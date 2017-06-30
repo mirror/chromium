@@ -483,7 +483,8 @@ void AutofillManager::StartUploadProcess(
                        raw_form),
         base::BindOnce(&AutofillManager::UploadFormDataAsyncCallback,
                        weak_ptr_factory_.GetWeakPtr(),
-                       base::Owned(form_structure.release()), loaded_timestamp,
+                       base::Owned(form_structure.release()),
+                       form_parsed_timestamp_, loaded_timestamp,
                        initial_interaction_timestamp_, timestamp,
                        observed_submission));
   }
@@ -528,7 +529,8 @@ void AutofillManager::OnTextFieldDidChangeImpl(const FormData& form,
   UpdatePendingForm(form);
 
   if (!user_did_type_ || autofill_field->is_autofilled)
-    form_interactions_ukm_logger_->LogTextFieldDidChange(*autofill_field);
+    form_interactions_ukm_logger_->LogTextFieldDidChange(
+        *autofill_field, form_parsed_timestamp_);
 
   if (!user_did_type_) {
     user_did_type_ = true;
@@ -746,10 +748,12 @@ void AutofillManager::FillOrPreviewCreditCardForm(
       GetOrCreateFullCardRequest()->GetFullCard(
           masked_card_, AutofillClient::UNMASK_FOR_AUTOFILL,
           weak_ptr_factory_.GetWeakPtr(), weak_ptr_factory_.GetWeakPtr());
-      credit_card_form_event_logger_->OnDidSelectMaskedServerCardSuggestion();
+      credit_card_form_event_logger_->OnDidSelectMaskedServerCardSuggestion(
+          form_parsed_timestamp_);
       return;
     }
-    credit_card_form_event_logger_->OnDidFillSuggestion(credit_card);
+    credit_card_form_event_logger_->OnDidFillSuggestion(credit_card,
+                                                        form_parsed_timestamp_);
   }
 
   FillOrPreviewDataModelForm(action, query_id, form, field, credit_card,
@@ -764,7 +768,8 @@ void AutofillManager::FillOrPreviewProfileForm(
     const FormFieldData& field,
     const AutofillProfile& profile) {
   if (action == AutofillDriver::FORM_DATA_ACTION_FILL)
-    address_form_event_logger_->OnDidFillSuggestion(profile);
+    address_form_event_logger_->OnDidFillSuggestion(profile,
+                                                    form_parsed_timestamp_);
 
   FillOrPreviewDataModelForm(action, query_id, form, field, profile,
                              false /* is_credit_card */,
@@ -858,9 +863,11 @@ void AutofillManager::DidShowSuggestions(bool is_new_popup,
     }
 
     if (autofill_field->Type().group() == CREDIT_CARD) {
-      credit_card_form_event_logger_->OnDidShowSuggestions(*autofill_field);
+      credit_card_form_event_logger_->OnDidShowSuggestions(
+          *autofill_field, form_parsed_timestamp_);
     } else {
-      address_form_event_logger_->OnDidShowSuggestions(*autofill_field);
+      address_form_event_logger_->OnDidShowSuggestions(*autofill_field,
+                                                       form_parsed_timestamp_);
     }
   }
 }
@@ -1018,7 +1025,7 @@ void AutofillManager::OnLoadedServerPredictions(
   // autocomplete attributes, if available.
   for (FormStructure* cur_form : queried_forms) {
     cur_form->LogQualityMetricsBasedOnAutocomplete(
-        form_interactions_ukm_logger_.get());
+        form_interactions_ukm_logger_.get(), form_parsed_timestamp_);
   }
 
   // Forward form structures to the password generation manager to detect
@@ -1108,7 +1115,8 @@ void AutofillManager::OnDidUploadCard(AutofillClient::PaymentsRpcResult result,
 
 void AutofillManager::OnFullCardRequestSucceeded(const CreditCard& card,
                                                  const base::string16& cvc) {
-  credit_card_form_event_logger_->OnDidFillSuggestion(masked_card_);
+  credit_card_form_event_logger_->OnDidFillSuggestion(masked_card_,
+                                                      form_parsed_timestamp_);
   FillCreditCardForm(unmasking_query_id_, unmasking_form_, unmasking_field_,
                      card, cvc);
   masked_card_ = CreditCard();
@@ -1521,12 +1529,13 @@ void AutofillManager::CollectRapporSample(
 // get reset before this method executes.
 void AutofillManager::UploadFormDataAsyncCallback(
     const FormStructure* submitted_form,
+    const TimeTicks& form_parsed_time,
     const TimeTicks& load_time,
     const TimeTicks& interaction_time,
     const TimeTicks& submission_time,
     bool observed_submission) {
   submitted_form->LogQualityMetrics(
-      load_time, interaction_time, submission_time,
+      form_parsed_time, load_time, interaction_time, submission_time,
       client_->GetRapporServiceImpl(), form_interactions_ukm_logger_.get(),
       did_show_suggestions_, observed_submission);
   if (submitted_form->ShouldBeCrowdsourced())
@@ -1586,6 +1595,7 @@ void AutofillManager::Reset() {
   unmasking_field_ = FormFieldData();
   forms_loaded_timestamps_.clear();
   initial_interaction_timestamp_ = TimeTicks();
+  form_parsed_timestamp_ = TimeTicks();
   external_delegate_->Reset();
 }
 
@@ -2019,6 +2029,9 @@ std::vector<Suggestion> AutofillManager::GetCreditCardSuggestions(
 void AutofillManager::ParseForms(const std::vector<FormData>& forms) {
   if (forms.empty())
     return;
+
+  // Log timestamp of parsing form.
+  form_parsed_timestamp_ = base::TimeTicks::Now();
 
   // Setup the url for metrics that we will collect for this form.
   form_interactions_ukm_logger_->OnFormsParsed(forms[0].origin);
