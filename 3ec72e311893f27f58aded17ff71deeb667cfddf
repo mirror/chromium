@@ -34,6 +34,24 @@
       "revId": "3ec72e311893f27f58aded17ff71deeb667cfddf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d97a0328_c76cac2b",
+        "filename": "media/gpu/android/video_frame_factory_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-06-30T00:20:00Z",
+      "side": 1,
+      "message": "This was really helpful, thanks!\n\nI think it\u0027s all handled correctly now by dropping the refs in OnWillDestroyStub() and calling ForceContextLost() if the context can\u0027t be made current.",
+      "parentUuid": "cfd578ce_3ceabe66",
+      "revId": "3ec72e311893f27f58aded17ff71deeb667cfddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
