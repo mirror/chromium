@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import org.chromium.base.ContextUtils;
+import org.chromium.base.Log;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.ntp.ContextMenuManager;
@@ -84,12 +85,6 @@ public class TileGrid extends OptionalLeaf implements TileGroup.Observer {
     public void onTileOfflineBadgeVisibilityChanged(Tile tile) {
         if (isVisible()) notifyItemChanged(0, new ViewHolder.UpdateOfflineBadgeCallback(tile));
     }
-
-    @Override
-    public void onLoadTaskAdded() {}
-
-    @Override
-    public void onLoadTaskCompleted() {}
 
     public TileGroup getTileGroup() {
         return mTileGroup;

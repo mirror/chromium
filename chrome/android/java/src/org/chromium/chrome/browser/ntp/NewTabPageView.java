@@ -161,6 +161,12 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
          * displayed to the user.
          */
         boolean isCurrentPage();
+
+        /**
+         * Called when the NTP has completely finished loading (all views will be inflated
+         * and any dependent resources will have been loaded).
+         */
+        void onLoadingComplete();
     }
 
     /**
@@ -279,6 +285,10 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
         mSearchProviderLogoView.showSearchProviderInitialView();
 
         mTileGroup.startObserving(getMaxTileRows(searchProviderHasLogo) * getMaxTileColumns());
+
+        // Tracking a task that will be completed when the tiles are done loading.
+        // TODO(dgn): Use flags instead? We only track that and window attachment now.
+        mPendingLoadTasks++;
 
         // Set up snippets
         NewTabPageAdapter newTabPageAdapter = new NewTabPageAdapter(mManager, mNewTabPageLayout,
@@ -543,7 +553,7 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
      * Decrements the count of pending load tasks and notifies the manager when the page load
      * is complete.
      */
-    private void loadTaskCompleted() {
+    public void loadTaskCompleted() {
         assert mPendingLoadTasks > 0;
         mPendingLoadTasks--;
         if (mPendingLoadTasks == 0) {
@@ -552,6 +562,7 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
             } else {
                 mLoadHasCompleted = true;
                 mTileGroupDelegate.onLoadingComplete(mTileGroup.getTiles());
+                mManager.onLoadingComplete();
                 // Load the logo after everything else is finished, since it's lower priority.
                 loadSearchProviderLogo();
             }
@@ -934,16 +945,6 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
     public void onTileOfflineBadgeVisibilityChanged(Tile tile) {
         mTileGridLayout.updateOfflineBadge(tile);
         mSnapshotTileGridChanged = true;
-    }
-
-    @Override
-    public void onLoadTaskAdded() {
-        mPendingLoadTasks++;
-    }
-
-    @Override
-    public void onLoadTaskCompleted() {
-        loadTaskCompleted();
     }
 
     private class SnapScrollRunnable implements Runnable {

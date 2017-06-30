@@ -7,6 +7,7 @@ package org.chromium.chrome.browser.suggestions;
 import android.support.v7.widget.RecyclerView;
 
 import org.chromium.base.Callback;
+import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.browser.ntp.NewTabPage;
 import org.chromium.chrome.browser.ntp.snippets.CategoryInt;
@@ -82,6 +83,18 @@ public abstract class SuggestionsMetrics {
                 SuggestionsEventReporterBridge.onSuggestionTargetVisited(category, visit.duration);
             }
         });
+    }
+
+    // Misc histogram recordings
+
+    /**
+     * Records which tiles are available offline once the site suggestions finished loading.
+     * @param tileIndex index of a tile whose URL is available offline.
+     * @param maxNumTiles max number of tiles that can be displayed.
+     */
+    public static void recordTileOfflineAvailability(int tileIndex, int maxNumTiles) {
+        RecordHistogram.recordEnumeratedHistogram(
+                "NewTabPage.TileOfflineAvailable", tileIndex, maxNumTiles);
     }
 
     /**
