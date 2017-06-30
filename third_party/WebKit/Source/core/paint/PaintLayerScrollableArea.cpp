@@ -1794,7 +1794,7 @@ LayoutRect PaintLayerScrollableArea::ScrollIntoView(
   ScrollOffset new_scroll_offset(ClampScrollOffset(RoundedIntSize(
       ToScrollOffset(FloatPoint(r.Location()) + old_scroll_offset))));
   if (is_smooth) {
-    DCHECK(scroll_type == kProgrammaticScroll);
+    DCHECK(scroll_type == kChainedScroll);
     GetSmoothScrollSequencer()->QueueAnimation(this, new_scroll_offset);
   } else {
     SetScrollOffset(new_scroll_offset, scroll_type, kScrollBehaviorInstant);

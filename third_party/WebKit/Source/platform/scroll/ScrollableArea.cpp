@@ -173,7 +173,7 @@ ScrollResult ScrollableArea::UserScroll(ScrollGranularity granularity,
 void ScrollableArea::SetScrollOffset(const ScrollOffset& offset,
                                      ScrollType scroll_type,
                                      ScrollBehavior behavior) {
-  if (scroll_type != kSequencedSmoothScroll && scroll_type != kClampingScroll &&
+  if (scroll_type != kChainedScroll && scroll_type != kClampingScroll &&
       scroll_type != kAnchoringScroll) {
     if (SmoothScrollSequencer* sequencer = GetSmoothScrollSequencer())
       sequencer->AbortAnimations();
@@ -198,7 +198,7 @@ void ScrollableArea::SetScrollOffset(const ScrollOffset& offset,
     case kProgrammaticScroll:
       ProgrammaticScrollHelper(clamped_offset, behavior, false);
       break;
-    case kSequencedSmoothScroll:
+    case kChainedScroll:
       ProgrammaticScrollHelper(clamped_offset, behavior, true);
       break;
     case kUserScroll:
@@ -234,17 +234,16 @@ void ScrollableArea::SetScrollOffsetSingleAxis(ScrollbarOrientation orientation,
   ScrollableArea::SetScrollOffset(new_offset, scroll_type, behavior);
 }
 
-void ScrollableArea::ProgrammaticScrollHelper(
-    const ScrollOffset& offset,
-    ScrollBehavior scroll_behavior,
-    bool sequenced_for_smooth_scroll) {
+void ScrollableArea::ProgrammaticScrollHelper(const ScrollOffset& offset,
+                                              ScrollBehavior scroll_behavior,
+                                              bool is_chained_scroll) {
   CancelScrollAnimation();
 
   if (scroll_behavior == kScrollBehaviorSmooth) {
-    GetProgrammaticScrollAnimator().AnimateToOffset(
-        offset, sequenced_for_smooth_scroll);
+    GetProgrammaticScrollAnimator().AnimateToOffset(offset, is_chained_scroll);
   } else {
-    GetProgrammaticScrollAnimator().ScrollToOffsetWithoutAnimation(offset);
+    GetProgrammaticScrollAnimator().ScrollToOffsetWithoutAnimation(
+        offset, is_chained_scroll);
   }
 }
 

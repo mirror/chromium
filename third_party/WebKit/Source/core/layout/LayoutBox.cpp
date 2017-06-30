@@ -650,7 +650,8 @@ void LayoutBox::ScrollRectToVisible(const LayoutRect& rect,
                                     ScrollType scroll_type,
                                     bool make_visible_in_visual_viewport,
                                     ScrollBehavior scroll_behavior) {
-  DCHECK(scroll_type == kProgrammaticScroll || scroll_type == kUserScroll);
+  DCHECK(scroll_type == kProgrammaticScroll || scroll_type == kUserScroll ||
+         scroll_type == kChainedScroll);
   // Presumably the same issue as in setScrollTop. See crbug.com/343132.
   DisableCompositingQueryAsserts disabler;
 

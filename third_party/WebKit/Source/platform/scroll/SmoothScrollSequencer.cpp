@@ -27,8 +27,7 @@ void SmoothScrollSequencer::RunQueuedAnimations() {
   ScrollableArea* scrollable = scroller_offset.first;
   current_scrollable_ = scrollable;
   ScrollOffset offset = scroller_offset.second;
-  scrollable->SetScrollOffset(offset, kSequencedSmoothScroll,
-                              kScrollBehaviorSmooth);
+  scrollable->SetScrollOffset(offset, kChainedScroll, kScrollBehaviorSmooth);
 }
 
 void SmoothScrollSequencer::AbortAnimations() {

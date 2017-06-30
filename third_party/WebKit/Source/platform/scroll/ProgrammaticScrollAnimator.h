@@ -29,9 +29,9 @@ class ProgrammaticScrollAnimator : public ScrollAnimatorCompositorCoordinator {
 
   virtual ~ProgrammaticScrollAnimator();
 
-  void ScrollToOffsetWithoutAnimation(const ScrollOffset&);
-  void AnimateToOffset(const ScrollOffset&,
-                       bool sequenced_for_smooth_scroll = false);
+  void ScrollToOffsetWithoutAnimation(const ScrollOffset&,
+                                      bool is_chained_scroll);
+  void AnimateToOffset(const ScrollOffset&, bool is_chained_scroll = false);
 
   // ScrollAnimatorCompositorCoordinator implementation.
   void ResetAnimationState() override;
@@ -59,7 +59,7 @@ class ProgrammaticScrollAnimator : public ScrollAnimatorCompositorCoordinator {
   std::unique_ptr<CompositorScrollOffsetAnimationCurve> animation_curve_;
   ScrollOffset target_offset_;
   double start_time_;
-  bool sequenced_for_smooth_scroll_;
+  bool is_chained_scroll_;
 };
 
 }  // namespace blink

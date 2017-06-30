@@ -4703,7 +4703,7 @@ LayoutRect LocalFrameView::ScrollIntoView(const LayoutRect& rect_in_content,
     ScrollOffset target_offset(expose_rect.X().ToFloat(),
                                expose_rect.Y().ToFloat());
     if (is_smooth) {
-      DCHECK(scroll_type == kProgrammaticScroll);
+      DCHECK(scroll_type == kChainedScroll);
       GetSmoothScrollSequencer()->QueueAnimation(this, target_offset);
     } else {
       SetScrollOffset(target_offset, scroll_type);

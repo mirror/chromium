@@ -77,15 +77,18 @@ enum ScrollType {
   kClampingScroll,
   kCompositorScroll,
   kAnchoringScroll,
-  kSequencedSmoothScroll
+  // These are programmatic chained scrolls coming from ScrollRectToVisible,
+  // or smooth scrolls that are being animated.
+  // SetScrollOffset called with kChainedScroll should not abort the smooth
+  // scroll sequence.
+  kChainedScroll
 };
 
 // An explicit scroll is one that was requested by the user or the webpage.
 // An implicit scroll is a side effect of a layout change.
 inline bool IsExplicitScrollType(ScrollType scroll_type) {
   return scroll_type == kUserScroll || scroll_type == kProgrammaticScroll ||
-         scroll_type == kCompositorScroll ||
-         scroll_type == kSequencedSmoothScroll;
+         scroll_type == kCompositorScroll || scroll_type == kChainedScroll;
 }
 
 // Convert logical scroll direction to physical. Physical scroll directions are
