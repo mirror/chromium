@@ -136,6 +136,7 @@ class FormStructure {
   // TODO(sebsg): We log more than quality metrics. Maybe rename or split
   // function?
   void LogQualityMetrics(
+      const base::TimeTicks& form_parsed_timestamp,
       const base::TimeTicks& load_time,
       const base::TimeTicks& interaction_time,
       const base::TimeTicks& submission_time,
@@ -148,8 +149,8 @@ class FormStructure {
   // structure, if autocomplete attributes are present on the fields (they are
   // used as golden truths).
   void LogQualityMetricsBasedOnAutocomplete(
-      AutofillMetrics::FormInteractionsUkmLogger* form_interactions_ukm_logger)
-      const;
+      AutofillMetrics::FormInteractionsUkmLogger* form_interactions_ukm_logger,
+      const base::TimeTicks& form_parsed_timestamp) const;
 
   // Classifies each field in |fields_| based upon its |autocomplete| attribute,
   // if the attribute is available.  The association is stored into the field's
