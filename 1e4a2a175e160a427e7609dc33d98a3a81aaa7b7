@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d3a1144_cdaf4486",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 14936,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-06-30T20:30:01Z",
+      "side": 1,
+      "message": "Could we generate kInvalidArguments only if width, height or depth are non-zero? Would that handle all the error cases and avoid needing to change the client code?",
+      "revId": "1e4a2a175e160a427e7609dc33d98a3a81aaa7b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
