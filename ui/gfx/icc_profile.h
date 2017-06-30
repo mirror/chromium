@@ -61,6 +61,7 @@ class COLOR_SPACE_EXPORT ICCProfile {
   // scale factor.
   static bool HasForcedProfile();
   static ICCProfile GetForcedProfile();
+  static ColorSpace GetForcedColorSpace();
 
   // Return a ColorSpace that references this ICCProfile. ColorTransforms
   // created using this ColorSpace will match this ICCProfile precisely.

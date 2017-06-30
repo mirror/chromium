@@ -124,24 +124,29 @@ bool ICCProfile::HasForcedProfile() {
 ICCProfile ICCProfile::GetForcedProfile() {
   DCHECK(HasForcedProfile());
   ICCProfile icc_profile;
+  ColorSpace forced_color_space = GetForcedColorSpace();
+  forced_color_space.GetICCProfile(&icc_profile);
+  return icc_profile;
+}
+
+// static
+gfx::ColorSpace ICCProfile::GetForcedColorSpace() {
+  DCHECK(HasForcedProfile());
   std::string value =
       base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
           switches::kForceColorProfile);
   if (value == "srgb") {
-    ColorSpace::CreateSRGB().GetICCProfile(&icc_profile);
+    return ColorSpace::CreateSRGB();
   } else if (value == "generic-rgb") {
-    ColorSpace generic_rgb_color_space(ColorSpace::PrimaryID::APPLE_GENERIC_RGB,
-                                       ColorSpace::TransferID::GAMMA18);
-    generic_rgb_color_space.GetICCProfile(&icc_profile);
+    return ColorSpace(ColorSpace::PrimaryID::APPLE_GENERIC_RGB,
+                      ColorSpace::TransferID::GAMMA18);
   } else if (value == "color-spin-gamma24") {
-    ColorSpace color_spin_color_space(
-        ColorSpace::PrimaryID::WIDE_GAMUT_COLOR_SPIN,
-        ColorSpace::TransferID::GAMMA24);
-    color_spin_color_space.GetICCProfile(&icc_profile);
+    return ColorSpace(ColorSpace::PrimaryID::WIDE_GAMUT_COLOR_SPIN,
+                      ColorSpace::TransferID::GAMMA24);
   } else {
     LOG(ERROR) << "Invalid forced color profile";
   }
-  return icc_profile;
+  return gfx::ColorSpace();
 }
 
 // static
