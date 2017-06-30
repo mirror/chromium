@@ -135,15 +135,9 @@ class NSPRInitSingleton {
     PR_Init(PR_USER_THREAD, PR_PRIORITY_NORMAL, 0);
   }
 
-  // NOTE(willchan): We don't actually execute this code since we leak NSS to
-  // prevent non-joinable threads from using NSS after it's already been shut
-  // down.
-  ~NSPRInitSingleton() {
-    PL_ArenaFinish();
-    PRStatus prstatus = PR_Cleanup();
-    if (prstatus != PR_SUCCESS)
-      LOG(ERROR) << "PR_Cleanup failed; was NSPR initialized on wrong thread?";
-  }
+  // NOTE(willchan): We don't actually cleanup on destruction since we leak NSS
+  // to prevent non-joinable threads from using NSS after it's already been
+  // shut down.
 };
 
 base::LazyInstance<NSPRInitSingleton>::Leaky
