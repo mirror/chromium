@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3acb4b6b_b20a6bcb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-06-30T22:50:26Z",
+      "side": 1,
+      "message": "Maybe: \"Fix lifetime of was_destroyed_ pointer in MessagePumpFuchsia\"\n\nwhich gives a bit more context?",
+      "revId": "832609772c21156e5ebcae9ae2cf34bfc00274b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
