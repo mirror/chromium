@@ -61,15 +61,8 @@ class UkmBrowserTest : public SyncTest {
   }
 };
 
-// Flaky on Mac only.  http://crbug.com/737682
-#if defined(OS_MACOSX)
-#define MAYBE_IncognitoCheck DISABLED_IncognitoCheck
-#else
-#define MAYBE_IncognitoCheck IncognitoCheck
-#endif
-
 // Make sure that UKM is disabled while an incognito window is open.
-IN_PROC_BROWSER_TEST_F(UkmBrowserTest, MAYBE_IncognitoCheck) {
+IN_PROC_BROWSER_TEST_F(UkmBrowserTest, IncognitoCheck) {
   // Enable metrics recording and update MetricsServicesManager.
   bool metrics_enabled = true;
   ChromeMetricsServiceAccessor::SetMetricsAndCrashReportingForTesting(
