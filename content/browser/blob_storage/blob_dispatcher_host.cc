@@ -302,7 +302,8 @@ void BlobDispatcherHost::OnRegisterPublicBlobURL(const GURL& public_url,
     return;
   }
   BlobStorageContext* context = this->context();
-  if (!IsInUseInHost(uuid) || context->registry().IsURLMapped(public_url)) {
+  if (/*!IsInUseInHost(uuid) || */ context->registry().IsURLMapped(
+      public_url)) {
     UMA_HISTOGRAM_ENUMERATION("Storage.Blob.InvalidURLRegister", BDH_INCREMENT,
                               BDH_TRACING_ENUM_LAST);
     return;

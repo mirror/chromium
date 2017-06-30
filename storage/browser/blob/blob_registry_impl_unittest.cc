@@ -4,6 +4,7 @@
 
 #include "storage/browser/blob/blob_registry_impl.h"
 
+#include <limits>
 #include "base/files/scoped_temp_dir.h"
 #include "base/test/scoped_task_environment.h"
 #include "mojo/edk/embedder/embedder.h"
@@ -17,6 +18,14 @@
 namespace storage {
 
 namespace {
+
+const size_t kTestBlobStorageIPCThresholdBytes = 5;
+const size_t kTestBlobStorageMaxSharedMemoryBytes = 20;
+
+const size_t kTestBlobStorageMaxBlobMemorySize = 400;
+const uint64_t kTestBlobStorageMaxDiskSpace = 4000;
+const uint64_t kTestBlobStorageMinFileSizeBytes = 10;
+const uint64_t kTestBlobStorageMaxFileSizeBytes = 100;
 
 class MockBlob : public mojom::Blob {
  public:
@@ -51,6 +60,40 @@ class MockDelegate : public BlobRegistryImpl::Delegate {
   bool can_read_file_system_file_result = true;
 };
 
+class MockBytesProvider : public mojom::BytesProvider {
+ public:
+  explicit MockBytesProvider(const std::vector<uint8_t>& data) : data_(data) {}
+
+  // BytesProvider implementation:
+  void RequestAsReply(RequestAsReplyCallback callback) override {
+    std::move(callback).Run(data_);
+  }
+
+  void RequestAsStream(mojo::ScopedDataPipeProducerHandle) override {
+    EXPECT_FALSE(true);
+  }
+
+  void RequestAsFile(uint64_t source_offset,
+                     uint64_t source_size,
+                     base::File file,
+                     uint64_t file_offset,
+                     RequestAsFileCallback callback) override {
+    EXPECT_LE(source_offset + source_size, data_.size());
+    EXPECT_EQ(source_size,
+              static_cast<uint64_t>(file.Write(
+                  file_offset,
+                  reinterpret_cast<const char*>(data_.data() + source_offset),
+                  source_size)));
+    EXPECT_TRUE(file.Flush());
+    base::File::Info info;
+    EXPECT_TRUE(file.GetInfo(&info));
+    std::move(callback).Run(info.last_modified);
+  }
+
+ private:
+  std::vector<uint8_t> data_;
+};
+
 }  // namespace
 
 class BlobRegistryImplTest : public testing::Test {
@@ -76,6 +119,15 @@ class BlobRegistryImplTest : public testing::Test {
     registry_impl_->Bind(MakeRequest(&registry_), std::move(delegate));
     mojo::edk::SetDefaultProcessErrorCallback(base::Bind(
         &BlobRegistryImplTest::OnBadMessage, base::Unretained(this)));
+    storage::BlobStorageLimits limits;
+    limits.max_ipc_memory_size = kTestBlobStorageIPCThresholdBytes;
+    limits.max_shared_memory_size = kTestBlobStorageMaxSharedMemoryBytes;
+    limits.max_blob_in_memory_space = kTestBlobStorageMaxBlobMemorySize;
+    limits.desired_max_disk_space = kTestBlobStorageMaxDiskSpace;
+    limits.effective_max_disk_space = kTestBlobStorageMaxDiskSpace;
+    limits.min_page_file_size = kTestBlobStorageMinFileSizeBytes;
+    limits.max_file_size = kTestBlobStorageMaxFileSizeBytes;
+    context_->mutable_memory_controller()->set_limits_for_testing(limits);
   }
 
   void TearDown() override {
@@ -514,6 +566,131 @@ TEST_F(BlobRegistryImplTest, Register_FileSystemFile_Valid) {
 
   BlobDataBuilder expected_blob_data(kId);
   expected_blob_data.AppendFileSystemFile(url, 0, 16, base::Time());
+
+  EXPECT_EQ(expected_blob_data, *handle->CreateSnapshot());
+}
+
+TEST_F(BlobRegistryImplTest, Register_BytesInvalidEmbeddedData) {
+  const std::string kId = "id";
+
+  mojom::BytesProviderPtr bytes_provider;
+  mojo::MakeStrongBinding(
+      base::MakeUnique<MockBytesProvider>(std::vector<uint8_t>(32)),
+      MakeRequest(&bytes_provider));
+
+  std::vector<mojom::DataElementPtr> elements;
+  elements.push_back(mojom::DataElement::NewBytes(mojom::DataElementBytes::New(
+      10, std::vector<uint8_t>(5), std::move(bytes_provider))));
+
+  mojom::BlobPtr blob;
+  EXPECT_FALSE(registry_->Register(MakeRequest(&blob), kId, "", "",
+                                   std::move(elements)));
+  EXPECT_EQ(1u, bad_messages_.size());
+
+  registry_.FlushForTesting();
+  EXPECT_TRUE(registry_.encountered_error());
+
+  std::unique_ptr<BlobDataHandle> handle = context_->GetBlobDataFromUUID(kId);
+  WaitForBlobCompletion(handle.get());
+
+  EXPECT_TRUE(handle->IsBroken());
+  EXPECT_EQ(BlobStatus::ERR_INVALID_CONSTRUCTION_ARGUMENTS,
+            handle->GetBlobStatus());
+}
+
+TEST_F(BlobRegistryImplTest, Register_BytesInvalidDataSize) {
+  const std::string kId = "id";
+
+  mojom::BytesProviderPtr bytes_provider1;
+  mojo::MakeStrongBinding(
+      base::MakeUnique<MockBytesProvider>(std::vector<uint8_t>(8)),
+      MakeRequest(&bytes_provider1));
+  mojom::BytesProviderPtr bytes_provider2;
+  mojo::MakeStrongBinding(
+      base::MakeUnique<MockBytesProvider>(std::vector<uint8_t>(8)),
+      MakeRequest(&bytes_provider2));
+
+  std::vector<mojom::DataElementPtr> elements;
+  elements.push_back(mojom::DataElement::NewBytes(mojom::DataElementBytes::New(
+      8, base::nullopt, std::move(bytes_provider1))));
+  elements.push_back(mojom::DataElement::NewBytes(
+      mojom::DataElementBytes::New(std::numeric_limits<uint64_t>::max() - 4,
+                                   base::nullopt, std::move(bytes_provider2))));
+
+  mojom::BlobPtr blob;
+  EXPECT_FALSE(registry_->Register(MakeRequest(&blob), kId, "", "",
+                                   std::move(elements)));
+  EXPECT_EQ(1u, bad_messages_.size());
+
+  registry_.FlushForTesting();
+  EXPECT_TRUE(registry_.encountered_error());
+
+  std::unique_ptr<BlobDataHandle> handle = context_->GetBlobDataFromUUID(kId);
+  WaitForBlobCompletion(handle.get());
+
+  EXPECT_TRUE(handle->IsBroken());
+  EXPECT_EQ(BlobStatus::ERR_INVALID_CONSTRUCTION_ARGUMENTS,
+            handle->GetBlobStatus());
+}
+
+TEST_F(BlobRegistryImplTest, Register_BytesOutOfMemory) {
+  const std::string kId = "id";
+
+  mojom::BytesProviderPtr bytes_provider1;
+  mojo::MakeStrongBinding(
+      base::MakeUnique<MockBytesProvider>(
+          std::vector<uint8_t>(kTestBlobStorageMaxDiskSpace)),
+      MakeRequest(&bytes_provider1));
+  mojom::BytesProviderPtr bytes_provider2;
+  mojo::MakeStrongBinding(
+      base::MakeUnique<MockBytesProvider>(
+          std::vector<uint8_t>(kTestBlobStorageMaxDiskSpace)),
+      MakeRequest(&bytes_provider2));
+
+  std::vector<mojom::DataElementPtr> elements;
+  elements.push_back(mojom::DataElement::NewBytes(
+      mojom::DataElementBytes::New(kTestBlobStorageMaxDiskSpace, base::nullopt,
+                                   std::move(bytes_provider1))));
+  elements.push_back(mojom::DataElement::NewBytes(
+      mojom::DataElementBytes::New(kTestBlobStorageMaxDiskSpace, base::nullopt,
+                                   std::move(bytes_provider2))));
+
+  mojom::BlobPtr blob;
+  EXPECT_TRUE(registry_->Register(MakeRequest(&blob), kId, "", "",
+                                  std::move(elements)));
+
+  std::unique_ptr<BlobDataHandle> handle = context_->GetBlobDataFromUUID(kId);
+  WaitForBlobCompletion(handle.get());
+
+  EXPECT_TRUE(handle->IsBroken());
+  EXPECT_EQ(BlobStatus::ERR_OUT_OF_MEMORY, handle->GetBlobStatus());
+}
+
+TEST_F(BlobRegistryImplTest, Register_ValidSmallBytes) {
+  const std::string kId = "id";
+  const std::string kData = "hello world";
+  std::vector<uint8_t> data_bytes(kData.begin(), kData.end());
+
+  mojom::BytesProviderPtr bytes_provider;
+  mojo::MakeStrongBinding(base::MakeUnique<MockBytesProvider>(data_bytes),
+                          MakeRequest(&bytes_provider));
+
+  std::vector<mojom::DataElementPtr> elements;
+  elements.push_back(mojom::DataElement::NewBytes(mojom::DataElementBytes::New(
+      kData.size(), data_bytes, std::move(bytes_provider))));
+
+  mojom::BlobPtr blob;
+  EXPECT_TRUE(registry_->Register(MakeRequest(&blob), kId, "", "",
+                                  std::move(elements)));
+
+  std::unique_ptr<BlobDataHandle> handle = context_->GetBlobDataFromUUID(kId);
+  WaitForBlobCompletion(handle.get());
+
+  EXPECT_FALSE(handle->IsBroken());
+  EXPECT_EQ(BlobStatus::DONE, handle->GetBlobStatus());
+
+  BlobDataBuilder expected_blob_data(kId);
+  expected_blob_data.AppendData(kData);
 
   EXPECT_EQ(expected_blob_data, *handle->CreateSnapshot());
 }
