@@ -113,9 +113,9 @@ function MainWindowComponent(
   ui.listContainer.element.addEventListener(
       ListContainer.EventType.TEXT_SEARCH, this.onTextSearch_.bind(this));
   ui.listContainer.table.list.addEventListener(
-      'click', this.onDetailClick_.bind(this));
+      'dblclick', this.onDoubleClick_.bind(this));
   ui.listContainer.grid.addEventListener(
-      'click', this.onDetailClick_.bind(this));
+      'dblclick', this.onDoubleClick_.bind(this));
   ui.listContainer.table.list.addEventListener(
       'focus', this.onFileListFocus_.bind(this));
   ui.listContainer.grid.addEventListener(
@@ -164,7 +164,7 @@ MainWindowComponent.prototype.onFileListFocus_ = function() {
  * @param {Event} event The click event.
  * @private
  */
-MainWindowComponent.prototype.onDetailClick_ = function(event) {
+MainWindowComponent.prototype.onDoubleClick_ = function(event) {
   if (this.namingController_.isRenamingInProgress()) {
     // Don't pay attention to clicks during a rename.
     return;
@@ -176,14 +176,6 @@ MainWindowComponent.prototype.onDetailClick_ = function(event) {
   if (!listItem || !listItem.selected || selection.totalCount != 1) {
     return;
   }
-
-  // React on double click, but only if both clicks hit the same item.
-  // TODO(mtomasz): Simplify it, and use a double click handler if possible.
-  var clickNumber = (this.lastClickedItem_ == listItem) ? 2 : undefined;
-  this.lastClickedItem_ = listItem;
-
-  if (event.detail != clickNumber)
-    return;
 
   var entry = selection.entries[0];
   if (entry.isDirectory) {
