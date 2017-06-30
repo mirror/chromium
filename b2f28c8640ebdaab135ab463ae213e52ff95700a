@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3ca3c798_0a846d83",
+        "filename": "ios/chrome/browser/ui/settings/passwords_settings_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-06-30T07:21:39Z",
+      "side": 1,
+      "message": "Thanks for catching this. It originates in my copy-pasta of some \"%@, %@\" pattern and then dropping the \", %@\".",
+      "parentUuid": "ec3c0252_ef5a8500",
+      "range": {
+        "startLine": 173,
+        "startChar": 35,
+        "endLine": 176,
+        "endChar": 72
+      },
+      "revId": "b2f28c8640ebdaab135ab463ae213e52ff95700a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c28b2697_2fd304fa",
         "filename": "ios/chrome/browser/ui/settings/passwords_settings_egtest.mm",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-29T15:39:19Z",
       "side": 1,
       "message": "yuck ... this is unreadable ... (nothing to do, I just find objc unreadable)",
+      "range": {
+        "startLine": 528,
+        "startChar": 0,
+        "endLine": 528,
+        "endChar": 38
+      },
+      "revId": "b2f28c8640ebdaab135ab463ae213e52ff95700a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "488c1c52_ad065dc1",
+        "filename": "ios/chrome/browser/ui/settings/passwords_settings_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-06-30T07:21:39Z",
+      "side": 1,
+      "message": "Ack :).",
+      "parentUuid": "c28b2697_2fd304fa",
       "range": {
         "startLine": 528,
         "startChar": 0,
