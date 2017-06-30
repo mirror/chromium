@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72d09c54_98470711",
+        "filename": "ui/file_manager/file_manager/foreground/js/main_window_component.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-06-30T07:38:06Z",
+      "side": 1,
+      "message": "Touch triggers click but not mousedown/up events.\nSo this will not work as before in this case:\n- Choose A and B in check-select mode\n- double-tap on C.\nIt opens A and B, not C.",
+      "revId": "d4b7625d25fa55aa7e3e17bffda9a179521a5397",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
