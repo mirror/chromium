@@ -181,6 +181,24 @@
       "revId": "77fa3b2f0c4dbea7e01d07822b3437d2bdb861b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85c4ab61_f6e589b0",
+        "filename": "content/browser/android/motion_event_synthesizer_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-06-30T03:22:01Z",
+      "side": 1,
+      "message": "VR uses MotionEventSynthesizer to transform native VR controller events into java events, and inject them into native java UI, like the New Tab Page.",
+      "parentUuid": "93a4cd05_aa50745d",
+      "revId": "77fa3b2f0c4dbea7e01d07822b3437d2bdb861b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
