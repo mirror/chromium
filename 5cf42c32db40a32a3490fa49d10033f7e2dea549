@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "250efb55_02bddc21",
+        "filename": "components/feature_engagement_tracker/public/event_constants.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-06-30T00:36:09Z",
+      "side": 1,
+      "message": "What about new normal tab?",
+      "revId": "5cf42c32db40a32a3490fa49d10033f7e2dea549",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
