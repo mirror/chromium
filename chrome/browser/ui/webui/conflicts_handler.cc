@@ -26,6 +26,11 @@ void ConflictsHandler::RegisterMessages() {
                  base::Unretained(this)));
 }
 
+void ConflictsHandler::OnScanCompleted() {
+  SendModuleList();
+  observer_.Remove(EnumerateModulesModel::GetInstance());
+}
+
 void ConflictsHandler::HandleRequestModuleList(const base::ListValue* args) {
   CHECK_EQ(1U, args->GetSize());
   CHECK(args->GetString(0, &module_list_callback_id_));
@@ -69,9 +74,4 @@ void ConflictsHandler::SendModuleList() {
 
   AllowJavascript();
   ResolveJavascriptCallback(base::Value(module_list_callback_id_), results);
-}
-
-void ConflictsHandler::OnScanCompleted() {
-  SendModuleList();
-  observer_.Remove(EnumerateModulesModel::GetInstance());
 }
