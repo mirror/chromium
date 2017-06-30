@@ -134,7 +134,7 @@ cr.define('settings_people_page_change_picture', function() {
         Polymer.dom.flush();
         expectFalse(cameraIcon.hidden);
         expectTrue(settingsCamera.cameraActive);
-        expectEquals(ChangePictureSelectionTypes.CAMERA,
+        expectEquals(CrPicture.SelectionTypes.CAMERA,
                      changePicture.selectedItem_.dataset.type);
         expectTrue(discardControlBar.hidden);
 
@@ -153,7 +153,7 @@ cr.define('settings_people_page_change_picture', function() {
         return browserProxy.whenCalled('selectProfileImage').then(function() {
           Polymer.dom.flush();
 
-          expectEquals(ChangePictureSelectionTypes.PROFILE,
+          expectEquals(CrPicture.SelectionTypes.PROFILE,
                        changePicture.selectedItem_.dataset.type);
           expectFalse(settingsCamera.cameraActive);
           expectTrue(discardControlBar.hidden);
@@ -162,7 +162,7 @@ cr.define('settings_people_page_change_picture', function() {
           // then back to the subpage.
           changePicture.currentRouteChanged(settings.Route.BASIC);
           changePicture.currentRouteChanged(settings.Route.CHANGE_PICTURE);
-          expectEquals(ChangePictureSelectionTypes.PROFILE,
+          expectEquals(CrPicture.SelectionTypes.PROFILE,
                        changePicture.selectedItem_.dataset.type);
         });
       });
@@ -178,7 +178,7 @@ cr.define('settings_people_page_change_picture', function() {
 
         // Expect the old image to be selected once an old image is sent via
         // the native interface.
-        expectEquals(ChangePictureSelectionTypes.OLD,
+        expectEquals(CrPicture.SelectionTypes.OLD,
                      changePicture.selectedItem_.dataset.type);
         expectFalse(oldImage.hidden);
         expectFalse(settingsCamera.cameraActive);
@@ -196,7 +196,7 @@ cr.define('settings_people_page_change_picture', function() {
               expectEquals('chrome://foo/1.png', args[0]);
 
               Polymer.dom.flush();
-              expectEquals(ChangePictureSelectionTypes.DEFAULT,
+              expectEquals(CrPicture.SelectionTypes.DEFAULT,
                            changePicture.selectedItem_.dataset.type);
               expectEquals(firstDefaultImage, changePicture.selectedItem_);
               expectFalse(settingsCamera.cameraActive);
@@ -227,7 +227,7 @@ cr.define('settings_people_page_change_picture', function() {
           cr.webUIListenerCallback('old-image-changed', 'fake-old-image.jpg');
 
           Polymer.dom.flush();
-          expectEquals(ChangePictureSelectionTypes.OLD,
+          expectEquals(CrPicture.SelectionTypes.OLD,
                        changePicture.selectedItem_.dataset.type);
 
           MockInteractions.tap(discardOldImage);
