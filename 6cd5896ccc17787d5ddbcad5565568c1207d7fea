@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1eac1e04_a6f3eb16",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableCell.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-30T19:33:52Z",
+      "side": 0,
+      "message": "Previously 4 functions (CollapsedBorderHalfXXX(outer)) were called for each LogicalCollapsedBorderHalfToPhysical conversion, though only one result is needed. Now LogicalToPhysical template are only used on inline functions, so that the compiler optimizer can eliminate the unused evaluations.\n\nLogicalToPhysicalGetter template doesn\u0027t work for this case because it doesn\u0027t support extra parameters (the \u0027outer\u0027 parameter in this case) for now.",
+      "revId": "6cd5896ccc17787d5ddbcad5565568c1207d7fea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
