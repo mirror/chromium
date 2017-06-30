@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad1b9998_814661eb",
+        "filename": "chromecast/media/cma/backend/android/audio_sink_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-06-30T05:56:56Z",
+      "side": 1,
+      "message": "I don\u0027t think this provides the correct multiplier. My understanding is that this multiplier is applied directly to the output samples (since it works the same way as the per-stream volume multiplier). So a value of 0.5 cuts the output amplitude in half.\n\nHowever, a volume limit of 0.5 should mean \"make sure the maximum output volume of this stream is no greater than the output volume at 0.5\" - so if the volume curve is linear in dB and goes from -60dB to 0dB, then 0.5 is 30dB quieter than 1.0, which is a multiplier of 0.03 (assuming the current volume is 1.0).\n\nAs you have it now, it can only be correct if the volume curve on your device is linear in amplitude - which seems unlikely since it is a bad UX for volume control.",
+      "range": {
+        "startLine": 31,
+        "startChar": 60,
+        "endLine": 31,
+        "endChar": 0
+      },
+      "revId": "64aa826ed80760868307d63bd864a82a7c00e9d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
