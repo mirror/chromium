@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "56ea7e9d_8effce75",
+        "filename": "components/feature_engagement_tracker/public/feature_constants.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-06-30T19:47:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8eb3a606_71cc37d4",
+      "revId": "5fb7c222f564b54d7e4c705a9da314976bfdca46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d117c72_361b502e",
         "filename": "components/feature_engagement_tracker/public/feature_constants.h",
         "patchSetId": 2
@@ -65,6 +83,24 @@
       "writtenOn": "2017-06-30T17:34:15Z",
       "side": 1,
       "message": "If you include \"Tip\" in the name, I\u0027m assuming\nthat this only tracks how often the tip is \nshown, and it does not track the use of the \nNew Tab feature itself. Is this correct?",
+      "revId": "5fb7c222f564b54d7e4c705a9da314976bfdca46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b518293d_0701ba11",
+        "filename": "components/feature_engagement_tracker/public/feature_constants.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-06-30T19:47:48Z",
+      "side": 1,
+      "message": "Correct. The base::Feature constants (as opposed to the the const char[] constants for events) represent the display of the in-product help. Iff kIPHNewTabTipFeature is enabled, then it is valid to show the new tab tip bubble.",
+      "parentUuid": "3d117c72_361b502e",
       "revId": "5fb7c222f564b54d7e4c705a9da314976bfdca46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
