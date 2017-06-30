@@ -1,0 +1,35 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module quota.mojom;
+
+import "url/mojo/origin.mojom";
+
+enum StorageType {
+  kStorageTypeTemporary,
+  kStorageTypePersistent,
+  kStorageTypeSyncable,
+  kStorageTypeQuotaNotManaged,
+  kStorageTypeUnknown,
+  kStorageTypeLast = kStorageTypeUnknown
+};
+
+enum QuotaStatusCode {
+  kQuotaStatusOk = 0,
+  kQuotaErrorNotSupported,
+  kQuotaErrorInvalidModification,
+  kQuotaErrorInvalidAccess,
+  kQuotaErrorAbort,
+  kQuotaStatusUnknown = -1,
+
+  kQuotaStatusLast = kQuotaErrorAbort
+};
+
+interface Quota {
+  RequestStorageQuota(StorageType type, url.mojom.Origin origin, int64 requested_size, bool user_gesture)
+    => (QuotaStatusCode status, int64 current_usage, int64 granted_quota);
+
+  QueryStorageUsageAndQuota(StorageType type, url.mojom.Origin origin)
+    => (QuotaStatusCode status, int64 current_usage, int64 current_quota);
+};
