@@ -210,6 +210,30 @@
       "revId": "b6c7e89b71ba9bcd476c731fc7b450c74ee81017",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bca2bb57_3248e43e",
+        "filename": "chrome/browser/signin/chrome_signin_helper_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-06-30T13:21:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2241cc4e_801ef375",
+      "range": {
+        "startLine": 145,
+        "startChar": 4,
+        "endLine": 145,
+        "endChar": 13
+      },
+      "revId": "b6c7e89b71ba9bcd476c731fc7b450c74ee81017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
