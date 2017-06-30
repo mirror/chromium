@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "adda9235_c01c5832",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-06-30T00:25:24Z",
+      "side": 1,
+      "message": "This is a dup of the line you added in accelerator_table.cc, please remove.",
+      "range": {
+        "startLine": 193,
+        "startChar": 27,
+        "endLine": 193,
+        "endChar": 41
+      },
+      "revId": "2002915e943379051f889f78560135fa25bc8947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
