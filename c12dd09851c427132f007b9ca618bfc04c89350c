@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5ef8e36_d6278e09",
+        "filename": "chrome/browser/ui/android/ssl_client_certificate_request.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2017-06-30T13:47:27Z",
+      "side": 1,
+      "message": "I think LOG(ERROR) is not needed, and should be removed.",
+      "range": {
+        "startLine": 198,
+        "startChar": 4,
+        "endLine": 198,
+        "endChar": 66
+      },
+      "revId": "c12dd09851c427132f007b9ca618bfc04c89350c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
