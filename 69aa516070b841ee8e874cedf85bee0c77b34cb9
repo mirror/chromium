@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9151592c_b21f12a3",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/SafeBrowsingTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-30T23:44:06Z",
+      "side": 1,
+      "message": "this runOnUiThread is repeated 3 times now, probably worth factoring out into a helper method",
+      "revId": "69aa516070b841ee8e874cedf85bee0c77b34cb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
