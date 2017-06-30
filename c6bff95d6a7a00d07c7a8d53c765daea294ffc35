@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71141fd7_c8ec56eb",
+        "filename": "components/password_manager/core/browser/sql_table_builder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-06-30T08:25:31Z",
+      "side": 1,
+      "message": "optional: I would suggest moving the initialisation from the declaration in the header to the definition here, following how it is done for most of Chromium code. If you do that, you should also be able to move #include \u003climits\u003e to the .cc file.",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 51
+      },
+      "revId": "c6bff95d6a7a00d07c7a8d53c765daea294ffc35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dace9eb2_79d29e8b",
+        "filename": "components/password_manager/core/browser/sql_table_builder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-06-30T08:25:31Z",
+      "side": 1,
+      "message": "While I agree with the comment, I think it is an unnecessary wall of text here. If somebody feels motivated to improve this, they are free to create a CL later and get it reviewed, and the comment won\u0027t change anything on that. For now we both agree with your choice, so let\u0027s not use 3 lines to record that agreement when the review tool does that already. :)",
+      "range": {
+        "startLine": 148,
+        "startChar": 51,
+        "endLine": 150,
+        "endChar": 75
+      },
+      "revId": "c6bff95d6a7a00d07c7a8d53c765daea294ffc35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9d691b5_3b80d87c",
+        "filename": "components/password_manager/core/browser/sql_table_builder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-06-30T08:25:31Z",
+      "side": 1,
+      "message": "It feels strange that \"signon_realm\" stays hard-coded this way. Isn\u0027t it covered by the next sentence alone? (Also below at DropColumn.)",
+      "range": {
+        "startLine": 63,
+        "startChar": 62,
+        "endLine": 63,
+        "endChar": 74
+      },
+      "revId": "c6bff95d6a7a00d07c7a8d53c765daea294ffc35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "717336c1_f703f204",
+        "filename": "components/password_manager/core/browser/sql_table_builder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-06-30T08:25:31Z",
+      "side": 1,
+      "message": "About passing the arguments by value: we had a discussion with dvadym@ last year about the case of AddColumn [1]. I can see the sense in AddIndex taking the ownership of the value. I just think AddColumn and AddIndex need to be consistent. Last year I went with using const ref in AddColumn, because it made the code less surprising and performance does not really matter in this case. We had another year of C++11 in Chromium, though, and the codebase is full of \"std::move\"s. I feel like it might be time that passing by value is more expected than const ref when the intention is to store the value for later.\n\nSo my suggestion is to also switch AddColumn and AddColumntoUniqueKey to passing by value. An alternative (which I do not prefer) is to switch AddIndex to passing const ref.\n\n\n[1] https://codereview.chromium.org/2126713006/diff/200001/components/password_manager/core/browser/sql_table_builder.h#newcode59",
+      "range": {
+        "startLine": 77,
+        "startChar": 16,
+        "endLine": 77,
+        "endChar": 66
+      },
+      "revId": "c6bff95d6a7a00d07c7a8d53c765daea294ffc35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f2abe56_31d9aab4",
+        "filename": "components/password_manager/core/browser/sql_table_builder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-06-30T08:25:31Z",
+      "side": 1,
+      "message": "Also here, does it need to be \"signon_realm\", or is the presence of an index on it more important?",
+      "range": {
+        "startLine": 92,
+        "startChar": 6,
+        "endLine": 92,
+        "endChar": 18
+      },
+      "revId": "c6bff95d6a7a00d07c7a8d53c765daea294ffc35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44568da5_8b0a9955",
+        "filename": "components/password_manager/core/browser/sql_table_builder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-06-30T08:25:31Z",
+      "side": 1,
+      "message": "I tried to remember why I used list instead of vector for columns_. I don\u0027t remember that, and looking at the code, I don\u0027t see any issues with columns_ being a vector instead of list. (Do you see one?) So given you introduce indices_ as a vector, and columns_ is used in a similar way, I propose to switch columns_ to vector to avoid scratching our head next year.",
+      "range": {
+        "startLine": 180,
+        "startChar": 7,
+        "endLine": 180,
+        "endChar": 11
+      },
+      "revId": "c6bff95d6a7a00d07c7a8d53c765daea294ffc35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
