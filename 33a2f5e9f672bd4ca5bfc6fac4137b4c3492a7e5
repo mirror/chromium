@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "9832a5e5_6af36382",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-06-30T17:34:14Z",
+      "side": 1,
+      "message": "Style: please elide braces for one-line body/condition if stmt.",
+      "revId": "33a2f5e9f672bd4ca5bfc6fac4137b4c3492a7e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "46bb1fb4_079babc0",
         "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
         "patchSetId": 2
@@ -36,6 +53,30 @@
       "writtenOn": "2017-06-30T16:59:39Z",
       "side": 1,
       "message": "Eek! Let\u0027s avoid creating files at all costs.\n\nYou can create a normal pipe and pass that as the fd:\n\nhttps://cs.chromium.org/chromium/src/components/arc/arc_session.cc?type\u003dcs\u0026q\u003dpipe%5C(+file:src/components\u0026l\u003d74\n\nYou can create the pipe, send the fd, and then in this method write |output| to the fd.",
+      "range": {
+        "startLine": 50,
+        "startChar": 13,
+        "endLine": 50,
+        "endChar": 32
+      },
+      "revId": "33a2f5e9f672bd4ca5bfc6fac4137b4c3492a7e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ead4f03_ee9fa409",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-06-30T17:34:14Z",
+      "side": 1,
+      "message": "pipe has kernel buffer limit, so bigger one cannot be sent? Why not just send the data? (I may misunderstand some background, though).",
+      "parentUuid": "d096167e_082cdeec",
       "range": {
         "startLine": 50,
         "startChar": 13,
@@ -140,6 +181,23 @@
     },
     {
       "key": {
+        "uuid": "e228ce25_62f5372b",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-06-30T17:34:14Z",
+      "side": 1,
+      "message": "fd is leaking.",
+      "revId": "33a2f5e9f672bd4ca5bfc6fac4137b4c3492a7e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f521161_2af177dd",
         "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
         "patchSetId": 2
@@ -209,6 +267,40 @@
     },
     {
       "key": {
+        "uuid": "35a89f99_48eda579",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-06-30T17:34:14Z",
+      "side": 1,
+      "message": "Could you use WeakPtr instead for safety?",
+      "revId": "33a2f5e9f672bd4ca5bfc6fac4137b4c3492a7e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70f41e35_81008b54",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-06-30T17:34:14Z",
+      "side": 1,
+      "message": "When can this be deleted? Looks not closed until Chrome is shutdown?",
+      "revId": "33a2f5e9f672bd4ca5bfc6fac4137b4c3492a7e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3ad0cd0e_cb71d1c9",
         "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
         "patchSetId": 2
@@ -226,6 +318,23 @@
         "endLine": 394,
         "endChar": 60
       },
+      "revId": "33a2f5e9f672bd4ca5bfc6fac4137b4c3492a7e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5e0ea57_ee93e49b",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-06-30T17:34:14Z",
+      "side": 1,
+      "message": "Could you use forward decl?\ncf) https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#Forward-declarations-vs_includes",
       "revId": "33a2f5e9f672bd4ca5bfc6fac4137b4c3492a7e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -272,6 +381,23 @@
         "endLine": 23,
         "endChar": 24
       },
+      "revId": "33a2f5e9f672bd4ca5bfc6fac4137b4c3492a7e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fed1dc20_913221e1",
+        "filename": "components/arc/common/clipboard.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-06-30T17:34:14Z",
+      "side": 1,
+      "message": "As for document, could you write concrete description in sentences? Just \"content\" is not meaningful for readers because it just repeats the name :-).",
       "revId": "33a2f5e9f672bd4ca5bfc6fac4137b4c3492a7e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
