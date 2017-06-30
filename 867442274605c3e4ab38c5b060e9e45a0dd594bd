@@ -73,6 +73,24 @@
       "revId": "867442274605c3e4ab38c5b060e9e45a0dd594bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25cdaa18_5e1b6cd4",
+        "filename": "media/blink/cdm_result_promise_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-06-30T16:50:48Z",
+      "side": 1,
+      "message": "So, technically, that\u0027s true.  However, I do think that it\u0027s a bit helpful to hardcode, as a reminder for readers that the values 5-7 are reserved, and should not be reused.  It\u0027s ok if you\u0027d prefer not to explicitly hardcode this; just please make sure that it\u0027s really clear to anyone editing this enum in the future that the deprecated values must not be reused.",
+      "parentUuid": "662919ce_06812dd7",
+      "revId": "867442274605c3e4ab38c5b060e9e45a0dd594bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
