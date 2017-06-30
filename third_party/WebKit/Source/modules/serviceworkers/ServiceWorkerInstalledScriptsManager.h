@@ -6,25 +6,37 @@
 #define ServiceWorkerInstalledScriptsManager_h
 
 #include "core/workers/InstalledScriptsManager.h"
+#include "public/platform/modules/serviceworker/WebServiceWorkerInstalledScriptsManager.h"
 
 namespace blink {
+
+class ServiceWorkerThread;
 
 // ServiceWorkerInstalledScriptsManager provides the main script and imported
 // scripts already installed in the service worker script cache. The scripts are
 // streamed from the script cache in parallel with worker thread initialization.
 class ServiceWorkerInstalledScriptsManager : public InstalledScriptsManager {
  public:
-  ServiceWorkerInstalledScriptsManager();
+  explicit ServiceWorkerInstalledScriptsManager(
+      std::unique_ptr<WebServiceWorkerInstalledScriptsManager>);
 
+  void ServiceWorkerThreadCreated(ServiceWorkerThread* thread) {
+    thread_ = thread;
+  }
+
+  // Implements InstalledScriptsManager.
   // Used on the main or worker thread. Returns true if the script has been
   // installed.
   bool IsScriptInstalled(const KURL& script_url) const override;
-
   // Used on the worker thread. This is possible to return WTF::nullopt when the
   // script has already been served from this manager (i.e. the same script is
   // read more than once). This can be blocked if the script is not streamed
   // yet.
   Optional<ScriptData> GetScriptData(const KURL& script_url) override;
+
+ private:
+  std::unique_ptr<WebServiceWorkerInstalledScriptsManager> manager_;
+  ServiceWorkerThread* thread_;
 };
 
 }  // namespace blink
