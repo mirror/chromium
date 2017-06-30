@@ -36,6 +36,11 @@ def get_sharding_map_path():
       path_util.GetChromiumSrcDir(), 'tools', 'perf', 'core',
       'benchmark_sharding_map.json')
 
+def get_timing_file_path():
+  return os.path.join(
+      path_util.GetChromiumSrcDir(), 'tools', 'perf', 'core',
+      'desktop_benchmark_avg_times.json')
+
 
 def load_benchmark_sharding_map():
   with open(get_sharding_map_path()) as f:
@@ -61,14 +66,12 @@ def load_benchmark_sharding_map():
 # benchmark in the all_benchmarks list where avg_runtime is in seconds.  Also
 # returns a list of benchmarks whose run time have not been seen before
 def get_sorted_benchmark_list_by_time(all_benchmarks):
+  benchmarks_with_times = set()
   runtime_list = []
   benchmark_avgs = {}
   new_benchmarks = []
-  timing_file_path = os.path.join(
-      path_util.GetChromiumSrcDir(), 'tools', 'perf', 'core',
-      'desktop_benchmark_avg_times.json')
   # Load in the avg times as calculated on Nov 1st, 2016
-  with open(timing_file_path) as f:
+  with open(get_timing_file_path()) as f:
     benchmark_avgs = json.load(f)
 
   for benchmark in all_benchmarks:
@@ -80,20 +83,23 @@ def get_sorted_benchmark_list_by_time(all_benchmarks):
       # new benchmarks list.
       new_benchmarks.append(benchmark)
     else:
+      benchmarks_with_times.add(benchmark.Name())
       # Need to multiple the seconds by 2 since we will be generating two tests
       # for each benchmark to be run on the same shard for the reference build
       runtime_list.append((benchmark, benchmark_avg_time * 2.0))
 
   # Return a reverse sorted list by runtime
   runtime_list.sort(key=lambda tup: tup[1], reverse=True)
-  return runtime_list, new_benchmarks
+
+  unused_benchmarks = set(benchmark_avgs.keys()) - benchmarks_with_times
+  return runtime_list, new_benchmarks, unused_benchmarks
 
 
 # Returns a map of benchmark name to shard it is on.
 def shard_benchmarks(num_shards, all_benchmarks):
   benchmark_to_shard_dict = {}
   shard_execution_times = [0] * num_shards
-  sorted_benchmark_list, new_benchmarks = get_sorted_benchmark_list_by_time(
+  sorted_benchmark_list, new_benchmarks, _ = get_sorted_benchmark_list_by_time(
     all_benchmarks)
   # Iterate over in reverse order and add them to the current smallest bucket.
   for benchmark in sorted_benchmark_list:
@@ -106,7 +112,68 @@ def shard_benchmarks(num_shards, all_benchmarks):
   for benchmark in new_benchmarks:
      device_affinity = bot_utils.GetDeviceAffinity(num_shards, benchmark.Name())
      benchmark_to_shard_dict[benchmark.Name()] = device_affinity
+
   return benchmark_to_shard_dict
+
+def verify(benchmarks, dry_run):
+  _, new_benchmarks, unused_benchmarks = get_sorted_benchmark_list_by_time(
+      benchmarks)
+
+  if dry_run:
+    if unused_benchmarks:
+      print (
+        'Would delete these items:\n%s' % (
+            '\n'.join(sorted('* ' + str(s) for s in unused_benchmarks))))
+    if new_benchmarks:
+      if unused_benchmarks:
+        # Add a newline for readability
+        print
+      print (
+          'Please add times for these items:\n%s' % (
+              '\n'.join(sorted(
+                  '* ' + b.Name() for b in new_benchmarks))))
+
+    print 'run with --dry_run=False to remove old benchmarks'
+  else:
+    if unused_benchmarks:
+      print (
+          'Deleted %d unused benchmarks. Run with --dry-run to see a full'
+          ' list.' % (
+              len(unused_benchmarks)))
+
+      with open(get_timing_file_path()) as f:
+        benchmark_avgs = json.load(f)
+
+      for name in unused_benchmarks:
+        del benchmark_avgs[name]
+
+      with open(get_timing_file_path(), 'w') as f:
+        dump_json(benchmark_avgs, f)
+
+      with open(get_sharding_map_path()) as f:
+        sharding_map = json.load(f)
+
+      for name in unused_benchmarks:
+        for builder_name, bot_to_tests in sharding_map.items():
+          if builder_name == 'all_benchmarks':
+            continue
+
+          for benchmark_map in bot_to_tests.values():
+            if name in benchmark_map['benchmarks']:
+              benchmark_map['benchmarks'].remove(name)
+
+      with open(get_sharding_map_path(), 'w') as f:
+        dump_json(sharding_map, f)
+
+    if new_benchmarks:
+      print 'Missing average times for these benchmarks:\n* %s' % (
+          '\n* '.join(b.Name() for b in new_benchmarks))
+      print (
+          'Currently, this will not block presubmit. In the future, these'
+          ' times will be required whenever a new benchmark is added.')
+
+  return 0
+
 
 def regenerate(
     benchmarks, waterfall_configs, dry_run, verbose, builder_names=None):
@@ -172,6 +239,11 @@ def get_args():
                    'benchmarks in tools/perf/benchmarks.'))
 
   parser.add_argument(
+      '--verify', '-v', action='store_true',
+      help='Verifies data is accurate. Checks data files against currently'
+      ' known existing benchmarks. Fails if there is any discrepancy. Does not'
+      ' modify anything by default; pass --dry_run=False to modify data.')
+  parser.add_argument(
       '--builder-names', '-b', action='append', default=None,
       help='Specifies a subset of builders which should be affected by commands'
            '. By default, commands affect all builders.')
@@ -195,5 +267,8 @@ def dumps_json(data):
   return json.dumps(data, indent=2, sort_keys=True, separators=(',', ': '))
 
 def main(args, benchmarks, configs):
+  if args.verify:
+    return verify(benchmarks, args.dry_run)
+
   return regenerate(
       benchmarks, configs, args.dry_run, args.verbose, args.builder_names)
