@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "802bbec0_226f0081",
+        "filename": "chrome/browser/ui/views/harmony/chrome_typography.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-06-30T17:38:55Z",
+      "side": 1,
+      "message": "nit: kTextStyle with a capital \u0027T\u0027 (or just inline the value below).",
+      "range": {
+        "startLine": 44,
+        "startChar": 27,
+        "endLine": 44,
+        "endChar": 37
+      },
+      "revId": "13e000e8c72baccc40f571886b7e7b06de3fe157",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caa8185d_9932bd38",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-06-30T17:38:55Z",
+      "side": 1,
+      "message": "nit: no curly braces needed for a one line conditional body. ditto elsewhere below.",
+      "range": {
+        "startLine": 274,
+        "startChar": 37,
+        "endLine": 274,
+        "endChar": 58
+      },
+      "revId": "13e000e8c72baccc40f571886b7e7b06de3fe157",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e448fe9f_7b3e0dee",
+        "filename": "ui/gfx/font_list_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-06-30T17:38:55Z",
+      "side": 1,
+      "message": "nit: add curlies for the then/else bodies with a multi-line conditional statement.",
+      "revId": "13e000e8c72baccc40f571886b7e7b06de3fe157",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32954bba_17bb9d45",
+        "filename": "ui/views/controls/styled_label.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-06-30T17:38:55Z",
+      "side": 1,
+      "message": "Update this comment.",
+      "range": {
+        "startLine": 44,
+        "startChar": 36,
+        "endLine": 44,
+        "endChar": 45
+      },
+      "revId": "13e000e8c72baccc40f571886b7e7b06de3fe157",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
