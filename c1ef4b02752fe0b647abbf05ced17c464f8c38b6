@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "23d89e0c_a219fadb",
+        "filename": "storage/public/interfaces/quota.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115988
+      },
+      "writtenOn": "2017-06-30T14:52:24Z",
+      "side": 1,
+      "message": "OK but at least some param_traits files (like permissions) use them to do bounds checking of enum values.",
+      "parentUuid": "9e65e081_463f7e1b",
+      "range": {
+        "startLine": 15,
+        "startChar": 2,
+        "endLine": 15,
+        "endChar": 18
+      },
+      "revId": "c1ef4b02752fe0b647abbf05ced17c464f8c38b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "648e89f3_100e3a9d",
         "filename": "storage/public/interfaces/quota.mojom",
         "patchSetId": 5
