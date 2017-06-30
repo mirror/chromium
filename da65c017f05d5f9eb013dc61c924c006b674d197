@@ -1,0 +1,259 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "996a88aa_5cec7560",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 25
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-06-30T11:21:16Z",
+      "side": 1,
+      "message": "Missing . (for consistency with other lines)",
+      "revId": "da65c017f05d5f9eb013dc61c924c006b674d197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bd5894a_075beeb0",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_service_factory.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-06-30T11:21:16Z",
+      "side": 1,
+      "message": "... this is what makes me think kOfflinePagePrefetchStoreDirname should actually be a file name with the \".db\" extension.",
+      "revId": "da65c017f05d5f9eb013dc61c924c006b674d197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b97f88e_73312061",
+        "filename": "chrome/common/chrome_constants.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-06-30T11:21:16Z",
+      "side": 1,
+      "message": "I might have misunderstood, but it seems like this is used as the file_path given to sql::Connection(). SQLite databases are single files, and we typically use the \".db\" extension.",
+      "revId": "da65c017f05d5f9eb013dc61c924c006b674d197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3df6ed8c_03f84a10",
+        "filename": "components/offline_pages/core/prefetch/add_unique_urls_task.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-06-30T11:21:16Z",
+      "side": 1,
+      "message": "You can get away without generating an ID. SQLite aliases your integer primary key to the record\u0027s ROWID, which is guaranteed to be unique. I imagine it\u0027s better to let SQLite set the ROWID, rather than set it based on an RNG. Details at the link below (you do _not_ need to use autoincrement) -- https://sqlite.org/autoinc.html",
+      "revId": "da65c017f05d5f9eb013dc61c924c006b674d197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c76e899d_396ed4df",
+        "filename": "components/offline_pages/core/prefetch/add_unique_urls_task.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-06-30T11:21:16Z",
+      "side": 1,
+      "message": "\"CheckDb\" is overly generic, and makes this bit of code difficult to read. Inlining the method might be better.\n\nAlternatively (or in addition) -- it seems like AddUrlsAndCleanupZombiesSync is called via Execute(), so it might make more sense to have Execute guarantee that it will pass in a valid connection.",
+      "revId": "da65c017f05d5f9eb013dc61c924c006b674d197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "285ff6aa_e9a1daf2",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-06-30T11:21:16Z",
+      "side": 1,
+      "message": "It\u0027s difficult to review this schema, as most of the columns don\u0027t appear to be used in code. It seems like the table contains the PrefetchItem members in components/offline_pages/core/prefetch/prefetch_item.h, and the type mapping seems reasonable based on that. Still, code that uses the fields and/or a design doc would be helpful.",
+      "revId": "da65c017f05d5f9eb013dc61c924c006b674d197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9ed23b6_a1fbfaf8",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-06-30T11:21:16Z",
+      "side": 1,
+      "message": "The existence check here seems unnecessary. \"IF NOT EXISTS\" in the SQL statement will take care of that for you. Renaming CreatePrefetchItemsTable to InitPrefetchItemsTable might make this a tad clearer.",
+      "revId": "da65c017f05d5f9eb013dc61c924c006b674d197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89eef214_7deafb72",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-06-30T11:21:16Z",
+      "side": 1,
+      "message": "Consider adding a meta table and calling sql::MetaTable::Init(db, 1, 1) here. The meta table will come in handy if you need to change the schema. (and that will most likely happen, at some point down the line)",
+      "revId": "da65c017f05d5f9eb013dc61c924c006b674d197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99c23105_104e331f",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-06-30T11:21:16Z",
+      "side": 1,
+      "message": "I think you\u0027ll need to add an error callback to recover from database corruption. This just happens, and the right thing to do is generally to let SQLite attempt recovery, and then give up, raze the database, and start over. An example is DatabaseErrorCallback in https://cs.chromium.org/chromium/src/components/history/core/browser/thumbnail_database.cc",
+      "revId": "da65c017f05d5f9eb013dc61c924c006b674d197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa701bba_295358c7",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-06-30T11:21:16Z",
+      "side": 1,
+      "message": "Nit: the SQL suffix seems unnecessary.",
+      "revId": "da65c017f05d5f9eb013dc61c924c006b674d197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "354a37ff_7ed5a7b3",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-06-30T11:21:16Z",
+      "side": 1,
+      "message": "This seems rather convoluted. I think it\u0027d be easier to have Execute create a OnceCallback for an internal function that checks initialization_status_ and calls Initialize(), then calls the user\u0027s run_callback if initialization succeeds. This removes pending_command_ and DbCheck().\n\nI think this would mesh well with having a sqlite error callback that attempts to do recovery / raze the db, poisons the connection and sets the initialization status to failure.",
+      "revId": "da65c017f05d5f9eb013dc61c924c006b674d197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ae725c7_cdb76b4a",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-06-30T11:21:16Z",
+      "side": 1,
+      "message": "This function seems to duplicate CountPrefetchItems in prefetch_store_sql_utils.cc. Would it make sense to call that insted instead?",
+      "revId": "da65c017f05d5f9eb013dc61c924c006b674d197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fb6c6b3_cd1b2bb4",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-06-30T11:21:16Z",
+      "side": 1,
+      "message": "If this test file expands (seems like it will?), it might help to have a constant for this, like kCountFailed.",
+      "revId": "da65c017f05d5f9eb013dc61c924c006b674d197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7584dcd_732fd3b8",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql_utils.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-06-30T11:21:16Z",
+      "side": 1,
+      "message": "Please make this a cached statement. IIUC, CountPrefetchItems() is currently only used in tests, so the choice doesn\u0027t matter at the moment. However, making it a cached statement means that calls to CountPrefetchItems() can be added in the future without having to remember the performance caveat.",
+      "revId": "da65c017f05d5f9eb013dc61c924c006b674d197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3b742f3_dd2f671f",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql_utils.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-06-30T11:21:16Z",
+      "side": 1,
+      "message": "Please extract this to a constant defined \u0026 documented in the header.",
+      "revId": "da65c017f05d5f9eb013dc61c924c006b674d197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
