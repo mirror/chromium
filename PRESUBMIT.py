@@ -2062,6 +2062,37 @@ def _AndroidSpecificOnUploadChecks(input_api, output_api):
   results.extend(_CheckAndroidTestAnnotationUsage(input_api, output_api))
   return results
 
+def _CheckNetworkTrafficAnnotaions(input_api, output_api):
+  """Runs checkdeps on network traffic annotations, checks annotation text's
+  syntax and usage of non-annotated network functions.
+  """
+  import sys
+  # We need to wait until we have an input_api object and use this
+  # roundabout construct to import checkdeps because this file is
+  # eval-ed and thus doesn't have __file__.
+  original_sys_path = sys.path
+  try:
+    sys.path = sys.path + [input_api.os_path.join(
+        input_api.PresubmitLocalPath(), 'tools', 'traffic_annotation')]
+    from presubmit_checks import NetworkTrafficAnnotationChecker
+
+  finally:
+    # Restore sys.path to what it was before.
+    sys.path = original_sys_path
+
+  checker = NetworkTrafficAnnotationChecker()
+  warnings, errors = checker.CheckFiles(
+      [f.LocalPath() for f in input_api.AffectedFiles()])
+  results = []
+  if errors:
+    results.append(output_api.PresubmitError(
+        'You have one or more network traffic annotation errors.',
+        errors))
+  if warnings:
+    results.append(output_api.PresubmitPromptOrNotify(
+        'You have one or more network traffic annotation warnings.',
+        warnings))
+  return results
 
 def _CommonChecks(input_api, output_api):
   """Checks common to both upload and commit."""
@@ -2114,6 +2145,7 @@ def _CommonChecks(input_api, output_api):
   results.extend(_CheckUselessForwardDeclarations(input_api, output_api))
   results.extend(_CheckForRiskyJsFeatures(input_api, output_api))
   results.extend(_CheckForRelativeIncludes(input_api, output_api))
+  results.extend(_CheckNetworkTrafficAnnotaions(input_api, output_api))
 
   if any('PRESUBMIT.py' == f.LocalPath() for f in input_api.AffectedFiles()):
     results.extend(input_api.canned_checks.RunUnitTestsInDirectory(
