@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c50b745_f51beb35",
+        "filename": "chrome/browser/metrics/ukm_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-06-30T18:37:17Z",
+      "side": 1,
+      "message": "Should probably EXPECT_TRUE the return value here. Although it should have LOG(ERROR) if you failed, which I don\u0027t see in the logs.",
+      "revId": "505262f62e3c16b2da027725385dc79e1afdaa24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
