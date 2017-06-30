@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "22e43121_e49f5a16",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-30T07:29:33Z",
+      "side": 1,
+      "message": "Hmm, your suggestion is to change the three states to two, and I\u0027m fine with that. I replaced PreloadState (preload_state_) with bool (is_unused_preload_).",
+      "parentUuid": "6cc72932_fb990a87",
+      "range": {
+        "startLine": 158,
+        "startChar": 4,
+        "endLine": 158,
+        "endChar": 22
+      },
+      "revId": "82f66f76e9e0f427e3b12c47df2b134e0c2a0550",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f1a7b61a_719d0a67",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcherTest.cpp",
         "patchSetId": 16
