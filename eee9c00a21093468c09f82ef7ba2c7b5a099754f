@@ -34,6 +34,24 @@
       "revId": "eee9c00a21093468c09f82ef7ba2c7b5a099754f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe1444ed_54bcaae9",
+        "filename": "chrome/browser/ui/webui/help/version_updater_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-30T16:30:00Z",
+      "side": 1,
+      "message": "By default, this call will create a task runner bound to a shared thread. You may not get the same thread each time, but each call to this API with SingleThreadTaskRunnerThreadMode::SHARED (default) will not create a new thread.",
+      "parentUuid": "91d39ab3_74a9dc99",
+      "revId": "eee9c00a21093468c09f82ef7ba2c7b5a099754f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
