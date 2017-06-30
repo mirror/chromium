@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff1ffe57_1c823355",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/ScopedPaintChunkProperties.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-06-30T20:27:32Z",
+      "side": 1,
+      "message": "General question: forcing a new chunk here looks like it\u0027s only used for subsequences. Do we always need a new chunk for subsequence caching? If so, would it be simpler to force new chunks before\u0026after in PaintController::AddCachedSubsequence?",
+      "revId": "5898e687e968225433aae570d08c902a66a63880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
