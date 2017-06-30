@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "85c2c3e6_2a3d7001",
+        "filename": "third_party/WebKit/LayoutTests/editing/execCommand/outdent-break-with-style-expected.txt",
+        "patchSetId": 17
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-06-30T12:22:37Z",
+      "side": 1,
+      "message": "What happens is that Indent starts with a selection which only includes the inserted image. After it clones the image into a blockquote, it deletes the selection which starts by expanding it with MostForwardCaretPosition() which includes whitespaces with LayoutText objects. Without this CL, we created unnecessary subsequent whitespace LayoutTexts which means it would expand the selection to the last whitespace LayoutText which means it included a script tag in between.\n\nThere is no reason why we should create the extra whitespace LayoutTexts, even for editing. For all I know, this may actually be a fix, all the time it actually is now closer to what Gecko does.",
+      "parentUuid": "29ec4208_4fcea274",
+      "range": {
+        "startLine": 9,
+        "startChar": 3,
+        "endLine": 9,
+        "endChar": 0
+      },
+      "revId": "c0790b9fdcb4b39014e3f0782a6b6c88085c4294",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "203815b3_e23b9819",
         "filename": "third_party/WebKit/LayoutTests/fast/dom/Element/scroll-width-hidden-expected.txt",
         "patchSetId": 17
