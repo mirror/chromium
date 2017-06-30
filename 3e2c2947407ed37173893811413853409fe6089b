@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e00e518c_51aef02c",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-06-30T13:30:53Z",
+      "side": 1,
+      "message": "looks like lazyinstance is only used in the cc so you can omit this include\n\nlooks like there may be some other includes here that are now only needed in the cc. can we move them to cc?",
+      "revId": "3e2c2947407ed37173893811413853409fe6089b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb92a95f_25206245",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-06-30T13:30:53Z",
+      "side": 1,
+      "message": "The logic here has become increasingly complex. STATIC_HISTOGRAM_POINTER_GROUP is itself complex, so I think this code will benefit from simplifying the readability of the call site as much as possible. Let\u0027s see if we can move kNonlocalhostHistogramNames into a simple static helper class with utility methods that make it easy to interact with, e.g.\n\nclass NonLocalhostHistograms {\n public:\n  static const int kNumHistograms;\n\n  static int GetIndex(internal::DomainType domain_type, internal::ResourceType resource_type, bool status);\n  static const string\u0026 GetName(internal::DomainType domain_type, internal::ResourceType resource_type, bool status);\n\n private:\n  // LazyInstance member here\n};\n\nThis simplifies your callsite to make it more understandable:\n\nconst string\u0026 histogram_name \u003d\n    NonLocalhostHistograms::GetName(domain_type, resource_type, status);\nSTATIC_HISTOGRAM_POINTER_GROUP(\n    histogram_name,\n    NonLocalhostHistograms::GetIndex(domain_type, resource_type, status),\n    NonLocalhostHistograms::kNumHistograms,\n    Add(counts[histogram_name]),\n    // Use the same bucketing as UMA_HISTOGRAM_COUNTS_1000 macro\n    base::Histogram::FactoryGet(\n        histogram_name,\n        1,     // min value\n        1000,  // max value\n        50,    // bucket count\n        base::HistogramBase::kUmaTargetedHistogramFlag));",
+      "revId": "3e2c2947407ed37173893811413853409fe6089b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e920978_ca853dcd",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-06-30T13:30:53Z",
+      "side": 1,
+      "message": "let\u0027s do the same here as for the nonlocalhost refactor suggested above",
+      "revId": "3e2c2947407ed37173893811413853409fe6089b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2b75d9f_c7e36521",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-06-30T13:30:53Z",
+      "side": 1,
+      "message": "what did we decide to do re: sharing this with the similar code in net/? does it make sense to share? perhaps add a comment pointing to the similar data structure that already exists in net/ with a note to consider consolidating them in the future?",
+      "revId": "3e2c2947407ed37173893811413853409fe6089b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1898545d_a966b2ef",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-06-30T13:30:53Z",
+      "side": 1,
+      "message": "similar issue here - style guide prohibits non-POD static types: https://google.github.io/styleguide/cppguide.html#Static_and_Global_Variables\n\nthis will also need to use LazyInstance.",
+      "revId": "3e2c2947407ed37173893811413853409fe6089b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
