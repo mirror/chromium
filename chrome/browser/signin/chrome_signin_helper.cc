@@ -20,7 +20,6 @@
 #include "components/signin/core/browser/chrome_connected_header_helper.h"
 #include "components/signin/core/browser/signin_header_helper.h"
 #include "components/signin/core/common/profile_management_switches.h"
-#include "components/signin/core/common/signin_features.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/web_contents.h"
 #include "google_apis/gaia/gaia_auth_util.h"
@@ -37,12 +36,15 @@
 
 namespace signin {
 
+#if BUILDFLAG(ENABLE_DICE_SUPPORT)
+const char kDiceResponseHeader[] = "X-Chrome-ID-Consistency-Response";
+#endif
+
 namespace {
 
 const char kChromeManageAccountsHeader[] = "X-Chrome-Manage-Accounts";
 
 #if BUILDFLAG(ENABLE_DICE_SUPPORT)
-const char kDiceResponseHeader[] = "X-Chrome-ID-Consistency-Response";
 const char kGoogleSignoutResponseHeader[] = "Google-Accounts-SignOut";
 #endif
 
@@ -135,11 +137,8 @@ void ProcessDiceHeaderUIThread(
 // Looks for the X-Chrome-Manage-Accounts response header, and if found,
 // tries to show the avatar bubble in the browser identified by the
 // child/route id. Must be called on IO thread.
-void ProcessMirrorResponseHeaderIfExists(
-    net::URLRequest* request,
-    ProfileIOData* io_data,
-    const content::ResourceRequestInfo::WebContentsGetter&
-        web_contents_getter) {
+void ProcessMirrorResponseHeaderIfExists(net::URLRequest* request,
+                                         bool is_off_the_record) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
 
   const content::ResourceRequestInfo* info =
@@ -160,7 +159,7 @@ void ProcessMirrorResponseHeaderIfExists(
     return;
   }
 
-  if (io_data->IsOffTheRecord()) {
+  if (is_off_the_record) {
     NOTREACHED() << "Gaia should not send the X-Chrome-Manage-Accounts header "
                  << "in incognito.";
     return;
@@ -181,18 +180,16 @@ void ProcessMirrorResponseHeaderIfExists(
 
   content::BrowserThread::PostTask(
       content::BrowserThread::UI, FROM_HERE,
-      base::BindOnce(ProcessMirrorHeaderUIThread, params, web_contents_getter));
+      base::BindOnce(ProcessMirrorHeaderUIThread, params,
+                     info->GetWebContentsGetterForRequest()));
 }
 
 #if BUILDFLAG(ENABLE_DICE_SUPPORT)
-void ProcessDiceResponseHeaderIfExists(
-    net::URLRequest* request,
-    ProfileIOData* io_data,
-    const content::ResourceRequestInfo::WebContentsGetter&
-        web_contents_getter) {
+void ProcessDiceResponseHeaderIfExists(net::URLRequest* request,
+                                       bool is_off_the_record) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
 
-  if (io_data->IsOffTheRecord())
+  if (is_off_the_record)
     return;
 
   const content::ResourceRequestInfo* info =
@@ -217,6 +214,7 @@ void ProcessDiceResponseHeaderIfExists(
   if (response_headers->GetNormalizedHeader(kDiceResponseHeader,
                                             &header_value)) {
     params = BuildDiceSigninResponseParams(header_value);
+    response_headers->RemoveHeader(kDiceResponseHeader);
   } else if (response_headers->GetNormalizedHeader(kGoogleSignoutResponseHeader,
                                                    &header_value)) {
     params = BuildDiceSignoutResponseParams(header_value);
@@ -229,7 +227,8 @@ void ProcessDiceResponseHeaderIfExists(
 
   content::BrowserThread::PostTask(
       content::BrowserThread::UI, FROM_HERE,
-      base::Bind(ProcessDiceHeaderUIThread, params, web_contents_getter));
+      base::Bind(ProcessDiceHeaderUIThread, params,
+                 info->GetWebContentsGetterForRequest()));
 }
 #endif  // BUILDFLAG(ENABLE_DICE_SUPPORT)
 
@@ -273,25 +272,22 @@ void FixAccountConsistencyRequestHeader(net::URLRequest* request,
       io_data->GetCookieSettings(), profile_mode_mask);
 }
 
-void ProcessAccountConsistencyResponseHeaders(
-    net::URLRequest* request,
-    const GURL& redirect_url,
-    ProfileIOData* io_data,
-    const content::ResourceRequestInfo::WebContentsGetter&
-        web_contents_getter) {
+void ProcessAccountConsistencyResponseHeaders(net::URLRequest* request,
+                                              const GURL& redirect_url,
+                                              bool is_off_the_record) {
   if (redirect_url.is_empty()) {
     // This is not a redirect.
 
     // See if the response contains the X-Chrome-Manage-Accounts header. If so
     // show the profile avatar bubble so that user can complete signin/out
     // action the native UI.
-    ProcessMirrorResponseHeaderIfExists(request, io_data, web_contents_getter);
+    ProcessMirrorResponseHeaderIfExists(request, is_off_the_record);
   }
 
 #if BUILDFLAG(ENABLE_DICE_SUPPORT)
   // Process the Dice header: on sign-in, exchange the authorization code for a
   // refresh token, on sign-out just follow the sign-out URL.
-  ProcessDiceResponseHeaderIfExists(request, io_data, web_contents_getter);
+  ProcessDiceResponseHeaderIfExists(request, is_off_the_record);
 #endif  // BUILDFLAG(ENABLE_DICE_SUPPORT)
 }
 
