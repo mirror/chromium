@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74138517_ebecafa7",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker_factory.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-30T00:24:14Z",
+      "side": 1,
+      "message": "Do we want to add a dependency here? I think we want to (by calling DependsOn(...)).\n\nThat means that we probably want to also add these two new services to:\nchrome/browser/profiles/chrome_browser_main_extra_parts_profiles.cc",
+      "revId": "fa380599c2c4f17f770f849f792b9a27e831e979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
