@@ -27,7 +27,7 @@
 #include "components/prefs/json_pref_store.h"
 #include "components/prefs/pref_filter.h"
 #include "ios/net/cookies/cookie_store_ios.h"
-#include "ios/net/global_state/ios_global_state.h"
+#include "ios/web/public/global_state/ios_global_state.h"
 #include "ios/web/public/user_agent.h"
 #include "net/base/network_change_notifier.h"
 #include "net/cert/cert_verifier.h"
@@ -53,11 +53,6 @@
 #include "url/url_util.h"
 
 namespace {
-
-base::AtExitManager* g_at_exit_ = nullptr;
-net::NetworkChangeNotifier* g_network_change_notifier = nullptr;
-// MessageLoop on the main thread.
-base::MessageLoop* g_main_message_loop = nullptr;
 
 // Request context getter for Cronet.
 class CronetURLRequestContextGetter : public net::URLRequestContextGetter {
@@ -115,28 +110,18 @@ net::URLRequestContextGetter* CronetEnvironment::GetURLRequestContextGetter()
 void CronetEnvironment::Initialize() {
   // This method must be called once from the main thread.
   DCHECK_EQ([NSThread currentThread], [NSThread mainThread]);
-  if (!g_at_exit_)
-    g_at_exit_ = new base::AtExitManager;
 
-  ios_global_state::Create();
+  ios_global_state::Create(true, 0, nullptr);
   ios_global_state::StartTaskScheduler();
 
   url::Initialize();
-  base::CommandLine::Init(0, nullptr);
 
   // Without doing this, StatisticsRecorder::FactoryGet() leaks one histogram
   // per call after the first for a given name.
   base::StatisticsRecorder::Initialize();
 
-  // Create a message loop on the UI thread.
-  DCHECK(!base::MessageLoop::current());
-  DCHECK(!g_main_message_loop);
-  g_main_message_loop = new base::MessageLoopForUI();
-  base::MessageLoopForUI::current()->Attach();
-  // The network change notifier must be initialized so that registered
-  // delegates will receive callbacks.
-  DCHECK(!g_network_change_notifier);
-  g_network_change_notifier = net::NetworkChangeNotifier::Create();
+  ios_global_state::BuildMessageLoop();
+  ios_global_state::CreateNetworkChangeNotifier();
 }
 
 bool CronetEnvironment::StartNetLog(base::FilePath::StringType file_name,
@@ -268,7 +253,6 @@ CronetEnvironment::~CronetEnvironment() {
 
 void CronetEnvironment::InitializeOnNetworkThread() {
   DCHECK(network_io_thread_->task_runner()->BelongsToCurrentThread());
-  base::FeatureList::InitializeInstance(std::string(), std::string());
 
   static bool ssl_key_log_file_set = false;
   if (!ssl_key_log_file_set && !ssl_key_log_file_name_.empty()) {
