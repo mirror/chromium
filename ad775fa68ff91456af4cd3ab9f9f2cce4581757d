@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec5884dc_b7f80523",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-06-30T01:23:54Z",
+      "side": 1,
+      "message": "iso-8859-1 and windows-1252 aren\u0027t the same. The change is fine, but this claim is not.",
+      "range": {
+        "startLine": 22,
+        "startChar": 28,
+        "endLine": 22,
+        "endChar": 71
+      },
+      "revId": "ad775fa68ff91456af4cd3ab9f9f2cce4581757d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
