@@ -22,6 +22,30 @@
       "revId": "0f49a6085f457b68295251409dc0a626212d8c28",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "704742e5_39bdc24b",
+        "filename": "components/password_manager/core/browser/sql_table_builder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-06-30T08:58:48Z",
+      "side": 1,
+      "message": "Yeah, this puzzled me as well. git cl format seemed to have strong opinions here ;) I will file a bug regarding this.",
+      "parentUuid": "2e3f461d_b69e8c8e",
+      "range": {
+        "startLine": 79,
+        "startChar": 25,
+        "endLine": 79,
+        "endChar": 26
+      },
+      "revId": "0f49a6085f457b68295251409dc0a626212d8c28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
