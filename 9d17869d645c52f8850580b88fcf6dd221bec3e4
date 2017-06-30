@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e64699db_da6ae0c0",
+        "filename": "device/generic_sensor/platform_sensor_provider_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-06-30T21:12:48Z",
+      "side": 0,
+      "message": "I think the check above is sufficient. I discussed this with robliao@ and he pointed out that ::CoCreateInstance might be hooked and the hook might not be adhering to the contract that sensor_manager_ is non-null when S_OK is returned.",
+      "revId": "9d17869d645c52f8850580b88fcf6dd221bec3e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
