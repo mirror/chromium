@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ccc3bff_b95d9eca",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-30T21:45:37Z",
+      "side": 1,
+      "message": "nit:\n\nBug: 722467",
+      "range": {
+        "startLine": 9,
+        "startChar": 4,
+        "endLine": 9,
+        "endChar": 8
+      },
+      "revId": "b7c1e51f7312580e9a46accdf8bf80f972677b69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50edfd93_e99d8ab1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-30T21:45:37Z",
+      "side": 1,
+      "message": "nit:\n\nTbr: thestig@chromium.org",
+      "revId": "b7c1e51f7312580e9a46accdf8bf80f972677b69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
