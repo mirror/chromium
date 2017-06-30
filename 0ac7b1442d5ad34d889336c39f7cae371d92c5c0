@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ca18dbe6_6dfb481c",
+        "filename": "content/browser/service_worker/embedded_worker_instance.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-06-30T10:00:11Z",
+      "side": 1,
+      "message": "|is_script_streaming| is \"false\" in the following line. Updated the TODO comment.",
+      "parentUuid": "6b0f43cf_619fa9ac",
+      "revId": "0ac7b1442d5ad34d889336c39f7cae371d92c5c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "068cd64b_4de9b85e",
         "filename": "content/browser/service_worker/embedded_worker_instance.cc",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "0ac7b1442d5ad34d889336c39f7cae371d92c5c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c21b870d_1a2edd3b",
+        "filename": "content/browser/service_worker/embedded_worker_instance.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-06-30T10:00:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "068cd64b_4de9b85e",
+      "revId": "0ac7b1442d5ad34d889336c39f7cae371d92c5c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f3e6f777_f636b3ae",
+        "filename": "content/browser/service_worker/embedded_worker_instance.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-06-30T10:00:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "baa21bc7_2040e3e2",
+      "revId": "0ac7b1442d5ad34d889336c39f7cae371d92c5c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67f1205c_ba937f72",
         "filename": "content/browser/service_worker/embedded_worker_instance.cc",
         "patchSetId": 11
@@ -67,6 +121,24 @@
       "revId": "0ac7b1442d5ad34d889336c39f7cae371d92c5c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49fb2fae_bf913c4d",
+        "filename": "content/browser/service_worker/embedded_worker_instance.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-06-30T10:00:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67f1205c_ba937f72",
+      "revId": "0ac7b1442d5ad34d889336c39f7cae371d92c5c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "b30b64f3_4c86d4cc",
+        "filename": "third_party/WebKit/Source/core/workers/InstalledScriptsManager.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-06-30T10:00:11Z",
+      "side": 1,
+      "message": "Thanks, updated.",
+      "parentUuid": "8941632b_6e7912e3",
+      "revId": "0ac7b1442d5ad34d889336c39f7cae371d92c5c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fcd8ad93_9e53d21b",
         "filename": "third_party/WebKit/Source/core/workers/WorkerThread.h",
         "patchSetId": 11
@@ -101,6 +191,24 @@
       "revId": "0ac7b1442d5ad34d889336c39f7cae371d92c5c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46507ff2_11376ffc",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-06-30T10:00:11Z",
+      "side": 1,
+      "message": "Ah, actually I\u0027d like to express like \"which will be run on the worker thread\".\nRemoved.",
+      "parentUuid": "fcd8ad93_9e53d21b",
+      "revId": "0ac7b1442d5ad34d889336c39f7cae371d92c5c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "153f8fb0_74f622f3",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-06-30T10:00:11Z",
+      "side": 1,
+      "message": "It seems more direct explanation. Updated, thanks!",
+      "parentUuid": "50ff5109_bdf3e507",
+      "revId": "0ac7b1442d5ad34d889336c39f7cae371d92c5c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ead4469_c699cffd",
         "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.h",
         "patchSetId": 11
@@ -135,6 +261,24 @@
       "revId": "0ac7b1442d5ad34d889336c39f7cae371d92c5c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1438cb3_b5d1f457",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-06-30T10:00:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ead4469_c699cffd",
+      "revId": "0ac7b1442d5ad34d889336c39f7cae371d92c5c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "97434fa3_581bc614",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-06-30T10:00:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "501b478a_1b5e16a5",
+      "revId": "0ac7b1442d5ad34d889336c39f7cae371d92c5c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7f4967f_9500671f",
         "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.h",
         "patchSetId": 11
@@ -169,6 +331,24 @@
       "revId": "0ac7b1442d5ad34d889336c39f7cae371d92c5c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9179ec02_702a71a6",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-06-30T10:00:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7f4967f_9500671f",
+      "revId": "0ac7b1442d5ad34d889336c39f7cae371d92c5c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
