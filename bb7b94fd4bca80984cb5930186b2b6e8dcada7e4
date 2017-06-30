@@ -598,6 +598,24 @@
     },
     {
       "key": {
+        "uuid": "00a0973c_0eae7ca9",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-30T01:09:15Z",
+      "side": 1,
+      "message": "In general I agree with the subclassing notion. The comment is now DropdownBarHost.\n\nMy concern here is that DropdownBarHost doesn\u0027t even attempt to override these. It just continues to make these abstract and passes the buck to the subclasses. It doesn\u0027t appear to call these methods either. This suggests that DropdownBarHost should bring this parent class in and instead this should be brought in by the real implementors at the subclass level.\n\nui::AcceleratorTarget is pure virtual and it seems someone might be using this as a casting convenience.",
+      "parentUuid": "c51c8883_3612a4a2",
+      "revId": "bb7b94fd4bca80984cb5930186b2b6e8dcada7e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d683b478_a9a2311a",
         "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.h",
         "patchSetId": 3

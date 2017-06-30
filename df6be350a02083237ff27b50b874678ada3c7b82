@@ -318,6 +318,24 @@
     },
     {
       "key": {
+        "uuid": "34fc0691_dadf0e8a",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-30T01:09:15Z",
+      "side": 1,
+      "message": "I\u0027ve indented the descriptions to make this more clear.",
+      "parentUuid": "33b4e9e9_a51b5bef",
+      "revId": "df6be350a02083237ff27b50b874678ada3c7b82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f73d6069_dce6293d",
         "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
         "patchSetId": 9
