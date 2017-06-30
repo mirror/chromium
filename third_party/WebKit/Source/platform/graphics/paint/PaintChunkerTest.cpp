@@ -83,20 +83,6 @@ TEST_F(PaintChunkerTest, SamePropertiesTwiceCombineIntoOneChunk) {
               ElementsAre(PaintChunk(0, 3, id, DefaultPaintChunkProperties())));
 }
 
-TEST_F(PaintChunkerTest, CanRewindDisplayItemIndex) {
-  PaintChunker chunker;
-  PaintChunk::Id id(client_, DisplayItemType(1));
-  chunker.UpdateCurrentPaintChunkProperties(&id, DefaultPaintChunkProperties());
-  chunker.IncrementDisplayItemIndex(TestDisplayItem(client_));
-  chunker.IncrementDisplayItemIndex(TestDisplayItem(client_));
-  chunker.DecrementDisplayItemIndex();
-  chunker.IncrementDisplayItemIndex(TestDisplayItem(client_));
-  Vector<PaintChunk> chunks = chunker.ReleasePaintChunks();
-
-  EXPECT_THAT(chunks,
-              ElementsAre(PaintChunk(0, 2, id, DefaultPaintChunkProperties())));
-}
-
 TEST_F(PaintChunkerTest, BuildMultipleChunksWithSinglePropertyChanging) {
   PaintChunker chunker;
   PaintChunk::Id id1(client_, DisplayItemType(1));
@@ -305,12 +291,6 @@ TEST_F(PaintChunkerTest, CreatesSeparateChunksWhenRequested) {
   chunker.IncrementDisplayItemIndex(i3);
   TestDisplayItem after_i3(client_, DisplayItemType(10));
   chunker.IncrementDisplayItemIndex(after_i3);
-  chunker.IncrementDisplayItemIndex(TestDisplayItem(client_));
-  chunker.IncrementDisplayItemIndex(i4);
-  chunker.IncrementDisplayItemIndex(i5);
-  chunker.DecrementDisplayItemIndex();
-  chunker.DecrementDisplayItemIndex();
-  chunker.DecrementDisplayItemIndex();
   chunker.IncrementDisplayItemIndex(TestDisplayItem(client_));
   chunker.IncrementDisplayItemIndex(i6);
 
