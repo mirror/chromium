@@ -276,6 +276,24 @@
       "revId": "d758c4eb46207a6f0f5957886b6e6fca19163203",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e5c66b3_0872de2d",
+        "filename": "remoting/host/client_session_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-06-30T18:30:14Z",
+      "side": 1,
+      "message": "I still think this is questionable. As Joe mentioned above, we do not have anything which is known in ChromotingHost level but not in ClientSession. So anything can be sent to ClientSession through a constructor parameter can be created in ClientSession directly. But I will wait for your coming change to use this parameter.\nRE Jow: calling from ConnectionToClient can ensure ClientSession overrides the correct ConnectionToClient::Delegate function to receive the event.",
+      "parentUuid": "71a96093_57727abc",
+      "revId": "d758c4eb46207a6f0f5957886b6e6fca19163203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
