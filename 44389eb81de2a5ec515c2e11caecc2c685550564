@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29df496f_6a797ba0",
+        "filename": "remoting/host/it2me/it2me_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-06-30T01:22:22Z",
+      "side": 1,
+      "message": "nit: Should we update these to \u003d nullptr while we are here?",
+      "range": {
+        "startLine": 468,
+        "startChar": 2,
+        "endLine": 468,
+        "endChar": 20
+      },
+      "revId": "44389eb81de2a5ec515c2e11caecc2c685550564",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04069589_34dd1076",
+        "filename": "remoting/host/linux/certificate_watcher.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-06-30T01:22:22Z",
+      "side": 1,
+      "message": "No need for \u003d nullptr here?",
+      "revId": "44389eb81de2a5ec515c2e11caecc2c685550564",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

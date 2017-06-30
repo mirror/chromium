@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2d41a70_3edd144b",
+        "filename": "remoting/host/host_status_monitor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-06-30T01:22:22Z",
+      "side": 1,
+      "message": "Do we need to explicitly provide these?",
+      "revId": "6f18901ea95b6c9ab282da118de029ef84fe217d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b2026f4_6fa9657c",
+        "filename": "remoting/host/host_status_monitor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-06-30T01:22:22Z",
+      "side": 1,
+      "message": "We\u0027re just wrapping ObserverList in a ref-count - is there no helper for external ref-counting in Chromium?  Could we just have this object provide a getter to the ObserverList and have callers use it directly?",
+      "revId": "6f18901ea95b6c9ab282da118de029ef84fe217d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbf99bb7_d69df310",
+        "filename": "remoting/host/host_status_monitor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-06-30T01:22:22Z",
+      "side": 1,
+      "message": "nit: Can we use \u003d default here?",
+      "revId": "6f18901ea95b6c9ab282da118de029ef84fe217d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
