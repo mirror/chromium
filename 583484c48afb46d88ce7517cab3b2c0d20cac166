@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4627da2_ad3c7f2b",
+        "filename": "build/android/pylib/local/device/local_device_instrumentation_test_run.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-06-30T15:43:39Z",
+      "side": 1,
+      "message": "This doesnt do anything bad when you arent tracing? correct? It seems good but just double checking.",
+      "revId": "583484c48afb46d88ce7517cab3b2c0d20cac166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b03a29ea_6de6fa93",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-06-30T15:43:39Z",
+      "side": 1,
+      "message": "I would add comment/docstring for what these args are (specifically what included/excluded are used for).",
+      "revId": "583484c48afb46d88ce7517cab3b2c0d20cac166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83529b07_f223b56c",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-06-30T15:43:39Z",
+      "side": 1,
+      "message": "question: What is difference of calling_module_names and the module_name above?",
+      "revId": "583484c48afb46d88ce7517cab3b2c0d20cac166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fae2050b_bc5a5051",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-06-30T15:43:39Z",
+      "side": 1,
+      "message": "pattern.match",
+      "revId": "583484c48afb46d88ce7517cab3b2c0d20cac166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e91d473_f543d891",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-06-30T15:43:39Z",
+      "side": 1,
+      "message": "ooooh, Ive never seen the \"|\u003d\" syntax. cool!\n\nId change it to to_exclude.update() to be consistent with the code in build/android though.",
+      "revId": "583484c48afb46d88ce7517cab3b2c0d20cac166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfa52619_2da672c4",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-06-30T15:43:39Z",
+      "side": 1,
+      "message": "suuuper nit: remove some of these empty lines where it makes sense to do so. This tracing coe could probably be in one block.",
+      "revId": "583484c48afb46d88ce7517cab3b2c0d20cac166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
