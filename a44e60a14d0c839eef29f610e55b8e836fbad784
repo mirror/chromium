@@ -22,6 +22,30 @@
       "revId": "a44e60a14d0c839eef29f610e55b8e836fbad784",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "736e72ee_2c17695f",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-30T14:52:20Z",
+      "side": 1,
+      "message": "I decided to replace |window_is_active| with stats_list.empty() here. I prefer not to move the logic into AddTabStats() because the caller would have to know about that (it isn\u0027t obvious that an empty |stats_list| means that the browser is active).",
+      "parentUuid": "4db35a18_d3928271",
+      "range": {
+        "startLine": 389,
+        "startChar": 30,
+        "endLine": 389,
+        "endChar": 46
+      },
+      "revId": "a44e60a14d0c839eef29f610e55b8e836fbad784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

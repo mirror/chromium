@@ -46,6 +46,30 @@
       "revId": "01662c8b05faaee2fdbbd9a42f2cde5f89f57535",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3548710d_3b5c9d6b",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 1067,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-30T14:52:20Z",
+      "side": 0,
+      "message": "Yes, ActiveTabChanged performs equivalent behavior. I\u0027ll update the description of the CL.",
+      "parentUuid": "a27ffac3_bbc725ca",
+      "range": {
+        "startLine": 1067,
+        "startChar": 15,
+        "endLine": 1067,
+        "endChar": 20
+      },
+      "revId": "01662c8b05faaee2fdbbd9a42f2cde5f89f57535",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
