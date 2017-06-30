@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "4b404982_8027874e",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 82106,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-06-30T16:35:37Z",
+      "side": 1,
+      "message": "Please make an enum for this and specify it via enum\u003d\n\nOtherwise, it will be treated as numeric by the dashboard and you\u0027d get things like percentiles which is not what you want.\n\nIf you don\u0027t want to enumerate all the possible values right now, you can start with a placeholder with not all values filled in.",
+      "range": {
+        "startLine": 82106,
+        "startChar": 33,
+        "endLine": 82106,
+        "endChar": 58
+      },
+      "revId": "93cca65b0cd61abbd137344b386cd353812127ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bb5a6e2_a79fa465",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 82119,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-06-30T16:35:37Z",
+      "side": 1,
+      "message": "BooleanValid",
+      "range": {
+        "startLine": 82119,
+        "startChar": 10,
+        "endLine": 82119,
+        "endChar": 17
+      },
+      "revId": "93cca65b0cd61abbd137344b386cd353812127ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "56dc99ca_4fff62a3",
         "filename": "ui/keyboard/keyboard_controller.cc",
         "patchSetId": 2
