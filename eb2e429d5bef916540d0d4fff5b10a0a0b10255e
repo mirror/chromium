@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3eee4cf9_b6bc55f1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-06-30T20:16:48Z",
+      "side": 1,
+      "message": "wrap it around 75~80 chars",
+      "revId": "eb2e429d5bef916540d0d4fff5b10a0a0b10255e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccb2ca5a_407737dc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-06-30T20:16:48Z",
+      "side": 1,
+      "message": "add a TEST: label, something like this: \"TEST: device or emulator test with --enable-features\u003dEnableFullcreenAppList\"",
+      "revId": "eb2e429d5bef916540d0d4fff5b10a0a0b10255e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dddcdf53_5aecf7c7",
+        "filename": "ui/app_list/vector_icons/ic_search_engine_not_google.icon",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-06-30T20:16:48Z",
+      "side": 1,
+      "message": "This doesn\u0027t have CANVAS_DIMENSIONS, 12 ?",
+      "revId": "eb2e429d5bef916540d0d4fff5b10a0a0b10255e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aee1a39c_4a428bfc",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-06-30T20:16:48Z",
+      "side": 1,
+      "message": "i have not seen k[variable_name] style for local scope in code base, maybe just search_icon.",
+      "revId": "eb2e429d5bef916540d0d4fff5b10a0a0b10255e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
