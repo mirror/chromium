@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "344a1ba3_dc74e569",
+        "filename": "chrome/browser/chromeos/input_method/mode_indicator_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-06-30T18:41:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f75252dc_4ce422d5",
+      "range": {
+        "startLine": 98,
+        "startChar": 27,
+        "endLine": 98,
+        "endChar": 40
+      },
+      "revId": "e5528adfa4f13da0f8c84cb1e8296857eac789ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a06dca0_a781d9d7",
         "filename": "ui/chromeos/ime/mode_indicator_view.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "db88441a_4621964f",
+        "filename": "ui/chromeos/ime/mode_indicator_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-06-30T18:41:47Z",
+      "side": 1,
+      "message": "Filed a bug about this per our discussion offline.",
+      "parentUuid": "8a06dca0_a781d9d7",
+      "range": {
+        "startLine": 76,
+        "startChar": 13,
+        "endLine": 76,
+        "endChar": 32
+      },
+      "revId": "e5528adfa4f13da0f8c84cb1e8296857eac789ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42a3f759_e5425dec",
         "filename": "ui/chromeos/ime/mode_indicator_view.h",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "e5528adfa4f13da0f8c84cb1e8296857eac789ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f57a44f5_2b153544",
+        "filename": "ui/chromeos/ime/mode_indicator_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-06-30T18:41:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42a3f759_e5425dec",
+      "range": {
+        "startLine": 24,
+        "startChar": 40,
+        "endLine": 24,
+        "endChar": 52
+      },
+      "revId": "e5528adfa4f13da0f8c84cb1e8296857eac789ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
