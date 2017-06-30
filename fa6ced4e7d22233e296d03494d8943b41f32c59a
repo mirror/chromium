@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "d1e393f4_c3f03846",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-30T01:30:43Z",
+      "side": 1,
+      "message": "You\u0027ll need to get a chromium.org account and that will give you access to a chromium.org linked Google Drive account that will allow open publishing of this doc.\n\nHaving said that, this link is more appropriate in the bug, so add a link to the design doc in the bug instead of here. (You\u0027ll still need to go through the chromium.org process as \"go links\" don\u0027t work externally).",
+      "parentUuid": "b0470c8e_90da6c32",
+      "range": {
+        "startLine": 31,
+        "startChar": 12,
+        "endLine": 31,
+        "endChar": 25
+      },
+      "revId": "fa6ced4e7d22233e296d03494d8943b41f32c59a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8acc0a84_f7e95057",
         "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.cc",
         "patchSetId": 11

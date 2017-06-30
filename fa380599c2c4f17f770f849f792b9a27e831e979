@@ -2,6 +2,144 @@
   "comments": [
     {
       "key": {
+        "uuid": "fd56c944_836cc5f6",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-30T01:30:43Z",
+      "side": 1,
+      "message": "Add a comment on why we exclude fullscreen mode. Should we reattempt the trigger later?",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 32
+      },
+      "revId": "fa380599c2c4f17f770f849f792b9a27e831e979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "585944dd_d46f0dc4",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-30T01:30:43Z",
+      "side": 1,
+      "message": "Remove these using statements. These types occur only once or twice in the file below.\n\nInstead, just reference the type explicitly below.",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 59
+      },
+      "revId": "fa380599c2c4f17f770f849f792b9a27e831e979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b17ec010_d807356b",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-30T01:30:43Z",
+      "side": 1,
+      "message": "This should probably be inside the feature_engagement_tracker namespace. I defer to nyquist@ on the correct location.",
+      "range": {
+        "startLine": 17,
+        "startChar": 10,
+        "endLine": 17,
+        "endChar": 44
+      },
+      "revId": "fa380599c2c4f17f770f849f792b9a27e831e979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2474be2_d85e9abc",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-30T01:30:43Z",
+      "side": 1,
+      "message": "Nit: either \"new tab button\" or \"New Tab Button\"",
+      "range": {
+        "startLine": 20,
+        "startChar": 31,
+        "endLine": 20,
+        "endChar": 32
+      },
+      "revId": "fa380599c2c4f17f770f849f792b9a27e831e979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a841aed9_3903a104",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-30T01:30:43Z",
+      "side": 1,
+      "message": "Profile* const",
+      "range": {
+        "startLine": 35,
+        "startChar": 2,
+        "endLine": 35,
+        "endChar": 10
+      },
+      "revId": "fa380599c2c4f17f770f849f792b9a27e831e979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92eb37fe_93b95201",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-30T01:30:43Z",
+      "side": 1,
+      "message": "Make this private.",
+      "range": {
+        "startLine": 35,
+        "startChar": 11,
+        "endLine": 35,
+        "endChar": 19
+      },
+      "revId": "fa380599c2c4f17f770f849f792b9a27e831e979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "74138517_ebecafa7",
         "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker_factory.cc",
         "patchSetId": 23
@@ -13,6 +151,75 @@
       "writtenOn": "2017-06-30T00:24:14Z",
       "side": 1,
       "message": "Do we want to add a dependency here? I think we want to (by calling DependsOn(...)).\n\nThat means that we probably want to also add these two new services to:\nchrome/browser/profiles/chrome_browser_main_extra_parts_profiles.cc",
+      "revId": "fa380599c2c4f17f770f849f792b9a27e831e979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e52d1e4_e53619f8",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker_factory.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-30T01:30:43Z",
+      "side": 1,
+      "message": "Nit: You can just do \"return new new_tab_feature...\";",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 17
+      },
+      "revId": "fa380599c2c4f17f770f849f792b9a27e831e979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a20ced5_cb4fdc3b",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker_factory.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-30T01:30:43Z",
+      "side": 1,
+      "message": "Add this to the new_tab_feature_engagement_tracker namespace as well.",
+      "range": {
+        "startLine": 27,
+        "startChar": 6,
+        "endLine": 27,
+        "endChar": 43
+      },
+      "revId": "fa380599c2c4f17f770f849f792b9a27e831e979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "985e9a79_4990427f",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-30T01:30:43Z",
+      "side": 1,
+      "message": "Unit tests should test the production code directly as much as possible.\n\nThis Fake object overrides all of the production implementation, which means the production implementation doesn\u0027t get testing.\n\nWhat you want is to expose test observable state in your production implementation so that the test can be reasonably assured the correct behavior occurred.\n\nThis will also allow you to change these methods to non-virtual.",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 36
+      },
       "revId": "fa380599c2c4f17f770f849f792b9a27e831e979",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
