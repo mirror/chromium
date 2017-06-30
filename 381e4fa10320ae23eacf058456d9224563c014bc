@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "482789fb_f4b3a528",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1160869
+      },
+      "writtenOn": "2017-06-30T06:46:55Z",
+      "side": 1,
+      "message": "Thanks for putting this together. This might indeed be the way we have to go.\n\nHowever, before submitting this we should really make it clear on services-dev@ what the new design is and, most importantly, what pros and cons it has. Not only did we say we would when we discussed this in the last meeting but I think it\u0027s really important for the whole s13n effort. Other services will run into similar problems and we (the people working on s13n) need to be comfortable that our solution actually gets to our goal (eventually decoupled services). So please send an email there to start a discussion (you can include a link to this CL and a high-level picture of the before and after pros/cons).",
+      "revId": "381e4fa10320ae23eacf058456d9224563c014bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
