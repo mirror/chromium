@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "c47a539a_9226a84d",
+        "filename": "ios/net/global_state/ios_global_state.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-06-30T17:02:57Z",
+      "side": 1,
+      "message": "I like everything about this CL, but this code (as it is) does not belong to ios/net. Is it possible to see how the final CL (with net code) will look? Maybe it is possible to have net code in net and non-net code in web?",
+      "parentUuid": "a3acb0d5_14392282",
+      "range": {
+        "startLine": 19,
+        "startChar": 8,
+        "endLine": 19,
+        "endChar": 27
+      },
+      "revId": "2ee580777d4a4b661f4f438ebaba4b9135df0f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7fdc4856_4b64fd4b",
         "filename": "ios/net/global_state/ios_global_state.mm",
         "patchSetId": 3
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "7fdc4856_4b64fd4b",
+      "range": {
+        "startLine": 45,
+        "startChar": 25,
+        "endLine": 45,
+        "endChar": 34
+      },
+      "revId": "2ee580777d4a4b661f4f438ebaba4b9135df0f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "942fa833_ca27155f",
+        "filename": "ios/net/global_state/ios_global_state.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-06-30T17:02:57Z",
+      "side": 1,
+      "message": "FYI: This is still onceToken",
+      "parentUuid": "8af1992c_d84515e6",
       "range": {
         "startLine": 45,
         "startChar": 25,
@@ -178,6 +226,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "9e30f70d_59249176",
+      "range": {
+        "startLine": 58,
+        "startChar": 25,
+        "endLine": 58,
+        "endChar": 34
+      },
+      "revId": "2ee580777d4a4b661f4f438ebaba4b9135df0f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "369bd174_9df3c884",
+        "filename": "ios/net/global_state/ios_global_state.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-06-30T17:02:57Z",
+      "side": 1,
+      "message": "FYI: This is still onceToken",
+      "parentUuid": "39d252ae_1c6530b2",
       "range": {
         "startLine": 58,
         "startChar": 25,
