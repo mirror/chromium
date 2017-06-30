@@ -21,22 +21,24 @@ namespace {
 // Amount of time to wait for the files on disk to settle before trying to load
 // them. This alleviates the problem of reading partially written files and
 // makes it possible to batch quasi-simultaneous changes.
-const int kSettleIntervalSeconds = 5;
+constexpr TimeDelta kSettleInterval = TimeDelta::FromSeconds(5);
 
 // The time interval for rechecking policy. This is the fallback in case the
 // implementation never detects changes.
-const int kReloadIntervalSeconds = 15 * 60;
+constexpr TimeDelta kReloadInterval = TimeDelta::FromSeconds(15 * 60);
 
 }  // namespace
 
 AsyncPolicyLoader::AsyncPolicyLoader(
     const scoped_refptr<base::SequencedTaskRunner>& task_runner)
-    : task_runner_(task_runner),
-      weak_factory_(this) {}
+    : task_runner_(task_runner) {}
 
-AsyncPolicyLoader::~AsyncPolicyLoader() {}
+AsyncPolicyLoader::~AsyncPolicyLoader() {
+  DCHECK(task_runner_->RunsTasksInCurrentSequence());
+}
 
 Time AsyncPolicyLoader::LastModificationTime() {
+  DCHECK(task_runner_->RunsTasksInCurrentSequence());
   return Time();
 }
 
@@ -63,7 +65,7 @@ void AsyncPolicyLoader::Reload(bool force) {
   schema_map_->FilterBundle(bundle.get());
 
   update_callback_.Run(std::move(bundle));
-  ScheduleNextReload(TimeDelta::FromSeconds(kReloadIntervalSeconds));
+  ScheduleNextReload(kReloadInterval);
 }
 
 std::unique_ptr<PolicyBundle> AsyncPolicyLoader::InitialLoad(
@@ -93,7 +95,7 @@ void AsyncPolicyLoader::Init(const UpdateCallback& update_callback) {
     Reload(false);
 
   // Start periodic refreshes.
-  ScheduleNextReload(TimeDelta::FromSeconds(kReloadIntervalSeconds));
+  ScheduleNextReload(kReloadInterval);
 }
 
 void AsyncPolicyLoader::RefreshPolicies(scoped_refptr<SchemaMap> schema_map) {
@@ -118,8 +120,6 @@ bool AsyncPolicyLoader::IsSafeToReload(const Time& now, TimeDelta* delay) {
     return true;
 
   // If there was a change since the last recorded modification, wait some more.
-  const TimeDelta kSettleInterval(
-      TimeDelta::FromSeconds(kSettleIntervalSeconds));
   if (last_modification != last_modification_time_) {
     last_modification_time_ = last_modification;
     last_modification_clock_ = now;
