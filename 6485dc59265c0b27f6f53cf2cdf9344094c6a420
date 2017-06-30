@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1e1abc3_48d9ac75",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwContents.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1680,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-30T21:56:20Z",
+      "side": 1,
+      "message": "nit: Let\u0027s update the comment to say it\u0027s the visible URL, which could be a pending navigation.  (It\u0027s not necessarily the URL of the current page, which is getLastCommittedUrl below.)",
+      "revId": "6485dc59265c0b27f6f53cf2cdf9344094c6a420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
