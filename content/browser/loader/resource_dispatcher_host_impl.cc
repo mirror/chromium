@@ -249,14 +249,26 @@ bool IsValidatedSCT(
 
 // Returns the PreviewsState after requesting it from the delegate. The
 // PreviewsState is a bitmask of potentially several Previews optimizations.
-PreviewsState GetPreviewsState(PreviewsState previews_state,
+// If previews_to_allow is set to anything other than PREVIEWS_UNSPECIFIED,
+// it is either the values passed in for a sub-frame to use, or if this is
+// the main frame, it is a limitation on which previews to allow.
+PreviewsState GetPreviewsState(PreviewsState previews_to_allow,
                                ResourceDispatcherHostDelegate* delegate,
                                const net::URLRequest& request,
                                ResourceContext* resource_context,
                                bool is_main_frame) {
-  // previews_state is set to PREVIEWS_OFF when reloading with Lo-Fi disabled.
-  if (previews_state == PREVIEWS_UNSPECIFIED && delegate && is_main_frame)
-    return delegate->GetPreviewsState(request, resource_context);
+  // If previews have already been turned off, or we are inheriting values on a
+  // sub-frame, don't check any further.
+  if (previews_to_allow & PREVIEWS_OFF ||
+      previews_to_allow & PREVIEWS_NO_TRANSFORM || !is_main_frame ||
+      !delegate) {
+    return previews_to_allow;
+  }
+
+  // Get the mask of previews we could apply to the current navigation.
+  PreviewsState previews_state =
+      delegate->GetPreviewsState(request, resource_context, previews_to_allow);
+
   return previews_state;
 }
 
