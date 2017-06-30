@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dcd751bb_4db3b407",
+        "filename": "base/memory/ref_counted.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-06-30T07:32:03Z",
+      "side": 1,
+      "message": "Can we use prefix \"++\" instead of the postfix one?",
+      "revId": "82b7c38ea9925337e5f455e1acb82c56df4f9548",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "715850ea_4343eda5",
+        "filename": "base/memory/ref_counted.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-06-30T07:32:03Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "82b7c38ea9925337e5f455e1acb82c56df4f9548",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
