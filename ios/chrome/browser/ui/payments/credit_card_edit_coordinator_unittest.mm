@@ -12,6 +12,8 @@
 #include "base/test/scoped_task_environment.h"
 #include "components/autofill/core/browser/credit_card.h"
 #include "components/autofill/core/browser/test_personal_data_manager.h"
+#include "components/payments/core/autofill_payment_instrument.h"
+#include "components/payments/core/payment_instrument.h"
 #include "ios/chrome/browser/payments/payment_request_test_util.h"
 #include "ios/chrome/browser/payments/test_payment_request.h"
 #import "ios/chrome/browser/ui/autofill/autofill_ui_type.h"
@@ -40,8 +42,8 @@ class MockPaymentRequest : public TestPaymentRequest {
   MockPaymentRequest(web::PaymentRequest web_payment_request,
                      autofill::PersonalDataManager* personal_data_manager)
       : TestPaymentRequest(web_payment_request, personal_data_manager) {}
-  MOCK_METHOD1(AddCreditCard,
-               autofill::CreditCard*(const autofill::CreditCard&));
+  MOCK_METHOD1(AddAutofillPaymentInstrument,
+               payments::PaymentInstrument*(const autofill::CreditCard&));
 };
 
 MATCHER_P5(CreditCardMatches,
@@ -169,7 +171,7 @@ TEST_F(PaymentRequestCreditCardEditCoordinatorTest, DidFinishCreatingWithSave) {
       mockForProtocol:@protocol(CreditCardEditCoordinatorDelegate)];
   [[delegate expect]
        creditCardEditCoordinator:coordinator
-      didFinishEditingCreditCard:static_cast<autofill::CreditCard*>(
+      didFinishEditingCreditCard:static_cast<payments::PaymentInstrument*>(
                                      [OCMArg anyPointer])];
   [coordinator setDelegate:delegate];
 
@@ -182,8 +184,8 @@ TEST_F(PaymentRequestCreditCardEditCoordinatorTest, DidFinishCreatingWithSave) {
 
   // Expect a credit card to be added to the PaymentRequest.
   EXPECT_CALL(*payment_request_,
-              AddCreditCard(CreditCardMatches("4111111111111111", "John Doe",
-                                              "12", "2090", "12345")))
+              AddAutofillPaymentInstrument(CreditCardMatches(
+                  "4111111111111111", "John Doe", "12", "2090", "12345")))
       .Times(1);
   // Expect a credit card to be added to the PersonalDataManager.
   EXPECT_CALL(personal_data_manager_,
@@ -227,7 +229,7 @@ TEST_F(PaymentRequestCreditCardEditCoordinatorTest, DidFinishCreatingNoSave) {
       mockForProtocol:@protocol(CreditCardEditCoordinatorDelegate)];
   [[delegate expect]
        creditCardEditCoordinator:coordinator
-      didFinishEditingCreditCard:static_cast<autofill::CreditCard*>(
+      didFinishEditingCreditCard:static_cast<payments::PaymentInstrument*>(
                                      [OCMArg anyPointer])];
   [coordinator setDelegate:delegate];
 
@@ -240,8 +242,8 @@ TEST_F(PaymentRequestCreditCardEditCoordinatorTest, DidFinishCreatingNoSave) {
 
   // Expect a credit card to be added to the PaymentRequest.
   EXPECT_CALL(*payment_request_,
-              AddCreditCard(CreditCardMatches("4111111111111111", "John Doe",
-                                              "12", "2090", "12345")))
+              AddAutofillPaymentInstrument(CreditCardMatches(
+                  "4111111111111111", "John Doe", "12", "2090", "12345")))
       .Times(1);
   // No credit card should get added to the PersonalDataManager.
   EXPECT_CALL(personal_data_manager_, AddCreditCard(_)).Times(0);
@@ -278,14 +280,18 @@ TEST_F(PaymentRequestCreditCardEditCoordinatorTest, DidFinishEditing) {
 
   // Set the credit card to be edited.
   autofill::CreditCard credit_card;
-  [coordinator setCreditCard:&credit_card];
+  payments::AutofillPaymentInstrument* payment_method =
+      new payments::AutofillPaymentInstrument(
+          "", credit_card, false, payment_request_->billing_profiles(), "",
+          nil);
+  [coordinator setPaymentMethod:payment_method];
 
   // Mock the coordinator delegate.
   id delegate = [OCMockObject
       mockForProtocol:@protocol(CreditCardEditCoordinatorDelegate)];
   [[delegate expect]
        creditCardEditCoordinator:coordinator
-      didFinishEditingCreditCard:static_cast<autofill::CreditCard*>(
+      didFinishEditingCreditCard:static_cast<payments::PaymentInstrument*>(
                                      [OCMArg anyPointer])];
   [coordinator setDelegate:delegate];
 
@@ -297,7 +303,7 @@ TEST_F(PaymentRequestCreditCardEditCoordinatorTest, DidFinishEditing) {
   EXPECT_NE(nil, base_view_controller.presentedViewController);
 
   // No credit card should get added to the PaymentRequest.
-  EXPECT_CALL(*payment_request_, AddCreditCard(_)).Times(0);
+  EXPECT_CALL(*payment_request_, AddAutofillPaymentInstrument(_)).Times(0);
   // No credit card should get added to the PersonalDataManager.
   EXPECT_CALL(personal_data_manager_, AddCreditCard(_)).Times(0);
   // Expect a credit card to be updated in the PersonalDataManager.
