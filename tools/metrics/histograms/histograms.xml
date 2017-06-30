@@ -22133,7 +22133,8 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>Records the source that requested showing the feedback app.</summary>
 </histogram>
 
-<histogram name="FileBrowser.ChangeDirectory.RootType" enum="FileManagerRootType">
+<histogram name="FileBrowser.ChangeDirectory.RootType"
+    enum="FileManagerRootType">
   <owner>yamaguchi@chromium.com</owner>
   <summary>
     Chrome OS File Browser: Counts the number of directory-changed events,
@@ -47870,14 +47871,11 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <owner>dimich@chromium.org</owner>
   <summary>
     Enum-based buckets reflect the number of days the Chrome was used in each
-    specific way:
-    - Not used at all during whole day.
-    - Started, but failed to successfully navigate.
-    - Only navigated to offline pages locally saved on the device.
-    - Only navigated online.
-    - Navigated to both online and offline pages.
-    This data is accumulated locally and reported when connection is likely to
-    succeed (usually after successful online navigation).
+    specific way: - Not used at all during whole day. - Started, but failed to
+    successfully navigate. - Only navigated to offline pages locally saved on
+    the device. - Only navigated online. - Navigated to both online and offline
+    pages. This data is accumulated locally and reported when connection is
+    likely to succeed (usually after successful online navigation).
   </summary>
 </histogram>
 
@@ -77882,6 +77880,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="TabManager.Discarding.DiscardedTabCouldUnsafeFastShutdown"
+    enum="BooleanTabDiscardFastShutdown">
+  <owner>oysteine@chromium.org</owner>
+  <summary>
+    Recorded for each discarding, allowing us to know whether the discarded tab
+    succeeded an unsafe process shutdown (not invoking unload handlers).
+  </summary>
+</histogram>
+
 <histogram name="TabManager.Discarding.DiscardedTabHasBeforeUnloadHandler"
     enum="Boolean">
   <owner>georgesak@chromium.org</owner>
@@ -80601,10 +80608,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <owner>sorin@chromium.org</owner>
   <summary>
     The number of download jobs found in the Windows BITS queue. This value is
-    expected to be zero in most cases, or a small number otherwise.
-    Large values indicate a problem with the job creation or clean up code.
-    The metric is recorded before a new BITS job is created and inserted
-    into BITS queue.
+    expected to be zero in most cases, or a small number otherwise. Large values
+    indicate a problem with the job creation or clean up code. The metric is
+    recorded before a new BITS job is created and inserted into BITS queue.
   </summary>
 </histogram>
 

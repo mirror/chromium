@@ -169,7 +169,7 @@ class PostMessageTimer final
 static void UpdateSuddenTerminationStatus(
     LocalDOMWindow* dom_window,
     bool added_listener,
-    LocalFrameClient::SuddenTerminationDisablerType disabler_type) {
+    WebSuddenTerminationDisabler disabler_type) {
   Platform::Current()->SuddenTerminationChanged(!added_listener);
   if (dom_window->GetFrame() && dom_window->GetFrame()->Client())
     dom_window->GetFrame()->Client()->SuddenTerminationDisablerChanged(
@@ -193,7 +193,7 @@ static void AddUnloadEventListener(LocalDOMWindow* dom_window) {
   DOMWindowSet& set = WindowsWithUnloadEventListeners();
   if (set.IsEmpty()) {
     UpdateSuddenTerminationStatus(dom_window, true,
-                                  LocalFrameClient::kUnloadHandler);
+                                  WebSuddenTerminationDisabler::kUnloadHandler);
   }
 
   set.insert(dom_window);
@@ -207,7 +207,7 @@ static void RemoveUnloadEventListener(LocalDOMWindow* dom_window) {
   set.erase(it);
   if (set.IsEmpty()) {
     UpdateSuddenTerminationStatus(dom_window, false,
-                                  LocalFrameClient::kUnloadHandler);
+                                  WebSuddenTerminationDisabler::kUnloadHandler);
   }
 }
 
@@ -219,15 +219,15 @@ static void RemoveAllUnloadEventListeners(LocalDOMWindow* dom_window) {
   set.RemoveAll(it);
   if (set.IsEmpty()) {
     UpdateSuddenTerminationStatus(dom_window, false,
-                                  LocalFrameClient::kUnloadHandler);
+                                  WebSuddenTerminationDisabler::kUnloadHandler);
   }
 }
 
 static void AddBeforeUnloadEventListener(LocalDOMWindow* dom_window) {
   DOMWindowSet& set = WindowsWithBeforeUnloadEventListeners();
   if (set.IsEmpty()) {
-    UpdateSuddenTerminationStatus(dom_window, true,
-                                  LocalFrameClient::kBeforeUnloadHandler);
+    UpdateSuddenTerminationStatus(
+        dom_window, true, WebSuddenTerminationDisabler::kBeforeUnloadHandler);
   }
 
   set.insert(dom_window);
@@ -240,8 +240,8 @@ static void RemoveBeforeUnloadEventListener(LocalDOMWindow* dom_window) {
     return;
   set.erase(it);
   if (set.IsEmpty()) {
-    UpdateSuddenTerminationStatus(dom_window, false,
-                                  LocalFrameClient::kBeforeUnloadHandler);
+    UpdateSuddenTerminationStatus(
+        dom_window, false, WebSuddenTerminationDisabler::kBeforeUnloadHandler);
   }
 }
 
@@ -252,8 +252,8 @@ static void RemoveAllBeforeUnloadEventListeners(LocalDOMWindow* dom_window) {
     return;
   set.RemoveAll(it);
   if (set.IsEmpty()) {
-    UpdateSuddenTerminationStatus(dom_window, false,
-                                  LocalFrameClient::kBeforeUnloadHandler);
+    UpdateSuddenTerminationStatus(
+        dom_window, false, WebSuddenTerminationDisabler::kBeforeUnloadHandler);
   }
 }
 

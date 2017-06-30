@@ -54,6 +54,7 @@
 #include "third_party/WebKit/public/platform/WebFeaturePolicy.h"
 #include "third_party/WebKit/public/platform/WebFocusType.h"
 #include "third_party/WebKit/public/platform/WebInsecureRequestPolicy.h"
+#include "third_party/WebKit/public/platform/WebSuddenTerminationDisablerType.h"
 #include "third_party/WebKit/public/web/WebFindOptions.h"
 #include "third_party/WebKit/public/web/WebFrameOwnerProperties.h"
 #include "third_party/WebKit/public/web/WebFrameSerializerCacheControlPolicy.h"
@@ -118,6 +119,8 @@ IPC_ENUM_TRAITS_MAX_VALUE(content::CSPDirective::Name,
                           content::CSPDirective::NameLast)
 IPC_ENUM_TRAITS_MAX_VALUE(blink::WebFeaturePolicyFeature,
                           blink::WebFeaturePolicyFeature::LAST_FEATURE)
+IPC_ENUM_TRAITS_MAX_VALUE(blink::WebSuddenTerminationDisabler,
+                          blink::WebSuddenTerminationDisabler::kLast)
 IPC_ENUM_TRAITS_MAX_VALUE(content::CSPDisposition,
                           content::CSPDisposition::LAST)
 IPC_ENUM_TRAITS_MAX_VALUE(blink::WebTriggeringEventInfo,
@@ -1571,6 +1574,11 @@ IPC_MESSAGE_ROUTED3(FrameHostMsg_SmartClipDataExtracted,
 // Puts the browser into "tab fullscreen" mode for the sending renderer.
 // See the comment in chrome/browser/ui/browser.h for more details.
 IPC_MESSAGE_ROUTED1(FrameHostMsg_ToggleFullscreen, bool /* enter_fullscreen */)
+
+//
+IPC_MESSAGE_ROUTED2(FrameHostMsg_SuddenTerminationDisablerChanged,
+                    bool /* present */,
+                    blink::WebSuddenTerminationDisabler /* disabler_type */)
 
 // Dispatch a load event for this frame in the iframe element of an
 // out-of-process parent frame.

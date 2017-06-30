@@ -4680,6 +4680,13 @@ void RenderFrameImpl::ExitFullscreen() {
   Send(new FrameHostMsg_ToggleFullscreen(routing_id_, false));
 }
 
+void RenderFrameImpl::SuddenTerminationDisablerChanged(
+    bool present,
+    blink::WebSuddenTerminationDisabler disabler_type) {
+  Send(new FrameHostMsg_SuddenTerminationDisablerChanged(routing_id_, present,
+                                                         disabler_type));
+}
+
 void RenderFrameImpl::RegisterProtocolHandler(const WebString& scheme,
                                               const WebURL& url,
                                               const WebString& title) {
