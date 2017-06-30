@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9663bcc6_5d6caf62",
+        "filename": "chrome/browser/ui/webui/module_database_conflicts_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-30T21:12:22Z",
+      "side": 1,
+      "message": "i still wonder what it means to leave the second call dangling like this. if we\u0027re not keeping all of the callbacks in a list to invoke all of them when the db becomes idle, should we invoke this callback with an empty results object immediately? or should we crash with a CHECK if it really shouldn\u0027t happen?",
+      "revId": "9ad88e3931b9c4b8b2e8e533c8e329a70beead70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
