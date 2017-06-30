@@ -25,7 +25,7 @@ class InteractionMediaQueriesDynamicTest : public ContentBrowserTest {
 
 }  //  namespace
 
-#if defined(OS_WIN) || defined(OS_LINUX)
+#if defined(OS_WIN) || defined(OS_LINUX) || defined(OS_ANDROID)
 IN_PROC_BROWSER_TEST_F(InteractionMediaQueriesDynamicTest,
                        PointerMediaQueriesDynamic) {
   GURL test_url = GetTestUrl("", "interaction-mq-dynamic.html");
