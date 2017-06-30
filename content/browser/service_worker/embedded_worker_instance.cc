@@ -125,6 +125,7 @@ bool HasSentStartWorker(EmbeddedWorkerInstance::StartingPhase phase) {
     case EmbeddedWorkerInstance::SCRIPT_DOWNLOADING:
     case EmbeddedWorkerInstance::SCRIPT_READ_STARTED:
     case EmbeddedWorkerInstance::SCRIPT_READ_FINISHED:
+    case EmbeddedWorkerInstance::SCRIPT_STREAMING:
     case EmbeddedWorkerInstance::SCRIPT_LOADED:
     case EmbeddedWorkerInstance::SCRIPT_EVALUATED:
     case EmbeddedWorkerInstance::THREAD_STARTED:
@@ -607,12 +608,19 @@ ServiceWorkerStatusCode EmbeddedWorkerInstance::SendStartWorker(
   client_->StartWorker(*params, std::move(pending_dispatcher_request_),
                        std::move(host_ptr_info));
   registry_->BindWorkerToProcess(process_id(), embedded_worker_id());
-  OnStartWorkerMessageSent();
-  TRACE_EVENT_NESTABLE_ASYNC_BEGIN0("ServiceWorker", "SENT_START_WORKER", this);
+  // TODO(shimazu): Set |is_script_streaming|.
+  OnStartWorkerMessageSent(false /* is_script_streaming */);
+  if (starting_phase() == SCRIPT_STREAMING) {
+    TRACE_EVENT_NESTABLE_ASYNC_BEGIN0("ServiceWorker", "SCRIPT_LOADING", this);
+  } else {
+    TRACE_EVENT_NESTABLE_ASYNC_BEGIN0("ServiceWorker", "SENT_START_WORKER",
+                                      this);
+  }
   return SERVICE_WORKER_OK;
 }
 
-void EmbeddedWorkerInstance::OnStartWorkerMessageSent() {
+void EmbeddedWorkerInstance::OnStartWorkerMessageSent(
+    bool is_script_streaming) {
   if (!step_time_.is_null()) {
     base::TimeDelta duration = UpdateStepTime();
     if (inflight_start_task_->is_installed()) {
@@ -621,7 +629,7 @@ void EmbeddedWorkerInstance::OnStartWorkerMessageSent() {
     }
   }
 
-  starting_phase_ = SENT_START_WORKER;
+  starting_phase_ = is_script_streaming ? SCRIPT_STREAMING : SENT_START_WORKER;
   for (auto& observer : listener_list_)
     observer.OnStartWorkerMessageSent();
 }
@@ -667,7 +675,9 @@ void EmbeddedWorkerInstance::OnScriptLoaded() {
       "ServiceWorker", "SCRIPT_LOADING", this, "Source",
       ServiceWorkerMetrics::LoadSourceToString(source));
 
-  if (!step_time_.is_null()) {
+  // Don't record the time when script streaming is enabled because
+  // OnScriptLaoded is called at the different timing.
+  if (starting_phase_ != SCRIPT_STREAMING && !step_time_.is_null()) {
     base::TimeDelta duration = UpdateStepTime();
     ServiceWorkerMetrics::RecordTimeToLoad(duration, source, start_situation_);
   }
@@ -981,6 +991,8 @@ std::string EmbeddedWorkerInstance::StartingPhaseToString(StartingPhase phase) {
       return "Script read started";
     case SCRIPT_READ_FINISHED:
       return "Script read finished";
+    case SCRIPT_STREAMING:
+      return "Script streaming";
     case STARTING_PHASE_MAX_VALUE:
       NOTREACHED();
   }
