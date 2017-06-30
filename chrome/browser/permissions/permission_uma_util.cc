@@ -232,6 +232,8 @@ void PermissionUmaUtil::PermissionGranted(
     PermissionRequestGestureType gesture_type,
     const GURL& requesting_origin,
     Profile* profile) {
+  ContentSettingsType storage_permission =
+      PermissionUtil::GetContentSettingsStorageType(permission);
   PermissionDecisionAutoBlocker* autoblocker =
       PermissionDecisionAutoBlocker::GetForProfile(profile);
   RecordPermissionAction(permission, PermissionAction::GRANTED,
@@ -239,10 +241,10 @@ void PermissionUmaUtil::PermissionGranted(
                          requesting_origin, profile);
   RecordPermissionPromptPriorCount(
       permission, kPermissionsPromptAcceptedPriorDismissCountPrefix,
-      autoblocker->GetDismissCount(requesting_origin, permission));
+      autoblocker->GetDismissCount(requesting_origin, storage_permission));
   RecordPermissionPromptPriorCount(
       permission, kPermissionsPromptAcceptedPriorIgnoreCountPrefix,
-      autoblocker->GetIgnoreCount(requesting_origin, permission));
+      autoblocker->GetIgnoreCount(requesting_origin, storage_permission));
 }
 
 void PermissionUmaUtil::PermissionDenied(
@@ -250,6 +252,8 @@ void PermissionUmaUtil::PermissionDenied(
     PermissionRequestGestureType gesture_type,
     const GURL& requesting_origin,
     Profile* profile) {
+  ContentSettingsType storage_permission =
+      PermissionUtil::GetContentSettingsStorageType(permission);
   PermissionDecisionAutoBlocker* autoblocker =
       PermissionDecisionAutoBlocker::GetForProfile(profile);
   RecordPermissionAction(permission, PermissionAction::DENIED,
@@ -257,10 +261,10 @@ void PermissionUmaUtil::PermissionDenied(
                          requesting_origin, profile);
   RecordPermissionPromptPriorCount(
       permission, kPermissionsPromptDeniedPriorDismissCountPrefix,
-      autoblocker->GetDismissCount(requesting_origin, permission));
+      autoblocker->GetDismissCount(requesting_origin, storage_permission));
   RecordPermissionPromptPriorCount(
       permission, kPermissionsPromptDeniedPriorIgnoreCountPrefix,
-      autoblocker->GetIgnoreCount(requesting_origin, permission));
+      autoblocker->GetIgnoreCount(requesting_origin, storage_permission));
 }
 
 void PermissionUmaUtil::PermissionDismissed(
@@ -268,6 +272,8 @@ void PermissionUmaUtil::PermissionDismissed(
     PermissionRequestGestureType gesture_type,
     const GURL& requesting_origin,
     Profile* profile) {
+  ContentSettingsType storage_permission =
+      PermissionUtil::GetContentSettingsStorageType(permission);
   PermissionDecisionAutoBlocker* autoblocker =
       PermissionDecisionAutoBlocker::GetForProfile(profile);
   RecordPermissionAction(permission, PermissionAction::DISMISSED,
@@ -275,10 +281,10 @@ void PermissionUmaUtil::PermissionDismissed(
                          requesting_origin, profile);
   RecordPermissionPromptPriorCount(
       permission, kPermissionsPromptDismissedPriorDismissCountPrefix,
-      autoblocker->GetDismissCount(requesting_origin, permission));
+      autoblocker->GetDismissCount(requesting_origin, storage_permission));
   RecordPermissionPromptPriorCount(
       permission, kPermissionsPromptDismissedPriorIgnoreCountPrefix,
-      autoblocker->GetIgnoreCount(requesting_origin, permission));
+      autoblocker->GetIgnoreCount(requesting_origin, storage_permission));
 }
 
 void PermissionUmaUtil::PermissionIgnored(
@@ -286,6 +292,8 @@ void PermissionUmaUtil::PermissionIgnored(
     PermissionRequestGestureType gesture_type,
     const GURL& requesting_origin,
     Profile* profile) {
+  ContentSettingsType storage_permission =
+      PermissionUtil::GetContentSettingsStorageType(permission);
   PermissionDecisionAutoBlocker* autoblocker =
       PermissionDecisionAutoBlocker::GetForProfile(profile);
   RecordPermissionAction(permission, PermissionAction::IGNORED,
@@ -293,10 +301,10 @@ void PermissionUmaUtil::PermissionIgnored(
                          requesting_origin, profile);
   RecordPermissionPromptPriorCount(
       permission, kPermissionsPromptIgnoredPriorDismissCountPrefix,
-      autoblocker->GetDismissCount(requesting_origin, permission));
+      autoblocker->GetDismissCount(requesting_origin, storage_permission));
   RecordPermissionPromptPriorCount(
       permission, kPermissionsPromptIgnoredPriorIgnoreCountPrefix,
-      autoblocker->GetIgnoreCount(requesting_origin, permission));
+      autoblocker->GetIgnoreCount(requesting_origin, storage_permission));
 }
 
 void PermissionUmaUtil::PermissionRevoked(ContentSettingsType permission,
@@ -602,6 +610,8 @@ void PermissionUmaUtil::RecordPermissionAction(
     const GURL& requesting_origin,
     Profile* profile) {
   if (IsOptedIntoPermissionActionReporting(profile)) {
+    ContentSettingsType storage_permission =
+        PermissionUtil::GetContentSettingsStorageType(permission);
     PermissionDecisionAutoBlocker* autoblocker =
         PermissionDecisionAutoBlocker::GetForProfile(profile);
     // TODO(kcarattini): Pass in the actual persist decision when it becomes
@@ -609,8 +619,8 @@ void PermissionUmaUtil::RecordPermissionAction(
     PermissionReportInfo report_info(
         requesting_origin, permission, action, source_ui, gesture_type,
         PermissionPersistDecision::UNSPECIFIED,
-        autoblocker->GetDismissCount(requesting_origin, permission),
-        autoblocker->GetIgnoreCount(requesting_origin, permission));
+        autoblocker->GetDismissCount(requesting_origin, storage_permission),
+        autoblocker->GetIgnoreCount(requesting_origin, storage_permission));
     g_browser_process->safe_browsing_service()
         ->ui_manager()->ReportPermissionAction(report_info);
   }

@@ -357,7 +357,7 @@ void PageInfo::OnSitePermissionChanged(ContentSettingsType type,
   // was changed away from BLOCK, clear embargo status if it exists.
   if (setting != CONTENT_SETTING_BLOCK) {
     PermissionDecisionAutoBlocker::GetForProfile(profile_)->RemoveEmbargoByUrl(
-        site_url_, type);
+        site_url_, PermissionUtil::GetContentSettingsStorageType(type));
   }
   content_settings_->SetNarrowestContentSetting(site_url_, site_url_, type,
                                                 setting);

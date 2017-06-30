@@ -290,6 +290,9 @@ void PermissionDecisionAutoBlocker::CheckSafeBrowsingBlacklist(
     base::Callback<void(bool)> callback) {
   DCHECK_EQ(CONTENT_SETTING_ASK,
             GetEmbargoResult(request_origin, permission).content_setting);
+  DCHECK_NE(CONTENT_SETTINGS_TYPE_PUSH_MESSAGING, permission)
+      << "Use notifications instead of push messaging. See "
+         "PermissionUtil::GetContentSettingsStorageType().";
 
   if (base::FeatureList::IsEnabled(features::kPermissionsBlacklist) &&
       db_manager_) {
@@ -311,6 +314,9 @@ void PermissionDecisionAutoBlocker::CheckSafeBrowsingBlacklist(
 PermissionResult PermissionDecisionAutoBlocker::GetEmbargoResult(
     const GURL& request_origin,
     ContentSettingsType permission) {
+  DCHECK_NE(CONTENT_SETTINGS_TYPE_PUSH_MESSAGING, permission)
+      << "Use notifications instead of push messaging. See "
+         "PermissionUtil::GetContentSettingsStorageType().";
   return GetEmbargoResult(
       HostContentSettingsMapFactory::GetForProfile(profile_), request_origin,
       permission, clock_->Now());
@@ -319,18 +325,27 @@ PermissionResult PermissionDecisionAutoBlocker::GetEmbargoResult(
 int PermissionDecisionAutoBlocker::GetDismissCount(
     const GURL& url,
     ContentSettingsType permission) {
+  DCHECK_NE(CONTENT_SETTINGS_TYPE_PUSH_MESSAGING, permission)
+      << "Use notifications instead of push messaging. See "
+         "PermissionUtil::GetContentSettingsStorageType().";
   return GetActionCount(url, permission, kPromptDismissCountKey, profile_);
 }
 
 int PermissionDecisionAutoBlocker::GetIgnoreCount(
     const GURL& url,
     ContentSettingsType permission) {
+  DCHECK_NE(CONTENT_SETTINGS_TYPE_PUSH_MESSAGING, permission)
+      << "Use notifications instead of push messaging. See "
+         "PermissionUtil::GetContentSettingsStorageType().";
   return GetActionCount(url, permission, kPromptIgnoreCountKey, profile_);
 }
 
 bool PermissionDecisionAutoBlocker::RecordDismissAndEmbargo(
     const GURL& url,
     ContentSettingsType permission) {
+  DCHECK_NE(CONTENT_SETTINGS_TYPE_PUSH_MESSAGING, permission)
+      << "Use notifications instead of push messaging. See "
+         "PermissionUtil::GetContentSettingsStorageType().";
   int current_dismissal_count = RecordActionInWebsiteSettings(
       url, permission, kPromptDismissCountKey, profile_);
 
@@ -355,6 +370,9 @@ bool PermissionDecisionAutoBlocker::RecordDismissAndEmbargo(
 bool PermissionDecisionAutoBlocker::RecordIgnoreAndEmbargo(
     const GURL& url,
     ContentSettingsType permission) {
+  DCHECK_NE(CONTENT_SETTINGS_TYPE_PUSH_MESSAGING, permission)
+      << "Use notifications instead of push messaging. See "
+         "PermissionUtil::GetContentSettingsStorageType().";
   int current_ignore_count = RecordActionInWebsiteSettings(
       url, permission, kPromptIgnoreCountKey, profile_);
 
@@ -370,6 +388,9 @@ bool PermissionDecisionAutoBlocker::RecordIgnoreAndEmbargo(
 void PermissionDecisionAutoBlocker::RemoveEmbargoByUrl(
     const GURL& url,
     ContentSettingsType permission) {
+  DCHECK_NE(CONTENT_SETTINGS_TYPE_PUSH_MESSAGING, permission)
+      << "Use notifications instead of push messaging. See "
+         "PermissionUtil::GetContentSettingsStorageType().";
   if (!PermissionUtil::IsPermission(permission))
     return;
 
