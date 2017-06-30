@@ -509,5 +509,40 @@
     "prefix": "high-contrast-mode",
     "base": "paint/high-contrast-mode/image-filter-none",
     "args": ["--blink-settings=highContrastMode=3,highContrastImagePolicy=1"]
+  },
+  {
+    "prefix": "mojo-blobs",
+    "base": "external/wpt/FileAPI",
+    "args": ["--enable-features=MojoBlobs"]
+  },
+  {
+    "prefix": "mojo-blobs",
+    "base": "external/wpt/fetch",
+    "args": ["--enable-features=MojoBlobs"]
+  },
+  {
+    "prefix": "mojo-blobs",
+    "base": "external/wpt/service-workers",
+    "args": ["--enable-features=MojoBlobs"]
+  },
+  {
+    "prefix": "mojo-blobs",
+    "base": "external/wpt/webrtc",
+    "args": ["--enable-features=MojoBlobs"]
+  },
+  {
+    "prefix": "mojo-blobs",
+    "base": "external/wpt/workers",
+    "args": ["--enable-features=MojoBlobs"]
+  },
+  {
+    "prefix": "mojo-blobs",
+    "base": "fast/files",
+    "args": ["--enable-features=MojoBlobs"]
+  },
+  {
+    "prefix": "mojo-blobs",
+    "base": "storage/indexeddb",
+    "args": ["--enable-features=MojoBlobs"]
   }
 ]
