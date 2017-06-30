@@ -11,6 +11,8 @@
 #include "net/test/net_test_suite.h"
 #include "url/url_features.h"
 
+#include <iostream>
+
 #if defined(OS_ANDROID)
 #include "base/android/jni_android.h"
 #include "base/android/jni_registrar.h"
@@ -57,6 +59,7 @@ bool VerifyBuildIsTimely() {
 }  // namespace
 
 int main(int argc, char** argv) {
+  std::cout << "Reached Unit Test Entry Point!" << std::endl;
   // Record histograms, so we can get histograms data in tests.
   base::StatisticsRecorder::Initialize();
 

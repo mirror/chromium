@@ -5,8 +5,10 @@
 #include "base/bind.h"
 #include "base/test/launcher/unit_test_launcher.h"
 #include "base/test/test_suite.h"
+#include <iostream>
 
 int main(int argc, char** argv) {
+  std::cout << "Reached Unit Test Entry Point!" << std::endl;
   base::TestSuite test_suite(argc, argv);
   return base::LaunchUnitTests(
       argc, argv,

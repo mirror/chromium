@@ -13,6 +13,8 @@
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/base/ui_base_paths.h"
 
+#include <iostream>
+
 #if defined(OS_ANDROID)
 #include "base/android/jni_android.h"
 #include "ui/gfx/android/gfx_jni_registrar.h"
@@ -96,6 +98,7 @@ class GfxTestSuite : public base::TestSuite {
 }  // namespace
 
 int main(int argc, char** argv) {
+  std::cout << "Reached Unit Test Entry Point!" << std::endl;
   GfxTestSuite test_suite(argc, argv);
 
 #if !defined(OS_IOS)

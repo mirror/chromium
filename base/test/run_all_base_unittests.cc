@@ -7,12 +7,15 @@
 #include "base/test/test_suite.h"
 #include "build/build_config.h"
 
+#include <iostream>
+
 #if defined(OS_ANDROID)
 #include "base/android/jni_android.h"
 #include "base/test/android/test_system_message_handler_link_android.h"
 #endif  // defined(OS_ANDROID)
 
 int main(int argc, char** argv) {
+  std::cout << "Reached Unit Test Entry Point!" << std::endl;
 #if defined(OS_ANDROID)
   base::android::TestSystemMessageHandlerLink::RegisterJNI(
       base::android::AttachCurrentThread());
