@@ -22,6 +22,7 @@ class AnimationDelegate;
 class AnimationEvents;
 class AnimationHost;
 class AnimationTimeline;
+class GroupAnimationPlayer;
 struct AnimationEvent;
 struct PropertyAnimationState;
 
@@ -55,9 +56,23 @@ class CC_ANIMATION_EXPORT AnimationPlayer
   }
   void SetAnimationTimeline(AnimationTimeline* timeline);
 
+  // Parent GroupAnimationPlayer.
+  GroupAnimationPlayer* group_animation_player() {
+    return group_animation_player_;
+  }
+  const GroupAnimationPlayer* group_animation_player() const {
+    return group_animation_player_;
+  }
+  void SetGroupAnimationPlayer(GroupAnimationPlayer* group_animation_player);
+
   // ElementAnimations object where this player is listed.
   scoped_refptr<ElementAnimations> element_animations() const {
     return element_animations_;
+  }
+
+  void set_element_animations(
+      scoped_refptr<ElementAnimations> element_animations) {
+    element_animations_ = element_animations;
   }
 
   void set_animation_delegate(AnimationDelegate* delegate) {
@@ -73,6 +88,8 @@ class CC_ANIMATION_EXPORT AnimationPlayer
   void AbortAnimation(int animation_id);
   void AbortAnimations(TargetProperty::Type target_property,
                        bool needs_completion);
+
+  void AnimationAdded();
 
   void PushPropertiesTo(AnimationPlayer* player_impl);
 
@@ -184,8 +201,6 @@ class CC_ANIMATION_EXPORT AnimationPlayer
   void BindElementAnimations();
   void UnbindElementAnimations();
 
-  void AnimationAdded();
-
   void MarkAbortedAnimationsForDeletion(
       AnimationPlayer* animation_player_impl) const;
   void PurgeAnimationsMarkedForDeletion(bool impl_only);
@@ -200,6 +215,7 @@ class CC_ANIMATION_EXPORT AnimationPlayer
 
   AnimationHost* animation_host_;
   AnimationTimeline* animation_timeline_;
+  GroupAnimationPlayer* group_animation_player_;
   // element_animations isn't null if player attached to an element (layer).
   scoped_refptr<ElementAnimations> element_animations_;
   AnimationDelegate* animation_delegate_;

@@ -139,6 +139,7 @@ void AnimationHost::RegisterPlayerForElement(ElementId element_id,
   }
 
   element_animations->AddPlayer(player);
+  player->set_element_animations(element_animations);
 }
 
 void AnimationHost::UnregisterPlayerForElement(ElementId element_id,
