@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4a020cf_13695f0d",
+        "filename": "build/config/ios/rules.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-06-30T07:19:42Z",
+      "side": 0,
+      "message": "This is a bug also addressed separately in https://chromium-review.googlesource.com/c/557105/.",
+      "range": {
+        "startLine": 270,
+        "startChar": 51,
+        "endLine": 270,
+        "endChar": 0
+      },
+      "revId": "65889e42e29d1df1a3fff40be1337844614a87a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
