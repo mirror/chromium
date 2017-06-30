@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2f07a64_a4a858f3",
+        "filename": "components/variations/service/variations_seed_manager.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1129010
+      },
+      "writtenOn": "2017-06-30T18:27:56Z",
+      "side": 1,
+      "message": "Clean up the headers, not all of them are used.",
+      "revId": "c5e5e124da7f3e89b04ea0d5424b1e7f57439ead",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

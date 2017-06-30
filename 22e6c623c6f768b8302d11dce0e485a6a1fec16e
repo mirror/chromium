@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15a75ebf_3ae31c45",
+        "filename": "android_webview/browser/aw_variations_seed_manager.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1129010
+      },
+      "writtenOn": "2017-06-30T18:27:56Z",
+      "side": 1,
+      "message": "Remove unused headers. Forward-declare as much as you can.",
+      "revId": "22e6c623c6f768b8302d11dce0e485a6a1fec16e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
