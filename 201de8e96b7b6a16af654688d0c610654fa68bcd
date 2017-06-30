@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "783639cb_4716a54d",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/push_messaging/permission-state-denied-in-document.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-06-30T17:23:48Z",
+      "side": 1,
+      "message": "comment no longer applies",
+      "revId": "201de8e96b7b6a16af654688d0c610654fa68bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2613743_701451f7",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/push_messaging/permission-state-denied-in-service-worker.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-06-30T17:23:48Z",
+      "side": 1,
+      "message": "nit: line length",
+      "revId": "201de8e96b7b6a16af654688d0c610654fa68bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6eafbf33_3efd5561",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/push_messaging/permission-state-denied-in-service-worker.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-06-30T17:23:48Z",
+      "side": 1,
+      "message": "nit: line length. And in other files.",
+      "revId": "201de8e96b7b6a16af654688d0c610654fa68bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44df9382_666e06ae",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/push_messaging/permission-state-exception-in-service-worker.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-06-30T17:23:48Z",
+      "side": 1,
+      "message": "does this comment still apply?",
+      "revId": "201de8e96b7b6a16af654688d0c610654fa68bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "118767bf_a9c0c923",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/push_messaging/permission-state-exception-in-service-worker.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-06-30T17:23:48Z",
+      "side": 1,
+      "message": "was it deliberate to set this to \u0027granted\u0027, not \u0027prompt\u0027 as before in this test?",
+      "revId": "201de8e96b7b6a16af654688d0c610654fa68bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81b27c0b_9f755e86",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/push_messaging/permission-state-granted-in-document.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-06-30T17:23:48Z",
+      "side": 1,
+      "message": "comment no longer applies?",
+      "revId": "201de8e96b7b6a16af654688d0c610654fa68bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
