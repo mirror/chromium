@@ -16,6 +16,24 @@
       "revId": "abade4578be9f49dee1fdfe1a80ccdaa3ca3f386",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c35f8447_bfa2dcc2",
+        "filename": "third_party/WebKit/Source/modules/websockets/DocumentWebSocketChannel.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-30T17:19:38Z",
+      "side": 0,
+      "message": "I see. Platform::Current()-\u003eGetInterfaceProvider() will be obtained by WorkerThread::GetInterfaceProvider() and passed. LayoutTests/http/tests/serviceworker/websocket/websocket-in-service-worker.html is passing. OK.",
+      "parentUuid": "e1663651_b6fb1de5",
+      "revId": "abade4578be9f49dee1fdfe1a80ccdaa3ca3f386",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
