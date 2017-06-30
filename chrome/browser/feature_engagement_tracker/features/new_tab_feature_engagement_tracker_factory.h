@@ -30,7 +30,7 @@ class NewTabFeatureEngagementTrackerFactory
   static NewTabFeatureEngagementTrackerFactory* GetInstance();
 
   // Returns the FeatureEngagementTracker associated with the profile.
-  new_tab_feature_engagement_tracker::NewTabFeatureEngagementTracker*
+  static new_tab_feature_engagement_tracker::NewTabFeatureEngagementTracker*
   GetForProfile(Profile* profile);
 
  private:
