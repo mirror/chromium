@@ -10,7 +10,6 @@ import android.os.SystemClock;
 
 import org.chromium.base.Callback;
 import org.chromium.base.VisibleForTesting;
-import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.chrome.browser.NativePageHost;
 import org.chromium.chrome.browser.download.ui.ThumbnailProvider;
 import org.chromium.chrome.browser.favicon.FaviconHelper;
@@ -24,7 +23,6 @@ import org.chromium.chrome.browser.profiles.Profile;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Class responsible for fetching images for the views in the NewTabPage and Chrome Home.
@@ -180,15 +178,15 @@ public class ImageFetcher {
                             assert faviconCallback != null;
 
                             faviconCallback.onResult(image);
-                            recordFaviconFetchResult(suggestion,
+                            SuggestionsMetrics.recordFaviconFetchResult(suggestion,
                                     fallbackToService ? FaviconFetchResult.SUCCESS_CACHED
                                                       : FaviconFetchResult.SUCCESS_FETCHED,
                                     faviconFetchStartTimeMs);
                         } else if (fallbackToService) {
                             if (!fetchFaviconFromService(suggestion, snippetUri,
                                         faviconFetchStartTimeMs, faviconSizePx, faviconCallback)) {
-                                recordFaviconFetchResult(suggestion, FaviconFetchResult.FAILURE,
-                                        faviconFetchStartTimeMs);
+                                SuggestionsMetrics.recordFaviconFetchResult(suggestion,
+                                        FaviconFetchResult.FAILURE, faviconFetchStartTimeMs);
                             }
                         }
                     }
@@ -202,7 +200,7 @@ public class ImageFetcher {
                 /* desiredSizePx */ 0, new Callback<Bitmap>() {
                     @Override
                     public void onResult(Bitmap image) {
-                        recordFaviconFetchTime(faviconFetchStartTimeMs);
+                        SuggestionsMetrics.recordFaviconFetchTime(faviconFetchStartTimeMs);
                         if (image == null) return;
                         faviconCallback.onResult(image);
                     }
@@ -227,8 +225,8 @@ public class ImageFetcher {
                     @Override
                     public void onIconAvailabilityChecked(boolean newlyAvailable) {
                         if (!newlyAvailable) {
-                            recordFaviconFetchResult(suggestion, FaviconFetchResult.FAILURE,
-                                    faviconFetchStartTimeMs);
+                            SuggestionsMetrics.recordFaviconFetchResult(suggestion,
+                                    FaviconFetchResult.FAILURE, faviconFetchStartTimeMs);
                             return;
                         }
                         // The download succeeded, the favicon is in the cache; fetch it.
@@ -238,22 +236,6 @@ public class ImageFetcher {
                     }
                 });
         return true;
-    }
-
-    private void recordFaviconFetchTime(long faviconFetchStartTimeMs) {
-        RecordHistogram.recordMediumTimesHistogram(
-                "NewTabPage.ContentSuggestions.ArticleFaviconFetchTime",
-                SystemClock.elapsedRealtime() - faviconFetchStartTimeMs, TimeUnit.MILLISECONDS);
-    }
-
-    private void recordFaviconFetchResult(SnippetArticle suggestion, @FaviconFetchResult int result,
-            long faviconFetchStartTimeMs) {
-        // Record the histogram for articles only to have a fair comparision.
-        if (!suggestion.isArticle()) return;
-        RecordHistogram.recordEnumeratedHistogram(
-                "NewTabPage.ContentSuggestions.ArticleFaviconFetchResult", result,
-                FaviconFetchResult.COUNT);
-        recordFaviconFetchTime(faviconFetchStartTimeMs);
     }
 
     /**
