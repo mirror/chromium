@@ -89,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f90314f8_30c3435a",
+        "filename": "ui/app_list/vector_icons/ic_search_engine_not_google.icon",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-06-30T20:43:58Z",
+      "side": 1,
+      "message": "per offline chat, ack",
+      "parentUuid": "34e688f4_e3210b21",
+      "revId": "eb2e429d5bef916540d0d4fff5b10a0a0b10255e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aee1a39c_4a428bfc",
         "filename": "ui/app_list/views/search_box_view.cc",
         "patchSetId": 3
