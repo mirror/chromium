@@ -33,7 +33,6 @@ class SharedPrefRegistry {
 
   scoped_refptr<ScopedPrefConnectionBuilder> CreateConnectionBuilder(
       mojom::PrefRegistryPtr pref_registry,
-      std::set<PrefValueStore::PrefStoreType> required_types,
       const service_manager::Identity& identity,
       mojom::PrefStoreConnector::ConnectCallback callback);
 

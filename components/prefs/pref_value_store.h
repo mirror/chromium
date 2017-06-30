@@ -17,6 +17,7 @@
 #include "components/prefs/base_prefs_export.h"
 #include "components/prefs/pref_store.h"
 
+class PersistentPrefStore;
 class PrefNotifier;
 class PrefStore;
 
@@ -46,6 +47,9 @@ class COMPONENTS_PREFS_EXPORT PrefValueStore {
                       PrefStore* recommended_prefs,
                       PrefStore* default_prefs,
                       PrefNotifier* pref_notifier) = 0;
+
+    virtual void InitIncognitoUnderlay(
+        PersistentPrefStore* incognito_user_prefs_underlay) = 0;
 
     // Called whenever PrefValueStore::UpdateCommandLinePrefStore is called,
     // with the same argument.

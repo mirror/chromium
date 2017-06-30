@@ -24,6 +24,10 @@
 using base::Time;
 using base::TimeDelta;
 
+namespace prefs {
+class InProcessPrefServiceFactory;
+}
+
 namespace sync_preferences {
 class PrefServiceSyncable;
 }
@@ -80,7 +84,6 @@ class OffTheRecordProfileImpl : public Profile {
   bool WasCreatedByVersionOrLater(const std::string& version) override;
   void SetExitType(ExitType exit_type) override;
   ExitType GetLastSessionExitType() override;
-  scoped_refptr<base::SequencedTaskRunner> GetPrefServiceTaskRunner() override;
 
 #if defined(OS_CHROMEOS)
   void ChangeAppLocale(const std::string& locale, AppLocaleChangedVia) override;
@@ -140,7 +143,6 @@ class OffTheRecordProfileImpl : public Profile {
   Profile* profile_;
 
   std::unique_ptr<sync_preferences::PrefServiceSyncable> prefs_;
-  scoped_refptr<base::SequencedTaskRunner> pref_service_task_runner_;
 
 #if !defined(OS_ANDROID)
   std::unique_ptr<content::HostZoomMap::Subscription> track_zoom_subscription_;
@@ -155,6 +157,8 @@ class OffTheRecordProfileImpl : public Profile {
   base::FilePath last_selected_directory_;
 
   std::unique_ptr<PrefProxyConfigTracker> pref_proxy_config_tracker_;
+
+  std::unique_ptr<prefs::InProcessPrefServiceFactory> pref_service_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(OffTheRecordProfileImpl);
 };
