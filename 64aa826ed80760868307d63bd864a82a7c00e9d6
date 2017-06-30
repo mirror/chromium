@@ -46,6 +46,30 @@
       "revId": "64aa826ed80760868307d63bd864a82a7c00e9d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9632b392_9671a142",
+        "filename": "chromecast/media/cma/backend/android/audio_sink_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-06-30T22:46:04Z",
+      "side": 1,
+      "message": "Thanks. I didn\u0027t realize that the AudioTrack volume was combined with the stream type volume and then had the volume curve applied after.",
+      "parentUuid": "4e632e03_9edc337c",
+      "range": {
+        "startLine": 31,
+        "startChar": 60,
+        "endLine": 31,
+        "endChar": 0
+      },
+      "revId": "64aa826ed80760868307d63bd864a82a7c00e9d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
