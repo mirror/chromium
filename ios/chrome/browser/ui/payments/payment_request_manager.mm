@@ -628,8 +628,13 @@ struct PendingPaymentResponse {
 
 #pragma mark - PaymentRequestUIDelegate
 
-- (void)openFullCardRequestUI {
-  [_paymentRequestCoordinator sendPaymentResponse];
+- (void)
+openFullCardRequestUI:(const autofill::CreditCard&)creditCard
+       resultDelegate:
+           (base::WeakPtr<autofill::payments::FullCardRequest::ResultDelegate>)
+               resultDelegate {
+  [_paymentRequestCoordinator openFullCardRequestUI:creditCard
+                                     resultDelegate:resultDelegate];
 }
 
 #pragma mark - PaymentRequestCoordinatorDelegate methods
@@ -653,15 +658,15 @@ struct PendingPaymentResponse {
 }
 
 - (void)paymentRequestCoordinator:(PaymentRequestCoordinator*)coordinator
-    didCompletePaymentRequestWithCard:(const autofill::CreditCard&)card
-                     verificationCode:(const base::string16&)verificationCode {
-  _pendingPaymentResponse.creditCard = card;
+        didReceiveFullCardDetails:(autofill::CreditCard*)card
+                 verificationCode:(const base::string16&)verificationCode {
+  _pendingPaymentResponse.creditCard = *card;
   _pendingPaymentResponse.verificationCode = verificationCode;
 
-  DCHECK(!card.billing_address_id().empty());
+  DCHECK(!card->billing_address_id().empty());
   autofill::AutofillProfile* billingAddress =
       autofill::PersonalDataManager::GetProfileFromProfilesByGUID(
-          card.billing_address_id(), _paymentRequest->billing_profiles());
+          card->billing_address_id(), _paymentRequest->billing_profiles());
   DCHECK(billingAddress);
   _pendingPaymentResponse.billingAddress = *billingAddress;
   _addressNormalizationManager->StartNormalizingAddress(
