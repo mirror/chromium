@@ -78,7 +78,10 @@ void va_TraceCreateConfig(
 );
 
 DLL_HIDDEN
-void va_TraceDestroyConfig(VADisplay dpy, VAConfigID config_id);
+void va_TraceDestroyConfig (
+    VADisplay dpy,
+    VAConfigID config_id
+);
 
 DLL_HIDDEN
 void va_TraceCreateSurfaces(
@@ -112,7 +115,10 @@ void va_TraceCreateContext(
 );
 
 DLL_HIDDEN
-void va_TraceDestroyContext(VADisplay dpy, VAContextID context);
+void va_TraceDestroyContext (
+    VADisplay dpy,
+    VAContextID context
+);
 
 DLL_HIDDEN
 void va_TraceCreateBuffer (

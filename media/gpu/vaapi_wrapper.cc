@@ -1225,8 +1225,8 @@ bool VaapiWrapper::VADisplayState::Initialize() {
     DVLOG(1) << "VAAPI version: " << major_version_ << "." << minor_version_;
   }
 
-  if (VAAPIVersionLessThan(0, 39)) {
-    LOG(ERROR) << "VAAPI version < 0.39 is not supported.";
+  if (VAAPIVersionLessThan(0, 40)) {
+    LOG(ERROR) << "VAAPI version < 0.40 is not supported.";
     return false;
   }
   return true;

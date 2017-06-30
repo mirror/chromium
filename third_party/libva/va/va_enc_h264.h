@@ -121,7 +121,7 @@ typedef enum {
 } VAEncPackedHeaderTypeH264;
 
 /**
- * \brief Sequence parameter for H.264 encoding in baseline, main & high
+ * \brief Sequence parameter for H.264 encoding in baseline, main & high 
  * profiles.
  *
  * This structure holds information for \c seq_parameter_set_data() as
@@ -386,8 +386,7 @@ typedef struct _VAEncPictureParameterBufferH264 {
  *
  * If per-macroblock encoder configuration is needed, \c macroblock_info
  * references a buffer of type #VAEncMacroblockParameterBufferH264. This
- * buffer is not passed to vaRenderPicture(). i.e. it is not destroyed
- * by subsequent calls to vaRenderPicture() and then can be re-used
+ * buffer is not passed to vaRenderPicture() and it can be re-used
  * without re-allocating the whole buffer.
  */
 typedef struct _VAEncSliceParameterBufferH264 {
@@ -524,7 +523,7 @@ typedef struct _VAEncSliceParameterBufferH264 {
 /**@}*/
 
 /**
- * \brief Macroblock parameter for H.264 encoding in baseline, main & high
+ * \brief Macroblock parameter for H.264 encoding in baseline, main & high 
  * profiles.
  *
  * This structure holds per-macroblock information. The buffer must be

@@ -183,13 +183,13 @@ typedef struct  _VADecPictureParameterBufferVP9
 
     /** \brief VP9 Profile definition
      *  value range [0..3].
-     */
+      */
     uint8_t                 profile;
 
     /** \brief VP9 bit depth per sample
      *  same for both luma and chroma samples.
      */
-    uint8_t bit_depth;
+    uint8_t                 bit_depth;
 
     /**@}*/
 
