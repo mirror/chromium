@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fddf30d8_d78add55",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-06-30T15:44:08Z",
+      "side": 1,
+      "message": "When can we make that the default? And don\u0027t you need to adjust https://cs.chromium.org/chromium/src/ui/gl/BUILD.gn?rcl\u003d33c0cac5413dc579185641ffa5b8ff6ee81a05b2\u0026l\u003d14 to do this for headless? Perhaps I\u0027m missing something.",
+      "revId": "7711969131395f3dd1bd037b1ab1c60d6618dbfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "367cb9bb_9b3253c4",
+        "filename": "ui/ozone/platform/headless/headless_surface_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-06-30T15:44:08Z",
+      "side": 1,
+      "message": "my understanding from kbr@ is that we should contemplate removing the Mesa version once we have swiftshader running. Perhaps there could be a bug to do that in a future CL?",
+      "revId": "7711969131395f3dd1bd037b1ab1c60d6618dbfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
