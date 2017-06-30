@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c041d1f8_9b7ddceb",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-06-30T14:38:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5858b80e_a141e544",
+      "range": {
+        "startLine": 532,
+        "startChar": 21,
+        "endLine": 532,
+        "endChar": 40
+      },
+      "revId": "c8d3b2100de1cd03564b7d196da42e332b45d6b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2cc392ea_d06247aa",
         "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "c8d3b2100de1cd03564b7d196da42e332b45d6b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd99146f_1eaa01a7",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-06-30T14:38:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2cc392ea_d06247aa",
+      "range": {
+        "startLine": 654,
+        "startChar": 24,
+        "endLine": 654,
+        "endChar": 46
+      },
+      "revId": "c8d3b2100de1cd03564b7d196da42e332b45d6b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -118,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "de1d22ed_c7737ca6",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1798,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-06-30T14:38:48Z",
+      "side": 1,
+      "message": "We set the scroll_type to kChainedScroll in LayoutObject::scrollRectToVisible so that SetScrollOffset will not abort any smooth scroll in the same chain.",
+      "parentUuid": "b8f0277f_28693706",
+      "range": {
+        "startLine": 1798,
+        "startChar": 26,
+        "endLine": 1798,
+        "endChar": 48
+      },
+      "revId": "c8d3b2100de1cd03564b7d196da42e332b45d6b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c060a572_51caef83",
         "filename": "third_party/WebKit/Source/platform/scroll/ProgrammaticScrollAnimator.cpp",
         "patchSetId": 3
@@ -141,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "c8ab9e9c_0f42bbbe",
+        "filename": "third_party/WebKit/Source/platform/scroll/ProgrammaticScrollAnimator.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-06-30T14:38:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c060a572_51caef83",
+      "range": {
+        "startLine": 41,
+        "startChar": 9,
+        "endLine": 41,
+        "endChar": 36
+      },
+      "revId": "c8d3b2100de1cd03564b7d196da42e332b45d6b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca9da2a1_38c0fa77",
         "filename": "third_party/WebKit/Source/platform/scroll/ProgrammaticScrollAnimator.cpp",
         "patchSetId": 3
@@ -161,6 +257,30 @@
       "revId": "c8d3b2100de1cd03564b7d196da42e332b45d6b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c62e04d2_2077b1e0",
+        "filename": "third_party/WebKit/Source/platform/scroll/ProgrammaticScrollAnimator.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-06-30T14:38:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca9da2a1_38c0fa77",
+      "range": {
+        "startLine": 43,
+        "startChar": 2,
+        "endLine": 43,
+        "endChar": 30
+      },
+      "revId": "c8d3b2100de1cd03564b7d196da42e332b45d6b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -208,6 +328,30 @@
       "revId": "c8d3b2100de1cd03564b7d196da42e332b45d6b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4c2390e_5410ac62",
+        "filename": "third_party/WebKit/Source/web/tests/SmoothScrollTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-06-30T14:38:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f18d546a_ecad3d0c",
+      "range": {
+        "startLine": 313,
+        "startChar": 2,
+        "endLine": 313,
+        "endChar": 34
+      },
+      "revId": "c8d3b2100de1cd03564b7d196da42e332b45d6b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
