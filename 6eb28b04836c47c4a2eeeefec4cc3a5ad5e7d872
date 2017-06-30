@@ -34,6 +34,24 @@
       "revId": "6eb28b04836c47c4a2eeeefec4cc3a5ad5e7d872",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ad7b304_f7d1d1de",
+        "filename": "build/android/lint/suppress.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-06-30T14:07:09Z",
+      "side": 1,
+      "message": "Gotcha. Thanks for the explanation! lgtm as-is, but would be worth adding your example of why re.escape doesn\u0027t work in the comment.",
+      "parentUuid": "9380f1a3_b0bbf010",
+      "revId": "6eb28b04836c47c4a2eeeefec4cc3a5ad5e7d872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
