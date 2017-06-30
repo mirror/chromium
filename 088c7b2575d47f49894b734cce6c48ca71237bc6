@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6faf9b6_2b7d2ef1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-06-30T05:17:31Z",
+      "side": 1,
+      "message": "nit: test -\u003e tests",
+      "revId": "088c7b2575d47f49894b734cce6c48ca71237bc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ced55b6b_0e6a9f8a",
+        "filename": "components/translate/core/browser/translate_language_list.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-06-30T05:17:31Z",
+      "side": 1,
+      "message": "nit: Sort in alphabetical order.",
+      "revId": "088c7b2575d47f49894b734cce6c48ca71237bc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "286f74e6_8737fd37",
+        "filename": "components/translate/core/browser/translate_language_list_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-06-30T05:17:31Z",
+      "side": 1,
+      "message": "nit: Is this necessary? (Sorry, I realise this isn\u0027t code you\u0027ve added in this CL.)",
+      "revId": "088c7b2575d47f49894b734cce6c48ca71237bc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ad4c561_b1d0cf79",
+        "filename": "components/translate/core/browser/translate_language_list_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-06-30T05:17:31Z",
+      "side": 1,
+      "message": "Please add comments for what each of these tests do (including SetSupportedLanguages above).",
+      "revId": "088c7b2575d47f49894b734cce6c48ca71237bc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "804aed84_9fbaa9e4",
+        "filename": "components/translate/core/browser/translate_language_list_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-06-30T05:17:31Z",
+      "side": 1,
+      "message": "These arguments should be the other way around:\n\n  EXPECT_EQ(expected, actual)",
+      "revId": "088c7b2575d47f49894b734cce6c48ca71237bc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a29ee675_c322353c",
+        "filename": "components/translate/core/browser/translate_language_list_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-06-30T05:17:31Z",
+      "side": 1,
+      "message": "Does it make sense to do something like\n\n  scoped_command_line.GetProcessCommandLine()-\u003eHasSwitch(\"translate-security-origin\")\n\nat the beginning of the test and only add it if it\u0027s not there?\n\n(I.e., will this switch ever be on by default, and what happens if it is?)",
+      "revId": "088c7b2575d47f49894b734cce6c48ca71237bc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
