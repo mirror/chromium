@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0bece7e_bfdc02f4",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/ico/ICOImageDecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-06-30T11:54:14Z",
+      "side": 1,
+      "message": "This is quite a straightforward fix for crash.\nIf you have any idea how to do it better, please share.",
+      "revId": "1743dbc33f3c74f1f1d260e46be10bc9d8a8efff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "649a0c36_21f18947",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/ico/ICOImageDecoderTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-06-30T11:54:14Z",
+      "side": 1,
+      "message": "This is a key to the crash.\nIf image decoder read less or greater than this value, crash will not happen.\nValue is related to the number of ICO directory entries and can be different for other images.",
+      "revId": "1743dbc33f3c74f1f1d260e46be10bc9d8a8efff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
