@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7ef495d_0c9e13d6",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-30T15:32:35Z",
+      "side": 1,
+      "message": "Can you remove the \"added for testing purposes\" comment in IsOobeOptInActive()\u0027s declaration?",
+      "range": {
+        "startLine": 584,
+        "startChar": 16,
+        "endLine": 584,
+        "endChar": 33
+      },
+      "revId": "896cbe879737fe8acab7d5f9113b04eac77740a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "611a2d36_dca7114f",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-30T15:32:35Z",
+      "side": 1,
+      "message": "nit: missing comma.",
+      "range": {
+        "startLine": 335,
+        "startChar": 51,
+        "endLine": 335,
+        "endChar": 52
+      },
+      "revId": "896cbe879737fe8acab7d5f9113b04eac77740a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c9a0ab5_b48fa80e",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-30T15:32:35Z",
+      "side": 1,
+      "message": "Can you also add a bit about the fact that you need to store this since the value returned from IsOobeOptInActive() will change by the time we need to make a decision based upon it?",
+      "range": {
+        "startLine": 336,
+        "startChar": 7,
+        "endLine": 336,
+        "endChar": 18
+      },
+      "revId": "896cbe879737fe8acab7d5f9113b04eac77740a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
