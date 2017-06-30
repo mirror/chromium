@@ -35,6 +35,7 @@
 #include "ash/test/test_shell_delegate.h"
 #include "ash/test/wallpaper_controller_test_api.h"
 #include "ash/wallpaper/wallpaper_controller.h"
+#include "ash/wm/maximize_mode/maximize_mode_controller.h"
 #include "base/i18n/rtl.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
@@ -2564,6 +2565,97 @@ TEST_F(ShelfViewInkDropTest, ShelfButtonWithMenuPressRelease) {
   EXPECT_THAT(browser_button_ink_drop_->GetAndResetRequestedStates(),
               ElementsAre(views::InkDropState::ACTIVATED,
                           views::InkDropState::DEACTIVATED));
+}
+
+// Tests that clicking/tapping on the app list button in maximized mode (when
+// it has two functionalities), transitions the ink drop state correctly.
+TEST_F(ShelfViewInkDropTest, AppListButtonInMaximizedMode) {
+  // TODO: investigate failure in mash, http://crbug.com/695751.
+  if (Shell::GetAshConfig() == Config::MASH)
+    return;
+
+  InitAppListButtonInkDrop();
+
+  // Verify the app list button bounds change when we enter maximized mode.
+  const gfx::Rect old_bounds = app_list_button_->GetBoundsInScreen();
+  Shell::Get()->maximize_mode_controller()->EnableMaximizeModeWindowManager(
+      true);
+  gfx::Rect new_bounds = app_list_button_->GetBoundsInScreen();
+  EXPECT_EQ(new_bounds.height(), old_bounds.height());
+  EXPECT_GT(new_bounds.width(), old_bounds.width());
+
+  ui::test::EventGenerator& generator = GetEventGenerator();
+  const gfx::Point point_on_circle(
+      app_list_button_->GetBoundsInScreen().x() +
+          app_list_button_->GetCircleCenterPoint().x(),
+      app_list_button_->GetBoundsInScreen().y() +
+          app_list_button_->GetCircleCenterPoint().y());
+  const gfx::Point point_on_back_button(
+      app_list_button_->GetBoundsInScreen().x() +
+          app_list_button_->GetBackButtonCenterPoint().x(),
+      app_list_button_->GetBoundsInScreen().y() +
+          app_list_button_->GetBackButtonCenterPoint().y());
+
+  const std::vector<std::string> event_types = {"mouse", "touch"};
+
+  for (auto event_type : event_types) {
+    // Verify the ink drop state transitions as expected when we press and
+    // release on the app list circle part of the app list button. Taps on the
+    // app list circle, which shows the app list, should end up in the activated
+    // state.
+    if (event_type == "mouse") {
+      generator.MoveMouseTo(point_on_circle);
+      generator.PressLeftButton();
+    } else if (event_type == "touch") {
+      generator.MoveTouch(point_on_circle);
+      generator.PressTouch();
+    }
+    // Trigger a mock button notification that the app list was shown.
+    app_list_button_->OnAppListShown();
+    FinishAppListVisibilityChange();
+    EXPECT_EQ(views::InkDropState::ACTIVATED,
+              app_list_button_ink_drop_->GetTargetInkDropState());
+    EXPECT_THAT(app_list_button_ink_drop_->GetAndResetRequestedStates(),
+                ElementsAre(views::InkDropState::ACTION_PENDING,
+                            views::InkDropState::ACTIVATED));
+    if (event_type == "mouse")
+      generator.ReleaseLeftButton();
+    else if (event_type == "touch")
+      generator.ReleaseTouch();
+    EXPECT_EQ(views::InkDropState::ACTIVATED,
+              app_list_button_ink_drop_->GetTargetInkDropState());
+    EXPECT_THAT(app_list_button_ink_drop_->GetAndResetRequestedStates(),
+                IsEmpty());
+
+    // Verify the ink drop state transitions as expected when we tap on the back
+    // button part of the app list button.
+    if (event_type == "mouse") {
+      generator.MoveMouseTo(point_on_back_button);
+      generator.PressLeftButton();
+    } else if (event_type == "touch") {
+      generator.MoveTouch(point_on_back_button);
+      generator.PressTouch();
+    }
+    EXPECT_EQ(views::InkDropState::ACTION_PENDING,
+              app_list_button_ink_drop_->GetTargetInkDropState());
+    EXPECT_THAT(app_list_button_ink_drop_->GetAndResetRequestedStates(),
+                ElementsAre(views::InkDropState::ACTION_PENDING));
+    if (event_type == "mouse")
+      generator.ReleaseLeftButton();
+    else if (event_type == "touch")
+      generator.ReleaseTouch();
+    EXPECT_EQ(views::InkDropState::HIDDEN,
+              app_list_button_ink_drop_->GetTargetInkDropState());
+    EXPECT_THAT(app_list_button_ink_drop_->GetAndResetRequestedStates(),
+                ElementsAre(views::InkDropState::ACTION_TRIGGERED));
+  }
+
+  // Verify when we leave maximized mode, the bounds should return to be the
+  // same as they were before we entered maximized mode.
+  Shell::Get()->maximize_mode_controller()->EnableMaximizeModeWindowManager(
+      false);
+  new_bounds = app_list_button_->GetBoundsInScreen();
+  EXPECT_EQ(new_bounds, old_bounds);
 }
 
 namespace {
