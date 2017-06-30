@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "3cfa61bf_e1b1499c",
+        "filename": "chrome/browser/profile_resetter/profile_resetter.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-30T19:33:09Z",
+      "side": 1,
+      "message": "Gotcha. As of late Wednesday/Thursday, unexpected uses of COM posted to the wrong task runner should DCHECK on 32-bit Windows builds. If you hit any other strange COM cases, feel free to let me know",
+      "parentUuid": "8a47eadb_7cb939ba",
+      "range": {
+        "startLine": 327,
+        "startChar": 8,
+        "endLine": 327,
+        "endChar": 40
+      },
+      "revId": "f400d05afacef5ef4ab13fadcc479579b6aa4635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9555cbbf_43dff1d4",
         "filename": "chrome/browser/profile_resetter/profile_resetter.h",
         "patchSetId": 9
