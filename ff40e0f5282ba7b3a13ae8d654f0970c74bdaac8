@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bcede275_45b43995",
+        "filename": "third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-30T07:49:38Z",
+      "side": 1,
+      "message": "(Sounds like we should be able to delete this entirely after browser-side provider host creation lands)",
+      "revId": "ff40e0f5282ba7b3a13ae8d654f0970c74bdaac8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
