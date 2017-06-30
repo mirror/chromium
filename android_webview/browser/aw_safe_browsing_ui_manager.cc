@@ -65,7 +65,8 @@ void AwSafeBrowsingUIManager::DisplayBlockingPage(
 
 void AwSafeBrowsingUIManager::ShowBlockingPageForResource(
     const UnsafeResource& resource) {
-  AwSafeBrowsingBlockingPage::ShowBlockingPage(this, resource);
+  AwSafeBrowsingBlockingPage::ShowBlockingPage(this, resource,
+                                               extended_reporting_allowed_);
 }
 
 int AwSafeBrowsingUIManager::GetErrorUiType(
@@ -102,6 +103,10 @@ void AwSafeBrowsingUIManager::SendSerializedThreatDetails(
     DVLOG(1) << "Sending serialized threat details";
     ping_manager_->ReportThreatDetails(serialized);
   }
+}
+
+void AwSafeBrowsingUIManager::SetExtendedReportingAllowed(bool allowed) {
+  extended_reporting_allowed_ = allowed;
 }
 
 }  // namespace android_webview
