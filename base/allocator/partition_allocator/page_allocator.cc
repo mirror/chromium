@@ -44,12 +44,47 @@ static std::atomic<int32_t> s_allocPageErrorCode{ERROR_SUCCESS};
 
 namespace base {
 
+// On 32 bit systems, reserve a single large block at startup to allow large
+// allocations to succeed if they occur early enough in the process's lifetime.
+// This reservation will be released after some amount of allocation activity
+// to allow other parts of the renderer to get memory.
+#if defined(ARCH_CPU_32_BITS)
+namespace {
+static const int kReservationSize = 514 * 1024 * 1024;  // 512 + 2 MiB
+static const int kReservationReleaseThreshold = 128 * 1024 * 1024;  // 128 MiB
+static void* s_reservation = nullptr;
+static bool s_did_reserve = false;
+static size_t s_total_system_allocs = 0;
+
+static void ReserveLargeBlock() {
+#if defined(OS_WIN)
+  s_reservation =
+      VirtualAlloc(nullptr, kReservationSize, MEM_RESERVE, PAGE_NOACCESS);
+#else
+  s_reservation = mmap(nullptr, kReservationSize, PROT_NONE,
+                       MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
+  if (s_reservation == MAP_FAILED) {
+    s_reservation = nullptr;
+  }
+#endif
+  s_did_reserve = true;
+}
+
+}  // namespace
+#endif  // defined(ARCH_CPU_32_BITS)
+
 // This internal function wraps the OS-specific page allocation call:
 // |VirtualAlloc| on Windows, and |mmap| on POSIX.
 static void* SystemAllocPages(
     void* hint,
     size_t length,
     PageAccessibilityConfiguration page_accessibility) {
+#if defined(ARCH_CPU_32_BITS)
+  // On 32-bit systems, reserve a large block before anything else.
+  if (s_reservation == nullptr && !s_did_reserve) {
+    ReserveLargeBlock();
+  }
+#endif
   DCHECK(!(length & kPageAllocationGranularityOffsetMask));
   DCHECK(!(reinterpret_cast<uintptr_t>(hint) &
            kPageAllocationGranularityOffsetMask));
@@ -58,8 +93,9 @@ static void* SystemAllocPages(
   DWORD access_flag =
       page_accessibility == PageAccessible ? PAGE_READWRITE : PAGE_NOACCESS;
   ret = VirtualAlloc(hint, length, MEM_RESERVE | MEM_COMMIT, access_flag);
-  if (!ret)
+  if (!ret) {
     s_allocPageErrorCode = GetLastError();
+  }
 #else
   int access_flag = page_accessibility == PageAccessible
                         ? (PROT_READ | PROT_WRITE)
@@ -67,7 +103,21 @@ static void* SystemAllocPages(
   ret = mmap(hint, length, access_flag, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
   if (ret == MAP_FAILED) {
     s_allocPageErrorCode = errno;
-    ret = 0;
+    ret = nullptr;
+  }
+#endif
+#if defined(ARCH_CPU_32_BITS)
+  if (ret) {
+    s_total_system_allocs += length;
+  }
+  if ((ret == nullptr ||
+       s_total_system_allocs >= kReservationReleaseThreshold) &&
+      s_reservation != nullptr) {
+    FreePages(s_reservation, kReservationSize);
+    s_reservation = nullptr;
+    if (!ret) {
+      return SystemAllocPages(hint, length, page_accessibility);
+    }
   }
 #endif
   return ret;
