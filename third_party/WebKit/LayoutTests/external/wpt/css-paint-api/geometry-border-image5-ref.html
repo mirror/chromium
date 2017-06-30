@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<body>
+<canvas id ="canvas" width="240" height="240" style="margin-left:-20px; margin-top:-20px"></canvas>
+<script>
+var canvas = document.getElementById('canvas');
+var context = canvas.getContext("2d");
+context.clearRect(0, 0, canvas.width, canvas.height);
+context.strokeStyle = 'green';
+context.lineWidth = 8;
+context.strokeRect(0, 0, 240, 240);
+</script>
+</body>
+</html>

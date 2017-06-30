@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<body>
+<canvas id ="canvas" width="50" height="20" style="position:absolute; top:48px; left:58px"></canvas>
+<script>
+var canvas = document.getElementById('canvas');
+var context = canvas.getContext("2d");
+context.clearRect(0, 0, canvas.width, canvas.height);
+context.strokeStyle = 'green';
+context.lineWidth = 4;
+context.strokeRect(0, 0, 50, 20);
+</script>
+</body>
+</html>
