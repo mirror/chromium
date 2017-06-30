@@ -20,6 +20,7 @@ namespace net {
 
 class IOBuffer;
 struct SockaddrStorage;
+class SocketTag;
 
 // Socket class to provide asynchronous read/write operations on top of the
 // posix socket api. It supports AF_INET, AF_INET6, and AF_UNIX addresses.
@@ -96,6 +97,8 @@ class NET_EXPORT_PRIVATE SocketPosix : public base::MessageLoopForIO::Watcher {
   // a new thread. Should only be called when the object is no longer used by
   // the old thread.
   void DetachFromThread();
+
+  void Tag(const SocketTag& tag);
 
   SocketDescriptor socket_fd() const { return socket_fd_; }
 

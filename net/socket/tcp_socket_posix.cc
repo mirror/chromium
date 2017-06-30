@@ -501,6 +501,11 @@ SocketDescriptor TCPSocketPosix::ReleaseSocketDescriptorForTesting() {
   return socket_descriptor;
 }
 
+void TCPSocketPosix::Tag(const SocketTag& tag) {
+  DCHECK(socket_);
+  socket_->Tag(tag);
+}
+
 void TCPSocketPosix::AcceptCompleted(
     std::unique_ptr<TCPSocketPosix>* tcp_socket,
     IPEndPoint* address,

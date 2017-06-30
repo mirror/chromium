@@ -84,6 +84,7 @@ class NET_EXPORT TCPClientSocket : public StreamSocket {
   void ClearConnectionAttempts() override;
   void AddConnectionAttempts(const ConnectionAttempts& attempts) override;
   int64_t GetTotalReceivedBytes() const override;
+  void Tag(const SocketTag& tag) override;
 
  private:
   // State machine for connecting the socket.

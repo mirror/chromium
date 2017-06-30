@@ -393,6 +393,10 @@ void SocketPosix::DetachFromThread() {
   thread_checker_.DetachFromThread();
 }
 
+void SocketPosix::Tag(const SocketTag& tag) {
+  // TODO(pauljensen): implement.
+}
+
 void SocketPosix::OnFileCanReadWithoutBlocking(int fd) {
   TRACE_EVENT0(kNetTracingCategory,
                "SocketPosix::OnFileCanReadWithoutBlocking");
