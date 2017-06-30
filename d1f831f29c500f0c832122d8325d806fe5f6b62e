@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7eade5ca_4e10227e",
+        "filename": "chrome/browser/resources/settings/people_page/change_picture.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-06-30T00:36:08Z",
+      "side": 1,
+      "message": "Hey, are we sure that these string ids can\u0027t belong within cr-camera? It seems like the oobe picker will need to do the exact same thing.",
+      "range": {
+        "startLine": 347,
+        "startChar": 31,
+        "endLine": 347,
+        "endChar": 32
+      },
+      "revId": "d1f831f29c500f0c832122d8325d806fe5f6b62e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec9585d0_107d2353",
+        "filename": "ui/webui/resources/cr_elements/chromeos/change_picture/cr_camera.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-06-30T00:36:08Z",
+      "side": 1,
+      "message": "Hmm this confuses me. Why isn\u0027t it just \"this\"? I don\u0027t actually see an element with id\u003d\"camera\"",
+      "revId": "d1f831f29c500f0c832122d8325d806fe5f6b62e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
