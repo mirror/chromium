@@ -65,6 +65,7 @@ class CC_EXPORT BrowserControlsOffsetManager {
   void MainThreadHasStoppedFlinging();
 
   gfx::Vector2dF Animate(base::TimeTicks monotonic_time);
+  void ResetBaseline();
 
  protected:
   BrowserControlsOffsetManager(BrowserControlsOffsetManagerClient* client,
@@ -76,7 +77,6 @@ class CC_EXPORT BrowserControlsOffsetManager {
   void SetupAnimation(AnimationDirection direction);
   void StartAnimationIfNecessary();
   bool IsAnimationComplete(float new_ratio);
-  void ResetBaseline();
 
   // The client manages the lifecycle of this.
   BrowserControlsOffsetManagerClient* client_;
