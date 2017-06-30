@@ -26,6 +26,7 @@
 #include "components/arc/instance_holder.h"
 #include "content/public/browser/notification_observer.h"
 #include "content/public/browser/notification_registrar.h"
+#include "ui/gfx/native_widget_types.h"
 #include "ui/wm/public/activation_change_observer.h"
 
 namespace resource_coordinator {
@@ -74,7 +75,7 @@ class TabManagerDelegate : public wm::ActivationChangeObserver,
                          aura::Window* lost_active) override;
 
   // Kills a process on memory pressure.
-  void LowMemoryKill(const TabStatsList& tab_stats);
+  void LowMemoryKill();
 
   // Returns oom_score_adj of a process if the score is cached by |this|.
   // If couldn't find the score in the cache, returns -1001 since the valid

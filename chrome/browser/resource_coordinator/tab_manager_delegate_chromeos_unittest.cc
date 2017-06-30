@@ -248,7 +248,8 @@ TEST_F(TabManagerDelegateTest, SetOomScoreAdj) {
   // tab1                pid: 11
   // tab5                pid: 12
   // tab2                pid: 11
-  tab_manager_delegate.AdjustOomPrioritiesImpl(tab_list, arc_processes);
+  tab_manager_delegate.AdjustOomPrioritiesImpl(tab_list,
+                                               std::move(arc_processes));
   auto& oom_score_map = tab_manager_delegate.oom_score_map_;
 
   // 6 PIDs for apps + 2 PIDs for tabs.
