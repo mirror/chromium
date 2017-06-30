@@ -53,6 +53,14 @@ class MediaEngagementService : public KeyedService {
   // |interactions| is a bitwise OR of InteractionTypes.
   void HandleInteraction(const GURL& url, unsigned short int interactions);
 
+  // Returns true if the origin is allowed to bypass autoplay policies based on
+  // the engagement score.
+  bool OriginIsAllowedToBypassAutoplayPolicy(const GURL& url) const;
+
+  // Origins with scores higher than this will be allowed to bypass autoplay
+  // policies.
+  const double kScoreAutoplayAllowed = 0.7;
+
  private:
   FRIEND_TEST_ALL_PREFIXES(MediaEngagementServiceTest,
                            RestrictedToHTTPAndHTTPS);

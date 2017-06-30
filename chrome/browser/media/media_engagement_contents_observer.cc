@@ -6,10 +6,24 @@
 
 #include "chrome/browser/media/media_engagement_service.h"
 #include "content/public/browser/navigation_handle.h"
+#include "content/public/browser/render_frame_host.h"
+#include "content/public/browser/render_view_host.h"
 #include "content/public/browser/web_contents.h"
+#include "content/public/common/web_preferences.h"
+#include "media/base/media_switches.h"
 
 constexpr base::TimeDelta
     MediaEngagementContentsObserver::kSignificantMediaPlaybackTime;
+
+namespace {
+
+GURL GetURLOfMainFrame(content::RenderFrameHost* render_frame_host) {
+  if (render_frame_host->GetParent())
+    return GetURLOfMainFrame(render_frame_host->GetParent());
+  return render_frame_host->GetLastCommittedURL();
+}
+
+}  // namespace
 
 MediaEngagementContentsObserver::MediaEngagementContentsObserver(
     content::WebContents* web_contents,
@@ -33,13 +47,43 @@ void MediaEngagementContentsObserver::ClearPlayerStates() {
   player_states_.clear();
 }
 
+void MediaEngagementContentsObserver::UpdateAutoplayOrigin(
+    content::RenderFrameHost* render_frame_host) {
+  if (!base::FeatureList::IsEnabled(
+          media::kMediaEngagementBypassAutoplayPolicies))
+    return;
+
+  // If the frame is an iFrame, we should find the URL of the main frame and use
+  // that to check the engagement score. If the score is high enough to bypass
+  // autopolicy policies then the new whitelist scope should be the origin of
+  // the current page.
+  std::string new_value = "";
+  if (service_->OriginIsAllowedToBypassAutoplayPolicy(
+          GetURLOfMainFrame(render_frame_host))) {
+    new_value = render_frame_host->GetLastCommittedOrigin().Serialize();
+  }
+
+  content::RenderViewHost* render_view_host =
+      render_frame_host->GetRenderViewHost();
+  content::WebPreferences preferences =
+      render_view_host->GetWebkitPreferences();
+  if (new_value != preferences.media_playback_gesture_whitelist_scope) {
+    preferences.media_playback_gesture_whitelist_scope = new_value;
+    render_view_host->UpdateWebkitPreferences(preferences);
+  }
+}
+
 void MediaEngagementContentsObserver::DidFinishNavigation(
     content::NavigationHandle* navigation_handle) {
-  if (!navigation_handle->IsInMainFrame() ||
-      !navigation_handle->HasCommitted() ||
+  if (!navigation_handle->HasCommitted() ||
       navigation_handle->IsSameDocument() || navigation_handle->IsErrorPage()) {
     return;
   }
+
+  UpdateAutoplayOrigin(navigation_handle->GetRenderFrameHost());
+
+  if (!navigation_handle->IsInMainFrame())
+    return;
 
   DCHECK(!playback_timer_->IsRunning());
   DCHECK(significant_players_.empty());

@@ -66,6 +66,11 @@ class MediaEngagementScore final {
   // a score of zero.
   static const int kScoreMinVisits;
 
+  void SetVisits(int visits) { visits_ = visits; }
+  void SetMediaPlaybacks(int media_playbacks) {
+    media_playbacks_ = media_playbacks;
+  }
+
  private:
   friend class MediaEngagementScoreTest;
 

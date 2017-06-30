@@ -10,22 +10,28 @@
 #include "chrome/browser/media/media_engagement_service_factory.h"
 #include "chrome/test/base/chrome_render_view_host_test_harness.h"
 #include "chrome/test/base/testing_profile.h"
+#include "content/public/browser/navigation_entry.h"
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/web_contents.h"
+#include "content/public/common/web_preferences.h"
+#include "content/public/test/navigation_simulator.h"
+#include "content/public/test/web_contents_tester.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 class MediaEngagementContentsObserverTest
     : public ChromeRenderViewHostTestHarness {
  public:
   void SetUp() override {
-    scoped_feature_list_.InitFromCommandLine("media-engagement", std::string());
+    scoped_feature_list_.InitFromCommandLine(
+        "media-engagement,media-engagement-bypass-autoplay-policies",
+        std::string());
 
     ChromeRenderViewHostTestHarness::SetUp();
 
-    MediaEngagementService* service = MediaEngagementService::Get(profile());
-    ASSERT_TRUE(service);
+    service_ = MediaEngagementService::Get(profile());
+    ASSERT_TRUE(service_);
     contents_observer_ =
-        new MediaEngagementContentsObserver(web_contents(), service);
+        new MediaEngagementContentsObserver(web_contents(), service_);
 
     playback_timer_ = new base::MockTimer(true, false);
     contents_observer_->SetTimerForTest(base::WrapUnique(playback_timer_));
@@ -107,17 +113,45 @@ class MediaEngagementContentsObserverTest
     EXPECT_EQ(score.media_playbacks(), expected_media_playbacks);
   }
 
-  void Navigate(GURL url) {
-    std::unique_ptr<content::NavigationHandle> test_handle =
-        content::NavigationHandle::CreateNavigationHandleForTesting(
-            GURL(url), main_rfh(), true /** committed */);
-    contents_observer_->DidFinishNavigation(test_handle.get());
-    contents_observer_->committed_origin_ = url::Origin(url);
+  void ExpectAutoplayOriginScope(content::RenderFrameHost* rfh,
+                                 std::string origin) {
+    content::WebPreferences preferences =
+        rfh->GetRenderViewHost()->GetWebkitPreferences();
+    std::string scope = preferences.media_playback_gesture_whitelist_scope;
+    if (scope.length())
+      scope = scope + "/";
+    EXPECT_EQ(origin, scope);
+  }
+
+  void SetMetricsForOrigin(GURL url, int visits, int media_playbacks) {
+    MediaEngagementScore score = service_->CreateEngagementScore(url);
+    score.SetVisits(visits);
+    score.SetMediaPlaybacks(media_playbacks);
+    score.Commit();
+  }
+
+  double GetEngagementScore(GURL url) {
+    return service_->GetEngagementScore(url);
+  }
+
+  content::RenderFrameHost* CreateFrame(content::RenderFrameHost* parent_rfh,
+                                        GURL url) {
+    content::RenderFrameHost* child_rfh =
+        content::RenderFrameHostTester::For(parent_rfh)
+            ->AppendChild("subframe");
+    content::RenderFrameHostTester* subframe_tester =
+        content::RenderFrameHostTester::For(child_rfh);
+    subframe_tester->SimulateNavigationStart(url);
+    subframe_tester->SimulateNavigationCommit(url);
+    subframe_tester->SimulateNavigationStop();
+    return child_rfh;
   }
 
  private:
   // contents_observer_ auto-destroys when WebContents is destroyed.
   MediaEngagementContentsObserver* contents_observer_;
+
+  MediaEngagementService* service_;
 
   base::test::ScopedFeatureList scoped_feature_list_;
 
@@ -147,6 +181,47 @@ TEST_F(MediaEngagementContentsObserverTest, SignificantActivePlayerCount) {
 
   SimulatePlaybackStopped(2);
   EXPECT_EQ(0u, GetSignificantActivePlayersCount());
+}
+
+TEST_F(MediaEngagementContentsObserverTest, UpdateAutoplayOrigin) {
+  GURL url1("https://www.google.com");
+  GURL url2("https://www.example.org");
+
+  // url1 should have a 1.0 score and url2 should have a 0.0 score.
+  SetMetricsForOrigin(url1, MediaEngagementScore::kScoreMinVisits + 1,
+                      MediaEngagementScore::kScoreMinVisits + 1);
+  SetMetricsForOrigin(url2, 1, 1);
+  EXPECT_EQ(1.0, GetEngagementScore(url1));
+  EXPECT_EQ(0.0, GetEngagementScore(url2));
+
+  NavigateAndCommit(url1);
+  ExpectAutoplayOriginScope(main_rfh(), url1.spec());
+
+  NavigateAndCommit(url2);
+  ExpectAutoplayOriginScope(main_rfh(), "");
+}
+
+TEST_F(MediaEngagementContentsObserverTest, UpdateAutoplayOriginFrame) {
+  GURL root("https://www.google.com");
+  GURL child("https://www.testplayer.com");
+  GURL other_root("https://www.example.org");
+
+  SetMetricsForOrigin(root, MediaEngagementScore::kScoreMinVisits + 1,
+                      MediaEngagementScore::kScoreMinVisits + 1);
+  SetMetricsForOrigin(other_root, 1, 1);
+  EXPECT_EQ(1.0, GetEngagementScore(root));
+  EXPECT_EQ(0.0, GetEngagementScore(other_root));
+
+  NavigateAndCommit(child);
+  ExpectAutoplayOriginScope(main_rfh(), "");
+
+  NavigateAndCommit(root);
+  content::RenderFrameHost* child_rfh = CreateFrame(main_rfh(), child);
+  ExpectAutoplayOriginScope(child_rfh, child.spec());
+
+  NavigateAndCommit(other_root);
+  child_rfh = CreateFrame(main_rfh(), child);
+  ExpectAutoplayOriginScope(child_rfh, "");
 }
 
 TEST_F(MediaEngagementContentsObserverTest, AreConditionsMet) {
@@ -184,7 +259,7 @@ TEST_F(MediaEngagementContentsObserverTest, EnsureCleanupAfterNavigation) {
   SimulateMutedStateChange(0, true);
   EXPECT_TRUE(GetStoredPlayerStatesCount());
 
-  Navigate(GURL("https://example.com"));
+  NavigateAndCommit(GURL("https://example.com"));
   EXPECT_FALSE(GetStoredPlayerStatesCount());
 }
 
@@ -243,7 +318,7 @@ TEST_F(MediaEngagementContentsObserverTest, InteractionsRecorded) {
   GURL url("https://www.google.com");
   ExpectScores(url, 0, 0);
 
-  Navigate(url);
+  NavigateAndCommit(url);
   ExpectScores(url, 1, 0);
 
   SimulateSignificantPlaybackTime();

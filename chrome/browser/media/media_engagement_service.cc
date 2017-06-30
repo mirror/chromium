@@ -65,6 +65,11 @@ std::set<GURL> GetEngagementOriginsFromContentSettings(Profile* profile) {
   return urls;
 }
 
+bool MediaEngagementService::OriginIsAllowedToBypassAutoplayPolicy(
+    const GURL& url) const {
+  return GetEngagementScore(url) > kScoreAutoplayAllowed;
+}
+
 double MediaEngagementService::GetEngagementScore(const GURL& url) const {
   return CreateEngagementScore(url).GetTotalScore();
 }
