@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "7447e19d_9dfa7b65",
+        "filename": "components/signin/core/browser/dice_header_helper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-06-30T12:26:26Z",
+      "side": 1,
+      "message": "I see - the doc is internal. Maybe we could add an internal go-link for this? Or is that too bad from a Open Source perspective?",
+      "parentUuid": "0663c41e_56a75e9c",
+      "range": {
+        "startLine": 95,
+        "startChar": 37,
+        "endLine": 95,
+        "endChar": 67
+      },
+      "revId": "59da5ac865915646c25d1c09a5e00b8b9e70d068",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dc75e60c_ae335119",
         "filename": "components/signin/core/browser/signin_header_helper.h",
         "patchSetId": 7
@@ -269,6 +293,24 @@
       "revId": "59da5ac865915646c25d1c09a5e00b8b9e70d068",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afc02f4a_9dad7d24",
+        "filename": "components/signin/core/browser/signin_header_helper.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-06-30T12:26:26Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c3e5ba6d_06d7a2f1",
+      "revId": "59da5ac865915646c25d1c09a5e00b8b9e70d068",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
