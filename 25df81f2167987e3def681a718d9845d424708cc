@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "3715c708_05a91da3",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-30T00:22:45Z",
+      "side": 1,
+      "message": "What is this conditioned on RuntimeEnabledFeatures::PaintUnderInvalidationCheckingEnabled()\nbeing false?",
+      "revId": "25df81f2167987e3def681a718d9845d424708cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "56d2cb50_4873e420",
         "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintController.h",
         "patchSetId": 3
@@ -13,6 +30,23 @@
       "writtenOn": "2017-06-29T19:56:55Z",
       "side": 1,
       "message": "This makes |end| consistent with others e.g. PaintChunk\u0027s end_index, and make https://chromium-review.googlesource.com/556267 easier.",
+      "revId": "25df81f2167987e3def681a718d9845d424708cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88c9e6cc_5bb03300",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/ScopedPaintChunkProperties.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-30T00:22:45Z",
+      "side": 1,
+      "message": "Was the absence of this a bug in my patch?",
       "revId": "25df81f2167987e3def681a718d9845d424708cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
