@@ -132,7 +132,9 @@ void BreakingNewsSuggestionsProvider::ClearDismissedSuggestionsForDebugging(
 void BreakingNewsSuggestionsProvider::OnDatabaseLoaded(
     std::vector<std::unique_ptr<RemoteSuggestion>> suggestions) {
   // TODO(mamir): check and update DB status.
-  NotifyNewSuggestions(std::move(suggestions));
+  if (suggestions.size() > 0) {
+    NotifyNewSuggestions(std::move(suggestions));
+  }
 }
 
 void BreakingNewsSuggestionsProvider::OnDatabaseError() {
