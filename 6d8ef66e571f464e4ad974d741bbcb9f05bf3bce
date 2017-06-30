@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "16a53482_9d963a0c",
+        "filename": "chrome/browser/profile_resetter/profile_resetter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-06-30T07:20:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c32ea247_ed99372d",
+      "range": {
+        "startLine": 55,
+        "startChar": 13,
+        "endLine": 55,
+        "endChar": 28
+      },
+      "revId": "6d8ef66e571f464e4ad974d741bbcb9f05bf3bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e967236_aeb27718",
         "filename": "chrome/browser/profile_resetter/resettable_settings_snapshot.cc",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-29T12:51:01Z",
       "side": 1,
       "message": "Should we also fix this or it\u0027s allowed?",
+      "range": {
+        "startLine": 135,
+        "startChar": 22,
+        "endLine": 135,
+        "endChar": 29
+      },
+      "revId": "6d8ef66e571f464e4ad974d741bbcb9f05bf3bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4139ccbf_e06a8325",
+        "filename": "chrome/browser/profile_resetter/resettable_settings_snapshot.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-06-30T07:20:44Z",
+      "side": 1,
+      "message": "My understanding is that we keep the UI thread and that this is allowed.",
+      "parentUuid": "2e967236_aeb27718",
       "range": {
         "startLine": 135,
         "startChar": 22,
@@ -68,6 +116,30 @@
       "revId": "6d8ef66e571f464e4ad974d741bbcb9f05bf3bce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd29eb5b_f0d507c8",
+        "filename": "chrome/browser/profile_resetter/resettable_settings_snapshot.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-06-30T07:20:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2935edda_9d6e079f",
+      "range": {
+        "startLine": 152,
+        "startChar": 12,
+        "endLine": 152,
+        "endChar": 16
+      },
+      "revId": "6d8ef66e571f464e4ad974d741bbcb9f05bf3bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
