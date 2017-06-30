@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc3fd54a_c9b3794a",
+        "filename": "chrome/browser/ui/cocoa/importer/import_lock_dialog_cocoa.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-30T07:31:33Z",
+      "side": 1,
+      "message": "here do\n\nif (ui::MaterialDesignController::IsSecondaryUiMaterial()) {\n  ShowImportLockDialogViews(parent, callback);\n  return;\n}\n\nchrome/browser/ui/cocoa/browser_dialog_views_mac.h:\n\n\nvoid ShowImportLockDialogViews(gfx::NativeWindow parent,\n                               const base::Callback\u003cvoid(bool)\u003e\u0026 callback);\n\n\nchrome/browser/ui/cocoa/browser_dialog_views_mac.cc:\n\nvoid ShowImportLockDialogViews(gfx::NativeWindow parent,\n                               const base::Callback\u003cvoid(bool)\u003e\u0026 callback) {\n  return ImportLockDialogView::Show(parent, callback);\n}\n\n\n(no need to rename ShowImportLockDialogCocoa)",
+      "revId": "e3f4d9629235ba954247d0838cadfe9d9ce22b3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
