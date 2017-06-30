@@ -90,17 +90,19 @@ SigninHeaderHelper::ParseAccountConsistencyResponseHeader(
     const std::string& header_value) {
   ResponseHeaderDictionary dictionary;
   for (const base::StringPiece& field :
-       base::SplitStringPiece(header_value, ",", base::KEEP_WHITESPACE,
+       base::SplitStringPiece(header_value, ",", base::TRIM_WHITESPACE,
                               base::SPLIT_WANT_NONEMPTY)) {
     size_t delim = field.find_first_of('=');
     if (delim == std::string::npos) {
       DLOG(WARNING) << "Unexpected Gaia header field '" << field << "'.";
       continue;
     }
-    dictionary[field.substr(0, delim).as_string()] = net::UnescapeURLComponent(
-        field.substr(delim + 1).as_string(),
-        net::UnescapeRule::PATH_SEPARATORS |
-            net::UnescapeRule::URL_SPECIAL_CHARS_EXCEPT_PATH_SEPARATORS);
+    dictionary.insert(
+        {field.substr(0, delim).as_string(),
+         net::UnescapeURLComponent(
+             field.substr(delim + 1).as_string(),
+             net::UnescapeRule::PATH_SEPARATORS |
+                 net::UnescapeRule::URL_SPECIAL_CHARS_EXCEPT_PATH_SEPARATORS)});
   }
   return dictionary;
 }
@@ -155,8 +157,14 @@ ManageAccountsParams BuildManageAccountsParams(
 }
 
 #if BUILDFLAG(ENABLE_DICE_SUPPORT)
-DiceResponseParams BuildDiceResponseParams(const std::string& header_value) {
-  return DiceHeaderHelper::BuildDiceResponseParams(header_value);
+DiceResponseParams BuildDiceSigninResponseParams(
+    const std::string& header_value) {
+  return DiceHeaderHelper::BuildDiceSigninResponseParams(header_value);
+}
+
+DiceResponseParams BuildDiceSignoutResponseParams(
+    const std::string& header_value) {
+  return DiceHeaderHelper::BuildDiceSignoutResponseParams(header_value);
 }
 #endif
 
