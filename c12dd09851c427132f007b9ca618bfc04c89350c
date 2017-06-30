@@ -93,6 +93,30 @@
       "revId": "c12dd09851c427132f007b9ca618bfc04c89350c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba63c514_e6133424",
+        "filename": "chrome/browser/ui/android/ssl_client_certificate_request.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-06-30T16:58:05Z",
+      "side": 1,
+      "message": "std::move is needed to pass around unique_ptrs.  By definition, only one site can own the unique pointer at any point, so you can\u0027t pass one to another function and retain a reference yourself.  std::move is a nice way to relinquish the version you own (the value becomes nullptr after calling move) while allowing someone else to take ownership.\n\nBecause we\u0027re gluttons for punishment in c++ land:\nhttp://en.cppreference.com/w/cpp/memory/unique_ptr",
+      "parentUuid": "5fa46966_9a17e48e",
+      "range": {
+        "startLine": 199,
+        "startChar": 9,
+        "endLine": 199,
+        "endChar": 13
+      },
+      "revId": "c12dd09851c427132f007b9ca618bfc04c89350c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
