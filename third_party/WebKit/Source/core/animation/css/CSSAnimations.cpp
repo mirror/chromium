@@ -892,11 +892,18 @@ void CSSAnimations::CalculateTransitionUpdate(CSSAnimationUpdate& update,
 
   HashSet<PropertyHandle> listed_properties;
   bool any_transition_had_transition_all = false;
-  const LayoutObject* layout_object = animating_element->GetLayoutObject();
+  const ComputedStyle* old_style = nullptr;
+  if (animating_element->GetLayoutObject()) {
+    old_style = animating_element->GetLayoutObject()->Style();
+  }
+  if (!old_style) {
+    old_style = animating_element->GetNonAttachedStyle();
+    printf("No layout thingy, instead have %p mao.\n", old_style);
+  }
   if (!animation_style_recalc && style.Display() != EDisplay::kNone &&
-      layout_object && layout_object->Style() && transition_data) {
+      old_style && transition_data) {
     TransitionUpdateState state = {
-        update,  animating_element,  *layout_object->Style(), style,
+        update,  animating_element,  *old_style, style,
         nullptr, active_transitions, listed_properties,       *transition_data};
 
     for (size_t transition_index = 0;
