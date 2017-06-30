@@ -69,6 +69,24 @@
       "revId": "40677bc17c5d00405ad5737693341572babbb53b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c308a8e1_14768faf",
+        "filename": "content/browser/service_worker/service_worker_controllee_request_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-30T13:08:12Z",
+      "side": 1,
+      "message": "Thanks Dmitry, I was a bit puzzled by this patch as well but what you propose sounds good to me too!",
+      "parentUuid": "4b7e653f_b619989f",
+      "revId": "40677bc17c5d00405ad5737693341572babbb53b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
