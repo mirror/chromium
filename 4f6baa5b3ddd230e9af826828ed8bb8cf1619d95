@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "065c331c_265c0176",
+        "filename": "build/config/ios/dummy.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-30T16:12:37Z",
+      "side": 1,
+      "message": "Can you expand on the explanations? For example, something that will prevent us from deleting this file in a few months?",
+      "revId": "4f6baa5b3ddd230e9af826828ed8bb8cf1619d95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dab126b0_7c351c50",
+        "filename": "build/config/ios/imageset.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-30T16:12:37Z",
+      "side": 1,
+      "message": "*references",
+      "range": {
+        "startLine": 5,
+        "startChar": 51,
+        "endLine": 5,
+        "endChar": 60
+      },
+      "revId": "4f6baa5b3ddd230e9af826828ed8bb8cf1619d95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b6d9408_049608bf",
+        "filename": "build/config/ios/imageset.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-30T16:12:37Z",
+      "side": 1,
+      "message": "*receives",
+      "range": {
+        "startLine": 9,
+        "startChar": 63,
+        "endLine": 9,
+        "endChar": 70
+      },
+      "revId": "4f6baa5b3ddd230e9af826828ed8bb8cf1619d95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cd22f87_889ab7d5",
+        "filename": "build/config/ios/imageset.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-30T16:12:37Z",
+      "side": 1,
+      "message": "*comes",
+      "range": {
+        "startLine": 9,
+        "startChar": 36,
+        "endLine": 9,
+        "endChar": 40
+      },
+      "revId": "4f6baa5b3ddd230e9af826828ed8bb8cf1619d95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5bd7935_f9d3157d",
+        "filename": "build/config/ios/imageset.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-30T16:12:37Z",
+      "side": 1,
+      "message": "*runs",
+      "range": {
+        "startLine": 21,
+        "startChar": 38,
+        "endLine": 21,
+        "endChar": 41
+      },
+      "revId": "4f6baa5b3ddd230e9af826828ed8bb8cf1619d95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df794f36_41dbf258",
+        "filename": "build/config/ios/imageset.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-30T16:12:37Z",
+      "side": 1,
+      "message": "*ensures",
+      "range": {
+        "startLine": 27,
+        "startChar": 21,
+        "endLine": 27,
+        "endChar": 27
+      },
+      "revId": "4f6baa5b3ddd230e9af826828ed8bb8cf1619d95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bcc7add_306153bc",
+        "filename": "build/config/ios/imageset.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-30T16:12:37Z",
+      "side": 1,
+      "message": "*contain",
+      "range": {
+        "startLine": 34,
+        "startChar": 39,
+        "endLine": 34,
+        "endChar": 47
+      },
+      "revId": "4f6baa5b3ddd230e9af826828ed8bb8cf1619d95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
