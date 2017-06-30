@@ -39,7 +39,8 @@ class UkmBrowserTest : public SyncTest {
     return service ? service->client_id_ : 0;
   }
 
-  void EnableSyncForProfile(Profile* profile) {
+  std::unique_ptr<ProfileSyncServiceHarness> EnableSyncForProfile(
+      Profile* profile) {
     browser_sync::ProfileSyncService* sync_service =
         ProfileSyncServiceFactory::GetInstance()->GetForProfile(profile);
 
@@ -53,6 +54,7 @@ class UkmBrowserTest : public SyncTest {
             ProfileSyncServiceHarness::SigninType::FAKE_SIGNIN);
 
     harness->SetupSync();
+    return harness;
   }
 
  private:
@@ -61,15 +63,8 @@ class UkmBrowserTest : public SyncTest {
   }
 };
 
-// Flaky on Mac only.  http://crbug.com/737682
-#if defined(OS_MACOSX)
-#define MAYBE_IncognitoCheck DISABLED_IncognitoCheck
-#else
-#define MAYBE_IncognitoCheck IncognitoCheck
-#endif
-
 // Make sure that UKM is disabled while an incognito window is open.
-IN_PROC_BROWSER_TEST_F(UkmBrowserTest, MAYBE_IncognitoCheck) {
+IN_PROC_BROWSER_TEST_F(UkmBrowserTest, IncognitoCheck) {
   // Enable metrics recording and update MetricsServicesManager.
   bool metrics_enabled = true;
   ChromeMetricsServiceAccessor::SetMetricsAndCrashReportingForTesting(
@@ -78,9 +73,10 @@ IN_PROC_BROWSER_TEST_F(UkmBrowserTest, MAYBE_IncognitoCheck) {
       false);
 
   Profile* profile = ProfileManager::GetActiveUserProfile();
-  EnableSyncForProfile(profile);
+  // std::unique_ptr<ProfileSyncServiceHarness> harness =
+      EnableSyncForProfile(profile);
 
-  CreateBrowser(ProfileManager::GetActiveUserProfile());
+  Browser* sync_browser = CreateBrowser(profile);
   EXPECT_TRUE(ukm_enabled());
   uint64_t original_client_id = client_id();
 
@@ -92,6 +88,8 @@ IN_PROC_BROWSER_TEST_F(UkmBrowserTest, MAYBE_IncognitoCheck) {
   // Client ID should not have been reset.
   EXPECT_EQ(original_client_id, client_id());
 
+  // CloseBrowserSynchronously(sync_browser);
+  // harness->service()->RequestStop(browser_sync::ProfileSyncService::CLEAR_DATA);
   ChromeMetricsServiceAccessor::SetMetricsAndCrashReportingForTesting(nullptr);
 }
 
