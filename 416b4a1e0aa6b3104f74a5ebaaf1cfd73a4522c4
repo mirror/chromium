@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14ce7a2c_c058beae",
+        "filename": "third_party/WebKit/LayoutTests/fast/html/data-element.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-06-30T06:34:06Z",
+      "side": 1,
+      "message": "As LayoutTests/fast/html/README.md says, LayoutTests/fast/html/ is obsoleted.  Please move the test to LayoutTests/html/text_level_semantics/",
+      "revId": "416b4a1e0aa6b3104f74a5ebaaf1cfd73a4522c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
