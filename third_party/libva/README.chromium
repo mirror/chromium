@@ -1,8 +1,8 @@
 Name: libva
 URL: https://github.com/01org/libva
 Source: git clone https://github.com/01org/libva.git
-Version: 1.7.1
-RealVersion: git tag libva-1.7.1
+Version: 1.8.3
+RealVersion: git tag libva-1.8.3
 License: MIT
 License File: COPYING
 Security Critical: no
