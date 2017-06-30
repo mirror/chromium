@@ -16,6 +16,24 @@
       "revId": "6eb28b04836c47c4a2eeeefec4cc3a5ad5e7d872",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9380f1a3_b0bbf010",
+        "filename": "build/android/lint/suppress.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1113224
+      },
+      "writtenOn": "2017-06-30T07:11:47Z",
+      "side": 1,
+      "message": "I think the \"regexp\" in this context is how it\u0027s value used in the suppressions.xml file. For each issue in the result there is a location tag with a file attribute (path), something like\n\u003cissue id\u003d\"FooIssue\"\u003e\n  \u003clocation file\u003d\"path/to/bad/Inner$Class.class\"/\u003e\n\u003c/issue\u003e\n\nThis is then \"converted\" to\n\n\u003clint\u003e\n  \u003cissue id\u003d\"FooIssue\"\u003e\n    \u003cignore regexp\u003d\"path/to/bad/Inner\\$Class.class\"/\u003e\n  \u003c/issue\u003e\n\u003c/lint\u003e\n\n..so the \"target use\" is a regexp.\n\nI actually first tried to use re.escape(), but it yields the string \"path\\/to\\/bad\\/Inner\\$Class\\.class\", which in the Java world of regexps won\u0027t match..",
+      "parentUuid": "49eb7bb1_731fc554",
+      "revId": "6eb28b04836c47c4a2eeeefec4cc3a5ad5e7d872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
