@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d397ddd6_2b9d7981",
+        "filename": "chrome/browser/resources/chromeos/guest_session_tab.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-06-30T20:55:18Z",
+      "side": 1,
+      "message": "Is there an extra space in \"href\u003d\" $i18n{...\"?",
+      "revId": "6243963ee1905a6fa4c895d4340a39a774ff1b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
