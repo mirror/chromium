@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a22a81d_1f736386",
+        "filename": "chrome/browser/android/vr_shell/ui_input_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-06-30T20:19:35Z",
+      "side": 1,
+      "message": "This could also be part of the UiBrowserInterface. But I like to keep the interfaces small.",
+      "revId": "6076819d44a89365f7dc8743c0205937143bbd44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4708c83_e40ae7d5",
+        "filename": "chrome/browser/android/vr_shell/ui_input_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-06-30T20:19:35Z",
+      "side": 1,
+      "message": "Should we make that a reference? Or is that now Chromy?",
+      "revId": "6076819d44a89365f7dc8743c0205937143bbd44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40eb00ee_cc6f0c0b",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-06-30T20:19:35Z",
+      "side": 1,
+      "message": "Assuming that UiScene should be the entry point to the Skia UI, I think this should be owned by UiScene. And called something different ;)",
+      "revId": "6076819d44a89365f7dc8743c0205937143bbd44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
