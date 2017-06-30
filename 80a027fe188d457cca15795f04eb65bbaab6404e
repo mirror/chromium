@@ -87,6 +87,24 @@
       "revId": "80a027fe188d457cca15795f04eb65bbaab6404e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf3b3695_63879427",
+        "filename": "extensions/shell/test/shell_tests_main.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1122985
+      },
+      "writtenOn": "2017-06-30T07:50:22Z",
+      "side": 1,
+      "message": "@Devlin, @Alok: would you be ok with landing this as-is, then I will put together a follow-up CL to make the smaller unit test binaries just use N processes?",
+      "parentUuid": "dc7bda02_5ee813fc",
+      "revId": "80a027fe188d457cca15795f04eb65bbaab6404e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
