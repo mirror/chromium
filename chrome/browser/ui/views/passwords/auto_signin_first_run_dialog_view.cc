@@ -125,7 +125,9 @@ int AutoSigninFirstRunDialogView::GetDialogButtons() const {
 }
 
 gfx::Size AutoSigninFirstRunDialogView::CalculatePreferredSize() const {
-  return gfx::Size(kDesiredWidth, GetHeightForWidth(kDesiredWidth));
+  int desired_width = ChromeLayoutProvider::Get()->GetSnappedDialogWidth(0);
+  desired_width = desired_width ? desired_width : kDesiredWidth;
+  return gfx::Size(desired_width, GetHeightForWidth(desired_width));
 }
 
 void AutoSigninFirstRunDialogView::ButtonPressed(views::Button* sender,
@@ -161,8 +163,9 @@ void AutoSigninFirstRunDialogView::InitWindow() {
       controller_->GetAutoSigninText();
   views::StyledLabel* content_label =
       new views::StyledLabel(text_content.first, this);
-  content_label->SetBaseFontList(views::style::GetFont(
-      CONTEXT_DEPRECATED_SMALL, views::style::STYLE_PRIMARY));
+  content_label->SetBaseFontList(
+      layout_provider->GetTypographyProvider().GetFont(
+          CONTEXT_BODY_TEXT_SMALL, views::style::STYLE_PRIMARY));
   views::StyledLabel::RangeStyleInfo default_style;
   default_style.color = kAutoSigninTextColor;
   content_label->SetDefaultStyle(default_style);
@@ -173,7 +176,7 @@ void AutoSigninFirstRunDialogView::InitWindow() {
   }
 
   // Buttons.
-  ok_button_ = views::MdTextButton::CreateSecondaryUiButton(
+  ok_button_ = views::MdTextButton::CreateSecondaryUiBlueButton(
       this, l10n_util::GetStringUTF16(IDS_AUTO_SIGNIN_FIRST_RUN_OK));
   turn_off_button_ = views::MdTextButton::CreateSecondaryUiButton(
       this, l10n_util::GetStringUTF16(IDS_AUTO_SIGNIN_FIRST_RUN_TURN_OFF));
