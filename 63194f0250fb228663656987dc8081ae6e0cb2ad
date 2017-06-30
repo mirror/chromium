@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b16ecec9_4063df5f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-06-30T10:22:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ebfc86d_eedad008",
+      "range": {
+        "startLine": 61,
+        "startChar": 11,
+        "endLine": 61,
+        "endChar": 23
+      },
+      "revId": "63194f0250fb228663656987dc8081ae6e0cb2ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55b1ae82_b1e7bcd6",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
         "patchSetId": 25
@@ -77,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "dc39895d_e76d3db4",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/snippets/ArticleSnippetsTest.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-06-30T10:22:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87d685f7_09dd30e9",
+      "revId": "63194f0250fb228663656987dc8081ae6e0cb2ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ddee3fc_f3d61cb4",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/snippets/ArticleSnippetsTest.java",
         "patchSetId": 25
@@ -97,6 +139,30 @@
       "revId": "63194f0250fb228663656987dc8081ae6e0cb2ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6cac88a_69ab41e0",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/snippets/ArticleSnippetsTest.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-06-30T10:22:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ddee3fc_f3d61cb4",
+      "range": {
+        "startLine": 355,
+        "startChar": 8,
+        "endLine": 355,
+        "endChar": 15
+      },
+      "revId": "63194f0250fb228663656987dc8081ae6e0cb2ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -123,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "f926cc7b_57cfd7ca",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/snippets/ArticleSnippetsTest.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-06-30T10:22:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfb16011_43fa0475",
+      "range": {
+        "startLine": 409,
+        "startChar": 36,
+        "endLine": 409,
+        "endChar": 56
+      },
+      "revId": "63194f0250fb228663656987dc8081ae6e0cb2ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0da05ee_53b6f1f4",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/snippets/ArticleSnippetsTest.java",
         "patchSetId": 25
@@ -134,6 +224,30 @@
       "writtenOn": "2017-06-29T13:33:12Z",
       "side": 1,
       "message": "TODO for a follow up patch:\n\nfake FaviconHelper and face LargeIconBridge that can be inserted in the deps factory to fake these operations instead of doing it at the image fetcher level? I don\u0027t mind too much this being here for now, as it\u0027s the old code, and I would like this one to land :D",
+      "range": {
+        "startLine": 417,
+        "startChar": 20,
+        "endLine": 417,
+        "endChar": 38
+      },
+      "revId": "63194f0250fb228663656987dc8081ae6e0cb2ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "51ef1efe_553cf07b",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/snippets/ArticleSnippetsTest.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-06-30T10:22:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d0da05ee_53b6f1f4",
       "range": {
         "startLine": 417,
         "startChar": 20,
@@ -189,6 +303,30 @@
       "revId": "63194f0250fb228663656987dc8081ae6e0cb2ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb835973_d96907a5",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/suggestions/ImageFetcherTest.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-06-30T10:22:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da0f8116_2ad0dd33",
+      "range": {
+        "startLine": 131,
+        "startChar": 24,
+        "endLine": 131,
+        "endChar": 40
+      },
+      "revId": "63194f0250fb228663656987dc8081ae6e0cb2ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
