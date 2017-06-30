@@ -563,6 +563,7 @@ void FrameLoader::LoadInSameDocument(
   frame_->DomWindow()->StatePopped(state_object
                                        ? std::move(state_object)
                                        : SerializedScriptValue::NullValue());
+  frame_->GetDocument()->UpdateStyleAndLayout();
 
   if (history_item)
     RestoreScrollPositionAndViewStateForLoadType(frame_load_type);
