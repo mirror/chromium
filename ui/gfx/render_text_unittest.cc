@@ -240,13 +240,13 @@ DecoratedText::RangedAttribute CreateRangedAttribute(
   DCHECK(font_spans.end() != iter);
   const Font& font = iter->first;
 
-  int font_style = Font::NORMAL;
+  int text_style = TextStyle::NORMAL;
   if (style_mask & ITALIC_MASK)
-    font_style |= Font::ITALIC;
+    text_style |= TextStyle::ITALIC;
   if (style_mask & UNDERLINE_MASK)
-    font_style |= Font::UNDERLINE;
+    text_style |= TextStyle::UNDERLINE;
 
-  const Font font_with_style = font.Derive(0, font_style, weight);
+  const Font font_with_style = font.Derive(0, text_style, weight);
   DecoratedText::RangedAttribute attributes(Range(index, index + 1),
                                             font_with_style);
   attributes.strike = style_mask & STRIKE_MASK;

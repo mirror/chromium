@@ -42,7 +42,7 @@ class VIEWS_EXPORT StyledLabel : public View, public LinkListener {
 
     // The font style that will be applied to the range. Should be a bitmask of
     // values defined in gfx::Font::FontStyle (ITALIC, UNDERLINE).
-    int font_style;
+    int text_style;
 
     // The font weight to be applied to the range. Default is Weight::NORMAL.
     gfx::Font::Weight weight;

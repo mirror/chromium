@@ -87,8 +87,9 @@ void InvertBubbleView::Init() {
 
   // TODO(tapted): This should be using WidgetDelegate::GetWindowTitle().
   views::Label* title = new views::Label(
-      base::string16(), views::Label::CustomFont{original_font_list.Derive(
-                            2, gfx::Font::NORMAL, gfx::Font::Weight::BOLD)});
+      base::string16(),
+      views::Label::CustomFont{original_font_list.Derive(
+          2, gfx::TextStyle::NORMAL, gfx::Font::Weight::BOLD)});
   title->SetMultiLine(true);
 
   learn_more_ = new views::Link(l10n_util::GetStringUTF16(IDS_LEARN_MORE));

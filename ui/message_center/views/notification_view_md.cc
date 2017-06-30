@@ -533,7 +533,7 @@ void NotificationViewMD::CreateOrUpdateTitleView(
     return;
   }
   const gfx::FontList& font_list = views::Label().font_list().Derive(
-      1, gfx::Font::NORMAL, gfx::Font::Weight::NORMAL);
+      1, gfx::TextStyle::NORMAL, gfx::Font::Weight::NORMAL);
 
   int title_character_limit =
       kNotificationWidth * kMaxTitleLines / kMinPixelsPerTitleCharacter;
@@ -565,7 +565,7 @@ void NotificationViewMD::CreateOrUpdateMessageView(
       notification.message(), kMessageCharacterLimit, gfx::WORD_BREAK);
 
   const gfx::FontList& font_list = views::Label().font_list().Derive(
-      1, gfx::Font::NORMAL, gfx::Font::Weight::NORMAL);
+      1, gfx::TextStyle::NORMAL, gfx::Font::Weight::NORMAL);
 
   if (!message_view_) {
     message_view_ = new BoundedLabel(text, font_list);

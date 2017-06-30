@@ -41,9 +41,9 @@ const gfx::FontList& LegacyTypographyProvider::GetFont(int context,
       font_weight = gfx::Font::Weight::BOLD;
       break;
   }
-  constexpr gfx::Font::FontStyle kFontStyle = gfx::Font::NORMAL;
+  constexpr gfx::TextStyle ktextStyle = gfx::TextStyle::NORMAL;
   return ui::ResourceBundle::GetSharedInstance().GetFontListWithDelta(
-      size_delta, kFontStyle, font_weight);
+      size_delta, ktextStyle, font_weight);
 }
 
 SkColor LegacyTypographyProvider::GetColor(int context,

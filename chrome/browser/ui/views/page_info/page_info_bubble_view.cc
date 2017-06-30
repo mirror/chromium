@@ -272,7 +272,7 @@ void BubbleHeaderView::SetDetails(const base::string16& details_text) {
   views::StyledLabel::RangeStyleInfo link_style =
       views::StyledLabel::RangeStyleInfo::CreateForLink();
   if (!ui::MaterialDesignController::IsSecondaryUiMaterial()) {
-    link_style.font_style |= gfx::Font::FontStyle::UNDERLINE;
+    link_style.font_style |= gfx::TextStyle::UNDERLINE;
   }
   link_style.disable_line_wrapping = false;
 
@@ -299,7 +299,7 @@ void BubbleHeaderView::AddResetDecisionsLabel() {
   views::StyledLabel::RangeStyleInfo link_style =
       views::StyledLabel::RangeStyleInfo::CreateForLink();
   if (!ui::MaterialDesignController::IsSecondaryUiMaterial()) {
-    link_style.font_style |= gfx::Font::FontStyle::UNDERLINE;
+    link_style.font_style |= gfx::TextStyle::UNDERLINE;
   }
   link_style.disable_line_wrapping = false;
 

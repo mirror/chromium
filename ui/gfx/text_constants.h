@@ -73,11 +73,11 @@ enum DirectionalityMode {
 };
 
 // Text styles and adornments.
-// TODO(msw): Merge with gfx::Font::FontStyle.
 enum TextStyle {
   ITALIC = 0,
   STRIKE,
   UNDERLINE,
+  NORMAL,
   NUM_TEXT_STYLES,
 };
 
