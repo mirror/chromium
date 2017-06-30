@@ -2002,6 +2002,7 @@ TEST_F(WebFrameTest, FrameOwnerPropertiesMargin) {
   RegisterMockedHttpURLLoad("frame_owner_properties.html");
   FrameTestHelpers::LoadFrame(local_frame,
                               base_url_ + "frame_owner_properties.html");
+  local_frame->GetFrameView()->UpdateAllLifecyclePhases();
 
   // Check if the LocalFrame has seen the marginwidth and marginheight
   // properties.
@@ -2117,6 +2118,7 @@ TEST_P(ParameterizedWebFrameTest, WideViewportAndWideContentWithInitialScale) {
 
   FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrameImpl(),
                               base_url_ + "wide_document_width_viewport.html");
+  web_view_helper.WebView()->UpdateAllLifecyclePhases();
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
   int wide_document_width = 800;
@@ -3204,6 +3206,7 @@ TEST_F(WebFrameTest, updateOverlayScrollbarLayers)
   web_view_helper.Resize(WebSize(view_width, view_height));
   FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrameImpl(),
                               base_url_ + "large-div.html");
+  web_view_helper.WebView()->UpdateAllLifecyclePhases();
 
   LocalFrameView* view = web_view_helper.LocalMainFrame()->GetFrameView();
   EXPECT_TRUE(
@@ -7746,6 +7749,7 @@ TEST_F(WebFrameTest, overflowHiddenRewrite) {
   web_view_helper.Resize(WebSize(100, 100));
   FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrameImpl(),
                               base_url_ + "non-scrollable.html");
+  web_view_helper.WebView()->UpdateAllLifecyclePhases();
 
   PaintLayerCompositor* compositor = web_view_helper.WebView()->Compositor();
   ASSERT_TRUE(compositor->ScrollLayer());

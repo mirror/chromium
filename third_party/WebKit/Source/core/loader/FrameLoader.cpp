@@ -1102,6 +1102,7 @@ void FrameLoader::RestoreScrollPositionAndViewStateForLoadType(
     return;
 
   if (should_restore_scroll) {
+    view->UpdateLifecycleToLayoutClean();
     view->LayoutViewportScrollableArea()->SetScrollOffset(
         history_item->GetScrollOffset(), kProgrammaticScroll);
   }
