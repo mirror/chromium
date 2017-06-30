@@ -105,6 +105,24 @@
       "revId": "6cd5896ccc17787d5ddbcad5565568c1207d7fea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9793e7ed_9d9f386b",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintController.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-30T23:38:48Z",
+      "side": 0,
+      "message": "The previous logic of CopyCachedSubsequence() is equivalent to the following, when REF::PaintUnderInvalidationChecking() is true (by removing the if (!REF::PaintUnderInvalidationEnabled()) blocks):\n\n  for (size_t current_index \u003d begin_index; current_index \u003c\u003d end_index;\n       ++current_index) {\n    ++num_cached_new_items_;\n  }\n  under_invalidation_checking_end_ \u003d end_index + 1;\n\nThis is extracted to UseCachedSubsequence().\n\nActually the old lines 481-492 should also be under \"if !(REF::PaintUnderInvalidationCheckingEnabled())\" because it did no harm because the actual painting forced by under-invalidation checking will override any paint properties set here.",
+      "parentUuid": "5451b9b9_fec81f78",
+      "revId": "6cd5896ccc17787d5ddbcad5565568c1207d7fea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
