@@ -273,24 +273,20 @@ class TestRunner(object):
     else:
       parser = gtest_utils.GTestLogParser()
 
-    proc = subprocess.Popen(
-        cmd,
-        env=self.get_launch_env(),
-        stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT,
-    )
+    print cmd
+    output = ''
+    cmd_returncode = 0
+    try:
+      output_chars = subprocess.check_output(cmd, env=self.get_launch_env())
+      output = ''.join(output_chars).split('\n')
+    except subprocess.CalledProcessError as e:
+      cmd_returncode = e.returncode
+      output = e.output
 
-    while True:
-      line = proc.stdout.readline()
-      if not line:
-        break
+    for line in output:
       line = line.rstrip()
       parser.ProcessLine(line)
       print line
-      sys.stdout.flush()
-
-    proc.wait()
-    sys.stdout.flush()
 
     for test in parser.FailedTests(include_flaky=True):
       # Test cases are named as <test group>.<test case>. If the test case
@@ -302,12 +298,12 @@ class TestRunner(object):
 
     result.passed_tests.extend(parser.PassedTests(include_flaky=True))
 
-    print '%s returned %s' % (cmd[0], proc.returncode)
+    print '%s returned %s' % (cmd[0], cmd_returncode)
     print
 
     # iossim can return 5 if it exits noncleanly even if all tests passed.
     # Therefore we cannot rely on process exit code to determine success.
-    result.finalize(proc.returncode, parser.CompletedWithoutFailure())
+    result.finalize(cmd_returncode, parser.CompletedWithoutFailure())
     return result
 
   def launch(self):
