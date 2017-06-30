@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76b80874_7e5f1e71",
+        "filename": "cc/output/renderer_settings.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-06-30T01:47:36Z",
+      "side": 1,
+      "message": "nit: This does not belong in RendererSettings. The other settings mostly affect GLRenderer/DirectRenderer. This is similar to max_pending_swaps so just pass it to the constructor directly.",
+      "revId": "f8817db445c9a05a8c7c783b67f87c3a158c768d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53615966_05cde42e",
+        "filename": "cc/surfaces/display_scheduler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-06-30T01:47:36Z",
+      "side": 1,
+      "message": "nit: Can you pass wait_for_all_surfaces_before_draw as a parameter in the constructor? AFAIK RendererSettings is going to be split or moved soon as part of the mojofication effort, so the fewer places that depend on it, the better.",
+      "revId": "f8817db445c9a05a8c7c783b67f87c3a158c768d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f4890e9_981c1b60",
+        "filename": "cc/surfaces/display_scheduler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-06-30T01:47:36Z",
+      "side": 1,
+      "message": "nit: Can you please split the LATE mode into LATE and NONE? I\u0027d like to have each deadline mode to correspond to a different deadline time.",
+      "revId": "f8817db445c9a05a8c7c783b67f87c3a158c768d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6294ce6_30f0220e",
+        "filename": "cc/surfaces/display_scheduler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-06-30T01:47:36Z",
+      "side": 1,
+      "message": "nit: Can you use style guide naming style here e.g. kImmediate?",
+      "revId": "f8817db445c9a05a8c7c783b67f87c3a158c768d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "472a6bc0_6137f1cd",
+        "filename": "cc/surfaces/display_scheduler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-06-30T01:47:36Z",
+      "side": 1,
+      "message": "nit: const",
+      "revId": "f8817db445c9a05a8c7c783b67f87c3a158c768d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2a26165_04141964",
+        "filename": "cc/surfaces/display_scheduler_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-06-30T01:47:36Z",
+      "side": 1,
+      "message": "nit: Can you explain the significance of this section in more detail in a comment?",
+      "revId": "f8817db445c9a05a8c7c783b67f87c3a158c768d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

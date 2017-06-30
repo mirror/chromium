@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a819a36_b6d2a23f",
+        "filename": "cc/surfaces/display_scheduler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-06-30T01:47:36Z",
+      "side": 1,
+      "message": "nit: I feel it\u0027d be better if this was passed in the ctor like max_pending_swaps for consistency (also fyi there\u0027s some work planned for splitting RendererSettings for the mojofication effort).",
+      "revId": "297ab942d6ad73dab4c8c7841ef5b50ec4d27dbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17c2ea75_19bf3652",
+        "filename": "cc/surfaces/display_scheduler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-06-30T01:47:36Z",
+      "side": 1,
+      "message": "nit: can you use style guide recommended naming convention e.g. kImmediate, kRegular, kLate?",
+      "range": {
+        "startLine": 77,
+        "startChar": 38,
+        "endLine": 77,
+        "endChar": 47
+      },
+      "revId": "297ab942d6ad73dab4c8c7841ef5b50ec4d27dbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c5e28cf_8cc2fbbb",
+        "filename": "cc/surfaces/display_scheduler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-06-30T01:47:36Z",
+      "side": 1,
+      "message": "nit: maybe const? (and the above method too)",
+      "revId": "297ab942d6ad73dab4c8c7841ef5b50ec4d27dbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
