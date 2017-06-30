@@ -175,6 +175,30 @@
       "revId": "28b6f3a8179725a1536870064173785a3b6e921d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f978f3e_de50ef7e",
+        "filename": "components/autofill/core/browser/autofill_metrics_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 3120,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-06-30T21:16:08Z",
+      "side": 1,
+      "message": "Ah whoops yep, thanks!",
+      "parentUuid": "73a88f1b_321e0508",
+      "range": {
+        "startLine": 3120,
+        "startChar": 36,
+        "endLine": 3120,
+        "endChar": 0
+      },
+      "revId": "28b6f3a8179725a1536870064173785a3b6e921d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
