@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "41546415_5d736043",
+        "filename": "chrome/browser/ui/webui/module_database_conflicts_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-30T17:23:08Z",
+      "side": 1,
+      "message": "Good catch.\n\nIt would be nice to have ObserverList offer a RAII alternative to AddObserver/RemoveObserver.\nKinda like CallbackList::Subscription.",
+      "parentUuid": "c3cecb31_c9e6f9e2",
+      "revId": "c3f05376983014dd5cd9c98b1bca45c30663d10b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12626559_9d860e85",
         "filename": "chrome/browser/ui/webui/module_database_conflicts_handler.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "c3f05376983014dd5cd9c98b1bca45c30663d10b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e43a293_8d2aec67",
+        "filename": "chrome/browser/ui/webui/module_database_conflicts_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-30T17:23:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12626559_9d860e85",
+      "revId": "c3f05376983014dd5cd9c98b1bca45c30663d10b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -73,6 +109,48 @@
       "revId": "c3f05376983014dd5cd9c98b1bca45c30663d10b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2e7476a_4f9b031f",
+        "filename": "chrome/browser/ui/webui/module_database_conflicts_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-30T17:23:08Z",
+      "side": 1,
+      "message": "After giving it more thoughts, I don\u0027t think there is any reason to keep this public (even in conflicts_handler.h).",
+      "parentUuid": "1da55e17_076cbf4c",
+      "revId": "c3f05376983014dd5cd9c98b1bca45c30663d10b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c956d13b_4b10cc37",
+        "filename": "chrome/browser/ui/webui/module_database_conflicts_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-30T17:23:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31ded564_260f1588",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 40
+      },
+      "revId": "c3f05376983014dd5cd9c98b1bca45c30663d10b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
