@@ -61,6 +61,7 @@ source_set("clients") {
   ]
 
   deps = [
+    "//media/cdm",
     "//media/mojo/common",
     "//media/mojo/common:mojo_shared_buffer_video_frame",
     "//mojo/common",
