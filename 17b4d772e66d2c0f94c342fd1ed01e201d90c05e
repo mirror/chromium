@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88ade40c_6de94e20",
+        "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-06-30T00:46:39Z",
+      "side": 1,
+      "message": "nit: Not a huge deal, but can you try to arrange the styles in order of roughly where they appear on the page (i.e., styles applying to the first elements at the top)?",
+      "range": {
+        "startLine": 12,
+        "startChar": 5,
+        "endLine": 12,
+        "endChar": 10
+      },
+      "revId": "17b4d772e66d2c0f94c342fd1ed01e201d90c05e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c85a0f4_3dc0317b",
+        "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-06-30T00:46:39Z",
+      "side": 1,
+      "message": "Any reason this has to be min-height instead of height?",
+      "range": {
+        "startLine": 24,
+        "startChar": 8,
+        "endLine": 24,
+        "endChar": 12
+      },
+      "revId": "17b4d772e66d2c0f94c342fd1ed01e201d90c05e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4778ccf6_2fc46678",
+        "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-06-30T00:46:39Z",
+      "side": 1,
+      "message": "Do you need two \u003cdiv\u003es? I don\u0027t see any styling applied to the outer one.\n\nIf we eliminate the outer one, let\u0027s just use id\u003d\"title\" for the inner one. If we need to keep the outer one, let\u0027s call it \"title-container\" and the inner one \"title\".",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 12
+      },
+      "revId": "17b4d772e66d2c0f94c342fd1ed01e201d90c05e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "348e82a2_ae9bbe5b",
+        "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-06-30T00:46:39Z",
+      "side": 1,
+      "message": "How about class\u003d\"contents\"? We try not to use class names which are also the names of HTML elements.",
+      "range": {
+        "startLine": 71,
+        "startChar": 18,
+        "endLine": 71,
+        "endChar": 22
+      },
+      "revId": "17b4d772e66d2c0f94c342fd1ed01e201d90c05e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a77495de_8fcca9b4",
+        "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-06-30T00:46:39Z",
+      "side": 1,
+      "message": "nit: Concise descriptions are preferred; \"This function retrieves\" \u003d\u003d\u003e \"Retrieves\"",
+      "range": {
+        "startLine": 92,
+        "startChar": 5,
+        "endLine": 92,
+        "endChar": 28
+      },
+      "revId": "17b4d772e66d2c0f94c342fd1ed01e201d90c05e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdf0ceaa_2a2666cc",
+        "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-06-30T00:46:39Z",
+      "side": 1,
+      "message": "tether host",
+      "range": {
+        "startLine": 93,
+        "startChar": 21,
+        "endLine": 93,
+        "endChar": 37
+      },
+      "revId": "17b4d772e66d2c0f94c342fd1ed01e201d90c05e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b9504a2_5ce10b58",
+        "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-06-30T00:46:39Z",
+      "side": 1,
+      "message": "Just say something like \"Custom icons are used here instead of a \u003ccr-network-icon\u003e because this dialog uses a special color scheme.\"",
+      "range": {
+        "startLine": 93,
+        "startChar": 40,
+        "endLine": 93,
+        "endChar": 71
+      },
+      "revId": "17b4d772e66d2c0f94c342fd1ed01e201d90c05e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cab3e54b_e7e2d235",
+        "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-06-30T00:46:39Z",
+      "side": 1,
+      "message": "strength",
+      "range": {
+        "startLine": 93,
+        "startChar": 5,
+        "endLine": 93,
+        "endChar": 13
+      },
+      "revId": "17b4d772e66d2c0f94c342fd1ed01e201d90c05e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
