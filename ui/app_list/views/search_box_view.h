@@ -115,16 +115,16 @@ class APP_LIST_EXPORT SearchBoxView : public views::View,
   void OnSpeechRecognitionStateChanged(
       SpeechRecognitionState new_state) override;
 
-  SearchBoxViewDelegate* delegate_;  // Not owned.
+  SearchBoxViewDelegate* delegate_;     // Not owned.
   AppListViewDelegate* view_delegate_;  // Not owned.
-  AppListModel* model_;  // Owned by the profile-keyed service.
+  AppListModel* model_;                 // Owned by the profile-keyed service.
 
-  views::View* content_container_;       // Owned by views hierarchy.
-  views::ImageView* google_icon_;        // Owned by views hierarchy.
-  SearchBoxImageButton* back_button_;    // Owned by views hierarchy.
-  SearchBoxImageButton* speech_button_;  // Owned by views hierarchy.
-  views::Textfield* search_box_;  // Owned by views hierarchy.
-  views::View* contents_view_;  // Owned by views hierarchy.
+  views::View* content_container_;        // Owned by views hierarchy.
+  views::ImageView* search_icon_;         // Owned by views hierarchy.
+  SearchBoxImageButton* back_button_;     // Owned by views hierarchy.
+  SearchBoxImageButton* speech_button_;   // Owned by views hierarchy.
+  views::Textfield* search_box_;          // Owned by views hierarchy.
+  views::View* contents_view_;            // Owned by views hierarchy.
   app_list::AppListView* app_list_view_;  // Owned by views hierarchy.
 
   SearchBoxFocus focused_view_;  // Which element has TAB'd focus.
