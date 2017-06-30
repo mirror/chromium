@@ -72,6 +72,8 @@ class TranslateLanguageList {
 
  private:
   FRIEND_TEST_ALL_PREFIXES(TranslateLanguageListTest, SetSupportedLanguages);
+  FRIEND_TEST_ALL_PREFIXES(TranslateLanguageListTest, TranslateLanguageUrl);
+  FRIEND_TEST_ALL_PREFIXES(TranslateLanguageListTest, IsSupportedLanguage);
 
   // Callback function called when TranslateURLFetcher::Request() is finished.
   void OnLanguageListFetchComplete(int id,
