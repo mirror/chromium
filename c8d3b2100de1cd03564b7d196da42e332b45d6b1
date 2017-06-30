@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "aaf9fec8_26f40a57",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1798,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-06-30T16:35:33Z",
+      "side": 1,
+      "message": "Hmm...I\u0027m a little worried that all smooth scrolls have to be sequenced and we\u0027re mixing these so freely. I think we can simplify things a bit by ensuring that kChainedScroll/kSequencedScroll is only ever called from the sequencer to update scroll offsets. That way only a few places need to know about this type and it\u0027s purpose is clear.\n\nTo do that, we\u0027d have to add instant scrolls to the sequencer as well and store the behavior along with the element and scroll offset. I find that easier to think about since we don\u0027t have a mix of sequenced and non-sequenced scrolls in a scrollIntoView call. WDYT?",
+      "parentUuid": "de1d22ed_c7737ca6",
+      "range": {
+        "startLine": 1798,
+        "startChar": 26,
+        "endLine": 1798,
+        "endChar": 48
+      },
+      "revId": "c8d3b2100de1cd03564b7d196da42e332b45d6b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c060a572_51caef83",
         "filename": "third_party/WebKit/Source/platform/scroll/ProgrammaticScrollAnimator.cpp",
         "patchSetId": 3
