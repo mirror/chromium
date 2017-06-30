@@ -77,6 +77,7 @@ component("blink") {
     "//gpu",
     "//media",
     "//media:shared_memory_support",
+    "//media/cdm",
     "//net",
     "//ppapi/features",
     "//skia",
