@@ -1,0 +1,308 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4073f754_d47574a9",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-30T19:02:34Z",
+      "side": 1,
+      "message": "I don\u0027t think this comment is useful. By contract, Start() can only be called once https://chromium.googlesource.com/chromium/src/+/fc108a3f8b0a86e98f379d27a8cc525ab1e30b99/base/task_scheduler/scheduler_worker_pool_impl.h#63",
+      "range": {
+        "startLine": 251,
+        "startChar": 21,
+        "endLine": 253,
+        "endChar": 14
+      },
+      "revId": "912505c09a2d0d80d50ecbd533783a32b048611a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a50792a6_63140e49",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-30T19:02:34Z",
+      "side": 1,
+      "message": "Why do you need to add this? When the StandbyThreadPolicy is ONE, we want one more SchedulerWorker than the number of tasks posted before Start().\n\nI believe that if you keep the condition as-is, you won\u0027t have to change TaskSchedulerWorkerPoolStandbyPolicyTest.InitLazy.",
+      "range": {
+        "startLine": 259,
+        "startChar": 72,
+        "endLine": 260,
+        "endChar": 48
+      },
+      "revId": "912505c09a2d0d80d50ecbd533783a32b048611a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a565e690_9b033b45",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-30T19:02:34Z",
+      "side": 1,
+      "message": "|workers_lock_|",
+      "range": {
+        "startLine": 268,
+        "startChar": 7,
+        "endLine": 268,
+        "endChar": 20
+      },
+      "revId": "912505c09a2d0d80d50ecbd533783a32b048611a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d690ebe9_7cbfc985",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-30T19:02:34Z",
+      "side": 1,
+      "message": "This comment goes in CreateNewWorker(), since no code in this function achieves that.",
+      "range": {
+        "startLine": 267,
+        "startChar": 57,
+        "endLine": 269,
+        "endChar": 58
+      },
+      "revId": "912505c09a2d0d80d50ecbd533783a32b048611a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99785bc9_b8e27bc9",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-30T19:02:34Z",
+      "side": 1,
+      "message": "As discussed on Hangouts, we don\u0027t need indexes in SchedulerWorker. You can remove |index| from the constructor of SchedulerWorkerDelegateImpl and create SchedulerWorkers in any order here.\n\nE.g.\n\nfor (int i \u003d 0; i \u003c num_initial_workers; ++i)\n  workers_.push_back(CreateNewWorker());",
+      "revId": "912505c09a2d0d80d50ecbd533783a32b048611a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16f103d2_de8a1662",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-30T19:02:34Z",
+      "side": 1,
+      "message": "The reason why there is a separate loop to Start() SchedulerWorkers is that previously, Start() had to be done outside the scope of |idle_workers_stack_lock_|.  This is no longer the case, as explained by the comment at lines 283-287. Therefore, you could create and Start() SchedulerWorkers in the same loop. It think you could even WakeUp() in the same loop.\n\nSee previous version of the code: https://chromium.googlesource.com/chromium/src/+/3322df623f6198576a688561fe22a8786b2e1e1f/base/task_scheduler/scheduler_worker_pool_impl.cc#280",
+      "revId": "912505c09a2d0d80d50ecbd533783a32b048611a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82fbae4a_7c461b49",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-30T19:02:34Z",
+      "side": 1,
+      "message": "workers_.back()",
+      "range": {
+        "startLine": 634,
+        "startChar": 17,
+        "endLine": 634,
+        "endChar": 46
+      },
+      "revId": "912505c09a2d0d80d50ecbd533783a32b048611a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b4e9f67_b6cf2c23",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-30T19:02:34Z",
+      "side": 1,
+      "message": "base::MakeRefCounted\u003cSchedulerWorker\u003e(",
+      "range": {
+        "startLine": 679,
+        "startChar": 9,
+        "endLine": 679,
+        "endChar": 48
+      },
+      "revId": "912505c09a2d0d80d50ecbd533783a32b048611a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de64844d_2c0522a2",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 682,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-30T19:02:34Z",
+      "side": 1,
+      "message": "Since when you create a worker, you always add it to |workers_| and you always Start() it, this method could be:\n\nworkers_lock_.AssertAcquired();\nworkers_.push_back(base::MakeRefCounted\u003cSchedulerWorker\u003e(...));\nworkers_.back()-\u003eStart();\nreturn workers_.back();",
+      "revId": "912505c09a2d0d80d50ecbd533783a32b048611a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24750404_dee702c8",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-30T19:02:34Z",
+      "side": 1,
+      "message": "SchedulerWorkerPoolParams",
+      "range": {
+        "startLine": 135,
+        "startChar": 56,
+        "endLine": 135,
+        "endChar": 71
+      },
+      "revId": "912505c09a2d0d80d50ecbd533783a32b048611a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c77b99a_ecc062f1",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-30T19:02:34Z",
+      "side": 1,
+      "message": "can\u0027t be called before Start().",
+      "range": {
+        "startLine": 137,
+        "startChar": 65,
+        "endLine": 138,
+        "endChar": 41
+      },
+      "revId": "912505c09a2d0d80d50ecbd533783a32b048611a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a2e4dbe_acd2d4be",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-30T19:02:34Z",
+      "side": 1,
+      "message": "s/number of workers/workers/.",
+      "range": {
+        "startLine": 210,
+        "startChar": 5,
+        "endLine": 210,
+        "endChar": 22
+      },
+      "revId": "912505c09a2d0d80d50ecbd533783a32b048611a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8b7c310_1ecc4e33",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-30T19:02:34Z",
+      "side": 1,
+      "message": "Do not add this member in this CL, since it\u0027s not useful yet (always equal to |worker_capacity_|).",
+      "range": {
+        "startLine": 213,
+        "startChar": 2,
+        "endLine": 215,
+        "endChar": 31
+      },
+      "revId": "912505c09a2d0d80d50ecbd533783a32b048611a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "933ab4be_7e327c79",
+        "filename": "base/task_scheduler/task_scheduler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-30T19:02:34Z",
+      "side": 1,
+      "message": "s/and remove/and/",
+      "range": {
+        "startLine": 211,
+        "startChar": 38,
+        "endLine": 211,
+        "endChar": 48
+      },
+      "revId": "912505c09a2d0d80d50ecbd533783a32b048611a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
