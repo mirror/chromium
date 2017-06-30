@@ -82,11 +82,9 @@ class LinkLoader::FinishObserver final
   USING_PRE_FINALIZER(FinishObserver, ClearResource);
 
  public:
-  FinishObserver(LinkLoader* loader,
-                 Resource* resource,
-                 Resource::PreloadReferencePolicy reference_policy)
+  FinishObserver(LinkLoader* loader, Resource* resource)
       : loader_(loader), resource_(resource) {
-    resource_->AddFinishObserver(this, reference_policy);
+    resource_->AddFinishObserver(this);
   }
 
   // ResourceFinishObserver implementation
@@ -486,12 +484,10 @@ bool LinkLoader::LoadLink(
   DCHECK(!preloaded_resource || !prefetched_resource);
 
   if (preloaded_resource) {
-    finish_observer_ = new FinishObserver(this, preloaded_resource,
-                                          Resource::kDontMarkAsReferenced);
+    finish_observer_ = new FinishObserver(this, preloaded_resource);
   }
   if (prefetched_resource) {
-    finish_observer_ = new FinishObserver(this, prefetched_resource,
-                                          Resource::kMarkAsReferenced);
+    finish_observer_ = new FinishObserver(this, prefetched_resource);
   }
 
   if (const unsigned prerender_rel_types =
