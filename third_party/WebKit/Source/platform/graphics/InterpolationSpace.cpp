@@ -111,6 +111,13 @@ Color ConvertColor(const Color& src_color,
 sk_sp<SkColorFilter> CreateInterpolationSpaceFilter(
     InterpolationSpace src_interpolation_space,
     InterpolationSpace dst_interpolation_space) {
+    if (1){
+        if (dst_interpolation_space == src_interpolation_space)
+            return nullptr;
+        return dst_interpolation_space == kInterpolationSpaceSRGB
+                  ? SkTableColorFilter::MakeLinearToSRGBGamma()
+                  : SkTableColorFilter::MakeSRGBToLinearGamma();
+    }
   const uint8_t* lookup_table =
       GetConversionLUT(dst_interpolation_space, src_interpolation_space);
   if (!lookup_table)
