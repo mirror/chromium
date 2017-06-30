@@ -16,6 +16,24 @@
       "revId": "0446f319ce560f7cacd3c55354325de4018bcde2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47f6f1cf_5b62faa7",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-06-30T04:27:45Z",
+      "side": 1,
+      "message": "Thanks. Will pick this fix in https://chromium-review.googlesource.com/c/555190/",
+      "parentUuid": "23c084ec_bd8745d3",
+      "revId": "0446f319ce560f7cacd3c55354325de4018bcde2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
