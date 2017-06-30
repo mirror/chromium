@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "af6b6239_171a12eb",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-30T22:45:15Z",
+      "side": 1,
+      "message": "Per Erik\u0027s comments, NotifySessionTimeMet will no longer call TryShowPromo(), since it is called after the session ends.",
+      "parentUuid": "fd56c944_836cc5f6",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 32
+      },
+      "revId": "fa380599c2c4f17f770f849f792b9a27e831e979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "585944dd_d46f0dc4",
         "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker.h",
         "patchSetId": 23
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "fbbd3a35_0ae1a5b3",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-30T22:45:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "585944dd_d46f0dc4",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 59
+      },
+      "revId": "fa380599c2c4f17f770f849f792b9a27e831e979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b17ec010_d807356b",
         "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker.h",
         "patchSetId": 23
@@ -59,6 +107,30 @@
       "writtenOn": "2017-06-30T01:30:43Z",
       "side": 1,
       "message": "This should probably be inside the feature_engagement_tracker namespace. I defer to nyquist@ on the correct location.",
+      "range": {
+        "startLine": 17,
+        "startChar": 10,
+        "endLine": 17,
+        "endChar": 44
+      },
+      "revId": "fa380599c2c4f17f770f849f792b9a27e831e979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ea741d0_7466e5fe",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-30T22:45:15Z",
+      "side": 1,
+      "message": "Tommy said to put it in a different namespace in an earlier patch.",
+      "parentUuid": "b17ec010_d807356b",
       "range": {
         "startLine": 17,
         "startChar": 10,
@@ -91,6 +163,30 @@
       "revId": "fa380599c2c4f17f770f849f792b9a27e831e979",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c431afed_3a8f99a9",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-30T22:45:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2474be2_d85e9abc",
+      "range": {
+        "startLine": 20,
+        "startChar": 31,
+        "endLine": 20,
+        "endChar": 32
+      },
+      "revId": "fa380599c2c4f17f770f849f792b9a27e831e979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +236,54 @@
     },
     {
       "key": {
+        "uuid": "7a0f22dd_432e6aeb",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-30T22:45:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92eb37fe_93b95201",
+      "range": {
+        "startLine": 35,
+        "startChar": 11,
+        "endLine": 35,
+        "endChar": 19
+      },
+      "revId": "fa380599c2c4f17f770f849f792b9a27e831e979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cad20006_09fd4408",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-30T22:45:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a841aed9_3903a104",
+      "range": {
+        "startLine": 35,
+        "startChar": 2,
+        "endLine": 35,
+        "endChar": 10
+      },
+      "revId": "fa380599c2c4f17f770f849f792b9a27e831e979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74138517_ebecafa7",
         "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker_factory.cc",
         "patchSetId": 23
@@ -154,6 +298,42 @@
       "revId": "fa380599c2c4f17f770f849f792b9a27e831e979",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fa9aed7_56cc0078",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker_factory.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-30T22:45:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74138517_ebecafa7",
+      "revId": "fa380599c2c4f17f770f849f792b9a27e831e979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e8575929_7cbbc3bd",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker_factory.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-30T22:45:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74138517_ebecafa7",
+      "revId": "fa380599c2c4f17f770f849f792b9a27e831e979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -180,6 +360,30 @@
     },
     {
       "key": {
+        "uuid": "6628625f_3fc26f1a",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker_factory.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-30T22:45:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e52d1e4_e53619f8",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 17
+      },
+      "revId": "fa380599c2c4f17f770f849f792b9a27e831e979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a20ced5_cb4fdc3b",
         "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker_factory.h",
         "patchSetId": 23
@@ -203,6 +407,30 @@
     },
     {
       "key": {
+        "uuid": "c0ad0a5d_5bbaac9c",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker_factory.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-30T22:45:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a20ced5_cb4fdc3b",
+      "range": {
+        "startLine": 27,
+        "startChar": 6,
+        "endLine": 27,
+        "endChar": 43
+      },
+      "revId": "fa380599c2c4f17f770f849f792b9a27e831e979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "985e9a79_4990427f",
         "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker_unittest.cc",
         "patchSetId": 23
@@ -223,6 +451,30 @@
       "revId": "fa380599c2c4f17f770f849f792b9a27e831e979",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8012f1c8_a9dd2ea8",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-30T22:45:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "985e9a79_4990427f",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 36
+      },
+      "revId": "fa380599c2c4f17f770f849f792b9a27e831e979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

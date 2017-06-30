@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b5d2b3e2_ffb40f58",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-30T22:45:15Z",
+      "side": 1,
+      "message": "Good call, fixed the code.",
+      "parentUuid": "2147fcf7_b156a289",
+      "revId": "c690d49e6dbbc93c19c99efefc503a503746179d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f88213a2_553a20da",
         "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker.cc",
         "patchSetId": 22
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ac234c70_6b62ed6f",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-30T22:45:15Z",
+      "side": 1,
+      "message": "Fixed.",
+      "parentUuid": "f88213a2_553a20da",
+      "revId": "c690d49e6dbbc93c19c99efefc503a503746179d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fe53d86a_4385c445",
         "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker.h",
         "patchSetId": 22
@@ -47,6 +83,30 @@
       "writtenOn": "2017-06-29T22:45:13Z",
       "side": 1,
       "message": "is this used?",
+      "range": {
+        "startLine": 28,
+        "startChar": 41,
+        "endLine": 28,
+        "endChar": 47
+      },
+      "revId": "c690d49e6dbbc93c19c99efefc503a503746179d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7186ed5f_436cdaa6",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-30T22:45:15Z",
+      "side": 1,
+      "message": "Changed in newer patch.",
+      "parentUuid": "fe53d86a_4385c445",
       "range": {
         "startLine": 28,
         "startChar": 41,
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "6403ccda_92cfe34b",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker_factory.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-30T22:45:15Z",
+      "side": 1,
+      "message": "Fixed in newer patch.",
+      "parentUuid": "381a1fe9_42150dd2",
+      "range": {
+        "startLine": 51,
+        "startChar": 14,
+        "endLine": 51,
+        "endChar": 59
+      },
+      "revId": "c690d49e6dbbc93c19c99efefc503a503746179d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6a19ccd7_440f0092",
         "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker_factory.h",
         "patchSetId": 22
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "95a255ed_59143e50",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker_factory.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-30T22:45:15Z",
+      "side": 1,
+      "message": "I think these need to be static to be accessed when I retrieve the tracker? The FeatureEngagementTrackerFactory does this as well.",
+      "parentUuid": "6a19ccd7_440f0092",
+      "range": {
+        "startLine": 33,
+        "startChar": 45,
+        "endLine": 33,
+        "endChar": 75
+      },
+      "revId": "c690d49e6dbbc93c19c99efefc503a503746179d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99b2b249_d68189ef",
         "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker_unittest.cc",
         "patchSetId": 22
@@ -119,6 +227,24 @@
       "revId": "c690d49e6dbbc93c19c99efefc503a503746179d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "181b7ab3_522fd973",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-30T22:45:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99b2b249_d68189ef",
+      "revId": "c690d49e6dbbc93c19c99efefc503a503746179d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -145,6 +271,30 @@
     },
     {
       "key": {
+        "uuid": "fd3a66c8_267fe5b6",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-30T22:45:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a99e28ce_986005c3",
+      "range": {
+        "startLine": 125,
+        "startChar": 24,
+        "endLine": 125,
+        "endChar": 34
+      },
+      "revId": "c690d49e6dbbc93c19c99efefc503a503746179d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf5d8559_03f7712d",
         "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker_unittest.cc",
         "patchSetId": 22
@@ -162,6 +312,24 @@
     },
     {
       "key": {
+        "uuid": "db62aa94_6b40a4fb",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-30T22:45:15Z",
+      "side": 1,
+      "message": "Changed.",
+      "parentUuid": "bf5d8559_03f7712d",
+      "revId": "c690d49e6dbbc93c19c99efefc503a503746179d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0c158ad3_af93504b",
         "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker_unittest.cc",
         "patchSetId": 22
@@ -173,6 +341,24 @@
       "writtenOn": "2017-06-29T22:45:13Z",
       "side": 1,
       "message": "can we check that the correction duration is recorded, even if UpdateSessionTime is called multiple times?",
+      "revId": "c690d49e6dbbc93c19c99efefc503a503746179d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98f4c140_24359ba3",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-30T22:45:15Z",
+      "side": 1,
+      "message": "Added another unit test",
+      "parentUuid": "0c158ad3_af93504b",
       "revId": "c690d49e6dbbc93c19c99efefc503a503746179d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
