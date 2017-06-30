@@ -16,6 +16,23 @@
       "revId": "23c5ebce2c8b32e263fd90403ba301d3e829f5cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0381ed77_11302ca7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline_model/TracingLayerTree.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-06-30T18:47:56Z",
+      "side": 1,
+      "message": "If we\u0027re not going to show real values shouldn\u0027t this be not listed in the tracing layer tree?",
+      "revId": "23c5ebce2c8b32e263fd90403ba301d3e829f5cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
