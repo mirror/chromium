@@ -86,22 +86,29 @@ public class FaceDetectionImplGmsCore implements FaceDetection {
             faceArray[i] = new FaceDetectionResult();
             final Face face = faces.valueAt(i);
 
-            final PointF corner = face.getPosition();
-            faceArray[i].boundingBox = new RectF();
-            faceArray[i].boundingBox.x = corner.x;
-            faceArray[i].boundingBox.y = corner.y;
-            faceArray[i].boundingBox.width = face.getWidth();
-            faceArray[i].boundingBox.height = face.getHeight();
-
             final List<Landmark> landmarks = face.getLandmarks();
             ArrayList<org.chromium.shape_detection.mojom.Landmark> mojoLandmarks =
                     new ArrayList<org.chromium.shape_detection.mojom.Landmark>(landmarks.size());
 
+            int leftEyeIndex = 0, rightEyeIndex = 0, bottomMouthIndex = 0;
             for (int j = 0; j < landmarks.size(); j++) {
                 final Landmark landmark = landmarks.get(j);
                 final int landmarkType = landmark.getType();
-                if (landmarkType == Landmark.LEFT_EYE || landmarkType == Landmark.RIGHT_EYE
-                        || landmarkType == Landmark.BOTTOM_MOUTH) {
+                final boolean flag = true;
+                switch (landmarkType) {
+                    case Landmark.LEFT_EYE:
+                        leftEyeIndex = j;
+                        break;
+                    case Landmark.RIGHT_EYE:
+                        rightEyeIndex = j;
+                        break;
+                    case Landmark.BOTTOM_MOUTH:
+                        bottomMouthIndex = j;
+                        break;
+                    default:
+                        flag = false;
+                }
+                if (flag) {
                     org.chromium.shape_detection.mojom.Landmark mojoLandmark =
                             new org.chromium.shape_detection.mojom.Landmark();
                     mojoLandmark.location = new org.chromium.gfx.mojom.PointF();
@@ -114,6 +121,17 @@ public class FaceDetectionImplGmsCore implements FaceDetection {
             }
             faceArray[i].landmarks = mojoLandmarks.toArray(
                     new org.chromium.shape_detection.mojom.Landmark[mojoLandmarks.size()]);
+
+            final PointF corner = face.getPosition();
+            final PointF leftEyePoint = landmarks.get(leftEyeIndex).getPosition();
+            final float eyesDistance =
+                    leftEyePoint.x - landmarks.get(rightEyeIndex).getPosition().x;
+            final PointF midPoint = new PointF(corner.x + face.getWidth() / 2, leftEyePoint.y);
+            faceArray[i].boundingBox = new RectF();
+            faceArray[i].boundingBox.x = midPoint.x - eyesDistance;
+            faceArray[i].boundingBox.y = midPoint.y - eyesDistance;
+            faceArray[i].boundingBox.width = 2 * eyesDistance;
+            faceArray[i].boundingBox.height = 2 * eyesDistance;
         }
         callback.call(faceArray);
     }
