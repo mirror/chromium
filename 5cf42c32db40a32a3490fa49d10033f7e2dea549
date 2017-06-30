@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "6f5dba0e_1cbd4ec3",
+        "filename": "components/feature_engagement_tracker/public/event_constants.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-06-30T17:43:00Z",
+      "side": 1,
+      "message": "When looking at this again, I actually think the following structure would be better, compared to what I recommended yesterday:\nMake 2 separate IF blocks. For the new tab constant, wrap it in its own if block with a check for OS_WIN or OS_LINUX or OS_IOS.\n\nFor the other constants we do not use on iOS, move them to their own IF block with checks for just OS_WIN or OS_LINUX.",
+      "revId": "5cf42c32db40a32a3490fa49d10033f7e2dea549",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "250efb55_02bddc21",
         "filename": "components/feature_engagement_tracker/public/event_constants.h",
         "patchSetId": 3
@@ -34,6 +51,24 @@
       "revId": "5cf42c32db40a32a3490fa49d10033f7e2dea549",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dea91a1_dc2416c3",
+        "filename": "components/feature_engagement_tracker/public/event_constants.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-06-30T17:43:00Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "38491f14_ec0c6379",
+      "revId": "5cf42c32db40a32a3490fa49d10033f7e2dea549",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
