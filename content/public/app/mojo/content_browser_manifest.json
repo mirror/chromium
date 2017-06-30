@@ -44,6 +44,7 @@
           "shape_detection::mojom::BarcodeDetection",
           "shape_detection::mojom::FaceDetectionProvider",
           "shape_detection::mojom::TextDetection",
+          "storage::mojom::BlobRegistry",
           "ui::mojom::Gpu"
         ],
         "service_manager:service_factory": [
