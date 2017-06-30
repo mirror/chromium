@@ -22,6 +22,29 @@
       "revId": "c12dd09851c427132f007b9ca618bfc04c89350c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "077fd9b7_79d90a21",
+        "filename": "chrome/browser/ui/android/ssl_client_certificate_request.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-06-30T15:51:43Z",
+      "side": 1,
+      "message": "forgive me for being naive, but why the std::move here?  seems to me it would be fine for the delegate to delete itself after this returns anyway.",
+      "range": {
+        "startLine": 199,
+        "startChar": 9,
+        "endLine": 199,
+        "endChar": 13
+      },
+      "revId": "c12dd09851c427132f007b9ca618bfc04c89350c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
