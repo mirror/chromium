@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1b7e06b7_6c399a80",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 2243,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-30T10:45:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "640e0240_ae58ab9a",
+      "revId": "9ba948a2167f95580a59e04c733ccae2bc8dd59d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1667d1f_aceea877",
         "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
         "patchSetId": 8
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "16c96c4b_d01bcb9a",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-30T10:45:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1667d1f_aceea877",
+      "revId": "9ba948a2167f95580a59e04c733ccae2bc8dd59d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d605675_51a663e7",
         "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
         "patchSetId": 8
@@ -47,6 +83,30 @@
       "writtenOn": "2017-06-29T13:45:23Z",
       "side": 1,
       "message": "Should this be \\n ?",
+      "range": {
+        "startLine": 44,
+        "startChar": 51,
+        "endLine": 44,
+        "endChar": 52
+      },
+      "revId": "9ba948a2167f95580a59e04c733ccae2bc8dd59d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f49fd2fb_fd1ca620",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-30T10:45:13Z",
+      "side": 1,
+      "message": "No, I am keeping one line of error for each proto. Therefore \"if\" there are more than one errors, they are added to the previous one. The |message| argument (as far as I have seen) has a period at its end, and hence the outcome is quite well formated.",
+      "parentUuid": "6d605675_51a663e7",
       "range": {
         "startLine": 44,
         "startChar": 51,
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "26ca24ef_aa19c3d1",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-30T10:45:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc8552a8_21476d97",
+      "revId": "9ba948a2167f95580a59e04c733ccae2bc8dd59d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc5a38f5_9afb0b9d",
         "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
         "patchSetId": 8
@@ -87,6 +165,30 @@
       "writtenOn": "2017-06-29T13:45:23Z",
       "side": 1,
       "message": "Could we add the space here (between the colon and %s) instead of at the beginning of the string in AddError()?",
+      "range": {
+        "startLine": 151,
+        "startChar": 48,
+        "endLine": 151,
+        "endChar": 49
+      },
+      "revId": "9ba948a2167f95580a59e04c733ccae2bc8dd59d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8655ec6c_dda6731d",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-30T10:45:13Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "cc5a38f5_9afb0b9d",
       "range": {
         "startLine": 151,
         "startChar": 48,
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "4d7586f3_c75830c4",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_ui.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-30T10:45:13Z",
+      "side": 1,
+      "message": "I do not control the error messages that protobuf returns. It seems that they are all just one line texts, but if one has an eol character, it is replaced here to avoid spreading to next line.",
+      "parentUuid": "e83d9cb9_c3cd13dc",
+      "range": {
+        "startLine": 192,
+        "startChar": 4,
+        "endLine": 192,
+        "endChar": 56
+      },
+      "revId": "9ba948a2167f95580a59e04c733ccae2bc8dd59d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0c761b9a_47925271",
         "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_ui.cc",
         "patchSetId": 8
@@ -145,6 +271,30 @@
     },
     {
       "key": {
+        "uuid": "19442762_cb49238b",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_ui.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-30T10:45:13Z",
+      "side": 1,
+      "message": "Done, error collection slightly improved to be more clear.",
+      "parentUuid": "0c761b9a_47925271",
+      "range": {
+        "startLine": 193,
+        "startChar": 4,
+        "endLine": 193,
+        "endChar": 60
+      },
+      "revId": "9ba948a2167f95580a59e04c733ccae2bc8dd59d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8edf921c_e2b15b44",
         "filename": "tools/traffic_annotation/presubmit_checks.py",
         "patchSetId": 8
@@ -159,6 +309,24 @@
       "revId": "9ba948a2167f95580a59e04c733ccae2bc8dd59d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e871181_22d084b6",
+        "filename": "tools/traffic_annotation/presubmit_checks.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-30T10:45:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8edf921c_e2b15b44",
+      "revId": "9ba948a2167f95580a59e04c733ccae2bc8dd59d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -185,6 +353,30 @@
     },
     {
       "key": {
+        "uuid": "d5716dd8_486eceed",
+        "filename": "tools/traffic_annotation/presubmit_checks.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-30T10:45:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8667bd42_be509953",
+      "range": {
+        "startLine": 51,
+        "startChar": 66,
+        "endLine": 51,
+        "endChar": 70
+      },
+      "revId": "9ba948a2167f95580a59e04c733ccae2bc8dd59d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "904516ab_9df6438d",
         "filename": "tools/traffic_annotation/presubmit_checks.py",
         "patchSetId": 8
@@ -199,6 +391,24 @@
       "revId": "9ba948a2167f95580a59e04c733ccae2bc8dd59d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "774e208c_e8559f77",
+        "filename": "tools/traffic_annotation/presubmit_checks.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-30T10:45:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "904516ab_9df6438d",
+      "revId": "9ba948a2167f95580a59e04c733ccae2bc8dd59d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -225,6 +435,30 @@
     },
     {
       "key": {
+        "uuid": "9b6602e7_9a7ef9dc",
+        "filename": "tools/traffic_annotation/presubmit_checks.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-30T10:45:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e6b386b_593530ce",
+      "range": {
+        "startLine": 105,
+        "startChar": 6,
+        "endLine": 105,
+        "endChar": 21
+      },
+      "revId": "9ba948a2167f95580a59e04c733ccae2bc8dd59d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "139d95f7_bdbf2a7d",
         "filename": "tools/traffic_annotation/presubmit_checks.py",
         "patchSetId": 8
@@ -236,6 +470,30 @@
       "writtenOn": "2017-06-29T13:45:23Z",
       "side": 1,
       "message": "Technically, we could add this on all platforms, no?\n\n\"#!/usr/bin/env python\" means that OS knows to execute this as a python, I wonder if explicitly starting \"python\" wouldn\u0027t even be slightly faster.\n\nAnd we don\u0027t have to deal with win32/win64 etc.",
+      "range": {
+        "startLine": 126,
+        "startChar": 4,
+        "endLine": 126,
+        "endChar": 31
+      },
+      "revId": "9ba948a2167f95580a59e04c733ccae2bc8dd59d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01fc5f53_1a0d6347",
+        "filename": "tools/traffic_annotation/presubmit_checks.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-30T10:45:13Z",
+      "side": 1,
+      "message": "I am not familiar with other platforms, but on Windows adding \u0027#!/usr/bin/env python\u0027 does not help and the file must be an executable or a batch file to run.\nPython docs (https://docs.python.org/2/library/sys.html#sys.platform) suggest using startswith to cope with version differences.",
+      "parentUuid": "139d95f7_bdbf2a7d",
       "range": {
         "startLine": 126,
         "startChar": 4,
@@ -268,6 +526,30 @@
       "revId": "9ba948a2167f95580a59e04c733ccae2bc8dd59d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d97c4fcb_11380656",
+        "filename": "tools/traffic_annotation/presubmit_checks.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-30T10:45:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebd83399_4394c8a5",
+      "range": {
+        "startLine": 130,
+        "startChar": 30,
+        "endLine": 130,
+        "endChar": 53
+      },
+      "revId": "9ba948a2167f95580a59e04c733ccae2bc8dd59d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
