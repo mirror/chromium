@@ -5,6 +5,7 @@
 #ifndef CHROME_BROWSER_ANDROID_VR_SHELL_VR_SHELL_GL_H_
 #define CHROME_BROWSER_ANDROID_VR_SHELL_VR_SHELL_GL_H_
 
+#include <chrome/browser/android/vr_shell/ui_input_manager.h>
 #include <memory>
 #include <queue>
 #include <utility>
@@ -66,7 +67,8 @@ struct WebVrBounds {
 
 // This class manages all GLThread owned objects and GL rendering for VrShell.
 // It is not threadsafe and must only be used on the GL thread.
-class VrShellGl : public device::mojom::VRPresentationProvider {
+class VrShellGl : public device::mojom::VRPresentationProvider,
+                  public UiInputManagerDelegate {
  public:
   VrShellGl(GlBrowserInterface* browser,
             gvr_context* gvr_api,
@@ -107,6 +109,13 @@ class VrShellGl : public device::mojom::VRPresentationProvider {
       device::mojom::VRSubmitFrameClientPtrInfo submit_client_info,
       device::mojom::VRPresentationProviderRequest request);
 
+  // UiInputManagerDelegate.
+  void OnEnterWebContents(const gfx::PointF& normalized_hit_point) override;
+  void OnExitWebContents() override;
+  void OnMoveOnWebContents(const gfx::PointF& normalized_hit_point) override;
+  void OnDownOnWebContents(const gfx::PointF& normalized_hit_point) override;
+  void OnUpOnWebContents(const gfx::PointF& normalized_hit_point) override;
+
  private:
   void GvrInit(gvr_context* gvr_api);
   void InitializeRenderer();
@@ -142,38 +151,12 @@ class VrShellGl : public device::mojom::VRPresentationProvider {
   void HandleWebVrCompatibilityClick();
   void SendFlingCancel(GestureList& gesture_list);
   void SendScrollEnd(GestureList& gesture_list);
-  bool SendScrollBegin(UiElement* target, GestureList& gesture_list);
+  bool SendScrollBegin(bool is_targeting_content, GestureList& gesture_list);
   void SendScrollUpdate(GestureList& gesture_list);
-  void SendHoverLeave(UiElement* target);
-  bool SendHoverEnter(UiElement* target,
-                      const gfx::PointF& target_point,
-                      const gfx::Point& local_point_pixels);
-  void SendHoverMove(const gfx::PointF& target_point,
-                     const gfx::Point& local_point_pixels);
-  void SendButtonDown(UiElement* target,
-                      const gfx::PointF& target_point,
-                      const gfx::Point& local_point_pixels);
-  bool SendButtonUp(UiElement* target,
-                    const gfx::PointF& target_point,
-                    const gfx::Point& local_point_pixels);
-  void SendTap(UiElement* target,
-               const gfx::PointF& target_point,
-               const gfx::Point& local_point_pixels);
   std::unique_ptr<blink::WebMouseEvent> MakeMouseEvent(
       blink::WebInputEvent::Type type,
-      const gfx::Point& location);
+      const gfx::PointF& normalized_web_content_location);
   void SendImmediateExitRequestIfNecessary();
-  void GetVisualTargetElement(const gfx::Vector3dF& controller_direction,
-                              gfx::Vector3dF& eye_to_target,
-                              gfx::Point3F& target_point,
-                              UiElement** target_element,
-                              gfx::PointF& target_local_point) const;
-  bool GetTargetLocalPoint(const gfx::Vector3dF& eye_to_target,
-                           const UiElement& element,
-                           float max_distance_to_plane,
-                           gfx::PointF& target_local_point,
-                           gfx::Point3F& target_point,
-                           float& distance_to_plane) const;
   void HandleControllerInput(const gfx::Vector3dF& head_direction);
   void HandleControllerAppButtonActivity(
       const gfx::Vector3dF& controller_direction);
@@ -242,14 +225,10 @@ class VrShellGl : public device::mojom::VRPresentationProvider {
   // TODO(mthiesse): We need to handle elements being removed, and update this
   // state appropriately.
   UiElement* reticle_render_target_ = nullptr;
-  UiElement* hover_target_ = nullptr;
-  // TODO(mthiesse): We shouldn't have a fling target. Elements should fling
-  // independently and we should only cancel flings on the relevant element
-  // when we do cancel flings.
-  UiElement* fling_target_ = nullptr;
-  UiElement* input_locked_element_ = nullptr;
   bool in_scroll_ = false;
   bool in_click_ = false;
+  bool in_fling_ = false;
+  base::Optional<gfx::PointF> normalized_content_hit_point_;
 
   int content_tex_css_width_ = 0;
   int content_tex_css_height_ = 0;
@@ -297,6 +276,8 @@ class VrShellGl : public device::mojom::VRPresentationProvider {
   std::unique_ptr<SlidingAverage> webvr_render_time_;
 
   gfx::Point3F pointer_start_;
+
+  std::unique_ptr<UiInputManager> bbb_;
 
   base::WeakPtrFactory<VrShellGl> weak_ptr_factory_;
 
