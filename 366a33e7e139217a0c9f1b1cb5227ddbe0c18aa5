@@ -16,6 +16,24 @@
       "revId": "366a33e7e139217a0c9f1b1cb5227ddbe0c18aa5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d7ffca9_7ca86426",
+        "filename": "third_party/WebKit/LayoutTests/flag-specific/enable-slimming-paint-v2/paint/invalidation/caret-invalidation-in-overflow-scroll-expected.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-30T22:44:07Z",
+      "side": 1,
+      "message": "The new baselines are created by \u0027run-webkit-tests --additional... --new-flag-specific-baseline\u0027 which won\u0027t create new baseline for results matching non-flag-specific baselines.\n\nThis one differs from the non-spv2 baseline at line 10 and line 15 (you can see it from the try result of the previous patch set here: http://build.chromium.org/p/tryserver.chromium.linux/builders/linux_layout_tests_slimming_paint_v2/builds/5448). The difference is because we use the display item clients found in the display items for spv2.\n\n(However, we will have spv2 baselines same as the non-spv2 baselines, in the following process:\n1. we create a new spv2 baseline which is different from the non-spv2 baseline;\n2. then some code change causes spv2 create the same baseline as non-spv2 for the test, and we rebaseline for spv2.\nThis can be avoided by optimizing results of above step 2, but the duplicated baselines seem not a big deal in this case which seems rare.)",
+      "parentUuid": "75a96f30_17a4b853",
+      "revId": "366a33e7e139217a0c9f1b1cb5227ddbe0c18aa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
