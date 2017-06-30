@@ -16,6 +16,24 @@
       "revId": "cac1144ad5fda2337223010c1c796a3a29809840",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96023ff6_ad486b44",
+        "filename": "components/omnibox/browser/shortcuts_backend.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-30T09:11:58Z",
+      "side": 1,
+      "message": "Not sure.  It looks like we use the db_runner_ to do the final release on the database object.  The database object has no code in its destructor, but does have various by-value members like a sql::Connection and a sql::MetaTable.  If this is SKIP_ON_SHUTDOWN, does that mean these objects could possibly never be freed?  Does that in turn mean we could have database corruption?\n\nSurely this question has come up before when converting file/database writes to the task scheduler.  Adding robliao@ as one of the relevant task_scheduler OWNERS to give pointers.",
+      "parentUuid": "4b7c4b0c_af1c6b60",
+      "revId": "cac1144ad5fda2337223010c1c796a3a29809840",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
