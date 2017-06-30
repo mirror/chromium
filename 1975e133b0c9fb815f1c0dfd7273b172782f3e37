@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ccbc5b12_ed34e3b2",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-30T13:55:25Z",
+      "side": 1,
+      "message": "nit: preferring early return",
+      "revId": "1975e133b0c9fb815f1c0dfd7273b172782f3e37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "372f8fc5_2666f633",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-30T13:55:25Z",
+      "side": 1,
+      "message": "nit: request -\u003e requests",
+      "revId": "1975e133b0c9fb815f1c0dfd7273b172782f3e37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37e2850d_5759ba09",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-30T13:55:25Z",
+      "side": 1,
+      "message": "\u0027Stops all operating\u0027 -\u003e \u0027Stops observing throttling status and changes the internal state to kShutdown.\u0027 ? (from what saw in the code)",
+      "revId": "1975e133b0c9fb815f1c0dfd7273b172782f3e37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26282c61_4c11db24",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-30T13:55:25Z",
+      "side": 1,
+      "message": "If scheduler is non-null state is changed to kActive in ctor, \u0027initial state\u0027 may feel a bit weird.",
+      "revId": "1975e133b0c9fb815f1c0dfd7273b172782f3e37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97432697_82660973",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-30T13:55:25Z",
+      "side": 1,
+      "message": "I think kInactive and kActive are rather used as enable/disabled flag than for a finite running state, if so wouldn\u0027t just having is_shutdown_ and is_enabled_ flags be clearer?",
+      "revId": "1975e133b0c9fb815f1c0dfd7273b172782f3e37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ac9a6f5_cf4176bc",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-30T13:55:25Z",
+      "side": 1,
+      "message": "nit: the method name is self-explanatory, probably this comment can be removed.",
+      "revId": "1975e133b0c9fb815f1c0dfd7273b172782f3e37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
