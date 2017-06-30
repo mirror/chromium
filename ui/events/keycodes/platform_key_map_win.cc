@@ -342,6 +342,22 @@ DomKey PlatformKeyMap::DomKeyFromKeyboardCode(KeyboardCode key_code,
   return platform_key_map->DomKeyFromKeyboardCodeImpl(key_code, flags);
 }
 
+// static
+bool PlatformKeyMap::UsesAltGraph() {
+  base::ThreadLocalStorage::Slot* platform_key_map_tls =
+      g_platform_key_map_tls_lazy.Pointer();
+  PlatformKeyMap* platform_key_map =
+      reinterpret_cast<PlatformKeyMap*>(platform_key_map_tls->Get());
+  if (!platform_key_map) {
+    platform_key_map = new PlatformKeyMap();
+    platform_key_map_tls->Set(platform_key_map);
+  }
+
+  HKL current_layout = ::GetKeyboardLayout(0);
+  platform_key_map->UpdateLayout(current_layout);
+  return platform_key_map->has_alt_graph_;
+}
+
 void PlatformKeyMap::UpdateLayout(HKL layout) {
   if (layout == keyboard_layout_)
     return;

@@ -29,6 +29,9 @@ class EVENTS_EXPORT PlatformKeyMap {
   // Updates a per-thread key map cache whenever the layout changes.
   static DomKey DomKeyFromKeyboardCode(KeyboardCode, int flags);
 
+  // Returns true if the currently-active keymap uses AltGraph shift.
+  static bool UsesAltGraph();
+
  private:
   friend class PlatformKeyMapTest;
 

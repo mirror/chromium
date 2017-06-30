@@ -8,7 +8,12 @@
 #include "ui/events/events_export.h"
 
 namespace ui {
+
+class Event;
+
 namespace win {
+
+EVENTS_EXPORT void OnInputEvent(ui::Event* event);
 
 // Returns true if the shift key is currently pressed.
 EVENTS_EXPORT bool IsShiftPressed();

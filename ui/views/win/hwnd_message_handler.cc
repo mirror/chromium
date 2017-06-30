@@ -1641,6 +1641,7 @@ LRESULT HWNDMessageHandler::OnKeyEvent(UINT message,
   MSG msg = {
       hwnd(), message, w_param, l_param, static_cast<DWORD>(GetMessageTime())};
   ui::KeyEvent key(msg);
+  ui::win::OnInputEvent(&key);
   base::WeakPtr<HWNDMessageHandler> ref(weak_factory_.GetWeakPtr());
   delegate_->HandleKeyEvent(&key);
   if (!ref)
