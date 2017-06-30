@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "eea9097d_082b9881",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-06-30T18:12:32Z",
+      "side": 1,
+      "message": "I\u0027ve moved it to AwVariationsSeedManager, a new class derived from VariationsSeedManager",
+      "parentUuid": "87e30202_c9cea9c3",
+      "revId": "2c4c19d76f9dfe2947f0ee8363be89221b4e523d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "68acaccc_97dcd4d2",
         "filename": "android_webview/browser/aw_browser_main_parts.cc",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "2c4c19d76f9dfe2947f0ee8363be89221b4e523d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39e6dc5f_def4fee4",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-06-30T18:12:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68acaccc_97dcd4d2",
+      "revId": "2c4c19d76f9dfe2947f0ee8363be89221b4e523d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7914ee68_5eca97b1",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-06-30T18:12:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6596b741_0cfd4f69",
+      "revId": "2c4c19d76f9dfe2947f0ee8363be89221b4e523d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fde97b4c_b4fe8ff1",
         "filename": "android_webview/browser/aw_browser_main_parts.cc",
         "patchSetId": 10
@@ -67,6 +121,24 @@
       "revId": "2c4c19d76f9dfe2947f0ee8363be89221b4e523d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad74e1ca_cf0a4ad7",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-06-30T18:12:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fde97b4c_b4fe8ff1",
+      "revId": "2c4c19d76f9dfe2947f0ee8363be89221b4e523d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "dbb5983c_43b25936",
+        "filename": "android_webview/browser/aw_metrics_service_client.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-06-30T18:12:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebebe3f3_a5181c86",
+      "revId": "2c4c19d76f9dfe2947f0ee8363be89221b4e523d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "462df480_aaa85a56",
         "filename": "android_webview/browser/aw_metrics_service_client.cc",
         "patchSetId": 10
@@ -119,6 +209,24 @@
       "revId": "2c4c19d76f9dfe2947f0ee8363be89221b4e523d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d27a33e4_7a5a0332",
+        "filename": "android_webview/browser/aw_metrics_service_client.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-06-30T18:12:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "462df480_aaa85a56",
+      "revId": "2c4c19d76f9dfe2947f0ee8363be89221b4e523d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -139,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "989a2685_12765845",
+        "filename": "android_webview/browser/metrics/variations/aw_variations_service_client.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-06-30T18:12:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a30b6c90_927dfac7",
+      "revId": "2c4c19d76f9dfe2947f0ee8363be89221b4e523d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86eb6611_71ce87ac",
         "filename": "components/variations/field_trial_config/field_trial_util.h",
         "patchSetId": 10
@@ -156,6 +282,24 @@
     },
     {
       "key": {
+        "uuid": "924a7744_71390001",
+        "filename": "components/variations/field_trial_config/field_trial_util.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-06-30T18:12:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86eb6611_71ce87ac",
+      "revId": "2c4c19d76f9dfe2947f0ee8363be89221b4e523d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50ed180a_17806f61",
         "filename": "components/variations/service/variations_service.cc",
         "patchSetId": 10
@@ -170,6 +314,24 @@
       "revId": "2c4c19d76f9dfe2947f0ee8363be89221b4e523d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33a046b6_dce2654f",
+        "filename": "components/variations/service/variations_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-06-30T18:12:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50ed180a_17806f61",
+      "revId": "2c4c19d76f9dfe2947f0ee8363be89221b4e523d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
