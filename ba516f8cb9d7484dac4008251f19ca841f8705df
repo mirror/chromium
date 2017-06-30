@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "d89eb838_d1f2b01a",
+        "filename": "cc/paint/paint_shader.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-30T21:26:45Z",
+      "side": 1,
+      "message": "Ok",
+      "parentUuid": "ac3e15ea_25c3bdd0",
+      "revId": "ba516f8cb9d7484dac4008251f19ca841f8705df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa989c49_42c33777",
         "filename": "cc/paint/paint_shader.cc",
         "patchSetId": 6
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "Yeah. Previously, AFAIK, building the shader if the matrix existed would have copied as well, since the shader has to have the matrix but it can\u0027t store a pointer.",
       "parentUuid": "fa989c49_42c33777",
+      "revId": "ba516f8cb9d7484dac4008251f19ca841f8705df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "851794f3_4d51e57c",
+        "filename": "cc/paint/paint_shader.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-30T21:26:45Z",
+      "side": 1,
+      "message": "Ok.",
+      "parentUuid": "a156d4ad_609bddfa",
       "revId": "ba516f8cb9d7484dac4008251f19ca841f8705df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
