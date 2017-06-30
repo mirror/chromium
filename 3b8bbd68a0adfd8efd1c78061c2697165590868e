@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "ee916784_b898a6bd",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-06-30T13:22:08Z",
+      "side": 1,
+      "message": "I think the worry is that GetStringWithoutPathExpansion could return an invalid number if something has messed with the preferences.\n\nI\u0027ve put in a check so it returns a null Time if StringToInt64 returns false.",
+      "parentUuid": "3cd725f7_2acffd71",
+      "revId": "3b8bbd68a0adfd8efd1c78061c2697165590868e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5df275b5_31eb3a57",
         "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
         "patchSetId": 4
@@ -283,6 +301,24 @@
     },
     {
       "key": {
+        "uuid": "08cf856d_273965dc",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-06-30T13:22:08Z",
+      "side": 1,
+      "message": "I prefer not to add *ForTesting methods to production code if I can help it. Injecting dependencies is one way to avoid it, although I admit here I am only injecting them in the private  constructor only used by tests, which isn\u0027t a lot better.. \n\nMy feeling is that the non-time-sensitive tests read more clearly if they don\u0027t pass in a clock to this method - only initializing it here reduces duplication too. If method overloading is frowned upon Peter I could rename the methods to something more explicit, e.g. InitChannelsProvider \u0026 InitChannelsProviderWithClock ?",
+      "parentUuid": "702d9e9a_7622d75a",
+      "revId": "3b8bbd68a0adfd8efd1c78061c2697165590868e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bcbc8eef_ab4f50b6",
         "filename": "chrome/browser/prefs/browser_prefs.cc",
         "patchSetId": 4
@@ -330,6 +366,24 @@
       "side": 1,
       "message": "the featurelist is initialized after the testingprofile. I had the same issue already :D You have to create the profile on the heap \nhttps://cs.chromium.org/chromium/src/chrome/browser/browsing_data/site_settings_counter_unittest.cc?l\u003d25\nA better solution would probably be to add a constructor to scopedfeaturelist that directly takes a list of features that should be enabled.",
       "parentUuid": "cc27f9f1_615810b9",
+      "revId": "3b8bbd68a0adfd8efd1c78061c2697165590868e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02db1342_3fac73c8",
+        "filename": "chrome/browser/prefs/browser_prefs.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-06-30T13:22:08Z",
+      "side": 1,
+      "message": "Initializing it in the test constructor before the profile, rather than in SetUp, seemed to do the trick. Thanks for the example!",
+      "parentUuid": "d3d18335_19b805d2",
       "revId": "3b8bbd68a0adfd8efd1c78061c2697165590868e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
