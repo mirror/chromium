@@ -154,6 +154,10 @@ int64_t UnixDomainClientSocket::GetTotalReceivedBytes() const {
   return 0;
 }
 
+void UnixDomainClientSocket::Tag(const SocketTag& tag) {
+  NOTIMPLEMENTED();
+}
+
 int UnixDomainClientSocket::Read(IOBuffer* buf, int buf_len,
                                  const CompletionCallback& callback) {
   DCHECK(socket_);
