@@ -1,0 +1,405 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc8b7f0c_74b4901d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-06-30T19:40:46Z",
+      "side": 1,
+      "message": "I think this would benefit from a README.md file that describes the intent, and briefly explains what each file is.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 84
+      },
+      "revId": "a48a750cb470fb59d0211740637208adcc489340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b295f19e_0e615879",
+        "filename": "third_party/WebKit/PerformanceTests/OWPStorage/idb-load-docs.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-06-30T19:40:46Z",
+      "side": 1,
+      "message": "Include \u003c!doctype html\u003e and a \u003ctitle\u003e...\u003c/title\u003e so it\u0027s conforming (and not quirks-mode)",
+      "revId": "a48a750cb470fb59d0211740637208adcc489340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb553b22_8ac165f4",
+        "filename": "third_party/WebKit/PerformanceTests/OWPStorage/idb-load-docs.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-06-30T19:40:46Z",
+      "side": 1,
+      "message": "Spaces around \u003d\u003e operator",
+      "range": {
+        "startLine": 6,
+        "startChar": 65,
+        "endLine": 6,
+        "endChar": 67
+      },
+      "revId": "a48a750cb470fb59d0211740637208adcc489340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2fb2919_6acf1b0d",
+        "filename": "third_party/WebKit/PerformanceTests/OWPStorage/idb-load-docs.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-06-30T19:40:46Z",
+      "side": 1,
+      "message": "No newline here, or adjust the indentation.",
+      "range": {
+        "startLine": 14,
+        "startChar": 2,
+        "endLine": 15,
+        "endChar": 4
+      },
+      "revId": "a48a750cb470fb59d0211740637208adcc489340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9427548_2e658a12",
+        "filename": "third_party/WebKit/PerformanceTests/OWPStorage/resources/idb-load-docs-runner.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-06-30T19:40:46Z",
+      "side": 1,
+      "message": "Include \u003c!doctype html\u003e and a \u003ctitle\u003e...\u003c/title\u003e so it\u0027s conforming (and not quirks-mode)",
+      "revId": "a48a750cb470fb59d0211740637208adcc489340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5aea1ae8_69355e46",
+        "filename": "third_party/WebKit/PerformanceTests/OWPStorage/resources/idb-load-docs-runner.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-06-30T19:40:46Z",
+      "side": 1,
+      "message": "Can you make this an external script file rather than inline? Just avoids extra indent and makes editing easier (e.g. could clang format)",
+      "revId": "a48a750cb470fb59d0211740637208adcc489340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "937b47ee_77df5add",
+        "filename": "third_party/WebKit/PerformanceTests/OWPStorage/resources/idb-load-docs-runner.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-06-30T19:40:46Z",
+      "side": 1,
+      "message": "Prefer `let`/`const` to `var` (since `let` is already being used in this file)",
+      "range": {
+        "startLine": 7,
+        "startChar": 4,
+        "endLine": 7,
+        "endChar": 7
+      },
+      "revId": "a48a750cb470fb59d0211740637208adcc489340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b276bb01_740bf9b9",
+        "filename": "third_party/WebKit/PerformanceTests/OWPStorage/resources/idb-load-docs-runner.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-06-30T19:40:46Z",
+      "side": 1,
+      "message": "A summary here of the intent of this file would be useful. I found event just the \"Explicit ordering\" section in the google doc useful to have when reviewing this.",
+      "revId": "a48a750cb470fb59d0211740637208adcc489340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b75a4ee_341356e2",
+        "filename": "third_party/WebKit/PerformanceTests/OWPStorage/resources/idb-load-docs-runner.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-06-30T19:40:46Z",
+      "side": 1,
+      "message": "Inconsistent use of `function() {}` and `() \u003d\u003e {}` in this file.",
+      "range": {
+        "startLine": 17,
+        "startChar": 17,
+        "endLine": 17,
+        "endChar": 25
+      },
+      "revId": "a48a750cb470fb59d0211740637208adcc489340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e008b1e3_3f63a447",
+        "filename": "third_party/WebKit/PerformanceTests/OWPStorage/resources/idb-load-docs-runner.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-06-30T19:40:46Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 159,
+        "startChar": 41,
+        "endLine": 159,
+        "endChar": 49
+      },
+      "revId": "a48a750cb470fb59d0211740637208adcc489340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32e4f5ac_b4eb8ad9",
+        "filename": "third_party/WebKit/PerformanceTests/OWPStorage/resources/idb-load-docs-runner.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-06-30T19:40:46Z",
+      "side": 1,
+      "message": "Weird indentation",
+      "range": {
+        "startLine": 221,
+        "startChar": 7,
+        "endLine": 222,
+        "endChar": 9
+      },
+      "revId": "a48a750cb470fb59d0211740637208adcc489340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69921759_56c022e6",
+        "filename": "third_party/WebKit/PerformanceTests/OWPStorage/resources/idb-load-docs-setup.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-06-30T19:40:46Z",
+      "side": 1,
+      "message": "wrap to 80 cols",
+      "revId": "a48a750cb470fb59d0211740637208adcc489340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0ff6c08_db63c309",
+        "filename": "third_party/WebKit/PerformanceTests/OWPStorage/resources/idb-load-docs-setup.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-06-30T19:40:46Z",
+      "side": 1,
+      "message": "const",
+      "range": {
+        "startLine": 37,
+        "startChar": 4,
+        "endLine": 37,
+        "endChar": 7
+      },
+      "revId": "a48a750cb470fb59d0211740637208adcc489340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2368656e_a63d7ac9",
+        "filename": "third_party/WebKit/PerformanceTests/OWPStorage/resources/idb-load-docs-setup.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-06-30T19:40:46Z",
+      "side": 1,
+      "message": "let (etc)",
+      "range": {
+        "startLine": 38,
+        "startChar": 4,
+        "endLine": 38,
+        "endChar": 7
+      },
+      "revId": "a48a750cb470fb59d0211740637208adcc489340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc664889_47cc4a30",
+        "filename": "third_party/WebKit/PerformanceTests/OWPStorage/resources/idb-load-docs-shared.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-06-30T19:40:46Z",
+      "side": 1,
+      "message": "May want to obfuscate this and other personal data",
+      "range": {
+        "startLine": 6,
+        "startChar": 19,
+        "endLine": 6,
+        "endChar": 36
+      },
+      "revId": "a48a750cb470fb59d0211740637208adcc489340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af6ddfdf_1f37ace1",
+        "filename": "third_party/WebKit/PerformanceTests/OWPStorage/resources/shared.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-06-30T19:40:46Z",
+      "side": 1,
+      "message": "Use \u003d\u003e syntax here?",
+      "range": {
+        "startLine": 35,
+        "startChar": 21,
+        "endLine": 35,
+        "endChar": 29
+      },
+      "revId": "a48a750cb470fb59d0211740637208adcc489340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14fde067_6838628c",
+        "filename": "third_party/WebKit/PerformanceTests/OWPStorage/resources/shared.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-06-30T19:40:46Z",
+      "side": 1,
+      "message": "Prefer `onabort` (since preventDefault() can be called on an error event and allow the TX to continue)",
+      "revId": "a48a750cb470fb59d0211740637208adcc489340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73ba7783_54cad0d3",
+        "filename": "third_party/WebKit/PerformanceTests/OWPStorage/resources/shared.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-06-30T19:40:46Z",
+      "side": 1,
+      "message": "Since `done` appears a lot and this gets confusing to read, how about `original_test_done` as a variable name?",
+      "range": {
+        "startLine": 55,
+        "startChar": 8,
+        "endLine": 55,
+        "endChar": 12
+      },
+      "revId": "a48a750cb470fb59d0211740637208adcc489340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad55c8c5_63f0a180",
+        "filename": "third_party/WebKit/PerformanceTests/OWPStorage/resources/shared.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-06-30T19:40:46Z",
+      "side": 1,
+      "message": "Is this chunking necessary for (and specific to) this IDB test? It seems unrelated to a test which is exercising DB operations. I think I\u0027m missing some context.",
+      "range": {
+        "startLine": 67,
+        "startChar": 6,
+        "endLine": 67,
+        "endChar": 16
+      },
+      "revId": "a48a750cb470fb59d0211740637208adcc489340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
