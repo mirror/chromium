@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f6ec2370_f006fb45",
+        "filename": "ui/events/keycodes/dom/dom_key_data.inc",
+        "patchSetId": 6
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1113814
+      },
+      "writtenOn": "2017-06-30T00:15:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "82664a35_594a099b",
+      "revId": "74298aa176c4fd7d77dab122d70f49987906d65e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "196c86cb_232c8935",
         "filename": "ui/events/ozone/layout/xkb/xkb_keyboard_layout_engine.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-29T22:02:13Z",
       "side": 1,
       "message": "The cl description says that there is an assumption here that it is handling only\nnon-printable characters, but DomCodeToUsLayoutDomKey has code to handle printable characters.\n\nCan you update the comment here to be more explicit about the non-printable assumption and either (a) assert that it is true (that the only chars handled here are non-printable), or (b) break out the non-printable handling code from DomCodeToUsLayoutDomKey.\n\nAlso, I don\u0027t see any tests for the new keys.",
+      "revId": "74298aa176c4fd7d77dab122d70f49987906d65e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9f90fa9_595a4e7d",
+        "filename": "ui/events/ozone/layout/xkb/xkb_keyboard_layout_engine.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1113814
+      },
+      "writtenOn": "2017-06-30T00:15:37Z",
+      "side": 1,
+      "message": "That was me temporizing about the kind of keys would fail XkbLookup(). I\u0027ll split out DomCodeToNonPrintableDomKey() and use it here.\n\nCould you please point me out to the tests I need to modify? Are you talking about ui/events/keycodes/dom/keycode_converter_unittest.cc? I see that I definitely need to increase the counts there, but I do not see it testing every key explicitly... Is there some other set of tests?\n\nThanks!",
+      "parentUuid": "196c86cb_232c8935",
       "revId": "74298aa176c4fd7d77dab122d70f49987906d65e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
