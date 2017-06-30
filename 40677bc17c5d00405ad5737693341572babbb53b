@@ -51,6 +51,24 @@
       "revId": "40677bc17c5d00405ad5737693341572babbb53b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b7e653f_b619989f",
+        "filename": "content/browser/service_worker/service_worker_controllee_request_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-30T09:14:10Z",
+      "side": 1,
+      "message": "Thanks for the explanation! Yes that all sounds good to me.",
+      "parentUuid": "3858bcac_a3af35c0",
+      "revId": "40677bc17c5d00405ad5737693341572babbb53b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
