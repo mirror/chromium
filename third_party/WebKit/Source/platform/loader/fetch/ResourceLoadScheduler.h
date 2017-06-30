@@ -5,8 +5,10 @@
 #ifndef ResourceLoadScheduler_h
 #define ResourceLoadScheduler_h
 
+#include "platform/WebFrameScheduler.h"
 #include "platform/heap/GarbageCollected.h"
 #include "platform/heap/HeapAllocator.h"
+#include "platform/loader/fetch/FetchContext.h"
 #include "platform/loader/fetch/Resource.h"
 #include "platform/wtf/Deque.h"
 #include "platform/wtf/HashSet.h"
@@ -30,7 +32,8 @@ class PLATFORM_EXPORT ResourceLoadSchedulerClient
 // them possibly with additional throttling/scheduling. This also keeps track of
 // in-flight requests that are granted but are not released (by Release()) yet.
 class PLATFORM_EXPORT ResourceLoadScheduler final
-    : public GarbageCollectedFinalized<ResourceLoadScheduler> {
+    : public GarbageCollectedFinalized<ResourceLoadScheduler>,
+      public WebFrameScheduler::Observer {
   WTF_MAKE_NONCOPYABLE(ResourceLoadScheduler);
 
  public:
@@ -50,13 +53,21 @@ class PLATFORM_EXPORT ResourceLoadScheduler final
 
   static constexpr ClientId kInvalidClientId = 0u;
 
-  static ResourceLoadScheduler* Create() { return new ResourceLoadScheduler(); }
+  static ResourceLoadScheduler* Create(FetchContext* context = nullptr) {
+    return new ResourceLoadScheduler(context ? context
+                                             : &FetchContext::NullInstance());
+  }
   ~ResourceLoadScheduler() {}
   DECLARE_TRACE();
 
-  // Makes a request. ClientId should be set before Run() is invoked so that
-  // caller can call Release() with the assigned ClientId correctly even if
-  // the invocation happens synchronously.
+  // Stops all operating. Once this method is called, any request should not
+  // be scheduled to run. Maybe called multiple times.
+  void Shutdown();
+
+  // Makes a request. ClientId should be set internally before calling
+  // ResourceLoadSchedulerClient::Run() so that a caller can call Release() with
+  // the assigned ClientId correctly even if the invocation happens
+  // synchronously before this method returns.
   void Request(ResourceLoadSchedulerClient*, ThrottleOption, ClientId*);
 
   // ResourceLoadSchedulerClient should call this method when the loading is
@@ -67,8 +78,27 @@ class PLATFORM_EXPORT ResourceLoadScheduler final
   // Sets outstanding limit for testing.
   void SetOutstandingLimitForTesting(size_t limit);
 
+  // WebFrameScheduler::Observer overrides:
+  void OnThrottlingStateChanged(WebFrameScheduler::ThrottlingState) override;
+
  private:
-  ResourceLoadScheduler();
+  // A finite-state to represent internal running state.
+  enum class State {
+    // Initial state. Throttling is disabled. All requests run synchronously.
+    kInactive,
+
+    // Throttling is activated. When the feature is enabled, move to this state
+    // in the constructor, and start throttling requests if it is needed.
+    kActive,
+
+    // Shutdown() is called. Never allow requests to run in this state since
+    // a finalization process is going on.
+    kShutdown,
+  };
+
+  static constexpr size_t kOutstandingUnlimited = 0;
+
+  ResourceLoadScheduler(FetchContext*);
 
   // Generates the next ClientId.
   ClientId GenerateClientId();
@@ -79,10 +109,16 @@ class PLATFORM_EXPORT ResourceLoadScheduler final
   // Grants a client to run,
   void Run(ClientId, ResourceLoadSchedulerClient*);
 
+  // Sets outstanding limit.
+  void SetOutstandingLimitAndMaybeRun(size_t limit);
+
+  // Running state.
+  State state_ = State::kInactive;
+
   // Outstanding limit. 0u means unlimited.
   // TODO(crbug.com/735410): If this throttling is enabled always, it makes some
   // tests fail.
-  size_t outstanding_limit_ = 0;
+  size_t outstanding_limit_ = kOutstandingUnlimited;
 
   // The last used ClientId to calculate the next.
   ClientId current_id_ = kInvalidClientId;
@@ -94,6 +130,9 @@ class PLATFORM_EXPORT ResourceLoadScheduler final
   HeapHashMap<ClientId, Member<ResourceLoadSchedulerClient>>
       pending_request_map_;
   Deque<ClientId> pending_request_queue_;
+
+  // Holds FetchContext reference to contact WebFrameScheduler.
+  Member<FetchContext> context_;
 };
 
 }  // namespace blink
