@@ -54,7 +54,7 @@ constexpr SkColor kHintTextColor = SkColorSetARGBMacro(0xFF, 0xA0, 0xA0, 0xA0);
 
 constexpr int kBackgroundBorderCornerRadius = 2;
 constexpr int kBackgroundBorderCornerRadiusFullscreen = 24;
-constexpr int kGoogleIconSize = 24;
+constexpr int kSearchIconSize = 24;
 constexpr int kMicIconSize = 24;
 
 // Default color used when wallpaper customized color is not available for
@@ -140,7 +140,7 @@ SearchBoxView::SearchBoxView(SearchBoxViewDelegate* delegate,
       view_delegate_(view_delegate),
       model_(nullptr),
       content_container_(new views::View),
-      google_icon_(nullptr),
+      search_icon_(nullptr),
       back_button_(nullptr),
       speech_button_(nullptr),
       search_box_(new views::Textfield),
@@ -182,10 +182,14 @@ SearchBoxView::SearchBoxView(SearchBoxViewDelegate* delegate,
   content_container_->AddChildView(back_button_);
 
   if (is_fullscreen_app_list_enabled_) {
-    google_icon_ = new views::ImageView();
-    google_icon_->SetImage(gfx::CreateVectorIcon(
-        kIcGoogleBlackIcon, kGoogleIconSize, kDefaultSearchboxColor));
-    content_container_->AddChildView(google_icon_);
+    search_icon_ = new views::ImageView();
+    const gfx::VectorIcon& kIcon =
+        view_delegate_->GetModel()->search_engine_is_google()
+            ? kIcGoogleBlackIcon
+            : kIcSearchEngineNotGoogleIcon;
+    search_icon_->SetImage(
+        gfx::CreateVectorIcon(kIcon, kSearchIconSize, kDefaultSearchboxColor));
+    content_container_->AddChildView(search_icon_);
 
     search_box_->set_placeholder_text_color(kDefaultSearchboxColor);
     search_box_->set_placeholder_text_draw_flags(
@@ -266,20 +270,23 @@ bool SearchBoxView::MoveTabFocus(bool move_backwards) {
     case FOCUS_SEARCH_BOX:
       if (move_backwards) {
         focused_view_ = back_button_ && back_button_->visible()
-            ? FOCUS_BACK_BUTTON : FOCUS_SEARCH_BOX;
+                            ? FOCUS_BACK_BUTTON
+                            : FOCUS_SEARCH_BOX;
       } else {
         focused_view_ = speech_button_ && speech_button_->visible()
-            ? FOCUS_MIC_BUTTON : FOCUS_CONTENTS_VIEW;
+                            ? FOCUS_MIC_BUTTON
+                            : FOCUS_CONTENTS_VIEW;
       }
       break;
     case FOCUS_MIC_BUTTON:
       focused_view_ = move_backwards ? FOCUS_SEARCH_BOX : FOCUS_CONTENTS_VIEW;
       break;
     case FOCUS_CONTENTS_VIEW:
-      focused_view_ = move_backwards
-          ? (speech_button_ && speech_button_->visible() ?
-              FOCUS_MIC_BUTTON : FOCUS_SEARCH_BOX)
-          : FOCUS_CONTENTS_VIEW;
+      focused_view_ =
+          move_backwards
+              ? (speech_button_ && speech_button_->visible() ? FOCUS_MIC_BUTTON
+                                                             : FOCUS_SEARCH_BOX)
+              : FOCUS_CONTENTS_VIEW;
       break;
     default:
       DCHECK(false);
@@ -336,7 +343,7 @@ void SearchBoxView::ShowBackOrGoogleIcon(bool show_back_button) {
   if (!is_fullscreen_app_list_enabled_)
     return;
 
-  google_icon_->SetVisible(!show_back_button);
+  search_icon_->SetVisible(!show_back_button);
   back_button_->SetVisible(show_back_button);
   content_container_->Layout();
 }
