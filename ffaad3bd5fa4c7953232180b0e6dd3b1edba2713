@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9cb6d35d_171ce912",
+        "filename": "third_party/WebKit/Source/modules/bluetooth/Bluetooth.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-06-30T16:29:54Z",
+      "side": 1,
+      "message": "I assume this list of platforms isn\u0027t consolidated elsewhere.",
+      "revId": "ffaad3bd5fa4c7953232180b0e6dd3b1edba2713",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
