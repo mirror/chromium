@@ -5,7 +5,7 @@
 #include <stddef.h>
 #include <string.h>
 
-#include "components/viz/service/display_compositor/host_shared_bitmap_manager.h"
+#include "components/viz/service/display_embedder/host_shared_bitmap_manager.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace viz {
