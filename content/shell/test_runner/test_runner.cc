@@ -1791,9 +1791,13 @@ void TestRunner::DumpPixelsAsync(
 
 void TestRunner::ReplicateLayoutTestRuntimeFlagsChanges(
     const base::DictionaryValue& changed_values) {
-  if (test_is_running_)
+  if (test_is_running_) {
     layout_test_runtime_flags_.tracked_dictionary().ApplyUntrackedChanges(
         changed_values);
+
+    main_view_->GetSettings()->SetPluginsEnabled(
+        layout_test_runtime_flags_.plugins_allowed());
+  }
 }
 
 bool TestRunner::HasCustomTextDump(std::string* custom_text_dump) const {
@@ -2548,6 +2552,7 @@ void TestRunner::SetStorageAllowed(bool allowed) {
 
 void TestRunner::SetPluginsAllowed(bool allowed) {
   layout_test_runtime_flags_.set_plugins_allowed(allowed);
+  main_view_->GetSettings()->SetPluginsEnabled(allowed);
   OnLayoutTestRuntimeFlagsChanged();
 }
 
