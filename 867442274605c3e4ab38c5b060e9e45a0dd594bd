@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "56e89e6b_ca0f721f",
+        "filename": "media/blink/cdm_result_promise_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-06-30T20:56:03Z",
+      "side": 1,
+      "message": "Done. Will fix up the WebContentDecryptionModuleExceptions in another CL.",
+      "parentUuid": "8f1cdc0a_5e1044c3",
+      "revId": "867442274605c3e4ab38c5b060e9e45a0dd594bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "813b9146_753a5171",
         "filename": "media/blink/cdm_result_promise_helper.h",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "867442274605c3e4ab38c5b060e9e45a0dd594bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9d72000_957a9403",
+        "filename": "media/blink/cdm_result_promise_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-06-30T20:56:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "813b9146_753a5171",
+      "revId": "867442274605c3e4ab38c5b060e9e45a0dd594bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -56,6 +92,30 @@
       "revId": "867442274605c3e4ab38c5b060e9e45a0dd594bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bebb5478_fcbf4c72",
+        "filename": "media/blink/cdm_result_promise_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-06-30T20:56:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9945bd9d_a58fa901",
+      "range": {
+        "startLine": 29,
+        "startChar": 18,
+        "endLine": 29,
+        "endChar": 19
+      },
+      "revId": "867442274605c3e4ab38c5b060e9e45a0dd594bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -109,6 +169,24 @@
       "revId": "867442274605c3e4ab38c5b060e9e45a0dd594bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74661502_fc621cbe",
+        "filename": "media/blink/cdm_result_promise_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-06-30T20:56:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e270f4df_f435513a",
+      "revId": "867442274605c3e4ab38c5b060e9e45a0dd594bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
