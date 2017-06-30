@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6f178fb5_fda15079",
+        "filename": "components/security_state/content/content_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-06-30T01:51:57Z",
+      "side": 1,
+      "message": "Doesn\u0027t the optional nit apply to `has_certificate` as well?\n\nI\u0027m happy to change both, though.",
+      "parentUuid": "5ab38d42_4b0f4a1f",
+      "range": {
+        "startLine": 234,
+        "startChar": 16,
+        "endLine": 234,
+        "endChar": 32
+      },
+      "revId": "ddb8913cc5f303d60db23ce9cc695028bc6d7f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6447b4f9_e53fc653",
         "filename": "content/public/browser/security_style_explanation.h",
         "patchSetId": 1
@@ -60,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "67d890b2_bccaa7e4",
+        "filename": "content/public/browser/security_style_explanation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-06-30T01:51:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40b599dc_2d27ea0f",
+      "revId": "ddb8913cc5f303d60db23ce9cc695028bc6d7f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16a416ce_fa057e37",
         "filename": "content/public/browser/security_style_explanation.h",
         "patchSetId": 1
@@ -83,6 +125,30 @@
     },
     {
       "key": {
+        "uuid": "27788063_a054d041",
+        "filename": "content/public/browser/security_style_explanation.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-06-30T01:51:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16a416ce_fa057e37",
+      "range": {
+        "startLine": 45,
+        "startChar": 19,
+        "endLine": 45,
+        "endChar": 37
+      },
+      "revId": "ddb8913cc5f303d60db23ce9cc695028bc6d7f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e11652f_493ab556",
         "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
         "patchSetId": 1
@@ -103,6 +169,30 @@
       "revId": "ddb8913cc5f303d60db23ce9cc695028bc6d7f58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1cdac64_495dfc16",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 1042,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-06-30T01:51:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e11652f_493ab556",
+      "range": {
+        "startLine": 1042,
+        "startChar": 103,
+        "endLine": 1042,
+        "endChar": 108
+      },
+      "revId": "ddb8913cc5f303d60db23ce9cc695028bc6d7f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
