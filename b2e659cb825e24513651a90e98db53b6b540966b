@@ -46,6 +46,30 @@
       "revId": "b2e659cb825e24513651a90e98db53b6b540966b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19001a15_241dd85d",
+        "filename": "content/public/app/mojo/content_browser_manifest.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-06-30T19:51:56Z",
+      "side": 1,
+      "message": "I\u0027ve moved blink::mojom::BudgetService to chrome_content_browser_manifest_overlay.json and am running try jobs to confirm that it works in this configuration.",
+      "parentUuid": "532537f3_6e4dacf4",
+      "range": {
+        "startLine": 98,
+        "startChar": 18,
+        "endLine": 98,
+        "endChar": 23
+      },
+      "revId": "b2e659cb825e24513651a90e98db53b6b540966b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
