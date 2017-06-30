@@ -1092,6 +1092,8 @@ source_set("browser") {
     "push_messaging/push_messaging_manager.h",
     "push_messaging/push_messaging_router.cc",
     "push_messaging/push_messaging_router.h",
+    "quota_impl.cc",
+    "quota_impl.h",
     "quota_dispatcher_host.cc",
     "quota_dispatcher_host.h",
     "renderer_host/clipboard_message_filter.cc",
