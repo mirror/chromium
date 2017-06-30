@@ -24,6 +24,8 @@ class BreakingNewsListener {
   // Stop listening for incoming breaking news. Any further pushed breaking news
   // will be ignored. Must be called while listening.
   virtual void StopListening() = 0;
+
+  virtual ~BreakingNewsListener() = default;
 };
 }  // namespace ntp_snippets
 
