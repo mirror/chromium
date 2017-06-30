@@ -24,6 +24,7 @@
 #include "public/platform/Platform.h"
 #include "public/platform/WebCompositorSupport.h"
 #include "public/platform/WebLayer.h"
+#include "public/platform/WebLayerScrollClient.h"
 #include "ui/gfx/geometry/rect.h"
 
 namespace blink {
@@ -129,6 +130,20 @@ PaintArtifactCompositor::CompositedLayerForPendingLayer(
       pending_layer.property_tree_state, store_debug_info);
   new_content_layer_clients.push_back(std::move(content_layer_client));
   return cc_layer;
+}
+
+scoped_refptr<cc::Layer> PaintArtifactCompositor::CompositedLayerForScroll(
+    const TransformPaintPropertyNode* scroll_offset_transform,
+    Vector<scoped_refptr<cc::Layer>>& new_scroll_layers) {
+  auto element_id = scroll_offset_transform->GetCompositorElementId();
+  for (auto& scroll_layer : scroll_layers_) {
+    if (scroll_layer && scroll_layer->element_id() == element_id)
+      return scroll_layer;
+  }
+
+  auto scroll_layer = cc::Layer::Create();
+  scroll_layer->SetElementId(element_id);
+  return scroll_layer;
 }
 
 PaintArtifactCompositor::PendingLayer::PendingLayer(
@@ -450,6 +465,8 @@ void PaintArtifactCompositor::Update(
   Vector<PendingLayer, 0> pending_layers;
   CollectPendingLayers(paint_artifact, pending_layers);
 
+  HashSet<const TransformPaintPropertyNode*> scroll_translation_nodes;
+
   Vector<std::unique_ptr<ContentLayerClientImpl>> new_content_layer_clients;
   new_content_layer_clients.ReserveCapacity(pending_layers.size());
 
@@ -467,6 +484,10 @@ void PaintArtifactCompositor::Update(
     const auto* transform = pending_layer.property_tree_state.Transform();
     int transform_id =
         property_tree_manager.EnsureCompositorTransformNode(transform);
+    const auto* nearest_scroll_translation_node =
+        transform->NearestScrollTranslationNode();
+    int scroll_id = property_tree_manager.CompositorScrollNode(
+        nearest_scroll_translation_node->ScrollNode());
     int clip_id = property_tree_manager.EnsureCompositorClipNode(
         pending_layer.property_tree_state.Clip());
     int effect_id = property_tree_manager.SwitchToEffectNode(
@@ -496,18 +517,62 @@ void PaintArtifactCompositor::Update(
 
     layer->set_property_tree_sequence_number(g_s_property_tree_sequence_number);
     layer->SetTransformTreeIndex(transform_id);
+    layer->SetScrollTreeIndex(scroll_id);
     layer->SetClipTreeIndex(clip_id);
     layer->SetEffectTreeIndex(effect_id);
-    property_tree_manager.UpdateLayerScrollMapping(layer.get(), transform);
 
     layer->SetContentsOpaque(pending_layer.known_to_be_opaque);
     layer->SetShouldCheckBackfaceVisibility(pending_layer.backface_hidden);
 
     if (extra_data_for_testing_enabled_)
       extra_data_for_testing_->content_layers.push_back(layer);
+
+    scroll_translation_nodes.insert(nearest_scroll_translation_node);
   }
+
   content_layer_clients_.clear();
   content_layer_clients_.swap(new_content_layer_clients);
+
+  Vector<scoped_refptr<cc::Layer>> new_scroll_layers;
+  new_scroll_layers.ReserveCapacity(scroll_translation_nodes.size());
+  for (const auto* transform_node : scroll_translation_nodes) {
+    auto layer = CompositedLayerForScroll(transform_node, new_scroll_layers);
+    int transform_id =
+        property_tree_manager.EnsureCompositorTransformNode(transform_node);
+    int scroll_id = property_tree_manager.CompositorScrollNode(
+        transform_node->ScrollNode());
+    int clip_id = property_tree_manager.EnsureCompositorClipNode(
+        ClipPaintPropertyNode::Root());
+    int effect_id = property_tree_manager.SwitchToEffectNode(
+        *EffectPaintPropertyNode::Root());
+
+    root_layer_->AddChild(layer);
+
+    layer->set_property_tree_sequence_number(g_s_property_tree_sequence_number);
+    layer->SetTransformTreeIndex(transform_id);
+    layer->SetScrollTreeIndex(scroll_id);
+    layer->SetClipTreeIndex(clip_id);
+    layer->SetEffectTreeIndex(effect_id);
+
+    host->RegisterElement(layer->element_id(), cc::ElementListType::ACTIVE,
+                          layer.get());
+
+    layer->SetScrollable(transform_node->ScrollNode()->Clip());
+    layer->SetBounds(transform_node->ScrollNode()->Bounds());
+
+    if (auto* scroll_client = transform_node->ScrollNode()->ScrollClient()) {
+      layer->set_did_scroll_callback(
+          base::Bind(&blink::WebLayerScrollClient::DidScroll,
+                     base::Unretained(scroll_client)));
+    }
+
+    if (extra_data_for_testing_enabled_)
+      extra_data_for_testing_->scroll_layers.push_back(layer);
+
+    new_scroll_layers.push_back(std::move(layer));
+  }
+  scroll_layers_.clear();
+  scroll_layers_.swap(new_scroll_layers);
 
   // Mark the property trees as having been rebuilt.
   host->property_trees()->sequence_number = g_s_property_tree_sequence_number;
