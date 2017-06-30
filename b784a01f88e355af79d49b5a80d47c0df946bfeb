@@ -70,6 +70,30 @@
       "revId": "b784a01f88e355af79d49b5a80d47c0df946bfeb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b402a71_2729810f",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-30T05:48:33Z",
+      "side": 1,
+      "message": "In this CL (https://codereview.chromium.org/2893233002) we added annotation to url_loader_factory.mojom\u0027s CreateLoaderAndStart. Adding a parameter to a mojom interface requires that it would be serializable, and it would be possible to create it uninitialized, and initialize it later. Therefore I added the new mutable wrapper for NetworkTrafficAnnotationTag and the parameter added to CreateLoaderAndStart is of type MutableNetworkTrafficAnnotationTag.\n\n‌But now I am thinking may be your question is why annotation is converted to mutable from here and it was better if I had kept the interfaces non-mutable as far as possible. If this is the case, I would need a wider refactoring.",
+      "parentUuid": "2b40f0ed_4874d217",
+      "range": {
+        "startLine": 64,
+        "startChar": 40,
+        "endLine": 64,
+        "endChar": 58
+      },
+      "revId": "b784a01f88e355af79d49b5a80d47c0df946bfeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
