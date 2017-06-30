@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "9c635cc6_a1b44fc9",
+        "filename": "components/password_manager/core/browser/sql_table_builder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-06-30T13:53:31Z",
+      "side": 1,
+      "message": "ping",
+      "parentUuid": "dace9eb2_79d29e8b",
+      "range": {
+        "startLine": 148,
+        "startChar": 51,
+        "endLine": 150,
+        "endChar": 75
+      },
+      "revId": "c6bff95d6a7a00d07c7a8d53c765daea294ffc35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c9d691b5_3b80d87c",
         "filename": "components/password_manager/core/browser/sql_table_builder.h",
         "patchSetId": 2
