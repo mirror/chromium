@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e8054900_01d456d0",
+        "filename": "ui/app_list/views/expand_arrow_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-06-30T05:33:12Z",
+      "side": 1,
+      "message": "For two reasons: (1) since we actually only need selected and non-selected two states; (2) to match the local style of start_page_view.cc.",
+      "parentUuid": "5b34d1bf_a45ca026",
+      "revId": "c166f57449e4568aed185d04ca56ad448d929dcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eed9de6b_37adde43",
         "filename": "ui/app_list/views/start_page_view.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "c166f57449e4568aed185d04ca56ad448d929dcd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a38b694e_26ce7bb5",
+        "filename": "ui/app_list/views/start_page_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-06-30T05:33:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eed9de6b_37adde43",
+      "revId": "c166f57449e4568aed185d04ca56ad448d929dcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
