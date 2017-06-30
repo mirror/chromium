@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b13cf1cf_518eb173",
+        "filename": "chrome/browser/push_messaging/push_messaging_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1860,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-06-30T14:52:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3e921eb_bc46e5db",
+      "revId": "3adc0708c731cd1ec2937caee590b7a0d4bdd1e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19880227_18836d5e",
         "filename": "chrome/browser/push_messaging/push_messaging_service_impl.h",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "9f677c11_1136ff56",
+        "filename": "chrome/browser/push_messaging/push_messaging_service_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-06-30T14:52:48Z",
+      "side": 1,
+      "message": "Done. (As SetServiceWorkerDatabaseWipedCallbackForTesting.)",
+      "parentUuid": "19880227_18836d5e",
+      "revId": "3adc0708c731cd1ec2937caee590b7a0d4bdd1e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5133926e_1f2e5bf3",
         "filename": "content/public/common/push_messaging_status.h",
         "patchSetId": 3
@@ -50,6 +86,24 @@
       "revId": "3adc0708c731cd1ec2937caee590b7a0d4bdd1e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af89d1a0_40790234",
+        "filename": "content/public/common/push_messaging_status.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-06-30T14:52:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5133926e_1f2e5bf3",
+      "revId": "3adc0708c731cd1ec2937caee590b7a0d4bdd1e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
