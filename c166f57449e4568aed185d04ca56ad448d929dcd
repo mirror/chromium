@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b34d1bf_a45ca026",
+        "filename": "ui/app_list/views/expand_arrow_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-30T05:08:51Z",
+      "side": 1,
+      "message": "So we don\u0027t want to use existing ButtonState, e.g. STATE_HOVERED, for this?",
+      "revId": "c166f57449e4568aed185d04ca56ad448d929dcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eed9de6b_37adde43",
+        "filename": "ui/app_list/views/start_page_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-30T05:08:51Z",
+      "side": 1,
+      "message": "Think we should mention why fullscreen app list allows this even selected_index is at the end.\n\ne.g.\n  // For non-fullscreen app list, don\u0027t go to the custom launcher page from\n  // the All apps tile. For fullscreen app list, allow this so that expand\n  // arrow is selected.",
+      "revId": "c166f57449e4568aed185d04ca56ad448d929dcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
