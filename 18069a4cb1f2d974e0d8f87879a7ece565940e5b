@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "861eb236_a97d1836",
+        "filename": "third_party/WebKit/Source/core/loader/PingLoader.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-06-30T11:42:07Z",
+      "side": 1,
+      "message": "\"// TODO(mkwst): Reevaluate this.\" I\u0027m pretty sure it\u0027s the wrong thing to do, but I don\u0027t want to make you change it in this patch. :P",
+      "revId": "18069a4cb1f2d974e0d8f87879a7ece565940e5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
