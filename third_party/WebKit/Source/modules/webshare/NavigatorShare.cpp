@@ -108,18 +108,6 @@ ScriptPromise NavigatorShare::share(ScriptState* script_state,
   Document* doc = ToDocument(ExecutionContext::From(script_state));
   DCHECK(doc);
   KURL full_url = doc->CompleteURL(share_data.url());
-  if (!full_url.IsNull() && !full_url.IsValid()) {
-    v8::Local<v8::Value> error = V8ThrowException::CreateTypeError(
-        script_state->GetIsolate(), "Invalid URL");
-    return ScriptPromise::Reject(script_state, error);
-  }
-
-  if (!UserGestureIndicator::ProcessingUserGesture()) {
-    DOMException* error = DOMException::Create(
-        kSecurityError,
-        "Must be handling a user gesture to perform a share request.");
-    return ScriptPromise::RejectWithDOMException(script_state, error);
-  }
 
   if (!service_) {
     LocalFrame* frame = doc->GetFrame();
