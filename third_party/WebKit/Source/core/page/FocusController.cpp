@@ -1040,7 +1040,7 @@ bool FocusController::AdvanceFocusInDocumentOrder(
 
   DCHECK(element->IsFocusable());
 
-  // FIXME: It would be nice to just be able to call setFocusedElement(element)
+  // FIXME: It would be nice to just be able to call SetFocusedElement(element)
   // here, but we can't do that because some elements (e.g. HTMLInputElement
   // and HTMLTextAreaElement) do extra work in their focus() methods.
   Document& new_document = element->GetDocument();
@@ -1125,12 +1125,8 @@ bool FocusController::SetFocusedElement(Element* element,
   }
   SetFocusedFrame(new_focused_frame);
 
-  if (new_document) {
-    bool successfully_focused =
-        new_document->SetFocusedElement(element, params);
-    if (!successfully_focused)
-      return false;
-  }
+  if (new_document)
+    return new_document->SetFocusedElement(element, params);
 
   return true;
 }
