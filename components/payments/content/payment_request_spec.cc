@@ -161,6 +161,10 @@ bool PaymentRequestSpec::IsMixedCurrency() const {
                      });
 }
 
+bool PaymentRequestSpec::RequestContactInfo() const {
+  return request_payer_name() || request_payer_phone() || request_payer_email();
+}
+
 void PaymentRequestSpec::PopulateValidatedMethodData(
     const std::vector<mojom::PaymentMethodDataPtr>& method_data_mojom) {
   std::vector<PaymentMethodData> method_data_vector;

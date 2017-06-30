@@ -120,6 +120,9 @@ class PaymentRequestSpec : public PaymentOptionsProvider {
 
   UpdateReason current_update_reason() const { return current_update_reason_; }
 
+  // Returns whether any contact info is requested by the merchant.
+  bool RequestContactInfo() const;
+
  private:
   // Validates the |method_data| and fills |supported_card_networks_|,
   // |supported_card_networks_set_| and |basic_card_specified_networks_|.
