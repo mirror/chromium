@@ -323,10 +323,17 @@ class FakeGetAuthTokenFunction : public IdentityGetAuthTokenFunction {
   void ShowLoginPopup() override {
     EXPECT_FALSE(login_ui_shown_);
     login_ui_shown_ = true;
-    if (login_ui_result_)
-      SigninSuccess();
-    else
+    if (login_ui_result_) {
+      ::identity::AccountState account_state;
+      account_state.has_refresh_token = true;
+      account_state.is_primary_account = true;
+      OnPrimaryAccountAvailable(
+          SigninManagerFactory::GetForProfile(GetProfile())
+              ->GetAuthenticatedAccountInfo(),
+          account_state);
+    } else {
       SigninFailed();
+    }
   }
 
   void ShowOAuthApprovalDialog(const IssueAdviceInfo& issue_advice) override {
