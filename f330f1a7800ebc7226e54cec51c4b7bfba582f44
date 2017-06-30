@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19522581_4dd684e1",
+        "filename": "android_webview/browser/aw_safe_browsing_resource_throttle.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-06-30T23:28:17Z",
+      "side": 1,
+      "message": "nit: move proceed down, right before switch. Variables should be declared as close as possible to their first use.",
+      "range": {
+        "startLine": 92,
+        "startChar": 7,
+        "endLine": 92,
+        "endChar": 14
+      },
+      "revId": "f330f1a7800ebc7226e54cec51c4b7bfba582f44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
