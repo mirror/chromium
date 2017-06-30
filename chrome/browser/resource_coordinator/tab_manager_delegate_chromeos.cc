@@ -548,7 +548,7 @@ chromeos::DebugDaemonClient* TabManagerDelegate::GetDebugDaemonClient() {
 
 void TabManagerDelegate::LowMemoryKillImpl(
     const TabStatsList& tab_list,
-    const std::vector<arc::ArcProcess>& arc_processes) {
+    std::vector<arc::ArcProcess> arc_processes) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   VLOG(2) << "LowMemoryKillImpl";
 
@@ -631,7 +631,7 @@ void TabManagerDelegate::LowMemoryKillImpl(
 
 void TabManagerDelegate::AdjustOomPrioritiesImpl(
     const TabStatsList& tab_list,
-    const std::vector<arc::ArcProcess>& arc_processes) {
+    std::vector<arc::ArcProcess> arc_processes) {
   std::vector<TabManagerDelegate::Candidate> candidates;
   std::vector<TabManagerDelegate::Candidate> apps_non_killable;
 
