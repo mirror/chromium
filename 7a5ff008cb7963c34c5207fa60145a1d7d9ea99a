@@ -22,6 +22,30 @@
       "revId": "7a5ff008cb7963c34c5207fa60145a1d7d9ea99a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f48c80a_83a7568c",
+        "filename": "components/cronet/ios/cronet_environment.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-06-30T16:47:47Z",
+      "side": 0,
+      "message": "This is a good question. It looks like the name is used for histograms and I didn\u0027t want to risk changing this without completely understanding the consequences, so I wanted to keep the code paths the same for the pre-existing targets.",
+      "parentUuid": "dcdb89d9_5fcea0ec",
+      "range": {
+        "startLine": 121,
+        "startChar": 56,
+        "endLine": 121,
+        "endChar": 65
+      },
+      "revId": "7a5ff008cb7963c34c5207fa60145a1d7d9ea99a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

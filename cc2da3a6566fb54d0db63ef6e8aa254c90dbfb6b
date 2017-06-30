@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e03d526d_1b0ec349",
+        "filename": "components/cronet/ios/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-06-30T16:47:47Z",
+      "side": 1,
+      "message": "It wasn\u0027t expected to override, but I\u0027ve refactored and this is now gone.",
+      "parentUuid": "85b9c48f_4cb2e4aa",
+      "range": {
+        "startLine": 84,
+        "startChar": 15,
+        "endLine": 84,
+        "endChar": 27
+      },
+      "revId": "cc2da3a6566fb54d0db63ef6e8aa254c90dbfb6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2e8150a_e38296fd",
         "filename": "components/cronet/ios/cronet_environment.mm",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "cc2da3a6566fb54d0db63ef6e8aa254c90dbfb6b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5fbe08b_ef5a1c8c",
+        "filename": "components/cronet/ios/cronet_environment.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-06-30T16:47:47Z",
+      "side": 1,
+      "message": "Yes, but I wanted to start with only a piece of the overall shared global_state to keep the CL small and make it easier to understand. I was planning on moving the other shared state to global_state as a dependent CL.",
+      "parentUuid": "b2e8150a_e38296fd",
+      "range": {
+        "startLine": 118,
+        "startChar": 7,
+        "endLine": 118,
+        "endChar": 17
+      },
+      "revId": "cc2da3a6566fb54d0db63ef6e8aa254c90dbfb6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "af36e8f7_125b4f40",
+        "filename": "ios/net/global_state/ios_global_state.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-06-30T16:47:47Z",
+      "side": 1,
+      "message": "WDYT about ios_global_state since all the state is not net related?",
+      "parentUuid": "52851333_f89c65b4",
+      "range": {
+        "startLine": 8,
+        "startChar": 10,
+        "endLine": 8,
+        "endChar": 22
+      },
+      "revId": "cc2da3a6566fb54d0db63ef6e8aa254c90dbfb6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a9a5b7e_5b546ea9",
         "filename": "ios/net/global_state/ios_global_state.mm",
         "patchSetId": 4
@@ -85,6 +157,24 @@
       "revId": "cc2da3a6566fb54d0db63ef6e8aa254c90dbfb6b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "add25fff_b3042523",
+        "filename": "ios/net/global_state/ios_global_state.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-06-30T16:47:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a9a5b7e_5b546ea9",
+      "revId": "cc2da3a6566fb54d0db63ef6e8aa254c90dbfb6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -141,6 +231,24 @@
     },
     {
       "key": {
+        "uuid": "dc2f384a_61c7bbd9",
+        "filename": "ios/net/global_state/ios_global_state.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-06-30T16:47:47Z",
+      "side": 1,
+      "message": "I followed this advice. PTAL at the latest patch. I have a configuration file where the name is returned from. The default implementation lives in the same location as the header instead of somewhere else inside ios/web, but it could be moved if we find that it makes more sense.",
+      "parentUuid": "479d6966_5f8064af",
+      "revId": "cc2da3a6566fb54d0db63ef6e8aa254c90dbfb6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77924afd_97a054bd",
         "filename": "ios/web/app/web_main_loop.mm",
         "patchSetId": 4
@@ -155,6 +263,24 @@
       "revId": "cc2da3a6566fb54d0db63ef6e8aa254c90dbfb6b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f2c2085_a0a5b362",
+        "filename": "ios/web/app/web_main_loop.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-06-30T16:47:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77924afd_97a054bd",
+      "revId": "cc2da3a6566fb54d0db63ef6e8aa254c90dbfb6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
