@@ -316,8 +316,12 @@ void InlineTextBoxPainter::Paint(const PaintInfo& paint_info,
       inline_text_box_.GetLineLayoutItem().StyleRef(
           inline_text_box_.IsFirstLineStyle());
 
-  LayoutPoint box_origin(inline_text_box_.PhysicalLocation());
-  box_origin.Move(adjusted_paint_offset.X(), adjusted_paint_offset.Y());
+  LayoutPoint orig_box_origin(inline_text_box_.PhysicalLocation());
+  orig_box_origin.Move(paint_offset.X(), paint_offset.Y());
+
+  LayoutPoint box_origin =
+      LayoutPoint(orig_box_origin.X(), LayoutUnit(orig_box_origin.Y().Round()));
+
   LayoutRect box_rect(box_origin, LayoutSize(inline_text_box_.LogicalWidth(),
                                              inline_text_box_.LogicalHeight()));
 

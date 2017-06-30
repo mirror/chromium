@@ -115,17 +115,17 @@ class LayoutTextControlInnerContainer final : public LayoutFlexibleBox {
       : LayoutFlexibleBox(element) {}
   ~LayoutTextControlInnerContainer() override {}
 
-  int BaselinePosition(FontBaseline baseline,
-                       bool first_line,
-                       LineDirectionMode direction,
-                       LinePositionMode position) const override {
+  LayoutUnit BaselinePosition(FontBaseline baseline,
+                              bool first_line,
+                              LineDirectionMode direction,
+                              LinePositionMode position) const override {
     return LayoutBlock::BaselinePosition(baseline, first_line, direction,
                                          position);
   }
   int FirstLineBoxBaseline() const override {
     return LayoutBlock::FirstLineBoxBaseline();
   }
-  int InlineBlockBaseline(LineDirectionMode direction) const override {
+  LayoutUnit InlineBlockBaseline(LineDirectionMode direction) const override {
     return LayoutBlock::InlineBlockBaseline(direction);
   }
   bool ShouldIgnoreOverflowPropertyForInlineBlockBaseline() const override {
