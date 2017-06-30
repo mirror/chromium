@@ -1,0 +1,732 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f9f43bb_07079dde",
+        "filename": "ios/chrome/browser/payments/payment_request.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-30T20:34:18Z",
+      "side": 1,
+      "message": "nit: isn\u0027t really necessary if not dereferencing the pointer.",
+      "revId": "82f7f7a85c531b47c3553af52cfefa6bebea9da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e1096f7_69331693",
+        "filename": "ios/chrome/browser/payments/payment_request.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-30T20:34:18Z",
+      "side": 1,
+      "message": "let\u0027s rename this to basic_card_issuer_network. There\u0027s already way too much jargon in Payment Request...",
+      "range": {
+        "startLine": 248,
+        "startChar": 14,
+        "endLine": 248,
+        "endChar": 33
+      },
+      "revId": "82f7f7a85c531b47c3553af52cfefa6bebea9da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0c6cf9d_a151a715",
+        "filename": "ios/chrome/browser/payments/payment_request.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-30T20:34:18Z",
+      "side": 1,
+      "message": "s/shipping_profiles_/billing_profiles()\nI know they\u0027re the same thing at the moment. but that may not always be the case.",
+      "range": {
+        "startLine": 262,
+        "startChar": 51,
+        "endLine": 262,
+        "endChar": 69
+      },
+      "revId": "82f7f7a85c531b47c3553af52cfefa6bebea9da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecbe17c5_ff8e3bad",
+        "filename": "ios/chrome/browser/payments/payment_request.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-30T20:34:18Z",
+      "side": 1,
+      "message": "AsWeakPtr().get() is the same this as \"this\".\nYou probably don\u0027t need base::SupportsWeakPtr anymore.",
+      "range": {
+        "startLine": 263,
+        "startChar": 59,
+        "endLine": 263,
+        "endChar": 76
+      },
+      "revId": "82f7f7a85c531b47c3553af52cfefa6bebea9da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c8e2a50_0d332ab4",
+        "filename": "ios/chrome/browser/payments/payment_request.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-30T20:34:18Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "82f7f7a85c531b47c3553af52cfefa6bebea9da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "431c566e_bb0bfb9b",
+        "filename": "ios/chrome/browser/payments/payment_request.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-30T20:34:18Z",
+      "side": 1,
+      "message": "if (payment_method-\u003eIsValidForCanMakePayment())\n  return true;",
+      "range": {
+        "startLine": 277,
+        "startChar": 4,
+        "endLine": 277,
+        "endChar": 43
+      },
+      "revId": "82f7f7a85c531b47c3553af52cfefa6bebea9da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "735b9598_c4f3cdfd",
+        "filename": "ios/chrome/browser/payments/payment_request.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-30T20:34:18Z",
+      "side": 1,
+      "message": "You\u0027d probably want to move the TODO to after figuring out the number of credit cards to suggest in order to reserve enough space in the vector for both payment apps and the credit cards.",
+      "revId": "82f7f7a85c531b47c3553af52cfefa6bebea9da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5d2fbd1_4447e151",
+        "filename": "ios/chrome/browser/payments/payment_request.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-30T20:34:18Z",
+      "side": 1,
+      "message": "nit: don\u0027t need braces if the body and the for state itself are both one liners",
+      "range": {
+        "startLine": 305,
+        "startChar": 58,
+        "endLine": 305,
+        "endChar": 59
+      },
+      "revId": "82f7f7a85c531b47c3553af52cfefa6bebea9da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be689767_a97f3b43",
+        "filename": "ios/chrome/browser/payments/payment_request.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-30T20:34:18Z",
+      "side": 1,
+      "message": "nit: ditto",
+      "range": {
+        "startLine": 318,
+        "startChar": 59,
+        "endLine": 318,
+        "endChar": 60
+      },
+      "revId": "82f7f7a85c531b47c3553af52cfefa6bebea9da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f26ec36_eeff7b70",
+        "filename": "ios/chrome/browser/payments/payment_request_unittest.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-30T20:34:18Z",
+      "side": 1,
+      "message": "nit: (e.g., credit cards)",
+      "range": {
+        "startLine": 253,
+        "startChar": 44,
+        "endLine": 253,
+        "endChar": 61
+      },
+      "revId": "82f7f7a85c531b47c3553af52cfefa6bebea9da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9df6aa59_02781aa9",
+        "filename": "ios/chrome/browser/payments/payment_request_unittest.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-30T20:34:18Z",
+      "side": 1,
+      "message": "s/paymentInstrument/payment_instrument\nhere and elsewhere in this file.",
+      "range": {
+        "startLine": 500,
+        "startChar": 39,
+        "endLine": 500,
+        "endChar": 56
+      },
+      "revId": "82f7f7a85c531b47c3553af52cfefa6bebea9da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48fe3524_6958b768",
+        "filename": "ios/chrome/browser/ui/payments/credit_card_edit_coordinator.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-30T20:34:18Z",
+      "side": 1,
+      "message": "Please update the rest of the comment as well.",
+      "range": {
+        "startLine": 24,
+        "startChar": 50,
+        "endLine": 24,
+        "endChar": 62
+      },
+      "revId": "82f7f7a85c531b47c3553af52cfefa6bebea9da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "582d2f6b_df5a0eab",
+        "filename": "ios/chrome/browser/ui/payments/credit_card_edit_coordinator.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-30T20:34:18Z",
+      "side": 1,
+      "message": "Please change didFinishEditingCreditCard: to didFinishEditingPaymentMethod:\nIt\u0027s a good practice for the method name to agree with the argument\u0027s name in Objective-C.",
+      "range": {
+        "startLine": 28,
+        "startChar": 7,
+        "endLine": 28,
+        "endChar": 34
+      },
+      "revId": "82f7f7a85c531b47c3553af52cfefa6bebea9da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b9a8897_38748c93",
+        "filename": "ios/chrome/browser/ui/payments/credit_card_edit_coordinator.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-30T20:34:18Z",
+      "side": 1,
+      "message": "Wouldn\u0027t it be easier to pass an AutofillPaymentInstrument instead?",
+      "range": {
+        "startLine": 28,
+        "startChar": 45,
+        "endLine": 28,
+        "endChar": 62
+      },
+      "revId": "82f7f7a85c531b47c3553af52cfefa6bebea9da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9ff40f6_98f61d08",
+        "filename": "ios/chrome/browser/ui/payments/credit_card_edit_coordinator.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-30T20:34:18Z",
+      "side": 1,
+      "message": "nit: autofillInstrument ? autofillInstrument-\u003ecredit_card() : nil;",
+      "range": {
+        "startLine": 104,
+        "startChar": 6,
+        "endLine": 104,
+        "endChar": 74
+      },
+      "revId": "82f7f7a85c531b47c3553af52cfefa6bebea9da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9857a81d_ce83f048",
+        "filename": "ios/chrome/browser/ui/payments/credit_card_edit_coordinator_unittest.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-30T20:34:18Z",
+      "side": 1,
+      "message": "Please update the comments where necessary throughout the test.",
+      "revId": "82f7f7a85c531b47c3553af52cfefa6bebea9da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efdecef7_dc687e64",
+        "filename": "ios/chrome/browser/ui/payments/credit_card_edit_coordinator_unittest.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-30T20:34:18Z",
+      "side": 1,
+      "message": "Don\u0027t create unowned raw pointers like this. Create a local payments::AutofillPaymentInstrument variable and pass the reference to it.\n\npayments::AutofillPaymentInstrument payment_method(\n    \"\", autofill::CreditCard(), false, payment_request_-\u003ebilling_profiles(), \n    \"\", nil);\n[coordinator setPaymentMethod:\u0026payment_method];",
+      "revId": "82f7f7a85c531b47c3553af52cfefa6bebea9da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a7eb8f4_3fedbc5f",
+        "filename": "ios/chrome/browser/ui/payments/full_card_requester.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-30T20:34:18Z",
+      "side": 1,
+      "message": "We should have #include \u003cstring\u003e instead.",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 34
+      },
+      "revId": "82f7f7a85c531b47c3553af52cfefa6bebea9da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9681f926_a0cfe835",
+        "filename": "ios/chrome/browser/ui/payments/full_card_requester.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-30T20:34:18Z",
+      "side": 1,
+      "message": "Please provide more details from payments::PaymentInstrument::Delegate:\n\"Should be called with method name (e.g., \"visa\") and json-serialized stringified details.\"",
+      "range": {
+        "startLine": 29,
+        "startChar": 60,
+        "endLine": 29,
+        "endChar": 0
+      },
+      "revId": "82f7f7a85c531b47c3553af52cfefa6bebea9da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16aa9fb2_a42be79a",
+        "filename": "ios/chrome/browser/ui/payments/full_card_requester.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-30T20:34:18Z",
+      "side": 1,
+      "message": "s/fullCardRequestDidSucceed:/fullCardRequestDidSucceedWithMethodName:",
+      "range": {
+        "startLine": 30,
+        "startChar": 8,
+        "endLine": 30,
+        "endChar": 33
+      },
+      "revId": "82f7f7a85c531b47c3553af52cfefa6bebea9da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3612e39_e922aecf",
+        "filename": "ios/chrome/browser/ui/payments/full_card_requester.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-30T20:34:18Z",
+      "side": 1,
+      "message": "No action needed at the moment.\nThis class should be renamed to something like PaymentInstrumentRequester in the future. It can be used to get full credit card details or payment app\u0027s method name and details. I like the direction it\u0027s moving toward!",
+      "range": {
+        "startLine": 36,
+        "startChar": 6,
+        "endLine": 36,
+        "endChar": 23
+      },
+      "revId": "82f7f7a85c531b47c3553af52cfefa6bebea9da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af1fcc27_f4dc9ff1",
+        "filename": "ios/chrome/browser/ui/payments/full_card_requester_unittest.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-30T20:34:18Z",
+      "side": 1,
+      "message": "#include \u003cstring\u003e",
+      "revId": "82f7f7a85c531b47c3553af52cfefa6bebea9da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86daa6c3_3061a1ac",
+        "filename": "ios/chrome/browser/ui/payments/full_card_requester_unittest.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-30T20:34:18Z",
+      "side": 1,
+      "message": "Could you use a std:string for cvc so that the conversion from ascii to UTF16 isn\u0027t necessary anymore in EXPECT_EQ?",
+      "range": {
+        "startLine": 161,
+        "startChar": 9,
+        "endLine": 161,
+        "endChar": 27
+      },
+      "revId": "82f7f7a85c531b47c3553af52cfefa6bebea9da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdf2adee_ea14c53b",
+        "filename": "ios/chrome/browser/ui/payments/full_card_requester_unittest.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-30T20:34:18Z",
+      "side": 1,
+      "message": "nit: it\u0027s fine to pass string literals to the method.",
+      "revId": "82f7f7a85c531b47c3553af52cfefa6bebea9da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f7d14e1_088304dd",
+        "filename": "ios/chrome/browser/ui/payments/full_card_requester_unittest.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-30T20:34:18Z",
+      "side": 1,
+      "message": "pass \"en-US\" as the locale.",
+      "range": {
+        "startLine": 173,
+        "startChar": 7,
+        "endLine": 173,
+        "endChar": 23
+      },
+      "revId": "82f7f7a85c531b47c3553af52cfefa6bebea9da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1b69fc3_4bec2d82",
+        "filename": "ios/chrome/browser/ui/payments/full_card_requester_unittest.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-30T20:34:18Z",
+      "side": 1,
+      "message": "nit: billing_address",
+      "range": {
+        "startLine": 175,
+        "startChar": 28,
+        "endLine": 175,
+        "endChar": 44
+      },
+      "revId": "82f7f7a85c531b47c3553af52cfefa6bebea9da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8966ca46_90453cfc",
+        "filename": "ios/chrome/browser/ui/payments/payment_method_selection_coordinator.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-30T20:34:18Z",
+      "side": 1,
+      "message": "prefer to work with AuotfillPaymentInstrument when you are certain of the type.",
+      "range": {
+        "startLine": 144,
+        "startChar": 35,
+        "endLine": 144,
+        "endChar": 62
+      },
+      "revId": "82f7f7a85c531b47c3553af52cfefa6bebea9da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e292e32b_27666a13",
+        "filename": "ios/chrome/browser/ui/payments/payment_method_selection_coordinator.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-30T20:34:18Z",
+      "side": 1,
+      "message": "nit: Rename the method and the argument here and where possible.",
+      "range": {
+        "startLine": 186,
+        "startChar": 8,
+        "endLine": 186,
+        "endChar": 52
+      },
+      "revId": "82f7f7a85c531b47c3553af52cfefa6bebea9da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27fb93c2_29f8f9cd",
+        "filename": "ios/chrome/browser/ui/payments/payment_method_selection_mediator.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-30T20:34:18Z",
+      "side": 1,
+      "message": "still needed?",
+      "range": {
+        "startLine": 10,
+        "startChar": 43,
+        "endLine": 10,
+        "endChar": 64
+      },
+      "revId": "82f7f7a85c531b47c3553af52cfefa6bebea9da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a4e50de_c6c7d50e",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_coordinator.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-30T20:34:18Z",
+      "side": 1,
+      "message": "The comment seems outdated an inaccurate. Please update it to reflect what the method actually does which is informing the delegate that the full payment method name and details have been received.",
+      "range": {
+        "startLine": 56,
+        "startChar": 37,
+        "endLine": 56,
+        "endChar": 0
+      },
+      "revId": "82f7f7a85c531b47c3553af52cfefa6bebea9da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59362038_5155f422",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_coordinator.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-30T20:34:18Z",
+      "side": 1,
+      "message": "I would change this to some like:\ndidReceiveFullPaymentMethodName:...details:..\nand simply forward the results from fullCardRequestDidSucceed",
+      "range": {
+        "startLine": 58,
+        "startChar": 8,
+        "endLine": 58,
+        "endChar": 33
+      },
+      "revId": "82f7f7a85c531b47c3553af52cfefa6bebea9da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd7831a1_a475336b",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_coordinator.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-30T20:34:18Z",
+      "side": 1,
+      "message": "I would also change this to something like requestFullCreditCard:resultDelegate:\nI think opening the UI should be an implementation detail of the coordinator.",
+      "range": {
+        "startLine": 122,
+        "startChar": 0,
+        "endLine": 122,
+        "endChar": 21
+      },
+      "revId": "82f7f7a85c531b47c3553af52cfefa6bebea9da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "233f4c77_ccf39c9b",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_coordinator.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-30T20:34:18Z",
+      "side": 1,
+      "message": "can method name and stringifiedDetails be used directly on the payment response? why not forwarding the arguments to the delegate rather than converting back to a credit card?",
+      "revId": "82f7f7a85c531b47c3553af52cfefa6bebea9da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3457d9b_19d1e033",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_coordinator.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-30T20:34:18Z",
+      "side": 1,
+      "message": "It\u0027s probably a good idea to check if the payment method is ready for payment here as well.",
+      "revId": "82f7f7a85c531b47c3553af52cfefa6bebea9da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
