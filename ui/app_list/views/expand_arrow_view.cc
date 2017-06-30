@@ -17,6 +17,8 @@
 #include "ui/views/animation/ink_drop_painted_layer_delegates.h"
 #include "ui/views/controls/image_view.h"
 
+#include "ui/gfx/canvas.h"
+
 namespace app_list {
 
 namespace {
@@ -24,6 +26,7 @@ namespace {
 constexpr int kExpandArrowTileSize = 36;
 constexpr int kExpandArrowIconSize = 12;
 constexpr int kInkDropRadius = 18;
+constexpr int kSelectedRadius = 18;
 
 constexpr SkColor kExpandArrowColor = SK_ColorWHITE;
 constexpr SkColor kInkDropRippleColor =
@@ -47,7 +50,30 @@ ExpandArrowView::ExpandArrowView(ContentsView* contents_view,
   SetInkDropMode(InkDropHostView::InkDropMode::ON);
 }
 
-ExpandArrowView::~ExpandArrowView() {}
+ExpandArrowView::~ExpandArrowView() = default;
+
+void ExpandArrowView::SetSelected(bool selected) {
+  if (selected == selected_)
+    return;
+
+  selected_ = selected;
+  SchedulePaint();
+
+  if (selected)
+    NotifyAccessibilityEvent(ui::AX_EVENT_SELECTION, true);
+}
+
+void ExpandArrowView::PaintButtonContents(gfx::Canvas* canvas) {
+  if (!selected_)
+    return;
+
+  gfx::Rect rect(GetContentsBounds());
+  cc::PaintFlags flags;
+  flags.setAntiAlias(true);
+  flags.setColor(kGridSelectedColor);
+  flags.setStyle(cc::PaintFlags::kFill_Style);
+  canvas->DrawCircle(gfx::PointF(rect.CenterPoint()), kSelectedRadius, flags);
+}
 
 void ExpandArrowView::ButtonPressed(views::Button* sender,
                                     const ui::Event& event) {
