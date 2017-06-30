@@ -115,6 +115,9 @@ const char kLastProfileResetTimestamp[] = "profile.last_reset_timestamp";
 const char kChromeCleanerResetPending[] = "chrome_cleaner.reset_pending";
 #endif
 
+// Used to determine if the New Tab in-product help has been shown or not.
+extern const char kNewTabInProductHelp[] = "newtab_in_product_help";
+
 // The URL to open the new tab page to. Only set by Group Policy.
 const char kNewTabPageLocationOverride[] = "newtab_page_location_override";
 
@@ -150,6 +153,9 @@ const char kSiteEngagementLastUpdateTime[] = "profile.last_engagement_time";
 // 4: restore the URLs defined in kURLsToRestoreOnStartup.
 // 5: open the New Tab Page on startup.
 const char kRestoreOnStartup[] = "session.restore_on_startup";
+
+// Stores the total amount of active session time for the user.
+const char kSessionTimeTotal[] = "session.total_time";
 
 // The URLs to restore on startup or when the home button is pressed. The URLs
 // are only restored on startup if kRestoreOnStartup is 4.
