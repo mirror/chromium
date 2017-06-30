@@ -820,11 +820,11 @@ PluginView* LocalFrameClientImpl::CreatePlugin(
   WebPluginContainerImpl* container =
       WebPluginContainerImpl::Create(element, web_plugin);
 
-  if (!web_plugin->Initialize(container))
+  if (!web_plugin->Initialize(container) ||
+      (policy != kAllowDetachedPlugin && !element.GetLayoutObject())) {
+    container->Dispose();
     return nullptr;
-
-  if (policy != kAllowDetachedPlugin && !element.GetLayoutObject())
-    return nullptr;
+  }
 
   return container;
 }
