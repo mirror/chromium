@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2fe58d83_b2d30147",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/push_messaging/permission-state-denied-in-document.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-06-30T17:35:55Z",
+      "side": 1,
+      "message": "Moved to line 16",
+      "parentUuid": "783639cb_4716a54d",
+      "revId": "201de8e96b7b6a16af654688d0c610654fa68bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2613743_701451f7",
         "filename": "third_party/WebKit/LayoutTests/http/tests/push_messaging/permission-state-denied-in-service-worker.html",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "201de8e96b7b6a16af654688d0c610654fa68bcd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c3cfa8c_34161e0d",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/push_messaging/permission-state-denied-in-service-worker.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-06-30T17:35:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2613743_701451f7",
+      "revId": "201de8e96b7b6a16af654688d0c610654fa68bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c203f504_f728708d",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/push_messaging/permission-state-denied-in-service-worker.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-06-30T17:35:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6eafbf33_3efd5561",
+      "revId": "201de8e96b7b6a16af654688d0c610654fa68bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44df9382_666e06ae",
         "filename": "third_party/WebKit/LayoutTests/http/tests/push_messaging/permission-state-exception-in-service-worker.html",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "201de8e96b7b6a16af654688d0c610654fa68bcd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecbd0044_e988ba4b",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/push_messaging/permission-state-exception-in-service-worker.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-06-30T17:35:55Z",
+      "side": 1,
+      "message": "Yes. (PermissionHelper uses it.)",
+      "parentUuid": "44df9382_666e06ae",
+      "revId": "201de8e96b7b6a16af654688d0c610654fa68bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "c239708e_8a726eed",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/push_messaging/permission-state-exception-in-service-worker.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-06-30T17:35:55Z",
+      "side": 1,
+      "message": "No! Fixed.",
+      "parentUuid": "118767bf_a9c0c923",
+      "revId": "201de8e96b7b6a16af654688d0c610654fa68bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81b27c0b_9f755e86",
         "filename": "third_party/WebKit/LayoutTests/http/tests/push_messaging/permission-state-granted-in-document.html",
         "patchSetId": 1
@@ -101,6 +191,24 @@
       "revId": "201de8e96b7b6a16af654688d0c610654fa68bcd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ac51a9d_b7faf865",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/push_messaging/permission-state-granted-in-document.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-06-30T17:35:55Z",
+      "side": 1,
+      "message": "Moved to line 17 again.",
+      "parentUuid": "81b27c0b_9f755e86",
+      "revId": "201de8e96b7b6a16af654688d0c610654fa68bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

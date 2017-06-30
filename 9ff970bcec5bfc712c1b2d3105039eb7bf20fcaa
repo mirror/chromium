@@ -16,6 +16,24 @@
       "revId": "9ff970bcec5bfc712c1b2d3105039eb7bf20fcaa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2012a73_b8ef8f66",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/push_messaging/permission-state-prompt-in-document.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-06-30T17:35:55Z",
+      "side": 0,
+      "message": "promise_test() will do this automagically for us. async_test() will not.",
+      "parentUuid": "a0957d9a_7283212e",
+      "revId": "9ff970bcec5bfc712c1b2d3105039eb7bf20fcaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
