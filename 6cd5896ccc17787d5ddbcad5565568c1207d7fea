@@ -87,6 +87,24 @@
       "revId": "6cd5896ccc17787d5ddbcad5565568c1207d7fea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5451b9b9_fec81f78",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintController.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-30T23:28:51Z",
+      "side": 0,
+      "message": "Makes sense, but I don\u0027t really understand what this conditional was for\npreviously. Could you briefly explain and say where what it did went?",
+      "parentUuid": "0c3616bf_7d6f928d",
+      "revId": "6cd5896ccc17787d5ddbcad5565568c1207d7fea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
