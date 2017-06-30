@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6e4b54b6_d333b0a9",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_container_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-30T22:30:37Z",
+      "side": 1,
+      "message": "Marking as resolved so that it doesn\u0027t appear in the list of CL requiring my attention, but feel free to comment.",
+      "parentUuid": "f6751d51_2b33f717",
+      "revId": "6ab56b0093792342ac89312a1710c4b0de5aa98c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51b946d1_e496f219",
         "filename": "ios/clean/chrome/browser/ui/tab/tab_container_view_controller.mm",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "6ab56b0093792342ac89312a1710c4b0de5aa98c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e74c9384_8bff69fb",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_container_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-30T22:30:37Z",
+      "side": 1,
+      "message": "Marking as resolved so that it doesn\u0027t appear in the list of CL requiring my attention, but feel free to comment.",
+      "parentUuid": "51b946d1_e496f219",
+      "revId": "6ab56b0093792342ac89312a1710c4b0de5aa98c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
