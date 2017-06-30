@@ -33,6 +33,24 @@
       "revId": "cf48b24635517cb15d6be5c3a72efef86926f341",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8999e202_a56d59c7",
+        "filename": "ui/ozone/platform/drm/gpu/gbm_buffer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1112153
+      },
+      "writtenOn": "2017-06-30T00:01:09Z",
+      "side": 1,
+      "message": "IMHO, this DCHECK is Chromium coding practices. I can change it to CHECK tho.\nIn addition, gpu testing (https://www.chromium.org/developers/testing/gpu-testing) always enable DCHECK, although I\u0027m not sure if gpu testing covers chromeos.",
+      "parentUuid": "5dc921ec_41e00e29",
+      "revId": "cf48b24635517cb15d6be5c3a72efef86926f341",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -22,6 +22,30 @@
       "revId": "5f2725f68003a78440a8c381b258bc338e910232",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e074aa9_2ed915e1",
+        "filename": "media/gpu/vaapi_wrapper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1112153
+      },
+      "writtenOn": "2017-06-30T00:01:09Z",
+      "side": 0,
+      "message": "this CL remove pixmap-\u003eGetDmaBufFdCount() api because now we expect num_fds \u003d\u003d num_planes always.",
+      "parentUuid": "ad5196b1_a00a69d1",
+      "range": {
+        "startLine": 616,
+        "startChar": 0,
+        "endLine": 623,
+        "endChar": 3
+      },
+      "revId": "5f2725f68003a78440a8c381b258bc338e910232",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
