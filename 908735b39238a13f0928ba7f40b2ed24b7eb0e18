@@ -1,0 +1,543 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ca772fa_8e02501a",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1332,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-06-30T17:51:58Z",
+      "side": 1,
+      "message": "This description should be user-understandable - something like \"Displays the offline dinosaur game on the touchbar\". If it\u0027s too hard to write a user-understandable description for a flag, there probably should not be a flag.",
+      "range": {
+        "startLine": 1332,
+        "startChar": 5,
+        "endLine": 1332,
+        "endChar": 11
+      },
+      "revId": "908735b39238a13f0928ba7f40b2ed24b7eb0e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "688c2906_05a56226",
+        "filename": "chrome/browser/ui/browser_command_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-06-30T17:51:58Z",
+      "side": 1,
+      "message": "this class is internal to content:: \u0026 isn\u0027t used anywhere else in chrome/ - we should not be using it or relying on it here. Fortunately it doesn\u0027t appear to be used so we can probably just remove this \u0027using\u0027.",
+      "range": {
+        "startLine": 88,
+        "startChar": 15,
+        "endLine": 88,
+        "endChar": 30
+      },
+      "revId": "908735b39238a13f0928ba7f40b2ed24b7eb0e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48685789_79a4e797",
+        "filename": "chrome/browser/ui/browser_command_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-06-30T17:51:58Z",
+      "side": 1,
+      "message": "This does not notify the controller that state has changed; it should not be grouped with these functions. I\u0027m not sure it belongs in BrowserCommandController in the first place...",
+      "range": {
+        "startLine": 64,
+        "startChar": 7,
+        "endLine": 64,
+        "endChar": 35
+      },
+      "revId": "908735b39238a13f0928ba7f40b2ed24b7eb0e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcdf9624_c9ae1d96",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-06-30T17:51:58Z",
+      "side": 1,
+      "message": "there is no need to add this",
+      "revId": "908735b39238a13f0928ba7f40b2ed24b7eb0e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b3a27fc_da9bf300",
+        "filename": "chrome/browser/ui/browser_window.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-06-30T17:51:58Z",
+      "side": 1,
+      "message": "This needs a function comment, and possibly a lengthy one, because of how complicated it is. Also, what will it do on non-Mac?",
+      "range": {
+        "startLine": 179,
+        "startChar": 15,
+        "endLine": 179,
+        "endChar": 43
+      },
+      "revId": "908735b39238a13f0928ba7f40b2ed24b7eb0e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4af2083b_299b4ca3",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-06-30T17:51:58Z",
+      "side": 1,
+      "message": "This needs a method comment",
+      "revId": "908735b39238a13f0928ba7f40b2ed24b7eb0e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6093c624_483d60f7",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-06-30T17:51:58Z",
+      "side": 1,
+      "message": "this doesn\u0027t have a corresponding header file change? and I am not sure it is used",
+      "revId": "908735b39238a13f0928ba7f40b2ed24b7eb0e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f1ed00d_24a0a094",
+        "filename": "chrome/browser/ui/cocoa/browser_window_touch_bar.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-06-30T17:51:58Z",
+      "side": 1,
+      "message": "This needs a comment.\n\nAlso, are you sure you want assign semantics? That will hold a pointer to the webContentsView but not a reference to it, which seems dicey.",
+      "range": {
+        "startLine": 25,
+        "startChar": 1,
+        "endLine": 25,
+        "endChar": 9
+      },
+      "revId": "908735b39238a13f0928ba7f40b2ed24b7eb0e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9192f9e_7fa5f78b",
+        "filename": "chrome/browser/ui/cocoa/browser_window_touch_bar.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-06-30T17:51:58Z",
+      "side": 1,
+      "message": "probably don\u0027t need to add this line",
+      "revId": "908735b39238a13f0928ba7f40b2ed24b7eb0e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "151c53ba_6784257c",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 906,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-06-30T17:51:58Z",
+      "side": 1,
+      "message": "what is this change for?",
+      "range": {
+        "startLine": 906,
+        "startChar": 16,
+        "endLine": 906,
+        "endChar": 29
+      },
+      "revId": "908735b39238a13f0928ba7f40b2ed24b7eb0e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d484d0c8_1d567605",
+        "filename": "components/neterror/resources/offline.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-06-30T17:51:58Z",
+      "side": 1,
+      "message": "this javascript doesn\u0027t look properly formatted",
+      "range": {
+        "startLine": 486,
+        "startChar": 1,
+        "endLine": 486,
+        "endChar": 5
+      },
+      "revId": "908735b39238a13f0928ba7f40b2ed24b7eb0e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "888333e6_5478d5e3",
+        "filename": "components/neterror/resources/offline.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-06-30T17:51:58Z",
+      "side": 1,
+      "message": "What is this for?",
+      "range": {
+        "startLine": 510,
+        "startChar": 4,
+        "endLine": 510,
+        "endChar": 11
+      },
+      "revId": "908735b39238a13f0928ba7f40b2ed24b7eb0e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce927aeb_33e15603",
+        "filename": "components/neterror/resources/offline.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-06-30T17:51:58Z",
+      "side": 1,
+      "message": "these names should all be compliant with https://google.github.io/styleguide/jsguide.html - ie, in camelCase, not hacker_case\n\nalso, the existence of a bunch of related variables with the same name prefix suggests to me that the popup support stuff can be split out into a different function or module or somesuch",
+      "range": {
+        "startLine": 527,
+        "startChar": 9,
+        "endLine": 527,
+        "endChar": 22
+      },
+      "revId": "908735b39238a13f0928ba7f40b2ed24b7eb0e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2151915_3e0b5d03",
+        "filename": "content/browser/renderer_host/input/web_input_event_builders_mac.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-06-30T17:51:58Z",
+      "side": 1,
+      "message": "blink style doesn\u0027t restate the type being built because it appears in the invocation, so this can be just BuildFromTouchEvent()",
+      "revId": "908735b39238a13f0928ba7f40b2ed24b7eb0e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f5faa45_2ea3de46",
+        "filename": "content/browser/renderer_host/input/web_input_event_builders_mac.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-06-30T17:51:58Z",
+      "side": 1,
+      "message": "this variable is probably not needed",
+      "range": {
+        "startLine": 259,
+        "startChar": 6,
+        "endLine": 259,
+        "endChar": 17
+      },
+      "revId": "908735b39238a13f0928ba7f40b2ed24b7eb0e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22318481_d00f877b",
+        "filename": "content/browser/renderer_host/input/web_input_event_builders_mac.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-06-30T17:51:58Z",
+      "side": 1,
+      "message": "int modifiers \u003d webInputEventModifier;",
+      "range": {
+        "startLine": 261,
+        "startChar": 19,
+        "endLine": 261,
+        "endChar": 20
+      },
+      "revId": "908735b39238a13f0928ba7f40b2ed24b7eb0e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95334b42_358b2600",
+        "filename": "content/browser/renderer_host/render_widget_host_view_mac.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 2417,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-06-30T17:51:58Z",
+      "side": 1,
+      "message": "this is duplicated - we can do something like:\n\nfor (const auto\u0026 event : { mouseDownEvent, mouseUpEvent }) { this stuff }",
+      "range": {
+        "startLine": 2417,
+        "startChar": 8,
+        "endLine": 2417,
+        "endChar": 29
+      },
+      "revId": "908735b39238a13f0928ba7f40b2ed24b7eb0e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6e17c99_e8fe90c2",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-06-30T17:51:58Z",
+      "side": 1,
+      "message": "these can be either:\na) initialized in the initializer list just above or\nb) initialized in the header file at their declaration points",
+      "range": {
+        "startLine": 530,
+        "startChar": 2,
+        "endLine": 530,
+        "endChar": 15
+      },
+      "revId": "908735b39238a13f0928ba7f40b2ed24b7eb0e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "556d4210_4ece4322",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1471,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-06-30T17:51:58Z",
+      "side": 1,
+      "message": "I do not think this logic belongs in WebContentsImpl or in //content generally. Instead, the Chrome layer should be observing this WebContents, then showing/hiding the popup WebContents in the touchbar.",
+      "range": {
+        "startLine": 1471,
+        "startChar": 25,
+        "endLine": 1471,
+        "endChar": 39
+      },
+      "revId": "908735b39238a13f0928ba7f40b2ed24b7eb0e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc8a6ca5_24e8216e",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2433,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-06-30T17:51:58Z",
+      "side": 1,
+      "message": "this should also be done in //chrome somewhere, by observing the WebContents",
+      "range": {
+        "startLine": 2433,
+        "startChar": 23,
+        "endLine": 2433,
+        "endChar": 44
+      },
+      "revId": "908735b39238a13f0928ba7f40b2ed24b7eb0e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc4e1c76_2277a8f0",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 3638,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-06-30T17:51:58Z",
+      "side": 1,
+      "message": "there is no need to add {} here",
+      "range": {
+        "startLine": 3638,
+        "startChar": 36,
+        "endLine": 3638,
+        "endChar": 37
+      },
+      "revId": "908735b39238a13f0928ba7f40b2ed24b7eb0e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02764bdc_f922da9f",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 3643,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-06-30T17:51:58Z",
+      "side": 1,
+      "message": "this seems a bit strange... why do we need to track this state here?",
+      "range": {
+        "startLine": 3643,
+        "startChar": 27,
+        "endLine": 3643,
+        "endChar": 38
+      },
+      "revId": "908735b39238a13f0928ba7f40b2ed24b7eb0e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb16b4e5_e8fd562c",
+        "filename": "content/browser/web_contents/web_contents_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-06-30T17:51:58Z",
+      "side": 1,
+      "message": "this should not be public and should it be a raw pointer? who owns it?",
+      "range": {
+        "startLine": 131,
+        "startChar": 19,
+        "endLine": 131,
+        "endChar": 33
+      },
+      "revId": "908735b39238a13f0928ba7f40b2ed24b7eb0e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b93fde2_3dcc7636",
+        "filename": "content/browser/web_contents/web_contents_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 892,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-06-30T17:51:58Z",
+      "side": 1,
+      "message": "member variables and functions go down below, with comments",
+      "range": {
+        "startLine": 892,
+        "startChar": 7,
+        "endLine": 892,
+        "endChar": 20
+      },
+      "revId": "908735b39238a13f0928ba7f40b2ed24b7eb0e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56d22a3f_2f2802b7",
+        "filename": "content/public/browser/web_contents_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-06-30T17:51:58Z",
+      "side": 1,
+      "message": "this needs a comment",
+      "revId": "908735b39238a13f0928ba7f40b2ed24b7eb0e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

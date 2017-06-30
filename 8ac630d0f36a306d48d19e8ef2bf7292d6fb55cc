@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05cb5df6_b60ac666",
+        "filename": "build/whitespace_file.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-06-30T17:51:58Z",
+      "side": 0,
+      "message": "this change should not be in this cl",
+      "range": {
+        "startLine": 174,
+        "startChar": 28,
+        "endLine": 174,
+        "endChar": 31
+      },
+      "revId": "8ac630d0f36a306d48d19e8ef2bf7292d6fb55cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
