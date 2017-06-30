@@ -442,11 +442,6 @@
   },
   {
     "prefix": "layout_ng",
-    "base": "external/wpt/css/CSS2/floats-clear",
-    "args": ["--enable-blink-features=LayoutNG"]
-  },
-  {
-    "prefix": "layout_ng",
     "base": "overflow",
     "args": ["--enable-blink-features=LayoutNG"]
   },
