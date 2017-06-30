@@ -265,11 +265,6 @@ CompositorAnimations::CheckCanStartEffectOnCompositor(
             "modes other than 'replace'");
       }
 
-      if (!keyframe->GetAnimatableValue()) {
-        return FailureCode::NonActionable(
-            "Accelerated keyframe value could not be computed");
-      }
-
       // FIXME: Determine candidacy based on the CSSValue instead of a snapshot
       // AnimatableValue.
       switch (property.CssProperty()) {
@@ -299,7 +294,8 @@ CompositorAnimations::CheckCanStartEffectOnCompositor(
           break;
         }
         default:
-          // any other types are not allowed to run on compositor.
+          DCHECK(!IsCompositableProperty(property.CssProperty()));
+          DCHECK(!keyframe->GetAnimatableValue());
           StringBuilder builder;
           builder.Append("CSS property not supported: ");
           if (property.IsCSSCustomProperty()) {
@@ -309,6 +305,8 @@ CompositorAnimations::CheckCanStartEffectOnCompositor(
           }
           return FailureCode::Actionable(builder.ToString());
       }
+
+      DCHECK(keyframe->GetAnimatableValue());
     }
   }
 
@@ -570,34 +568,34 @@ namespace {
 
 void AddKeyframeToCurve(CompositorFilterAnimationCurve& curve,
                         Keyframe::PropertySpecificKeyframe* keyframe,
-                        const AnimatableValue* value,
+                        const AnimatableValue& value,
                         const TimingFunction& keyframe_timing_function) {
   FilterEffectBuilder builder(nullptr, FloatRect(), 1);
   CompositorFilterKeyframe filter_keyframe(
       keyframe->Offset(),
       builder.BuildFilterOperations(
-          ToAnimatableFilterOperations(value)->Operations()),
+          ToAnimatableFilterOperations(value).Operations()),
       keyframe_timing_function);
   curve.AddKeyframe(filter_keyframe);
 }
 
 void AddKeyframeToCurve(CompositorFloatAnimationCurve& curve,
                         Keyframe::PropertySpecificKeyframe* keyframe,
-                        const AnimatableValue* value,
+                        const AnimatableValue& value,
                         const TimingFunction& keyframe_timing_function) {
   CompositorFloatKeyframe float_keyframe(keyframe->Offset(),
-                                         ToAnimatableDouble(value)->ToDouble(),
+                                         ToAnimatableDouble(value).ToDouble(),
                                          keyframe_timing_function);
   curve.AddKeyframe(float_keyframe);
 }
 
 void AddKeyframeToCurve(CompositorTransformAnimationCurve& curve,
                         Keyframe::PropertySpecificKeyframe* keyframe,
-                        const AnimatableValue* value,
+                        const AnimatableValue& value,
                         const TimingFunction& keyframe_timing_function) {
   CompositorTransformOperations ops;
   ToCompositorTransformOperations(
-      ToAnimatableTransform(value)->GetTransformOperations(), &ops);
+      ToAnimatableTransform(value).GetTransformOperations(), &ops);
 
   CompositorTransformKeyframe transform_keyframe(
       keyframe->Offset(), std::move(ops), keyframe_timing_function);
@@ -617,7 +615,9 @@ void AddKeyframesToCurve(PlatformAnimationCurveType& curve,
       keyframe_timing_function = &keyframe->Easing();
 
     const AnimatableValue* value = keyframe->GetAnimatableValue();
-    AddKeyframeToCurve(curve, keyframe.Get(), value, *keyframe_timing_function);
+    DCHECK(value);
+    AddKeyframeToCurve(curve, keyframe.Get(), *value,
+                       *keyframe_timing_function);
   }
 }
 
