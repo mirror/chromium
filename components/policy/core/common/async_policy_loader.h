@@ -96,8 +96,8 @@ class POLICY_EXPORT AsyncPolicyLoader {
   // before retrying when this returns false.
   bool IsSafeToReload(const base::Time& now, base::TimeDelta* delay);
 
-  // Task runner to run background threads.
-  scoped_refptr<base::SequencedTaskRunner> task_runner_;
+  // Task runner for running background jobs.
+  const scoped_refptr<base::SequencedTaskRunner> task_runner_;
 
   // Callback for updates, passed in Init().
   UpdateCallback update_callback_;
@@ -115,7 +115,7 @@ class POLICY_EXPORT AsyncPolicyLoader {
   scoped_refptr<SchemaMap> schema_map_;
 
   // Used to get WeakPtrs for the periodic reload task.
-  base::WeakPtrFactory<AsyncPolicyLoader> weak_factory_;
+  base::WeakPtrFactory<AsyncPolicyLoader> weak_factory_{this};
 
   DISALLOW_COPY_AND_ASSIGN(AsyncPolicyLoader);
 };
