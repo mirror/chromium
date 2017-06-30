@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03d33ac6_f001c5f7",
+        "filename": "chrome/browser/ui/webui/flags_ui.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-06-30T19:23:12Z",
+      "side": 1,
+      "message": "Bonus change, just because I was editing the file anyway.",
+      "revId": "1c8e27426cca91a5db634156b032c2fa58c668ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
