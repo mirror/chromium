@@ -16,6 +16,24 @@
       "revId": "17eb9509e263f170c703aad2885c6419dbf78f3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "661ae405_a5889669",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-06-30T07:02:54Z",
+      "side": 1,
+      "message": "Aha. I updated the comment.",
+      "parentUuid": "e7c9eebd_b8613a73",
+      "revId": "17eb9509e263f170c703aad2885c6419dbf78f3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
