@@ -304,6 +304,7 @@ void ArcSessionManager::OnProvisioningFinished(ProvisioningResult result) {
 
     // Launch Play Store app, except for the following cases:
     // * When Opt-in verification is disabled (for tests);
+    // * In case ARC is enabled from OOBE.
     // * In ARC Kiosk mode, because the only one UI in kiosk mode must be the
     //   kiosk app and device is not needed for opt-in;
     // * When ARC is managed, the user is not an Active Directory user and all
@@ -314,7 +315,7 @@ void ArcSessionManager::OnProvisioningFinished(ProvisioningResult result) {
     // it less weird that a browser window pops up.
     const bool suppress_play_store_app =
         !IsPlayStoreAvailable() || IsArcOptInVerificationDisabled() ||
-        IsArcKioskMode() ||
+        IsArcKioskMode() || oobe_start_ ||
         (IsArcPlayStoreEnabledPreferenceManagedForProfile(profile_) &&
          AreArcAllOptInPreferencesManagedForProfile(profile_) &&
          !IsActiveDirectoryUserForProfile(profile_));
@@ -582,6 +583,8 @@ void ArcSessionManager::RequestEnableImpl() {
     return;
   }
 
+  oobe_start_ = IsOobeOptInActive();
+
   PrefService* const prefs = profile_->GetPrefs();
 
   // If it is marked that sign in has been successfully done, if ARC has been
@@ -631,6 +634,7 @@ void ArcSessionManager::RequestDisable() {
     arc_session_runner_->RequestStop(true);
     return;
   }
+  oobe_start_ = false;
   enable_requested_ = false;
   scoped_opt_in_tracker_.reset();
 
