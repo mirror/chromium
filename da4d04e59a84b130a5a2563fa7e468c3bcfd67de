@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "116dfb97_07f122d6",
+        "filename": "content/browser/service_worker/service_worker_registration.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-30T05:31:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9579ba1e_93d9e713",
+      "revId": "da4d04e59a84b130a5a2563fa7e468c3bcfd67de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ba68da8_4a9ea209",
         "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
         "patchSetId": 11
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "1334a8fb_e11a302f",
+        "filename": "content/browser/service_worker/service_worker_registration_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-30T05:31:07Z",
+      "side": 1,
+      "message": "Ha! Done.",
+      "parentUuid": "6ba68da8_4a9ea209",
+      "revId": "da4d04e59a84b130a5a2563fa7e468c3bcfd67de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5da5bcd8_2a5196d8",
         "filename": "content/browser/service_worker/service_worker_version.cc",
         "patchSetId": 11
@@ -47,6 +83,24 @@
       "writtenOn": "2017-06-30T05:21:29Z",
       "side": 1,
       "message": "For sourcecode consistency, can you remove {} if you don\u0027t add {} to line 1319 (or vice versa)?",
+      "revId": "da4d04e59a84b130a5a2563fa7e468c3bcfd67de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c238c80f_a3600bdb",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1323,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-30T05:31:07Z",
+      "side": 1,
+      "message": "Good point, done. Since all the others if()s in this function lack the {}, I removed it.",
+      "parentUuid": "5da5bcd8_2a5196d8",
       "revId": "da4d04e59a84b130a5a2563fa7e468c3bcfd67de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
