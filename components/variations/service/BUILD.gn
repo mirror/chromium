@@ -6,6 +6,8 @@ static_library("service") {
   sources = [
     "ui_string_overrider.cc",
     "ui_string_overrider.h",
+    "variations_seed_manager.cc",
+    "variations_seed_manager.h",
     "variations_service.cc",
     "variations_service.h",
     "variations_service_client.h",
@@ -13,6 +15,7 @@ static_library("service") {
 
   deps = [
     "//base",
+    "//cc/base",
     "//components/data_use_measurement/core",
     "//components/metrics",
     "//components/network_time",
@@ -22,6 +25,7 @@ static_library("service") {
     "//components/variations/proto",
     "//components/version_info",
     "//components/web_resource",
+    "//content/public/common",
     "//net",
     "//ui/base",
   ]
