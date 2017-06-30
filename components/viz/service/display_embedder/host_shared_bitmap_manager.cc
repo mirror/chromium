@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "components/viz/service/display_compositor/server_shared_bitmap_manager.h"
+#include "components/viz/service/display_embedder/host_shared_bitmap_manager.h"
 
 #include <stdint.h>
 
@@ -15,6 +15,8 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/stringprintf.h"
 #include "base/trace_event/process_memory_dump.h"
+#include "build/build_config.h"
+#include "mojo/public/cpp/system/platform_handle.h"
 #include "ui/gfx/geometry/size.h"
 
 namespace viz {
@@ -34,17 +36,17 @@ class BitmapData : public base::RefCountedThreadSafe<BitmapData> {
 
 namespace {
 
-class ServerSharedBitmap : public cc::SharedBitmap {
+class HostSharedBitmap : public cc::SharedBitmap {
  public:
-  ServerSharedBitmap(uint8_t* pixels,
-                     scoped_refptr<BitmapData> bitmap_data,
-                     const cc::SharedBitmapId& id,
-                     ServerSharedBitmapManager* manager)
+  HostSharedBitmap(uint8_t* pixels,
+                   scoped_refptr<BitmapData> bitmap_data,
+                   const cc::SharedBitmapId& id,
+                   HostSharedBitmapManager* manager)
       : SharedBitmap(pixels, id),
         bitmap_data_(bitmap_data),
         manager_(manager) {}
 
-  ~ServerSharedBitmap() override {
+  ~HostSharedBitmap() override {
     if (manager_)
       manager_->FreeSharedMemoryFromMap(id());
   }
@@ -58,47 +60,89 @@ class ServerSharedBitmap : public cc::SharedBitmap {
 
  private:
   scoped_refptr<BitmapData> bitmap_data_;
-  ServerSharedBitmapManager* manager_;
+  HostSharedBitmapManager* manager_;
 };
 
 }  // namespace
 
-base::LazyInstance<ServerSharedBitmapManager>::DestructorAtExit
+base::LazyInstance<HostSharedBitmapManager>::DestructorAtExit
     g_shared_memory_manager = LAZY_INSTANCE_INITIALIZER;
 
-ServerSharedBitmapManager::ServerSharedBitmapManager() = default;
+HostSharedBitmapManagerClient::HostSharedBitmapManagerClient(
+    HostSharedBitmapManager* manager)
+    : manager_(manager), binding_(this) {}
 
-ServerSharedBitmapManager::~ServerSharedBitmapManager() {
+HostSharedBitmapManagerClient::~HostSharedBitmapManagerClient() {
+  for (const auto& id : owned_bitmaps_)
+    manager_->ChildDeletedSharedBitmap(id);
+}
+
+void HostSharedBitmapManagerClient::Bind(
+    cc::mojom::SharedBitmapManagerAssociatedRequest request) {
+  binding_.Bind(std::move(request));
+}
+
+void HostSharedBitmapManagerClient::DidAllocateSharedBitmap(
+    mojo::ScopedSharedBufferHandle buffer,
+    const cc::SharedBitmapId& id) {
+  base::SharedMemoryHandle memory_handle;
+  size_t size;
+  MojoResult result = mojo::UnwrapSharedMemoryHandle(
+      std::move(buffer), &memory_handle, &size, NULL);
+  DCHECK_EQ(result, MOJO_RESULT_OK);
+  this->ChildAllocatedSharedBitmap(size, memory_handle, id);
+}
+
+void HostSharedBitmapManagerClient::ChildAllocatedSharedBitmap(
+    size_t buffer_size,
+    const base::SharedMemoryHandle& handle,
+    const cc::SharedBitmapId& id) {
+  if (manager_->ChildAllocatedSharedBitmap(buffer_size, handle, id)) {
+    base::AutoLock lock(lock_);
+    owned_bitmaps_.insert(id);
+  }
+}
+
+void HostSharedBitmapManagerClient::DidDeleteSharedBitmap(
+    const cc::SharedBitmapId& id) {
+  manager_->ChildDeletedSharedBitmap(id);
+  {
+    base::AutoLock lock(lock_);
+    owned_bitmaps_.erase(id);
+  }
+}
+
+HostSharedBitmapManager::HostSharedBitmapManager() {}
+HostSharedBitmapManager::~HostSharedBitmapManager() {
   DCHECK(handle_map_.empty());
 }
 
-ServerSharedBitmapManager* ServerSharedBitmapManager::current() {
+HostSharedBitmapManager* HostSharedBitmapManager::current() {
   return g_shared_memory_manager.Pointer();
 }
 
-std::unique_ptr<cc::SharedBitmap>
-ServerSharedBitmapManager::AllocateSharedBitmap(const gfx::Size& size) {
+std::unique_ptr<cc::SharedBitmap> HostSharedBitmapManager::AllocateSharedBitmap(
+    const gfx::Size& size) {
   base::AutoLock lock(lock_);
   size_t bitmap_size;
   if (!cc::SharedBitmap::SizeInBytes(size, &bitmap_size))
     return nullptr;
 
   scoped_refptr<BitmapData> data(new BitmapData(bitmap_size));
-  // Bitmaps allocated in server don't need to be shared to other processes, so
+  // Bitmaps allocated in host don't need to be shared to other processes, so
   // allocate them with new instead.
   data->pixels = std::unique_ptr<uint8_t[]>(new uint8_t[bitmap_size]);
 
   cc::SharedBitmapId id = cc::SharedBitmap::GenerateId();
   handle_map_[id] = data;
-  return base::MakeUnique<ServerSharedBitmap>(data->pixels.get(), data, id,
-                                              this);
+  return base::MakeUnique<HostSharedBitmap>(data->pixels.get(), data, id, this);
 }
 
 std::unique_ptr<cc::SharedBitmap>
-ServerSharedBitmapManager::GetSharedBitmapFromId(const gfx::Size& size,
-                                                 const cc::SharedBitmapId& id) {
+HostSharedBitmapManager::GetSharedBitmapFromId(const gfx::Size& size,
+                                               const cc::SharedBitmapId& id) {
   base::AutoLock lock(lock_);
-  auto it = handle_map_.find(id);
+  BitmapMap::iterator it = handle_map_.find(id);
   if (it == handle_map_.end())
     return nullptr;
 
@@ -110,18 +154,18 @@ ServerSharedBitmapManager::GetSharedBitmapFromId(const gfx::Size& size,
     return nullptr;
 
   if (data->pixels) {
-    return base::MakeUnique<ServerSharedBitmap>(data->pixels.get(), data, id,
-                                                nullptr);
+    return base::MakeUnique<HostSharedBitmap>(data->pixels.get(), data, id,
+                                              nullptr);
   }
   if (!data->memory->memory()) {
     return nullptr;
   }
 
-  return base::MakeUnique<ServerSharedBitmap>(
+  return base::MakeUnique<HostSharedBitmap>(
       static_cast<uint8_t*>(data->memory->memory()), data, id, nullptr);
 }
 
-bool ServerSharedBitmapManager::OnMemoryDump(
+bool HostSharedBitmapManager::OnMemoryDump(
     const base::trace_event::MemoryDumpArgs& args,
     base::trace_event::ProcessMemoryDump* pmd) {
   base::AutoLock lock(lock_);
@@ -156,33 +200,34 @@ bool ServerSharedBitmapManager::OnMemoryDump(
   return true;
 }
 
-bool ServerSharedBitmapManager::ChildAllocatedSharedBitmap(
+bool HostSharedBitmapManager::ChildAllocatedSharedBitmap(
     size_t buffer_size,
     const base::SharedMemoryHandle& handle,
     const cc::SharedBitmapId& id) {
   base::AutoLock lock(lock_);
   if (handle_map_.find(id) != handle_map_.end())
     return false;
-  auto data = base::MakeRefCounted<BitmapData>(buffer_size);
+  scoped_refptr<BitmapData> data(new BitmapData(buffer_size));
+
+  handle_map_[id] = data;
   data->memory = base::MakeUnique<base::SharedMemory>(handle, false);
   data->memory->Map(data->buffer_size);
   data->memory->Close();
-  handle_map_[id] = std::move(data);
   return true;
 }
 
-void ServerSharedBitmapManager::ChildDeletedSharedBitmap(
+void HostSharedBitmapManager::ChildDeletedSharedBitmap(
     const cc::SharedBitmapId& id) {
   base::AutoLock lock(lock_);
   handle_map_.erase(id);
 }
 
-size_t ServerSharedBitmapManager::AllocatedBitmapCount() const {
+size_t HostSharedBitmapManager::AllocatedBitmapCount() const {
   base::AutoLock lock(lock_);
   return handle_map_.size();
 }
 
-void ServerSharedBitmapManager::FreeSharedMemoryFromMap(
+void HostSharedBitmapManager::FreeSharedMemoryFromMap(
     const cc::SharedBitmapId& id) {
   base::AutoLock lock(lock_);
   handle_map_.erase(id);
