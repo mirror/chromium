@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "7b1d43b7_c3f2fb6b",
+        "filename": "third_party/WebKit/LayoutTests/FlagExpectations/enable-slimming-paint-v2",
+        "patchSetId": 11
+      },
+      "lineNbr": 1662,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-30T00:40:06Z",
+      "side": 1,
+      "message": "Also, did you review these tests and why they might be failing? Any\nfindings?",
+      "revId": "09e9b162902d6ba5d28c1be1ec180c1f4bd85993",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5f1a505c_8075e0f2",
         "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositorTest.cpp",
         "patchSetId": 11
