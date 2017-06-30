@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "869ae229_8c221e22",
+        "filename": "base/memory/ref_counted.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-30T14:26:11Z",
+      "side": 1,
+      "message": "Sure. Note that the usual distinction (postfix one inducing a copy, prefix not) doesn\u0027t apply here, as these operators on std::atomic always return their new/previous value (respectively), and not a reference or std::atomic object. And since the value isn\u0027t used, even that compiles away, so it\u0027s purely aesthetic. :)",
+      "parentUuid": "dcd751bb_4db3b407",
+      "revId": "82b7c38ea9925337e5f455e1acb82c56df4f9548",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "715850ea_4343eda5",
         "filename": "base/memory/ref_counted.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "82b7c38ea9925337e5f455e1acb82c56df4f9548",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "104c219a_b75e6d49",
+        "filename": "base/memory/ref_counted.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-30T14:26:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "715850ea_4343eda5",
+      "revId": "82b7c38ea9925337e5f455e1acb82c56df4f9548",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
