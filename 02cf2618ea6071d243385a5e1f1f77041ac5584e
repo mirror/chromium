@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a385e846_1834d903",
+        "filename": "chrome/browser/ui/ash/chrome_shell_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-06-30T21:53:13Z",
+      "side": 1,
+      "message": "The most common spelling in the code is \"MultiProfile\" singular, which is why this name doesn\u0027t match the delegate method name. Unfortunately we have every possible variation of Multi{ple}[Pp]rofile{s}. :-(",
+      "revId": "02cf2618ea6071d243385a5e1f1f77041ac5584e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
