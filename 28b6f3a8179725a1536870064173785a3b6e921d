@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5fcb8cff_17feba9a",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1469,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-06-30T06:32:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "80ab75d8_330c0a2d",
+      "range": {
+        "startLine": 1469,
+        "startChar": 51,
+        "endLine": 1469,
+        "endChar": 56
+      },
+      "revId": "28b6f3a8179725a1536870064173785a3b6e921d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf9ae3f7_7afff6e8",
         "filename": "components/autofill/core/browser/autofill_metrics.cc",
         "patchSetId": 12
@@ -36,6 +60,24 @@
       "writtenOn": "2017-06-29T21:20:27Z",
       "side": 1,
       "message": "Plz grab the implementation from the overload that doesn\u0027t take any params (above) and then implement the other in terms of this one.\n\ni.e.,\n\nint64_t\nAutofillMetrics::FormInteractionsUkmLogger::MillisecondsSinceFormParsed()\n    const {\n return MillisecondsSinceFormParsed(form_parse_timestamp_);\n}\n\nint64_t\nAutofillMetrics::FormInteractionsUkmLogger::MillisecondsSinceFormParsed(\n    const base::TimeTicks\u0026 form_parsed_time) const {\n  DCHECK(!form_parsed_timestamp.is_null());\n  // Use the pinned timestamp as the current time if it\u0027s set.\n  base::TimeTicks now \u003d\n      pinned_timestamp_.is_null() ? base::TimeTicks::Now() : pinned_timestamp_;\n  return (now - form_parsed_timestamp).InMilliseconds();\n}",
+      "revId": "28b6f3a8179725a1536870064173785a3b6e921d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcd12284_d0c07769",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1491,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-06-30T06:32:35Z",
+      "side": 1,
+      "message": "Merged them since the previous one is not used any more.",
+      "parentUuid": "cf9ae3f7_7afff6e8",
       "revId": "28b6f3a8179725a1536870064173785a3b6e921d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "e626f21e_27c3e734",
+        "filename": "components/autofill/core/browser/autofill_metrics.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-06-30T06:32:35Z",
+      "side": 1,
+      "message": "Done. I\u0027m felling in the same way that we should pull this timestamp out from all other methods.",
+      "parentUuid": "6cc677d7_1744c141",
+      "range": {
+        "startLine": 763,
+        "startChar": 10,
+        "endLine": 763,
+        "endChar": 19
+      },
+      "revId": "28b6f3a8179725a1536870064173785a3b6e921d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f91f8e77_004629eb",
         "filename": "components/autofill/core/browser/autofill_metrics_unittest.cc",
         "patchSetId": 12
@@ -76,6 +142,30 @@
       "writtenOn": "2017-06-29T23:13:04Z",
       "side": 1,
       "message": "Should there be some sort of \"autofill_manager_-\u003eReset()\" here to simulate that it\u0027s actually reset but the cached data should still work?  Otherwise I figure it\u0027s a toss-up if -\u003eReset() is actually called fast enough or not...\n\n(Ditto below I guess)",
+      "range": {
+        "startLine": 3120,
+        "startChar": 36,
+        "endLine": 3120,
+        "endChar": 0
+      },
+      "revId": "28b6f3a8179725a1536870064173785a3b6e921d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73a88f1b_321e0508",
+        "filename": "components/autofill/core/browser/autofill_metrics_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 3120,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-06-30T06:32:35Z",
+      "side": 1,
+      "message": "It\u0027s called before RunRunLoop().",
+      "parentUuid": "f91f8e77_004629eb",
       "range": {
         "startLine": 3120,
         "startChar": 36,
