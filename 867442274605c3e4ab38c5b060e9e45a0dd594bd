@@ -91,6 +91,24 @@
       "revId": "867442274605c3e4ab38c5b060e9e45a0dd594bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e270f4df_f435513a",
+        "filename": "media/blink/cdm_result_promise_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-30T17:15:26Z",
+      "side": 1,
+      "message": "Agreed that deprecated values should never be reused (e.g. 6 and 7). But hardcoding NUM_RESULT_CODES here still seems unnecessary and wrong. Now the \"number of results codes\" is actually 6, not 8. Also, when people adding a value, they have to update 2 lines instead of one, including changing NUM_RESULT_CODES to be 9, while in the comment above we say \"These values should never be changed\"...",
+      "parentUuid": "25cdaa18_5e1b6cd4",
+      "revId": "867442274605c3e4ab38c5b060e9e45a0dd594bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
