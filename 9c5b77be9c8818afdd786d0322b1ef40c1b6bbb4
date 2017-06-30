@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "c9e005ea_eb0d78aa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-06-30T14:44:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4d58fd4_2446c204",
+      "range": {
+        "startLine": 42,
+        "startChar": 12,
+        "endLine": 42,
+        "endChar": 33
+      },
+      "revId": "9c5b77be9c8818afdd786d0322b1ef40c1b6bbb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e34cf035_b38e034c",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
         "patchSetId": 1
@@ -68,6 +92,30 @@
       "revId": "9c5b77be9c8818afdd786d0322b1ef40c1b6bbb4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f34913a_6cec9092",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-06-30T14:44:37Z",
+      "side": 1,
+      "message": "ImageRequest interface no longer exists, so the DownloadThumbnailRequest stays.\nDone",
+      "parentUuid": "e34cf035_b38e034c",
+      "range": {
+        "startLine": 59,
+        "startChar": 50,
+        "endLine": 59,
+        "endChar": 68
+      },
+      "revId": "9c5b77be9c8818afdd786d0322b1ef40c1b6bbb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "96aba9c7_2ebfd002",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-06-30T14:44:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f46fe6f1_848fcb27",
+      "range": {
+        "startLine": 61,
+        "startChar": 27,
+        "endLine": 61,
+        "endChar": 35
+      },
+      "revId": "9c5b77be9c8818afdd786d0322b1ef40c1b6bbb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6884aa74_15ee9f56",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
         "patchSetId": 1
@@ -117,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "2479a565_b09991c0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-06-30T14:44:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6884aa74_15ee9f56",
+      "range": {
+        "startLine": 84,
+        "startChar": 53,
+        "endLine": 84,
+        "endChar": 60
+      },
+      "revId": "9c5b77be9c8818afdd786d0322b1ef40c1b6bbb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca4d48c7_d1da9b06",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
         "patchSetId": 1
@@ -131,6 +227,24 @@
       "revId": "9c5b77be9c8818afdd786d0322b1ef40c1b6bbb4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f2faf3d_33b6b0bb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-06-30T14:44:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca4d48c7_d1da9b06",
+      "revId": "9c5b77be9c8818afdd786d0322b1ef40c1b6bbb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +271,30 @@
     },
     {
       "key": {
+        "uuid": "f044f3a7_5268f774",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-06-30T14:44:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17d8db06_20485721",
+      "range": {
+        "startLine": 117,
+        "startChar": 16,
+        "endLine": 117,
+        "endChar": 28
+      },
+      "revId": "9c5b77be9c8818afdd786d0322b1ef40c1b6bbb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3d3fff7_6c065434",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
         "patchSetId": 1
@@ -180,6 +318,30 @@
     },
     {
       "key": {
+        "uuid": "e1a12140_e9506711",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-06-30T14:44:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3d3fff7_6c065434",
+      "range": {
+        "startLine": 183,
+        "startChar": 22,
+        "endLine": 183,
+        "endChar": 50
+      },
+      "revId": "9c5b77be9c8818afdd786d0322b1ef40c1b6bbb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "515626d9_77da9ced",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
         "patchSetId": 1
@@ -191,6 +353,24 @@
       "writtenOn": "2017-06-14T14:13:09Z",
       "side": 1,
       "message": "We don\u0027t make assumptions about the way the fields are displayed, so I\u0027d recommend not using \"card\" here. Maybe rename to \"updateFieldsVisibility\" ?",
+      "revId": "9c5b77be9c8818afdd786d0322b1ef40c1b6bbb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60b361af_720020bf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-06-30T14:44:37Z",
+      "side": 1,
+      "message": "Alright, I also renamed the updateCardInformation() to updateViewInformation().",
+      "parentUuid": "515626d9_77da9ced",
       "revId": "9c5b77be9c8818afdd786d0322b1ef40c1b6bbb4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -220,6 +400,30 @@
     },
     {
       "key": {
+        "uuid": "548c23bf_acc898e4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-06-30T14:44:37Z",
+      "side": 1,
+      "message": "It seems to work fine with the other CL as it is.",
+      "parentUuid": "c5cda94e_5fc15e06",
+      "range": {
+        "startLine": 286,
+        "startChar": 18,
+        "endLine": 286,
+        "endChar": 40
+      },
+      "revId": "9c5b77be9c8818afdd786d0322b1ef40c1b6bbb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a4ee277_089a62db",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsUiDelegateImpl.java",
         "patchSetId": 1
@@ -231,6 +435,24 @@
       "writtenOn": "2017-06-14T14:21:20Z",
       "side": 1,
       "message": "Do you need this?",
+      "revId": "9c5b77be9c8818afdd786d0322b1ef40c1b6bbb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fd0ff4f_9d00d5b9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsUiDelegateImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-06-30T14:44:37Z",
+      "side": 1,
+      "message": "I need it for isVisible(), no?",
+      "parentUuid": "7a4ee277_089a62db",
       "revId": "9c5b77be9c8818afdd786d0322b1ef40c1b6bbb4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
