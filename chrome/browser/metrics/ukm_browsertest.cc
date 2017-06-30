@@ -39,7 +39,8 @@ class UkmBrowserTest : public SyncTest {
     return service ? service->client_id_ : 0;
   }
 
-  void EnableSyncForProfile(Profile* profile) {
+  std::unique_ptr<ProfileSyncServiceHarness> EnableSyncForProfile(
+      Profile* profile) {
     browser_sync::ProfileSyncService* sync_service =
         ProfileSyncServiceFactory::GetInstance()->GetForProfile(profile);
 
@@ -52,7 +53,8 @@ class UkmBrowserTest : public SyncTest {
             profile, "user@gmail.com", "password",
             ProfileSyncServiceHarness::SigninType::FAKE_SIGNIN);
 
-    harness->SetupSync();
+    EXPECT_TRUE(harness->SetupSync());
+    return harness;
   }
 
  private:
@@ -71,9 +73,10 @@ IN_PROC_BROWSER_TEST_F(UkmBrowserTest, IncognitoCheck) {
       false);
 
   Profile* profile = ProfileManager::GetActiveUserProfile();
-  EnableSyncForProfile(profile);
+  std::unique_ptr<ProfileSyncServiceHarness> harness =
+      EnableSyncForProfile(profile);
 
-  CreateBrowser(ProfileManager::GetActiveUserProfile());
+  Browser* sync_browser = CreateBrowser(profile);
   EXPECT_TRUE(ukm_enabled());
   uint64_t original_client_id = client_id();
 
@@ -85,6 +88,8 @@ IN_PROC_BROWSER_TEST_F(UkmBrowserTest, IncognitoCheck) {
   // Client ID should not have been reset.
   EXPECT_EQ(original_client_id, client_id());
 
+  harness->service()->RequestStop(browser_sync::ProfileSyncService::CLEAR_DATA);
+  CloseBrowserSynchronously(sync_browser);
   ChromeMetricsServiceAccessor::SetMetricsAndCrashReportingForTesting(nullptr);
 }
 
