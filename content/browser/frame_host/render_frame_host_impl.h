@@ -79,6 +79,18 @@ namespace base {
 class ListValue;
 }
 
+namespace blink {
+namespace mojom {
+enum class PermissionStatus;
+}
+}  // namespace blink
+
+namespace device {
+namespace mojom {
+class GeolocationService;
+}
+}  // namespace device
+
 namespace gfx {
 class Range;
 }
@@ -912,6 +924,17 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // FrameTreeNode that is not a child of this node.
   FrameTreeNode* FindAndVerifyChild(int32_t child_frame_routing_id,
                                     bad_message::BadMessageReason reason);
+
+  // Creates the Geolocation Service.
+  void CreateGeolocationService(
+      const service_manager::BindSourceInfo& source_info,
+      mojo::InterfaceRequest<device::mojom::GeolocationService> request);
+
+  // Creates the Geolocation Service.
+  void CreateGeolocationServiceWithPermissionStatus(
+      const service_manager::BindSourceInfo& source_info,
+      mojo::InterfaceRequest<device::mojom::GeolocationService> request,
+      blink::mojom::PermissionStatus permission_status);
 
   // Creates Web Bluetooth Service owned by the frame. Returns a raw pointer
   // to it.
