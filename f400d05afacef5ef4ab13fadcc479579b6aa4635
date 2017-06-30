@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8a47eadb_7cb939ba",
+        "filename": "chrome/browser/profile_resetter/profile_resetter.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-06-30T18:19:57Z",
+      "side": 1,
+      "message": "no, this was actually pretty painful. As I had no windows machine, you can see the debugging in the patch revisions of this CL.",
+      "parentUuid": "1dd1696d_8792038b",
+      "range": {
+        "startLine": 327,
+        "startChar": 8,
+        "endLine": 327,
+        "endChar": 40
+      },
+      "revId": "f400d05afacef5ef4ab13fadcc479579b6aa4635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9555cbbf_43dff1d4",
         "filename": "chrome/browser/profile_resetter/profile_resetter.h",
         "patchSetId": 9
