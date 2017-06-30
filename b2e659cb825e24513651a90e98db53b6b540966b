@@ -22,6 +22,30 @@
       "revId": "b2e659cb825e24513651a90e98db53b6b540966b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "532537f3_6e4dacf4",
+        "filename": "content/public/app/mojo/content_browser_manifest.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-06-30T14:18:35Z",
+      "side": 1,
+      "message": "You\u0027re right. I\u0027ve been doing so many of these services that live in //content that I didn\u0027t fully grok that this was in //chrome. It should be in chrome_content_browser_manifest_overlay.json unless there is some reason (perhaps hinted at by this comment) why it needs to be here. I will investigate further.",
+      "parentUuid": "fa3fe8bc_e5217558",
+      "range": {
+        "startLine": 98,
+        "startChar": 18,
+        "endLine": 98,
+        "endChar": 23
+      },
+      "revId": "b2e659cb825e24513651a90e98db53b6b540966b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
