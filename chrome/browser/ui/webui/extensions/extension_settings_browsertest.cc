@@ -38,6 +38,11 @@ void ExtensionSettingsUIBrowserTest::InstallErrorsExtension() {
                            .AppendASCII("runtime_and_manifest_errors")));
 }
 
+void ExtensionSettingsUIBrowserTest::InstallGuestViewOptionsExtension() {
+  EXPECT_TRUE(
+      InstallExtension(test_data_dir_.AppendASCII("options_page_in_view.crx")));
+}
+
 void ExtensionSettingsUIBrowserTest::InstallSharedModule() {
   base::FilePath shared_module_path =
       test_data_dir_.AppendASCII("api_test").AppendASCII("shared_module");

@@ -13,6 +13,9 @@ var GOOD_EXTENSION_ID = 'ldnnhddmnhbkjipkidpdiheffobcpfmf';
 // The id of the extension from |InstallErrorsExtension|.
 var ERROR_EXTENSION_ID = 'pdlpifnclfacjobnmbpngemkalkjamnf';
 
+// The id of the extension from |InstallGuestViewOptionsExtension|.
+var GUEST_VIEW_OPTIONS_EXTENSION_ID = 'ajfkbeolfgenhmiempbjphiklkdohkai';
+
 /**
  * Test C++ fixture for settings WebUI testing.
  * @constructor
@@ -514,11 +517,21 @@ TEST_F('ManagedExtensionSettingsWebUITest', 'testAccessibility', function() {
 function OptionsDialogExtensionSettingsWebUITest() {}
 
 OptionsDialogExtensionSettingsWebUITest.prototype = {
-  __proto__: InstallGoodExtensionSettingsWebUITest.prototype,
+  __proto__: ExtensionSettingsWebUITest.prototype,
+
+  /** @override */
+  testGenPreamble: function() {
+    GEN('  InstallGuestViewOptionsExtension();');
+  },
+
+  emptyTestForAccessibility() {
+    this.steps = [this.waitForPageLoad, testDone];
+    this.nextStep();
+  },
 
   /** @override */
   browsePreload: ExtensionSettingsWebUITest.prototype.browsePreload +
-      '?options=' + GOOD_EXTENSION_ID,
+      '?options=' + GUEST_VIEW_OPTIONS_EXTENSION_ID,
 };
 
 TEST_F('OptionsDialogExtensionSettingsWebUITest', 'testAccessibility',
