@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0805be08_33d33516",
+        "filename": "chrome/browser/ui/views/desktop_capture/desktop_media_list_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1126834
+      },
+      "writtenOn": "2017-06-30T17:05:44Z",
+      "side": 1,
+      "message": "It is there for long time, before I touch desktop capture stuff.\nWeb developers reporting such a bug means there are some use cases for the flag.\nFor example, when tuning a sharing session for a specific window, one wishes to skip the picker window and save several clicks.\nSo let\u0027s keep it there.",
+      "parentUuid": "7d1234b7_e7f30cba",
+      "range": {
+        "startLine": 200,
+        "startChar": 14,
+        "endLine": 200,
+        "endChar": 32
+      },
+      "revId": "efb7747043e8cdc1a07e86409800ab6071c39249",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d89b8d76_9cdee075",
         "filename": "chrome/browser/ui/views/desktop_capture/desktop_media_picker_views.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "efb7747043e8cdc1a07e86409800ab6071c39249",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cdf5a6b_8950f4b4",
+        "filename": "chrome/browser/ui/views/desktop_capture/desktop_media_picker_views.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1126834
+      },
+      "writtenOn": "2017-06-30T17:05:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d89b8d76_9cdee075",
+      "range": {
+        "startLine": 372,
+        "startChar": 13,
+        "endLine": 372,
+        "endChar": 26
+      },
+      "revId": "efb7747043e8cdc1a07e86409800ab6071c39249",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
