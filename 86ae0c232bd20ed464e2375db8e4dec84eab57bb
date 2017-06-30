@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0a0d796_b7c0bae6",
+        "filename": "chrome/browser/notifications/notification_permission_context.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-06-30T14:40:23Z",
+      "side": 1,
+      "message": "Hiya Raymes, Dominick - I\u0027ve made the code change in DecidePermission() now since we only want to limit notification permission *requests* to iframes, not the ability to use the functionality. It seems to me like we\u0027d want that for push too, but now we have checks in two places. It it safe to move this check to DecidePermission() too?",
+      "revId": "86ae0c232bd20ed464e2375db8e4dec84eab57bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
