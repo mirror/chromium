@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7ea4b5e_c653f4cc",
+        "filename": "remoting/ios/app/resources/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-06-30T19:08:46Z",
+      "side": 1,
+      "message": "I think you can completely remove system_icons now and move the deps into :assets\n\nThey used to be conflicting because they were named ic_close and ic_refresh.",
+      "revId": "1da9a835bbcab4c191167445dc441caa81dcdd3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
