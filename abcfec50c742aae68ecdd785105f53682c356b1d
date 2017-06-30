@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "6b96f3f7_3e6dbbfd",
+        "filename": "media/filters/frame_processor_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 722,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-06-30T02:18:11Z",
+      "side": 1,
+      "message": "Ack. Sequence mode is insanity. New comment is more clear.",
+      "parentUuid": "e65af767_349c079e",
+      "range": {
+        "startLine": 718,
+        "startChar": 2,
+        "endLine": 722,
+        "endChar": 3
+      },
+      "revId": "abcfec50c742aae68ecdd785105f53682c356b1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bd260882_def76626",
         "filename": "media/filters/frame_processor_unittest.cc",
         "patchSetId": 2
@@ -284,6 +308,30 @@
     },
     {
       "key": {
+        "uuid": "220cdbbe_8692055e",
+        "filename": "media/filters/frame_processor_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-06-30T02:18:11Z",
+      "side": 1,
+      "message": "I follow. Again, sequence mode is insane. There is no scenario I can think of where it is desirable for a timestamp offset that is generated at by an unrelated append at the other end of the buffered range to affect this most recent append at the front of the range. If such a scenario exists, it is extremely contrived.",
+      "parentUuid": "f4d79ec7_790c7bb8",
+      "range": {
+        "startLine": 769,
+        "startChar": 4,
+        "endLine": 769,
+        "endChar": 13
+      },
+      "revId": "abcfec50c742aae68ecdd785105f53682c356b1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b3b8cf58_bf130417",
         "filename": "media/filters/frame_processor_unittest.cc",
         "patchSetId": 2
@@ -366,6 +414,30 @@
     },
     {
       "key": {
+        "uuid": "4bbe865a_10d90a9a",
+        "filename": "media/filters/frame_processor_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 790,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-06-30T02:18:11Z",
+      "side": 1,
+      "message": "Ack. This is less frightening when I\u0027m reminded that the units are msec",
+      "parentUuid": "57b2222e_31f41bd1",
+      "range": {
+        "startLine": 789,
+        "startChar": 68,
+        "endLine": 790,
+        "endChar": 47
+      },
+      "revId": "abcfec50c742aae68ecdd785105f53682c356b1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5942bfb_a06d33ab",
         "filename": "media/filters/frame_processor_unittest.cc",
         "patchSetId": 2
@@ -425,6 +497,30 @@
       "side": 1,
       "message": "(I\u0027ve filed https://crbug.com/738034 to track |frame_duration_| cleanup.)",
       "parentUuid": "ff403d60_4c6d8b99",
+      "range": {
+        "startLine": 797,
+        "startChar": 28,
+        "endLine": 797,
+        "endChar": 43
+      },
+      "revId": "abcfec50c742aae68ecdd785105f53682c356b1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf8f9fad_1f370888",
+        "filename": "media/filters/frame_processor_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 797,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-06-30T02:18:11Z",
+      "side": 1,
+      "message": "You inferred the correct meaning. Separate CL is fine.",
+      "parentUuid": "2d60c092_332db156",
       "range": {
         "startLine": 797,
         "startChar": 28,
