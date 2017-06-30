@@ -293,6 +293,7 @@ WebViewBase* WebViewHelper::InitializeAndLoad(
              update_settings_func);
 
   LoadFrame(WebView()->MainFrameImpl(), url);
+  WebView()->UpdateAllLifecyclePhases();
 
   return WebView();
 }

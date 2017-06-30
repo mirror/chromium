@@ -117,6 +117,7 @@ class FrameSerializerTest : public ::testing::Test,
   void Serialize(const char* url) {
     FrameTestHelpers::LoadFrame(helper_.WebView()->MainFrameImpl(),
                                 KURL(base_url_, url).GetString().Utf8().data());
+    helper_.WebView()->UpdateAllLifecyclePhases();
     FrameSerializer serializer(resources_, *this);
     Frame* frame = helper_.LocalMainFrame()->GetFrame();
     for (; frame; frame = frame->Tree().TraverseNext()) {
@@ -365,7 +366,7 @@ TEST_F(FrameSerializerTest, CSS) {
 
   Serialize("css_test_page.html");
 
-  EXPECT_EQ(16U, GetResources().size());
+  EXPECT_EQ(15U, GetResources().size());
 
   EXPECT_FALSE(IsSerialized("do_not_serialize.png", "image/png"));
   EXPECT_FALSE(IsSerialized("included_in_another_frame.css", "text/css"));

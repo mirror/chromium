@@ -4305,6 +4305,7 @@ TEST_P(WebViewTest, DeviceEmulationResetScrollbars) {
                                    "  body {margin: 0px; height:3000px;}"
                                    "</style>",
                                    base_url);
+  web_view->UpdateAllLifecyclePhases();
 
   WebLocalFrameBase* frame = web_view->MainFrameImpl();
   auto* frame_view = frame->GetFrameView();

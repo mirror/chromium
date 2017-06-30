@@ -1033,10 +1033,14 @@ void SVGElement::EnsureAttributeAnimValUpdated() {
   if (!RuntimeEnabledFeatures::WebAnimationsSVGEnabled())
     return;
 
+  Document& document = GetDocument();
+  if (document.SvgExtensions())
+    document.AccessSVGExtensions().StartAnimations();
+
   if ((HasSVGRareData() && SvgRareData()->WebAnimatedAttributesDirty()) ||
       (GetElementAnimations() &&
-       DocumentAnimations::NeedsAnimationTimingUpdate(GetDocument()))) {
-    DocumentAnimations::UpdateAnimationTimingIfNeeded(GetDocument());
+       DocumentAnimations::NeedsAnimationTimingUpdate(document))) {
+    DocumentAnimations::UpdateAnimationTimingIfNeeded(document);
     ApplyActiveWebAnimations();
   }
 }

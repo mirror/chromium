@@ -215,6 +215,7 @@ LocalFrameView::LocalFrameView(LocalFrame& frame, IntRect frame_rect)
       suppress_adjust_view_size_(false),
       allows_layout_invalidation_after_layout_clean_(true),
       forcing_layout_parent_view_(false),
+      needs_intersection_observation_(false),
       main_thread_scrolling_reasons_(0) {
   Init();
 }
@@ -5031,6 +5032,7 @@ void LocalFrameView::UpdateViewportIntersectionsForSubtree(
        child = child->Tree().NextSibling()) {
     child->View()->UpdateViewportIntersectionsForSubtree(target_state);
   }
+  needs_intersection_observation_ = false;
 }
 
 void LocalFrameView::UpdateRenderThrottlingStatusForTesting() {
@@ -5197,6 +5199,9 @@ bool LocalFrameView::ShouldThrottleRendering() const {
 }
 
 bool LocalFrameView::CanThrottleRendering() const {
+  if (needs_intersection_observation_)
+    return false;
+
   if (lifecycle_updates_throttled_)
     return true;
   if (!RuntimeEnabledFeatures::RenderingPipelineThrottlingEnabled())
