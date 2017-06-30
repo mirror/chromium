@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a603de6f_9ded3a48",
+        "filename": "ios/chrome/browser/ui/payments/contact_info_selection_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-30T15:34:03Z",
+      "side": 1,
+      "message": "The edited item should be marked as complete here.\nAlso, now that paymentRequestSelectorViewController:didSelectItemAtIndex: doesn\u0027t set the selectedItemIndex on the mediator unless the item is complete, that property needs to be set here, if not in edit mode.\nhttps://cs.chromium.org/chromium/src/ios/chrome/browser/ui/payments/billing_address_selection_coordinator.mm?l\u003d135",
+      "revId": "dece0e37a5f3aa3da057b9aabe6d7a727e1a1fa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8afa5872_9461c57b",
+        "filename": "ios/chrome/browser/ui/payments/contact_info_selection_mediator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-30T15:34:03Z",
+      "side": 1,
+      "message": "PaymentRequest already has an instance of payments::PaymentsProfileComparator which is properly invalidated once a profile is saved.",
+      "revId": "dece0e37a5f3aa3da057b9aabe6d7a727e1a1fa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58fd534b_70d8216c",
+        "filename": "ios/chrome/browser/ui/payments/contact_info_selection_mediator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-30T15:34:03Z",
+      "side": 1,
+      "message": "Could you please abstract into a utility method similar to payment_request_util::GetAddressNotificationLabelFromAutofillProfile?",
+      "range": {
+        "startLine": 109,
+        "startChar": 0,
+        "endLine": 112,
+        "endChar": 77
+      },
+      "revId": "dece0e37a5f3aa3da057b9aabe6d7a727e1a1fa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
