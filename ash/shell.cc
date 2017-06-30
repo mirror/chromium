@@ -838,6 +838,12 @@ void Shell::Init(const ShellInitParams& init_params) {
         shell_delegate_->GetShellConnector(), std::move(pref_registry),
         base::Bind(&Shell::OnPrefServiceInitialized, base::Unretained(this)),
         prefs::mojom::kForwarderServiceName);
+    pref_registry = base::MakeRefCounted<PrefRegistrySimple>();
+    prefs::ConnectToPrefService(
+        shell_delegate_->GetShellConnector(), std::move(pref_registry),
+        base::Bind(&Shell::OnLocalStatePrefServiceInitialized,
+                   base::Unretained(this)),
+        prefs::mojom::kLocalStateServiceName);
   }
 
   // Some delegates access ShellPort during their construction. Create them here
@@ -1273,6 +1279,15 @@ void Shell::OnPrefServiceInitialized(
   // |pref_service_| is null if can't connect to Chrome (as happens when
   // running mash outside of chrome --mash and chrome isn't built).
   pref_service_ = std::move(pref_service);
+}
+
+void Shell::OnLocalStatePrefServiceInitialized(
+    std::unique_ptr<::PrefService> pref_service) {
+  if (!instance_)
+    return;
+  // |pref_service_| is null if can't connect to Chrome (as happens when
+  // running mash outside of chrome --mash and chrome isn't built).
+  local_state_ = std::move(pref_service);
 }
 
 }  // namespace ash

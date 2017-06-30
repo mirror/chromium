@@ -63,6 +63,10 @@ class BrowserPolicyConnector;
 class PolicyService;
 };
 
+namespace prefs {
+class InProcessPrefServiceFactory;
+}
+
 // Real implementation of BrowserProcess that creates and returns the services.
 class BrowserProcessImpl : public BrowserProcess,
                            public KeepAliveStateObserver {
@@ -158,6 +162,7 @@ class BrowserProcessImpl : public BrowserProcess,
   shell_integration::DefaultWebClientState CachedDefaultWebClientState()
       override;
   physical_web::PhysicalWebDataSource* GetPhysicalWebDataSource() override;
+  prefs::InProcessPrefServiceFactory* pref_service_factory() override;
 
   static void RegisterPrefs(PrefRegistrySimple* registry);
 
@@ -352,6 +357,8 @@ class BrowserProcessImpl : public BrowserProcess,
 
   std::unique_ptr<physical_web::PhysicalWebDataSource>
       physical_web_data_source_;
+
+  std::unique_ptr<prefs::InProcessPrefServiceFactory> pref_service_factory_;
 
   SEQUENCE_CHECKER(sequence_checker_);
 

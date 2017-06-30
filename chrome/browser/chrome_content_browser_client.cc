@@ -205,6 +205,7 @@
 #include "ppapi/features/features.h"
 #include "ppapi/host/ppapi_host.h"
 #include "printing/features/features.h"
+#include "services/preferences/public/cpp/in_process_service_factory.h"
 #include "services/preferences/public/interfaces/preferences.mojom.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
@@ -3006,6 +3007,15 @@ void ChromeContentBrowserClient::BindInterfaceRequest(
 
 void ChromeContentBrowserClient::RegisterInProcessServices(
     StaticServiceMap* services) {
+  {
+    service_manager::EmbeddedServiceInfo info;
+    info.factory =
+        base::Bind(&prefs::InProcessPrefServiceFactory::CreatePrefService,
+                   base::Unretained(g_browser_process->pref_service_factory()));
+    info.task_runner = base::ThreadTaskRunnerHandle::Get();
+    services->insert(
+        std::make_pair(prefs::mojom::kLocalStateServiceName, info));
+  }
 #if BUILDFLAG(ENABLE_MOJO_MEDIA_IN_BROWSER_PROCESS)
   service_manager::EmbeddedServiceInfo info;
   info.factory = base::Bind(&media::CreateMediaService);

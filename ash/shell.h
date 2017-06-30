@@ -438,6 +438,8 @@ class ASH_EXPORT Shell : public SessionObserver,
   // desired stored settings.
   PrefService* GetActiveUserPrefService() const;
 
+  PrefService* local_state() const { return local_state_.get(); }
+
   // Returns WebNotificationTray on the primary root window.
   WebNotificationTray* GetWebNotificationTray();
 
@@ -651,8 +653,10 @@ class ASH_EXPORT Shell : public SessionObserver,
   // the profile is available.
   void InitializeShelf();
 
-  // Callback for prefs::ConnectToPrefService.
+  // Callbacks for prefs::ConnectToPrefService.
   void OnPrefServiceInitialized(std::unique_ptr<::PrefService> pref_service);
+  void OnLocalStatePrefServiceInitialized(
+      std::unique_ptr<::PrefService> pref_service);
 
   static Shell* instance_;
 
@@ -714,6 +718,7 @@ class ASH_EXPORT Shell : public SessionObserver,
   std::unique_ptr<::wm::WindowModalityController> window_modality_controller_;
   std::unique_ptr<app_list::AppList> app_list_;
   std::unique_ptr<::PrefService> pref_service_;
+  std::unique_ptr<::PrefService> local_state_;
   std::unique_ptr<views::corewm::TooltipController> tooltip_controller_;
   LinkHandlerModelFactory* link_handler_model_factory_;
   std::unique_ptr<PowerButtonController> power_button_controller_;
