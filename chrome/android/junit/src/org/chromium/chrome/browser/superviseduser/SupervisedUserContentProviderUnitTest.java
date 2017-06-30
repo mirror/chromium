@@ -222,7 +222,7 @@ public class SupervisedUserContentProviderUnitTest {
         AccountManagerHelper.overrideAccountManagerHelperForTests(
                 RuntimeEnvironment.application, mockDelegate);
         Account account = new Account("Google", "Dummy");
-        when(mockDelegate.getAccountsByType("Google")).thenReturn(new Account[] {account});
+        when(mockDelegate.getAccountsSync()).thenReturn(new Account[] {account});
 
         WebRestrictionsResult result =
                 mSupervisedUserContentProvider.shouldProceed(DEFAULT_CALLING_PACKAGE, "url");
@@ -250,7 +250,7 @@ public class SupervisedUserContentProviderUnitTest {
         AccountManagerHelper.overrideAccountManagerHelperForTests(
                 RuntimeEnvironment.application, mockDelegate);
         Account account = new Account("Google", "Dummy");
-        when(mockDelegate.getAccountsByType("Google")).thenReturn(new Account[] {account});
+        when(mockDelegate.getAccountsSync()).thenReturn(new Account[] {account});
 
         // Change the behavior of the forced sign-in processor to not sign in.
         doAnswer(new Answer<Void>() {

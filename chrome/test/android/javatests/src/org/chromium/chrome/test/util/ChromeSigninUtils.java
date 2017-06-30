@@ -85,7 +85,7 @@ public class ChromeSigninUtils {
      * Removes all fake accounts from the OS.
      */
     public void removeAllFakeAccountsFromOs() {
-        for (Account acct : mFakeAccountManagerDelegate.getAccountsByType(GOOGLE_ACCOUNT_TYPE)) {
+        for (Account acct : mFakeAccountManagerDelegate.getAccountsSyncNoThrow()) {
             mFakeAccountManagerDelegate.removeAccountHolderExplicitly(
                     AccountHolder.builder(acct).build());
         }
@@ -98,11 +98,7 @@ public class ChromeSigninUtils {
      * @return {@code true} if fake account is on OS, false otherwise.
      */
     public boolean isExistingFakeAccountOnOs(String username) {
-        if (mFakeAccountManagerDelegate.getAccountsByType(GOOGLE_ACCOUNT_TYPE).length == 0) {
-            return false;
-        }
-
-        for (Account acct : mFakeAccountManagerDelegate.getAccountsByType(GOOGLE_ACCOUNT_TYPE)) {
+        for (Account acct : mFakeAccountManagerDelegate.getAccountsSyncNoThrow()) {
             if (username.equals(acct.name)) {
                 return true;
             }

@@ -20,10 +20,17 @@ import org.chromium.base.Callback;
 public interface AccountManagerDelegate {
     /**
      * Get all the accounts for a given {@code type}.
-     * This method shouldn't be called on the UI thread (violated due to crbug.com/517697).
+     * This is deprecated an will be removed soon.
      */
     @WorkerThread
     Account[] getAccountsByType(String type);
+
+    /**
+     * Get all the accounts.
+     * This method shouldn't be called on the UI thread (violated due to crbug.com/517697).
+     */
+    @WorkerThread
+    Account[] getAccountsSync() throws AccountManagerDelegateException;
 
     /**
      * Get an auth token.
