@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8ce56397_0bed5137",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-30T17:16:35Z",
+      "side": 1,
+      "message": "Don\u0027t forget this.",
+      "parentUuid": "5b80d945_4264e64c",
+      "range": {
+        "startLine": 10,
+        "startChar": 50,
+        "endLine": 10,
+        "endChar": 0
+      },
+      "revId": "7b0c0c6e9f67d027d1aeb9f33b05f49ca113ee90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e0a7597b_3331d632",
         "filename": "services/shape_detection/android/javatests/src/org/chromium/shape_detection/FaceDetectionImplTest.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-29T16:00:54Z",
       "side": 1,
       "message": "This can be private, right? \nAnd, for that matter, all the constants in l.32-38 as well.",
+      "range": {
+        "startLine": 42,
+        "startChar": 4,
+        "endLine": 42,
+        "endChar": 10
+      },
+      "revId": "7b0c0c6e9f67d027d1aeb9f33b05f49ca113ee90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4db3778a_1aa01637",
+        "filename": "services/shape_detection/android/javatests/src/org/chromium/shape_detection/FaceDetectionImplTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-30T17:16:35Z",
+      "side": 1,
+      "message": "Change to private also l.32-38 ?",
+      "parentUuid": "e0a7597b_3331d632",
       "range": {
         "startLine": 42,
         "startChar": 4,
