@@ -55,7 +55,7 @@ class Coordinator : public mojom::Coordinator {
 
   // Internal methods for collecting events from agents.
   void SendStartTracingToAgent(AgentRegistry::AgentEntry* agent_entry);
-  void OnTracingStarted(AgentRegistry::AgentEntry* agent_entry);
+  void OnTracingStarted(AgentRegistry::AgentEntry* agent_entry, bool success);
   void StopAndFlushInternal();
   void OnRecorderDataChange(const std::string& label);
   bool StreamEventsForCurrentLabel();

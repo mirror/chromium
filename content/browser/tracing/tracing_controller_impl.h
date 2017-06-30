@@ -153,10 +153,9 @@ class TracingControllerImpl
 
   // Issue clock sync markers to the tracing agents.
   void IssueClockSyncMarker();
-  void OnClockSyncMarkerRecordedByAgent(
-      const std::string& sync_id,
-      const base::TimeTicks& issue_ts,
-      const base::TimeTicks& issue_end_ts);
+  void OnClockSyncMarkerRecordedByAgent(const std::string& sync_id,
+                                        base::TimeTicks issue_ts,
+                                        base::TimeTicks issue_end_ts);
 
   void AddFilteredMetadata(TracingController::TraceDataSink* sink,
                            std::unique_ptr<base::DictionaryValue> metadata,
