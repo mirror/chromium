@@ -52,6 +52,24 @@
       "revId": "cac1144ad5fda2337223010c1c796a3a29809840",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd4da000_c3ae1148",
+        "filename": "components/omnibox/browser/shortcuts_backend.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-30T19:22:30Z",
+      "side": 1,
+      "message": "We should be using transactions anywhere we\u0027re doing multiple writes as part of a single update.  If we don\u0027t, as you mention, that\u0027s already a bug.\n\nIf the shutdown behavior of the task scheduler is that SKIP_ON_SHUTDOWN will throw away unstarted tasks but allow already-started ones to block shutdown (rather than just nuking the thread they\u0027re on mid-task), then we may be OK.  My biggest worry is things like stale locks.  As you note, if we can have these after a crash we already have a problem, but I\u0027d rather not escalate that to an \"every time Chrome exits\" problem, and the right fix for it would be somewhere other than the layer I\u0027m changing.\n\nIt looks from reading ~Connection() and the chain of calls it makes like we\u0027re OK here.  I\u0027m going to proceed.",
+      "parentUuid": "3f8cbac8_6a05be09",
+      "revId": "cac1144ad5fda2337223010c1c796a3a29809840",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
