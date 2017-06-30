@@ -69,6 +69,24 @@
       "revId": "80a027fe188d457cca15795f04eb65bbaab6404e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc7bda02_5ee813fc",
+        "filename": "extensions/shell/test/shell_tests_main.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2017-06-30T07:19:45Z",
+      "side": 1,
+      "message": "Originally we used smaller-than-cores number of jobs for heavy tests like browser_tests, since the browser under test spawns further processes, and the \"throttling\" was necessary not to put excessive load on the continuous integration build machines.\n\nI\u0027d still recommend it for browser_tests-like binaries which launch the full browser or heavy sub-processes. It\u0027s probably not needed for smaller unit tests.",
+      "parentUuid": "0d7f414f_df240916",
+      "revId": "80a027fe188d457cca15795f04eb65bbaab6404e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
