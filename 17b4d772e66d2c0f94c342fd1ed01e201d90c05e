@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3ca02225_265f3281",
+        "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-06-30T01:39:44Z",
+      "side": 1,
+      "message": "will do!",
+      "parentUuid": "88ade40c_6de94e20",
+      "range": {
+        "startLine": 12,
+        "startChar": 5,
+        "endLine": 12,
+        "endChar": 10
+      },
+      "revId": "17b4d772e66d2c0f94c342fd1ed01e201d90c05e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5c85a0f4_3dc0317b",
         "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.html",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-30T00:46:39Z",
       "side": 1,
       "message": "Any reason this has to be min-height instead of height?",
+      "range": {
+        "startLine": 24,
+        "startChar": 8,
+        "endLine": 24,
+        "endChar": 12
+      },
+      "revId": "17b4d772e66d2c0f94c342fd1ed01e201d90c05e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5eab42d4_eb52e0a0",
+        "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-06-30T01:39:44Z",
+      "side": 1,
+      "message": "I noticed that when I shrink the simulator vertically the ui looked funny, so putting min-height guaranteed that there wouldn\u0027t be any overlaps.  I guess the device would have to be really short in order for it to actually be a problem...",
+      "parentUuid": "5c85a0f4_3dc0317b",
       "range": {
         "startLine": 24,
         "startChar": 8,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b0ec0ec5_974d37c6",
+        "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-06-30T01:39:44Z",
+      "side": 1,
+      "message": "Yeah I was thinking the same, but the code was set up previously so that divs with class\u003d\"title\" and class\u003d\"body\" are specifically processed by some preprocessor.  So if I change the name of these classes then they won\u0027t show up on the ui.\n\nI will get rid of id\u003dtitle-style and modify class\u003dtitle directly",
+      "parentUuid": "4778ccf6_2fc46678",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 12
+      },
+      "revId": "17b4d772e66d2c0f94c342fd1ed01e201d90c05e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "348e82a2_ae9bbe5b",
         "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.html",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2017-06-30T00:46:39Z",
       "side": 1,
       "message": "How about class\u003d\"contents\"? We try not to use class names which are also the names of HTML elements.",
+      "range": {
+        "startLine": 71,
+        "startChar": 18,
+        "endLine": 71,
+        "endChar": 22
+      },
+      "revId": "17b4d772e66d2c0f94c342fd1ed01e201d90c05e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b83dc824_ea8608f9",
+        "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-06-30T01:39:44Z",
+      "side": 1,
+      "message": "Same thing as above.",
+      "parentUuid": "348e82a2_ae9bbe5b",
       "range": {
         "startLine": 71,
         "startChar": 18,
@@ -114,6 +210,30 @@
       "revId": "17b4d772e66d2c0f94c342fd1ed01e201d90c05e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2c847c6_2796003c",
+        "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-06-30T01:39:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a77495de_8fcca9b4",
+      "range": {
+        "startLine": 92,
+        "startChar": 5,
+        "endLine": 92,
+        "endChar": 28
+      },
+      "revId": "17b4d772e66d2c0f94c342fd1ed01e201d90c05e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -183,6 +303,78 @@
       "revId": "17b4d772e66d2c0f94c342fd1ed01e201d90c05e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d1dfb52_192a3a39",
+        "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-06-30T01:39:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cab3e54b_e7e2d235",
+      "range": {
+        "startLine": 93,
+        "startChar": 5,
+        "endLine": 93,
+        "endChar": 13
+      },
+      "revId": "17b4d772e66d2c0f94c342fd1ed01e201d90c05e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cf7e7584_58337917",
+        "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-06-30T01:39:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fdf0ceaa_2a2666cc",
+      "range": {
+        "startLine": 93,
+        "startChar": 21,
+        "endLine": 93,
+        "endChar": 37
+      },
+      "revId": "17b4d772e66d2c0f94c342fd1ed01e201d90c05e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f2fb2965_aff93377",
+        "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-06-30T01:39:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b9504a2_5ce10b58",
+      "range": {
+        "startLine": 93,
+        "startChar": 40,
+        "endLine": 93,
+        "endChar": 71
+      },
+      "revId": "17b4d772e66d2c0f94c342fd1ed01e201d90c05e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
