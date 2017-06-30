@@ -107,6 +107,7 @@ CONTENT_EXPORT extern const base::Feature kWinSboxDisableExtensionPoints;
 #endif  // defined(OS_WIN)
 
 #if defined(OS_MACOSX)
+CONTENT_EXPORT extern const base::Feature kDeviceMonitorMac;
 CONTENT_EXPORT extern const base::Feature kMacV2Sandbox;
 #endif  // defined(OS_MACOSX)
 
