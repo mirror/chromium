@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "222e0d62_2ed100d8",
+        "filename": "cc/paint/paint_shader.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-30T00:50:58Z",
+      "side": 1,
+      "message": "If it requires two points, let\u0027s change the interface to specify two\npoints.",
+      "revId": "ba516f8cb9d7484dac4008251f19ca841f8705df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa989c49_42c33777",
+        "filename": "cc/paint/paint_shader.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-30T00:50:58Z",
+      "side": 1,
+      "message": "This makes an extra copy. Is that ok?",
+      "revId": "ba516f8cb9d7484dac4008251f19ca841f8705df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d7eae15_344657f1",
+        "filename": "cc/paint/paint_shader.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-30T00:50:58Z",
+      "side": 1,
+      "message": "The code here and below appears to be a copy of code from \nMakeLinearGradient. Factor into a helper method?",
+      "revId": "ba516f8cb9d7484dac4008251f19ca841f8705df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3150a851_5a1cce66",
+        "filename": "cc/paint/paint_shader.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-30T00:50:58Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "ba516f8cb9d7484dac4008251f19ca841f8705df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
