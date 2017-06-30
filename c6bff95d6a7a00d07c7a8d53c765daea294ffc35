@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d9e0daf0_a3cb442d",
+        "filename": "components/password_manager/core/browser/sql_table_builder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-06-30T14:12:07Z",
+      "side": 1,
+      "message": "That is true, however then we also would need to move the initialization of |sealed_version_| from the header file to the constructor. I don\u0027t have a strong opinion about this, what do you prefer?",
+      "parentUuid": "71141fd7_c8ec56eb",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 51
+      },
+      "revId": "c6bff95d6a7a00d07c7a8d53c765daea294ffc35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dace9eb2_79d29e8b",
         "filename": "components/password_manager/core/browser/sql_table_builder.cc",
         "patchSetId": 2
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "a3e02d67_605d5de7",
+        "filename": "components/password_manager/core/browser/sql_table_builder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-06-30T14:12:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dace9eb2_79d29e8b",
+      "range": {
+        "startLine": 148,
+        "startChar": 51,
+        "endLine": 150,
+        "endChar": 75
+      },
+      "revId": "c6bff95d6a7a00d07c7a8d53c765daea294ffc35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9d691b5_3b80d87c",
         "filename": "components/password_manager/core/browser/sql_table_builder.h",
         "patchSetId": 2
@@ -83,6 +131,30 @@
       "writtenOn": "2017-06-30T08:25:31Z",
       "side": 1,
       "message": "It feels strange that \"signon_realm\" stays hard-coded this way. Isn\u0027t it covered by the next sentence alone? (Also below at DropColumn.)",
+      "range": {
+        "startLine": 63,
+        "startChar": 62,
+        "endLine": 63,
+        "endChar": 74
+      },
+      "revId": "c6bff95d6a7a00d07c7a8d53c765daea294ffc35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4233919f_c2be3ce6",
+        "filename": "components/password_manager/core/browser/sql_table_builder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-06-30T14:12:07Z",
+      "side": 1,
+      "message": "As I learned during the offline discussion \"signon_realm\" was hard coded due to the presence of an index referencing it. This CL introduces a generalized DCHECK, so this sentence can be dropped.",
+      "parentUuid": "c9d691b5_3b80d87c",
       "range": {
         "startLine": 63,
         "startChar": 62,
@@ -118,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "df777ef4_287f1acc",
+        "filename": "components/password_manager/core/browser/sql_table_builder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-06-30T14:12:07Z",
+      "side": 1,
+      "message": "Done, changed AddColumn and AddColumnToUniqueKey. Passing by value has an additional performance benefit if we can move construct the parameters. A const-ref does not allow this.\n\nOne could argue that we also should pass |new_name| in Rename{Column,Index} by value. However, here we don\u0027t take ownership if old_name \u003d\u003d new_name and we would have made an unneccesarry string construction. But then again, this should be a rare case. What do you think?",
+      "parentUuid": "717336c1_f703f204",
+      "range": {
+        "startLine": 77,
+        "startChar": 16,
+        "endLine": 77,
+        "endChar": 66
+      },
+      "revId": "c6bff95d6a7a00d07c7a8d53c765daea294ffc35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4f2abe56_31d9aab4",
         "filename": "components/password_manager/core/browser/sql_table_builder.h",
         "patchSetId": 2
@@ -141,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "24b324f9_f04bf364",
+        "filename": "components/password_manager/core/browser/sql_table_builder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-06-30T14:12:07Z",
+      "side": 1,
+      "message": "Dropped, same reason as above.",
+      "parentUuid": "4f2abe56_31d9aab4",
+      "range": {
+        "startLine": 92,
+        "startChar": 6,
+        "endLine": 92,
+        "endChar": 18
+      },
+      "revId": "c6bff95d6a7a00d07c7a8d53c765daea294ffc35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "44568da5_8b0a9955",
         "filename": "components/password_manager/core/browser/sql_table_builder.h",
         "patchSetId": 2
@@ -152,6 +272,30 @@
       "writtenOn": "2017-06-30T08:25:31Z",
       "side": 1,
       "message": "I tried to remember why I used list instead of vector for columns_. I don\u0027t remember that, and looking at the code, I don\u0027t see any issues with columns_ being a vector instead of list. (Do you see one?) So given you introduce indices_ as a vector, and columns_ is used in a similar way, I propose to switch columns_ to vector to avoid scratching our head next year.",
+      "range": {
+        "startLine": 180,
+        "startChar": 7,
+        "endLine": 180,
+        "endChar": 11
+      },
+      "revId": "c6bff95d6a7a00d07c7a8d53c765daea294ffc35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d94920c7_6a3da959",
+        "filename": "components/password_manager/core/browser/sql_table_builder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-06-30T14:12:07Z",
+      "side": 1,
+      "message": "A reason to use list over vector here is that RenameColumn can make insertions at an arbitrary position of the container. However, iterating over all columns is a common use case, where a vector is clearly a better choice. I changed it to a vector for this reason and for consistency with indices.",
+      "parentUuid": "44568da5_8b0a9955",
       "range": {
         "startLine": 180,
         "startChar": 7,
