@@ -22,6 +22,7 @@
 #include "core/layout/ng/ng_layout_opportunity_iterator.h"
 #include "core/layout/ng/ng_layout_result.h"
 #include "core/layout/ng/ng_length_utils.h"
+#include "core/layout/ng/ng_out_of_flow_layout_part.h"
 #include "core/layout/ng/ng_space_utils.h"
 #include "core/layout/ng/ng_unpositioned_float.h"
 #include "core/style/ComputedStyle.h"
@@ -57,6 +58,7 @@ NGInlineLayoutAlgorithm::NGInlineLayoutAlgorithm(
           blink::IsHorizontalWritingMode(space->WritingMode())),
       space_builder_(space) {
   container_builder_.MutableUnpositionedFloats() = space->UnpositionedFloats();
+  container_builder_.SetIsAnonymousLineBoxWrapper();
 
   if (!is_horizontal_writing_mode_)
     baseline_type_ = FontBaseline::kIdeographicBaseline;
@@ -151,6 +153,14 @@ bool NGInlineLayoutAlgorithm::PlaceItems(
   NGInlineBoxState* box =
       box_states_.OnBeginPlaceItems(&line_style, baseline_type_);
 
+  // Keep out of flow items in a vector, so that we can place them after we know
+  // the block start position.
+  struct OutOfFlowItem {
+    const NGInlineItem* item;
+    LayoutUnit inline_offset;
+  };
+  Vector<OutOfFlowItem> out_of_flow_items;
+
   // Place items from line-left to line-right along with the baseline.
   // Items are already bidi-reordered to the visual order.
   LayoutUnit position;
@@ -195,16 +205,8 @@ bool NGInlineLayoutAlgorithm::PlaceItems(
       box = PlaceAtomicInline(item, &item_result, *line_info, position,
                               &line_box, &text_builder);
     } else if (item.Type() == NGInlineItem::kOutOfFlowPositioned) {
-      // TODO(layout-dev): Report the correct static position for the out of
-      // flow descendant. We can't do this here yet as it doesn't know the
-      // size of the line box.
-      container_builder_.AddOutOfFlowDescendant(
-          // Absolute positioning blockifies the box's display type.
-          // https://drafts.csswg.org/css-display/#transformations
-          {NGBlockNode(ToLayoutBox(item.GetLayoutObject())),
-           NGStaticPosition::Create(ConstraintSpace().WritingMode(),
-                                    ConstraintSpace().Direction(),
-                                    NGPhysicalOffset())});
+      // TODO(kojii): Inline containing box is not supported yet.
+      out_of_flow_items.push_back(OutOfFlowItem{&item, position});
       continue;
     } else {
       continue;
@@ -214,6 +216,19 @@ bool NGInlineLayoutAlgorithm::PlaceItems(
   }
 
   if (line_box.Children().IsEmpty()) {
+    for (const auto& out_of_flow_item : out_of_flow_items) {
+      // TODO(kojii): What should we do if we have OOF but this inline turned
+      // out not to create a line box? I think we need tests to figure out the
+      // desired behavior?
+      // For now just let an ancestor place it:
+      container_builder_.AddOutOfFlowDescendant(
+          // Absolute positioning blockifies the box's display type.
+          // https://drafts.csswg.org/css-display/#transformations
+          {NGBlockNode(ToLayoutBox(out_of_flow_item.item->GetLayoutObject())),
+           NGStaticPosition::Create(ConstraintSpace().WritingMode(),
+                                    ConstraintSpace().Direction(),
+                                    NGPhysicalOffset())});
+    }
     return true;  // The line was empty.
   }
 
@@ -261,6 +276,26 @@ bool NGInlineLayoutAlgorithm::PlaceItems(
   }
   ApplyTextAlign(line_style.GetTextAlign(line_info->IsLastLine()),
                  &offset.inline_offset, inline_size, available_width);
+
+  // With the final position of the line box, we can now give the static
+  // position to OOF.
+  if (!out_of_flow_items.IsEmpty()) {
+    for (const auto& out_of_flow_item : out_of_flow_items) {
+      NGBlockNode node(ToLayoutBox(out_of_flow_item.item->GetLayoutObject()));
+      NGLogicalOffset static_position;
+      if (node.Style().IsOriginalDisplayInlineType()) {
+        // TODO(kojii): This is probably wrong for RTL, since inline_offset is
+        // visual wihle static_position probably need logical?
+        static_position = {
+            out_of_flow_item.inline_offset + offset.inline_offset,
+            offset.block_offset};
+      } else {
+        static_position = {ConstraintSpace().BfcOffset().inline_offset,
+                           line_bottom};
+      }
+      container_builder_.AddOutOfFlowChildCandidate(node, static_position);
+    }
+  }
 
   line_box.SetInlineSize(inline_size);
   container_builder_.AddChild(line_box.ToLineBoxFragment(), offset);
@@ -428,6 +463,8 @@ RefPtr<NGLayoutResult> NGInlineLayoutAlgorithm::Layout() {
   // TODO(kojii): Check if the line box width should be content or available.
   NGLogicalSize size(max_inline_size_, content_size_);
   container_builder_.SetSize(size).SetOverflowSize(size);
+
+  NGOutOfFlowLayoutPart(ConstraintSpace(), Style(), &container_builder_).Run();
 
   // TODO(crbug.com/716930): We may be an empty LayoutInline due to splitting.
   // Margin struts shouldn't need to be passed through like this once we've

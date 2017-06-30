@@ -100,6 +100,13 @@ class CORE_EXPORT NGFragmentBuilder final {
     return *this;
   }
 
+  NGFragmentBuilder& SetIsAnonymousLineBoxWrapper() {
+    is_anonymous_line_box_wrapper_ = true;
+    return *this;
+  }
+
+  bool IsAnonymousLineBoxWrapper() { return is_anonymous_line_box_wrapper_; }
+
   // Offsets are not supposed to be set during fragment construction, so we
   // do not provide a setter here.
 
@@ -188,6 +195,8 @@ class CORE_EXPORT NGFragmentBuilder final {
   NGMarginStrut end_margin_strut_;
 
   NGBorderEdges border_edges_;
+
+  bool is_anonymous_line_box_wrapper_;
 };
 
 }  // namespace blink
