@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b23f5488_86216ed8",
+        "filename": "chrome/browser/signin/chrome_signin_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-06-30T12:17:15Z",
+      "side": 1,
+      "message": "Removing this header was a privacy requirement. May I ask you to add a comment here explaining the reasons for this decision. This way it is clear why this was needed.",
+      "range": {
+        "startLine": 217,
+        "startChar": 22,
+        "endLine": 217,
+        "endChar": 34
+      },
+      "revId": "b6c7e89b71ba9bcd476c731fc7b450c74ee81017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f658101_fdee9f56",
+        "filename": "chrome/browser/signin/chrome_signin_helper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-06-30T12:17:15Z",
+      "side": 1,
+      "message": "I think I would keep this private and use the string in the test. That way  if somehow changes the string of the header by mistake, the test will catch the bug.",
+      "range": {
+        "startLine": 27,
+        "startChar": 18,
+        "endLine": 27,
+        "endChar": 37
+      },
+      "revId": "b6c7e89b71ba9bcd476c731fc7b450c74ee81017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8944fab5_f272f123",
+        "filename": "chrome/browser/signin/chrome_signin_helper_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-06-30T12:17:15Z",
+      "side": 1,
+      "message": "Let\u0027s pass here \"X-Chrome-ID-Consistency-Response\" instead of signin::kDiceResponseHeader",
+      "range": {
+        "startLine": 43,
+        "startChar": 48,
+        "endLine": 43,
+        "endChar": 67
+      },
+      "revId": "b6c7e89b71ba9bcd476c731fc7b450c74ee81017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c83832f0_654b2110",
+        "filename": "chrome/browser/signin/chrome_signin_helper_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-06-30T12:17:15Z",
+      "side": 1,
+      "message": "/* is_incognito */",
+      "range": {
+        "startLine": 119,
+        "startChar": 53,
+        "endLine": 119,
+        "endChar": 58
+      },
+      "revId": "b6c7e89b71ba9bcd476c731fc7b450c74ee81017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89a417b4_1d7de151",
+        "filename": "chrome/browser/signin/chrome_signin_helper_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-06-30T12:17:15Z",
+      "side": 1,
+      "message": "I think this if-def can go around the whole contents of this file. Or maybe only build this test if dice is enabled. WDYT?",
+      "range": {
+        "startLine": 145,
+        "startChar": 4,
+        "endLine": 145,
+        "endChar": 13
+      },
+      "revId": "b6c7e89b71ba9bcd476c731fc7b450c74ee81017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
