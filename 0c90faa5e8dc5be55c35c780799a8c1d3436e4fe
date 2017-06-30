@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73a1809b_dcac2415",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-30T23:32:39Z",
+      "side": 1,
+      "message": "I\u0027m not sure I understand how this works. Who called the ctor of the annotate op? I\u0027m concerned that if this is a call to clean-up what is already in memory without someone calling the ctor, then it\u0027s probably somewhere in the realm of undefined behavior? I don\u0027t know off the top of my head.\n\nAlso, I\u0027m guessing this can\u0027t be \"DestroyThis\" because we don\u0027t actually have the type set yet?\n\nMaybe AnnotateOp* op \u003d reinterpret_cast ... on 618 is meant to be \n\nAnnotateOp* op \u003d new (output) AnnotateOp;?",
+      "revId": "0c90faa5e8dc5be55c35c780799a8c1d3436e4fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
