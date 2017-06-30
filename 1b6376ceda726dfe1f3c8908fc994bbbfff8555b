@@ -519,6 +519,24 @@
       "revId": "1b6376ceda726dfe1f3c8908fc994bbbfff8555b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b515bc1c_b2e174e4",
+        "filename": "remoting/protocol/webrtc_connection_to_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-06-30T01:12:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3efc1594_fdeccec7",
+      "revId": "1b6376ceda726dfe1f3c8908fc994bbbfff8555b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
