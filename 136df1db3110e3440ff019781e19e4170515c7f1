@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c82cada_ba43d438",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/security/subresourceIntegrity/shared-with-xhtml.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-06-30T07:17:38Z",
+      "side": 1,
+      "message": "Can we convert these tests to testharness.js, and upstream them to `//external/wpt/subresource-integrity` to make sure other vendors aren\u0027t making the same mistake we made?",
+      "revId": "136df1db3110e3440ff019781e19e4170515c7f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "277c9e31_a3cd4735",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ScriptResource.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-06-30T07:17:38Z",
+      "side": 1,
+      "message": "s/String()/g_empty_string/",
+      "revId": "136df1db3110e3440ff019781e19e4170515c7f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
