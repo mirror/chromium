@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "43d660dd_873b1c3b",
+        "filename": "components/url_pattern_index/flat/url_pattern_index.fbs",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-06-30T18:56:42Z",
+      "side": 1,
+      "message": "Great catch! I had added OBJECT_SUBREQUEST in one of the later commits, and forgot updating this. Thanks.",
+      "parentUuid": "4dcb27fa_87d351ca",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 68,
+        "endChar": 32
+      },
+      "revId": "59486b9e2694fc49bbf886c8630289ee479c5c18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a849330a_ede98f60",
         "filename": "components/url_pattern_index/url_pattern_index.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "59486b9e2694fc49bbf886c8630289ee479c5c18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7819f008_de28d8a4",
+        "filename": "components/url_pattern_index/url_pattern_index.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-06-30T18:56:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a849330a_ede98f60",
+      "range": {
+        "startLine": 60,
+        "startChar": 11,
+        "endLine": 60,
+        "endChar": 21
+      },
+      "revId": "59486b9e2694fc49bbf886c8630289ee479c5c18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "86d3a3b1_231808a7",
+        "filename": "components/url_pattern_index/url_pattern_index.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-06-30T18:56:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c081cbb1_b0941555",
+      "range": {
+        "startLine": 230,
+        "startChar": 0,
+        "endLine": 230,
+        "endChar": 18
+      },
+      "revId": "59486b9e2694fc49bbf886c8630289ee479c5c18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "560ba055_b57a1ed4",
         "filename": "components/url_pattern_index/url_pattern_index.h",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2017-06-30T17:48:27Z",
       "side": 1,
       "message": "Document this method and why it is needed (e.g. s/proto/flat)",
+      "range": {
+        "startLine": 127,
+        "startChar": 0,
+        "endLine": 127,
+        "endChar": 49
+      },
+      "revId": "59486b9e2694fc49bbf886c8630289ee479c5c18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2fd451d_a817d510",
+        "filename": "components/url_pattern_index/url_pattern_index.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-06-30T18:56:42Z",
+      "side": 1,
+      "message": "This is still private, so I think this should suffice.",
+      "parentUuid": "560ba055_b57a1ed4",
       "range": {
         "startLine": 127,
         "startChar": 0,
