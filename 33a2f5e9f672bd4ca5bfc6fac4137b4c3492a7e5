@@ -89,6 +89,30 @@
     },
     {
       "key": {
+        "uuid": "d38d18ac_6be87501",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-30T17:36:45Z",
+      "side": 1,
+      "message": "It\u0027s still possible to write to the pipe in a loop, precisely to avoid this.",
+      "parentUuid": "7ead4f03_ee9fa409",
+      "range": {
+        "startLine": 50,
+        "startChar": 13,
+        "endLine": 50,
+        "endChar": 32
+      },
+      "revId": "33a2f5e9f672bd4ca5bfc6fac4137b4c3492a7e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce90f642_b2f33c8c",
         "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
         "patchSetId": 2
