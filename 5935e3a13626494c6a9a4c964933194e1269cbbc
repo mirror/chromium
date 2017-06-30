@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4fc77b28_60f3a526",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-06-30T18:18:34Z",
+      "side": 1,
+      "message": "nit: should use base::StringPiece for arguments",
+      "range": {
+        "startLine": 716,
+        "startChar": 17,
+        "endLine": 716,
+        "endChar": 23
+      },
+      "revId": "5935e3a13626494c6a9a4c964933194e1269cbbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
