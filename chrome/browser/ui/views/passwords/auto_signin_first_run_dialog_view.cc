@@ -173,7 +173,7 @@ void AutoSigninFirstRunDialogView::InitWindow() {
   }
 
   // Buttons.
-  ok_button_ = views::MdTextButton::CreateSecondaryUiButton(
+  ok_button_ = views::MdTextButton::CreateSecondaryUiBlueButton(
       this, l10n_util::GetStringUTF16(IDS_AUTO_SIGNIN_FIRST_RUN_OK));
   turn_off_button_ = views::MdTextButton::CreateSecondaryUiButton(
       this, l10n_util::GetStringUTF16(IDS_AUTO_SIGNIN_FIRST_RUN_TURN_OFF));
