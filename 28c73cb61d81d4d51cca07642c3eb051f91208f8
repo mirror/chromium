@@ -16,6 +16,24 @@
       "revId": "28c73cb61d81d4d51cca07642c3eb051f91208f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b876b33_0b805429",
+        "filename": "components/url_pattern_index/url_pattern_index.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-06-30T20:59:38Z",
+      "side": 1,
+      "message": "That\u0027s weird. I thought I remembered it being the opposite. \n\nI checked and it seems the argument is not evaluated in non-debug builds. So just omitting DCHECK_IS_ON is probably fine.",
+      "parentUuid": "af118cf2_c158eeee",
+      "revId": "28c73cb61d81d4d51cca07642c3eb051f91208f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
