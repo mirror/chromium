@@ -16,6 +16,24 @@
       "revId": "a552893b4f4c14801e74e2217cbaf71ecb1bd303",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5d772b1_48527031",
+        "filename": "remoting/ios/app/host_setup_footer_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-06-30T22:48:55Z",
+      "side": 1,
+      "message": "setTitleColor just doesn\u0027t work for us...\n\ncustomTitleColor\u0027s doc says:\n\nThe default is nil, which means that the button\n chooses its title color automatically based on @c underlyingColor, whether the button is opaque,\n its current background color, etc.\n\nI feel like MDCRaisedButton decides to use white text color based on the background color and ignores setTitleColor:..., which is a bad decision X_X",
+      "parentUuid": "665d17e6_9ae6129d",
+      "revId": "a552893b4f4c14801e74e2217cbaf71ecb1bd303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
