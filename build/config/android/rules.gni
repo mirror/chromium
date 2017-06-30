@@ -2346,6 +2346,22 @@ if (enable_java_templates) {
       }
     }
 
+    # Generate apk opeartion related script.
+    _apk_operations_target_name = "${target_name}__apk_operations"
+    action(_apk_operations_target_name) {
+      generated_script = "$root_build_dir/bin/${invoker.target_name}"
+      script = "//build/android/gyp/create_apk_operations_script.py"
+      outputs = [
+        generated_script,
+      ]
+      args = [
+        "--apk-to-install",
+        rebase_path(_final_apk_path, root_build_dir),
+        "--script-output-path",
+        rebase_path(generated_script, root_build_dir),
+      ]
+    }
+
     group(target_name) {
       if (_incremental_allowed && incremental_apk_by_default) {
         deps = [
@@ -2358,6 +2374,7 @@ if (enable_java_templates) {
                                  "data_deps",
                                ])
         public_deps = _final_deps
+        public_deps += [ ":$_apk_operations_target_name" ]
 
         # Make the proguard .mapping file easy to find by putting it beside the .apk.
         if (_proguard_enabled) {
