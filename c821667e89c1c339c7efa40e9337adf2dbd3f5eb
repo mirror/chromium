@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02b5b70a_34e555be",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/style/checker.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-06-30T21:03:52Z",
+      "side": 1,
+      "message": "Should this be more specific than .endswith(\u0027Scripts\u0027)? I see (\u0027Tools\u0027, \u0027Scripts\u0027) is used below. I\u0027m sure it makes little difference but it would be a little more robust.",
+      "revId": "c821667e89c1c339c7efa40e9337adf2dbd3f5eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
