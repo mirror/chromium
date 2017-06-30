@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a70770f4_1f844af3",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/util/browser/signin/SigninTestUtil.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-06-30T18:47:52Z",
+      "side": 1,
+      "message": "Good point. I would like to put it in another CL, though. Filed https://crbug.com/738533.",
+      "parentUuid": "c82b3f3b_ce828340",
+      "revId": "c0df9660c38ef6f822faa2cf2a1338dc7f03f754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ff091e6_617a3060",
         "filename": "components/signin/core/browser/android/javatests/src/org/chromium/components/signin/test/util/FakeAccountManagerDelegate.java",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "c0df9660c38ef6f822faa2cf2a1338dc7f03f754",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d70b6d39_efda99f1",
+        "filename": "components/signin/core/browser/android/javatests/src/org/chromium/components/signin/test/util/FakeAccountManagerDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-06-30T18:47:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ff091e6_617a3060",
+      "revId": "c0df9660c38ef6f822faa2cf2a1338dc7f03f754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
