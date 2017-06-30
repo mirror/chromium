@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9d7884b_8e261a7b",
+        "filename": "content/browser/quota_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-30T16:32:01Z",
+      "side": 1,
+      "message": "this isn\u0027t blink, so you shouldn\u0027t be using the blink version of the mojom bindings. You\u0027re not including quota.mojom-blink.h anyway, so also get rid of the ::blink here.",
+      "revId": "8283fd44a4c0a52222622761b54e0359fe7a0ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
