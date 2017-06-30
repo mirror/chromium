@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "398499b4_cb498853",
+        "filename": "components/cronet/ios/ios_global_state_cronet_configuration.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-06-30T19:46:26Z",
+      "side": 1,
+      "message": "What\u0027s the significance of TaskSchedulerName? Can Cronet use the default?",
+      "range": {
+        "startLine": 14,
+        "startChar": 10,
+        "endLine": 14,
+        "endChar": 19
+      },
+      "revId": "33e57643c1ce856ac8073638d6ba4b8835b307e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a58d2b16_b1ecd0cb",
+        "filename": "ios/web/public/global_state/ios_global_state.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-06-30T19:46:26Z",
+      "side": 1,
+      "message": "I *think* network change notifier may start posting notifications immediately, and that would break as message loop is not built yet.\n\nDoes BuildMessageLoop() have to be separate?",
+      "range": {
+        "startLine": 62,
+        "startChar": 4,
+        "endLine": 62,
+        "endChar": 27
+      },
+      "revId": "33e57643c1ce856ac8073638d6ba4b8835b307e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
