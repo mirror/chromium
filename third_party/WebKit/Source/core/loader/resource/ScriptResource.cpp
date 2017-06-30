@@ -26,6 +26,7 @@
 
 #include "core/loader/resource/ScriptResource.h"
 
+#include "core/frame/SubresourceIntegrity.h"
 #include "platform/SharedBuffer.h"
 #include "platform/instrumentation/tracing/web_memory_allocator_dump.h"
 #include "platform/instrumentation/tracing/web_process_memory_dump.h"
@@ -115,6 +116,25 @@ AccessControlStatus ScriptResource::CalculateAccessControlStatus() const {
     return kSharableCrossOrigin;
 
   return kNotSharableCrossOrigin;
+}
+
+void ScriptResource::CheckResourceIntegrity(Document& document) {
+  // Already checked? Retain existing result.
+  if (IntegrityDisposition() != ResourceIntegrityDisposition::kNotChecked)
+    return;
+
+  // Loading error occurred? Then result is uncheckable.
+  if (ErrorOccurred())
+    return;
+
+  CHECK(!!ResourceBuffer());
+  bool passed = IntegrityMetadata().IsEmpty() ||
+                SubresourceIntegrity::CheckSubresourceIntegrity(
+                    IntegrityMetadata(), document, ResourceBuffer()->Data(),
+                    ResourceBuffer()->size(), Url(), *this);
+  SetIntegrityDisposition(passed ? ResourceIntegrityDisposition::kPassed
+                                 : ResourceIntegrityDisposition::kFailed);
+  CHECK_NE(IntegrityDisposition(), ResourceIntegrityDisposition::kNotChecked);
 }
 
 }  // namespace blink

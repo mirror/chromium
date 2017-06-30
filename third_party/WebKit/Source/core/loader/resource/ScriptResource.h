@@ -38,6 +38,7 @@ namespace blink {
 
 enum class ScriptIntegrityDisposition { kNotChecked = 0, kFailed, kPassed };
 
+class Document;
 class FetchParameters;
 class KURL;
 class ResourceFetcher;
@@ -85,6 +86,8 @@ class CORE_EXPORT ScriptResource final : public TextResource {
   static bool MimeTypeAllowedByNosniff(const ResourceResponse&);
 
   AccessControlStatus CalculateAccessControlStatus() const;
+
+  void CheckResourceIntegrity(Document&);
 
  private:
   class ScriptResourceFactory : public ResourceFactory {
