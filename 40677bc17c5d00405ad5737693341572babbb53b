@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d2b4528_0a794e6a",
+        "filename": "content/browser/service_worker/service_worker_controllee_request_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-30T00:58:47Z",
+      "side": 1,
+      "message": "This wording is awkward to me because one of the primary use cases of service workers is to serve the page when you\u0027re offline. It seems OfflinePages should really be named something like DownloadedPages. I can buy that we should navigate to the downloaded snapshot if the user intent is to do that, but bypassing the service worker in order to load an \"offline page\" sounds really weird.\n\nHow baked in is the name \"offline page\"?\n\nIt kind of feels like there are two competing technologies here to handle the offline use case.",
+      "revId": "40677bc17c5d00405ad5737693341572babbb53b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
