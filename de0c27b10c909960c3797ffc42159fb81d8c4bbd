@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e107899b_66da625a",
+        "filename": "cc/scheduler/scheduler_state_machine.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1161,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-06-30T01:26:38Z",
+      "side": 0,
+      "message": "nit: This was for fixing a browser compositor hang. The scheduler wouldn\u0027t end the frame while wait_for_ready_to_draw_ was set to true. I think your change fixes the same problem by also looking at PendingDrawsShouldBeAborted in ShouldBlockDeadlineIndefinitely. There\u0027s a test for this: cc_unittests LayerTreeHostTestReadyToDrawVisibility. I\u0027d suggest trying to run it in a loop to make sure we don\u0027t regress it. It should hang in case of a regression.\n\nSee https://codereview.chromium.org/1247033007 for context.",
+      "range": {
+        "startLine": 1161,
+        "startChar": 34,
+        "endLine": 1161,
+        "endChar": 0
+      },
+      "revId": "de0c27b10c909960c3797ffc42159fb81d8c4bbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c78c381_616af9bf",
+        "filename": "cc/scheduler/scheduler_state_machine.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1291,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-06-30T01:26:38Z",
+      "side": 0,
+      "message": "nit: same comment as above for SetVisible",
+      "range": {
+        "startLine": 1291,
+        "startChar": 34,
+        "endLine": 1291,
+        "endChar": 0
+      },
+      "revId": "de0c27b10c909960c3797ffc42159fb81d8c4bbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

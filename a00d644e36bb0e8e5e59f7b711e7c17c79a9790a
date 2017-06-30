@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ceed4224_d79b2dc9",
+        "filename": "cc/scheduler/scheduler_state_machine.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1130,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-06-30T01:26:38Z",
+      "side": 1,
+      "message": "nit: This is equivalent to active_tree_needs_first_draw_ if there was a commit (and activation, ready to draw, etc.) CommitPending and has_pending_tree will also be false in either case. Is there a problem that you\u0027re trying to prevent here?",
+      "revId": "a00d644e36bb0e8e5e59f7b711e7c17c79a9790a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "820a1b5e_76ea1534",
+        "filename": "cc/scheduler/scheduler_state_machine.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1260,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-06-30T01:26:38Z",
+      "side": 1,
+      "message": "nit: I don\u0027t think you need this. However, if you\u0027re keeping it, I\u0027d recommend also checking settings_.commit_to_active_tree here.",
+      "range": {
+        "startLine": 1260,
+        "startChar": 36,
+        "endLine": 1260,
+        "endChar": 38
+      },
+      "revId": "a00d644e36bb0e8e5e59f7b711e7c17c79a9790a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
