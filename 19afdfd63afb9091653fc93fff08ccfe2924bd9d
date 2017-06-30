@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "28a0a542_a55fcf80",
+        "filename": "chrome/browser/ui/views/passwords/auto_signin_first_run_dialog_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-06-30T20:33:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a04c3409_e0596429",
+      "revId": "19afdfd63afb9091653fc93fff08ccfe2924bd9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21a373ed_63d97e14",
         "filename": "chrome/browser/ui/views/passwords/auto_signin_first_run_dialog_view.cc",
         "patchSetId": 2
@@ -66,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "9b1afab7_b4a9d656",
+        "filename": "chrome/browser/ui/views/passwords/auto_signin_first_run_dialog_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-06-30T20:33:30Z",
+      "side": 1,
+      "message": "Will do.",
+      "parentUuid": "eae1de40_c60f02ca",
+      "range": {
+        "startLine": 84,
+        "startChar": 9,
+        "endLine": 84,
+        "endChar": 24
+      },
+      "revId": "19afdfd63afb9091653fc93fff08ccfe2924bd9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a7462af_fb100b68",
         "filename": "chrome/browser/ui/views/passwords/auto_signin_first_run_dialog_view.h",
         "patchSetId": 2
@@ -80,6 +122,24 @@
       "revId": "19afdfd63afb9091653fc93fff08ccfe2924bd9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf136802_88dcdfbf",
+        "filename": "chrome/browser/ui/views/passwords/auto_signin_first_run_dialog_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-06-30T20:33:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a7462af_fb100b68",
+      "revId": "19afdfd63afb9091653fc93fff08ccfe2924bd9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
