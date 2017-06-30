@@ -689,6 +689,7 @@ void FormStructure::UpdateFromCache(const FormStructure& cached_form,
 }
 
 void FormStructure::LogQualityMetrics(
+    const base::TimeTicks& form_parsed_timestamp,
     const base::TimeTicks& load_time,
     const base::TimeTicks& interaction_time,
     const base::TimeTicks& submission_time,
@@ -718,15 +719,18 @@ void FormStructure::LogQualityMetrics(
           AutofillMetrics::USER_DID_ENTER_UPI_VPA);
     }
 
-    form_interactions_ukm_logger->LogFieldFillStatus(*this, *field,
-                                                     metric_type);
+    form_interactions_ukm_logger->LogFieldFillStatus(
+        *this, *field, form_parsed_timestamp, metric_type);
 
     AutofillMetrics::LogHeuristicPredictionQualityMetrics(
-        form_interactions_ukm_logger, *this, *field, metric_type);
+        form_interactions_ukm_logger, *this, *field, metric_type,
+        form_parsed_timestamp);
     AutofillMetrics::LogServerPredictionQualityMetrics(
-        form_interactions_ukm_logger, *this, *field, metric_type);
+        form_interactions_ukm_logger, *this, *field, metric_type,
+        form_parsed_timestamp);
     AutofillMetrics::LogOverallPredictionQualityMetrics(
-        form_interactions_ukm_logger, *this, *field, metric_type);
+        form_interactions_ukm_logger, *this, *field, metric_type,
+        form_parsed_timestamp);
     // We count fields that were autofilled but later modified, regardless of
     // whether the data now in the field is recognized.
     if (field->previously_autofilled())
@@ -803,22 +807,24 @@ void FormStructure::LogQualityMetrics(
     if (form_interactions_ukm_logger->url() != source_url())
       form_interactions_ukm_logger->UpdateSourceURL(source_url());
     AutofillMetrics::LogAutofillFormSubmittedState(
-        state, form_interactions_ukm_logger);
+        state, form_parsed_timestamp, form_interactions_ukm_logger);
   }
 }
 
 void FormStructure::LogQualityMetricsBasedOnAutocomplete(
-    AutofillMetrics::FormInteractionsUkmLogger* form_interactions_ukm_logger)
-    const {
+    AutofillMetrics::FormInteractionsUkmLogger* form_interactions_ukm_logger,
+    const base::TimeTicks& form_parsed_timestamp) const {
   const AutofillMetrics::QualityMetricType metric_type =
       AutofillMetrics::TYPE_AUTOCOMPLETE_BASED;
   for (const auto& field : fields_) {
     if (field->html_type() != HTML_TYPE_UNSPECIFIED &&
         field->html_type() != HTML_TYPE_UNRECOGNIZED) {
       AutofillMetrics::LogHeuristicPredictionQualityMetrics(
-          form_interactions_ukm_logger, *this, *field, metric_type);
+          form_interactions_ukm_logger, *this, *field, metric_type,
+          form_parsed_timestamp);
       AutofillMetrics::LogServerPredictionQualityMetrics(
-          form_interactions_ukm_logger, *this, *field, metric_type);
+          form_interactions_ukm_logger, *this, *field, metric_type,
+          form_parsed_timestamp);
     }
   }
 }
