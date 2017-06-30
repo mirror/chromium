@@ -436,6 +436,8 @@ void NGInlineNode::CopyFragmentDataToLayoutBox(
   NGPhysicalBoxFragment* box_fragment =
       ToNGPhysicalBoxFragment(layout_result->PhysicalFragment().Get());
   for (const auto& container_child : box_fragment->Children()) {
+    if (!container_child->IsLineBox())
+      continue;  // Skip out-of-flow descendants.
     NGPhysicalLineBoxFragment* physical_line_box =
         ToNGPhysicalLineBoxFragment(container_child.Get());
     NGLineBoxFragment line_box(constraint_space.WritingMode(),
