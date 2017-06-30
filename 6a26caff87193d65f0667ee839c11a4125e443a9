@@ -16,6 +16,24 @@
       "revId": "6a26caff87193d65f0667ee839c11a4125e443a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac144aaa_e24b60c3",
+        "filename": "ios/chrome/browser/ui/settings/passwords_settings_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-06-30T12:00:41Z",
+      "side": 1,
+      "message": "I was also surprised, but I saw the element in the EG error dump with attribute \"hidden\". I guess, this can be some internals of how views organise themselves, or perhaps something to do with ARC?\n\nI see your point about the element being hidden. However, the test controls that there is just one entry in the list, and if that does not fit on the initial screen, then we have a UI problem.",
+      "parentUuid": "814342ec_b8939b96",
+      "revId": "6a26caff87193d65f0667ee839c11a4125e443a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
