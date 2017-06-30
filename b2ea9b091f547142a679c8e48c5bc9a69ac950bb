@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "622cbcd2_1b58ff0b",
+        "filename": "third_party/WebKit/Source/core/html/parser/CSSPreloadScanner.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2017-06-30T07:59:30Z",
+      "side": 1,
+      "message": "I remember this being added in order to solve some tricky memory issues in https://codereview.chromium.org/1976463003/\n\nCan we simply remove this flag?",
+      "range": {
+        "startLine": 269,
+        "startChar": 27,
+        "endLine": 269,
+        "endChar": 28
+      },
+      "revId": "b2ea9b091f547142a679c8e48c5bc9a69ac950bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "258b5f25_5fefc07b",
+        "filename": "third_party/WebKit/Source/core/loader/LinkLoader.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2017-06-30T07:59:30Z",
+      "side": 1,
+      "message": "What happens if we have a `\u003clink rel\u003d\"preload prefetch\" href\u003d\"foo\"\u003e`?\nIf we want to ignore the prefetch in this case (which makes sense) shouldn\u0027t we avoid calling PrefetchIfNeeded if preloaded_resource is not null?",
+      "range": {
+        "startLine": 484,
+        "startChar": 10,
+        "endLine": 484,
+        "endChar": 28
+      },
+      "revId": "b2ea9b091f547142a679c8e48c5bc9a69ac950bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fe85e9c_ee177d35",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2017-06-30T07:59:30Z",
+      "side": 1,
+      "message": "Does removing the counter still enable the \"multiple ResourceFetchers\" case? Are we testing for it?",
+      "range": {
+        "startLine": 236,
+        "startChar": 7,
+        "endLine": 236,
+        "endChar": 19
+      },
+      "revId": "b2ea9b091f547142a679c8e48c5bc9a69ac950bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
