@@ -8,6 +8,7 @@
 #include "components/app_modal/javascript_app_modal_dialog.h"
 #include "components/strings/grit/components_strings.h"
 #include "ui/base/l10n/l10n_util.h"
+#include "ui/base/material_design/material_design_controller.h"
 #include "ui/events/keycodes/keyboard_codes.h"
 #include "ui/views/controls/message_box_view.h"
 #include "ui/views/controls/textfield/textfield.h"
@@ -143,6 +144,11 @@ views::View* JavaScriptAppModalDialogViews::GetInitiallyFocusedView() {
   if (message_box_view_->text_box())
     return message_box_view_->text_box();
   return views::DialogDelegate::GetInitiallyFocusedView();
+}
+
+bool JavaScriptAppModalDialogViews::ShouldShowCloseButton() {
+  return !parent->is_before_unload_dialog() ||
+         !ui::MaterialDesignController::IsSecondaryUiMaterial();
 }
 
 void JavaScriptAppModalDialogViews::WindowClosing() {
