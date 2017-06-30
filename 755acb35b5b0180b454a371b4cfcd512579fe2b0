@@ -22,6 +22,30 @@
       "revId": "755acb35b5b0180b454a371b4cfcd512579fe2b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97b0cf45_2c991b43",
+        "filename": "chrome/browser/task_manager/providers/arc/arc_process_task_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-30T17:46:23Z",
+      "side": 1,
+      "message": "This CL will be merged to a release branch, so I\u0027d prefer to avoid unnecessary changes.",
+      "parentUuid": "b8bf11f4_f5543d42",
+      "range": {
+        "startLine": 50,
+        "startChar": 4,
+        "endLine": 50,
+        "endChar": 34
+      },
+      "revId": "755acb35b5b0180b454a371b4cfcd512579fe2b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
