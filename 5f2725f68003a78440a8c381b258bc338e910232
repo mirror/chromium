@@ -46,6 +46,30 @@
       "revId": "5f2725f68003a78440a8c381b258bc338e910232",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af3694d3_048e44e8",
+        "filename": "media/gpu/vaapi_wrapper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1119929
+      },
+      "writtenOn": "2017-06-30T01:08:21Z",
+      "side": 0,
+      "message": "We expect indeed, but we still should have a way to validate this expectation, especially singe NativePixmap is just an interface and it might have many implementations. Actually TestPixmap always has num_fds \u003d\u003d 0...\n\nIn case of this particular method, it does a partial validation by checking the FD after calling pixmap-\u003eGetDmaBufFd(i), so it is at least going to give a deterministic failure if the pixmap does not contain enough buffers. It would be better if it also gave an error if there were some extra FDs that were not expected...",
+      "parentUuid": "8e074aa9_2ed915e1",
+      "range": {
+        "startLine": 616,
+        "startChar": 0,
+        "endLine": 623,
+        "endChar": 3
+      },
+      "revId": "5f2725f68003a78440a8c381b258bc338e910232",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
