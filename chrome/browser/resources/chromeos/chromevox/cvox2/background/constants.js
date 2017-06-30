@@ -20,6 +20,12 @@ constants.Dir = {
   BACKWARD: 'backward'
 };
 
+constants.ControlMode = {
+  DISABLED: 'disabled',
+  ENABLED: 'enabled',
+  READ_ONLY: 'readOnly'
+};
+
 /**
  * If a node contains more characters than this, it should not be visited during
  * object navigation.
