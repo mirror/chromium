@@ -27,6 +27,7 @@
 #include "chrome/browser/ui/browser_list_observer.h"
 #include "chrome/browser/ui/browser_tab_strip_tracker.h"
 #include "chrome/browser/ui/tabs/tab_strip_model_observer.h"
+#include "ui/gfx/native_widget_types.h"
 
 class BrowserList;
 class GURL;
@@ -45,6 +46,14 @@ namespace resource_coordinator {
 #if defined(OS_CHROMEOS)
 class TabManagerDelegate;
 #endif
+
+// Information about a Browser.
+struct BrowserInfo {
+  Browser* browser = nullptr;  // can be nullptr in tests
+  TabStripModel* tab_strip_model = nullptr;
+  bool window_is_minimized = false;
+  bool browser_is_app = false;
+};
 
 // The TabManager periodically updates (see
 // |kAdjustmentIntervalSeconds| in the source) the status of renderers
@@ -125,8 +134,12 @@ class TabManager : public TabStripModelObserver,
 
   // Returns TabStats for all tabs in the current Chrome instance. The tabs are
   // sorted first by most recently used to least recently used Browser and
-  // second by index in the Browser. Must be called on the UI thread.
-  TabStatsList GetUnsortedTabStats() const;
+  // second by index in the Browser. |windows_sorted_by_z_index| is a list of
+  // Browser windows sorted by z-index. If left empty, no window occlusion
+  // checks will be performed.  Must be called on the UI thread.
+  TabStatsList GetUnsortedTabStats(
+      const std::vector<gfx::NativeWindow>& windows_sorted_by_z_index =
+          std::vector<gfx::NativeWindow>()) const;
 
   void AddObserver(TabManagerObserver* observer);
   void RemoveObserver(TabManagerObserver* observer);
@@ -187,13 +200,7 @@ class TabManager : public TabStripModelObserver,
                            GetUnsortedTabStatsIsInVisibleWindow);
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, HistogramsSessionRestoreSwitchToTab);
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, DiscardTabWithNonVisibleTabs);
-
-  // Information about a Browser.
-  struct BrowserInfo {
-    TabStripModel* tab_strip_model;
-    bool window_is_minimized;
-    bool browser_is_app;
-  };
+  FRIEND_TEST_ALL_PREFIXES(TabManagerDelegateTest, KillMultipleProcesses);
 
   // The time of the first purging after a renderer is backgrounded.
   // The initial value was chosen because most of users activate backgrounded
@@ -247,8 +254,11 @@ class TabManager : public TabStripModelObserver,
 
   // Adds all the stats of the tabs in |browser_info| into |stats_list|.
   // |window_is_active| indicates whether |browser_info|'s window is active.
+  // |window_is_visible| indicates whether |browser_info|'s window might be
+  // visible.
   void AddTabStats(const BrowserInfo& browser_info,
                    bool window_is_active,
+                   bool window_is_visible,
                    TabStatsList* stats_list) const;
 
   // Callback for when |update_timer_| fires. Takes care of executing the tasks
