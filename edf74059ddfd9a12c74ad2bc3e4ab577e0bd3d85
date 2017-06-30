@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "91c3538e_4b54d679",
+        "filename": "chrome/browser/password_manager/chrome_password_manager_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-06-30T10:34:19Z",
+      "side": 1,
+      "message": "Sounds good to me.",
+      "parentUuid": "6bfa0795_67b79900",
+      "revId": "edf74059ddfd9a12c74ad2bc3e4ab577e0bd3d85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c41be95_024bd8fb",
         "filename": "chrome/browser/password_manager/chrome_password_manager_client.cc",
         "patchSetId": 5
@@ -72,6 +90,30 @@
       "side": 1,
       "message": "I can wait with landing for your CL. \n\nAck",
       "parentUuid": "1c41be95_024bd8fb",
+      "range": {
+        "startLine": 475,
+        "startChar": 0,
+        "endLine": 479,
+        "endChar": 3
+      },
+      "revId": "edf74059ddfd9a12c74ad2bc3e4ab577e0bd3d85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1ef7a86d_1b5a0493",
+        "filename": "chrome/browser/password_manager/chrome_password_manager_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-06-30T10:34:19Z",
+      "side": 1,
+      "message": "Feel free to go ahead and land this. In the meantime, I discovered that I might have much bigger merge conflicts than this here. ;)",
+      "parentUuid": "b060dacf_a72879e7",
       "range": {
         "startLine": 475,
         "startChar": 0,
@@ -160,6 +202,24 @@
       "side": 1,
       "message": "I found this to be a totally separate concern and cleaner to be in a separate block.",
       "parentUuid": "95349667_7a8d764a",
+      "revId": "edf74059ddfd9a12c74ad2bc3e4ab577e0bd3d85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "01cd80b6_a66e866f",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-06-30T10:34:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "90ec1fee_bac025a0",
       "revId": "edf74059ddfd9a12c74ad2bc3e4ab577e0bd3d85",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -307,6 +367,30 @@
     },
     {
       "key": {
+        "uuid": "de663875_ddbe23c3",
+        "filename": "components/password_manager/core/browser/password_manager_metrics_recorder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-06-30T10:34:19Z",
+      "side": 1,
+      "message": "I don\u0027t think I have better ideas, maybe Page{With|Having}PasswordForms, but I leave it up to you.",
+      "parentUuid": "83d0fc48_532f591b",
+      "range": {
+        "startLine": 30,
+        "startChar": 51,
+        "endLine": 30,
+        "endChar": 63
+      },
+      "revId": "edf74059ddfd9a12c74ad2bc3e4ab577e0bd3d85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e89de94_1d331d1e",
         "filename": "components/password_manager/core/browser/password_manager_metrics_recorder.h",
         "patchSetId": 5
@@ -336,6 +420,24 @@
       "side": 1,
       "message": "I guess operator\u003d(\u0026\u0026)\n\nDone.",
       "parentUuid": "1e89de94_1d331d1e",
+      "revId": "edf74059ddfd9a12c74ad2bc3e4ab577e0bd3d85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1c92eec1_24b53915",
+        "filename": "components/password_manager/core/browser/password_manager_metrics_recorder.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-06-30T10:34:19Z",
+      "side": 1,
+      "message": "Uhm, yes.",
+      "parentUuid": "127d8ec8_3c471b96",
       "revId": "edf74059ddfd9a12c74ad2bc3e4ab577e0bd3d85",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
