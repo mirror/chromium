@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "aaa1c9ef_b5455c6f",
+        "filename": "remoting/host/client_session_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-06-30T15:04:23Z",
+      "side": 1,
+      "message": "Lambdas are fine but can hurt readability (IMO).  If you want to go with a helper method, it should be part of the class.  That way you can create a callback using it and ASSERT_TRUE on the \u0027data_channel_test_callback_called\u0027 member.",
+      "parentUuid": "77c6d64c_2f045e26",
+      "revId": "d758c4eb46207a6f0f5957886b6e6fca19163203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a552e0c5_6553986b",
         "filename": "remoting/host/client_session_unittest.cc",
         "patchSetId": 3
@@ -65,6 +83,47 @@
       "writtenOn": "2017-06-30T01:34:44Z",
       "side": 1,
       "message": "The DataChannel is too generic, you may want to use a name to describe the behavior of this test case.",
+      "revId": "d758c4eb46207a6f0f5957886b6e6fca19163203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f71bb0b_41ea5f4c",
+        "filename": "remoting/host/client_session_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-06-30T15:04:23Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "a552e0c5_6553986b",
+      "revId": "d758c4eb46207a6f0f5957886b6e6fca19163203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "444856f5_3965afad",
+        "filename": "remoting/host/client_session_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-06-30T15:04:23Z",
+      "side": 1,
+      "message": "\"test_channel_name\" should be define as a constexpr char[] in an anonymous namespace at the top of the file.",
+      "range": {
+        "startLine": 445,
+        "startChar": 10,
+        "endLine": 445,
+        "endChar": 29
+      },
       "revId": "d758c4eb46207a6f0f5957886b6e6fca19163203",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -100,6 +159,24 @@
       "side": 1,
       "message": "I think one data channel is enough, since ClientSession does not have any complex logic, but only forward the request to the DataChannelManager. But I suggest to call the function from |connection_| instead of |client_session_|.\n\nSince the |data_channel_callbacks| constructor parameter will be removed from ClientSession, you may add a friend relationship between ClientSession and ClientSessionTest to use the private data_channel_manager_ instance.",
       "parentUuid": "cdf5dc19_fca1abf5",
+      "revId": "d758c4eb46207a6f0f5957886b6e6fca19163203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75ebda76_817fd889",
+        "filename": "remoting/host/client_session_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-06-30T15:04:23Z",
+      "side": 1,
+      "message": "We are using a FakeConnectionToClient so I don\u0027t think there is much value in calling through that class.  I could see adding a unit test for WebRtcConnectionToClient but it looks like we don\u0027t have any ATM and this change doesn\u0027t justify the work to bring it up IMO.\n\nI\u0027m fine allowing c\u0027tor injection since we are planning on using it later, however if we decide to move away from that mechanism, I\u0027d prefer a scoped method for setting the test callback (rather than friend which gives full access to all of the internals).",
+      "parentUuid": "126da56e_87d140d2",
       "revId": "d758c4eb46207a6f0f5957886b6e6fca19163203",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
