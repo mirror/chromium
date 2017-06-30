@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "7de572b2_2a1d7549",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ScriptResource.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-06-30T14:10:47Z",
+      "side": 1,
+      "message": "As we are not retaining the decoded bytes, we don\u0027t need to override OnMemoryDump anymore.",
+      "revId": "136df1db3110e3440ff019781e19e4170515c7f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "277c9e31_a3cd4735",
         "filename": "third_party/WebKit/Source/core/loader/resource/ScriptResource.cpp",
         "patchSetId": 3
@@ -30,6 +47,29 @@
       "writtenOn": "2017-06-30T07:17:38Z",
       "side": 1,
       "message": "s/String()/g_empty_string/",
+      "revId": "136df1db3110e3440ff019781e19e4170515c7f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66360a8f_aff9d8c8",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ScriptResource.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-06-30T14:10:47Z",
+      "side": 1,
+      "message": "Remove this line.",
+      "range": {
+        "startLine": 90,
+        "startChar": 29,
+        "endLine": 90,
+        "endChar": 50
+      },
       "revId": "136df1db3110e3440ff019781e19e4170515c7f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
