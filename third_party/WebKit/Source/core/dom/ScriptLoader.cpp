@@ -791,7 +791,8 @@ PendingScript* ScriptLoader::CreatePendingScript() {
       return ClassicPendingScript::Create(element_, resource_);
     case ScriptType::kModule:
       CHECK(module_tree_client_);
-      return ModulePendingScript::Create(element_, module_tree_client_);
+      return ModulePendingScript::Create(element_, module_tree_client_,
+                                         is_external_script_);
   }
   NOTREACHED();
   return nullptr;
@@ -908,7 +909,7 @@ ScriptLoader::ExecuteScriptResult ScriptLoader::DoExecuteScript(
 void ScriptLoader::Execute() {
   DCHECK(!will_be_parser_executed_);
   DCHECK(async_exec_type_ != ScriptRunner::kNone);
-  DCHECK(pending_script_->IsExternal());
+  DCHECK(pending_script_->IsExternalOrModule());
   bool error_occurred = false;
   Script* script = pending_script_->GetSource(KURL(), error_occurred);
   const bool was_canceled = pending_script_->WasCanceled();
