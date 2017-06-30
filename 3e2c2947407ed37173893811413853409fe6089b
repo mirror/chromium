@@ -84,6 +84,23 @@
       "revId": "3e2c2947407ed37173893811413853409fe6089b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc339efd_79abd577",
+        "filename": "content/public/test/navigation_simulator.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-06-30T14:51:27Z",
+      "side": 1,
+      "message": "nit: could you add a\n// --------------------------------------------------------------------------\nto mark the end of this section? Thanks!",
+      "revId": "3e2c2947407ed37173893811413853409fe6089b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
