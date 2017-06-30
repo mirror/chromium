@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "dae90f87_dbe8903f",
+        "filename": "content/browser/service_worker/service_worker_controllee_request_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-30T05:15:15Z",
+      "side": 1,
+      "message": "This probably better be BUILDFLAG(ENABLE_OFFLINE_PAGES)",
+      "revId": "40677bc17c5d00405ad5737693341572babbb53b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6d2b4528_0a794e6a",
         "filename": "content/browser/service_worker/service_worker_controllee_request_handler.cc",
         "patchSetId": 1
@@ -13,6 +30,24 @@
       "writtenOn": "2017-06-30T00:58:47Z",
       "side": 1,
       "message": "This wording is awkward to me because one of the primary use cases of service workers is to serve the page when you\u0027re offline. It seems OfflinePages should really be named something like DownloadedPages. I can buy that we should navigate to the downloaded snapshot if the user intent is to do that, but bypassing the service worker in order to load an \"offline page\" sounds really weird.\n\nHow baked in is the name \"offline page\"?\n\nIt kind of feels like there are two competing technologies here to handle the offline use case.",
+      "revId": "40677bc17c5d00405ad5737693341572babbb53b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3858bcac_a3af35c0",
+        "filename": "content/browser/service_worker/service_worker_controllee_request_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-30T05:15:15Z",
+      "side": 1,
+      "message": "Hi Matt, \n\nLet me chime in about naming and a bit of wider issue you have pointed out here... Unfortunately, by now \"Offline Pages\" are very deeply imprinted into the codebase. See components/offline_pages, or chrome/browser/offline_pages or chrome/browser/android/offline_pages for example. \n\nWe do not expose them as \"offline pages\" to the user. In fact, in UI they are mostly known as \"offline copy of a page at www.xyz.com\". \n\nAs far as competing technologies, service worker is the answer to the offline-enabled apps and there is no other technology for that. However, there is still place for old good \"save the page snapshot\" functionality, especially when people share them. We think we provide a better alternative to an image screenshot in this case. Also, there is simply no need for many sites to have service worker since they are basically static pages. In any case, if the site does have a service worker, we want in all cases let it serve offline content *except* the case when user saved what is effectively a current snapshot (via download action). This is the nature of this patch.\n\nAs far as this code goes, I\u0027d suggest re-wording along the lines of \"offline snapshot of a page\" or \"downloaded snapshot of a page\" or \"downloaded page\" to avoid possible confusion. A more verbose comment explaining difference between downloaded snapshots and service worker would be definitely useful as well.\n\nWould this work?",
+      "parentUuid": "6d2b4528_0a794e6a",
       "revId": "40677bc17c5d00405ad5737693341572babbb53b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
