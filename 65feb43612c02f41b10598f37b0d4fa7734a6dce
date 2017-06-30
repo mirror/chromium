@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a5b271e_8502ab30",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptLoader.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 908,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-06-30T01:10:02Z",
+      "side": 1,
+      "message": "Should we add a comment (probably in the header) that this serves as an entry point from ScriptRunner?",
+      "revId": "65feb43612c02f41b10598f37b0d4fa7734a6dce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
