@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "79bcf1a9_33b88fca",
+        "filename": "chrome/browser/signin/chrome_signin_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-06-30T12:34:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b23f5488_86216ed8",
+      "range": {
+        "startLine": 217,
+        "startChar": 22,
+        "endLine": 217,
+        "endChar": 34
+      },
+      "revId": "b6c7e89b71ba9bcd476c731fc7b450c74ee81017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f658101_fdee9f56",
         "filename": "chrome/browser/signin/chrome_signin_helper.h",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "ad5fb63f_8fb20f8d",
+        "filename": "chrome/browser/signin/chrome_signin_helper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-06-30T12:34:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f658101_fdee9f56",
+      "range": {
+        "startLine": 27,
+        "startChar": 18,
+        "endLine": 27,
+        "endChar": 37
+      },
+      "revId": "b6c7e89b71ba9bcd476c731fc7b450c74ee81017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8944fab5_f272f123",
         "filename": "chrome/browser/signin/chrome_signin_helper_unittest.cc",
         "patchSetId": 4
@@ -68,6 +116,30 @@
       "revId": "b6c7e89b71ba9bcd476c731fc7b450c74ee81017",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a5700cb_103f8b20",
+        "filename": "chrome/browser/signin/chrome_signin_helper_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-06-30T12:34:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8944fab5_f272f123",
+      "range": {
+        "startLine": 43,
+        "startChar": 48,
+        "endLine": 43,
+        "endChar": 67
+      },
+      "revId": "b6c7e89b71ba9bcd476c731fc7b450c74ee81017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +177,30 @@
       "writtenOn": "2017-06-30T12:17:15Z",
       "side": 1,
       "message": "I think this if-def can go around the whole contents of this file. Or maybe only build this test if dice is enabled. WDYT?",
+      "range": {
+        "startLine": 145,
+        "startChar": 4,
+        "endLine": 145,
+        "endChar": 13
+      },
+      "revId": "b6c7e89b71ba9bcd476c731fc7b450c74ee81017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2241cc4e_801ef375",
+        "filename": "chrome/browser/signin/chrome_signin_helper_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-06-30T12:34:21Z",
+      "side": 1,
+      "message": "I would prefer building this file in all cases, because the chrome_signin_helper is not only about Dice.\nIdeally we should add more tests to this file, including tests not related to dice.\n\nI\u0027m expanding the ifdef.",
+      "parentUuid": "89a417b4_1d7de151",
       "range": {
         "startLine": 145,
         "startChar": 4,
