@@ -319,6 +319,30 @@
     },
     {
       "key": {
+        "uuid": "a7b7ebeb_975d3948",
+        "filename": "media/mojo/interfaces/video_decoder_config_struct_traits.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-30T22:56:26Z",
+      "side": 1,
+      "message": "Good question! Here are some related discussions for the context.\n\nhttps://groups.google.com/a/chromium.org/forum/?utm_medium\u003demail\u0026utm_source\u003dfooter#!msg/chromium-mojo/y-c0l8nKcn0/MGVasOMHDAAJ\n\nhttps://groups.google.com/a/chromium.org/forum/?utm_medium\u003demail\u0026utm_source\u003dfooter#!msg/chromium-mojo/17dnGbiytY4/SSvPUfTZBQAJ",
+      "parentUuid": "565f0fa2_3eb01566",
+      "range": {
+        "startLine": 96,
+        "startChar": 23,
+        "endLine": 96,
+        "endChar": 54
+      },
+      "revId": "a521b65072b533a77ac0e73dea74fb5c11b1ad91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd9bf609_0afeef13",
         "filename": "media/mojo/services/mojo_demuxer_stream_adapter.cc",
         "patchSetId": 3
