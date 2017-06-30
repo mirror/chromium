@@ -16,6 +16,24 @@
       "revId": "5cf42c32db40a32a3490fa49d10033f7e2dea549",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38491f14_ec0c6379",
+        "filename": "components/feature_engagement_tracker/public/event_constants.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-06-30T16:06:57Z",
+      "side": 1,
+      "message": "That\u0027s already defined in the Windows / Linux section, which is why it needs to be compiled on iOS, too.",
+      "parentUuid": "250efb55_02bddc21",
+      "revId": "5cf42c32db40a32a3490fa49d10033f7e2dea549",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
