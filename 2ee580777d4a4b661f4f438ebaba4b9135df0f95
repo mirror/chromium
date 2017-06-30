@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "1fab1052_1ee94934",
+        "filename": "ios/net/global_state/ios_global_state.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-06-30T18:05:00Z",
+      "side": 1,
+      "message": "Yes, I was working on that to help with the overall understanding and just uploaded it. Of course, feel free to offer suggestions about splitting this up. It looks like there is the single net item and some objects from base. I listed the shared objects in the tracking bug crbug.com/738510\n\nCL for entire global_state: https://chromium-review.googlesource.com/558268",
+      "parentUuid": "c47a539a_9226a84d",
+      "range": {
+        "startLine": 19,
+        "startChar": 8,
+        "endLine": 19,
+        "endChar": 27
+      },
+      "revId": "2ee580777d4a4b661f4f438ebaba4b9135df0f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7fdc4856_4b64fd4b",
         "filename": "ios/net/global_state/ios_global_state.mm",
         "patchSetId": 3
@@ -132,6 +156,30 @@
       "side": 1,
       "message": "FYI: This is still onceToken",
       "parentUuid": "8af1992c_d84515e6",
+      "range": {
+        "startLine": 45,
+        "startChar": 25,
+        "endLine": 45,
+        "endChar": 34
+      },
+      "revId": "2ee580777d4a4b661f4f438ebaba4b9135df0f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dd732d33_a5cbfb26",
+        "filename": "ios/net/global_state/ios_global_state.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-06-30T18:05:00Z",
+      "side": 1,
+      "message": "It is fixed, make sure you take a look at patch 6 :)\n\nhttps://chromium-review.googlesource.com/c/552763/6/ios/net/global_state/ios_global_state.mm",
+      "parentUuid": "942fa833_ca27155f",
       "range": {
         "startLine": 45,
         "startChar": 25,
@@ -250,6 +298,30 @@
       "side": 1,
       "message": "FYI: This is still onceToken",
       "parentUuid": "39d252ae_1c6530b2",
+      "range": {
+        "startLine": 58,
+        "startChar": 25,
+        "endLine": 58,
+        "endChar": 34
+      },
+      "revId": "2ee580777d4a4b661f4f438ebaba4b9135df0f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0ef22791_0414d5e7",
+        "filename": "ios/net/global_state/ios_global_state.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-06-30T18:05:00Z",
+      "side": 1,
+      "message": "See above.",
+      "parentUuid": "369bd174_9df3c884",
       "range": {
         "startLine": 58,
         "startChar": 25,
