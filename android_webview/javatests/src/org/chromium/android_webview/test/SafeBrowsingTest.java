@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.support.test.filters.SmallTest;
 import android.view.ViewGroup;
+import android.webkit.ValueCallback;
 
 import org.chromium.android_webview.AwBrowserContext;
 import org.chromium.android_webview.AwContents;
@@ -26,6 +27,7 @@ import org.chromium.android_webview.test.util.GraphicsTestUtils;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.CallbackHelper;
 import org.chromium.base.test.util.CommandLineFlags;
+import org.chromium.base.test.util.DisabledTest;
 import org.chromium.base.test.util.Feature;
 import org.chromium.base.test.util.InMemorySharedPreferences;
 import org.chromium.components.safe_browsing.SafeBrowsingApiBridge;
@@ -204,6 +206,18 @@ public class SafeBrowsingTest extends AwTestBase {
         }
     }
 
+    private static class JavaScriptHelper extends CallbackHelper {
+        private String mValue;
+
+        public void setValue(String s) {
+            mValue = s;
+        }
+
+        public String getValue() {
+            return mValue;
+        }
+    }
+
     @Override
     public void setUp() throws Exception {
         super.setUp();
@@ -253,20 +267,62 @@ public class SafeBrowsingTest extends AwTestBase {
         waitForVisualStateCallback(mAwContents);
     }
 
-    private void proceedThroughInterstitial() {
-        ThreadUtils.runOnUiThread(new Runnable() {
+    private void waitForInterstitialToLoad() throws Exception {
+        final String script = "document.readyState;";
+        final JavaScriptHelper helper = new JavaScriptHelper();
+
+        final ValueCallback<String> callback = new ValueCallback<String>() {
             @Override
-            public void run() {
-                mAwContents.callProceedOnInterstitial();
+            public void onReceiveValue(String value) {
+                helper.setValue(value);
+                helper.notifyCalled();
+            }
+        };
+
+        final String expected = "\"complete\"";
+        CriteriaHelper.pollUiThread(new Criteria() {
+            @Override
+            public boolean isSatisfied() {
+                try {
+                    final int count = helper.getCallCount();
+                    mAwContents.evaluateJavaScriptOnInterstitial(script, callback);
+                    boolean b = expected.equals(helper.getValue());
+                    return b;
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
     }
 
-    private void dontProceedThroughInterstitial() {
+    private void clickBackToSafety() {
+        final String script = "document.getElementById('primary-button').click();";
         ThreadUtils.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mAwContents.callDontProceedOnInterstitial();
+                mAwContents.evaluateJavaScriptOnInterstitial(script, null);
+            }
+        });
+    }
+
+    private void clickVisitUnsafePageQuietInterstitial() {
+        final String script = "document.getElementById('details-link').click();"
+                + "document.getElementById('proceed-link').click();";
+        ThreadUtils.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mAwContents.evaluateJavaScriptOnInterstitial(script, null);
+            }
+        });
+    }
+
+    private void clickVisitUnsafePage() {
+        final String script = "document.getElementById('details-button').click();"
+                + "document.getElementById('proceed-link').click();";
+        ThreadUtils.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mAwContents.evaluateJavaScriptOnInterstitial(script, null);
             }
         });
     }
@@ -362,6 +418,7 @@ public class SafeBrowsingTest extends AwTestBase {
         loadPathAndWaitForInterstitial(IFRAME_HTML_PATH);
         assertGreenPageNotShowing();
         assertTargetPageNotShowing(IFRAME_EMBEDDER_BACKGROUND_COLOR);
+
         // Assume that we are rendering the interstitial, since we see neither the previous page nor
         // the target page
     }
@@ -372,7 +429,8 @@ public class SafeBrowsingTest extends AwTestBase {
     public void testSafeBrowsingProceedThroughInterstitialForMainFrame() throws Throwable {
         int pageFinishedCount = mContentsClient.getOnPageFinishedHelper().getCallCount();
         loadPathAndWaitForInterstitial(MALWARE_HTML_PATH);
-        proceedThroughInterstitial();
+        waitForInterstitialToLoad();
+        clickVisitUnsafePage();
         mContentsClient.getOnPageFinishedHelper().waitForCallback(pageFinishedCount);
         assertTargetPageHasLoaded(MALWARE_PAGE_BACKGROUND_COLOR);
     }
@@ -380,10 +438,11 @@ public class SafeBrowsingTest extends AwTestBase {
     @SmallTest
     @Feature({"AndroidWebView"})
     @CommandLineFlags.Add(AwSwitches.WEBVIEW_ENABLE_SAFEBROWSING_SUPPORT)
-    public void testSafeBrowsingCanProceedThroughInterstitialForSubresource() throws Throwable {
+    public void testSafeBrowsingProceedThroughInterstitialForSubresource() throws Throwable {
         int pageFinishedCount = mContentsClient.getOnPageFinishedHelper().getCallCount();
         loadPathAndWaitForInterstitial(IFRAME_HTML_PATH);
-        proceedThroughInterstitial();
+        waitForInterstitialToLoad();
+        clickVisitUnsafePage();
         mContentsClient.getOnPageFinishedHelper().waitForCallback(pageFinishedCount);
         assertTargetPageHasLoaded(IFRAME_EMBEDDER_BACKGROUND_COLOR);
     }
@@ -392,10 +451,12 @@ public class SafeBrowsingTest extends AwTestBase {
     @Feature({"AndroidWebView"})
     @CommandLineFlags.Add(AwSwitches.WEBVIEW_ENABLE_SAFEBROWSING_SUPPORT)
     public void testSafeBrowsingDontProceedCausesNetworkErrorForMainFrame() throws Throwable {
+        loadGreenPage();
         loadPathAndWaitForInterstitial(MALWARE_HTML_PATH);
         OnReceivedError2Helper errorHelper = mContentsClient.getOnReceivedError2Helper();
         int errorCount = errorHelper.getCallCount();
-        dontProceedThroughInterstitial();
+        waitForInterstitialToLoad();
+        clickBackToSafety();
         errorHelper.waitForCallback(errorCount);
         assertEquals(
                 ErrorCodeConversionHelper.ERROR_UNSAFE_RESOURCE, errorHelper.getError().errorCode);
@@ -407,11 +468,13 @@ public class SafeBrowsingTest extends AwTestBase {
     @SmallTest
     @Feature({"AndroidWebView"})
     @CommandLineFlags.Add(AwSwitches.WEBVIEW_ENABLE_SAFEBROWSING_SUPPORT)
+    @DisabledTest(message = "crbug/737820")
     public void testSafeBrowsingDontProceedCausesNetworkErrorForSubresource() throws Throwable {
         loadPathAndWaitForInterstitial(IFRAME_HTML_PATH);
         OnReceivedError2Helper errorHelper = mContentsClient.getOnReceivedError2Helper();
         int errorCount = errorHelper.getCallCount();
-        dontProceedThroughInterstitial();
+        waitForInterstitialToLoad();
+        clickBackToSafety();
         errorHelper.waitForCallback(errorCount);
         assertEquals(
                 ErrorCodeConversionHelper.ERROR_UNSAFE_RESOURCE, errorHelper.getError().errorCode);
@@ -428,7 +491,28 @@ public class SafeBrowsingTest extends AwTestBase {
         final String originalTitle = getTitleOnUiThread(mAwContents);
         loadPathAndWaitForInterstitial(MALWARE_HTML_PATH);
         waitForInterstitialToChangeTitle();
-        dontProceedThroughInterstitial();
+        waitForInterstitialToLoad();
+        clickBackToSafety();
+
+        // Make sure we navigate back to previous page
+        CriteriaHelper.pollUiThread(new Criteria() {
+            @Override
+            public boolean isSatisfied() {
+                return originalTitle.equals(mAwContents.getTitle());
+            }
+        });
+    }
+
+    @SmallTest
+    @Feature({"AndroidWebView"})
+    @CommandLineFlags.Add(AwSwitches.WEBVIEW_ENABLE_SAFEBROWSING_SUPPORT)
+    public void testSafeBrowsingDontProceedNavigatesBackForSubResource() throws Throwable {
+        loadGreenPage();
+        final String originalTitle = getTitleOnUiThread(mAwContents);
+        loadPathAndWaitForInterstitial(IFRAME_HTML_PATH);
+        waitForInterstitialToChangeTitle();
+        waitForInterstitialToLoad();
+        clickBackToSafety();
 
         // Make sure we navigate back to previous page
         CriteriaHelper.pollUiThread(new Criteria() {
@@ -511,7 +595,8 @@ public class SafeBrowsingTest extends AwTestBase {
         mAwContents.setCanShowBigInterstitial(false);
         int pageFinishedCount = mContentsClient.getOnPageFinishedHelper().getCallCount();
         loadPathAndWaitForInterstitial(PHISHING_HTML_PATH);
-        proceedThroughInterstitial();
+        waitForInterstitialToLoad();
+        clickVisitUnsafePageQuietInterstitial();
         mContentsClient.getOnPageFinishedHelper().waitForCallback(pageFinishedCount);
         assertTargetPageHasLoaded(PHISHING_PAGE_BACKGROUND_COLOR);
     }
