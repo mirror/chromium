@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db9bcc48_a5be0e8e",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_synchronizer.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-30T21:50:45Z",
+      "side": 1,
+      "message": "*represents",
+      "range": {
+        "startLine": 38,
+        "startChar": 43,
+        "endLine": 38,
+        "endChar": 52
+      },
+      "revId": "f9b41748c7cfe7b9e90852ce713ed2e3dd311c7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3363ee56_def0b4fb",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_synchronizer.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-30T21:50:45Z",
+      "side": 1,
+      "message": "I like it, it\u0027s more explicit with the local variables names.",
+      "revId": "f9b41748c7cfe7b9e90852ce713ed2e3dd311c7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
