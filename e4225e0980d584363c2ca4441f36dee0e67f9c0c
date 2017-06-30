@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ed63301_f9594f84",
+        "filename": "cc/paint/display_item_list.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-06-30T20:54:48Z",
+      "side": 1,
+      "message": "To be honest, I\u0027m not 100% we need this level of complication.  There aren\u0027t a ton of pieces of code that go down this path.  SVG images, scrollbars, etc.  It feels not that common or not that large, but that\u0027s just my subjective feeling.  If you think we should have this, then let\u0027s go with it.  I don\u0027t feel super strongly, but just am a little subjective.",
+      "revId": "e4225e0980d584363c2ca4441f36dee0e67f9c0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
