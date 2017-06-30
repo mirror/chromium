@@ -25,6 +25,8 @@ cc_component("animation") {
     "animation_timeline.h",
     "element_animations.cc",
     "element_animations.h",
+    "group_animation_player.cc",
+    "group_animation_player.h",
     "keyframed_animation_curve.cc",
     "keyframed_animation_curve.h",
     "scroll_offset_animation_curve.cc",

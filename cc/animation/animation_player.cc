@@ -63,6 +63,11 @@ void AnimationPlayer::SetAnimationTimeline(AnimationTimeline* timeline) {
     RegisterPlayer();
 }
 
+void AnimationPlayer::SetGroupAnimationPlayer(
+    GroupAnimationPlayer* group_animation_player) {
+  group_animation_player_ = group_animation_player;
+}
+
 void AnimationPlayer::AttachElement(ElementId element_id) {
   DCHECK(!element_id_);
   DCHECK(element_id);
