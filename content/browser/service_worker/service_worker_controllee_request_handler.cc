@@ -9,6 +9,7 @@
 #include <string>
 
 #include "base/trace_event/trace_event.h"
+#include "components/offline_pages/features/features.h"
 #include "content/browser/service_worker/service_worker_context_core.h"
 #include "content/browser/service_worker/service_worker_metrics.h"
 #include "content/browser/service_worker/service_worker_provider_host.h"
@@ -30,6 +31,10 @@
 #include "net/base/url_util.h"
 #include "net/url_request/url_request.h"
 #include "ui/base/page_transition_types.h"
+
+#if BUILDFLAG(ENABLE_OFFLINE_PAGES)
+#include "components/offline_pages/core/request_header/offline_page_header.h"
+#endif  // BUILDFLAG(ENABLE_OFFLINE_PAGES)
 
 namespace content {
 
@@ -124,6 +129,24 @@ net::URLRequestJob* ServiceWorkerControlleeRequestHandler::MaybeCreateJob(
       use_network_ = false;
     return NULL;
   }
+
+#if BUILDFLAG(ENABLE_OFFLINE_PAGES)
+  // A web page, regardless whether the service worker is used or not, could be
+  // downloaded with the offline snapshot captured. The user can then open the
+  // downloaded page which is identified by the presence of a specific offline
+  // header in the network request. In this case, we want to fall back in order
+  // for the subsequent offline page interceptor to bring up the offline
+  // snapshot of the page.
+  std::string offline_header_value;
+  if (request->extra_request_headers().GetHeader(
+          offline_pages::kOfflinePageHeader, &offline_header_value)) {
+    offline_pages::OfflinePageHeader offline_header(offline_header_value);
+    if (offline_header.reason ==
+        offline_pages::OfflinePageHeader::Reason::DOWNLOAD) {
+      return NULL;
+    }
+  }
+#endif  // BUILDFLAG(ENABLE_OFFLINE_PAGES)
 
   // It's for original request (A) or redirect case (B-a or B-b).
   std::unique_ptr<ServiceWorkerURLRequestJob> job(
