@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f1cdc0a_5e1044c3",
+        "filename": "media/blink/cdm_result_promise_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-30T16:42:10Z",
+      "side": 1,
+      "message": "According to the spec, we should never return kUnknownError now:\n\nhttps://w3c.github.io/encrypted-media/#exceptions\n\nUse INVALID_STATE_ERROR instead and remove kWebContentDecryptionModuleExceptionUnknownError altogether?",
+      "revId": "867442274605c3e4ab38c5b060e9e45a0dd594bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "813b9146_753a5171",
+        "filename": "media/blink/cdm_result_promise_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-30T16:42:10Z",
+      "side": 1,
+      "message": "The previous UNKNOWN_ERROR should now be converted to INVALID_STATE_ERROR so this should really never happen now. Given the fact we don\u0027t report \"invalid values for enums\" in other UMA, I feel we should just remove this as well. WDYT?",
+      "revId": "867442274605c3e4ab38c5b060e9e45a0dd594bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9945bd9d_a58fa901",
+        "filename": "media/blink/cdm_result_promise_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-30T16:42:10Z",
+      "side": 1,
+      "message": "Please add a comment that these values are deprecated.",
+      "range": {
+        "startLine": 29,
+        "startChar": 18,
+        "endLine": 29,
+        "endChar": 19
+      },
+      "revId": "867442274605c3e4ab38c5b060e9e45a0dd594bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "662919ce_06812dd7",
+        "filename": "media/blink/cdm_result_promise_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-30T16:42:10Z",
+      "side": 1,
+      "message": "This is never reported and you don\u0027t need to hardcode the value here.",
+      "revId": "867442274605c3e4ab38c5b060e9e45a0dd594bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
