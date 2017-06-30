@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3cecb31_c9e6f9e2",
+        "filename": "chrome/browser/ui/webui/module_database_conflicts_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-30T08:52:40Z",
+      "side": 1,
+      "message": "if (module_list_)\n    ModuleDatabase::GetInstance()-\u003eRemoveObserver(this);\nin case the handler is destroyed while the database is still active",
+      "revId": "c3f05376983014dd5cd9c98b1bca45c30663d10b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12626559_9d860e85",
+        "filename": "chrome/browser/ui/webui/module_database_conflicts_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-30T08:52:40Z",
+      "side": 1,
+      "message": "should this:\n  DCHECK(module_list_);\n  DCHECK(!module_list_callback_id_.empty());",
+      "revId": "c3f05376983014dd5cd9c98b1bca45c30663d10b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1da55e17_076cbf4c",
+        "filename": "chrome/browser/ui/webui/module_database_conflicts_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-30T08:52:40Z",
+      "side": 1,
+      "message": "i\u0027m assuming that this is public (in contrast to ModuleDatabaseObserver) because there truly is an \"is-a\" relation between MDCH and WUIMH. is this correct?",
+      "revId": "c3f05376983014dd5cd9c98b1bca45c30663d10b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31ded564_260f1588",
+        "filename": "chrome/browser/ui/webui/module_database_conflicts_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-30T08:52:40Z",
+      "side": 1,
+      "message": "// content::WebUIMessageHandler:\nfor consistency with line 32",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 40
+      },
+      "revId": "c3f05376983014dd5cd9c98b1bca45c30663d10b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
