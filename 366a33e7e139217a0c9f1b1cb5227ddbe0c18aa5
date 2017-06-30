@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75a96f30_17a4b853",
+        "filename": "third_party/WebKit/LayoutTests/flag-specific/enable-slimming-paint-v2/paint/invalidation/caret-invalidation-in-overflow-scroll-expected.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-06-30T22:29:55Z",
+      "side": 1,
+      "message": "This (and others) seem to match the non-spv2 expectation file. When spv2 and non-svp2 results match, can we remove the spv2-specific file?",
+      "revId": "366a33e7e139217a0c9f1b1cb5227ddbe0c18aa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
