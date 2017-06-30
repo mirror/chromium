@@ -71,7 +71,8 @@ void NGOutOfFlowLayoutPart::Run() {
 
   while (descendant_candidates.size() > 0) {
     for (auto& candidate : descendant_candidates) {
-      if (IsContainingBlockForAbsoluteDescendant(container_style_,
+      if (!container_builder_->IsAnonymousLineBoxWrapper() &&
+          IsContainingBlockForAbsoluteDescendant(container_style_,
                                                  candidate.node.Style())) {
         NGLogicalOffset offset;
         RefPtr<NGLayoutResult> result = LayoutDescendant(

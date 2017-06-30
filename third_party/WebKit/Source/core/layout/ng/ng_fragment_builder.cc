@@ -23,7 +23,8 @@ NGFragmentBuilder::NGFragmentBuilder(NGPhysicalFragment::NGFragmentType type,
       direction_(TextDirection::kLtr),
       node_(node),
       layout_object_(node.GetLayoutObject()),
-      did_break_(false) {}
+      did_break_(false),
+      is_anonymous_line_box_wrapper_(false) {}
 
 NGFragmentBuilder::NGFragmentBuilder(NGPhysicalFragment::NGFragmentType type,
                                      LayoutObject* layout_object)
@@ -32,7 +33,8 @@ NGFragmentBuilder::NGFragmentBuilder(NGPhysicalFragment::NGFragmentType type,
       direction_(TextDirection::kLtr),
       node_(nullptr),
       layout_object_(layout_object),
-      did_break_(false) {}
+      did_break_(false),
+      is_anonymous_line_box_wrapper_(false) {}
 
 NGFragmentBuilder& NGFragmentBuilder::SetWritingMode(
     NGWritingMode writing_mode) {
