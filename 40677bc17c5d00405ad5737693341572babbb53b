@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "028aeb9c_50cc8dde",
+        "filename": "content/browser/service_worker/service_worker_controllee_request_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-06-30T21:50:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dae90f87_dbe8903f",
+      "revId": "40677bc17c5d00405ad5737693341572babbb53b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d2b4528_0a794e6a",
         "filename": "content/browser/service_worker/service_worker_controllee_request_handler.cc",
         "patchSetId": 1
@@ -84,6 +102,24 @@
       "side": 1,
       "message": "Thanks Dmitry, I was a bit puzzled by this patch as well but what you propose sounds good to me too!",
       "parentUuid": "4b7e653f_b619989f",
+      "revId": "40677bc17c5d00405ad5737693341572babbb53b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "456ad4aa_eef4722c",
+        "filename": "content/browser/service_worker/service_worker_controllee_request_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-06-30T21:50:05Z",
+      "side": 1,
+      "message": "Updated the comment here to add detailed explanation.",
+      "parentUuid": "c308a8e1_14768faf",
       "revId": "40677bc17c5d00405ad5737693341572babbb53b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
