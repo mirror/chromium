@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bbc0bc74_d88e2543",
+        "filename": "content/public/browser/android/motion_event_synthesizer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-30T18:22:39Z",
+      "side": 1,
+      "message": "this is internal implementation unnecessarily leaking into the public interface\n\nThe public interface should just have this take a WebContents pointer. Don\u0027t even need ViewAndroid since you can get that from WebContents.\n\nInternally, you can maybe RenderWidgetHostDelegate return the Synthesizer. If you really want to be strict, it can\u0027t be Synthesizer itself, but an interface that doesn\u0027t mention webcontents, although that seems a bit overkill",
+      "revId": "29c90b3ebc3d4b3e81cd6bbc71b0cc27eab98549",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
