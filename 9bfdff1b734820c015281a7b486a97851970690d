@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "ede96224_098a6ce8",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintChunker.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-30T22:45:19Z",
+      "side": 1,
+      "message": "I don\u0027t see code which sets force_new_chunk_ back to false after allocating a chunk.",
+      "revId": "9bfdff1b734820c015281a7b486a97851970690d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a75a3e7e_685fd446",
         "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintController.cpp",
         "patchSetId": 6
