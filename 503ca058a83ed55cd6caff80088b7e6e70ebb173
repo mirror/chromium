@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d17cd3b_373da9cb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsMetrics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-30T16:37:20Z",
+      "side": 1,
+      "message": "nit: documentation for the new methods, since they are not internal details anymore.\n\nAlso, mark a new code section? like it is done on line 67 or 28?\n\nSomething like \"// Misc histogram recording\" would do",
+      "range": {
+        "startLine": 92,
+        "startChar": 23,
+        "endLine": 92,
+        "endChar": 45
+      },
+      "revId": "503ca058a83ed55cd6caff80088b7e6e70ebb173",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
