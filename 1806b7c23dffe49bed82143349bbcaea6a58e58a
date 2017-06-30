@@ -16,6 +16,24 @@
       "revId": "1806b7c23dffe49bed82143349bbcaea6a58e58a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a1dc7f3_2205d9ab",
+        "filename": "media/cdm/cdm_wrapper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-06-30T23:02:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "493dd42d_3dbaceb5",
+      "revId": "1806b7c23dffe49bed82143349bbcaea6a58e58a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
