@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c8fb8579_8582b622",
+        "filename": "storage/browser/blob/blob_registry_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-30T00:24:42Z",
+      "side": 1,
+      "message": "\u003e Per offline conversation:\n\u003e \n\u003e 1. Let\u0027s only in production / release code check for direct children being our own blob. We can accept that circular dependencies will just hang forever - it should simplify the code a lot to remove this full graph checks.\n\nDone\n\n\u003e 2. Let\u0027s do a simpler heuristic circular dependency checker for debug builds, where (possibly):\n\u003e   * When we get a UUID resolved, we crawl the graph of that blob and see if we have a circular depency.\n\u003e   * Should be it\u0027s own method call, so we don\u0027t muck up BlobUnderConstruction.\n\nNot sure what you mean with this point?\n\n\u003e   * We can limit our call depth (maybe make it a breadth-first-search style) to not impact perf too much (as this is less efficient than current method - no caching).\n\nIt still seems very unlikely to me that the graph of blobs-under-construction would ever be very deep, but maybe people really are creating hundreds of blobs... If you want I\u0027d be happy to change the current depth-first-search to a breadth-first-search with limited search space.\n\n\u003e This should allow us to simplify this class into:\n\u003e  1. Wait until we get all UUIDs\n\u003e  2. Check to see if none are our own.\n\u003e  3. Wait for dependent blobs to call BuildBlob in the BlobStorageContext so they aren\u0027t pending construction and we have sizes.\n\nFor this last \"wait\" I added callbacks to BlobEntry\u0027s buildstate similar to the existing blob-completed callbacks. If you want I can move that back to be part of this BlobUnderConstruction. Not sure which you think is cleaner.",
+      "parentUuid": "afee850c_800e687b",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 47
+      },
+      "revId": "2133b2448b40ad4a9b93e21ddb69bd74bf35c2fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ef7e1973_9a32eece",
         "filename": "storage/browser/blob/blob_storage_context.cc",
         "patchSetId": 8
@@ -39,6 +63,24 @@
       "revId": "2133b2448b40ad4a9b93e21ddb69bd74bf35c2fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "523b2733_af793442",
+        "filename": "storage/browser/blob/blob_storage_context.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-30T00:24:42Z",
+      "side": 1,
+      "message": "I added DCHECKs to verify the building_state_ is empty if it exists. I didn\u0027t change it to just grab the callbacks though, as that would have made the DCHECKs harder.",
+      "parentUuid": "ef7e1973_9a32eece",
+      "revId": "2133b2448b40ad4a9b93e21ddb69bd74bf35c2fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
