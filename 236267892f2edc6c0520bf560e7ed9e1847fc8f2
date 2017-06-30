@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e7ed573_99de8209",
+        "filename": "components/password_manager/core/browser/password_manager_metrics_recorder.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-06-30T18:28:52Z",
+      "side": 1,
+      "message": "think you should be able to use base:StringPiece here",
+      "revId": "236267892f2edc6c0520bf560e7ed9e1847fc8f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ebb7298_5bbdda2c",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-06-30T18:28:52Z",
+      "side": 1,
+      "message": "can you mention how it would interact if multiple password fields were modified on the same page?",
+      "revId": "236267892f2edc6c0520bf560e7ed9e1847fc8f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
