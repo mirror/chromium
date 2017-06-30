@@ -2,17 +2,56 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+// Next MinVersion: 2
+
 module arc.mojom;
+
+// Struct to to transfer HTML data
+struct ClipDataHTML {
+  // Markup text. The real "html"
+  string markup;
+  // Plain text. Needed when clipboard consumers don't expect markup and prefer
+  // plain text instead. Needed in Android side.
+  string text;
+  // The URL of the markup. Needed in Chrome side.
+  string url;
+};
+
+// Union for the different contents
+union ClipDataContent {
+  // Array of opaque data. To transfer things that are already in memory
+  array<uint8> opaque_data;
+  // Plain text
+  string plain_text;
+  // HTML
+  ClipDataHTML html;
+  // File descriptor. To transfer files
+  handle file;
+};
+
+// The Clip Data to send
+struct ClipData {
+  // content
+  ClipDataContent content;
+  // type. Needed when sending the file descriptor, but can be used for plain
+  // text as well.
+  string mime_type;
+};
 
 interface ClipboardHost {
   // Tells the host to change its content, usually when the user initiates
-  // a 'copy' action.
+  // a 'copy' action. Deprecated
   SetTextContent@0(string text);
 
   // Tells the host to return its content, usually when the user initiates
   // a 'paste' action or when the instance needs to re-sync its clipboard
-  // content with the host.
+  // content with the host. Deprecated
   GetTextContent@1();
+
+  // Tells the host to change its content
+  [MinVersion=1] SetHostClip@2(ClipData data);
+  // Tells the host to return its content
+  [MinVersion=1] GetHostClip@3();
 };
 
 interface ClipboardInstance {
@@ -20,5 +59,11 @@ interface ClipboardInstance {
   Init@0(ClipboardHost host_ptr);
 
   // Pass the result of ClipboardHost.GetTextContent().
-  OnGetTextContent@1(string returnedText);
+  // deprecated.
+  OnGetTextContent@1(string returned_text);
+
+  [MinVersion=1] HostClipboardUpdated@2();
+  [MinVersion=1] GetInstanceClip@3();
+
+  [MinVersion=1] OnGetHostClip@4(ClipData data);
 };
