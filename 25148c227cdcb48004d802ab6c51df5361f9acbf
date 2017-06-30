@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03bd1848_3c369e54",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-06-30T13:49:39Z",
+      "side": 1,
+      "message": "in gerrit the format is Bug: xxxxxxx I think",
+      "range": {
+        "startLine": 14,
+        "startChar": 3,
+        "endLine": 14,
+        "endChar": 4
+      },
+      "revId": "25148c227cdcb48004d802ab6c51df5361f9acbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45faa21c_8b3126f9",
+        "filename": "base/trace_event/memory_dump_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-06-30T13:49:39Z",
+      "side": 1,
+      "message": "This argument is gone",
+      "range": {
+        "startLine": 198,
+        "startChar": 0,
+        "endLine": 198,
+        "endChar": 78
+      },
+      "revId": "25148c227cdcb48004d802ab6c51df5361f9acbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee956e31_c05b3264",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/client_process_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-06-30T13:49:39Z",
+      "side": 1,
+      "message": "A comment on this would be good, it is kind of confusing.\nMaybe just copy the ones from MDM_unittest",
+      "range": {
+        "startLine": 183,
+        "startChar": 7,
+        "endLine": 183,
+        "endChar": 32
+      },
+      "revId": "25148c227cdcb48004d802ab6c51df5361f9acbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f9c2036_c69ecd53",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/client_process_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-06-30T13:49:39Z",
+      "side": 1,
+      "message": "This should be after `if (curried_result) { ... }` to avoid a race I think?",
+      "range": {
+        "startLine": 197,
+        "startChar": 10,
+        "endLine": 197,
+        "endChar": 37
+      },
+      "revId": "25148c227cdcb48004d802ab6c51df5361f9acbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
