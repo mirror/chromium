@@ -47,7 +47,9 @@ ServiceWorkerThread::ServiceWorkerThread(
     : WorkerThread(loading_context, worker_reporting_proxy),
       worker_backing_thread_(
           WorkerBackingThread::Create("ServiceWorker Thread")),
-      installed_scripts_manager_(std::move(installed_scripts_manager)) {}
+      installed_scripts_manager_(std::move(installed_scripts_manager)) {
+  installed_scripts_manager_->ServiceWorkerThreadCreated(this);
+}
 
 ServiceWorkerThread::~ServiceWorkerThread() {}
 

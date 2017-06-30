@@ -6,19 +6,27 @@
 #define ServiceWorkerInstalledScriptsManager_h
 
 #include "core/workers/InstalledScriptsManager.h"
+#include "public/platform/modules/serviceworker/WebServiceWorkerInstalledScriptsManager.h"
 
 namespace blink {
+
+class ServiceWorkerThread;
 
 // ServiceWorkerInstalledScriptsManager provides the main script and imported
 // scripts of an installed service worker. The scripts are streamed from the
 // browser process in parallel with worker thread initialization.
 class ServiceWorkerInstalledScriptsManager : public InstalledScriptsManager {
  public:
-  ServiceWorkerInstalledScriptsManager();
+  explicit ServiceWorkerInstalledScriptsManager(
+      std::unique_ptr<WebServiceWorkerInstalledScriptsManager>);
 
   // InstalledScriptsManager implementation.
   bool IsScriptInstalled(const KURL& script_url) const override;
   Optional<ScriptData> GetScriptData(const KURL& script_url) override;
+
+ private:
+  std::unique_ptr<WebServiceWorkerInstalledScriptsManager> manager_;
+  ServiceWorkerThread* thread_;
 };
 
 }  // namespace blink
