@@ -1,0 +1,418 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6cf71c2b_2505b95e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-30T13:56:33Z",
+      "side": 1,
+      "message": "Please leave only white empty line before this line.",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 11
+      },
+      "revId": "3731634b5bef3ccc9b55bb83e604d350c1f9e4ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a0e0300_26d9e56f",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_listener.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-30T13:56:33Z",
+      "side": 1,
+      "message": "Please move this line after \"using\", e.g. like here https://cs.chromium.org/chromium/src/components/ntp_snippets/remote/remote_suggestions_provider.h. I cannot find the source of this rule, but all other classes are like that.",
+      "range": {
+        "startLine": 28,
+        "startChar": 2,
+        "endLine": 28,
+        "endChar": 42
+      },
+      "revId": "3731634b5bef3ccc9b55bb83e604d350c1f9e4ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6324ab9c_e494ac39",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_suggestions_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-30T13:56:33Z",
+      "side": 1,
+      "message": "!suggestions.empty()\n\nAlso, are you sure that you need this?\nThere is tschumann@\u0027s TODO in remote suggestions provider impl to not do this :)\n\nhttps://cs.chromium.org/chromium/src/components/ntp_snippets/remote/remote_suggestions_provider_impl.cc?type\u003dcs\u0026l\u003d903",
+      "range": {
+        "startLine": 135,
+        "startChar": 6,
+        "endLine": 135,
+        "endChar": 28
+      },
+      "revId": "3731634b5bef3ccc9b55bb83e604d350c1f9e4ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9d8eebc_fdd0e994",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_suggestions_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-30T13:56:33Z",
+      "side": 1,
+      "message": "please sort.",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 17
+      },
+      "revId": "3731634b5bef3ccc9b55bb83e604d350c1f9e4ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24455e75_880278fe",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_suggestions_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-30T13:56:33Z",
+      "side": 1,
+      "message": "please add a new line above.",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 24
+      },
+      "revId": "3731634b5bef3ccc9b55bb83e604d350c1f9e4ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b04d38fb_ec2cec77",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_suggestions_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-30T13:56:33Z",
+      "side": 1,
+      "message": "do you really need this? remote_suggestions_provider_impl_unittest.cc does not have this.",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 20
+      },
+      "revId": "3731634b5bef3ccc9b55bb83e604d350c1f9e4ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83bbd122_42e957e1",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_suggestions_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-30T13:56:33Z",
+      "side": 1,
+      "message": "ASSERT_TRUE?\n\nI do not think you want to run the tests if the database fails.",
+      "range": {
+        "startLine": 41,
+        "startChar": 4,
+        "endLine": 41,
+        "endChar": 15
+      },
+      "revId": "3731634b5bef3ccc9b55bb83e604d350c1f9e4ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d394dc2_075f6f7d",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_suggestions_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-30T13:56:33Z",
+      "side": 1,
+      "message": "Please move this before the line you expect this to happen (I assume before 59).",
+      "range": {
+        "startLine": 46,
+        "startChar": 4,
+        "endLine": 47,
+        "endChar": 57
+      },
+      "revId": "3731634b5bef3ccc9b55bb83e604d350c1f9e4ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "147624b1_04345958",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_suggestions_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-30T13:56:33Z",
+      "side": 1,
+      "message": "You may consider adding \".RetiresOnSaturation()\" to both expectations.\nThen they will be fulfilled by one call and won\u0027t intervene with the next calls at all.\n\nAlso you may move this expectation into test class destructor.",
+      "range": {
+        "startLine": 48,
+        "startChar": 4,
+        "endLine": 48,
+        "endChar": 44
+      },
+      "revId": "3731634b5bef3ccc9b55bb83e604d350c1f9e4ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2db7f160_4e2db5fb",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_suggestions_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-30T13:56:33Z",
+      "side": 1,
+      "message": "You can inline these.",
+      "range": {
+        "startLine": 60,
+        "startChar": 41,
+        "endLine": 61,
+        "endChar": 27
+      },
+      "revId": "3731634b5bef3ccc9b55bb83e604d350c1f9e4ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "744ef1c4_5b6c40f1",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_suggestions_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-30T13:56:33Z",
+      "side": 1,
+      "message": "The name is misleading. Imagine that this test fails and you see in the terminal \"ReceivePushedBreakingNews\". You will think that it did not received pushed breaking news, however, there are a lot of other possible reasons why this could fail.\n\nI would go for \"ShouldPropagatePushedNewsWithoutModifyingToObserver\".",
+      "range": {
+        "startLine": 75,
+        "startChar": 44,
+        "endLine": 75,
+        "endChar": 69
+      },
+      "revId": "3731634b5bef3ccc9b55bb83e604d350c1f9e4ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5dedfb8_5113e233",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_suggestions_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-30T13:56:33Z",
+      "side": 1,
+      "message": "The name is misleading. \"Make\" should return the provider. In the current state, however, you could initialize the provider in SetUp and not to care about this in the test at all. Then the function could be \"InitializeBreakingNewsSuggestionsProvider\" and not public.",
+      "range": {
+        "startLine": 76,
+        "startChar": 2,
+        "endLine": 76,
+        "endChar": 28
+      },
+      "revId": "3731634b5bef3ccc9b55bb83e604d350c1f9e4ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "598fbad7_eacc8119",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_suggestions_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-30T13:56:33Z",
+      "side": 1,
+      "message": "This may be harmful. Imagine that the test fails and you try to compare expectations to the input. Comparing such a string is a pain. Imagine someone makes a typo while modifying your test. \n\nI would probably go for \"Title string\". I like having strings \"related\" to the fields, because then in the test log you can clearly see where this comes from :)",
+      "range": {
+        "startLine": 83,
+        "startChar": 25,
+        "endLine": 83,
+        "endChar": 44
+      },
+      "revId": "3731634b5bef3ccc9b55bb83e604d350c1f9e4ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb791eae_895dd8c4",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_suggestions_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-30T13:56:33Z",
+      "side": 1,
+      "message": "It may be worth checking that all these values are preserved correctly. Otherwise, you could remove lines, which are not needed.\n\nE.g. if faviconUrl is optional and you are not going to check it below, then there is no point to have it here at all.",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 62
+      },
+      "revId": "3731634b5bef3ccc9b55bb83e604d350c1f9e4ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcab9586_3dd9105f",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_suggestions_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-30T13:56:33Z",
+      "side": 1,
+      "message": "That is a bad example. The expiration time should not be equal to creationTime. We should at least try to have realistic values in tests.",
+      "range": {
+        "startLine": 87,
+        "startChar": 34,
+        "endLine": 87,
+        "endChar": 58
+      },
+      "revId": "3731634b5bef3ccc9b55bb83e604d350c1f9e4ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52ca054b_d09fbad2",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_suggestions_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-30T13:56:33Z",
+      "side": 1,
+      "message": "You can inline this, either:\non_new_content_callback_.Run(json_reader.ReadToValue(json));\n\nor even\n\non_new_content_callback_.Run(base::JSONReader().ReadToValue(json));",
+      "range": {
+        "startLine": 93,
+        "startChar": 2,
+        "endLine": 94,
+        "endChar": 69
+      },
+      "revId": "3731634b5bef3ccc9b55bb83e604d350c1f9e4ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42e57a85_fa657e3e",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_suggestions_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-30T13:56:33Z",
+      "side": 1,
+      "message": "please remove the newline before this line.",
+      "range": {
+        "startLine": 110,
+        "startChar": 2,
+        "endLine": 110,
+        "endChar": 49
+      },
+      "revId": "3731634b5bef3ccc9b55bb83e604d350c1f9e4ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9a2d5ce_05b23a7a",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_suggestions_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-30T13:56:33Z",
+      "side": 1,
+      "message": "There are newlines between namespaces on top, please add them here as well.",
+      "range": {
+        "startLine": 113,
+        "startChar": 0,
+        "endLine": 115,
+        "endChar": 28
+      },
+      "revId": "3731634b5bef3ccc9b55bb83e604d350c1f9e4ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
