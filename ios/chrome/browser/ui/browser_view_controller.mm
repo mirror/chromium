@@ -4769,7 +4769,7 @@ class BrowserBookmarkModelBridge : public bookmarks::BookmarkModelObserver {
     DCHECK_NE(webStateList->active_index(), WebStateList::kInvalidIndex);
     DCHECK_NE(webStateList->active_index(), INT_MAX);
     int insertion_index = webStateList->active_index() + 1;
-    webStateList->InsertWebState(insertion_index, std::move(webState));
+    webStateList->InsertWebState(insertion_index, std::move(webState), false);
     webStateList->SetOpenerOfWebStateAt(insertion_index,
                                         [tabProvider webStateOpener]);
 

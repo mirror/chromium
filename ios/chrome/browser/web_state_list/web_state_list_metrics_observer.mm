@@ -7,12 +7,16 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/user_metrics.h"
 #include "base/metrics/user_metrics_action.h"
+#include "ios/chrome/browser/metrics/tab_usage_recorder.h"
+#import "ios/chrome/browser/tabs/legacy_tab_helper.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
 #endif
 
-WebStateListMetricsObserver::WebStateListMetricsObserver() {
+WebStateListMetricsObserver::WebStateListMetricsObserver(
+    TabUsageRecorder* tab_usage_recorder)
+    : tab_usage_recorder_(tab_usage_recorder) {
   ResetSessionMetrics();
 }
 
@@ -36,9 +40,15 @@ void WebStateListMetricsObserver::RecordSessionMetrics() {
 void WebStateListMetricsObserver::WebStateInsertedAt(
     WebStateList* web_state_list,
     web::WebState* web_state,
-    int index) {
+    int index,
+    bool foreground) {
   base::RecordAction(base::UserMetricsAction("MobileNewTabOpened"));
   ++inserted_web_state_counter_;
+
+  if (tab_usage_recorder_ && foreground) {
+    Tab* tab = LegacyTabHelper::GetTabForWebState(web_state);
+    tab_usage_recorder_->TabCreatedForSelection(tab);
+  }
 }
 
 void WebStateListMetricsObserver::WebStateReplacedAt(

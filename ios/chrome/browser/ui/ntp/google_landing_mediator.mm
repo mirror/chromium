@@ -352,7 +352,8 @@ void SearchEngineObserver::OnTemplateURLServiceChanged() {
 
 - (void)webStateList:(WebStateList*)webStateList
     didInsertWebState:(web::WebState*)webState
-              atIndex:(int)index {
+              atIndex:(int)index
+           foreground:(BOOL)foreground {
   [self.consumer setTabCount:self.webStateList->count()];
 }
 

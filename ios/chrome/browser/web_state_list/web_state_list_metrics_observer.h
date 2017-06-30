@@ -8,9 +8,11 @@
 #include "base/macros.h"
 #import "ios/chrome/browser/web_state_list/web_state_list_observer.h"
 
+class TabUsageRecorder;
+
 class WebStateListMetricsObserver : public WebStateListObserver {
  public:
-  WebStateListMetricsObserver();
+  explicit WebStateListMetricsObserver(TabUsageRecorder* tab_usage_recorder);
   ~WebStateListMetricsObserver() override;
 
   void ResetSessionMetrics();
@@ -19,7 +21,8 @@ class WebStateListMetricsObserver : public WebStateListObserver {
   // WebStateListObserver implementation.
   void WebStateInsertedAt(WebStateList* web_state_list,
                           web::WebState* web_state,
-                          int index) override;
+                          int index,
+                          bool foreground) override;
   void WebStateReplacedAt(WebStateList* web_state_list,
                           web::WebState* old_web_state,
                           web::WebState* new_web_state,
@@ -38,6 +41,9 @@ class WebStateListMetricsObserver : public WebStateListObserver {
   int inserted_web_state_counter_;
   int detached_web_state_counter_;
   int activated_web_state_counter_;
+
+  // Tab usage recorder.
+  TabUsageRecorder* tab_usage_recorder_;
 
   DISALLOW_COPY_AND_ASSIGN(WebStateListMetricsObserver);
 };
