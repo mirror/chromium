@@ -212,7 +212,12 @@ void ContentSubresourceFilterThrottleManager::MaybeAppendNavigationThrottles(
     throttles->push_back(std::move(filtering_throttle));
   }
 
-  CHECK(!base::ContainsKey(ongoing_activation_throttles_, navigation_handle));
+  // There are cases when a navigation_handle is already in the map, for unknown
+  // reasons in non-PlzNavigate code. See crbug.com/736658.
+  //
+  // TODO(csharrison): Invest some time in rearchitecting this class now that
+  // ongoing_activation_throttles_ has problems like this.
+  ongoing_activation_throttles_.erase(navigation_handle);
   if (auto activation_throttle =
           MaybeCreateActivationStateComputingThrottle(navigation_handle)) {
     ongoing_activation_throttles_[navigation_handle] =
@@ -324,8 +329,10 @@ void ContentSubresourceFilterThrottleManager::OnDocumentLoadStatistics(
 
 void ContentSubresourceFilterThrottleManager::OnActivationThrottleDestroyed(
     content::NavigationHandle* navigation_handle) {
-  size_t num_erased = ongoing_activation_throttles_.erase(navigation_handle);
-  CHECK_EQ(0u, num_erased);
+  // Should be 0 but there are some cases in PlzNavigate when
+  // DidFinishNavigation is not called. See crbug.com/738444 for when this
+  // property was CHECKed.
+  ongoing_activation_throttles_.erase(navigation_handle);
 }
 
 }  // namespace subresource_filter
