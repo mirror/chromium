@@ -64,11 +64,15 @@ ConfigDirPolicyLoader::ConfigDirPolicyLoader(
     scoped_refptr<base::SequencedTaskRunner> task_runner,
     const base::FilePath& config_dir,
     PolicyScope scope)
-    : AsyncPolicyLoader(task_runner), config_dir_(config_dir), scope_(scope) {}
+    : AsyncPolicyLoader(task_runner),
+      task_runner_(task_runner),
+      config_dir_(config_dir),
+      scope_(scope) {}
 
 ConfigDirPolicyLoader::~ConfigDirPolicyLoader() {}
 
 void ConfigDirPolicyLoader::InitOnBackgroundThread() {
+  DCHECK(task_runner_->RunsTasksInCurrentSequence());
   base::FilePathWatcher::Callback callback =
       base::Bind(&ConfigDirPolicyLoader::OnFileUpdated, base::Unretained(this));
   mandatory_watcher_.Watch(config_dir_.Append(kMandatoryConfigDir), false,
@@ -78,6 +82,7 @@ void ConfigDirPolicyLoader::InitOnBackgroundThread() {
 }
 
 std::unique_ptr<PolicyBundle> ConfigDirPolicyLoader::Load() {
+  DCHECK(task_runner_->RunsTasksInCurrentSequence());
   std::unique_ptr<PolicyBundle> bundle(new PolicyBundle());
   LoadFromPath(config_dir_.Append(kMandatoryConfigDir),
                POLICY_LEVEL_MANDATORY,
@@ -89,6 +94,8 @@ std::unique_ptr<PolicyBundle> ConfigDirPolicyLoader::Load() {
 }
 
 base::Time ConfigDirPolicyLoader::LastModificationTime() {
+  DCHECK(task_runner_->RunsTasksInCurrentSequence());
+
   static const base::FilePath::CharType* kConfigDirSuffixes[] = {
     kMandatoryConfigDir,
     kRecommendedConfigDir,
@@ -229,6 +236,7 @@ void ConfigDirPolicyLoader::Merge3rdPartyPolicy(
 
 void ConfigDirPolicyLoader::OnFileUpdated(const base::FilePath& path,
                                           bool error) {
+  DCHECK(task_runner_->RunsTasksInCurrentSequence());
   if (!error)
     Reload(false);
 }
