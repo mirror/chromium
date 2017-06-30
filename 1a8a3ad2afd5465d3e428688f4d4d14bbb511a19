@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18b77d9b_de336572",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-06-30T03:22:12Z",
+      "side": 1,
+      "message": "please update the commit message",
+      "range": {
+        "startLine": 9,
+        "startChar": 24,
+        "endLine": 10,
+        "endChar": 21
+      },
+      "revId": "1a8a3ad2afd5465d3e428688f4d4d14bbb511a19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3195b4b4_2e4f3da4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-06-30T03:22:12Z",
+      "side": 1,
+      "message": "change",
+      "range": {
+        "startLine": 14,
+        "startChar": 5,
+        "endLine": 14,
+        "endChar": 12
+      },
+      "revId": "1a8a3ad2afd5465d3e428688f4d4d14bbb511a19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "353b30e8_83f40d49",
+        "filename": "chromecast/media/cma/backend/android/java/src/org/chromium/chromecast/cma/backend/android/AudioSinkAudioTrackImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-06-30T03:22:12Z",
+      "side": 1,
+      "message": "could use the minimum of this value and mTotalFramesWritten to get a slightly better estimate in this case.",
+      "range": {
+        "startLine": 217,
+        "startChar": 34,
+        "endLine": 217,
+        "endChar": 69
+      },
+      "revId": "1a8a3ad2afd5465d3e428688f4d4d14bbb511a19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
