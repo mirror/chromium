@@ -22133,7 +22133,8 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>Records the source that requested showing the feedback app.</summary>
 </histogram>
 
-<histogram name="FileBrowser.ChangeDirectory.RootType" enum="FileManagerRootType">
+<histogram name="FileBrowser.ChangeDirectory.RootType"
+    enum="FileManagerRootType">
   <owner>yamaguchi@chromium.com</owner>
   <summary>
     Chrome OS File Browser: Counts the number of directory-changed events,
@@ -94248,7 +94249,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <suffix name="PasswordFieldOnFocus"
       label="Password protection triggered by password field on focus event."/>
   <suffix name="ProtectedPasswordEntry"
-      label="Password protection triggered by password reuse event."/>
+      label="Password protection triggered by saved password reuse event."/>
+  <suffix name="SyncPasswordEntry"
+      label="Password protectiontriggered by sync password reuse event."/>
   <affected-histogram name="PasswordProtection.RequestOutcome"/>
   <affected-histogram name="PasswordProtection.Verdict"/>
 </histogram_suffixes>
