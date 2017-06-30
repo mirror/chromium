@@ -5,7 +5,7 @@
 import("//chrome/common/features.gni")
 
 if (enable_oop_heap_profiling) {
-  static_library("profiling") {
+  source_set("profiling") {
     sources = [
       "address.h",
       "allocation_tracker.cc",
