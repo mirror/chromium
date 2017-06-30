@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f34fa49_bda5c7fb",
+        "filename": "media/gpu/android/video_frame_factory_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-06-30T05:19:05Z",
+      "side": 1,
+      "message": "might want to replace this and the other two cases (Clear... and CreateVideoFrameInternal) with a call to \u0027bool Gpu...::MakeContextCurrent() { return stub_ \u0026\u0026 ...; }\u0027",
+      "range": {
+        "startLine": 273,
+        "startChar": 33,
+        "endLine": 273,
+        "endChar": 34
+      },
+      "revId": "e59a19fad028a3af937b7f68b18c3e627d15f459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
