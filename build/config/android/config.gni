@@ -92,6 +92,10 @@ if (is_android) {
     webview_framework_jar = webview_public_framework_jar
   }
 
+  if (!defined(post_process_resources)) {
+    post_process_resources = false
+  }
+
   declare_args() {
     android_ndk_root = default_android_ndk_root
     android_ndk_version = default_android_ndk_version
