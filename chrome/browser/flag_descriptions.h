@@ -1332,6 +1332,9 @@ extern const char kGestureEditingDescription[];
 extern const char kGestureTypingName[];
 extern const char kGestureTypingDescription[];
 
+extern const char kHideTitlebarsForTabletName[];
+extern const char kHideTitlebarsForTabletDescription[];
+
 extern const char kInputViewName[];
 extern const char kInputViewDescription[];
 
