@@ -12,6 +12,10 @@ gfx::Insets HarmonyLayoutProvider::GetInsetsMetric(int metric) const {
       return gfx::Insets(kHarmonyLayoutUnit, kHarmonyLayoutUnit);
     case views::INSETS_VECTOR_IMAGE_BUTTON:
       return gfx::Insets(kHarmonyLayoutUnit / 4);
+    case views::INSETS_CHECKBOX_RADIO_BUTTON: {
+      gfx::Insets insets = ChromeLayoutProvider::GetInsetsMetric(metric);
+      return gfx::Insets(insets.top(), 0, insets.bottom(), insets.right());
+    }
     default:
       return ChromeLayoutProvider::GetInsetsMetric(metric);
   }
