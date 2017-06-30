@@ -18,13 +18,13 @@
 #include "base/power_monitor/power_monitor_device_source.h"
 #include "base/process/process_metrics.h"
 #include "base/system_monitor/system_monitor.h"
-#include "base/task_scheduler/initialization_util.h"
 #include "base/task_scheduler/scheduler_worker_pool_params.h"
 #include "base/task_scheduler/task_scheduler.h"
 #include "base/threading/sequenced_worker_pool.h"
 #include "base/threading/thread_restrictions.h"
 #import "ios/web/net/cookie_notification_bridge.h"
 #include "ios/web/public/app/web_main_parts.h"
+#import "ios/web/public/global_state/ios_global_state.h"
 #import "ios/web/public/web_client.h"
 #include "ios/web/web_thread_impl.h"
 #include "ios/web/webui/url_data_manager_ios.h"
@@ -36,33 +36,6 @@
 
 namespace web {
 
-namespace {
-
-std::unique_ptr<base::TaskScheduler::InitParams>
-GetDefaultTaskSchedulerInitParams() {
-  using StandbyThreadPolicy =
-      base::SchedulerWorkerPoolParams::StandbyThreadPolicy;
-  return base::MakeUnique<base::TaskScheduler::InitParams>(
-      base::SchedulerWorkerPoolParams(
-          StandbyThreadPolicy::ONE,
-          base::RecommendedMaxNumberOfThreadsInPool(2, 8, 0.1, 0),
-          base::TimeDelta::FromSeconds(30)),
-      base::SchedulerWorkerPoolParams(
-          StandbyThreadPolicy::ONE,
-          base::RecommendedMaxNumberOfThreadsInPool(2, 8, 0.1, 0),
-          base::TimeDelta::FromSeconds(30)),
-      base::SchedulerWorkerPoolParams(
-          StandbyThreadPolicy::ONE,
-          base::RecommendedMaxNumberOfThreadsInPool(3, 8, 0.3, 0),
-          base::TimeDelta::FromSeconds(30)),
-      base::SchedulerWorkerPoolParams(
-          StandbyThreadPolicy::ONE,
-          base::RecommendedMaxNumberOfThreadsInPool(3, 8, 0.3, 0),
-          base::TimeDelta::FromSeconds(60)));
-}
-
-}  // namespace
-
 // The currently-running WebMainLoop.  There can be one or zero.
 // TODO(rohitrao): Desktop uses this to implement
 // ImmediateShutdownAndExitProcess.  If we don't need that functionality, we can
@@ -73,9 +46,7 @@ WebMainLoop::WebMainLoop() : result_code_(0), created_threads_(false) {
   DCHECK(!g_current_web_main_loop);
   g_current_web_main_loop = this;
 
-  // Use an empty string as TaskScheduler name to match the suffix of browser
-  // process TaskScheduler histograms.
-  base::TaskScheduler::Create("");
+  ios_global_state::Create();
 }
 
 WebMainLoop::~WebMainLoop() {
@@ -150,15 +121,7 @@ int WebMainLoop::PreCreateThreads() {
 }
 
 int WebMainLoop::CreateThreads() {
-  {
-    auto task_scheduler_init_params =
-        GetWebClient()->GetTaskSchedulerInitParams();
-    if (!task_scheduler_init_params)
-      task_scheduler_init_params = GetDefaultTaskSchedulerInitParams();
-    DCHECK(task_scheduler_init_params);
-    base::TaskScheduler::GetInstance()->Start(
-        *task_scheduler_init_params.get());
-  }
+  ios_global_state::StartTaskScheduler();
 
   base::SequencedWorkerPool::EnableWithRedirectionToTaskSchedulerForProcess();
 
