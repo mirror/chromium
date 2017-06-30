@@ -135,10 +135,10 @@ bool PaintController::UseCachedSubsequenceIfPossible(
 
   if (!RuntimeEnabledFeatures::PaintUnderInvalidationCheckingEnabled()) {
     AddCachedSubsequence(client, size_before_copy,
-                         new_display_item_list_.size() - 1);
+                         new_display_item_list_.size());
   }
 
-  next_item_to_match_ = markers->end + 1;
+  next_item_to_match_ = markers->end;
   // Items before |m_nextItemToMatch| have been copied so we don't need to index
   // them.
   if (next_item_to_match_ > next_item_to_index_)
@@ -164,8 +164,8 @@ PaintController::SubsequenceMarkers* PaintController::GetSubsequenceMarkers(
 void PaintController::AddCachedSubsequence(const DisplayItemClient& client,
                                            unsigned start,
                                            unsigned end) {
-  DCHECK(start <= end);
-  DCHECK(end < new_display_item_list_.size());
+  DCHECK(start < end);
+  DCHECK(end <= new_display_item_list_.size());
   if (IsCheckingUnderInvalidation()) {
     SubsequenceMarkers* markers = GetSubsequenceMarkers(client);
     if (!markers) {
@@ -198,7 +198,7 @@ bool PaintController::LastDisplayItemIsNoopBegin() const {
 
 bool PaintController::LastDisplayItemIsSubsequenceEnd() const {
   return !new_cached_subsequences_.IsEmpty() &&
-         last_cached_subsequence_end_ == new_display_item_list_.size() - 1;
+         last_cached_subsequence_end_ == new_display_item_list_.size();
 }
 
 void PaintController::RemoveLastDisplayItem() {
@@ -478,11 +478,15 @@ void PaintController::CopyCachedSubsequence(size_t begin_index,
   }
 
   Vector<PaintChunk>::const_iterator cached_chunk;
-  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
+  PaintChunkProperties properties_before_subsequence;
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled() &&
+      !RuntimeEnabledFeatures::PaintUnderInvalidationCheckingEnabled()) {
     cached_chunk =
         current_paint_artifact_.FindChunkByDisplayItemIndex(begin_index);
     DCHECK(cached_chunk != current_paint_artifact_.PaintChunks().end());
 
+    properties_before_subsequence =
+        new_paint_chunks_.CurrentPaintChunkProperties();
     UpdateCurrentPaintChunkProperties(
         cached_chunk->is_cacheable ? &cached_chunk->id : nullptr,
         cached_chunk->properties, kForceNewChunk);
@@ -491,7 +495,7 @@ void PaintController::CopyCachedSubsequence(size_t begin_index,
     cached_chunk = current_paint_artifact_.PaintChunks().begin();
   }
 
-  for (size_t current_index = begin_index; current_index <= end_index;
+  for (size_t current_index = begin_index; current_index < end_index;
        ++current_index) {
     cached_item = &current_paint_artifact_.GetDisplayItemList()[current_index];
     DCHECK(cached_item->HasValidClient());
@@ -502,6 +506,7 @@ void PaintController::CopyCachedSubsequence(size_t begin_index,
     DCHECK(cached_item->Client().IsAlive());
 #endif
     ++num_cached_new_items_;
+
     if (!RuntimeEnabledFeatures::PaintUnderInvalidationCheckingEnabled()) {
       if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled() &&
           current_index == cached_chunk->end_index) {
@@ -534,8 +539,13 @@ void PaintController::CopyCachedSubsequence(size_t begin_index,
   }
 
   if (RuntimeEnabledFeatures::PaintUnderInvalidationCheckingEnabled()) {
-    under_invalidation_checking_end_ = end_index + 1;
+    under_invalidation_checking_end_ = end_index;
     DCHECK(IsCheckingUnderInvalidation());
+  } else if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
+    // Restore properties and force new chunk for any trailing display items
+    // after the cached subsequence without new properties.
+    UpdateCurrentPaintChunkProperties(nullptr, properties_before_subsequence,
+                                      kForceNewChunk);
   }
 }
 

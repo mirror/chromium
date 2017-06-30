@@ -318,8 +318,8 @@ class PLATFORM_EXPORT PaintController {
     SubsequenceMarkers() : start(0), end(0) {}
     SubsequenceMarkers(size_t start_arg, size_t end_arg)
         : start(start_arg), end(end_arg) {}
-    // The start and end index within m_currentPaintArtifact of this
-    // subsequence.
+    // The start and end (not included) index within current_paint_artifact_
+    // of this subsequence.
     size_t start;
     size_t end;
   };

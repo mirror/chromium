@@ -26,7 +26,8 @@ class ScopedPaintChunkProperties {
       const PaintChunkProperties& properties,
       NewChunkForceState force_new_chunk = kDontForceNewChunk)
       : paint_controller_(paint_controller),
-        previous_properties_(paint_controller.CurrentPaintChunkProperties()) {
+        previous_properties_(paint_controller.CurrentPaintChunkProperties()),
+        force_new_chunk_(force_new_chunk) {
     PaintChunk::Id id(client, type);
     paint_controller_.UpdateCurrentPaintChunkProperties(&id, properties,
                                                         force_new_chunk);
@@ -51,13 +52,14 @@ class ScopedPaintChunkProperties {
     // ScopedPaintChunkProperties. The painter should create another scope of
     // paint properties with new id, or the new chunk will use the id of the
     // first display item as its id.
-    paint_controller_.UpdateCurrentPaintChunkProperties(nullptr,
-                                                        previous_properties_);
+    paint_controller_.UpdateCurrentPaintChunkProperties(
+        nullptr, previous_properties_, force_new_chunk_);
   }
 
  private:
   PaintController& paint_controller_;
   PaintChunkProperties previous_properties_;
+  NewChunkForceState force_new_chunk_;
 };
 
 }  // namespace blink

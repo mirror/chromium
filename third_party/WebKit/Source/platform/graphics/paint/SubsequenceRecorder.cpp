@@ -31,7 +31,7 @@ SubsequenceRecorder::~SubsequenceRecorder() {
 
   paint_controller_.AddCachedSubsequence(
       client_, begin_subsequence_index_,
-      paint_controller_.NewDisplayItemList().size() - 1);
+      paint_controller_.NewDisplayItemList().size());
 }
 
 }  // namespace blink
