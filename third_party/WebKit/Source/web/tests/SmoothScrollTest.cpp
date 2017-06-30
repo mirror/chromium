@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "bindings/core/v8/ScrollIntoViewOptionsOrBoolean.h"
+#include "controller/WebLocalFrameImpl.h"
 #include "core/frame/ScrollIntoViewOptions.h"
 #include "core/frame/ScrollToOptions.h"
 #include "core/testing/sim/SimCompositor.h"
@@ -11,7 +12,6 @@
 #include "core/testing/sim/SimTest.h"
 #include "public/web/WebScriptSource.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include "web/WebLocalFrameImpl.h"
 
 namespace blink {
 

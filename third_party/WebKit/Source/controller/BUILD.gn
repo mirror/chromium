@@ -34,10 +34,14 @@ component("controller") {
 
   sources = [
     "ControllerExport.h",
+    "LocalFrameClientImpl.cpp",
+    "LocalFrameClientImpl.h",
     "WebDevToolsAgentImpl.cpp",
     "WebDevToolsAgentImpl.h",
     "WebFrameWidgetImpl.cpp",
     "WebFrameWidgetImpl.h",
+    "WebLocalFrameImpl.cpp",
+    "WebLocalFrameImpl.h",
   ]
 
   if (is_mac) {

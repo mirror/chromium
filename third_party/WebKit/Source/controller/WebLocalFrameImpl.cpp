@@ -85,7 +85,7 @@
 // The client is expected to be set whenever the WebLocalFrameImpl is attached
 // to the DOM.
 
-#include "web/WebLocalFrameImpl.h"
+#include "controller/WebLocalFrameImpl.h"
 
 #include <algorithm>
 #include <memory>
@@ -99,6 +99,7 @@
 #include "bindings/core/v8/SourceLocation.h"
 #include "bindings/core/v8/V8BindingForCore.h"
 #include "bindings/core/v8/V8GCController.h"
+#include "build/build_config.h"
 #include "controller/WebDevToolsAgentImpl.h"
 #include "controller/WebFrameWidgetImpl.h"
 #include "core/HTMLNames.h"
@@ -332,7 +333,7 @@ class ChromePrintContext : public PrintContext {
 
       AffineTransform transform;
       transform.Translate(0, current_height);
-#if OS(WIN) || OS(MACOSX)
+#if defined(OS_WIN) || defined(OS_MACOSX)
       // Account for the disabling of scaling in spoolPage. In the context of
       // SpoolAllPagesWithBoundariesForTesting the scale HAS NOT been
       // pre-applied.
@@ -364,7 +365,7 @@ class ChromePrintContext : public PrintContext {
     float scale = printed_page_width_ / page_rect.Width();
 
     AffineTransform transform;
-#if OS(POSIX) && !OS(MACOSX)
+#if defined(OS_POSIX) && !defined(OS_MACOSX)
     transform.Scale(scale);
 #endif
     transform.Translate(static_cast<float>(-page_rect.X()),
@@ -773,9 +774,10 @@ void WebLocalFrameImpl::ExecuteScriptInIsolatedWorld(
     GetFrame()->GetScriptController().ExecuteScriptInIsolatedWorld(
         world_id, sources, &script_results);
     WebVector<v8::Local<v8::Value>> v8_results(script_results.size());
-    for (unsigned i = 0; i < script_results.size(); i++)
+    for (unsigned i = 0; i < script_results.size(); i++) {
       v8_results[i] =
           v8::Local<v8::Value>::New(ToIsolate(GetFrame()), script_results[i]);
+    }
     results->Swap(v8_results);
   } else {
     v8::HandleScope handle_scope(ToIsolate(GetFrame()));
@@ -841,8 +843,8 @@ v8::Local<v8::Object> WebLocalFrameImpl::GlobalProxy() const {
 
 bool WebFrame::ScriptCanAccess(WebFrame* target) {
   return BindingSecurity::ShouldAllowAccessToFrame(
-      CurrentDOMWindow(MainThreadIsolate()), ToCoreFrame(*target),
-      BindingSecurity::ErrorReportOption::kDoNotReport);
+      CurrentDOMWindow(V8PerIsolateData::MainThreadIsolate()),
+      ToCoreFrame(*target), BindingSecurity::ErrorReportOption::kDoNotReport);
 }
 
 void WebLocalFrameImpl::Reload(WebFrameLoadType load_type) {
@@ -1135,7 +1137,7 @@ WebString WebLocalFrameImpl::SelectionAsText() const {
 
   String text = GetFrame()->Selection().SelectedText(
       TextIteratorBehavior::EmitsObjectReplacementCharacterBehavior());
-#if OS(WIN)
+#if defined(OS_WIN)
   ReplaceNewlinesWithWindowsStyleNewlines(text);
 #endif
   ReplaceNBSPWithSpace(text);
@@ -1751,9 +1753,10 @@ void WebLocalFrameImpl::CreateFrameView() {
     GetFrame()->View()->SetInitialViewportSize(
         web_view->GetPageScaleConstraintsSet().InitialViewportSize());
   }
-  if (web_view->ShouldAutoResize() && GetFrame()->IsLocalRoot())
+  if (web_view->ShouldAutoResize() && GetFrame()->IsLocalRoot()) {
     GetFrame()->View()->EnableAutoSizeMode(web_view->MinAutoSize(),
                                            web_view->MaxAutoSize());
+  }
 
   GetFrame()->View()->SetInputEventsTransformForEmulation(
       input_events_offset_for_emulation_,
@@ -1833,10 +1836,11 @@ void WebLocalFrameImpl::SetInputEventsTransformForEmulation(
     float content_scale_factor) {
   input_events_offset_for_emulation_ = offset;
   input_events_scale_factor_for_emulation_ = content_scale_factor;
-  if (GetFrame()->View())
+  if (GetFrame()->View()) {
     GetFrame()->View()->SetInputEventsTransformForEmulation(
         input_events_offset_for_emulation_,
         input_events_scale_factor_for_emulation_);
+  }
 }
 
 void WebLocalFrameImpl::LoadJavaScriptURL(const KURL& url) {
@@ -1870,9 +1874,10 @@ void WebLocalFrameImpl::LoadJavaScriptURL(const KURL& url) {
   if (result.IsEmpty() || !result->IsString())
     return;
   String script_result = ToCoreString(v8::Local<v8::String>::Cast(result));
-  if (!GetFrame()->GetNavigationScheduler().LocationChangePending())
+  if (!GetFrame()->GetNavigationScheduler().LocationChangePending()) {
     GetFrame()->Loader().ReplaceDocumentWhileExecutingJavaScriptURL(
         script_result, owner_document);
+  }
 }
 
 HitTestResult WebLocalFrameImpl::HitTestResultForVisualViewportPos(
