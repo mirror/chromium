@@ -154,7 +154,7 @@ TEST_F(HTMLMediaElementEventListenersTest,
   UserGestureIndicator gesture_indicator(
       UserGestureToken::Create(&GetDocument()));
   Fullscreen::RequestFullscreen(*Video());
-  Fullscreen::From(GetDocument()).DidEnterFullscreen();
+  Fullscreen::DidEnterFullscreen(GetDocument());
 
   testing::RunPendingTasks();
 

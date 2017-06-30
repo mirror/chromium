@@ -20,7 +20,7 @@ const char kDeclarativeContent[] = "Extension declarativeContent.css";
 const char kDesignMode[] = "DesignMode";
 const char kFontSizeChange[] = "FontSizeChange";
 const char kFonts[] = "Fonts";
-const char kFullScreen[] = "FullScreen";
+const char kFullscreen[] = "Fullscreen";
 const char kInline[] = "Inline";
 const char kInlineCSSStyleMutated[] =
     "Inline CSS style declaration was mutated";

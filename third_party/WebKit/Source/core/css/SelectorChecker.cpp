@@ -1051,14 +1051,6 @@ bool SelectorChecker::CheckPseudoClass(const SelectorCheckingContext& context,
       return true;
     }
     case CSSSelector::kPseudoFullScreen:
-      // While a Document is in the fullscreen state, and the document's current
-      // fullscreen element is an element in the document, the 'full-screen'
-      // pseudoclass applies to that element. Also, an <iframe>, <object> or
-      // <embed> element whose child browsing context's Document is in the
-      // fullscreen state has the 'full-screen' pseudoclass applied.
-      if (IsHTMLFrameElementBase(element) &&
-          element.ContainsFullScreenElement())
-        return true;
       return Fullscreen::IsFullscreenElement(element);
     case CSSSelector::kPseudoFullScreenAncestor:
       return element.ContainsFullScreenElement();
