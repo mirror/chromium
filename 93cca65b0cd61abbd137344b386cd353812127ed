@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56dc99ca_4fff62a3",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 712,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-06-30T05:06:26Z",
+      "side": 1,
+      "message": "nit: const?",
+      "range": {
+        "startLine": 712,
+        "startChar": 2,
+        "endLine": 712,
+        "endChar": 6
+      },
+      "revId": "93cca65b0cd61abbd137344b386cd353812127ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d6fa5bf_6679278e",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 713,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-06-30T05:06:26Z",
+      "side": 1,
+      "message": "nit: remove the curly braces?",
+      "range": {
+        "startLine": 713,
+        "startChar": 24,
+        "endLine": 713,
+        "endChar": 26
+      },
+      "revId": "93cca65b0cd61abbd137344b386cd353812127ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "476d3319_fa2161cf",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-06-30T05:06:26Z",
+      "side": 1,
+      "message": "nit: const?",
+      "range": {
+        "startLine": 726,
+        "startChar": 2,
+        "endLine": 726,
+        "endChar": 5
+      },
+      "revId": "93cca65b0cd61abbd137344b386cd353812127ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5043097a_28aa903b",
+        "filename": "ui/keyboard/keyboard_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-06-30T05:06:26Z",
+      "side": 1,
+      "message": "Don\u0027t change the numeric values of the members?\n\nReordering may be fine.",
+      "range": {
+        "startLine": 50,
+        "startChar": 9,
+        "endLine": 50,
+        "endChar": 37
+      },
+      "revId": "93cca65b0cd61abbd137344b386cd353812127ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
