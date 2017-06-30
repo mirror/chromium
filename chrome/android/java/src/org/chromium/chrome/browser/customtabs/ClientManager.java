@@ -9,6 +9,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.pm.Signature;
 import android.net.Uri;
 import android.os.IBinder;
 import android.os.SystemClock;
@@ -122,6 +124,7 @@ class ClientManager {
         public final int uid;
         public final DisconnectCallback disconnectCallback;
         public final String packageName;
+        public final Signature signature;
         public final PostMessageHandler postMessageHandler;
         public boolean mIgnoreFragments;
         public boolean lowConfidencePrediction;
@@ -138,6 +141,7 @@ class ClientManager {
                 PostMessageHandler postMessageHandler) {
             this.uid = uid;
             packageName = getPackageName(context, uid);
+            signature = getSignature(context, uid, packageName);
             disconnectCallback = callback;
             this.postMessageHandler = postMessageHandler;
             if (postMessageHandler != null) this.postMessageHandler.setPackageName(packageName);
@@ -149,6 +153,21 @@ class ClientManager {
             String[] packageList = packageManager.getPackagesForUid(uid);
             if (packageList.length != 1 || TextUtils.isEmpty(packageList[0])) return null;
             return packageList[0];
+        }
+
+        private static Signature getSignature(Context context, int uid, String packageName) {
+            if (packageName == null) return null;
+            PackageManager packageManager = context.getPackageManager();
+            Signature[] signatureList;
+            try {
+                signatureList =
+                        packageManager.getPackageInfo(packageName, PackageManager.GET_SIGNATURES)
+                                .signatures;
+            } catch (NameNotFoundException e) {
+                return null;
+            }
+            if (signatureList.length != 1) return null;
+            return signatureList[0];
         }
 
         public KeepAliveServiceConnection getKeepAliveConnection() {
@@ -388,6 +407,16 @@ class ClientManager {
     public synchronized String getClientPackageNameForSession(CustomTabsSessionToken session) {
         SessionParams params = mSessionParams.get(session);
         return params == null ? null : params.packageName;
+    }
+
+    /**
+     * @return The package signature associated with the client owning the given session.
+     *         This number is 0 if a single signature cannot be determined.
+     */
+    public synchronized int getClientSignatureHashForSession(CustomTabsSessionToken session) {
+        SessionParams params = mSessionParams.get(session);
+        if (params == null || params.signature == null) return 0;
+        return params.signature.hashCode();
     }
 
     /**
