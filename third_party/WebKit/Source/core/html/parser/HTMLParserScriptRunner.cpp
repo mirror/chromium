@@ -513,7 +513,7 @@ bool HTMLParserScriptRunner::ExecuteScriptsWaitingForParsing() {
   while (!scripts_to_execute_after_parsing_.IsEmpty()) {
     DCHECK(!IsExecutingScript());
     DCHECK(!HasParserBlockingScript());
-    DCHECK(scripts_to_execute_after_parsing_.front()->IsExternal());
+    DCHECK(scripts_to_execute_after_parsing_.front()->IsExternalOrModule());
 
     // 1. "Spin the event loop until the first script in the list of scripts
     //     that will execute when the document has finished parsing
@@ -582,7 +582,7 @@ void HTMLParserScriptRunner::RequestDeferredScript(Element* element) {
                                              ScriptStreamer::kDeferred);
   }
 
-  DCHECK(pending_script->IsExternal());
+  DCHECK(pending_script->IsExternalOrModule());
 
   // "Add the element to the end of the list of scripts that will execute
   //  when the document has finished parsing associated with the Document

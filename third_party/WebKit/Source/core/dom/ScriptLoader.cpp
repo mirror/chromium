@@ -777,7 +777,8 @@ PendingScript* ScriptLoader::CreatePendingScript() {
       return ClassicPendingScript::Create(element_, resource_);
     case ScriptType::kModule:
       CHECK(module_tree_client_);
-      return ModulePendingScript::Create(element_, module_tree_client_);
+      return ModulePendingScript::Create(element_, module_tree_client_,
+                                         is_external_script_);
   }
   NOTREACHED();
   return nullptr;
@@ -894,7 +895,7 @@ ScriptLoader::ExecuteScriptResult ScriptLoader::DoExecuteScript(
 void ScriptLoader::Execute() {
   DCHECK(!will_be_parser_executed_);
   DCHECK(async_exec_type_ != ScriptRunner::kNone);
-  DCHECK(pending_script_->IsExternal());
+  DCHECK(pending_script_->IsExternalOrModule());
   PendingScript* pending_script = pending_script_;
   pending_script_ = nullptr;
   ExecuteScriptBlock(pending_script, KURL());
