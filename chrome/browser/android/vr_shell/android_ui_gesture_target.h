@@ -7,41 +7,49 @@
 
 #include <memory>
 
-#include "base/android/jni_android.h"
 #include "base/macros.h"
-#include "base/time/time.h"
-#include "third_party/WebKit/public/platform/WebGestureEvent.h"
-#include "third_party/WebKit/public/platform/WebInputEvent.h"
-#include "third_party/WebKit/public/platform/WebMouseEvent.h"
+#include "content/public/browser/android/motion_event_synthesizer.h"
+
+namespace blink {
+class WebInputEvent;
+}
+
+namespace content {
+class WebContents;
+}
+
+namespace ui {
+class ViewAndroid;
+}
 
 namespace vr_shell {
 
 class AndroidUiGestureTarget {
  public:
-  AndroidUiGestureTarget(jobject event_synthesizer, float dpr_ratio);
+  AndroidUiGestureTarget(content::WebContents* web_contents,
+                         ui::ViewAndroid* view,
+                         float dpr_ratio);
   ~AndroidUiGestureTarget();
 
   void DispatchWebInputEvent(std::unique_ptr<blink::WebInputEvent> event);
 
  private:
-  // Enum values below need to be kept in sync with MotionEventSynthesizer.java.
-  enum Action {
-    Invalid = -1,
-    Start = 0,
-    Move = 1,
-    Cancel = 2,
-    End = 3,
-    Scroll = 4,
-    HoverEnter = 5,
-    HoverExit = 6,
-    HoverMove = 7,
+  void Inject(content::MotionEventAction action, int64_t time_ms);
+  void SetPointer(int x, int y);
+
+  class EventSynthesizerHelper
+      : public content::MotionEventSynthesizer::Helper {
+   public:
+    explicit EventSynthesizerHelper(content::WebContents* web_contents)
+        : web_contents_(web_contents) {}
+    content::WebContents* GetWebContents() const override;
+
+   private:
+    content::WebContents* web_contents_;
   };
 
-  void SetPointer(JNIEnv* env, int x, int y);
-  void SetScrollDeltas(JNIEnv* env, int x, int y, int dx, int dy);
-  void Inject(JNIEnv* env, Action action, double time_in_seconds);
-
-  jobject event_synthesizer_;
+  std::unique_ptr<EventSynthesizerHelper> event_helper_;
+  std::unique_ptr<content::MotionEventSynthesizer> event_synthesizer_;
   int scroll_x_ = 0;
   int scroll_y_ = 0;
   float scroll_ratio_;

@@ -222,6 +222,10 @@ class CONTENT_EXPORT WebContentsAndroid
   void SetMediaSession(
       const base::android::ScopedJavaLocalRef<jobject>& j_media_session);
 
+  void SetMotionEventSynthesizer(
+      const base::android::ScopedJavaLocalRef<jobject>& j_synthesizer);
+  base::android::ScopedJavaLocalRef<jobject> GetMotionEventSynthesizer();
+
  private:
   RenderWidgetHostViewAndroid* GetRenderWidgetHostViewAndroid();
 

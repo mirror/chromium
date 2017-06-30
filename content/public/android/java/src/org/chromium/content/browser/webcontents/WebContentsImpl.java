@@ -20,6 +20,7 @@ import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.content.browser.AppWebMessagePort;
 import org.chromium.content.browser.MediaSessionImpl;
+import org.chromium.content.browser.MotionEventSynthesizer;
 import org.chromium.content.browser.RenderCoordinates;
 import org.chromium.content.browser.framehost.RenderFrameHostDelegate;
 import org.chromium.content_public.browser.AccessibilitySnapshotCallback;
@@ -105,6 +106,10 @@ import java.util.UUID;
     // The media session for this WebContents. It is constructed by the native MediaSession and has
     // the same life time as native MediaSession.
     private MediaSessionImpl mMediaSession;
+
+    // Synthesizes motion events from other inputs for embedders. The instance is accessed through
+    // its native object but WebContentsImpl holds its reference to keep it from being gc'ed.
+    private MotionEventSynthesizer mMotionEventSynthesizer;
 
     class SmartClipCallbackImpl implements SmartClipCallback {
         public SmartClipCallbackImpl(final Handler smartClipHandler) {
@@ -610,6 +615,16 @@ import java.util.UUID;
     @CalledByNative
     private static void createSizeAndAddToList(List<Rect> sizes, int width, int height) {
         sizes.add(new Rect(0, 0, width, height));
+    }
+
+    @CalledByNative
+    private final void setMotionEventSynthesizer(MotionEventSynthesizer synthesizer) {
+        mMotionEventSynthesizer = synthesizer;
+    }
+
+    @CalledByNative
+    private final MotionEventSynthesizer getMotionEventSynthesizer() {
+        return mMotionEventSynthesizer;
     }
 
     // This is static to avoid exposing a public destroy method on the native side of this class.

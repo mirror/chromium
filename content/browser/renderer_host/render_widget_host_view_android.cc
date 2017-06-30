@@ -43,6 +43,7 @@
 #include "content/browser/android/overscroll_controller_android.h"
 #include "content/browser/android/selection_popup_controller.h"
 #include "content/browser/android/synchronous_compositor_host.h"
+#include "content/browser/android/synthetic_event_helper.h"
 #include "content/browser/compositor/surface_utils.h"
 #include "content/browser/devtools/render_frame_devtools_agent_host.h"
 #include "content/browser/gpu/browser_gpu_channel_host_factory.h"
@@ -1147,9 +1148,10 @@ void RenderWidgetHostViewAndroid::ShowDisambiguationPopup(
 
 std::unique_ptr<SyntheticGestureTarget>
 RenderWidgetHostViewAndroid::CreateSyntheticGestureTarget() {
+  DCHECK(synthetic_event_helper_);
   return std::unique_ptr<SyntheticGestureTarget>(
-      new SyntheticGestureTargetAndroid(
-          host_, content_view_core_->CreateMotionEventSynthesizer()));
+      new SyntheticGestureTargetAndroid(host_, synthetic_event_helper_,
+                                        &view_));
 }
 
 void RenderWidgetHostViewAndroid::SendReclaimCompositorResources(

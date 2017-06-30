@@ -746,4 +746,15 @@ void WebContentsAndroid::SetMediaSession(
   Java_WebContentsImpl_setMediaSession(env, obj_, j_media_session);
 }
 
+void WebContentsAndroid::SetMotionEventSynthesizer(
+    const ScopedJavaLocalRef<jobject>& j_synthesizer) {
+  JNIEnv* env = base::android::AttachCurrentThread();
+  Java_WebContentsImpl_setMotionEventSynthesizer(env, obj_, j_synthesizer);
+}
+
+ScopedJavaLocalRef<jobject> WebContentsAndroid::GetMotionEventSynthesizer() {
+  JNIEnv* env = base::android::AttachCurrentThread();
+  return Java_WebContentsImpl_getMotionEventSynthesizer(env, obj_);
+}
+
 }  // namespace content

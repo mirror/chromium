@@ -56,6 +56,7 @@ class RenderWidgetHostImpl;
 class SelectionPopupController;
 class SynchronousCompositorHost;
 class SynchronousCompositorClient;
+class SyntheticEventHelper;
 class WebContentsAccessibilityAndroid;
 struct NativeWebKeyboardEvent;
 struct ContextMenuParams;
@@ -252,6 +253,9 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
   void set_selection_popup_controller(SelectionPopupController* controller) {
     selection_popup_controller_ = controller;
   }
+  void set_synthetic_event_helper(SyntheticEventHelper* helper) {
+    synthetic_event_helper_ = helper;
+  }
 
   base::WeakPtr<RenderWidgetHostViewAndroid> GetWeakPtrAndroid();
 
@@ -381,6 +385,7 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
 
   ImeAdapterAndroid* ime_adapter_android_;
   SelectionPopupController* selection_popup_controller_;
+  SyntheticEventHelper* synthetic_event_helper_;
 
   // The background color of the widget.
   SkColor background_color_;

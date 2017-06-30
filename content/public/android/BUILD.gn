@@ -298,6 +298,7 @@ java_cpp_enum("content_public_android_java_enums_srcjar") {
   sources = [
     "//content/browser/android/content_view_core_impl.cc",
     "//content/browser/android/gesture_event_type.h",
+    "//content/public/browser/android/motion_event_synthesizer.h",
     "//content/public/browser/download_item.h",
     "//content/public/browser/invalidate_type.h",
     "//content/public/browser/navigation_controller.h",

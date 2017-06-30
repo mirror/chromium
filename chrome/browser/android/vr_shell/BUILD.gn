@@ -158,7 +158,6 @@ if (is_android) {
       "//cc",
       "//chrome:resources",
       "//components/rappor",
-      "//content/public/android:jni",
       "//content/public/browser",
       "//content/public/common",
       "//device/gamepad",
