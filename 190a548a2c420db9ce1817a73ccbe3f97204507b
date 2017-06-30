@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "054ccade_a83a025b",
+        "filename": "android_webview/browser/aw_contents.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-06-30T23:40:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "645ef881_fb11d302",
+      "revId": "190a548a2c420db9ce1817a73ccbe3f97204507b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a1fc28f_131bcec2",
         "filename": "android_webview/browser/aw_contents.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "190a548a2c420db9ce1817a73ccbe3f97204507b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0523878f_5686ac11",
+        "filename": "android_webview/browser/aw_contents.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1452,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-06-30T23:40:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a1fc28f_131bcec2",
+      "revId": "190a548a2c420db9ce1817a73ccbe3f97204507b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2f012636_7d2860e5",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwContents.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3013,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-06-30T23:40:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4d4fadf_2230e9e4",
+      "revId": "190a548a2c420db9ce1817a73ccbe3f97204507b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9018f5a6_646e6d19",
         "filename": "android_webview/javatests/src/org/chromium/android_webview/test/SafeBrowsingTest.java",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "190a548a2c420db9ce1817a73ccbe3f97204507b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ffaa29a_4a42c1f5",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/SafeBrowsingTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-06-30T23:40:13Z",
+      "side": 1,
+      "message": "waitForCallback() blocks the thread until JS executes. JS is posted to the same thread, so it waits for waitForCallback() to finish during that poll.\n\nI fixed it by making sure we poll on one thread and execute javascript on another.",
+      "parentUuid": "9018f5a6_646e6d19",
+      "revId": "190a548a2c420db9ce1817a73ccbe3f97204507b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
