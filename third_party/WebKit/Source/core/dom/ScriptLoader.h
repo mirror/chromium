@@ -89,18 +89,8 @@ class CORE_EXPORT ScriptLoader : public GarbageCollectedFinalized<ScriptLoader>,
   // TODO(hiroshige): Currently this returns bool (true if success) only to
   // preserve existing code structure and behavior. Clean up this.
   bool ExecuteScriptBlock(PendingScript*, const KURL&);
-
-  enum class ExecuteScriptResult {
-    kShouldFireErrorEvent,
-    kShouldFireLoadEvent,
-    kShouldFireNone
-  };
-  WARN_UNUSED_RESULT ExecuteScriptResult ExecuteScript(const Script*);
   virtual void Execute();
 
-  // XML parser calls these
-  void DispatchLoadEvent();
-  void DispatchErrorEvent();
   bool IsScriptTypeSupported(LegacyTypeSupport,
                              ScriptType& out_script_type) const;
 
@@ -173,7 +163,15 @@ class CORE_EXPORT ScriptLoader : public GarbageCollectedFinalized<ScriptLoader>,
                              ParserDisposition,
                              WebURLRequest::FetchCredentialsMode);
 
+  enum class ExecuteScriptResult {
+    kShouldFireErrorEvent,
+    kShouldFireLoadEvent,
+    kShouldFireNone
+  };
+  WARN_UNUSED_RESULT ExecuteScriptResult ExecuteScript(const Script*);
   ExecuteScriptResult DoExecuteScript(const Script*);
+  void DispatchLoadEvent();
+  void DispatchErrorEvent();
 
   // Clears the connection to the PendingScript.
   void DetachPendingScript();
