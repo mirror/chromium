@@ -16,6 +16,24 @@
       "revId": "e4225e0980d584363c2ca4441f36dee0e67f9c0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c7acc2c_ebcd5183",
+        "filename": "cc/paint/display_item_list.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-30T21:38:05Z",
+      "side": 1,
+      "message": "Hrmm. I _think_ this was responsible for a big piece of the recording cost (ie it saved that recording cost). Mostly due to removing direct pob access from things that want to cache it, and requiring that they use DIL+release instead. In those cases, the allocations for offsets and visual rects and rtree building and all that fun can add up I think.",
+      "parentUuid": "2ed63301_f9594f84",
+      "revId": "e4225e0980d584363c2ca4441f36dee0e67f9c0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
