@@ -61,6 +61,7 @@ void InProcessVideoCaptureProvider::GetDeviceInfosAsync(
 std::unique_ptr<VideoCaptureDeviceLauncher>
 InProcessVideoCaptureProvider::CreateDeviceLauncher() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+
   return base::MakeUnique<InProcessVideoCaptureDeviceLauncher>(
       device_task_runner_, video_capture_system_.get());
 }
