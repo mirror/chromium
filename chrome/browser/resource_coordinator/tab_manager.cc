@@ -12,6 +12,7 @@
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/command_line.h"
+#include "base/containers/flat_set.h"
 #include "base/feature_list.h"
 #include "base/memory/memory_pressure_monitor.h"
 #include "base/metrics/field_trial.h"
@@ -103,6 +104,31 @@ void ReloadWebContentsIfDiscarded(WebContents* contents,
     contents_data->SetDiscardState(false);
   }
 }
+
+class BoundsList {
+ public:
+  BoundsList() = default;
+
+  // Returns false if a previously inserted gfx::Rect covers |bounds|.
+  // Otherwise, returns true and adds |bounds| to the list.
+  //
+  // TODO(fdoray): Handle the case where no previously inserted gfx::Rect covers
+  // |bounds| by itself but the union of all previously inserted gfx::Rects
+  // covers |bounds|.
+  bool AddBoundsIfNotCoveredByPreviousBounds(const gfx::Rect& bounds) {
+    for (const gfx::Rect& previous_bounds : bounds_list_) {
+      if (previous_bounds.Contains(bounds))
+        return false;
+    }
+    bounds_list_.push_back(bounds);
+    return true;
+  }
+
+ private:
+  std::vector<gfx::Rect> bounds_list_;
+
+  DISALLOW_COPY_AND_ASSIGN(BoundsList);
+};
 
 }  // namespace
 
@@ -249,7 +275,8 @@ int TabManager::FindTabStripModelById(int64_t target_web_contents_id,
 }
 
 TabStatsList TabManager::GetTabStats() const {
-  TabStatsList stats_list(GetUnsortedTabStats());
+  TabStatsList stats_list(
+      GetUnsortedTabStats(std::vector<gfx::NativeWindow>()));
 
   // Sort the collected data so that least desirable to be killed is first, most
   // desirable is last.
@@ -330,7 +357,7 @@ void TabManager::DiscardTab() {
 #if defined(OS_CHROMEOS)
   // Call Chrome OS specific low memory handling process.
   if (base::FeatureList::IsEnabled(features::kArcMemoryManagement)) {
-    delegate_->LowMemoryKill(GetUnsortedTabStats());
+    delegate_->LowMemoryKill();
     return;
   }
 #endif
@@ -376,14 +403,42 @@ void TabManager::set_test_tick_clock(base::TickClock* test_tick_clock) {
 // 1) whether or not a tab is pinned
 // 2) last time a tab was selected
 // 3) is the tab currently selected
-TabStatsList TabManager::GetUnsortedTabStats() const {
+TabStatsList TabManager::GetUnsortedTabStats(
+    const std::vector<gfx::NativeWindow>& windows_sorted_by_z_index) const {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
+
+  const auto browser_info_list = GetBrowserInfoList();
+
+  // Compute visibility.
+  base::flat_set<const BrowserInfo*> non_visible_windows;
+  if (!windows_sorted_by_z_index.empty()) {
+    BoundsList bounds_list;
+    for (gfx::NativeWindow window : windows_sorted_by_z_index) {
+      auto browser_info_it = std::find_if(
+          browser_info_list.begin(), browser_info_list.end(),
+          [&window](const BrowserInfo& browser_info) {
+            return browser_info.browser &&
+                   browser_info.browser->window()->GetNativeWindow() == window;
+          });
+      if (browser_info_it != browser_info_list.end()) {
+        const bool window_is_visible =
+            !browser_info_it->window_is_minimized &&
+            bounds_list.AddBoundsIfNotCoveredByPreviousBounds(
+                browser_info_it->browser->window()->GetBounds());
+        if (!window_is_visible)
+          non_visible_windows.insert(&*browser_info_it);
+      }
+    }
+  }
 
   TabStatsList stats_list;
   stats_list.reserve(32);  // 99% of users have < 30 tabs open.
-  for (const BrowserInfo& browser_info : GetBrowserInfoList()) {
+  for (const BrowserInfo& browser_info : browser_info_list) {
     const bool window_is_active = stats_list.empty();
-    AddTabStats(browser_info, window_is_active, &stats_list);
+    const bool window_is_visible =
+        !browser_info.window_is_minimized &&
+        !base::ContainsKey(non_visible_windows, &browser_info);
+    AddTabStats(browser_info, window_is_active, window_is_visible, &stats_list);
   }
 
   return stats_list;
@@ -422,7 +477,7 @@ content::WebContents* TabManager::GetWebContentsById(
 
 bool TabManager::CanSuspendBackgroundedRenderer(int render_process_id) const {
   // A renderer can be purged if it's not playing media.
-  auto tab_stats = GetUnsortedTabStats();
+  auto tab_stats = GetUnsortedTabStats(std::vector<gfx::NativeWindow>());
   for (auto& tab : tab_stats) {
     if (tab.child_process_host_id != render_process_id)
       continue;
@@ -611,6 +666,7 @@ int TabManager::GetTabCount() const {
 
 void TabManager::AddTabStats(const BrowserInfo& browser_info,
                              bool window_is_active,
+                             bool window_is_visible,
                              TabStatsList* stats_list) const {
   TabStripModel* tab_strip_model = browser_info.tab_strip_model;
   for (int i = 0; i < tab_strip_model->count(); i++) {
@@ -623,10 +679,7 @@ void TabManager::AddTabStats(const BrowserInfo& browser_info,
       stats.is_pinned = tab_strip_model->IsTabPinned(i);
       stats.is_active = tab_strip_model->active_index() == i;
       stats.is_in_active_window = window_is_active;
-      // Only consider the window non-visible if it is minimized. The consumer
-      // of the constructed TabStatsList may update this after performing more
-      // advanced window visibility checks.
-      stats.is_in_visible_window = !browser_info.window_is_minimized;
+      stats.is_in_visible_window = window_is_visible;
       stats.is_discarded = GetWebContentsData(contents)->IsDiscarded();
       stats.has_form_entry =
           contents->GetPageImportanceSignals().had_form_interaction;
@@ -686,7 +739,7 @@ bool TabManager::ShouldPurgeNow(content::WebContents* content) const {
 }
 
 void TabManager::PurgeBackgroundedTabsIfNeeded() {
-  auto tab_stats = GetUnsortedTabStats();
+  auto tab_stats = GetUnsortedTabStats(std::vector<gfx::NativeWindow>());
   for (auto& tab : tab_stats) {
     if (!tab.render_process_host->IsProcessBackgrounded())
       continue;
@@ -944,6 +997,7 @@ std::vector<TabManager::BrowserInfo> TabManager::GetBrowserInfoList() const {
     Browser* browser = *browser_iterator;
 
     BrowserInfo browser_info;
+    browser_info.browser = browser;
     browser_info.tab_strip_model = browser->tab_strip_model();
     browser_info.window_is_minimized = browser->window()->IsMinimized();
     browser_info.browser_is_app = browser->is_app();
