@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d11719f1_612b06a8",
+        "filename": "chrome/browser/page_load_metrics/metrics_web_contents_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-06-30T18:25:07Z",
+      "side": 1,
+      "message": "You might add a comment as to what kinds of things we\u0027re filtering here.",
+      "range": {
+        "startLine": 278,
+        "startChar": 4,
+        "endLine": 278,
+        "endChar": 10
+      },
+      "revId": "8fa9578f334b124075bc56fc34abf868227aea5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
