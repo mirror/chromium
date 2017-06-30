@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2338ff00_8f81b839",
+        "filename": "content/shell/test_runner/test_runner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1799,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-06-30T21:49:09Z",
+      "side": 1,
+      "message": "Do we need to audit other items contained within LayoutTestRuntimeFlags?\n\nFWIW, I see that the following items (related to MockContentSettingsClient) in LayoutTestRuntimeFlags:\n  images_allowed\n  scripts_allowed\n  storage_allowed\n  plugins_allowed\n  running_insecure_content_allowed\n  autoplay_allowed\n\nAnd I also see that blink::WebSettings has the following methods:\n  SetImagesEnabled\n  SetLocalStorageEnabled\n  SetAllowRunningOfInsecureContent\n  SetAutoplayPolicy\n\nCan the concerns from this CL apply to these other settings (e.g. is there an equivalent of DOMPluginArray for images and other items above)?",
+      "range": {
+        "startLine": 1799,
+        "startChar": 35,
+        "endLine": 1799,
+        "endChar": 52
+      },
+      "revId": "f3ac9c562fed08a8ffc5a0436ec1196d19df147b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
