@@ -6,7 +6,10 @@
 #include "base/test/launcher/unit_test_launcher.h"
 #include "sql/test/sql_test_suite.h"
 
+#include <iostream>
+
 int main(int argc, char** argv) {
+  std::cout << "Reached Unit Test Entry Point!" << std::endl;
   sql::SQLTestSuite test_suite(argc, argv);
 
   return base::LaunchUnitTests(

@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 #import <Foundation/Foundation.h>
+
 #include <getopt.h>
 #include <string>
 
@@ -47,12 +48,45 @@ void LogError(NSString* format, ...) {
 
 }
 
+// Wrapper around NSTimer to execute a simple block.
+@interface NSTimer (Block)
++ (id)scheduledTimerWithTimeInterval:(NSTimeInterval)timeInterval
+                               block:(void (^)())block
+                             repeats:(BOOL)repeats;
+@end
+
+@implementation NSTimer (Block)
+
++ (id)scheduledTimerWithTimeInterval:(NSTimeInterval)timeInterval
+                               block:(void (^)())block
+                             repeats:(BOOL)repeats {
+  NSTimer* timer =
+      [self scheduledTimerWithTimeInterval:timeInterval
+                                    target:self
+                                  selector:@selector(timerFireMethod:)
+                                  userInfo:block
+                                   repeats:repeats];
+  [block release];
+  return timer;
+}
+
++ (void)timerFireMethod:(NSTimer*)timer {
+  if ([timer userInfo]) {
+    void (^block)() = (void (^)())[timer userInfo];
+    block();
+  }
+}
+
+@end
+
 // Wrap boiler plate calls to xcrun NSTasks.
 @interface XCRunTask : NSObject {
+ @public
   NSTask* _task;
 }
 - (instancetype)initWithArguments:(NSArray*)arguments;
 - (void)run;
+- (void)terminate;
 - (void)setStandardOutput:(id)output;
 - (void)setStandardError:(id)error;
 @end
@@ -88,6 +122,10 @@ void LogError(NSString* format, ...) {
 - (void)run {
   [_task launch];
   [_task waitUntilExit];
+}
+
+- (void)terminate {
+  [_task terminate];
 }
 
 - (void)launch {
@@ -220,12 +258,20 @@ void KillSimulator() {
   [task run];
 }
 
+void PrintAppContainer(NSString* udid) {
+  XCRunTask* task = [[[XCRunTask alloc] initWithArguments:@[
+    @"simctl", @"get_app_container", udid,
+    @"org.chromium.gtest.generic-unit-test"
+  ]] autorelease];
+  [task run];
+}
+
 void RunApplication(NSString* app_path,
                     NSString* xctest_path,
                     NSString* udid,
                     NSMutableDictionary* app_env,
                     NSString* cmd_args,
-                    NSMutableArray* tests_filter) {
+                    NSMutableArray* only_testing_tests) {
   NSString* tempFilePath = [NSTemporaryDirectory()
       stringByAppendingPathComponent:[[NSUUID UUID] UUIDString]];
   [[NSFileManager defaultManager] createFileAtPath:tempFilePath
@@ -269,8 +315,8 @@ void RunApplication(NSString* app_path,
     [testTargetName setObject:@[ cmd_args ] forKey:@"CommandLineArguments"];
   }
 
-  if ([tests_filter count] > 0) {
-    [testTargetName setObject:tests_filter forKey:@"OnlyTestIdentifiers"];
+  if (only_testing_tests) {
+    [testTargetName setObject:only_testing_tests forKey:@"OnlyTestIdentifiers"];
   }
 
   [testTargetName setObject:testingEnvironmentVariables
@@ -283,34 +329,102 @@ void RunApplication(NSString* app_path,
                     format:NSPropertyListXMLFormat_v1_0
           errorDescription:&error];
   [data writeToFile:tempFilePath atomically:YES];
-  XCRunTask* task = [[[XCRunTask alloc] initWithArguments:@[
-    @"xcodebuild", @"-xctestrun", tempFilePath, @"-destination",
-    [@"platform=iOS Simulator,id=" stringByAppendingString:udid],
-    @"test-without-building"
-  ]] autorelease];
 
-  if (!xctest_path) {
-    // The following stderr messages are meaningless on iossim when not running
-    // xctests and can be safely stripped.
-    NSArray* ignore_strings = @[
-      @"IDETestOperationsObserverErrorDomain", @"** TEST EXECUTE FAILED **"
-    ];
-    NSPipe* stderr_pipe = [NSPipe pipe];
-    stderr_pipe.fileHandleForReading.readabilityHandler =
+  // xcodebuild -xctestrun sometimes hangs in the middle of tests running, thus
+  // adding the following workaround to kill the task and re-run the tests if
+  // detected hanging.
+  __block BOOL shouldRunTests = YES;
+  while (shouldRunTests) {
+    // Should re-run tests if and only if the tests running task hangs and gets
+    // killed manually.
+    shouldRunTests = NO;
+
+    XCRunTask* task = [[[XCRunTask alloc] initWithArguments:@[
+      @"xcodebuild", @"-xctestrun", tempFilePath, @"-destination",
+      [@"platform=iOS Simulator,id=" stringByAppendingString:udid],
+      @"test-without-building"
+    ]] autorelease];
+
+    if (!xctest_path) {
+      // The following stderr messages are meaningless on iossim when not
+      // running xctests and can be safely stripped.
+      NSArray* ignore_strings = @[
+        @"IDETestOperationsObserverErrorDomain", @"** TEST EXECUTE FAILED **"
+      ];
+      NSPipe* stderr_pipe = [NSPipe pipe];
+      stderr_pipe.fileHandleForReading.readabilityHandler =
+          ^(NSFileHandle* handle) {
+            NSString* log = [[[NSString alloc]
+                initWithData:handle.availableData
+                    encoding:NSUTF8StringEncoding] autorelease];
+
+            for (NSString* ignore_string in ignore_strings) {
+              if ([log rangeOfString:ignore_string].location != NSNotFound) {
+                return;
+              }
+            }
+            NSLog(@"%@", log);
+          };
+      [task setStandardError:stderr_pipe];
+    }
+
+    NSTimer* repeatingTimer = nil;
+
+    // Whether tests running task is hanging or not is determined by
+    // monitoring the standard output stream, and if no output has been sent
+    // to the pipe over a predefined timeout, the task is considered to be
+    // hanging.
+    __block BOOL outputStreamAlive = NO;
+
+    float timeout = 600.0;
+
+    NSPipe* stdoutPipe = [NSPipe pipe];
+    stdoutPipe.fileHandleForReading.readabilityHandler =
         ^(NSFileHandle* handle) {
           NSString* log = [[[NSString alloc] initWithData:handle.availableData
                                                  encoding:NSUTF8StringEncoding]
               autorelease];
-          for (NSString* ignore_string in ignore_strings) {
-            if ([log rangeOfString:ignore_string].location != NSNotFound) {
-              return;
-            }
+          if ([log length] != 0) {
+            outputStreamAlive = YES;
+            NSLog(@"%@", log);
           }
-          printf("%s", [log UTF8String]);
         };
-    [task setStandardError:stderr_pipe];
+    [task setStandardOutput:stdoutPipe];
+
+    repeatingTimer = [NSTimer
+        scheduledTimerWithTimeInterval:timeout
+                                 block:^{
+                                   NSLog(@"Timer fired!");
+                                   PrintAppContainer(udid);
+
+                                   int pid = task->_task.processIdentifier;
+                                   NSString* pidString = [@(pid) stringValue];
+                                   NSTask* sampleTask = [[NSTask alloc] init];
+                                   SEL selector =
+                                       @selector(setStartsNewProcessGroup:);
+                                   if ([sampleTask respondsToSelector:selector])
+                                     [sampleTask performSelector:selector
+                                                      withObject:nil];
+                                   [sampleTask
+                                       setLaunchPath:@"/usr/bin/sample"];
+                                   [sampleTask setArguments:@[ pidString ]];
+                                   [sampleTask launch];
+                                   [sampleTask waitUntilExit];
+
+                                   // if (!outputStreamAlive) {
+                                   //  shouldRunTests = YES;
+                                   //  [task terminate];
+                                   //  KillSimulator();
+                                   //} else {
+                                   //  outputStreamAlive = NO;
+                                   //}
+                                 }
+                               repeats:NO];
+
+    [task run];
+
+    [repeatingTimer invalidate];
   }
-  [task run];
 }
 
 int main(int argc, char* const argv[]) {

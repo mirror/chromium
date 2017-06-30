@@ -17,7 +17,10 @@
 #include "mojo/public/tests/test_support_private.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
+#include <iostream>
+
 int main(int argc, char** argv) {
+  std::cout << "Reached Unit Test Entry Point!" << std::endl;
 #if !defined(OS_ANDROID)
   // Silence death test thread warnings on Linux. We can afford to run our death
   // tests a little more slowly (< 10 ms per death test on a Z620).
