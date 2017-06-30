@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "a6ab0e6c_36ac1355",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-30T00:30:05Z",
+      "side": 1,
+      "message": "Please add an actual description of what is being added in this patch and for what.",
+      "revId": "5f998c5047478631cd1aec57a80eba4f92ba85d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff7a2f64_6cc4c03c",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_importer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-30T00:30:05Z",
+      "side": 1,
+      "message": "This won\u0027t work, there should not be #if defined(OS_ANDROID) in this folder. This is a layering violation.\n\nI don\u0027t see why OfflinePageModelFactory can not be just moved into c/b/o_p right in this patch. It doesn\u0027t seem that it needs any refactoring to do so.",
+      "revId": "5f998c5047478631cd1aec57a80eba4f92ba85d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f1e83fe5_d12d46e8",
         "filename": "chrome/browser/offline_pages/prefetch/prefetch_importer_impl.cc",
         "patchSetId": 1
@@ -13,6 +47,24 @@
       "writtenOn": "2017-06-30T00:00:51Z",
       "side": 1,
       "message": "You need some #ifdef in the implementation as well.  Probably:\n\n#if !OS_ANDROID\nNOTREACHED();\n#else\n.... regular impl ....\n#endif",
+      "revId": "5f998c5047478631cd1aec57a80eba4f92ba85d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d452584e_52ba55e0",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_importer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-30T00:30:05Z",
+      "side": 1,
+      "message": "See above.",
+      "parentUuid": "f1e83fe5_d12d46e8",
       "revId": "5f998c5047478631cd1aec57a80eba4f92ba85d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -36,6 +88,23 @@
     },
     {
       "key": {
+        "uuid": "c7a0e656_f95501ec",
+        "filename": "components/offline_pages/core/archive_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-30T00:30:05Z",
+      "side": 1,
+      "message": "Why isn\u0027t it just generated guid for the filename? We probably don\u0027t want to depend on naming schema chosen by download code.",
+      "revId": "5f998c5047478631cd1aec57a80eba4f92ba85d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b94a2be9_30faf410",
         "filename": "components/offline_pages/core/archive_manager.h",
         "patchSetId": 1
@@ -47,6 +116,23 @@
       "writtenOn": "2017-06-30T00:00:51Z",
       "side": 1,
       "message": "Can you describe the expectations for src_path?  It should be a unique GUID to prevent collisions.",
+      "revId": "5f998c5047478631cd1aec57a80eba4f92ba85d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a61824cc_f803b843",
+        "filename": "components/offline_pages/core/archive_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-30T00:30:05Z",
+      "side": 1,
+      "message": "MovePrefetchedArchiveToChromeDownloadsFolder ?",
       "revId": "5f998c5047478631cd1aec57a80eba4f92ba85d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -81,6 +167,23 @@
       "writtenOn": "2017-06-30T00:00:51Z",
       "side": 1,
       "message": "Can you use default here?",
+      "revId": "5f998c5047478631cd1aec57a80eba4f92ba85d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e0a8405_165af869",
+        "filename": "components/offline_pages/core/offline_page_model.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-30T00:30:05Z",
+      "side": 1,
+      "message": "\"Attempts to import a prefetched offline page.\"?\nAlso probably rename the method to ImportPrefetchedPage.\n\nThis is not a general import, this is a very specific form of it. Another one coming soon will be import from P2P sharing, which will have different params and functionality.",
       "revId": "5f998c5047478631cd1aec57a80eba4f92ba85d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
