@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8499f70c_1f4e7da2",
+        "filename": "chrome/browser/chromeos/arc/accessibility/ax_tree_source_arc.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-06-30T22:11:33Z",
+      "side": 1,
+      "message": "As I mentioned before, you can\u0027t do this without defining what it means for these Android backed objects to be a control.",
+      "revId": "404cc5e98c66501a9918abb9c775f9033b83cb15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d59b463c_82e639a4",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/constants.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-06-30T22:11:33Z",
+      "side": 1,
+      "message": "Sorry, I meant for you to make this part of the automation idl. See how NameFromType is done (you\u0027ll also need to add a check for it in PRESUBMIT.py under ui/accessibility). This will generate the correct externs.",
+      "revId": "404cc5e98c66501a9918abb9c775f9033b83cb15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "61c902d8_2673fd96",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/constants.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-06-30T22:11:33Z",
+      "side": 1,
+      "message": "As was pointed out to me earlier today, aria-disabled is valid on all base markup, so I\u0027m not really sure how you want to resolve that point in the ARIA spec. e.g. \u003cdiv aria-disabled\u003d\"true\"\u003e is valid and should be able to be expressed; with this patch, it won\u0027t be anymore.",
+      "revId": "404cc5e98c66501a9918abb9c775f9033b83cb15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "01f02d9a_38d9c436",
+        "filename": "chrome/browser/ui/views/download/download_item_view.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-06-30T22:11:33Z",
+      "side": 1,
+      "message": "As mentiond before, the big downside of this approach is now you\u0027ll have to mark a lot of classes as control mode enabled including some you caught but others I think you missed e.g. ui/views/controls/slider.cc. What happens when we try to use this control mode and someone forgets to add this?",
+      "revId": "404cc5e98c66501a9918abb9c775f9033b83cb15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f38ad2a7_68393898",
+        "filename": "content/browser/accessibility/browser_accessibility_auralinux.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-06-30T22:11:33Z",
+      "side": 1,
+      "message": "Can you just define the missing constant?",
+      "revId": "404cc5e98c66501a9918abb9c775f9033b83cb15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e46c205_e86d1a8c",
+        "filename": "ui/views/controls/textfield/textfield.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 925,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-06-30T22:11:33Z",
+      "side": 1,
+      "message": "This logic seems wrong. !enabled should take precedence, right?",
+      "revId": "404cc5e98c66501a9918abb9c775f9033b83cb15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
