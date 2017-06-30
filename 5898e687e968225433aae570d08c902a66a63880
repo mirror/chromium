@@ -34,6 +34,24 @@
       "revId": "5898e687e968225433aae570d08c902a66a63880",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7fdd2a8_73bce4af",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/ScopedPaintChunkProperties.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-30T22:32:26Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "95904547_742fff89",
+      "revId": "5898e687e968225433aae570d08c902a66a63880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

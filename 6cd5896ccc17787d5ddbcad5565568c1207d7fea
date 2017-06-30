@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb40bd3b_360e3202",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintChunker.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-30T22:32:26Z",
+      "side": 0,
+      "message": "This is removed because we no longer have paired display items for SPv2.",
+      "revId": "6cd5896ccc17787d5ddbcad5565568c1207d7fea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
