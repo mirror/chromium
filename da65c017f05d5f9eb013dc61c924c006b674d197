@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "ca504f96_f24eeff7",
+        "filename": "chrome/common/chrome_constants.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-30T21:29:01Z",
+      "side": 1,
+      "message": "This is a dirname and we append PrefetchStore.db to complete the file name.\n\nThere are at least 2 files per db created:\n* One as specified by the path, e.g. PrefetchStore.db\n* Another one for the journal, e.g. PrefetchStore.db-jounral  \n\nI see quite a few of pairs in the Default profile on my phone (guessing these are all sqlite):\nCookies\nCookies-journal\nFavicons\nFavicons-journal\nHistory\nHistory-journal\nLogin Data\nLogin Data-journal\nNetwork Action Predictor\nNetwork Action Predictor-journal\nOrigin Bound Certs\nOrigin Bound Certs-journal\nPrecacheDatabase\nPrecacheDatabase-journal\nShortcuts\nShortcuts-journal\nTop Sites\nTop Sites-journal\nWeb Data\nWeb Data-journal\npreviews_opt_out.db\npreviews_opt_out.db-journal\n\nWhich makes me feel good about putting this db into OfflinePages. I am fine pointing to the file name directly here, but from the perspective of desperate recovery, the simplest thing to do would be to simply blow away a whole directory and not think about how many files are in it. And that is what we have right now.\n\n(It looks like .db extension is a rare phenomenon too, BTW.)",
+      "parentUuid": "0b97f88e_73312061",
+      "revId": "da65c017f05d5f9eb013dc61c924c006b674d197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3df6ed8c_03f84a10",
         "filename": "components/offline_pages/core/prefetch/add_unique_urls_task.cc",
         "patchSetId": 25
@@ -64,6 +82,24 @@
       "writtenOn": "2017-06-30T11:21:16Z",
       "side": 1,
       "message": "You can get away without generating an ID. SQLite aliases your integer primary key to the record\u0027s ROWID, which is guaranteed to be unique. I imagine it\u0027s better to let SQLite set the ROWID, rather than set it based on an RNG. Details at the link below (you do _not_ need to use autoincrement) -- https://sqlite.org/autoinc.html",
+      "revId": "da65c017f05d5f9eb013dc61c924c006b674d197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99c10ed1_dcea6734",
+        "filename": "components/offline_pages/core/prefetch/add_unique_urls_task.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-30T21:29:01Z",
+      "side": 1,
+      "message": "In general I agree with you, except we are using this key in multiple tables (in different DBs), which makes me feel more comfortable when I auto generate this value.\n\nOnce we put all the tables in a single DB (this is something we are going to be doing in Q3 or Q4, and I\u0027ll keep you posted), this will be very sound approach, once we normalize the DB a little bit.",
+      "parentUuid": "3df6ed8c_03f84a10",
       "revId": "da65c017f05d5f9eb013dc61c924c006b674d197",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +123,24 @@
     },
     {
       "key": {
+        "uuid": "a26d4a9a_73908eeb",
+        "filename": "components/offline_pages/core/prefetch/add_unique_urls_task.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-30T21:29:01Z",
+      "side": 1,
+      "message": "This is not as simple as it look.\n\nCheckDb is meant to be a generic check that we can move on. And I want to to be used everywhere we write the command in our code. The reason I don\u0027t want to assert the pointer before calling a sync method is that Execute is written to be able to work with multiple different return types. I can of course go the Go route and return a pair \u003cstatus, T result\u003e, but then I added more complex return type to save 2 lines of code... and handling that return type will add more to the problem. I\u0027d like every task to decide how it will respond to db check failing and I want the DB check to be consistent everywhere.\n\nI am working on a patch with README.md for this store, so that prefetch team has a good guidance on how to write such Sync methods.\n\nWould that pass in your book?",
+      "parentUuid": "c76e899d_396ed4df",
+      "revId": "da65c017f05d5f9eb013dc61c924c006b674d197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "285ff6aa_e9a1daf2",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.cc",
         "patchSetId": 25
@@ -98,6 +152,24 @@
       "writtenOn": "2017-06-30T11:21:16Z",
       "side": 1,
       "message": "It\u0027s difficult to review this schema, as most of the columns don\u0027t appear to be used in code. It seems like the table contains the PrefetchItem members in components/offline_pages/core/prefetch/prefetch_item.h, and the type mapping seems reasonable based on that. Still, code that uses the fields and/or a design doc would be helpful.",
+      "revId": "da65c017f05d5f9eb013dc61c924c006b674d197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2788695b_9bd0d51e",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-30T21:29:01Z",
+      "side": 1,
+      "message": "How about I write a separate patch that writes and reads?\nThis one is so big that I don\u0027t really want to do anything more with it. I already had that code and removed it to make the patch a little smaller.",
+      "parentUuid": "285ff6aa_e9a1daf2",
       "revId": "da65c017f05d5f9eb013dc61c924c006b674d197",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +193,24 @@
     },
     {
       "key": {
+        "uuid": "50a3327b_6a5acfbc",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-30T21:29:01Z",
+      "side": 1,
+      "message": "The way we do upgrades in our other db, this is reasonable check. I will remove IF NOT EXISTS, as that is not necessary.\n\nhttps://cs.chromium.org/chromium/src/components/offline_pages/core/offline_page_metadata_store_sql.cc?q\u003doffline_page_metadata_Store\u0026l\u003d146\n\nAlso, I just noticed that this if should be followed by an else if instead of if for different cases of upgrade.\n\nRemoved \"IF NOT EXISTS\" from the query above.",
+      "parentUuid": "a9ed23b6_a1fbfaf8",
+      "revId": "da65c017f05d5f9eb013dc61c924c006b674d197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89eef214_7deafb72",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.cc",
         "patchSetId": 25
@@ -132,6 +222,47 @@
       "writtenOn": "2017-06-30T11:21:16Z",
       "side": 1,
       "message": "Consider adding a meta table and calling sql::MetaTable::Init(db, 1, 1) here. The meta table will come in handy if you need to change the schema. (and that will most likely happen, at some point down the line)",
+      "revId": "da65c017f05d5f9eb013dc61c924c006b674d197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f46cbe22_76ff88b6",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-30T21:29:01Z",
+      "side": 1,
+      "message": "We worked out a way to run upgrades without that. See:\n\nhttps://cs.chromium.org/chromium/src/components/offline_pages/core/offline_page_metadata_store_sql.cc?q\u003doffline_page_metadata_Store\u0026l\u003d146\n(same link as before)\n\nI can look into that to rework it in future, but I\u0027d like to avoid making such change in this patch, if you are OK with that.",
+      "parentUuid": "89eef214_7deafb72",
+      "revId": "da65c017f05d5f9eb013dc61c924c006b674d197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8f6e3ea_6e7d52b0",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-30T21:29:01Z",
+      "side": 1,
+      "message": "Victor, could you advice on this and the next number?",
+      "range": {
+        "startLine": 90,
+        "startChar": 6,
+        "endLine": 90,
+        "endChar": 19
+      },
       "revId": "da65c017f05d5f9eb013dc61c924c006b674d197",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +286,24 @@
     },
     {
       "key": {
+        "uuid": "9cd9711d_0f032e01",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-30T21:29:01Z",
+      "side": 1,
+      "message": "We are aware of problems with DB and need for recovery. We just hit a it in our other store. This will be added separately, once we figure out how exactly we want to approach it.\n\nThanks for the pointer to recovery code. It will definitely be useful soon.",
+      "parentUuid": "99c23105_104e331f",
+      "revId": "da65c017f05d5f9eb013dc61c924c006b674d197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aa701bba_295358c7",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.h",
         "patchSetId": 25
@@ -169,6 +318,24 @@
       "revId": "da65c017f05d5f9eb013dc61c924c006b674d197",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0ccfc41_cc6a4fcf",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-30T21:29:01Z",
+      "side": 1,
+      "message": "Historically it makes sense, as we were typically using at least 2 versions of the store (sql + leveldb or in memory). For this case we only have a SQL store and we use it\u0027s in memory version for tests. I\u0027ll run it through my team and I think we\u0027ll end up removing it.\n\nDone.",
+      "parentUuid": "aa701bba_295358c7",
+      "revId": "da65c017f05d5f9eb013dc61c924c006b674d197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +356,24 @@
     },
     {
       "key": {
+        "uuid": "c9f26649_dd66bff4",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-30T21:29:01Z",
+      "side": 1,
+      "message": "As I mentioned before I don\u0027t want to remove CheckDb, so that Sync methods can choose how they fail in that case and general return type stays simpler.\n\nI managed to remove pending_command_ (initially it was written in a way that we could have more then one item waiting in the vector, but you are absolutely right, this is not needed if we only ever have one). We are guaranteeing 1 by having a primitive monitor guarding access to the store, BTW.",
+      "parentUuid": "354a37ff_7ed5a7b3",
+      "revId": "da65c017f05d5f9eb013dc61c924c006b674d197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ae725c7_cdb76b4a",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql_unittest.cc",
         "patchSetId": 25
@@ -203,6 +388,24 @@
       "revId": "da65c017f05d5f9eb013dc61c924c006b674d197",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d46083a2_32db85ec",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-30T21:29:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ae725c7_cdb76b4a",
+      "revId": "da65c017f05d5f9eb013dc61c924c006b674d197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +426,24 @@
     },
     {
       "key": {
+        "uuid": "71715cf6_cee53400",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-30T21:29:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1fb6c6b3_cd1b2bb4",
+      "revId": "da65c017f05d5f9eb013dc61c924c006b674d197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7584dcd_732fd3b8",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql_utils.cc",
         "patchSetId": 25
@@ -240,6 +461,24 @@
     },
     {
       "key": {
+        "uuid": "034c5992_83aad865",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql_utils.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-30T21:29:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7584dcd_732fd3b8",
+      "revId": "da65c017f05d5f9eb013dc61c924c006b674d197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3b742f3_dd2f671f",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql_utils.cc",
         "patchSetId": 25
@@ -254,6 +493,24 @@
       "revId": "da65c017f05d5f9eb013dc61c924c006b674d197",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06415c2e_2fed42ae",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql_utils.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-30T21:29:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3b742f3_dd2f671f",
+      "revId": "da65c017f05d5f9eb013dc61c924c006b674d197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
