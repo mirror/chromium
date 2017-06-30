@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "267fada3_9e8f3dce",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-06-30T09:37:22Z",
+      "side": 1,
+      "message": "I\u0027m planning to add a thread hop to the io thread in this method, so I added this method to clarify this will do more than setting parameters.",
+      "parentUuid": "5a4ee13f_a8f23539",
+      "revId": "cc5b02fc09935c2f4358f9906c02802cc319590d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b214f124_df592afd",
         "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.h",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "cc5b02fc09935c2f4358f9906c02802cc319590d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9862eaa6_c1f0c26e",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-06-30T09:37:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b214f124_df592afd",
+      "revId": "cc5b02fc09935c2f4358f9906c02802cc319590d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "824034ba_d3c8a70b",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-06-30T09:37:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff049d07_9e94266b",
+      "revId": "cc5b02fc09935c2f4358f9906c02802cc319590d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd2395b1_7a51a016",
         "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.cpp",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "cc5b02fc09935c2f4358f9906c02802cc319590d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bedc39a_e60d3da6",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-06-30T09:37:22Z",
+      "side": 1,
+      "message": "I meant adding a DCHECK. Added it.",
+      "parentUuid": "dd2395b1_7a51a016",
+      "revId": "cc5b02fc09935c2f4358f9906c02802cc319590d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "2dd74366_092255f3",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-06-30T09:37:22Z",
+      "side": 1,
+      "message": "That sounds good. Updated.",
+      "parentUuid": "030ed463_8d53119d",
+      "revId": "cc5b02fc09935c2f4358f9906c02802cc319590d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "895b2a6e_85aad989",
         "filename": "third_party/WebKit/Source/modules/serviceworkers/WebEmbeddedWorkerImplTest.cpp",
         "patchSetId": 5
@@ -101,6 +191,24 @@
       "revId": "cc5b02fc09935c2f4358f9906c02802cc319590d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64952ed2_beb3fbbd",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/WebEmbeddedWorkerImplTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-06-30T09:37:22Z",
+      "side": 1,
+      "message": "Sounds good. updated.",
+      "parentUuid": "895b2a6e_85aad989",
+      "revId": "cc5b02fc09935c2f4358f9906c02802cc319590d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "fc04692a_70ceac10",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/WebEmbeddedWorkerImplTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-06-30T09:37:22Z",
+      "side": 1,
+      "message": "The test didn\u0027t wait for the worker thread is launched, so it would be called after ServeAsyncRequests.\nFixed that by waiting the end of script evaluation.",
+      "parentUuid": "7bee01bc_d63f1cb0",
+      "revId": "cc5b02fc09935c2f4358f9906c02802cc319590d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eabf8ea3_a45cfc53",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerInstalledScriptsManager.h",
         "patchSetId": 5
@@ -135,6 +261,24 @@
       "revId": "cc5b02fc09935c2f4358f9906c02802cc319590d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30aacce1_d027e16d",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerInstalledScriptsManager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-06-30T09:37:22Z",
+      "side": 1,
+      "message": "I just wanted to mention that WebSWInstalledScriptsManagerImpl should use lock or something to be thread safe. Changed the comment, thanks.",
+      "parentUuid": "eabf8ea3_a45cfc53",
+      "revId": "cc5b02fc09935c2f4358f9906c02802cc319590d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -173,6 +317,24 @@
     },
     {
       "key": {
+        "uuid": "8955f45e_f48d0eeb",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerInstalledScriptsManager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-06-30T09:37:22Z",
+      "side": 1,
+      "message": "Thanks. Moved them to each getter.",
+      "parentUuid": "fe36ac27_5ae3bfaa",
+      "revId": "cc5b02fc09935c2f4358f9906c02802cc319590d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0eddaa92_a50aa389",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerInstalledScriptsManager.h",
         "patchSetId": 5
@@ -187,6 +349,24 @@
       "revId": "cc5b02fc09935c2f4358f9906c02802cc319590d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62a07729_7f985cb6",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerInstalledScriptsManager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-06-30T09:37:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0eddaa92_a50aa389",
+      "revId": "cc5b02fc09935c2f4358f9906c02802cc319590d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -207,6 +387,24 @@
     },
     {
       "key": {
+        "uuid": "d7f30980_8f3fbf21",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerInstalledScriptsManager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-06-30T09:37:22Z",
+      "side": 1,
+      "message": "It\u0027s to clarify it\u0027s not a const member (I\u0027ve changed Headers -\u003e DrainHeaders). TakeHeaders sounds good. Updated.",
+      "parentUuid": "afcf42a4_5837fa44",
+      "revId": "cc5b02fc09935c2f4358f9906c02802cc319590d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9fb674b_787af14f",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerInstalledScriptsManager.h",
         "patchSetId": 5
@@ -221,6 +419,24 @@
       "revId": "cc5b02fc09935c2f4358f9906c02802cc319590d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52cacbf8_1636de05",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerInstalledScriptsManager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-06-30T09:37:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9fb674b_787af14f",
+      "revId": "cc5b02fc09935c2f4358f9906c02802cc319590d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

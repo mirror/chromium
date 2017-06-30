@@ -749,6 +749,24 @@
       "revId": "75c8fc7dda8390de8e0e06fba8ea427f9cc2c2e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "37e25cdc_152cfa52",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerInstalledScriptsManager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-06-30T09:37:22Z",
+      "side": 1,
+      "message": "I looked around the WorkerScriptLoader again and I think no other field is necessary to do the same thing with it. \nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/workers/WorkerScriptLoader.cpp?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d144\n\nFor now let\u0027s keep it as is and add fields when it\u0027s needed.",
+      "parentUuid": "0b372b09_853f37ec",
+      "revId": "75c8fc7dda8390de8e0e06fba8ea427f9cc2c2e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
