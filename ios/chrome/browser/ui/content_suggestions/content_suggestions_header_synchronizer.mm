@@ -4,6 +4,7 @@
 
 #import "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_synchronizer.h"
 
+#import "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_cell.h"
 #import "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_most_visited_cell.h"
 #import "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_controller.h"
 #import "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_synchronizing.h"
@@ -31,9 +32,10 @@ const CGFloat kShiftTilesUpAnimationDuration = 0.25;
     headerController;
 @property(nonatomic, assign) CFTimeInterval shiftTilesDownStartTime;
 
-// Tap and swipe gesture recognizers when the omnibox is focused.
+// Tap gesture recognizer when the omnibox is focused.
 @property(nonatomic, strong) UITapGestureRecognizer* tapGestureRecognizer;
-@property(nonatomic, strong) UISwipeGestureRecognizer* swipeGestureRecognizer;
+
+@property(nonatomic, assign) CGFloat collectionShiftingOffset;
 
 @end
 
@@ -44,7 +46,7 @@ const CGFloat kShiftTilesUpAnimationDuration = 0.25;
 @synthesize shouldAnimateHeader = _shouldAnimateHeader;
 @synthesize shiftTilesDownStartTime = _shiftTilesDownStartTime;
 @synthesize tapGestureRecognizer = _tapGestureRecognizer;
-@synthesize swipeGestureRecognizer = _swipeGestureRecognizer;
+@synthesize collectionShiftingOffset = _collectionShiftingOffset;
 
 - (instancetype)initWithSuggestionsViewController:
                     (ContentSuggestionsViewController*)suggestionsViewController
@@ -60,14 +62,11 @@ const CGFloat kShiftTilesUpAnimationDuration = 0.25;
         initWithTarget:self
                 action:@selector(unfocusOmnibox)];
     [_tapGestureRecognizer setDelegate:self];
-    _swipeGestureRecognizer = [[UISwipeGestureRecognizer alloc]
-        initWithTarget:self
-                action:@selector(unfocusOmnibox)];
-    [_swipeGestureRecognizer
-        setDirection:UISwipeGestureRecognizerDirectionDown];
 
     _headerController = headerController;
     _suggestionsViewController = suggestionsViewController;
+
+    _collectionShiftingOffset = 0;
   }
   return self;
 }
@@ -75,13 +74,18 @@ const CGFloat kShiftTilesUpAnimationDuration = 0.25;
 #pragma mark - ContentSuggestionsCollectionSynchronizing
 
 - (void)shiftTilesDown {
-  self.shouldAnimateHeader = YES;
-  self.suggestionsViewController.scrolledToTop = NO;
-
   // Reshow views that are within range of the most visited collection view
   // (if necessary).
   [self.collectionView removeGestureRecognizer:self.tapGestureRecognizer];
-  [self.collectionView removeGestureRecognizer:self.swipeGestureRecognizer];
+
+  self.shouldAnimateHeader = YES;
+
+  if (self.collectionShiftingOffset == 0 || self.collectionView.dragging) {
+    [self updateFakeOmniboxForScrollView:self.collectionView];
+    return;
+  }
+
+  self.suggestionsViewController.scrolledToTop = NO;
 
   // CADisplayLink is used for this animation instead of the standard UIView
   // animation because the standard animation did not properly convert the
@@ -97,13 +101,22 @@ const CGFloat kShiftTilesUpAnimationDuration = 0.25;
 }
 
 - (void)shiftTilesUpWithCompletionBlock:(ProceduralBlock)completion {
-  self.suggestionsViewController.scrolledToTop = YES;
   // Add gesture recognizer to background |self.view| when omnibox is focused.
   [self.collectionView addGestureRecognizer:self.tapGestureRecognizer];
-  [self.collectionView addGestureRecognizer:self.swipeGestureRecognizer];
 
   CGFloat pinnedOffsetY =
       [self.suggestionsViewController.suggestionsDelegate pinnedOffsetY];
+  self.collectionShiftingOffset =
+      MAX(0, pinnedOffsetY - self.collectionView.contentOffset.y);
+
+  if (self.suggestionsViewController.scrolledToTop) {
+    self.shouldAnimateHeader = NO;
+    if (completion)
+      completion();
+    return;
+  }
+
+  self.suggestionsViewController.scrolledToTop = YES;
   self.shouldAnimateHeader = !IsIPadIdiom();
 
   [UIView animateWithDuration:kShiftTilesUpAnimationDuration
@@ -130,10 +143,7 @@ const CGFloat kShiftTilesUpAnimationDuration = 0.25;
 - (void)updateFakeOmniboxForScrollView:(UIScrollView*)scrollView {
   // Unfocus the omnibox when the scroll view is scrolled below the pinned
   // offset.
-  CGFloat pinnedOffsetY =
-      [self.suggestionsViewController.suggestionsDelegate pinnedOffsetY];
-  if ([self.headerController isOmniboxFocused] && scrollView.dragging &&
-      scrollView.contentOffset.y < pinnedOffsetY) {
+  if ([self.headerController isOmniboxFocused] && !self.shouldAnimateHeader) {
     [self.headerController unfocusOmnibox];
   }
 
@@ -178,14 +188,16 @@ const CGFloat kShiftTilesUpAnimationDuration = 0.25;
   // Find how much the collection view should be scrolled up in the next frame.
   CGFloat yOffset =
       (1.0 - percentComplete) *
-      [self.suggestionsViewController.suggestionsDelegate pinnedOffsetY];
+          [self.suggestionsViewController.suggestionsDelegate pinnedOffsetY] +
+      percentComplete *
+          ([self.suggestionsViewController.suggestionsDelegate pinnedOffsetY] -
+           self.collectionShiftingOffset);
   self.collectionView.contentOffset = CGPointMake(0, yOffset);
 
   if (percentComplete == 1.0) {
     [link invalidate];
     // Reset |shiftTilesDownStartTime to its sentinal value.
     self.shiftTilesDownStartTime = -1;
-    [self.collectionView.collectionViewLayout invalidateLayout];
   }
 }
 
@@ -193,10 +205,14 @@ const CGFloat kShiftTilesUpAnimationDuration = 0.25;
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer*)gestureRecognizer
        shouldReceiveTouch:(UITouch*)touch {
-  return
+  BOOL isMostVisited =
       [self nearestAncestorOfView:touch.view
-                        withClass:[ContentSuggestionsMostVisitedCell class]] ==
+                        withClass:[ContentSuggestionsMostVisitedCell class]] !=
       nil;
+  BOOL isSuggestions =
+      [self nearestAncestorOfView:touch.view
+                        withClass:[ContentSuggestionsCell class]] != nil;
+  return !isMostVisited && !isSuggestions;
 }
 
 - (UIView*)nearestAncestorOfView:(UIView*)view withClass:(Class)aClass {

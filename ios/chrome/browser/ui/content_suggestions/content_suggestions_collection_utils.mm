@@ -138,7 +138,8 @@ void configureSearchHintLabel(UILabel* searchHintLabel,
     [searchHintLabel.heightAnchor
         constraintEqualToConstant:kSearchFieldHeight - 2 * kSearchHintMargin],
     [searchHintLabel.centerYAnchor
-        constraintEqualToAnchor:searchTapTarget.centerYAnchor]
+        constraintEqualToAnchor:searchTapTarget.centerYAnchor
+                       constant:0.5]
   ]];
 
   [searchHintLabel setText:l10n_util::GetNSString(IDS_OMNIBOX_EMPTY_HINT)];
