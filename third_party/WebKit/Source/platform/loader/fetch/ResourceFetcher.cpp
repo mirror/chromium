@@ -282,7 +282,7 @@ WebURLRequest::RequestContext ResourceFetcher::DetermineRequestContext(
 ResourceFetcher::ResourceFetcher(FetchContext* new_context,
                                  RefPtr<WebTaskRunner> task_runner)
     : context_(new_context),
-      scheduler_(ResourceLoadScheduler::Create()),
+      scheduler_(ResourceLoadScheduler::Create(&Context())),
       archive_(Context().IsMainFrame() ? nullptr : Context().Archive()),
       resource_timing_report_timer_(
           std::move(task_runner),
@@ -1455,6 +1455,10 @@ void ResourceFetcher::RemoveResourceLoader(ResourceLoader* loader) {
 }
 
 void ResourceFetcher::StopFetching() {
+  // Shutdown scheduler first so that loading cancellations below do not awake
+  // unnecessary scheduling.
+  scheduler_->Shutdown();
+
   HeapVector<Member<ResourceLoader>> loaders_to_cancel;
   for (const auto& loader : non_blocking_loaders_) {
     if (!loader->GetKeepalive())
