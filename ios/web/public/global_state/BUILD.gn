@@ -3,16 +3,12 @@
 # found in the LICENSE file.
 
 source_set("global_state") {
-  configs += [ "//build/config/compiler:enable_arc" ]
-
   deps = [
     "//base",
-    "//components/task_scheduler_util/browser",
   ]
 
   sources = [
     "ios_global_state.h",
-    "ios_global_state.mm",
     "ios_global_state_configuration.h",
   ]
 }
@@ -20,11 +16,18 @@ source_set("global_state") {
 source_set("shared_global_state") {
   configs += [ "//build/config/compiler:enable_arc" ]
 
-  deps = [
+  public_deps = [
     ":global_state",
   ]
 
+  deps = [
+    "//base",
+    "//components/task_scheduler_util/browser",
+    "//net",
+  ]
+
   sources = [
+    "ios_global_state.mm",
     "ios_global_state_configuration.mm",
   ]
 }
