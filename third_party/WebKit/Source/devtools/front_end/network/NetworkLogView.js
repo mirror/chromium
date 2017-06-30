@@ -108,6 +108,9 @@ Network.NetworkLogView = class extends UI.VBox {
     this._resetSuggestionBuilder();
     this._initializeView();
 
+    new UI.DropTarget(
+        this.element, [UI.DropTarget.Types.Files], Common.UIString('Drop HAR files here'), this._handleDrop.bind(this));
+
     Common.moduleSetting('networkColorCodeResourceTypes')
         .addChangeListener(this._invalidateAllItems.bind(this, false), this);
 
@@ -379,6 +382,41 @@ Network.NetworkLogView = class extends UI.VBox {
           contentData.content, request.mimeType, contentData.encoded, contentData.encoded ? 'utf-8' : null);
     }
     InspectorFrontendHost.copyText(content || '');
+  }
+
+  /**
+   * @param {!DataTransfer} dataTransfer
+   */
+  _handleDrop(dataTransfer) {
+    var items = dataTransfer.items;
+    if (!items.length)
+      return;
+    var entry = items[0].webkitGetAsEntry();
+    if (entry.isDirectory)
+      return;
+
+    entry.file(this._onLoadFromFile.bind(this));
+  }
+
+  /**
+   * @param {!File} file
+   */
+  async _onLoadFromFile(file) {
+    this._outputStream = new Common.StringOutputStream();
+    // TODO fix this when alph's patch lands.
+    var reader = new FileReader();
+    reader.readAsArrayBuffer(file);
+    var event = await new Promise(resolve => reader.onload = resolve);
+    var data = (new TextDecoder()).decode(event.target.result);
+    try {
+      // HARRoot and JSON.parse might throw.
+      var harRoot = new HarImporter.HARRoot(JSON.parse(data));
+    } catch (e) {
+      Common.console.error('Failed to load HAR file with following error:');
+      Common.console.error(e);
+      return;
+    }
+    NetworkLog.networkLog.importRequests(HarImporter.Importer.requestsFromHARLog(harRoot.log));
   }
 
   /**
