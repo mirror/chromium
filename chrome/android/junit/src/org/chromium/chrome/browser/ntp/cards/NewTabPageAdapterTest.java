@@ -65,6 +65,7 @@ import org.chromium.chrome.browser.ntp.snippets.KnownCategories;
 import org.chromium.chrome.browser.ntp.snippets.SnippetArticle;
 import org.chromium.chrome.browser.offlinepages.OfflinePageBridge;
 import org.chromium.chrome.browser.preferences.ChromePreferenceManager;
+import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.chrome.browser.signin.SigninManager;
 import org.chromium.chrome.browser.signin.SigninManager.SignInAllowedObserver;
 import org.chromium.chrome.browser.signin.SigninManager.SignInStateObserver;
@@ -234,6 +235,10 @@ public class NewTabPageAdapterTest {
         MockitoAnnotations.initMocks(this);
 
         ContextUtils.initApplicationContextForTests(RuntimeEnvironment.application);
+        // Make sure that isChromeHome() is current value set by the test, not the value saved in
+        // the shared preference.
+        // TODO(changwan): check if we can clear shared preferences for each test case.
+        FeatureUtilities.cacheChromeHomeEnabled();
 
         // Set empty variation params for the test.
         CardsVariationParameters.setTestVariationParams(new HashMap<String, String>());
