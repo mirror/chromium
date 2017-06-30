@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "7df7702c_64e12fa3",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintChunker.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-30T23:22:04Z",
+      "side": 0,
+      "message": "It also makes it possible to combine the previous foreign-layer logic into the new simplified force-new-chunk logic.",
+      "parentUuid": "8303c8be_a3a07828",
+      "revId": "6cd5896ccc17787d5ddbcad5565568c1207d7fea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "971c0a7d_90926ad4",
         "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintController.cpp",
         "patchSetId": 8
@@ -48,6 +66,24 @@
       "writtenOn": "2017-06-30T23:14:49Z",
       "side": 0,
       "message": "Why this change?",
+      "revId": "6cd5896ccc17787d5ddbcad5565568c1207d7fea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c3616bf_7d6f928d",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintController.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-30T23:22:04Z",
+      "side": 0,
+      "message": "This patch also extracts the under-invalidation checking logic out of CopyCachedSubsequence() into UseCachedSubsequenceIfPossible(). This is to make the new BeginSubsequence/EndSubsequence logic (new line 150-152) for cached subsequence simple, otherwise I would need to check !REF::PaintUnderInvalidationCheckingEnabled() at more places.",
+      "parentUuid": "971c0a7d_90926ad4",
       "revId": "6cd5896ccc17787d5ddbcad5565568c1207d7fea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
