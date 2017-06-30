@@ -9,6 +9,7 @@
 #include <string>
 #include <vector>
 
+#include "base/base_switches.h"
 #include "base/command_line.h"
 #include "base/feature_list.h"
 #include "base/metrics/field_trial.h"
@@ -16,6 +17,8 @@
 #include "base/strings/stringprintf.h"
 #include "components/variations/field_trial_config/fieldtrial_testing_config.h"
 #include "components/variations/variations_associated_data.h"
+#include "components/variations/variations_http_header_provider.h"
+#include "components/variations/variations_switches.h"
 #include "net/base/escape.h"
 
 namespace variations {
