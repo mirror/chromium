@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "49f7aef9_4c68aa5f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-06-30T03:24:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4ad488c_c54e6c13",
+      "revId": "bd3f1d92d9875a2aacb873b2771090789320bf2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ee4faad_9f0c3cda",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
         "patchSetId": 18
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "dbd69e96_1ef1ea86",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 2228,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-06-30T03:24:05Z",
+      "side": 1,
+      "message": "Good idea!",
+      "parentUuid": "0ee4faad_9f0c3cda",
+      "range": {
+        "startLine": 2228,
+        "startChar": 17,
+        "endLine": 2228,
+        "endChar": 21
+      },
+      "revId": "bd3f1d92d9875a2aacb873b2771090789320bf2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e754ba6a_bfb5b0fa",
         "filename": "components/feature_engagement_tracker/public/feature_constants.cc",
         "patchSetId": 18
@@ -56,6 +98,24 @@
       "revId": "bd3f1d92d9875a2aacb873b2771090789320bf2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a777b157_a576dcf9",
+        "filename": "components/feature_engagement_tracker/public/feature_constants.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-06-30T03:24:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e754ba6a_bfb5b0fa",
+      "revId": "bd3f1d92d9875a2aacb873b2771090789320bf2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -79,6 +139,30 @@
       "revId": "bd3f1d92d9875a2aacb873b2771090789320bf2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a81569d8_79e707a2",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 18
+      },
+      "lineNbr": 90113,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-06-30T03:24:05Z",
+      "side": 1,
+      "message": "Ah yes! Added.",
+      "parentUuid": "436333ee_d6f6c26e",
+      "range": {
+        "startLine": 90113,
+        "startChar": 29,
+        "endLine": 90113,
+        "endChar": 42
+      },
+      "revId": "bd3f1d92d9875a2aacb873b2771090789320bf2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
