@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "853e6f3a_32eeb867",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptLoader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-06-30T01:03:06Z",
+      "side": 1,
+      "message": "No, this doesn\u0027t correspond to \"evaluationStatus\" there. I think this is a purely implementation detail due to e.g. misplaced CSP checks, and I\u0027ll remove this by merging/inlining some methods in the near future.",
+      "parentUuid": "2c3680a5_3c0defe8",
+      "revId": "a8bef5dd271d879941d993283842cffdc7e3f403",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d9c9d24b_8fa0998e",
         "filename": "third_party/WebKit/Source/core/dom/ScriptLoader.h",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-30T00:55:31Z",
       "side": 1,
       "message": "kErrored, kNormalCompletion, kAborted ?",
+      "revId": "a8bef5dd271d879941d993283842cffdc7e3f403",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8e68f74_5c41c07f",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptLoader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-06-30T01:03:06Z",
+      "side": 1,
+      "message": "I\u0027d like to keep the names as-is, because these are used (and should be used) locally only to controll event dispatching in the callers of ExecuteScript().",
+      "parentUuid": "d9c9d24b_8fa0998e",
       "revId": "a8bef5dd271d879941d993283842cffdc7e3f403",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
