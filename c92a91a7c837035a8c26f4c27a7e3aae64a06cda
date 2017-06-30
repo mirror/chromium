@@ -1,0 +1,308 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2d22192_9344ea6b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-30T16:18:00Z",
+      "side": 1,
+      "message": "s/SnippetAricleViewHolder/SnippetArTicleViewHolder",
+      "range": {
+        "startLine": 10,
+        "startChar": 46,
+        "endLine": 10,
+        "endChar": 69
+      },
+      "revId": "c92a91a7c837035a8c26f4c27a7e3aae64a06cda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c97dfe0f_48e90bdd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticleViewHolder.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-30T16:18:00Z",
+      "side": 1,
+      "message": "This method used to only change the layout. It now also refreshes the data, triggering new fetches for images in particular. I don\u0027t think we want that, as it might also happen when only style should change, e.g. DisplayStyle updates. Move the updateViewInformation call out?",
+      "range": {
+        "startLine": 136,
+        "startChar": 17,
+        "endLine": 136,
+        "endChar": 29
+      },
+      "revId": "c92a91a7c837035a8c26f4c27a7e3aae64a06cda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afa3669e_031e9e39",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-30T16:18:00Z",
+      "side": 1,
+      "message": "@Nullable",
+      "range": {
+        "startLine": 63,
+        "startChar": 50,
+        "endLine": 63,
+        "endChar": 67
+      },
+      "revId": "c92a91a7c837035a8c26f4c27a7e3aae64a06cda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38228258_bed9d550",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-30T16:18:00Z",
+      "side": 1,
+      "message": "nit: if we are now building with the O SDK, casting the result for findViewById is not necessary anymore.",
+      "range": {
+        "startLine": 72,
+        "startChar": 23,
+        "endLine": 72,
+        "endChar": 35
+      },
+      "revId": "c92a91a7c837035a8c26f4c27a7e3aae64a06cda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b86eeccb_f9c004ca",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-30T16:18:00Z",
+      "side": 1,
+      "message": "m[Snippet|Description]TextView? Article is inaccurate (at least should be Suggestion) and redundant",
+      "range": {
+        "startLine": 77,
+        "startChar": 8,
+        "endLine": 77,
+        "endChar": 31
+      },
+      "revId": "c92a91a7c837035a8c26f4c27a7e3aae64a06cda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3e57812_65783a13",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-30T16:18:00Z",
+      "side": 1,
+      "message": "mAgeTextView ?",
+      "range": {
+        "startLine": 78,
+        "startChar": 8,
+        "endLine": 78,
+        "endChar": 27
+      },
+      "revId": "c92a91a7c837035a8c26f4c27a7e3aae64a06cda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9efe37d0_4bc80ecb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-30T16:18:00Z",
+      "side": 1,
+      "message": "Why not set the headerMaxLines here too? It refers more to the way data is displayed than to the data itself and looks like a better fit",
+      "range": {
+        "startLine": 105,
+        "startChar": 16,
+        "endLine": 105,
+        "endChar": 38
+      },
+      "revId": "c92a91a7c837035a8c26f4c27a7e3aae64a06cda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e57605c3_df6968cc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-30T16:18:00Z",
+      "side": 1,
+      "message": "remove the member from the class, make it a final local variable and pass it as argument to setFaviconOnView?",
+      "range": {
+        "startLine": 148,
+        "startChar": 8,
+        "endLine": 148,
+        "endChar": 31
+      },
+      "revId": "c92a91a7c837035a8c26f4c27a7e3aae64a06cda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a035b44f_5a1c2038",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-30T16:18:00Z",
+      "side": 1,
+      "message": "I would inline setDownloadThumbnail here. It would allow to directly show in which cases setting the thumbnail is synchronous (non image asset downloads) thus don\u0027t need a placeholder, and be clear in which cases we need a placeholder, by having it next to the ARTICLE case",
+      "range": {
+        "startLine": 178,
+        "startChar": 12,
+        "endLine": 178,
+        "endChar": 32
+      },
+      "revId": "c92a91a7c837035a8c26f4c27a7e3aae64a06cda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b782c160_86c6db0f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-30T16:18:00Z",
+      "side": 1,
+      "message": "local variable names should not be in the mFoo style",
+      "revId": "c92a91a7c837035a8c26f4c27a7e3aae64a06cda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0f37526_8c0c88f2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-30T16:18:00Z",
+      "side": 1,
+      "message": "use \"suggestion\" as name? Same below",
+      "revId": "c92a91a7c837035a8c26f4c27a7e3aae64a06cda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df9846cd_2e437c25",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-30T16:18:00Z",
+      "side": 1,
+      "message": "extract to SuggestionsMetrics?",
+      "revId": "c92a91a7c837035a8c26f4c27a7e3aae64a06cda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50605c4b_274d3883",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-30T16:18:00Z",
+      "side": 1,
+      "message": "For grepping purposes and because overriding fields is always dodgy and source of mistakes, could you give a different name to this field? mCapturedSuggestion or whatever you want would do. That way we are sure we don\u0027t refer to the unintended field by mistake. You can also then also remove the absolute referencing on line 341",
+      "range": {
+        "startLine": 314,
+        "startChar": 37,
+        "endLine": 314,
+        "endChar": 48
+      },
+      "revId": "c92a91a7c837035a8c26f4c27a7e3aae64a06cda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd2d0641_07a8ad4e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-30T16:18:00Z",
+      "side": 1,
+      "message": "add a comment either here or in updateViewInformation to say that this is the way we go around having to cancel the request, and that we also don\u0027t exit the callback early on purpose so that we can cache its result.",
+      "range": {
+        "startLine": 341,
+        "startChar": 16,
+        "endLine": 341,
+        "endChar": 27
+      },
+      "revId": "c92a91a7c837035a8c26f4c27a7e3aae64a06cda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
