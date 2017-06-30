@@ -11,11 +11,41 @@
 
 namespace traffic_annotation_auditor {
 
+// Holds the auditor processing results on one unit of annotation or function.
+class AuditorResult {
+ public:
+  enum class ResultType {
+    OK,                   // No error
+    IGNORE,               // The item does not require furthure processing.
+    ERROR_FATAL,          // A fatal error that should stop process.
+    ERROR_MISSING,        // A function is called without annotation.
+    ERROR_NO_ANNOTATION,  // A function is called with NO_ANNOTATION tag.
+    ERROR_SYNTAX          // Annotation syntax is not right.
+  };
+
+  AuditorResult(ResultType type = ResultType::OK,
+                std::string message = "",
+                std::string file_path = "",
+                int line = -1)
+      : type_(type), file_path_(file_path), line_(line), message_(message){};
+
+  ResultType GetType() const { return type_; };
+
+  // Formats the error message into one line of text.
+  std::string ToText() const;
+
+ private:
+  ResultType type_;
+  std::string file_path_;
+  int line_;
+  std::string message_;
+};
+
 // Holds an instance of network traffic annotation.
 // TODO(rhalavati): Check if this class can also be reused in clang tool.
 class AnnotationInstance {
  public:
-  // Annotation Type
+  // Annotation Type.
   enum class AnnotationType {
     ANNOTATION_COMPLETE,
     ANNOTATION_PARTIAL,
@@ -41,10 +71,9 @@ class AnnotationInstance {
   // not available, or missing), returns true, otherwise false.
   // If any error happens, |error_text| will be set. If it would be set to
   // FATAL, furthur processing of the text should be stopped.
-  bool Deserialize(const std::vector<std::string>& serialized_lines,
-                   int start_line,
-                   int end_line,
-                   std::string* error_text);
+  AuditorResult Deserialize(const std::vector<std::string>& serialized_lines,
+                            int start_line,
+                            int end_line);
 
   // Protobuf of the annotation.
   traffic_annotation::NetworkTrafficAnnotation proto;
@@ -79,10 +108,9 @@ class CallInstance {
   // If the call instance is correctly read returns true, otherwise false.
   // If any error happens, |error_text| will be set. If it would be set to
   // FATAL, further processing of the text should be stopped.
-  bool Deserialize(const std::vector<std::string>& serialized_lines,
-                   int start_line,
-                   int end_line,
-                   std::string* error_text);
+  AuditorResult Deserialize(const std::vector<std::string>& serialized_lines,
+                            int start_line,
+                            int end_line);
 
   std::string file_path;
   uint32_t line_number;
@@ -109,7 +137,7 @@ std::string RunClangTool(const base::FilePath& source_path,
 bool ParseClangToolRawOutput(const std::string& clang_output,
                              std::vector<AnnotationInstance>* annotations,
                              std::vector<CallInstance>* calls,
-                             std::vector<std::string>* errors);
+                             std::vector<AuditorResult>* errors);
 
 // Computes the hash value of a traffic annotation unique id.
 int ComputeHashValue(const std::string& unique_id);
