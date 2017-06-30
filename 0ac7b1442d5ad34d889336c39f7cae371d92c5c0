@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b0f43cf_619fa9ac",
+        "filename": "content/browser/service_worker/embedded_worker_instance.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-30T08:55:54Z",
+      "side": 1,
+      "message": "This TODO is pretty vague :). What is |is_script_streaming|?",
+      "revId": "0ac7b1442d5ad34d889336c39f7cae371d92c5c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "068cd64b_4de9b85e",
+        "filename": "content/browser/service_worker/embedded_worker_instance.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-30T08:55:54Z",
+      "side": 1,
+      "message": "I\u0027d like to use a unique name to be able to easily identify the script streaming case in traces. Can this be SENT_START_WITH_SCRIPT_STREAMING\nalso it\u0027s not totally accurate that it finished loading when this ends.",
+      "revId": "0ac7b1442d5ad34d889336c39f7cae371d92c5c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baa21bc7_2040e3e2",
+        "filename": "content/browser/service_worker/embedded_worker_instance.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-30T08:55:54Z",
+      "side": 1,
+      "message": "then here if (SCRIPT_STREAMING) END(SENT_START_WITH_SCRIPT_STREAMING) and you don\u0027t need a LoadSource since it\u0027s of course from SW_STORAGE.",
+      "revId": "0ac7b1442d5ad34d889336c39f7cae371d92c5c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67f1205c_ba937f72",
+        "filename": "content/browser/service_worker/embedded_worker_instance.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-30T08:55:54Z",
+      "side": 1,
+      "message": "OnScriptLoaded",
+      "revId": "0ac7b1442d5ad34d889336c39f7cae371d92c5c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8941632b_6e7912e3",
+        "filename": "third_party/WebKit/Source/core/workers/InstalledScriptsManager.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-30T08:55:54Z",
+      "side": 1,
+      "message": "This comment is confusing in two ways:\n\"imported scripts\" means \"installed scripts\"?\n\"running on the worker thread\" means the scripts are currently running?\n\nSuggest:\n// InstalledScriptsManager provides the scripts of workers that have been installed. Currently it is only used for installed service workers.",
+      "revId": "0ac7b1442d5ad34d889336c39f7cae371d92c5c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcd8ad93_9e53d21b",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-30T08:55:54Z",
+      "side": 1,
+      "message": "Are the scripts already running on the worker thread? Suggest just removing the first sentence.",
+      "revId": "0ac7b1442d5ad34d889336c39f7cae371d92c5c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50ff5109_bdf3e507",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-30T08:55:54Z",
+      "side": 1,
+      "message": "When is it not available?\n\nSince service worker script streaming is now a feature flag, suggest:\n\n// For ServiceWorkerScriptStreaming. Returns nullptr otherwise.",
+      "revId": "0ac7b1442d5ad34d889336c39f7cae371d92c5c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ead4469_c699cffd",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-30T08:55:54Z",
+      "side": 1,
+      "message": "I\u0027m allergic to the terminology \"script cache\" :)\n\nCan you just say \"ServiceWorkerInstalledScriptsManager provides the main script and imported scripts of an installed service worker. The scripts are streamed from the browser process in parallel with worker thread initialization.\"",
+      "revId": "0ac7b1442d5ad34d889336c39f7cae371d92c5c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "501b478a_1b5e16a5",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-30T08:55:54Z",
+      "side": 1,
+      "message": "Add:\n// InstalledScriptsManager implementation",
+      "revId": "0ac7b1442d5ad34d889336c39f7cae371d92c5c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7f4967f_9500671f",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-30T08:55:54Z",
+      "side": 1,
+      "message": "These comments should be moved to InstalledScriptsManager, and then ServiceWorkerInstalledScriptsManager doesn\u0027t need individual function comments.",
+      "revId": "0ac7b1442d5ad34d889336c39f7cae371d92c5c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
