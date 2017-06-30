@@ -22,6 +22,30 @@
       "revId": "64aa826ed80760868307d63bd864a82a7c00e9d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e632e03_9edc337c",
+        "filename": "chromecast/media/cma/backend/android/audio_sink_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1211940
+      },
+      "writtenOn": "2017-06-30T22:22:21Z",
+      "side": 1,
+      "message": "What I call \"LimiterMultiplier\" is effectively the volume level I set in the Audiotrack. I call it a multiplier because it will get combined with the (master) volume level for media (STREAM_MUSIC in Android). It does not get applied directly to the output samples.\n\nAndroid provides two places to control volume. A \"master\" volume is used for each type of stream (e.g., MUSIC, ALARM, SYSTEM). Let\u0027s call it stream-type volume (st_vol). It applies to all streams of the same type across all apps. Second, within each individual AudioTrack (-\u003e audio sink) it has an additional volume level that can be set. Let\u0027s call it at_vol. Internally, each one is a float in the range [0..1] and it is combined to a single volume level and applied to the samples (after running it through the volume table). So:\n\n  total_vol \u003d at_vol * st_vol.\n\nIn the current version (before this change), we assume st_vol \u003d 1 and handle volume control via at_vol. So\n\n  at_vol \u003d min(type_vol, limiter_vol)\n  total_vol \u003d at_vol * st_vol \u003d min(type_vol, limiter_vol)\n\nWith this change I pushed the type volume into st_vol, i.e., st_vol \u003d type_vol. When a limiter_vol is set, I cannot just change the st_vol to min(..) since it would affect every app in Android. Instead I tweak at_vol of the affected cast streams to a value such that at_vol * st_vol \u003d min(..).\n\nE.g. if type_vol \u003d st_vol \u003d 0.8 and limiter_vol \u003d 0.4 then I set \n\n  at_vol \u003d limiter_vol / st_vol \u003d 0.4 / 0.8 \u003d 0.5\n\nThis gives us\n\n  total_vol \u003d at_vol * st_vol \u003d 0.5 * 0.8 \u003d 0.4\n\nExactly what I wanted.",
+      "parentUuid": "ad1b9998_814661eb",
+      "range": {
+        "startLine": 31,
+        "startChar": 60,
+        "endLine": 31,
+        "endChar": 0
+      },
+      "revId": "64aa826ed80760868307d63bd864a82a7c00e9d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
