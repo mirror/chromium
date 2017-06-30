@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "a04c3409_e0596429",
+        "filename": "chrome/browser/ui/views/passwords/auto_signin_first_run_dialog_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-30T09:04:39Z",
+      "side": 1,
+      "message": "Nit: Even simpler:\n\n  return l10n_util::GetStringUTF16(button \u003d\u003d ui::DIALOG_BUTTON_OK\n                                       ? IDS_AUTO_SIGNIN_FIRST_RUN_OK\n                                       : IDS_AUTO_SIGNIN_FIRST_RUN_TURN_OFF);\n\nIf you\u0027re paranoid and want the DCHECK, you could maybe do:\n\n  const bool ok \u003d button \u003d\u003d ui::DIALOG_BUTTON_OK;\n  DCHECK(ok || button \u003d\u003d ui::DIALOG_BUTTON_CANCEL);\n  return l10n_util::GetStringUTF16(ok ? IDS_AUTO_SIGNIN_FIRST_RUN_OK\n                                      : IDS_AUTO_SIGNIN_FIRST_RUN_TURN_OFF);",
+      "revId": "19afdfd63afb9091653fc93fff08ccfe2924bd9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "21a373ed_63d97e14",
         "filename": "chrome/browser/ui/views/passwords/auto_signin_first_run_dialog_view.cc",
         "patchSetId": 2
@@ -22,6 +39,47 @@
       "revId": "19afdfd63afb9091653fc93fff08ccfe2924bd9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eae1de40_c60f02ca",
+        "filename": "chrome/browser/ui/views/passwords/auto_signin_first_run_dialog_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-30T09:04:39Z",
+      "side": 1,
+      "message": "I don\u0027t know whether Trent is planning on giving StyledLabel an OnNativeThemeChanged() listener as part of that bug; that sounds a little orthogonal, but maybe not.  I would post on the bug to make this desire of your clear, and note that this code can be cleaned up when that\u0027s addressed.",
+      "parentUuid": "21a373ed_63d97e14",
+      "range": {
+        "startLine": 84,
+        "startChar": 9,
+        "endLine": 84,
+        "endChar": 24
+      },
+      "revId": "19afdfd63afb9091653fc93fff08ccfe2924bd9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a7462af_fb100b68",
+        "filename": "chrome/browser/ui/views/passwords/auto_signin_first_run_dialog_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-30T09:04:39Z",
+      "side": 1,
+      "message": "Nit: Honestly probably all three of these first sections should be grouped together since you don\u0027t directly override any of these classes, but whatever",
+      "revId": "19afdfd63afb9091653fc93fff08ccfe2924bd9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
