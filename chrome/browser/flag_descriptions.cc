@@ -3300,4 +3300,13 @@ const char kUiDevToolsDescription[] =
 
 #endif  // defined(OS_CHROMEOS)
 
+#if defined(OS_ANDROID)
+
+const char kSpannableInlineAutocompleteName[] = "Spannable inline autocomplete";
+const char kSpannableInlineAutocompleteDescription[] =
+    "A new type of inline autocomplete for the omnibox that works with "
+    "keyboards that compose text.";
+
+#endif  // defined(OS_ANDROID)
+
 }  // namespace flag_descriptions
