@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7f780535_e391621e",
+        "filename": "cc/layers/touch_action_region.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-06-30T21:45:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83fb141b_3f09cda9",
+      "range": {
+        "startLine": 28,
+        "startChar": 17,
+        "endLine": 28,
+        "endChar": 45
+      },
+      "revId": "7fc84600bf4ff335e0bd939f24d29b42411e8a2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45adbc58_fd9e9e02",
         "filename": "cc/layers/touch_action_region_unittest.cc",
         "patchSetId": 15
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "cab8d652_1083959a",
+        "filename": "cc/layers/touch_action_region_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-06-30T21:45:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45adbc58_fd9e9e02",
+      "revId": "7fc84600bf4ff335e0bd939f24d29b42411e8a2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3b9098d_4bb84b3c",
         "filename": "ui/events/blink/input_handler_proxy.cc",
         "patchSetId": 15
@@ -53,6 +95,24 @@
       "writtenOn": "2017-06-29T13:26:26Z",
       "side": 1,
       "message": "Should we DCHECK that touch_action is nullptr when the touch event isn\u0027t a touch start, and that it isn\u0027t nullptr when it is a touchstart?",
+      "revId": "7fc84600bf4ff335e0bd939f24d29b42411e8a2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2ae6aa04_5409bc61",
+        "filename": "ui/events/blink/input_handler_proxy.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1058,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-06-30T21:45:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3b9098d_4bb84b3c",
       "revId": "7fc84600bf4ff335e0bd939f24d29b42411e8a2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "728aa4ae_3d409695",
+        "filename": "ui/events/blink/input_handler_proxy.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1122,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-06-30T21:45:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45bc3cab_2eb1f932",
+      "range": {
+        "startLine": 1122,
+        "startChar": 18,
+        "endLine": 1122,
+        "endChar": 38
+      },
+      "revId": "7fc84600bf4ff335e0bd939f24d29b42411e8a2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "077a6c81_8beb1ce3",
         "filename": "ui/events/blink/input_handler_proxy.h",
         "patchSetId": 15
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "ca1d0312_eb2d40a4",
+        "filename": "ui/events/blink/input_handler_proxy.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-06-30T21:45:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "077a6c81_8beb1ce3",
+      "range": {
+        "startLine": 187,
+        "startChar": 19,
+        "endLine": 187,
+        "endChar": 36
+      },
+      "revId": "7fc84600bf4ff335e0bd939f24d29b42411e8a2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e79f5056_cf0fdca4",
         "filename": "ui/events/blink/input_handler_proxy_unittest.cc",
         "patchSetId": 15
@@ -116,6 +224,24 @@
       "writtenOn": "2017-06-29T13:26:26Z",
       "side": 1,
       "message": "Could we add a test around the InputHandlerProxy logic changes?",
+      "revId": "7fc84600bf4ff335e0bd939f24d29b42411e8a2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e23e5db2_8dfcee84",
+        "filename": "ui/events/blink/input_handler_proxy_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-06-30T21:45:05Z",
+      "side": 1,
+      "message": "I added tests that would check for the nullptr and non nullptr cases. Let me know if there should be more or if this is not what you were anticipating.",
+      "parentUuid": "e79f5056_cf0fdca4",
       "revId": "7fc84600bf4ff335e0bd939f24d29b42411e8a2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
