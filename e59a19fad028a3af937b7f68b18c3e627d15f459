@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "0c4d256b_8d83ffa4",
+        "filename": "media/gpu/android/video_frame_factory_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-06-30T22:01:02Z",
+      "side": 1,
+      "message": "nit: maybe I would DCHECK(stub_ || texture_refs_.empty());\nalso, if you have a stub, it always has a decoder (we fail initialization if we can\u0027t create/initialize the decoder, and it stays alive until the stub destruction)",
+      "revId": "e59a19fad028a3af937b7f68b18c3e627d15f459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8f34fa49_bda5c7fb",
         "filename": "media/gpu/android/video_frame_factory_impl.cc",
         "patchSetId": 7
