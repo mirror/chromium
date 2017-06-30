@@ -11,6 +11,7 @@
 #include <vector>
 
 #include "base/macros.h"
+#include "base/memory/weak_ptr.h"
 #include "components/payments/core/payment_options_provider.h"
 #include "components/payments/core/payment_request_base_delegate.h"
 #include "components/payments/core/payments_profile_comparator.h"
@@ -27,6 +28,8 @@ namespace payments {
 class AddressNormalizer;
 class AddressNormalizerImpl;
 class CurrencyFormatter;
+class PaymentInstrument;
+class AutofillPaymentInstrument;
 }  // namespace payments
 
 // A protocol implementd by any UI classes that the PaymentRequest object
@@ -34,7 +37,11 @@ class CurrencyFormatter;
 // initiating UI to request full card details for payment.
 @protocol PaymentRequestUIDelegate<NSObject>
 
-- (void)openFullCardRequestUI;
+- (void)
+openFullCardRequestUI:(const autofill::CreditCard&)creditCard
+       resultDelegate:
+           (base::WeakPtr<autofill::payments::FullCardRequest::ResultDelegate>)
+               resultDelegate;
 
 @end
 
@@ -44,7 +51,8 @@ class CurrencyFormatter;
 // the current PaymentRequest flow. It must be initialized with a non-null
 // instance of |personal_data_manager| that outlives this class.
 class PaymentRequest : public payments::PaymentOptionsProvider,
-                       public payments::PaymentRequestBaseDelegate {
+                       public payments::PaymentRequestBaseDelegate,
+                       public base::SupportsWeakPtr<PaymentRequest> {
  public:
   // |personal_data_manager| should not be null and should outlive this object.
   PaymentRequest(const web::PaymentRequest& web_payment_request,
@@ -149,27 +157,27 @@ class PaymentRequest : public payments::PaymentOptionsProvider,
     return basic_card_specified_networks_;
   }
 
-  // Adds |credit_card| to the list of cached credit cards, updates the list of
-  // available credit cards, and returns a reference to the cached copy of
+  // Creates and adds an AutofillPaymentInstrument, which makes a copy of
   // |credit_card|.
-  virtual autofill::CreditCard* AddCreditCard(
+  virtual payments::PaymentInstrument* AddAutofillPaymentInstrument(
       const autofill::CreditCard& credit_card);
 
-  // Returns the available autofill credit cards for this user that match a
-  // supported type specified in |web_payment_request_|.
-  const std::vector<autofill::CreditCard*>& credit_cards() const {
-    return credit_cards_;
+  // Returns the available payment methods for this user that match a supported
+  // type specified in |web_payment_request_|.
+  const std::vector<payments::PaymentInstrument*>& payment_methods() const {
+    return payment_methods_;
   }
 
-  // Returns the currently selected credit card for this PaymentRequest flow if
-  // there is one. Returns nullptr if there is no selected credit card.
-  autofill::CreditCard* selected_credit_card() const {
-    return selected_credit_card_;
+  // Returns the currently selected payment method for this PaymentRequest flow
+  // if there is one. Returns nullptr if there is no selected payment method.
+  payments::PaymentInstrument* selected_payment_method() const {
+    return selected_payment_method_;
   }
 
-  // Sets the currently selected credit card for this PaymentRequest flow.
-  void set_selected_credit_card(autofill::CreditCard* credit_card) {
-    selected_credit_card_ = credit_card;
+  // Sets the currently selected payment method for this PaymentRequest flow.
+  void set_selected_payment_method(
+      payments::PaymentInstrument* payment_method) {
+    selected_payment_method_ = payment_method;
   }
 
   // Returns the available shipping options from |web_payment_request_|.
@@ -197,14 +205,14 @@ class PaymentRequest : public payments::PaymentOptionsProvider,
   // cached profiles ordered by completeness.
   void PopulateAvailableProfiles();
 
-  // Fetches the autofill credit cards for this user from the
-  // PersonalDataManager that match a supported type specified in
-  // |web_payment_request_| and stores copies of them, owned by this
-  // PaymentRequest, in credit_card_cache_.
-  void PopulateCreditCardCache();
+  // Fetches the payment methods for this user that match a supported type
+  // specified in |web_payment_request_| and stores copies of them, owned
+  // by this PaymentRequest, in payment_method_cache_.
+  void PopulatePaymentMethodCache();
 
-  // Sets the available credit cards as references to the cached credit cards.
-  void PopulateAvailableCreditCards();
+  // Sets the available payment methods as references to the cached payment
+  // methods.
+  void PopulateAvailablePaymentMethods();
 
   // Sets the available shipping options as references to the shipping options
   // in |web_payment_request_|.
@@ -242,14 +250,16 @@ class PaymentRequest : public payments::PaymentOptionsProvider,
   std::vector<autofill::AutofillProfile*> contact_profiles_;
   autofill::AutofillProfile* selected_contact_profile_;
 
-  // Credit cards returnd by the Data Manager may change due to (e.g.)
-  // sync events, meaning PaymentRequest may outlive them. Therefore, credit
-  // cards are fetched once and their copies are cached here. Whenever credit
-  // cards are requested a vector of pointers to these copies are returned.
-  std::vector<std::unique_ptr<autofill::CreditCard>> credit_card_cache_;
+  // Some payment methods, such as credit cards returned by the Data Manager,
+  // may change due to (e.g.) sync events, meaning PaymentRequest may outlive
+  // them. Therefore, payment methods are fetched once and their copies are
+  // cached here. Whenever payment methods are requested a vector of pointers to
+  // these copies are returned.
+  std::vector<std::unique_ptr<payments::PaymentInstrument>>
+      payment_method_cache_;
 
-  std::vector<autofill::CreditCard*> credit_cards_;
-  autofill::CreditCard* selected_credit_card_;
+  std::vector<payments::PaymentInstrument*> payment_methods_;
+  payments::PaymentInstrument* selected_payment_method_;
 
   // A vector of supported basic card networks. This encompasses everything that
   // the merchant supports and should be used for support checks.
