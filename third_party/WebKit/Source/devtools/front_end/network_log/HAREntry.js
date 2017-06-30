@@ -75,6 +75,10 @@ NetworkLog.HAREntry = class {
       serverIPAddress: ipAddress
     };
 
+    // Chrome specific.
+    if (this._request.cached())
+      entry._fromCache = this._request.cachedInMemory() ? 'memory' : 'disk';
+
     if (this._request.connectionId !== '0')
       entry.connection = this._request.connectionId;
     var page = NetworkLog.PageLoad.forRequest(this._request);
