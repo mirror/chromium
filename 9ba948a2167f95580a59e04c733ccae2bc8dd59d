@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d4090ed7_430cab72",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-30T15:01:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f49fd2fb_fd1ca620",
+      "range": {
+        "startLine": 44,
+        "startChar": 51,
+        "endLine": 44,
+        "endChar": 52
+      },
+      "revId": "9ba948a2167f95580a59e04c733ccae2bc8dd59d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc8552a8_21476d97",
         "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
         "patchSetId": 8
@@ -245,6 +269,30 @@
       "revId": "9ba948a2167f95580a59e04c733ccae2bc8dd59d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9844acc1_817ad147",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_ui.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-30T15:01:50Z",
+      "side": 1,
+      "message": "Got it. So the answer is the same as above - to force one error message to one line :)",
+      "parentUuid": "4d7586f3_c75830c4",
+      "range": {
+        "startLine": 192,
+        "startChar": 4,
+        "endLine": 192,
+        "endChar": 56
+      },
+      "revId": "9ba948a2167f95580a59e04c733ccae2bc8dd59d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -503,6 +551,30 @@
       "revId": "9ba948a2167f95580a59e04c733ccae2bc8dd59d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcf7e0e3_6362deb7",
+        "filename": "tools/traffic_annotation/presubmit_checks.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-30T15:01:50Z",
+      "side": 1,
+      "message": "What I meant is that on Windows, you *have to* prepend \"python\", on Linux you *can* do it (works both ways).\n\nSo can we just always do it? And it might be faster on Linux, because then the command line doesn\u0027t have to figure out that this is Python. But that\u0027s just my guess at this point, up to you :)",
+      "parentUuid": "01fc5f53_1a0d6347",
+      "range": {
+        "startLine": 126,
+        "startChar": 4,
+        "endLine": 126,
+        "endChar": 31
+      },
+      "revId": "9ba948a2167f95580a59e04c733ccae2bc8dd59d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

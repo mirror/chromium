@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3db4aa6d_1c66eb9e",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-30T15:01:50Z",
+      "side": 1,
+      "message": "I like this.",
+      "range": {
+        "startLine": 15,
+        "startChar": 6,
+        "endLine": 15,
+        "endChar": 19
+      },
+      "revId": "5e1f7b5ec872186c625f12ebe9a7673020e8e4a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e91a6bc_95564111",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-30T15:01:50Z",
+      "side": 1,
+      "message": "We don\u0027t use that in Chromium C++ (in Python it\u0027s OK).\n\nPlease define multiple constructors (the simpler ones can then reference the \"canonical\" constructor without default values).",
+      "range": {
+        "startLine": 27,
+        "startChar": 35,
+        "endLine": 27,
+        "endChar": 40
+      },
+      "revId": "5e1f7b5ec872186c625f12ebe9a7673020e8e4a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86f3ef58_b226c064",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-30T15:01:50Z",
+      "side": 1,
+      "message": "Definitions should go to the C++ file.",
+      "range": {
+        "startLine": 30,
+        "startChar": 8,
+        "endLine": 30,
+        "endChar": 77
+      },
+      "revId": "5e1f7b5ec872186c625f12ebe9a7673020e8e4a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7ef0cbc_5b5d3eae",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-30T15:01:50Z",
+      "side": 1,
+      "message": "According to the style guide, simple accessors are allowed in .h files, but they must be non-virtual, and must use the following style:\n\nChicken get_chicken() const { return chicken_; };\nChicken set_chicken(Chicken chicken) { chicken_ \u003d chicken; };\n\nIn other words, just rename this to type().\n\n(P.S. Hope you get the joke :) )",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 47
+      },
+      "revId": "5e1f7b5ec872186c625f12ebe9a7673020e8e4a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1285d747_a05e1003",
+        "filename": "tools/traffic_annotation/presubmit_checks.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-30T15:01:50Z",
+      "side": 1,
+      "message": "Sorry, when I said above that we should change interface, I meant here as well.",
+      "range": {
+        "startLine": 171,
+        "startChar": 9,
+        "endLine": 171,
+        "endChar": 18
+      },
+      "revId": "5e1f7b5ec872186c625f12ebe9a7673020e8e4a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
