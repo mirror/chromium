@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "5e79fc51_16481a95",
+        "filename": "remoting/host/daemon_process.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-06-30T15:31:38Z",
+      "side": 1,
+      "message": "Can you get rid of weak_factory_ completely?  It looks like it was only used for the host_event_logger_",
+      "range": {
+        "startLine": 172,
+        "startChar": 6,
+        "endLine": 172,
+        "endChar": 19
+      },
+      "revId": "6f18901ea95b6c9ab282da118de029ef84fe217d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d2d41a70_3edd144b",
         "filename": "remoting/host/host_status_monitor.cc",
         "patchSetId": 5
@@ -47,6 +70,69 @@
       "writtenOn": "2017-06-30T01:22:22Z",
       "side": 1,
       "message": "nit: Can we use \u003d default here?",
+      "revId": "6f18901ea95b6c9ab282da118de029ef84fe217d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "134d52d4_fe5d3d00",
+        "filename": "remoting/host/linux/certificate_watcher.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-06-30T15:31:38Z",
+      "side": 1,
+      "message": "nit: add period to end of comment.",
+      "range": {
+        "startLine": 71,
+        "startChar": 22,
+        "endLine": 71,
+        "endChar": 29
+      },
+      "revId": "6f18901ea95b6c9ab282da118de029ef84fe217d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca6fc503_ed96c325",
+        "filename": "remoting/host/linux/certificate_watcher.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-06-30T15:31:38Z",
+      "side": 1,
+      "message": "Does this need to be initialized with nullptr?  scoped_refptr appears to set its * to nullptr by default.",
+      "revId": "6f18901ea95b6c9ab282da118de029ef84fe217d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "178019b5_01aa3cf7",
+        "filename": "remoting/signaling/iq_sender.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-06-30T15:31:38Z",
+      "side": 1,
+      "message": "Not for this CL, but should this class use a ThreadChecker to enforce the restriction in the class documentation?",
+      "range": {
+        "startLine": 80,
+        "startChar": 5,
+        "endLine": 80,
+        "endChar": 62
+      },
       "revId": "6f18901ea95b6c9ab282da118de029ef84fe217d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
