@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "19cebc77_5422def1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2017-06-30T20:34:30Z",
+      "side": 1,
+      "message": "any idea how I get this to happen automatically?",
+      "parentUuid": "3eee4cf9_b6bc55f1",
+      "revId": "eb2e429d5bef916540d0d4fff5b10a0a0b10255e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ccb2ca5a_407737dc",
         "filename": "/COMMIT_MSG",
         "patchSetId": 3
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "34e688f4_e3210b21",
+        "filename": "ui/app_list/vector_icons/ic_search_engine_not_google.icon",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2017-06-30T20:34:30Z",
+      "side": 1,
+      "message": "yeah, I guess not. Should it? ic_google_black.icon doesn\u0027t have it either, but it seems like the other 2x icons do.",
+      "parentUuid": "dddcdf53_5aecf7c7",
+      "revId": "eb2e429d5bef916540d0d4fff5b10a0a0b10255e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aee1a39c_4a428bfc",
         "filename": "ui/app_list/views/search_box_view.cc",
         "patchSetId": 3
@@ -67,6 +103,24 @@
       "revId": "eb2e429d5bef916540d0d4fff5b10a0a0b10255e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85b60f38_b23bce19",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2017-06-30T20:34:30Z",
+      "side": 1,
+      "message": "Done.\n\nChanged it to just \"icon\" as it\u0027s a bit easier to follow (hard to differentiate search_icon_ vs. search_icon)",
+      "parentUuid": "aee1a39c_4a428bfc",
+      "revId": "eb2e429d5bef916540d0d4fff5b10a0a0b10255e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
