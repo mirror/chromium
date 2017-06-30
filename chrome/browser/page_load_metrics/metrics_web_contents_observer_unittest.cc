@@ -983,6 +983,7 @@ TEST_F(MetricsWebContentsObserverTest, OnLoadedResource_MainFrame) {
 
   observer()->OnRequestComplete(
       main_resource_url, net::HostPortPair(), frame_tree_node_id, request_id,
+      web_contents()->GetMainFrame(),
       content::ResourceType::RESOURCE_TYPE_MAIN_FRAME, false, nullptr, 0, 0,
       base::TimeTicks::Now(), net::OK);
   EXPECT_EQ(1u, loaded_resources().size());
@@ -994,6 +995,7 @@ TEST_F(MetricsWebContentsObserverTest, OnLoadedResource_MainFrame) {
   // specified |request_id| is no longer associated with any tracked page loads.
   observer()->OnRequestComplete(
       main_resource_url, net::HostPortPair(), frame_tree_node_id, request_id,
+      web_contents()->GetMainFrame(),
       content::ResourceType::RESOURCE_TYPE_MAIN_FRAME, false, nullptr, 0, 0,
       base::TimeTicks::Now(), net::OK);
   EXPECT_EQ(1u, loaded_resources().size());
@@ -1008,8 +1010,9 @@ TEST_F(MetricsWebContentsObserverTest, OnLoadedResource_Subresource) {
   observer()->OnRequestComplete(
       loaded_resource_url, net::HostPortPair(),
       web_contents()->GetMainFrame()->GetFrameTreeNodeId(),
-      content::GlobalRequestID(), content::RESOURCE_TYPE_SCRIPT, false, nullptr,
-      0, 0, base::TimeTicks::Now(), net::OK);
+      content::GlobalRequestID(), web_contents()->GetMainFrame(),
+      content::RESOURCE_TYPE_SCRIPT, false, nullptr, 0, 0,
+      base::TimeTicks::Now(), net::OK);
 
   EXPECT_EQ(1u, loaded_resources().size());
   EXPECT_EQ(loaded_resource_url, loaded_resources().back().url);
@@ -1024,8 +1027,9 @@ TEST_F(MetricsWebContentsObserverTest,
   observer()->OnRequestComplete(
       loaded_resource_url, net::HostPortPair(),
       web_contents()->GetMainFrame()->GetFrameTreeNodeId(),
-      content::GlobalRequestID(), content::RESOURCE_TYPE_SCRIPT, false, nullptr,
-      0, 0, base::TimeTicks::Now(), net::OK);
+      content::GlobalRequestID(), web_contents()->GetMainFrame(),
+      content::RESOURCE_TYPE_SCRIPT, false, nullptr, 0, 0,
+      base::TimeTicks::Now(), net::OK);
 
   EXPECT_TRUE(loaded_resources().empty());
 }
