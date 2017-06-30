@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "975a22d6_819f58cf",
+        "filename": "gpu/ipc/service/gpu_channel_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-06-30T21:22:36Z",
+      "side": 1,
+      "message": "program_cache_ can be NULL in tests or if disabled (or arguably not initialized yet), in which case we should just return early.",
+      "revId": "53df816a66945f93165fd42817bf5f5d33dbbafd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "387cad2f_04d6e6e6",
+        "filename": "gpu/ipc/service/gpu_channel_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-06-30T21:22:36Z",
+      "side": 1,
+      "message": "This field should be before weak_factory_ (see comment above and build warnings).",
+      "revId": "53df816a66945f93165fd42817bf5f5d33dbbafd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
