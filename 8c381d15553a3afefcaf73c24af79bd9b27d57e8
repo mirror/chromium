@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a5f46f15_8b774e3e",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-06-30T21:01:43Z",
+      "side": 1,
+      "message": "Unfortunately this list is somewhat order-dependent.  I tried to keep the ones that are independent together and sorted though.",
+      "parentUuid": "10b2237c_1b08914e",
+      "revId": "8c381d15553a3afefcaf73c24af79bd9b27d57e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cda779ab_34201f69",
         "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-23T23:05:26Z",
       "side": 1,
       "message": "Do we need to make a new struct for this? Can\u0027t we just use std::strings?",
+      "revId": "8c381d15553a3afefcaf73c24af79bd9b27d57e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa6c66a5_67eedaf7",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-06-30T21:01:43Z",
+      "side": 1,
+      "message": "We\u0027d have to use std::basic_string\u003cuint8_t\u003e.  I believe MSVC has short string optimizations, but still, this guarantees there\u0027s no heap allocation for just 6 bytes.  There\u0027s also the length DCHECKs to make sure we\u0027re not getting something that can\u0027t be a MAC address.  How do you feel given those trade-offs?",
+      "parentUuid": "cda779ab_34201f69",
       "revId": "8c381d15553a3afefcaf73c24af79bd9b27d57e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6947e63b_48c74424",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-06-30T21:01:43Z",
+      "side": 1,
+      "message": "Not without defining new traits which I feel is more work for this use case.",
+      "parentUuid": "c301df7b_24651365",
+      "revId": "8c381d15553a3afefcaf73c24af79bd9b27d57e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6ca29d4_35237089",
         "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "8c381d15553a3afefcaf73c24af79bd9b27d57e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01bbf741_ca639ee6",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-06-30T21:01:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6ca29d4_35237089",
+      "revId": "8c381d15553a3afefcaf73c24af79bd9b27d57e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "ed11cf48_1978ec5f",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-06-30T21:01:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09d08411_5198f9cb",
+      "revId": "8c381d15553a3afefcaf73c24af79bd9b27d57e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d69c822c_27933dc9",
         "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "8c381d15553a3afefcaf73c24af79bd9b27d57e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1580fa31_4438349d",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-06-30T21:01:43Z",
+      "side": 1,
+      "message": "Upgraded to LOG(WARNING).",
+      "parentUuid": "d69c822c_27933dc9",
+      "revId": "8c381d15553a3afefcaf73c24af79bd9b27d57e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "af67adf2_3299ab88",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-06-30T21:01:43Z",
+      "side": 1,
+      "message": "I changed the name but unless you feel strongly, I prefer to keep it here so it\u0027s close to its use.",
+      "parentUuid": "2a7408df_00575bec",
+      "revId": "8c381d15553a3afefcaf73c24af79bd9b27d57e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80c59437_ffd4c7a1",
         "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
         "patchSetId": 3
@@ -135,6 +261,24 @@
       "revId": "8c381d15553a3afefcaf73c24af79bd9b27d57e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d8fbcef_12d8caba",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-06-30T21:01:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80c59437_ffd4c7a1",
+      "revId": "8c381d15553a3afefcaf73c24af79bd9b27d57e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "8bc0f7ea_7dc0ba33",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-06-30T21:01:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f682f114_3e50f5fd",
+      "revId": "8c381d15553a3afefcaf73c24af79bd9b27d57e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50523a71_e643d804",
         "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
         "patchSetId": 3
@@ -169,6 +331,24 @@
       "revId": "8c381d15553a3afefcaf73c24af79bd9b27d57e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38d18c63_9c3643b3",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-06-30T21:01:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50523a71_e643d804",
+      "revId": "8c381d15553a3afefcaf73c24af79bd9b27d57e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "0be5329e_c4a17f45",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-06-30T21:01:43Z",
+      "side": 1,
+      "message": "I moved this code to a helper function but there are now two code paths that free the memory so I left the unique_ptr.  If you still think it\u0027s not providing value in this case I can remove it.",
+      "parentUuid": "964fe52f_e92ad625",
+      "revId": "8c381d15553a3afefcaf73c24af79bd9b27d57e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61e4bbc3_ae167996",
         "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
         "patchSetId": 3
@@ -203,6 +401,24 @@
       "revId": "8c381d15553a3afefcaf73c24af79bd9b27d57e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f82783eb_5f8533f9",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-06-30T21:01:43Z",
+      "side": 1,
+      "message": "The cast needs to stay but changed the array-to-pointer syntax.",
+      "parentUuid": "61e4bbc3_ae167996",
+      "revId": "8c381d15553a3afefcaf73c24af79bd9b27d57e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "3323294d_aab30028",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-06-30T21:01:43Z",
+      "side": 1,
+      "message": "See explanation below for retry count but I\u0027d prefer to keep the constants here where they are used.",
+      "parentUuid": "4ced9bee_91297e38",
+      "revId": "8c381d15553a3afefcaf73c24af79bd9b27d57e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1cb4faf5_800b7548",
         "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
         "patchSetId": 3
@@ -237,6 +471,24 @@
       "revId": "8c381d15553a3afefcaf73c24af79bd9b27d57e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "579de56a_b929fcba",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-06-30T21:01:43Z",
+      "side": 1,
+      "message": "This is used to receive network adapter.  I changed this variable name but also added a comment for the whole GetAdaptersAddresses flow.\n\nI\u0027d prefer to keep the constants here where they are used.",
+      "parentUuid": "1cb4faf5_800b7548",
+      "revId": "8c381d15553a3afefcaf73c24af79bd9b27d57e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -257,6 +509,24 @@
     },
     {
       "key": {
+        "uuid": "2414c405_96b0d318",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-06-30T21:01:43Z",
+      "side": 1,
+      "message": "I suppose it doesn\u0027t make much difference but I used ULONG to be consistent with the Windows APIs.",
+      "parentUuid": "7f26f5e8_5542a6a3",
+      "revId": "8c381d15553a3afefcaf73c24af79bd9b27d57e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8848274_605681be",
         "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
         "patchSetId": 3
@@ -271,6 +541,24 @@
       "revId": "8c381d15553a3afefcaf73c24af79bd9b27d57e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d207da0e_a2f6d147",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-06-30T21:01:43Z",
+      "side": 1,
+      "message": "Just being consistent with the Windows APIs.",
+      "parentUuid": "a8848274_605681be",
+      "revId": "8c381d15553a3afefcaf73c24af79bd9b27d57e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -291,6 +579,24 @@
     },
     {
       "key": {
+        "uuid": "e7e87dc0_ff0214e1",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-06-30T21:01:43Z",
+      "side": 1,
+      "message": "We need both declarations.  I added a comment here describing the process of using GetAdaptersAddresses.  Basically we have to allocate our own buffer but we don\u0027t know the size.  We have a best-guess buffer on the stack but if that fails, we try with heap allocations.  Every time the call fails, it resets |addresses_buffer_size| to the new correct size.",
+      "parentUuid": "3c4d152d_1db98078",
+      "revId": "8c381d15553a3afefcaf73c24af79bd9b27d57e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31ed7113_f0e34270",
         "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
         "patchSetId": 3
@@ -305,6 +611,24 @@
       "revId": "8c381d15553a3afefcaf73c24af79bd9b27d57e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3bb23d4_d3e77f42",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-06-30T21:01:43Z",
+      "side": 1,
+      "message": "No, the first iteration uses a stack-allocated buffer.  Only if that fails do we do the loop, which uses heap allocation.  This strategy was copied from existing //net/ code.",
+      "parentUuid": "31ed7113_f0e34270",
+      "revId": "8c381d15553a3afefcaf73c24af79bd9b27d57e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -325,6 +649,24 @@
     },
     {
       "key": {
+        "uuid": "af05d57f_c2f9e9fb",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-06-30T21:01:43Z",
+      "side": 1,
+      "message": "No, see above response.",
+      "parentUuid": "a192ca57_822dff6c",
+      "revId": "8c381d15553a3afefcaf73c24af79bd9b27d57e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0773fd6_eaa81e46",
         "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
         "patchSetId": 3
@@ -339,6 +681,24 @@
       "revId": "8c381d15553a3afefcaf73c24af79bd9b27d57e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31bff46c_37375515",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-06-30T21:01:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0773fd6_eaa81e46",
+      "revId": "8c381d15553a3afefcaf73c24af79bd9b27d57e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -359,6 +719,24 @@
     },
     {
       "key": {
+        "uuid": "06dcf084_b3a0bdda",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-06-30T21:01:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "641643ac_9128e28f",
+      "revId": "8c381d15553a3afefcaf73c24af79bd9b27d57e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9dd8586e_e9d24e69",
         "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
         "patchSetId": 3
@@ -373,6 +751,24 @@
       "revId": "8c381d15553a3afefcaf73c24af79bd9b27d57e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1be1acae_36507711",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-06-30T21:01:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9dd8586e_e9d24e69",
+      "revId": "8c381d15553a3afefcaf73c24af79bd9b27d57e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
