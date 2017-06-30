@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b1323e9_0d4f31bf",
+        "filename": "ui/events/blink/input_handler_proxy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-06-30T00:16:23Z",
+      "side": 1,
+      "message": "This logic is confusing but I\u0027m not sure if there is better way of doing it...\n\nAlternatively I could use the ack in |MouseWheelEventQueue::ProcessMouseWheelAck()|, but it\u0027s always |INPUT_EVENT_ACK_STATE_NOT_CONSUMED| and I\u0027m not sure if that means blocking?",
+      "revId": "70c87314e458c12141e123cc5612558d1c171028",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
