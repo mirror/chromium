@@ -87,6 +87,23 @@
     },
     {
       "key": {
+        "uuid": "af7e23c8_80e12443",
+        "filename": "ui/views/accessibility/native_view_accessibility_base.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-06-30T22:49:09Z",
+      "side": 1,
+      "message": "Also, I don\u0027t understand how this will work with read only? Note that the code calls\n  view_-\u003eGetAccessibleNodeData(\u0026data_);\nabove, so you\u0027re actually adding multiple control modes.\nAlso, Set/GetEnabled is available on view.h, so are all views now controls as well?",
+      "revId": "404cc5e98c66501a9918abb9c775f9033b83cb15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e46c205_e86d1a8c",
         "filename": "ui/views/controls/textfield/textfield.cc",
         "patchSetId": 17
