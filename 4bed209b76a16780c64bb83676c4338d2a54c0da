@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88d96053_0d0d2864",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-30T16:16:23Z",
+      "side": 1,
+      "message": "nit: Maybe enumerate them as closely as possible to the declaration order.",
+      "range": {
+        "startLine": 492,
+        "startChar": 0,
+        "endLine": 494,
+        "endChar": 12
+      },
+      "revId": "4bed209b76a16780c64bb83676c4338d2a54c0da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "302e9813_5b6f7632",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-30T16:16:23Z",
+      "side": 1,
+      "message": "nit: If the previous invocation of ARC is still running (but currently being stopped)",
+      "range": {
+        "startLine": 601,
+        "startChar": 17,
+        "endLine": 601,
+        "endChar": 24
+      },
+      "revId": "4bed209b76a16780c64bb83676c4338d2a54c0da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d07b79b1_84c210c8",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 603,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-30T16:16:23Z",
+      "side": 1,
+      "message": "It seems like you need a DCHECK(enable_requested_); at the very top.",
+      "range": {
+        "startLine": 603,
+        "startChar": 4,
+        "endLine": 603,
+        "endChar": 17
+      },
+      "revId": "4bed209b76a16780c64bb83676c4338d2a54c0da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1e81082_4a519a14",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-30T16:16:23Z",
+      "side": 1,
+      "message": "The return of STOPPING :P",
+      "range": {
+        "startLine": 61,
+        "startChar": 5,
+        "endLine": 61,
+        "endChar": 13
+      },
+      "revId": "4bed209b76a16780c64bb83676c4338d2a54c0da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
