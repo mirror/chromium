@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "decbea06_6f00c9e1",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-30T16:42:01Z",
+      "side": 1,
+      "message": "Perhaps WebContents::FromRenderFrameHost(render_frame_host)-\u003eGetLastCommittedURL() would be an easier way to write this.",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 50
+      },
+      "revId": "a04f3f2839ec3271728d84ff3c13603754a885a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0124a921_0987973a",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-30T16:42:01Z",
+      "side": 1,
+      "message": "Nit: omitting the \"\" is usually slightly more efficient",
+      "range": {
+        "startLine": 60,
+        "startChar": 26,
+        "endLine": 60,
+        "endChar": 28
+      },
+      "revId": "a04f3f2839ec3271728d84ff3c13603754a885a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c53811d_9a4ce7b0",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-30T16:42:01Z",
+      "side": 1,
+      "message": "Preferences is a pretty big struct to be sending--it kind of feels like maybe we shouldn\u0027t be sending all prefs to toggle these sorts of behaviors, and there should be a separate ipc plumbed for this. Just my two cents.",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 3
+      },
+      "revId": "a04f3f2839ec3271728d84ff3c13603754a885a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0431dccb_30ca8d4f",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-30T16:42:01Z",
+      "side": 1,
+      "message": "I don\u0027t quite understand why we update the autoplay origin on each navigation, since it\u0027s only based off the main frame anyway.",
+      "range": {
+        "startLine": 83,
+        "startChar": 2,
+        "endLine": 83,
+        "endChar": 64
+      },
+      "revId": "a04f3f2839ec3271728d84ff3c13603754a885a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a82f2dd9_e4d7e045",
+        "filename": "chrome/browser/media/media_engagement_score.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-30T16:42:01Z",
+      "side": 1,
+      "message": "Please suffix this method name (and the below) with ForTesting, as they only appear to be used from tests.",
+      "range": {
+        "startLine": 69,
+        "startChar": 7,
+        "endLine": 69,
+        "endChar": 16
+      },
+      "revId": "a04f3f2839ec3271728d84ff3c13603754a885a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03c1aa8d_db64ec2b",
+        "filename": "chrome/browser/media/media_engagement_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-30T16:42:01Z",
+      "side": 1,
+      "message": "C++ nit: this should be static const double... though by doing that, this will need an actual definition in the .cc file as well.\n\nIt might be easier to just make this a constexpr in the .cc file, since it\u0027s not referenced elsewhere anyway)",
+      "range": {
+        "startLine": 62,
+        "startChar": 1,
+        "endLine": 62,
+        "endChar": 2
+      },
+      "revId": "a04f3f2839ec3271728d84ff3c13603754a885a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
