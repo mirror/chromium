@@ -15,13 +15,6 @@ using testing::Property;
 using testing::Mock;
 
 namespace cc {
-namespace {
-void Playback(PaintOpBuffer* buffer,
-              SkCanvas* canvas,
-              const std::vector<size_t>& indices) {
-  buffer->Playback(canvas, nullptr, &indices);
-}
-}  // namespace
 
 TEST(PaintOpBufferTest, Empty) {
   PaintOpBuffer buffer;
@@ -603,15 +596,45 @@ TEST(PaintOpBufferTest, NonAAPaint) {
   }
 }
 
-TEST(PaintOpBufferTest, ContiguousIndices) {
-  PaintOpBuffer buffer;
+class PaintOpBufferOffsetsTest : public ::testing::Test {
+ public:
+  void SetUp() override {}
+  void TearDown() override {
+    offsets_.clear();
+    buffer_.Reset();
+  }
+
+  template <typename T, typename... Args>
+  void push_op(Args&&... args) {
+    offsets_.push_back(buffer_.next_op_offset());
+    buffer_.push<T>(std::forward<Args>(args)...);
+  }
+
+  // Returns a subset of offsets_ by selecting only the specified indices.
+  std::vector<size_t> Select(const std::vector<size_t>& indices) {
+    std::vector<size_t> result;
+    for (size_t i : indices)
+      result.push_back(offsets_[i]);
+    return result;
+  }
+
+  void Playback(SkCanvas* canvas, const std::vector<size_t>& offsets) {
+    buffer_.Playback(canvas, nullptr, &offsets);
+  }
+
+ private:
+  std::vector<size_t> offsets_;
+  PaintOpBuffer buffer_;
+};
+
+TEST_F(PaintOpBufferOffsetsTest, ContiguousIndices) {
   MockCanvas canvas;
 
-  buffer.push<DrawColorOp>(0u, SkBlendMode::kClear);
-  buffer.push<DrawColorOp>(1u, SkBlendMode::kClear);
-  buffer.push<DrawColorOp>(2u, SkBlendMode::kClear);
-  buffer.push<DrawColorOp>(3u, SkBlendMode::kClear);
-  buffer.push<DrawColorOp>(4u, SkBlendMode::kClear);
+  push_op<DrawColorOp>(0u, SkBlendMode::kClear);
+  push_op<DrawColorOp>(1u, SkBlendMode::kClear);
+  push_op<DrawColorOp>(2u, SkBlendMode::kClear);
+  push_op<DrawColorOp>(3u, SkBlendMode::kClear);
+  push_op<DrawColorOp>(4u, SkBlendMode::kClear);
 
   // Plays all items.
   testing::Sequence s;
@@ -620,18 +643,17 @@ TEST(PaintOpBufferTest, ContiguousIndices) {
   EXPECT_CALL(canvas, OnDrawPaintWithColor(2u)).InSequence(s);
   EXPECT_CALL(canvas, OnDrawPaintWithColor(3u)).InSequence(s);
   EXPECT_CALL(canvas, OnDrawPaintWithColor(4u)).InSequence(s);
-  Playback(&buffer, &canvas, {0, 1, 2, 3, 4});
+  Playback(&canvas, Select({0, 1, 2, 3, 4}));
 }
 
-TEST(PaintOpBufferTest, NonContiguousIndices) {
-  PaintOpBuffer buffer;
+TEST_F(PaintOpBufferOffsetsTest, NonContiguousIndices) {
   MockCanvas canvas;
 
-  buffer.push<DrawColorOp>(0u, SkBlendMode::kClear);
-  buffer.push<DrawColorOp>(1u, SkBlendMode::kClear);
-  buffer.push<DrawColorOp>(2u, SkBlendMode::kClear);
-  buffer.push<DrawColorOp>(3u, SkBlendMode::kClear);
-  buffer.push<DrawColorOp>(4u, SkBlendMode::kClear);
+  push_op<DrawColorOp>(0u, SkBlendMode::kClear);
+  push_op<DrawColorOp>(1u, SkBlendMode::kClear);
+  push_op<DrawColorOp>(2u, SkBlendMode::kClear);
+  push_op<DrawColorOp>(3u, SkBlendMode::kClear);
+  push_op<DrawColorOp>(4u, SkBlendMode::kClear);
 
   // Plays 0, 1, 3, 4 indices.
   testing::Sequence s;
@@ -639,71 +661,67 @@ TEST(PaintOpBufferTest, NonContiguousIndices) {
   EXPECT_CALL(canvas, OnDrawPaintWithColor(1u)).InSequence(s);
   EXPECT_CALL(canvas, OnDrawPaintWithColor(3u)).InSequence(s);
   EXPECT_CALL(canvas, OnDrawPaintWithColor(4u)).InSequence(s);
-  Playback(&buffer, &canvas, {0, 1, 3, 4});
+  Playback(&canvas, Select({0, 1, 3, 4}));
 }
 
-TEST(PaintOpBufferTest, FirstTwoIndices) {
-  PaintOpBuffer buffer;
+TEST_F(PaintOpBufferOffsetsTest, FirstTwoIndices) {
   MockCanvas canvas;
 
-  buffer.push<DrawColorOp>(0u, SkBlendMode::kClear);
-  buffer.push<DrawColorOp>(1u, SkBlendMode::kClear);
-  buffer.push<DrawColorOp>(2u, SkBlendMode::kClear);
-  buffer.push<DrawColorOp>(3u, SkBlendMode::kClear);
-  buffer.push<DrawColorOp>(4u, SkBlendMode::kClear);
+  push_op<DrawColorOp>(0u, SkBlendMode::kClear);
+  push_op<DrawColorOp>(1u, SkBlendMode::kClear);
+  push_op<DrawColorOp>(2u, SkBlendMode::kClear);
+  push_op<DrawColorOp>(3u, SkBlendMode::kClear);
+  push_op<DrawColorOp>(4u, SkBlendMode::kClear);
 
   // Plays first two indices.
   testing::Sequence s;
   EXPECT_CALL(canvas, OnDrawPaintWithColor(0u)).InSequence(s);
   EXPECT_CALL(canvas, OnDrawPaintWithColor(1u)).InSequence(s);
-  Playback(&buffer, &canvas, {0, 1});
+  Playback(&canvas, Select({0, 1}));
 }
 
-TEST(PaintOpBufferTest, MiddleIndex) {
-  PaintOpBuffer buffer;
+TEST_F(PaintOpBufferOffsetsTest, MiddleIndex) {
   MockCanvas canvas;
 
-  buffer.push<DrawColorOp>(0u, SkBlendMode::kClear);
-  buffer.push<DrawColorOp>(1u, SkBlendMode::kClear);
-  buffer.push<DrawColorOp>(2u, SkBlendMode::kClear);
-  buffer.push<DrawColorOp>(3u, SkBlendMode::kClear);
-  buffer.push<DrawColorOp>(4u, SkBlendMode::kClear);
+  push_op<DrawColorOp>(0u, SkBlendMode::kClear);
+  push_op<DrawColorOp>(1u, SkBlendMode::kClear);
+  push_op<DrawColorOp>(2u, SkBlendMode::kClear);
+  push_op<DrawColorOp>(3u, SkBlendMode::kClear);
+  push_op<DrawColorOp>(4u, SkBlendMode::kClear);
 
   // Plays index 2.
   testing::Sequence s;
   EXPECT_CALL(canvas, OnDrawPaintWithColor(2u)).InSequence(s);
-  Playback(&buffer, &canvas, {2});
+  Playback(&canvas, Select({2}));
 }
 
-TEST(PaintOpBufferTest, LastTwoElements) {
-  PaintOpBuffer buffer;
+TEST_F(PaintOpBufferOffsetsTest, LastTwoElements) {
   MockCanvas canvas;
 
-  buffer.push<DrawColorOp>(0u, SkBlendMode::kClear);
-  buffer.push<DrawColorOp>(1u, SkBlendMode::kClear);
-  buffer.push<DrawColorOp>(2u, SkBlendMode::kClear);
-  buffer.push<DrawColorOp>(3u, SkBlendMode::kClear);
-  buffer.push<DrawColorOp>(4u, SkBlendMode::kClear);
+  push_op<DrawColorOp>(0u, SkBlendMode::kClear);
+  push_op<DrawColorOp>(1u, SkBlendMode::kClear);
+  push_op<DrawColorOp>(2u, SkBlendMode::kClear);
+  push_op<DrawColorOp>(3u, SkBlendMode::kClear);
+  push_op<DrawColorOp>(4u, SkBlendMode::kClear);
 
   // Plays last two elements.
   testing::Sequence s;
   EXPECT_CALL(canvas, OnDrawPaintWithColor(3u)).InSequence(s);
   EXPECT_CALL(canvas, OnDrawPaintWithColor(4u)).InSequence(s);
-  Playback(&buffer, &canvas, {3, 4});
+  Playback(&canvas, Select({3, 4}));
 }
 
-TEST(PaintOpBufferTest, ContiguousIndicesWithSaveLayerAlphaRestore) {
-  PaintOpBuffer buffer;
+TEST_F(PaintOpBufferOffsetsTest, ContiguousIndicesWithSaveLayerAlphaRestore) {
   MockCanvas canvas;
 
-  buffer.push<DrawColorOp>(0u, SkBlendMode::kClear);
-  buffer.push<DrawColorOp>(1u, SkBlendMode::kClear);
+  push_op<DrawColorOp>(0u, SkBlendMode::kClear);
+  push_op<DrawColorOp>(1u, SkBlendMode::kClear);
   uint8_t alpha = 100;
-  buffer.push<SaveLayerAlphaOp>(nullptr, alpha, true);
-  buffer.push<RestoreOp>();
-  buffer.push<DrawColorOp>(2u, SkBlendMode::kClear);
-  buffer.push<DrawColorOp>(3u, SkBlendMode::kClear);
-  buffer.push<DrawColorOp>(4u, SkBlendMode::kClear);
+  push_op<SaveLayerAlphaOp>(nullptr, alpha, true);
+  push_op<RestoreOp>();
+  push_op<DrawColorOp>(2u, SkBlendMode::kClear);
+  push_op<DrawColorOp>(3u, SkBlendMode::kClear);
+  push_op<DrawColorOp>(4u, SkBlendMode::kClear);
 
   // Items are {0, 1, save, restore, 2, 3, 4}.
 
@@ -714,22 +732,22 @@ TEST(PaintOpBufferTest, ContiguousIndicesWithSaveLayerAlphaRestore) {
   EXPECT_CALL(canvas, OnDrawPaintWithColor(2u)).InSequence(s);
   EXPECT_CALL(canvas, OnDrawPaintWithColor(3u)).InSequence(s);
   EXPECT_CALL(canvas, OnDrawPaintWithColor(4u)).InSequence(s);
-  Playback(&buffer, &canvas, {0, 1, 2, 3, 4, 5, 6});
+  Playback(&canvas, Select({0, 1, 2, 3, 4, 5, 6}));
   Mock::VerifyAndClearExpectations(&canvas);
 }
 
-TEST(PaintOpBufferTest, NonContiguousIndicesWithSaveLayerAlphaRestore) {
-  PaintOpBuffer buffer;
+TEST_F(PaintOpBufferOffsetsTest,
+       NonContiguousIndicesWithSaveLayerAlphaRestore) {
   MockCanvas canvas;
 
-  buffer.push<DrawColorOp>(0u, SkBlendMode::kClear);
-  buffer.push<DrawColorOp>(1u, SkBlendMode::kClear);
+  push_op<DrawColorOp>(0u, SkBlendMode::kClear);
+  push_op<DrawColorOp>(1u, SkBlendMode::kClear);
   uint8_t alpha = 100;
-  buffer.push<SaveLayerAlphaOp>(nullptr, alpha, true);
-  buffer.push<DrawColorOp>(2u, SkBlendMode::kClear);
-  buffer.push<DrawColorOp>(3u, SkBlendMode::kClear);
-  buffer.push<RestoreOp>();
-  buffer.push<DrawColorOp>(4u, SkBlendMode::kClear);
+  push_op<SaveLayerAlphaOp>(nullptr, alpha, true);
+  push_op<DrawColorOp>(2u, SkBlendMode::kClear);
+  push_op<DrawColorOp>(3u, SkBlendMode::kClear);
+  push_op<RestoreOp>();
+  push_op<DrawColorOp>(4u, SkBlendMode::kClear);
 
   // Items are {0, 1, save, 2, 3, restore, 4}.
 
@@ -746,7 +764,7 @@ TEST(PaintOpBufferTest, NonContiguousIndicesWithSaveLayerAlphaRestore) {
     EXPECT_CALL(canvas, OnDrawPaintWithColor(3u)).InSequence(s);
     EXPECT_CALL(canvas, willRestore()).InSequence(s);
     EXPECT_CALL(canvas, OnDrawPaintWithColor(4u)).InSequence(s);
-    Playback(&buffer, &canvas, {0, 1, 2, 3, 4, 5, 6});
+    Playback(&canvas, Select({0, 1, 2, 3, 4, 5, 6}));
   }
   Mock::VerifyAndClearExpectations(&canvas);
 
@@ -757,29 +775,29 @@ TEST(PaintOpBufferTest, NonContiguousIndicesWithSaveLayerAlphaRestore) {
     EXPECT_CALL(canvas, OnDrawPaintWithColor(1u)).InSequence(s);
     // The now-empty SaveLayerAlpha/Restore is dropped
     EXPECT_CALL(canvas, OnDrawPaintWithColor(4u)).InSequence(s);
-    Playback(&buffer, &canvas, {0, 1, 2, 5, 6});
+    Playback(&canvas, Select({0, 1, 2, 5, 6}));
   }
   Mock::VerifyAndClearExpectations(&canvas);
 }
 
-TEST(PaintOpBufferTest, ContiguousIndicesWithSaveLayerAlphaDrawRestore) {
-  PaintOpBuffer buffer;
+TEST_F(PaintOpBufferOffsetsTest,
+       ContiguousIndicesWithSaveLayerAlphaDrawRestore) {
   MockCanvas canvas;
 
-  auto add_draw_rect = [](PaintOpBuffer* buffer, SkColor c) {
+  auto add_draw_rect = [this](SkColor c) {
     PaintFlags flags;
     flags.setColor(c);
-    buffer->push<DrawRectOp>(SkRect::MakeWH(1, 1), flags);
+    push_op<DrawRectOp>(SkRect::MakeWH(1, 1), flags);
   };
 
-  add_draw_rect(&buffer, 0u);
-  add_draw_rect(&buffer, 1u);
+  add_draw_rect(0u);
+  add_draw_rect(1u);
   uint8_t alpha = 100;
-  buffer.push<SaveLayerAlphaOp>(nullptr, alpha, true);
-  add_draw_rect(&buffer, 2u);
-  buffer.push<RestoreOp>();
-  add_draw_rect(&buffer, 3u);
-  add_draw_rect(&buffer, 4u);
+  push_op<SaveLayerAlphaOp>(nullptr, alpha, true);
+  add_draw_rect(2u);
+  push_op<RestoreOp>();
+  add_draw_rect(3u);
+  add_draw_rect(4u);
 
   // Items are {0, 1, save, 2, restore, 3, 4}.
 
@@ -791,28 +809,28 @@ TEST(PaintOpBufferTest, ContiguousIndicesWithSaveLayerAlphaDrawRestore) {
   EXPECT_CALL(canvas, OnDrawRectWithColor(2u)).InSequence(s);
   EXPECT_CALL(canvas, OnDrawRectWithColor(3u)).InSequence(s);
   EXPECT_CALL(canvas, OnDrawRectWithColor(4u)).InSequence(s);
-  Playback(&buffer, &canvas, {0, 1, 2, 3, 4, 5, 6});
+  Playback(&canvas, Select({0, 1, 2, 3, 4, 5, 6}));
   Mock::VerifyAndClearExpectations(&canvas);
 }
 
-TEST(PaintOpBufferTest, NonContiguousIndicesWithSaveLayerAlphaDrawRestore) {
-  PaintOpBuffer buffer;
+TEST_F(PaintOpBufferOffsetsTest,
+       NonContiguousIndicesWithSaveLayerAlphaDrawRestore) {
   MockCanvas canvas;
 
-  auto add_draw_rect = [](PaintOpBuffer* buffer, SkColor c) {
+  auto add_draw_rect = [this](SkColor c) {
     PaintFlags flags;
     flags.setColor(c);
-    buffer->push<DrawRectOp>(SkRect::MakeWH(1, 1), flags);
+    push_op<DrawRectOp>(SkRect::MakeWH(1, 1), flags);
   };
 
-  add_draw_rect(&buffer, 0u);
-  add_draw_rect(&buffer, 1u);
+  add_draw_rect(0u);
+  add_draw_rect(1u);
   uint8_t alpha = 100;
-  buffer.push<SaveLayerAlphaOp>(nullptr, alpha, true);
-  add_draw_rect(&buffer, 2u);
-  add_draw_rect(&buffer, 3u);
-  add_draw_rect(&buffer, 4u);
-  buffer.push<RestoreOp>();
+  push_op<SaveLayerAlphaOp>(nullptr, alpha, true);
+  add_draw_rect(2u);
+  add_draw_rect(3u);
+  add_draw_rect(4u);
+  push_op<RestoreOp>();
 
   // Items are are {0, 1, save, 2, 3, 4, restore}.
 
@@ -827,7 +845,7 @@ TEST(PaintOpBufferTest, NonContiguousIndicesWithSaveLayerAlphaDrawRestore) {
     EXPECT_CALL(canvas, OnDrawRectWithColor(3u)).InSequence(s);
     EXPECT_CALL(canvas, OnDrawRectWithColor(4u)).InSequence(s);
     EXPECT_CALL(canvas, willRestore()).InSequence(s);
-    Playback(&buffer, &canvas, {0, 1, 2, 3, 4, 5, 6});
+    Playback(&canvas, Select({0, 1, 2, 3, 4, 5, 6}));
   }
   Mock::VerifyAndClearExpectations(&canvas);
 
@@ -838,7 +856,7 @@ TEST(PaintOpBufferTest, NonContiguousIndicesWithSaveLayerAlphaDrawRestore) {
     EXPECT_CALL(canvas, OnDrawRectWithColor(0u)).InSequence(s);
     EXPECT_CALL(canvas, OnDrawRectWithColor(1u)).InSequence(s);
     EXPECT_CALL(canvas, OnDrawRectWithColor(4u)).InSequence(s);
-    Playback(&buffer, &canvas, {0, 1, 2, 5, 6});
+    Playback(&canvas, Select({0, 1, 2, 5, 6}));
   }
   Mock::VerifyAndClearExpectations(&canvas);
 
@@ -849,7 +867,7 @@ TEST(PaintOpBufferTest, NonContiguousIndicesWithSaveLayerAlphaDrawRestore) {
     EXPECT_CALL(canvas, OnDrawRectWithColor(0u)).InSequence(s);
     EXPECT_CALL(canvas, OnDrawRectWithColor(1u)).InSequence(s);
     EXPECT_CALL(canvas, OnDrawRectWithColor(2u)).InSequence(s);
-    Playback(&buffer, &canvas, {0, 1, 2, 3, 6});
+    Playback(&canvas, Select({0, 1, 2, 3, 6}));
   }
 }
 

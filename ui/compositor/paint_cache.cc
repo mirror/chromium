@@ -10,30 +10,36 @@
 
 namespace ui {
 
-PaintCache::PaintCache() {}
-
-PaintCache::~PaintCache() {
-}
+PaintCache::PaintCache() = default;
+PaintCache::~PaintCache() = default;
 
 bool PaintCache::UseCache(const PaintContext& context,
                           const gfx::Size& size_in_context) {
   if (!paint_op_buffer_)
     return false;
   DCHECK(context.list_);
-  cc::PaintOpBuffer* buffer = context.list_->StartPaint();
-  buffer->push<cc::DrawRecordOp>(paint_op_buffer_);
+  context.list_->StartPaint();
+  context.list_->push<cc::DrawRecordOp>(paint_op_buffer_);
   gfx::Rect bounds_in_layer = context.ToLayerSpaceBounds(size_in_context);
   context.list_->EndPaintOfUnpaired(bounds_in_layer);
   return true;
 }
 
-cc::PaintOpBuffer* PaintCache::ResetCache() {
-  paint_op_buffer_ = sk_make_sp<cc::PaintOpBuffer>();
-  return paint_op_buffer_.get();
+cc::DisplayItemList* PaintCache::ResetCache() {
+  paint_op_buffer_ = nullptr;
+  display_item_list_ = base::MakeRefCounted<cc::DisplayItemList>(
+      cc::DisplayItemList::kToBeReleasedAsPaintOpBuffer);
+  display_item_list_->StartPaint();
+  return display_item_list_.get();
 }
 
 void PaintCache::FinalizeCache() {
-  paint_op_buffer_->ShrinkToFit();
+  // The bounds of the unpainred call don't matter, since we immediately
+  // release the list as a paint op buffer.
+  display_item_list_->EndPaintOfUnpaired(gfx::Rect());
+  display_item_list_->Finalize();
+  paint_op_buffer_ = display_item_list_->ReleaseAsRecord();
+  display_item_list_ = nullptr;
 }
 
 }  // namespace ui
