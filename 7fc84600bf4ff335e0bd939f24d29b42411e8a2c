@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "83fb141b_3f09cda9",
+        "filename": "cc/layers/touch_action_region.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-06-30T03:13:20Z",
+      "side": 1,
+      "message": "Most restricted sounds a bit strange, what we want to say is the touch actions that we are sure will be allowed at the point.",
+      "range": {
+        "startLine": 28,
+        "startChar": 17,
+        "endLine": 28,
+        "endChar": 45
+      },
+      "revId": "7fc84600bf4ff335e0bd939f24d29b42411e8a2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45adbc58_fd9e9e02",
+        "filename": "cc/layers/touch_action_region_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-06-30T03:13:20Z",
+      "side": 1,
+      "message": "nit: No need for the local variable, you can just EXPECT_EQ(kTouchAction*, touch_action_region.GetWhiteListedTouchAction(gfx::Point(x, y))) right?",
+      "revId": "7fc84600bf4ff335e0bd939f24d29b42411e8a2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e3b9098d_4bb84b3c",
         "filename": "ui/events/blink/input_handler_proxy.cc",
         "patchSetId": 15
@@ -16,6 +56,29 @@
       "revId": "7fc84600bf4ff335e0bd939f24d29b42411e8a2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "45bc3cab_2eb1f932",
+        "filename": "ui/events/blink/input_handler_proxy.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1122,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-06-30T03:13:20Z",
+      "side": 1,
+      "message": "nit: This is the whitelisted touch actions, not the actual touch action right?",
+      "range": {
+        "startLine": 1122,
+        "startChar": 18,
+        "endLine": 1122,
+        "endChar": 38
+      },
+      "revId": "7fc84600bf4ff335e0bd939f24d29b42411e8a2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
