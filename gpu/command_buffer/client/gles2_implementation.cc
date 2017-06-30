@@ -2448,9 +2448,6 @@ void GLES2Implementation::CompressedTexSubImage2D(
     // and we don't have to wait for the result so from the client's perspective
     // it's cheap.
     helper_->SetBucketSize(kResultBucketId, 0);
-  } else {
-    helper_->CompressedTexSubImage2D(target, level, xoffset, yoffset, width,
-                                     height, format, image_size, 0, 0);
   }
   CheckGLError();
 }
@@ -2554,10 +2551,6 @@ void GLES2Implementation::CompressedTexSubImage3D(
     // and we don't have to wait for the result so from the client's perspective
     // it's cheap.
     helper_->SetBucketSize(kResultBucketId, 0);
-  } else {
-    helper_->CompressedTexSubImage3D(target, level, xoffset, yoffset, zoffset,
-                                     width, height, depth, format, image_size,
-                                     0, 0);
   }
   CheckGLError();
 }
@@ -2944,6 +2937,9 @@ void GLES2Implementation::TexSubImage2D(
     return;
   }
 
+  if (width == 0 || height == 0)
+    return;
+
   uint32_t size;
   uint32_t unpadded_row_size;
   uint32_t padded_row_size;
@@ -2994,14 +2990,6 @@ void GLES2Implementation::TexSubImage2D(
       buffer->set_last_usage_token(helper_->InsertToken());
       CheckGLError();
     }
-    return;
-  }
-
-  if (width == 0 || height == 0) {
-    // No need to worry about pixel data.
-    helper_->TexSubImage2D(target, level, xoffset, yoffset, width, height,
-                           format, type, 0, 0, false);
-    CheckGLError();
     return;
   }
 
@@ -3081,6 +3069,9 @@ void GLES2Implementation::TexSubImage3D(
     return;
   }
 
+  if (width == 0 || height == 0 || depth == 0)
+    return;
+
   uint32_t size;
   uint32_t unpadded_row_size;
   uint32_t padded_row_size;
@@ -3132,14 +3123,6 @@ void GLES2Implementation::TexSubImage3D(
       buffer->set_last_usage_token(helper_->InsertToken());
       CheckGLError();
     }
-    return;
-  }
-
-  if (width == 0 || height == 0 || depth == 0) {
-    // No need to worry about pixel data.
-    helper_->TexSubImage3D(target, level, xoffset, yoffset, zoffset,
-                           width, height, depth, format, type, 0, 0, false);
-    CheckGLError();
     return;
   }
 
