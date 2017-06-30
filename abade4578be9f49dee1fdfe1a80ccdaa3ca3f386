@@ -34,6 +34,24 @@
       "revId": "abade4578be9f49dee1fdfe1a80ccdaa3ca3f386",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "262f2196_0565c1e7",
+        "filename": "third_party/WebKit/Source/modules/websockets/DocumentWebSocketChannel.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-06-30T18:17:17Z",
+      "side": 0,
+      "message": "The empty interface provider case will no longer be encountered. Worker threads will use the process-wide interface provider from Platform (until they get a real per-worker interface provider) and documents will use the frame interface provider.",
+      "parentUuid": "c35f8447_bfa2dcc2",
+      "revId": "abade4578be9f49dee1fdfe1a80ccdaa3ca3f386",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

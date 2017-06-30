@@ -16,6 +16,24 @@
       "revId": "79e6c248cb03125aad34de4e8ffa4a91a90172d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "309fdf6d_087645d1",
+        "filename": "third_party/WebKit/Source/modules/websockets/DocumentWebSocketChannelTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-06-30T18:17:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "047fc476_5d5314d9",
+      "revId": "79e6c248cb03125aad34de4e8ffa4a91a90172d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
