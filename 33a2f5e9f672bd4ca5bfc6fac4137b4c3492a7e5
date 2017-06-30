@@ -1,0 +1,349 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46bb1fb4_079babc0",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-30T16:59:39Z",
+      "side": 1,
+      "message": "base::ThreadRestrictions::AssertIOAllowed();",
+      "range": {
+        "startLine": 41,
+        "startChar": 28,
+        "endLine": 41,
+        "endChar": 29
+      },
+      "revId": "33a2f5e9f672bd4ca5bfc6fac4137b4c3492a7e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d096167e_082cdeec",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-30T16:59:39Z",
+      "side": 1,
+      "message": "Eek! Let\u0027s avoid creating files at all costs.\n\nYou can create a normal pipe and pass that as the fd:\n\nhttps://cs.chromium.org/chromium/src/components/arc/arc_session.cc?type\u003dcs\u0026q\u003dpipe%5C(+file:src/components\u0026l\u003d74\n\nYou can create the pipe, send the fd, and then in this method write |output| to the fd.",
+      "range": {
+        "startLine": 50,
+        "startChar": 13,
+        "endLine": 50,
+        "endChar": 32
+      },
+      "revId": "33a2f5e9f672bd4ca5bfc6fac4137b4c3492a7e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce90f642_b2f33c8c",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-30T16:59:39Z",
+      "side": 1,
+      "message": "ArcClipboardBridge?",
+      "range": {
+        "startLine": 87,
+        "startChar": 5,
+        "endLine": 87,
+        "endChar": 24
+      },
+      "revId": "33a2f5e9f672bd4ca5bfc6fac4137b4c3492a7e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0626c3d8_51d9a3d3",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-30T16:59:39Z",
+      "side": 1,
+      "message": "These two things are not used.\n\nYou can create a new https://cs.chromium.org/chromium/src/base/threading/thread_checker.h?type\u003dcs on this class to make sure it\u0027s called on the right thread instead.",
+      "range": {
+        "startLine": 88,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 28
+      },
+      "revId": "33a2f5e9f672bd4ca5bfc6fac4137b4c3492a7e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ad51f4c_8aa4f114",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-30T16:59:39Z",
+      "side": 1,
+      "message": "nit: use the guard clause pattern:\n\nif (current_seq \u003d\u003d clipboard_seq_before_arc_ + 1) {\n  // ignore ...\n  return;\n}\n// rest.",
+      "range": {
+        "startLine": 141,
+        "startChar": 0,
+        "endLine": 142,
+        "endChar": 22
+      },
+      "revId": "33a2f5e9f672bd4ca5bfc6fac4137b4c3492a7e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58258235_c9a14dd4",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-30T16:59:39Z",
+      "side": 1,
+      "message": "It\u0027s probably better to do\n\nswitch (clip_data-\u003econtent.which()) {\n  case mojom::ClipDataContent::Tag::HTML:\n    // ...\n}\n\nand don\u0027t add a default entry, that way the compiler will complain if you missed something.",
+      "range": {
+        "startLine": 177,
+        "startChar": 2,
+        "endLine": 177,
+        "endChar": 36
+      },
+      "revId": "33a2f5e9f672bd4ca5bfc6fac4137b4c3492a7e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f521161_2af177dd",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-30T16:59:39Z",
+      "side": 1,
+      "message": "You cannot in general perform this. What if it\u0027s a pipe?\n\nIt\u0027s probably better to do post this task to a blocking threadpool and read from there, and keep reading until the data\u0027s exhausted (maybe set a reasonable maximum size to avoid running out of memory).",
+      "range": {
+        "startLine": 206,
+        "startChar": 0,
+        "endLine": 207,
+        "endChar": 37
+      },
+      "revId": "33a2f5e9f672bd4ca5bfc6fac4137b4c3492a7e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fb771cf_cb4e20c6",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-30T16:59:39Z",
+      "side": 1,
+      "message": "You can\u0027t perform I/O on this thread :(",
+      "range": {
+        "startLine": 210,
+        "startChar": 6,
+        "endLine": 210,
+        "endChar": 80
+      },
+      "revId": "33a2f5e9f672bd4ca5bfc6fac4137b4c3492a7e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "768d8d21_c7087b71",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-30T16:59:39Z",
+      "side": 1,
+      "message": "base::Unretained(this) should only be used if you have any guarantee that |this| will never be destroyed by the time the MessageLoop gets around processing this.\n\nIIUC you have no way of providing such guarantee, so you\u0027ll need to use https://cs.chromium.org/chromium/src/base/memory/weak_ptr.h",
+      "range": {
+        "startLine": 271,
+        "startChar": 54,
+        "endLine": 271,
+        "endChar": 76
+      },
+      "revId": "33a2f5e9f672bd4ca5bfc6fac4137b4c3492a7e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ad0cd0e_cb71d1c9",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-30T16:59:39Z",
+      "side": 1,
+      "message": "Why not have an explicit \"empty\" type instead of relying on magic constants? Or even better, make the  content be a |ClipDataContent?| so that it maps to base::Optional\u003c\u003e in C++ / null in Java, that way you can signal that it\u0027s empty.",
+      "range": {
+        "startLine": 394,
+        "startChar": 42,
+        "endLine": 394,
+        "endChar": 60
+      },
+      "revId": "33a2f5e9f672bd4ca5bfc6fac4137b4c3492a7e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2700aebe_255146f7",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-30T16:59:39Z",
+      "side": 1,
+      "message": "All the \"ToARC\" suffixes are superfluous: \"Send\" already implies that you\u0027re transferring stuff to the container.",
+      "range": {
+        "startLine": 48,
+        "startChar": 16,
+        "endLine": 48,
+        "endChar": 21
+      },
+      "revId": "33a2f5e9f672bd4ca5bfc6fac4137b4c3492a7e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7188404_051fb3c3",
+        "filename": "components/arc/common/clipboard.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-30T16:59:39Z",
+      "side": 1,
+      "message": "If it\u0027s opaque, maybe call it just |blob|?",
+      "range": {
+        "startLine": 23,
+        "startChar": 15,
+        "endLine": 23,
+        "endChar": 24
+      },
+      "revId": "33a2f5e9f672bd4ca5bfc6fac4137b4c3492a7e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfa4bd12_9b660ec6",
+        "filename": "components/arc/common/clipboard.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-30T16:59:39Z",
+      "side": 1,
+      "message": "SetTextContentDeprecated. Same below.",
+      "range": {
+        "startLine": 44,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 16
+      },
+      "revId": "33a2f5e9f672bd4ca5bfc6fac4137b4c3492a7e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "585afda4_633b12f9",
+        "filename": "components/arc/common/clipboard.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-30T16:59:39Z",
+      "side": 1,
+      "message": "Same here:\n\n[MinVersion\u003d1] GetInstanceClip@3() \u003d\u003e (ClipData data);\n\n(unless SetHostClip can be called unprompted. in any case, please add more comments about the expected usage).",
+      "range": {
+        "startLine": 66,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 37
+      },
+      "revId": "33a2f5e9f672bd4ca5bfc6fac4137b4c3492a7e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29063a7a_095e5edc",
+        "filename": "components/arc/common/clipboard.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-30T16:59:39Z",
+      "side": 1,
+      "message": "Given that this will only be called when ClipboardHost.GetHostClip() is invoked, it\u0027s better to remove this and instead make the other \"return\" a callback:\n\n[MinVersion\u003d1] GetHostClip@3() \u003d\u003e (ClipData data);",
+      "range": {
+        "startLine": 68,
+        "startChar": 2,
+        "endLine": 68,
+        "endChar": 48
+      },
+      "revId": "33a2f5e9f672bd4ca5bfc6fac4137b4c3492a7e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
