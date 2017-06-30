@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d76b58a0_133ea32c",
+        "filename": "components/password_manager/core/browser/password_manager_metrics_recorder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-06-30T16:18:29Z",
+      "side": 1,
+      "message": "Enum should go before the constructors.",
+      "range": {
+        "startLine": 49,
+        "startChar": 7,
+        "endLine": 49,
+        "endChar": 29
+      },
+      "revId": "9ec45e00c6a63985cd8ea99ffb15cac8ecfac685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
