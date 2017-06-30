@@ -16,6 +16,24 @@
       "revId": "bbf85c4795b79cbe3285167e3a0d18127ef747a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1442d0e5_b9b9d0dd",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-06-30T19:07:09Z",
+      "side": 0,
+      "message": "I\u0027m fine with deleting these since we have other metrics that\ntrack it already.",
+      "parentUuid": "ce22b141_458f3da6",
+      "revId": "bbf85c4795b79cbe3285167e3a0d18127ef747a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
