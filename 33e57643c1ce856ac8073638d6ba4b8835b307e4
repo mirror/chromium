@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "32fa290e_ae0c3929",
+        "filename": "components/cronet/ios/ios_global_state_cronet_configuration.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-06-30T20:52:59Z",
+      "side": 1,
+      "message": "It is still not completely clear to me. I don\u0027t see it exposed in histogram data, but that doesn\u0027t mean it isn\u0027t used in the process somewhere. All the documentation in the header says is: \"|name| is used to label threads and histograms. It should identify the component that creates the TaskScheduler.\" It doesn\u0027t look like there is a default value for it, in ios/web we use and empty string, but have it commented that we do that so that it matches the browser process. I added fdoray@ as a TaskScheduler owner to comment on the name\u0027s importance.",
+      "parentUuid": "398499b4_cb498853",
+      "range": {
+        "startLine": 14,
+        "startChar": 10,
+        "endLine": 14,
+        "endChar": 19
+      },
+      "revId": "33e57643c1ce856ac8073638d6ba4b8835b307e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a58d2b16_b1ecd0cb",
         "filename": "ios/web/public/global_state/ios_global_state.mm",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-30T19:46:26Z",
       "side": 1,
       "message": "I *think* network change notifier may start posting notifications immediately, and that would break as message loop is not built yet.\n\nDoes BuildMessageLoop() have to be separate?",
+      "range": {
+        "startLine": 62,
+        "startChar": 4,
+        "endLine": 62,
+        "endChar": 27
+      },
+      "revId": "33e57643c1ce856ac8073638d6ba4b8835b307e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5a5ae3d_cb2c3a0d",
+        "filename": "ios/web/public/global_state/ios_global_state.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-06-30T20:52:59Z",
+      "side": 1,
+      "message": "I think you are right about the network change notifier. Although I put it here in Create, I missed the fact that even in ios/web we were doing this after the message loop was created. I think I will need to break NetworkChangeNotifier::Create() out into another method.\n\nI think the BuildMessageLoop should be separate. I want to make minimal (none if possible) changes to the startup logic for both Cronet and iOS Chrome to avoid introducing difficult to debug issues. The ios/web startup is quite complex so I wanted to initialize in the same order.",
+      "parentUuid": "a58d2b16_b1ecd0cb",
       "range": {
         "startLine": 62,
         "startChar": 4,

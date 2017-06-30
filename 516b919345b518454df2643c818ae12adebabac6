@@ -22,6 +22,30 @@
       "revId": "516b919345b518454df2643c818ae12adebabac6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2986991_2c2e0802",
+        "filename": "ios/net/global_state/ios_global_state.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-06-30T20:52:59Z",
+      "side": 1,
+      "message": "Yes, you can\u0027t create more than one of these globally. It will DCHECK in NetworkChangeNotifier::NetworkChangeNotifier on !g_network_change_notifier",
+      "parentUuid": "092e80a5_f2ec5983",
+      "range": {
+        "startLine": 62,
+        "startChar": 28,
+        "endLine": 62,
+        "endChar": 33
+      },
+      "revId": "516b919345b518454df2643c818ae12adebabac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
