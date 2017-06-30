@@ -16,6 +16,7 @@
 #include "base/single_thread_task_runner.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/task_scheduler/post_task.h"
+#include "content/browser/blob_storage/blob_registry_wrapper.h"
 #include "content/browser/blob_storage/chrome_blob_storage_context.h"
 #include "content/browser/browser_main_loop.h"
 #include "content/browser/browsing_data/storage_partition_http_cache_data_remover.h"
@@ -31,6 +32,7 @@
 #include "content/public/browser/local_storage_usage_info.h"
 #include "content/public/browser/session_storage_usage_info.h"
 #include "content/public/common/content_client.h"
+#include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/service_manager_connection.h"
 #include "content/public/common/service_names.mojom.h"
@@ -42,6 +44,7 @@
 #include "net/url_request/url_request_context_getter.h"
 #include "ppapi/features/features.h"
 #include "services/service_manager/public/cpp/connector.h"
+#include "storage/browser/blob/blob_registry_impl.h"
 #include "storage/browser/blob/blob_storage_context.h"
 #include "storage/browser/database/database_tracker.h"
 #include "storage/browser/quota/quota_manager.h"
@@ -557,6 +560,12 @@ std::unique_ptr<StoragePartitionImpl> StoragePartitionImpl::Create(
     partition->url_loader_factory_getter_->Initialize(partition.get());
   }
 
+  if (base::FeatureList::IsEnabled(features::kMojoBlobs)) {
+    partition->blob_registry_ =
+        new BlobRegistryWrapper(ChromeBlobStorageContext::GetFor(context),
+                                partition->filesystem_context_);
+  }
+
   return partition;
 }
 
@@ -649,6 +658,10 @@ StoragePartitionImpl::GetBluetoothAllowedDevicesMap() {
 
 BlobURLLoaderFactory* StoragePartitionImpl::GetBlobURLLoaderFactory() {
   return blob_url_loader_factory_.get();
+}
+
+BlobRegistryWrapper* StoragePartitionImpl::GetBlobRegistry() {
+  return blob_registry_.get();
 }
 
 void StoragePartitionImpl::OpenLocalStorage(
