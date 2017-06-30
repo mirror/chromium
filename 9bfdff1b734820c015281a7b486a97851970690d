@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "adf39025_89d672c9",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintChunker.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-30T23:09:42Z",
+      "side": 1,
+      "message": "It is here :)\n\nHowever, I changed to the following and moved it to the end of this method, which might look clearer:\n\n  // For foreign layer display item, we still need to force new chunk for the\n  // next display item. Otherwise reset force_new_chunk_ to false.\n  if (!is_foreign_layer)\n    force_new_chunk_ \u003d false;",
+      "parentUuid": "ede96224_098a6ce8",
+      "revId": "9bfdff1b734820c015281a7b486a97851970690d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a75a3e7e_685fd446",
         "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintController.cpp",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "122b5a81_fdb8bc3b",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintController.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-30T23:09:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a75a3e7e_685fd446",
+      "revId": "9bfdff1b734820c015281a7b486a97851970690d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "571c0436_e31592e7",
         "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintController.cpp",
         "patchSetId": 6
@@ -47,6 +83,24 @@
       "writtenOn": "2017-06-30T22:42:25Z",
       "side": 1,
       "message": "If the subsequence is empty we will still have forced a new chunk because of the force in begin. Are empty subsequences common? If not, I don\u0027t think it\u0027s an issue.",
+      "revId": "9bfdff1b734820c015281a7b486a97851970690d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff0258ab_f092ab37",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintController.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-30T23:09:42Z",
+      "side": 1,
+      "message": "Added comment here which answers your question:\n\n  // Omit the empty subsequence. The forced new chunk flag set by\n  // BeginSubsequence() still applies, but this not a big deal because empty\n  // subsequences are not common. Also we should not clear the flag because\n  // there might be unhandled flag that was set before this empty subsequence.",
+      "parentUuid": "571c0436_e31592e7",
       "revId": "9bfdff1b734820c015281a7b486a97851970690d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
