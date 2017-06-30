@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "665d17e6_9ae6129d",
+        "filename": "remoting/ios/app/host_setup_footer_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-06-30T22:40:36Z",
+      "side": 1,
+      "message": "is setCustomTitleColor: preferred to setTitleColor:forState: ?",
+      "revId": "a552893b4f4c14801e74e2217cbaf71ecb1bd303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
