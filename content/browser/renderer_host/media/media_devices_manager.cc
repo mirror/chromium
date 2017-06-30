@@ -232,6 +232,11 @@ void MediaDevicesManager::StartMonitoring() {
   if (!base::SystemMonitor::Get())
     return;
 
+#if defined(OS_MACOSX)
+  if (!base::FeatureList::IsEnabled(kDeviceMonitorMac))
+    return;
+#endif
+
   monitoring_started_ = true;
   base::SystemMonitor::Get()->AddDevicesChangedObserver(this);
 
