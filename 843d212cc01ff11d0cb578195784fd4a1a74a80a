@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e1afbf4_116c7044",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1012,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-30T04:53:51Z",
+      "side": 1,
+      "message": "Maybe use reference instead now that it should never be nullptr",
+      "revId": "843d212cc01ff11d0cb578195784fd4a1a74a80a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ffd58a3_7c977e58",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-30T04:53:51Z",
+      "side": 1,
+      "message": "nit: It\u0027s unclear what value this returns (from the new method name)",
+      "revId": "843d212cc01ff11d0cb578195784fd4a1a74a80a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
