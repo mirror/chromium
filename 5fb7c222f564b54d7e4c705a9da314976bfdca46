@@ -34,6 +34,40 @@
       "revId": "5fb7c222f564b54d7e4c705a9da314976bfdca46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8eb3a606_71cc37d4",
+        "filename": "components/feature_engagement_tracker/public/feature_constants.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-06-30T17:34:15Z",
+      "side": 1,
+      "message": "Can you add \"(IPH)\" after In-Product Help, so that the \nacronym is defined in this file?",
+      "revId": "5fb7c222f564b54d7e4c705a9da314976bfdca46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d117c72_361b502e",
+        "filename": "components/feature_engagement_tracker/public/feature_constants.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-06-30T17:34:15Z",
+      "side": 1,
+      "message": "If you include \"Tip\" in the name, I\u0027m assuming\nthat this only tracks how often the tip is \nshown, and it does not track the use of the \nNew Tab feature itself. Is this correct?",
+      "revId": "5fb7c222f564b54d7e4c705a9da314976bfdca46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
