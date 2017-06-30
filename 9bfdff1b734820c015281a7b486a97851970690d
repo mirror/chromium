@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a75a3e7e_685fd446",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintController.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-06-30T22:42:25Z",
+      "side": 1,
+      "message": "Can you add a comment here (and below in EndSubsequence) about why we need to force a new chunk?",
+      "revId": "9bfdff1b734820c015281a7b486a97851970690d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "571c0436_e31592e7",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintController.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-06-30T22:42:25Z",
+      "side": 1,
+      "message": "If the subsequence is empty we will still have forced a new chunk because of the force in begin. Are empty subsequences common? If not, I don\u0027t think it\u0027s an issue.",
+      "revId": "9bfdff1b734820c015281a7b486a97851970690d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
