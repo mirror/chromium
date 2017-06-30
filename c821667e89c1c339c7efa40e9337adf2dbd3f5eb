@@ -16,6 +16,24 @@
       "revId": "c821667e89c1c339c7efa40e9337adf2dbd3f5eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77f72132_0a0e8d16",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/style/checker.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-30T21:47:31Z",
+      "side": 1,
+      "message": "Sounds reasonable, switching to check for Tools/Scripts.",
+      "parentUuid": "02b5b70a_34e555be",
+      "revId": "c821667e89c1c339c7efa40e9337adf2dbd3f5eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
