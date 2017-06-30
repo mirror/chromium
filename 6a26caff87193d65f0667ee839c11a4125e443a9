@@ -34,6 +34,24 @@
       "revId": "6a26caff87193d65f0667ee839c11a4125e443a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e26914e_c9fa77b7",
+        "filename": "ios/chrome/browser/ui/settings/passwords_settings_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-30T12:40:44Z",
+      "side": 1,
+      "message": "Oh I see, it might be because of the collection view dequeuing system. It must keep the cell in the hierarchy but hidden. We\u0027ve seen that before.\nThanks!",
+      "parentUuid": "ac144aaa_e24b60c3",
+      "revId": "6a26caff87193d65f0667ee839c11a4125e443a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
