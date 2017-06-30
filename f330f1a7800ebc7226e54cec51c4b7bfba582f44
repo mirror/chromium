@@ -22,6 +22,30 @@
       "revId": "f330f1a7800ebc7226e54cec51c4b7bfba582f44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36c07547_fecea192",
+        "filename": "android_webview/browser/aw_safe_browsing_resource_throttle.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-06-30T23:35:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19522581_4dd684e1",
+      "range": {
+        "startLine": 92,
+        "startChar": 7,
+        "endLine": 92,
+        "endChar": 14
+      },
+      "revId": "f330f1a7800ebc7226e54cec51c4b7bfba582f44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
