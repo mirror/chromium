@@ -111,17 +111,53 @@ const char* GetShaderSource(vr_shell::ShaderID shader) {
           /* clang-format off */
           precision highp float;
           uniform samplerExternalOES u_Texture;
-          uniform vec4 u_CopyRect;  // rectangle
+          uniform ivec2 u_TextureSize;
           varying vec2 v_TexCoordinate;
           uniform lowp vec4 color;
           uniform mediump float opacity;
+          uniform float u_CornerRadius;
 
           void main() {
-            vec2 scaledTex =
-                vec2(u_CopyRect[0] + v_TexCoordinate.x * u_CopyRect[2],
-                     u_CopyRect[1] + v_TexCoordinate.y * u_CopyRect[3]);
-            lowp vec4 color = texture2D(u_Texture, scaledTex);
-            gl_FragColor = color * opacity;
+            // Find the position in physical texture space.
+            vec2 tp = vec2(v_TexCoordinate.x * float(u_TextureSize[0]),
+                           v_TexCoordinate.y * float(u_TextureSize[1]));
+            lowp vec4 color = texture2D(u_Texture, v_TexCoordinate);
+
+            vec2 c1 = vec2(u_CornerRadius, u_CornerRadius);
+            vec2 c2 = vec2(float(u_TextureSize[0]) - u_CornerRadius,
+                           float(u_TextureSize[1]) - u_CornerRadius);
+            vec2 c3 = vec2(c1.x, c2.y);
+            vec2 c4 = vec2(c2.x, c1.y);
+
+            // |total| will increase whenever |tp| lies within one of the
+            // circles implied by u_CornerRadius.
+            float total = 0.0;
+            total += smoothstep(
+                u_CornerRadius + 1.0, u_CornerRadius - 1.0, length(tp - c1));
+            total += smoothstep(
+                u_CornerRadius + 1.0, u_CornerRadius - 1.0, length(tp - c2));
+            total += smoothstep(
+                u_CornerRadius + 1.0, u_CornerRadius - 1.0, length(tp - c3));
+            total += smoothstep(
+                u_CornerRadius + 1.0, u_CornerRadius - 1.0, length(tp - c4));
+
+            // Now that we've handled the corners, we then ensure that |total|
+            // is at least 1.0 when within these two rectangles.
+            //                             ___
+            //                           _|___|_
+            //                          | |   | |
+            //                          |_|___|_|
+            //                            |___|
+            //
+            // We will have to clamp this value back as there is a great deal
+            // of overlap between the corner circles and these two rectangles.
+            total += step(c1.x, tp.x) * (1.0 - step(c2.x, tp.x));
+            total += step(c1.y, tp.y) * (1.0 - step(c2.y, tp.y));
+
+            total = clamp(total, 0.0, 1.0);
+            total *= opacity;
+
+            gl_FragColor = color * total;
           }
           /* clang-format on */);
     case vr_shell::ShaderID::TEXTURED_QUAD_FRAGMENT_SHADER:
@@ -376,15 +412,18 @@ ExternalTexturedQuadRenderer::ExternalTexturedQuadRenderer()
   model_view_proj_matrix_handle_ =
       glGetUniformLocation(program_handle_, "u_ModelViewProjMatrix");
   tex_uniform_handle_ = glGetUniformLocation(program_handle_, "u_Texture");
-  copy_rect_uniform_handle_ =
-      glGetUniformLocation(program_handle_, "u_CopyRect");
+  tex_size_uniform_handle_ =
+      glGetUniformLocation(program_handle_, "u_TextureSize");
   opacity_handle_ = glGetUniformLocation(program_handle_, "opacity");
+  corner_radius_uniform_handle_ =
+      glGetUniformLocation(program_handle_, "u_CornerRadius");
 }
 
 void ExternalTexturedQuadRenderer::Draw(int texture_data_handle,
                                         const gfx::Transform& view_proj_matrix,
-                                        const gfx::RectF& copy_rect,
-                                        float opacity) {
+                                        const gfx::Size& size,
+                                        float opacity,
+                                        float corner_radius) {
   PrepareToDraw(model_view_proj_matrix_handle_, view_proj_matrix);
 
   // Link texture data with texture unit.
@@ -396,9 +435,9 @@ void ExternalTexturedQuadRenderer::Draw(int texture_data_handle,
   glTexParameteri(GL_TEXTURE_EXTERNAL_OES, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
   glUniform1i(tex_uniform_handle_, 0);
-  glUniform4fv(copy_rect_uniform_handle_, 1,
-               reinterpret_cast<const float*>(&copy_rect));
+  glUniform2i(tex_size_uniform_handle_, size.width(), size.height());
   glUniform1f(opacity_handle_, opacity);
+  glUniform1f(corner_radius_uniform_handle_, corner_radius * size.width());
 
   glDrawArrays(GL_TRIANGLES, 0, kVerticesNumber);
 

@@ -1316,10 +1316,10 @@ void VrShellGl::DrawElement(const gfx::Transform& view_proj_matrix,
       break;
     }
     case Fill::CONTENT: {
-      gfx::RectF copy_rect(0, 0, 1, 1);
       vr_shell_renderer_->GetExternalTexturedQuadRenderer()->Draw(
-          content_texture_id_, transform, copy_rect,
-          element.computed_opacity());
+          content_texture_id_, transform, content_tex_physical_size_,
+          element.computed_opacity(),
+          element.corner_radius() / element.size().x());
       break;
     }
     case Fill::SELF: {
