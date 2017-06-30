@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9206e067_6cce92f5",
+        "filename": "cc/scheduler/scheduler_state_machine.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1130,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-06-30T13:03:36Z",
+      "side": 1,
+      "message": "I\u0027m thinking of the \"no updates\" case here, too, where we don\u0027t want to wait for the late deadline. Improved the comment.",
+      "parentUuid": "ceed4224_d79b2dc9",
+      "revId": "a00d644e36bb0e8e5e59f7b711e7c17c79a9790a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "820a1b5e_76ea1534",
         "filename": "cc/scheduler/scheduler_state_machine.cc",
         "patchSetId": 8
@@ -39,6 +57,30 @@
       "revId": "a00d644e36bb0e8e5e59f7b711e7c17c79a9790a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9c770b5_82374452",
+        "filename": "cc/scheduler/scheduler_state_machine.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1260,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-06-30T13:03:36Z",
+      "side": 1,
+      "message": "You\u0027re right, got rid of it :)",
+      "parentUuid": "820a1b5e_76ea1534",
+      "range": {
+        "startLine": 1260,
+        "startChar": 36,
+        "endLine": 1260,
+        "endChar": 38
+      },
+      "revId": "a00d644e36bb0e8e5e59f7b711e7c17c79a9790a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

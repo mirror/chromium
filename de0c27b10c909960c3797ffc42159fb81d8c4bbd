@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "325798c8_fb3c9019",
+        "filename": "cc/scheduler/scheduler_state_machine.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1161,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-06-30T13:03:36Z",
+      "side": 0,
+      "message": "Yeah, there were a few tests that failed / timed out (including the one you mention, it was timing out consistently) when I removed this line (and the one in DidLoseLayerTreeFrameSink). Adding the condition on PendingDrawsShouldBeAborted in ShouldBlockDeadlineIndefinitely resolved these failing tests consistently.\n\nThis solution has the same effect because callers of SetVisible and DidLoseLayerTreeFrameSink also reschedule the deadline afterwards.",
+      "parentUuid": "e107899b_66da625a",
+      "range": {
+        "startLine": 1161,
+        "startChar": 34,
+        "endLine": 1161,
+        "endChar": 0
+      },
+      "revId": "de0c27b10c909960c3797ffc42159fb81d8c4bbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c78c381_616af9bf",
         "filename": "cc/scheduler/scheduler_state_machine.cc",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "de0c27b10c909960c3797ffc42159fb81d8c4bbd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92f4d76b_a911bfc3",
+        "filename": "cc/scheduler/scheduler_state_machine.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1291,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-06-30T13:03:36Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "9c78c381_616af9bf",
+      "range": {
+        "startLine": 1291,
+        "startChar": 34,
+        "endLine": 1291,
+        "endChar": 0
+      },
+      "revId": "de0c27b10c909960c3797ffc42159fb81d8c4bbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

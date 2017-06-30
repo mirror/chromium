@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "171fa225_e922a6a2",
+        "filename": "cc/scheduler/scheduler_state_machine.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-06-30T13:03:36Z",
+      "side": 1,
+      "message": "resolved.",
+      "parentUuid": "67207b59_fa7f5fc2",
+      "range": {
+        "startLine": 736,
+        "startChar": 4,
+        "endLine": 736,
+        "endChar": 33
+      },
+      "revId": "e7baaf659689dd814323cbb8793df6fc8fb85a79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fbc1bb76_66bc9c09",
         "filename": "cc/scheduler/scheduler_state_machine_unittest.cc",
         "patchSetId": 6
