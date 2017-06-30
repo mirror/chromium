@@ -2798,9 +2798,6 @@ void RenderFrameHostImpl::RunCreateWindowCompleteCallback(
 }
 
 void RenderFrameHostImpl::RegisterMojoInterfaces() {
-  device::GeolocationServiceContext* geolocation_service_context =
-      delegate_ ? delegate_->GetGeolocationServiceContext() : NULL;
-
 #if !defined(OS_ANDROID)
   // The default (no-op) implementation of InstalledAppProvider. On Android, the
   // real implementation is provided in Java.
@@ -2808,20 +2805,8 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
       base::Bind(&InstalledAppProviderImplDefault::Create));
 #endif  // !defined(OS_ANDROID)
 
-  if (geolocation_service_context) {
-    // TODO(creis): Bind process ID here so that GeolocationServiceImpl
-    // can perform permissions checks once site isolation is complete.
-    // crbug.com/426384
-    // NOTE: At shutdown, there is no guaranteed ordering between destruction of
-    // this object and destruction of any GeolocationServicesImpls created via
-    // the below service registry, the reason being that the destruction of the
-    // latter is triggered by receiving a message that the pipe was closed from
-    // the renderer side. Hence, supply the reference to this object as a weak
-    // pointer.
-    GetInterfaceRegistry()->AddInterface(
-        base::Bind(&device::GeolocationServiceContext::CreateService,
-                   base::Unretained(geolocation_service_context)));
-  }
+  GetInterfaceRegistry()->AddInterface(base::Bind(
+      &RenderFrameHostImpl::CreateGeolocationService, base::Unretained(this)));
 
   GetInterfaceRegistry()->AddInterface<device::mojom::WakeLock>(base::Bind(
       &RenderFrameHostImpl::BindWakeLockRequest, base::Unretained(this)));
@@ -3864,6 +3849,42 @@ void RenderFrameHostImpl::AXContentTreeDataToAXTreeData(
   if (!focused_frame)
     return;
   dst->focused_tree_id = focused_frame->GetAXTreeID();
+}
+
+void RenderFrameHostImpl::CreateGeolocationService(
+    const service_manager::BindSourceInfo& source_info,
+    mojo::InterfaceRequest<device::mojom::GeolocationService> request) {
+  if (!delegate_)
+    return;
+
+  PermissionManager* permission_manager = delegate_->GetPermissionManager();
+  if (!permission_manager)
+    return;
+
+  permission_manager->RequestPermission(
+      PermissionType::GEOLOCATION, this, GetLastCommittedOrigin().GetURL(),
+      false,  // user_gesture
+      base::Bind(
+          &RenderFrameHostImpl::CreateGeolocationServiceWithPermissionStatus,
+          base::Unretained(this), source_info, base::Passed(&request)));
+}
+
+void RenderFrameHostImpl::CreateGeolocationServiceWithPermissionStatus(
+    const service_manager::BindSourceInfo& source_info,
+    mojo::InterfaceRequest<device::mojom::GeolocationService> request,
+    blink::mojom::PermissionStatus permission_status) {
+  if (permission_status != blink::mojom::PermissionStatus::GRANTED)
+    return;
+
+  if (!delegate_)
+    return;
+
+  device::GeolocationServiceContext* geolocation_service_context =
+      delegate_->GetGeolocationServiceContext();
+  if (!geolocation_service_context)
+    return;
+
+  geolocation_service_context->CreateService(source_info, std::move(request));
 }
 
 WebBluetoothServiceImpl* RenderFrameHostImpl::CreateWebBluetoothService(
