@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9805ffee_0af2f021",
+        "filename": "third_party/WebKit/Source/core/events/EventTarget.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-06-30T20:20:42Z",
+      "side": 1,
+      "message": "Indeed! and in FireEventListeners too.\n\nThanks",
+      "parentUuid": "c0291f43_25b82d50",
+      "range": {
+        "startLine": 370,
+        "startChar": 28,
+        "endLine": 370,
+        "endChar": 29
+      },
+      "revId": "cef91a628d0e37820a874e1069da8e38120f1fe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "df17ab4e_e92c2b20",
         "filename": "third_party/WebKit/Source/core/events/EventTarget.cpp",
         "patchSetId": 5
@@ -36,6 +60,24 @@
       "writtenOn": "2017-06-30T19:33:28Z",
       "side": 1,
       "message": "I think you can avoid checking IsDOMMutationEventType twice - it\u0027s mutually exclusive with all of the above, so just move it outside the \"if(executing_window)\" block.",
+      "revId": "cef91a628d0e37820a874e1069da8e38120f1fe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bef23ad_13342687",
+        "filename": "third_party/WebKit/Source/core/events/EventTarget.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-06-30T20:20:42Z",
+      "side": 1,
+      "message": "My bad, I should have taken a look at what IsDOMMutationEventType does before making the changes. Moved it in a separate statement.\n\nThanks",
+      "parentUuid": "df17ab4e_e92c2b20",
       "revId": "cef91a628d0e37820a874e1069da8e38120f1fe3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
