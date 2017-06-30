@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a4c28115_7c4179f4",
+        "filename": "ash/mus/shell_delegate_mus.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-06-30T23:57:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "584cd25d_c5a4e110",
+      "revId": "02cf2618ea6071d243385a5e1f1f77041ac5584e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a385e846_1834d903",
         "filename": "chrome/browser/ui/ash/chrome_shell_delegate.cc",
         "patchSetId": 1
@@ -77,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "f742673c_bd20c443",
+        "filename": "chrome/browser/ui/ash/session_controller_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-06-30T23:57:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "707fdf73_8945e857",
+      "range": {
+        "startLine": 122,
+        "startChar": 5,
+        "endLine": 122,
+        "endChar": 31
+      },
+      "revId": "02cf2618ea6071d243385a5e1f1f77041ac5584e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df7df006_3fdd619b",
         "filename": "chrome/browser/ui/ash/session_controller_client.cc",
         "patchSetId": 1
@@ -100,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "41ea8dc0_77d7a96f",
+        "filename": "chrome/browser/ui/ash/session_controller_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-06-30T23:57:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df7df006_3fdd619b",
+      "range": {
+        "startLine": 246,
+        "startChar": 19,
+        "endLine": 246,
+        "endChar": 22
+      },
+      "revId": "02cf2618ea6071d243385a5e1f1f77041ac5584e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a45af27f_2d8f6d37",
         "filename": "chrome/browser/ui/ash/session_controller_client.cc",
         "patchSetId": 1
@@ -114,6 +180,24 @@
       "revId": "02cf2618ea6071d243385a5e1f1f77041ac5584e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d647e7fe_5fb85706",
+        "filename": "chrome/browser/ui/ash/session_controller_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-06-30T23:57:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a45af27f_2d8f6d37",
+      "revId": "02cf2618ea6071d243385a5e1f1f77041ac5584e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "f024e93b_35ec2de7",
+        "filename": "chrome/browser/ui/ash/session_controller_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-06-30T23:57:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b04b8a1f_98e2588f",
+      "range": {
+        "startLine": 274,
+        "startChar": 8,
+        "endLine": 274,
+        "endChar": 13
+      },
+      "revId": "02cf2618ea6071d243385a5e1f1f77041ac5584e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8c340fb_a81e7e7c",
         "filename": "chrome/browser/ui/ash/session_controller_client.cc",
         "patchSetId": 1
@@ -160,6 +268,30 @@
       "revId": "02cf2618ea6071d243385a5e1f1f77041ac5584e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb1d19d5_ed502bec",
+        "filename": "chrome/browser/ui/ash/session_controller_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-06-30T23:57:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8c340fb_a81e7e7c",
+      "range": {
+        "startLine": 281,
+        "startChar": 7,
+        "endLine": 281,
+        "endChar": 22
+      },
+      "revId": "02cf2618ea6071d243385a5e1f1f77041ac5584e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +318,30 @@
     },
     {
       "key": {
+        "uuid": "ea06ce2d_2788e9d1",
+        "filename": "chrome/browser/ui/ash/session_controller_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-06-30T23:57:40Z",
+      "side": 1,
+      "message": "skuhne is OOO but I pinged the bug to ask if I should clean this up.",
+      "parentUuid": "71407c03_77b3a2c9",
+      "range": {
+        "startLine": 288,
+        "startChar": 36,
+        "endLine": 288,
+        "endChar": 41
+      },
+      "revId": "02cf2618ea6071d243385a5e1f1f77041ac5584e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b83595c_0fefec79",
         "filename": "chrome/browser/ui/ash/session_controller_client.cc",
         "patchSetId": 1
@@ -200,6 +356,24 @@
       "revId": "02cf2618ea6071d243385a5e1f1f77041ac5584e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cef0e408_3f52aca6",
+        "filename": "chrome/browser/ui/ash/session_controller_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-06-30T23:57:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b83595c_0fefec79",
+      "revId": "02cf2618ea6071d243385a5e1f1f77041ac5584e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
