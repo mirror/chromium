@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ac3e15ea_25c3bdd0",
+        "filename": "cc/paint/paint_shader.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-30T20:24:20Z",
+      "side": 1,
+      "message": "Do you mind if this is a follow-up? I\u0027d prefer to make few function signature changes to limit what components this patch affects",
+      "parentUuid": "222e0d62_2ed100d8",
+      "revId": "ba516f8cb9d7484dac4008251f19ca841f8705df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa989c49_42c33777",
         "filename": "cc/paint/paint_shader.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-30T00:50:58Z",
       "side": 1,
       "message": "This makes an extra copy. Is that ok?",
+      "revId": "ba516f8cb9d7484dac4008251f19ca841f8705df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a156d4ad_609bddfa",
+        "filename": "cc/paint/paint_shader.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-30T20:24:20Z",
+      "side": 1,
+      "message": "Yeah. Previously, AFAIK, building the shader if the matrix existed would have copied as well, since the shader has to have the matrix but it can\u0027t store a pointer.",
+      "parentUuid": "fa989c49_42c33777",
       "revId": "ba516f8cb9d7484dac4008251f19ca841f8705df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e0515762_fe373f13",
+        "filename": "cc/paint/paint_shader.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-30T20:24:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d7eae15_344657f1",
+      "revId": "ba516f8cb9d7484dac4008251f19ca841f8705df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3150a851_5a1cce66",
         "filename": "cc/paint/paint_shader.cc",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "ba516f8cb9d7484dac4008251f19ca841f8705df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "540297a5_218e475a",
+        "filename": "cc/paint/paint_shader.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-30T20:24:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3150a851_5a1cce66",
+      "revId": "ba516f8cb9d7484dac4008251f19ca841f8705df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
