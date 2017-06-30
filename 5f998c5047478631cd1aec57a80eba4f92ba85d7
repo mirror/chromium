@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1e83fe5_d12d46e8",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_importer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-30T00:00:51Z",
+      "side": 1,
+      "message": "You need some #ifdef in the implementation as well.  Probably:\n\n#if !OS_ANDROID\nNOTREACHED();\n#else\n.... regular impl ....\n#endif",
+      "revId": "5f998c5047478631cd1aec57a80eba4f92ba85d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db523d50_c9b5b50a",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_importer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-30T00:00:51Z",
+      "side": 1,
+      "message": "Any reason not to accept an ImportPageParams as parameter?\n\nIf the reason is not to expose OfflinePageModel to Prefetch, then perhaps move ImportPageParams to its own file.",
+      "revId": "5f998c5047478631cd1aec57a80eba4f92ba85d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b94a2be9_30faf410",
+        "filename": "components/offline_pages/core/archive_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-30T00:00:51Z",
+      "side": 1,
+      "message": "Can you describe the expectations for src_path?  It should be a unique GUID to prevent collisions.",
+      "revId": "5f998c5047478631cd1aec57a80eba4f92ba85d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1ff64c8_f1605cdd",
+        "filename": "components/offline_pages/core/archive_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-30T00:00:51Z",
+      "side": 1,
+      "message": "nit: please add a test for file collisions, and ideally for move failure.",
+      "revId": "5f998c5047478631cd1aec57a80eba4f92ba85d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "405b8f90_3b8700c9",
+        "filename": "components/offline_pages/core/offline_page_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-30T00:00:51Z",
+      "side": 1,
+      "message": "Can you use default here?",
+      "revId": "5f998c5047478631cd1aec57a80eba4f92ba85d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d687ba3_6cbb63f5",
+        "filename": "components/offline_pages/core/offline_page_model_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-30T00:00:51Z",
+      "side": 1,
+      "message": "Can |archiver| be omitted from this?  It feels like an untidy API to have this threaded through when some code paths make it |null|",
+      "revId": "5f998c5047478631cd1aec57a80eba4f92ba85d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35b0a096_683ae9c9",
+        "filename": "components/offline_pages/core/prefetch/prefetch_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-30T00:00:51Z",
+      "side": 1,
+      "message": "We need to either implement this or remove the commented code.",
+      "revId": "5f998c5047478631cd1aec57a80eba4f92ba85d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74376a74_09280f24",
+        "filename": "components/offline_pages/core/prefetch/prefetch_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-30T00:00:51Z",
+      "side": 1,
+      "message": "Is this input event represented in the state machine in the design doc?  I think possibly not.  We need a bug or Asana task to figure out what",
+      "revId": "5f998c5047478631cd1aec57a80eba4f92ba85d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
