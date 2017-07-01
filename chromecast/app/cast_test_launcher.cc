@@ -45,9 +45,6 @@ class CastTestLauncherDelegate : public content::TestLauncherDelegate {
 int main(int argc, char** argv) {
   base::CommandLine::Init(argc, argv);
   size_t parallel_jobs = base::NumParallelJobs();
-  if (parallel_jobs > 1U) {
-    parallel_jobs /= 2U;
-  }
   chromecast::shell::CastTestLauncherDelegate launcher_delegate;
   mojo::edk::Init();
   return content::LaunchTests(&launcher_delegate, parallel_jobs, argc, argv);
