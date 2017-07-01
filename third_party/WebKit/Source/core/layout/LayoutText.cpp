@@ -808,6 +808,19 @@ ALWAYS_INLINE float LayoutText::WidthFromFont(
   run.SetTabSize(!Style()->CollapseWhiteSpace(), Style()->GetTabSize());
   run.SetXPos(lead_width + text_width_so_far);
 
+  LayoutObject* previous_sibling =
+      text_direction == TextDirection::kLtr ? PreviousSibling() : NextSibling();
+  if (!start && Style()->LetterSpacing() && previous_sibling &&
+      !previous_sibling->IsText())
+    run.SetUseLeadingLetterSpacing(true);
+
+  LayoutObject* next_sibling =
+      text_direction == TextDirection::kLtr ? NextSibling() : PreviousSibling();
+  bool contains_last_character =
+      (start + len) == static_cast<int>(TextLength());
+  if (contains_last_character && Style()->LetterSpacing() && !next_sibling)
+    run.SetUseTrailingLetterSpacing(false);
+
   FloatRect new_glyph_bounds;
   float result =
       f.Width(run, fallback_fonts,
@@ -1336,6 +1349,22 @@ void LayoutText::ComputePreferredLogicalWidths(
         run.SetTabSize(!Style()->CollapseWhiteSpace(), Style()->GetTabSize());
         run.SetXPos(lead_width + curr_max_width);
 
+        LayoutObject* previous_sibling = text_direction == TextDirection::kLtr
+                                             ? PreviousSibling()
+                                             : NextSibling();
+        if (!i && Style()->LetterSpacing() && previous_sibling &&
+            !previous_sibling->IsText())
+          run.SetUseLeadingLetterSpacing(true);
+
+        LayoutObject* next_sibling = text_direction == TextDirection::kLtr
+                                         ? NextSibling()
+                                         : PreviousSibling();
+        bool contains_last_character =
+            (i + 1) == static_cast<int>(TextLength());
+        if (!is_space && contains_last_character && Style()->LetterSpacing() &&
+            !next_sibling)
+          run.SetUseTrailingLetterSpacing(false);
+
         curr_max_width += f.Width(run);
         needs_word_spacing =
             is_space && !previous_character_is_space && i == len - 1;
@@ -1809,6 +1838,7 @@ float LayoutText::Width(unsigned from,
 
     run.SetTabSize(!Style()->CollapseWhiteSpace(), Style()->GetTabSize());
     run.SetXPos(x_pos.ToFloat());
+
     w = f.Width(run, fallback_fonts, glyph_bounds);
   }
 

@@ -110,7 +110,9 @@ class PLATFORM_EXPORT ShapeResult : public RefCounted<ShapeResult> {
   template <typename TextContainerType>
   void ApplySpacing(ShapeResultSpacing<TextContainerType>&,
                     const TextContainerType&,
-                    bool is_rtl);
+                    bool is_rtl,
+                    bool use_trailing_letter_spacing = false,
+                    bool use_leading_letter_spacing = false);
   void InsertRun(std::unique_ptr<ShapeResult::RunInfo>,
                  unsigned start_glyph,
                  unsigned num_glyphs,
