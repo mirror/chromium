@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41ebdbf6_38f65a24",
+        "filename": "third_party/WebKit/Source/modules/websockets/WorkerWebSocketChannel.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-01T09:17:40Z",
+      "side": 1,
+      "message": "Nit: Why do we need WTF::Passed?",
+      "revId": "fdf5529e011b8747c99690cb976da5d227535b88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
