@@ -93,6 +93,40 @@
       "revId": "f400d05afacef5ef4ab13fadcc479579b6aa4635",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38d81940_a024a649",
+        "filename": "chrome/browser/profile_resetter/profile_resetter_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 867,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-01T06:40:15Z",
+      "side": 1,
+      "message": "Update comment (and below)",
+      "revId": "f400d05afacef5ef4ab13fadcc479579b6aa4635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdeca740_089907b2",
+        "filename": "chrome/browser/profile_resetter/resettable_settings_snapshot.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-01T06:40:15Z",
+      "side": 1,
+      "message": "// defined (OS_WIN)\n\nand on #endif",
+      "revId": "f400d05afacef5ef4ab13fadcc479579b6aa4635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
