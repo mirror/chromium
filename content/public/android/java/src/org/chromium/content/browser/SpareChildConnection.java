@@ -84,8 +84,7 @@ public class SpareChildConnection {
     public ChildProcessConnection getConnection(ChildConnectionAllocator allocator,
             @NonNull final ChildProcessConnection.ServiceCallback serviceCallback) {
         assert LauncherThread.runningOnLauncherThread();
-        if (mConnection == null || allocator != mConnectionAllocator
-                || mConnectionServiceCallback != null) {
+        if (isEmpty() || !isForAllocator(allocator) || mConnectionServiceCallback != null) {
             return null;
         }
 
@@ -112,6 +111,11 @@ public class SpareChildConnection {
     /** Returns true if no connection is available (so getConnection will always return null), */
     public boolean isEmpty() {
         return mConnection == null;
+    }
+
+    /** Returns true if this spare connection uses {@param allocator}. */
+    public boolean isForAllocator(ChildConnectionAllocator allocator) {
+        return mConnectionAllocator == allocator;
     }
 
     private void clearConnection() {
