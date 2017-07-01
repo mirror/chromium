@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "94567249_43dd5840",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-07-01T20:26:27Z",
+      "side": 1,
+      "message": "Changed the name as suggested.\n\nOk, I\u0027ve unified call paths to mPreviouslySetState as follows:\n1) setAutocompleteText()\n2) clearAutocompleteText() --\u003e now a unified method\n3) setAutocompleteSpan() --\u003e now it does not update the state",
+      "parentUuid": "4823565b_6448ca90",
+      "range": {
+        "startLine": 53,
+        "startChar": 36,
+        "endLine": 53,
+        "endChar": 57
+      },
+      "revId": "eb9407bad6e7ef16b2d861e634c636ac5aef2d07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "832ae6a1_dcca9f46",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
         "patchSetId": 18
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "58dfc61d_f036bf98",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-07-01T20:26:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "832ae6a1_dcca9f46",
+      "range": {
+        "startLine": 404,
+        "startChar": 39,
+        "endLine": 404,
+        "endChar": 40
+      },
+      "revId": "eb9407bad6e7ef16b2d861e634c636ac5aef2d07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2893c5c3_34ec53a7",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
         "patchSetId": 18
@@ -68,6 +116,30 @@
       "revId": "eb9407bad6e7ef16b2d861e634c636ac5aef2d07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ede4081c_db658ceb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-07-01T20:26:27Z",
+      "side": 1,
+      "message": "Yes, the only callsite of setAutocompleteSpan() is endBatchEdit(), and we call notify... there.\nI\u0027ve also simplified paths to notify(), too.",
+      "parentUuid": "2893c5c3_34ec53a7",
+      "range": {
+        "startLine": 413,
+        "startChar": 32,
+        "endLine": 413,
+        "endChar": 39
+      },
+      "revId": "eb9407bad6e7ef16b2d861e634c636ac5aef2d07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

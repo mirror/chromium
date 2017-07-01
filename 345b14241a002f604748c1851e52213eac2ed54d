@@ -931,6 +931,30 @@
     },
     {
       "key": {
+        "uuid": "1549ccda_a2e2033e",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/omnibox/OmniboxTest.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-07-01T20:26:27Z",
+      "side": 1,
+      "message": "Oh, you\u0027re right. The new model still notifies when setIgnore() was previously called and when InputConnection#get... method was called. I\u0027ve fixed the case and added a new test to AutocompleteEditTextTest. Now expectedNumRequests is always 1.",
+      "parentUuid": "fff74817_0edd8148",
+      "range": {
+        "startLine": 261,
+        "startChar": 12,
+        "endLine": 261,
+        "endChar": 31
+      },
+      "revId": "345b14241a002f604748c1851e52213eac2ed54d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "193eb072_93426a25",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/omnibox/UrlBarTest.java",
         "patchSetId": 17
