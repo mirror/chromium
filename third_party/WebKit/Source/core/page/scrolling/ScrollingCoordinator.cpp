@@ -178,7 +178,6 @@ void ScrollingCoordinator::UpdateAfterCompositingChangeIfNeeded() {
 
   if (!ShouldUpdateAfterCompositingChange())
     return;
-
   TRACE_EVENT0("input",
                "ScrollingCoordinator::updateAfterCompositingChangeIfNeeded");
 

@@ -65,6 +65,7 @@ TEST_F(ResizeObserverUnitTest, ResizeObservationSize) {
       "<circle id='svgTarget' cx='100' cy='100' r='100'/>"
       "</svg>");
   main_resource.Finish();
+  WebView().UpdateAllLifecyclePhases();
 
   ResizeObserver::Delegate* delegate =
       new TestResizeObserverDelegate(GetDocument());

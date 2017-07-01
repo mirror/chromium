@@ -149,6 +149,7 @@ class VisualViewportTest
 
   void NavigateTo(const std::string& url) {
     FrameTestHelpers::LoadFrame(WebViewImpl()->MainFrameImpl(), url);
+    WebViewImpl()->UpdateAllLifecyclePhases();
   }
 
   void ForceFullCompositingUpdate() {

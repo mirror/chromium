@@ -97,17 +97,31 @@ std::unique_ptr<T> CreateDefaultClientIfNeeded(T*& client) {
 
 }  // namespace
 
+// Run the render loop a couple of times, enough to suffice for all use-cases.
+void PumpRequests(WebLocalFrame* frame) {
+  // PumpPendingRequestsForFrameToLoad will finish loading the page.
+  PumpPendingRequestsForFrameToLoad(frame);
+  // Run the first lifecycle.
+  if (frame->View()) {
+    frame->View()->UpdateAllLifecyclePhases();
+    // Running the lifecycle may result in some requests being queued, in
+    // particular for new resources.
+    PumpPendingRequestsForFrameToLoad(frame);
+  }
+}
+
 void LoadFrame(WebLocalFrame* frame, const std::string& url) {
   WebURLRequest url_request(URLTestHelpers::ToKURL(url));
   frame->LoadRequest(url_request);
-  PumpPendingRequestsForFrameToLoad(frame);
+  PumpRequests(frame);
 }
 
 void LoadHTMLString(WebLocalFrame* frame,
                     const std::string& html,
                     const WebURL& base_url) {
   frame->LoadHTMLString(WebData(html.data(), html.size()), base_url);
-  PumpPendingRequestsForFrameToLoad(frame);
+  // PumpPendingRequestsForFrameToLoad(frame);
+  PumpRequests(frame);
 }
 
 void LoadHistoryItem(WebLocalFrame* frame,
@@ -116,6 +130,7 @@ void LoadHistoryItem(WebLocalFrame* frame,
                      WebCachePolicy cache_policy) {
   WebURLRequest request = frame->RequestFromHistoryItem(item, cache_policy);
   frame->Load(request, WebFrameLoadType::kBackForward, item);
+  frame->View()->UpdateAllLifecyclePhases();
   PumpPendingRequestsForFrameToLoad(frame);
 }
 
@@ -293,6 +308,7 @@ WebViewBase* WebViewHelper::InitializeAndLoad(
              update_settings_func);
 
   LoadFrame(WebView()->MainFrameImpl(), url);
+  WebView()->UpdateAllLifecyclePhases();
 
   return WebView();
 }

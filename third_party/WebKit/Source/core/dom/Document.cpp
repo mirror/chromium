@@ -2545,8 +2545,13 @@ void Document::Initialize() {
   frame_->DocumentAttached();
   lifecycle_.AdvanceTo(DocumentLifecycle::kStyleClean);
 
-  if (View())
+  if (View()) {
     View()->DidAttachDocument();
+    // The LayoutView needs to set its position via
+    // UpdateLayerPositionsAfterLayout. A dirty bit on the containing
+    // LocalFrameView tracks this.
+    View()->SetNeedsLayout();
+  }
 
   // Observer(s) should not be initialized until the document is initialized /
   // attached to a frame. Otherwise ContextLifecycleObserver::contextDestroyed
@@ -3105,21 +3110,8 @@ void Document::ImplicitClose() {
     load_event_progress_ = kLoadEventCompleted;
     return;
   }
-
-  // We used to force a synchronous display and flush here.  This really isn't
-  // necessary and can in fact be actively harmful if pages are loading at a
-  // rate of > 60fps
-  // (if your platform is syncing flushes and limiting them to 60fps).
-  if (!LocalOwner() || (LocalOwner()->GetLayoutObject() &&
-                        !LocalOwner()->GetLayoutObject()->NeedsLayout())) {
-    UpdateStyleAndLayoutTree();
-
-    // Always do a layout after loading if needed.
-    if (View() && !GetLayoutViewItem().IsNull() &&
-        (!GetLayoutViewItem().FirstChild() ||
-         GetLayoutViewItem().NeedsLayout()))
-      View()->UpdateLayout();
-  }
+  if (LocalFrameView* frame_view = View())
+    frame_view->SetNeedsLayout();
 
   load_event_progress_ = kLoadEventCompleted;
 
@@ -3132,9 +3124,6 @@ void Document::ImplicitClose() {
         cache->HandleLayoutComplete(this);
     }
   }
-
-  if (SvgExtensions())
-    AccessSVGExtensions().StartAnimations();
 }
 
 static bool AllDescendantsAreComplete(Frame* frame) {
