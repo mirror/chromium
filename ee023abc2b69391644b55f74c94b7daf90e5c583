@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a75130b4_8dcd398c",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker_factory.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-01T02:35:24Z",
+      "side": 1,
+      "message": "It seems redundant to have 2 static methods. We probably don\u0027t need both 30 and 33 to be static.",
+      "range": {
+        "startLine": 33,
+        "startChar": 9,
+        "endLine": 33,
+        "endChar": 43
+      },
+      "revId": "ee023abc2b69391644b55f74c94b7daf90e5c583",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
