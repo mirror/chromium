@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce9ed4b4_1f88f5a5",
+        "filename": "components/favicon/core/large_icon_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-07-01T00:31:49Z",
+      "side": 1,
+      "message": "None of the other places which call the callback check whether the callback is null. Is there a reason we check for it here?",
+      "range": {
+        "startLine": 273,
+        "startChar": 16,
+        "endLine": 273,
+        "endChar": 0
+      },
+      "revId": "4a1b1aebdc93d1b53ff69768d9936021fef3e8a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30728dc0_e6856ab8",
+        "filename": "components/favicon_base/favicon_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-07-01T00:31:49Z",
+      "side": 1,
+      "message": "Nit: Add \u0027.\u0027",
+      "range": {
+        "startLine": 137,
+        "startChar": 27,
+        "endLine": 137,
+        "endChar": 0
+      },
+      "revId": "4a1b1aebdc93d1b53ff69768d9936021fef3e8a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
