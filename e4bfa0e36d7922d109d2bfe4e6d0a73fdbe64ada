@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1dc9daaf_9a88af33",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-01T02:33:57Z",
+      "side": 1,
+      "message": "Comments please. I suspect these methods are public for testing only?\n\nSomething like\n\"\"\"// Public for testing.\"\"\"",
+      "revId": "e4bfa0e36d7922d109d2bfe4e6d0a73fdbe64ada",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4703f194_f204a944",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-01T02:33:57Z",
+      "side": 1,
+      "message": "I think most of these methods can be protected or private [depending on whether they\u0027re being overridden by the fake]. Please use the minimum visibility necessary for all methods.",
+      "revId": "e4bfa0e36d7922d109d2bfe4e6d0a73fdbe64ada",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1cb49f7_2f613cc9",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-01T02:33:57Z",
+      "side": 1,
+      "message": "remove lines 151, reformat line 153.",
+      "revId": "e4bfa0e36d7922d109d2bfe4e6d0a73fdbe64ada",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
