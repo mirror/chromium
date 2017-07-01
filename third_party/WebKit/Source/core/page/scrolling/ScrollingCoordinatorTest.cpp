@@ -165,6 +165,15 @@ TEST_P(ScrollingCoordinatorTest, fastScrollingCanBeDisabledWithSetting) {
   GetWebView()->Resize(WebSize(800, 600));
   LoadHTML("<div id='spacer' style='height: 1000px'></div>");
   GetWebView()->GetSettings()->SetThreadedScrollingEnabled(false);
+  // There is no simple way to set a dirty bit due to changes of
+  // threaded scrolling, since it's not really supported to change this
+  // setting other than in the iniitialization sequence of a WebView.
+  GetWebView()
+      ->MainFrameImpl()
+      ->GetFrame()
+      ->View()
+      ->GetScrollingCoordinator()
+      ->NotifyGeometryChanged();
   ForceFullCompositingUpdate();
 
   // Make sure the scrolling coordinator is active.

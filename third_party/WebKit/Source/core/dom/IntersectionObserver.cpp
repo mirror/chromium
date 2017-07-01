@@ -246,8 +246,10 @@ void IntersectionObserver::observe(Element* target,
       new IntersectionObservation(*this, *target);
   target->EnsureIntersectionObserverData().AddObservation(*observation);
   observations_.insert(observation);
-  if (LocalFrameView* frame_view = target_frame->View())
+  if (LocalFrameView* frame_view = target_frame->View()) {
+    frame_view->SetNeedsIntersectionObservation();
     frame_view->ScheduleAnimation();
+  }
 }
 
 void IntersectionObserver::unobserve(Element* target,

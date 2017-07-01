@@ -51,10 +51,10 @@ TEST_P(PaintInvalidationTest, RecalcOverflowInvalidatesBackground) {
       "  #container {"
       "    width: 100%;"
       "    height: 100%;"
+      "    position: relative;"
       "  }"
       "</style>"
       "<div id='container'></div>");
-
   GetDocument().View()->UpdateAllLifecyclePhases();
 
   ScrollableArea* scrollable_area = GetDocument().View();
