@@ -128,6 +128,9 @@ static_library("browser") {
     "statistics_table.h",
     "suppressed_form_fetcher.cc",
     "suppressed_form_fetcher.h",
+    "vote_uploader.h",
+    "vote_uploader_impl.cc",
+    "vote_uploader_impl.h",
     "webdata/logins_table.cc",
     "webdata/logins_table.h",
     "webdata/logins_table_win.cc",
@@ -327,6 +330,8 @@ source_set("unit_tests") {
     "sql_table_builder_unittest.cc",
     "statistics_table_unittest.cc",
     "suppressed_form_fetcher_unittest.cc",
+
+    #"vote_uploader_unittest.cc",
   ]
   if (is_mac) {
     sources -= [ "password_store_default_unittest.cc" ]
