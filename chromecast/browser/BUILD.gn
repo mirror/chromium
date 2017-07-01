@@ -162,6 +162,13 @@ source_set("browser") {
   if (use_ozone) {
     deps += [ "//ui/ozone" ]
   }
+
+  if (enable_mojo_media_in_browser_process) {
+    deps += [
+      "//media/mojo/interfaces:constants",
+      "//media/mojo/services",
+    ]
+  }
 }
 
 # This target generates an "overlay" interface spec, allowing the Cast build to
