@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da7d1f60_c8cc2889",
+        "filename": "third_party/WebKit/Source/core/dom/ModuleScript.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-01T03:05:42Z",
+      "side": 1,
+      "message": "nit: Coresponds -\u003e Corresponds",
+      "revId": "758641dbbc5ec366114333e7b6a3661aa8f6e261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
