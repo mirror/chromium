@@ -1793,12 +1793,9 @@ LayoutRect PaintLayerScrollableArea::ScrollIntoView(
   ScrollOffset old_scroll_offset = GetScrollOffset();
   ScrollOffset new_scroll_offset(ClampScrollOffset(RoundedIntSize(
       ToScrollOffset(FloatPoint(r.Location()) + old_scroll_offset))));
-  if (is_smooth) {
-    DCHECK(scroll_type == kProgrammaticScroll);
-    GetSmoothScrollSequencer()->QueueAnimation(this, new_scroll_offset);
-  } else {
-    SetScrollOffset(new_scroll_offset, scroll_type, kScrollBehaviorInstant);
-  }
+  ScrollBehavior behavior =
+      is_smooth ? kScrollBehaviorSmooth : kScrollBehaviorInstant;
+  GetSmoothScrollSequencer()->QueueAnimation(this, new_scroll_offset, behavior);
   ScrollOffset scroll_offset_difference =
       ClampScrollOffset(new_scroll_offset) - old_scroll_offset;
   local_expose_rect.Move(-LayoutSize(scroll_offset_difference));
