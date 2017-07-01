@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7471bdf0_ca2a0e8e",
+        "filename": "third_party/WebKit/Source/core/dom/ModulatorImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-01T08:55:49Z",
+      "side": 1,
+      "message": "Ditto. (See the below comment.)",
+      "revId": "3bd23b408727fe4991922081c9cf43d6ad594105",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90fa9c0b_e8f0b217",
+        "filename": "third_party/WebKit/Source/core/dom/ModulatorImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-01T08:55:49Z",
+      "side": 1,
+      "message": "I\u0027d prefer moving the ScriptState::Scope to ScriptModule::Status. Then you don\u0027t need to add ScriptState::Scope to all call sites of ScriptModule::Status.",
+      "revId": "3bd23b408727fe4991922081c9cf43d6ad594105",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
