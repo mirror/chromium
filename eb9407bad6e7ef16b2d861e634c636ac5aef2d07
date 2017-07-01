@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4823565b_6448ca90",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-07-01T05:14:44Z",
+      "side": 1,
+      "message": "Sigh...I apologize still, but this comment still throws me off.\n\nWhere does this text come from?  This looks to be the last autocomplete generated and set to this view (i.e. from the AutocompleteController).  It is only used to reuse the previous autocomplete if the current text matches.\n\nI wonder if this was like mPreviouslySetState would be enough to clarify.  Also, why do we need to keep this in sync with current state all the time?  I would rather see this only set in setAutocompleteTextInternal.  In all other circumstances, we\u0027d find a way to mark it is invalid instead of making it match mCurrentState.",
+      "range": {
+        "startLine": 53,
+        "startChar": 36,
+        "endLine": 53,
+        "endChar": 57
+      },
+      "revId": "eb9407bad6e7ef16b2d861e634c636ac5aef2d07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "832ae6a1_dcca9f46",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-07-01T05:14:44Z",
+      "side": 1,
+      "message": "should this then be mBatchEditNestCount \u003d\u003d 1?",
+      "range": {
+        "startLine": 404,
+        "startChar": 39,
+        "endLine": 404,
+        "endChar": 40
+      },
+      "revId": "eb9407bad6e7ef16b2d861e634c636ac5aef2d07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2893c5c3_34ec53a7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SpannableAutocompleteEditTextModel.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-07-01T05:14:44Z",
+      "side": 1,
+      "message": "This looks like it will notify the autocomplete controller that it changed right?  Just wanted to clarify.",
+      "range": {
+        "startLine": 413,
+        "startChar": 32,
+        "endLine": 413,
+        "endChar": 39
+      },
+      "revId": "eb9407bad6e7ef16b2d861e634c636ac5aef2d07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
