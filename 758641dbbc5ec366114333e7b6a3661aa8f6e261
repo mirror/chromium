@@ -16,6 +16,24 @@
       "revId": "758641dbbc5ec366114333e7b6a3661aa8f6e261",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1f989f8_e48d551c",
+        "filename": "third_party/WebKit/Source/core/dom/ModuleScript.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-07-01T03:57:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da7d1f60_c8cc2889",
+      "revId": "758641dbbc5ec366114333e7b6a3661aa8f6e261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
