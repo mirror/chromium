@@ -16,6 +16,24 @@
       "revId": "fdf5529e011b8747c99690cb976da5d227535b88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "356ac3a6_2ae3454b",
+        "filename": "third_party/WebKit/Source/modules/websockets/WorkerWebSocketChannel.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-01T14:36:19Z",
+      "side": 1,
+      "message": "It is necessary to wrap the WebSocketPtrInfo in a PassedWrapper for the CrossThreadCopier.",
+      "parentUuid": "41ebdbf6_38f65a24",
+      "revId": "fdf5529e011b8747c99690cb976da5d227535b88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
