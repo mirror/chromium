@@ -102,7 +102,8 @@ TryChromeDialogView::Result TryChromeDialogView::ShowDialog(
   root_view->SetBackground(
       views::CreateSolidBackground(SkColorSetRGB(0xfc, 0xfc, 0xfc)));
 
-  views::GridLayout* layout = views::GridLayout::CreatePanel(root_view);
+  views::GridLayout* layout = new views::GridLayout(root_view);
+  root_view->SetLayoutManager(layout);
   views::ColumnSet* columns;
 
   ChromeLayoutProvider* provider = ChromeLayoutProvider::Get();

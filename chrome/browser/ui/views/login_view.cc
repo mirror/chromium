@@ -40,7 +40,8 @@ LoginView::LoginView(const base::string16& authority,
   authority_label_->SetAllowCharacterBreak(true);
 
   // Initialize the Grid Layout Manager used for this dialog box.
-  GridLayout* layout = GridLayout::CreatePanel(this);
+  GridLayout* layout = new GridLayout(this);
+  SetLayoutManager(layout);
 
   // Add the column set for the information message at the top of the dialog
   // box.

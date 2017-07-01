@@ -7,9 +7,8 @@
 gfx::Insets HarmonyLayoutProvider::GetInsetsMetric(int metric) const {
   DCHECK_LT(metric, views::VIEWS_INSETS_MAX);
   switch (metric) {
-    case views::INSETS_BUBBLE_CONTENTS:
-    case views::INSETS_DIALOG_CONTENTS:
-      return gfx::Insets(kHarmonyLayoutUnit, kHarmonyLayoutUnit);
+    case views::INSETS_DIALOG:
+      return gfx::Insets(kHarmonyLayoutUnit);
     case views::INSETS_VECTOR_IMAGE_BUTTON:
       return gfx::Insets(kHarmonyLayoutUnit / 4);
     default:
@@ -20,8 +19,6 @@ gfx::Insets HarmonyLayoutProvider::GetInsetsMetric(int metric) const {
 int HarmonyLayoutProvider::GetDistanceMetric(int metric) const {
   DCHECK_GE(metric, views::VIEWS_INSETS_MAX);
   switch (metric) {
-    case views::DISTANCE_BUBBLE_BUTTON_TOP_MARGIN:
-      return kHarmonyLayoutUnit;
     case DISTANCE_CONTROL_LIST_VERTICAL:
       return kHarmonyLayoutUnit * 3 / 4;
     case views::DISTANCE_CLOSE_BUTTON_MARGIN: {
@@ -30,6 +27,10 @@ int HarmonyLayoutProvider::GetDistanceMetric(int metric) const {
       // margin we need to subtract out the padding.
       return kVisibleMargin - kHarmonyLayoutUnit / 4;
     }
+    case views::DISTANCE_DIALOG_BUTTON_CONTENT_MARGIN:
+      return kHarmonyLayoutUnit;
+    case views::DISTANCE_DIALOG_TITLE_CONTENT_MARGIN:
+      return kHarmonyLayoutUnit;
     case views::DISTANCE_RELATED_BUTTON_HORIZONTAL:
       return kHarmonyLayoutUnit / 2;
     case views::DISTANCE_RELATED_CONTROL_HORIZONTAL:
@@ -40,8 +41,6 @@ int HarmonyLayoutProvider::GetDistanceMetric(int metric) const {
       return kHarmonyLayoutUnit / 2;
     case DISTANCE_RELATED_CONTROL_VERTICAL_SMALL:
       return kHarmonyLayoutUnit / 2;
-    case views::DISTANCE_DIALOG_BUTTON_BOTTOM_MARGIN:
-      return kHarmonyLayoutUnit;
     case views::DISTANCE_DIALOG_BUTTON_MINIMUM_WIDTH:
     case DISTANCE_BUTTON_MINIMUM_WIDTH:
       // Minimum label size plus padding.

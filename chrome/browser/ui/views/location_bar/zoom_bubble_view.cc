@@ -230,7 +230,7 @@ ZoomBubbleView::ZoomBubbleView(
   set_notify_enter_exit_on_child(true);
   if (immersive_mode_controller_)
     immersive_mode_controller_->AddObserver(this);
-  UseCompactMargins();
+  set_margins(gfx::Insets(6));
   chrome::RecordDialogCreation(chrome::DialogIdentifier::ZOOM);
 }
 

@@ -318,10 +318,8 @@ ManagePasswordsBubbleView::PendingView::PendingView(
   if (item) {
     layout->StartRow(0, SINGLE_VIEW_COLUMN_SET);
     layout->AddView(item);
-    layout->AddPaddingRow(0,
-                          ChromeLayoutProvider::Get()
-                              ->GetInsetsMetric(views::INSETS_DIALOG_CONTENTS)
-                              .bottom());
+    layout->AddPaddingRow(0, ChromeLayoutProvider::Get()->GetDistanceMetric(
+                                 views::DISTANCE_DIALOG_BUTTON_CONTENT_MARGIN));
   }
 
   // Button row.
@@ -424,13 +422,10 @@ ManagePasswordsBubbleView::ManageView::ManageView(
       this, l10n_util::GetStringUTF16(IDS_DONE));
 
   ChromeLayoutProvider* layout_provider = ChromeLayoutProvider::Get();
-  layout->AddPaddingRow(
-      0,
-      layout_provider->GetInsetsMetric(views::INSETS_DIALOG_CONTENTS).bottom());
+  layout->AddPaddingRow(0, layout_provider->GetDistanceMetric(
+                               views::DISTANCE_DIALOG_BUTTON_CONTENT_MARGIN));
   BuildColumnSet(layout, LINK_BUTTON_COLUMN_SET);
-  layout->StartRowWithPadding(
-      0, LINK_BUTTON_COLUMN_SET, 0,
-      layout_provider->GetInsetsMetric(views::INSETS_DIALOG_BUTTON_ROW).top());
+  layout->StartRow(0, LINK_BUTTON_COLUMN_SET);
   layout->AddView(manage_link_);
   layout->AddView(done_button_);
 
@@ -504,13 +499,10 @@ ManagePasswordsBubbleView::SaveConfirmationView::SaveConfirmationView(
       this, l10n_util::GetStringUTF16(IDS_OK));
 
   ChromeLayoutProvider* layout_provider = ChromeLayoutProvider::Get();
-  layout->AddPaddingRow(
-      0,
-      layout_provider->GetInsetsMetric(views::INSETS_DIALOG_CONTENTS).bottom());
+  layout->AddPaddingRow(0, layout_provider->GetDistanceMetric(
+                               views::DISTANCE_DIALOG_BUTTON_CONTENT_MARGIN));
   BuildColumnSet(layout, SINGLE_BUTTON_COLUMN_SET);
-  layout->StartRowWithPadding(
-      0, SINGLE_BUTTON_COLUMN_SET, 0,
-      layout_provider->GetInsetsMetric(views::INSETS_DIALOG_BUTTON_ROW).top());
+  layout->StartRow(0, SINGLE_BUTTON_COLUMN_SET);
   layout->AddView(ok_button_);
 
   parent_->set_initially_focused_view(ok_button_);
@@ -649,15 +641,12 @@ ManagePasswordsBubbleView::UpdatePendingView::UpdatePendingView(
   // Credential row.
   layout->StartRow(0, SINGLE_VIEW_COLUMN_SET);
   layout->AddView(item);
-  layout->AddPaddingRow(
-      0,
-      layout_provider->GetInsetsMetric(views::INSETS_DIALOG_CONTENTS).bottom());
+  layout->AddPaddingRow(0, layout_provider->GetDistanceMetric(
+                               views::DISTANCE_DIALOG_BUTTON_CONTENT_MARGIN));
 
   // Button row.
   BuildColumnSet(layout, DOUBLE_BUTTON_COLUMN_SET);
-  layout->StartRowWithPadding(
-      0, DOUBLE_BUTTON_COLUMN_SET, 0,
-      layout_provider->GetInsetsMetric(views::INSETS_DIALOG_BUTTON_ROW).top());
+  layout->StartRow(0, DOUBLE_BUTTON_COLUMN_SET);
   layout->AddView(update_button_);
   layout->AddView(nope_button_);
 

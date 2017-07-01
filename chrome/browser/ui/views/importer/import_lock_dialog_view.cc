@@ -18,6 +18,7 @@
 #include "chrome/grit/locale_settings.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/views/controls/label.h"
+#include "ui/views/layout/fill_layout.h"
 #include "ui/views/widget/widget.h"
 
 using base::UserMetricsAction;
@@ -41,13 +42,13 @@ void ImportLockDialogView::Show(gfx::NativeWindow parent,
 
 ImportLockDialogView::ImportLockDialogView(
     const base::Callback<void(bool)>& callback)
-    : description_label_(NULL),
-      callback_(callback) {
-  description_label_ = new views::Label(
-      l10n_util::GetStringUTF16(IDS_IMPORTER_LOCK_TEXT));
-  description_label_->SetMultiLine(true);
-  description_label_->SetHorizontalAlignment(gfx::ALIGN_LEFT);
-  AddChildView(description_label_);
+    : callback_(callback) {
+  SetLayoutManager(new views::FillLayout());
+  views::Label* description_label =
+      new views::Label(l10n_util::GetStringUTF16(IDS_IMPORTER_LOCK_TEXT));
+  description_label->SetMultiLine(true);
+  description_label->SetHorizontalAlignment(gfx::ALIGN_LEFT);
+  AddChildView(description_label);
   chrome::RecordDialogCreation(chrome::DialogIdentifier::IMPORT_LOCK);
 }
 
@@ -58,13 +59,6 @@ gfx::Size ImportLockDialogView::CalculatePreferredSize() const {
   return gfx::Size(views::Widget::GetLocalizedContentsSize(
       IDS_IMPORTLOCK_DIALOG_WIDTH_CHARS,
       IDS_IMPORTLOCK_DIALOG_HEIGHT_LINES));
-}
-
-void ImportLockDialogView::Layout() {
-  gfx::Rect bounds(GetLocalBounds());
-  const ChromeLayoutProvider* provider = ChromeLayoutProvider::Get();
-  bounds.Inset(provider->GetInsetsMetric(views::INSETS_DIALOG_CONTENTS));
-  description_label_->SetBoundsRect(bounds);
 }
 
 base::string16 ImportLockDialogView::GetDialogButtonLabel(

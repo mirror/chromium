@@ -49,10 +49,7 @@ ChromeCleanerDialog::ChromeCleanerDialog(
   DCHECK(controller_);
 
   SetLayoutManager(
-      new views::BoxLayout(views::BoxLayout::kVertical,
-                           ChromeLayoutProvider::Get()->GetInsetsMetric(
-                               views::INSETS_DIALOG_CONTENTS),
-                           0));
+      new views::BoxLayout(views::BoxLayout::kVertical, gfx::Insets(), 0));
   views::Label* label = new views::Label(
       l10n_util::GetStringUTF16(IDS_CHROME_CLEANUP_PROMPT_EXPLANATION));
   label->SetMultiLine(true);

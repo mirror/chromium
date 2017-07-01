@@ -35,7 +35,7 @@ void BuildColumnSet(views::GridLayout* layout, ColumnSetType type) {
   views::ColumnSet* column_set = layout->AddColumnSet(type);
   ChromeLayoutProvider* layout_provider = ChromeLayoutProvider::Get();
   gfx::Insets dialog_insets =
-      layout_provider->GetInsetsMetric(views::INSETS_DIALOG_CONTENTS);
+      layout_provider->GetInsetsMetric(views::INSETS_DIALOG);
   column_set->AddPaddingColumn(0, dialog_insets.left());
   switch (type) {
     case SINGLE_VIEW_COLUMN_SET:
@@ -181,10 +181,10 @@ void AutoSigninFirstRunDialogView::InitWindow() {
   // Layout.
   layout->StartRowWithPadding(
       0, SINGLE_VIEW_COLUMN_SET, 0,
-      layout_provider->GetInsetsMetric(views::INSETS_DIALOG_TITLE).top());
+      layout_provider->GetInsetsMetric(views::INSETS_DIALOG).top());
   layout->AddView(title_label);
   const gfx::Insets dialog_insets =
-      layout_provider->GetInsetsMetric(views::INSETS_DIALOG_CONTENTS);
+      layout_provider->GetInsetsMetric(views::INSETS_DIALOG);
   layout->StartRowWithPadding(0, SINGLE_VIEW_COLUMN_SET, 0,
                               dialog_insets.top());
   layout->AddView(content_label);
@@ -192,7 +192,7 @@ void AutoSigninFirstRunDialogView::InitWindow() {
 
   BuildColumnSet(layout, DOUBLE_BUTTON_COLUMN_SET);
   const gfx::Insets button_insets =
-      layout_provider->GetInsetsMetric(views::INSETS_DIALOG_BUTTON_ROW);
+      layout_provider->GetInsetsMetric(views::INSETS_DIALOG);
   layout->StartRowWithPadding(0, DOUBLE_BUTTON_COLUMN_SET, 0,
                               button_insets.top());
   layout->AddView(ok_button_);
