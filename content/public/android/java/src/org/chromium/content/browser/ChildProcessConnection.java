@@ -424,6 +424,7 @@ public class ChildProcessConnection {
 
     private void onSetupConnectionResult(int pid) {
         mPid = pid;
+        System.err.println("** JAY ** onSetupConnectionResult pid=" + pid);
         assert mPid != 0 : "Child service claims to be run by a process of pid=0.";
 
         if (mConnectionCallback != null) {
@@ -446,9 +447,11 @@ public class ChildProcessConnection {
             ICallbackInt pidCallback = new ICallbackInt.Stub() {
                 @Override
                 public void call(final int pid) {
+                    System.out.println("** JAY ** PID CALLBACK " + pid);
                     LauncherThread.post(new Runnable() {
                         @Override
                         public void run() {
+                            System.out.println("** JAY ** PID CALLBACK LAUNCH THREAD " + pid);
                             onSetupConnectionResult(pid);
                         }
                     });
