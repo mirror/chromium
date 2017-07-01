@@ -100,7 +100,8 @@ class MockGLInterface {
       TexSubImage3DNoData(target, level, xoffset, yoffset, zoffset,
                           width, height, depth, format, type);
     } else {
-      NOTREACHED();
+      TexSubImage3DWithData(target, level, xoffset, yoffset, zoffset, width,
+                            height, depth, format, type);
     }
   }
 
@@ -120,6 +121,17 @@ class MockGLInterface {
   }
 
   MOCK_METHOD10(TexSubImage3DNoData,
+                void(GLenum target,
+                     GLint level,
+                     GLint xoffset,
+                     GLint yoffset,
+                     GLint zoffset,
+                     GLsizei width,
+                     GLsizei height,
+                     GLsizei depth,
+                     GLenum format,
+                     GLenum type));
+  MOCK_METHOD10(TexSubImage3DWithData,
                 void(GLenum target,
                      GLint level,
                      GLint xoffset,
