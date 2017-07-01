@@ -16,6 +16,24 @@
       "revId": "69aa516070b841ee8e874cedf85bee0c77b34cb9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5900e48b_f8702afe",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/SafeBrowsingTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-07-01T00:03:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9151592c_b21f12a3",
+      "revId": "69aa516070b841ee8e874cedf85bee0c77b34cb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
