@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "fefe66dc_dc732079",
+        "filename": "chrome/browser/extensions/api/tab_capture/offscreen_tab.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-01T00:13:25Z",
+      "side": 1,
+      "message": "FYI--There are different tear-down paths because both the page can initiate the close, and the MediaStreamTrack.close() can cause it.",
+      "parentUuid": "f5a721c4_80fbac60",
+      "revId": "2f293e1148a5cd744af2151486ba3d035f88a58e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b173295a_e39863c4",
         "filename": "chrome/test/data/extensions/api_test/tab_capture/offscreen_evil_tests.js",
         "patchSetId": 3
@@ -72,6 +90,30 @@
       "side": 1,
       "message": "I need to check the state of the media stream tracks after the following async events:\n\n1. page loads\n2. tab capture begins\n3. page attempts to navigate\n4. page is closed\n5. tracks are ended\n\nMy assumption is that these can complete in 3000 ms...",
       "parentUuid": "b173295a_e39863c4",
+      "range": {
+        "startLine": 32,
+        "startChar": 5,
+        "endLine": 32,
+        "endChar": 9
+      },
+      "revId": "2f293e1148a5cd744af2151486ba3d035f88a58e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8596e263_7bb7019c",
+        "filename": "chrome/test/data/extensions/api_test/tab_capture/offscreen_evil_tests.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-01T00:13:25Z",
+      "side": 1,
+      "message": "They should complete in 3 sec in a normal user environment. However, you cannot assume this on a bot. Non-perf bots may run under variable load/availability conditions. Issues I\u0027ve experienced in the past include:\n\n1. Debug builds can run very slowly. Especially, around page navigations/loads.\n2. Bots can be heavily loaded with multiple tasks running, causing tests to run slower.\n3. ASAN bots are always SUPER slow.\n\nI\u0027d suggest removing this and letting the normal test watchdog do all the work. Infra adjusts the watchdog based on the build/bot/other concerns.",
+      "parentUuid": "7eca3f68_c091bf37",
       "range": {
         "startLine": 32,
         "startChar": 5,
