@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9bada690_18f38d1b",
+        "filename": "components/cronet/ios/cronet_environment.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-01T00:36:56Z",
+      "side": 1,
+      "message": "could you please use comments to explain arguments:\n\nios_global_state::Create(true /*foo*/, 0 /*bar*/, nullptr /*baz*/);",
+      "range": {
+        "startLine": 114,
+        "startChar": 33,
+        "endLine": 114,
+        "endChar": 34
+      },
+      "revId": "314d7c704033b9a049fab430ad7432293f27c1e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
