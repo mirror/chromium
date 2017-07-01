@@ -368,17 +368,22 @@ std::ostream& operator<<(std::ostream& os, const FormFieldData& field) {
       break;
   }
 
-  return os << base::UTF16ToUTF8(field.label) << " "
-            << base::UTF16ToUTF8(field.name) << " "
-            << base::UTF16ToUTF8(field.id) << " "
-            << base::UTF16ToUTF8(field.value) << " " << field.form_control_type
-            << " " << field.autocomplete_attribute << " " << field.placeholder
-            << " " << field.max_length << " " << field.css_classes << " "
-            << (field.is_autofilled ? "true" : "false") << " "
-            << check_status_str << (field.is_focusable ? "true" : "false")
-            << " " << (field.should_autocomplete ? "true" : "false") << " "
-            << role_str << " " << field.text_direction << " "
-            << field.properties_mask;
+  return os << "lable:" << base::UTF16ToUTF8(field.label) << " "
+            << "name:" << base::UTF16ToUTF8(field.name) << " "
+            << "id:" << base::UTF16ToUTF8(field.id) << " "
+            << "vaue:" << base::UTF16ToUTF8(field.value) << " "
+            << "type:" << field.form_control_type
+            << " " << "autocomplet:" << field.autocomplete_attribute << " "
+            << "placeholder:"<< field.placeholder
+            << " " << "max_len:" << field.max_length << " "
+            << "css:" <<  field.css_classes << " "
+            << "autofilled:" << (field.is_autofilled ? "true" : "false") << " "
+            << "checkstatus:" << check_status_str << (field.is_focusable ? "true" : "false")
+            << " " << "should_autocomplete:" << (field.should_autocomplete ? "true" : "false") << " "
+            << "role:" <<  role_str << " text_dir:" << field.text_direction << " prop_mask:"
+            << field.properties_mask
+            << "option_values:" << base::JoinString(field.option_values, base::ASCIIToUTF16(", "))
+            << "option_contents:" << base::JoinString(field.option_contents, base::ASCIIToUTF16(", "));
 }
 
 }  // namespace autofill

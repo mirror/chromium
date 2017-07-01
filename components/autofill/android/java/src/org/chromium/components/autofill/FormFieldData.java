@@ -19,11 +19,15 @@ public class FormFieldData {
     public final String mPlaceholder;
     public final String mType;
     public final String mId;
+    public final String[] mOptionValues;
+    public final String[] mOptionContents;
+    public final boolean mIsCheckField;
 
+    private boolean mIsChecked;
     private String mValue;
 
     private FormFieldData(String name, String label, String value, String autocompleteAttr,
-            boolean shouldAutocomplete, String placeholder, String type, String id) {
+        boolean shouldAutocomplete, String placeholder, String type, String id, String[] optionValues, String[] optionContents, boolean isCheckField, boolean isChecked) {
         mName = name;
         mLabel = label;
         mValue = value;
@@ -32,6 +36,18 @@ public class FormFieldData {
         mPlaceholder = placeholder;
         mType = type;
         mId = id;
+        mOptionValues = optionValues;
+        mOptionContents = optionContents;
+        mIsCheckField = isCheckField;
+        mIsChecked = isChecked;
+    }
+
+    public boolean isSelectField() {
+      return mOptionValues != null && mOptionValues.length != 0;
+    }
+
+    public boolean isCheckField() {
+      return mIsCheckField;
     }
 
     /**
@@ -48,10 +64,19 @@ public class FormFieldData {
     }
 
     @CalledByNative
+    public boolean isChecked() {
+        return mIsChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        mIsChecked = checked;
+    }
+
+    @CalledByNative
     private static FormFieldData createFormFieldData(String name, String label, String value,
             String autocompleteAttr, boolean shouldAutocomplete, String placeholder, String type,
-            String id) {
+        String id, String[] optionValues, String[] optionContents, boolean isCheckField, boolean isChecked) {
         return new FormFieldData(
-                name, label, value, autocompleteAttr, shouldAutocomplete, placeholder, type, id);
+            name, label, value, autocompleteAttr, shouldAutocomplete, placeholder, type, id, optionValues, optionContents, isCheckField, isChecked);
     }
 }

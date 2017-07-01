@@ -210,6 +210,7 @@ void ContentAutofillDriver::QueryFormFieldAutofill(
     const FormData& form,
     const FormFieldData& field,
     const gfx::RectF& bounding_box) {
+  LOG(ERROR) << "autofill:" << __PRETTY_FUNCTION__ << form << field;
   autofill_handler_->OnQueryFormFieldAutofill(id, form, field, bounding_box);
 }
 
