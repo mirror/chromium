@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a37d199_831c95f9",
+        "filename": "chromeos/network/onc/onc_translator_onc_to_shill.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1123084
+      },
+      "writtenOn": "2017-07-01T00:43:12Z",
+      "side": 1,
+      "message": "nit: this comment is a little mangled",
+      "revId": "8b2d65c16a5a9f317e915d9eacefa41e7e2473f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
