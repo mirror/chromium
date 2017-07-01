@@ -68,7 +68,8 @@
 
 #if BUILDFLAG(ENABLE_MOJO_MEDIA_IN_BROWSER_PROCESS)
 #include "chromecast/media/service/cast_mojo_media_client.h"
-#include "media/mojo/services/media_service.h"  // nogncheck
+#include "media/mojo/interfaces/constants.mojom.h"  // nogncheck
+#include "media/mojo/services/media_service.h"      // nogncheck
 #endif  // ENABLE_MOJO_MEDIA_IN_BROWSER_PROCESS
 
 #if defined(OS_ANDROID)
@@ -505,7 +506,7 @@ void CastContentBrowserClient::RegisterInProcessServices(
   content::ServiceInfo info;
   info.factory = base::Bind(&CreateMediaService, base::Unretained(this));
   info.task_runner = GetMediaTaskRunner();
-  services->insert(std::make_pair("media", info));
+  services->insert(std::make_pair(media::mojom::kMediaServiceName, info));
 #endif
 }
 

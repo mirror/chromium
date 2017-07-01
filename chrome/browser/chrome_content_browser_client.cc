@@ -399,6 +399,7 @@
 #endif
 
 #if BUILDFLAG(ENABLE_MOJO_MEDIA_IN_BROWSER_PROCESS)
+#include "media/mojo/interfaces/constants.mojom.h"      // nogncheck
 #include "media/mojo/services/media_service_factory.h"  // nogncheck
 #endif
 
@@ -3086,7 +3087,7 @@ void ChromeContentBrowserClient::RegisterInProcessServices(
 #if BUILDFLAG(ENABLE_MOJO_MEDIA_IN_BROWSER_PROCESS)
   content::ServiceInfo info;
   info.factory = base::Bind(&media::CreateMediaService);
-  services->insert(std::make_pair("media", info));
+  services->insert(std::make_pair(media::mojom::kMediaServiceName, info));
 #endif
 #if defined(OS_CHROMEOS)
   {
