@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d10860c6_10e0ce82",
+        "filename": "content/browser/devtools/protocol/security_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-07-01T17:25:06Z",
+      "side": 1,
+      "message": "Can you delete this?",
+      "range": {
+        "startLine": 58,
+        "startChar": 4,
+        "endLine": 58,
+        "endChar": 11
+      },
+      "revId": "c896b8d2bd6b74f190ba746d619ff16b2ce33fe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b3a6072_a69e0fe9",
+        "filename": "content/public/browser/security_style_explanation.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-07-01T17:25:06Z",
+      "side": 1,
+      "message": "do you still need this?",
+      "range": {
+        "startLine": 21,
+        "startChar": 7,
+        "endLine": 21,
+        "endChar": 23
+      },
+      "revId": "c896b8d2bd6b74f190ba746d619ff16b2ce33fe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
