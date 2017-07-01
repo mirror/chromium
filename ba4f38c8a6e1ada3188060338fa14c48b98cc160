@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05abaa52_ccda8109",
+        "filename": "chrome/browser/ui/views/passwords/auto_signin_first_run_dialog_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-01T02:45:42Z",
+      "side": 1,
+      "message": "This isn\u0027t the right way to compute the preferred width under harmony (or, frankly, non-harmony).  We should be computing the preferred size based on our preferred child sizes.",
+      "revId": "ba4f38c8a6e1ada3188060338fa14c48b98cc160",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36d31b46_3c8c0386",
+        "filename": "chrome/browser/ui/views/passwords/auto_signin_first_run_dialog_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-01T02:45:42Z",
+      "side": 1,
+      "message": "Seems like this should be replaced with a typographyprovider-provided color too.",
+      "revId": "ba4f38c8a6e1ada3188060338fa14c48b98cc160",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5008fe26_8798c4a8",
+        "filename": "chrome/browser/ui/views/passwords/auto_signin_first_run_dialog_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-01T02:45:42Z",
+      "side": 1,
+      "message": "It seems like this is manually creating a dialog bottom button row.  I would assume the reason for that is to avoid having esc trigger the \"cancel\" button.  But we can simply make \"close\" not call \"cancel\" and get that same effect.  I think what you want is probably something like https://chromium-review.googlesource.com/c/557139/ .",
+      "revId": "ba4f38c8a6e1ada3188060338fa14c48b98cc160",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
