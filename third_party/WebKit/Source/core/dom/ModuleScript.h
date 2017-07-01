@@ -20,15 +20,6 @@
 
 namespace blink {
 
-// https://html.spec.whatwg.org/multipage/webappapis.html#concept-module-script-state
-enum class ModuleInstantiationState {
-  kUninstantiated,
-  kErrored,
-  kInstantiated,
-};
-
-const char* ModuleInstantiationStateToString(ModuleInstantiationState);
-
 // ModuleScript is a model object for the "module script" spec concept.
 // https://html.spec.whatwg.org/multipage/webappapis.html#module-script
 class CORE_EXPORT ModuleScript final : public Script, public TraceWrapperBase {
@@ -59,17 +50,18 @@ class CORE_EXPORT ModuleScript final : public Script, public TraceWrapperBase {
   bool HasEmptyRecord() const;
   const KURL& BaseURL() const { return base_url_; }
 
-  ModuleInstantiationState State() const { return state_; }
+  ScriptModuleState RecordStatus() const;
 
   // https://html.spec.whatwg.org/multipage/webappapis.html#concept-module-script-is-errored
-  bool IsErrored() const { return record_.IsEmpty(); }
+  bool IsErrored() const {
+    return record_.IsEmpty() || RecordStatus() == ScriptModuleState::kErrored;
+  }
+
+  // https://html.spec.whatwg.org/multipage/webappapis.html#concept-module-script-has-instantiated
+  bool HasInstantiated() const;
 
   // https://html.spec.whatwg.org/multipage/webappapis.html#concept-module-script-set-pre-instantiation-error
   void SetErrorAndClearRecord(ScriptValue error);
-
-  // Implements Step 7.2 of:
-  // https://html.spec.whatwg.org/multipage/webappapis.html#internal-module-script-graph-fetching-procedure
-  void SetInstantiationSuccess();
 
   v8::Local<v8::Value> CreateError(v8::Isolate* isolate) const {
     return preinstantiation_error_.NewLocal(isolate);
@@ -111,6 +103,8 @@ class CORE_EXPORT ModuleScript final : public Script, public TraceWrapperBase {
   void RunScript(LocalFrame*, const SecurityOrigin*) const override;
   String InlineSourceTextForCSP() const override;
 
+  friend std::ostream& operator<<(std::ostream&, const ModuleScript&);
+
   friend class ModulatorImpl;
   friend class ModuleTreeLinkerTestModulator;
   // Access this func only via ModulatorImpl::GetError(),
@@ -129,9 +123,6 @@ class CORE_EXPORT ModuleScript final : public Script, public TraceWrapperBase {
 
   // https://html.spec.whatwg.org/multipage/webappapis.html#concept-module-script-base-url
   const KURL base_url_;
-
-  // https://html.spec.whatwg.org/multipage/webappapis.html#concept-module-script-instantiation-state
-  ModuleInstantiationState state_ = ModuleInstantiationState::kUninstantiated;
 
   // https://html.spec.whatwg.org/multipage/webappapis.html#concept-module-script-pre-instantiation-error
   //
@@ -165,6 +156,8 @@ class CORE_EXPORT ModuleScript final : public Script, public TraceWrapperBase {
 
   const TextPosition start_position_;
 };
+
+CORE_EXPORT std::ostream& operator<<(std::ostream&, const ModuleScript&);
 
 }  // namespace blink
 

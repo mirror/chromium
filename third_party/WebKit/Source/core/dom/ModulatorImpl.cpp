@@ -148,6 +148,11 @@ ScriptValue ModulatorImpl::InstantiateModule(ScriptModule script_module) {
   return script_module.Instantiate(script_state_.Get());
 }
 
+ScriptModuleState ModulatorImpl::GetRecordStatus(ScriptModule script_module) {
+  ScriptState::Scope scope(script_state_.Get());
+  return script_module.Status(script_state_.Get());
+}
+
 ScriptValue ModulatorImpl::GetError(const ModuleScript* module_script) {
   DCHECK(module_script);
   ScriptState::Scope scope(script_state_.Get());
@@ -209,10 +214,10 @@ void ModulatorImpl::ExecuteModule(const ModuleScript* module_script) {
   // Step 3. "If s is errored, then report the exception given by s's error for
   // s and abort these steps." [spec text]
   if (module_script->IsErrored()) {
-    v8::Isolate* isolate = script_state_->GetIsolate();
-    ScriptModule::ReportException(
-        script_state_.Get(), module_script->CreateErrorInternal(isolate),
-        module_script->BaseURL().GetString(), module_script->StartPosition());
+    ScriptValue error = GetError(module_script);
+    ScriptModule::ReportException(script_state_.Get(), error.V8Value(),
+                                  module_script->BaseURL().GetString(),
+                                  module_script->StartPosition());
     return;
   }
 

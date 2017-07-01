@@ -64,7 +64,7 @@ class ModuleTreeLinkerTestModulator final : public DummyModulator {
   ModuleScript* ResolveSingleModuleScriptFetch(
       const KURL& url,
       const Vector<String>& dependency_module_specifiers,
-      ModuleInstantiationState state) {
+      ScriptModuleState state) {
     ScriptState::Scope scope(script_state_.Get());
 
     StringBuilder source_text;
@@ -93,7 +93,7 @@ class ModuleTreeLinkerTestModulator final : public DummyModulator {
     auto result_map = module_map_.insert(url, module_script);
     EXPECT_TRUE(result_map.is_new_entry);
 
-    if (state == ModuleInstantiationState::kErrored) {
+    if (state == ScriptModuleState::kErrored) {
       v8::Local<v8::Value> error = V8ThrowException::CreateError(
           script_state_->GetIsolate(), "Instantiation failure.");
       module_script->SetErrorAndClearRecord(
@@ -101,10 +101,8 @@ class ModuleTreeLinkerTestModulator final : public DummyModulator {
     }
 
     EXPECT_EQ(url, pending_request_url_);
-    if (state == ModuleInstantiationState::kErrored) {
+    if (state == ScriptModuleState::kErrored) {
       EXPECT_TRUE(module_script->IsErrored());
-    } else {
-      EXPECT_EQ(state, module_script->State());
     }
     EXPECT_TRUE(pending_client_);
     pending_client_->NotifyModuleLoadFinished(module_script);
@@ -189,14 +187,24 @@ class ModuleTreeLinkerTestModulator final : public DummyModulator {
     return it->value;
   }
 
-  ScriptValue InstantiateModule(ScriptModule) override {
+  ScriptValue InstantiateModule(ScriptModule record) override {
     if (instantiate_should_fail_) {
       ScriptState::Scope scope(script_state_.Get());
       v8::Local<v8::Value> error = V8ThrowException::CreateError(
           script_state_->GetIsolate(), "Instantiation failure.");
+      errored_records_.insert(record);
       return ScriptValue(script_state_.Get(), error);
     }
+    instantiated_records_.insert(record);
     return ScriptValue();
+  }
+
+  ScriptModuleState GetRecordStatus(ScriptModule record) override {
+    if (instantiated_records_.Contains(record))
+      return ScriptModuleState::kInstantiated;
+    if (errored_records_.Contains(record))
+      return ScriptModuleState::kErrored;
+    return ScriptModuleState::kUninstantiated;
   }
 
   ScriptValue GetError(const ModuleScript* module_script) override {
@@ -224,6 +232,8 @@ class ModuleTreeLinkerTestModulator final : public DummyModulator {
   HeapHashMap<KURL, Member<ModuleScript>> module_map_;
   HeapHashMap<KURL, Member<ModuleTreeClient>> pending_tree_client_map_;
   HashMap<KURL, AncestorList> pending_tree_ancestor_list_;
+  HashSet<ScriptModule> instantiated_records_;
+  HashSet<ScriptModule> errored_records_;
   bool instantiate_should_fail_ = false;
 };
 
@@ -271,11 +281,10 @@ TEST_F(ModuleTreeLinkerTest, FetchTreeNoDeps) {
   EXPECT_FALSE(client->GetModuleScript());
 
   GetModulator()->ResolveSingleModuleScriptFetch(
-      url, {}, ModuleInstantiationState::kUninstantiated);
+      url, {}, ScriptModuleState::kUninstantiated);
   EXPECT_TRUE(client->WasNotifyFinished());
   ASSERT_TRUE(client->GetModuleScript());
-  EXPECT_EQ(client->GetModuleScript()->State(),
-            ModuleInstantiationState::kInstantiated);
+  EXPECT_TRUE(client->GetModuleScript()->HasInstantiated());
 }
 
 TEST_F(ModuleTreeLinkerTest, FetchTreeInstantiationFailure) {
@@ -296,7 +305,7 @@ TEST_F(ModuleTreeLinkerTest, FetchTreeInstantiationFailure) {
   EXPECT_FALSE(client->GetModuleScript());
 
   GetModulator()->ResolveSingleModuleScriptFetch(
-      url, {}, ModuleInstantiationState::kUninstantiated);
+      url, {}, ScriptModuleState::kUninstantiated);
 
   // Modulator::InstantiateModule() fails here, as
   // we SetInstantiateShouldFail(true) earlier.
@@ -323,8 +332,8 @@ TEST_F(ModuleTreeLinkerTest, FetchTreePreviousInstantiationFailure) {
 
   // This emulates "previous instantiation failure", where
   // Modulator::FetchSingle resolves w/ "errored" module script.
-  GetModulator()->ResolveSingleModuleScriptFetch(
-      url, {}, ModuleInstantiationState::kErrored);
+  GetModulator()->ResolveSingleModuleScriptFetch(url, {},
+                                                 ScriptModuleState::kErrored);
   EXPECT_TRUE(client->WasNotifyFinished());
   ASSERT_TRUE(client->GetModuleScript());
   EXPECT_TRUE(client->GetModuleScript()->IsErrored());
@@ -346,7 +355,7 @@ TEST_F(ModuleTreeLinkerTest, FetchTreeWithSingleDependency) {
   EXPECT_FALSE(client->GetModuleScript());
 
   GetModulator()->ResolveSingleModuleScriptFetch(
-      url, {"./dep1.js"}, ModuleInstantiationState::kUninstantiated);
+      url, {"./dep1.js"}, ScriptModuleState::kUninstantiated);
   EXPECT_FALSE(client->WasNotifyFinished());
 
   KURL url_dep1(kParsedURLString, "http://example.com/dep1.js");
@@ -360,8 +369,7 @@ TEST_F(ModuleTreeLinkerTest, FetchTreeWithSingleDependency) {
   EXPECT_TRUE(client->WasNotifyFinished());
 
   ASSERT_TRUE(client->GetModuleScript());
-  EXPECT_EQ(client->GetModuleScript()->State(),
-            ModuleInstantiationState::kInstantiated);
+  EXPECT_TRUE(client->GetModuleScript()->HasInstantiated());
 }
 
 TEST_F(ModuleTreeLinkerTest, FetchTreeWith3Deps) {
@@ -381,7 +389,7 @@ TEST_F(ModuleTreeLinkerTest, FetchTreeWith3Deps) {
 
   GetModulator()->ResolveSingleModuleScriptFetch(
       url, {"./dep1.js", "./dep2.js", "./dep3.js"},
-      ModuleInstantiationState::kUninstantiated);
+      ScriptModuleState::kUninstantiated);
   EXPECT_FALSE(client->WasNotifyFinished());
 
   Vector<KURL> url_deps;
@@ -411,8 +419,7 @@ TEST_F(ModuleTreeLinkerTest, FetchTreeWith3Deps) {
 
   EXPECT_TRUE(client->WasNotifyFinished());
   ASSERT_TRUE(client->GetModuleScript());
-  EXPECT_EQ(client->GetModuleScript()->State(),
-            ModuleInstantiationState::kInstantiated);
+  EXPECT_TRUE(client->GetModuleScript()->HasInstantiated());
 }
 
 TEST_F(ModuleTreeLinkerTest, FetchTreeWith3Deps1Fail) {
@@ -432,7 +439,7 @@ TEST_F(ModuleTreeLinkerTest, FetchTreeWith3Deps1Fail) {
 
   GetModulator()->ResolveSingleModuleScriptFetch(
       url, {"./dep1.js", "./dep2.js", "./dep3.js"},
-      ModuleInstantiationState::kUninstantiated);
+      ScriptModuleState::kUninstantiated);
   EXPECT_FALSE(client->WasNotifyFinished());
 
   Vector<KURL> url_deps;
@@ -464,8 +471,8 @@ TEST_F(ModuleTreeLinkerTest, FetchTreeWith3Deps1Fail) {
   GetModulator()->ResolveDependentTreeFetch(
       url_dep, ModuleTreeLinkerTestModulator::ResolveResult::kFailure);
 
-  EXPECT_TRUE(client->WasNotifyFinished());
-  EXPECT_FALSE(client->GetModuleScript());
+  // TODO(kouhei): This may not hold once we implement early failure reporting.
+  EXPECT_FALSE(client->WasNotifyFinished());
 
   // Check below doesn't crash.
   url_dep = url_deps.back();
@@ -473,6 +480,9 @@ TEST_F(ModuleTreeLinkerTest, FetchTreeWith3Deps1Fail) {
   GetModulator()->ResolveDependentTreeFetch(
       url_dep, ModuleTreeLinkerTestModulator::ResolveResult::kSuccess);
   EXPECT_TRUE(url_deps.IsEmpty());
+
+  EXPECT_TRUE(client->WasNotifyFinished());
+  EXPECT_FALSE(client->GetModuleScript());
 }
 
 TEST_F(ModuleTreeLinkerTest, FetchDependencyTree) {
@@ -492,7 +502,7 @@ TEST_F(ModuleTreeLinkerTest, FetchDependencyTree) {
   EXPECT_FALSE(client->GetModuleScript());
 
   GetModulator()->ResolveSingleModuleScriptFetch(
-      url, {"./depth2.js"}, ModuleInstantiationState::kUninstantiated);
+      url, {"./depth2.js"}, ScriptModuleState::kUninstantiated);
 
   KURL url_dep2(kParsedURLString, "http://example.com/depth2.js");
   auto ancestor_list = GetModulator()->GetAncestorListForTreeFetch(url_dep2);
@@ -507,8 +517,7 @@ TEST_F(ModuleTreeLinkerTest, FetchDependencyTree) {
 
   EXPECT_TRUE(client->WasNotifyFinished());
   ASSERT_TRUE(client->GetModuleScript());
-  EXPECT_EQ(client->GetModuleScript()->State(),
-            ModuleInstantiationState::kInstantiated);
+  EXPECT_FALSE(client->GetModuleScript()->HasInstantiated());
 }
 
 TEST_F(ModuleTreeLinkerTest, FetchDependencyOfCyclicGraph) {
@@ -528,15 +537,14 @@ TEST_F(ModuleTreeLinkerTest, FetchDependencyOfCyclicGraph) {
   EXPECT_FALSE(client->GetModuleScript());
 
   GetModulator()->ResolveSingleModuleScriptFetch(
-      url, {"./a.js"}, ModuleInstantiationState::kUninstantiated);
+      url, {"./a.js"}, ScriptModuleState::kUninstantiated);
 
   auto ancestor_list = GetModulator()->GetAncestorListForTreeFetch(url);
   EXPECT_EQ(0u, ancestor_list.size());
 
   EXPECT_TRUE(client->WasNotifyFinished());
   ASSERT_TRUE(client->GetModuleScript());
-  EXPECT_EQ(client->GetModuleScript()->State(),
-            ModuleInstantiationState::kInstantiated);
+  EXPECT_FALSE(client->GetModuleScript()->HasInstantiated());
 }
 
 }  // namespace blink
