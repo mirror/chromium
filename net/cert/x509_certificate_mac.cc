@@ -35,6 +35,23 @@ namespace net {
 
 namespace {
 
+// Tests that a given |cert_handle| is actually a valid X.509 certificate, and
+// returns true if it is.
+//
+// On OS X, SecCertificateCreateFromData() does not return any errors if
+// called with invalid data, as long as data is present. The actual decoding
+// of the certificate does not happen until an API that requires a CSSM
+// handle is called. While SecCertificateGetCLHandle is the most likely
+// candidate, as it performs the parsing, it does not check whether the
+// parsing was actually successful. Instead, SecCertificateGetSubject is
+// used (supported since 10.3), as a means to check that the certificate
+// parsed as a valid X.509 certificate.
+bool IsValidSecCertificate(SecCertificateRef cert_handle) {
+  const CSSM_X509_NAME* sanity_check = NULL;
+  OSStatus status = SecCertificateGetSubject(cert_handle, &sanity_check);
+  return status == noErr && sanity_check;
+}
+
 bool GetCertDistinguishedName(
     const x509_util::CSSMCachedCertificate& cached_cert,
     const CSSM_OID* oid,
@@ -165,7 +182,7 @@ void AddCertificatesFromBytes(const char* data, size_t length,
       // |input_format|, causing decode to succeed. On OS X 10.6, the data
       // is properly decoded as a PKCS#7, whether PEM or not, which avoids
       // the need to fallback to internal decoding.
-      if (x509_util::IsValidSecCertificate(cert)) {
+      if (IsValidSecCertificate(cert)) {
         CFRetain(cert);
         output->push_back(cert);
       }
