@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3a175c48_de5034cc",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_unittest_textures.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-07-01T01:13:11Z",
+      "side": 1,
+      "message": "No, this is a command buffer error, not a GL error.\nWe could test for the exact error, but I don\u0027t think it matters (but makes the test more fragile). What matters is that we don\u0027t issue GL commands (referencing invalid data) in that case.",
+      "parentUuid": "576596f2_7ed5adb5",
+      "range": {
+        "startLine": 456,
+        "startChar": 2,
+        "endLine": 456,
+        "endChar": 11
+      },
+      "revId": "4a21ad6d2952aca8e3d14323546113b7c2b973d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc33835e_24f1da69",
         "filename": "gpu/command_buffer/service/gles2_cmd_decoder_unittest_textures.cc",
         "patchSetId": 6
