@@ -56,12 +56,12 @@ void RenderWidgetHostInputEventRouter::OnRenderWidgetHostViewBaseDestroyed(
     active_touches_ = 0;
   }
 
-  // If the target that's being destroyed is in the gesture target queue, we
+  // If the target that's being destroyed is in the gesture target map, we
   // replace it with nullptr so that we maintain the 1:1 correspondence between
-  // queue entries and the touch sequences that underly them.
-  for (size_t i = 0; i < touchscreen_gesture_target_queue_.size(); ++i) {
-    if (touchscreen_gesture_target_queue_[i].target == view)
-      touchscreen_gesture_target_queue_[i].target = nullptr;
+  // map entries and the touch sequences that underly them.
+  for (auto it : touchscreen_gesture_target_map_) {
+    if (it.second.target == view)
+      it.second.target = nullptr;
   }
 
   if (view == mouse_capture_target_.target)
@@ -385,6 +385,13 @@ unsigned CountChangedTouchPoints(const blink::WebTouchEvent& event) {
 
 }  // namespace
 
+// Any time a touch start event is handled/consumed/default prevented it is
+// removed from the gesture map, because it will never create a gesture
+void RenderWidgetHostInputEventRouter::OnHandledTouchStartOrFirstTouchMove(
+    uint32_t unique_touch_event_id) {
+  touchscreen_gesture_target_map_.erase(unique_touch_event_id);
+}
+
 void RenderWidgetHostInputEventRouter::RouteTouchEvent(
     RenderWidgetHostViewBase* root_view,
     blink::WebTouchEvent* event,
@@ -408,7 +415,8 @@ void RenderWidgetHostInputEventRouter::RouteTouchEvent(
         // might be to always transform each point to the |touch_target_.target|
         // for the duration of the sequence.
         touch_target_.delta = transformed_point - original_point;
-        touchscreen_gesture_target_queue_.push_back(touch_target_);
+        touchscreen_gesture_target_map_[event->unique_touch_event_id] =
+            touch_target_;
 
         if (!touch_target_.target)
           return;
@@ -792,8 +800,9 @@ void RenderWidgetHostInputEventRouter::RouteTouchscreenGestureEvent(
 
   // On Android it is possible for touchscreen gesture events to arrive that
   // are not associated with touch events, because non-synthetic events can be
-  // created by ContentView. In that case the target queue will be empty.
-  if (touchscreen_gesture_target_queue_.empty()) {
+  // created by ContentView.
+  // Gesture events should always a unique_touch_event_id of 0.
+  if (event->unique_touch_event_id == 0) {
     gfx::Point transformed_point;
     gfx::Point original_point(event->x, event->y);
     touchscreen_gesture_target_.target =
@@ -805,8 +814,9 @@ void RenderWidgetHostInputEventRouter::RouteTouchscreenGestureEvent(
     // this means the GestureFlingCancel that always comes between
     // ET_GESTURE_BEGIN and GestureTapDown is sent to the previous target, in
     // case it is still in a fling.
-    touchscreen_gesture_target_ = touchscreen_gesture_target_queue_.front();
-    touchscreen_gesture_target_queue_.pop_front();
+    touchscreen_gesture_target_ =
+        touchscreen_gesture_target_map_.at(event->unique_touch_event_id);
+    touchscreen_gesture_target_map_.erase(event->unique_touch_event_id);
 
     // Abort any scroll bubbling in progress to avoid double entry.
     if (touchscreen_gesture_target_.target &&

@@ -5918,7 +5918,8 @@ namespace {
 
 // Defined here to be close to
 // SitePerProcessBrowserTest.InputEventRouterGestureTargetQueueTest.
-void SendTouchTapWithExpectedTarget(
+// Returns the unique_touch_id of the TouchStart
+uint32_t SendTouchTapWithExpectedTarget(
     RenderWidgetHostViewBase* root_view,
     const gfx::Point& touch_point,
     RenderWidgetHostViewBase*& router_touch_target,
@@ -5942,6 +5943,7 @@ void SendTouchTapWithExpectedTarget(
                          /* force */ 0.0f));
   root_view_aura->OnTouchEvent(&touch_event_released);
   EXPECT_EQ(nullptr, router_touch_target);
+  return touch_event_pressed.unique_event_id();
 }
 
 void SendGestureTapSequenceWithExpectedTarget(
@@ -5949,15 +5951,16 @@ void SendGestureTapSequenceWithExpectedTarget(
     const gfx::Point& gesture_point,
     RenderWidgetHostViewBase*& router_gesture_target,
     const RenderWidgetHostViewBase* old_expected_target,
-    const RenderWidgetHostViewBase* expected_target) {
+    const RenderWidgetHostViewBase* expected_target,
+    const uint32_t unique_touch_event_id) {
   auto* root_view_aura = static_cast<RenderWidgetHostViewAura*>(root_view);
 
   ui::GestureEventDetails gesture_begin_details(ui::ET_GESTURE_BEGIN);
   gesture_begin_details.set_device_type(
       ui::GestureDeviceType::DEVICE_TOUCHSCREEN);
-  ui::GestureEvent gesture_begin_event(gesture_point.x(), gesture_point.y(), 0,
-                                       ui::EventTimeForNow(),
-                                       gesture_begin_details);
+  ui::GestureEvent gesture_begin_event(
+      gesture_point.x(), gesture_point.y(), 0, ui::EventTimeForNow(),
+      gesture_begin_details, unique_touch_event_id);
   root_view_aura->OnGestureEvent(&gesture_begin_event);
   // We expect to still have the old gesture target in place for the
   // GestureFlingCancel that will be inserted before GestureTapDown.
@@ -5969,9 +5972,9 @@ void SendGestureTapSequenceWithExpectedTarget(
   ui::GestureEventDetails gesture_tap_down_details(ui::ET_GESTURE_TAP_DOWN);
   gesture_tap_down_details.set_device_type(
       ui::GestureDeviceType::DEVICE_TOUCHSCREEN);
-  ui::GestureEvent gesture_tap_down_event(gesture_point.x(), gesture_point.y(),
-                                          0, ui::EventTimeForNow(),
-                                          gesture_tap_down_details);
+  ui::GestureEvent gesture_tap_down_event(
+      gesture_point.x(), gesture_point.y(), 0, ui::EventTimeForNow(),
+      gesture_tap_down_details, unique_touch_event_id);
   root_view_aura->OnGestureEvent(&gesture_tap_down_event);
   EXPECT_EQ(expected_target, router_gesture_target);
 
@@ -5980,7 +5983,7 @@ void SendGestureTapSequenceWithExpectedTarget(
       ui::GestureDeviceType::DEVICE_TOUCHSCREEN);
   ui::GestureEvent gesture_show_press_event(
       gesture_point.x(), gesture_point.y(), 0, ui::EventTimeForNow(),
-      gesture_show_press_details);
+      gesture_show_press_details, unique_touch_event_id);
   root_view_aura->OnGestureEvent(&gesture_show_press_event);
   EXPECT_EQ(expected_target, router_gesture_target);
 
@@ -5989,8 +5992,8 @@ void SendGestureTapSequenceWithExpectedTarget(
       ui::GestureDeviceType::DEVICE_TOUCHSCREEN);
   gesture_tap_details.set_tap_count(1);
   ui::GestureEvent gesture_tap_event(gesture_point.x(), gesture_point.y(), 0,
-                                     ui::EventTimeForNow(),
-                                     gesture_tap_details);
+                                     ui::EventTimeForNow(), gesture_tap_details,
+                                     unique_touch_event_id);
   root_view_aura->OnGestureEvent(&gesture_tap_event);
   EXPECT_EQ(expected_target, router_gesture_target);
 
@@ -5998,8 +6001,8 @@ void SendGestureTapSequenceWithExpectedTarget(
   gesture_end_details.set_device_type(
       ui::GestureDeviceType::DEVICE_TOUCHSCREEN);
   ui::GestureEvent gesture_end_event(gesture_point.x(), gesture_point.y(), 0,
-                                     ui::EventTimeForNow(),
-                                     gesture_end_details);
+                                     ui::EventTimeForNow(), gesture_end_details,
+                                     unique_touch_event_id);
   root_view_aura->OnGestureEvent(&gesture_end_event);
   EXPECT_EQ(expected_target, router_gesture_target);
 }
@@ -6057,7 +6060,7 @@ void SendTouchpadFlingSequenceWithExpectedTarget(
 }  // namespace anonymous
 
 IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
-                       InputEventRouterGestureTargetQueueTest) {
+                       InputEventRouterGestureTargetMapTest) {
   GURL main_url(embedded_test_server()->GetURL(
       "/frame_tree/page_with_positioned_nested_frames.html"));
   EXPECT_TRUE(NavigateToURL(shell(), main_url));
@@ -6083,27 +6086,27 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
       contents->GetRenderWidgetHostView());
 
   RenderWidgetHostInputEventRouter* router = contents->GetInputEventRouter();
-  EXPECT_TRUE(router->touchscreen_gesture_target_queue_.empty());
+  EXPECT_TRUE(router->touchscreen_gesture_target_map_.empty());
   EXPECT_EQ(nullptr, router->touchscreen_gesture_target_.target);
 
   // Send touch sequence to main-frame.
   gfx::Point main_frame_point(25, 25);
-  SendTouchTapWithExpectedTarget(rwhv_parent, main_frame_point,
-                                 router->touch_target_.target, rwhv_parent);
-  EXPECT_EQ(1LU, router->touchscreen_gesture_target_queue_.size());
+  uint32_t firstId = SendTouchTapWithExpectedTarget(
+      rwhv_parent, main_frame_point, router->touch_target_.target, rwhv_parent);
+  EXPECT_EQ(1, router->touchscreen_gesture_target_map_.size());
   EXPECT_EQ(nullptr, router->touchscreen_gesture_target_.target);
 
   // Send touch sequence to child.
   gfx::Point child_center(150, 150);
-  SendTouchTapWithExpectedTarget(rwhv_parent, child_center,
-                                 router->touch_target_.target, rwhv_child);
-  EXPECT_EQ(2LU, router->touchscreen_gesture_target_queue_.size());
+  uint32_t secondId = SendTouchTapWithExpectedTarget(
+      rwhv_parent, child_center, router->touch_target_.target, rwhv_child);
+  EXPECT_EQ(2, router->touchscreen_gesture_target_map_.size());
   EXPECT_EQ(nullptr, router->touchscreen_gesture_target_.target);
 
   // Send another touch sequence to main frame.
-  SendTouchTapWithExpectedTarget(rwhv_parent, main_frame_point,
-                                 router->touch_target_.target, rwhv_parent);
-  EXPECT_EQ(3LU, router->touchscreen_gesture_target_queue_.size());
+  uint32_t thirdId = SendTouchTapWithExpectedTarget(
+      rwhv_parent, main_frame_point, router->touch_target_.target, rwhv_parent);
+  EXPECT_EQ(3, router->touchscreen_gesture_target_map_.size());
   EXPECT_EQ(nullptr, router->touchscreen_gesture_target_.target);
 
   // Send Gestures to clear GestureTargetQueue.
@@ -6112,8 +6115,8 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
   // main frame.
   SendGestureTapSequenceWithExpectedTarget(
       rwhv_parent, main_frame_point, router->touchscreen_gesture_target_.target,
-      nullptr, rwhv_parent);
-  EXPECT_EQ(2LU, router->touchscreen_gesture_target_queue_.size());
+      nullptr, rwhv_parent, firstId);
+  EXPECT_EQ(2, router->touchscreen_gesture_target_map_.size());
   // Note: rwhv_parent is the target used for GestureFlingCancel sent by
   // RenderWidgetHostViewAura::OnGestureEvent() at the start of the next gesture
   // sequence; the sequence itself goes to rwhv_child.
@@ -6123,16 +6126,16 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
   // child frame.
   SendGestureTapSequenceWithExpectedTarget(
       rwhv_parent, child_center, router->touchscreen_gesture_target_.target,
-      rwhv_parent, rwhv_child);
-  EXPECT_EQ(1LU, router->touchscreen_gesture_target_queue_.size());
+      rwhv_parent, rwhv_child, secondId);
+  EXPECT_EQ(1, router->touchscreen_gesture_target_map_.size());
   EXPECT_EQ(rwhv_child, router->touchscreen_gesture_target_.target);
 
   // The third touch sequence should generate a GestureTapDown, sent to the
   // main frame.
   SendGestureTapSequenceWithExpectedTarget(
       rwhv_parent, main_frame_point, router->touchscreen_gesture_target_.target,
-      rwhv_child, rwhv_parent);
-  EXPECT_EQ(0LU, router->touchscreen_gesture_target_queue_.size());
+      rwhv_child, rwhv_parent, thirdId);
+  EXPECT_EQ(0, router->touchscreen_gesture_target_map_.size());
   EXPECT_EQ(rwhv_parent, router->touchscreen_gesture_target_.target);
 }
 
@@ -8480,44 +8483,44 @@ class SitePerProcessGestureBrowserTest : public SitePerProcessBrowserTest {
     ui::GestureEventDetails gesture_tap_down_details(ui::ET_GESTURE_TAP_DOWN);
     gesture_tap_down_details.set_device_type(
         ui::GestureDeviceType::DEVICE_TOUCHSCREEN);
-    ui::GestureEvent gesture_tap_down(position.x(), position.y(), 0,
-                                      ui::EventTimeForNow(),
-                                      gesture_tap_down_details);
+    ui::GestureEvent gesture_tap_down(
+        position.x(), position.y(), 0, ui::EventTimeForNow(),
+        gesture_tap_down_details, touch_pressed.unique_event_id());
     rwhva->OnGestureEvent(&gesture_tap_down);
 
     ui::GestureEventDetails gesture_scroll_begin_details(
         ui::ET_GESTURE_SCROLL_BEGIN);
     gesture_scroll_begin_details.set_device_type(
         ui::GestureDeviceType::DEVICE_TOUCHSCREEN);
-    ui::GestureEvent gesture_scroll_begin(position.x(), position.y(), 0,
-                                          ui::EventTimeForNow(),
-                                          gesture_scroll_begin_details);
+    ui::GestureEvent gesture_scroll_begin(
+        position.x(), position.y(), 0, ui::EventTimeForNow(),
+        gesture_scroll_begin_details, touch_pressed.unique_event_id());
     rwhva->OnGestureEvent(&gesture_scroll_begin);
 
     ui::GestureEventDetails gesture_pinch_begin_details(
         ui::ET_GESTURE_PINCH_BEGIN);
     gesture_pinch_begin_details.set_device_type(
         ui::GestureDeviceType::DEVICE_TOUCHSCREEN);
-    ui::GestureEvent gesture_pinch_begin(position.x(), position.y(), 0,
-                                         ui::EventTimeForNow(),
-                                         gesture_pinch_begin_details);
+    ui::GestureEvent gesture_pinch_begin(
+        position.x(), position.y(), 0, ui::EventTimeForNow(),
+        gesture_pinch_begin_details, touch_pressed.unique_event_id());
     rwhva->OnGestureEvent(&gesture_pinch_begin);
 
     ui::GestureEventDetails gesture_pinch_end_details(ui::ET_GESTURE_PINCH_END);
     gesture_pinch_end_details.set_device_type(
         ui::GestureDeviceType::DEVICE_TOUCHSCREEN);
-    ui::GestureEvent gesture_pinch_end(position.x(), position.y(), 0,
-                                       ui::EventTimeForNow(),
-                                       gesture_pinch_end_details);
+    ui::GestureEvent gesture_pinch_end(
+        position.x(), position.y(), 0, ui::EventTimeForNow(),
+        gesture_pinch_end_details, touch_pressed.unique_event_id());
     rwhva->OnGestureEvent(&gesture_pinch_end);
 
     ui::GestureEventDetails gesture_scroll_end_details(
         ui::ET_GESTURE_SCROLL_END);
     gesture_scroll_end_details.set_device_type(
         ui::GestureDeviceType::DEVICE_TOUCHSCREEN);
-    ui::GestureEvent gesture_scroll_end(position.x(), position.y(), 0,
-                                        ui::EventTimeForNow(),
-                                        gesture_scroll_end_details);
+    ui::GestureEvent gesture_scroll_end(
+        position.x(), position.y(), 0, ui::EventTimeForNow(),
+        gesture_scroll_end_details, touch_pressed.unique_event_id());
     rwhva->OnGestureEvent(&gesture_scroll_end);
   }
 
