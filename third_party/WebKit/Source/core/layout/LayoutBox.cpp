@@ -671,7 +671,8 @@ void LayoutBox::ScrollRectToVisible(const LayoutRect& rect,
   }
 
   bool is_smooth = scroll_behavior == kScrollBehaviorSmooth ||
-                   (scroll_behavior == kScrollBehaviorAuto &&
+                   (scroll_type == kProgrammaticScroll &&
+                    scroll_behavior == kScrollBehaviorAuto &&
                     Style()->GetScrollBehavior() == kScrollBehaviorSmooth);
 
   if (!IsLayoutView() && HasOverflowClip() && !restricted_by_line_clamp) {
