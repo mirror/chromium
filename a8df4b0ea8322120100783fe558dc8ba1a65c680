@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51571ebe_f64b99d9",
+        "filename": "third_party/WebKit/Source/core/events/EventTarget.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-02T23:40:23Z",
+      "side": 1,
+      "message": "|document| can be nullptr.  So CheckTypeThenUseCount() can crash.\n\nThe series of CheckTypeThenUseCount()s isn\u0027t necessary if document is not available. So, the code would be:\n\nif (Document* document) {\n  if (CheckTypeThenUseCount(...)) {\n  } else if (CheckTypeThenUseCount(...)) {\n  } else if (CheckTypeThenUseCount(...)) {\n  ...\n}",
+      "revId": "a8df4b0ea8322120100783fe558dc8ba1a65c680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
