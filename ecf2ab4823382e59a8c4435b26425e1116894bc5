@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb6b974e_cc9b18d5",
+        "filename": "components/payments/content/payment_request_state.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-02T19:35:37Z",
+      "side": 1,
+      "message": "Ideally this logic (and GetApplicableModifier) would live in PaymentRequestSpec, but I realize that we have the selected instrument in the State. Perhaps it could be PaymentRequestSpec::GetTotalForInstrument(const PaymentInstrument\u0026)? We could keep PaymentRequestState::GetTotal() which would forward the call to the spec. \n\nSpec should ideally keep all the logic about display items. WDYT?",
+      "range": {
+        "startLine": 254,
+        "startChar": 50,
+        "endLine": 254,
+        "endChar": 58
+      },
+      "revId": "ecf2ab4823382e59a8c4435b26425e1116894bc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41dcbd8c_cba6ec5d",
+        "filename": "components/payments/content/payment_request_state.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-02T19:35:37Z",
+      "side": 1,
+      "message": "I don\u0027t see where this is used?",
+      "revId": "ecf2ab4823382e59a8c4435b26425e1116894bc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6d6c6af_b90c4601",
+        "filename": "components/payments/content/payment_request_state.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-02T19:35:37Z",
+      "side": 1,
+      "message": "How often do we expect the cache of display items to be queried? If only for the payment sheet and the order summary view, which don\u0027t update all that often, perhaps it\u0027s ok to always compute on the fly?",
+      "range": {
+        "startLine": 205,
+        "startChar": 7,
+        "endLine": 205,
+        "endChar": 25
+      },
+      "revId": "ecf2ab4823382e59a8c4435b26425e1116894bc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c37cc5d5_32212374",
+        "filename": "components/payments/content/payment_request_state.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-02T19:35:37Z",
+      "side": 1,
+      "message": "how about: Returns the first applicable modifier in the Payment Request for the currently selected instrument.",
+      "revId": "ecf2ab4823382e59a8c4435b26425e1116894bc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
