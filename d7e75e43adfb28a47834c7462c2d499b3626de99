@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "623d1671_d500b1b8",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-02T00:43:42Z",
+      "side": 1,
+      "message": "Add a class-level comment.",
+      "revId": "d7e75e43adfb28a47834c7462c2d499b3626de99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d454139_f0d0d41a",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-02T00:43:42Z",
+      "side": 1,
+      "message": "Add explicit.",
+      "revId": "d7e75e43adfb28a47834c7462c2d499b3626de99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "938df5c0_a7cfc2f5",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-02T00:43:42Z",
+      "side": 1,
+      "message": "Would you help me understand what this is doing?\n\nBy having the InUse check, we won\u0027t be able to record traces of nested RuntimeCallStatsScopedTracer...?",
+      "revId": "d7e75e43adfb28a47834c7462c2d499b3626de99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
