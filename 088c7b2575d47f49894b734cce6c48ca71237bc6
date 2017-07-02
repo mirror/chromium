@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2b132008_4fc833fb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1212429
+      },
+      "writtenOn": "2017-07-02T23:06:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6faf9b6_2b7d2ef1",
+      "revId": "088c7b2575d47f49894b734cce6c48ca71237bc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ced55b6b_0e6a9f8a",
         "filename": "components/translate/core/browser/translate_language_list.h",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "436fc5d9_2aaccbae",
+        "filename": "components/translate/core/browser/translate_language_list.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1212429
+      },
+      "writtenOn": "2017-07-02T23:06:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ced55b6b_0e6a9f8a",
+      "revId": "088c7b2575d47f49894b734cce6c48ca71237bc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "286f74e6_8737fd37",
         "filename": "components/translate/core/browser/translate_language_list_unittest.cc",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-06-30T05:17:31Z",
       "side": 1,
       "message": "nit: Is this necessary? (Sorry, I realise this isn\u0027t code you\u0027ve added in this CL.)",
+      "revId": "088c7b2575d47f49894b734cce6c48ca71237bc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaa011c5_2fed3ee2",
+        "filename": "components/translate/core/browser/translate_language_list_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1212429
+      },
+      "writtenOn": "2017-07-02T23:06:41Z",
+      "side": 1,
+      "message": "TranslateDownloadManager is a singleton. This test has modified the state of the singleton from default. ResetForTesting() puts in back into the default state. I think this is the correct thing to do.",
+      "parentUuid": "286f74e6_8737fd37",
       "revId": "088c7b2575d47f49894b734cce6c48ca71237bc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "93c1b2d8_a0433b6f",
+        "filename": "components/translate/core/browser/translate_language_list_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1212429
+      },
+      "writtenOn": "2017-07-02T23:06:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ad4c561_b1d0cf79",
+      "revId": "088c7b2575d47f49894b734cce6c48ca71237bc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "804aed84_9fbaa9e4",
         "filename": "components/translate/core/browser/translate_language_list_unittest.cc",
         "patchSetId": 3
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "fb1833c5_7ea00efa",
+        "filename": "components/translate/core/browser/translate_language_list_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1212429
+      },
+      "writtenOn": "2017-07-02T23:06:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "804aed84_9fbaa9e4",
+      "revId": "088c7b2575d47f49894b734cce6c48ca71237bc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a29ee675_c322353c",
         "filename": "components/translate/core/browser/translate_language_list_unittest.cc",
         "patchSetId": 3
@@ -98,6 +188,24 @@
       "writtenOn": "2017-06-30T05:17:31Z",
       "side": 1,
       "message": "Does it make sense to do something like\n\n  scoped_command_line.GetProcessCommandLine()-\u003eHasSwitch(\"translate-security-origin\")\n\nat the beginning of the test and only add it if it\u0027s not there?\n\n(I.e., will this switch ever be on by default, and what happens if it is?)",
+      "revId": "088c7b2575d47f49894b734cce6c48ca71237bc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5922be8e_61a50e89",
+        "filename": "components/translate/core/browser/translate_language_list_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1212429
+      },
+      "writtenOn": "2017-07-02T23:06:41Z",
+      "side": 1,
+      "message": "I don\u0027t think this is necessary. This command-line switch is only needed to allow developers to override the default value which is hard-coded. This switch should never be on by default. I have added a DCHECK() to ensure this is true.",
+      "parentUuid": "a29ee675_c322353c",
       "revId": "088c7b2575d47f49894b734cce6c48ca71237bc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
