@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d769b6d3_4105b490",
+        "filename": "content/browser/devtools/protocol/security_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-07-02T02:31:44Z",
+      "side": 1,
+      "message": "No, the Windows bots fail. :-(\n\nSame issue as SecurityStyleToProtocolSecurityState() above.\n\nAlternatively, maybe I could remove the `default` to keep the full enumeration and place this after the switch statement, both for here and SecurityStyleToProtocolSecurityState().",
+      "parentUuid": "d10860c6_10e0ce82",
+      "range": {
+        "startLine": 58,
+        "startChar": 4,
+        "endLine": 58,
+        "endChar": 11
+      },
+      "revId": "c896b8d2bd6b74f190ba746d619ff16b2ce33fe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4b3a6072_a69e0fe9",
         "filename": "content/public/browser/security_style_explanation.h",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-01T17:25:06Z",
       "side": 1,
       "message": "do you still need this?",
+      "range": {
+        "startLine": 21,
+        "startChar": 7,
+        "endLine": 21,
+        "endChar": 23
+      },
+      "revId": "c896b8d2bd6b74f190ba746d619ff16b2ce33fe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe19ad7e_b6b108ba",
+        "filename": "content/public/browser/security_style_explanation.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-07-02T02:31:44Z",
+      "side": 1,
+      "message": "Nope. I\u0027ve removed it.\n\n(I was *so* sure I\u0027d removed it before, but maybe it got lost in a rebase?)",
+      "parentUuid": "4b3a6072_a69e0fe9",
       "range": {
         "startLine": 21,
         "startChar": 7,
