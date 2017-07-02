@@ -2025,6 +2025,9 @@ crbug.com/626703 virtual/threaded/inspector/tracing/timeline-js/timeline-runtime
 crbug.com/626703 virtual/threaded/transitions/transition-end-event-multiple-03.html [ Pass Failure ]
 
 # ====== New tests from wpt-importer added here ======
+crbug.com/626703 external/wpt/css-fonts/matching/fixed-stretch-style-over-weight.html [ Failure ]
+crbug.com/626703 external/wpt/css-fonts/matching/stretch-distance-over-weight-distance.html [ Failure ]
+crbug.com/626703 external/wpt/css-fonts/matching/style-ranges-over-weight-direction.html [ Failure ]
 crbug.com/626703 external/wpt/css/css-tables-3/floats/floats-wrap-bfc-006b.xht [ Failure ]
 crbug.com/626703 external/wpt/css/css-tables-3/floats/floats-wrap-bfc-006c.xht [ Failure ]
 crbug.com/626703 external/wpt/html/webappapis/idle-callbacks/callback-xhr-sync.html [ Timeout ]
