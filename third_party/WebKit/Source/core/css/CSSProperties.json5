@@ -1654,6 +1654,7 @@
     {
       name: "marker-end",
       api_class: "CSSPropertyAPIMarker",
+      api_methods: ["parseSingleValue"],
       converter: "ConvertFragmentIdentifier",
       inherited: true,
       name_for_methods: "MarkerEndResource",
@@ -1662,6 +1663,7 @@
     {
       name: "marker-mid",
       api_class: "CSSPropertyAPIMarker",
+      api_methods: ["parseSingleValue"],
       converter: "ConvertFragmentIdentifier",
       inherited: true,
       name_for_methods: "MarkerMidResource",
@@ -1670,6 +1672,7 @@
     {
       name: "marker-start",
       api_class: "CSSPropertyAPIMarker",
+      api_methods: ["parseSingleValue"],
       converter: "ConvertFragmentIdentifier",
       inherited: true,
       name_for_methods: "MarkerStartResource",
@@ -1678,6 +1681,7 @@
     {
       name: "mask",
       api_class: "CSSPropertyAPIMarker",
+      api_methods: ["parseSingleValue"],
       converter: "ConvertFragmentIdentifier",
       name_for_methods: "MaskerResource",
       svg: true,
@@ -1743,8 +1747,8 @@
       type_name: "WebBlendMode",
       field_template: "keyword",
       keywords: ["normal", "multiply", "screen", "overlay", "darken", "lighten",
-       "color-dodge", "color-burn", "hard-light", "soft-light", "difference", 
-       "exclusion", "hue", "saturation", "color", "luminosity"], 
+       "color-dodge", "color-burn", "hard-light", "soft-light", "difference",
+       "exclusion", "hue", "saturation", "color", "luminosity"],
       field_group: "rare-non-inherited",
       default_value: "normal",
       include_paths: ["public/platform/WebBlendMode.h"],

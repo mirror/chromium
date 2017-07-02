@@ -590,13 +590,6 @@ static CSSValue* ConsumeTextDecorationLine(CSSParserTokenRange& range) {
   return list;
 }
 
-static CSSValue* ConsumeNoneOrURI(CSSParserTokenRange& range,
-                                  const CSSParserContext* context) {
-  if (range.Peek().Id() == CSSValueNone)
-    return ConsumeIdent(range);
-  return ConsumeUrl(range, context);
-}
-
 static CSSValue* ConsumePerspective(CSSParserTokenRange& range,
                                     const CSSParserContext* context,
                                     bool use_legacy_parsing) {
@@ -1361,11 +1354,6 @@ const CSSValue* CSSPropertyParser::ParseSingleValue(
       return CSSPropertyPositionUtils::ConsumePositionLonghand<CSSValueTop,
                                                                CSSValueBottom>(
           range_, context_->Mode());
-    case CSSPropertyMarkerStart:
-    case CSSPropertyMarkerMid:
-    case CSSPropertyMarkerEnd:
-    case CSSPropertyMask:
-      return ConsumeNoneOrURI(range_, context_);
     case CSSPropertyWebkitBoxFlex:
       return ConsumeNumber(range_, kValueRangeAll);
     case CSSPropertyStrokeWidth:
