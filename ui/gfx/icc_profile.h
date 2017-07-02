@@ -61,6 +61,7 @@ class COLOR_SPACE_EXPORT ICCProfile {
   // scale factor.
   static bool HasForcedProfile();
   static ICCProfile GetForcedProfile();
+  static ColorSpace GetForcedColorSpace();
 
   // Return a ColorSpace that references this ICCProfile. ColorTransforms
   // created using this ColorSpace will match this ICCProfile precisely.
@@ -88,7 +89,6 @@ class COLOR_SPACE_EXPORT ICCProfile {
   friend ICCProfile ICCProfileForTestingNoAnalyticTrFn();
   friend ICCProfile ICCProfileForTestingA2BOnly();
   friend ICCProfile ICCProfileForTestingOvershoot();
-  friend ICCProfile ICCProfileForLayoutTests();
   static const uint64_t test_id_adobe_rgb_;
   static const uint64_t test_id_color_spin_;
   static const uint64_t test_id_generic_rgb_;

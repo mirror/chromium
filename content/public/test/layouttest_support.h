@@ -33,7 +33,7 @@ class OrientationData;
 }
 
 namespace gfx {
-class ICCProfile;
+class ColorSpace;
 }
 
 namespace test_runner {
@@ -144,9 +144,10 @@ std::unique_ptr<blink::WebInputEvent> TransformScreenToWidgetCoordinates(
     test_runner::WebWidgetTestProxyBase* web_widget_test_proxy_base,
     const blink::WebInputEvent& event);
 
-// Get the ICC profile for a given name string. This is not in the ICCProfile
-// class to avoid bloating the shipping build.
-gfx::ICCProfile GetTestingICCProfile(const std::string& name);
+// Get the color space for a given name string. These color spaces come from
+// full ICC profiles and are not in the class to avoid bloating the shipping
+// build.
+gfx::ColorSpace GetTestingColorSpace(const std::string& name);
 
 // Set the device color profile associated with the profile |name|.
 void SetDeviceColorProfile(
