@@ -195,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "575fb7b8_049725bb",
+        "filename": "chrome/browser/media/media_engagement_score.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-07-03T10:49:11Z",
+      "side": 1,
+      "message": "Fixed",
+      "parentUuid": "c86c8e10_d10436d0",
+      "revId": "465bbb76f956225cdb0b8d23caa6ab8cf8d7a386",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3bf5c7d4_06106776",
         "filename": "chrome/browser/media/media_engagement_score.h",
         "patchSetId": 5
