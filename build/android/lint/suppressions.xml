@@ -18,7 +18,7 @@ Still reading?
     build/android/lint/suppress.py
 
   which will generate this file (Comments are not preserved).
-  Note: PRODUCT_DIR will be substituted at run-time with actual
+  Note: PRODUCT\_DIR will be substituted at run-time with actual
   directory path (e.g. out/Debug)
 -->
   <!-- AllowBackup defaults to true, and causes a lint warning if not explicitly set. -->
@@ -293,10 +293,10 @@ Still reading?
   <!-- TODO(crbug.com/635567): Fix this properly. -->
   <issue id="UnusedResources" severity="ignore"/>
   <issue id="UnusedResources">
-    <ignore regexp="PRODUCT_DIR/gen/remoting/android/remoting_android_raw_resources/res/raw/credits.html"/>
-    <ignore regexp="PRODUCT_DIR/gen/remoting/android/remoting_android_raw_resources/res/raw/credits_css.css"/>
-    <ignore regexp="PRODUCT_DIR/gen/remoting/android/remoting_android_raw_resources/res/raw/credits_js.js"/>
-    <ignore regexp="PRODUCT_DIR/gen/remoting/android/remoting_android_raw_resources/res/raw/main.css"/>
+    <ignore regexp="PRODUCT\_DIR/gen/remoting/android/remoting_android_raw_resources/res/raw/credits.html"/>
+    <ignore regexp="PRODUCT\_DIR/gen/remoting/android/remoting_android_raw_resources/res/raw/credits_css.css"/>
+    <ignore regexp="PRODUCT\_DIR/gen/remoting/android/remoting_android_raw_resources/res/raw/credits_js.js"/>
+    <ignore regexp="PRODUCT\_DIR/gen/remoting/android/remoting_android_raw_resources/res/raw/main.css"/>
     <ignore regexp="android_ui_strings.xml"/>
     <ignore regexp="android_webview/java/res/drawable-hdpi/ic_play_circle_outline_black_48dp.png"/>
     <ignore regexp="android_webview/test/shell/res/raw/resource_file.html"/>

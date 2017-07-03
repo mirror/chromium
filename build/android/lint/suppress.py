@@ -39,7 +39,7 @@ _DOC = (
     '  build process by running:\n\n'
     '    ' + os.path.relpath(_THIS_FILE, host_paths.DIR_SOURCE_ROOT) + '\n\n'
     '  which will generate this file (Comments are not preserved).\n'
-    '  Note: PRODUCT_DIR will be substituted at run-time with actual\n'
+    '  Note: PRODUCT\\_DIR will be substituted at run-time with actual\n'
     '  directory path (e.g. out/Debug)\n'
 )
 
@@ -76,8 +76,10 @@ def _ParseAndMergeResultFile(result_path, issues_dict):
     issue_id = issue.attributes['id'].value
     severity = issue.attributes['severity'].value
     path = issue.getElementsByTagName('location')[0].attributes['file'].value
-    # Strip temporary file path and use regex instead of path.
-    regexp = re.sub(_TMP_DIR_RE, '', path)
+    # Strip temporary file path.
+    path = re.sub(_TMP_DIR_RE, '', path)
+    # Escape regex characters and suppress with regex instead of path.
+    regexp = re.escape(path)
     if issue_id not in issues_dict:
       issues_dict[issue_id] = _Issue(severity, set(), set())
     issues_dict[issue_id].regexps.add(regexp)

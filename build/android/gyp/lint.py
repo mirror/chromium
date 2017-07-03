@@ -46,7 +46,7 @@ def _OnStaleMd5(lint_path, config_path, processed_config_path,
 
     with open(config_path, 'rb') as f:
       content = f.read().replace(
-          'PRODUCT_DIR', _RebasePath(product_dir))
+          r'PRODUCT\_DIR', re.escape(_RebasePath(product_dir)))
 
     with open(processed_config_path, 'wb') as f:
       f.write(content)
