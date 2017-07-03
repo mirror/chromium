@@ -10,7 +10,7 @@
 #include "base/location.h"
 #include "base/memory/ptr_util.h"
 #include "base/sequenced_task_runner.h"
-#include "base/threading/thread_task_runner_handle.h"
+#include "base/threading/sequenced_task_runner_handle.h"
 #include "base/time/default_clock.h"
 #include "base/time/default_tick_clock.h"
 #include "components/password_manager/core/browser/android_affiliation/affiliation_backend.h"
@@ -58,7 +58,7 @@ void AffiliationService::GetAffiliations(
       FROM_HERE,
       base::Bind(&AffiliationBackend::GetAffiliations,
                  base::Unretained(backend_), facet_uri, cache_miss_strategy,
-                 result_callback, base::ThreadTaskRunnerHandle::Get()));
+                 result_callback, base::SequencedTaskRunnerHandle::Get()));
 }
 
 void AffiliationService::Prefetch(const FacetURI& facet_uri,

@@ -17,8 +17,8 @@ using autofill::PasswordForm;
 namespace password_manager {
 
 PasswordStoreDefault::PasswordStoreDefault(
-    scoped_refptr<base::SingleThreadTaskRunner> main_thread_runner,
-    scoped_refptr<base::SingleThreadTaskRunner> db_thread_runner,
+    scoped_refptr<base::SequencedTaskRunner> main_thread_runner,
+    scoped_refptr<base::SequencedTaskRunner> db_thread_runner,
     std::unique_ptr<LoginDatabase> login_db)
     : PasswordStore(main_thread_runner, db_thread_runner),
       login_db_(std::move(login_db)) {}

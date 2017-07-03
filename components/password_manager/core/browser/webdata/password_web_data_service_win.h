@@ -19,7 +19,7 @@ struct IE7PasswordInfo;
 class WebDatabaseService;
 
 namespace base {
-class SingleThreadTaskRunner;
+class SequencedTaskRunner;
 }
 
 namespace content {
@@ -38,7 +38,7 @@ class PasswordWebDataService : public WebDataServiceBase {
       content::BrowserContext* context);
 
   PasswordWebDataService(scoped_refptr<WebDatabaseService> wdbs,
-                         scoped_refptr<base::SingleThreadTaskRunner> ui_thread,
+                         scoped_refptr<base::SequencedTaskRunner> ui_thread,
                          const ProfileErrorCallback& callback);
 
   // Adds |info| to the list of imported passwords from ie7/ie8.
@@ -57,7 +57,7 @@ class PasswordWebDataService : public WebDataServiceBase {
 
  protected:
   // For unit tests, passes a null callback.
-  PasswordWebDataService(scoped_refptr<base::SingleThreadTaskRunner> ui_thread);
+  PasswordWebDataService(scoped_refptr<base::SequencedTaskRunner> ui_thread);
 
   ~PasswordWebDataService() override;
 
