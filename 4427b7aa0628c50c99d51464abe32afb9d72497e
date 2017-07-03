@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "25230843_9df704f5",
+        "filename": "components/drive/change_list_processor_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-07-03T04:51:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a77684a_7d850b79",
+      "revId": "4427b7aa0628c50c99d51464abe32afb9d72497e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff60c753_08ec5b22",
         "filename": "components/drive/change_list_processor_unittest.cc",
         "patchSetId": 10
@@ -39,6 +57,30 @@
       "revId": "4427b7aa0628c50c99d51464abe32afb9d72497e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12ffa82a_f2bccfdc",
+        "filename": "components/drive/change_list_processor_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-07-03T04:51:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff60c753_08ec5b22",
+      "range": {
+        "startLine": 168,
+        "startChar": 49,
+        "endLine": 169,
+        "endChar": 40
+      },
+      "revId": "4427b7aa0628c50c99d51464abe32afb9d72497e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "04b18470_6720c188",
+        "filename": "components/drive/change_list_processor_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-07-03T04:51:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2049e752_92ff3941",
+      "range": {
+        "startLine": 343,
+        "startChar": 50,
+        "endLine": 343,
+        "endChar": 60
+      },
+      "revId": "4427b7aa0628c50c99d51464abe32afb9d72497e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4cca3a1f_169c85bb",
         "filename": "components/drive/change_list_processor_unittest.cc",
         "patchSetId": 10
@@ -85,6 +151,30 @@
       "revId": "4427b7aa0628c50c99d51464abe32afb9d72497e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb8b6c08_e5e4591c",
+        "filename": "components/drive/change_list_processor_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-07-03T04:51:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4cca3a1f_169c85bb",
+      "range": {
+        "startLine": 349,
+        "startChar": 63,
+        "endLine": 349,
+        "endChar": 72
+      },
+      "revId": "4427b7aa0628c50c99d51464abe32afb9d72497e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "434a4d46_2cc4e642",
+        "filename": "components/drive/chromeos/change_list_processor.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-07-03T04:51:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c78cec1_d3a4913a",
+      "range": {
+        "startLine": 142,
+        "startChar": 60,
+        "endLine": 142,
+        "endChar": 67
+      },
+      "revId": "4427b7aa0628c50c99d51464abe32afb9d72497e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0dff24b_7724582d",
         "filename": "components/drive/chromeos/change_list_processor.cc",
         "patchSetId": 10
@@ -125,6 +239,24 @@
       "revId": "4427b7aa0628c50c99d51464abe32afb9d72497e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5aea4012_9b3c370c",
+        "filename": "components/drive/chromeos/change_list_processor.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-07-03T04:51:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0dff24b_7724582d",
+      "revId": "4427b7aa0628c50c99d51464abe32afb9d72497e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -151,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "074f464e_410f1c1e",
+        "filename": "components/drive/chromeos/change_list_processor.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-07-03T04:51:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6b41d66_e176e582",
+      "range": {
+        "startLine": 184,
+        "startChar": 5,
+        "endLine": 184,
+        "endChar": 24
+      },
+      "revId": "4427b7aa0628c50c99d51464abe32afb9d72497e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4f773d0_77a72d73",
         "filename": "components/drive/chromeos/change_list_processor.cc",
         "patchSetId": 10
@@ -162,6 +318,30 @@
       "writtenOn": "2017-06-30T07:22:14Z",
       "side": 1,
       "message": "Why are you updating the root entry again?",
+      "range": {
+        "startLine": 201,
+        "startChar": 0,
+        "endLine": 207,
+        "endChar": 3
+      },
+      "revId": "4427b7aa0628c50c99d51464abe32afb9d72497e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ead7e06_410dae3f",
+        "filename": "components/drive/chromeos/change_list_processor.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-07-03T04:51:55Z",
+      "side": 1,
+      "message": "Sorry, this was a simple mistake on merge.",
+      "parentUuid": "b4f773d0_77a72d73",
       "range": {
         "startLine": 201,
         "startChar": 0,
@@ -197,6 +377,30 @@
     },
     {
       "key": {
+        "uuid": "b784b6b6_8ad47b2c",
+        "filename": "components/drive/chromeos/change_list_processor.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-07-03T04:51:55Z",
+      "side": 1,
+      "message": "Since this is a precondition, I removed the code to handle failure of this check.",
+      "parentUuid": "7b0807f0_526f69cf",
+      "range": {
+        "startLine": 232,
+        "startChar": 2,
+        "endLine": 232,
+        "endChar": 32
+      },
+      "revId": "4427b7aa0628c50c99d51464abe32afb9d72497e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6dd6ae28_9c503263",
         "filename": "components/drive/chromeos/change_list_processor.cc",
         "patchSetId": 10
@@ -208,6 +412,30 @@
       "writtenOn": "2017-06-30T07:22:14Z",
       "side": 1,
       "message": "Why does applying empty change list result in an INVALID_OPERATION error?\nHow about doing nothing and returning OK?",
+      "range": {
+        "startLine": 235,
+        "startChar": 4,
+        "endLine": 235,
+        "endChar": 40
+      },
+      "revId": "4427b7aa0628c50c99d51464abe32afb9d72497e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59e8d4fd_393847b2",
+        "filename": "components/drive/chromeos/change_list_processor.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-07-03T04:51:55Z",
+      "side": 1,
+      "message": "Sorry, the error message was inaccurate and confusing.\nThis is not about \"an empty change list\" which can be returned in a normal API response, but it means having 0-length list of ChangeList, which we want to forbid for this function.",
+      "parentUuid": "6dd6ae28_9c503263",
       "range": {
         "startLine": 235,
         "startChar": 4,
@@ -243,6 +471,30 @@
     },
     {
       "key": {
+        "uuid": "cef6caf8_badde183",
+        "filename": "components/drive/chromeos/change_list_processor.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-07-03T04:51:55Z",
+      "side": 1,
+      "message": "As you pointed out, having invalid value in the field will indicate server-side bug, thus other fields are likely unreliable. So changed it to return error without processing.",
+      "parentUuid": "114a7c61_fbf21b7a",
+      "range": {
+        "startLine": 241,
+        "startChar": 2,
+        "endLine": 241,
+        "endChar": 55
+      },
+      "revId": "4427b7aa0628c50c99d51464abe32afb9d72497e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "593b6c58_20631b61",
         "filename": "components/drive/chromeos/change_list_processor.cc",
         "patchSetId": 10
@@ -254,6 +506,24 @@
       "writtenOn": "2017-06-30T07:22:14Z",
       "side": 1,
       "message": "Can\u0027t you minimize code duplication between ApplyUserChangeList and ApplyTeamDriveChangeList?IIUC almost everything except SetLargestChangestamp part can be shared after you get the largest changestamp and the root directory.",
+      "revId": "4427b7aa0628c50c99d51464abe32afb9d72497e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c59d6855_db748767",
+        "filename": "components/drive/chromeos/change_list_processor.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-07-03T04:51:55Z",
+      "side": 1,
+      "message": "Done.\nExtracted some of the common code into a helper function.",
+      "parentUuid": "593b6c58_20631b61",
       "revId": "4427b7aa0628c50c99d51464abe32afb9d72497e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -283,6 +553,30 @@
     },
     {
       "key": {
+        "uuid": "6560b4da_84777934",
+        "filename": "components/drive/chromeos/change_list_processor.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-07-03T04:51:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8debb40a_89db0686",
+      "range": {
+        "startLine": 124,
+        "startChar": 5,
+        "endLine": 124,
+        "endChar": 26
+      },
+      "revId": "4427b7aa0628c50c99d51464abe32afb9d72497e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "469a4dff_0c50e381",
         "filename": "components/drive/chromeos/change_list_processor.h",
         "patchSetId": 10
@@ -300,6 +594,24 @@
     },
     {
       "key": {
+        "uuid": "d56cf2db_892bf39c",
+        "filename": "components/drive/chromeos/change_list_processor.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-07-03T04:51:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "469a4dff_0c50e381",
+      "revId": "4427b7aa0628c50c99d51464abe32afb9d72497e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ee3f195_eaf92dc8",
         "filename": "components/drive/chromeos/change_list_processor.h",
         "patchSetId": 10
@@ -314,6 +626,24 @@
       "revId": "4427b7aa0628c50c99d51464abe32afb9d72497e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c1305f6_d769b2c8",
+        "filename": "components/drive/chromeos/change_list_processor.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-07-03T04:51:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ee3f195_eaf92dc8",
+      "revId": "4427b7aa0628c50c99d51464abe32afb9d72497e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
