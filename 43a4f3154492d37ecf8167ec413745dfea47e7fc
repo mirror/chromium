@@ -123,6 +123,24 @@
       "revId": "43a4f3154492d37ecf8167ec413745dfea47e7fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4aa4e928_c77ee724",
+        "filename": "components/arc/common/volume_mounter.typemap",
+        "patchSetId": 17
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-03T09:12:23Z",
+      "side": 1,
+      "message": "From \"gn help labels\":\n\n    $ gn help labels\n    ...\n    Implicit names\n\n      If a name is unspecified, it will inherit the directory name. Stylistically,\n      we prefer to omit the colon and name when possible:\n\n        //net  -\u003e  //net:net\n        //tools/gn  -\u003e  //tools/gn:gn",
+      "parentUuid": "3c803b0c_7fd0e5ce",
+      "revId": "43a4f3154492d37ecf8167ec413745dfea47e7fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
