@@ -112,6 +112,10 @@ bool H264Decoder::InitNonexistingPicture(scoped_refptr<H264Picture> pic,
 bool H264Decoder::InitCurrPicture(const H264SliceHeader* slice_hdr) {
   DCHECK(curr_pic_.get());
 
+  // Simulate an error.
+  if (true)
+    return false;
+
   curr_pic_->idr = slice_hdr->idr_pic_flag;
   if (curr_pic_->idr)
     curr_pic_->idr_pic_id = slice_hdr->idr_pic_id;
