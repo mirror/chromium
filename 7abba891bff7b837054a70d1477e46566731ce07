@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "fff4dabd_3ec8f5fd",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-03T08:39:47Z",
+      "side": 1,
+      "message": "Would it make sense to remove kActive/kInactive states, but instead have a method like IsSchedulingEnabled(), which internally checks REF::ResourceLoadSchedulerEnabled() flag and context_-\u003eGetScheduler()?  For testing could the test harness provide a dummy, mock scheduler, or would it be too much hassle?  (Trying to seek for a reasonable resolution that can work for both of us...)",
+      "revId": "7abba891bff7b837054a70d1477e46566731ce07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9500bda7_00f042df",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
         "patchSetId": 7
