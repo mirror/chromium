@@ -22,6 +22,30 @@
       "revId": "3d1932adc90dbea4c5f47dd201ad7584a4e0c440",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aed17397_8c4d5686",
+        "filename": "chrome/browser/thumbnails/thumbnail_tab_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-03T16:30:48Z",
+      "side": 1,
+      "message": "I don\u0027t think it can be null or empty - we checked that CopyFromSurface returned READBACK_SUCCESS, I\u0027m assuming we can trust that.\nI actually had a DCHECK here in a previous version, but then decided that there\u0027s really no point to it - CalculateBoringScore will handle that just fine. (It returns 1, which even happens to be the default value of .boring_score.)\n\nI don\u0027t know why the check was there in the first place. Given the state this code was in, I\u0027m not convinced there ever was a reason :D",
+      "parentUuid": "6ce15c1b_fd0fb6ce",
+      "range": {
+        "startLine": 33,
+        "startChar": 43,
+        "endLine": 33,
+        "endChar": 52
+      },
+      "revId": "3d1932adc90dbea4c5f47dd201ad7584a4e0c440",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
