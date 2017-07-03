@@ -16,6 +16,24 @@
       "revId": "3b4d71ffdc6445f1f613b27deb4370f3f5ec66a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54a33ebb_54eb6366",
+        "filename": "ios/chrome/browser/ui/settings/password_details_collection_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-03T14:40:44Z",
+      "side": 1,
+      "message": "I\u0027m not aware of any explicit guidance on whether calls to the same metric should be in the same file. I chose to scatter those to keep the histograms closest to the reported event in code. I would find the skipReauth message on the reauth module a little confusing.\n\nHaving said that, if Robert has a different guidance, I\u0027m happy to adjust the code to match it.",
+      "parentUuid": "c473719f_974a9e9d",
+      "revId": "3b4d71ffdc6445f1f613b27deb4370f3f5ec66a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
