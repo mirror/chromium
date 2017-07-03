@@ -4,10 +4,13 @@
 
 #include "chrome/test/base/chrome_unit_test_suite.h"
 
+#include <memory>
+
 #include "base/macros.h"
 #include "base/message_loop/message_loop.h"
 #include "base/path_service.h"
 #include "base/process/process_handle.h"
+#include "base/test/scoped_task_environment.h"
 #include "build/build_config.h"
 #include "chrome/browser/chrome_content_browser_client.h"
 #include "chrome/browser/ui/webui/chrome_web_ui_controller_factory.h"
@@ -75,10 +78,13 @@ class ChromeUnitTestSuiteInitializer : public testing::EmptyTestEventListener {
     // are deleted). But they shouldn't have to worry about that.
     DCHECK(!base::MessageLoop::current());
     base::MessageLoopForUI message_loop;
+    // base::test::ScopedTaskEnvironment scoped_test_environment;
     TestingBrowserProcess::DeleteInstance();
   }
 
  private:
+  // base::test::ScopedTaskEnvironment scoped_test_environment;
+
   // Client implementations for the content module.
   std::unique_ptr<ChromeContentClient> content_client_;
   std::unique_ptr<ChromeContentBrowserClient> browser_content_client_;

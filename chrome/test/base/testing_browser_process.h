@@ -24,6 +24,12 @@
 #include "media/media_features.h"
 #include "printing/features/features.h"
 
+
+#include "base/test/scoped_task_environment.h"
+#include "content/public/test/test_browser_thread_bundle.h"
+#include "base/test/scoped_task_scheduler.h"
+
+
 class BackgroundModeManager;
 class CRLSetFetcher;
 class IOThread;
@@ -157,6 +163,10 @@ class TestingBrowserProcess : public BrowserProcess {
   // See CreateInstance() and DestoryInstance() above.
   TestingBrowserProcess();
   ~TestingBrowserProcess() override;
+
+  // base::test::ScopedTaskEnvironment scoped_test_environment;
+  // content::TestBrowserThreadBundle thread_bundle_;
+  // base::test::ScopedTaskScheduler scoped_task_scheduler;
 
   std::unique_ptr<content::NotificationService> notification_service_;
   std::string app_locale_;

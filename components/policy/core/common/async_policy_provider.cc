@@ -61,7 +61,8 @@ void AsyncPolicyProvider::Shutdown() {
   // If threads are spinning, delete the loader on the thread it lives on. If
   // there are no threads, kill it immediately.
   AsyncPolicyLoader* loader_to_delete = loader_.release();
-  if (!loader_to_delete->task_runner()->DeleteSoon(FROM_HERE, loader_to_delete))
+  // loader_.release();
+  // if (!loader_to_delete->task_runner()->DeleteSoon(FROM_HERE, loader_to_delete))
     delete loader_to_delete;
   ConfigurationPolicyProvider::Shutdown();
 }
