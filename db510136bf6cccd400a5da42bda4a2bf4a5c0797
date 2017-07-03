@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a840d0e7_a5753bbe",
+        "filename": "third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-03T03:01:12Z",
+      "side": 1,
+      "message": "MakeUnique is not necessary.",
+      "revId": "db510136bf6cccd400a5da42bda4a2bf4a5c0797",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
