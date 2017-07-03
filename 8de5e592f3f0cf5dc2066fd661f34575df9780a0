@@ -67,6 +67,23 @@
       "revId": "8de5e592f3f0cf5dc2066fd661f34575df9780a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae719862_228d79fa",
+        "filename": "third_party/WebKit/Source/core/dom/TreeOrderedMap.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-07-03T07:19:59Z",
+      "side": 1,
+      "message": "nit: Same comment as from tkent@ - |state| could be in the previous line.",
+      "revId": "8de5e592f3f0cf5dc2066fd661f34575df9780a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
