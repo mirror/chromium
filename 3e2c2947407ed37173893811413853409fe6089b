@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "0c6a9aa7_eafa2e5a",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-03T16:33:07Z",
+      "side": 1,
+      "message": "Given that this is only needed in this one function, maybe a class is overkill.\n\nI think it\u0027d still be helpful to factor the args to the macro out, to improve clarity, though. Something like:\n\nstatic const int kNumHistograms \u003d internal::DOMAIN_TYPE_LOCALHOST \u003c\u003c 6 |\n          internal::RESOURCE_TYPE_LOCALHOST \u003c\u003c 1 | true + 1;\n\nconst string\u0026 histogram_name \u003d \ninternal::kNonlocalhostHistogramNames.at(domain_type)\n          .at(resource_type)\n          .at(status);\nconst int histogram_index \u003d domain_type \u003c\u003c 6 | resource_type \u003c\u003c 1 | status;\nSTATIC_HISTOGRAM_POINTER_GROUP(\n    histogram_name, histogram_index, kNumHistograms,\n    Add(counts[histogram_name]),\n    base::Histogram::FactoryGet(\n        histogram_name,\n        1,     // min value\n        1000,  // max value\n        50,    // bucket count\n        base::HistogramBase::kUmaTargetedHistogramFlag));",
+      "parentUuid": "3b470355_4982658d",
+      "revId": "3e2c2947407ed37173893811413853409fe6089b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6e920978_ca853dcd",
         "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
         "patchSetId": 22
@@ -159,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "876003f8_fcf5e02e",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-03T16:33:07Z",
+      "side": 1,
+      "message": "Thinking about this more, in the context of the guidance in the style guide, I\u0027m actually not sure if invoking the LazyInstance function proactively during static initialization time ends up being any different from declaring a static variable.\n\nThe style guide says:\n\"Variables of class type with static storage duration are forbidden: they cause hard-to-find bugs due to indeterminate order of construction and destruction.\"\nhttps://google.github.io/styleguide/cppguide.html#Static_and_Global_Variables\n\nTo me, it seems like the concern here is with when the initialization runs, rather than with whether the variable itself is declared static.\n\nWhat I think is intended with LazyInstance types is that consumers call the getter function when they need it, rather than referencing a const static ref assigned during static initialization time.\n\nSo I think we actually want to get rid of all of these static const refs and call the getter directly (GetLocalhostPortCategories() in this case) when you want to use the given type.\n\nYou\u0027ll need to modify that function slightly to only perform initilization if the variable isn\u0027t set up yet, e.g.:\n\nconst std::map\u003cuint16_t, internal::PortType\u003e\u0026 GetLocalhostPortCategories() {\n  static base::LazyInstance\u003cstd::map\u003cuint16_t, internal::PortType\u003e\u003e::Leaky\n      localhost_port_categories \u003d LAZY_INSTANCE_INITIALIZER;\n  if (localhost_port_categories.Get().empty()) {\n    // initialize here\n  }\n  return localhost_port_categories.Get();\n}",
+      "parentUuid": "6faef049_0d5f7f79",
+      "revId": "3e2c2947407ed37173893811413853409fe6089b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f7c10fc_50234257",
         "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
         "patchSetId": 22
@@ -170,6 +206,142 @@
       "writtenOn": "2017-06-30T22:36:46Z",
       "side": 1,
       "message": "Following up with mmenke@ regarding having net/ expose the table in ip_address.cc from which this table is pulled.",
+      "revId": "3e2c2947407ed37173893811413853409fe6089b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01fe9afb_65791e35",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-03T16:33:07Z",
+      "side": 1,
+      "message": "same with these - i think we need to be calling the Getter function when wanting to use these maps, rather than assigning to a static const ref at static initialization time.",
+      "revId": "3e2c2947407ed37173893811413853409fe6089b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d044314b_bdfd7a28",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-03T16:33:07Z",
+      "side": 1,
+      "message": "this is a really nice use of the c/c++ capability allowing declaration of multiple variables of the same type using comma. i haven\u0027t seen this before in tests but i will use this going forward. very nice, thanks :)",
+      "revId": "3e2c2947407ed37173893811413853409fe6089b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f71788e6_eb48b60c",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-03T16:33:07Z",
+      "side": 1,
+      "message": "is -102 a certain error code? if so, better to use that code directly, e.g net::CONNECTION_REFUSED (you just need to include net/base/net_errors.h)",
+      "revId": "3e2c2947407ed37173893811413853409fe6089b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c6a49be_d805601f",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-03T16:33:07Z",
+      "side": 1,
+      "message": "it\u0027s generally considered better practice to pass around pairs of values in a vector, than 2 separate parallel vectors. it reduces the risk of the values getting out of sync. could we change this to:\n\nconst std::vector\u003cstd::pair\u003cinternal::PageAddressInfo\u003e, bool\u003e resource_and_success_statuses or something along those lines?",
+      "revId": "3e2c2947407ed37173893811413853409fe6089b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ca04f6b_51903fcb",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-03T16:33:07Z",
+      "side": 1,
+      "message": "i believe that calling ExpectUniqueSample makes the call to ExpectTotalCount redundant. ExpectUniqueSample\u0027s comment says:\n\"// We know the exact number of samples in a bucket, and that no other bucket\n  // should have samples.\"\n\nSo I think you can remove the calls to ExpectTotalCount when you are subsequently calling ExpectUniqueSample for the same histogram.",
+      "revId": "3e2c2947407ed37173893811413853409fe6089b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "738d78ac_126c171e",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-03T16:33:07Z",
+      "side": 1,
+      "message": "given that this is specific to UKM can we name it ExpectUkmPageDomainMetric? Let\u0027s avoid \u0027PageLoad\u0027 in the name since this is actually looking for metrics for a different source than \u0027PageLoad\u0027.",
+      "revId": "3e2c2947407ed37173893811413853409fe6089b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e587c432_875d1d3e",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-03T16:33:07Z",
+      "side": 1,
+      "message": "it\u0027s not immediately clear what the the \u0027+ 1\u0027 part is needed for. can you add a comment?",
+      "revId": "3e2c2947407ed37173893811413853409fe6089b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a855d440_13216168",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-03T16:33:07Z",
+      "side": 1,
+      "message": "similarly, not immediately clear why we start iteration at 1 rather than zero here? what expected element are we skipping over here? note that I do not think that entries have a guaranteed expected ordering. I actually have a change in flight that adds some page load metrics UKM utility test methods - let me see if I can land that and you can see if any of those methods make this simpler for you here.",
       "revId": "3e2c2947407ed37173893811413853409fe6089b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
