@@ -348,6 +348,24 @@
     },
     {
       "key": {
+        "uuid": "54ebbcc1_346fa2c3",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-03T16:52:55Z",
+      "side": 1,
+      "message": "RE: the new test infra, a change with the new UKM test utility can be seen here:\nhttps://chromium-review.googlesource.com/c/558945/4/chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.h\n\nI\u0027ll try to land this in the next few days and you can update to use it.\n\nLet me know if anything you need is missing from that test class.",
+      "parentUuid": "a855d440_13216168",
+      "revId": "3e2c2947407ed37173893811413853409fe6089b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dc339efd_79abd577",
         "filename": "content/public/test/navigation_simulator.h",
         "patchSetId": 22
