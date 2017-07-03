@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5378ee6d_96afe1ee",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-07-03T07:07:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3db4aa6d_1c66eb9e",
+      "range": {
+        "startLine": 15,
+        "startChar": 6,
+        "endLine": 15,
+        "endChar": 19
+      },
+      "revId": "5e1f7b5ec872186c625f12ebe9a7673020e8e4a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e91a6bc_95564111",
         "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.h",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "5e1f7b5ec872186c625f12ebe9a7673020e8e4a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "359290d4_251ad43c",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-07-03T07:07:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e91a6bc_95564111",
+      "range": {
+        "startLine": 27,
+        "startChar": 35,
+        "endLine": 27,
+        "endChar": 40
+      },
+      "revId": "5e1f7b5ec872186c625f12ebe9a7673020e8e4a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "213d895b_a1dff9cd",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-07-03T07:07:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86f3ef58_b226c064",
+      "range": {
+        "startLine": 30,
+        "startChar": 8,
+        "endLine": 30,
+        "endChar": 77
+      },
+      "revId": "5e1f7b5ec872186c625f12ebe9a7673020e8e4a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7ef0cbc_5b5d3eae",
         "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.h",
         "patchSetId": 10
@@ -82,6 +154,30 @@
       "writtenOn": "2017-06-30T15:01:50Z",
       "side": 1,
       "message": "According to the style guide, simple accessors are allowed in .h files, but they must be non-virtual, and must use the following style:\n\nChicken get_chicken() const { return chicken_; };\nChicken set_chicken(Chicken chicken) { chicken_ \u003d chicken; };\n\nIn other words, just rename this to type().\n\n(P.S. Hope you get the joke :) )",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 47
+      },
+      "revId": "5e1f7b5ec872186c625f12ebe9a7673020e8e4a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09f476c0_f46d0c17",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-07-03T07:07:03Z",
+      "side": 1,
+      "message": "I am sorry, didn\u0027t! :(",
+      "parentUuid": "f7ef0cbc_5b5d3eae",
       "range": {
         "startLine": 32,
         "startChar": 2,
@@ -114,6 +210,30 @@
       "revId": "5e1f7b5ec872186c625f12ebe9a7673020e8e4a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "866f1009_0dfb8175",
+        "filename": "tools/traffic_annotation/presubmit_checks.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-07-03T07:07:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1285d747_a05e1003",
+      "range": {
+        "startLine": 171,
+        "startChar": 9,
+        "endLine": 171,
+        "endChar": 18
+      },
+      "revId": "5e1f7b5ec872186c625f12ebe9a7673020e8e4a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
