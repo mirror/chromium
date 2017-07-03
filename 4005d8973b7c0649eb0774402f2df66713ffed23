@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbbced1c_0c6887ca",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-03T13:49:51Z",
+      "side": 0,
+      "message": "Have you thought about keeping these methods take a FacetURI, and include branding info only in the responses and callbacks?\n\nGiven that the FacetURI is the primary key, and all the other members in |Facet| should probably be ignored by these methods, it\u0027s probably cleaner if they are not supplied in the first place. We also have quite a few call sites that now need a lot of boilerplate.",
+      "revId": "4005d8973b7c0649eb0774402f2df66713ffed23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

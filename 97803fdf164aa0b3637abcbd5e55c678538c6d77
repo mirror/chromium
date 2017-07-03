@@ -16,6 +16,81 @@
       "revId": "97803fdf164aa0b3637abcbd5e55c678538c6d77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59278427_921a04b8",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_database_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-03T13:49:51Z",
+      "side": 1,
+      "message": "Nice catch! Just for the sake of readable test outputs, could you please flip |expectation| and |reality| here? (EXPECT_THAT expects the actual value first.)",
+      "parentUuid": "179fa317_8a878dc9",
+      "revId": "97803fdf164aa0b3637abcbd5e55c678538c6d77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1162df72_7e6ebfad",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-03T13:49:51Z",
+      "side": 1,
+      "message": "nit: Let\u0027s add a description for these attributes!",
+      "revId": "97803fdf164aa0b3637abcbd5e55c678538c6d77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa5ee6cf_08d56b3a",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-03T13:49:51Z",
+      "side": 1,
+      "message": "nit: Could you please move this and the other operator\u003d\u003d further down next to operator\u003c\u003c?",
+      "revId": "97803fdf164aa0b3637abcbd5e55c678538c6d77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e96b1039_85ab95a0",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-03T13:49:51Z",
+      "side": 1,
+      "message": "nit: s///",
+      "range": {
+        "startLine": 164,
+        "startChar": 3,
+        "endLine": 164,
+        "endChar": 17
+      },
+      "revId": "97803fdf164aa0b3637abcbd5e55c678538c6d77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
