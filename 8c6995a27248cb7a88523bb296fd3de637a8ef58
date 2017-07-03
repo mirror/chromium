@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "70763087_21ae7930",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-03T10:39:27Z",
+      "side": 1,
+      "message": "I don\u0027t have strong opinion here, but I slightly prefer to putting it on as is because installed_urls will be passed as a member of a mojo\u0027s struct and I have to change the argument type again.\nhttps://chromium-review.googlesource.com/c/538477/17/content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc#201",
+      "parentUuid": "495baa77_acc3519a",
+      "revId": "8c6995a27248cb7a88523bb296fd3de637a8ef58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2202954a_9d193a9c",
         "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
         "patchSetId": 12
@@ -112,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "62c5d122_112dcf21",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerInstalledScriptsManager.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-03T10:39:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43fc9a78_05701278",
+      "range": {
+        "startLine": 15,
+        "startChar": 1,
+        "endLine": 15,
+        "endChar": 6
+      },
+      "revId": "8c6995a27248cb7a88523bb296fd3de637a8ef58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b17be408_82c183fd",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerInstalledScriptsManager.h",
         "patchSetId": 12
@@ -126,6 +168,24 @@
       "revId": "8c6995a27248cb7a88523bb296fd3de637a8ef58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f3477a5_9493fbe3",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerInstalledScriptsManager.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-03T10:39:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b17be408_82c183fd",
+      "revId": "8c6995a27248cb7a88523bb296fd3de637a8ef58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
