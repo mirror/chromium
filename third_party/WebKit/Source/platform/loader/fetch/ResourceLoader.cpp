@@ -149,6 +149,8 @@ void ResourceLoader::Restart(const ResourceRequest& request) {
 }
 
 void ResourceLoader::SetDefersLoading(bool defers) {
+  // TODO(toyoshim): Might be called before creating |loader_| if the request
+  // is throttled.
   DCHECK(loader_);
 
   loader_->SetDefersLoading(defers);
