@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5d9e9bed_9ab222e9",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-07-03T09:42:52Z",
+      "side": 1,
+      "message": "Wouldn\u0027t this just return the URL of the frame though? The idea here is to get the URL of the top most frame e.g.\n\nwebsite1.com\n  - website2.com\n    - website3.com \u003c-- Return website1.com",
+      "parentUuid": "decbea06_6f00c9e1",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 50
+      },
+      "revId": "a04f3f2839ec3271728d84ff3c13603754a885a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0124a921_0987973a",
         "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "a04f3f2839ec3271728d84ff3c13603754a885a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16742723_88d4e746",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-07-03T09:42:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0124a921_0987973a",
+      "range": {
+        "startLine": 60,
+        "startChar": 26,
+        "endLine": 60,
+        "endChar": 28
+      },
+      "revId": "a04f3f2839ec3271728d84ff3c13603754a885a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "79e2f59c_bdeec90b",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-07-03T09:42:52Z",
+      "side": 1,
+      "message": "The origin we need to set and the origin we get the score from are different if there are child frames e.g.\n\nexample.com \u003c- Use scores from example.com, autoplay origin should be example.com\n  - youtube.com \u003c- Use scores from example.com, but autoplay origin should be youtube.com",
+      "parentUuid": "0431dccb_30ca8d4f",
+      "range": {
+        "startLine": 83,
+        "startChar": 2,
+        "endLine": 83,
+        "endChar": 64
+      },
+      "revId": "a04f3f2839ec3271728d84ff3c13603754a885a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a82f2dd9_e4d7e045",
         "filename": "chrome/browser/media/media_engagement_score.h",
         "patchSetId": 1
@@ -105,6 +177,30 @@
       "writtenOn": "2017-06-30T16:42:01Z",
       "side": 1,
       "message": "Please suffix this method name (and the below) with ForTesting, as they only appear to be used from tests.",
+      "range": {
+        "startLine": 69,
+        "startChar": 7,
+        "endLine": 69,
+        "endChar": 16
+      },
+      "revId": "a04f3f2839ec3271728d84ff3c13603754a885a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daa40e21_2b16cb57",
+        "filename": "chrome/browser/media/media_engagement_score.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-07-03T09:42:52Z",
+      "side": 1,
+      "message": "It gets used (not from tests) in an unsubmitted CL (https://chromium-review.googlesource.com/c/550058/2/chrome/browser/media/media_engagement_service.cc)",
+      "parentUuid": "a82f2dd9_e4d7e045",
       "range": {
         "startLine": 69,
         "startChar": 7,
@@ -137,6 +233,30 @@
       "revId": "a04f3f2839ec3271728d84ff3c13603754a885a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edff9186_9b356e70",
+        "filename": "chrome/browser/media/media_engagement_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-07-03T09:42:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03c1aa8d_db64ec2b",
+      "range": {
+        "startLine": 62,
+        "startChar": 1,
+        "endLine": 62,
+        "endChar": 2
+      },
+      "revId": "a04f3f2839ec3271728d84ff3c13603754a885a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
