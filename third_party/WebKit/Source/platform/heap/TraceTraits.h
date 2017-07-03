@@ -257,8 +257,6 @@ struct TraceTrait<HeapVectorBacking<T, Traits>> {
 
   template <typename VisitorDispatcher>
   static void Trace(VisitorDispatcher visitor, void* self) {
-    static_assert(!WTF::IsWeak<T>::value,
-                  "weakness in HeapVectors and HeapDeques are not supported");
     if (WTF::IsTraceableInCollectionTrait<Traits>::value)
       WTF::TraceInCollectionTrait<
           WTF::kNoWeakHandlingInCollections, WTF::kWeakPointersActWeak,
