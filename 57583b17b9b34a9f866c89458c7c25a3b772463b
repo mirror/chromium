@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "34acb2f6_659861f9",
+        "filename": "third_party/WebKit/LayoutTests/html/text_level_semantics/data-element.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1170229
+      },
+      "writtenOn": "2017-07-03T07:31:12Z",
+      "side": 1,
+      "message": "Updated TCs based on your example. Please take a look.",
+      "parentUuid": "7780d9fb_40149213",
+      "revId": "57583b17b9b34a9f866c89458c7c25a3b772463b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7ec8c39f_51b8ccaf",
         "filename": "third_party/WebKit/Source/core/html/HTMLDataElement.idl",
         "patchSetId": 6
