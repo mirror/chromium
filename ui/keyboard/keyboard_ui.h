@@ -31,7 +31,7 @@ class KEYBOARD_EXPORT KeyboardUI {
 
   // Gets the virtual keyboard window. May return null if the window has not yet
   // been created.
-  virtual aura::Window* GetKeyboardWindow() = 0;
+  virtual aura::Window* GetWebContentsWindow() = 0;
 
   // Whether the keyboard window has been created.
   virtual bool HasKeyboardWindow() const = 0;
