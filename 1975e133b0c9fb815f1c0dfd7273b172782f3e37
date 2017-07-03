@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "78974fe6_5e5089c4",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-07-03T08:00:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ccbc5b12_ed34e3b2",
+      "revId": "1975e133b0c9fb815f1c0dfd7273b172782f3e37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "372f8fc5_2666f633",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "1975e133b0c9fb815f1c0dfd7273b172782f3e37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5068c1f8_1e9f1f2e",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-07-03T08:00:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "372f8fc5_2666f633",
+      "revId": "1975e133b0c9fb815f1c0dfd7273b172782f3e37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "8830cc6c_27e8e9cf",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-07-03T08:00:42Z",
+      "side": 1,
+      "message": "Also as a result of moving to kShutdown status, MayRun() stops calling Run() that\u0027s why I said \"stops all operation.\" (sorry, \"operating\" was a typo of \"operation\").\n\nI also notice that current code bypass requests of kCanNotBeThrottled, but this is my mistake. Let me fix it.\n\nI do not prefer to explain implementation details in the header file (also do not prefer to refer private things in comments for public method), but want to explain what caller needs to know. Let me rephrase this comment.",
+      "parentUuid": "37e2850d_5759ba09",
+      "revId": "1975e133b0c9fb815f1c0dfd7273b172782f3e37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26282c61_4c11db24",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "1975e133b0c9fb815f1c0dfd7273b172782f3e37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7ed5af1_b16ec1a0",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-07-03T08:00:42Z",
+      "side": 1,
+      "message": "Let me rephrase.",
+      "parentUuid": "26282c61_4c11db24",
+      "revId": "1975e133b0c9fb815f1c0dfd7273b172782f3e37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "4472c9ca_993185b2",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-07-03T08:00:42Z",
+      "side": 1,
+      "message": "I do not like boolean flags that can easily make things out of control. Adding one flag doubles invisible virtual state, and results in adding many unexpected states that many developers do not handle correctly. Such problems happen here and there Blink.",
+      "parentUuid": "97432697_82660973",
+      "revId": "1975e133b0c9fb815f1c0dfd7273b172782f3e37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ac9a6f5_cf4176bc",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
         "patchSetId": 6
@@ -101,6 +191,24 @@
       "revId": "1975e133b0c9fb815f1c0dfd7273b172782f3e37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c02a9eb_bc7f7c12",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-07-03T08:00:42Z",
+      "side": 1,
+      "message": "Ack. The method name tells us more than comments do :/",
+      "parentUuid": "4ac9a6f5_cf4176bc",
+      "revId": "1975e133b0c9fb815f1c0dfd7273b172782f3e37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
