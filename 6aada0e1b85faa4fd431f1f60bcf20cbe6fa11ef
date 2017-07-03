@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba376ed5_b08d1fd6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticleViewHolder.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-03T17:20:34Z",
+      "side": 1,
+      "message": "I would almost be tempted to have the thumbnail request return a Promise and fulfill that when the ThumbnailProvider request comes back. Then the client code here could check right away whether there already is a result, instead of having to work around the reentrancy issue.",
+      "range": {
+        "startLine": 364,
+        "startChar": 12,
+        "endLine": 364,
+        "endChar": 29
+      },
+      "revId": "6aada0e1b85faa4fd431f1f60bcf20cbe6fa11ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
