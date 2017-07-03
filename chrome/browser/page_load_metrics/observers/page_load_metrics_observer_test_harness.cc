@@ -9,8 +9,10 @@
 
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
+#include "base/metrics/metrics_hashes.h"
 #include "chrome/browser/page_load_metrics/page_load_metrics_embedder_interface.h"
 #include "chrome/browser/page_load_metrics/page_load_metrics_util.h"
+#include "chrome/test/base/testing_browser_process.h"
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_data.h"
 #include "content/public/browser/navigation_entry.h"
 #include "content/public/browser/web_contents.h"
@@ -58,6 +60,7 @@ PageLoadMetricsObserverTestHarness::~PageLoadMetricsObserverTestHarness() {}
 
 void PageLoadMetricsObserverTestHarness::SetUp() {
   ChromeRenderViewHostTestHarness::SetUp();
+  ukm_tester_.SetUp();
   SetContents(CreateTestWebContents());
   NavigateAndCommit(GURL("http://www.google.com"));
   observer_ = MetricsWebContentsObserver::CreateForWebContents(
@@ -144,6 +147,109 @@ void PageLoadMetricsObserverTestHarness::NavigateWithPageTransitionAndCommit(
     ui::PageTransition transition) {
   controller().LoadURL(url, content::Referrer(), transition, std::string());
   content::WebContentsTester::For(web_contents())->CommitPendingNavigation();
+}
+
+void PageLoadMetricsObserverTestHarness::UkmTester::SetUp() {
+  TestingBrowserProcess::GetGlobal()->SetUkmRecorder(&test_ukm_recorder_);
+}
+
+const ukm::UkmSource*
+PageLoadMetricsObserverTestHarness::UkmTester::GetSourceForUrl(
+    const char* url) const {
+  std::vector<const ukm::UkmSource*> matching_sources = GetSourcesForUrl(url);
+  EXPECT_LE(1ul, matching_sources.size());
+  return matching_sources.empty() ? nullptr : matching_sources.back();
+}
+
+std::vector<const ukm::UkmSource*>
+PageLoadMetricsObserverTestHarness::UkmTester::GetSourcesForUrl(
+    const char* url) const {
+  std::vector<const ukm::UkmSource*> matching_sources;
+  for (const auto& candidate : test_ukm_recorder_.GetSources()) {
+    if (candidate.second->url() == url)
+      matching_sources.push_back(candidate.second.get());
+  }
+  return matching_sources;
+}
+
+std::vector<const ukm::mojom::UkmEntry*>
+PageLoadMetricsObserverTestHarness::UkmTester::GetEntriesForSourceID(
+    ukm::SourceId source_id,
+    const char* event) const {
+  std::vector<const ukm::mojom::UkmEntry*> entries;
+  for (size_t i = 0; i < entries_count(); ++i) {
+    const ukm::mojom::UkmEntry* entry = test_ukm_recorder_.GetEntry(i);
+    if (entry->source_id == source_id &&
+        entry->event_hash == base::HashMetricName(event)) {
+      entries.push_back(entry);
+    }
+  }
+  return entries;
+}
+
+// static
+ukm::mojom::UkmEntryPtr
+PageLoadMetricsObserverTestHarness::UkmTester::GetMergedEntry(
+    const std::vector<const ukm::mojom::UkmEntry*>& entries) {
+  EXPECT_FALSE(entries.empty());
+  ukm::mojom::UkmEntryPtr merged_entry = ukm::mojom::UkmEntry::New();
+  for (const auto* entry : entries) {
+    if (merged_entry->event_hash) {
+      EXPECT_EQ(merged_entry->source_id, entry->source_id);
+      EXPECT_EQ(merged_entry->event_hash, entry->event_hash);
+    } else {
+      merged_entry->event_hash = entry->event_hash;
+      merged_entry->source_id = entry->source_id;
+    }
+    for (const auto& metric : entry->metrics) {
+      merged_entry->metrics.emplace_back(metric->Clone());
+    }
+  }
+  return merged_entry;
+}
+
+ukm::mojom::UkmEntryPtr
+PageLoadMetricsObserverTestHarness::UkmTester::GetMergedEntryForSourceID(
+    ukm::SourceId source_id,
+    const char* event) const {
+  ukm::mojom::UkmEntryPtr entry =
+      GetMergedEntry(GetEntriesForSourceID(source_id, event));
+  EXPECT_EQ(source_id, entry->source_id);
+  EXPECT_EQ(base::HashMetricName(event), entry->event_hash);
+  return entry;
+}
+
+bool PageLoadMetricsObserverTestHarness::UkmTester::HasEntry(
+    const ukm::UkmSource& source,
+    const char* event) const {
+  return !GetEntriesForSourceID(source.id(), event).empty();
+}
+
+int PageLoadMetricsObserverTestHarness::UkmTester::CountMetrics(
+    const ukm::UkmSource& source,
+    const char* event) const {
+  ukm::mojom::UkmEntryPtr entry = GetMergedEntryForSourceID(source.id(), event);
+  return entry.get() ? entry->metrics.size() : 0;
+}
+
+bool PageLoadMetricsObserverTestHarness::UkmTester::HasMetric(
+    const ukm::UkmSource& source,
+    const char* event,
+    const char* name) const {
+  ukm::mojom::UkmEntryPtr entry = GetMergedEntryForSourceID(source.id(), event);
+  return ukm::TestUkmRecorder::FindMetric(entry.get(), name) != nullptr;
+}
+
+void PageLoadMetricsObserverTestHarness::UkmTester::ExpectMetric(
+    const ukm::UkmSource& source,
+    const char* event,
+    const char* name,
+    int64_t expected_value) const {
+  ukm::mojom::UkmEntryPtr entry = GetMergedEntryForSourceID(source.id(), event);
+  const ukm::mojom::UkmMetric* metric =
+      ukm::TestUkmRecorder::FindMetric(entry.get(), name);
+  EXPECT_NE(nullptr, metric) << "Failed to find metric: " << name;
+  EXPECT_EQ(expected_value, metric->value);
 }
 
 const char PageLoadMetricsObserverTestHarness::kResourceUrl[] =
