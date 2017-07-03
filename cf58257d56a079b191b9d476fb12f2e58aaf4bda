@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ea4a37b_4732524a",
+        "filename": "content/common/utility_messages.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-07-03T03:36:01Z",
+      "side": 0,
+      "message": "Remove this from ipc/ipc_message_start.h.",
+      "range": {
+        "startLine": 12,
+        "startChar": 26,
+        "endLine": 12,
+        "endChar": 41
+      },
+      "revId": "cf58257d56a079b191b9d476fb12f2e58aaf4bda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
