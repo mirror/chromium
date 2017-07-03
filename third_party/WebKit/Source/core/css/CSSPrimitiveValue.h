@@ -26,6 +26,7 @@
 #include "core/CSSValueKeywords.h"
 #include "core/CoreExport.h"
 #include "core/css/CSSValue.h"
+#include "platform/fonts/FontSelectionTypes.h"
 #include "platform/wtf/BitVector.h"
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/MathExtras.h"
