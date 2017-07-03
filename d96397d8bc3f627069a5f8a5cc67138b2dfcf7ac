@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f8d9ac0_0f3e6e5b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticleViewHolder.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-03T14:36:40Z",
+      "side": 1,
+      "message": "add comment to specify that we rely on the imagefetcher call to synchronously set the thumbnail when it\u0027s in the cache to know whether to use the thumbnail from the file type, so call order is important? That\u0027s the kind of things easily overlooked in refactorings otherwise.",
+      "range": {
+        "startLine": 368,
+        "startChar": 27,
+        "endLine": 368,
+        "endChar": 38
+      },
+      "revId": "d96397d8bc3f627069a5f8a5cc67138b2dfcf7ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
