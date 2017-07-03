@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0f3db1a8_689efa39",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_fetcher_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1063,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-03T14:42:39Z",
+      "side": 1,
+      "message": "This is what this test is about.\nThere was such a test (CreationTimestampParseFail) in provider and I just moved it here and made the timestamp more obviously invalid :)",
+      "parentUuid": "3f987725_dc1b1612",
+      "range": {
+        "startLine": 1063,
+        "startChar": 32,
+        "endLine": 1063,
+        "endChar": 64
+      },
+      "revId": "bc2bf0d1883987c19524981039dd049d5b62376f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "720da078_d8fd717b",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-03T14:07:04Z",
       "side": 1,
       "message": "You are appending to a vector that has been std::moved out. Isn\u0027t the behavior undefined?\n(same 2x below)",
+      "range": {
+        "startLine": 1871,
+        "startChar": 2,
+        "endLine": 1871,
+        "endChar": 20
+      },
+      "revId": "bc2bf0d1883987c19524981039dd049d5b62376f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ff25310_028ac91c",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1871,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-03T14:42:39Z",
+      "side": 1,
+      "message": "Done.\n\nAccording to https://stackoverflow.com/questions/17730689/is-a-moved-from-vector-always-empty it is defined, however, the vector is not guaranteed to be empty (only valid). Thus, now I clear() the vector before reusing it.\n\nI\u0027ve added a TODO to experiment more with inlining this bit.",
+      "parentUuid": "720da078_d8fd717b",
       "range": {
         "startLine": 1871,
         "startChar": 2,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "603321f6_e8ef9595",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1956,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-03T14:42:39Z",
+      "side": 1,
+      "message": "Please note that this is completely equivalent to what was here before (GetExpiredSuggestion() does precisely the same thing).\n\nShould I add a TODO? I definitely would prefer not to consider this inside this CL.",
+      "parentUuid": "9225f17c_05680794",
+      "range": {
+        "startLine": 1956,
+        "startChar": 54,
+        "endLine": 1956,
+        "endChar": 71
+      },
+      "revId": "bc2bf0d1883987c19524981039dd049d5b62376f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8db7f6e6_71e2b8cc",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
         "patchSetId": 7
@@ -82,6 +154,30 @@
       "writtenOn": "2017-07-03T14:07:04Z",
       "side": 1,
       "message": "nit: same here",
+      "range": {
+        "startLine": 2005,
+        "startChar": 54,
+        "endLine": 2005,
+        "endChar": 71
+      },
+      "revId": "bc2bf0d1883987c19524981039dd049d5b62376f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "802dccb8_671be1b7",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2005,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-03T14:42:39Z",
+      "side": 1,
+      "message": "same as above.",
+      "parentUuid": "8db7f6e6_71e2b8cc",
       "range": {
         "startLine": 2005,
         "startChar": 54,
