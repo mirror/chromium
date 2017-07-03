@@ -1279,6 +1279,12 @@ const CSSValue* CSSPropertyParser::ParseSingleValue(
   }
 
   switch (property) {
+    // TODO(drott): Make these two property API classses, like weight
+    // https://codereview.chromium.org/2739773005
+    case CSSPropertyFontStretch:
+      return CSSPropertyFontUtils::ConsumeFontStretch(range_);
+    case CSSPropertyFontStyle:
+      return CSSPropertyFontUtils::ConsumeFontStyle(range_);
     case CSSPropertyMaxWidth:
     case CSSPropertyMaxHeight:
       return CSSPropertyLengthUtils::ConsumeMaxWidthOrHeight(
@@ -1546,14 +1552,11 @@ bool CSSPropertyParser::ParseFontFaceDescriptor(CSSPropertyID prop_id) {
       parsed_value = ConsumeFontDisplay(range_);
       break;
     case CSSPropertyFontStretch:
-    case CSSPropertyFontStyle: {
-      CSSValueID id = range_.ConsumeIncludingWhitespace().Id();
-      if (!CSSParserFastPaths::IsValidKeywordPropertyAndValue(prop_id, id,
-                                                              context_->Mode()))
-        return false;
-      parsed_value = CSSIdentifierValue::Create(id);
+      parsed_value = CSSPropertyFontUtils::ConsumeFontStretch(range_);
       break;
-    }
+    case CSSPropertyFontStyle:
+      parsed_value = CSSPropertyFontUtils::ConsumeFontStyle(range_);
+      break;
     case CSSPropertyFontVariant:
       parsed_value = ConsumeFontVariantList(range_);
       break;
