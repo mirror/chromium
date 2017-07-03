@@ -24,6 +24,10 @@
 #include "base/trace_event/process_memory_totals.h"
 #include "build/build_config.h"
 
+#if defined(OS_LINUX) || defined(OS_ANDROID)
+#include "services/resource_coordinator/public/cpp/memory_instrumentation/os_metrics.h"
+#endif  // defined(OS_LINUX) || defined(OS_ANDROID)
+
 #if defined(OS_MACOSX)
 #include <libproc.h>
 #include <mach/mach.h>
@@ -181,20 +185,6 @@ uint32_t ReadLinuxProcSmapsFile(FILE* smaps_file,
   return num_valid_regions;
 }
 
-bool GetResidentAndSharedPagesFromStatmFile(int fd,
-                                            uint64_t* resident_pages,
-                                            uint64_t* shared_pages) {
-  lseek(fd, 0, SEEK_SET);
-  char line[kMaxLineSize];
-  int res = read(fd, line, kMaxLineSize - 1);
-  if (res <= 0)
-    return false;
-  line[res] = '\0';
-  int num_scanned =
-      sscanf(line, "%*s %" SCNu64 " %" SCNu64, resident_pages, shared_pages);
-  return num_scanned == 2;
-}
-
 #endif  // defined(OS_LINUX) || defined(OS_ANDROID)
 
 std::unique_ptr<base::ProcessMetrics> CreateProcessMetrics(
@@ -250,6 +240,18 @@ bool ProcessMetricsMemoryDumpProvider::DumpProcessMemoryMaps(
     pmd->set_has_process_mmaps();
   return res;
 }
+
+bool GetResidentPagesFromStatmFile(int fd, uint64_t* resident_pages) {
+  lseek(fd, 0, SEEK_SET);
+  char line[kMaxLineSize];
+  int res = read(fd, line, kMaxLineSize - 1);
+  if (res <= 0)
+    return false;
+  line[res] = '\0';
+  int num_scanned = sscanf(line, "%*s %" SCNu64, resident_pages);
+  return num_scanned == 1;
+}
+
 #endif  // defined(OS_LINUX) || defined(OS_ANDROID)
 
 #if defined(OS_WIN)
@@ -609,6 +611,141 @@ bool ProcessMetricsMemoryDumpProvider::OnMemoryDump(
   return res;
 }
 
+#if defined(OS_MACOSX)
+bool ProcessMetricsMemoryDumpProvider::DumpProcessTotals(
+    const base::trace_event::MemoryDumpArgs& args,
+    base::trace_event::ProcessMemoryDump* pmd) {
+  size_t private_bytes;
+  size_t shared_bytes;
+  size_t resident_bytes;
+  size_t locked_bytes;
+  if (!process_metrics_->GetMemoryBytes(&private_bytes, &shared_bytes,
+                                        &resident_bytes, &locked_bytes)) {
+    return false;
+  }
+  uint64_t rss_bytes = resident_bytes;
+  pmd->process_totals()->SetExtraFieldInBytes("private_bytes", private_bytes);
+  pmd->process_totals()->SetExtraFieldInBytes("shared_bytes", shared_bytes);
+  pmd->process_totals()->SetExtraFieldInBytes("locked_bytes", locked_bytes);
+
+  base::trace_event::ProcessMemoryTotals::PlatformPrivateFootprint footprint;
+  base::ProcessMetrics::TaskVMInfo info = process_metrics_->GetTaskVMInfo();
+  footprint.phys_footprint_bytes = info.phys_footprint;
+  footprint.internal_bytes = info.internal;
+  footprint.compressed_bytes = info.compressed;
+
+  pmd->process_totals()->SetPlatformPrivateFootprint(footprint);
+
+  if (rss_bytes_for_testing)
+    rss_bytes = rss_bytes_for_testing;
+
+  // rss_bytes will be 0 if the process ended while dumping.
+  if (!rss_bytes)
+    return false;
+
+  uint64_t peak_rss_bytes = 0;
+
+  peak_rss_bytes = process_metrics_->GetPeakWorkingSetSize();
+
+  pmd->process_totals()->set_resident_set_bytes(rss_bytes);
+  pmd->set_has_process_totals();
+  pmd->process_totals()->set_peak_resident_set_bytes(peak_rss_bytes);
+
+  // Returns true even if other metrics failed, since rss is reported.
+  return true;
+}
+#endif  // defined(OS_MACOSX)
+
+#if defined(OS_LINUX) || defined(OS_ANDROID)
+bool ProcessMetricsMemoryDumpProvider::DumpProcessTotals(
+    const base::trace_event::MemoryDumpArgs& args,
+    base::trace_event::ProcessMemoryDump* pmd) {
+  uint64_t rss_bytes = process_metrics_->GetWorkingSetSize();
+  if (rss_bytes_for_testing)
+    rss_bytes = rss_bytes_for_testing;
+
+  // rss_bytes will be 0 if the process ended while dumping.
+  if (!rss_bytes)
+    return false;
+
+  uint64_t peak_rss_bytes = 0;
+
+  mojom::RawOSMemDumpPtr dump = GetOSMemoryDump(process_);
+  pmd->process_totals()->SetPlatformPrivateFootprint(
+      dump->platform_private_footprint);
+
+  peak_rss_bytes = process_metrics_->GetPeakWorkingSetSize();
+  if (is_rss_peak_resettable_) {
+    std::string clear_refs_file =
+        "/proc/" +
+        (process_ == base::kNullProcessId ? "self"
+                                          : base::IntToString(process_)) +
+        "/clear_refs";
+    int clear_refs_fd = open(clear_refs_file.c_str(), O_WRONLY);
+    if (clear_refs_fd > 0 &&
+        base::WriteFileDescriptor(clear_refs_fd, kClearPeakRssCommand,
+                                  sizeof(kClearPeakRssCommand))) {
+      pmd->process_totals()->set_is_peak_rss_resetable(true);
+    } else {
+      is_rss_peak_resettable_ = false;
+    }
+    close(clear_refs_fd);
+  }
+
+  pmd->process_totals()->set_resident_set_bytes(rss_bytes);
+  pmd->set_has_process_totals();
+  pmd->process_totals()->set_peak_resident_set_bytes(peak_rss_bytes);
+
+  // Returns true even if other metrics failed, since rss is reported.
+  return true;
+}
+#endif  // defined(OS_LINUX) || defined(OS_ANDROID)
+
+#if defined(OS_WIN)
+bool ProcessMetricsMemoryDumpProvider::DumpProcessTotals(
+    const base::trace_event::MemoryDumpArgs& args,
+    base::trace_event::ProcessMemoryDump* pmd) {
+  uint64_t rss_bytes = process_metrics_->GetWorkingSetSize();
+  if (rss_bytes_for_testing)
+    rss_bytes = rss_bytes_for_testing;
+
+  // rss_bytes will be 0 if the process ended while dumping.
+  if (!rss_bytes)
+    return false;
+
+  uint64_t peak_rss_bytes = 0;
+
+  {
+    size_t private_bytes;
+    base::trace_event::ProcessMemoryTotals::PlatformPrivateFootprint footprint;
+    process_metrics_->GetMemoryBytes(&private_bytes, nullptr);
+    footprint.private_bytes = private_bytes;
+    pmd->process_totals()->SetPlatformPrivateFootprint(footprint);
+  }
+
+  peak_rss_bytes = process_metrics_->GetPeakWorkingSetSize();
+
+  if (args.level_of_detail ==
+      base::trace_event::MemoryDumpLevelOfDetail::DETAILED) {
+    uint64_t pss_bytes = 0;
+    bool res = process_metrics_->GetProportionalSetSizeBytes(&pss_bytes);
+    if (res) {
+      base::trace_event::ProcessMemoryMaps::VMRegion region;
+      region.byte_stats_proportional_resident = pss_bytes;
+      pmd->process_mmaps()->AddVMRegion(region);
+      pmd->set_has_process_mmaps();
+    }
+  }
+
+  pmd->process_totals()->set_resident_set_bytes(rss_bytes);
+  pmd->set_has_process_totals();
+  pmd->process_totals()->set_peak_resident_set_bytes(peak_rss_bytes);
+
+  // Returns true even if other metrics failed, since rss is reported.
+  return true;
+}
+#endif  // defined(OS_WIN)
+
 bool ProcessMetricsMemoryDumpProvider::DumpProcessTotals(
     const base::trace_event::MemoryDumpArgs& args,
     base::trace_event::ProcessMemoryDump* pmd) {
@@ -646,27 +783,9 @@ bool ProcessMetricsMemoryDumpProvider::DumpProcessTotals(
   uint64_t peak_rss_bytes = 0;
 
 #if defined(OS_LINUX) || defined(OS_ANDROID)
-  base::trace_event::ProcessMemoryTotals::PlatformPrivateFootprint footprint;
-
-  base::ScopedFD autoclose;
-  int statm_fd = fast_polling_statm_fd_.get();
-  if (statm_fd == -1) {
-    autoclose = OpenStatm();
-    statm_fd = autoclose.get();
-  }
-  if (statm_fd == -1)
-    return false;
-  const static size_t page_size = base::GetPageSize();
-  uint64_t resident_pages;
-  uint64_t shared_pages;
-  bool success = GetResidentAndSharedPagesFromStatmFile(
-      statm_fd, &resident_pages, &shared_pages);
-  if (!success)
-    return false;
-
-  footprint.rss_anon_bytes = (resident_pages - shared_pages) * page_size;
-  footprint.vm_swap_bytes = process_metrics_->GetVmSwapBytes();
-  pmd->process_totals()->SetPlatformPrivateFootprint(footprint);
+  mojom::RawOSMemDumpPtr dump = GetOSMemoryDump(process_);
+  pmd->process_totals()->SetPlatformPrivateFootprint(
+      dump->platform_private_footprint);
 #endif  // defined(OS_LINUX) || defined(OS_ANDROID)
 
 #if defined(OS_WIN)
@@ -750,9 +869,7 @@ void ProcessMetricsMemoryDumpProvider::PollFastMemoryTotal(
   }
 
   uint64_t resident_pages = 0;
-  uint64_t ignored_shared_pages = 0;
-  if (!GetResidentAndSharedPagesFromStatmFile(statm_fd, &resident_pages,
-                                              &ignored_shared_pages))
+  if (!GetResidentPagesFromStatmFile(statm_fd, &resident_pages))
     return;
 
   static size_t page_size = base::GetPageSize();
