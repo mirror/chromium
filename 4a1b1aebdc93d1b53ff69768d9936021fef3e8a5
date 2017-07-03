@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dab03900_416faa38",
+        "filename": "components/favicon/core/large_icon_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-03T15:33:31Z",
+      "side": 1,
+      "message": "Hmm, no reason, you are right. Removed.",
+      "parentUuid": "ce9ed4b4_1f88f5a5",
+      "range": {
+        "startLine": 273,
+        "startChar": 16,
+        "endLine": 273,
+        "endChar": 0
+      },
+      "revId": "4a1b1aebdc93d1b53ff69768d9936021fef3e8a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "30728dc0_e6856ab8",
         "filename": "components/favicon_base/favicon_types.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "4a1b1aebdc93d1b53ff69768d9936021fef3e8a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5515ae83_eeac4103",
+        "filename": "components/favicon_base/favicon_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-03T15:33:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30728dc0_e6856ab8",
+      "range": {
+        "startLine": 137,
+        "startChar": 27,
+        "endLine": 137,
+        "endChar": 0
+      },
+      "revId": "4a1b1aebdc93d1b53ff69768d9936021fef3e8a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
