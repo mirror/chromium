@@ -15512,6 +15512,20 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="2026" label="DocumentDomainSetWithDefaultPort"/>
   <int value="2027" label="FeaturePolicyHeader"/>
   <int value="2028" label="FeaturePolicyAllowAttribute"/>
+  <int value="2029" label="CSSSelectorWebkitMediaControls"/>
+  <int value="2030" label="CSSSelectorWebkitMediaControlsOverlayEnclosure"/>
+  <int value="2031" label="CSSSelectorWebkitMediaControlsOverlayPlayButton"/>
+  <int value="2032" label="CSSSelectorWebkitMediaControlsEnclosure"/>
+  <int value="2033" label="CSSSelectorWebkitMediaControlsPanel"/>
+  <int value="2034" label="CSSSelectorWebkitMediaControlsPlayButton"/>
+  <int value="2035" label="CSSSelectorWebkitMediaControlsCurrentTimeDisplay"/>
+  <int value="2036" label="CSSSelectorWebkitMediaControlsTimeRemainingDisplay"/>
+  <int value="2037" label="CSSSelectorWebkitMediaControlsTimeline"/>
+  <int value="2038" label="CSSSelectorWebkitMediaControlsMuteButton"/>
+  <int value="2039" label="CSSSelectorWebkitMediaControlsVolumeSlider"/>
+  <int value="2040" label="CSSSelectorWebkitMediaControlsFullscreenButton"/>
+  <int value="2041"
+      label="CSSSelectorWebkitMediaControlsToggleClosedCaptionsButton"/>
 </enum>
 
 <enum name="FeedbackSource">

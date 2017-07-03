@@ -1561,6 +1561,19 @@ enum class WebFeature : uint32_t {
   kDocumentDomainSetWithDefaultPort = 2026,
   kFeaturePolicyHeader = 2027,
   kFeaturePolicyAllowAttribute = 2028,
+  kCSSSelectorWebkitMediaControls = 2029,
+  kCSSSelectorWebkitMediaControlsOverlayEnclosure = 2030,
+  kCSSSelectorWebkitMediaControlsOverlayPlayButton = 2031,
+  kCSSSelectorWebkitMediaControlsEnclosure = 2032,
+  kCSSSelectorWebkitMediaControlsPanel = 2033,
+  kCSSSelectorWebkitMediaControlsPlayButton = 2034,
+  kCSSSelectorWebkitMediaControlsCurrentTimeDisplay = 2035,
+  kCSSSelectorWebkitMediaControlsTimeRemainingDisplay = 2036,
+  kCSSSelectorWebkitMediaControlsTimeline = 2037,
+  kCSSSelectorWebkitMediaControlsMuteButton = 2038,
+  kCSSSelectorWebkitMediaControlsVolumeSlider = 2039,
+  kCSSSelectorWebkitMediaControlsFullscreenButton = 2040,
+  kCSSSelectorWebkitMediaControlsToggleClosedCaptionsButton = 2041,
 
   // Add new features immediately above this line. Don't change assigned
   // numbers of any item, and don't reuse removed slots.
