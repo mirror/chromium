@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93c60aeb_ef57bc16",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParser.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-07-03T01:32:37Z",
+      "side": 0,
+      "message": "please retain this comment on the new implementation in the animation api :)",
+      "revId": "1f7f94c914b63dfb47d4605fcecc5761515db15f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a17c119_8ab1d32b",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAnimationUtils.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-07-03T01:32:37Z",
+      "side": 1,
+      "message": "nit: remove extra newline",
+      "revId": "e9944a6404fd9734f6c5cb75aba94e18aa79178e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9c050cb_8e355bba",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAnimationUtils.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-07-03T01:32:37Z",
+      "side": 1,
+      "message": "I think this should retain the name ConsumeAnimationShorthand, ConsumeShorthand isn\u0027t specific enough unless it is taken with the prefix of the utils class name. Because the utils files that methods are included in is kind of arbitraty, I would prefer the names of the methods inside them not to rely on the utils names",
+      "revId": "e9944a6404fd9734f6c5cb75aba94e18aa79178e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4abbddbc_54026733",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAnimationUtils.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-07-03T01:32:37Z",
+      "side": 1,
+      "message": "this method should be in cpp file, it is long and contains loops so should not be inlined",
+      "revId": "e9944a6404fd9734f6c5cb75aba94e18aa79178e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
