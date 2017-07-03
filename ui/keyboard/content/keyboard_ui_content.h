@@ -63,7 +63,7 @@ class KEYBOARD_EXPORT KeyboardUIContent : public KeyboardUI,
   void UpdateInsetsForWindow(aura::Window* window);
 
   // Overridden from KeyboardUI:
-  aura::Window* GetKeyboardWindow() override;
+  aura::Window* GetWebContentsWindow() override;
   bool HasKeyboardWindow() const override;
   bool ShouldWindowOverscroll(aura::Window* window) const override;
   void ReloadKeyboardIfNeeded() override;
