@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "ca7cc1bb_15c53928",
+        "filename": "components/translate/core/browser/translate_language_list_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-03T00:58:05Z",
+      "side": 1,
+      "message": "Ack, thanks for explaining :)",
+      "parentUuid": "aaa011c5_2fed3ee2",
+      "revId": "088c7b2575d47f49894b734cce6c48ca71237bc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ad4c561_b1d0cf79",
         "filename": "components/translate/core/browser/translate_language_list_unittest.cc",
         "patchSetId": 3
@@ -206,6 +224,24 @@
       "side": 1,
       "message": "I don\u0027t think this is necessary. This command-line switch is only needed to allow developers to override the default value which is hard-coded. This switch should never be on by default. I have added a DCHECK() to ensure this is true.",
       "parentUuid": "a29ee675_c322353c",
+      "revId": "088c7b2575d47f49894b734cce6c48ca71237bc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a814442_56365514",
+        "filename": "components/translate/core/browser/translate_language_list_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-03T00:58:05Z",
+      "side": 1,
+      "message": "Makes sense, thanks!\n\nI actually just found out that you\u0027re not supposed to put DCHECKs in tests though (if it fails, it will crash the process and all other tests that happen to be in that process). Maybe change it to a EXPECT_FALSE()?",
+      "parentUuid": "5922be8e_61a50e89",
       "revId": "088c7b2575d47f49894b734cce6c48ca71237bc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
