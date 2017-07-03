@@ -52,6 +52,24 @@
       "revId": "6eb28b04836c47c4a2eeeefec4cc3a5ad5e7d872",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2aeea23b_2b39c297",
+        "filename": "build/android/lint/suppress.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1113224
+      },
+      "writtenOn": "2017-07-03T12:46:47Z",
+      "side": 1,
+      "message": "I got suspicious when I tried to verify that escaping \u0027/\u0027 would cause the Java Pattern to fail to match, and I must have made a mistake when I tried using re.escape() (I\u0027ll blame https://crbug.com/737897)\n\nIt seems it does indeed work, but I was forced to update build/android/gyp/lint.py to handle the now escaped \u0027_\u0027 in PRODUCT_DIR.",
+      "parentUuid": "1ad7b304_f7d1d1de",
+      "revId": "6eb28b04836c47c4a2eeeefec4cc3a5ad5e7d872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
