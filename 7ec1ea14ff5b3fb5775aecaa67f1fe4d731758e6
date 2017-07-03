@@ -34,6 +34,24 @@
       "revId": "7ec1ea14ff5b3fb5775aecaa67f1fe4d731758e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89c7a55e_b5dd8bc3",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAnimationUtils.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-07-03T05:11:45Z",
+      "side": 1,
+      "message": "Done. I\u0027ve moved this comment to Animation API cpp file.",
+      "parentUuid": "2150ebae_229846be",
+      "revId": "7ec1ea14ff5b3fb5775aecaa67f1fe4d731758e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
