@@ -2,6 +2,86 @@
   "comments": [
     {
       "key": {
+        "uuid": "781c5c6a_c7541053",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPageView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-03T11:10:14Z",
+      "side": 1,
+      "message": "If we make this a public method, it should be specific to the tile loading task, at least in name and documented contract (it could then forward to an internal method).",
+      "revId": "63854eadfc201067c7d51479a23a80252086af35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "583c411e_7c03259d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPageView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-03T11:10:14Z",
+      "side": 1,
+      "message": "If you\u0027re changing this anyway: Return early if there are still pending tasks?",
+      "revId": "63854eadfc201067c7d51479a23a80252086af35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cd44135_f67fcd3c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPageView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-03T11:10:14Z",
+      "side": 1,
+      "message": "And change this to assert !mLoadHasCompleted?",
+      "range": {
+        "startLine": 561,
+        "startChar": 16,
+        "endLine": 561,
+        "endChar": 28
+      },
+      "revId": "63854eadfc201067c7d51479a23a80252086af35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4e7e398_168dd152",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroup.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-03T11:10:14Z",
+      "side": 1,
+      "message": "Can we make this private?",
+      "range": {
+        "startLine": 87,
+        "startChar": 15,
+        "endLine": 87,
+        "endChar": 23
+      },
+      "revId": "63854eadfc201067c7d51479a23a80252086af35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d7cb1555_7074c4c4",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroup.java",
         "patchSetId": 1
@@ -19,6 +99,139 @@
         "endLine": 547,
         "endChar": 29
       },
+      "revId": "63854eadfc201067c7d51479a23a80252086af35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c6d36ab_e5054392",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroup.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-03T11:10:14Z",
+      "side": 1,
+      "message": "Hm, I think encapsulating \"remove one task, run callback if that was the last one\" is good, but the overhead of having an additional object with an implicit back reference to the outer object seems a bit unnecessary. I think we could just merge these into the outer class.",
+      "parentUuid": "d7cb1555_7074c4c4",
+      "range": {
+        "startLine": 547,
+        "startChar": 18,
+        "endLine": 547,
+        "endChar": 29
+      },
+      "revId": "63854eadfc201067c7d51479a23a80252086af35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0e45988_ba84186b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroup.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-03T11:10:14Z",
+      "side": 1,
+      "message": "Do we allow duplicate entries? If no, this should maybe be a set (and if yes, a multiset). There is also EnumSet which has a bit smaller instances, but requires an enum type...\n\nAlso, final?",
+      "range": {
+        "startLine": 548,
+        "startChar": 8,
+        "endLine": 548,
+        "endChar": 12
+      },
+      "revId": "63854eadfc201067c7d51479a23a80252086af35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "191c689f_48902cad",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroup.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-03T11:10:14Z",
+      "side": 1,
+      "message": "I would also replace this with asserting that the task was actually removed.",
+      "range": {
+        "startLine": 559,
+        "startChar": 20,
+        "endLine": 559,
+        "endChar": 34
+      },
+      "revId": "63854eadfc201067c7d51479a23a80252086af35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7d89ecd_1fb51443",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroup.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-03T11:10:14Z",
+      "side": 1,
+      "message": "Is the case expected to happen?",
+      "range": {
+        "startLine": 577,
+        "startChar": 20,
+        "endLine": 577,
+        "endChar": 49
+      },
+      "revId": "63854eadfc201067c7d51479a23a80252086af35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f668a45c_fe0c2888",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroupDelegateImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-03T11:10:14Z",
+      "side": 1,
+      "message": "Oooh, yeah... I think at the very least this should be a constant in recordTileOfflineAvailability() (there is no reason to call the method with another value). And if we wanted to support more than 12 tiles, we would have to change the histogram xml file, right?",
+      "range": {
+        "startLine": 109,
+        "startChar": 43,
+        "endLine": 109,
+        "endChar": 96
+      },
+      "revId": "63854eadfc201067c7d51479a23a80252086af35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbadcc77_e6d4c7e1",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/suggestions/TileGridTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-03T11:10:14Z",
+      "side": 1,
+      "message": "These are tests for Tile*Grid*, no?\n\nMore to the point, these comments add no value (and as seen above, can sometimes even be misleading). Could we just remove them and if necessary add an exclusion for the Javadoc requirement?",
       "revId": "63854eadfc201067c7d51479a23a80252086af35",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
