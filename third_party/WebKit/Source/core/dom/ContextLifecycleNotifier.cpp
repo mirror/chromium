@@ -34,7 +34,7 @@ namespace blink {
 
 void ContextLifecycleNotifier::NotifyResumingSuspendableObjects() {
   AutoReset<IterationState> scope(&iteration_state_, kAllowingNone);
-  for (ContextLifecycleObserver* observer : observers_) {
+  for (ContextLifecycleObserver* observer : *observers_) {
     if (observer->ObserverType() !=
         ContextLifecycleObserver::kSuspendableObjectType)
       continue;
@@ -50,7 +50,7 @@ void ContextLifecycleNotifier::NotifyResumingSuspendableObjects() {
 
 void ContextLifecycleNotifier::NotifySuspendingSuspendableObjects() {
   AutoReset<IterationState> scope(&iteration_state_, kAllowingNone);
-  for (ContextLifecycleObserver* observer : observers_) {
+  for (ContextLifecycleObserver* observer : *observers_) {
     if (observer->ObserverType() !=
         ContextLifecycleObserver::kSuspendableObjectType)
       continue;
@@ -67,7 +67,7 @@ void ContextLifecycleNotifier::NotifySuspendingSuspendableObjects() {
 unsigned ContextLifecycleNotifier::SuspendableObjectCount() const {
   DCHECK(!IsIteratingOverObservers());
   unsigned suspendable_objects = 0;
-  for (ContextLifecycleObserver* observer : observers_) {
+  for (ContextLifecycleObserver* observer : *observers_) {
     if (observer->ObserverType() !=
         ContextLifecycleObserver::kSuspendableObjectType)
       continue;
@@ -79,7 +79,7 @@ unsigned ContextLifecycleNotifier::SuspendableObjectCount() const {
 #if DCHECK_IS_ON()
 bool ContextLifecycleNotifier::Contains(SuspendableObject* object) const {
   DCHECK(!IsIteratingOverObservers());
-  for (ContextLifecycleObserver* observer : observers_) {
+  for (ContextLifecycleObserver* observer : *observers_) {
     if (observer->ObserverType() !=
         ContextLifecycleObserver::kSuspendableObjectType)
       continue;
