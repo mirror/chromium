@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "139e4b82_6db39663",
+        "filename": "components/arc/volume_mounter/arc_volume_mounter_bridge.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1221932
+      },
+      "writtenOn": "2017-07-03T07:02:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "606c0dd3_885f584b",
+      "revId": "c9d885a03ed699992275ce040b0ed0dc56deaa40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0cc26782_ccc90e4c",
         "filename": "components/arc/volume_mounter/arc_volume_mounter_bridge.cc",
         "patchSetId": 15
@@ -33,6 +51,24 @@
       "revId": "c9d885a03ed699992275ce040b0ed0dc56deaa40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5df95b8_5d862d4d",
+        "filename": "components/arc/volume_mounter/arc_volume_mounter_bridge.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1221932
+      },
+      "writtenOn": "2017-07-03T07:02:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0cc26782_ccc90e4c",
+      "revId": "c9d885a03ed699992275ce040b0ed0dc56deaa40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
