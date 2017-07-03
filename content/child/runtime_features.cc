@@ -395,6 +395,9 @@ void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
       !enableExperimentalWebPlatformFeatures)
     WebRuntimeFeatures::EnableWebAuth(false);
 
+  WebRuntimeFeatures::EnableModuleScripts(
+      base::FeatureList::IsEnabled(features::kModuleScripts));
+
   // Enable explicitly enabled features, and then disable explicitly disabled
   // ones.
   if (command_line.HasSwitch(switches::kEnableBlinkFeatures)) {
