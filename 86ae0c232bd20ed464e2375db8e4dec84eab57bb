@@ -16,6 +16,24 @@
       "revId": "86ae0c232bd20ed464e2375db8e4dec84eab57bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "251943ec_11c9deaf",
+        "filename": "chrome/browser/notifications/notification_permission_context.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-03T04:00:32Z",
+      "side": 1,
+      "message": "I think it should be fine, but I\u0027ll defer to Raymes here.",
+      "parentUuid": "e0a0d796_b7c0bae6",
+      "revId": "86ae0c232bd20ed464e2375db8e4dec84eab57bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
