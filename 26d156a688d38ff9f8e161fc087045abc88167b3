@@ -22,6 +22,23 @@
       "revId": "26d156a688d38ff9f8e161fc087045abc88167b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e06c347_7ff0d4d8",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2882,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-03T06:37:55Z",
+      "side": 1,
+      "message": "nit: Use -\u003e Enable, or just \u0027ECMAScript 6 modules support\u0027? (Since this is a new API thing rather than behavior changes on existing thing)",
+      "revId": "26d156a688d38ff9f8e161fc087045abc88167b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
