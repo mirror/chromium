@@ -42,6 +42,8 @@ class MediaEngagementContentsObserver : public content::WebContentsObserver {
   bool AreConditionsMet() const;
   void UpdateTimer();
 
+  void UpdateAutoplayOrigin(content::RenderFrameHost* render_frame_host);
+
   void SetTimerForTest(std::unique_ptr<base::Timer> timer);
 
   // |this| is owned by |service_|.

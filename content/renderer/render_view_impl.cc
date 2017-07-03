@@ -914,6 +914,9 @@ void RenderView::ApplyWebPreferences(const WebPreferences& prefs,
   web_view->SetDefaultPageScaleLimits(prefs.default_minimum_page_scale_factor,
                                       prefs.default_maximum_page_scale_factor);
 
+  settings->SetMediaPlaybackGestureWhitelistScope(
+      blink::WebString::FromUTF8(prefs.media_playback_gesture_whitelist_scope));
+
 #if defined(OS_ANDROID)
   settings->SetAllowCustomScrollbarInMainFrame(false);
   settings->SetTextAutosizingEnabled(prefs.text_autosizing_enabled);
@@ -923,8 +926,6 @@ void RenderView::ApplyWebPreferences(const WebPreferences& prefs,
   web_view->SetIgnoreViewportTagScaleLimits(prefs.force_enable_zoom);
   settings->SetAutoZoomFocusedNodeToLegibleScale(true);
   settings->SetDoubleTapToZoomEnabled(prefs.double_tap_to_zoom_enabled);
-  settings->SetMediaPlaybackGestureWhitelistScope(
-      blink::WebString::FromUTF8(prefs.media_playback_gesture_whitelist_scope));
   settings->SetDefaultVideoPosterURL(
       WebString::FromASCII(prefs.default_video_poster_url.spec()));
   settings->SetSupportDeprecatedTargetDensityDPI(

@@ -14,6 +14,10 @@
 #include "content/public/browser/web_contents.h"
 #include "media/base/media_switches.h"
 
+// Origins with scores higher than this will be allowed to bypass autoplay
+// policies.
+constexpr double kScoreAutoplayAllowed = 0.7;
+
 // static
 bool MediaEngagementService::IsEnabled() {
   return base::FeatureList::IsEnabled(media::kMediaEngagement);
@@ -63,6 +67,11 @@ std::set<GURL> GetEngagementOriginsFromContentSettings(Profile* profile) {
   }
 
   return urls;
+}
+
+bool MediaEngagementService::OriginIsAllowedToBypassAutoplayPolicy(
+    const GURL& url) const {
+  return GetEngagementScore(url) > kScoreAutoplayAllowed;
 }
 
 double MediaEngagementService::GetEngagementScore(const GURL& url) const {

@@ -215,6 +215,8 @@ struct CONTENT_EXPORT WebPreferences {
   // Cues will not be placed in this margin area.
   float text_track_margin_percentage;
 
+  std::string media_playback_gesture_whitelist_scope;
+
 #if defined(OS_ANDROID)
   bool text_autosizing_enabled;
   float font_scale_factor;
@@ -222,7 +224,6 @@ struct CONTENT_EXPORT WebPreferences {
   bool force_enable_zoom;
   bool fullscreen_supported;
   bool double_tap_to_zoom_enabled;
-  std::string media_playback_gesture_whitelist_scope;
   GURL default_video_poster_url;
   bool support_deprecated_target_density_dpi;
   bool use_legacy_background_size_shorthand_behavior;
