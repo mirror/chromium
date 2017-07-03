@@ -144,6 +144,10 @@ void LogoTracker::ReturnToIdle(int outcome) {
   if (outcome != kDownloadOutcomeNotTracked) {
     UMA_HISTOGRAM_ENUMERATION("NewTabPage.LogoDownloadOutcome", outcome,
                               DOWNLOAD_OUTCOME_COUNT);
+    if (outcome != DOWNLOAD_OUTCOME_NEW_LOGO_SUCCESS) {
+      for (auto& observer : logo_observers_)
+        observer.OnLogoAvailable(nullptr, false);
+    }
   }
   // Cancel the current asynchronous operation, if any.
   fetcher_.reset();
@@ -154,7 +158,7 @@ void LogoTracker::ReturnToIdle(int outcome) {
   cached_logo_.reset();
   is_cached_logo_valid_ = false;
 
-  // Clear obsevers.
+  // Clear observers.
   for (auto& observer : logo_observers_)
     observer.OnObserverRemoved();
   logo_observers_.Clear();
@@ -321,13 +325,14 @@ void LogoTracker::OnFreshLogoAvailable(
         download_outcome = DOWNLOAD_OUTCOME_NO_LOGO_TODAY;
     }
 
-    // Notify observers if a new logo was fetched, or if the new logo is NULL
-    // but the cached logo was non-NULL.
-    if (logo || cached_logo_) {
+    // Notify observers if a new logo was fetched.
+    if (logo) {
       for (auto& observer : logo_observers_)
         observer.OnLogoAvailable(logo.get(), false);
-      SetCachedLogo(std::move(encoded_logo));
     }
+
+    if (logo || cached_logo_)
+      SetCachedLogo(std::move(encoded_logo));
   }
 
   DCHECK_NE(kDownloadOutcomeNotTracked, download_outcome);

@@ -190,6 +190,7 @@ public class LogoView extends FrameLayout implements OnClickListener {
             if (maybeShowDefaultLogo()) return;
 
             mLogo = null;
+            mLoadingView.hideLoadingUI();
             invalidate();
             return;
         }

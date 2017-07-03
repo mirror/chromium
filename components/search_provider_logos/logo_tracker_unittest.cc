@@ -188,7 +188,7 @@ void ExpectLogosEqual(const Logo* expected_logo,
   Logo actual_logo;
   if (actual_encoded_logo)
     actual_logo = DecodeLogo(*actual_encoded_logo);
-  ExpectLogosEqual(expected_logo, actual_encoded_logo ? &actual_logo : NULL);
+  ExpectLogosEqual(expected_logo, actual_encoded_logo ? &actual_logo : nullptr);
 }
 
 ACTION_P(ExpectLogosEqualAction, expected_logo) {
@@ -239,13 +239,13 @@ class MockLogoCache : public LogoCache {
   }
 
   virtual void SetCachedLogoInternal(const EncodedLogo* logo) {
-    logo_.reset(logo ? new EncodedLogo(*logo) : NULL);
-    metadata_.reset(logo ? new LogoMetadata(logo->metadata) : NULL);
+    logo_.reset(logo ? new EncodedLogo(*logo) : nullptr);
+    metadata_.reset(logo ? new LogoMetadata(logo->metadata) : nullptr);
   }
 
   std::unique_ptr<EncodedLogo> GetCachedLogo() override {
     OnGetCachedLogo();
-    return base::WrapUnique(logo_ ? new EncodedLogo(*logo_) : NULL);
+    return base::WrapUnique(logo_ ? new EncodedLogo(*logo_) : nullptr);
   }
 
  private:
@@ -274,7 +274,7 @@ class MockLogoObserver : public LogoObserver {
   void ExpectFreshLogo(const Logo* expected_fresh_logo) {
     Mock::VerifyAndClearExpectations(this);
     EXPECT_CALL(*this, OnLogoAvailable(_, true)).Times(0);
-    EXPECT_CALL(*this, OnLogoAvailable(NULL, true));
+    EXPECT_CALL(*this, OnLogoAvailable(nullptr, true));
     EXPECT_CALL(*this, OnLogoAvailable(_, false))
         .WillOnce(ExpectLogosEqualAction(expected_fresh_logo));
     EXPECT_CALL(*this, OnObserverRemoved()).Times(1);
@@ -318,7 +318,7 @@ class LogoTrackerTest : public ::testing::Test {
         logo_url_("https://google.com/doodleoftheday?size=hp"),
         test_clock_(new base::SimpleTestClock()),
         logo_cache_(new NiceMock<MockLogoCache>()),
-        fake_url_fetcher_factory_(NULL) {
+        fake_url_fetcher_factory_(nullptr) {
     test_clock_->SetNow(base::Time::FromJsTime(INT64_C(1388686828000)));
     logo_tracker_ =
         new LogoTracker(base::FilePath(), base::ThreadTaskRunnerHandle::Get(),
@@ -441,18 +441,18 @@ TEST_F(LogoTrackerTest, DownloadAndCacheLogo) {
 TEST_F(LogoTrackerTest, EmptyCacheAndFailedDownload) {
   EXPECT_CALL(*logo_cache_, UpdateCachedLogoMetadata(_)).Times(0);
   EXPECT_CALL(*logo_cache_, SetCachedLogo(_)).Times(0);
-  EXPECT_CALL(*logo_cache_, SetCachedLogo(NULL)).Times(AnyNumber());
+  EXPECT_CALL(*logo_cache_, SetCachedLogo(nullptr)).Times(AnyNumber());
 
   SetServerResponse("server is borked");
-  observer_.ExpectCachedLogo(NULL);
+  observer_.ExpectCachedAndFreshLogos(nullptr, nullptr);
   GetLogo();
 
   SetServerResponse("", net::URLRequestStatus::FAILED, net::HTTP_OK);
-  observer_.ExpectCachedLogo(NULL);
+  observer_.ExpectCachedAndFreshLogos(nullptr, nullptr);
   GetLogo();
 
   SetServerResponse("", net::URLRequestStatus::SUCCESS, net::HTTP_BAD_GATEWAY);
-  observer_.ExpectCachedLogo(NULL);
+  observer_.ExpectCachedAndFreshLogos(nullptr, nullptr);
   GetLogo();
 }
 
@@ -483,7 +483,7 @@ TEST_F(LogoTrackerTest, ReturnCachedLogo) {
   EXPECT_CALL(*logo_cache_, UpdateCachedLogoMetadata(_)).Times(0);
   EXPECT_CALL(*logo_cache_, SetCachedLogo(_)).Times(0);
   EXPECT_CALL(*logo_cache_, OnGetCachedLogo()).Times(AtMost(1));
-  observer_.ExpectCachedLogo(&cached_logo);
+  observer_.ExpectCachedAndFreshLogos(&cached_logo, nullptr);
   GetLogo();
 }
 
@@ -503,10 +503,10 @@ TEST_F(LogoTrackerTest, ValidateCachedLogo) {
   EXPECT_CALL(*logo_cache_, UpdateCachedLogoMetadata(_)).Times(1);
   EXPECT_CALL(*logo_cache_, SetCachedLogo(_)).Times(0);
   EXPECT_CALL(*logo_cache_, OnGetCachedLogo()).Times(AtMost(1));
-  observer_.ExpectCachedLogo(&cached_logo);
+  observer_.ExpectCachedAndFreshLogos(&cached_logo, nullptr);
   GetLogo();
 
-  EXPECT_TRUE(logo_cache_->GetCachedLogoMetadata() != NULL);
+  EXPECT_TRUE(logo_cache_->GetCachedLogoMetadata());
   EXPECT_EQ(fresh_logo.metadata.expiration_time,
             logo_cache_->GetCachedLogoMetadata()->expiration_time);
 
@@ -515,7 +515,7 @@ TEST_F(LogoTrackerTest, ValidateCachedLogo) {
   EXPECT_CALL(*logo_cache_, UpdateCachedLogoMetadata(_)).Times(1);
   EXPECT_CALL(*logo_cache_, SetCachedLogo(_)).Times(0);
   EXPECT_CALL(*logo_cache_, OnGetCachedLogo()).Times(AtMost(1));
-  observer_.ExpectCachedLogo(&cached_logo);
+  observer_.ExpectCachedAndFreshLogos(&cached_logo, nullptr);
   GetLogo();
 }
 
@@ -535,7 +535,7 @@ TEST_F(LogoTrackerTest, UpdateCachedLogoMetadata) {
                                    ServerResponse(fresh_logo));
 
   // On the first request, the cached logo should be used.
-  observer_.ExpectCachedLogo(&cached_logo);
+  observer_.ExpectCachedAndFreshLogos(&cached_logo, nullptr);
   GetLogo();
 
   // Subsequently, the cached image should be returned along with the updated
@@ -543,7 +543,7 @@ TEST_F(LogoTrackerTest, UpdateCachedLogoMetadata) {
   Logo expected_logo = fresh_logo;
   expected_logo.image = cached_logo.image;
   expected_logo.metadata.mime_type = cached_logo.metadata.mime_type;
-  observer_.ExpectCachedLogo(&expected_logo);
+  observer_.ExpectCachedAndFreshLogos(&expected_logo, nullptr);
   GetLogo();
 }
 
@@ -571,10 +571,10 @@ TEST_F(LogoTrackerTest, InvalidateCachedLogo) {
   SetServerResponseWhenFingerprint(cached_logo.metadata.fingerprint,
                                    ")]}' {\"update\":{}}");
 
-  logo_cache_->ExpectSetCachedLogo(NULL);
+  logo_cache_->ExpectSetCachedLogo(nullptr);
   EXPECT_CALL(*logo_cache_, UpdateCachedLogoMetadata(_)).Times(0);
   EXPECT_CALL(*logo_cache_, OnGetCachedLogo()).Times(AtMost(1));
-  observer_.ExpectCachedAndFreshLogos(&cached_logo, NULL);
+  observer_.ExpectCachedAndFreshLogos(&cached_logo, nullptr);
 
   GetLogo();
 }
@@ -587,9 +587,9 @@ TEST_F(LogoTrackerTest, DeleteCachedLogoFromOldUrl) {
 
   EXPECT_CALL(*logo_cache_, UpdateCachedLogoMetadata(_)).Times(0);
   EXPECT_CALL(*logo_cache_, SetCachedLogo(_)).Times(0);
-  EXPECT_CALL(*logo_cache_, SetCachedLogo(NULL)).Times(AnyNumber());
+  EXPECT_CALL(*logo_cache_, SetCachedLogo(nullptr)).Times(AnyNumber());
   EXPECT_CALL(*logo_cache_, OnGetCachedLogo()).Times(AtMost(1));
-  observer_.ExpectCachedLogo(NULL);
+  observer_.ExpectCachedAndFreshLogos(nullptr, nullptr);
   GetLogo();
 }
 
@@ -602,7 +602,7 @@ TEST_F(LogoTrackerTest, LogoWithTTLCannotBeShownAfterExpiration) {
 
   const LogoMetadata* cached_metadata =
       logo_cache_->GetCachedLogoMetadata();
-  EXPECT_TRUE(cached_metadata != NULL);
+  EXPECT_TRUE(cached_metadata);
   EXPECT_FALSE(cached_metadata->can_show_after_expiration);
   EXPECT_EQ(test_clock_->Now() + time_to_live,
             cached_metadata->expiration_time);
@@ -616,7 +616,7 @@ TEST_F(LogoTrackerTest, LogoWithoutTTLCanBeShownAfterExpiration) {
 
   const LogoMetadata* cached_metadata =
       logo_cache_->GetCachedLogoMetadata();
-  EXPECT_TRUE(cached_metadata != NULL);
+  EXPECT_TRUE(cached_metadata);
   EXPECT_TRUE(cached_metadata->can_show_after_expiration);
   EXPECT_EQ(test_clock_->Now() + base::TimeDelta::FromDays(30),
             cached_metadata->expiration_time);
@@ -633,7 +633,7 @@ TEST_F(LogoTrackerTest, UseSoftExpiredCachedLogo) {
   EXPECT_CALL(*logo_cache_, UpdateCachedLogoMetadata(_)).Times(0);
   EXPECT_CALL(*logo_cache_, SetCachedLogo(_)).Times(0);
   EXPECT_CALL(*logo_cache_, OnGetCachedLogo()).Times(AtMost(1));
-  observer_.ExpectCachedLogo(&cached_logo);
+  observer_.ExpectCachedAndFreshLogos(&cached_logo, nullptr);
   GetLogo();
 }
 
@@ -665,9 +665,9 @@ TEST_F(LogoTrackerTest, DeleteAncientCachedLogo) {
 
   EXPECT_CALL(*logo_cache_, UpdateCachedLogoMetadata(_)).Times(0);
   EXPECT_CALL(*logo_cache_, SetCachedLogo(_)).Times(0);
-  EXPECT_CALL(*logo_cache_, SetCachedLogo(NULL)).Times(AnyNumber());
+  EXPECT_CALL(*logo_cache_, SetCachedLogo(nullptr)).Times(AnyNumber());
   EXPECT_CALL(*logo_cache_, OnGetCachedLogo()).Times(AtMost(1));
-  observer_.ExpectCachedLogo(NULL);
+  observer_.ExpectCachedAndFreshLogos(nullptr, nullptr);
   GetLogo();
 }
 
@@ -681,9 +681,9 @@ TEST_F(LogoTrackerTest, DeleteExpiredCachedLogo) {
 
   EXPECT_CALL(*logo_cache_, UpdateCachedLogoMetadata(_)).Times(0);
   EXPECT_CALL(*logo_cache_, SetCachedLogo(_)).Times(0);
-  EXPECT_CALL(*logo_cache_, SetCachedLogo(NULL)).Times(AnyNumber());
+  EXPECT_CALL(*logo_cache_, SetCachedLogo(nullptr)).Times(AnyNumber());
   EXPECT_CALL(*logo_cache_, OnGetCachedLogo()).Times(AtMost(1));
-  observer_.ExpectCachedLogo(NULL);
+  observer_.ExpectCachedAndFreshLogos(nullptr, nullptr);
   GetLogo();
 }
 
