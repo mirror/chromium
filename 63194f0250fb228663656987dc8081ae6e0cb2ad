@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "3762784a_450ae67c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
+        "patchSetId": 25
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-03T14:15:02Z",
+      "side": 1,
+      "message": "Coming after the CL is closed: \n\nI do not think FaviconHelper.ensureIconIsAvailable() is worth that refactoring. This is the only caller of that function and we have the new code path (fetchFaviconFromLocalCacheOrGoogleServer()) that avoids ensureIconIsAvailable().\n\nI\u0027d wait and see if the new code path / new server can get launched to 100%.",
+      "parentUuid": "52a20fd8_3512768f",
+      "revId": "63194f0250fb228663656987dc8081ae6e0cb2ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "87d685f7_09dd30e9",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/snippets/ArticleSnippetsTest.java",
         "patchSetId": 25
