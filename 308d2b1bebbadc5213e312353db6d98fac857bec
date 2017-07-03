@@ -248,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "f537adea_77fc8dd4",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_header_controller_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-03T08:55:28Z",
+      "side": 1,
+      "message": "I meant: if the protocol is unused, shouldn\u0027t it be deleted and reintroduced when used?",
+      "parentUuid": "ba55d6fc_6ec3c72d",
+      "range": {
+        "startLine": 10,
+        "startChar": 27,
+        "endLine": 10,
+        "endChar": 36
+      },
+      "revId": "308d2b1bebbadc5213e312353db6d98fac857bec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1fa75c43_70b7387c",
         "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_controller.h",
         "patchSetId": 6
@@ -277,6 +301,24 @@
       "side": 1,
       "message": "This is read only. It means I should redefine the property as read-write in the implementation file. I prefer it this way.",
       "parentUuid": "1fa75c43_70b7387c",
+      "revId": "308d2b1bebbadc5213e312353db6d98fac857bec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4f8419d6_1bee561f",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-03T08:55:28Z",
+      "side": 1,
+      "message": "What about\n@property(nonatomic, assign, getter\u003disOmniboxFocused, readonly) BOOL omniboxFocused;\nthen? So that from the start it\u0027s clear that it is a property not a method?",
+      "parentUuid": "d4c383dc_b58ac578",
       "revId": "308d2b1bebbadc5213e312353db6d98fac857bec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -447,6 +489,30 @@
       "side": 1,
       "message": "init is always nullable as NSObject\u0027s -init is nullable.",
       "parentUuid": "1a0caaf2_dfac70fd",
+      "range": {
+        "startLine": 27,
+        "startChar": 3,
+        "endLine": 27,
+        "endChar": 11
+      },
+      "revId": "308d2b1bebbadc5213e312353db6d98fac857bec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "39566cd3_69bbc097",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_synchronizer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-03T08:55:28Z",
+      "side": 1,
+      "message": "What about the parameters?",
+      "parentUuid": "450c9dec_fe4f92ab",
       "range": {
         "startLine": 27,
         "startChar": 3,
