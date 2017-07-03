@@ -200,6 +200,7 @@ core_idl_files = get_path_info([
                                  "html/HTMLCollection.idl",
                                  "html/HTMLContentElement.idl",
                                  "html/HTMLDListElement.idl",
+                                 "html/HTMLDataElement.idl",
                                  "html/HTMLDataListElement.idl",
                                  "html/HTMLDetailsElement.idl",
                                  "html/HTMLDialogElement.idl",
