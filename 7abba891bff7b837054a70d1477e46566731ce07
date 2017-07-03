@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2a1e8c7e_6ab782c3",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-07-03T09:27:21Z",
+      "side": 1,
+      "message": "This direction looks nice, but probably it\u0027s a little hard to find a right function name since IsChedulingEnabled() is a little misleading because GetScheduler() may return nullptr on shutdown sequence, depending on how the frame is closed.\n\nAs we chatted offline, let me go back to have two separate flags, and revisit this when we add another signal.",
+      "parentUuid": "fff4dabd_3ec8f5fd",
+      "revId": "7abba891bff7b837054a70d1477e46566731ce07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9500bda7_00f042df",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "7abba891bff7b837054a70d1477e46566731ce07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "566cce63_bd08cd60",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-07-03T09:27:21Z",
+      "side": 1,
+      "message": "What I want to explain here is how previous requests are handled on calling Shutdown(), and what happens if another request is made after the Shutdown() call because there is another API choice to run all requests synchronously on shutdown, and move to kInactive mode. Probably I need to choose clear wording, such as \"RLSClient::Run() will not be called after this method is called\".",
+      "parentUuid": "9500bda7_00f042df",
+      "revId": "7abba891bff7b837054a70d1477e46566731ce07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "00b5b09b_2e064839",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-07-03T09:27:21Z",
+      "side": 1,
+      "message": "Thanks! That\u0027s exactly what I want to explain here, and sounds better and easy to understand. Let me use that phrase here.",
+      "parentUuid": "4c54534e_44f373b9",
+      "revId": "7abba891bff7b837054a70d1477e46566731ce07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f543e722_a73b1d63",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
         "patchSetId": 7
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "b3b7f04b_16b5c184",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-07-03T09:27:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f543e722_a73b1d63",
+      "revId": "7abba891bff7b837054a70d1477e46566731ce07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c913243_31fb1115",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
         "patchSetId": 7
@@ -84,6 +156,24 @@
       "revId": "7abba891bff7b837054a70d1477e46566731ce07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dbab033_7ed6e541",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-07-03T09:27:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3c913243_31fb1115",
+      "revId": "7abba891bff7b837054a70d1477e46566731ce07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
