@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1b204a8_6278355b",
+        "filename": "third_party/WebKit/Source/core/dom/SlotAssignment.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-03T07:09:59Z",
+      "side": 1,
+      "message": "nit: can you move |name.| to the previous line?",
+      "revId": "8de5e592f3f0cf5dc2066fd661f34575df9780a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a5cd4f2_06ebaef7",
+        "filename": "third_party/WebKit/Source/core/dom/SlotAssignment.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-03T07:09:59Z",
+      "side": 1,
+      "message": "nit: can you move |name.| to the previous line?",
+      "revId": "8de5e592f3f0cf5dc2066fd661f34575df9780a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4272f93c_4f9e0466",
+        "filename": "third_party/WebKit/Source/core/dom/SlotAssignment.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-03T07:09:59Z",
+      "side": 1,
+      "message": "nit: can you move |element.| to the previous line?",
+      "revId": "8de5e592f3f0cf5dc2066fd661f34575df9780a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f147ed1_a5f24c1c",
+        "filename": "third_party/WebKit/Source/core/dom/SlotAssignment.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-03T07:09:59Z",
+      "side": 1,
+      "message": "nit: can you move |element.| to the previous line?",
+      "revId": "8de5e592f3f0cf5dc2066fd661f34575df9780a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
