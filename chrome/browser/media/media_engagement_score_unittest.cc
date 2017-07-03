@@ -149,24 +149,25 @@ TEST_F(MediaEngagementScoreTest, ContentSettingsMultiOrigin) {
   // but zero for a different origin.
   GURL same_origin("http://www.google.com/page1");
   GURL different_origin("http://www.google.co.uk");
-  score_ = MediaEngagementScore(&test_clock, url, settings_map);
-  MediaEngagementScore same_origin_score =
-      MediaEngagementScore(&test_clock, same_origin, settings_map);
-  MediaEngagementScore different_origin_score =
-      MediaEngagementScore(&test_clock, different_origin, settings_map);
-  VerifyScore(score_, 2, 1, test_clock.Now());
+  MediaEngagementScore* new_score =
+      new MediaEngagementScore(&test_clock, url, settings_map);
+  MediaEngagementScore* same_origin_score =
+      new MediaEngagementScore(&test_clock, same_origin, settings_map);
+  MediaEngagementScore* different_origin_score =
+      new MediaEngagementScore(&test_clock, different_origin, settings_map);
+  VerifyScore(new_score, 2, 1, test_clock.Now());
   VerifyScore(same_origin_score, 2, 1, test_clock.Now());
   VerifyScore(different_origin_score, 0, 0, base::Time());
 }
 
 // Test that the total score is calculated correctly.
 TEST_F(MediaEngagementScoreTest, TotalScoreCalculation) {
-  EXPECT_EQ(0, score_.GetTotalScore());
-  UpdateScore(&score_);
-  EXPECT_EQ(0, score_.GetTotalScore());
-  UpdateScore(&score_);
+  EXPECT_EQ(0, score_->GetTotalScore());
+  UpdateScore(score_);
+  EXPECT_EQ(0, score_->GetTotalScore());
+  UpdateScore(score_);
   SetVisits(MediaEngagementScore::kScoreMinVisits);
   double expected_score =
-      score_.media_playbacks() / (double)MediaEngagementScore::kScoreMinVisits;
-  EXPECT_EQ(expected_score, score_.GetTotalScore());
+      score_->media_playbacks() / (double)MediaEngagementScore::kScoreMinVisits;
+  EXPECT_EQ(expected_score, score_->GetTotalScore());
 }
