@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "cb046524_1a11a99b",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_fetcher_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1063,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-03T15:17:58Z",
+      "side": 1,
+      "message": "Then I do not understand the naming:\n ShouldReportInvalidListErrorForInvalidTimestampButValidJson - has all valid but the timestamp\n ShouldReportInvalidListErrorForInvalidUrlButValidJson - has all valid but the URL _and_ the timestamp.\n\nCan you explain why both are needed in the latter?",
+      "parentUuid": "0f3db1a8_689efa39",
+      "range": {
+        "startLine": 1063,
+        "startChar": 32,
+        "endLine": 1063,
+        "endChar": 64
+      },
+      "revId": "bc2bf0d1883987c19524981039dd049d5b62376f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "720da078_d8fd717b",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
         "patchSetId": 7
@@ -143,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "2cbdeb6e_8cd34db1",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1956,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-03T15:17:58Z",
+      "side": 1,
+      "message": "Ack, not needed.",
+      "parentUuid": "603321f6_e8ef9595",
+      "range": {
+        "startLine": 1956,
+        "startChar": 54,
+        "endLine": 1956,
+        "endChar": 71
+      },
+      "revId": "bc2bf0d1883987c19524981039dd049d5b62376f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8db7f6e6_71e2b8cc",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
         "patchSetId": 7
@@ -187,6 +235,30 @@
       "revId": "bc2bf0d1883987c19524981039dd049d5b62376f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72849c06_1d5ce60e",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2005,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-03T15:17:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "802dccb8_671be1b7",
+      "range": {
+        "startLine": 2005,
+        "startChar": 54,
+        "endLine": 2005,
+        "endChar": 71
+      },
+      "revId": "bc2bf0d1883987c19524981039dd049d5b62376f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
