@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a84129f6_1f5390d5",
+        "filename": "chrome/browser/media/media_engagement_contents_observer_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-03T15:18:09Z",
+      "side": 1,
+      "message": "I think it could be beneficial to have the test hardcode the expected value instead of computing it in order to reduce the chances of a bug magically passing the tests (ie. here, the CalculateScore() is also used by the implementation so we could easily do something wrong and not realise it)",
+      "revId": "c32e3d22c2d2c2d3dd25ef52bf4be71399256821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2e7ac0b_7225023b",
+        "filename": "chrome/browser/media/media_engagement_score.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-03T15:18:09Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "c32e3d22c2d2c2d3dd25ef52bf4be71399256821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c92301c_6fad9b68",
+        "filename": "chrome/browser/media/media_engagement_score.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-03T15:18:09Z",
+      "side": 1,
+      "message": "Per above comment, we could drop this.",
+      "revId": "c32e3d22c2d2c2d3dd25ef52bf4be71399256821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad786bf2_87faaa75",
+        "filename": "chrome/browser/media/media_engagement_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-03T15:18:09Z",
+      "side": 1,
+      "message": "Should this be in the anonymous namespace?",
+      "revId": "c32e3d22c2d2c2d3dd25ef52bf4be71399256821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c92bbe61_116db237",
+        "filename": "chrome/browser/media/media_engagement_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-03T15:18:09Z",
+      "side": 1,
+      "message": "style: drop { }",
+      "revId": "c32e3d22c2d2c2d3dd25ef52bf4be71399256821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c22038f_216cf4aa",
+        "filename": "chrome/browser/media/media_engagement_service.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-03T15:18:09Z",
+      "side": 1,
+      "message": "If this is meant to be used for tests, maybe GetEngagementScoreForTesting?",
+      "revId": "c32e3d22c2d2c2d3dd25ef52bf4be71399256821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "326394e0_a4e73a00",
+        "filename": "chrome/browser/media/media_engagement_service.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-03T15:18:09Z",
+      "side": 1,
+      "message": "If this is meant to be used for tests, maybe GetScoreMapForTesting?",
+      "revId": "c32e3d22c2d2c2d3dd25ef52bf4be71399256821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43780a0f_394ac62b",
+        "filename": "chrome/browser/media/media_engagement_service.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-03T15:18:09Z",
+      "side": 1,
+      "message": "I would call this `RecordInteractions` to make it clear why the bitfield is used. Though, in practice, apart from the tests, this could be RecordVisit() and RecordPlayback() as they are never happening at the same time, are they? Arguably, this is early optimisation ;)\n\nAlso, the type of `interactions` could be `int`.",
+      "revId": "c32e3d22c2d2c2d3dd25ef52bf4be71399256821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6308ca77_94b7f689",
+        "filename": "chrome/browser/media/media_engagement_service.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-03T15:18:09Z",
+      "side": 1,
+      "message": "Looks like you end up not using this, do you?",
+      "revId": "c32e3d22c2d2c2d3dd25ef52bf4be71399256821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36a3daf2_94baab09",
+        "filename": "chrome/browser/media/media_engagement_service.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-03T15:18:09Z",
+      "side": 1,
+      "message": "style: should methods declaration should be above variables.",
+      "revId": "c32e3d22c2d2c2d3dd25ef52bf4be71399256821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37060c6d_809ff3b2",
+        "filename": "chrome/browser/media/media_engagement_service_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-03T15:18:09Z",
+      "side": 1,
+      "message": "I think this comment was meant for a different test.",
+      "revId": "c32e3d22c2d2c2d3dd25ef52bf4be71399256821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4eac0f04_f6ba54b6",
+        "filename": "chrome/browser/media/media_engagement_service_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-03T15:18:09Z",
+      "side": 1,
+      "message": "You might want to move the clock between url1 and url2, otherwise this seems to be a no-op check, isn\u0027t it?",
+      "revId": "c32e3d22c2d2c2d3dd25ef52bf4be71399256821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b0fe307_9beb3252",
+        "filename": "chrome/browser/media/media_engagement_service_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-03T15:18:09Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "c32e3d22c2d2c2d3dd25ef52bf4be71399256821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
