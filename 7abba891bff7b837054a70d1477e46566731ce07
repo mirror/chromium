@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9500bda7_00f042df",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-03T08:33:28Z",
+      "side": 1,
+      "message": "\u0027should not be scheduled to run\u0027 feels a bit unclear, is that what\u0027s done internally, or the caller needs to take care of?",
+      "revId": "7abba891bff7b837054a70d1477e46566731ce07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c54534e_44f373b9",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-03T08:33:28Z",
+      "side": 1,
+      "message": "nit: again, what \u0027should\u0027 (and \u0027internally\u0027) means here feels a bit unclear, if that\u0027s not what the caller needs to take care of, maybe:\n\n\u0027This may synchronously call ResourceLoaderSchedulerClient::Run(), but it is guaranteed that ClientId is populated before ResourceLoadSchedulerClient::Run() is called, so that the caller can ...\u0027\n\n?",
+      "revId": "7abba891bff7b837054a70d1477e46566731ce07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f543e722_a73b1d63",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-03T08:33:28Z",
+      "side": 1,
+      "message": "\u0027should be allowed to run\u0027 --\u003e \u0027will run synchronously without any scheduling or throttling\u0027",
+      "revId": "7abba891bff7b837054a70d1477e46566731ce07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c913243_31fb1115",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-03T08:33:28Z",
+      "side": 1,
+      "message": "should be applied -\u003e are applied",
+      "revId": "7abba891bff7b837054a70d1477e46566731ce07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
