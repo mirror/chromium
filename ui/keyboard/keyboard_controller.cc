@@ -337,7 +337,7 @@ aura::Window* KeyboardController::GetContainerWindowWithoutCreationForTest() {
 void KeyboardController::NotifyKeyboardBoundsChanging(
     const gfx::Rect& new_bounds) {
   current_keyboard_bounds_ = new_bounds;
-  if (ui_->HasKeyboardWindow() && ui_->GetKeyboardWindow()->IsVisible()) {
+  if (ui_->HasKeyboardWindow() && ui_->GetWebContentsWindow()->IsVisible()) {
     for (KeyboardControllerObserver& observer : observer_list_)
       observer.OnKeyboardBoundsChanging(new_bounds);
     if (keyboard::IsKeyboardOverscrollEnabled())
@@ -568,7 +568,7 @@ void KeyboardController::ShowKeyboardInternal(int64_t display_id) {
   // Add the WebContents window to the container if it has not been added.
   if (container_->children().empty()) {
     keyboard::MarkKeyboardLoadStarted();
-    aura::Window* keyboard = ui_->GetKeyboardWindow();
+    aura::Window* keyboard = ui_->GetWebContentsWindow();
     keyboard->Show();
     container_->AddChild(keyboard);
     keyboard->set_owned_by_parent(false);
@@ -585,7 +585,7 @@ void KeyboardController::ShowKeyboardInternal(int64_t display_id) {
 
   if (keyboard_visible_) {
     return;
-  } else if (ui_->GetKeyboardWindow()->bounds().height() == 0) {
+  } else if (ui_->GetWebContentsWindow()->bounds().height() == 0) {
     show_on_resize_ = true;
     ChangeState(KeyboardControllerState::LOADING_EXTENSION);
     return;
