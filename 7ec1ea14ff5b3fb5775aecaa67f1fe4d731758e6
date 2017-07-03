@@ -16,6 +16,24 @@
       "revId": "7ec1ea14ff5b3fb5775aecaa67f1fe4d731758e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2150ebae_229846be",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAnimationUtils.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-07-03T05:05:18Z",
+      "side": 1,
+      "message": "Heh, I see that bugsnash asked for this comment to stay. That\u0027s okay, just not here. This file doesn\u0027t have the concept of legacy parsing in it.",
+      "parentUuid": "dfe04ece_1756ccc1",
+      "revId": "7ec1ea14ff5b3fb5775aecaa67f1fe4d731758e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
