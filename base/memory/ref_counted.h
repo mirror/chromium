@@ -477,13 +477,13 @@ class scoped_refptr {
 
   scoped_refptr(T* p) : ptr_(p) {
     if (ptr_)
-      AddRef(ptr_);
+      AddRefInternal(ptr_);
   }
 
   // Copy constructor.
   scoped_refptr(const scoped_refptr<T>& r) : ptr_(r.ptr_) {
     if (ptr_)
-      AddRef(ptr_);
+      AddRefInternal(ptr_);
   }
 
   // Copy conversion constructor.
@@ -492,7 +492,7 @@ class scoped_refptr {
                 std::is_convertible<U*, T*>::value>::type>
   scoped_refptr(const scoped_refptr<U>& r) : ptr_(r.get()) {
     if (ptr_)
-      AddRef(ptr_);
+      AddRefInternal(ptr_);
   }
 
   // Move constructor. This is required in addition to the conversion
@@ -509,7 +509,7 @@ class scoped_refptr {
 
   ~scoped_refptr() {
     if (ptr_)
-      Release(ptr_);
+      ReleaseInternal(ptr_);
   }
 
   T* get() const { return ptr_; }
@@ -527,11 +527,11 @@ class scoped_refptr {
   scoped_refptr<T>& operator=(T* p) {
     // AddRef first so that self assignment should work
     if (p)
-      AddRef(p);
+      AddRefInternal(p);
     T* old_ptr = ptr_;
     ptr_ = p;
     if (old_ptr)
-      Release(old_ptr);
+      ReleaseInternal(old_ptr);
     return *this;
   }
 
@@ -601,19 +601,19 @@ class scoped_refptr {
   //     class Opaque;
   //     extern template class scoped_refptr<Opaque>;
   // Otherwise the compiler will complain that Opaque is an incomplete type.
-  static void AddRef(T* ptr);
-  static void Release(T* ptr);
+  static void AddRefInternal(T* ptr);
+  static void ReleaseInternal(T* ptr);
 };
 
 // static
 template <typename T>
-void scoped_refptr<T>::AddRef(T* ptr) {
+void scoped_refptr<T>::AddRefInternal(T* ptr) {
   ptr->AddRef();
 }
 
 // static
 template <typename T>
-void scoped_refptr<T>::Release(T* ptr) {
+void scoped_refptr<T>::ReleaseInternal(T* ptr) {
   ptr->Release();
 }
 

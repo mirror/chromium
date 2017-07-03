@@ -95,6 +95,19 @@ template <class T>
 using is_trivially_copyable = std::is_trivially_copyable<T>;
 #endif
 
+template <typename...>
+struct make_void {
+  using type = void;
+};
+
+// A clone of C++17 std::void_t.
+// Unlike the original version, we need |make_void| as a helper struct to avoid
+// a C++14 defect.
+// ref: http://en.cppreference.com/w/cpp/types/void_t
+// ref: http://open-std.org/JTC1/SC22/WG21/docs/cwg_defects.html#1558
+template <typename... Ts>
+using void_t = typename make_void<Ts...>::type;
+
 }  // namespace base
 
 #undef CR_USE_FALLBACKS_FOR_GCC_WITH_LIBCXX

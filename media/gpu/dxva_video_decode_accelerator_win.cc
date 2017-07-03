@@ -2457,9 +2457,11 @@ void DXVAVideoDecodeAccelerator::CopySurface(
   TRACE_EVENT0("media", "DXVAVideoDecodeAccelerator::CopySurface");
   if (!decoder_thread_task_runner_->BelongsToCurrentThread()) {
     decoder_thread_task_runner_->PostTask(
-        FROM_HERE, base::Bind(&DXVAVideoDecodeAccelerator::CopySurface,
-                              base::Unretained(this), src_surface, dest_surface,
-                              picture_buffer_id, input_buffer_id, color_space));
+        FROM_HERE,
+        base::Bind(&DXVAVideoDecodeAccelerator::CopySurface,
+                   base::Unretained(this), base::Unretained(src_surface),
+                   base::Unretained(dest_surface), picture_buffer_id,
+                   input_buffer_id, color_space));
     return;
   }
 
@@ -2517,17 +2519,20 @@ void DXVAVideoDecodeAccelerator::CopySurface(
   if (using_angle_device_) {
     main_thread_task_runner_->PostTask(
         FROM_HERE, base::Bind(&DXVAVideoDecodeAccelerator::CopySurfaceComplete,
-                              weak_ptr_, src_surface, dest_surface,
-                              picture_buffer_id, input_buffer_id));
+                              weak_ptr_, base::Unretained(src_surface),
+                              base::Unretained(dest_surface), picture_buffer_id,
+                              input_buffer_id));
     return;
   }
 
   // Flush the decoder device to ensure that the decoded frame is copied to the
   // target surface.
   decoder_thread_task_runner_->PostDelayedTask(
-      FROM_HERE, base::Bind(&DXVAVideoDecodeAccelerator::FlushDecoder,
-                            base::Unretained(this), 0, src_surface,
-                            dest_surface, picture_buffer_id, input_buffer_id),
+      FROM_HERE,
+      base::Bind(&DXVAVideoDecodeAccelerator::FlushDecoder,
+                 base::Unretained(this), 0, base::Unretained(src_surface),
+                 base::Unretained(dest_surface), picture_buffer_id,
+                 input_buffer_id),
       base::TimeDelta::FromMilliseconds(kFlushDecoderSurfaceTimeoutMs));
 }
 
@@ -2683,9 +2688,10 @@ void DXVAVideoDecodeAccelerator::CopyTexture(
   decoder_thread_task_runner_->PostTask(
       FROM_HERE,
       base::Bind(&DXVAVideoDecodeAccelerator::CopyTextureOnDecoderThread,
-                 base::Unretained(this), dest_texture, dest_keyed_mutex,
-                 keyed_mutex_value, input_sample_for_conversion,
-                 picture_buffer_id, input_buffer_id));
+                 base::Unretained(this), base::Unretained(dest_texture),
+                 dest_keyed_mutex, keyed_mutex_value,
+                 input_sample_for_conversion, picture_buffer_id,
+                 input_buffer_id));
 }
 
 void DXVAVideoDecodeAccelerator::CopyTextureOnDecoderThread(
@@ -2777,11 +2783,10 @@ void DXVAVideoDecodeAccelerator::CopyTextureOnDecoderThread(
     d3d11_device_context_->End(d3d11_query_.Get());
 
     decoder_thread_task_runner_->PostDelayedTask(
-        FROM_HERE, base::Bind(&DXVAVideoDecodeAccelerator::FlushDecoder,
-                              base::Unretained(this), 0,
-                              reinterpret_cast<IDirect3DSurface9*>(NULL),
-                              reinterpret_cast<IDirect3DSurface9*>(NULL),
-                              picture_buffer_id, input_buffer_id),
+        FROM_HERE,
+        base::Bind(&DXVAVideoDecodeAccelerator::FlushDecoder,
+                   base::Unretained(this), 0, nullptr, nullptr,
+                   picture_buffer_id, input_buffer_id),
         base::TimeDelta::FromMilliseconds(kFlushDecoderSurfaceTimeoutMs));
   }
 }
@@ -2821,17 +2826,20 @@ void DXVAVideoDecodeAccelerator::FlushDecoder(int iterations,
 
   if ((hr == S_FALSE) && (++iterations < kMaxIterationsForD3DFlush)) {
     decoder_thread_task_runner_->PostDelayedTask(
-        FROM_HERE, base::Bind(&DXVAVideoDecodeAccelerator::FlushDecoder,
-                              base::Unretained(this), iterations, src_surface,
-                              dest_surface, picture_buffer_id, input_buffer_id),
+        FROM_HERE,
+        base::Bind(
+            &DXVAVideoDecodeAccelerator::FlushDecoder, base::Unretained(this),
+            iterations, base::Unretained(src_surface),
+            base::Unretained(dest_surface), picture_buffer_id, input_buffer_id),
         base::TimeDelta::FromMilliseconds(kFlushDecoderSurfaceTimeoutMs));
     return;
   }
 
   main_thread_task_runner_->PostTask(
-      FROM_HERE, base::Bind(&DXVAVideoDecodeAccelerator::CopySurfaceComplete,
-                            weak_ptr_, src_surface, dest_surface,
-                            picture_buffer_id, input_buffer_id));
+      FROM_HERE,
+      base::Bind(&DXVAVideoDecodeAccelerator::CopySurfaceComplete, weak_ptr_,
+                 base::Unretained(src_surface), base::Unretained(dest_surface),
+                 picture_buffer_id, input_buffer_id));
 }
 
 bool DXVAVideoDecodeAccelerator::InitializeID3D11VideoProcessor(
