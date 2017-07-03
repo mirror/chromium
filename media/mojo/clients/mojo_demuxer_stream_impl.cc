@@ -29,7 +29,7 @@ MojoDemuxerStreamImpl::~MojoDemuxerStreamImpl() {}
 // This is called when our DemuxerStreamClient has connected itself and is
 // ready to receive messages.  Send an initial config and notify it that
 // we are now ready for business.
-void MojoDemuxerStreamImpl::Initialize(const InitializeCallback& callback) {
+void MojoDemuxerStreamImpl::Initialize(InitializeCallback callback) {
   DVLOG(2) << __func__;
 
   // Prepare the initial config.
@@ -50,13 +50,14 @@ void MojoDemuxerStreamImpl::Initialize(const InitializeCallback& callback) {
   mojo_decoder_buffer_writer_ =
       MojoDecoderBufferWriter::Create(stream_->type(), &remote_consumer_handle);
 
-  callback.Run(stream_->type(), std::move(remote_consumer_handle),
-               std::move(audio_config), std::move(video_config));
+  std::move(callback).Run(stream_->type(), std::move(remote_consumer_handle),
+                          std::move(audio_config), std::move(video_config));
 }
 
-void MojoDemuxerStreamImpl::Read(const ReadCallback& callback) {
+void MojoDemuxerStreamImpl::Read(ReadCallback callback) {
   stream_->Read(base::Bind(&MojoDemuxerStreamImpl::OnBufferReady,
-                           weak_factory_.GetWeakPtr(), callback));
+                           weak_factory_.GetWeakPtr(),
+                           base::Passed(&callback)));
 }
 
 void MojoDemuxerStreamImpl::EnableBitstreamConverter() {
@@ -64,7 +65,7 @@ void MojoDemuxerStreamImpl::EnableBitstreamConverter() {
 }
 
 void MojoDemuxerStreamImpl::OnBufferReady(
-    const ReadCallback& callback,
+    ReadCallback callback,
     Status status,
     const scoped_refptr<media::DecoderBuffer>& buffer) {
   mojom::AudioDecoderConfigPtr audio_config;
@@ -85,14 +86,14 @@ void MojoDemuxerStreamImpl::OnBufferReady(
                    << stream_->type();
     }
 
-    callback.Run(Status::kConfigChanged, mojom::DecoderBufferPtr(),
-                 std::move(audio_config), std::move(video_config));
+    std::move(callback).Run(Status::kConfigChanged, mojom::DecoderBufferPtr(),
+                            std::move(audio_config), std::move(video_config));
     return;
   }
 
   if (status == Status::kAborted) {
-    callback.Run(Status::kAborted, mojom::DecoderBufferPtr(),
-                 std::move(audio_config), std::move(video_config));
+    std::move(callback).Run(Status::kAborted, mojom::DecoderBufferPtr(),
+                            std::move(audio_config), std::move(video_config));
     return;
   }
 
@@ -101,16 +102,16 @@ void MojoDemuxerStreamImpl::OnBufferReady(
   mojom::DecoderBufferPtr mojo_buffer =
       mojo_decoder_buffer_writer_->WriteDecoderBuffer(buffer);
   if (!mojo_buffer) {
-    callback.Run(Status::kAborted, mojom::DecoderBufferPtr(),
-                 std::move(audio_config), std::move(video_config));
+    std::move(callback).Run(Status::kAborted, mojom::DecoderBufferPtr(),
+                            std::move(audio_config), std::move(video_config));
     return;
   }
 
   // TODO(dalecurtis): Once we can write framed data to the DataPipe, fill via
   // the producer handle and then read more to keep the pipe full.  Waiting for
   // space can be accomplished using an AsyncWaiter.
-  callback.Run(status, std::move(mojo_buffer), std::move(audio_config),
-               std::move(video_config));
+  std::move(callback).Run(status, std::move(mojo_buffer),
+                          std::move(audio_config), std::move(video_config));
 }
 
 }  // namespace media
