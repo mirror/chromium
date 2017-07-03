@@ -105,6 +105,24 @@
       "revId": "43a4f3154492d37ecf8167ec413745dfea47e7fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3c803b0c_7fd0e5ce",
+        "filename": "components/arc/common/volume_mounter.typemap",
+        "patchSetId": 17
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-03T08:44:51Z",
+      "side": 1,
+      "message": "Ah, sorry, never mind.\nTurned out that analyze stage can be also happy with both chromeos and chromeos:chromeos.",
+      "parentUuid": "f3a5d5e9_05a449f9",
+      "revId": "43a4f3154492d37ecf8167ec413745dfea47e7fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
