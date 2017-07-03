@@ -37,7 +37,7 @@ IPC_MESSAGE_CONTROL0(TestMsg_SendBadMessage)
 IPC_MESSAGE_CONTROL1(TestMsg_BadMessage, BadType)
 
 #undef IPC_MESSAGE_START
-#define IPC_MESSAGE_START UtilityMsgStart
+#define IPC_MESSAGE_START AutomationMsgStart
 IPC_MESSAGE_CONTROL0(UtilityMsg_Bounce)
 
 #undef IPC_MESSAGE_START
