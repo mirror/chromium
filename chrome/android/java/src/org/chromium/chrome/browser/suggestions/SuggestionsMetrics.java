@@ -4,15 +4,19 @@
 
 package org.chromium.chrome.browser.suggestions;
 
+import android.os.SystemClock;
 import android.support.v7.widget.RecyclerView;
 
 import org.chromium.base.Callback;
+import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.browser.ntp.NewTabPage;
 import org.chromium.chrome.browser.ntp.snippets.CategoryInt;
 import org.chromium.chrome.browser.ntp.snippets.SnippetArticle;
 import org.chromium.chrome.browser.preferences.ChromePreferenceManager;
 import org.chromium.chrome.browser.tab.Tab;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * Exposes methods to report suggestions related events, for UMA or Fetch scheduling purposes.
@@ -82,6 +86,12 @@ public abstract class SuggestionsMetrics {
                 SuggestionsEventReporterBridge.onSuggestionTargetVisited(category, visit.duration);
             }
         });
+    }
+
+    static void recordDateFormattingDuration(long timeBeforeDateFormattingInitiated) {
+        RecordHistogram.recordTimesHistogram("Android.StrictMode.SnippetUIBuildTime",
+                SystemClock.elapsedRealtime() - timeBeforeDateFormattingInitiated,
+                TimeUnit.MILLISECONDS);
     }
 
     /**
