@@ -6,6 +6,7 @@
 
 #include "components/exo/keyboard_delegate.h"
 #include "components/exo/keyboard_device_configuration_delegate.h"
+#include "components/exo/keyboard_extension_delegate.h"
 #include "components/exo/shell_surface.h"
 #include "components/exo/surface.h"
 #include "ui/aura/client/focus_client.h"
@@ -122,6 +123,19 @@ void Keyboard::SetDeviceConfigurationDelegate(
     KeyboardDeviceConfigurationDelegate* delegate) {
   device_configuration_delegate_ = delegate;
   OnKeyboardDeviceConfigurationChanged();
+}
+
+bool Keyboard::HasExtendedKeyboardDelegate() const {
+  return !!extended_keyboard_delegate_;
+}
+
+void Keyboard::SetExtendedKeyboardDelegate(
+    KeyboardExtensionDelegate* delegate) {
+  extended_keyboard_delegate_ = delegate;
+}
+
+void Keyboard::OnAckKeyEvent(uint32_t serial, bool handled) {
+  // TODO(yhanada): Implement this method.
 }
 
 ////////////////////////////////////////////////////////////////////////////////
