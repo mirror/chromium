@@ -6,8 +6,7 @@
 
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
-#include "base/threading/sequenced_worker_pool.h"
-#include "base/threading/thread_task_runner_handle.h"
+#include "base/task_scheduler/post_task.h"
 #include "chrome/browser/android/chrome_feature_list.h"
 #include "chrome/browser/image_decoder.h"
 #include "chrome/browser/profiles/profile.h"
@@ -50,9 +49,10 @@ class LogoDecoderDelegate : public ImageDecoder::ImageRequest {
     // If the ImageDecoder crashes or otherwise never completes, call
     // OnImageDecodeTimedOut() eventually to ensure that image_decoded_callback_
     // is run.
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-        FROM_HERE, base::Bind(&LogoDecoderDelegate::OnDecodeImageFailed,
-                              weak_ptr_factory_.GetWeakPtr()),
+    task_runner()->PostDelayedTask(
+        FROM_HERE,
+        base::Bind(&LogoDecoderDelegate::OnDecodeImageFailed,
+                   weak_ptr_factory_.GetWeakPtr()),
         base::TimeDelta::FromSeconds(kDecodeLogoTimeoutSeconds));
   }
 
@@ -85,9 +85,9 @@ class ChromeLogoDelegate : public search_provider_logos::LogoDelegate {
   void DecodeUntrustedImage(
       const scoped_refptr<base::RefCountedString>& encoded_image,
       base::Callback<void(const SkBitmap&)> image_decoded_callback) override {
-    LogoDecoderDelegate* delegate =
-        new LogoDecoderDelegate(image_decoded_callback);
-    ImageDecoder::Start(delegate, encoded_image->data());
+    auto delegate =
+        base::MakeUnique<LogoDecoderDelegate>(image_decoded_callback);
+    ImageDecoder::Start(delegate.release(), encoded_image->data());
   }
 
  private:
@@ -126,9 +126,10 @@ void LogoService::GetLogo(search_provider_logos::LogoObserver* observer) {
   if (!logo_tracker_) {
     logo_tracker_ = base::MakeUnique<LogoTracker>(
         profile_->GetPath().Append(kCachedLogoDirectory),
-        BrowserThread::GetTaskRunnerForThread(BrowserThread::FILE),
-        BrowserThread::GetBlockingPool(), profile_->GetRequestContext(),
-        base::MakeUnique<ChromeLogoDelegate>());
+        base::CreateSequencedTaskRunnerWithTraits(
+            {base::MayBlock(), base::TaskPriority::USER_VISIBLE,
+             base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN}),
+        profile_->GetRequestContext(), base::MakeUnique<ChromeLogoDelegate>());
   }
 
   GURL url =
