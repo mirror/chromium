@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1570c9a4_b8905891",
+        "filename": "net/test/android/javatests/src/org/chromium/net/test/EmbeddedTestServerRule.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-03T11:11:50Z",
+      "side": 1,
+      "message": "Why don\u0027t we just make EmbeddedTestServer implement TestWatcher? It would also make migration easier.",
+      "range": {
+        "startLine": 16,
+        "startChar": 13,
+        "endLine": 16,
+        "endChar": 35
+      },
+      "revId": "17794d9a409d1247f657a1bfc8113ab01dc5201c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
