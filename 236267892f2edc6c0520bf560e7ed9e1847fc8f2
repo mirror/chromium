@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "78333323_39d52f12",
+        "filename": "components/password_manager/core/browser/password_manager_metrics_recorder.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-03T07:39:39Z",
+      "side": 1,
+      "message": "Nope, UkmEntryBuilder::AddMetric accepts only a const char*.",
+      "parentUuid": "1e7ed573_99de8209",
+      "revId": "236267892f2edc6c0520bf560e7ed9e1847fc8f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ebb7298_5bbdda2c",
         "filename": "tools/metrics/ukm/ukm.xml",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "236267892f2edc6c0520bf560e7ed9e1847fc8f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6b22a6c_cbce2e65",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-03T07:39:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ebb7298_5bbdda2c",
+      "revId": "236267892f2edc6c0520bf560e7ed9e1847fc8f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
