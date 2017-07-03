@@ -1,0 +1,327 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5e05a22_449c7200",
+        "filename": "chrome/browser/media/media_engagement_score.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-03T14:48:55Z",
+      "side": 1,
+      "message": "You are repeating a few includes from the header files.",
+      "revId": "afa4db254f416bca03676c1a58389e37cab3623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5c89e43_75564f3b",
+        "filename": "chrome/browser/media/media_engagement_score.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-03T14:48:55Z",
+      "side": 1,
+      "message": "nit: could this be in the init-list?",
+      "revId": "afa4db254f416bca03676c1a58389e37cab3623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71237330_4ebcaa14",
+        "filename": "chrome/browser/media/media_engagement_score.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-03T14:48:55Z",
+      "side": 1,
+      "message": "These could be in the header as they are simple initialisation.",
+      "revId": "afa4db254f416bca03676c1a58389e37cab3623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f36e5f57_0b883cbd",
+        "filename": "chrome/browser/media/media_engagement_score.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-03T14:48:55Z",
+      "side": 1,
+      "message": "no need to have this here as it is the default init",
+      "revId": "afa4db254f416bca03676c1a58389e37cab3623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce83f073_51891fb1",
+        "filename": "chrome/browser/media/media_engagement_score.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-03T14:48:55Z",
+      "side": 1,
+      "message": "nit: I think casting both variables might be better. Using static_cast would be more C++-y.\nWhat about: `return static_cast\u003cdouble\u003e(media_playback_) / static_cast\u003cdouble\u003e(visits_);`",
+      "revId": "afa4db254f416bca03676c1a58389e37cab3623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee19d802_f0023cb7",
+        "filename": "chrome/browser/media/media_engagement_score.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-03T14:48:55Z",
+      "side": 1,
+      "message": "s/NULL/nullptr/",
+      "revId": "afa4db254f416bca03676c1a58389e37cab3623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73f96324_fdeac091",
+        "filename": "chrome/browser/media/media_engagement_score.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-03T14:48:55Z",
+      "side": 1,
+      "message": "If you like ternary operators, you could do:\n`return value.get() ? value : base::MakeUnique\u003cbase::DictionaryValue\u003e();`\n\nThis said, makes me wonder why this isn\u0027t using base::Optional but probably not worth returning base::Optional, DictionaryValue should.",
+      "revId": "afa4db254f416bca03676c1a58389e37cab3623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74b06153_5b4c9445",
+        "filename": "chrome/browser/media/media_engagement_score.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-03T14:48:55Z",
+      "side": 1,
+      "message": "style: you should keep the implementation in the same order an the declaration",
+      "revId": "afa4db254f416bca03676c1a58389e37cab3623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71f8f96b_2b15b314",
+        "filename": "chrome/browser/media/media_engagement_score.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-03T14:48:55Z",
+      "side": 1,
+      "message": "Do you need this include given that you forward declare the class below?",
+      "revId": "afa4db254f416bca03676c1a58389e37cab3623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44adb00e_07afeb85",
+        "filename": "chrome/browser/media/media_engagement_score.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-03T14:48:55Z",
+      "side": 1,
+      "message": "Why do we have this ctor? It looks like the one with the HostContentSettingsMap needs to be called, making this one a footgun.",
+      "revId": "afa4db254f416bca03676c1a58389e37cab3623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7736dd62_48fc773b",
+        "filename": "chrome/browser/media/media_engagement_score.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-03T14:48:55Z",
+      "side": 1,
+      "message": "style: static should be on top",
+      "revId": "afa4db254f416bca03676c1a58389e37cab3623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a3c6292_cc0f0b45",
+        "filename": "chrome/browser/media/media_engagement_score.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-03T14:48:55Z",
+      "side": 1,
+      "message": "Looking at the code, it seems that the object is owned by the service. You should probably add a note because the raw pointer is worrysome otherwise ;)",
+      "revId": "afa4db254f416bca03676c1a58389e37cab3623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "386f0930_98e4b0f4",
+        "filename": "chrome/browser/media/media_engagement_score.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-03T14:48:55Z",
+      "side": 1,
+      "message": "ditto for the lifetime: it\u0027s only fine because the objects are shortlived, therefore guaranteed to not outlive the profile.",
+      "revId": "afa4db254f416bca03676c1a58389e37cab3623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56cbc665_5b6302e6",
+        "filename": "chrome/browser/media/media_engagement_score.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-03T14:48:55Z",
+      "side": 1,
+      "message": "style: methods should be before variables",
+      "revId": "afa4db254f416bca03676c1a58389e37cab3623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56610320_542f2030",
+        "filename": "chrome/browser/media/media_engagement_score.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-03T14:48:55Z",
+      "side": 1,
+      "message": "style: static methods should be first. Though, static methods that are private usually could be in the cpp anonymous namespace",
+      "revId": "afa4db254f416bca03676c1a58389e37cab3623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dc7901b_82b64566",
+        "filename": "chrome/browser/media/media_engagement_score_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-03T14:48:55Z",
+      "side": 1,
+      "message": "nit: drop \"/page1\"?\n\ndouble nit: https? :)",
+      "revId": "afa4db254f416bca03676c1a58389e37cab3623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e41ea4b9_245f01c8",
+        "filename": "chrome/browser/media/media_engagement_score_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-03T14:48:55Z",
+      "side": 1,
+      "message": "Maybe you could check that the TotalScore() will return 0 when below the number of visits.",
+      "revId": "afa4db254f416bca03676c1a58389e37cab3623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab680331_67d8e8a1",
+        "filename": "chrome/browser/media/media_engagement_score_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-03T14:48:55Z",
+      "side": 1,
+      "message": "probably better to have a value here instead of computing `expected_score`",
+      "revId": "afa4db254f416bca03676c1a58389e37cab3623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3ac8217_239e392b",
+        "filename": "chrome/browser/media/media_engagement_score_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-03T14:48:55Z",
+      "side": 1,
+      "message": "Should there be a test for UpdateScoreDict?\nMaybe you could add a test that adds stuff manually to the content settings and check that the MediaEngagementScore reflects it correctly?\nAlso something that reads the content settings after Commit() was called?",
+      "revId": "afa4db254f416bca03676c1a58389e37cab3623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
