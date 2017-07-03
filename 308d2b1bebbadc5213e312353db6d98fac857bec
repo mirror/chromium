@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e073489c_0aac037f",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_coordinator.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-03T08:07:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a252dfe0_e58fe29d",
+      "range": {
+        "startLine": 38,
+        "startChar": 51,
+        "endLine": 38,
+        "endChar": 91
+      },
+      "revId": "308d2b1bebbadc5213e312353db6d98fac857bec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "edfc57d6_f376ab85",
         "filename": "ios/chrome/browser/content_suggestions/content_suggestions_header_controller.h",
         "patchSetId": 6
@@ -39,6 +63,24 @@
       "revId": "308d2b1bebbadc5213e312353db6d98fac857bec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d09f608_723f8372",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_header_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-03T08:07:13Z",
+      "side": 1,
+      "message": "I will move it when I move the header controller in the ui. For now it is only used by the mediator. The header is exposed through the data source.",
+      "parentUuid": "edfc57d6_f376ab85",
+      "revId": "308d2b1bebbadc5213e312353db6d98fac857bec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "a9b02afe_6dbf38a3",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_header_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-03T08:07:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e655166_aceb9fce",
+      "range": {
+        "startLine": 39,
+        "startChar": 4,
+        "endLine": 39,
+        "endChar": 28
+      },
+      "revId": "308d2b1bebbadc5213e312353db6d98fac857bec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8173be6e_11935108",
         "filename": "ios/chrome/browser/content_suggestions/content_suggestions_header_controller.h",
         "patchSetId": 6
@@ -79,6 +145,24 @@
       "revId": "308d2b1bebbadc5213e312353db6d98fac857bec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4ff23c5_19096303",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_header_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-03T08:07:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8173be6e_11935108",
+      "revId": "308d2b1bebbadc5213e312353db6d98fac857bec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "d65d9df6_5a8f4b79",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_header_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-03T08:07:13Z",
+      "side": 1,
+      "message": "I don\u0027t know how dismissing the modals can result in anything being dealloc\u0027ed. I will remove the comment but keep the call here.",
+      "parentUuid": "fc505814_ace39bd1",
+      "revId": "308d2b1bebbadc5213e312353db6d98fac857bec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7131525_d6e60263",
         "filename": "ios/chrome/browser/content_suggestions/content_suggestions_header_controller_delegate.h",
         "patchSetId": 6
@@ -110,6 +212,30 @@
       "writtenOn": "2017-06-30T10:02:56Z",
       "side": 1,
       "message": "Should it be left out until then?",
+      "range": {
+        "startLine": 10,
+        "startChar": 27,
+        "endLine": 10,
+        "endChar": 36
+      },
+      "revId": "308d2b1bebbadc5213e312353db6d98fac857bec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba55d6fc_6ec3c72d",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_header_controller_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-03T08:07:13Z",
+      "side": 1,
+      "message": "Left out from where?",
+      "parentUuid": "c7131525_d6e60263",
       "range": {
         "startLine": 10,
         "startChar": 27,
@@ -139,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "d4c383dc_b58ac578",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-03T08:07:13Z",
+      "side": 1,
+      "message": "This is read only. It means I should redefine the property as read-write in the implementation file. I prefer it this way.",
+      "parentUuid": "1fa75c43_70b7387c",
+      "revId": "308d2b1bebbadc5213e312353db6d98fac857bec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f765e8a9_63d88f8c",
         "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_controller.h",
         "patchSetId": 6
@@ -162,6 +306,30 @@
     },
     {
       "key": {
+        "uuid": "ae13f035_2e82f5a3",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-03T08:07:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f765e8a9_63d88f8c",
+      "range": {
+        "startLine": 16,
+        "startChar": 3,
+        "endLine": 16,
+        "endChar": 9
+      },
+      "revId": "308d2b1bebbadc5213e312353db6d98fac857bec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa4faac0_a2510a07",
         "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_synchronizer.h",
         "patchSetId": 6
@@ -176,6 +344,24 @@
       "revId": "308d2b1bebbadc5213e312353db6d98fac857bec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "009cb985_9c902d92",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_synchronizer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-03T08:07:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa4faac0_a2510a07",
+      "revId": "308d2b1bebbadc5213e312353db6d98fac857bec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -202,6 +388,30 @@
     },
     {
       "key": {
+        "uuid": "56977cea_3bb59a32",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_synchronizer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-03T08:07:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10f82c27_0c8532d4",
+      "range": {
+        "startLine": 17,
+        "startChar": 10,
+        "endLine": 17,
+        "endChar": 50
+      },
+      "revId": "308d2b1bebbadc5213e312353db6d98fac857bec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a0caaf2_dfac70fd",
         "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_synchronizer.h",
         "patchSetId": 6
@@ -222,6 +432,30 @@
       "revId": "308d2b1bebbadc5213e312353db6d98fac857bec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "450c9dec_fe4f92ab",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_synchronizer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-03T08:07:13Z",
+      "side": 1,
+      "message": "init is always nullable as NSObject\u0027s -init is nullable.",
+      "parentUuid": "1a0caaf2_dfac70fd",
+      "range": {
+        "startLine": 27,
+        "startChar": 3,
+        "endLine": 27,
+        "endChar": 11
+      },
+      "revId": "308d2b1bebbadc5213e312353db6d98fac857bec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -248,6 +482,30 @@
     },
     {
       "key": {
+        "uuid": "a03f2456_51a90c41",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_synchronizer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-03T08:07:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21c2e332_2db5ad7c",
+      "range": {
+        "startLine": 29,
+        "startChar": 48,
+        "endLine": 29,
+        "endChar": 73
+      },
+      "revId": "308d2b1bebbadc5213e312353db6d98fac857bec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ee184c7_c2b035bf",
         "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_synchronizer.mm",
         "patchSetId": 6
@@ -262,6 +520,24 @@
       "revId": "308d2b1bebbadc5213e312353db6d98fac857bec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a806d7a1_0814b319",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_synchronizer.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-03T08:07:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ee184c7_c2b035bf",
+      "revId": "308d2b1bebbadc5213e312353db6d98fac857bec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -288,6 +564,30 @@
     },
     {
       "key": {
+        "uuid": "364066ac_595aa222",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_synchronizer.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-03T08:07:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85b6ff79_c63b33a8",
+      "range": {
+        "startLine": 101,
+        "startChar": 47,
+        "endLine": 101,
+        "endChar": 48
+      },
+      "revId": "308d2b1bebbadc5213e312353db6d98fac857bec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3025cf86_7336a542",
         "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_synchronizer.mm",
         "patchSetId": 6
@@ -311,6 +611,30 @@
     },
     {
       "key": {
+        "uuid": "c612eb59_83621d20",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_synchronizer.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-03T08:07:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3025cf86_7336a542",
+      "range": {
+        "startLine": 117,
+        "startChar": 27,
+        "endLine": 117,
+        "endChar": 29
+      },
+      "revId": "308d2b1bebbadc5213e312353db6d98fac857bec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "075aa499_a6bfa053",
         "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_synchronizer.mm",
         "patchSetId": 6
@@ -325,6 +649,24 @@
       "revId": "308d2b1bebbadc5213e312353db6d98fac857bec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75cbc8c4_b6440819",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_synchronizer.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-03T08:07:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "075aa499_a6bfa053",
+      "revId": "308d2b1bebbadc5213e312353db6d98fac857bec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -374,6 +716,30 @@
     },
     {
       "key": {
+        "uuid": "704b95b6_568b2621",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_synchronizer.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-03T08:07:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1af250cb_55974435",
+      "range": {
+        "startLine": 146,
+        "startChar": 40,
+        "endLine": 146,
+        "endChar": 65
+      },
+      "revId": "308d2b1bebbadc5213e312353db6d98fac857bec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3df722f_db1e877b",
         "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_synchronizer.mm",
         "patchSetId": 6
@@ -397,6 +763,30 @@
     },
     {
       "key": {
+        "uuid": "1384d238_8182fdf9",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_synchronizer.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-03T08:07:13Z",
+      "side": 1,
+      "message": "I was actually wondering if the word existed when I copy-pasted it, but I forgot to check ;)\nDone.",
+      "parentUuid": "d3df722f_db1e877b",
+      "range": {
+        "startLine": 186,
+        "startChar": 45,
+        "endLine": 186,
+        "endChar": 53
+      },
+      "revId": "308d2b1bebbadc5213e312353db6d98fac857bec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2fa2d9fe_4c612fa8",
         "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_synchronizer.mm",
         "patchSetId": 6
@@ -417,6 +807,30 @@
       "revId": "308d2b1bebbadc5213e312353db6d98fac857bec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b48a6893_c8b45dca",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_synchronizer.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-03T08:07:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2fa2d9fe_4c612fa8",
+      "range": {
+        "startLine": 202,
+        "startChar": 11,
+        "endLine": 202,
+        "endChar": 32
+      },
+      "revId": "308d2b1bebbadc5213e312353db6d98fac857bec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
