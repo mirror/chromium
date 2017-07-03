@@ -272,6 +272,30 @@
     },
     {
       "key": {
+        "uuid": "6523dc38_0667da0c",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_header_controller_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-03T09:18:17Z",
+      "side": 1,
+      "message": "It is not unused, it is unimplemented :)\nIt is used by the HeaderController. I am still figuring out if I should merge it with another protocol or not.",
+      "parentUuid": "f537adea_77fc8dd4",
+      "range": {
+        "startLine": 10,
+        "startChar": 27,
+        "endLine": 10,
+        "endChar": 36
+      },
+      "revId": "308d2b1bebbadc5213e312353db6d98fac857bec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1fa75c43_70b7387c",
         "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_controller.h",
         "patchSetId": 6
@@ -319,6 +343,24 @@
       "side": 1,
       "message": "What about\n@property(nonatomic, assign, getter\u003disOmniboxFocused, readonly) BOOL omniboxFocused;\nthen? So that from the start it\u0027s clear that it is a property not a method?",
       "parentUuid": "d4c383dc_b58ac578",
+      "revId": "308d2b1bebbadc5213e312353db6d98fac857bec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d424bf01_dec9fa6f",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-03T09:18:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f8419d6_1bee561f",
       "revId": "308d2b1bebbadc5213e312353db6d98fac857bec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -513,6 +555,30 @@
       "side": 1,
       "message": "What about the parameters?",
       "parentUuid": "450c9dec_fe4f92ab",
+      "range": {
+        "startLine": 27,
+        "startChar": 3,
+        "endLine": 27,
+        "endChar": 11
+      },
+      "revId": "308d2b1bebbadc5213e312353db6d98fac857bec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87c0b977_a417f898",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_synchronizer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-03T09:18:17Z",
+      "side": 1,
+      "message": "I usually use \"nonnull\" for parameters without which it the object would not work. Here you might want to have the synchronizer synchronize only one of the two objects for example.",
+      "parentUuid": "39566cd3_69bbc097",
       "range": {
         "startLine": 27,
         "startChar": 3,
