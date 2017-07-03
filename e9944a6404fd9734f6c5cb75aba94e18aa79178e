@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a8afa7d1_a769d175",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAnimationUtils.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-07-03T02:03:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a17c119_8ab1d32b",
+      "revId": "e9944a6404fd9734f6c5cb75aba94e18aa79178e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9c050cb_8e355bba",
         "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAnimationUtils.h",
         "patchSetId": 10
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ce2384e1_0242bc5a",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAnimationUtils.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-07-03T02:03:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9c050cb_8e355bba",
+      "revId": "e9944a6404fd9734f6c5cb75aba94e18aa79178e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4abbddbc_54026733",
         "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAnimationUtils.h",
         "patchSetId": 10
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-03T01:32:37Z",
       "side": 1,
       "message": "this method should be in cpp file, it is long and contains loops so should not be inlined",
+      "revId": "e9944a6404fd9734f6c5cb75aba94e18aa79178e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b69e267_3c2a2a03",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAnimationUtils.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-07-03T02:03:37Z",
+      "side": 1,
+      "message": "This is a templated function, and so we\u0027ll have to keep its defn in the header file. :(",
+      "parentUuid": "4abbddbc_54026733",
       "revId": "e9944a6404fd9734f6c5cb75aba94e18aa79178e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
