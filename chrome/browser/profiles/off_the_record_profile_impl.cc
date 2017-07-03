@@ -62,6 +62,7 @@
 #include "net/http/http_server_properties.h"
 #include "net/http/transport_security_state.h"
 #include "ppapi/features/features.h"
+#include "services/preferences/public/cpp/in_process_service_factory.h"
 #include "services/preferences/public/cpp/pref_service_main.h"
 #include "services/preferences/public/interfaces/preferences.mojom.h"
 #include "services/service_manager/public/cpp/service.h"
@@ -139,22 +140,17 @@ PrefStore* CreateExtensionPrefStore(Profile* profile,
 
 OffTheRecordProfileImpl::OffTheRecordProfileImpl(Profile* real_profile)
     : profile_(real_profile),
-      start_time_(Time::Now()) {
+      start_time_(Time::Now()),
+      pref_service_factory_(
+          base::MakeUnique<prefs::InProcessPrefServiceFactory>()) {
   // Must happen before we ask for prefs as prefs needs the connection to the
   // service manager, which is set up in Initialize.
   BrowserContext::Initialize(this, profile_->GetPath());
-  service_manager::Connector* otr_connector = nullptr;
-  service_manager::Connector* user_connector = nullptr;
-  std::set<PrefValueStore::PrefStoreType> already_connected_types;
-  if (features::PrefServiceEnabled()) {
-    otr_connector = content::BrowserContext::GetConnectorFor(this);
-    user_connector = content::BrowserContext::GetConnectorFor(profile_);
-    already_connected_types = chrome::InProcessPrefStores();
-  }
   prefs_.reset(CreateIncognitoPrefServiceSyncable(
       PrefServiceSyncableFromProfile(profile_),
       CreateExtensionPrefStore(profile_, true),
-      std::move(already_connected_types), otr_connector, user_connector));
+      std::set<PrefValueStore::PrefStoreType>(),
+      pref_service_factory_->CreateDelegate()));
   // Register on BrowserContext.
   user_prefs::UserPrefs::Set(this, prefs_.get());
 }
@@ -382,15 +378,13 @@ OffTheRecordProfileImpl::CreateMediaRequestContextForStoragePartition(
 
 void OffTheRecordProfileImpl::RegisterInProcessServices(
     StaticServiceMap* services) {
-  if (features::PrefServiceEnabled()) {
+  {
     service_manager::EmbeddedServiceInfo info;
-    info.factory = base::Bind(
-        &prefs::CreatePrefService, chrome::ExpectedPrefStores(),
-        make_scoped_refptr(content::BrowserThread::GetBlockingPool()));
-    info.task_runner = base::CreateSequencedTaskRunnerWithTraits(
-        {base::TaskShutdownBehavior::BLOCK_SHUTDOWN,
-         base::TaskPriority::USER_VISIBLE});
-    pref_service_task_runner_ = info.task_runner;
+    info.factory =
+        base::Bind(&prefs::InProcessPrefServiceFactory::CreatePrefService,
+                   base::Unretained(pref_service_factory_.get()));
+    info.task_runner = content::BrowserThread::GetTaskRunnerForThread(
+        content::BrowserThread::UI);
     services->insert(std::make_pair(prefs::mojom::kServiceName, info));
   }
 }
@@ -499,11 +493,6 @@ bool OffTheRecordProfileImpl::WasCreatedByVersionOrLater(
 
 Profile::ExitType OffTheRecordProfileImpl::GetLastSessionExitType() {
   return profile_->GetLastSessionExitType();
-}
-
-scoped_refptr<base::SequencedTaskRunner>
-OffTheRecordProfileImpl::GetPrefServiceTaskRunner() {
-  return pref_service_task_runner_;
 }
 
 #if defined(OS_CHROMEOS)

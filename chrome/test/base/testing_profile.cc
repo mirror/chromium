@@ -829,7 +829,7 @@ void TestingProfile::CreateIncognitoPrefService() {
   // leaves testing_prefs_ unset.
   prefs_.reset(CreateIncognitoPrefServiceSyncable(
       original_profile_->prefs_.get(), nullptr,
-      std::set<PrefValueStore::PrefStoreType>(), nullptr, nullptr));
+      std::set<PrefValueStore::PrefStoreType>(), nullptr));
   user_prefs::UserPrefs::Set(this, prefs_.get());
 }
 
@@ -1048,12 +1048,6 @@ bool TestingProfile::IsGuestSession() const {
 
 Profile::ExitType TestingProfile::GetLastSessionExitType() {
   return last_session_exited_cleanly_ ? EXIT_NORMAL : EXIT_CRASHED;
-}
-
-scoped_refptr<base::SequencedTaskRunner>
-TestingProfile::GetPrefServiceTaskRunner() {
-  NOTIMPLEMENTED();
-  return nullptr;
 }
 
 TestingProfile::Builder::Builder()

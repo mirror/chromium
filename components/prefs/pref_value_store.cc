@@ -60,6 +60,11 @@ PrefValueStore::PrefValueStore(PrefStore* managed_prefs,
     : pref_notifier_(pref_notifier),
       initialization_failed_(false),
       delegate_(std::move(delegate)) {
+  if (delegate_) {
+    delegate_->Init(managed_prefs, supervised_user_prefs, extension_prefs,
+                    command_line_prefs, user_prefs, recommended_prefs,
+                    default_prefs, pref_notifier);
+  }
   InitPrefStore(MANAGED_STORE, managed_prefs);
   InitPrefStore(SUPERVISED_USER_STORE, supervised_user_prefs);
   InitPrefStore(EXTENSION_STORE, extension_prefs);
@@ -69,11 +74,6 @@ PrefValueStore::PrefValueStore(PrefStore* managed_prefs,
   InitPrefStore(DEFAULT_STORE, default_prefs);
 
   CheckInitializationCompleted();
-  if (delegate_) {
-    delegate_->Init(managed_prefs, supervised_user_prefs, extension_prefs,
-                    command_line_prefs, user_prefs, recommended_prefs,
-                    default_prefs, pref_notifier);
-  }
 }
 
 PrefValueStore::~PrefValueStore() {}
