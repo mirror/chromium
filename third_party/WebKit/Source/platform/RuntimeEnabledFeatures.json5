@@ -664,7 +664,7 @@
     },
     {
       name: "ModuleScripts",
-      status: "experimental",
+      status: "stable",
     },
     {
       name: "MojoBlobs",
