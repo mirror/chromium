@@ -857,6 +857,9 @@ TEST_F(SingleOverlayOnTopTest, AcceptBlending) {
       &damage_rect_, &content_bounds_);
   EXPECT_EQ(1U, candidate_list.size());
   EXPECT_FALSE(damage_rect_.IsEmpty());
+  gfx::Rect overlay_damage_rect =
+      overlay_processor_->GetAndResetOverlayDamage();
+  EXPECT_FALSE(overlay_damage_rect.IsEmpty());
 }
 
 TEST_F(SingleOverlayOnTopTest, RejectBackgroundColor) {
