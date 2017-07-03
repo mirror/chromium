@@ -521,7 +521,7 @@ class ComputedStyleBaseWriter(make_style_builder.StyleBuilderWriter):
             'ComputedStyleBaseConstants.h': self.generate_base_computed_style_constants,
         }
 
-    @template_expander.use_jinja('ComputedStyleBase.h.tmpl', tests={'in': lambda a, b: a in b})
+    @template_expander.use_jinja('templates/ComputedStyleBase.h.tmpl', tests={'in': lambda a, b: a in b})
     def generate_base_computed_style_h(self):
         return {
             'properties': self._properties,
@@ -531,7 +531,7 @@ class ComputedStyleBaseWriter(make_style_builder.StyleBuilderWriter):
             'diff_functions_map': self._diff_functions_map,
         }
 
-    @template_expander.use_jinja('ComputedStyleBase.cpp.tmpl', tests={'in': lambda a, b: a in b})
+    @template_expander.use_jinja('templates/ComputedStyleBase.cpp.tmpl', tests={'in': lambda a, b: a in b})
     def generate_base_computed_style_cpp(self):
         return {
             'properties': self._properties,
@@ -541,7 +541,7 @@ class ComputedStyleBaseWriter(make_style_builder.StyleBuilderWriter):
             'diff_functions_map': self._diff_functions_map,
         }
 
-    @template_expander.use_jinja('ComputedStyleBaseConstants.h.tmpl')
+    @template_expander.use_jinja('templates/ComputedStyleBaseConstants.h.tmpl')
     def generate_base_computed_style_constants(self):
         return {
             'properties': self._properties,
