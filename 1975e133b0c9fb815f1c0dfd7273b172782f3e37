@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "efa3c6a7_57c0a24d",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-03T08:21:14Z",
+      "side": 1,
+      "message": "Yes, I agree that we should basically use enums over booleans, but what worries me here is if we\u0027re mixing two different flags or not. kShutdown is a state, while enabled/disabled feels rather an operation mode to me.",
+      "parentUuid": "4472c9ca_993185b2",
+      "revId": "1975e133b0c9fb815f1c0dfd7273b172782f3e37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ac9a6f5_cf4176bc",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
         "patchSetId": 6
