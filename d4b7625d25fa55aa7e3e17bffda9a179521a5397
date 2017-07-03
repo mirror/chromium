@@ -16,6 +16,24 @@
       "revId": "d4b7625d25fa55aa7e3e17bffda9a179521a5397",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e03a9d5e_0d95f042",
+        "filename": "ui/file_manager/file_manager/foreground/js/main_window_component.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-07-03T07:21:19Z",
+      "side": 1,
+      "message": "Touch does actually trigger mousedown/up and click.\n\nFiled crbug.com/738803. This is a separate issue before this change, and it happen even with mouse clicks.",
+      "parentUuid": "72d09c54_98470711",
+      "revId": "d4b7625d25fa55aa7e3e17bffda9a179521a5397",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
