@@ -53,6 +53,11 @@ class SQLTableBuilder {
   // must not have been added to the table in this version before.
   void AddColumn(std::string name, std::string type);
 
+  // As AddColumn but also adds column |name| to the primary key of the table.
+  // SealVersion must not have been called yet (the builder does not currently
+  // support migration code for changing the primary key between versions).
+  void AddColumnToPrimaryKey(std::string name, std::string type);
+
   // As AddColumn but also adds column |name| to the unique key of the table.
   // SealVersion must not have been called yet (the builder does not currently
   // support migration code for changing the unique key between versions).
@@ -112,6 +117,9 @@ class SQLTableBuilder {
   // Same as ListAllNonuniqueKeyNames, but for unique key names and separated by
   // " AND ".
   std::string ListAllUniqueKeyNames() const;
+
+  // Same as ListAllUniqueKeyNames, but for primary key names.
+  std::string ListAllPrimaryKeyNames() const;
 
   // Returns the comma-separated list of all index names present in the last
   // version. The last version must be sealed.
@@ -176,6 +184,10 @@ class SQLTableBuilder {
   std::vector<Column> columns_;  // Columns of the table, across all versions.
 
   std::vector<Index> indices_;  // Indices of the table, across all versions.
+
+  // The "PRIMARY KEY" part of an SQL CREATE TABLE constraint. This value is
+  // computed dring sealing the first version (0).
+  std::string primary_key_constraint_;
 
   // The "UNIQUE" part of an SQL CREATE TABLE constraint. This value is
   // computed dring sealing the first version (0).
