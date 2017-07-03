@@ -1469,8 +1469,6 @@ void ResourceFetcher::StopFetching() {
 }
 
 void ResourceFetcher::SetDefersLoading(bool defers) {
-  // TODO(toyoshim): Let |scheduler_| know |defers| too.
-
   for (const auto& loader : non_blocking_loaders_)
     loader->SetDefersLoading(defers);
   for (const auto& loader : loaders_)

@@ -163,7 +163,8 @@ class PLATFORM_EXPORT ResourceLoader final
   // https://fetch.spec.whatwg.org/#request-keepalive-flag
   SelfKeepAlive<ResourceLoader> keepalive_;
 
-  bool is_cache_aware_loading_activated_;
+  bool is_cache_aware_loading_activated_ = false;
+  bool is_defered_loading_activated_ = false;
 };
 
 }  // namespace blink
