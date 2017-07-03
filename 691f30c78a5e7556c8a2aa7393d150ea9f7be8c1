@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "15dcfd7d_24c6da8e",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_commands.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-03T10:32:40Z",
+      "side": 1,
+      "message": "Context menu is used everywhere else the content suggestions. So I think it is fine to use modal for this (the only modals are context menus).",
+      "parentUuid": "e22e91c7_7a3fa226",
+      "range": {
+        "startLine": 29,
+        "startChar": 17,
+        "endLine": 29,
+        "endChar": 29
+      },
+      "revId": "691f30c78a5e7556c8a2aa7393d150ea9f7be8c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ee7f3fe_1fb107cf",
         "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller.mm",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "688baf56_1f587a40",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-03T10:32:40Z",
+      "side": 1,
+      "message": "Same",
+      "parentUuid": "0ee7f3fe_1fb107cf",
+      "range": {
+        "startLine": 96,
+        "startChar": 15,
+        "endLine": 96,
+        "endChar": 27
+      },
+      "revId": "691f30c78a5e7556c8a2aa7393d150ea9f7be8c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e809e8ae_8f7eb396",
         "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller.mm",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "691f30c78a5e7556c8a2aa7393d150ea9f7be8c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3cc38ea_71560777",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-03T10:32:40Z",
+      "side": 1,
+      "message": "Same.",
+      "parentUuid": "e809e8ae_8f7eb396",
+      "range": {
+        "startLine": 114,
+        "startChar": 15,
+        "endLine": 114,
+        "endChar": 27
+      },
+      "revId": "691f30c78a5e7556c8a2aa7393d150ea9f7be8c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
