@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e24afad_71bd37af",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-03T07:08:59Z",
+      "side": 1,
+      "message": "const ?",
+      "revId": "ec0aed125e804f867f8c92bf56223b027b0c9359",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
