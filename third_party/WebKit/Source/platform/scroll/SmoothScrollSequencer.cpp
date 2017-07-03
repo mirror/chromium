@@ -9,12 +9,14 @@
 
 namespace blink {
 
-SmoothScrollSequencer::SmoothScrollSequencer() {}
+DEFINE_TRACE(SequencedScroll) {
+  visitor->Trace(scrollable_area);
+}
 
 void SmoothScrollSequencer::QueueAnimation(ScrollableArea* scrollable,
-                                           ScrollOffset offset) {
-  ScrollerAndOffsetPair scroller_offset(scrollable, offset);
-  queue_.push_back(scroller_offset);
+                                           ScrollOffset offset,
+                                           ScrollBehavior behavior) {
+  queue_.push_back(new SequencedScroll(scrollable, offset, behavior));
 }
 
 void SmoothScrollSequencer::RunQueuedAnimations() {
@@ -22,13 +24,14 @@ void SmoothScrollSequencer::RunQueuedAnimations() {
     current_scrollable_ = nullptr;
     return;
   }
-  ScrollerAndOffsetPair scroller_offset = queue_.back();
+  SequencedScroll* sequenced_scroll = queue_.back();
   queue_.pop_back();
-  ScrollableArea* scrollable = scroller_offset.first;
-  current_scrollable_ = scrollable;
-  ScrollOffset offset = scroller_offset.second;
-  scrollable->SetScrollOffset(offset, kSequencedSmoothScroll,
-                              kScrollBehaviorSmooth);
+  current_scrollable_ = sequenced_scroll->scrollable_area;
+  current_scrollable_->SetScrollOffset(sequenced_scroll->scroll_offset,
+                                       kSequencedScroll,
+                                       sequenced_scroll->scroll_behavior);
+  if (sequenced_scroll->scroll_behavior != kScrollBehaviorSmooth)
+    RunQueuedAnimations();
 }
 
 void SmoothScrollSequencer::AbortAnimations() {

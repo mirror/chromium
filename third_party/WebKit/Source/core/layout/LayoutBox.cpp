@@ -650,7 +650,8 @@ void LayoutBox::ScrollRectToVisible(const LayoutRect& rect,
                                     ScrollType scroll_type,
                                     bool make_visible_in_visual_viewport,
                                     ScrollBehavior scroll_behavior) {
-  DCHECK(scroll_type == kProgrammaticScroll || scroll_type == kUserScroll);
+  DCHECK(scroll_type == kProgrammaticScroll || scroll_type == kUserScroll ||
+         scroll_type == kSequencedScroll);
   // Presumably the same issue as in setScrollTop. See crbug.com/343132.
   DisableCompositingQueryAsserts disabler;
 
@@ -671,7 +672,8 @@ void LayoutBox::ScrollRectToVisible(const LayoutRect& rect,
   }
 
   bool is_smooth = scroll_behavior == kScrollBehaviorSmooth ||
-                   (scroll_behavior == kScrollBehaviorAuto &&
+                   (scroll_type == kSequencedScroll &&
+                    scroll_behavior == kScrollBehaviorAuto &&
                     Style()->GetScrollBehavior() == kScrollBehaviorSmooth);
 
   if (!IsLayoutView() && HasOverflowClip() && !restricted_by_line_clamp) {
@@ -694,10 +696,10 @@ void LayoutBox::ScrollRectToVisible(const LayoutRect& rect,
             rect_to_scroll.Move(
                 LayoutSize(GetScrollableArea()->GetScrollOffset()));
           }
-          frame_view->GetScrollableArea()->ScrollIntoView(
+          new_rect = frame_view->GetScrollableArea()->ScrollIntoView(
               rect_to_scroll, align_x, align_y, is_smooth, scroll_type);
         } else {
-          frame_view->LayoutViewportScrollableArea()->ScrollIntoView(
+          new_rect = frame_view->LayoutViewportScrollableArea()->ScrollIntoView(
               rect_to_scroll, align_x, align_y, is_smooth, scroll_type);
         }
         if (owner_element && owner_element->GetLayoutObject()) {
@@ -707,7 +709,7 @@ void LayoutBox::ScrollRectToVisible(const LayoutRect& rect,
             new_rect = EnclosingLayoutRect(
                 View()
                     ->LocalToAncestorQuad(
-                        FloatRect(rect_to_scroll), parent_view,
+                        FloatRect(new_rect), parent_view,
                         kUseTransforms | kTraverseDocumentBoundaries)
                     .BoundingBox());
           } else {
