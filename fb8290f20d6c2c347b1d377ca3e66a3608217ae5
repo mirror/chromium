@@ -16,6 +16,24 @@
       "revId": "fb8290f20d6c2c347b1d377ca3e66a3608217ae5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2d6107f_4ddc0eb2",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-07-03T05:57:29Z",
+      "side": 1,
+      "message": "As discussed offline, I\u0027ll submit a separate change which adds doublequotes to spec texts",
+      "parentUuid": "0a4da3dc_2134861d",
+      "revId": "fb8290f20d6c2c347b1d377ca3e66a3608217ae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
