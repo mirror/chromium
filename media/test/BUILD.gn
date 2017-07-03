@@ -47,6 +47,7 @@ source_set("pipeline_integration_test_base") {
       "//media:test_support",
       "//media/audio:test_support",
       "//media/base:test_support",
+      "//media/cdm",
       "//testing/gmock",
       "//testing/gtest",
     ]
