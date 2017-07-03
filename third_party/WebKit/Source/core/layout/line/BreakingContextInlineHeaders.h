@@ -694,6 +694,21 @@ ALWAYS_INLINE float TextWidth(
   TextRun run = ConstructTextRun(font, text, from, len, text.StyleRef());
   run.SetTabSize(!collapse_white_space, text.Style()->GetTabSize());
   run.SetXPos(x_pos);
+
+  LineLayoutItem previous_sibling =
+      text.Style()->Direction() == TextDirection::kLtr ? text.PreviousSibling()
+                                                       : text.NextSibling();
+  if (!from && text.Style()->LetterSpacing() && previous_sibling &&
+      !previous_sibling.IsText())
+    run.SetUseLeadingLetterSpacing(true);
+
+  LineLayoutItem next_sibling = text.Style()->Direction() == TextDirection::kLtr
+                                    ? text.NextSibling()
+                                    : text.PreviousSibling();
+  bool contains_last_character = from + len == text.TextLength();
+  if (contains_last_character && text.Style()->LetterSpacing() && !next_sibling)
+    run.SetUseTrailingLetterSpacing(false);
+
   return font.Width(run, fallback_fonts, glyph_bounds);
 }
 
@@ -845,6 +860,21 @@ ALWAYS_INLINE bool BreakingContext::RewindToMidWordBreak(
   run.SetTabSize(!collapse_white_space_, style.GetTabSize());
   run.SetXPos(width_.CurrentWidth());
 
+  LineLayoutItem previous_sibling = style.Direction() == TextDirection::kLtr
+                                        ? text.PreviousSibling()
+                                        : text.NextSibling();
+  if (!start && style.LetterSpacing() && previous_sibling &&
+      !previous_sibling.IsText())
+    run.SetUseLeadingLetterSpacing(true);
+
+  LineLayoutItem next_sibling = text.Style()->Direction() == TextDirection::kLtr
+                                    ? text.NextSibling()
+                                    : text.PreviousSibling();
+  bool contains_last_character =
+      start + len == static_cast<int>(text.TextLength());
+  if (contains_last_character && text.Style()->LetterSpacing() && !next_sibling)
+    run.SetUseTrailingLetterSpacing(false);
+
   // TODO(kojii): should be replaced with safe-to-break when hb is ready.
   x_pos_to_break += LayoutUnit::Epsilon();
   if (run.Rtl())
@@ -890,6 +920,21 @@ ALWAYS_INLINE bool BreakingContext::Hyphenate(
   TextRun run = ConstructTextRun(font, text, start, len, style);
   run.SetTabSize(!collapse_white_space_, style.GetTabSize());
   run.SetXPos(width_.CurrentWidth());
+
+  LineLayoutItem previous_sibling = style.Direction() == TextDirection::kLtr
+                                        ? text.PreviousSibling()
+                                        : text.NextSibling();
+  if (!start && style.LetterSpacing() && previous_sibling &&
+      !previous_sibling.IsText())
+    run.SetUseLeadingLetterSpacing(true);
+
+  LineLayoutItem next_sibling = text.Style()->Direction() == TextDirection::kLtr
+                                    ? text.NextSibling()
+                                    : text.PreviousSibling();
+  bool contains_last_character = start + len == text.TextLength();
+  if (contains_last_character && text.Style()->LetterSpacing() && !next_sibling)
+    run.SetUseTrailingLetterSpacing(false);
+
   unsigned max_prefix_length =
       font.OffsetForPosition(run, max_prefix_width, false);
   if (max_prefix_length < Hyphenation::kMinimumPrefixLength)
