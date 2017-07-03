@@ -24,6 +24,10 @@
 #include "base/trace_event/process_memory_totals.h"
 #include "build/build_config.h"
 
+#if defined(OS_LINUX) || defined(OS_ANDROID)
+#include "services/resource_coordinator/public/cpp/memory_instrumentation/os_metrics.h"
+#endif  // defined(OS_LINUX) || defined(OS_ANDROID)
+
 #if defined(OS_MACOSX)
 #include <libproc.h>
 #include <mach/mach.h>
@@ -181,20 +185,6 @@ uint32_t ReadLinuxProcSmapsFile(FILE* smaps_file,
   return num_valid_regions;
 }
 
-bool GetResidentAndSharedPagesFromStatmFile(int fd,
-                                            uint64_t* resident_pages,
-                                            uint64_t* shared_pages) {
-  lseek(fd, 0, SEEK_SET);
-  char line[kMaxLineSize];
-  int res = read(fd, line, kMaxLineSize - 1);
-  if (res <= 0)
-    return false;
-  line[res] = '\0';
-  int num_scanned =
-      sscanf(line, "%*s %" SCNu64 " %" SCNu64, resident_pages, shared_pages);
-  return num_scanned == 2;
-}
-
 #endif  // defined(OS_LINUX) || defined(OS_ANDROID)
 
 std::unique_ptr<base::ProcessMetrics> CreateProcessMetrics(
@@ -250,6 +240,18 @@ bool ProcessMetricsMemoryDumpProvider::DumpProcessMemoryMaps(
     pmd->set_has_process_mmaps();
   return res;
 }
+
+bool GetResidentPagesFromStatmFile(int fd, uint64_t* resident_pages) {
+  lseek(fd, 0, SEEK_SET);
+  char line[kMaxLineSize];
+  int res = read(fd, line, kMaxLineSize - 1);
+  if (res <= 0)
+    return false;
+  line[res] = '\0';
+  int num_scanned = sscanf(line, "%*s %" SCNu64, resident_pages);
+  return num_scanned == 1;
+}
+
 #endif  // defined(OS_LINUX) || defined(OS_ANDROID)
 
 #if defined(OS_WIN)
@@ -646,27 +648,9 @@ bool ProcessMetricsMemoryDumpProvider::DumpProcessTotals(
   uint64_t peak_rss_bytes = 0;
 
 #if defined(OS_LINUX) || defined(OS_ANDROID)
-  base::trace_event::ProcessMemoryTotals::PlatformPrivateFootprint footprint;
-
-  base::ScopedFD autoclose;
-  int statm_fd = fast_polling_statm_fd_.get();
-  if (statm_fd == -1) {
-    autoclose = OpenStatm();
-    statm_fd = autoclose.get();
-  }
-  if (statm_fd == -1)
-    return false;
-  const static size_t page_size = base::GetPageSize();
-  uint64_t resident_pages;
-  uint64_t shared_pages;
-  bool success = GetResidentAndSharedPagesFromStatmFile(
-      statm_fd, &resident_pages, &shared_pages);
-  if (!success)
-    return false;
-
-  footprint.rss_anon_bytes = (resident_pages - shared_pages) * page_size;
-  footprint.vm_swap_bytes = process_metrics_->GetVmSwapBytes();
-  pmd->process_totals()->SetPlatformPrivateFootprint(footprint);
+  mojom::RawOSMemDumpPtr dump = GetOSMemoryDump(process_);
+  pmd->process_totals()->SetPlatformPrivateFootprint(
+      dump->platform_private_footprint);
 #endif  // defined(OS_LINUX) || defined(OS_ANDROID)
 
 #if defined(OS_WIN)
@@ -750,9 +734,7 @@ void ProcessMetricsMemoryDumpProvider::PollFastMemoryTotal(
   }
 
   uint64_t resident_pages = 0;
-  uint64_t ignored_shared_pages = 0;
-  if (!GetResidentAndSharedPagesFromStatmFile(statm_fd, &resident_pages,
-                                              &ignored_shared_pages))
+  if (!GetResidentPagesFromStatmFile(statm_fd, &resident_pages))
     return;
 
   static size_t page_size = base::GetPageSize();
