@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5afaab09_8a65f215",
+        "filename": "ios/showcase/core/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-03T09:11:09Z",
+      "side": 1,
+      "message": "Also add TODO to remove these?",
+      "range": {
+        "startLine": 20,
+        "startChar": 7,
+        "endLine": 20,
+        "endChar": 10
+      },
+      "revId": "0796890d0bc4be1a693cd62b1a4a84ec06572847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18add8a7_31a93ae6",
+        "filename": "ios/showcase/core/app_delegate.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-03T09:11:09Z",
+      "side": 1,
+      "message": "Maybe add a TODO with a bug indicating what transitive dependency makes this necessary.",
+      "range": {
+        "startLine": 72,
+        "startChar": 7,
+        "endLine": 72,
+        "endChar": 19
+      },
+      "revId": "0796890d0bc4be1a693cd62b1a4a84ec06572847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
