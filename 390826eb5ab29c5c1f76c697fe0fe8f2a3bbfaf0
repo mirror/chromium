@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e34a9c16_aa98e6c6",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_listener.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-03T10:51:00Z",
+      "side": 1,
+      "message": "Unrelated to this CL: By looking at the change, I got puzzled what is the role of the Listener here. \n - Usually, listener is an object that is registered with the _source_ of events and then receives calls on events.\n - Here, the Listener is an object registered with the _target_ of events and then calls the target on events.\n\nI am not sure if there is any common naming for such an object: wouldn\u0027t, e.g., BreakingNewsFeeder or BreakingNewsSource make more sense?",
+      "range": {
+        "startLine": 15,
+        "startChar": 6,
+        "endLine": 15,
+        "endChar": 26
+      },
+      "revId": "390826eb5ab29c5c1f76c697fe0fe8f2a3bbfaf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da8e4175_ed3bfe43",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_listener.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-03T10:51:00Z",
+      "side": 1,
+      "message": "Just to make sure: is this needed to be mockable?",
+      "range": {
+        "startLine": 28,
+        "startChar": 11,
+        "endLine": 28,
+        "endChar": 31
+      },
+      "revId": "390826eb5ab29c5c1f76c697fe0fe8f2a3bbfaf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "393fcf65_dfa917ad",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_suggestions_provider_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-03T10:51:00Z",
+      "side": 1,
+      "message": "ASSERT_TRUE?\n\nI do not think it makes sense to continue running the tests if this fails.",
+      "range": {
+        "startLine": 41,
+        "startChar": 4,
+        "endLine": 41,
+        "endChar": 15
+      },
+      "revId": "390826eb5ab29c5c1f76c697fe0fe8f2a3bbfaf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16d228be_6bd79f95",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_suggestions_provider_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-03T10:51:00Z",
+      "side": 1,
+      "message": "I think it is not fair to blame Marc here :)",
+      "range": {
+        "startLine": 63,
+        "startChar": 12,
+        "endLine": 63,
+        "endChar": 17
+      },
+      "revId": "390826eb5ab29c5c1f76c697fe0fe8f2a3bbfaf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
