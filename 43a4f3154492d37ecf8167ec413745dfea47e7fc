@@ -69,6 +69,24 @@
       "revId": "43a4f3154492d37ecf8167ec413745dfea47e7fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "170169ee_3e076255",
+        "filename": "components/arc/common/volume_mounter.typemap",
+        "patchSetId": 17
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-03T08:25:58Z",
+      "side": 1,
+      "message": "For the record, \"//chromeos\" and \"//chromeos:chromeos\" means exactly the same thing in gn.",
+      "parentUuid": "53073955_5ab8bd66",
+      "revId": "43a4f3154492d37ecf8167ec413745dfea47e7fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
