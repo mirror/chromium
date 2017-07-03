@@ -5,11 +5,13 @@
 #ifndef COMPONENTS_EXO_KEYBOARD_H_
 #define COMPONENTS_EXO_KEYBOARD_H_
 
+#include <map>
 #include <vector>
 
 #include "base/macros.h"
 #include "components/exo/surface_observer.h"
 #include "components/exo/wm_helper.h"
+#include "ui/events/event.h"
 #include "ui/events/event_handler.h"
 
 namespace ui {
@@ -19,6 +21,7 @@ class KeyEvent;
 
 namespace exo {
 class KeyboardDelegate;
+class KeyboardExtensionDelegate;
 class KeyboardDeviceConfigurationDelegate;
 class KeyboardExtensionDelegate;
 class Surface;
@@ -83,6 +86,8 @@ class Keyboard : public ui::EventHandler,
 
   // Current set of modifier flags.
   int modifier_flags_ = 0;
+
+  std::map<uint32_t, ui::KeyEvent> sent_key_events_;
 
   DISALLOW_COPY_AND_ASSIGN(Keyboard);
 };

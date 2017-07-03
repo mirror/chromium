@@ -8,7 +8,6 @@
 #include "components/exo/keyboard_extension_delegate.h"
 
 namespace exo {
-class Keyboard;
 
 // Used as an extension to the KeyboardDelegate.
 class KeyboardDeviceConfigurationDelegate : public KeyboardExtensionDelegate {
