@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6f34aed5_18075752",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-07-03T12:29:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "baad129a_983554ed",
+      "range": {
+        "startLine": 12,
+        "startChar": 4,
+        "endLine": 12,
+        "endChar": 0
+      },
+      "revId": "26d156a688d38ff9f8e161fc087045abc88167b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e06c347_7ff0d4d8",
         "filename": "chrome/browser/flag_descriptions.cc",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "26d156a688d38ff9f8e161fc087045abc88167b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e34a0177_806b2303",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2882,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-07-03T12:29:28Z",
+      "side": 1,
+      "message": "Ah, I see. That sounds a good explanation of \"Use or Enable\" choice.",
+      "parentUuid": "3e06c347_7ff0d4d8",
+      "revId": "26d156a688d38ff9f8e161fc087045abc88167b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
