@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f987725_dc1b1612",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_fetcher_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1063,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-03T14:07:04Z",
+      "side": 1,
+      "message": "Please use a valid timestamp here.",
+      "range": {
+        "startLine": 1063,
+        "startChar": 32,
+        "endLine": 1063,
+        "endChar": 64
+      },
+      "revId": "bc2bf0d1883987c19524981039dd049d5b62376f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "720da078_d8fd717b",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1871,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-03T14:07:04Z",
+      "side": 1,
+      "message": "You are appending to a vector that has been std::moved out. Isn\u0027t the behavior undefined?\n(same 2x below)",
+      "range": {
+        "startLine": 1871,
+        "startChar": 2,
+        "endLine": 1871,
+        "endChar": 20
+      },
+      "revId": "bc2bf0d1883987c19524981039dd049d5b62376f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9225f17c_05680794",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1956,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-03T14:07:04Z",
+      "side": 1,
+      "message": "nit: This feels a bit subtle. I know that some microseconds will pass from here till the suggestions are processed. What if there is a platform with a coarser granularity of time?",
+      "range": {
+        "startLine": 1956,
+        "startChar": 54,
+        "endLine": 1956,
+        "endChar": 71
+      },
+      "revId": "bc2bf0d1883987c19524981039dd049d5b62376f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8db7f6e6_71e2b8cc",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2005,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-03T14:07:04Z",
+      "side": 1,
+      "message": "nit: same here",
+      "range": {
+        "startLine": 2005,
+        "startChar": 54,
+        "endLine": 2005,
+        "endChar": 71
+      },
+      "revId": "bc2bf0d1883987c19524981039dd049d5b62376f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
