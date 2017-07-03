@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "985e571a_e5cbeb03",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-03T06:50:31Z",
+      "side": 1,
+      "message": "Sounds good! Done.",
+      "parentUuid": "2202954a_9d193a9c",
+      "revId": "8c6995a27248cb7a88523bb296fd3de637a8ef58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9532dad2_559aa684",
         "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.h",
         "patchSetId": 12
@@ -33,6 +51,24 @@
       "revId": "8c6995a27248cb7a88523bb296fd3de637a8ef58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1111e027_6f43636f",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-03T06:50:31Z",
+      "side": 1,
+      "message": "Yes, this is just for thread checking. \nI talked with nhiroki@ and now I think precise thread checking might not be necessary for this class. Removed.",
+      "parentUuid": "9532dad2_559aa684",
+      "revId": "8c6995a27248cb7a88523bb296fd3de637a8ef58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
