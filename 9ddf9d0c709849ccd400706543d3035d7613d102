@@ -22,6 +22,30 @@
       "revId": "9ddf9d0c709849ccd400706543d3035d7613d102",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b12be9d_c03876ee",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_layout_algorithm.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1002809
+      },
+      "writtenOn": "2017-07-03T20:09:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c10b6101_e0e1cf9e",
+      "range": {
+        "startLine": 285,
+        "startChar": 10,
+        "endLine": 285,
+        "endChar": 21
+      },
+      "revId": "9ddf9d0c709849ccd400706543d3035d7613d102",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
