@@ -2,6 +2,92 @@
   "comments": [
     {
       "key": {
+        "uuid": "22d3aa02_0f2150b9",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-03T14:03:46Z",
+      "side": 1,
+      "message": "I see why you are doing this caching, but for the moment I\u0027d probably just add a for loop in PerformNextQueuedGlobalMemoryDump() looking for the type\u003d\u003dBROWSER process there.\nIt\u0027s going to be an extra loop on each dump request, but for the moment, giving that we are touching this file a lot, will avoid messing this state variable during the refactors and will make the code in the interim easier to understand.\n \nSo I\u0027d do something like:\n- remove this browser_client_ \n- in PerformNextQueuedGlobalMemoryDump() do:\n\n// TODO(hjd): this should be cached and not computed every time.\n// Add a comment explaining why this happens (because of sandboxing)\nbrowser_client \u003d std::find_if(clients_.begin(), clients_.end(), [](...) { client.type \u003d\u003d BROWSER}",
+      "range": {
+        "startLine": 202,
+        "startChar": 4,
+        "endLine": 202,
+        "endChar": 19
+      },
+      "revId": "6161cc44103b0d6399b8479b903b42757fc125ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a813405_2873a69d",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-03T14:03:46Z",
+      "side": 1,
+      "message": "this all makes sense but please add (or just copy from the existing place) a comment explaining that this is bevause of the weird sandbox and link to the appropriate bug",
+      "range": {
+        "startLine": 238,
+        "startChar": 0,
+        "endLine": 238,
+        "endChar": 21
+      },
+      "revId": "6161cc44103b0d6399b8479b903b42757fc125ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "307be2f9_f0e884f3",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-03T14:03:46Z",
+      "side": 1,
+      "message": "Add a pids.reserve(clients_.size()) before the for loop: that will avoid expanding that inline within the loop",
+      "revId": "6161cc44103b0d6399b8479b903b42757fc125ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "158780ae_bbcc2934",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-03T14:03:46Z",
+      "side": 1,
+      "message": "I think there was a mail from brettw@ a while ago about avoiding unordererd_map and just use either map or flat_map (or extremely rarely unordererd_map, but only if you fall into that special usage case).\nSee https://groups.google.com/a/chromium.org/d/msg/chromium-dev/rdxOHKzQmRY/fgMJCEGxCgAJ\n\nGiven that this is not a fastpath I\u0027d just go for map without overengineering it too much\n(But I understand why you did this. Before Brett\u0027s email my rationale has always been: \"do you need a map? YES; Do you care about ordering? NO --\u003e use unordered_map\")",
+      "range": {
+        "startLine": 87,
+        "startChar": 21,
+        "endLine": 87,
+        "endChar": 34
+      },
+      "revId": "6161cc44103b0d6399b8479b903b42757fc125ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "128c9b68_3bbbf127",
         "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.h",
         "patchSetId": 1
@@ -13,6 +99,30 @@
       "writtenOn": "2017-06-28T15:33:55Z",
       "side": 1,
       "message": "Maintaining these two sets is kind of ugly maybe I should combine them into std::set\u003cPendingRequest\u003e or something?",
+      "range": {
+        "startLine": 136,
+        "startChar": 34,
+        "endLine": 136,
+        "endChar": 70
+      },
+      "revId": "6161cc44103b0d6399b8479b903b42757fc125ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e603fa8_07855af0",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-03T14:03:46Z",
+      "side": 1,
+      "message": "Yeah I think that a PendingRequests might avoid in future having bugs of the form: we forgot to check one of the two pending_ sets.",
+      "parentUuid": "128c9b68_3bbbf127",
       "range": {
         "startLine": 136,
         "startChar": 34,
