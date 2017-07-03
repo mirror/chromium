@@ -31,6 +31,8 @@
 #ifndef WebLocalFrameImpl_h
 #define WebLocalFrameImpl_h
 
+#include "controller/ControllerExport.h"
+#include "controller/LocalFrameClientImpl.h"
 #include "core/editing/VisiblePosition.h"
 #include "core/exported/WebInputMethodControllerImpl.h"
 #include "core/frame/ContentSettingsClient.h"
@@ -43,8 +45,6 @@
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/WebFileSystemType.h"
 #include "public/web/WebLocalFrame.h"
-#include "web/LocalFrameClientImpl.h"
-#include "web/WebExport.h"
 
 #include <memory>
 
@@ -81,7 +81,7 @@ template <typename T>
 class WebVector;
 
 // Implementation of WebFrame, note that this is a reference counted object.
-class WEB_EXPORT WebLocalFrameImpl final
+class CONTROLLER_EXPORT WebLocalFrameImpl final
     : NON_EXPORTED_BASE(public WebLocalFrameBase) {
  public:
   // WebFrame methods:

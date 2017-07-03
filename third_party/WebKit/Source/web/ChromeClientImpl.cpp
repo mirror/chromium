@@ -34,6 +34,7 @@
 #include <memory>
 #include "bindings/core/v8/ScriptController.h"
 #include "controller/WebFrameWidgetImpl.h"
+#include "controller/WebLocalFrameImpl.h"
 #include "core/HTMLNames.h"
 #include "core/dom/Document.h"
 #include "core/dom/Fullscreen.h"
@@ -108,7 +109,6 @@
 #include "public/web/WebUserGestureToken.h"
 #include "public/web/WebViewClient.h"
 #include "public/web/WebWindowFeatures.h"
-#include "web/WebLocalFrameImpl.h"
 
 namespace blink {
 
