@@ -231,9 +231,10 @@ LayoutRect RootFrameViewport::ScrollIntoView(const LayoutRect& rect_in_content,
       view_rect_in_content, rect_in_content, align_x, align_y);
   if (target_viewport != view_rect_in_content) {
     ScrollOffset target_offset(target_viewport.X(), target_viewport.Y());
-    if (is_smooth) {
-      DCHECK(scroll_type == kProgrammaticScroll);
-      GetSmoothScrollSequencer()->QueueAnimation(this, target_offset);
+    if (scroll_type == kSequencedScroll) {
+      ScrollBehavior behavior =
+          is_smooth ? kScrollBehaviorSmooth : kScrollBehaviorInstant;
+      GetSmoothScrollSequencer()->QueueAnimation(this, target_offset, behavior);
     } else {
       SetScrollOffset(target_offset, scroll_type);
     }
