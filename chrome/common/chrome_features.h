@@ -147,8 +147,6 @@ extern const base::Feature kDisablePostScriptPrinting;
 extern const base::Feature kPreferHtmlOverPlugins;
 #endif
 
-extern const base::Feature kPrefService;
-
 #if defined(OS_CHROMEOS)
 extern const base::Feature kPreloadLockScreen;
 #endif
