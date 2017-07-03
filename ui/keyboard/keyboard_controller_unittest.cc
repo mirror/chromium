@@ -339,7 +339,7 @@ INSTANTIATE_TEST_CASE_P(NewAndOldBehavior,
 TEST_P(KeyboardControllerTest, KeyboardSize) {
   aura::Window* container(controller()->GetContainerWindow());
   aura::Window* keyboard(ui()->GetKeyboardWindow());
-  gfx::Rect screen_bounds = root_window()->bounds();
+  const gfx::Rect screen_bounds = root_window()->bounds();
   root_window()->AddChild(container);
   container->AddChild(keyboard);
   const gfx::Rect& initial_bounds = container->bounds();
