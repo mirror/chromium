@@ -15,7 +15,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/test/test_mock_time_task_runner.h"
 #include "base/test/test_simple_task_runner.h"
-#include "base/threading/thread_task_runner_handle.h"
+#include "base/threading/sequenced_task_runner_handle.h"
 #include "components/password_manager/core/browser/android_affiliation/fake_affiliation_api.h"
 #include "components/password_manager/core/browser/android_affiliation/mock_affiliation_consumer.h"
 #include "testing/gmock/include/gmock/gmock.h"
@@ -90,7 +90,7 @@ class AffiliationServiceTest : public testing::Test {
   }
 
   scoped_refptr<base::TestSimpleTaskRunner> main_task_runner_;
-  base::ThreadTaskRunnerHandle main_task_runner_handle_;
+  base::SequencedTaskRunnerHandle main_task_runner_handle_;
   scoped_refptr<base::TestMockTimeTaskRunner> background_task_runner_;
 
   ScopedFakeAffiliationAPI fake_affiliation_api_;
