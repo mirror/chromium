@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c74aa9ee_04f34b70",
+        "filename": "components/password_manager/core/browser/sql_table_builder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-03T18:15:22Z",
+      "side": 1,
+      "message": "To avoid duplicating the computation (see CreateTable), consider making constraints a data member of SQLTableBuilder. Perhaps it could even replace the individual constraints?",
+      "range": {
+        "startLine": 421,
+        "startChar": 16,
+        "endLine": 421,
+        "endChar": 27
+      },
+      "revId": "86ed74867d7a8f409945a25d7593285d48e96d0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7a6d5fa_420d4e39",
+        "filename": "components/password_manager/core/browser/sql_table_builder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-03T18:15:22Z",
+      "side": 1,
+      "message": "Just checking that you know this will be useful for primary keys as well. It has been specially tailored for how LoginDatabase uses the DB interface.\nI cannot tell, because I don\u0027t know yet, how you use them.\n\nI should also have asked this question about ListAllIndexNames in one of your earlier CLs.\n\nI would like to make sure that we only grow this API as needed, not too much to satisfy the symmetries.",
+      "range": {
+        "startLine": 122,
+        "startChar": 14,
+        "endLine": 122,
+        "endChar": 36
+      },
+      "revId": "86ed74867d7a8f409945a25d7593285d48e96d0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ceedb927_dc173aaf",
+        "filename": "components/password_manager/core/browser/sql_table_builder_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-03T18:15:22Z",
+      "side": 1,
+      "message": "I\u0027m a bit surprised by this. I thought a primary key is a special type of a unique key?",
+      "range": {
+        "startLine": 292,
+        "startChar": 13,
+        "endLine": 292,
+        "endChar": 18
+      },
+      "revId": "86ed74867d7a8f409945a25d7593285d48e96d0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98d26933_3727dcd7",
+        "filename": "components/password_manager/core/browser/sql_table_builder_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-03T18:15:22Z",
+      "side": 1,
+      "message": "I\u0027m wondering whether this results in valid SQL during table creation.\nIIUC from [1], specifying the primary key over multiple columns results in just one use of the PRIMARY KEY keyword: \"...CONSTRAINTS Name PRIMARY KEY (col1, col2)\". If I read the code correctly, though, the result is multiple occurrences of PRIMARY KEY, which should not be allowed.\n\n[1] https://www.w3schools.com/sql/sql_primarykey.asp",
+      "range": {
+        "startLine": 319,
+        "startChar": 13,
+        "endLine": 319,
+        "endChar": 34
+      },
+      "revId": "86ed74867d7a8f409945a25d7593285d48e96d0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
