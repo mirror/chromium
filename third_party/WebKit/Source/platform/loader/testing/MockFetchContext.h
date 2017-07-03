@@ -20,6 +20,7 @@ namespace blink {
 class KURL;
 class ResourceRequest;
 class WebTaskRunner;
+class Element;
 struct ResourceLoaderOptions;
 
 // Mocked FetchContext for testing.
@@ -55,13 +56,13 @@ class MockFetchContext : public FetchContext {
   bool AllowImage(bool images_enabled, const KURL&) const override {
     return true;
   }
-  ResourceRequestBlockedReason CanRequest(
-      Resource::Type,
-      const ResourceRequest&,
-      const KURL&,
-      const ResourceLoaderOptions&,
-      SecurityViolationReportingPolicy,
-      FetchParameters::OriginRestriction) const override {
+  ResourceRequestBlockedReason CanRequest(Resource::Type,
+                                          const ResourceRequest&,
+                                          const KURL&,
+                                          const ResourceLoaderOptions&,
+                                          SecurityViolationReportingPolicy,
+                                          FetchParameters::OriginRestriction,
+                                          Element* element) const override {
     return ResourceRequestBlockedReason::kNone;
   }
   ResourceRequestBlockedReason CanFollowRedirect(
@@ -72,7 +73,7 @@ class MockFetchContext : public FetchContext {
       SecurityViolationReportingPolicy reporting_policy,
       FetchParameters::OriginRestriction origin_restriction) const override {
     return CanRequest(type, request, url, options, reporting_policy,
-                      origin_restriction);
+                      origin_restriction, nullptr);
   }
   bool ShouldLoadNewResource(Resource::Type) const override {
     return load_policy_ == kShouldLoadNewResource;

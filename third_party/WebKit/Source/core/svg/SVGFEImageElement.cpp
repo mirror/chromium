@@ -75,7 +75,8 @@ void SVGFEImageElement::FetchImageResource() {
   options.initiator_info.name = localName();
   FetchParameters params(
       ResourceRequest(GetDocument().CompleteURL(HrefString())), options);
-  cached_image_ = ImageResourceContent::Fetch(params, GetDocument().Fetcher());
+  cached_image_ =
+      ImageResourceContent::Fetch(params, GetDocument().Fetcher(), this);
 
   if (cached_image_)
     cached_image_->AddObserver(this);

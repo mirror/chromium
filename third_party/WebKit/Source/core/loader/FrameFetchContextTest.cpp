@@ -201,7 +201,8 @@ class FrameFetchContextSubresourceFilterTest : public FrameFetchContextTest {
     ResourceLoaderOptions options;
     return fetch_context->CanRequest(
         Resource::kImage, resource_request, input_url, options,
-        reporting_policy, FetchParameters::kUseDefaultOriginRestrictionForType);
+        reporting_policy, FetchParameters::kUseDefaultOriginRestrictionForType,
+        nullptr);
   }
 
   int filtered_load_callback_counter_;

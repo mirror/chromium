@@ -51,6 +51,7 @@ class MockScriptElementBase
   MOCK_METHOD1(SetScriptElementForBinding,
                void(HTMLScriptElementOrSVGScriptElement&));
   MOCK_CONST_METHOD0(Loader, ScriptLoader*());
+  MOCK_METHOD0(ElementPointerIfPossible, Element*());
 
   DEFINE_INLINE_VIRTUAL_TRACE() { ScriptElementBase::Trace(visitor); }
 };

@@ -81,7 +81,8 @@ RawResource* RawResource::FetchMainResource(
              WebURLRequest::kRequestContextLocation);
 
   return ToRawResource(fetcher->RequestResource(
-      params, RawResourceFactory(Resource::kMainResource), substitute_data));
+      params, RawResourceFactory(Resource::kMainResource), nullptr,
+      substitute_data));
 }
 
 RawResource* RawResource::FetchMedia(FetchParameters& params,

@@ -79,7 +79,7 @@ StyleImage* CSSImageValue::CacheImage(
       document.GetFrame()->MaybeAllowImagePlaceholder(params);
 
     if (ImageResourceContent* cached_image =
-            ImageResourceContent::Fetch(params, document.Fetcher())) {
+            ImageResourceContent::Fetch(params, document.Fetcher(), nullptr)) {
       cached_image_ =
           StyleFetchedImage::Create(cached_image, document, params.Url());
     } else {

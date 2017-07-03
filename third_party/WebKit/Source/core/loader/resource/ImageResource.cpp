@@ -148,7 +148,8 @@ class ImageResource::ImageResourceFactory : public NonTextResourceFactory {
 };
 
 ImageResource* ImageResource::Fetch(FetchParameters& params,
-                                    ResourceFetcher* fetcher) {
+                                    ResourceFetcher* fetcher,
+                                    Element* element) {
   if (params.GetResourceRequest().GetRequestContext() ==
       WebURLRequest::kRequestContextUnspecified) {
     params.SetRequestContext(WebURLRequest::kRequestContextImage);
@@ -163,7 +164,7 @@ ImageResource* ImageResource::Fetch(FetchParameters& params,
           params.IsSpeculativePreload()
               ? SecurityViolationReportingPolicy::kSuppressReporting
               : SecurityViolationReportingPolicy::kReport,
-          params.GetOriginRestriction());
+          params.GetOriginRestriction(), element);
       if (block_reason == ResourceRequestBlockedReason::kNone)
         fetcher->Context().SendImagePing(request_url);
     }
@@ -171,7 +172,7 @@ ImageResource* ImageResource::Fetch(FetchParameters& params,
   }
 
   return ToImageResource(
-      fetcher->RequestResource(params, ImageResourceFactory(params)));
+      fetcher->RequestResource(params, ImageResourceFactory(params), element));
 }
 
 bool ImageResource::CanReuse(const FetchParameters& params) const {
