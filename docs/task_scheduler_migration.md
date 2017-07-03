@@ -101,6 +101,9 @@ assigned files by:
      with a comment and ideally a bug to make it sequence when the sequence-unfriendly
      dependency is addressed (again [Prefer Sequences to
      Threads](threading_and_tasks.md#Prefer-Sequences-to-Threads)).
+* BelongsToCurrentThread -> RunsTasksInCurrentSequence
+* CalledOnValidThread -> `DCHECK_CALLED_ON_VALID_SEQUENCE`
+
 
 ### Other relevant mappings for tests
 
