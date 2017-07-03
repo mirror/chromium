@@ -13,6 +13,7 @@
 #include "chrome/common/page_load_metrics/test/weak_mock_timer.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/test/base/chrome_render_view_host_test_harness.h"
+#include "components/ukm/test_ukm_recorder.h"
 #include "content/public/browser/global_request_id.h"
 #include "content/public/test/web_contents_tester.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
@@ -29,6 +30,57 @@ class PageLoadMetricsObserverTestHarness
  public:
   // Sample URL for resource loads.
   static const char kResourceUrl[];
+
+  class UkmTester {
+   public:
+    UkmTester() {}
+
+    // Sets up UKM test infrastructure. Intended to be called as part of a test
+    // fixture's SetUp() method.
+    void SetUp();
+
+    // Number of sources recorded.
+    size_t sources_count() const { return test_ukm_recorder_.sources_count(); }
+
+    // Number of entries recorded.
+    size_t entries_count() const { return test_ukm_recorder_.entries_count(); }
+
+    const ukm::UkmSource* GetSourceForUrl(const char* url) const;
+
+    std::vector<const ukm::UkmSource*> GetSourcesForUrl(const char* url) const;
+
+    bool HasEntry(const ukm::UkmSource& source,
+                  const char* event) const WARN_UNUSED_RESULT;
+
+    int CountMetrics(const ukm::UkmSource& source, const char* event) const;
+
+    bool HasMetric(const ukm::UkmSource& source,
+                   const char* event,
+                   const char* name) const WARN_UNUSED_RESULT;
+
+    void ExpectMetric(const ukm::UkmSource& source,
+                      const char* event,
+                      const char* name,
+                      int64_t expected_value) const;
+
+   private:
+    ukm::mojom::UkmEntryPtr GetMergedEntryForSourceID(ukm::SourceId source_id,
+                                                      const char* event) const;
+
+    std::vector<const ukm::mojom::UkmEntry*> GetEntriesForSourceID(
+        ukm::SourceId source_id,
+        const char* event) const;
+
+    // Provides a single merged ukm::mojom::UkmEntry proto that contains all
+    // metrics from the given |entries|. |entries| must be non-empty, and all
+    // |entries| must have the same |source_id| and |event_hash|.
+    static ukm::mojom::UkmEntryPtr GetMergedEntry(
+        const std::vector<const ukm::mojom::UkmEntry*>& entries);
+
+    ukm::TestUkmRecorder test_ukm_recorder_;
+
+    DISALLOW_COPY_AND_ASSIGN(UkmTester);
+  };
 
   PageLoadMetricsObserverTestHarness();
   ~PageLoadMetricsObserverTestHarness() override;
@@ -86,8 +138,11 @@ class PageLoadMetricsObserverTestHarness
   // Gets the PageLoadExtraInfo for the committed_load_ in observer_.
   const PageLoadExtraInfo GetPageLoadExtraInfoForCommittedLoad();
 
+  const UkmTester& ukm_tester() const { return ukm_tester_; }
+
  private:
   base::HistogramTester histogram_tester_;
+  UkmTester ukm_tester_;
   MetricsWebContentsObserver* observer_;
 
   DISALLOW_COPY_AND_ASSIGN(PageLoadMetricsObserverTestHarness);
