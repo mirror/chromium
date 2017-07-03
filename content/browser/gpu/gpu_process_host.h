@@ -30,6 +30,7 @@
 #include "gpu/ipc/common/surface_handle.h"
 #include "ipc/ipc_sender.h"
 #include "ipc/message_filter.h"
+#include "media/mojo/interfaces/video_encode_accelerator.mojom.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "services/ui/gpu/interfaces/gpu_host.mojom.h"
 #include "services/ui/gpu/interfaces/gpu_main.mojom.h"
@@ -133,6 +134,10 @@ class GpuProcessHost : public BrowserChildProcessHostDelegate,
                            bool allow_view_command_buffers,
                            bool allow_real_time_streams,
                            const EstablishChannelCallback& callback);
+
+  // Mimics the method with the same name in gpu_service.mojom.
+  void CreateVideoEncodeAccelerator(
+      media::mojom::VideoEncodeAcceleratorRequest vea);
 
   // Tells the GPU process to create a new GPU memory buffer.
   void CreateGpuMemoryBuffer(gfx::GpuMemoryBufferId id,
