@@ -34,6 +34,8 @@ component("controller") {
 
   sources = [
     "ControllerExport.h",
+    "WebDevToolsAgentImpl.cpp",
+    "WebDevToolsAgentImpl.h",
   ]
 
   if (is_mac) {
