@@ -1,0 +1,5 @@
+CONSOLE ERROR: Subresource Integrity: The resource 'http://127.0.0.1:8000/security/subresourceIntegrity/fail.js' has an integrity attribute, but the resource requires the request to be CORS enabled to check the integrity, and it is not. The resource has been blocked because the integrity cannot be enforced.
+ALERT: FAIL
+This test passes if only one 'FAIL' alert appears.
+
+  
