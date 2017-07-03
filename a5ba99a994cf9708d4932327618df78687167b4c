@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e09130cf_8c81f32e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-03T17:07:45Z",
+      "side": 1,
+      "message": "I would mention that the goal is to see which ones can be deprecated.",
+      "revId": "a5ba99a994cf9708d4932327618df78687167b4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "838a7418_0454d4da",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSSelectorParser.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 902,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-03T17:07:45Z",
+      "side": 1,
+      "message": "I think you are missing :-webkit-media-controls-timeline-container",
+      "revId": "a5ba99a994cf9708d4932327618df78687167b4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
