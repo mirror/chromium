@@ -135,6 +135,12 @@ void GpuMain::CreateFrameSinkManager(
   CreateFrameSinkManagerInternal(std::move(request), client.PassInterface());
 }
 
+void GpuMain::CreateJpegDecoder(
+    media::mojom::GpuJpegDecodeAcceleratorRequest request) {
+  // TODO(c.padhi): Implement this, see http://crbug.com/699255.
+  NOTIMPLEMENTED();
+}
+
 void GpuMain::BindOnGpu(mojom::GpuMainRequest request) {
   binding_.Bind(std::move(request));
 }

@@ -15,6 +15,7 @@
 #include "base/threading/thread.h"
 #include "cc/output/context_provider.h"
 #include "gpu/ipc/client/gpu_channel_host.h"
+#include "media/gpu/mojo/jpeg_decoder.mojom.h"
 #include "services/ui/public/cpp/gpu/client_gpu_memory_buffer_manager.h"
 #include "services/ui/public/interfaces/gpu.mojom.h"
 
@@ -43,6 +44,8 @@ class Gpu : public gpu::GpuChannelHostFactory,
 
   scoped_refptr<cc::ContextProvider> CreateContextProvider(
       scoped_refptr<gpu::GpuChannelHost> gpu_channel);
+
+  void CreateJpegDecoder(media::mojom::GpuJpegDecodeAcceleratorRequest request);
 
   // gpu::GpuChannelEstablishFactory:
   void EstablishGpuChannel(

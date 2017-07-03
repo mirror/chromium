@@ -759,6 +759,11 @@ void GpuProcessHost::DestroyGpuMemoryBuffer(gfx::GpuMemoryBufferId id,
   gpu_service_ptr_->DestroyGpuMemoryBuffer(id, client_id, sync_token);
 }
 
+void GpuProcessHost::CreateJpegDecoder(
+    media::mojom::GpuJpegDecodeAcceleratorRequest request) {
+  gpu_main_ptr_->CreateJpegDecoder(std::move(request));
+}
+
 void GpuProcessHost::RequestGPUInfo(RequestGPUInfoCallback request_cb) {
   if (status_ == SUCCESS || status_ == FAILURE) {
     std::move(request_cb).Run(GpuDataManagerImpl::GetInstance()->GetGPUInfo());

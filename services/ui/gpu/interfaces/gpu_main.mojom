@@ -6,6 +6,7 @@ module ui.mojom;
 
 import "cc/ipc/frame_sink_manager.mojom";
 import "gpu/ipc/common/gpu_preferences.mojom";
+import "media/gpu/mojo/jpeg_decoder.mojom";
 import "services/ui/gpu/interfaces/gpu_host.mojom";
 import "services/ui/gpu/interfaces/gpu_service.mojom";
 
@@ -20,4 +21,6 @@ interface GpuMain {
                    GpuHost gpu_host,
                    gpu.mojom.GpuPreferences preferences,
                    handle<shared_buffer>? activity_flags);
+
+  CreateJpegDecoder(media.mojom.GpuJpegDecodeAccelerator& request);
 };

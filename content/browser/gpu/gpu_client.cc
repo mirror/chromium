@@ -106,4 +106,13 @@ void GpuClient::DestroyGpuMemoryBuffer(gfx::GpuMemoryBufferId id,
       id, render_process_id_, sync_token);
 }
 
+void GpuClient::CreateJpegDecoder(
+    media::mojom::GpuJpegDecodeAcceleratorRequest request) {
+  GpuProcessHost* host = GpuProcessHost::Get();
+  if (!host)
+    return;
+
+  host->CreateJpegDecoder(std::move(request));
+}
+
 }  // namespace content

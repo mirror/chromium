@@ -39,6 +39,8 @@ class GpuMain : public gpu::GpuSandboxHelper, public mojom::GpuMain {
   void CreateFrameSinkManager(
       cc::mojom::FrameSinkManagerRequest request,
       cc::mojom::FrameSinkManagerClientPtr client) override;
+  void CreateJpegDecoder(
+      media::mojom::GpuJpegDecodeAcceleratorRequest request) override;
 
   void OnStart();
 
