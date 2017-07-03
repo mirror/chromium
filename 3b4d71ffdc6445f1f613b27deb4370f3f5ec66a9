@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c473719f_974a9e9d",
+        "filename": "ios/chrome/browser/ui/settings/password_details_collection_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-03T14:17:43Z",
+      "side": 1,
+      "message": "Optional nit: Calling this here scatters a bit the calls to the metric. Should this be internal to the reauthentication module and here we\u0027d call:\n[_weakReauthenticationModule skipReauth];\nor something similar?\nOr is it classic in Chromium code to scatter histograms like this? I miss high-level view on that, so I defer to you or Robert.",
+      "revId": "3b4d71ffdc6445f1f613b27deb4370f3f5ec66a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
