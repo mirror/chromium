@@ -65,6 +65,10 @@ class CONTENT_EXPORT ServiceWorkerScriptCacheMap {
     return main_script_status_message_;
   }
 
+  base::WeakPtr<ServiceWorkerScriptCacheMap> AsWeakPtr() {
+    return weak_factory_.GetWeakPtr();
+  }
+
  private:
   typedef std::map<GURL, ServiceWorkerDatabase::ResourceRecord> ResourceMap;
 

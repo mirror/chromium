@@ -42,10 +42,12 @@
 #include "core/workers/WorkerBackingThread.h"
 #include "core/workers/WorkerClients.h"
 #include "core/workers/WorkerGlobalScope.h"
+#include "core/workers/WorkerInstalledScriptsManager.h"
 #include "core/workers/WorkerReportingProxy.h"
 #include "core/workers/WorkerThreadStartupData.h"
 #include "platform/CrossThreadFunctional.h"
 #include "platform/Histogram.h"
+#include "platform/RuntimeEnabledFeatures.h"
 #include "platform/WaitableEvent.h"
 #include "platform/WebThreadSupportingGC.h"
 #include "platform/bindings/Microtask.h"
@@ -467,7 +469,6 @@ void WorkerThread::InitializeOnWorkerThread(
   bool allow_atomics_wait =
       startup_data->worker_v8_settings_.atomics_wait_mode_ ==
       WorkerV8Settings::AtomicsWaitMode::kAllow;
-
   {
     MutexLocker lock(thread_state_mutex_);
 
@@ -518,7 +519,8 @@ void WorkerThread::InitializeOnWorkerThread(
 
   String source_code;
   std::unique_ptr<Vector<char>> cached_meta_data;
-  if (GetInstalledScriptsManager() &&
+  if (RuntimeEnabledFeatures::ServiceWorkerScriptStreamingEnabled() &&
+      GetInstalledScriptsManager() &&
       GetInstalledScriptsManager()->IsScriptInstalled(script_url)) {
     // TODO(shimazu): Set ContentSecurityPolicy, ReferrerPolicy and
     // OriginTrialTokens to |startup_data|.

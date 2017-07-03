@@ -27,6 +27,7 @@
 #include "content/browser/service_worker/service_worker_client_utils.h"
 #include "content/browser/service_worker/service_worker_context_core.h"
 #include "content/browser/service_worker/service_worker_context_wrapper.h"
+#include "content/browser/service_worker/service_worker_installed_scripts_sender.h"
 #include "content/browser/service_worker/service_worker_registration.h"
 #include "content/common/origin_trials/trial_token_validator.h"
 #include "content/common/service_worker/embedded_worker_messages.h"
@@ -784,6 +785,7 @@ void ServiceWorkerVersion::SetDevToolsAttached(bool attached) {
 
 void ServiceWorkerVersion::SetMainScriptHttpResponseInfo(
     const net::HttpResponseInfo& http_info) {
+  LOG(ERROR) << __PRETTY_FUNCTION__;
   main_script_http_info_.reset(new net::HttpResponseInfo(http_info));
 
   // Updates |origin_trial_tokens_| if it is not set yet. This happens when:
@@ -812,6 +814,7 @@ void ServiceWorkerVersion::SetTickClockForTesting(
 
 const net::HttpResponseInfo*
 ServiceWorkerVersion::GetMainScriptHttpResponseInfo() {
+  LOG(ERROR) << __PRETTY_FUNCTION__;
   return main_script_http_info_.get();
 }
 
@@ -1474,8 +1477,14 @@ void ServiceWorkerVersion::StartWorkerInternal() {
   params->is_installed = IsInstalled(status_);
   params->pause_after_download = pause_after_download_;
 
+  DCHECK(!installed_scripts_sender_);
+  installed_scripts_sender_ =
+      base::MakeUnique<ServiceWorkerInstalledScriptsSender>(
+          this, script_url(), script_cache_map()->AsWeakPtr(), context());
+
   embedded_worker_->Start(
       std::move(params), mojo::MakeRequest(&event_dispatcher_),
+      installed_scripts_sender_->CreateInfoAndBind(),
       base::Bind(&ServiceWorkerVersion::OnStartSentAndScriptEvaluated,
                  weak_factory_.GetWeakPtr()));
   event_dispatcher_.set_connection_error_handler(base::Bind(
@@ -1835,6 +1844,7 @@ void ServiceWorkerVersion::OnStoppedInternal(EmbeddedWorkerStatus old_status) {
   pending_requests_.Clear();
   external_request_uuid_to_request_id_.clear();
   event_dispatcher_.reset();
+  installed_scripts_sender_.reset();
 
   // TODO(falken): Call SWURLRequestJob::ClearStream here?
   streaming_url_request_jobs_.clear();
