@@ -170,6 +170,19 @@ class CORE_EXPORT WorkerGlobalScope
   const KURL& VirtualURL() const final { return url_; }
   KURL VirtualCompleteURL(const String&) const final;
 
+  enum class ImportScriptResult { kSuccess, kFailed, kNotHandled };
+  ImportScriptResult MaybeHandleImportScriptByInstalledScriptsManager(
+      const KURL& script_url,
+      ExceptionState&);
+  ImportScriptResult HandleImportScriptByScriptLoader(const KURL& script_url,
+                                                      ExecutionContext&,
+                                                      ExceptionState&);
+  bool EvaluateImportScript(const KURL& script_url,
+                            const KURL& response_url,
+                            std::unique_ptr<Vector<char>> cached_meta_data,
+                            String source_code,
+                            ExceptionState&);
+
   // SecurityContext
   void DidUpdateSecurityOrigin() final {}
 

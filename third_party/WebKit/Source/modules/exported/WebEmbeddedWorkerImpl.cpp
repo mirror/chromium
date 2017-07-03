@@ -84,11 +84,14 @@ namespace blink {
 
 template class MODULES_EXPORT WorkerClientsInitializer<WebEmbeddedWorkerImpl>;
 
-WebEmbeddedWorker* WebEmbeddedWorker::Create(
-    WebServiceWorkerContextClient* client,
-    WebContentSettingsClient* content_settings_client) {
-  return new WebEmbeddedWorkerImpl(WTF::WrapUnique(client),
-                                   WTF::WrapUnique(content_settings_client));
+std::unique_ptr<WebEmbeddedWorker> WebEmbeddedWorker::Create(
+    std::unique_ptr<WebServiceWorkerContextClient> client,
+    std::unique_ptr<WebServiceWorkerInstalledScriptsManager>
+        installed_scripts_manager,
+    std::unique_ptr<WebContentSettingsClient> content_settings_client) {
+  return WTF::MakeUnique<WebEmbeddedWorkerImpl>(
+      std::move(client), std::move(installed_scripts_manager),
+      std::move(content_settings_client));
 }
 
 static HashSet<WebEmbeddedWorkerImpl*>& RunningWorkerInstances() {
@@ -98,10 +101,10 @@ static HashSet<WebEmbeddedWorkerImpl*>& RunningWorkerInstances() {
 
 WebEmbeddedWorkerImpl::WebEmbeddedWorkerImpl(
     std::unique_ptr<WebServiceWorkerContextClient> client,
+    std::unique_ptr<WebServiceWorkerInstalledScriptsManager>
+        installed_scripts_manager,
     std::unique_ptr<WebContentSettingsClient> content_settings_client)
     : worker_context_client_(std::move(client)),
-      installed_scripts_manager_(
-          WTF::MakeUnique<ServiceWorkerInstalledScriptsManager>()),
       content_settings_client_(std::move(content_settings_client)),
       worker_inspector_proxy_(WorkerInspectorProxy::Create()),
       web_view_(nullptr),
@@ -111,6 +114,13 @@ WebEmbeddedWorkerImpl::WebEmbeddedWorkerImpl(
       pause_after_download_state_(kDontPauseAfterDownload),
       waiting_for_debugger_state_(kNotWaitingForDebugger) {
   RunningWorkerInstances().insert(this);
+
+  if (RuntimeEnabledFeatures::ServiceWorkerScriptStreamingEnabled()) {
+    DCHECK(installed_scripts_manager);
+    installed_scripts_manager_ =
+        WTF::MakeUnique<ServiceWorkerInstalledScriptsManager>(
+            std::move(installed_scripts_manager));
+  }
 }
 
 WebEmbeddedWorkerImpl::~WebEmbeddedWorkerImpl() {
@@ -333,7 +343,8 @@ void WebEmbeddedWorkerImpl::DidFinishDocumentLoad() {
 
   // Kickstart the worker before loading the script when the script has been
   // installed.
-  if (installed_scripts_manager_->IsScriptInstalled(
+  if (RuntimeEnabledFeatures::ServiceWorkerScriptStreamingEnabled() &&
+      installed_scripts_manager_->IsScriptInstalled(
           worker_start_data_.script_url)) {
     // TODO(shimazu): Move WorkerScriptLoaded to the correct place which is
     // after InstalledScriptsManager::GetScriptData() called at
