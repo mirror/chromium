@@ -1,0 +1,25 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module content.mojom;
+
+import "url/mojo/url.mojom";
+
+// This is sent from the browser to the renderer.
+// Carries information of installed scripts of a service worker.
+struct ServiceWorkerInstalledScriptsInfo {
+  ServiceWorkerInstalledScriptsManager& manager_request;
+  array<url.mojom.Url> installed_urls;
+};
+
+// Receives information about an installed script. Headers are served as an
+// argument, and body and cached meta data which is known as V8 code cache is
+// served on data pipes.
+interface ServiceWorkerInstalledScriptsManager {
+  TransferInstalledScript(url.mojom.Url script_url,
+                          string encoding,
+                          map<string, string> headers,
+                          handle<data_pipe_consumer> body,
+                          handle<data_pipe_consumer> meta_data);
+};
