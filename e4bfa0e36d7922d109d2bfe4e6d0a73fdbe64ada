@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "02459c49_a153d1df",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-03T02:00:54Z",
+      "side": 1,
+      "message": "Minor nit:\n\nreturn GetFeatureTracker()-\u003eShouldTriggerHelpUI(\n  feature_engagement_tracker::kIPHNewTabFeature));",
+      "range": {
+        "startLine": 66,
+        "startChar": 6,
+        "endLine": 66,
+        "endChar": 23
+      },
+      "revId": "e4bfa0e36d7922d109d2bfe4e6d0a73fdbe64ada",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1dc9daaf_9a88af33",
         "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker.h",
         "patchSetId": 25
@@ -47,6 +70,23 @@
       "writtenOn": "2017-07-01T02:33:57Z",
       "side": 1,
       "message": "remove lines 151, reformat line 153.",
+      "revId": "e4bfa0e36d7922d109d2bfe4e6d0a73fdbe64ada",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a36b1c7_edd77f71",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-03T02:00:54Z",
+      "side": 1,
+      "message": "Suggestion: might be worth adding a test with an incognito profile to check that the usage accumulates in the main profile. You can use Profile::GetOffTheRecordProfile() to get the incognito version of a TestingProfile.",
       "revId": "e4bfa0e36d7922d109d2bfe4e6d0a73fdbe64ada",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
