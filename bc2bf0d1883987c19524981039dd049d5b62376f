@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "d43e9931_7da76556",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_fetcher_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1063,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-03T15:31:10Z",
+      "side": 1,
+      "message": "Done.\n\nYou are right. I\u0027m sorry, I thought this was the timestamp test, but this was the URL test (and I just copied the JSON and forgot to correct the timestamp). Thanks for noticing!",
+      "parentUuid": "cb046524_1a11a99b",
+      "range": {
+        "startLine": 1063,
+        "startChar": 32,
+        "endLine": 1063,
+        "endChar": 64
+      },
+      "revId": "bc2bf0d1883987c19524981039dd049d5b62376f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "720da078_d8fd717b",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
         "patchSetId": 7
