@@ -326,7 +326,7 @@ ResourceRequestBlockedReason ResourceLoader::CanAccessResponse(
       /* Don't send security violation reports for unused preloads */
       (unused_preload ? SecurityViolationReportingPolicy::kSuppressReporting
                       : SecurityViolationReportingPolicy::kReport),
-      FetchParameters::kUseDefaultOriginRestrictionForType);
+      FetchParameters::kUseDefaultOriginRestrictionForType, nullptr);
   if (blocked_reason != ResourceRequestBlockedReason::kNone)
     return blocked_reason;
 

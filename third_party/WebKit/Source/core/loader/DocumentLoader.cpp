@@ -194,13 +194,13 @@ Resource* DocumentLoader::StartPreload(Resource::Type type,
     case Resource::kImage:
       if (frame_)
         frame_->MaybeAllowImagePlaceholder(params);
-      resource = ImageResource::Fetch(params, Fetcher());
+      resource = ImageResource::Fetch(params, Fetcher(), nullptr);
       break;
     case Resource::kScript:
-      resource = ScriptResource::Fetch(params, Fetcher());
+      resource = ScriptResource::Fetch(params, Fetcher(), nullptr);
       break;
     case Resource::kCSSStyleSheet:
-      resource = CSSStyleSheetResource::Fetch(params, Fetcher());
+      resource = CSSStyleSheetResource::Fetch(params, Fetcher(), nullptr);
       break;
     case Resource::kFont:
       resource = FontResource::Fetch(params, Fetcher());

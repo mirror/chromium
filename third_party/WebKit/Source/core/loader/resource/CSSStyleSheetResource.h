@@ -27,6 +27,7 @@
 #define CSSStyleSheetResource_h
 
 #include "core/CoreExport.h"
+#include "core/dom/Element.h"
 #include "core/loader/resource/StyleSheetResource.h"
 #include "platform/heap/Handle.h"
 #include "platform/loader/fetch/TextResourceDecoderOptions.h"
@@ -45,7 +46,9 @@ class CORE_EXPORT CSSStyleSheetResource final : public StyleSheetResource {
  public:
   enum class MIMETypeCheck { kStrict, kLax };
 
-  static CSSStyleSheetResource* Fetch(FetchParameters&, ResourceFetcher*);
+  static CSSStyleSheetResource* Fetch(FetchParameters&,
+                                      ResourceFetcher*,
+                                      Element*);
   static CSSStyleSheetResource* CreateForTest(const KURL&,
                                               const WTF::TextEncoding&);
 

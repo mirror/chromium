@@ -160,7 +160,8 @@ void ProcessingInstruction::Process(const String& href, const String& charset) {
   } else {
     params.SetCharset(charset.IsEmpty() ? GetDocument().Encoding()
                                         : WTF::TextEncoding(charset));
-    resource = CSSStyleSheetResource::Fetch(params, GetDocument().Fetcher());
+    resource =
+        CSSStyleSheetResource::Fetch(params, GetDocument().Fetcher(), nullptr);
   }
 
   if (resource) {

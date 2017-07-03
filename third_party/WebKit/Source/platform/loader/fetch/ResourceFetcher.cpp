@@ -536,7 +536,8 @@ ResourceFetcher::PrepareRequestResult ResourceFetcher::PrepareRequest(
     const ResourceFactory& factory,
     const SubstituteData& substitute_data,
     unsigned long identifier,
-    ResourceRequestBlockedReason& blocked_reason) {
+    ResourceRequestBlockedReason& blocked_reason,
+    Element* element) {
   ResourceRequest& resource_request = params.MutableResourceRequest();
 
   DCHECK(params.Options().synchronous_policy == kRequestAsynchronously ||
@@ -572,7 +573,7 @@ ResourceFetcher::PrepareRequestResult ResourceFetcher::PrepareRequest(
       MemoryCache::RemoveFragmentIdentifierIfNeeded(params.Url()),
       params.Options(),
       /* Don't send security violation reports for speculative preloads */
-      reporting_policy, params.GetOriginRestriction());
+      reporting_policy, params.GetOriginRestriction(), element);
   if (blocked_reason != ResourceRequestBlockedReason::kNone) {
     DCHECK(!substitute_data.ForceSynchronousLoad());
     return kBlock;
@@ -616,6 +617,7 @@ ResourceFetcher::PrepareRequestResult ResourceFetcher::PrepareRequest(
 Resource* ResourceFetcher::RequestResource(
     FetchParameters& params,
     const ResourceFactory& factory,
+    Element* element,
     const SubstituteData& substitute_data) {
   unsigned long identifier = CreateUniqueIdentifier();
   ResourceRequest& resource_request = params.MutableResourceRequest();
@@ -630,8 +632,8 @@ Resource* ResourceFetcher::RequestResource(
   ResourceRequestBlockedReason blocked_reason =
       ResourceRequestBlockedReason::kNone;
 
-  PrepareRequestResult result = PrepareRequest(params, factory, substitute_data,
-                                               identifier, blocked_reason);
+  PrepareRequestResult result = PrepareRequest(
+      params, factory, substitute_data, identifier, blocked_reason, element);
   if (result == kAbort)
     return nullptr;
   if (result == kBlock)
@@ -1661,7 +1663,7 @@ void ResourceFetcher::EmulateLoadStartedForInspector(
   Context().CanRequest(resource->GetType(), resource->LastResourceRequest(),
                        resource->LastResourceRequest().Url(), params.Options(),
                        SecurityViolationReportingPolicy::kReport,
-                       params.GetOriginRestriction());
+                       params.GetOriginRestriction(), nullptr);
   RequestLoadStarted(resource->Identifier(), resource, params, kUse);
 }
 

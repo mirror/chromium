@@ -51,6 +51,7 @@ class ArchiveResource;
 class MHTMLArchive;
 class KURL;
 class ResourceTimingInfo;
+class Element;
 
 // The ResourceFetcher provides a per-context interface to the MemoryCache and
 // enforces a bunch of security checks and rules for resource revalidation. Its
@@ -75,6 +76,7 @@ class PLATFORM_EXPORT ResourceFetcher
 
   Resource* RequestResource(FetchParameters&,
                             const ResourceFactory&,
+                            Element* = nullptr,
                             const SubstituteData& = SubstituteData());
 
   Resource* CachedResource(const KURL&) const;
@@ -183,7 +185,8 @@ class PLATFORM_EXPORT ResourceFetcher
                                       const ResourceFactory&,
                                       const SubstituteData&,
                                       unsigned long identifier,
-                                      ResourceRequestBlockedReason&);
+                                      ResourceRequestBlockedReason&,
+                                      Element*);
 
   Resource* ResourceForStaticData(const FetchParameters&,
                                   const ResourceFactory&,

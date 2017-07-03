@@ -26,6 +26,7 @@
 
 #include "core/loader/resource/ScriptResource.h"
 
+#include "core/dom/Element.h"
 #include "platform/SharedBuffer.h"
 #include "platform/instrumentation/tracing/web_memory_allocator_dump.h"
 #include "platform/instrumentation/tracing/web_process_memory_dump.h"
@@ -39,12 +40,15 @@
 namespace blink {
 
 ScriptResource* ScriptResource::Fetch(FetchParameters& params,
-                                      ResourceFetcher* fetcher) {
+                                      ResourceFetcher* fetcher,
+                                      ScriptElementBase* element) {
   DCHECK_EQ(params.GetResourceRequest().GetFrameType(),
             WebURLRequest::kFrameTypeNone);
   params.SetRequestContext(WebURLRequest::kRequestContextScript);
-  ScriptResource* resource = ToScriptResource(
-      fetcher->RequestResource(params, ScriptResourceFactory()));
+
+  ScriptResource* resource = ToScriptResource(fetcher->RequestResource(
+      params, ScriptResourceFactory(),
+      element ? element->ElementPointerIfPossible() : nullptr));
   if (resource && !params.IntegrityMetadata().IsEmpty())
     resource->SetIntegrityMetadata(params.IntegrityMetadata());
   return resource;

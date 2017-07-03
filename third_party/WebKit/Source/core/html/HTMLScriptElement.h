@@ -103,6 +103,8 @@ class CORE_EXPORT HTMLScriptElement final : public HTMLElement,
 
   Element* CloneElementWithoutAttributesAndChildren() override;
 
+  Element* ElementPointerIfPossible() override { return this; }
+
   TraceWrapperMember<ScriptLoader> loader_;
 };
 

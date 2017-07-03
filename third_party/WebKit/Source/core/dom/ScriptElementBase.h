@@ -69,6 +69,8 @@ class CORE_EXPORT ScriptElementBase : public GarbageCollectedMixin {
 
   virtual ScriptLoader* Loader() const = 0;
 
+  virtual Element* ElementPointerIfPossible() = 0;
+
  protected:
   ScriptLoader* InitializeScriptLoader(bool parser_inserted,
                                        bool already_started,

@@ -23,6 +23,7 @@ class KURL;
 class SecurityOrigin;
 class Settings;
 class SubresourceFilter;
+class Element;
 
 // A core-level implementaiton of FetchContext that does not depend on
 // Frame. This class provides basic default implementation for some methods.
@@ -30,13 +31,13 @@ class CORE_EXPORT BaseFetchContext : public FetchContext {
  public:
   void AddAdditionalRequestHeaders(ResourceRequest&,
                                    FetchResourceType) override;
-  ResourceRequestBlockedReason CanRequest(
-      Resource::Type,
-      const ResourceRequest&,
-      const KURL&,
-      const ResourceLoaderOptions&,
-      SecurityViolationReportingPolicy,
-      FetchParameters::OriginRestriction) const override;
+  ResourceRequestBlockedReason CanRequest(Resource::Type,
+                                          const ResourceRequest&,
+                                          const KURL&,
+                                          const ResourceLoaderOptions&,
+                                          SecurityViolationReportingPolicy,
+                                          FetchParameters::OriginRestriction,
+                                          Element*) const override;
   ResourceRequestBlockedReason CanFollowRedirect(
       Resource::Type,
       const ResourceRequest&,
@@ -94,7 +95,8 @@ class CORE_EXPORT BaseFetchContext : public FetchContext {
       const ResourceLoaderOptions&,
       SecurityViolationReportingPolicy,
       ResourceRequest::RedirectStatus,
-      ContentSecurityPolicy::CheckHeaderType) const;
+      ContentSecurityPolicy::CheckHeaderType,
+      Element*) const;
 
   // Utility methods that are used in default implement for CanRequest,
   // CanFollowRedirect and AllowResponse.
@@ -105,7 +107,8 @@ class CORE_EXPORT BaseFetchContext : public FetchContext {
       const ResourceLoaderOptions&,
       SecurityViolationReportingPolicy,
       FetchParameters::OriginRestriction,
-      ResourceRequest::RedirectStatus) const;
+      ResourceRequest::RedirectStatus,
+      Element*) const;
 };
 
 }  // namespace blink

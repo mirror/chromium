@@ -49,10 +49,11 @@ ResourceRequestBlockedReason BaseFetchContext::CanRequest(
     const KURL& url,
     const ResourceLoaderOptions& options,
     SecurityViolationReportingPolicy reporting_policy,
-    FetchParameters::OriginRestriction origin_restriction) const {
+    FetchParameters::OriginRestriction origin_restriction,
+    Element* element) const {
   ResourceRequestBlockedReason blocked_reason = CanRequestInternal(
       type, resource_request, url, options, reporting_policy,
-      origin_restriction, resource_request.GetRedirectStatus());
+      origin_restriction, resource_request.GetRedirectStatus(), element);
   if (blocked_reason != ResourceRequestBlockedReason::kNone &&
       reporting_policy == SecurityViolationReportingPolicy::kReport) {
     DispatchDidBlockRequest(resource_request, options.initiator_info,
@@ -72,9 +73,10 @@ ResourceRequestBlockedReason BaseFetchContext::CanFollowRedirect(
   // that violations are sent.
   CheckCSPForRequest(resource_request, url, options, reporting_policy,
                      RedirectStatus::kFollowedRedirect,
-                     ContentSecurityPolicy::CheckHeaderType::kCheckReportOnly);
+                     ContentSecurityPolicy::CheckHeaderType::kCheckReportOnly,
+                     nullptr);
   return CanRequest(type, resource_request, url, options, reporting_policy,
-                    origin_restriction);
+                    origin_restriction, nullptr);
 }
 
 ResourceRequestBlockedReason BaseFetchContext::AllowResponse(
@@ -84,15 +86,15 @@ ResourceRequestBlockedReason BaseFetchContext::AllowResponse(
     const ResourceLoaderOptions& options) const {
   // CanRequestInternal only checks enforced policies: check report-only here
   // to ensure violations are sent.
-  CheckCSPForRequest(resource_request, url, options,
-                     SecurityViolationReportingPolicy::kReport,
-                     RedirectStatus::kFollowedRedirect,
-                     ContentSecurityPolicy::CheckHeaderType::kCheckReportOnly);
+  CheckCSPForRequest(
+      resource_request, url, options, SecurityViolationReportingPolicy::kReport,
+      RedirectStatus::kFollowedRedirect,
+      ContentSecurityPolicy::CheckHeaderType::kCheckReportOnly, nullptr);
   ResourceRequestBlockedReason blocked_reason =
       CanRequestInternal(type, resource_request, url, options,
                          SecurityViolationReportingPolicy::kReport,
                          FetchParameters::kUseDefaultOriginRestrictionForType,
-                         RedirectStatus::kFollowedRedirect);
+                         RedirectStatus::kFollowedRedirect, nullptr);
   if (blocked_reason != ResourceRequestBlockedReason::kNone) {
     DispatchDidBlockRequest(resource_request, options.initiator_info,
                             blocked_reason);
@@ -136,7 +138,8 @@ ResourceRequestBlockedReason BaseFetchContext::CheckCSPForRequest(
     const ResourceLoaderOptions& options,
     SecurityViolationReportingPolicy reporting_policy,
     ResourceRequest::RedirectStatus redirect_status,
-    ContentSecurityPolicy::CheckHeaderType check_header_type) const {
+    ContentSecurityPolicy::CheckHeaderType check_header_type,
+    Element* element) const {
   if (ShouldBypassMainWorldCSP() || options.content_security_policy_option ==
                                         kDoNotCheckContentSecurityPolicy) {
     return ResourceRequestBlockedReason::kNone;
@@ -147,7 +150,7 @@ ResourceRequestBlockedReason BaseFetchContext::CheckCSPForRequest(
                                 options.content_security_policy_nonce,
                                 options.integrity_metadata,
                                 options.parser_disposition, redirect_status,
-                                reporting_policy, check_header_type)) {
+                                reporting_policy, check_header_type, element)) {
     return ResourceRequestBlockedReason::CSP;
   }
   return ResourceRequestBlockedReason::kNone;
@@ -160,7 +163,8 @@ ResourceRequestBlockedReason BaseFetchContext::CanRequestInternal(
     const ResourceLoaderOptions& options,
     SecurityViolationReportingPolicy reporting_policy,
     FetchParameters::OriginRestriction origin_restriction,
-    ResourceRequest::RedirectStatus redirect_status) const {
+    ResourceRequest::RedirectStatus redirect_status,
+    Element* element) const {
   if (IsDetached() && !resource_request.GetKeepalive())
     return ResourceRequestBlockedReason::kOther;
 
@@ -219,10 +223,10 @@ ResourceRequestBlockedReason BaseFetchContext::CanRequestInternal(
   // We check the 'report-only' headers before upgrading the request (in
   // populateResourceRequest). We check the enforced headers here to ensure we
   // block things we ought to block.
-  if (CheckCSPForRequest(
-          resource_request, url, options, reporting_policy, redirect_status,
-          ContentSecurityPolicy::CheckHeaderType::kCheckEnforce) ==
-      ResourceRequestBlockedReason::CSP) {
+  if (CheckCSPForRequest(resource_request, url, options, reporting_policy,
+                         redirect_status,
+                         ContentSecurityPolicy::CheckHeaderType::kCheckEnforce,
+                         element) == ResourceRequestBlockedReason::CSP) {
     return ResourceRequestBlockedReason::CSP;
   }
 

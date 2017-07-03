@@ -164,20 +164,22 @@ TEST_F(CSPDirectiveListTest, AllowScriptFromSourceNoNonce) {
     // Report-only
     Member<CSPDirectiveList> directive_list =
         CreateList(test.list, kContentSecurityPolicyHeaderTypeReport);
-    EXPECT_EQ(test.expected,
-              directive_list->AllowScriptFromSource(
-                  script_src, String(), IntegrityMetadataSet(), kParserInserted,
-                  ResourceRequest::RedirectStatus::kNoRedirect,
-                  SecurityViolationReportingPolicy::kSuppressReporting));
+    EXPECT_EQ(
+        test.expected,
+        directive_list->AllowScriptFromSource(
+            script_src, String(), IntegrityMetadataSet(), kParserInserted,
+            ResourceRequest::RedirectStatus::kNoRedirect,
+            SecurityViolationReportingPolicy::kSuppressReporting, nullptr));
 
     // Enforce
     directive_list =
         CreateList(test.list, kContentSecurityPolicyHeaderTypeEnforce);
-    EXPECT_EQ(test.expected,
-              directive_list->AllowScriptFromSource(
-                  script_src, String(), IntegrityMetadataSet(), kParserInserted,
-                  ResourceRequest::RedirectStatus::kNoRedirect,
-                  SecurityViolationReportingPolicy::kSuppressReporting));
+    EXPECT_EQ(
+        test.expected,
+        directive_list->AllowScriptFromSource(
+            script_src, String(), IntegrityMetadataSet(), kParserInserted,
+            ResourceRequest::RedirectStatus::kNoRedirect,
+            SecurityViolationReportingPolicy::kSuppressReporting, nullptr));
   }
 }
 
@@ -221,66 +223,74 @@ TEST_F(CSPDirectiveListTest, AllowFromSourceWithNonce) {
     Member<CSPDirectiveList> directive_list =
         CreateList(String("script-src ") + test.list,
                    kContentSecurityPolicyHeaderTypeReport);
-    EXPECT_EQ(test.expected,
-              directive_list->AllowScriptFromSource(
-                  resource, String(test.nonce), IntegrityMetadataSet(),
-                  kParserInserted, ResourceRequest::RedirectStatus::kNoRedirect,
-                  SecurityViolationReportingPolicy::kSuppressReporting));
+    EXPECT_EQ(
+        test.expected,
+        directive_list->AllowScriptFromSource(
+            resource, String(test.nonce), IntegrityMetadataSet(),
+            kParserInserted, ResourceRequest::RedirectStatus::kNoRedirect,
+            SecurityViolationReportingPolicy::kSuppressReporting, nullptr));
 
     // Enforce 'script-src'
     directive_list = CreateList(String("script-src ") + test.list,
                                 kContentSecurityPolicyHeaderTypeEnforce);
-    EXPECT_EQ(test.expected,
-              directive_list->AllowScriptFromSource(
-                  resource, String(test.nonce), IntegrityMetadataSet(),
-                  kParserInserted, ResourceRequest::RedirectStatus::kNoRedirect,
-                  SecurityViolationReportingPolicy::kSuppressReporting));
+    EXPECT_EQ(
+        test.expected,
+        directive_list->AllowScriptFromSource(
+            resource, String(test.nonce), IntegrityMetadataSet(),
+            kParserInserted, ResourceRequest::RedirectStatus::kNoRedirect,
+            SecurityViolationReportingPolicy::kSuppressReporting, nullptr));
 
     // Report-only 'style-src'
     directive_list = CreateList(String("style-src ") + test.list,
                                 kContentSecurityPolicyHeaderTypeReport);
-    EXPECT_EQ(test.expected,
-              directive_list->AllowStyleFromSource(
-                  resource, String(test.nonce),
-                  ResourceRequest::RedirectStatus::kNoRedirect,
-                  SecurityViolationReportingPolicy::kSuppressReporting));
+    EXPECT_EQ(
+        test.expected,
+        directive_list->AllowStyleFromSource(
+            resource, String(test.nonce),
+            ResourceRequest::RedirectStatus::kNoRedirect,
+            SecurityViolationReportingPolicy::kSuppressReporting, nullptr));
 
     // Enforce 'style-src'
     directive_list = CreateList(String("style-src ") + test.list,
                                 kContentSecurityPolicyHeaderTypeEnforce);
-    EXPECT_EQ(test.expected,
-              directive_list->AllowStyleFromSource(
-                  resource, String(test.nonce),
-                  ResourceRequest::RedirectStatus::kNoRedirect,
-                  SecurityViolationReportingPolicy::kSuppressReporting));
+    EXPECT_EQ(
+        test.expected,
+        directive_list->AllowStyleFromSource(
+            resource, String(test.nonce),
+            ResourceRequest::RedirectStatus::kNoRedirect,
+            SecurityViolationReportingPolicy::kSuppressReporting, nullptr));
 
     // Report-only 'style-src'
     directive_list = CreateList(String("default-src ") + test.list,
                                 kContentSecurityPolicyHeaderTypeReport);
-    EXPECT_EQ(test.expected,
-              directive_list->AllowScriptFromSource(
-                  resource, String(test.nonce), IntegrityMetadataSet(),
-                  kParserInserted, ResourceRequest::RedirectStatus::kNoRedirect,
-                  SecurityViolationReportingPolicy::kSuppressReporting));
-    EXPECT_EQ(test.expected,
-              directive_list->AllowStyleFromSource(
-                  resource, String(test.nonce),
-                  ResourceRequest::RedirectStatus::kNoRedirect,
-                  SecurityViolationReportingPolicy::kSuppressReporting));
+    EXPECT_EQ(
+        test.expected,
+        directive_list->AllowScriptFromSource(
+            resource, String(test.nonce), IntegrityMetadataSet(),
+            kParserInserted, ResourceRequest::RedirectStatus::kNoRedirect,
+            SecurityViolationReportingPolicy::kSuppressReporting, nullptr));
+    EXPECT_EQ(
+        test.expected,
+        directive_list->AllowStyleFromSource(
+            resource, String(test.nonce),
+            ResourceRequest::RedirectStatus::kNoRedirect,
+            SecurityViolationReportingPolicy::kSuppressReporting, nullptr));
 
     // Enforce 'style-src'
     directive_list = CreateList(String("default-src ") + test.list,
                                 kContentSecurityPolicyHeaderTypeEnforce);
-    EXPECT_EQ(test.expected,
-              directive_list->AllowScriptFromSource(
-                  resource, String(test.nonce), IntegrityMetadataSet(),
-                  kParserInserted, ResourceRequest::RedirectStatus::kNoRedirect,
-                  SecurityViolationReportingPolicy::kSuppressReporting));
-    EXPECT_EQ(test.expected,
-              directive_list->AllowStyleFromSource(
-                  resource, String(test.nonce),
-                  ResourceRequest::RedirectStatus::kNoRedirect,
-                  SecurityViolationReportingPolicy::kSuppressReporting));
+    EXPECT_EQ(
+        test.expected,
+        directive_list->AllowScriptFromSource(
+            resource, String(test.nonce), IntegrityMetadataSet(),
+            kParserInserted, ResourceRequest::RedirectStatus::kNoRedirect,
+            SecurityViolationReportingPolicy::kSuppressReporting, nullptr));
+    EXPECT_EQ(
+        test.expected,
+        directive_list->AllowStyleFromSource(
+            resource, String(test.nonce),
+            ResourceRequest::RedirectStatus::kNoRedirect,
+            SecurityViolationReportingPolicy::kSuppressReporting, nullptr));
   }
 }
 
@@ -364,20 +374,22 @@ TEST_F(CSPDirectiveListTest, AllowScriptFromSourceWithHash) {
     Member<CSPDirectiveList> directive_list =
         CreateList(String("script-src ") + test.list,
                    kContentSecurityPolicyHeaderTypeReport);
-    EXPECT_EQ(test.expected,
-              directive_list->AllowScriptFromSource(
-                  resource, String(), integrity_metadata, kParserInserted,
-                  ResourceRequest::RedirectStatus::kNoRedirect,
-                  SecurityViolationReportingPolicy::kSuppressReporting));
+    EXPECT_EQ(
+        test.expected,
+        directive_list->AllowScriptFromSource(
+            resource, String(), integrity_metadata, kParserInserted,
+            ResourceRequest::RedirectStatus::kNoRedirect,
+            SecurityViolationReportingPolicy::kSuppressReporting, nullptr));
 
     // Enforce 'script-src'
     directive_list = CreateList(String("script-src ") + test.list,
                                 kContentSecurityPolicyHeaderTypeEnforce);
-    EXPECT_EQ(test.expected,
-              directive_list->AllowScriptFromSource(
-                  resource, String(), integrity_metadata, kParserInserted,
-                  ResourceRequest::RedirectStatus::kNoRedirect,
-                  SecurityViolationReportingPolicy::kSuppressReporting));
+    EXPECT_EQ(
+        test.expected,
+        directive_list->AllowScriptFromSource(
+            resource, String(), integrity_metadata, kParserInserted,
+            ResourceRequest::RedirectStatus::kNoRedirect,
+            SecurityViolationReportingPolicy::kSuppressReporting, nullptr));
   }
 }
 
@@ -543,10 +555,11 @@ TEST_F(CSPDirectiveListTest, WorkerSrc) {
     KURL resource = KURL(KURL(), "https://example.test/worker.js");
     Member<CSPDirectiveList> directive_list =
         CreateList(test.list, kContentSecurityPolicyHeaderTypeEnforce);
-    EXPECT_EQ(test.allowed,
-              directive_list->AllowWorkerFromSource(
-                  resource, ResourceRequest::RedirectStatus::kNoRedirect,
-                  SecurityViolationReportingPolicy::kSuppressReporting));
+    EXPECT_EQ(
+        test.allowed,
+        directive_list->AllowWorkerFromSource(
+            resource, ResourceRequest::RedirectStatus::kNoRedirect,
+            SecurityViolationReportingPolicy::kSuppressReporting, nullptr));
   }
 }
 
@@ -588,10 +601,11 @@ TEST_F(CSPDirectiveListTest, WorkerSrcChildSrcFallback) {
     KURL resource = KURL(KURL(), "https://example.test/worker.js");
     Member<CSPDirectiveList> directive_list =
         CreateList(test.list, kContentSecurityPolicyHeaderTypeEnforce);
-    EXPECT_EQ(test.allowed,
-              directive_list->AllowWorkerFromSource(
-                  resource, ResourceRequest::RedirectStatus::kNoRedirect,
-                  SecurityViolationReportingPolicy::kSuppressReporting));
+    EXPECT_EQ(
+        test.allowed,
+        directive_list->AllowWorkerFromSource(
+            resource, ResourceRequest::RedirectStatus::kNoRedirect,
+            SecurityViolationReportingPolicy::kSuppressReporting, nullptr));
   }
 }
 

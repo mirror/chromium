@@ -54,6 +54,7 @@ class PlatformProbeSink;
 class ResourceError;
 class ResourceResponse;
 class ResourceTimingInfo;
+class Element;
 
 enum FetchResourceType { kFetchMainResource, kFetchSubresource };
 
@@ -152,7 +153,8 @@ class PLATFORM_EXPORT FetchContext
       const KURL&,
       const ResourceLoaderOptions&,
       SecurityViolationReportingPolicy,
-      FetchParameters::OriginRestriction) const {
+      FetchParameters::OriginRestriction,
+      Element* element) const {
     return ResourceRequestBlockedReason::kOther;
   }
   virtual ResourceRequestBlockedReason CanFollowRedirect(

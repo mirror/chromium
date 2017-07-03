@@ -26,7 +26,7 @@ void WorkletScriptLoader::FetchScript(const KURL& module_url_record) {
   ResourceLoaderOptions options;
   options.initiator_info.name = FetchInitiatorTypeNames::internal;
   FetchParameters params(resource_request, options);
-  ScriptResource* resource = ScriptResource::Fetch(params, fetcher_);
+  ScriptResource* resource = ScriptResource::Fetch(params, fetcher_, nullptr);
   if (!resource) {
     NotifyFinished(nullptr);
     return;

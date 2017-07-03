@@ -99,6 +99,8 @@ class SVGScriptElement final : public SVGElement,
   Element* CloneElementWithoutAttributesAndChildren() override;
   bool LayoutObjectIsNeeded(const ComputedStyle&) override { return false; }
 
+  Element* ElementPointerIfPossible() override { return this; }
+
   TraceWrapperMember<ScriptLoader> loader_;
 };
 

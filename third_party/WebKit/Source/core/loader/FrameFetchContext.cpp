@@ -822,9 +822,9 @@ void FrameFetchContext::PopulateResourceRequest(
   // Before modifying the request for CSP, evaluate report-only headers. This
   // allows site owners to learn about requests that are being modified
   // (e.g. mixed content that is being upgraded by upgrade-insecure-requests).
-  CheckCSPForRequest(request, url, options, reporting_policy,
-                     request.GetRedirectStatus(),
-                     ContentSecurityPolicy::CheckHeaderType::kCheckReportOnly);
+  CheckCSPForRequest(
+      request, url, options, reporting_policy, request.GetRedirectStatus(),
+      ContentSecurityPolicy::CheckHeaderType::kCheckReportOnly, nullptr);
 
   ModifyRequestForCSP(request);
   AddClientHintsIfNecessary(hints_preferences, resource_width, request);

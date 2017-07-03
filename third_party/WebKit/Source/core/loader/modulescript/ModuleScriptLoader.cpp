@@ -144,7 +144,8 @@ void ModuleScriptLoader::Fetch(const ModuleScriptFetchRequest& module_request,
   nonce_ = module_request.Nonce();
   parser_state_ = module_request.ParserState();
 
-  ScriptResource* resource = ScriptResource::Fetch(fetch_params, fetcher);
+  ScriptResource* resource =
+      ScriptResource::Fetch(fetch_params, fetcher, nullptr);
   if (state_ == State::kFinished) {
     // ScriptResource::fetch() has succeeded synchronously,
     // ::notifyFinished() already took care of the |resource|.

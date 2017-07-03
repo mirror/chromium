@@ -83,10 +83,11 @@ ImageResourceContent* ImageResourceContent::CreateLoaded(
 }
 
 ImageResourceContent* ImageResourceContent::Fetch(FetchParameters& params,
-                                                  ResourceFetcher* fetcher) {
+                                                  ResourceFetcher* fetcher,
+                                                  Element* element) {
   // TODO(hiroshige): Remove direct references to ImageResource by making
   // the dependencies around ImageResource and ImageResourceContent cleaner.
-  ImageResource* resource = ImageResource::Fetch(params, fetcher);
+  ImageResource* resource = ImageResource::Fetch(params, fetcher, element);
   if (!resource)
     return nullptr;
   return resource->GetContent();

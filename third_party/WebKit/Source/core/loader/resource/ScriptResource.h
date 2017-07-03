@@ -27,6 +27,7 @@
 #define ScriptResource_h
 
 #include "core/CoreExport.h"
+#include "core/dom/ScriptElementBase.h"
 #include "core/loader/resource/TextResource.h"
 #include "platform/loader/fetch/AccessControlStatus.h"
 #include "platform/loader/fetch/IntegrityMetadata.h"
@@ -57,7 +58,9 @@ class CORE_EXPORT ScriptResourceClient : public ResourceClient {
 class CORE_EXPORT ScriptResource final : public TextResource {
  public:
   using ClientType = ScriptResourceClient;
-  static ScriptResource* Fetch(FetchParameters&, ResourceFetcher*);
+  static ScriptResource* Fetch(FetchParameters&,
+                               ResourceFetcher*,
+                               ScriptElementBase*);
 
   // Public for testing
   static ScriptResource* CreateForTest(const KURL& url,

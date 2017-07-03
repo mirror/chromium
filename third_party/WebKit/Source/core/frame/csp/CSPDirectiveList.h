@@ -81,42 +81,54 @@ class CORE_EXPORT CSPDirectiveList
                              const IntegrityMetadataSet& hashes,
                              ParserDisposition,
                              ResourceRequest::RedirectStatus,
-                             SecurityViolationReportingPolicy) const;
+                             SecurityViolationReportingPolicy,
+                             Element*) const;
   bool AllowStyleFromSource(const KURL&,
                             const String& nonce,
                             ResourceRequest::RedirectStatus,
-                            SecurityViolationReportingPolicy) const;
+                            SecurityViolationReportingPolicy,
+                            Element*) const;
 
   bool AllowObjectFromSource(const KURL&,
                              ResourceRequest::RedirectStatus,
-                             SecurityViolationReportingPolicy) const;
+                             SecurityViolationReportingPolicy,
+                             Element*) const;
   bool AllowFrameFromSource(const KURL&,
                             ResourceRequest::RedirectStatus,
-                            SecurityViolationReportingPolicy) const;
+                            SecurityViolationReportingPolicy,
+                            Element*) const;
   bool AllowImageFromSource(const KURL&,
                             ResourceRequest::RedirectStatus,
-                            SecurityViolationReportingPolicy) const;
+                            SecurityViolationReportingPolicy,
+                            Element*) const;
   bool AllowFontFromSource(const KURL&,
                            ResourceRequest::RedirectStatus,
-                           SecurityViolationReportingPolicy) const;
+                           SecurityViolationReportingPolicy,
+                           Element*) const;
   bool AllowMediaFromSource(const KURL&,
                             ResourceRequest::RedirectStatus,
-                            SecurityViolationReportingPolicy) const;
+                            SecurityViolationReportingPolicy,
+                            Element*) const;
   bool AllowManifestFromSource(const KURL&,
                                ResourceRequest::RedirectStatus,
-                               SecurityViolationReportingPolicy) const;
+                               SecurityViolationReportingPolicy,
+                               Element*) const;
   bool AllowConnectToSource(const KURL&,
                             ResourceRequest::RedirectStatus,
-                            SecurityViolationReportingPolicy) const;
+                            SecurityViolationReportingPolicy,
+                            Element*) const;
   bool AllowFormAction(const KURL&,
                        ResourceRequest::RedirectStatus,
-                       SecurityViolationReportingPolicy) const;
+                       SecurityViolationReportingPolicy,
+                       Element*) const;
   bool AllowBaseURI(const KURL&,
                     ResourceRequest::RedirectStatus,
-                    SecurityViolationReportingPolicy) const;
+                    SecurityViolationReportingPolicy,
+                    Element*) const;
   bool AllowWorkerFromSource(const KURL&,
                              ResourceRequest::RedirectStatus,
-                             SecurityViolationReportingPolicy) const;
+                             SecurityViolationReportingPolicy,
+                             Element*) const;
   // |allowAncestors| does not need to know whether the resource was a
   // result of a redirect. After a redirect, source paths are usually
   // ignored to stop a page from learning the path to which the
@@ -219,7 +231,8 @@ class CORE_EXPORT CSPDirectiveList
                        const ContentSecurityPolicy::DirectiveType&,
                        const String& console_message,
                        const KURL& blocked_url,
-                       ResourceRequest::RedirectStatus) const;
+                       ResourceRequest::RedirectStatus,
+                       Element* = nullptr) const;
   void ReportViolationWithFrame(const String& directive_text,
                                 const ContentSecurityPolicy::DirectiveType&,
                                 const String& console_message,
@@ -279,7 +292,8 @@ class CORE_EXPORT CSPDirectiveList
       SourceListDirective*,
       const KURL&,
       const ContentSecurityPolicy::DirectiveType&,
-      ResourceRequest::RedirectStatus) const;
+      ResourceRequest::RedirectStatus,
+      Element* = nullptr) const;
   bool CheckMediaTypeAndReportViolation(MediaListDirective*,
                                         const String& type,
                                         const String& type_attribute,

@@ -316,13 +316,13 @@ TEST_F(BaseFetchContextTest, CanRequestWhenDetached) {
             fetch_context_->CanRequest(
                 Resource::kRaw, request, url, ResourceLoaderOptions(),
                 SecurityViolationReportingPolicy::kSuppressReporting,
-                FetchParameters::kNoOriginRestriction));
+                FetchParameters::kNoOriginRestriction, nullptr));
 
   EXPECT_EQ(ResourceRequestBlockedReason::kNone,
             fetch_context_->CanRequest(
                 Resource::kRaw, keepalive_request, url, ResourceLoaderOptions(),
                 SecurityViolationReportingPolicy::kSuppressReporting,
-                FetchParameters::kNoOriginRestriction));
+                FetchParameters::kNoOriginRestriction, nullptr));
 
   fetch_context_->SetIsDetached(true);
 
@@ -330,13 +330,13 @@ TEST_F(BaseFetchContextTest, CanRequestWhenDetached) {
             fetch_context_->CanRequest(
                 Resource::kRaw, request, url, ResourceLoaderOptions(),
                 SecurityViolationReportingPolicy::kSuppressReporting,
-                FetchParameters::kNoOriginRestriction));
+                FetchParameters::kNoOriginRestriction, nullptr));
 
   EXPECT_EQ(ResourceRequestBlockedReason::kNone,
             fetch_context_->CanRequest(
                 Resource::kRaw, keepalive_request, url, ResourceLoaderOptions(),
                 SecurityViolationReportingPolicy::kSuppressReporting,
-                FetchParameters::kNoOriginRestriction));
+                FetchParameters::kNoOriginRestriction, nullptr));
 }
 
 }  // namespace blink

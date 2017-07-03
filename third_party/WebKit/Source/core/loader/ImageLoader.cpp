@@ -329,7 +329,8 @@ void ImageLoader::DoUpdateFromElement(BypassMainWorldBehavior bypass_behavior,
     if (update_behavior != kUpdateForcedReload && document.GetFrame())
       document.GetFrame()->MaybeAllowImagePlaceholder(params);
 
-    new_image = ImageResourceContent::Fetch(params, document.Fetcher());
+    new_image =
+        ImageResourceContent::Fetch(params, document.Fetcher(), GetElement());
 
     if (!new_image && !PageIsBeingDismissed(&document)) {
       CrossSiteOrCSPViolationOccurred(image_source_url);

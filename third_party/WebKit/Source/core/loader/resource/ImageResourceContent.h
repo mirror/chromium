@@ -7,6 +7,7 @@
 
 #include <memory>
 #include "core/CoreExport.h"
+#include "core/dom/Element.h"
 #include "platform/geometry/IntRect.h"
 #include "platform/geometry/IntSizeHash.h"
 #include "platform/geometry/LayoutSize.h"
@@ -55,7 +56,9 @@ class CORE_EXPORT ImageResourceContent final
   // Creates ImageResourceContent from an already loaded image.
   static ImageResourceContent* CreateLoaded(PassRefPtr<blink::Image>);
 
-  static ImageResourceContent* Fetch(FetchParameters&, ResourceFetcher*);
+  static ImageResourceContent* Fetch(FetchParameters&,
+                                     ResourceFetcher*,
+                                     Element*);
 
   // Returns the nullImage() if the image is not available yet.
   blink::Image* GetImage();
