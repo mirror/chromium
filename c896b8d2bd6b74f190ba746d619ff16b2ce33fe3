@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "6d306554_f5878d36",
+        "filename": "content/browser/devtools/protocol/security_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-07-03T00:40:11Z",
+      "side": 1,
+      "message": "Huh, weird. Do you remember what the error was? Maybe you need to include kLast in it too?",
+      "parentUuid": "d769b6d3_4105b490",
+      "range": {
+        "startLine": 58,
+        "startChar": 4,
+        "endLine": 58,
+        "endChar": 11
+      },
+      "revId": "c896b8d2bd6b74f190ba746d619ff16b2ce33fe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4b3a6072_a69e0fe9",
         "filename": "content/public/browser/security_style_explanation.h",
         "patchSetId": 6
