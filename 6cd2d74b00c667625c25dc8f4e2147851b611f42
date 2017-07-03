@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02ed0e15_38cf2322",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-03T13:14:08Z",
+      "side": 1,
+      "message": "Old code:\n\n```\n    private void setDownloadThumbnail() {\n        assert mArticle.isDownload();\n        if (!mArticle.isAssetDownload()) {\n            setThumbnailFromFileType(DownloadFilter.FILTER_PAGE);\n            return;\n        }\n\n        int fileType \u003d DownloadFilter.fromMimeType(mArticle.getAssetDownloadMimeType());\n        if (fileType \u003d\u003d DownloadFilter.FILTER_IMAGE) {\n            // For image downloads, attempt to fetch a thumbnail.\n            mThumbnailRequest \u003d mImageFetcher.makeDownloadThumbnailRequest(...);\n        }\n        setThumbnailFromFileType(fileType);\n    }\n```\n\nAs discussed offline, the setThumbnailFromFileType call used to set the placeholder in cases with FILTER_IMAGE too, instead of the duplicated placeholder code that actually should only apply to non-downloads.",
+      "revId": "6cd2d74b00c667625c25dc8f4e2147851b611f42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7201de86_8b400496",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-03T13:14:08Z",
+      "side": 1,
+      "message": "Just take the duration as input, rather than the start time. It\u0027s more consistent with the method name.",
+      "range": {
+        "startLine": 317,
+        "startChar": 31,
+        "endLine": 317,
+        "endChar": 59
+      },
+      "revId": "6cd2d74b00c667625c25dc8f4e2147851b611f42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "067c4225_355fa9d5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-03T13:14:08Z",
+      "side": 1,
+      "message": "nits:\n- You can safely compare strings using TextUtils.equals(s1, s2)\n- s/SuggestionsBinder.this.mSuggestion/mSuggestion\n\n\u003d\u003e One liner \\o/",
+      "range": {
+        "startLine": 361,
+        "startChar": 44,
+        "endLine": 361,
+        "endChar": 45
+      },
+      "revId": "6cd2d74b00c667625c25dc8f4e2147851b611f42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdb3f01b_96342f8e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsMetrics.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-03T13:14:08Z",
+      "side": 1,
+      "message": "IMO it\u0027s a weird thing we record there, so add javadoc for a quick explanation why we record that and maybe link the associated bug? https://bugs.chromium.org/p/chromium/issues/detail?id\u003d639877",
+      "range": {
+        "startLine": 91,
+        "startChar": 16,
+        "endLine": 91,
+        "endChar": 44
+      },
+      "revId": "6cd2d74b00c667625c25dc8f4e2147851b611f42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
