@@ -31,6 +31,12 @@
 #include "content/public/common/content_switches.h"
 #include "net/url_request/url_request_context_getter.h"
 
+
+#include "base/task_scheduler/post_task.h"
+#include "base/task_scheduler/task_traits.h"
+#include "base/task_scheduler/task_scheduler.h"
+
+
 #if defined(OS_WIN)
 #include "components/policy/core/common/policy_loader_win.h"
 #elif defined(OS_MACOSX)
@@ -97,13 +103,19 @@ std::unique_ptr<ConfigurationPolicyProvider>
 ChromeBrowserPolicyConnector::CreatePlatformProvider() {
 #if defined(OS_WIN)
   std::unique_ptr<AsyncPolicyLoader> loader(PolicyLoaderWin::Create(
-      BrowserThread::GetTaskRunnerForThread(BrowserThread::FILE),
+      base::TaskScheduler::GetInstance() ?
+          base::CreateSequencedTaskRunnerWithTraits(
+              {base::MayBlock(), base::TaskPriority::BACKGROUND}) :
+          nullptr,
       kRegistryChromePolicyKey));
   return base::MakeUnique<AsyncPolicyProvider>(GetSchemaRegistry(),
                                                std::move(loader));
 #elif defined(OS_MACOSX)
   std::unique_ptr<AsyncPolicyLoader> loader(new PolicyLoaderMac(
-      BrowserThread::GetTaskRunnerForThread(BrowserThread::FILE),
+      base::TaskScheduler::GetInstance() ?
+          base::CreateSequencedTaskRunnerWithTraits(
+              {base::MayBlock(), base::TaskPriority::BACKGROUND}) :
+          nullptr,
       GetManagedPolicyPath(), new MacPreferences()));
   return base::MakeUnique<AsyncPolicyProvider>(GetSchemaRegistry(),
                                                std::move(loader));
@@ -111,7 +123,10 @@ ChromeBrowserPolicyConnector::CreatePlatformProvider() {
   base::FilePath config_dir_path;
   if (PathService::Get(chrome::DIR_POLICY_FILES, &config_dir_path)) {
     std::unique_ptr<AsyncPolicyLoader> loader(new ConfigDirPolicyLoader(
-        BrowserThread::GetTaskRunnerForThread(BrowserThread::FILE),
+        base::TaskScheduler::GetInstance() ?
+            base::CreateSequencedTaskRunnerWithTraits(
+                {base::MayBlock(), base::TaskPriority::BACKGROUND}) :
+            nullptr,
         config_dir_path, POLICY_SCOPE_MACHINE));
     return base::MakeUnique<AsyncPolicyProvider>(GetSchemaRegistry(),
                                                  std::move(loader));
