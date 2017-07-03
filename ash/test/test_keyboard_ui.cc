@@ -23,7 +23,7 @@ bool TestKeyboardUI::ShouldWindowOverscroll(aura::Window* window) const {
   return true;
 }
 
-aura::Window* TestKeyboardUI::GetKeyboardWindow() {
+aura::Window* TestKeyboardUI::GetWebContentsWindow() {
   if (!keyboard_) {
     keyboard_.reset(new aura::Window(&delegate_));
     keyboard_->Init(ui::LAYER_NOT_DRAWN);
