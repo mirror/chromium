@@ -28,7 +28,7 @@ void SlotAssignment::DidAddSlot(HTMLSlotElement& slot) {
   DCHECK(!slot_map_->Contains(slot.GetName()) ||
          GetCachedFirstSlotWithoutAccessingNodeTree(slot.GetName()));
   DidAddSlotInternal(slot);
-  // Ensures that DocumentOrderedMap has a cache if there is a slot for the
+  // Ensures that TreeOrderedMap has a cache if there is a slot for the
   // name.
   DCHECK(GetCachedFirstSlotWithoutAccessingNodeTree(slot.GetName()));
 }
@@ -46,7 +46,7 @@ void SlotAssignment::DidRemoveSlot(HTMLSlotElement& slot) {
 
   DCHECK(GetCachedFirstSlotWithoutAccessingNodeTree(slot.GetName()));
   DidRemoveSlotInternal(slot, slot.GetName(), SlotMutationType::kRemoved);
-  // Ensures that DocumentOrderedMap has a cache if there is a slot for the
+  // Ensures that TreeOrderedMap has a cache if there is a slot for the
   // name.
   DCHECK(!slot_map_->Contains(slot.GetName()) ||
          GetCachedFirstSlotWithoutAccessingNodeTree(slot.GetName()));
@@ -74,7 +74,7 @@ void SlotAssignment::DidAddSlotInternal(HTMLSlotElement& slot) {
   // This might invalidate the slot_map's cache.
   slot_map_->Add(slot_name, &slot);
 
-  // This also ensures that DocumentOrderedMap has a cache for the first
+  // This also ensures that TreeOrderedMap has a cache for the first
   // element.
   HTMLSlotElement* new_active = FindSlotByName(slot_name);
   DCHECK(new_active);
@@ -121,7 +121,7 @@ void SlotAssignment::DidRemoveSlotInternal(
       GetCachedFirstSlotWithoutAccessingNodeTree(slot_name);
   DCHECK(old_active);
   slot_map_->Remove(slot_name, &slot);
-  // This also ensures that DocumentOrderedMap has a cache for the first
+  // This also ensures that TreeOrderedMap has a cache for the first
   // element.
   HTMLSlotElement* new_active = FindSlotByName(slot_name);
   DCHECK(!new_active || new_active != slot);
@@ -186,7 +186,7 @@ void SlotAssignment::DidChangeHostChildSlotName(const AtomicString& old_value,
 }
 
 SlotAssignment::SlotAssignment(ShadowRoot& owner)
-    : slot_map_(DocumentOrderedMap::Create()),
+    : slot_map_(TreeOrderedMap::Create()),
       owner_(&owner),
       needs_collect_slots_(false),
       slot_count_(0) {
