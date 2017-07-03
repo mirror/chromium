@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac49c6b9_84200e6f",
+        "filename": "components/arc/BUILD.gn",
+        "patchSetId": 17
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-03T08:06:33Z",
+      "side": 1,
+      "message": "Please remove this line.\nIf you encounter an error when doing that, please add necessary targets to be more specific.",
+      "revId": "43a4f3154492d37ecf8167ec413745dfea47e7fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f4d4b10_77b2a7e0",
+        "filename": "components/arc/common/volume_mounter.typemap",
+        "patchSetId": 17
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-03T08:06:33Z",
+      "side": 1,
+      "message": "Isn\u0027t it possible to add specific target (e.g. //chromeos:chromeos) instead of //chromeos?",
+      "revId": "43a4f3154492d37ecf8167ec413745dfea47e7fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
