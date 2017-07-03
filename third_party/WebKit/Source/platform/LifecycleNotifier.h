@@ -27,6 +27,7 @@
 #ifndef LifecycleNotifier_h
 #define LifecycleNotifier_h
 
+#include "platform/WeakMemberSet.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/AutoReset.h"
 #include "platform/wtf/HashSet.h"
@@ -61,7 +62,7 @@ class LifecycleNotifier : public virtual GarbageCollectedMixin {
 
   T* Context() { return static_cast<T*>(this); }
 
-  using ObserverSet = HeapHashSet<WeakMember<Observer>>;
+  using ObserverSet = WeakMemberSet<Observer>;
 
   enum IterationState {
     kAllowingNone = 0,
@@ -74,7 +75,7 @@ class LifecycleNotifier : public virtual GarbageCollectedMixin {
   // Iteration state is recorded while iterating the observer set,
   // optionally barring add or remove mutations.
   IterationState iteration_state_;
-  ObserverSet observers_;
+  Member<ObserverSet> observers_ = ObserverSet::Create();
 };
 
 template <typename T, typename Observer>
@@ -134,7 +135,7 @@ inline void LifecycleNotifier<T, Observer>::NotifyContextDestroyed() {
   // Observer unregistration is allowed, but effectively a no-op.
   AutoReset<IterationState> scope(&iteration_state_, kAllowingRemoval);
   ObserverSet observers;
-  observers_.swap(observers);
+  observers_->swap(observers);
   for (Observer* observer : observers) {
     DCHECK(observer->LifecycleContext() == Context());
     ContextDestroyedNotifier<Observer, T>::Call(observer, Context());
@@ -145,7 +146,7 @@ inline void LifecycleNotifier<T, Observer>::NotifyContextDestroyed() {
 template <typename T, typename Observer>
 inline void LifecycleNotifier<T, Observer>::AddObserver(Observer* observer) {
   CHECK(iteration_state_ & kAllowingAddition);
-  observers_.insert(observer);
+  observers_->insert(observer);
 }
 
 template <typename T, typename Observer>
@@ -153,11 +154,11 @@ inline void LifecycleNotifier<T, Observer>::RemoveObserver(Observer* observer) {
   // If immediate removal isn't currently allowed,
   // |observer| is recorded for pending removal.
   if (iteration_state_ & kAllowPendingRemoval) {
-    observers_.insert(observer);
+    observers_->insert(observer);
     return;
   }
   CHECK(iteration_state_ & kAllowingRemoval);
-  observers_.erase(observer);
+  observers_->erase(observer);
 }
 
 }  // namespace blink

@@ -57,6 +57,17 @@ class WeakPersistent;
 template <typename T, bool = NeedsAdjustAndMark<T>::value>
 class AdjustAndMarkTrait;
 
+// WeakMemberSet has to manage its own gc_info_index_ because it's
+// templated.
+template <class T>
+auto GCIndex(const T* obj) -> decltype(obj->GCIndex()) {
+  return obj->GCIndex();
+}
+template <class T>
+auto GCIndex(...) -> size_t {
+  return GCInfoTrait<T>::Index();
+}
+
 template <typename T>
 class AdjustAndMarkTrait<T, false> {
   STATIC_ONLY(AdjustAndMarkTrait);
@@ -65,7 +76,7 @@ class AdjustAndMarkTrait<T, false> {
   template <typename VisitorDispatcher>
   static NOINLINE_GXX_ONLY void Mark(VisitorDispatcher visitor, const T* t) {
 #if DCHECK_IS_ON()
-    AssertObjectHasGCInfo(const_cast<T*>(t), GCInfoTrait<T>::Index());
+    AssertObjectHasGCInfo(const_cast<T*>(t), GCIndex<T>(const_cast<T*>(t)));
 #endif
     // Default mark method of the trait just calls the two-argument mark
     // method on the visitor. The second argument is the static trace method
@@ -273,8 +284,6 @@ struct TraceTrait<HeapVectorBacking<T, Traits>> {
 
   template <typename VisitorDispatcher>
   static void Trace(VisitorDispatcher visitor, void* self) {
-    static_assert(!WTF::IsWeak<T>::value,
-                  "weakness in HeapVectors and HeapDeques are not supported");
     if (WTF::IsTraceableInCollectionTrait<Traits>::value)
       WTF::TraceInCollectionTrait<
           WTF::kNoWeakHandlingInCollections, WTF::kWeakPointersActWeak,
