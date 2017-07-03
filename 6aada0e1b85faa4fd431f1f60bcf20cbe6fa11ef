@@ -22,6 +22,30 @@
       "revId": "6aada0e1b85faa4fd431f1f60bcf20cbe6fa11ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05c00fef_3d984dfa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticleViewHolder.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-03T18:28:10Z",
+      "side": 1,
+      "message": "Hum that would be more elegant yes. But isn\u0027t it overkill? Maybe just adding a isFulfilled() method to DownloadThumbnailRequest?",
+      "parentUuid": "ba376ed5_b08d1fd6",
+      "range": {
+        "startLine": 364,
+        "startChar": 12,
+        "endLine": 364,
+        "endChar": 29
+      },
+      "revId": "6aada0e1b85faa4fd431f1f60bcf20cbe6fa11ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
