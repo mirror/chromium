@@ -206,6 +206,8 @@ class CONTENT_EXPORT RenderProcessHost : public IPC::Sender,
   // Try to shutdown the associated render process as fast as possible.
   virtual bool FastShutdownForPageCount(size_t count) = 0;
 
+  virtual bool ForceUnsafeFastShutdownForPageCount(size_t count) = 0;
+
   // Sets whether input events should be ignored for this process.
   virtual void SetIgnoreInputEvents(bool ignore_input_events) = 0;
   virtual bool IgnoreInputEvents() const = 0;
