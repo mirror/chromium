@@ -250,6 +250,9 @@ class HeapDeque;
 template <typename T, typename U, typename V>
 class HeapHashCountedSet;
 
+template <typename T, size_t inlineCapacity>
+class WeakMemberSet;
+
 template <typename T, typename U, typename V, typename W, typename X>
 struct GCInfoTrait<HeapHashMap<T, U, V, W, X>>
     : public GCInfoTrait<HashMap<T, U, V, W, X, HeapAllocator>> {};
