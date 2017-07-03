@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e815f58f_c61cb822",
+        "filename": "base/trace_event/process_memory_dump.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-07-03T03:03:19Z",
+      "side": 1,
+      "message": "Is it OK to override the importance of the existing edge? Doesn\u0027t this break the assumption that importance is not overridden unless the edge is created by AddOverridableOwnershipEdge?\n\nOr, if you want to change all edges to be overridable, that would make sense. In this case, we would need to remove AddOverridableOwnershipEdge and MemoryAllocatorDumpEdge::overridable member.",
+      "revId": "8d2f55312bea5afa987158a034db4693a98da301",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
