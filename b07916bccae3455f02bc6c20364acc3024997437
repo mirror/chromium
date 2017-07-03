@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7510f0f_cbbed9fa",
+        "filename": "components/arc/BUILD.gn",
+        "patchSetId": 20
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-03T08:20:59Z",
+      "side": 1,
+      "message": "Apparently, you wanted to remove this line, instead of //chromeos:chromeos?",
+      "revId": "b07916bccae3455f02bc6c20364acc3024997437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
