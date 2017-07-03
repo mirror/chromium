@@ -187,6 +187,31 @@ void AddAdditionalRequestHeaders(net::HttpRequestHeaders* headers,
   headers->SetHeader(net::HttpRequestHeaders::kOrigin, origin.Serialize());
 }
 
+// Checks if a given throttle check result means we should abort a navigation.
+bool ShouldAbortNavigationRequest(
+    NavigationThrottle::ThrottleCheckResult throttle) {
+  return (throttle == NavigationThrottle::CANCEL ||
+          throttle == NavigationThrottle::CANCEL_AND_IGNORE ||
+          throttle == NavigationThrottle::BLOCK_REQUEST ||
+          throttle == NavigationThrottle::BLOCK_REQUEST_AND_COLLAPSE);
+}
+
+// Returns the network error code that makes more sense to report a throttle
+// check failure.
+int GetNetErrorFromThrottle(NavigationThrottle::ThrottleCheckResult throttle) {
+  switch (throttle) {
+    case NavigationThrottle::CANCEL:
+    case NavigationThrottle::CANCEL_AND_IGNORE:
+      return net::ERR_ABORTED;
+    case NavigationThrottle::BLOCK_REQUEST:
+    case NavigationThrottle::BLOCK_REQUEST_AND_COLLAPSE:
+      return net::ERR_BLOCKED_BY_CLIENT;
+    default:
+      NOTREACHED();
+      return net::ERR_FAILED;
+  }
+}
+
 }  // namespace
 
 // static
@@ -324,6 +349,8 @@ NavigationRequest::NavigationRequest(
       associated_site_instance_type_(AssociatedSiteInstanceType::NONE),
       may_transfer_(may_transfer),
       weak_factory_(this) {
+
+            LOG(WARNING) << "NavigationRequest";
   DCHECK(!browser_initiated || (entry != nullptr && frame_entry != nullptr));
   TRACE_EVENT_ASYNC_BEGIN2("navigation", "NavigationRequest", this,
                            "frame_tree_node",
@@ -385,7 +412,7 @@ void NavigationRequest::BeginNavigation() {
   DCHECK(state_ == NOT_STARTED || state_ == WAITING_FOR_RENDERER_RESPONSE);
   TRACE_EVENT_ASYNC_STEP_INTO0("navigation", "NavigationRequest", this,
                                "BeginNavigation");
-
+            LOG(WARNING) << "BeginNavigation";
   state_ = STARTED;
 
   // Check Content Security Policy before the NavigationThrottles run. This
@@ -683,6 +710,7 @@ void NavigationRequest::OnRequestFailed(bool has_stale_copy_in_cache,
   DCHECK(state_ == STARTED || state_ == RESPONSE_STARTED);
   TRACE_EVENT_ASYNC_STEP_INTO1("navigation", "NavigationRequest", this,
                                "OnRequestFailed", "error", net_error);
+              LOG(WARNING) << "OnRequestFailed";
   state_ = FAILED;
   navigation_handle_->set_net_error_code(static_cast<net::Error>(net_error));
 
@@ -700,9 +728,14 @@ void NavigationRequest::OnRequestFailed(bool has_stale_copy_in_cache,
 
   // If the request was canceled by the user do not show an error page.
   if (net_error == net::ERR_ABORTED) {
+                  LOG(WARNING) << "net::ERR_ABORTED inside NavigationRequest::OnRequestFailed";
+
     frame_tree_node_->ResetNavigationRequest(false, true);
     return;
   }
+
+  LOG(WARNING) << "outside net::ERR_ABORTED inside NavigationRequest::OnRequestFailed";
+
 
   // Decide whether to leave the error page in the original process.
   // * If this was a renderer-initiated navigation, and the request is blocked
@@ -761,21 +794,11 @@ void NavigationRequest::OnStartChecksComplete(
   if (on_start_checks_complete_closure_)
     on_start_checks_complete_closure_.Run();
   // Abort the request if needed. This will destroy the NavigationRequest.
-  if (result == NavigationThrottle::CANCEL_AND_IGNORE ||
-      result == NavigationThrottle::CANCEL ||
-      result == NavigationThrottle::BLOCK_REQUEST ||
-      result == NavigationThrottle::BLOCK_REQUEST_AND_COLLAPSE) {
-    // TODO(clamy): distinguish between CANCEL and CANCEL_AND_IGNORE.
-    int error_code = net::ERR_ABORTED;
-    if (result == NavigationThrottle::BLOCK_REQUEST ||
-        result == NavigationThrottle::BLOCK_REQUEST_AND_COLLAPSE) {
-      error_code = net::ERR_BLOCKED_BY_CLIENT;
-    }
-
+  if (ShouldAbortNavigationRequest(result)) {
+    int error_code = GetNetErrorFromThrottle(result);
     // If the start checks completed synchronously, which could happen if there
-    // is no onbeforeunload handler or if a NavigationThrottle cancelled it,
-    // then this could cause reentrancy into NavigationController. So use a
-    // PostTask to avoid that.
+    // is no onbeforeunload handler, then this could cause reentrancy into
+    // NavigationController. So use a PostTask to avoid that.
     BrowserThread::PostTask(
         BrowserThread::UI, FROM_HERE,
         base::Bind(&NavigationRequest::OnRequestFailed,
@@ -928,6 +951,8 @@ void NavigationRequest::OnWillProcessResponseChecksComplete(
 }
 
 void NavigationRequest::CommitNavigation() {
+                LOG(WARNING) << "CommitNavigation";
+
   DCHECK(response_ || !ShouldMakeNetworkRequestForURL(common_params_.url) ||
          navigation_handle_->IsSameDocument());
   DCHECK(!common_params_.url.SchemeIs(url::kJavaScriptScheme));

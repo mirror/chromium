@@ -199,6 +199,7 @@ void NavigateToURLWithDispositionBlockUntilNavigationsComplete(
     int number_of_navigations,
     WindowOpenDisposition disposition,
     int browser_test_flags) {
+
   TabStripModel* tab_strip = browser->tab_strip_model();
   if (disposition == WindowOpenDisposition::CURRENT_TAB &&
       tab_strip->GetActiveWebContents())

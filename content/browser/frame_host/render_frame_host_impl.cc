@@ -454,6 +454,8 @@ RenderFrameHostImpl::RenderFrameHostImpl(SiteInstance* site_instance,
       is_waiting_for_swapout_ack_(false),
       render_frame_created_(false),
       navigations_suspended_(false),
+      has_beforeunload_handlers_(false),
+      has_unload_handlers_(false),
       is_waiting_for_beforeunload_ack_(false),
       unload_ack_is_for_navigation_(false),
       is_loading_(false),
@@ -473,6 +475,7 @@ RenderFrameHostImpl::RenderFrameHostImpl(SiteInstance* site_instance,
       frame_host_associated_binding_(this),
       waiting_for_init_(renderer_initiated_creation),
       has_focused_editable_element_(false),
+      had_double_load_(false),
       weak_ptr_factory_(this) {
   frame_tree_->AddRenderViewHostRef(render_view_host_);
   GetProcess()->AddRoute(routing_id_, this);
@@ -653,6 +656,7 @@ void RenderFrameHostImpl::AddMessageToConsole(ConsoleMessageLevel level,
 
 void RenderFrameHostImpl::ExecuteJavaScript(
     const base::string16& javascript) {
+LOG(WARNING) << "ExecuteJavaScript";
   CHECK(CanExecuteJavaScript());
   Send(new FrameMsg_JavaScriptExecuteRequest(routing_id_,
                                              javascript,
@@ -662,6 +666,8 @@ void RenderFrameHostImpl::ExecuteJavaScript(
 void RenderFrameHostImpl::ExecuteJavaScript(
      const base::string16& javascript,
      const JavaScriptResultCallback& callback) {
+  LOG(WARNING) << "ExecuteJavaScript";
+
   CHECK(CanExecuteJavaScript());
   int key = g_next_javascript_callback_id++;
   Send(new FrameMsg_JavaScriptExecuteRequest(routing_id_,
@@ -672,6 +678,8 @@ void RenderFrameHostImpl::ExecuteJavaScript(
 
 void RenderFrameHostImpl::ExecuteJavaScriptForTests(
     const base::string16& javascript) {
+  LOG(WARNING) << "ExecuteJavaScript";
+
   Send(new FrameMsg_JavaScriptExecuteRequestForTests(routing_id_,
                                                      javascript,
                                                      0, false, false));
@@ -680,6 +688,8 @@ void RenderFrameHostImpl::ExecuteJavaScriptForTests(
 void RenderFrameHostImpl::ExecuteJavaScriptForTests(
      const base::string16& javascript,
      const JavaScriptResultCallback& callback) {
+  LOG(WARNING) << "ExecuteJavaScript";
+
   int key = g_next_javascript_callback_id++;
   Send(new FrameMsg_JavaScriptExecuteRequestForTests(routing_id_, javascript,
                                                      key, true, false));
@@ -689,6 +699,8 @@ void RenderFrameHostImpl::ExecuteJavaScriptForTests(
 
 void RenderFrameHostImpl::ExecuteJavaScriptWithUserGestureForTests(
     const base::string16& javascript) {
+  LOG(WARNING) << "ExecuteJavaScript";
+
   Send(new FrameMsg_JavaScriptExecuteRequestForTests(routing_id_,
                                                      javascript,
                                                      0, false, true));
@@ -698,6 +710,8 @@ void RenderFrameHostImpl::ExecuteJavaScriptInIsolatedWorld(
     const base::string16& javascript,
     const JavaScriptResultCallback& callback,
     int world_id) {
+  LOG(WARNING) << "ExecuteJavaScript";
+
   if (world_id <= ISOLATED_WORLD_ID_GLOBAL ||
       world_id > ISOLATED_WORLD_ID_MAX) {
     // Return if the world_id is not valid.
@@ -786,6 +800,8 @@ blink::WebPageVisibilityState RenderFrameHostImpl::GetVisibilityState() {
 }
 
 bool RenderFrameHostImpl::Send(IPC::Message* message) {
+  //LOG(WARNING) << "Send: " << IPC_MESSAGE_ID_LINE(message->type());
+
   if (IPC_MESSAGE_ID_CLASS(message->type()) == InputMsgStart) {
     return GetRenderWidgetHost()->input_router()->SendInput(
         base::WrapUnique(message));
@@ -795,6 +811,8 @@ bool RenderFrameHostImpl::Send(IPC::Message* message) {
 }
 
 bool RenderFrameHostImpl::OnMessageReceived(const IPC::Message &msg) {
+  //LOG(WARNING) << "Receive: " << IPC_MESSAGE_ID_LINE(msg.type());
+
   // Only process messages if the RenderFrame is alive.
   if (!render_frame_created_)
     return false;
@@ -844,6 +862,10 @@ bool RenderFrameHostImpl::OnMessageReceived(const IPC::Message &msg) {
     IPC_MESSAGE_HANDLER(FrameHostMsg_DocumentOnLoadCompleted,
                         OnDocumentOnLoadCompleted)
     IPC_MESSAGE_HANDLER(FrameHostMsg_BeforeUnload_ACK, OnBeforeUnloadACK)
+    IPC_MESSAGE_HANDLER(FrameHostMsg_BeforeUnloadHandlersPresent,
+                        OnBeforeUnloadHandlersPresent)
+    IPC_MESSAGE_HANDLER(FrameHostMsg_UnloadHandlersPresent,
+                        OnUnloadHandlersPresent)
     IPC_MESSAGE_HANDLER(FrameHostMsg_SwapOut_ACK, OnSwapOutACK)
     IPC_MESSAGE_HANDLER(FrameHostMsg_ContextMenu, OnContextMenu)
     IPC_MESSAGE_HANDLER(FrameHostMsg_JavaScriptExecuteResponse,
@@ -1012,6 +1034,7 @@ gfx::NativeViewAccessible
 
 void RenderFrameHostImpl::RenderProcessGone(SiteInstanceImpl* site_instance) {
   DCHECK_EQ(site_instance_.get(), site_instance);
+  LOG(WARNING) << "RenderProcessGone: ";
 
   // The renderer process is gone, so this frame can no longer be loading.
   if (navigation_handle_)
@@ -1295,6 +1318,8 @@ void RenderFrameHostImpl::OnFrameFocused() {
 }
 
 void RenderFrameHostImpl::OnOpenURL(const FrameHostMsg_OpenURL_Params& params) {
+    LOG(WARNING) << "OnOpenURL: ";
+
   GURL validated_url(params.url);
   GetProcess()->FilterURL(false, &validated_url);
   if (!ChildProcessSecurityPolicyImpl::GetInstance()->CanReadRequestBody(
@@ -1335,6 +1360,8 @@ void RenderFrameHostImpl::OnOpenURL(const FrameHostMsg_OpenURL_Params& params) {
 }
 
 void RenderFrameHostImpl::OnCancelInitialHistoryLoad() {
+      LOG(WARNING) << "OnCancelInitialHistoryLoad: ";
+
   // A Javascript navigation interrupted the initial history load.  Check if an
   // initial subframe cross-process navigation needs to be canceled as a result.
   // TODO(creis, clamy): Cancel any cross-process navigation in PlzNavigate.
@@ -1348,6 +1375,7 @@ void RenderFrameHostImpl::OnCancelInitialHistoryLoad() {
 void RenderFrameHostImpl::OnDocumentOnLoadCompleted(
     FrameMsg_UILoadMetricsReportType::Value report_type,
     base::TimeTicks ui_timestamp) {
+        LOG(WARNING) << "OnDocumentOnLoadCompleted: ";
   if (report_type == FrameMsg_UILoadMetricsReportType::REPORT_LINK) {
     UMA_HISTOGRAM_CUSTOM_TIMES("Navigation.UI_OnLoadComplete.Link",
                                base::TimeTicks::Now() - ui_timestamp,
@@ -1368,6 +1396,8 @@ void RenderFrameHostImpl::OnDidStartProvisionalLoad(
     const GURL& url,
     const std::vector<GURL>& redirect_chain,
     const base::TimeTicks& navigation_start) {
+          LOG(WARNING) << "OnDidStartProvisionalLoad: ";
+
   // TODO(clamy): Check if other navigation methods (OpenURL,
   // DidFailProvisionalLoad, ...) should also be ignored if the RFH is no longer
   // active.
@@ -1391,6 +1421,7 @@ void RenderFrameHostImpl::OnDidFailProvisionalLoadWithError(
   // TODO(clamy): Kill the renderer with RFH_FAIL_PROVISIONAL_LOAD_NO_HANDLE and
   // return early if navigation_handle_ is null, once we prevent that case from
   // happening in practice.
+          LOG(WARNING) << "OnDidFailProvisionalLoadWithError: ";
 
   // Update the error code in the NavigationHandle of the navigation.
   if (navigation_handle_) {
@@ -1410,6 +1441,7 @@ void RenderFrameHostImpl::OnDidFailLoadWithError(
                "RenderFrameHostImpl::OnDidFailProvisionalLoadWithError",
                "frame_tree_node", frame_tree_node_->frame_tree_node_id(),
                "error", error_code);
+          LOG(WARNING) << "OnDidFailLoadWithError: ";
 
   GURL validated_url(url);
   GetProcess()->FilterURL(false, &validated_url);
@@ -1424,6 +1456,9 @@ void RenderFrameHostImpl::OnDidFailLoadWithError(
 void RenderFrameHostImpl::OnDidCommitProvisionalLoad(const IPC::Message& msg) {
   ScopedCommitStateResetter commit_state_resetter(this);
   RenderProcessHost* process = GetProcess();
+          LOG(WARNING) << "OnDidCommitProvisionalLoad: ";
+
+
 
   // Read the parameters out of the IPC message directly to avoid making another
   // copy when we filter the URLs.
@@ -1622,7 +1657,24 @@ GlobalFrameRoutingId RenderFrameHostImpl::GetGlobalFrameRoutingId() {
 
 void RenderFrameHostImpl::SetNavigationHandle(
     std::unique_ptr<NavigationHandleImpl> navigation_handle) {
+            LOG(WARNING) << "SetNavigationHandle";
+
+  // LOG(WARNING) << "SetNavigationHandle begin";
+  // LOG(WARNING) << "navigation_handle: " << navigation_handle.get();
+  // if (navigation_handle) LOG(WARNING) << "navigation_handle.GetURL(): " << navigation_handle->GetURL();
+  // LOG(WARNING) << "navigation_handle_: " << navigation_handle.get();
+  // if (navigation_handle_) LOG(WARNING) << "navigation_handle_.GetURL(): " << navigation_handle_->GetURL();
+  // LOG(WARNING) << "had_double_load_: " << had_double_load_;
+
+
   navigation_handle_ = std::move(navigation_handle);
+
+  // LOG(WARNING) << "SetNavigationHandle end";
+  // LOG(WARNING) << "navigation_handle: " << navigation_handle.get();
+  // if (navigation_handle) LOG(WARNING) << "navigation_handle.GetURL(): " << navigation_handle->GetURL();
+  // LOG(WARNING) << "navigation_handle_: " << navigation_handle.get();
+  // if (navigation_handle_) LOG(WARNING) << "navigation_handle_.GetURL(): " << navigation_handle_->GetURL();
+  // LOG(WARNING) << "had_double_load_: " << had_double_load_;
 }
 
 std::unique_ptr<NavigationHandleImpl>
@@ -1636,6 +1688,8 @@ RenderFrameHostImpl::PassNavigationHandleOwnership() {
 void RenderFrameHostImpl::SwapOut(
     RenderFrameProxyHost* proxy,
     bool is_loading) {
+              LOG(WARNING) << "SwapOut";
+
   // The end of this event is in OnSwapOutACK when the RenderFrame has completed
   // the operation and sends back an IPC message.
   // The trace event may not end properly if the ACK times out.  We expect this
@@ -1682,6 +1736,7 @@ void RenderFrameHostImpl::OnBeforeUnloadACK(
     bool proceed,
     const base::TimeTicks& renderer_before_unload_start_time,
     const base::TimeTicks& renderer_before_unload_end_time) {
+                LOG(WARNING) << "OnBeforeUnloadACK";
   TRACE_EVENT_ASYNC_END1("navigation", "RenderFrameHostImpl BeforeUnload", this,
                          "FrameTreeNode id",
                          frame_tree_node_->frame_tree_node_id());
@@ -1783,6 +1838,7 @@ void RenderFrameHostImpl::OnSwapOutACK() {
 
 void RenderFrameHostImpl::OnRenderProcessGone(int status, int exit_code) {
   if (frame_tree_node_->IsMainFrame()) {
+                    LOG(WARNING) << "OnRenderProcessGone";
     // Keep the termination status so we can get at it later when we
     // need to know why it died.
     render_view_host_->render_view_termination_status_ =
@@ -1833,6 +1889,7 @@ void RenderFrameHostImpl::OnRenderProcessGone(int status, int exit_code) {
 }
 
 void RenderFrameHostImpl::OnSwappedOut() {
+  LOG(WARNING) << "OnSwappedOut";
   // Ignore spurious swap out ack.
   if (!is_waiting_for_swapout_ack_)
     return;
@@ -1860,6 +1917,8 @@ void RenderFrameHostImpl::DisableSwapOutTimerForTesting() {
 }
 
 void RenderFrameHostImpl::OnContextMenu(const ContextMenuParams& params) {
+    LOG(WARNING) << "OnContextMenu";
+
   if (!is_active())
     return;
 
@@ -1889,6 +1948,8 @@ void RenderFrameHostImpl::OnContextMenu(const ContextMenuParams& params) {
 
 void RenderFrameHostImpl::OnJavaScriptExecuteResponse(
     int id, const base::ListValue& result) {
+      LOG(WARNING) << "OnJavaScriptExecuteResponse";
+
   const base::Value* result_value;
   if (!result.Get(0, &result_value)) {
     // Programming error or rogue renderer.
@@ -1942,6 +2003,8 @@ void RenderFrameHostImpl::OnRunJavaScriptDialog(
     const GURL& frame_url,
     JavaScriptDialogType dialog_type,
     IPC::Message* reply_msg) {
+      LOG(WARNING) << "OnRunJavaScriptDialog";
+
   if (IsWaitingForUnloadACK()) {
     SendJavaScriptDialogReply(reply_msg, true, base::string16());
     return;
@@ -1965,6 +2028,8 @@ void RenderFrameHostImpl::OnRunBeforeUnloadConfirm(
     const GURL& frame_url,
     bool is_reload,
     IPC::Message* reply_msg) {
+        LOG(WARNING) << "OnRunBeforeUnloadConfirm";
+
   TRACE_EVENT1("navigation", "RenderFrameHostImpl::OnRunBeforeUnloadConfirm",
                "frame_tree_node", frame_tree_node_->frame_tree_node_id());
 
@@ -2116,6 +2181,8 @@ void RenderFrameHostImpl::OnDidChangeOpener(int32_t opener_routing_id) {
 
 void RenderFrameHostImpl::OnDidChangeName(const std::string& name,
                                           const std::string& unique_name) {
+          LOG(WARNING) << "OnDidChangeName";
+
   if (GetParent() != nullptr) {
     // TODO(lukasza): Call ReceivedBadMessage when |unique_name| is empty.
     DCHECK(!unique_name.empty());
@@ -2248,6 +2315,7 @@ void RenderFrameHostImpl::OnUpdateEncoding(const std::string& encoding_name) {
 void RenderFrameHostImpl::OnBeginNavigation(
     const CommonNavigationParams& common_params,
     const BeginNavigationParams& begin_params) {
+  LOG(WARNING) << "OnBeginNavigation";
   CHECK(IsBrowserSideNavigationEnabled());
   if (!is_active())
     return;
@@ -2281,11 +2349,17 @@ void RenderFrameHostImpl::OnBeginNavigation(
     return;
   }
 
+  if (navigation_handle_ && IsBrowserSideNavigationEnabled())
+    had_double_load_ = true;
+
   frame_tree_node()->navigator()->OnBeginNavigation(
       frame_tree_node(), validated_params, validated_begin_params);
+
 }
 
 void RenderFrameHostImpl::OnAbortNavigation() {
+    LOG(WARNING) << "OnAbortNavigation";
+
   TRACE_EVENT1("navigation", "RenderFrameHostImpl::OnAbortNavigation",
                "frame_tree_node", frame_tree_node_->frame_tree_node_id());
   if (!IsBrowserSideNavigationEnabled()) {
@@ -2298,6 +2372,8 @@ void RenderFrameHostImpl::OnAbortNavigation() {
 }
 
 void RenderFrameHostImpl::OnDispatchLoad() {
+      LOG(WARNING) << "OnDispatchLoad";
+
   TRACE_EVENT1("navigation", "RenderFrameHostImpl::OnDispatchLoad",
                "frame_tree_node", frame_tree_node_->frame_tree_node_id());
   CHECK(SiteIsolationPolicy::AreCrossProcessFramesPossible());
@@ -2539,6 +2615,8 @@ void RenderFrameHostImpl::OnToggleFullscreen(bool enter_fullscreen) {
 }
 
 void RenderFrameHostImpl::OnDidStartLoading(bool to_different_document) {
+        LOG(WARNING) << "OnDidStartLoading";
+
   TRACE_EVENT2("navigation", "RenderFrameHostImpl::OnDidStartLoading",
                "frame_tree_node", frame_tree_node_->frame_tree_node_id(),
                "to different document", to_different_document);
@@ -2560,8 +2638,21 @@ void RenderFrameHostImpl::OnDidStartLoading(bool to_different_document) {
 }
 
 void RenderFrameHostImpl::OnDidStopLoading() {
+          LOG(WARNING) << "OnDidStopLoading";
+
   TRACE_EVENT1("navigation", "RenderFrameHostImpl::OnDidStopLoading",
                "frame_tree_node", frame_tree_node_->frame_tree_node_id());
+
+  // LOG(WARNING) << "STATE WHEN ENTERING:";
+  // LOG(WARNING) << "IsBrowserSideNavigationEnabled(): "
+  //              << IsBrowserSideNavigationEnabled();
+  // LOG(WARNING) << "is_loading_: " << is_loading_;
+  // LOG(WARNING) << "navigation_handle_: " << navigation_handle_.get();
+  // LOG(WARNING) << "navigation_handle_ url: "
+  //              << (navigation_handle_.get() ? navigation_handle_->GetURL()
+  //                                           : GURL(""));
+  // LOG(WARNING) << "is_active(): " << is_active();
+  // LOG(WARNING) << "had_double_load_: " << had_double_load_;
 
   // This method should never be called when the frame is not loading.
   // Unfortunately, it can happen if a history navigation happens during a
@@ -2573,6 +2664,15 @@ void RenderFrameHostImpl::OnDidStopLoading() {
     return;
   }
 
+  if(navigation_handle_ && IsBrowserSideNavigationEnabled()) {
+
+    if (had_double_load_) {
+      LOG(WARNING) << "DID A DOUBLE LOAD CANCEL:";
+      had_double_load_ = false;
+    }
+    return;
+  }
+
   is_loading_ = false;
   navigation_handle_.reset();
 
@@ -2580,9 +2680,21 @@ void RenderFrameHostImpl::OnDidStopLoading() {
   // of this RenderFrameHost is being tracked.
   if (is_active())
     frame_tree_node_->DidStopLoading();
+
+  // LOG(WARNING) << "STATE WHEN LEAVING:";
+  // LOG(WARNING) << "IsBrowserSideNavigationEnabled(): "
+  //              << IsBrowserSideNavigationEnabled();
+  // LOG(WARNING) << "is_loading_: " << is_loading_;
+  // LOG(WARNING) << "navigation_handle_: " << navigation_handle_.get();
+  // LOG(WARNING) << "navigation_handle_ url: "
+  //              << (navigation_handle_.get() ? navigation_handle_->GetURL()
+  //                                           : GURL(""));
+  // LOG(WARNING) << "is_active(): " << is_active();
+  // LOG(WARNING) << "had_double_load_: " << had_double_load_;
 }
 
 void RenderFrameHostImpl::OnDidChangeLoadProgress(double load_progress) {
+
   frame_tree_node_->DidChangeLoadProgress(load_progress);
 }
 
@@ -2626,9 +2738,19 @@ void RenderFrameHostImpl::OnSetDevToolsFrameId(
   untrusted_devtools_frame_id_ = devtools_frame_id;
 }
 
+void RenderFrameHostImpl::OnBeforeUnloadHandlersPresent(bool present) {
+  has_beforeunload_handlers_ = present;
+}
+
+void RenderFrameHostImpl::OnUnloadHandlersPresent(bool present) {
+  has_unload_handlers_ = present;
+}
+
 #if BUILDFLAG(USE_EXTERNAL_POPUP_MENU)
 void RenderFrameHostImpl::OnShowPopup(
     const FrameHostMsg_ShowPopup_Params& params) {
+              LOG(WARNING) << "OnShowPopup";
+
   RenderViewHostDelegateView* view =
       render_view_host_->delegate_->GetDelegateView();
   if (view) {
@@ -2646,6 +2768,8 @@ void RenderFrameHostImpl::OnShowPopup(
 }
 
 void RenderFrameHostImpl::OnHidePopup() {
+                LOG(WARNING) << "OnHidePopup";
+
   RenderViewHostDelegateView* view =
       render_view_host_->delegate_->GetDelegateView();
   if (view)
@@ -2947,6 +3071,8 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
 }
 
 void RenderFrameHostImpl::ResetWaitingState() {
+  LOG(WARNING) << "ResetWaitingState";
+
   DCHECK(is_active());
 
   // Whenever we reset the RFH state, we should not be waiting for beforeunload
@@ -3001,6 +3127,8 @@ void RenderFrameHostImpl::Navigate(
     const CommonNavigationParams& common_params,
     const StartNavigationParams& start_params,
     const RequestNavigationParams& request_params) {
+    LOG(WARNING) << "Navigate";
+
   TRACE_EVENT1("navigation", "RenderFrameHostImpl::Navigate", "frame_tree_node",
                frame_tree_node_->frame_tree_node_id());
   DCHECK(!IsBrowserSideNavigationEnabled());
@@ -3039,6 +3167,8 @@ void RenderFrameHostImpl::Navigate(
 }
 
 void RenderFrameHostImpl::NavigateToInterstitialURL(const GURL& data_url) {
+      LOG(WARNING) << "NavigateToInterstitialURL";
+
   TRACE_EVENT1("navigation", "RenderFrameHostImpl::NavigateToInterstitialURL",
                "frame_tree_node", frame_tree_node_->frame_tree_node_id());
   DCHECK(data_url.SchemeIs(url::kDataScheme));
@@ -3059,6 +3189,8 @@ void RenderFrameHostImpl::NavigateToInterstitialURL(const GURL& data_url) {
 }
 
 void RenderFrameHostImpl::Stop() {
+        LOG(WARNING) << "Stop";
+
   TRACE_EVENT1("navigation", "RenderFrameHostImpl::Stop", "frame_tree_node",
                frame_tree_node_->frame_tree_node_id());
   Send(new FrameMsg_Stop(routing_id_));
@@ -3066,6 +3198,8 @@ void RenderFrameHostImpl::Stop() {
 
 void RenderFrameHostImpl::DispatchBeforeUnload(bool for_navigation,
                                                bool is_reload) {
+          LOG(WARNING) << "DispatchBeforeUnload";
+
   DCHECK(for_navigation || !is_reload);
 
   if (IsBrowserSideNavigationEnabled() && !for_navigation) {
@@ -3125,13 +3259,33 @@ void RenderFrameHostImpl::DispatchBeforeUnload(bool for_navigation,
 }
 
 void RenderFrameHostImpl::SimulateBeforeUnloadAck() {
+            LOG(WARNING) << "SimulateBeforeUnloadAck";
+
   DCHECK(is_waiting_for_beforeunload_ack_);
   base::TimeTicks approx_renderer_start_time = send_before_unload_start_time_;
   OnBeforeUnloadACK(true, approx_renderer_start_time, base::TimeTicks::Now());
 }
 
 bool RenderFrameHostImpl::ShouldDispatchBeforeUnload() {
-  return IsRenderFrameLive();
+  if (!IsRenderFrameLive())
+    return false;
+
+  for (FrameTreeNode* node : frame_tree_->SubtreeNodes(frame_tree_node_)) {
+    if (node->current_frame_host()->has_beforeunload_handlers_)
+      return true;
+  }
+  return false;
+}
+
+bool RenderFrameHostImpl::HasUnloadHandler() {
+  if (!IsRenderFrameLive())
+    return false;
+
+  for (FrameTreeNode* node : frame_tree_->SubtreeNodes(frame_tree_node_)) {
+    if (node->current_frame_host()->has_unload_handlers_)
+      return true;
+  }
+  return false;
 }
 
 void RenderFrameHostImpl::UpdateOpener() {
@@ -3170,6 +3324,8 @@ void RenderFrameHostImpl::JavaScriptDialogClosed(
     IPC::Message* reply_msg,
     bool success,
     const base::string16& user_input) {
+              LOG(WARNING) << "JavaScriptDialogClosed";
+
   GetProcess()->SetIgnoreInputEvents(false);
 
   SendJavaScriptDialogReply(reply_msg, success, user_input);
@@ -3190,6 +3346,8 @@ void RenderFrameHostImpl::SendJavaScriptDialogReply(
     IPC::Message* reply_msg,
     bool success,
     const base::string16& user_input) {
+                LOG(WARNING) << "SendJavaScriptDialogReply";
+
   FrameHostMsg_RunJavaScriptDialog::WriteReplyParams(reply_msg, success,
                                                      user_input);
   Send(reply_msg);
@@ -3204,6 +3362,8 @@ void RenderFrameHostImpl::CommitNavigation(
     const RequestNavigationParams& request_params,
     bool is_view_source,
     mojom::URLLoaderFactoryPtrInfo subresource_url_loader_factory_info) {
+                  LOG(WARNING) << "CommitNavigation";
+
   TRACE_EVENT2("navigation", "RenderFrameHostImpl::CommitNavigation",
                "frame_tree_node", frame_tree_node_->frame_tree_node_id(), "url",
                common_params.url.possibly_invalid_spec());
@@ -3276,6 +3436,8 @@ void RenderFrameHostImpl::FailedNavigation(
     const RequestNavigationParams& request_params,
     bool has_stale_copy_in_cache,
     int error_code) {
+                    LOG(WARNING) << "FailedNavigation";
+
   TRACE_EVENT2("navigation", "RenderFrameHostImpl::FailedNavigation",
                "frame_tree_node", frame_tree_node_->frame_tree_node_id(),
                "error", error_code);
@@ -3466,6 +3628,8 @@ RenderFrameHostImpl::GetFrameResourceCoordinator() {
 }
 
 void RenderFrameHostImpl::ResetLoadingState() {
+                      LOG(WARNING) << "ResetLoadingState";
+
   if (is_loading()) {
     // When pending deletion, just set the loading state to not loading.
     // Otherwise, OnDidStopLoading will take care of that, as well as sending

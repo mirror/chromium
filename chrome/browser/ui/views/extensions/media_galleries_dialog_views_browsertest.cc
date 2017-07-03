@@ -7,6 +7,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/media_galleries/media_galleries_dialog_controller_mock.h"
 #include "chrome/browser/ui/browser.h"
+#include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/browser/ui/test/test_browser_dialog.h"
 #include "chrome/browser/ui/views/extensions/media_galleries_dialog_views.h"
 #include "chrome/browser/ui/views/extensions/media_gallery_checkbox_view.h"
@@ -45,12 +46,16 @@ class MediaGalleriesInteractiveDialogTest : public DialogBrowserTest {
   void PreRunTestOnMainThread() override {
     DialogBrowserTest::PreRunTestOnMainThread();
     const GURL about_blank(url::kAboutBlankURL);
-    content::WebContents* content = browser()->OpenURL(content::OpenURLParams(
+    content::WebContents* content =
+        browser()->tab_strip_model()->GetActiveWebContents();
+    content::TestNavigationManager manager(content, about_blank);
+
+    browser()->OpenURL(content::OpenURLParams(
         about_blank, content::Referrer(), WindowOpenDisposition::CURRENT_TAB,
         ui::PAGE_TRANSITION_TYPED, true));
     EXPECT_CALL(controller_, WebContents())
         .WillRepeatedly(testing::Return(content));
-    content::TestNavigationManager manager(content, about_blank);
+
     manager.WaitForNavigationFinished();
   }
 

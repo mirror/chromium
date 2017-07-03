@@ -149,6 +149,7 @@ void TestNavigationObserver::OnDidStopLoading(WebContents* web_contents) {
   ++navigations_completed_;
   if (navigations_completed_ == number_of_navigations_) {
     navigation_started_ = false;
+    //base::debug::StackTrace().Print();
     message_loop_runner_->Quit();
   }
 }
