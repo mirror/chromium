@@ -41,9 +41,7 @@ class PLATFORM_EXPORT CachingWordShapeIterator final {
   WTF_MAKE_NONCOPYABLE(CachingWordShapeIterator);
 
  public:
-  CachingWordShapeIterator(ShapeCache* cache,
-                           const TextRun& run,
-                           const Font* font)
+  CachingWordShapeIterator(ShapeCache* cache, TextRun& run, const Font* font)
       : shape_cache_(cache),
         text_run_(run),
         font_(font),
@@ -75,6 +73,8 @@ class PLATFORM_EXPORT CachingWordShapeIterator final {
 
     return NextWord(word_result);
   }
+
+  bool LengthOfNextWord() { return NextWordEndIndex(); }
 
  private:
   PassRefPtr<const ShapeResult> ShapeWordWithoutSpacing(const TextRun&,
@@ -159,9 +159,17 @@ class PLATFORM_EXPORT CachingWordShapeIterator final {
       *result = ShapeWord(text_run_, font_);
     } else {
       DCHECK_LE(end_index, length);
+      bool use_trailing_letter_spacing = text_run_.UseTrailingLetterSpacing();
+      if (!use_trailing_letter_spacing) {
+        if (end_index == length)
+          text_run_.SetUseTrailingLetterSpacing(false);
+        else
+          text_run_.SetUseTrailingLetterSpacing(true);
+      }
       TextRun sub_run =
           text_run_.SubRun(start_index_, end_index - start_index_);
       *result = ShapeWord(sub_run, font_);
+      text_run_.SetUseTrailingLetterSpacing(use_trailing_letter_spacing);
     }
     start_index_ = end_index;
     return result->Get();
@@ -203,7 +211,7 @@ class PLATFORM_EXPORT CachingWordShapeIterator final {
   }
 
   ShapeCache* shape_cache_;
-  const TextRun& text_run_;
+  TextRun& text_run_;
   const Font* font_;
   ShapeResultSpacing<TextRun> spacing_;
   float width_so_far_;  // Used only when allowTabs()
