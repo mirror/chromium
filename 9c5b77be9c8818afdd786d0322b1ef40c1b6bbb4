@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4c687790_8175795a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-07-03T10:08:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21e38100_b4a77a8c",
+      "range": {
+        "startLine": 13,
+        "startChar": 4,
+        "endLine": 13,
+        "endChar": 17
+      },
+      "revId": "9c5b77be9c8818afdd786d0322b1ef40c1b6bbb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4d58fd4_2446c204",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
         "patchSetId": 1
