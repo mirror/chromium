@@ -8,8 +8,6 @@
 #include <tuple>
 #include <type_traits>
 
-#include "base/memory/ref_counted.h"
-
 // It is dangerous to post a task with a T* argument where T is a subtype of
 // RefCounted(Base|ThreadSafeBase), since by the time the parameter is used, the
 // object may already have been deleted since it was not held with a
@@ -23,19 +21,20 @@ namespace base {
 // Not for public consumption, so we wrap it in namespace internal.
 namespace internal {
 
+template <typename T, typename SFINAE = void>
+struct IsRefCountedType : std::false_type {};
+
+template <typename T>
+struct IsRefCountedType<T, void_t<decltype(&T::AddRef), decltype(&T::Release)>>
+    : std::true_type {};
+
 template <typename T>
 struct NeedsScopedRefptrButGetsRawPtr {
-  static_assert(!std::is_reference<T>::value,
-                "NeedsScopedRefptrButGetsRawPtr requires non-reference type.");
+  using U = typename std::decay<T>::type;
 
-  enum {
-    // Human readable translation: you needed to be a scoped_refptr if you are a
-    // raw pointer type and are convertible to a RefCounted(Base|ThreadSafeBase)
-    // type.
-    value = (std::is_pointer<T>::value &&
-             (std::is_convertible<T, subtle::RefCountedBase*>::value ||
-              std::is_convertible<T, subtle::RefCountedThreadSafeBase*>::value))
-  };
+  static constexpr bool value =
+      std::is_pointer<U>::value &&
+      IsRefCountedType<typename std::remove_pointer<U>::type>::value;
 };
 
 template <typename Params>

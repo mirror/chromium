@@ -42,7 +42,7 @@ class CONTENT_EXPORT WebRtcMediaStreamTrackAdapter
   static scoped_refptr<WebRtcMediaStreamTrackAdapter> CreateRemoteTrackAdapter(
       PeerConnectionDependencyFactory* factory,
       const scoped_refptr<base::SingleThreadTaskRunner>& main_thread,
-      webrtc::MediaStreamTrackInterface* webrtc_track);
+      rtc::scoped_refptr<webrtc::MediaStreamTrackInterface> webrtc_track);
   // Must be called before all external references are released (i.e. before
   // destruction). Invoke on the main thread. Disposing may finish
   // asynchronously using the webrtc signaling thread and the main thread. After

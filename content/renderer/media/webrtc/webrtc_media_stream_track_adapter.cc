@@ -37,7 +37,7 @@ scoped_refptr<WebRtcMediaStreamTrackAdapter>
 WebRtcMediaStreamTrackAdapter::CreateRemoteTrackAdapter(
     PeerConnectionDependencyFactory* factory,
     const scoped_refptr<base::SingleThreadTaskRunner>& main_thread,
-    webrtc::MediaStreamTrackInterface* webrtc_track) {
+    rtc::scoped_refptr<webrtc::MediaStreamTrackInterface> webrtc_track) {
   DCHECK(factory);
   DCHECK(!main_thread->BelongsToCurrentThread());
   DCHECK(webrtc_track);
@@ -45,12 +45,12 @@ WebRtcMediaStreamTrackAdapter::CreateRemoteTrackAdapter(
       new WebRtcMediaStreamTrackAdapter(factory, main_thread));
   if (webrtc_track->kind() == webrtc::MediaStreamTrackInterface::kAudioKind) {
     remote_track_adapter->InitializeRemoteAudioTrack(
-        static_cast<webrtc::AudioTrackInterface*>(webrtc_track));
+        static_cast<webrtc::AudioTrackInterface*>(webrtc_track.get()));
   } else {
     DCHECK_EQ(webrtc_track->kind(),
               webrtc::MediaStreamTrackInterface::kVideoKind);
     remote_track_adapter->InitializeRemoteVideoTrack(
-        static_cast<webrtc::VideoTrackInterface*>(webrtc_track));
+        static_cast<webrtc::VideoTrackInterface*>(webrtc_track.get()));
   }
   return remote_track_adapter;
 }
