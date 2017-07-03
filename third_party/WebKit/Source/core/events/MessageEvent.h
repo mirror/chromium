@@ -38,6 +38,8 @@
 #include "core/events/EventTarget.h"
 #include "core/events/MessageEventInit.h"
 #include "core/fileapi/Blob.h"
+#include "platform/bindings/DOMWrapperWorld.h"
+#include "platform/bindings/TraceWrapperV8Reference.h"
 #include "platform/wtf/Compiler.h"
 
 namespace blink {
@@ -87,12 +89,14 @@ class CORE_EXPORT MessageEvent final : public Event {
                               const String& suborigin = String()) {
     return new MessageEvent(data, origin, suborigin);
   }
-  static MessageEvent* Create(const AtomicString& type,
+  static MessageEvent* Create(ScriptState*,
+                              const AtomicString& type,
                               const MessageEventInit& initializer,
                               ExceptionState&);
   ~MessageEvent() override;
 
-  void initMessageEvent(const AtomicString& type,
+  void initMessageEvent(ScriptState*,
+                        const AtomicString& type,
                         bool can_bubble,
                         bool cancelable,
                         ScriptValue data,
@@ -129,17 +133,14 @@ class CORE_EXPORT MessageEvent final : public Event {
   const AtomicString& InterfaceName() const override;
 
   enum DataType {
-    kDataTypeScriptValue,
+    kDataTypeV8Reference,
     kDataTypeSerializedScriptValue,
     kDataTypeString,
     kDataTypeBlob,
     kDataTypeArrayBuffer
   };
   DataType GetDataType() const { return data_type_; }
-  ScriptValue DataAsScriptValue() const {
-    DCHECK_EQ(data_type_, kDataTypeScriptValue);
-    return data_as_script_value_;
-  }
+  ScriptValue DataAsScriptValue(ScriptState*) const;
   SerializedScriptValue* DataAsSerializedScriptValue() const {
     DCHECK_EQ(data_type_, kDataTypeSerializedScriptValue);
     return data_as_serialized_script_value_.Get();
@@ -166,6 +167,8 @@ class CORE_EXPORT MessageEvent final : public Event {
 
   DECLARE_VIRTUAL_TRACE();
 
+  DECLARE_VIRTUAL_TRACE_WRAPPERS();
+
   WARN_UNUSED_RESULT v8::Local<v8::Object> AssociateWithWrapper(
       v8::Isolate*,
       const WrapperTypeInfo*,
@@ -173,7 +176,7 @@ class CORE_EXPORT MessageEvent final : public Event {
 
  private:
   MessageEvent();
-  MessageEvent(const AtomicString&, const MessageEventInit&);
+  MessageEvent(ScriptState*, const AtomicString&, const MessageEventInit&);
   MessageEvent(const String& origin,
                const String& last_event_id,
                EventTarget* source,
@@ -201,7 +204,8 @@ class CORE_EXPORT MessageEvent final : public Event {
                const String& suborigin);
 
   DataType data_type_;
-  ScriptValue data_as_script_value_;
+  RefPtr<DOMWrapperWorld> world_;
+  TraceWrapperV8Reference<v8::Value> data_as_v8_value_reference_;
   RefPtr<SerializedScriptValue> data_as_serialized_script_value_;
   String data_as_string_;
   Member<Blob> data_as_blob_;

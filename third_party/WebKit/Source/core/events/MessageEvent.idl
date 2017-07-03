@@ -29,6 +29,7 @@
 
 [
     Constructor(DOMString type, optional MessageEventInit eventInitDict),
+    ConstructorCallWith=ScriptState,
     Exposed=(Window,Worker),
     RaisesException=Constructor
 ] interface MessageEvent : Event {

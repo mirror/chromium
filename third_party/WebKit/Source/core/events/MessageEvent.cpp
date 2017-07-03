@@ -40,15 +40,21 @@ static inline bool IsValidSource(EventTarget* source) {
          source->ToServiceWorker();
 }
 
-MessageEvent::MessageEvent() : data_type_(kDataTypeScriptValue) {}
+MessageEvent::MessageEvent()
+    : data_type_(kDataTypeV8Reference), data_as_v8_value_reference_(this) {}
 
-MessageEvent::MessageEvent(const AtomicString& type,
+MessageEvent::MessageEvent(ScriptState* script_state,
+                           const AtomicString& type,
                            const MessageEventInit& initializer)
     : Event(type, initializer),
-      data_type_(kDataTypeScriptValue),
+      data_type_(kDataTypeV8Reference),
+      data_as_v8_value_reference_(this),
       source_(nullptr) {
-  if (initializer.hasData())
-    data_as_script_value_ = initializer.data();
+  if (initializer.hasData()) {
+    world_ = RefPtr<DOMWrapperWorld>(script_state->World());
+    data_as_v8_value_reference_.Set(initializer.data().GetIsolate(),
+                                    initializer.data().V8Value());
+  }
   if (initializer.hasOrigin())
     origin_ = initializer.origin();
   if (initializer.hasLastEventId())
@@ -66,7 +72,8 @@ MessageEvent::MessageEvent(const String& origin,
                            MessagePortArray* ports,
                            const String& suborigin)
     : Event(EventTypeNames::message, false, false),
-      data_type_(kDataTypeScriptValue),
+      data_type_(kDataTypeV8Reference),
+      data_as_v8_value_reference_(this),
       origin_(origin),
       last_event_id_(last_event_id),
       source_(source),
@@ -82,6 +89,7 @@ MessageEvent::MessageEvent(PassRefPtr<SerializedScriptValue> data,
                            const String& suborigin)
     : Event(EventTypeNames::message, false, false),
       data_type_(kDataTypeSerializedScriptValue),
+      data_as_v8_value_reference_(this),
       data_as_serialized_script_value_(std::move(data)),
       origin_(origin),
       last_event_id_(last_event_id),
@@ -101,6 +109,7 @@ MessageEvent::MessageEvent(PassRefPtr<SerializedScriptValue> data,
                            const String& suborigin)
     : Event(EventTypeNames::message, false, false),
       data_type_(kDataTypeSerializedScriptValue),
+      data_as_v8_value_reference_(this),
       data_as_serialized_script_value_(std::move(data)),
       origin_(origin),
       last_event_id_(last_event_id),
@@ -118,6 +127,7 @@ MessageEvent::MessageEvent(const String& data,
                            const String& suborigin)
     : Event(EventTypeNames::message, false, false),
       data_type_(kDataTypeString),
+      data_as_v8_value_reference_(this),
       data_as_string_(data),
       origin_(origin) {}
 
@@ -126,6 +136,7 @@ MessageEvent::MessageEvent(Blob* data,
                            const String& suborigin)
     : Event(EventTypeNames::message, false, false),
       data_type_(kDataTypeBlob),
+      data_as_v8_value_reference_(this),
       data_as_blob_(data),
       origin_(origin) {}
 
@@ -134,12 +145,14 @@ MessageEvent::MessageEvent(DOMArrayBuffer* data,
                            const String& suborigin)
     : Event(EventTypeNames::message, false, false),
       data_type_(kDataTypeArrayBuffer),
+      data_as_v8_value_reference_(this),
       data_as_array_buffer_(data),
       origin_(origin) {}
 
 MessageEvent::~MessageEvent() {}
 
-MessageEvent* MessageEvent::Create(const AtomicString& type,
+MessageEvent* MessageEvent::Create(ScriptState* script_state,
+                                   const AtomicString& type,
                                    const MessageEventInit& initializer,
                                    ExceptionState& exception_state) {
   if (initializer.source() && !IsValidSource(initializer.source())) {
@@ -147,10 +160,11 @@ MessageEvent* MessageEvent::Create(const AtomicString& type,
         "The optional 'source' property is neither a Window nor MessagePort.");
     return nullptr;
   }
-  return new MessageEvent(type, initializer);
+  return new MessageEvent(script_state, type, initializer);
 }
 
-void MessageEvent::initMessageEvent(const AtomicString& type,
+void MessageEvent::initMessageEvent(ScriptState* script_state,
+                                    const AtomicString& type,
                                     bool can_bubble,
                                     bool cancelable,
                                     ScriptValue data,
@@ -163,8 +177,11 @@ void MessageEvent::initMessageEvent(const AtomicString& type,
 
   initEvent(type, can_bubble, cancelable);
 
-  data_type_ = kDataTypeScriptValue;
-  data_as_script_value_ = data;
+  data_type_ = kDataTypeV8Reference;
+  if (!data.IsEmpty()) {
+    world_ = RefPtr<DOMWrapperWorld>(script_state->World());
+    data_as_v8_value_reference_.Set(data.GetIsolate(), data.V8Value());
+  }
   origin_ = origin;
   last_event_id_ = last_event_id;
   source_ = source;
@@ -224,6 +241,23 @@ const AtomicString& MessageEvent::InterfaceName() const {
   return EventNames::MessageEvent;
 }
 
+ScriptValue MessageEvent::DataAsScriptValue(ScriptState* script_state) const {
+  DCHECK_EQ(data_type_, kDataTypeV8Reference);
+  DCHECK(script_state);
+  v8::Isolate* isolate = script_state->GetIsolate();
+  if (data_as_v8_value_reference_.IsEmpty())
+    return ScriptValue(script_state, v8::Null(isolate));
+  // Returns a clone of the v8 value if the world is different.
+  if (!world_ || world_->GetWorldId() != script_state->World().GetWorldId()) {
+    v8::Local<v8::Value> value = data_as_v8_value_reference_.NewLocal(isolate);
+    RefPtr<SerializedScriptValue> serialized =
+        SerializedScriptValue::SerializeAndSwallowExceptions(isolate, value);
+    return ScriptValue(script_state, serialized->Deserialize(isolate));
+  }
+  return ScriptValue(script_state,
+                     data_as_v8_value_reference_.NewLocal(isolate));
+}
+
 MessagePortArray MessageEvent::ports(bool& is_null) const {
   // TODO(bashi): Currently we return a copied array because the binding
   // layer could modify the content of the array while executing JS callbacks.
@@ -254,6 +288,11 @@ DEFINE_TRACE(MessageEvent) {
   Event::Trace(visitor);
 }
 
+DEFINE_TRACE_WRAPPERS(MessageEvent) {
+  visitor->TraceWrappers(data_as_v8_value_reference_);
+  Event::TraceWrappers(visitor);
+}
+
 v8::Local<v8::Object> MessageEvent::AssociateWithWrapper(
     v8::Isolate* isolate,
     const WrapperTypeInfo* wrapper_type,
@@ -264,7 +303,7 @@ v8::Local<v8::Object> MessageEvent::AssociateWithWrapper(
   // how much memory is used via the wrapper. To keep the wrapper alive, it's
   // set to the wrapper of the MessageEvent as a private value.
   switch (GetDataType()) {
-    case MessageEvent::kDataTypeScriptValue:
+    case MessageEvent::kDataTypeV8Reference:
     case MessageEvent::kDataTypeSerializedScriptValue:
       break;
     case MessageEvent::kDataTypeString:
