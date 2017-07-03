@@ -104,6 +104,24 @@
       "revId": "e9944a6404fd9734f6c5cb75aba94e18aa79178e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb01bc29_37d758f1",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAnimationUtils.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-07-03T02:58:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3b69e267_3c2a2a03",
+      "revId": "e9944a6404fd9734f6c5cb75aba94e18aa79178e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
