@@ -1449,8 +1449,7 @@ void ResourceFetcher::RemoveResourceLoader(ResourceLoader* loader) {
 }
 
 void ResourceFetcher::StopFetching() {
-  // TODO(toyoshim): May want to suspend scheduler while canceling loaders so
-  // that the cancellations below do not awake unnecessary scheduling.
+  scheduler_->Suspend();
 
   HeapVector<Member<ResourceLoader>> loaders_to_cancel;
   for (const auto& loader : non_blocking_loaders_) {
@@ -1466,6 +1465,8 @@ void ResourceFetcher::StopFetching() {
     if (loaders_.Contains(loader) || non_blocking_loaders_.Contains(loader))
       loader->Cancel();
   }
+
+  scheduler_->Resume();
 }
 
 void ResourceFetcher::SetDefersLoading(bool defers) {

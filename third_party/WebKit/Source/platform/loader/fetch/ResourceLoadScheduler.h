@@ -60,6 +60,18 @@ class PLATFORM_EXPORT ResourceLoadScheduler final
   ~ResourceLoadScheduler() {}
   DECLARE_TRACE();
 
+  void Suspend() {
+    if (state_ == State::kRunning)
+      state_ = State::kSuspended;
+  }
+
+  void Resume() {
+    if (state_ == State::kSuspended) {
+      state_ = State::kRunning;
+      MaybeRun();
+    }
+  }
+
   // Changes the internal state to kShutdown to stop all operations including
   // observing throttling signals. ResourceLoadSchedulerClient::Run() will not
   // be called once this method is called. This method can be called multiple
@@ -84,6 +96,12 @@ class PLATFORM_EXPORT ResourceLoadScheduler final
   void OnThrottlingStateChanged(WebFrameScheduler::ThrottlingState) override;
 
  private:
+  enum class State {
+    kRunning,
+    kSuspended,
+    kShutdown,
+  };
+
   static constexpr size_t kOutstandingUnlimited = 0;
 
   ResourceLoadScheduler(FetchContext*);
@@ -99,7 +117,7 @@ class PLATFORM_EXPORT ResourceLoadScheduler final
 
   void SetOutstandingLimitAndMaybeRun(size_t limit);
 
-  bool is_shutdown_ = false;
+  State state_ = State::kRunning;
   bool is_enabled_ = false;
 
   // Outstanding limit. 0u means unlimited.

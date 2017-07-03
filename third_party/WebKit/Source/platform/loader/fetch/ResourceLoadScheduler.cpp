@@ -40,7 +40,7 @@ DEFINE_TRACE(ResourceLoadScheduler) {
 }
 
 void ResourceLoadScheduler::Shutdown() {
-  is_shutdown_ = true;
+  state_ = State::kShutdown;
 
   if (!is_enabled_)
     return;
@@ -60,7 +60,7 @@ void ResourceLoadScheduler::Request(ResourceLoadSchedulerClient* client,
                                     ThrottleOption option,
                                     ResourceLoadScheduler::ClientId* id) {
   *id = GenerateClientId();
-  if (is_shutdown_)
+  if (state_ == State::kShutdown)
     return;
 
   if (!is_enabled_ || option == ThrottleOption::kCanNotBeThrottled) {
@@ -124,7 +124,7 @@ ResourceLoadScheduler::ClientId ResourceLoadScheduler::GenerateClientId() {
 }
 
 void ResourceLoadScheduler::MaybeRun() {
-  if (!is_enabled_)
+  if (!is_enabled_ || state_ == State::kSuspended)
     return;
 
   while (!pending_request_queue_.empty()) {
