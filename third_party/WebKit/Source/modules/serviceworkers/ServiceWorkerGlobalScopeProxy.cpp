@@ -55,6 +55,8 @@
 #include "modules/notifications/Notification.h"
 #include "modules/notifications/NotificationEvent.h"
 #include "modules/notifications/NotificationEventInit.h"
+#include "modules/payments/CanMakePaymentEvent.h"
+#include "modules/payments/CanMakePaymentRespondWithObserver.h"
 #include "modules/payments/PaymentEventDataConversion.h"
 #include "modules/payments/PaymentRequestEvent.h"
 #include "modules/payments/PaymentRequestEventInit.h"
@@ -449,6 +451,32 @@ void ServiceWorkerGlobalScopeProxy::DispatchSyncEvent(
   Event* event = SyncEvent::Create(EventTypeNames::sync, tag,
                                    last_chance == kIsLastChance, observer);
   WorkerGlobalScope()->DispatchExtendableEvent(event, observer);
+}
+
+void ServiceWorkerGlobalScopeProxy::DispatchCanMakePaymentEvent(
+    int event_id,
+    const WebCanMakePaymentEventData& web_event_data) {
+  WaitUntilObserver* wait_until_observer = WaitUntilObserver::Create(
+      WorkerGlobalScope(), WaitUntilObserver::kCanMakePayment, event_id);
+  RespondWithObserver* respond_with_observer =
+      new CanMakePaymentRespondWithObserver(WorkerGlobalScope(), event_id,
+                                            wait_until_observer);
+
+  Event* event = CanMakePaymentEvent::Create(
+      EventTypeNames::canmakepayment,
+      PaymentEventDataConversion::ToCanMakePaymentEventInit(
+          WorkerGlobalScope()->ScriptController()->GetScriptState(),
+          web_event_data),
+      respond_with_observer, wait_until_observer);
+
+  wait_until_observer->WillDispatchEvent();
+  respond_with_observer->WillDispatchEvent();
+  DispatchEventResult dispatch_result =
+      WorkerGlobalScope()->DispatchEvent(event);
+  respond_with_observer->DidDispatchEvent(dispatch_result);
+  // false is okay because waitUntil for payment request event doesn't care
+  // about the promise rejection or an uncaught runtime script error.
+  wait_until_observer->DidDispatchEvent(false /* event_dispatch_failed */);
 }
 
 void ServiceWorkerGlobalScopeProxy::DispatchPaymentRequestEvent(
