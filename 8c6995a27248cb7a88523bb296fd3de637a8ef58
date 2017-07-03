@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2202954a_9d193a9c",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-03T05:17:06Z",
+      "side": 1,
+      "message": "nit: wonder if it\u0027s better to use std::set or flat_set, initialize them once in ctor and use it afterwards?",
+      "revId": "8c6995a27248cb7a88523bb296fd3de637a8ef58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9532dad2_559aa684",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-03T05:17:06Z",
+      "side": 1,
+      "message": "Is this introduced mostly for thread checking?  I\u0027m a bit uncomfortable with this rawptr...\nis the thread checking in this class really desirable?",
+      "revId": "8c6995a27248cb7a88523bb296fd3de637a8ef58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
