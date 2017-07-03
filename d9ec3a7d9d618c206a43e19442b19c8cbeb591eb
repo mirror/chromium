@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8a0cc27_770bb324",
+        "filename": "third_party/WebKit/Source/controller/DEPS",
+        "patchSetId": 17
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-03T07:14:58Z",
+      "side": 1,
+      "message": "For now would you add only:\n\n- core\n- modules\n- controller\n- bindings\n\n?\n\nWe can add more dependencies as needed.",
+      "revId": "d9ec3a7d9d618c206a43e19442b19c8cbeb591eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee3923d9_dc34115b",
+        "filename": "third_party/WebKit/Source/controller/OWNERS",
+        "patchSetId": 17
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-03T07:14:58Z",
+      "side": 1,
+      "message": "Did you get a committer?",
+      "revId": "d9ec3a7d9d618c206a43e19442b19c8cbeb591eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9193e11_e67d36d1",
+        "filename": "third_party/WebKit/Source/controller/README.md",
+        "patchSetId": 17
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-03T07:14:58Z",
+      "side": 1,
+      "message": "Add:\n\n  We should avoid making controller/ a \"catch-all\" directory. Things that are part of core/ should go to core/. Things that are part of modules/ should go to modules/. Only things that lives outside the web platform should go to controller/.\n\nSlangley: Do you want to add more sentences?",
+      "revId": "d9ec3a7d9d618c206a43e19442b19c8cbeb591eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
