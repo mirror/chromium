@@ -1,0 +1,13 @@
+#!/bin/sh
+
+since=$1
+until=$2
+
+days_with_import=`git log origin/master --grep "^Import wpt@" --format="%cd" --date=short --since=${since}T00:00:00Z --until=${until}T00:00:00Z | sort | uniq`
+days_with_auto_import=`git log origin/master --grep "^Import wpt@" --format="%cd" --date=short --since=${since}T00:00:00Z --until=${until}T00:00:00Z --author=blink-w3c-test-autoroller@chromium.org | sort | uniq`
+
+echo "$(echo "$days_with_import" | wc -l) days with import:"
+echo "$days_with_import"
+echo
+echo "$(echo "$days_with_auto_import" | wc -l) days with automatic import:"
+echo "$days_with_auto_import"
