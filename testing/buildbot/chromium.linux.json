@@ -1965,7 +1965,7 @@
               "device_type": "hammerhead"
             }
           ],
-          "hard_timeout": 2400,
+          "hard_timeout": 4800,
           "output_links": [
             {
               "link": [
@@ -2126,7 +2126,7 @@
               "device_type": "hammerhead"
             }
           ],
-          "hard_timeout": 960,
+          "hard_timeout": 3840,
           "output_links": [
             {
               "link": [
@@ -3156,7 +3156,7 @@
               "device_type": "hammerhead"
             }
           ],
-          "hard_timeout": 960,
+          "hard_timeout": 3840,
           "output_links": [
             {
               "link": [
