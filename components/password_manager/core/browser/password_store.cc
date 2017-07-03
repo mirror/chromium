@@ -14,7 +14,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/stl_util.h"
-#include "base/threading/thread_task_runner_handle.h"
+#include "base/threading/sequenced_task_runner_handle.h"
 #include "components/autofill/core/common/password_form.h"
 #include "components/password_manager/core/browser/android_affiliation/affiliated_match_helper.h"
 #include "components/password_manager/core/browser/password_manager_util.h"
@@ -33,7 +33,7 @@ namespace password_manager {
 PasswordStore::GetLoginsRequest::GetLoginsRequest(
     PasswordStoreConsumer* consumer)
     : consumer_weak_(consumer->GetWeakPtr()) {
-  origin_task_runner_ = base::ThreadTaskRunnerHandle::Get();
+  origin_task_runner_ = base::SequencedTaskRunnerHandle::Get();
 }
 
 PasswordStore::GetLoginsRequest::~GetLoginsRequest() {
@@ -64,7 +64,7 @@ void PasswordStore::GetLoginsRequest::NotifyWithSiteStatistics(
 #if !defined(OS_ANDROID) && !defined(OS_IOS)
 PasswordStore::CheckReuseRequest::CheckReuseRequest(
     PasswordReuseDetectorConsumer* consumer)
-    : origin_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+    : origin_task_runner_(base::SequencedTaskRunnerHandle::Get()),
       consumer_weak_(consumer->AsWeakPtr()) {}
 
 PasswordStore::CheckReuseRequest::~CheckReuseRequest() {}
@@ -107,8 +107,8 @@ bool PasswordStore::FormDigest::operator==(const FormDigest& other) const {
 }
 
 PasswordStore::PasswordStore(
-    scoped_refptr<base::SingleThreadTaskRunner> main_thread_runner,
-    scoped_refptr<base::SingleThreadTaskRunner> db_thread_runner)
+    scoped_refptr<base::SequencedTaskRunner> main_thread_runner,
+    scoped_refptr<base::SequencedTaskRunner> db_thread_runner)
     : main_thread_runner_(main_thread_runner),
       db_thread_runner_(db_thread_runner),
       observers_(new base::ObserverListThreadSafe<Observer>()),
@@ -259,7 +259,7 @@ void PasswordStore::GetBlacklistLoginsWithAffiliatedRealms(
 
 void PasswordStore::ReportMetrics(const std::string& sync_username,
                                   bool custom_passphrase_sync_enabled) {
-  scoped_refptr<base::SingleThreadTaskRunner> task_runner(
+  scoped_refptr<base::SequencedTaskRunner> task_runner(
       GetBackgroundTaskRunner());
   if (task_runner) {
     base::Closure task =
@@ -301,7 +301,7 @@ void PasswordStore::RemoveObserver(Observer* observer) {
 }
 
 bool PasswordStore::ScheduleTask(const base::Closure& task) {
-  scoped_refptr<base::SingleThreadTaskRunner> task_runner(
+  scoped_refptr<base::SequencedTaskRunner> task_runner(
       GetBackgroundTaskRunner());
   if (task_runner.get())
     return task_runner->PostTask(FROM_HERE, task);
@@ -365,7 +365,7 @@ PasswordStore::~PasswordStore() {
   DCHECK(shutdown_called_);
 }
 
-scoped_refptr<base::SingleThreadTaskRunner>
+scoped_refptr<base::SequencedTaskRunner>
 PasswordStore::GetBackgroundTaskRunner() {
   return db_thread_runner_;
 }

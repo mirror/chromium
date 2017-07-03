@@ -72,7 +72,7 @@ class AssetLinkRetrieverTest : public testing::Test {
 
 AssetLinkRetrieverTest::AssetLinkRetrieverTest()
     : request_context_(new net::TestURLRequestContextGetter(
-          base::ThreadTaskRunnerHandle::Get())),
+          base::SequencedTaskRunnerHandle::Get())),
       factory_(nullptr, base::Bind(&AssetLinksFetcherCreator)) {}
 
 // Load the asset links resource that isn't available.

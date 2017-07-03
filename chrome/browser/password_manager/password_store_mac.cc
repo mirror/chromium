@@ -11,7 +11,7 @@
 using password_manager::MigrationStatus;
 
 PasswordStoreMac::PasswordStoreMac(
-    scoped_refptr<base::SingleThreadTaskRunner> main_thread_runner,
+    scoped_refptr<base::SequencedTaskRunner> main_thread_runner,
     std::unique_ptr<password_manager::LoginDatabase> login_db,
     PrefService* prefs)
     : PasswordStoreDefault(main_thread_runner, nullptr, std::move(login_db)) {
@@ -49,7 +49,7 @@ void PasswordStoreMac::ShutdownOnUIThread() {
   migration_status_.Destroy();
 }
 
-scoped_refptr<base::SingleThreadTaskRunner>
+scoped_refptr<base::SequencedTaskRunner>
 PasswordStoreMac::GetBackgroundTaskRunner() {
   return thread_ ? thread_->task_runner() : nullptr;
 }

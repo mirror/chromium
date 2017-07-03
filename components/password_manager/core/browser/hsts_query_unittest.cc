@@ -11,7 +11,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
-#include "base/threading/thread_task_runner_handle.h"
+#include "base/threading/sequenced_task_runner_handle.h"
 #include "components/password_manager/core/browser/password_manager_test_utils.h"
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_test_util.h"
@@ -24,7 +24,7 @@ class HSTSQueryTest : public testing::Test {
  public:
   HSTSQueryTest()
       : request_context_(new net::TestURLRequestContextGetter(
-            base::ThreadTaskRunnerHandle::Get())) {}
+            base::SequencedTaskRunnerHandle::Get())) {}
 
   const scoped_refptr<net::TestURLRequestContextGetter>& request_context() {
     return request_context_;

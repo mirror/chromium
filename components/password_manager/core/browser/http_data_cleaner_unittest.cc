@@ -72,7 +72,7 @@ class HTTPDataCleanerTest : public testing::Test {
       : store_(new NiceMock<MockPasswordStore>),
         prefs_(base::MakeUnique<TestingPrefServiceSimple>()),
         request_context_(new net::TestURLRequestContextGetter(
-            base::ThreadTaskRunnerHandle::Get())) {
+            base::SequencedTaskRunnerHandle::Get())) {
     prefs()->registry()->RegisterBooleanPref(prefs::kWasObsoleteHttpDataCleaned,
                                              false);
   }
