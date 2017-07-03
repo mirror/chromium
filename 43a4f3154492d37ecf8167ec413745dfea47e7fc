@@ -87,6 +87,24 @@
       "revId": "43a4f3154492d37ecf8167ec413745dfea47e7fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f3a5d5e9_05a449f9",
+        "filename": "components/arc/common/volume_mounter.typemap",
+        "patchSetId": 17
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-03T08:32:02Z",
+      "side": 1,
+      "message": "Apparently trybots don\u0027t think so in their analyze stage. I think it\u0027s better to stick to chromeos:chromeos here too for the sake of consistency.\n\nERROR at //chromeos/disks/disk_mount_manager.h:14:11: Can\u0027t include this header from here.\n#include \"chromeos/chromeos_export.h\"\n          ^-------------------------\nThe target:\n  //components/arc:arc_bindings\nis including a file from the target:\n  //chromeos:chromeos\n\nhttps://luci-logdog.appspot.com/v/?s\u003dchromium%2Fbb%2Ftryserver.chromium.linux%2Flinux_chromium_chromeos_ozone_rel_ng%2F419824%2F%2B%2Frecipes%2Fsteps%2Fanalyze%2F0%2Fstdout",
+      "parentUuid": "170169ee_3e076255",
+      "revId": "43a4f3154492d37ecf8167ec413745dfea47e7fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
