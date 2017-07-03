@@ -48,7 +48,10 @@ ServiceWorkerThread::ServiceWorkerThread(
       worker_backing_thread_(
           WorkerBackingThread::Create("ServiceWorker Thread")),
       installed_scripts_manager_(std::move(installed_scripts_manager)) {
-  installed_scripts_manager_->OnServiceWorkerThreadCreated(this);
+  if (RuntimeEnabledFeatures::ServiceWorkerScriptStreamingEnabled()) {
+    DCHECK(installed_scripts_manager_);
+    installed_scripts_manager_->OnServiceWorkerThreadCreated(this);
+  }
 }
 
 ServiceWorkerThread::~ServiceWorkerThread() {}
