@@ -1697,6 +1697,12 @@ void RenderWidgetHostViewAndroid::ProcessAckedTouchEvent(
   gesture_provider_.OnTouchEventAck(
       touch.event.unique_touch_event_id, event_consumed,
       InputEventAckStateIsSetNonBlocking(ack_result));
+  if (touch.event.touch_start_or_first_touch_move && result == ui::ER_HANDLED &&
+      host_->delegate() && host_->delegate()->GetInputEventRouter())
+    host_->delegate()
+        ->GetInputEventRouter()
+        ->OnHandledTouchStartOrFirstTouchMove(
+            touch.event.unique_touch_event_id);
 }
 
 void RenderWidgetHostViewAndroid::GestureEventAck(
