@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "32e48d08_768ac023",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-07-03T13:59:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02ed0e15_38cf2322",
+      "revId": "6cd2d74b00c667625c25dc8f4e2147851b611f42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7201de86_8b400496",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
         "patchSetId": 9
@@ -39,6 +57,30 @@
       "revId": "6cd2d74b00c667625c25dc8f4e2147851b611f42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4508387_98bdfbcf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-07-03T13:59:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7201de86_8b400496",
+      "range": {
+        "startLine": 317,
+        "startChar": 31,
+        "endLine": 317,
+        "endChar": 59
+      },
+      "revId": "6cd2d74b00c667625c25dc8f4e2147851b611f42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "f39dbd00_1f3388a1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-07-03T13:59:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "067c4225_355fa9d5",
+      "range": {
+        "startLine": 361,
+        "startChar": 44,
+        "endLine": 361,
+        "endChar": 45
+      },
+      "revId": "6cd2d74b00c667625c25dc8f4e2147851b611f42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cdb3f01b_96342f8e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsMetrics.java",
         "patchSetId": 9
@@ -85,6 +151,30 @@
       "revId": "6cd2d74b00c667625c25dc8f4e2147851b611f42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bffd2d38_003f8db8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsMetrics.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-07-03T13:59:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cdb3f01b_96342f8e",
+      "range": {
+        "startLine": 91,
+        "startChar": 16,
+        "endLine": 91,
+        "endChar": 44
+      },
+      "revId": "6cd2d74b00c667625c25dc8f4e2147851b611f42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

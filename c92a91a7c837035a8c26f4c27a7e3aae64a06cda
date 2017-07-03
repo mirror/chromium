@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9ac09963_eaef7cc9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-07-03T13:59:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2d22192_9344ea6b",
+      "range": {
+        "startLine": 10,
+        "startChar": 46,
+        "endLine": 10,
+        "endChar": 69
+      },
+      "revId": "c92a91a7c837035a8c26f4c27a7e3aae64a06cda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c97dfe0f_48e90bdd",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticleViewHolder.java",
         "patchSetId": 5
