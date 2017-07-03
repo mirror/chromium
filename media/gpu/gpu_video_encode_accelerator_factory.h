@@ -15,7 +15,7 @@ namespace media {
 
 class MEDIA_GPU_EXPORT GpuVideoEncodeAcceleratorFactory {
  public:
-  // Creates and Initializes an VideoEncodeAccelerator. Returns nullptr
+  // Creates and initializes a VideoEncodeAccelerator. Returns nullptr
   // if there is no implementation available on the platform or calling
   // VideoEncodeAccelerator::Initialize() returns false.
   static std::unique_ptr<VideoEncodeAccelerator> CreateVEA(
@@ -24,7 +24,7 @@ class MEDIA_GPU_EXPORT GpuVideoEncodeAcceleratorFactory {
       VideoCodecProfile output_profile,
       uint32_t initial_bitrate,
       VideoEncodeAccelerator::Client* client,
-      const gpu::GpuPreferences& gpu_perferences);
+      const gpu::GpuPreferences& gpu_preferences);
 
   // Gets the supported codec profiles for video encoding on the platform.
   static VideoEncodeAccelerator::SupportedProfiles GetSupportedProfiles(

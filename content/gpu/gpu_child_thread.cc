@@ -208,6 +208,9 @@ void GpuChildThread::Init(const base::Time& process_start_time) {
   registry->AddInterface(base::Bind(&GpuChildThread::BindServiceFactoryRequest,
                                     weak_factory_.GetWeakPtr()),
                          base::ThreadTaskRunnerHandle::Get());
+
+  // TODO(mcasas): register here our VideoEncodeAccelerator interface impl.
+
   if (GetContentClient()->gpu())  // NULL in tests.
     GetContentClient()->gpu()->Initialize(this, registry.get());
 
@@ -244,6 +247,7 @@ bool GpuChildThread::Send(IPC::Message* msg) {
 void GpuChildThread::OnAssociatedInterfaceRequest(
     const std::string& name,
     mojo::ScopedInterfaceEndpointHandle handle) {
+  DVLOG(1) << __func__ << " " << name;
   if (associated_interfaces_.CanBindRequest(name))
     associated_interfaces_.BindRequest(name, std::move(handle));
   else
@@ -255,6 +259,8 @@ void GpuChildThread::CreateGpuService(
     ui::mojom::GpuHostPtr gpu_host,
     const gpu::GpuPreferences& gpu_preferences,
     mojo::ScopedSharedBufferHandle activity_flags) {
+  DVLOG(1) << __func__ ;
+
   gpu_service_->UpdateGPUInfoFromPreferences(gpu_preferences);
   for (const LogMessage& log : deferred_messages_)
     gpu_host->RecordLogMessage(log.severity, log.header, log.message);
