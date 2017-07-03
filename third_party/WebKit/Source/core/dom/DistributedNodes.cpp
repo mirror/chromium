@@ -26,7 +26,7 @@
 
 #include "core/dom/DistributedNodes.h"
 
-#include "core/dom/InsertionPoint.h"
+#include "core/dom/V0InsertionPoint.h"
 
 namespace blink {
 
