@@ -1486,7 +1486,7 @@ void ContainerNode::RebuildChildrenLayoutTrees(
       toHTMLSlotElement(this)->RebuildDistributedChildrenLayoutTrees(
           whitespace_attacher);
     } else {
-      ToInsertionPoint(this)->RebuildDistributedChildrenLayoutTrees(
+      ToV0InsertionPoint(this)->RebuildDistributedChildrenLayoutTrees(
           whitespace_attacher);
     }
   }
@@ -1673,7 +1673,7 @@ bool ChildAttachedAllowedWhenAttachingChildren(ContainerNode* node) {
   if (node->IsShadowRoot())
     return true;
 
-  if (node->IsInsertionPoint())
+  if (node->IsV0InsertionPoint())
     return true;
 
   if (isHTMLSlotElement(node))
