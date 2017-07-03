@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "22c95f41_b432953e",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-03T12:21:55Z",
+      "side": 1,
+      "message": "Resolved offline :)",
+      "parentUuid": "09f476c0_f46d0c17",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 47
+      },
+      "revId": "5e1f7b5ec872186c625f12ebe9a7673020e8e4a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1285d747_a05e1003",
         "filename": "tools/traffic_annotation/presubmit_checks.py",
         "patchSetId": 10
