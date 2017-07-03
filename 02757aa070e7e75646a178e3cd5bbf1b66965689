@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3fe7afb_23f17769",
+        "filename": "components/policy/core/common/async_policy_loader.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-07-03T11:03:36Z",
+      "side": 1,
+      "message": "nit: TimeDelta::FromMinutes(15)?",
+      "range": {
+        "startLine": 28,
+        "startChar": 38,
+        "endLine": 28,
+        "endChar": 70
+      },
+      "revId": "02757aa070e7e75646a178e3cd5bbf1b66965689",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
