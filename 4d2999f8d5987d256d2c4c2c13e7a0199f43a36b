@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "9ce206c3_6709a510",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-04T04:54:19Z",
+      "side": 1,
+      "message": "Ah, that makes sense.\n\nIn that case I\u0027d suggest:\n\"Schedule a regular async worker thread termination task, and forcibly terminate V8 script execution to ensure the task runs.\"\n\nIt\u0027s a bit weird that MayForciblyTerminateExecution() means to forcibly terminate. Why does it say \"MayForciblyTerminate\"? Should it just call ForciblyTerminateExecution(), or are you exercising a code path on purpose?",
+      "parentUuid": "5589e7fb_3b71364d",
+      "revId": "4d2999f8d5987d256d2c4c2c13e7a0199f43a36b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "95745152_50a1b070",
         "filename": "third_party/WebKit/Source/core/workers/WorkerThread.h",
         "patchSetId": 5
