@@ -92,9 +92,8 @@ class PLATFORM_EXPORT ImageFrameGenerator final
   // to hold partial planes, and the GPU code needs to handle them.
   bool DecodeToYUV(SegmentReader*,
                    size_t index,
-                   const SkISize component_sizes[3],
-                   void* planes[3],
-                   const size_t row_bytes[3]);
+                   const SkYUVSizeInfo&,
+                   void* planes[3]);
 
   const SkISize& GetFullSize() const { return full_size_; }
 
@@ -106,7 +105,7 @@ class PLATFORM_EXPORT ImageFrameGenerator final
   // Must not be called unless the SkROBuffer has all the data. YUV decoding
   // does not currently support progressive decoding. See comment above on
   // decodeToYUV().
-  bool GetYUVComponentSizes(SegmentReader*, SkYUVSizeInfo*);
+  bool GetYUVComponentSizes(SegmentReader*, SkYUVSizeInfo*, SkYUVColorSpace*);
 
  private:
   ImageFrameGenerator(const SkISize& full_size,
