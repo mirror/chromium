@@ -16,6 +16,24 @@
       "revId": "0a8e47404c40fb2d93cb6d868dc55fc834a94a91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da4bcb6c_1ef46728",
+        "filename": "third_party/WebKit/Source/modules/plugins/DOMPluginArray.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-07-04T19:39:23Z",
+      "side": 1,
+      "message": "I\u0027ll put up a separate CL to clean that up, as there are other classes that could use this as well, such as DOMMimeTypeArray, DOMPlugin and DOMMimeType.",
+      "parentUuid": "8baf7e0d_fec4afb7",
+      "revId": "0a8e47404c40fb2d93cb6d868dc55fc834a94a91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
