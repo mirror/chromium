@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8fc12be2_d8382d46",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_importer.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-07-04T12:18:42Z",
+      "side": 1,
+      "message": "This typo was fixed in https://chromium-review.googlesource.com/c/558982, filed https://bugs.chromium.org/p/chromium/issues/detail?id\u003d739155 about tests for this code.",
+      "range": {
+        "startLine": 353,
+        "startChar": 7,
+        "endLine": 353,
+        "endChar": 8
+      },
+      "revId": "958bfd4935a824faaf7cdf02e8dd6803d25795b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
