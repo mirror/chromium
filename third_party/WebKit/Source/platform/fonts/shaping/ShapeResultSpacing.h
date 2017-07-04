@@ -38,7 +38,10 @@ class PLATFORM_EXPORT ShapeResultSpacing final {
   // Compute the sum of all spacings for the specified index.
   // For justification, this function must be called incrementally since it
   // keeps states and counts consumed justification opportunities.
-  float ComputeSpacing(const TextContainerType&, size_t, float& offset);
+  float ComputeSpacing(const TextContainerType&,
+                       size_t,
+                       float& offset,
+                       bool use_leading_letter_spacing = false);
 
  private:
   bool IsAfterExpansion() const { return is_after_expansion_; }

@@ -39,7 +39,7 @@ ShapeCache* CachingWordShaper::GetShapeCache() const {
   return font_.font_fallback_list_->GetShapeCache(font_.font_description_);
 }
 
-float CachingWordShaper::Width(const TextRun& run,
+float CachingWordShaper::Width(TextRun& run,
                                HashSet<const SimpleFontData*>* fallback_fonts,
                                FloatRect* glyph_bounds) {
   float width = 0;
@@ -67,7 +67,8 @@ static inline float ShapeResultsForRun(ShapeCache* shape_cache,
                                        const Font* font,
                                        const TextRun& run,
                                        ShapeResultBuffer* results_buffer) {
-  CachingWordShapeIterator iterator(shape_cache, run, font);
+  CachingWordShapeIterator iterator(shape_cache, const_cast<TextRun&>(run),
+                                    font);
   RefPtr<const ShapeResult> word_result;
   float total_width = 0;
   while (iterator.Next(&word_result)) {

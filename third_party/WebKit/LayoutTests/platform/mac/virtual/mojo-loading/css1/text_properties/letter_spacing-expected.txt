@@ -68,8 +68,8 @@ layer at (0,0) size 785x1378 backgroundClip at (0,0) size 785x600 clip at (0,0) 
         LayoutInline {SPAN} at (0,0) size 184x18
           LayoutText {#text} at (439,18) size 184x18
             text run at (439,18) width 184: "should show normal spacing"
-        LayoutText {#text} at (622,18) size 10x18
-          text run at (622,18) width 10: "."
+        LayoutText {#text} at (622,18) size 15x18
+          text run at (622,18) width 15: "."
       LayoutBlockFlow {P} at (0,700) size 769x36
         LayoutText {#text} at (0,0) size 746x36
           text run at (0,0) width 746: "This letters in this sentence should have normal space between them, since percentage values are not allowed on this"
@@ -127,8 +127,8 @@ layer at (0,0) size 785x1378 backgroundClip at (0,0) size 785x600 clip at (0,0) 
                 LayoutInline {SPAN} at (0,0) size 183x18
                   LayoutText {#text} at (509,18) size 183x18
                     text run at (509,18) width 183: "should show normal spacing"
-                LayoutText {#text} at (692,18) size 9x18
-                  text run at (692,18) width 9: "."
+                LayoutText {#text} at (692,18) size 14x18
+                  text run at (692,18) width 14: "."
               LayoutBlockFlow {P} at (4,474) size 747x36
                 LayoutText {#text} at (0,0) size 746x36
                   text run at (0,0) width 746: "This letters in this sentence should have normal space between them, since percentage values are not allowed on this"

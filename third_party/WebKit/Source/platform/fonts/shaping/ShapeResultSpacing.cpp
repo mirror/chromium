@@ -137,7 +137,8 @@ template <typename TextContainerType>
 float ShapeResultSpacing<TextContainerType>::ComputeSpacing(
     const TextContainerType& run,
     size_t index,
-    float& offset) {
+    float& offset,
+    bool use_leading_letter_spacing) {
   DCHECK(has_spacing_);
   UChar32 character = run[index];
   bool treat_as_space =
@@ -149,8 +150,13 @@ float ShapeResultSpacing<TextContainerType>::ComputeSpacing(
     character = kSpaceCharacter;
 
   float spacing = 0;
-  if (letter_spacing_ && !Character::TreatAsZeroWidthSpace(character))
+  if (letter_spacing_ && !Character::TreatAsZeroWidthSpace(character)) {
     spacing += letter_spacing_;
+    if (!index && IsFirstRun(run) && use_leading_letter_spacing) {
+      offset += letter_spacing_;
+      spacing += letter_spacing_;
+    }
+  }
 
   if (treat_as_space &&
       (index || !IsFirstRun(run) || character == kNoBreakSpaceCharacter))

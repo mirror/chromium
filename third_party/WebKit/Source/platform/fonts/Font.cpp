@@ -269,7 +269,7 @@ float Font::Width(const TextRun& run,
                   FloatRect* glyph_bounds) const {
   FontCachePurgePreventer purge_preventer;
   CachingWordShaper shaper(*this);
-  return shaper.Width(run, fallback_fonts, glyph_bounds);
+  return shaper.Width(const_cast<TextRun&>(run), fallback_fonts, glyph_bounds);
 }
 
 namespace {  // anonymous namespace

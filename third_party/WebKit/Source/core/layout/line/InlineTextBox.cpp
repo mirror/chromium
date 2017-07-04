@@ -709,6 +709,21 @@ TextRun InlineTextBox::ConstructTextRun(
   run.SetTabSize(!style.CollapseWhiteSpace(), style.GetTabSize());
   run.SetTextJustify(style.GetTextJustify());
 
+  LineLayoutText layout_object = GetLineLayoutItem();
+
+  LineLayoutItem previous_sibling = Direction() == TextDirection::kLtr
+                                        ? layout_object.PreviousSibling()
+                                        : layout_object.NextSibling();
+  if (style.LetterSpacing() && previous_sibling && !previous_sibling.IsText())
+    run.SetUseLeadingLetterSpacing(true);
+
+  LineLayoutItem next_sibling = Direction() == TextDirection::kLtr
+                                    ? layout_object.NextSibling()
+                                    : layout_object.PreviousSibling();
+  bool contains_last_character = Start() + Len() == layout_object.TextLength();
+  if (contains_last_character && style.LetterSpacing() && !next_sibling)
+    run.SetUseTrailingLetterSpacing(false);
+
   // Propagate the maximum length of the characters buffer to the TextRun, even
   // when we're only processing a substring.
   run.SetCharactersLength(maximum_length);
