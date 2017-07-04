@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "745b6941_1d8b2c2b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticleViewHolder.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-04T09:41:45Z",
+      "side": 1,
+      "message": "This can be called from many places, I think I\u0027d still use the drawable check here.",
+      "range": {
+        "startLine": 423,
+        "startChar": 47,
+        "endLine": 423,
+        "endChar": 64
+      },
+      "revId": "13b782a7fc66551f28a9e55bc2de26a567b5d7bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
