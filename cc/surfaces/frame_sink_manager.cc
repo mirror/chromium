@@ -8,6 +8,7 @@
 #include <stdint.h>
 
 #include "base/logging.h"
+#include "cc/surfaces/display.h"
 #include "cc/surfaces/frame_sink_manager_client.h"
 #include "cc/surfaces/primary_begin_frame_source.h"
 
@@ -24,7 +25,8 @@ FrameSinkManager::FrameSinkSourceMapping::FrameSinkSourceMapping(
 
 FrameSinkManager::FrameSinkSourceMapping::~FrameSinkSourceMapping() = default;
 
-FrameSinkManager::FrameSinkManager() = default;
+FrameSinkManager::FrameSinkManager(SurfaceManager::LifetimeType lifetime_type)
+    : surface_manager_(lifetime_type) {}
 
 FrameSinkManager::~FrameSinkManager() {
   // All FrameSinks should be unregistered prior to SurfaceManager destruction.
@@ -32,20 +34,27 @@ FrameSinkManager::~FrameSinkManager() {
   DCHECK_EQ(registered_sources_.size(), 0u);
 }
 
+void FrameSinkManager::AddSurfaceObserver(SurfaceObserver* obs) {
+  surface_manager_.AddObserver(obs);
+}
+
+void FrameSinkManager::RemoveSurfaceObserver(SurfaceObserver* obs) {
+  surface_manager_.RemoveObserver(obs);
+}
+
 void FrameSinkManager::RegisterFrameSinkId(const FrameSinkId& frame_sink_id) {
-  bool inserted = valid_frame_sink_ids_.insert(frame_sink_id).second;
-  DCHECK(inserted);
+  surface_manager_.RegisterFrameSinkId(frame_sink_id);
 }
 
 void FrameSinkManager::InvalidateFrameSinkId(const FrameSinkId& frame_sink_id) {
-  valid_frame_sink_ids_.erase(frame_sink_id);
+  surface_manager_.InvalidateFrameSinkId(frame_sink_id);
 }
 
 void FrameSinkManager::RegisterFrameSinkManagerClient(
     const FrameSinkId& frame_sink_id,
     FrameSinkManagerClient* client) {
   DCHECK(client);
-  DCHECK_EQ(valid_frame_sink_ids_.count(frame_sink_id), 1u);
+  DCHECK_EQ(surface_manager_.GetValidFrameSinkIds()->count(frame_sink_id), 1u);
 
   clients_[frame_sink_id] = client;
 
@@ -58,7 +67,7 @@ void FrameSinkManager::RegisterFrameSinkManagerClient(
 
 void FrameSinkManager::UnregisterFrameSinkManagerClient(
     const FrameSinkId& frame_sink_id) {
-  DCHECK_EQ(valid_frame_sink_ids_.count(frame_sink_id), 1u);
+  DCHECK_EQ(surface_manager_.GetValidFrameSinkIds()->count(frame_sink_id), 1u);
   auto client_iter = clients_.find(frame_sink_id);
   DCHECK(client_iter != clients_.end());
 
@@ -77,7 +86,7 @@ void FrameSinkManager::RegisterBeginFrameSource(
     const FrameSinkId& frame_sink_id) {
   DCHECK(source);
   DCHECK_EQ(registered_sources_.count(source), 0u);
-  DCHECK_EQ(valid_frame_sink_ids_.count(frame_sink_id), 1u);
+  DCHECK_EQ(surface_manager_.GetValidFrameSinkIds()->count(frame_sink_id), 1u);
 
   registered_sources_[source] = frame_sink_id;
   RecursivelyAttachBeginFrameSource(frame_sink_id, source);
@@ -111,7 +120,7 @@ BeginFrameSource* FrameSinkManager::GetPrimaryBeginFrameSource() {
 }
 
 void FrameSinkManager::RecursivelyAttachBeginFrameSource(
-    const FrameSinkId& frame_sink_id,
+    FrameSinkId frame_sink_id,
     BeginFrameSource* source) {
   FrameSinkSourceMapping& mapping = frame_sink_source_map_[frame_sink_id];
   if (!mapping.source) {
@@ -120,12 +129,13 @@ void FrameSinkManager::RecursivelyAttachBeginFrameSource(
     if (client_iter != clients_.end())
       client_iter->second->SetBeginFrameSource(source);
   }
-  for (size_t i = 0; i < mapping.children.size(); ++i)
-    RecursivelyAttachBeginFrameSource(mapping.children[i], source);
+  auto children = mapping.children;
+  for (size_t i = 0; i < children.size(); ++i)
+    RecursivelyAttachBeginFrameSource(children[i], source);
 }
 
 void FrameSinkManager::RecursivelyDetachBeginFrameSource(
-    const FrameSinkId& frame_sink_id,
+    FrameSinkId frame_sink_id,
     BeginFrameSource* source) {
   auto iter = frame_sink_source_map_.find(frame_sink_id);
   if (iter == frame_sink_source_map_.end())
@@ -232,6 +242,28 @@ void FrameSinkManager::UnregisterFrameSinkHierarchy(
   RecursivelyDetachBeginFrameSource(child_frame_sink_id, parent_source);
   for (auto source_iter : registered_sources_)
     RecursivelyAttachBeginFrameSource(source_iter.second, source_iter.first);
+}
+
+void FrameSinkManager::DropTemporaryReference(const SurfaceId& surface_id) {
+  surface_manager_.DropTemporaryReference(surface_id);
+}
+
+scoped_refptr<SurfaceReferenceFactory> FrameSinkManager::GetReferenceFactory() {
+  return surface_manager_.reference_factory();
+}
+
+void FrameSinkManager::RequireSequence(const SurfaceId& surface_id,
+                                       const SurfaceSequence& sequence) {
+  surface_manager_.RequireSequence(surface_id, sequence);
+}
+
+void FrameSinkManager::SatisfySequence(const SurfaceSequence& sequence) {
+  surface_manager_.SatisfySequence(sequence);
+}
+
+void FrameSinkManager::SetDependencyTracker(
+    SurfaceDependencyTracker* dependency_tracker) {
+  surface_manager_.SetDependencyTracker(dependency_tracker);
 }
 
 }  // namespace cc
