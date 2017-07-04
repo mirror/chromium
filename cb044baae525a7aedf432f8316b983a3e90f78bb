@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6ad529fc_2358e495",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-07-04T07:22:20Z",
+      "side": 1,
+      "message": "Shutdown() will be called regardless of |is_enabled_|, and |is_enabled_| can be false here for users in Disabled study group. Also, this protects from calling RemoveThrottlingObserver multiple times since Shutdown() can be called multiple times. This is because RF::ClearContext() can be called so.\n\nAnother option is to return if |is_shutdown_| is already true, and do not modify |is_enabled_| here, and remove observer only when scheduler is valid and |is_enabled_| is true.\n\nUsing |is_shutdown_| sounds more correct to protects from multiple calls.",
+      "parentUuid": "84197d98_838e465a",
+      "revId": "cb044baae525a7aedf432f8316b983a3e90f78bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "10d3d951_37795b8d",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "cb044baae525a7aedf432f8316b983a3e90f78bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba8bc25d_1c05aa3f",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-07-04T07:22:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10d3d951_37795b8d",
+      "revId": "cb044baae525a7aedf432f8316b983a3e90f78bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,47 @@
     },
     {
       "key": {
+        "uuid": "b62f4725_55dd7a30",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-07-04T07:22:20Z",
+      "side": 1,
+      "message": "Keep-alive loaders can be in the pending_request_queue_ after Shutdown() actually.\nThey are not cancelled in the RF::StopFetching().",
+      "parentUuid": "4930c3d7_0b20387d",
+      "revId": "cb044baae525a7aedf432f8316b983a3e90f78bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f78d08d8_c786c354",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-07-04T07:22:20Z",
+      "side": 1,
+      "message": "also is_enabled_ should be changed to is_shutdown_ now because of removing \"is_enabled_ \u003d false\" in the Shutdown().",
+      "range": {
+        "startLine": 127,
+        "startChar": 7,
+        "endLine": 127,
+        "endChar": 18
+      },
+      "revId": "cb044baae525a7aedf432f8316b983a3e90f78bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ae80895_37fbe02b",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
         "patchSetId": 8
@@ -67,6 +144,24 @@
       "revId": "cb044baae525a7aedf432f8316b983a3e90f78bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6347c705_454e9f90",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-07-04T07:22:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ae80895_37fbe02b",
+      "revId": "cb044baae525a7aedf432f8316b983a3e90f78bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +182,24 @@
     },
     {
       "key": {
+        "uuid": "ca76412b_a1e376cf",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-07-04T07:22:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d91f4ef4_5f1c5082",
+      "revId": "cb044baae525a7aedf432f8316b983a3e90f78bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4db07eb5_24b89c77",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
         "patchSetId": 8
@@ -101,6 +214,24 @@
       "revId": "cb044baae525a7aedf432f8316b983a3e90f78bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa7aeabc_2d059c02",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-07-04T07:22:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4db07eb5_24b89c77",
+      "revId": "cb044baae525a7aedf432f8316b983a3e90f78bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
