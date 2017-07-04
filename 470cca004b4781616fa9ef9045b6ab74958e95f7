@@ -53,6 +53,23 @@
     },
     {
       "key": {
+        "uuid": "4e309eac_d419e638",
+        "filename": "third_party/WebKit/Source/controller/BlinkInitializer.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-04T06:28:01Z",
+      "side": 1,
+      "message": "Add a comment like:\n\n  The embedder must call this function before starting using Blink.",
+      "revId": "470cca004b4781616fa9ef9045b6ab74958e95f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8476ccd0_4bfccb78",
         "filename": "third_party/WebKit/Source/controller/ControllerExport.h",
         "patchSetId": 23
