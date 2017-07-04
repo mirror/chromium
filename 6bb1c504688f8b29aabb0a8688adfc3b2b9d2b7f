@@ -94,6 +94,30 @@
       "revId": "6bb1c504688f8b29aabb0a8688adfc3b2b9d2b7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d95c9b98_bca49125",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticleViewHolder.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-04T14:14:39Z",
+      "side": 1,
+      "message": "After offline discussion, looks great, thanks! :)",
+      "parentUuid": "96607b84_c6c1d4f1",
+      "range": {
+        "startLine": 365,
+        "startChar": 12,
+        "endLine": 365,
+        "endChar": 29
+      },
+      "revId": "6bb1c504688f8b29aabb0a8688adfc3b2b9d2b7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
