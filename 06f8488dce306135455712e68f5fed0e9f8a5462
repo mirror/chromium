@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36cad5ce_5a3ff198",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_favicon_mediator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-04T14:20:20Z",
+      "side": 1,
+      "message": "Since faviconURL is only set based on that condition, would it make sense to simplify:\n\nGURL URL \u003d item.faviconURL ?: item.URL?",
+      "revId": "06f8488dce306135455712e68f5fed0e9f8a5462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
