@@ -52,6 +52,24 @@
       "revId": "08ff97980714bbfb42d9b0d50ac01feabce3e500",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ffd4f18_14b6feac",
+        "filename": "ios/chrome/browser/ui/content_suggestions/cells/suggested_content.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-04T14:01:00Z",
+      "side": 0,
+      "message": "This object is containing all the information to set up a favicon \"tile\" (i.e. the image if there is one, the monogram if not). I don\u0027t think it is possible to removed it from the UI layer.",
+      "parentUuid": "27402ec1_e22cbdc4",
+      "revId": "08ff97980714bbfb42d9b0d50ac01feabce3e500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
