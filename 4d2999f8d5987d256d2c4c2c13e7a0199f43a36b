@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5589e7fb_3b71364d",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-04T04:48:20Z",
+      "side": 1,
+      "message": "Agree that naming is so confusing...\n\nThere are orthogonal termination concepts here: (1) termination for worker (thread) and (2) termination for V8 script evaluation. \"Terminate\" indicates the former and \"TerminateExecution\" indicates the latter.\n\n\"stop\" and \"terminate\" have the same meaning here. I just wanted to avoid multiple use of \"terminat*\" in one sentence. \"the task\" is \"a regular async worker termination\" that is scheduled at line 172. I\u0027ll try to make it clearer.",
+      "parentUuid": "3f335a86_ce7ed040",
+      "revId": "4d2999f8d5987d256d2c4c2c13e7a0199f43a36b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "95745152_50a1b070",
         "filename": "third_party/WebKit/Source/core/workers/WorkerThread.h",
         "patchSetId": 5
