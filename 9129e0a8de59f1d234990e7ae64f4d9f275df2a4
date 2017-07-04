@@ -1,0 +1,216 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d672da6_633e62a8",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/NewTabPageUiCaptureTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-04T16:58:36Z",
+      "side": 1,
+      "message": "as a shortcut, how about sending the factory to NtpUiCaptureTestData and letting it set all the fields? Removes boilerplate from the actual test code",
+      "range": {
+        "startLine": 64,
+        "startChar": 36,
+        "endLine": 64,
+        "endChar": 56
+      },
+      "revId": "9129e0a8de59f1d234990e7ae64f4d9f275df2a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "955c5202_5f862838",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/NewTabPageUiCaptureTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-04T16:58:36Z",
+      "side": 1,
+      "message": "These 4 lines are copy-pasted all over the tests... maybe candidate to be extracted to something like ChromeTabbedActivityText#getNtpWhenLoaded()?",
+      "revId": "9129e0a8de59f1d234990e7ae64f4d9f275df2a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d46492d_4474e658",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/NtpUiCaptureTestData.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-04T16:58:36Z",
+      "side": 1,
+      "message": "maybe use something like Arrays.fill() in getMostVisitedSites instead?",
+      "range": {
+        "startLine": 40,
+        "startChar": 31,
+        "endLine": 40,
+        "endChar": 56
+      },
+      "revId": "9129e0a8de59f1d234990e7ae64f4d9f275df2a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42eae207_8c6334ce",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/NtpUiCaptureTestData.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-04T16:58:36Z",
+      "side": 1,
+      "message": "nit:remove line",
+      "revId": "9129e0a8de59f1d234990e7ae64f4d9f275df2a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ee406de_5d86da1a",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/NtpUiCaptureTestData.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-04T16:58:36Z",
+      "side": 1,
+      "message": "reorder members? Don\u0027t mix methods and properties",
+      "revId": "9129e0a8de59f1d234990e7ae64f4d9f275df2a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da1d431b_8253cc05",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/NtpUiCaptureTestData.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-04T16:58:36Z",
+      "side": 1,
+      "message": "nit: I\u0027d use a different id, like bookmark1, to make sure we don\u0027t accidentally reuse them when adding a suggestion to one category or the other? OTOH ID unicity is required only within the category itself, so it wouldn\u0027t be an issue...",
+      "range": {
+        "startLine": 87,
+        "startChar": 59,
+        "endLine": 87,
+        "endChar": 70
+      },
+      "revId": "9129e0a8de59f1d234990e7ae64f4d9f275df2a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "066a4bf5_81c5cabb",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/NtpUiCaptureTestData.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-04T16:58:36Z",
+      "side": 1,
+      "message": "nit: rename to makeFoo or createFoo? To make it clear that a new instance is created at each call",
+      "range": {
+        "startLine": 93,
+        "startChar": 36,
+        "endLine": 93,
+        "endChar": 56
+      },
+      "revId": "9129e0a8de59f1d234990e7ae64f4d9f275df2a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d42db8c_718fec4e",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/NtpUiCaptureTestData.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-04T16:58:36Z",
+      "side": 1,
+      "message": "no favicon for the others, WAI?",
+      "range": {
+        "startLine": 105,
+        "startChar": 29,
+        "endLine": 105,
+        "endChar": 36
+      },
+      "revId": "9129e0a8de59f1d234990e7ae64f4d9f275df2a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fae719cb_275c5c56",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/NtpUiCaptureTestData.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-04T16:58:36Z",
+      "side": 1,
+      "message": "import R",
+      "range": {
+        "startLine": 134,
+        "startChar": 37,
+        "endLine": 134,
+        "endChar": 43
+      },
+      "revId": "9129e0a8de59f1d234990e7ae64f4d9f275df2a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc61784b_303fc7b3",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-04T16:58:36Z",
+      "side": 1,
+      "message": "This is used already outside of UiCapture tests, thus is more general purpose than that. Rename the class? Do you think it would be useful in unit tests too? We could move it to the test support directory then? Or as a separate patch maybe",
+      "range": {
+        "startLine": 51,
+        "startChar": 36,
+        "endLine": 51,
+        "endChar": 56
+      },
+      "revId": "9129e0a8de59f1d234990e7ae64f4d9f275df2a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
