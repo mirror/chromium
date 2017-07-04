@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3aa626e8_2dc684f6",
+        "filename": "ios/chrome/browser/ui/settings/save_passwords_collection_view_controller_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-04T15:12:01Z",
+      "side": 1,
+      "message": "How about moving the declaration to save_passwords_collection_view_controller.h under (Testing) category. I saw this pattern in /ios/. Then you could drop the declaration in save_passwords_collection_view_controller.mm\nIt wouldn\u0027t prevent the bug but at least reduce the number of declarations. That one here is very well hidden.",
+      "range": {
+        "startLine": 35,
+        "startChar": 28,
+        "endLine": 35,
+        "endChar": 38
+      },
+      "revId": "add8cc3800c2b35881d34dae9681f0c1c0c8515f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
