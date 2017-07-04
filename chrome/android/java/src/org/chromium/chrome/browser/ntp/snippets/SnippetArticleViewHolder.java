@@ -84,11 +84,12 @@ public class SnippetArticleViewHolder extends CardViewHolder implements Impressi
     private final int mIconBackgroundColor;
     private final ColorStateList mIconForegroundColorList;
 
-    @Nullable
-    private ImageFetcher.DownloadThumbnailRequest mThumbnailRequest;
     private SnippetArticle mArticle;
     private SuggestionsCategoryInfo mCategoryInfo;
     private int mPublisherFaviconSizePx;
+
+    @Nullable
+    private ImageFetcher.ThumbnailReceivedPromise mThumbnailPromise;
 
     /**
      * Constructs a {@link SnippetArticleViewHolder} item used to display snippets.
@@ -361,16 +362,16 @@ public class SnippetArticleViewHolder extends CardViewHolder implements Impressi
         int fileType = DownloadFilter.fromMimeType(mArticle.getAssetDownloadMimeType());
         if (fileType == DownloadFilter.FILTER_IMAGE) {
             // For image downloads, attempt to fetch a thumbnail.
-            mThumbnailRequest = mImageFetcher.makeDownloadThumbnailRequest(
+            mThumbnailPromise = mImageFetcher.makeDownloadThumbnailRequest(
                     mArticle, mThumbnailSize, new FetchImageCallback(mArticle, mThumbnailSize));
         }
 
         // Code order here is important because the call to fetch a thumbnail above can be
         // synchronous (if the image is cached) or asynchronous (if not). In the first case, it will
         // immediately set a thumbnail on the mThumbnailView and no placeholder will be needed. In
-        // the second case, the placeholder will be replaced once the thumbnail is retrieved.
-        // We check here that there is no thumbnail already set on the mThumbnailView.
-        if (mThumbnailView.getDrawable() == null) {
+        // the second case, we set a placeholder until the image is retrieved.
+        if (!mThumbnailPromise.isFulfilled()) {
+            // Set a placeholder for the type of the image.
             setThumbnailFromFileType(fileType);
         }
     }
@@ -408,9 +409,9 @@ public class SnippetArticleViewHolder extends CardViewHolder implements Impressi
     }
 
     private void cancelImageFetch() {
-        if (mThumbnailRequest != null) {
-            mThumbnailRequest.cancel();
-            mThumbnailRequest = null;
+        if (mThumbnailPromise != null) {
+            mThumbnailPromise.reject();
+            mThumbnailPromise = null;
         }
     }
 

@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.os.SystemClock;
 
 import org.chromium.base.Callback;
+import org.chromium.base.Promise;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.chrome.browser.NativePageHost;
@@ -36,7 +37,7 @@ import java.util.concurrent.TimeUnit;
  * To fetch an image, the caller should create a request which is done in the following way:
  *   - for favicons: {@link #makeFaviconRequest(SnippetArticle, int, Callback)}
  *   - for article thumbnails: {@link #makeArticleThumbnailRequest(SnippetArticle, Callback)}
- *   - for article downloads: {@link #makeDownloadThumbnailRequest(SnippetArticle, int, Callback)}
+ *   - for article downloads: {@link #makeDownloadThumbnailRequest(SnippetArticle, int)}
  *   - for large icons: {@link #makeLargeIconRequest(String, int,
  * LargeIconBridge.LargeIconCallback)}
  *
@@ -73,16 +74,23 @@ public class ImageFetcher {
      *
      * If there is an error while fetching the thumbnail, the callback will not be called.
      *
-     * @param suggestion The suggestion for which a thumbnail is needed.
+     * @param suggestion The suggestion for which we need a thumbnail.
      * @param thumbnailSizePx The required size for the thumbnail.
-     * @param imageCallback The callback where the bitmap will be returned when fetched.
-     * @return The request which will be used to fetch the image.
+     * @param callback The callback which will be called after the thumbnail is retrieved.
+     * @return The promise which will call the callback once it is fulfilled. It can be used to
+     * cancel the fetching.
      */
-    public DownloadThumbnailRequest makeDownloadThumbnailRequest(
-            SnippetArticle suggestion, int thumbnailSizePx, Callback<Bitmap> imageCallback) {
+    public ThumbnailReceivedPromise makeDownloadThumbnailRequest(
+            SnippetArticle suggestion, int thumbnailSizePx, Callback<Bitmap> callback) {
         assert !mIsDestroyed;
+        DownloadThumbnailRequest request =
+                new DownloadThumbnailRequest(suggestion, thumbnailSizePx);
 
-        return new DownloadThumbnailRequest(suggestion, imageCallback, thumbnailSizePx);
+        ThumbnailReceivedPromise thumbnailReceivedPromise = new ThumbnailReceivedPromise(request);
+        thumbnailReceivedPromise.then(callback);
+
+        request.initiateFetch(thumbnailReceivedPromise);
+        return thumbnailReceivedPromise;
     }
 
     /**
@@ -329,20 +337,29 @@ public class ImageFetcher {
     /**
      * Request for a download thumbnail.
      *
+     * To start the thumbnail fetching process, {@link #initiateFetch(Promise)} must be called.
+     *
      * Cancellation of the request is available through {@link #cancel(), which will remove the
      * request from the ThumbnailProvider queue}.
      */
-    public class DownloadThumbnailRequest implements ThumbnailProvider.ThumbnailRequest {
+    private class DownloadThumbnailRequest implements ThumbnailProvider.ThumbnailRequest {
+        private Promise<Bitmap> mThumbnailReceivedPromise;
         private final SnippetArticle mSuggestion;
-        private final Callback<Bitmap> mCallback;
         private final int mSize;
 
-        DownloadThumbnailRequest(SnippetArticle suggestion, Callback<Bitmap> callback, int size) {
+        DownloadThumbnailRequest(SnippetArticle suggestion, int size) {
             mSuggestion = suggestion;
-            mCallback = callback;
             mSize = size;
+        }
 
-            // Fetch the download thumbnail.
+        /**
+         * Initiate the image fetching process for the download thumbnail.
+         *
+         * @param thumbnailReceivedPromise The promise to be fulfilled when the thumbnail has been
+         *                                 retrieved.
+         */
+        public void initiateFetch(Promise<Bitmap> thumbnailReceivedPromise) {
+            mThumbnailReceivedPromise = thumbnailReceivedPromise;
             getThumbnailProvider().getThumbnail(this);
         }
 
@@ -353,7 +370,7 @@ public class ImageFetcher {
 
         @Override
         public void onThumbnailRetrieved(String filePath, Bitmap thumbnail) {
-            mCallback.onResult(thumbnail);
+            mThumbnailReceivedPromise.fulfill(thumbnail);
         }
 
         @Override
@@ -364,6 +381,24 @@ public class ImageFetcher {
         public void cancel() {
             if (mIsDestroyed) return;
             getThumbnailProvider().cancelRetrieval(this);
+        }
+    }
+
+    /**
+     * A promise that will be fulfilled when a download thumbnail is retrieved.
+     * It also propagates cancellation to the {@link DownloadThumbnailRequest} by overriding the
+     * {@link Promise#reject()} method.
+     */
+    public class ThumbnailReceivedPromise extends Promise<Bitmap> {
+        private final DownloadThumbnailRequest mThumbnailRequest;
+
+        ThumbnailReceivedPromise(DownloadThumbnailRequest request) {
+            mThumbnailRequest = request;
+        }
+
+        @Override
+        public void reject() {
+            mThumbnailRequest.cancel();
         }
     }
 }
