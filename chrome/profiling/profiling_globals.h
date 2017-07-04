@@ -11,7 +11,6 @@
 #include "base/memory/ref_counted.h"
 #include "base/threading/thread.h"
 #include "chrome/profiling/backtrace_storage.h"
-#include "chrome/profiling/memlog_connection_manager.h"
 
 namespace base {
 class MessageLoopForUI;
@@ -26,7 +25,6 @@ class ProfilingGlobals {
   static ProfilingGlobals* Get();
 
   base::TaskRunner* GetIORunner();
-  MemlogConnectionManager* GetMemlogConnectionManager();
   BacktraceStorage* GetBacktraceStorage();
 
   // Returns non-null when inside RunMainMessageLoop. Call only on the
@@ -44,7 +42,6 @@ class ProfilingGlobals {
   base::MessageLoopForUI* main_message_loop_ = nullptr;
 
   base::Thread io_thread_;
-  MemlogConnectionManager memlog_connection_manager_;
   BacktraceStorage backtrace_storage_;
 
   DISALLOW_COPY_AND_ASSIGN(ProfilingGlobals);

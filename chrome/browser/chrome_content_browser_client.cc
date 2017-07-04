@@ -1642,7 +1642,8 @@ void ChromeContentBrowserClient::AppendExtraCommandLineSwitches(
   command_line->CopySwitchesFrom(browser_command_line, kCommonSwitchNames,
                                  arraysize(kCommonSwitchNames));
 #if BUILDFLAG(ENABLE_OOP_HEAP_PROFILING)
-  profiling::ProfilingProcessHost::AddSwitchesToChildCmdLine(command_line);
+  profiling::ProfilingProcessHost::AddSwitchesToChildCmdLine(command_line,
+                                                             child_process_id);
 #endif
 
   static const char* const kDinosaurEasterEggSwitches[] = {

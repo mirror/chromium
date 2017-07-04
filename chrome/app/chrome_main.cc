@@ -122,7 +122,8 @@ int ChromeMain(int argc, const char** argv) {
   if (command_line->GetSwitchValueASCII(switches::kProcessType) ==
       switches::kProfiling)
     return profiling::ProfilingMain(*command_line);
-  profiling::InitMemlogSenderIfNecessary(*command_line);
+  if (command_line->GetSwitchValueASCII(switches::kProcessType) == "")
+    profiling::InitMemlogSenderIfNecessary(*command_line);
 #endif  // ENABLE_OOP_HEAP_PROFILING
 
 #if defined(OS_CHROMEOS) && BUILDFLAG(ENABLE_PACKAGE_MASH_SERVICES)
@@ -131,6 +132,11 @@ int ChromeMain(int argc, const char** argv) {
 #endif  // BUILDFLAG(ENABLE_PACKAGE_MASH_SERVICES)
 
   int rv = content::ContentMain(params);
+
+  // Delay creation of control channel until ContentMain() can initialize the
+  // mojo EDK.
+  if (command_line->HasSwitch(switches::kMemlog))
+    profiling::ProfilingProcessHost::Get()->ConnectControlChannel();
 
   return rv;
 }

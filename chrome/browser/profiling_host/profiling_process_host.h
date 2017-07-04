@@ -5,12 +5,20 @@
 #ifndef CHROME_BROWSER_PROFILING_HOST_PROFILING_PROCESS_HOST_H_
 #define CHROME_BROWSER_PROFILING_HOST_PROFILING_PROCESS_HOST_H_
 
+#include "base/files/scoped_platform_handle.h"
 #include "base/macros.h"
 #include "base/process/process.h"
+#include "chrome/profiling/memlog.mojom.h"
 
 namespace base {
 class CommandLine;
-}
+}  // namespace base
+
+namespace mojo {
+namespace edk {
+class PlatformChannelPair;
+}  // namespace edk
+}  // namespace mojo
 
 namespace profiling {
 
@@ -40,7 +48,11 @@ class ProfilingProcessHost {
   // Appends necessary switches to a command line for a child process so it can
   // be profiled. These switches will cause the child process to start in the
   // same mode (either profiling or not) as the browser process.
-  static void AddSwitchesToChildCmdLine(base::CommandLine* child_cmd_line);
+  static void AddSwitchesToChildCmdLine(base::CommandLine* child_cmd_line,
+                                        int child_process_id);
+
+  // Connects the control channel to the profiling process.
+  void ConnectControlChannel();
 
  private:
   ProfilingProcessHost();
@@ -51,6 +63,8 @@ class ProfilingProcessHost {
   // Use process_.IsValid() to determine if the child process has been launched.
   base::Process process_;
   std::string pipe_id_;
+  mojom::MemlogPtr memlog_;
+  std::unique_ptr<mojo::edk::PlatformChannelPair> control_channel_;
 
   DISALLOW_COPY_AND_ASSIGN(ProfilingProcessHost);
 };

@@ -8,16 +8,30 @@
 #include "base/path_service.h"
 #include "base/process/launch.h"
 #include "base/strings/string_number_conversions.h"
-#include "base/strings/utf_string_conversions.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/profiling/memlog_sender.h"
+#include "chrome/profiling/profiling_constants.h"
 #include "content/public/common/content_switches.h"
+#include "mojo/edk/embedder/outgoing_broker_client_invitation.h"
+#include "mojo/edk/embedder/platform_channel_pair.h"
+#include "mojo/public/cpp/system/platform_handle.h"
+
+#if defined(OS_LINUX)
+#include "base/process/process_metrics.h"
+#include "base/third_party/valgrind/valgrind.h"
+#endif
 
 namespace profiling {
 
 namespace {
 
 ProfilingProcessHost* pph_singleton = nullptr;
+
+#if defined(OS_LINUX)
+bool IsRunningOnValgrind() {
+  return RUNNING_ON_VALGRIND;
+}
+#endif
 
 base::CommandLine MakeProfilingCommandLine(const std::string& pipe_id) {
   // Program name.
@@ -28,7 +42,7 @@ base::CommandLine MakeProfilingCommandLine(const std::string& pipe_id) {
   // When running under Valgrind, forking /proc/self/exe ends up forking the
   // Valgrind executable, which then crashes. However, it's almost safe to
   // assume that the updates won't happen while testing with Valgrind tools.
-  if (!RunningOnValgrind())
+  if (!IsRunningOnValgrind())
     child_path = base::FilePath(base::kProcSelfExe);
 #endif
   if (child_path.empty())
@@ -71,22 +85,63 @@ ProfilingProcessHost* ProfilingProcessHost::Get() {
 
 // static
 void ProfilingProcessHost::AddSwitchesToChildCmdLine(
-    base::CommandLine* child_cmd_line) {
+    base::CommandLine* child_cmd_line,
+    int child_process_id) {
   ProfilingProcessHost* pph = ProfilingProcessHost::Get();
   if (!pph)
     return;
-  child_cmd_line->AppendSwitchASCII(switches::kMemlogPipe, pph->pipe_id_);
+  mojo::edk::PlatformChannelPair channel;
+  mojo::edk::HandlePassingInformation handle_passing_info;
+  std::string pipe_id = channel.PrepareToPassClientHandleToChildProcessAsString(
+      &handle_passing_info);
+  child_cmd_line->AppendSwitchASCII(switches::kMemlogPipe, pipe_id);
+  pph->memlog_->AddNewSender(
+      mojo::WrapPlatformFile(channel.PassServerHandle().release().handle),
+      child_process_id);
+}
+
+void ProfilingProcessHost::ConnectControlChannel() {
+  mojo::edk::OutgoingBrokerClientInvitation invitation;
+
+  mojo::ScopedMessagePipeHandle control_pipe =
+      invitation.AttachMessagePipe(kControlPipeName);
+
+  invitation.Send(process_.Handle(), mojo::edk::ConnectionParams(
+                                         mojo::edk::TransportProtocol::kLegacy,
+                                         control_channel_->PassServerHandle()));
+  memlog_.Bind(mojom::MemlogPtrInfo(std::move(control_pipe), 0));
+  control_channel_.reset();
 }
 
 void ProfilingProcessHost::Launch() {
-  base::Process process = base::Process::Current();
-  pipe_id_ = base::IntToString(static_cast<int>(process.Pid()));
+  mojo::edk::PlatformChannelPair initial_data_channel;
+  control_channel_.reset(new mojo::edk::PlatformChannelPair());
 
-  base::CommandLine profiling_cmd = MakeProfilingCommandLine(pipe_id_);
+  mojo::edk::HandlePassingInformation handle_passing_info;
+  std::string initial_pipe_id =
+      initial_data_channel.PrepareToPassClientHandleToChildProcessAsString(
+          &handle_passing_info);
+
+  base::CommandLine profiling_cmd = MakeProfilingCommandLine(initial_pipe_id);
+  control_channel_->PrepareToPassClientHandleToChildProcess(
+      &profiling_cmd, &handle_passing_info);
 
   base::LaunchOptions options;
+#if defined(OS_WIN)
+  options.handles_to_inherit = &handle_passing_info;
+#elif defined(OS_POSIX)
+  options.fds_to_remap = &handle_passing_info;
+  options.kill_on_parent_death = true;
+#else
+#error Unsupported OS.
+#endif
+
   process_ = base::LaunchProcess(profiling_cmd, options);
-  StartMemlogSender(pipe_id_);
+  base::ScopedPlatformHandle data_pipe(
+      initial_data_channel.PassServerHandle().release().handle);
+  StartMemlogSender(std::move(data_pipe));
+  initial_data_channel.ChildProcessLaunched();
+  control_channel_->ChildProcessLaunched();
 }
 
 }  // namespace profiling

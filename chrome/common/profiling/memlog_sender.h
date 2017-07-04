@@ -7,6 +7,8 @@
 
 #include <string>
 
+#include "base/files/scoped_platform_handle.h"
+
 namespace base {
 
 class CommandLine;
@@ -17,7 +19,7 @@ namespace profiling {
 
 void InitMemlogSenderIfNecessary(const base::CommandLine& cmdline);
 
-void StartMemlogSender(const std::string& pipe_id);
+void StartMemlogSender(base::ScopedPlatformHandle data_pipe);
 
 }  // namespace profiling
 
