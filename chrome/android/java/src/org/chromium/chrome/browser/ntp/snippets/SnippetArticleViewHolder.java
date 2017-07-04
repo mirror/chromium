@@ -368,9 +368,9 @@ public class SnippetArticleViewHolder extends CardViewHolder implements Impressi
         // Code order here is important because the call to fetch a thumbnail above can be
         // synchronous (if the image is cached) or asynchronous (if not). In the first case, it will
         // immediately set a thumbnail on the mThumbnailView and no placeholder will be needed. In
-        // the second case, the placeholder will be replaced once the thumbnail is retrieved.
-        // We check here that there is no thumbnail already set on the mThumbnailView.
-        if (mThumbnailView.getDrawable() == null) {
+        // the second case, we set a placeholder until the image is retrieved.
+        if (mThumbnailRequest.thumbnailReceived()) {
+            // Set a placeholder for the type of the image.
             setThumbnailFromFileType(fileType);
         }
     }
@@ -420,7 +420,7 @@ public class SnippetArticleViewHolder extends CardViewHolder implements Impressi
         mThumbnailView.setTint(null);
         int duration = (int) (FADE_IN_ANIMATION_TIME_MS
                 * ChromeAnimation.Animation.getAnimationMultiplier());
-        if (duration == 0 || mThumbnailView.getDrawable() == null) {
+        if (duration == 0 || mThumbnailRequest.thumbnailReceived()) {
             mThumbnailView.setImageBitmap(thumbnail);
             return;
         }
