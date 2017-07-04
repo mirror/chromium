@@ -1,0 +1,147 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f795084d_6f490264",
+        "filename": "ios/chrome/browser/chrome_browser_provider_observer_bridge.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-04T14:10:59Z",
+      "side": 1,
+      "message": "naming: I think protocol should be named FooObserving, not FooObserver (at least marq@ ask me to use that naming convention)",
+      "revId": "7d8d800f07e33b9359e3f79660ff3b1cc6eec568",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f39c9de_0b82012e",
+        "filename": "ios/chrome/browser/chrome_browser_provider_observer_bridge.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-04T14:10:59Z",
+      "side": 1,
+      "message": "identity → newIdentityService",
+      "range": {
+        "startLine": 17,
+        "startChar": 70,
+        "endLine": 17,
+        "endChar": 78
+      },
+      "revId": "7d8d800f07e33b9359e3f79660ff3b1cc6eec568",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebe0a89b_78074dbe",
+        "filename": "ios/chrome/browser/chrome_browser_provider_observer_bridge.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-04T14:10:59Z",
+      "side": 1,
+      "message": "naming: I think the convention is to not start notification method by \"on\" in objc, so instead those two methods should be called chromeIdentifyServiceDidChange and chromeBrowserProviderWillBeDestroyed.",
+      "revId": "7d8d800f07e33b9359e3f79660ff3b1cc6eec568",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f5900c8_d65b30cb",
+        "filename": "ios/chrome/browser/chrome_browser_provider_observer_bridge.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-04T14:10:59Z",
+      "side": 1,
+      "message": "Please document those two methods.",
+      "range": {
+        "startLine": 17,
+        "startChar": 8,
+        "endLine": 17,
+        "endChar": 40
+      },
+      "revId": "7d8d800f07e33b9359e3f79660ff3b1cc6eec568",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81fc304c_6fc744f5",
+        "filename": "ios/chrome/browser/chrome_browser_provider_observer_bridge.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-04T14:10:59Z",
+      "side": 1,
+      "message": "newIdentityService → new_identity_service",
+      "range": {
+        "startLine": 32,
+        "startChar": 34,
+        "endLine": 32,
+        "endChar": 52
+      },
+      "revId": "7d8d800f07e33b9359e3f79660ff3b1cc6eec568",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a17adaa0_8f22db58",
+        "filename": "ios/chrome/browser/chrome_browser_provider_observer_bridge.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-04T14:10:59Z",
+      "side": 1,
+      "message": "This file is only included from objc file that are build with ARC enabled, so please use __weak instead of __unsafe_unretained as it is safer.\n\nAlso, remove \"// Weak.\" comment.\n\noptional: BTW, most of the other bridge observer classes owns the pointer, so maybe change this to __strong (though it will require refactoring of the observer class so you may chose not to do this).",
+      "revId": "7d8d800f07e33b9359e3f79660ff3b1cc6eec568",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "636e8c22_4d35b6fb",
+        "filename": "ios/chrome/browser/chrome_browser_provider_observer_bridge_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-04T14:10:59Z",
+      "side": 1,
+      "message": "identityService → identity_service (this is a C++ method not an objc method).\n\nAlso, please do not use raw pointer and delete, but instead use std::unique_ptr\u003c\u003e.",
+      "range": {
+        "startLine": 84,
+        "startChar": 30,
+        "endLine": 84,
+        "endChar": 45
+      },
+      "revId": "7d8d800f07e33b9359e3f79660ff3b1cc6eec568",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
