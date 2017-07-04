@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29619d89_2f13ebf1",
+        "filename": "third_party/WebKit/Source/core/loader/appcache/ApplicationCacheHost.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-04T08:16:15Z",
+      "side": 1,
+      "message": "Do we have some kInvalid constant declaration for appcache ID?  Can we comment that 0 means invalid?",
+      "revId": "8e2ef7477c70b042ce8db8fb95e6554c9d94cd15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
