@@ -18,6 +18,7 @@ namespace cc {
 DirectLayerTreeFrameSink::DirectLayerTreeFrameSink(
     const FrameSinkId& frame_sink_id,
     SurfaceManager* surface_manager,
+    BeginFrameSource* display_begin_frame_source,
     Display* display,
     scoped_refptr<ContextProvider> context_provider,
     scoped_refptr<ContextProvider> worker_context_provider,
@@ -29,6 +30,7 @@ DirectLayerTreeFrameSink::DirectLayerTreeFrameSink(
                          shared_bitmap_manager),
       frame_sink_id_(frame_sink_id),
       surface_manager_(surface_manager),
+      display_begin_frame_source_(display_begin_frame_source),
       display_(display) {
   DCHECK(thread_checker_.CalledOnValidThread());
   capabilities_.must_always_swap = true;
@@ -40,11 +42,13 @@ DirectLayerTreeFrameSink::DirectLayerTreeFrameSink(
 DirectLayerTreeFrameSink::DirectLayerTreeFrameSink(
     const FrameSinkId& frame_sink_id,
     SurfaceManager* surface_manager,
+    BeginFrameSource* display_begin_frame_source,
     Display* display,
     scoped_refptr<VulkanContextProvider> vulkan_context_provider)
     : LayerTreeFrameSink(std::move(vulkan_context_provider)),
       frame_sink_id_(frame_sink_id),
       surface_manager_(surface_manager),
+      display_begin_frame_source_(display_begin_frame_source),
       display_(display) {
   DCHECK(thread_checker_.CalledOnValidThread());
   capabilities_.must_always_swap = true;
@@ -74,6 +78,9 @@ bool DirectLayerTreeFrameSink::BindToClient(LayerTreeFrameSinkClient* client) {
       capabilities_.delegated_sync_points_required);
   begin_frame_source_ = base::MakeUnique<ExternalBeginFrameSource>(this);
   client_->SetBeginFrameSource(begin_frame_source_.get());
+
+  surface_manager_->RegisterBeginFrameSource(display_begin_frame_source_,
+                                             frame_sink_id_);
 
   // Avoid initializing GL context here, as this should be sharing the
   // Display's context.
