@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19829965_de4340d7",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-04T01:34:02Z",
+      "side": 1,
+      "message": "Is this ctor ever passed something that\u0027s not an empty vector?",
+      "revId": "50f7897dc906d6888662240acd55786339083b21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74bb2963_ac1f9f73",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-04T01:34:02Z",
+      "side": 1,
+      "message": "A trace event for a boolean function like IsScriptInstalled seems to have limited usefulness and bloats the source code  (the original purpose of trace events was to debug performance, if I understand correctly).\n\nIf there\u0027s a callsite where it\u0027d be interesting to see in a trace, I\u0027d put it there.",
+      "revId": "50f7897dc906d6888662240acd55786339083b21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8735ad7_9ddaa41d",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-04T01:34:02Z",
+      "side": 1,
+      "message": "I think the trace should be added when the code is added if it\u0027s going to be something worth timing.",
+      "revId": "50f7897dc906d6888662240acd55786339083b21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dce4c98_f9a23fe2",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-04T01:34:02Z",
+      "side": 1,
+      "message": "What\u0027s the purpose of Create() instead of just making the ctor public?\n\nOK I just noticed kinuko@ had the same question. It\u0027d be nice to add comments or TODO in the code about why Create() exists in the meantime (in general if something prompted a question in code review, having a comment in the code would be useful).",
+      "revId": "50f7897dc906d6888662240acd55786339083b21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
