@@ -33,6 +33,8 @@ class CORE_EXPORT ParentFrameTaskRunners final
   WTF_MAKE_NONCOPYABLE(ParentFrameTaskRunners);
 
  public:
+  // Returns task runners associated with a given frame, or default task runners
+  // on the main thread if it's nullptr.
   static ParentFrameTaskRunners* Create(LocalFrame* frame) {
     return new ParentFrameTaskRunners(frame);
   }
