@@ -1,0 +1,266 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d156bd1_24f61c13",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-04T17:49:08Z",
+      "side": 1,
+      "message": "Since this is still core flag-parsing logic, I think it makes sense to inline this into main()",
+      "range": {
+        "startLine": 16,
+        "startChar": 4,
+        "endLine": 16,
+        "endChar": 19
+      },
+      "revId": "6dd7df201e1e714d04e0707b3c18a01a1b68f2bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3251b148_fb4718b1",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-04T17:49:08Z",
+      "side": 1,
+      "message": "It\u0027s generally good practice to not pass around args because it makes it unclear what the arguments actually are. Would be better to pass apk_path explicitly.",
+      "range": {
+        "startLine": 22,
+        "startChar": 16,
+        "endLine": 22,
+        "endChar": 20
+      },
+      "revId": "6dd7df201e1e714d04e0707b3c18a01a1b68f2bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fb0baa6_d4125692",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-04T17:49:08Z",
+      "side": 1,
+      "message": "I think it would be better to not catch these exceptions. That way they will bubble up naturally and be displayed as errors.",
+      "revId": "6dd7df201e1e714d04e0707b3c18a01a1b68f2bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74b87b43_b0d36a99",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-04T17:49:08Z",
+      "side": 1,
+      "message": "This will be needed by multiple commands, so I think it belongs in RunApkOperation(), or main(), then pass devices as an arg to this function.",
+      "revId": "6dd7df201e1e714d04e0707b3c18a01a1b68f2bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3de3735c_2333314c",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-04T17:49:08Z",
+      "side": 1,
+      "message": "MutlipleDevicesError() gives a good error message, with a list of devices, but it doesn\u0027t mention the presence of an \"--all\" flag. \n\nFor the first go here, I\u0027d copy/paste the error message logic into this file and change it to include --all. But add a TODO to introduce --all to the MutlipleDevicesError messages (as well as the flag to scripts that currently use it)",
+      "revId": "6dd7df201e1e714d04e0707b3c18a01a1b68f2bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae1c5b12_84f2e0a3",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-04T17:49:08Z",
+      "side": 1,
+      "message": "I don\u0027t think this group is helpful, as there are no non-group flags",
+      "revId": "6dd7df201e1e714d04e0707b3c18a01a1b68f2bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d022078_d8ab2543",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-04T17:49:08Z",
+      "side": 1,
+      "message": "nit: remove the \u0027-a\u0027 option. In general, I think it\u0027s good to support as few short-form args as possible in order to keep command-line flags readable.",
+      "revId": "6dd7df201e1e714d04e0707b3c18a01a1b68f2bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d9041fa_e777f7a1",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-04T17:49:08Z",
+      "side": 1,
+      "message": "nit: I don\u0027t see the rationale for having dest !\u003d name here. Either call the flag --apk-path, or call the variable apk_to_install",
+      "revId": "6dd7df201e1e714d04e0707b3c18a01a1b68f2bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f98dfab_2303cfa5",
+        "filename": "build/android/gyp/create_apk_operations_script.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-04T17:49:08Z",
+      "side": 1,
+      "message": "nit: add required\u003dTrue, and remove the if check below.",
+      "range": {
+        "startLine": 43,
+        "startChar": 24,
+        "endLine": 43,
+        "endChar": 25
+      },
+      "revId": "6dd7df201e1e714d04e0707b3c18a01a1b68f2bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b72919c_9be1b451",
+        "filename": "build/android/gyp/create_apk_operations_script.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-04T17:49:08Z",
+      "side": 1,
+      "message": "nit: use lower_case() for nested functions",
+      "range": {
+        "startLine": 46,
+        "startChar": 6,
+        "endLine": 46,
+        "endChar": 28
+      },
+      "revId": "6dd7df201e1e714d04e0707b3c18a01a1b68f2bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adcc85c8_69742f51",
+        "filename": "build/android/gyp/create_apk_operations_script.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-04T17:49:08Z",
+      "side": 1,
+      "message": "Better to use repr() for both of these, then remove the \u0027\u0027s in the template that surround APK_OPERATIONS_PATH. That will ensure proper escaping.",
+      "revId": "6dd7df201e1e714d04e0707b3c18a01a1b68f2bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2b7d4ca_50ef15bd",
+        "filename": "build/config/android/rules.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 2351,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-04T17:49:08Z",
+      "side": 1,
+      "message": "This don\u0027t make much sense for test targets. I\u0027d guard this with:\nif (!defined(invoker.create_apk_script) || invoker.create_apk_script) {\n}\n\nThen set this value to false inside of test() and instrumentation_test_apk()",
+      "revId": "6dd7df201e1e714d04e0707b3c18a01a1b68f2bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bccfef32_2cfe4a6d",
+        "filename": "build/config/android/rules.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 2352,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-04T17:49:08Z",
+      "side": 1,
+      "message": "nit: prefix with _ to distinguish from parameter to action()",
+      "revId": "6dd7df201e1e714d04e0707b3c18a01a1b68f2bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb70498a_ab072279",
+        "filename": "build/config/android/rules.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 2377,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-04T17:49:08Z",
+      "side": 1,
+      "message": "Rather than explicitly add this here, I think it would make sense to add it to _final_deps above.",
+      "revId": "6dd7df201e1e714d04e0707b3c18a01a1b68f2bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
