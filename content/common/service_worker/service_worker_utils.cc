@@ -141,11 +141,6 @@ bool ServiceWorkerUtils::IsServicificationEnabled() {
              switches::kEnableNetworkService);
 }
 
-// static
-bool ServiceWorkerUtils::IsMojoForServiceWorkerEnabled() {
-  return true;
-}
-
 bool LongestScopeMatcher::MatchLongest(const GURL& scope) {
   if (!ServiceWorkerUtils::ScopeMatches(scope, url_))
     return false;
