@@ -60,7 +60,7 @@
 #include "core/dom/ExecutionContext.h"
 #include "core/dom/FlexibleArrayBufferView.h"
 #include "core/dom/TagCollection.h"
-#include "core/dom/custom/V0CustomElementProcessingStack.h"
+#include "core/html/custom/V0CustomElementProcessingStack.h"
 #include "core/frame/Deprecation.h"
 #include "core/frame/UseCounter.h"
 #include "core/html/HTMLCollection.h"

@@ -138,7 +138,7 @@ core_idl_files = get_path_info([
                                  "dom/Uint8Array.idl",
                                  "dom/Uint8ClampedArray.idl",
                                  "dom/XMLDocument.idl",
-                                 "dom/custom/CustomElementRegistry.idl",
+                                 "html/custom/CustomElementRegistry.idl",
                                  "editing/Selection.idl",
                                  "events/AnimationEvent.idl",
                                  "events/AnimationPlaybackEvent.idl",
