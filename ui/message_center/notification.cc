@@ -32,19 +32,7 @@ ButtonInfo::~ButtonInfo() = default;
 
 ButtonInfo& ButtonInfo::operator=(const ButtonInfo& other) = default;
 
-RichNotificationData::RichNotificationData()
-    : priority(DEFAULT_PRIORITY),
-      never_timeout(false),
-      timestamp(base::Time::Now()),
-      context_message(base::string16()),
-      progress(0),
-      should_make_spoken_feedback_for_popup_updates(true),
-      clickable(true),
-#if defined(OS_CHROMEOS)
-      pinned(false),
-#endif  // defined(OS_CHROMEOS)
-      renotify(false),
-      silent(false) {}
+RichNotificationData::RichNotificationData() : timestamp(base::Time::Now()) {}
 
 RichNotificationData::RichNotificationData(const RichNotificationData& other)
     : priority(other.priority),
@@ -67,9 +55,9 @@ RichNotificationData::RichNotificationData(const RichNotificationData& other)
       silent(other.silent),
       accessible_name(other.accessible_name) {}
 
-RichNotificationData::~RichNotificationData() {}
+RichNotificationData::~RichNotificationData() = default;
 
-Notification::Notification() {}
+Notification::Notification() = default;
 
 Notification::Notification(NotificationType type,
                            const std::string& id,
@@ -94,21 +82,6 @@ Notification::Notification(NotificationType type,
       shown_as_popup_(false),
       is_read_(false),
       delegate_(delegate) {}
-
-Notification::Notification(const std::string& id, const Notification& other)
-    : type_(other.type_),
-      id_(id),
-      title_(other.title_),
-      message_(other.message_),
-      icon_(other.icon_),
-      display_source_(other.display_source_),
-      origin_url_(other.origin_url_),
-      notifier_id_(other.notifier_id_),
-      serial_number_(other.serial_number_),
-      optional_fields_(other.optional_fields_),
-      shown_as_popup_(other.shown_as_popup_),
-      is_read_(other.is_read_),
-      delegate_(other.delegate_) {}
 
 Notification::Notification(const Notification& other)
     : type_(other.type_),
@@ -143,7 +116,7 @@ Notification& Notification::operator=(const Notification& other) {
   return *this;
 }
 
-Notification::~Notification() {}
+Notification::~Notification() = default;
 
 bool Notification::IsRead() const {
   return is_read_ || optional_fields_.priority == MIN_PRIORITY;
