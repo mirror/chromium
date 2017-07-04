@@ -39,6 +39,7 @@
 #include "third_party/WebKit/public/web/WebDocument.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
 #include "third_party/WebKit/public/web/WebPluginParams.h"
+#include "v8/include/v8.h"
 
 using extensions::Extension;
 
@@ -316,4 +317,18 @@ void ChromeExtensionsRendererClient::RunScriptsAtDocumentEnd(
 void ChromeExtensionsRendererClient::RunScriptsAtDocumentIdle(
     content::RenderFrame* render_frame) {
   extension_dispatcher_->RunScriptsAtDocumentIdle(render_frame);
+}
+
+// static
+GURL ChromeExtensionsRendererClient::GetHandlerForPdfResource(
+    const GURL& gurl) {
+  return GURL();
+}
+
+// static
+v8::Local<v8::Object>
+ChromeExtensionsRendererClient::GetV8ScriptableObjectForPluginFrame(
+    v8::Isolate* isolate,
+    blink::WebFrame* web_frame) {
+  return v8::Local<v8::Object>();
 }
