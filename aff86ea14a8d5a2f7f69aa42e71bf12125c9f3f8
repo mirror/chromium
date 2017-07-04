@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e1ab106d_528f419a",
+        "filename": "components/drive/chromeos/change_list_processor.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-07-04T06:52:08Z",
+      "side": 1,
+      "message": "I agree with the idea and observed that it works, but I could not figure out which part of other code is filling resource_id for the \"drive/root\" entry, instead of line 174 here. At least, it\u0027s not done at the initialization in ResourceMetadata::SetUpDefaultEntries.\nWould you know where it is done?",
+      "parentUuid": "77d45e54_9685630e",
+      "range": {
+        "startLine": 173,
+        "startChar": 0,
+        "endLine": 180,
+        "endChar": 0
+      },
+      "revId": "aff86ea14a8d5a2f7f69aa42e71bf12125c9f3f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "971fb14b_acfc0f12",
         "filename": "components/drive/chromeos/change_list_processor.cc",
         "patchSetId": 13
@@ -45,6 +69,30 @@
       "revId": "aff86ea14a8d5a2f7f69aa42e71bf12125c9f3f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2870c395_78058208",
+        "filename": "components/drive/chromeos/change_list_processor.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-07-04T06:52:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "971fb14b_acfc0f12",
+      "range": {
+        "startLine": 217,
+        "startChar": 20,
+        "endLine": 217,
+        "endChar": 36
+      },
+      "revId": "aff86ea14a8d5a2f7f69aa42e71bf12125c9f3f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d5874e85_da3c05ce",
+        "filename": "components/drive/chromeos/change_list_processor.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-07-04T06:52:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13a2d705_04dc847c",
+      "range": {
+        "startLine": 288,
+        "startChar": 4,
+        "endLine": 288,
+        "endChar": 23
+      },
+      "revId": "aff86ea14a8d5a2f7f69aa42e71bf12125c9f3f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16baa7a6_fc124f62",
         "filename": "components/drive/chromeos/change_list_processor.h",
         "patchSetId": 13
@@ -91,6 +163,30 @@
       "revId": "aff86ea14a8d5a2f7f69aa42e71bf12125c9f3f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba750a74_4ae73168",
+        "filename": "components/drive/chromeos/change_list_processor.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-07-04T06:52:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16baa7a6_fc124f62",
+      "range": {
+        "startLine": 166,
+        "startChar": 12,
+        "endLine": 166,
+        "endChar": 28
+      },
+      "revId": "aff86ea14a8d5a2f7f69aa42e71bf12125c9f3f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
