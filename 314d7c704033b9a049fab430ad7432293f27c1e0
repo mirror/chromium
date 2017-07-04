@@ -22,6 +22,53 @@
       "revId": "314d7c704033b9a049fab430ad7432293f27c1e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d309306_544838dc",
+        "filename": "components/cronet/ios/cronet_environment.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-04T16:33:06Z",
+      "side": 1,
+      "message": "Or better, introduce a structure so that the arguments can:\n1. have default value (e.g. 0, nullptr for argc/argv)\n2. have names.",
+      "parentUuid": "9bada690_18f38d1b",
+      "range": {
+        "startLine": 114,
+        "startChar": 33,
+        "endLine": 114,
+        "endChar": 34
+      },
+      "revId": "314d7c704033b9a049fab430ad7432293f27c1e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e150e7dd_030f7eaa",
+        "filename": "ios/web/public/global_state/ios_global_state.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-04T16:33:06Z",
+      "side": 1,
+      "message": "AtExitManger → AtExitManager",
+      "range": {
+        "startLine": 14,
+        "startChar": 6,
+        "endLine": 14,
+        "endChar": 18
+      },
+      "revId": "314d7c704033b9a049fab430ad7432293f27c1e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

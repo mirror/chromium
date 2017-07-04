@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "fb5d47fb_7b6252fe",
+        "filename": "components/cronet/ios/ios_global_state_cronet_configuration.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-04T16:33:06Z",
+      "side": 1,
+      "message": "The naming of threads is just local to the process and has no incidence.\n\nThe naming of the histogram is to differentiate the histogram per process (i.e. browser, renderer, mojo services). On iOS since the application is single process, this does not really apply (since the histogram should already include the product too -- Chrome, ...).\n\nI think we should be able to use the same name for Chrome on iOS and for Cronet.",
+      "parentUuid": "32fa290e_ae0c3929",
+      "range": {
+        "startLine": 14,
+        "startChar": 10,
+        "endLine": 14,
+        "endChar": 19
+      },
+      "revId": "33e57643c1ce856ac8073638d6ba4b8835b307e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a58d2b16_b1ecd0cb",
         "filename": "ios/web/public/global_state/ios_global_state.mm",
         "patchSetId": 3
@@ -93,6 +117,30 @@
       "revId": "33e57643c1ce856ac8073638d6ba4b8835b307e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "057a9dcd_cdad6532",
+        "filename": "ios/web/public/global_state/ios_global_state.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-04T16:33:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d5a5ae3d_cb2c3a0d",
+      "range": {
+        "startLine": 62,
+        "startChar": 4,
+        "endLine": 62,
+        "endChar": 27
+      },
+      "revId": "33e57643c1ce856ac8073638d6ba4b8835b307e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
