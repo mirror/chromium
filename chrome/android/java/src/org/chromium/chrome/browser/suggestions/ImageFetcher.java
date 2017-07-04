@@ -336,11 +336,13 @@ public class ImageFetcher {
         private final SnippetArticle mSuggestion;
         private final Callback<Bitmap> mCallback;
         private final int mSize;
+        private boolean mThumbnailReceived;
 
         DownloadThumbnailRequest(SnippetArticle suggestion, Callback<Bitmap> callback, int size) {
             mSuggestion = suggestion;
             mCallback = callback;
             mSize = size;
+            mThumbnailReceived = false;
 
             // Fetch the download thumbnail.
             getThumbnailProvider().getThumbnail(this);
@@ -354,6 +356,7 @@ public class ImageFetcher {
         @Override
         public void onThumbnailRetrieved(String filePath, Bitmap thumbnail) {
             mCallback.onResult(thumbnail);
+            mThumbnailReceived = true;
         }
 
         @Override
@@ -364,6 +367,10 @@ public class ImageFetcher {
         public void cancel() {
             if (mIsDestroyed) return;
             getThumbnailProvider().cancelRetrieval(this);
+        }
+
+        public boolean thumbnailReceived() {
+            return mThumbnailReceived;
         }
     }
 }
