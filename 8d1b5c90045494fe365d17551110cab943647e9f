@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5352c6b5_121c4c0e",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerDelegate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-04T16:50:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77a6cc2e_29d33e6d",
+      "revId": "8d1b5c90045494fe365d17551110cab943647e9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a574ae4_b1732685",
         "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerDelegateException.java",
         "patchSetId": 4
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "93190878_732b036d",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerDelegateException.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-04T16:50:39Z",
+      "side": 1,
+      "message": "Oops, thanks!",
+      "parentUuid": "6a574ae4_b1732685",
+      "range": {
+        "startLine": 8,
+        "startChar": 35,
+        "endLine": 8,
+        "endChar": 47
+      },
+      "revId": "8d1b5c90045494fe365d17551110cab943647e9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2515eb4a_934b9bc3",
         "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerHelper.java",
         "patchSetId": 4
@@ -56,6 +98,24 @@
       "revId": "8d1b5c90045494fe365d17551110cab943647e9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbeb2983_386ea742",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-04T16:50:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2515eb4a_934b9bc3",
+      "revId": "8d1b5c90045494fe365d17551110cab943647e9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -79,6 +139,30 @@
       "revId": "8d1b5c90045494fe365d17551110cab943647e9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6eb5c4a5_ca1f0777",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-04T16:50:39Z",
+      "side": 1,
+      "message": "Done, thanks!",
+      "parentUuid": "1f68589b_7608a517",
+      "range": {
+        "startLine": 275,
+        "startChar": 41,
+        "endLine": 276,
+        "endChar": 65
+      },
+      "revId": "8d1b5c90045494fe365d17551110cab943647e9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
