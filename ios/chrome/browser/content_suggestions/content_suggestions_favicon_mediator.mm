@@ -8,6 +8,9 @@
 #include "components/favicon/core/large_icon_service.h"
 #include "components/ntp_snippets/category.h"
 #include "components/ntp_snippets/content_suggestions_service.h"
+#include "components/ntp_tiles/metrics.h"
+#include "components/rappor/rappor_service_impl.h"
+#include "ios/chrome/browser/application_context.h"
 #import "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_item.h"
 #import "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_most_visited_item.h"
 #import "ios/chrome/browser/ui/content_suggestions/content_suggestions_data_sink.h"
@@ -31,7 +34,12 @@ const CGFloat kMostVisitedFaviconMinimalSize = 32;
 
 }  // namespace
 
-@interface ContentSuggestionsFaviconMediator ()
+@interface ContentSuggestionsFaviconMediator () {
+  // Most visited data used for logging the tiles impression. The data are
+  // copied when receiving the first non-empty data. This copy is used to make
+  // sure only the data received the first time are logged, and only once.
+  ntp_tiles::NTPTilesVector _mostVisitedDataForLogging;
+}
 
 // The ContentSuggestionsService, serving suggestions.
 @property(nonatomic, assign)
@@ -71,6 +79,11 @@ initWithContentService:(ntp_snippets::ContentSuggestionsService*)contentService
     _contentService = contentService;
   }
   return self;
+}
+
+- (void)setMostVisitedDataForLogging:
+    (const ntp_tiles::NTPTilesVector&)mostVisitedData {
+  _mostVisitedDataForLogging = mostVisitedData;
 }
 
 - (void)fetchFaviconForMostVisited:(ContentSuggestionsMostVisitedItem*)item {
@@ -142,6 +155,22 @@ initWithContentService:(ntp_snippets::ContentSuggestionsService*)contentService
   self.contentService->FetchSuggestionFavicon(
       identifier, /* minimum_size_in_pixel = */ 1, kSuggestionsFaviconSize,
       base::BindBlockArc(imageCallback));
+}
+
+// If it is the first time the favicon corresponding to |URL| has its favicon
+// fetched, its impression is logged.
+- (void)logFaviconFetchedForItem:(ContentSuggestionsMostVisitedItem*)item {
+  for (size_t i = 0; i < _mostVisitedDataForLogging.size(); ++i) {
+    ntp_tiles::NTPTile& ntpTile = _mostVisitedDataForLogging[i];
+    if (ntpTile.url == item.URL) {
+      ntp_tiles::metrics::RecordTileImpression(
+          i, ntpTile.source, item.tileType, item.URL,
+          GetApplicationContext()->GetRapporServiceImpl());
+      // Reset the URL to be sure to log the impression only once.
+      ntpTile.url = GURL();
+      break;
+    }
+  }
 }
 
 @end
