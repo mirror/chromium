@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77a6cc2e_29d33e6d",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerDelegate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-04T16:30:02Z",
+      "side": 1,
+      "message": "Mark it as @Deprecated?",
+      "revId": "8d1b5c90045494fe365d17551110cab943647e9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a574ae4_b1732685",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerDelegateException.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-04T16:30:02Z",
+      "side": 1,
+      "message": "Nit: \"encapsulates\"",
+      "range": {
+        "startLine": 8,
+        "startChar": 35,
+        "endLine": 8,
+        "endChar": 47
+      },
+      "revId": "8d1b5c90045494fe365d17551110cab943647e9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2515eb4a_934b9bc3",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-04T16:30:02Z",
+      "side": 1,
+      "message": "I think subsequent lines just get indented eight spaces. In particular with long exception names like this anything else starts to look weird.",
+      "revId": "8d1b5c90045494fe365d17551110cab943647e9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f68589b_7608a517",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-04T16:30:02Z",
+      "side": 1,
+      "message": "So, returns null if the account doesn\u0027t exist or an error occurs? It might be worth mentioning that in one (otherwise you have two seemingly contradictory statements).",
+      "range": {
+        "startLine": 275,
+        "startChar": 41,
+        "endLine": 276,
+        "endChar": 65
+      },
+      "revId": "8d1b5c90045494fe365d17551110cab943647e9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
