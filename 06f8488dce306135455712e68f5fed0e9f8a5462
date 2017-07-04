@@ -16,6 +16,24 @@
       "revId": "06f8488dce306135455712e68f5fed0e9f8a5462",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66d1e43d_30d3e3f3",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_favicon_mediator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-04T14:44:53Z",
+      "side": 1,
+      "message": "The result should be the same, but I find it clearer that way.",
+      "parentUuid": "36cad5ce_5a3ff198",
+      "revId": "06f8488dce306135455712e68f5fed0e9f8a5462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
