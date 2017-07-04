@@ -64,8 +64,7 @@ bool ImageSource::SetData(RefPtr<SharedBuffer> data, bool all_data_received) {
                                           ImageDecoder::kAlphaPremultiplied,
                                           color_behavior);
 
-  // Insufficient data is not a failure.
-  return decoder_ || !ImageDecoder::HasSufficientDataToSniffImageType(*data);
+  return decoder_ ? true : false;
 }
 
 String ImageSource::FilenameExtension() const {
