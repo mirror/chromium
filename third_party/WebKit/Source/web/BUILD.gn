@@ -108,6 +108,7 @@ test("webkit_unit_tests") {
     "//gpu:test_support",
     "//testing/gmock",
     "//testing/gtest",
+    "//third_party/WebKit/Source/controller",
     "//third_party/WebKit/Source/core:unit_tests",
     "//third_party/WebKit/Source/modules:unit_tests",
     "//third_party/WebKit/Source/modules/exported:test_support",
