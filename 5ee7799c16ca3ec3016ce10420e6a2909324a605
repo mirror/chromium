@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5219a4d_c731846e",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-04T15:16:09Z",
+      "side": 1,
+      "message": "(optional) nit: now that we\u0027ve clarified that this is ForTesting, I think it\u0027s not so important to mention that it\u0027s going to be blocking. TerminateAllWorkersForTesting() sounds fine and a bit clearer than having the two \"For\"s.",
+      "revId": "5ee7799c16ca3ec3016ce10420e6a2909324a605",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69891051_bf7697c3",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-04T15:16:09Z",
+      "side": 1,
+      "message": "It\u0027d be nice to explain what \"IfNeeded\" means, if possible\n\nFrom my code reading, I\u0027d suggest a comment here like:\n// Terminates worker script execution if the worker thread is running and not already shutting down. Does not terminate if a debugger task is running, because the debugger task is guaranteed to finish and it heavily uses V8 API calls which would crash after forcible script termination. Called on the main thread.",
+      "revId": "5ee7799c16ca3ec3016ce10420e6a2909324a605",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
