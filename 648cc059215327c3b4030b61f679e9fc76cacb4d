@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "18e92829_9a00b0d9",
+        "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-dynamic-dependency.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-07-04T23:55:10Z",
+      "side": 1,
+      "message": "I think this was supposed to be --c not --b.",
+      "parentUuid": "91bdea69_851bccfa",
+      "revId": "648cc059215327c3b4030b61f679e9fc76cacb4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ee847e7_ef6d892d",
         "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-dynamic-dependency.html",
         "patchSetId": 6
@@ -104,6 +122,24 @@
       "revId": "648cc059215327c3b4030b61f679e9fc76cacb4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3f73140_bb3b0444",
+        "filename": "third_party/WebKit/Source/core/animation/CSSInterpolationType.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-07-04T23:55:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3c512360_644349bf",
+      "revId": "648cc059215327c3b4030b61f679e9fc76cacb4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -212,6 +248,24 @@
     },
     {
       "key": {
+        "uuid": "5e50c390_65bae603",
+        "filename": "third_party/WebKit/Source/core/animation/CSSVarCycleInterpolationType.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-07-04T23:55:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "304fc350_12cb34ab",
+      "revId": "648cc059215327c3b4030b61f679e9fc76cacb4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "503983c5_fd52cf65",
         "filename": "third_party/WebKit/Source/core/animation/CSSVarCycleInterpolationType.cpp",
         "patchSetId": 6
@@ -282,6 +336,24 @@
     },
     {
       "key": {
+        "uuid": "9489dc3d_0c6e123b",
+        "filename": "third_party/WebKit/Source/core/animation/CSSVarCycleInterpolationType.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-07-04T23:55:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2cd67850_e65d6338",
+      "revId": "648cc059215327c3b4030b61f679e9fc76cacb4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21a4cb33_2215a654",
         "filename": "third_party/WebKit/Source/core/animation/CSSVarCycleInterpolationType.cpp",
         "patchSetId": 6
@@ -349,6 +421,24 @@
       "revId": "648cc059215327c3b4030b61f679e9fc76cacb4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "070d5b18_45a662e6",
+        "filename": "third_party/WebKit/Source/core/animation/CSSVarCycleInterpolationType.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-07-04T23:55:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "164ecff3_33df73db",
+      "revId": "648cc059215327c3b4030b61f679e9fc76cacb4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

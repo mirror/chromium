@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8ac9fe1_57c88212",
+        "filename": "third_party/WebKit/Source/core/animation/CSSVarCycleInterpolationType.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-07-04T23:55:10Z",
+      "side": 1,
+      "message": "Optional nit: Capture this with a named constant like kNoCycleDetected as an alias for nullptr and use that in preference to nullptr throughout this class. Advantage: makes it clear throughout this class what your return value means, and documents its mapping to nullptr in a single location. Disadvantage: Makes the code in this function a little more verbose since you need to compare start and end to a constant instead of using implicit nullptr\u003d\u003dfalse. I think the readability of the verbosity is worth it, but will leave the final call to you.",
+      "revId": "230022c620bac7b1e0288afa15100c6a4c29b634",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d290e4a5_45650227",
+        "filename": "third_party/WebKit/Source/core/animation/CSSVarCycleInterpolationType.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-07-04T23:55:10Z",
+      "side": 1,
+      "message": "I don\u0027t really understand what this function does. Is this the actual implementation of \"unset the value because there was a cycle\"? Add a comment please.",
+      "revId": "230022c620bac7b1e0288afa15100c6a4c29b634",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0216a240_5306f49b",
+        "filename": "third_party/WebKit/Source/core/animation/CSSVarCycleInterpolationType.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-07-04T23:55:10Z",
+      "side": 1,
+      "message": "I\u0027m curious whether this behaviour is (or should be) specced.\nNit: Include a spec link if there is one.",
+      "revId": "230022c620bac7b1e0288afa15100c6a4c29b634",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e65b67ea_791dcc60",
+        "filename": "third_party/WebKit/Source/core/animation/CSSVarCycleInterpolationType.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-07-04T23:55:10Z",
+      "side": 1,
+      "message": "I guess this (and MaybeConvertUnderlyingValue above) are fairly bland default behaviour for a class where the concept doesn\u0027t really apply. A comment to verify this might be useful.",
+      "revId": "230022c620bac7b1e0288afa15100c6a4c29b634",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
