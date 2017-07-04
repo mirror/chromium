@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3f3e933_24c7dbb9",
+        "filename": "services/resource_coordinator/tracing/agent_registry.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-04T09:04:12Z",
+      "side": 1,
+      "message": "- +const\n- this could be an inline accessor\n- this seems to be testing only, so I\u0027d make it explicit\n\nIn other words, I\u0027d probably do here:\n\nsize_t num_disconnect_closures_for_testing() const { return closures_.size(); }",
+      "range": {
+        "startLine": 37,
+        "startChar": 4,
+        "endLine": 38,
+        "endChar": 0
+      },
+      "revId": "ebfb7cf21ec92306a39f6a8f721c578d1097dd04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
