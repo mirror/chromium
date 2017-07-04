@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99cbe1d0_6ad5002d",
+        "filename": "ios/chrome/browser/chrome_browser_provider_observer_bridge_unittest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-04T15:58:50Z",
+      "side": 1,
+      "message": "nit: since the method is called \"chromeIdentityServiceDidChange:\" maybe this property should be called \"chromeIdentityServiceDidChangeCalled\" instead.",
+      "revId": "671565cbed4fbf22c6d8a12c3f44a7d80005aa76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f32a5168_7d927816",
+        "filename": "ios/chrome/browser/chrome_browser_provider_observer_bridge_unittest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-04T15:58:50Z",
+      "side": 1,
+      "message": "ditto, chromeBrowserProviderWillBeDestroyedCalled.",
+      "range": {
+        "startLine": 22,
+        "startChar": 29,
+        "endLine": 22,
+        "endChar": 70
+      },
+      "revId": "671565cbed4fbf22c6d8a12c3f44a7d80005aa76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48d73eaf_6c4b7ddf",
+        "filename": "ios/chrome/browser/chrome_browser_provider_observer_bridge_unittest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-04T15:58:50Z",
+      "side": 1,
+      "message": "nit: this is an ivar of an objc class, so it should be called _observerBridge.",
+      "range": {
+        "startLine": 29,
+        "startChar": 56,
+        "endLine": 29,
+        "endChar": 72
+      },
+      "revId": "671565cbed4fbf22c6d8a12c3f44a7d80005aa76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae05a1fa_997c94df",
+        "filename": "ios/chrome/browser/chrome_browser_provider_observer_bridge_unittest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-04T15:58:50Z",
+      "side": 1,
+      "message": "nit: since the method is called chromeIdentityServiceDidChange, maybe this should also be the name of the test (though I think the test ends up being a C++ method, so it should really be ChromeIdentityServiceDidChange).",
+      "range": {
+        "startLine": 87,
+        "startChar": 7,
+        "endLine": 87,
+        "endChar": 39
+      },
+      "revId": "671565cbed4fbf22c6d8a12c3f44a7d80005aa76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e852f0f9_de7fb7a6",
+        "filename": "ios/chrome/browser/chrome_browser_provider_observer_bridge_unittest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-04T15:58:50Z",
+      "side": 1,
+      "message": "ditto, ChromeBrowserProviderWillBeDestroyed.",
+      "range": {
+        "startLine": 98,
+        "startChar": 7,
+        "endLine": 98,
+        "endChar": 45
+      },
+      "revId": "671565cbed4fbf22c6d8a12c3f44a7d80005aa76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
