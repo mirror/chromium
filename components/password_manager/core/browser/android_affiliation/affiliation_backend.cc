@@ -13,7 +13,6 @@
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/sequenced_task_runner.h"
-#include "base/threading/thread_checker.h"
 #include "base/time/clock.h"
 #include "base/time/tick_clock.h"
 #include "base/time/time.h"
@@ -37,14 +36,13 @@ AffiliationBackend::AffiliationBackend(
       construction_time_(clock_->Now()),
       weak_ptr_factory_(this) {
   DCHECK_LT(base::Time(), clock_->Now());
+  DETACH_FROM_SEQUENCE(sequence_checker_);
 }
 
 AffiliationBackend::~AffiliationBackend() {
 }
 
 void AffiliationBackend::Initialize(const base::FilePath& db_path) {
-  thread_checker_.reset(new base::ThreadChecker);
-
   DCHECK(!throttler_);
   throttler_.reset(
       new AffiliationFetchThrottler(this, task_runner_, tick_clock_.get()));
@@ -62,7 +60,7 @@ void AffiliationBackend::GetAffiliations(
     StrategyOnCacheMiss cache_miss_strategy,
     const AffiliationService::ResultCallback& callback,
     const scoped_refptr<base::TaskRunner>& callback_task_runner) {
-  DCHECK(thread_checker_ && thread_checker_->CalledOnValidThread());
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
   FacetManager* facet_manager = GetOrCreateFacetManager(facet_uri);
   DCHECK(facet_manager);
@@ -75,7 +73,7 @@ void AffiliationBackend::GetAffiliations(
 
 void AffiliationBackend::Prefetch(const FacetURI& facet_uri,
                                   const base::Time& keep_fresh_until) {
-  DCHECK(thread_checker_ && thread_checker_->CalledOnValidThread());
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
   FacetManager* facet_manager = GetOrCreateFacetManager(facet_uri);
   DCHECK(facet_manager);
@@ -87,7 +85,7 @@ void AffiliationBackend::Prefetch(const FacetURI& facet_uri,
 
 void AffiliationBackend::CancelPrefetch(const FacetURI& facet_uri,
                                         const base::Time& keep_fresh_until) {
-  DCHECK(thread_checker_ && thread_checker_->CalledOnValidThread());
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
   auto facet_manager_it = facet_managers_.find(facet_uri);
   if (facet_manager_it == facet_managers_.end())
@@ -99,7 +97,7 @@ void AffiliationBackend::CancelPrefetch(const FacetURI& facet_uri,
 }
 
 void AffiliationBackend::TrimCacheForFacet(const FacetURI& facet_uri) {
-  DCHECK(thread_checker_ && thread_checker_->CalledOnValidThread());
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
   AffiliatedFacetsWithUpdateTime affiliation;
   if (cache_->GetAffiliationsForFacet(facet_uri, &affiliation))
@@ -123,7 +121,7 @@ FacetManager* AffiliationBackend::GetOrCreateFacetManager(
 
 void AffiliationBackend::DiscardCachedDataIfNoLongerNeeded(
     const AffiliatedFacets& affiliated_facets) {
-  DCHECK(thread_checker_ && thread_checker_->CalledOnValidThread());
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
   // Discard the equivalence class if there is no facet in the class whose
   // FacetManager claims that it needs to keep the data.
@@ -140,7 +138,7 @@ void AffiliationBackend::DiscardCachedDataIfNoLongerNeeded(
 }
 
 void AffiliationBackend::OnSendNotification(const FacetURI& facet_uri) {
-  DCHECK(thread_checker_ && thread_checker_->CalledOnValidThread());
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
   auto facet_manager_it = facet_managers_.find(facet_uri);
   if (facet_manager_it == facet_managers_.end())
@@ -173,7 +171,7 @@ void AffiliationBackend::RequestNotificationAtTime(const FacetURI& facet_uri,
 
 void AffiliationBackend::OnFetchSucceeded(
     std::unique_ptr<AffiliationFetcherDelegate::Result> result) {
-  DCHECK(thread_checker_ && thread_checker_->CalledOnValidThread());
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
   fetcher_.reset();
   throttler_->InformOfNetworkRequestComplete(true);
@@ -219,7 +217,7 @@ void AffiliationBackend::OnFetchSucceeded(
 }
 
 void AffiliationBackend::OnFetchFailed() {
-  DCHECK(thread_checker_ && thread_checker_->CalledOnValidThread());
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
   fetcher_.reset();
   throttler_->InformOfNetworkRequestComplete(false);
@@ -234,7 +232,7 @@ void AffiliationBackend::OnFetchFailed() {
 }
 
 void AffiliationBackend::OnMalformedResponse() {
-  DCHECK(thread_checker_ && thread_checker_->CalledOnValidThread());
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
   // TODO(engedy): Potentially handle this case differently. crbug.com/437865.
   OnFetchFailed();
