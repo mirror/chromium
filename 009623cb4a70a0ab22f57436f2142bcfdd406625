@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "a1174de7_913544a2",
+        "filename": "chrome/browser/ui/app_list/speech_auth_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-07-04T14:10:10Z",
+      "side": 1,
+      "message": "nit: I would just call this something like AuthenticatedAccountIsReady(). It doesn\u0027t matter that much though, because as discussed this method has no parallel in the Identity Service world.",
+      "revId": "009623cb4a70a0ab22f57436f2142bcfdd406625",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c5c354b_6a98b1c6",
+        "filename": "components/signin/core/browser/signin_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-07-04T14:10:10Z",
+      "side": 1,
+      "message": "As discussed offline, I still think this is a mistake.",
+      "revId": "009623cb4a70a0ab22f57436f2142bcfdd406625",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9b5c8cd0_83c6771b",
         "filename": "components/signin/core/browser/signin_manager_base.h",
         "patchSetId": 3
