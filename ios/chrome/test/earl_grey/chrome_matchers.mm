@@ -99,10 +99,6 @@ id<GREYMatcher> WebViewContainingText(std::string text) {
   return web::WebViewContainingText(std::move(text), GetCurrentWebState());
 }
 
-id<GREYMatcher> WebViewNotContainingText(std::string text) {
-  return web::WebViewNotContainingText(std::move(text), GetCurrentWebState());
-}
-
 id<GREYMatcher> WebViewContainingBlockedImage(std::string image_id) {
   return web::WebViewContainingBlockedImage(
       std::move(image_id), chrome_test_util::GetCurrentWebState());
