@@ -64,6 +64,7 @@ class ContextMenuMatcher {
       const base::string16& selection_text);
 
   bool IsCommandIdChecked(int command_id) const;
+  bool IsCommandIdVisible(int command_id) const;
   bool IsCommandIdEnabled(int command_id) const;
   void ExecuteCommand(int command_id,
                       content::WebContents* web_contents,
