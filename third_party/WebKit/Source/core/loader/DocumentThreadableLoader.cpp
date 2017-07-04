@@ -39,6 +39,7 @@
 #include "core/frame/LocalFrameClient.h"
 #include "core/inspector/InspectorNetworkAgent.h"
 #include "core/inspector/InspectorTraceEvents.h"
+#include "core/loader/BaseFetchContext.h"
 #include "core/loader/DocumentThreadableLoaderClient.h"
 #include "core/loader/FrameLoader.h"
 #include "core/loader/ThreadableLoaderClient.h"
@@ -181,7 +182,7 @@ DocumentThreadableLoader::DocumentThreadableLoader(
       request_context_(WebURLRequest::kRequestContextUnspecified),
       fetch_request_mode_(WebURLRequest::kFetchRequestModeSameOrigin),
       fetch_credentials_mode_(WebURLRequest::kFetchCredentialsModeOmit),
-      timeout_timer_(loading_context_->GetTaskRunner(TaskType::kNetworking),
+      timeout_timer_(loading_context_->GetFetchContext()->GetTaskRunner(),
                      this,
                      &DocumentThreadableLoader::DidTimeout),
       request_started_seconds_(0.0),
@@ -385,7 +386,10 @@ void DocumentThreadableLoader::MakeCrossOriginAccessRequest(
 
   // Non-secure origins may not make "external requests":
   // https://wicg.github.io/cors-rfc1918/#integration-fetch
-  if (!loading_context_->IsSecureContext() && request.IsExternalRequest()) {
+  String error_message;
+  if (!loading_context_->GetExecutionContext()->IsSecureContext(
+          error_message) &&
+      request.IsExternalRequest()) {
     DispatchDidFailAccessControlCheck(
         ResourceError(kErrorDomainBlinkInternal, 0, request.Url().GetString(),
                       "Requests to internal network resources are not allowed "
@@ -854,8 +858,10 @@ void DocumentThreadableLoader::HandleResponse(
   }
 
   if (response.WasFetchedViaServiceWorker()) {
-    if (response.WasFetchedViaForeignFetch())
-      loading_context_->RecordUseCount(WebFeature::kForeignFetchInterception);
+    if (response.WasFetchedViaForeignFetch()) {
+      loading_context_->GetFetchContext()->CountUsage(
+          WebFeature::kForeignFetchInterception);
+    }
     if (response.WasFallbackRequiredByServiceWorker()) {
       // At this point we must have m_fallbackRequestForServiceWorker. (For
       // SharedWorker the request won't be CORS or CORS-with-preflight,
@@ -1235,13 +1241,17 @@ bool DocumentThreadableLoader::IsAllowedRedirect(
 }
 
 const SecurityOrigin* DocumentThreadableLoader::GetSecurityOrigin() const {
-  return security_origin_ ? security_origin_.Get()
-                          : loading_context_->GetSecurityOrigin();
+  return security_origin_
+             ? security_origin_.Get()
+             : loading_context_->GetFetchContext()->GetSecurityOrigin();
 }
 
 Document* DocumentThreadableLoader::GetDocument() const {
   DCHECK(loading_context_);
-  return loading_context_->GetLoadingDocument();
+  ExecutionContext* context = loading_context_->GetExecutionContext();
+  if (context->IsDocument())
+    return ToDocument(context);
+  return nullptr;
 }
 
 DEFINE_TRACE(DocumentThreadableLoader) {
