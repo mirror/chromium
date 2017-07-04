@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b9f33ab_4679d145",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/controls-cast-button-low-end-device.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-04T10:18:36Z",
+      "side": 1,
+      "message": "I would set this to the previous value if you can read it so if we run tests with setIsLowEndDevice on by default, we don\u0027t break them ;)",
+      "revId": "32f3eecce83026abf56a01eacb9f8a48c3f26866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ebc1cd9_8235d8b2",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/controls-cast-button-low-end-device.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-04T10:18:36Z",
+      "side": 1,
+      "message": "fyi, `video.controls \u003d true;` works too :)",
+      "revId": "32f3eecce83026abf56a01eacb9f8a48c3f26866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d53b25a_fb492aeb",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/controls-cast-button-low-end-device.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-04T10:18:36Z",
+      "side": 1,
+      "message": "you don\u0027t have timeouts... is this a stale comment?",
+      "revId": "32f3eecce83026abf56a01eacb9f8a48c3f26866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c33b1cd_4a6ca00b",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/controls-cast-button-low-end-device.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-04T10:18:36Z",
+      "side": 1,
+      "message": "`assert_true(isVisible(castButton(video)));` ?",
+      "revId": "32f3eecce83026abf56a01eacb9f8a48c3f26866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
