@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff3c92c2_8d5db1f4",
+        "filename": "third_party/WebKit/Source/core/dom/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2017-07-04T13:04:21Z",
+      "side": 1,
+      "message": "Can you refer to https://crbug.com/716395 here? These are supposed to be \"temporary\" so good to be able to track why they exist.",
+      "revId": "4ad1347aa6cf69678f69e48fff97b5e437380756",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
