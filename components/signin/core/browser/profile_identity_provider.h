@@ -27,7 +27,6 @@ class ProfileIdentityProvider : public IdentityProvider,
   // IdentityProvider:
   std::string GetActiveUsername() override;
   std::string GetActiveAccountId() override;
-  OAuth2TokenService* GetTokenService() override;
   bool RequestLogin() override;
 
   // SigninManagerBase::Observer:
@@ -39,7 +38,6 @@ class ProfileIdentityProvider : public IdentityProvider,
 
  private:
   SigninManagerBase* const signin_manager_;
-  ProfileOAuth2TokenService* const token_service_;
   base::Closure request_login_callback_;
 
   DISALLOW_COPY_AND_ASSIGN(ProfileIdentityProvider);

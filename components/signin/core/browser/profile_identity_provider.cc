@@ -11,8 +11,8 @@ ProfileIdentityProvider::ProfileIdentityProvider(
     SigninManagerBase* signin_manager,
     ProfileOAuth2TokenService* token_service,
     const base::Closure& request_login_callback)
-    : signin_manager_(signin_manager),
-      token_service_(token_service),
+    : IdentityProvider(token_service),
+      signin_manager_(signin_manager),
       request_login_callback_(request_login_callback) {
   signin_manager_->AddObserver(this);
 }
@@ -27,10 +27,6 @@ std::string ProfileIdentityProvider::GetActiveUsername() {
 
 std::string ProfileIdentityProvider::GetActiveAccountId() {
   return signin_manager_->GetAuthenticatedAccountId();
-}
-
-OAuth2TokenService* ProfileIdentityProvider::GetTokenService() {
-  return token_service_;
 }
 
 bool ProfileIdentityProvider::RequestLogin() {

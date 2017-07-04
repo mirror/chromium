@@ -7,8 +7,7 @@
 #include "google_apis/gaia/oauth2_token_service.h"
 
 FakeIdentityProvider::FakeIdentityProvider(OAuth2TokenService* token_service)
-    : token_service_(token_service) {
-}
+    : IdentityProvider(token_service) {}
 
 FakeIdentityProvider::~FakeIdentityProvider() {
 }
@@ -29,10 +28,6 @@ std::string FakeIdentityProvider::GetActiveUsername() {
 
 std::string FakeIdentityProvider::GetActiveAccountId() {
   return account_id_;
-}
-
-OAuth2TokenService* FakeIdentityProvider::GetTokenService() {
-  return token_service_;
 }
 
 bool FakeIdentityProvider::RequestLogin() {

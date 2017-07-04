@@ -77,7 +77,6 @@ TiclInvalidationService::~TiclInvalidationService() {
   invalidator_registrar_->UpdateInvalidatorState(
       syncer::INVALIDATOR_SHUTTING_DOWN);
   settings_provider_->RemoveObserver(this);
-  identity_provider_->RemoveActiveAccountRefreshTokenObserver(this);
   identity_provider_->RemoveObserver(this);
   if (IsStarted()) {
     StopInvalidator();
@@ -101,7 +100,6 @@ void TiclInvalidationService::Init(
   }
 
   identity_provider_->AddObserver(this);
-  identity_provider_->AddActiveAccountRefreshTokenObserver(this);
   settings_provider_->AddObserver(this);
 }
 
@@ -253,14 +251,12 @@ void TiclInvalidationService::OnGetTokenFailure(
   }
 }
 
-void TiclInvalidationService::OnRefreshTokenAvailable(
-    const std::string& account_id) {
+void TiclInvalidationService::OnRefreshTokenAvailableForActiveAccount() {
   if (!IsStarted() && IsReadyToStart())
     StartInvalidator(network_channel_type_);
 }
 
-void TiclInvalidationService::OnRefreshTokenRevoked(
-    const std::string& account_id) {
+void TiclInvalidationService::OnRefreshTokenRevokedForActiveAccount() {
   access_token_.clear();
   if (IsStarted())
     UpdateInvalidatorCredentials();

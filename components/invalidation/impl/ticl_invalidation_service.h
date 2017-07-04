@@ -44,7 +44,6 @@ class GCMInvalidationBridge;
 // It provides invalidations for desktop platforms (Win, Mac, Linux).
 class TiclInvalidationService : public InvalidationService,
                                 public OAuth2TokenService::Consumer,
-                                public OAuth2TokenService::Observer,
                                 public IdentityProvider::Observer,
                                 public TiclSettingsProvider::Observer,
                                 public syncer::InvalidationHandler {
@@ -93,11 +92,9 @@ class TiclInvalidationService : public InvalidationService,
   void OnGetTokenFailure(const OAuth2TokenService::Request* request,
                          const GoogleServiceAuthError& error) override;
 
-  // OAuth2TokenService::Observer implementation
-  void OnRefreshTokenAvailable(const std::string& account_id) override;
-  void OnRefreshTokenRevoked(const std::string& account_id) override;
-
   // IdentityProvider::Observer implementation.
+  void OnRefreshTokenAvailableForActiveAccount() override;
+  void OnRefreshTokenRevokedForActiveAccount() override;
   void OnActiveAccountLogout() override;
 
   // TiclSettingsProvider::Observer implementation.

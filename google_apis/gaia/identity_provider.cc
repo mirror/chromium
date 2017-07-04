@@ -7,28 +7,14 @@
 
 IdentityProvider::Observer::~Observer() {}
 
-IdentityProvider::~IdentityProvider() {}
-
-void IdentityProvider::AddActiveAccountRefreshTokenObserver(
-    OAuth2TokenService::Observer* observer) {
-  OAuth2TokenService* token_service = GetTokenService();
-  if (!token_service || token_service_observers_.HasObserver(observer))
-    return;
-
-  token_service_observers_.AddObserver(observer);
-  if (++token_service_observer_count_ == 1)
-    token_service->AddObserver(this);
+IdentityProvider::IdentityProvider(OAuth2TokenService* token_service)
+    : token_service_(token_service) {
+  DCHECK(token_service_);
+  token_service_->AddObserver(this);
 }
 
-void IdentityProvider::RemoveActiveAccountRefreshTokenObserver(
-    OAuth2TokenService::Observer* observer) {
-  OAuth2TokenService* token_service = GetTokenService();
-  if (!token_service || !token_service_observers_.HasObserver(observer))
-    return;
-
-  token_service_observers_.RemoveObserver(observer);
-  if (--token_service_observer_count_ == 0)
-    token_service->RemoveObserver(this);
+IdentityProvider::~IdentityProvider() {
+  token_service_->RemoveObserver(this);
 }
 
 void IdentityProvider::AddObserver(Observer* observer) {
@@ -48,23 +34,16 @@ void IdentityProvider::OnRefreshTokenAvailable(const std::string& account_id) {
 
   if (account_id != GetActiveAccountId())
     return;
-  for (auto& observer : token_service_observers_)
-    observer.OnRefreshTokenAvailable(account_id);
+  for (auto& observer : observers_)
+    observer.OnRefreshTokenAvailableForActiveAccount();
 }
 
 void IdentityProvider::OnRefreshTokenRevoked(const std::string& account_id) {
   if (account_id != GetActiveAccountId())
     return;
-  for (auto& observer : token_service_observers_)
-    observer.OnRefreshTokenRevoked(account_id);
+  for (auto& observer : observers_)
+    observer.OnRefreshTokenRevokedForActiveAccount();
 }
-
-void IdentityProvider::OnRefreshTokensLoaded() {
-  for (auto& observer : token_service_observers_)
-    observer.OnRefreshTokensLoaded();
-}
-
-IdentityProvider::IdentityProvider() : token_service_observer_count_(0) {}
 
 void IdentityProvider::FireOnActiveAccountLogin() {
   for (auto& observer : observers_)
