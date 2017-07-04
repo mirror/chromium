@@ -449,6 +449,10 @@ blink_core_sources("dom") {
     "custom/V0CustomElementSyncMicrotaskQueue.h",
     "custom/V0CustomElementUpgradeCandidateMap.cpp",
     "custom/V0CustomElementUpgradeCandidateMap.h",
+    "safetypes/SafeHTML.cpp",
+    "safetypes/SafeHTML.h",
+    "safetypes/SafeURL.cpp",
+    "safetypes/SafeURL.h",
   ]
 
   configs += [

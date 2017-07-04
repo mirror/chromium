@@ -283,21 +283,21 @@ TEST_F(InputMethodControllerTest, SetCompositionKeepingStyle) {
   // Subtract a character.
   Controller().SetComposition(String("12345789"), underlines, 8, 8);
   EXPECT_STREQ("abc1<b>2</b>3457<b>8</b>9d<b>e</b>f",
-               div->innerHTML().Utf8().data());
+               div->InnerHTMLAsString().Utf8().data());
   EXPECT_EQ(11u, Controller().GetSelectionOffsets().Start());
   EXPECT_EQ(11u, Controller().GetSelectionOffsets().End());
 
   // Append a character.
   Controller().SetComposition(String("123456789"), underlines, 9, 9);
   EXPECT_STREQ("abc1<b>2</b>34567<b>8</b>9d<b>e</b>f",
-               div->innerHTML().Utf8().data());
+               div->InnerHTMLAsString().Utf8().data());
   EXPECT_EQ(12u, Controller().GetSelectionOffsets().Start());
   EXPECT_EQ(12u, Controller().GetSelectionOffsets().End());
 
   // Subtract and append characters.
   Controller().SetComposition(String("123hello789"), underlines, 11, 11);
   EXPECT_STREQ("abc1<b>2</b>3hello7<b>8</b>9d<b>e</b>f",
-               div->innerHTML().Utf8().data());
+               div->InnerHTMLAsString().Utf8().data());
 }
 
 TEST_F(InputMethodControllerTest, SetCompositionWithEmojiKeepingStyle) {
@@ -314,11 +314,13 @@ TEST_F(InputMethodControllerTest, SetCompositionWithEmojiKeepingStyle) {
   // surrogate pair to the previous one.
   Controller().SetComposition(String::FromUTF8("\xF0\x9F\x8F\xAB"), underlines,
                               2, 2);
-  EXPECT_STREQ("<b>\xF0\x9F\x8F\xAB</b>", div->innerHTML().Utf8().data());
+  EXPECT_STREQ("<b>\xF0\x9F\x8F\xAB</b>",
+               div->InnerHTMLAsString().Utf8().data());
 
   Controller().SetComposition(String::FromUTF8("\xF0\x9F\x8F\xA0"), underlines,
                               2, 2);
-  EXPECT_STREQ("<b>\xF0\x9F\x8F\xA0</b>", div->innerHTML().Utf8().data());
+  EXPECT_STREQ("<b>\xF0\x9F\x8F\xA0</b>",
+               div->InnerHTMLAsString().Utf8().data());
 }
 
 TEST_F(InputMethodControllerTest,
@@ -338,11 +340,11 @@ TEST_F(InputMethodControllerTest,
   Controller().SetComposition(String::FromUTF8("\xE0\xB0\x83\xE0\xB0\x83"),
                               underlines, 2, 2);
   EXPECT_STREQ("<b>\xE0\xB0\x83\xE0\xB0\x83</b>",
-               div->innerHTML().Utf8().data());
+               div->InnerHTMLAsString().Utf8().data());
 
   Controller().SetComposition(String::FromUTF8("\xE0\xB0\x83"), underlines, 1,
                               1);
-  EXPECT_STREQ("<b>\xE0\xB0\x83</b>", div->innerHTML().Utf8().data());
+  EXPECT_STREQ("<b>\xE0\xB0\x83</b>", div->InnerHTMLAsString().Utf8().data());
 }
 
 TEST_F(InputMethodControllerTest, FinishComposingTextKeepingStyle) {
@@ -356,10 +358,12 @@ TEST_F(InputMethodControllerTest, FinishComposingTextKeepingStyle) {
   Controller().SetCompositionFromExistingText(underlines, 3, 12);
 
   Controller().SetComposition(String("123hello789"), underlines, 11, 11);
-  EXPECT_STREQ("abc1<b>2</b>3hello7<b>8</b>9", div->innerHTML().Utf8().data());
+  EXPECT_STREQ("abc1<b>2</b>3hello7<b>8</b>9",
+               div->InnerHTMLAsString().Utf8().data());
 
   Controller().FinishComposingText(InputMethodController::kKeepSelection);
-  EXPECT_STREQ("abc1<b>2</b>3hello7<b>8</b>9", div->innerHTML().Utf8().data());
+  EXPECT_STREQ("abc1<b>2</b>3hello7<b>8</b>9",
+               div->InnerHTMLAsString().Utf8().data());
 }
 
 TEST_F(InputMethodControllerTest, CommitTextKeepingStyle) {
@@ -373,7 +377,8 @@ TEST_F(InputMethodControllerTest, CommitTextKeepingStyle) {
   Controller().SetCompositionFromExistingText(underlines, 3, 12);
 
   Controller().CommitText(String("123789"), underlines, 0);
-  EXPECT_STREQ("abc1<b>2</b>37<b>8</b>9", div->innerHTML().Utf8().data());
+  EXPECT_STREQ("abc1<b>2</b>37<b>8</b>9",
+               div->InnerHTMLAsString().Utf8().data());
 }
 
 TEST_F(InputMethodControllerTest, InsertTextWithNewLine) {
@@ -383,7 +388,7 @@ TEST_F(InputMethodControllerTest, InsertTextWithNewLine) {
   underlines.push_back(CompositionUnderline(0, 11, Color(255, 0, 0), false, 0));
 
   Controller().CommitText(String("hello\nworld"), underlines, 0);
-  EXPECT_STREQ("hello<div>world</div>", div->innerHTML().Utf8().data());
+  EXPECT_STREQ("hello<div>world</div>", div->InnerHTMLAsString().Utf8().data());
 }
 
 TEST_F(InputMethodControllerTest, InsertTextWithNewLineIncrementally) {
@@ -393,10 +398,10 @@ TEST_F(InputMethodControllerTest, InsertTextWithNewLineIncrementally) {
   Vector<CompositionUnderline> underlines;
   underlines.push_back(CompositionUnderline(0, 11, Color(255, 0, 0), false, 0));
   Controller().SetComposition("foo", underlines, 0, 2);
-  EXPECT_STREQ("foo", div->innerHTML().Utf8().data());
+  EXPECT_STREQ("foo", div->InnerHTMLAsString().Utf8().data());
 
   Controller().CommitText(String("hello\nworld"), underlines, 0);
-  EXPECT_STREQ("hello<div>world</div>", div->innerHTML().Utf8().data());
+  EXPECT_STREQ("hello<div>world</div>", div->InnerHTMLAsString().Utf8().data());
 }
 
 TEST_F(InputMethodControllerTest, SelectionOnConfirmExistingText) {
@@ -1493,14 +1498,14 @@ TEST_F(InputMethodControllerTest, WhitespaceFixup) {
 
   // The space at the beginning of the string should have been converted to an
   // nbsp
-  EXPECT_STREQ("&nbsp;text blah", div->innerHTML().Utf8().data());
+  EXPECT_STREQ("&nbsp;text blah", div->InnerHTMLAsString().Utf8().data());
 
   // Delete "blah"
   Controller().SetCompositionFromExistingText(empty_underlines, 6, 10);
   Controller().CommitText(String(""), empty_underlines, 0);
 
   // The space at the end of the string should have been converted to an nbsp
-  EXPECT_STREQ("&nbsp;text&nbsp;", div->innerHTML().Utf8().data());
+  EXPECT_STREQ("&nbsp;text&nbsp;", div->InnerHTMLAsString().Utf8().data());
 }
 
 TEST_F(InputMethodControllerTest, CommitEmptyTextDeletesSelection) {
@@ -1790,7 +1795,7 @@ TEST_F(InputMethodControllerTest,
   Controller().SetCompositionFromExistingText(empty_underlines, 13, 25);
   Controller().CommitText(String("content"), empty_underlines, 0);
 
-  EXPECT_STREQ("This is some content", div->innerHTML().Utf8().data());
+  EXPECT_STREQ("This is some content", div->InnerHTMLAsString().Utf8().data());
 
   // Verify marker was removed
   EXPECT_EQ(0u, GetDocument().Markers().Markers().size());
@@ -1813,7 +1818,7 @@ TEST_F(InputMethodControllerTest,
   Controller().SetCompositionFromExistingText(empty_underlines, 13, 25);
   Controller().CommitText(String("content"), empty_underlines, 0);
 
-  EXPECT_STREQ("This is some content", div->innerHTML().Utf8().data());
+  EXPECT_STREQ("This is some content", div->InnerHTMLAsString().Utf8().data());
 
   // Verify marker is under "some "
   EXPECT_EQ(1u, GetDocument().Markers().Markers().size());

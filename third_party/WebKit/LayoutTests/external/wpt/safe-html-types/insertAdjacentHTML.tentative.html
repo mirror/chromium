@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script src="./support/helper.js"></script>
+<body>
+<div id="container"></div>
+<script>
+  var container = document.querySelector('#container');
+
+  promise_test(t => {
+    return SafeHTML.escape(unescapedHTML).then(html => {
+      var d = document.createElement('div');
+      container.appendChild(d);
+
+      d.insertAdjacentHTML('beforebegin', html);
+      assert_equals(d.previousSibling.nodeType, Node.TEXT_NODE);
+      assert_equals(d.previousSibling.data, unescapedHTML);
+
+      d.insertAdjacentHTML('afterbegin', html);
+      assert_equals(d.firstChild.nodeType, Node.TEXT_NODE);
+      assert_equals(d.firstChild.data, unescapedHTML);
+
+      d.insertAdjacentHTML('beforeend', html);
+      assert_equals(d.lastChild.nodeType, Node.TEXT_NODE);
+      assert_equals(d.lastChild.data, unescapedHTML);
+
+      d.insertAdjacentHTML('afterend', html);
+      assert_equals(d.nextSibling.nodeType, Node.TEXT_NODE);
+      assert_equals(d.nextSibling.data, unescapedHTML);
+
+      while (container.firstChild)
+        container.firstChild.remove();
+    });
+  }, "insertAdjacentHTML = SafeHTML.escape().");
+
+  promise_test(t => {
+    return SafeHTML.unsafelyCreate(unescapedHTML).then(html => {
+      var d = document.createElement('div');
+      container.appendChild(d);
+
+      d.insertAdjacentHTML('beforebegin', html);
+      assert_equals(d.previousSibling.nodeType, Node.TEXT_NODE);
+      assert_equals(d.previousSibling.data, unescapedText);
+
+      d.insertAdjacentHTML('afterbegin', html);
+      assert_equals(d.firstChild.nodeType, Node.TEXT_NODE);
+      assert_equals(d.firstChild.data, unescapedText);
+
+      d.insertAdjacentHTML('beforeend', html);
+      assert_equals(d.lastChild.nodeType, Node.TEXT_NODE);
+      assert_equals(d.lastChild.data, unescapedText);
+
+      d.insertAdjacentHTML('afterend', html);
+      assert_equals(d.nextSibling.nodeType, Node.TEXT_NODE);
+      assert_equals(d.nextSibling.data, unescapedText);
+
+      while (container.firstChild)
+        container.firstChild.remove();
+    });
+  }, "insertAdjacentHTML = SafeHTML.unsafelyCreate().");
+</script>

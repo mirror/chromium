@@ -120,6 +120,11 @@ typedef (HTMLScriptElement or SVGScriptElement) HTMLOrSVGScriptElement;
     [CallWith=EnteredWindow, CEReactions, CustomElementCallbacks, RaisesException] void write(DOMString... text);
     [CallWith=EnteredWindow, CEReactions, CustomElementCallbacks, RaisesException] void writeln(DOMString... text);
 
+    // SafeHTMLTypes variants of the above.
+    // TODO(mkwst): Write a spec for this.
+    [RuntimeEnabled=SafeHTMLTypes, CallWith=EnteredWindow, CEReactions, CustomElementCallbacks, RaisesException] void write(SafeHTML text);
+    [RuntimeEnabled=SafeHTMLTypes, CallWith=EnteredWindow, CEReactions, CustomElementCallbacks, RaisesException] void writeln(SafeHTML text);
+
     // user interaction
     readonly attribute Window? defaultView;
     boolean hasFocus();

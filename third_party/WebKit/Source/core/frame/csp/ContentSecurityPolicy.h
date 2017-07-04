@@ -94,9 +94,9 @@ class CORE_EXPORT ContentSecurityPolicy
     kConnectSrc,
     kDefaultSrc,
     kFrameAncestors,
-    kFrameSrc,
     kFontSrc,
     kFormAction,
+    kFrameSrc,
     kImgSrc,
     kManifestSrc,
     kMediaSrc,
@@ -104,6 +104,7 @@ class CORE_EXPORT ContentSecurityPolicy
     kPluginTypes,
     kReportURI,
     kRequireSRIFor,
+    kRequireSafeTypes,
     kSandbox,
     kScriptSrc,
     kStyleSrc,
@@ -388,6 +389,7 @@ class CORE_EXPORT ContentSecurityPolicy
   const KURL Url() const;
   void EnforceSandboxFlags(SandboxFlags);
   void TreatAsPublicAddress();
+  void RequireSafeTypes();
   String EvalDisabledErrorMessage() const;
 
   // Upgrade-Insecure-Requests and Block-All-Mixed-Content are represented in
@@ -484,6 +486,7 @@ class CORE_EXPORT ContentSecurityPolicy
   // State flags used to configure the environment after parsing a policy.
   SandboxFlags sandbox_mask_;
   bool treat_as_public_address_;
+  bool require_safe_types_;
   String disable_eval_error_message_;
   WebInsecureRequestPolicy insecure_request_policy_;
 

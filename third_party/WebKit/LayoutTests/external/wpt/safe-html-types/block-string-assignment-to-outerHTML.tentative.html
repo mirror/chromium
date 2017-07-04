@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="/resources/testharness.js"></script>
+  <script src="/resources/testharnessreport.js"></script>
+  <script src="./support/helper.js"></script>
+
+  <meta http-equiv="Content-Security-Policy" content="require-safe-types">
+</head>
+<body>
+<div id="container"></div>
+<script>
+  var container = document.querySelector('#container')
+
+  // String assignments throw.
+  test(t => {
+    var d = document.createElement('div');
+    container.appendChild(d);
+    assert_throws(new TypeError(), _ => {
+      d.outerHTML = "Fail.";
+    });
+    assert_equals(container.innerText, "");
+    while (container.firstChild)
+      container.firstChild.remove();
+  }, "`outerHTML = string` throws.");
+
+  // SafeHTML assignments work.
+  var container = document.querySelector('#container')
+  promise_test(t => {
+    return SafeHTML.escape(unescapedHTML).then(html => {
+      var d = document.createElement('div');
+      document.querySelector('#container').appendChild(d);
+      d.outerHTML = html;
+      assert_equals(container.innerText, unescapedHTML);
+      while (container.firstChild)
+        container.firstChild.remove();
+    });
+  }, "outerHTML = SafeHTML.escape().");
+
+  promise_test(t => {
+    return SafeHTML.unsafelyCreate(unescapedHTML).then(html => {
+      var d = document.createElement('div');
+      container.appendChild(d);
+      d.outerHTML = html;
+      assert_equals(container.innerText, unescapedText);
+      while (container.firstChild)
+        container.firstChild.remove();
+    });
+  }, "outerHTML = SafeHTML.unsafelyCreate().");
+</script>
+</body>
+</html>

@@ -59,7 +59,7 @@ TEST_F(CompositeEditCommandTest, insertNodeBefore) {
   EditingState editing_state;
   sample.InsertNodeBefore(insert_child, ref_child, &editing_state);
   EXPECT_FALSE(editing_state.IsAborted());
-  EXPECT_EQ("foo<b></b>", div->innerHTML());
+  EXPECT_EQ("foo<b></b>", div->InnerHTMLAsString());
 }
 
 TEST_F(CompositeEditCommandTest, insertNodeBeforeInUneditable) {
@@ -84,7 +84,7 @@ TEST_F(CompositeEditCommandTest, insertNodeBeforeDisconnectedNode) {
   EditingState editing_state;
   sample.InsertNodeBefore(insert_child, ref_child, &editing_state);
   EXPECT_FALSE(editing_state.IsAborted());
-  EXPECT_EQ("<b></b>", div->innerHTML())
+  EXPECT_EQ("<b></b>", div->InnerHTMLAsString())
       << "InsertNodeBeforeCommand does nothing for disconnected node";
 }
 
@@ -99,7 +99,7 @@ TEST_F(CompositeEditCommandTest, insertNodeBeforeWithDirtyLayoutTree) {
   EditingState editing_state;
   sample.InsertNodeBefore(insert_child, ref_child, &editing_state);
   EXPECT_FALSE(editing_state.IsAborted());
-  EXPECT_EQ("foo<b></b>", div->innerHTML());
+  EXPECT_EQ("foo<b></b>", div->InnerHTMLAsString());
 }
 
 }  // namespace blink

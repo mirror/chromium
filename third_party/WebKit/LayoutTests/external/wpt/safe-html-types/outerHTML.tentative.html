@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script src="./support/helper.js"></script>
+<body>
+<div id="container"></div>
+<script>
+  var container = document.querySelector('#container')
+  promise_test(t => {
+    return SafeHTML.escape(unescapedHTML).then(html => {
+      var d = document.createElement('div');
+      document.querySelector('#container').appendChild(d);
+      d.outerHTML = html;
+      assert_equals(container.innerText, unescapedHTML);
+      while (container.firstChild)
+        container.firstChild.remove();
+    });
+  }, "outerHTML = SafeHTML.escape().");
+
+  promise_test(t => {
+    return SafeHTML.unsafelyCreate(unescapedHTML).then(html => {
+      var d = document.createElement('div');
+      container.appendChild(d);
+      d.outerHTML = html;
+      assert_equals(container.innerText, unescapedText);
+      while (container.firstChild)
+        container.firstChild.remove();
+    });
+  }, "outerHTML = SafeHTML.unsafelyCreate().");
+</script>

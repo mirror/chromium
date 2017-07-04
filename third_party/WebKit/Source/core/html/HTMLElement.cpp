@@ -1190,6 +1190,6 @@ Element* HTMLElement::unclosedOffsetParent() {
 void dumpInnerHTML(blink::HTMLElement*);
 
 void dumpInnerHTML(blink::HTMLElement* element) {
-  printf("%s\n", element->innerHTML().Ascii().data());
+  printf("%s\n", element->InnerHTMLAsString().Ascii().data());
 }
 #endif
