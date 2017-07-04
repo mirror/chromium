@@ -36,13 +36,11 @@ class PerformanceMonitorTest : public ::testing::Test {
   }
 
   // scheduler::TaskTimeObserver implementation
-  void WillProcessTask(scheduler::TaskQueue* queue, double start_time) {
+  void WillProcessTask(double start_time) {
     monitor_->WillProcessTask(queue, start_time);
   }
 
-  void DidProcessTask(scheduler::TaskQueue* queue,
-                      double start_time,
-                      double end_time) {
+  void DidProcessTask(double start_time, double end_time) {
     monitor_->DidProcessTask(queue, start_time, end_time);
   }
 
