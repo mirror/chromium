@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "1858948c_2ffb0a82",
+        "filename": "third_party/WebKit/Source/controller/BlinkInitializer.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-07-04T06:35:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c197df67_bfeb4c7f",
+      "revId": "470cca004b4781616fa9ef9045b6ab74958e95f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4fe1f394_b9a3e6de",
         "filename": "third_party/WebKit/Source/controller/BlinkInitializer.cpp",
         "patchSetId": 23
@@ -50,6 +68,24 @@
       "revId": "470cca004b4781616fa9ef9045b6ab74958e95f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a5aa245_38937e0c",
+        "filename": "third_party/WebKit/Source/controller/BlinkInitializer.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-07-04T06:35:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4fe1f394_b9a3e6de",
+      "revId": "470cca004b4781616fa9ef9045b6ab74958e95f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -81,6 +117,24 @@
       "writtenOn": "2017-07-04T05:51:25Z",
       "side": 1,
       "message": "This #include looks unnecessary.",
+      "revId": "470cca004b4781616fa9ef9045b6ab74958e95f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70472af8_f23d7a0a",
+        "filename": "third_party/WebKit/Source/controller/ControllerExport.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-07-04T06:35:47Z",
+      "side": 1,
+      "message": "It is needed for the macros",
+      "parentUuid": "8476ccd0_4bfccb78",
       "revId": "470cca004b4781616fa9ef9045b6ab74958e95f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
