@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "91bdea69_851bccfa",
+        "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-dynamic-dependency.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-07-04T06:46:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9580d60c_566e2148",
+      "revId": "648cc059215327c3b4030b61f679e9fc76cacb4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ee847e7_ef6d892d",
         "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-dynamic-dependency.html",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "eae72f1b_d028370f",
+        "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-dynamic-dependency.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-07-04T06:46:15Z",
+      "side": 1,
+      "message": "Good point about the initial value, changed description.",
+      "parentUuid": "8ee847e7_ef6d892d",
+      "revId": "648cc059215327c3b4030b61f679e9fc76cacb4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69e45076_0d54e5a3",
         "filename": "third_party/WebKit/Source/core/animation/CSSInterpolationType.cpp",
         "patchSetId": 6
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-04T06:10:38Z",
       "side": 1,
       "message": "Nit for a separate patch: I think these ConversionCheckers should be moved to their own file. They seem to all be to do with custom properties and I think separating them from the CSSInterpolationType implementation will make that more obvious to a new reader of the code.",
+      "revId": "648cc059215327c3b4030b61f679e9fc76cacb4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c512360_644349bf",
+        "filename": "third_party/WebKit/Source/core/animation/CSSInterpolationType.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-07-04T06:46:15Z",
+      "side": 1,
+      "message": "I think the real issue is that CSSInterpolationType is two different classes in one; standard properties and custom properties. If it were split by those two categories it would be much less of a monolith. It\u0027s something I\u0027ve thought heavily about and have decided that the refactor work involved is too large to do at this time.\n\nGiven this I\u0027m not in favour of moving these ConversionCheckers around (the majority of which have nothing to do with custom properties) as it would break the established idiom in InterpolationType code of keeping inner classes scoped to the CPP files that use them instead of exposing them globally.",
+      "parentUuid": "69e45076_0d54e5a3",
       "revId": "648cc059215327c3b4030b61f679e9fc76cacb4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "8c45058b_4f0076f6",
+        "filename": "third_party/WebKit/Source/core/animation/CSSInterpolationType.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-07-04T06:46:15Z",
+      "side": 1,
+      "message": "Made it an assert.",
+      "parentUuid": "c95a0d3e_cab9c1dd",
+      "revId": "648cc059215327c3b4030b61f679e9fc76cacb4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b41a537_04847080",
         "filename": "third_party/WebKit/Source/core/animation/CSSInterpolationTypesMap.cpp",
         "patchSetId": 6
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "9648c8c8_b5e81188",
+        "filename": "third_party/WebKit/Source/core/animation/CSSInterpolationTypesMap.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-07-04T06:46:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b41a537_04847080",
+      "revId": "648cc059215327c3b4030b61f679e9fc76cacb4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12d1f106_5ccd22d8",
         "filename": "third_party/WebKit/Source/core/animation/CSSVarCycleInterpolationType.cpp",
         "patchSetId": 6
@@ -98,6 +188,24 @@
       "writtenOn": "2017-07-04T06:10:38Z",
       "side": 1,
       "message": "Do we need to do any other validity checking other than the existence of a cycle? Does anything else need to remain the same?",
+      "revId": "648cc059215327c3b4030b61f679e9fc76cacb4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "304fc350_12cb34ab",
+        "filename": "third_party/WebKit/Source/core/animation/CSSVarCycleInterpolationType.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-07-04T06:46:15Z",
+      "side": 1,
+      "message": "Nothing else needs checking. This class is only active when there is a cycle and does only one thing when that is the case.",
+      "parentUuid": "12d1f106_5ccd22d8",
       "revId": "648cc059215327c3b4030b61f679e9fc76cacb4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "aace9dcf_e55eefa8",
+        "filename": "third_party/WebKit/Source/core/animation/CSSVarCycleInterpolationType.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-07-04T06:46:15Z",
+      "side": 1,
+      "message": "Added commend and renamed CreateValue() to CreateCycleDetectedValue().",
+      "parentUuid": "503983c5_fd52cf65",
+      "revId": "648cc059215327c3b4030b61f679e9fc76cacb4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61b9be8a_4f5a48d7",
         "filename": "third_party/WebKit/Source/core/animation/CSSVarCycleInterpolationType.cpp",
         "patchSetId": 6
@@ -132,6 +258,24 @@
       "writtenOn": "2017-07-04T06:10:38Z",
       "side": 1,
       "message": "IIRC a failure of MaybeConvertPairwise results in a fallback to two MaybeConvertSingle calls. How does that behaviour interact with this?",
+      "revId": "648cc059215327c3b4030b61f679e9fc76cacb4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cd67850_e65d6338",
+        "filename": "third_party/WebKit/Source/core/animation/CSSVarCycleInterpolationType.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-07-04T06:46:15Z",
+      "side": 1,
+      "message": "Only if every other interpolation type\u0027s pairwise conversion attempt fails will MaybeConvertSingle be called on each keyframe separately. There\u0027s no behavioural concern here, just minor performance concerns.",
+      "parentUuid": "61b9be8a_4f5a48d7",
       "revId": "648cc059215327c3b4030b61f679e9fc76cacb4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "d6f30964_9a526305",
+        "filename": "third_party/WebKit/Source/core/animation/CSSVarCycleInterpolationType.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-07-04T06:46:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21a4cb33_2215a654",
+      "revId": "648cc059215327c3b4030b61f679e9fc76cacb4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4fafac2_286da0f7",
         "filename": "third_party/WebKit/Source/core/animation/CSSVarCycleInterpolationType.h",
         "patchSetId": 6
@@ -166,6 +328,24 @@
       "writtenOn": "2017-07-04T06:10:38Z",
       "side": 1,
       "message": "I think it would be good to add a class-level comment to describe the purpose of this InterpolationType.",
+      "revId": "648cc059215327c3b4030b61f679e9fc76cacb4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "164ecff3_33df73db",
+        "filename": "third_party/WebKit/Source/core/animation/CSSVarCycleInterpolationType.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-07-04T06:46:15Z",
+      "side": 1,
+      "message": "Not only is it a good idea for this case it\u0027s what we should be doing anyway. (:",
+      "parentUuid": "c4fafac2_286da0f7",
       "revId": "648cc059215327c3b4030b61f679e9fc76cacb4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -186,6 +366,24 @@
       "revId": "648cc059215327c3b4030b61f679e9fc76cacb4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c10bdae9_2326296b",
+        "filename": "third_party/WebKit/Source/core/css/resolver/CSSVariableResolver.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-07-04T06:46:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cda11963_85ac928c",
+      "revId": "648cc059215327c3b4030b61f679e9fc76cacb4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
