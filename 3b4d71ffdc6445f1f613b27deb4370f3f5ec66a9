@@ -52,6 +52,24 @@
       "revId": "3b4d71ffdc6445f1f613b27deb4370f3f5ec66a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e976866c_ef6f4c2f",
+        "filename": "ios/chrome/browser/ui/settings/password_details_collection_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-04T19:35:58Z",
+      "side": 1,
+      "message": "Thanks, I can confirm that IMO here the code in general is simpler with scattered macro calls, for the reasons stated in my previous comment.",
+      "parentUuid": "ea588f3f_24608980",
+      "revId": "3b4d71ffdc6445f1f613b27deb4370f3f5ec66a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
