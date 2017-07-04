@@ -6,6 +6,7 @@
 
 #include "core/dom/Document.h"
 #include "core/dom/Element.h"
+#include "core/dom/StyleChangeReason.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/html/HTMLFrameOwnerElement.h"
 #include "core/layout/LayoutBox.h"
@@ -131,6 +132,14 @@ void RootScrollerController::RecomputeEffectiveRootScroller() {
 
   ApplyRootScrollerProperties(*old_effective_root_scroller);
   ApplyRootScrollerProperties(*effective_root_scroller_);
+
+  // Document (i.e. LayoutView) gets its background style from the rootScroller
+  // so we need to recalc its style. Ensure that we get back to a LayoutClean
+  // state after.
+  document_->SetNeedsStyleRecalc(kLocalStyleChange,
+                                 StyleChangeReasonForTracing::Create(
+                                     StyleChangeReason::kStyleInvalidator));
+  document_->UpdateStyleAndLayout();
 
   if (Page* page = document_->GetPage())
     page->GlobalRootScrollerController().DidChangeRootScroller();
