@@ -36,18 +36,6 @@ constexpr const char* kRec2020ImageBitmapColorSpaceConversion = "rec2020";
 
 namespace {
 
-struct ParsedOptions {
-  bool flip_y = false;
-  bool premultiply_alpha = true;
-  bool should_scale_input = false;
-  unsigned resize_width = 0;
-  unsigned resize_height = 0;
-  IntRect crop_rect;
-  SkFilterQuality resize_quality = kLow_SkFilterQuality;
-  CanvasColorParams color_params;
-  bool color_canvas_extensions_enabled = false;
-};
-
 ParsedOptions DefaultOptions() {
   return ParsedOptions();
 }
@@ -370,11 +358,11 @@ bool ImageBitmap::IsSourceSizeValid(int source_width,
 // premuliplied format For example, if the image is already in unpremultiplied
 // format and we want the created ImageBitmap in the same format, then we don't
 // need to use the ImageDecoder to decode the image.
-static PassRefPtr<StaticBitmapImage> CropImageAndApplyColorSpaceConversion(
+void ImageBitmap::CropImageAndApplyColorSpaceConversion(
     RefPtr<Image> image,
     ParsedOptions& parsed_options,
     AlphaDisposition image_format,
-    ColorBehavior color_behavior = ColorBehavior::TransformToGlobalTarget()) {
+    ColorBehavior color_behavior) {
   DCHECK(image);
   IntRect img_rect(IntPoint(), IntSize(image->width(), image->height()));
   const IntRect src_rect = Intersection(img_rect, parsed_options.crop_rect);
@@ -392,9 +380,12 @@ static PassRefPtr<StaticBitmapImage> CropImageAndApplyColorSpaceConversion(
                          parsed_options.resize_height);
     }
     sk_sp<SkSurface> surface = SkSurface::MakeRaster(info);
-    if (!surface)
-      return nullptr;
-    return StaticBitmapImage::Create(surface->makeImageSnapshot());
+    if (!surface) {
+      image_ = nullptr;
+      return;
+    }
+    image_ = StaticBitmapImage::Create(surface->makeImageSnapshot());
+    return;
   }
 
   sk_sp<SkImage> skia_image = image->ImageForCurrentFrame();
@@ -408,33 +399,40 @@ static PassRefPtr<StaticBitmapImage> CropImageAndApplyColorSpaceConversion(
         parsed_options.premultiply_alpha ? ImageDecoder::kAlphaPremultiplied
                                          : ImageDecoder::kAlphaNotPremultiplied,
         color_behavior));
-    if (!decoder)
-      return nullptr;
+    if (!decoder) {
+      image_ = nullptr;
+      return;
+    }
     SkColorType color_type = parsed_options.color_params.GetSkColorType();
     sk_sp<SkColorSpace> color_space =
         parsed_options.color_params.GetSkColorSpace();
     skia_image = ImageBitmap::GetSkImageFromDecoder(
         std::move(decoder), &color_type, &color_space,
         kUpdateColorSpaceInformation);
-    if (!skia_image)
-      return nullptr;
+    if (!skia_image) {
+      image_ = nullptr;
+      return;
+    }
   }
 
   if (!parsed_options.should_scale_input) {
     sk_sp<SkImage> cropped_sk_image = skia_image->makeSubset(src_rect);
     ApplyColorSpaceConversion(cropped_sk_image, parsed_options);
     if (parsed_options.flip_y) {
-      return StaticBitmapImage::Create(FlipSkImageVertically(
+      image_ = StaticBitmapImage::Create(FlipSkImageVertically(
           cropped_sk_image, kDontEnforceAlphaPremultiply, parsed_options));
+      return;
     }
     // Special case: The first parameter image is unpremul but we need to turn
     // it into premul.
     if (parsed_options.premultiply_alpha &&
         image_format == kDontPremultiplyAlpha) {
-      return StaticBitmapImage::Create(
+      image_ = StaticBitmapImage::Create(
           GetSkImageWithAlphaDisposition(cropped_sk_image, kPremultiplyAlpha));
+      return;
     }
-    return StaticBitmapImage::Create(std::move(cropped_sk_image));
+    image_ = StaticBitmapImage::Create(std::move(cropped_sk_image));
+    return;
   }
 
   SkImageInfo info = SkImageInfo::Make(
@@ -444,8 +442,10 @@ static PassRefPtr<StaticBitmapImage> CropImageAndApplyColorSpaceConversion(
                                        : kUnpremul_SkAlphaType,
       parsed_options.color_params.GetSkColorSpace());
   sk_sp<SkSurface> surface = SkSurface::MakeRaster(info);
-  if (!surface)
-    return nullptr;
+  if (!surface) {
+    image_ = nullptr;
+    return;
+  }
   if (parsed_options.flip_y) {
     surface->getCanvas()->translate(0, surface->height());
     surface->getCanvas()->scale(1, -1);
@@ -463,37 +463,48 @@ static PassRefPtr<StaticBitmapImage> CropImageAndApplyColorSpaceConversion(
 
   if (parsed_options.premultiply_alpha) {
     if (image_format == kDontPremultiplyAlpha) {
-      return StaticBitmapImage::Create(
+      image_ = StaticBitmapImage::Create(
           GetSkImageWithAlphaDisposition(skia_image, kPremultiplyAlpha));
+      return;
     }
-    return StaticBitmapImage::Create(std::move(skia_image));
+    image_ = StaticBitmapImage::Create(std::move(skia_image));
+    return;
   }
-  return StaticBitmapImage::Create(
+  image_ = StaticBitmapImage::Create(
       GetSkImageWithAlphaDisposition(skia_image, kDontPremultiplyAlpha));
 }
 
 ImageBitmap::ImageBitmap(ImageElementBase* image,
                          Optional<IntRect> crop_rect,
                          Document* document,
+                         ScriptPromiseResolver* resolver,
                          const ImageBitmapOptions& options) {
   RefPtr<Image> input = image->CachedImage()->GetImage();
   ParsedOptions parsed_options =
       ParseOptions(options, crop_rect, image->BitmapSourceSize());
-  if (DstBufferSizeHasOverflow(parsed_options))
+  if (DstBufferSizeHasOverflow(parsed_options)) {
+    resolver->Reject(
+        ScriptValue(resolver->GetScriptState(),
+                    v8::Null(resolver->GetScriptState()->GetIsolate())));
     return;
+  }
 
   bool is_premultiply_alpha_reverted = false;
   if (!parsed_options.premultiply_alpha) {
     parsed_options.premultiply_alpha = true;
     is_premultiply_alpha_reverted = true;
   }
-  image_ = CropImageAndApplyColorSpaceConversion(
+  CropImageAndApplyColorSpaceConversion(
       input, parsed_options, kPremultiplyAlpha,
       options.colorSpaceConversion() == kImageBitmapOptionNone
           ? ColorBehavior::Ignore()
           : ColorBehavior::TransformToGlobalTarget());
-  if (!image_)
+  if (!image_) {
+    resolver->Reject(
+        ScriptValue(resolver->GetScriptState(),
+                    v8::Null(resolver->GetScriptState()->GetIsolate())));
     return;
+  }
 
   // In the case where the source image is lazy-decoded, m_image may not be in
   // a decoded state, we trigger it here.
@@ -517,39 +528,57 @@ ImageBitmap::ImageBitmap(ImageElementBase* image,
     ApplyColorSpaceConversion(skia_image, parsed_options);
     image_ = StaticBitmapImage::Create(std::move(skia_image));
   }
-  if (!image_)
+  if (!image_) {
+    resolver->Reject(
+        ScriptValue(resolver->GetScriptState(),
+                    v8::Null(resolver->GetScriptState()->GetIsolate())));
     return;
+  }
 
   if (is_premultiply_alpha_reverted) {
     parsed_options.premultiply_alpha = false;
     image_ = StaticBitmapImage::Create(GetSkImageWithAlphaDisposition(
         image_->ImageForCurrentFrame(), kDontPremultiplyAlpha));
   }
-  if (!image_)
+  if (!image_) {
+    resolver->Reject(
+        ScriptValue(resolver->GetScriptState(),
+                    v8::Null(resolver->GetScriptState()->GetIsolate())));
     return;
+  }
 
   image_->SetOriginClean(
       !image->WouldTaintOrigin(document->GetSecurityOrigin()));
   image_->SetPremultiplied(parsed_options.premultiply_alpha);
+  resolver->Resolve(this);
 }
 
 ImageBitmap::ImageBitmap(HTMLVideoElement* video,
                          Optional<IntRect> crop_rect,
                          Document* document,
+                         ScriptPromiseResolver* resolver,
                          const ImageBitmapOptions& options) {
   IntSize player_size;
   if (video->GetWebMediaPlayer())
     player_size = video->GetWebMediaPlayer()->NaturalSize();
   ParsedOptions parsed_options =
       ParseOptions(options, crop_rect, video->BitmapSourceSize());
-  if (DstBufferSizeHasOverflow(parsed_options))
+  if (DstBufferSizeHasOverflow(parsed_options)) {
+    resolver->Reject(
+        ScriptValue(resolver->GetScriptState(),
+                    v8::Null(resolver->GetScriptState()->GetIsolate())));
     return;
+  }
 
   std::unique_ptr<ImageBuffer> buffer = ImageBuffer::Create(
       IntSize(parsed_options.resize_width, parsed_options.resize_height),
       kNonOpaque, kDoNotInitializeImagePixels);
-  if (!buffer)
+  if (!buffer) {
+    resolver->Reject(
+        ScriptValue(resolver->GetScriptState(),
+                    v8::Null(resolver->GetScriptState()->GetIsolate())));
     return;
+  }
 
   IntPoint dst_point =
       IntPoint(-parsed_options.crop_rect.X(), -parsed_options.crop_rect.Y());
@@ -579,16 +608,22 @@ ImageBitmap::ImageBitmap(HTMLVideoElement* video,
     skia_image =
         GetSkImageWithAlphaDisposition(skia_image, kDontPremultiplyAlpha);
   }
-  if (!skia_image)
+  if (!skia_image) {
+    resolver->Reject(
+        ScriptValue(resolver->GetScriptState(),
+                    v8::Null(resolver->GetScriptState()->GetIsolate())));
     return;
+  }
   image_ = StaticBitmapImage::Create(std::move(skia_image));
   image_->SetOriginClean(
       !video->WouldTaintOrigin(document->GetSecurityOrigin()));
   image_->SetPremultiplied(parsed_options.premultiply_alpha);
+  resolver->Resolve(this);
 }
 
 ImageBitmap::ImageBitmap(HTMLCanvasElement* canvas,
                          Optional<IntRect> crop_rect,
+                         ScriptPromiseResolver* resolver,
                          const ImageBitmapOptions& options) {
   DCHECK(canvas->IsPaintable());
   RefPtr<Image> input;
@@ -600,62 +635,93 @@ ImageBitmap::ImageBitmap(HTMLCanvasElement* canvas,
   }
   ParsedOptions parsed_options = ParseOptions(
       options, crop_rect, IntSize(input->width(), input->height()));
-  if (DstBufferSizeHasOverflow(parsed_options))
+  if (DstBufferSizeHasOverflow(parsed_options)) {
+    resolver->Reject(
+        ScriptValue(resolver->GetScriptState(),
+                    v8::Null(resolver->GetScriptState()->GetIsolate())));
     return;
+  }
 
   bool is_premultiply_alpha_reverted = false;
   if (!parsed_options.premultiply_alpha) {
     parsed_options.premultiply_alpha = true;
     is_premultiply_alpha_reverted = true;
   }
-  image_ = CropImageAndApplyColorSpaceConversion(input, parsed_options,
-                                                 kPremultiplyAlpha);
-  if (!image_)
+  CropImageAndApplyColorSpaceConversion(input, parsed_options,
+                                        kPremultiplyAlpha);
+  if (!image_) {
+    resolver->Reject(
+        ScriptValue(resolver->GetScriptState(),
+                    v8::Null(resolver->GetScriptState()->GetIsolate())));
     return;
+  }
 
   if (is_premultiply_alpha_reverted) {
     parsed_options.premultiply_alpha = false;
     image_ = StaticBitmapImage::Create(GetSkImageWithAlphaDisposition(
         image_->ImageForCurrentFrame(), kDontPremultiplyAlpha));
   }
-  if (!image_)
+  if (!image_) {
+    resolver->Reject(
+        ScriptValue(resolver->GetScriptState(),
+                    v8::Null(resolver->GetScriptState()->GetIsolate())));
     return;
+  }
   image_->SetOriginClean(canvas->OriginClean());
   image_->SetPremultiplied(parsed_options.premultiply_alpha);
+  resolver->Resolve(this);
 }
 
 ImageBitmap::ImageBitmap(OffscreenCanvas* offscreen_canvas,
                          Optional<IntRect> crop_rect,
+                         ScriptPromiseResolver* resolver,
                          const ImageBitmapOptions& options) {
   SourceImageStatus status;
   RefPtr<Image> input = offscreen_canvas->GetSourceImageForCanvas(
       &status, kPreferNoAcceleration, kSnapshotReasonCreateImageBitmap,
       FloatSize(offscreen_canvas->Size()));
-  if (status != kNormalSourceImageStatus)
+  if (status != kNormalSourceImageStatus) {
+    resolver->Reject(
+        ScriptValue(resolver->GetScriptState(),
+                    v8::Null(resolver->GetScriptState()->GetIsolate())));
     return;
+  }
   ParsedOptions parsed_options = ParseOptions(
       options, crop_rect, IntSize(input->width(), input->height()));
-  if (DstBufferSizeHasOverflow(parsed_options))
+  if (DstBufferSizeHasOverflow(parsed_options)) {
+    resolver->Reject(
+        ScriptValue(resolver->GetScriptState(),
+                    v8::Null(resolver->GetScriptState()->GetIsolate())));
     return;
+  }
 
   bool is_premultiply_alpha_reverted = false;
   if (!parsed_options.premultiply_alpha) {
     parsed_options.premultiply_alpha = true;
     is_premultiply_alpha_reverted = true;
   }
-  image_ = CropImageAndApplyColorSpaceConversion(input, parsed_options,
-                                                 kPremultiplyAlpha);
-  if (!image_)
+  CropImageAndApplyColorSpaceConversion(input, parsed_options,
+                                        kPremultiplyAlpha);
+  if (!image_) {
+    resolver->Reject(
+        ScriptValue(resolver->GetScriptState(),
+                    v8::Null(resolver->GetScriptState()->GetIsolate())));
     return;
+  }
   if (is_premultiply_alpha_reverted) {
     parsed_options.premultiply_alpha = false;
     image_ = StaticBitmapImage::Create(GetSkImageWithAlphaDisposition(
         image_->ImageForCurrentFrame(), kDontPremultiplyAlpha));
   }
-  if (!image_)
+  if (!image_) {
+    resolver->Reject(
+        ScriptValue(resolver->GetScriptState(),
+                    v8::Null(resolver->GetScriptState()->GetIsolate())));
     return;
+  }
   image_->SetOriginClean(offscreen_canvas->OriginClean());
   image_->SetPremultiplied(parsed_options.premultiply_alpha);
+  resolver->Resolve(this);
 }
 
 ImageBitmap::ImageBitmap(const void* pixel_data,
@@ -699,11 +765,16 @@ static sk_sp<SkImage> ScaleSkImage(sk_sp<SkImage> sk_image,
 
 ImageBitmap::ImageBitmap(ImageData* data,
                          Optional<IntRect> crop_rect,
+                         ScriptPromiseResolver* resolver,
                          const ImageBitmapOptions& options) {
   ParsedOptions parsed_options =
       ParseOptions(options, crop_rect, data->BitmapSourceSize());
-  if (DstBufferSizeHasOverflow(parsed_options))
+  if (DstBufferSizeHasOverflow(parsed_options)) {
+    resolver->Reject(
+        ScriptValue(resolver->GetScriptState(),
+                    v8::Null(resolver->GetScriptState()->GetIsolate())));
     return;
+  }
 
   IntRect data_src_rect = IntRect(IntPoint(), data->Size());
   IntRect src_rect = crop_rect
@@ -736,6 +807,7 @@ ImageBitmap::ImageBitmap(ImageData* data,
         SkImage::MakeRasterCopy(SkPixmap(info, pixels.get(), bytes_per_row));
     image_ = StaticBitmapImage::Create(sk_image);
     image_->SetPremultiplied(parsed_options.premultiply_alpha);
+    resolver->Resolve(this);
     return;
   }
 
@@ -778,9 +850,14 @@ ImageBitmap::ImageBitmap(ImageData* data,
     } else {
       image_ = StaticBitmapImage::Create(sk_image);
     }
-    if (!image_)
+    if (!image_) {
+      resolver->Reject(
+          ScriptValue(resolver->GetScriptState(),
+                      v8::Null(resolver->GetScriptState()->GetIsolate())));
       return;
+    }
     image_->SetPremultiplied(parsed_options.premultiply_alpha);
+    resolver->Resolve(this);
     return;
   }
 
@@ -789,11 +866,16 @@ ImageBitmap::ImageBitmap(ImageData* data,
   std::unique_ptr<ImageBuffer> buffer =
       ImageBuffer::Create(buffer_size, kNonOpaque, kDoNotInitializeImagePixels,
                           parsed_options.color_params);
-  if (!buffer)
+  if (!buffer) {
+    resolver->Reject(
+        ScriptValue(resolver->GetScriptState(),
+                    v8::Null(resolver->GetScriptState()->GetIsolate())));
     return;
+  }
   if (src_rect.IsEmpty()) {
     image_ = StaticBitmapImage::Create(buffer->NewSkImageSnapshot(
         kPreferNoAcceleration, kSnapshotReasonUnknown));
+    resolver->Resolve(this);
     return;
   }
 
@@ -803,8 +885,12 @@ ImageBitmap::ImageBitmap(ImageData* data,
 
   sk_sp<SkImage> sk_image =
       buffer->NewSkImageSnapshot(kPreferNoAcceleration, kSnapshotReasonUnknown);
-  if (!sk_image)
+  if (!sk_image) {
+    resolver->Reject(
+        ScriptValue(resolver->GetScriptState(),
+                    v8::Null(resolver->GetScriptState()->GetIsolate())));
     return;
+  }
 
   if (parsed_options.should_scale_input) {
     SkImageInfo resize_info = SkImageInfo::Make(
@@ -815,36 +901,52 @@ ImageBitmap::ImageBitmap(ImageData* data,
         ScaleSkImage(sk_image, resize_info, parsed_options.resize_quality);
   }
   image_ = StaticBitmapImage::Create(std::move(sk_image));
+  resolver->Resolve(this);
 }
 
 ImageBitmap::ImageBitmap(ImageBitmap* bitmap,
                          Optional<IntRect> crop_rect,
+                         ScriptPromiseResolver* resolver,
                          const ImageBitmapOptions& options) {
   RefPtr<Image> input = bitmap->BitmapImage();
-  if (!input)
+  if (!input) {
+    resolver->Reject(
+        ScriptValue(resolver->GetScriptState(),
+                    v8::Null(resolver->GetScriptState()->GetIsolate())));
     return;
+  }
   ParsedOptions parsed_options =
       ParseOptions(options, crop_rect, input->Size());
-  if (DstBufferSizeHasOverflow(parsed_options))
+  if (DstBufferSizeHasOverflow(parsed_options)) {
+    resolver->Reject(
+        ScriptValue(resolver->GetScriptState(),
+                    v8::Null(resolver->GetScriptState()->GetIsolate())));
     return;
+  }
 
-  image_ = CropImageAndApplyColorSpaceConversion(
+  CropImageAndApplyColorSpaceConversion(
       input, parsed_options,
       bitmap->IsPremultiplied() ? kPremultiplyAlpha : kDontPremultiplyAlpha);
   if (!image_)
     return;
   image_->SetOriginClean(bitmap->OriginClean());
   image_->SetPremultiplied(parsed_options.premultiply_alpha);
+  resolver->Resolve(this);
 }
 
 ImageBitmap::ImageBitmap(RefPtr<StaticBitmapImage> image,
                          Optional<IntRect> crop_rect,
+                         ScriptPromiseResolver* resolver,
                          const ImageBitmapOptions& options) {
   bool origin_clean = image->OriginClean();
   ParsedOptions parsed_options =
       ParseOptions(options, crop_rect, image->Size());
-  if (DstBufferSizeHasOverflow(parsed_options))
+  if (DstBufferSizeHasOverflow(parsed_options)) {
+    resolver->Reject(
+        ScriptValue(resolver->GetScriptState(),
+                    v8::Null(resolver->GetScriptState()->GetIsolate())));
     return;
+  }
 
   if (image->ImageForCurrentFrame()->alphaType() == kUnpremul_SkAlphaType) {
     sk_sp<SkImage> premul_image = GetSkImageWithAlphaDisposition(
@@ -860,8 +962,8 @@ ImageBitmap::ImageBitmap(RefPtr<StaticBitmapImage> image,
     is_premultiply_alpha_reverted = true;
   }
 
-  image_ = CropImageAndApplyColorSpaceConversion(image_, parsed_options,
-                                                 kPremultiplyAlpha);
+  CropImageAndApplyColorSpaceConversion(image_, parsed_options,
+                                        kPremultiplyAlpha);
   if (!image_)
     return;
 
@@ -874,6 +976,7 @@ ImageBitmap::ImageBitmap(RefPtr<StaticBitmapImage> image,
     return;
   image_->SetOriginClean(origin_clean);
   image_->SetPremultiplied(parsed_options.premultiply_alpha);
+  resolver->Resolve(this);
 }
 
 ImageBitmap::ImageBitmap(PassRefPtr<StaticBitmapImage> image) {
@@ -892,45 +995,52 @@ ImageBitmap::~ImageBitmap() {}
 ImageBitmap* ImageBitmap::Create(ImageElementBase* image,
                                  Optional<IntRect> crop_rect,
                                  Document* document,
+                                 ScriptPromiseResolver* resolver,
                                  const ImageBitmapOptions& options) {
-  return new ImageBitmap(image, crop_rect, document, options);
+  return new ImageBitmap(image, crop_rect, document, resolver, options);
 }
 
 ImageBitmap* ImageBitmap::Create(HTMLVideoElement* video,
                                  Optional<IntRect> crop_rect,
                                  Document* document,
+                                 ScriptPromiseResolver* resolver,
                                  const ImageBitmapOptions& options) {
-  return new ImageBitmap(video, crop_rect, document, options);
+  return new ImageBitmap(video, crop_rect, document, resolver, options);
 }
 
 ImageBitmap* ImageBitmap::Create(HTMLCanvasElement* canvas,
                                  Optional<IntRect> crop_rect,
+                                 ScriptPromiseResolver* resolver,
                                  const ImageBitmapOptions& options) {
-  return new ImageBitmap(canvas, crop_rect, options);
+  return new ImageBitmap(canvas, crop_rect, resolver, options);
 }
 
 ImageBitmap* ImageBitmap::Create(OffscreenCanvas* offscreen_canvas,
                                  Optional<IntRect> crop_rect,
+                                 ScriptPromiseResolver* resolver,
                                  const ImageBitmapOptions& options) {
-  return new ImageBitmap(offscreen_canvas, crop_rect, options);
+  return new ImageBitmap(offscreen_canvas, crop_rect, resolver, options);
 }
 
 ImageBitmap* ImageBitmap::Create(ImageData* data,
                                  Optional<IntRect> crop_rect,
+                                 ScriptPromiseResolver* resolver,
                                  const ImageBitmapOptions& options) {
-  return new ImageBitmap(data, crop_rect, options);
+  return new ImageBitmap(data, crop_rect, resolver, options);
 }
 
 ImageBitmap* ImageBitmap::Create(ImageBitmap* bitmap,
                                  Optional<IntRect> crop_rect,
+                                 ScriptPromiseResolver* resolver,
                                  const ImageBitmapOptions& options) {
-  return new ImageBitmap(bitmap, crop_rect, options);
+  return new ImageBitmap(bitmap, crop_rect, resolver, options);
 }
 
 ImageBitmap* ImageBitmap::Create(PassRefPtr<StaticBitmapImage> image,
                                  Optional<IntRect> crop_rect,
+                                 ScriptPromiseResolver* resolver,
                                  const ImageBitmapOptions& options) {
-  return new ImageBitmap(std::move(image), crop_rect, options);
+  return new ImageBitmap(std::move(image), crop_rect, resolver, options);
 }
 
 ImageBitmap* ImageBitmap::Create(PassRefPtr<StaticBitmapImage> image) {
@@ -1008,8 +1118,10 @@ ScriptPromise ImageBitmap::CreateImageBitmap(ScriptState* script_state,
     return ScriptPromise();
   if (!IsResizeOptionValid(options, exception_state))
     return ScriptPromise();
-  return ImageBitmapSource::FulfillImageBitmap(
-      script_state, Create(this, crop_rect, options));
+  ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
+  ScriptPromise promise = resolver->Promise();
+  ImageBitmap::Create(this, crop_rect, resolver, options);
+  return promise;
 }
 
 PassRefPtr<Image> ImageBitmap::GetSourceImageForCanvas(
