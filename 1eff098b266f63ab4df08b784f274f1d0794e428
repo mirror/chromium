@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa814a98_a9649049",
+        "filename": "chrome/browser/password_manager/native_backend_libsecret_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-04T09:51:03Z",
+      "side": 1,
+      "message": "I don\u0027t think that this model is supported. We quit a random message loop on the sequence. We should use ScopedTaskEnvironment::RunUntilIdle().\nI think the same is applicable to all RunLoop instances here.\n\nhttps://chromium.googlesource.com/chromium/src/+/master/docs/task_scheduler_migration.md",
+      "range": {
+        "startLine": 346,
+        "startChar": 10,
+        "endLine": 346,
+        "endChar": 17
+      },
+      "revId": "1eff098b266f63ab4df08b784f274f1d0794e428",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f200a98d_8fa8772c",
+        "filename": "chrome/browser/password_manager/password_store_x_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-04T09:51:03Z",
+      "side": 1,
+      "message": "This file also uses RunLoop a lot which is to be migrated.",
+      "range": {
+        "startLine": 335,
+        "startChar": 15,
+        "endLine": 335,
+        "endChar": 29
+      },
+      "revId": "1eff098b266f63ab4df08b784f274f1d0794e428",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "425b0ddb_66424ffc",
+        "filename": "components/password_manager/content/browser/credential_manager_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-04T09:51:03Z",
+      "side": 1,
+      "message": "To be migrated too",
+      "range": {
+        "startLine": 170,
+        "startChar": 23,
+        "endLine": 170,
+        "endChar": 34
+      },
+      "revId": "1eff098b266f63ab4df08b784f274f1d0794e428",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79f927c9_21d0ccba",
+        "filename": "components/password_manager/content/renderer/credential_manager_client_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-04T09:51:03Z",
+      "side": 1,
+      "message": "To be migrated too",
+      "range": {
+        "startLine": 178,
+        "startChar": 6,
+        "endLine": 178,
+        "endChar": 15
+      },
+      "revId": "1eff098b266f63ab4df08b784f274f1d0794e428",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f844d622_87756519",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliated_match_helper_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-04T09:51:03Z",
+      "side": 1,
+      "message": "If the file doesn\u0027t care what to include, maybe it\u0027s not needed?",
+      "range": {
+        "startLine": 19,
+        "startChar": 25,
+        "endLine": 19,
+        "endChar": 53
+      },
+      "revId": "1eff098b266f63ab4df08b784f274f1d0794e428",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89c12e43_2c7f61ae",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_backend.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-04T09:51:03Z",
+      "side": 1,
+      "message": "DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_); ?",
+      "range": {
+        "startLine": 46,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 8
+      },
+      "revId": "1eff098b266f63ab4df08b784f274f1d0794e428",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "538495eb_a4c0ebcf",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_fetch_throttler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-04T09:51:03Z",
+      "side": 1,
+      "message": "Is it used?",
+      "range": {
+        "startLine": 12,
+        "startChar": 25,
+        "endLine": 12,
+        "endChar": 53
+      },
+      "revId": "1eff098b266f63ab4df08b784f274f1d0794e428",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dc0a86f_d980048c",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_fetch_throttler_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-04T09:51:03Z",
+      "side": 1,
+      "message": "used?",
+      "range": {
+        "startLine": 21,
+        "startChar": 25,
+        "endLine": 21,
+        "endChar": 53
+      },
+      "revId": "1eff098b266f63ab4df08b784f274f1d0794e428",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "754322e3_48c00c36",
+        "filename": "components/password_manager/core/browser/import/password_importer_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-04T09:51:03Z",
+      "side": 1,
+      "message": "used?",
+      "range": {
+        "startLine": 16,
+        "startChar": 25,
+        "endLine": 16,
+        "endChar": 53
+      },
+      "revId": "1eff098b266f63ab4df08b784f274f1d0794e428",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05132b09_45840cf4",
+        "filename": "components/password_manager/core/browser/password_store.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-04T09:51:03Z",
+      "side": 1,
+      "message": "Do you want to fix the comments here and below?",
+      "range": {
+        "startLine": 336,
+        "startChar": 46,
+        "endLine": 336,
+        "endChar": 48
+      },
+      "revId": "1eff098b266f63ab4df08b784f274f1d0794e428",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
