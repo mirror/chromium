@@ -1,0 +1,361 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "029cb011_d460b811",
+        "filename": "cc/surfaces/compositor_frame_sink_support.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-04T18:39:59Z",
+      "side": 1,
+      "message": "Does this accesssor belong here still?",
+      "revId": "a9420d4cb1ae052f263572ce84b82c0ba27a7918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf473aaf_90831af3",
+        "filename": "cc/surfaces/frame_sink_manager.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-04T18:39:59Z",
+      "side": 1,
+      "message": "SurfaceObserver is part of the SurfaceManager\u0027s domain, should things that need this just grab the SurfaceManager? Would this be part of FrameSinkManager mojo api? From looking at existing callers, it\u0027s all unit tests or things that have a surface manager already?",
+      "revId": "a9420d4cb1ae052f263572ce84b82c0ba27a7918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "774fca40_e50bd8a6",
+        "filename": "cc/surfaces/frame_sink_manager.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-04T18:39:59Z",
+      "side": 1,
+      "message": "do you mean to be copying the children?",
+      "revId": "a9420d4cb1ae052f263572ce84b82c0ba27a7918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1042718d_8c675d7f",
+        "filename": "cc/surfaces/frame_sink_manager.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-04T18:39:59Z",
+      "side": 1,
+      "message": "const\u0026",
+      "revId": "a9420d4cb1ae052f263572ce84b82c0ba27a7918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5914121b_3078d254",
+        "filename": "cc/surfaces/frame_sink_manager.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-04T18:39:59Z",
+      "side": 1,
+      "message": "Sequences are something in the details of the SurfaceManager\u0027s domain, should things that need this just grab the SurfaceManager? Would this be part of FrameSinkManager mojo api?",
+      "revId": "a9420d4cb1ae052f263572ce84b82c0ba27a7918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a64b58a0_4622db58",
+        "filename": "cc/surfaces/frame_sink_manager.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-04T18:39:59Z",
+      "side": 1,
+      "message": "same thought here",
+      "revId": "a9420d4cb1ae052f263572ce84b82c0ba27a7918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6335402a_ee516ffe",
+        "filename": "cc/surfaces/frame_sink_manager.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-04T18:39:59Z",
+      "side": 1,
+      "message": "not used",
+      "revId": "a9420d4cb1ae052f263572ce84b82c0ba27a7918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2fdb7b1_42130c07",
+        "filename": "cc/surfaces/frame_sink_manager.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-04T18:39:59Z",
+      "side": 1,
+      "message": "You can pass by const\u0026 and take a copy before calling and pass that copy to resolve this, and then the detail doesn\u0027t leak into the API?",
+      "revId": "a9420d4cb1ae052f263572ce84b82c0ba27a7918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87cca38b_d9ca0752",
+        "filename": "cc/surfaces/frame_sink_manager.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-04T18:39:59Z",
+      "side": 1,
+      "message": "s/.././",
+      "revId": "a9420d4cb1ae052f263572ce84b82c0ba27a7918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdcbc14e_37a53c15",
+        "filename": "cc/surfaces/surface_manager.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-04T18:39:59Z",
+      "side": 1,
+      "message": "const\u0026",
+      "revId": "a9420d4cb1ae052f263572ce84b82c0ba27a7918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a529a90c_1049280f",
+        "filename": "cc/surfaces/surface_manager.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-04T18:39:59Z",
+      "side": 1,
+      "message": "I had a question about why this is a non-const pointer in an earlier patch set, instead of exposing methods to modify this member as needed. Still wondering about it.",
+      "revId": "a9420d4cb1ae052f263572ce84b82c0ba27a7918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8802b64e_5c0305dc",
+        "filename": "cc/surfaces/surface_manager.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-04T18:39:59Z",
+      "side": 1,
+      "message": "Write it as FrameSinkIds and FrameSinkId",
+      "revId": "a9420d4cb1ae052f263572ce84b82c0ba27a7918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09770a7a_c5b0a199",
+        "filename": "cc/test/test_layer_tree_frame_sink.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-04T18:39:59Z",
+      "side": 1,
+      "message": "nit: no ()",
+      "revId": "a9420d4cb1ae052f263572ce84b82c0ba27a7918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30aa1025_99f90dc1",
+        "filename": "content/browser/renderer_host/compositor_impl_android.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-04T18:39:59Z",
+      "side": 1,
+      "message": "frame_sink_manager-\u003eframe_sink_manager() ?",
+      "revId": "a9420d4cb1ae052f263572ce84b82c0ba27a7918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40a524d2_85c23f22",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 3411,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-04T18:39:59Z",
+      "side": 1,
+      "message": "frame_sink_manager",
+      "revId": "a9420d4cb1ae052f263572ce84b82c0ba27a7918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4e9dd01_6d02a944",
+        "filename": "content/renderer/android/synchronous_layer_tree_frame_sink.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-04T18:39:59Z",
+      "side": 1,
+      "message": "nit: no ()",
+      "revId": "a9420d4cb1ae052f263572ce84b82c0ba27a7918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "451663fa_a655b164",
+        "filename": "ui/android/delegated_frame_host_android.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-04T18:39:59Z",
+      "side": 1,
+      "message": "frame_sink_manager",
+      "revId": "a9420d4cb1ae052f263572ce84b82c0ba27a7918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cf51534_646775ee",
+        "filename": "ui/android/delegated_frame_host_android.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-04T18:39:59Z",
+      "side": 1,
+      "message": "cc::FSM* const",
+      "revId": "a9420d4cb1ae052f263572ce84b82c0ba27a7918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dcc37ad_39737d48",
+        "filename": "ui/compositor/compositor.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-04T18:39:59Z",
+      "side": 1,
+      "message": "Is there something we could/should say here about in-vs-out-of-process display compositor?",
+      "revId": "a9420d4cb1ae052f263572ce84b82c0ba27a7918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c4d599c_290535dc",
+        "filename": "ui/compositor/test/in_process_context_factory.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-04T18:39:59Z",
+      "side": 1,
+      "message": "T* const",
+      "revId": "a9420d4cb1ae052f263572ce84b82c0ba27a7918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "716bc341_284bc999",
+        "filename": "ui/compositor/test/in_process_context_factory.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-04T18:39:59Z",
+      "side": 1,
+      "message": "T* const",
+      "revId": "a9420d4cb1ae052f263572ce84b82c0ba27a7918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
