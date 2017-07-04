@@ -608,8 +608,6 @@ void GpuProcessTransportFactory::EstablishedGpuChannel(
       std::move(display_output_surface), std::move(scheduler),
       base::MakeUnique<cc::TextureMailboxDeleter>(
           compositor->task_runner().get()));
-  GetSurfaceManager()->RegisterBeginFrameSource(begin_frame_source,
-                                                compositor->frame_sink_id());
   // Note that we are careful not to destroy prior BeginFrameSource objects
   // until we have reset |data->display|.
   data->synthetic_begin_frame_source = std::move(synthetic_begin_frame_source);
@@ -622,16 +620,17 @@ void GpuProcessTransportFactory::EstablishedGpuChannel(
       vulkan_context_provider
           ? base::MakeUnique<cc::DirectLayerTreeFrameSink>(
                 compositor->frame_sink_id(), GetSurfaceManager(),
-                data->display.get(),
+                begin_frame_source, data->display.get(),
                 static_cast<scoped_refptr<cc::VulkanContextProvider>>(
                     vulkan_context_provider))
           : base::MakeUnique<cc::DirectLayerTreeFrameSink>(
                 compositor->frame_sink_id(), GetSurfaceManager(),
-                data->display.get(), context_provider,
+                begin_frame_source, data->display.get(), context_provider,
                 shared_worker_context_provider_, GetGpuMemoryBufferManager(),
                 viz::ServerSharedBitmapManager::current());
   data->display->Resize(compositor->size());
   data->display->SetOutputIsSecure(data->output_is_secure);
+
   compositor->SetLayerTreeFrameSink(std::move(layer_tree_frame_sink));
 }
 
