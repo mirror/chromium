@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d88ec0b7_78ca57b6",
+        "filename": "ui/message_center/notification.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-07-04T14:15:12Z",
+      "side": 1,
+      "message": "micronit: wording is slightly ambiguous, consider \"On some platforms, a mask will be applied to the icon, to match the visual requirements of the notification.\" (it\u0027s platform-dependent, right?)",
+      "revId": "241be940db663aec03a2b3b76b6e9c3485f16766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8f1118b_8c037a2c",
+        "filename": "ui/message_center/notification.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-07-04T14:15:12Z",
+      "side": 1,
+      "message": "while you\u0027re adding comments, pls can you add a \u0027the\u0027 here before \u0027user\u0027? it\u0027s bugging me :D",
+      "revId": "241be940db663aec03a2b3b76b6e9c3485f16766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f6d166a_6b2492e5",
+        "filename": "ui/message_center/notification.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-07-04T14:15:12Z",
+      "side": 1,
+      "message": "micronit: s/number/numbers",
+      "range": {
+        "startLine": 129,
+        "startChar": 0,
+        "endLine": 130,
+        "endChar": 74
+      },
+      "revId": "241be940db663aec03a2b3b76b6e9c3485f16766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c524a38c_023ab050",
+        "filename": "ui/message_center/notification.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-07-04T14:15:12Z",
+      "side": 1,
+      "message": "Is this then displayed on the notification? Can you provide a realistic example of a value for display_source?",
+      "revId": "241be940db663aec03a2b3b76b6e9c3485f16766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24e30168_b208e133",
+        "filename": "ui/message_center/notification.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-07-04T14:15:12Z",
+      "side": 1,
+      "message": "To me this sounds a bit like it\u0027s okay to supply a nullptr here, but really callers should supply message_center::RichNotificationData() if there are no optional fields, right? Maybe dispense with the \u0027Optional\u0027 in the description and/or instruct callers to supply  message_center::RichNotificationData() if there are none.",
+      "revId": "241be940db663aec03a2b3b76b6e9c3485f16766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
