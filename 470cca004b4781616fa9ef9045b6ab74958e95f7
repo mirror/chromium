@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0e4ad58_13c88f0b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 23
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-04T05:51:25Z",
+      "side": 1,
+      "message": "trailing whitespace",
+      "revId": "470cca004b4781616fa9ef9045b6ab74958e95f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c197df67_bfeb4c7f",
+        "filename": "third_party/WebKit/Source/controller/BlinkInitializer.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-04T05:51:25Z",
+      "side": 1,
+      "message": "Copyright header should be inherited from the original file.",
+      "revId": "470cca004b4781616fa9ef9045b6ab74958e95f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fe1f394_b9a3e6de",
+        "filename": "third_party/WebKit/Source/controller/BlinkInitializer.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-04T05:51:25Z",
+      "side": 1,
+      "message": "nit: Add a blank line before this.",
+      "revId": "470cca004b4781616fa9ef9045b6ab74958e95f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8476ccd0_4bfccb78",
+        "filename": "third_party/WebKit/Source/controller/ControllerExport.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-04T05:51:25Z",
+      "side": 1,
+      "message": "This #include looks unnecessary.",
+      "revId": "470cca004b4781616fa9ef9045b6ab74958e95f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
