@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95c3a4b6_800b283f",
+        "filename": "third_party/WebKit/Source/core/mojo/Mojo.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-04T09:33:15Z",
+      "side": 1,
+      "message": "Nit: for better or worse\n\n  StringUTF8Adaptor(wtf_string).AsStringPiece().as_string()\n\nappears to be the canonical way to write this.",
+      "range": {
+        "startLine": 82,
+        "startChar": 21,
+        "endLine": 82,
+        "endChar": 49
+      },
+      "revId": "56afc5c44ec00eedd16ea4423be0d05e0aa42689",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
