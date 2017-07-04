@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec5c5a6e_91dde70c",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-04T01:17:07Z",
+      "side": 1,
+      "message": "nit: \u003d isn\u0027t needed, just\nurl::Origin origin(GURL(...));",
+      "revId": "aefffaf3bb6e0566a2ffef5973c94624e44a9914",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4f7cce5_b6d2d6b4",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-04T01:17:07Z",
+      "side": 1,
+      "message": "nit: move this down to where it is used",
+      "revId": "aefffaf3bb6e0566a2ffef5973c94624e44a9914",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36d9e78d_fbc26d63",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-04T01:17:07Z",
+      "side": 1,
+      "message": "Would recreating the channel like this happen under normal operation? Or is it basically simulating someone removing the channel and then recreating it?",
+      "revId": "aefffaf3bb6e0566a2ffef5973c94624e44a9914",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
