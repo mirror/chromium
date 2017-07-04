@@ -27,8 +27,6 @@
 @property(nonatomic, weak) id<SuggestedContentDelegate> delegate;
 // Image associated with this content.
 @property(nonatomic, strong) UIImage* image;
-// Attributes for favicon.
-@property(nonatomic, strong) FaviconAttributes* attributes;
 // Identifier for this content.
 @property(nonatomic, strong) ContentSuggestionIdentifier* suggestionIdentifier;
 
