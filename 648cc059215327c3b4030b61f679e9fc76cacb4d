@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9580d60c_566e2148",
+        "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-dynamic-dependency.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-07-04T06:10:38Z",
+      "side": 1,
+      "message": "Typo: -cb",
+      "revId": "648cc059215327c3b4030b61f679e9fc76cacb4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ee847e7_ef6d892d",
+        "filename": "third_party/WebKit/LayoutTests/animations/custom-properties/registered-var-dynamic-dependency.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-07-04T06:10:38Z",
+      "side": 1,
+      "message": "It\u0027s not clear what the relationship is between this test description and the CL description. In particular, this makes no reference to why the variables become initial-value.",
+      "revId": "648cc059215327c3b4030b61f679e9fc76cacb4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69e45076_0d54e5a3",
+        "filename": "third_party/WebKit/Source/core/animation/CSSInterpolationType.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-07-04T06:10:38Z",
+      "side": 1,
+      "message": "Nit for a separate patch: I think these ConversionCheckers should be moved to their own file. They seem to all be to do with custom properties and I think separating them from the CSSInterpolationType implementation will make that more obvious to a new reader of the code.",
+      "revId": "648cc059215327c3b4030b61f679e9fc76cacb4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c95a0d3e_cab9c1dd",
+        "filename": "third_party/WebKit/Source/core/animation/CSSInterpolationType.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-07-04T06:10:38Z",
+      "side": 1,
+      "message": "Maybe \"unused_\" instead of \"dummy_\"? Do we not care if there are cycles here, or do we believe we will never encounter them here? (A comment might be in order.)",
+      "revId": "648cc059215327c3b4030b61f679e9fc76cacb4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b41a537_04847080",
+        "filename": "third_party/WebKit/Source/core/animation/CSSInterpolationTypesMap.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-07-04T06:10:38Z",
+      "side": 1,
+      "message": "Please add a brief comment to this line. It\u0027s not immediately clear why it makes sense for this to be the first InterpolationType for every property.",
+      "revId": "648cc059215327c3b4030b61f679e9fc76cacb4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12d1f106_5ccd22d8",
+        "filename": "third_party/WebKit/Source/core/animation/CSSVarCycleInterpolationType.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-07-04T06:10:38Z",
+      "side": 1,
+      "message": "Do we need to do any other validity checking other than the existence of a cycle? Does anything else need to remain the same?",
+      "revId": "648cc059215327c3b4030b61f679e9fc76cacb4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "503983c5_fd52cf65",
+        "filename": "third_party/WebKit/Source/core/animation/CSSVarCycleInterpolationType.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-07-04T06:10:38Z",
+      "side": 1,
+      "message": "I\u0027m finding this confusing on a first read-through. Does start having a value mean that the keyframe has a cyclic dependency or not? I\u0027m used to nullptr in this context being used to signal failure, and then I guess it\u0027s unclear whether \"has a cyclic dependency\" is failure or success.",
+      "revId": "648cc059215327c3b4030b61f679e9fc76cacb4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61b9be8a_4f5a48d7",
+        "filename": "third_party/WebKit/Source/core/animation/CSSVarCycleInterpolationType.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-07-04T06:10:38Z",
+      "side": 1,
+      "message": "IIRC a failure of MaybeConvertPairwise results in a fallback to two MaybeConvertSingle calls. How does that behaviour interact with this?",
+      "revId": "648cc059215327c3b4030b61f679e9fc76cacb4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21a4cb33_2215a654",
+        "filename": "third_party/WebKit/Source/core/animation/CSSVarCycleInterpolationType.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-07-04T06:10:38Z",
+      "side": 1,
+      "message": "This is compact but difficult to unpack. I suggest pulling out the ?: statements to their own lines prior.",
+      "revId": "648cc059215327c3b4030b61f679e9fc76cacb4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4fafac2_286da0f7",
+        "filename": "third_party/WebKit/Source/core/animation/CSSVarCycleInterpolationType.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-07-04T06:10:38Z",
+      "side": 1,
+      "message": "I think it would be good to add a class-level comment to describe the purpose of this InterpolationType.",
+      "revId": "648cc059215327c3b4030b61f679e9fc76cacb4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cda11963_85ac928c",
+        "filename": "third_party/WebKit/Source/core/css/resolver/CSSVariableResolver.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-07-04T06:10:38Z",
+      "side": 1,
+      "message": "As above.",
+      "revId": "648cc059215327c3b4030b61f679e9fc76cacb4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
