@@ -76,6 +76,8 @@ class PLATFORM_EXPORT TextRun final {
         disable_spacing_(false),
         text_justify_(static_cast<unsigned>(TextJustify::kAuto)),
         normalize_space_(false),
+        leading_letter_spacing_(false),
+        trailing_letter_spacing_(true),
         tab_size_(0) {
     data_.characters8 = c;
   }
@@ -101,6 +103,8 @@ class PLATFORM_EXPORT TextRun final {
         disable_spacing_(false),
         text_justify_(static_cast<unsigned>(TextJustify::kAuto)),
         normalize_space_(false),
+        leading_letter_spacing_(false),
+        trailing_letter_spacing_(true),
         tab_size_(0) {
     data_.characters16 = c;
   }
@@ -124,6 +128,8 @@ class PLATFORM_EXPORT TextRun final {
         disable_spacing_(false),
         text_justify_(static_cast<unsigned>(TextJustify::kAuto)),
         normalize_space_(false),
+        leading_letter_spacing_(false),
+        trailing_letter_spacing_(true),
         tab_size_(0) {
     if (!characters_length_) {
       is8_bit_ = true;
@@ -263,6 +269,16 @@ class PLATFORM_EXPORT TextRun final {
     return static_cast<TextJustify>(text_justify_);
   }
 
+  void SetUseLeadingLetterSpacing(bool letter_spacing) {
+    leading_letter_spacing_ = letter_spacing;
+  }
+  bool UseLeadingLetterSpacing() const { return leading_letter_spacing_; }
+
+  void SetUseTrailingLetterSpacing(bool letter_spacing) {
+    trailing_letter_spacing_ = letter_spacing;
+  }
+  bool UseTrailingLetterSpacing() const { return trailing_letter_spacing_; }
+
   // Up-converts to UTF-16 as needed and normalizes spaces and Unicode control
   // characters as per the CSS Text Module Level 3 specification.
   // https://drafts.csswg.org/css-text-3/#white-space-processing
@@ -295,6 +311,8 @@ class PLATFORM_EXPORT TextRun final {
   unsigned disable_spacing_ : 1;
   unsigned text_justify_ : 2;
   unsigned normalize_space_ : 1;
+  unsigned leading_letter_spacing_ : 1;
+  unsigned trailing_letter_spacing_ : 1;
   TabSize tab_size_;
 };
 

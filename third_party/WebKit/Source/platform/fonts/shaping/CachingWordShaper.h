@@ -49,7 +49,7 @@ class PLATFORM_EXPORT CachingWordShaper final {
   explicit CachingWordShaper(const Font& font) : font_(font) {}
   ~CachingWordShaper() {}
 
-  float Width(const TextRun&,
+  float Width(TextRun&,
               HashSet<const SimpleFontData*>* fallback_fonts,
               FloatRect* glyph_bounds);
   int OffsetForPosition(const TextRun&,

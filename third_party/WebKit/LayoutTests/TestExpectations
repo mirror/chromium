@@ -1531,7 +1531,6 @@ crbug.com/733494 [ Linux ] media/autoplay/document-user-activation.html [ Skip ]
 crbug.com/733495 [ Linux ] inspector/elements/styles-4/styles-history.html [ Skip ]
 
 # Temporarily disabled after chromium change
-crbug.com/492511 [ Mac ] fast/text/atsui-negative-spacing-features.html [ Failure ]
 crbug.com/492511 [ Mac ] fast/text/international/arabic-justify.html [ Failure ]
 
 # Ref tests that fail due to differences in inline box structure, even though they contain the same text.
@@ -1692,8 +1691,6 @@ crbug.com/611658 [ Win ] fast/text/emphasis-combined-text.html [ Failure ]
 
 # Reenable when 737620 is rebaselined
 #crbug.com/611658 [ Win7 ] fast/writing-mode/english-lr-text.html [ Failure ]
-
-crbug.com/605059 [ Retina ] fast/text/international/rtl-negative-letter-spacing.html [ Failure ]
 
 crbug.com/610464 [ Linux Win7 Debug ] inspector/components/throttler.html [ Failure Pass ]
 crbug.com/487344 [ Linux Mac Win7 ] paint/invalidation/video-paint-invalidation.html [ Failure ]
@@ -2970,7 +2967,6 @@ crbug.com/736177 [ Mac ] fast/dom/HTMLMeterElement/meter-optimums.html [ Failure
 crbug.com/736177 [ Mac ] fast/dynamic/012.html [ Failure Pass ]
 crbug.com/736177 [ Mac ] fast/forms/form-element-geometry.html [ Failure Pass ]
 crbug.com/736177 [ Mac ] fast/inline/absolute-positioned-inline-in-centred-block.html [ Failure Pass ]
-crbug.com/736177 [ Mac ] fast/inline/left-right-center-inline-alignment-in-ltr-and-rtl-blocks.html [ Failure Pass ]
 crbug.com/736177 [ Mac ] fast/lists/ordered-list-with-no-ol-tag.html [ Failure Pass ]
 crbug.com/736177 [ Mac ] fast/selectors/166.html [ Failure Pass ]
 crbug.com/736177 [ Mac ] fast/text/color-emoji.html [ Failure Pass ]
