@@ -85,10 +85,9 @@ class GL_EXPORT GLImageIOSurface : public GLImage {
   static GLImageIOSurface* FromGLImage(GLImage* image);
 
  protected:
-  ~GLImageIOSurface() override;
-
- private:
   GLImageIOSurface(const gfx::Size& size, unsigned internalformat);
+  ~GLImageIOSurface() override;
+  virtual bool BindTexImageImpl(unsigned target, unsigned internalformat);
 
   Type GetType() const override;
   class RGBConverter;
@@ -116,6 +115,18 @@ class GL_EXPORT GLImageIOSurface : public GLImage {
   gfx::ColorSpace color_space_for_yuv_to_rgb_ = gfx::ColorSpace::CreateREC601();
 
   DISALLOW_COPY_AND_ASSIGN(GLImageIOSurface);
+};
+
+class GL_EXPORT GLImageIOSurfaceEGL : public GLImageIOSurface {
+ public:
+  using GLImageIOSurface::GLImageIOSurface;
+
+ protected:
+  ~GLImageIOSurfaceEGL() override = default;
+  bool BindTexImageImpl(unsigned target, unsigned internalformat) override;
+
+ private:
+  void* surface_ = nullptr;
 };
 
 }  // namespace gl
