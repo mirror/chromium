@@ -21,6 +21,7 @@
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/task_scheduler/post_task.h"
+#include "base/threading/thread_restrictions.h"
 #include "base/win/shortcut.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/shell_integration_win.h"
@@ -443,7 +444,7 @@ bool CreatePlatformShortcuts(const base::FilePath& web_app_path,
                              const ShortcutInfo& shortcut_info,
                              const ShortcutLocations& creation_locations,
                              ShortcutCreationReason creation_reason) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::FILE);
+  base::ThreadRestrictions::AssertIOAllowed();
 
   // Nothing to do on Windows for hidden apps.
   if (creation_locations.applications_menu_location == APP_MENU_LOCATION_HIDDEN)
@@ -486,7 +487,7 @@ bool CreatePlatformShortcuts(const base::FilePath& web_app_path,
 void UpdatePlatformShortcuts(const base::FilePath& web_app_path,
                              const base::string16& old_app_title,
                              const ShortcutInfo& shortcut_info) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::FILE);
+  base::ThreadRestrictions::AssertIOAllowed();
 
   // Generates file name to use with persisted ico and shortcut file.
   base::FilePath file_name =
@@ -540,6 +541,7 @@ void DeletePlatformShortcuts(const base::FilePath& web_app_path,
 }
 
 void DeleteAllShortcutsForProfile(const base::FilePath& profile_path) {
+  base::ThreadRestrictions::AssertIOAllowed();
   GetShortcutLocationsAndDeleteShortcuts(base::FilePath(), profile_path, L"",
                                          NULL, NULL);
 

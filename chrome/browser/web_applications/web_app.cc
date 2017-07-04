@@ -15,7 +15,9 @@
 #include "base/macros.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/threading/thread.h"
+#include "base/threading/thread_restrictions.h"
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/extensions/extension_ui_util.h"
@@ -90,7 +92,9 @@ void UpdateAllShortcutsForShortcutInfo(
     const base::Closure& callback,
     std::unique_ptr<web_app::ShortcutInfo> shortcut_info) {
   base::FilePath shortcut_data_dir = GetShortcutDataDir(*shortcut_info);
+
   const web_app::ShortcutInfo& shortcut_info_ref = *shortcut_info;
+
   BrowserThread::PostTaskAndReply(
       BrowserThread::FILE, FROM_HERE,
       base::Bind(&web_app::internals::UpdatePlatformShortcuts,
@@ -179,6 +183,23 @@ ShortcutInfo::ShortcutInfo() {}
 
 ShortcutInfo::~ShortcutInfo() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
+}
+
+// static
+void ShortcutInfo::PostIOTask(
+    base::OnceCallback<void(const ShortcutInfo&)> task,
+    std::unique_ptr<ShortcutInfo> shortcut_info) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  // Ownership of |shortcut_info| moves to the Reply, which is guaranteed to
+  // outlive the const reference.
+  const web_app::ShortcutInfo& shortcut_info_ref = *shortcut_info;
+  base::PostTaskWithTraitsAndReply(
+      FROM_HERE,
+      {base::MayBlock(), base::TaskPriority::BACKGROUND,
+       base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN},
+      base::BindOnce(std::move(task), base::ConstRef(shortcut_info_ref)),
+      base::BindOnce(&web_app::internals::DeleteShortcutInfoOnUIThread,
+                     base::Passed(&shortcut_info), base::Closure()));
 }
 
 ShortcutLocations::ShortcutLocations()

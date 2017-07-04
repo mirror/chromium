@@ -41,6 +41,11 @@ struct ShortcutInfo {
   ShortcutInfo();
   ~ShortcutInfo();
 
+  // Run an IO task on a worker thread. Ownership transfers to a closure that
+  // deletes |this| on the UI thread when the task is complete.
+  static void PostIOTask(base::OnceCallback<void(const ShortcutInfo&)> task,
+                         std::unique_ptr<ShortcutInfo> shortcut_info);
+
   GURL url;
   // If |extension_id| is non-empty, this is short cut is to an extension-app
   // and the launch url will be detected at start-up. In this case, |url|
