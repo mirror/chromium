@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b756fa97_bc00284f",
+        "filename": "ui/android/java/src/org/chromium/ui/events/devices/InputDeviceObserver.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-04T16:32:31Z",
+      "side": 1,
+      "message": "It looks like the only way to use this class is by first calling getInstance(). Since this is the case, I think it\u0027s better to put the INSTANCE field right in the outer class.\n\nThere\u0027s also no utility in having a private getter. Just use INSTANCE directly.",
+      "range": {
+        "startLine": 26,
+        "startChar": 24,
+        "endLine": 26,
+        "endChar": 35
+      },
+      "revId": "99e47d88b2df4e9d949eb72194cd37ffb563b896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63501709_5625c969",
+        "filename": "ui/android/java/src/org/chromium/ui/events/devices/InputDeviceObserver.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-04T16:32:31Z",
+      "side": 1,
+      "message": "You would save on an extra inner class, and also eliminate the need for a constructor by having InputDeviceObserver implement InputDeviceListener directly (smaller code size)",
+      "range": {
+        "startLine": 54,
+        "startChar": 8,
+        "endLine": 54,
+        "endChar": 28
+      },
+      "revId": "99e47d88b2df4e9d949eb72194cd37ffb563b896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
