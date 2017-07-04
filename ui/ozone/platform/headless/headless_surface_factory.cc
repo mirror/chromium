@@ -16,6 +16,10 @@
 #include "ui/gfx/native_pixmap.h"
 #include "ui/gfx/skia_util.h"
 #include "ui/gfx/vsync_provider.h"
+#include "ui/gl/gl_features.h"
+#include "ui/gl/gl_surface_egl.h"
+#include "ui/ozone/common/egl_util.h"
+#include "ui/ozone/common/gl_ozone_egl.h"
 #include "ui/ozone/common/gl_ozone_osmesa.h"
 #include "ui/ozone/platform/headless/headless_window.h"
 #include "ui/ozone/platform/headless/headless_window_manager.h"
@@ -103,21 +107,69 @@ class TestPixmap : public gfx::NativePixmap {
   DISALLOW_COPY_AND_ASSIGN(TestPixmap);
 };
 
-}  // namespace
+// A thin wrapper around PbufferGLSurfaceEGL that pretends it is an onscreen
+// surface.
+class GL_EXPORT GLSurfaceEGLHeadless : public gl::PbufferGLSurfaceEGL {
+ public:
+  GLSurfaceEGLHeadless() : PbufferGLSurfaceEGL(gfx::Size(1, 1)) {}
 
-HeadlessSurfaceFactory::HeadlessSurfaceFactory()
-    : HeadlessSurfaceFactory(nullptr) {}
+  bool IsOffscreen() override { return false; }
+  gfx::SwapResult SwapBuffers() override { return gfx::SwapResult::SWAP_ACK; }
+
+ protected:
+  ~GLSurfaceEGLHeadless() override { Destroy(); }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(GLSurfaceEGLHeadless);
+};
+
+// Headless EGL implementation for use with SwiftShader.
+class GLOzoneEGLHeadless : public GLOzoneEGL {
+ public:
+  GLOzoneEGLHeadless() = default;
+  ~GLOzoneEGLHeadless() override = default;
+
+  // GLOzone:
+  scoped_refptr<gl::GLSurface> CreateViewGLSurface(
+      gfx::AcceleratedWidget window) override {
+    return gl::InitializeGLSurface(new GLSurfaceEGLHeadless());
+  }
+
+  scoped_refptr<gl::GLSurface> CreateOffscreenGLSurface(
+      const gfx::Size& size) override {
+    return gl::InitializeGLSurface(new gl::PbufferGLSurfaceEGL(size));
+  }
+
+ protected:
+  // GLOzoneEGL:
+  intptr_t GetNativeDisplay() override { return EGL_DEFAULT_DISPLAY; }
+
+  bool LoadGLES2Bindings(gl::GLImplementation implementation) override {
+    return LoadDefaultEGLGLES2Bindings(implementation);
+  }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(GLOzoneEGLHeadless);
+};
+
+}  // namespace
 
 HeadlessSurfaceFactory::HeadlessSurfaceFactory(
     HeadlessWindowManager* window_manager)
     : window_manager_(window_manager),
-      osmesa_implementation_(base::MakeUnique<GLOzoneOSMesa>()) {}
+      osmesa_implementation_(base::MakeUnique<GLOzoneOSMesa>()),
+      swiftshader_implementation_(base::MakeUnique<GLOzoneEGLHeadless>()) {}
 
 HeadlessSurfaceFactory::~HeadlessSurfaceFactory() {}
 
 std::vector<gl::GLImplementation>
 HeadlessSurfaceFactory::GetAllowedGLImplementations() {
-  return std::vector<gl::GLImplementation>{gl::kGLImplementationOSMesaGL};
+  std::vector<gl::GLImplementation> impls;
+#if BUILDFLAG(ENABLE_SWIFTSHADER)
+  impls.push_back(gl::kGLImplementationSwiftShaderGL);
+#endif
+  impls.push_back(gl::kGLImplementationOSMesaGL);
+  return impls;
 }
 
 GLOzone* HeadlessSurfaceFactory::GetGLOzone(
@@ -125,6 +177,9 @@ GLOzone* HeadlessSurfaceFactory::GetGLOzone(
   switch (implementation) {
     case gl::kGLImplementationOSMesaGL:
       return osmesa_implementation_.get();
+    case gl::kGLImplementationSwiftShaderGL:
+    case gl::kGLImplementationEGLGLES2:
+      return swiftshader_implementation_.get();
     default:
       return nullptr;
   }
@@ -133,7 +188,7 @@ GLOzone* HeadlessSurfaceFactory::GetGLOzone(
 std::unique_ptr<SurfaceOzoneCanvas>
 HeadlessSurfaceFactory::CreateCanvasForWidget(gfx::AcceleratedWidget widget) {
   HeadlessWindow* window = window_manager_->GetWindow(widget);
-  return base::WrapUnique<SurfaceOzoneCanvas>(new FileSurface(window->path()));
+  return base::MakeUnique<FileSurface>(window->path());
 }
 
 scoped_refptr<gfx::NativePixmap> HeadlessSurfaceFactory::CreateNativePixmap(
