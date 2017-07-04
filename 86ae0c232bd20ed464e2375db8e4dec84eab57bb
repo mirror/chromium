@@ -69,6 +69,23 @@
       "revId": "86ae0c232bd20ed464e2375db8e4dec84eab57bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fce9f4ac_ecc78f24",
+        "filename": "chrome/browser/notifications/notification_permission_context.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-04T00:07:24Z",
+      "side": 1,
+      "message": "One thing to add here: this actually doesn\u0027t get us the \"secure context\" guarantee. It gives an approximation (subset) of it, but the secure context check is currently only possible to check in the renderer process. We probably want to add a check for secure context there as well.",
+      "revId": "86ae0c232bd20ed464e2375db8e4dec84eab57bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
