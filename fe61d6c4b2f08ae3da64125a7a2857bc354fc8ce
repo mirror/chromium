@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7cec8917_a982b891",
+        "filename": "ios/chrome/search_widget_extension/search_widget_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-04T13:55:41Z",
+      "side": 1,
+      "message": "Optional nit: initialization?",
+      "range": {
+        "startLine": 35,
+        "startChar": 3,
+        "endLine": 35,
+        "endChar": 17
+      },
+      "revId": "fe61d6c4b2f08ae3da64125a7a2857bc354fc8ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a341021c_b0f4bb16",
+        "filename": "ios/chrome/search_widget_extension/search_widget_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-04T13:55:41Z",
+      "side": 1,
+      "message": "*Changes",
+      "range": {
+        "startLine": 44,
+        "startChar": 3,
+        "endLine": 44,
+        "endChar": 9
+      },
+      "revId": "fe61d6c4b2f08ae3da64125a7a2857bc354fc8ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "045458ac_12b72127",
+        "filename": "ios/chrome/search_widget_extension/search_widget_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-04T13:55:41Z",
+      "side": 1,
+      "message": "*Gets",
+      "range": {
+        "startLine": 47,
+        "startChar": 3,
+        "endLine": 47,
+        "endChar": 6
+      },
+      "revId": "fe61d6c4b2f08ae3da64125a7a2857bc354fc8ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4de60ba1_5680eb89",
+        "filename": "ios/chrome/search_widget_extension/search_widget_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-04T13:55:41Z",
+      "side": 1,
+      "message": "Nit: *createActionsViews",
+      "range": {
+        "startLine": 46,
+        "startChar": 8,
+        "endLine": 46,
+        "endChar": 25
+      },
+      "revId": "fe61d6c4b2f08ae3da64125a7a2857bc354fc8ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00d9a382_20388805",
+        "filename": "ios/chrome/search_widget_extension/search_widget_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-04T13:55:41Z",
+      "side": 1,
+      "message": "These two lines are duplicates of lines 199-200, if I am not mistaken.",
+      "range": {
+        "startLine": 93,
+        "startChar": 8,
+        "endLine": 93,
+        "endChar": 18
+      },
+      "revId": "fe61d6c4b2f08ae3da64125a7a2857bc354fc8ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
