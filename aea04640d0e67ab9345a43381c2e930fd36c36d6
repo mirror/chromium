@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "651b85c5_ed59ecc2",
+        "filename": "cc/surfaces/compositor_frame_sink_support.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-07-04T23:25:26Z",
+      "side": 1,
+      "message": "nit: Do we want to keep them public?",
+      "range": {
+        "startLine": 50,
+        "startChar": 34,
+        "endLine": 50,
+        "endChar": 0
+      },
+      "revId": "aea04640d0e67ab9345a43381c2e930fd36c36d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
