@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<style>
+#container {
+  column-count: 2;
+  border: 1px solid black;
+}
+#a {
+  width: 100px;
+  height: 100px;
+  background: green;
+}
+</style>
+<p>crbug.com/177556: The green box should straddle the two columns.</p>
+<div id="container">
+  <div style="height: 5px; width: 20px;"></div>
+  <div id="a">A</div>
+</div>
+<script>
+  document.body.offsetTop;
+  document.getElementById("a").style["transform"] = "scale(1, 1)";
+</script>
