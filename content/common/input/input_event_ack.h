@@ -9,6 +9,7 @@
 
 #include <memory>
 
+#include "cc/input/touch_action.h"
 #include "content/common/content_export.h"
 #include "content/common/input/input_event_ack_source.h"
 #include "content/common/input/input_event_ack_state.h"
@@ -20,6 +21,13 @@ namespace content {
 
 // InputEventAck.
 struct CONTENT_EXPORT InputEventAck {
+  InputEventAck(InputEventAckSource source,
+                blink::WebInputEvent::Type type,
+                InputEventAckState state,
+                const ui::LatencyInfo& latency,
+                std::unique_ptr<ui::DidOverscrollParams> overscroll,
+                std::unique_ptr<cc::TouchAction> touch_action,
+                uint32_t unique_touch_event_id);
   InputEventAck(InputEventAckSource source,
                 blink::WebInputEvent::Type type,
                 InputEventAckState state,
@@ -46,6 +54,7 @@ struct CONTENT_EXPORT InputEventAck {
   InputEventAckState state;
   ui::LatencyInfo latency;
   std::unique_ptr<ui::DidOverscrollParams> overscroll;
+  std::unique_ptr<cc::TouchAction> touch_action;
   uint32_t unique_touch_event_id;
 };
 

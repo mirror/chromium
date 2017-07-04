@@ -18,6 +18,7 @@
 #include "base/process/kill.h"
 #include "base/strings/string16.h"
 #include "build/build_config.h"
+#include "cc/input/touch_action.h"
 #include "cc/ipc/compositor_frame_sink.mojom.h"
 #include "cc/output/compositor_frame.h"
 #include "cc/surfaces/surface_id.h"
@@ -248,6 +249,8 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
                                       InputEventAckState ack_result) {}
 
   virtual void DidOverscroll(const ui::DidOverscrollParams& params) {}
+
+  virtual void OnSetTouchAction(cc::TouchAction touch_action) {}
 
   virtual void DidStopFlinging() {}
 
