@@ -1,0 +1,30 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module media.mojom;
+
+import "media/mojo/interfaces/media_types.mojom";
+import "ui/gfx/geometry/mojo/geometry.mojom";
+
+interface VideoEncodeAccelerator {
+  // Responded by VideoEncodeAcceleratorClient.RequireBitstreamBuffers().
+  Initialize(VideoPixelFormat input_format,
+             gfx.mojom.Size input_visible_size,
+             VideoCodecProfile output_profile,
+             uint32 initial_bitrate,
+             VideoEncodeAcceleratorClient client);
+
+  Encode(int32 buffer_id);
+
+  // TODO(mcasas): Find a better name for this method after finishing the
+  // transition from IPC to mojom, https://crbug.com/736517.
+  UseOutputBitstreamBuffer(int32 buffer_id, handle<shared_buffer> buffer);
+};
+
+interface VideoEncodeAcceleratorClient {
+  // Response to VideoEncodeAccelerator.Initialize().
+  RequireBitstreamBuffers(uint32 input_count,
+                          gfx.mojom.Size input_coded_size,
+                          uint32 output_buffer_size);
+};
