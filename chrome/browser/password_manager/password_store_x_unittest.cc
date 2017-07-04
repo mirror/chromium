@@ -18,6 +18,7 @@
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/test/scoped_task_environment.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
 #include "chrome/test/base/testing_browser_process.h"
@@ -28,7 +29,6 @@
 #include "components/password_manager/core/common/password_manager_pref_names.h"
 #include "components/prefs/pref_service.h"
 #include "content/public/browser/browser_thread.h"
-#include "content/public/test/test_browser_thread_bundle.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -310,7 +310,7 @@ class PasswordStoreXTestDelegate {
  public:
   PasswordStoreX* store() { return store_.get(); }
 
-  static void FinishAsyncProcessing();
+  void FinishAsyncProcessing();
 
  protected:
   explicit PasswordStoreXTestDelegate(BackendType backend_type);
@@ -321,7 +321,7 @@ class PasswordStoreXTestDelegate {
 
   base::FilePath test_login_db_file_path() const;
 
-  content::TestBrowserThreadBundle thread_bundle_;
+  base::test::ScopedTaskEnvironment scoped_task_environment_;
   base::ScopedTempDir temp_dir_;
   BackendType backend_type_;
   scoped_refptr<PasswordStoreX> store_;
@@ -346,7 +346,7 @@ PasswordStoreXTestDelegate::~PasswordStoreXTestDelegate() {
 }
 
 void PasswordStoreXTestDelegate::FinishAsyncProcessing() {
-  base::RunLoop().RunUntilIdle();
+  scoped_task_environment_.RunUntilIdle();
 }
 
 void PasswordStoreXTestDelegate::SetupTempDir() {
@@ -385,17 +385,19 @@ INSTANTIATE_TYPED_TEST_CASE_P(XWorkingBackend,
 
 class PasswordStoreXTest : public testing::TestWithParam<BackendType> {
  protected:
-  void SetUp() override {
-    ASSERT_TRUE(temp_dir_.CreateUniqueTempDir());
+  PasswordStoreXTest()
+      : scoped_task_environment_(
+            base::test::ScopedTaskEnvironment::MainThreadType::UI) {
+    EXPECT_TRUE(temp_dir_.CreateUniqueTempDir());
   }
 
-  void TearDown() override { base::RunLoop().RunUntilIdle(); }
+  ~PasswordStoreXTest() override { scoped_task_environment_.RunUntilIdle(); }
 
   base::FilePath test_login_db_file_path() const {
     return temp_dir_.GetPath().Append(FILE_PATH_LITERAL("login_test"));
   }
 
-  content::TestBrowserThreadBundle thread_bundle_;
+  base::test::ScopedTaskEnvironment scoped_task_environment_;
 
   base::ScopedTempDir temp_dir_;
 };
@@ -439,7 +441,7 @@ TEST_P(PasswordStoreXTest, Notifications) {
 
   // The PasswordStore schedules tasks to run on the DB thread. Wait for them
   // to complete.
-  base::RunLoop().RunUntilIdle();
+  scoped_task_environment_.RunUntilIdle();
 
   // Change the password.
   form->password_value = base::ASCIIToUTF16("a different password");
@@ -456,7 +458,7 @@ TEST_P(PasswordStoreXTest, Notifications) {
   store->UpdateLogin(*form);
 
   // Wait for PasswordStore to send execute.
-  base::RunLoop().RunUntilIdle();
+  scoped_task_environment_.RunUntilIdle();
 
   const PasswordStoreChange expected_delete_changes[] = {
     PasswordStoreChange(PasswordStoreChange::REMOVE, *form),
@@ -470,7 +472,7 @@ TEST_P(PasswordStoreXTest, Notifications) {
   store->RemoveLogin(*form);
 
   // Wait for PasswordStore to execute.
-  base::RunLoop().RunUntilIdle();
+  scoped_task_environment_.RunUntilIdle();
 
   store->RemoveObserver(&observer);
 
@@ -522,7 +524,7 @@ TEST_P(PasswordStoreXTest, NativeMigration) {
                   UnorderedPasswordFormElementsAre(&expected_autofillable)));
 
   store->GetAutofillableLogins(&consumer);
-  base::RunLoop().RunUntilIdle();
+  scoped_task_environment_.RunUntilIdle();
 
   // The blacklisted forms should have been migrated to the native backend.
   EXPECT_CALL(consumer,
@@ -530,7 +532,7 @@ TEST_P(PasswordStoreXTest, NativeMigration) {
                   UnorderedPasswordFormElementsAre(&expected_blacklisted)));
 
   store->GetBlacklistLogins(&consumer);
-  base::RunLoop().RunUntilIdle();
+  scoped_task_environment_.RunUntilIdle();
 
   MockLoginDatabaseReturn ld_return;
 
@@ -547,7 +549,7 @@ TEST_P(PasswordStoreXTest, NativeMigration) {
   LoginDatabaseQueryCallback(store->login_db(), true, &ld_return);
 
   // Wait for the login DB methods to execute.
-  base::RunLoop().RunUntilIdle();
+  scoped_task_environment_.RunUntilIdle();
 
   if (GetParam() == WORKING_BACKEND) {
     // Likewise, no blacklisted logins should be left in the login DB.
@@ -562,7 +564,7 @@ TEST_P(PasswordStoreXTest, NativeMigration) {
   LoginDatabaseQueryCallback(store->login_db(), false, &ld_return);
 
   // Wait for the login DB methods to execute.
-  base::RunLoop().RunUntilIdle();
+  scoped_task_environment_.RunUntilIdle();
 
   if (GetParam() == WORKING_BACKEND) {
     // If the migration succeeded, then not only should there be no logins left
