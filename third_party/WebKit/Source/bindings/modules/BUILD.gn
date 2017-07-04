@@ -198,3 +198,37 @@ source_set("generated") {
     "//v8",
   ]
 }
+
+generate_idl_store("modules_idl_store") {
+  sources = modules_definition_idl_files + modules_dependency_idl_files
+  output = "IdlStoreForModules.pickle"
+  output_dir = bindings_modules_output_dir
+}
+
+action("idl_information") {
+  script = "${bindings_scripts_dir}/generate_idl_information.py"
+
+  inputs = [
+    "${bindings_core_output_dir}/IdlStoreForCore.pickle",
+    "${bindings_modules_output_dir}/IdlStoreForModules.pickle",
+  ]
+  output_path = "${bindings_modules_output_dir}/IdlInformation.pickle"
+  outputs = [
+    output_path,
+  ]
+
+  # List input file names in a temporary file.
+  response_file_contents = rebase_path(inputs, root_build_dir)
+
+  args = [
+    "--idl-stores-list",
+    "{{response_file_name}}",
+    "--output",
+    rebase_path(output_path, root_build_dir),
+  ]
+
+  deps = [
+    ":modules_idl_store",
+    "//third_party/WebKit/Source/bindings/core:core_idl_store",
+  ]
+}
