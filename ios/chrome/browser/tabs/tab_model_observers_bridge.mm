@@ -33,7 +33,8 @@
 
 - (void)webStateList:(WebStateList*)webStateList
     didInsertWebState:(web::WebState*)webState
-              atIndex:(int)atIndex {
+              atIndex:(int)atIndex
+           foreground:(BOOL)foreground {
   DCHECK_GE(atIndex, 0);
   [_tabModelObservers tabModel:_tabModel
                   didInsertTab:LegacyTabHelper::GetTabForWebState(webState)
