@@ -23,6 +23,7 @@
 #include "mojo/public/cpp/bindings/connection_error_callback.h"
 #include "mojo/public/cpp/bindings/interface_endpoint_client.h"
 #include "mojo/public/cpp/bindings/interface_id.h"
+#include "mojo/public/cpp/bindings/lib/task_runner_helper.h"
 #include "mojo/public/cpp/bindings/scoped_interface_endpoint_handle.h"
 #include "mojo/public/cpp/system/message_pipe.h"
 
@@ -76,7 +77,7 @@ class AssociatedInterfacePtrState {
   }
 
   void Bind(AssociatedInterfacePtrInfo<Interface> info,
-            scoped_refptr<base::SequencedTaskRunner> runner) {
+            scoped_refptr<base::SingleThreadTaskRunner> runner) {
     DCHECK(!endpoint_client_);
     DCHECK(!proxy_);
     DCHECK_EQ(0u, version_);
@@ -88,7 +89,7 @@ class AssociatedInterfacePtrState {
     endpoint_client_.reset(new InterfaceEndpointClient(
         info.PassHandle(), nullptr,
         base::WrapUnique(new typename Interface::ResponseValidator_()), false,
-        std::move(runner), 0u));
+        GetSequencedTaskRunner(std::move(runner)), 0u));
     proxy_.reset(new Proxy(endpoint_client_.get()));
   }
 
