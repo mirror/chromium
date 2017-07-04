@@ -16,6 +16,24 @@
       "revId": "cca92b36ff221cd329cde25a2ee26e8c8a077c70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f0c0f07_93cf5fad",
+        "filename": "ios/chrome/search_widget_extension/search_widget_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-07-04T11:28:13Z",
+      "side": 0,
+      "message": "Because everything is about to change completely in this section. I removed the function (which won\u0027t be used) in this CL since it would have needed to be rewritten, so had to make this change.",
+      "parentUuid": "19bbc06f_af161d08",
+      "revId": "cca92b36ff221cd329cde25a2ee26e8c8a077c70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
