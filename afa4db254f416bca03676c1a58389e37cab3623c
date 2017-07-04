@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d018f216_4058a723",
+        "filename": "chrome/browser/media/media_engagement_score.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-07-04T09:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5e05a22_449c7200",
+      "revId": "afa4db254f416bca03676c1a58389e37cab3623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5c89e43_75564f3b",
         "filename": "chrome/browser/media/media_engagement_score.cc",
         "patchSetId": 12
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-03T14:48:55Z",
       "side": 1,
       "message": "nit: could this be in the init-list?",
+      "revId": "afa4db254f416bca03676c1a58389e37cab3623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ae4eb26_45b93237",
+        "filename": "chrome/browser/media/media_engagement_score.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-07-04T09:40:20Z",
+      "side": 1,
+      "message": "No it cannot since an initializer for a delegating ctor must be alone.",
+      "parentUuid": "d5c89e43_75564f3b",
       "revId": "afa4db254f416bca03676c1a58389e37cab3623c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "476ace0b_1b3dcc94",
+        "filename": "chrome/browser/media/media_engagement_score.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-07-04T09:40:20Z",
+      "side": 1,
+      "message": "This throws a chromium style error: Complex constructor has an inlined body.\n\nhttps://www.chromium.org/developers/coding-style/chromium-style-checker-errors",
+      "parentUuid": "71237330_4ebcaa14",
+      "revId": "afa4db254f416bca03676c1a58389e37cab3623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f36e5f57_0b883cbd",
         "filename": "chrome/browser/media/media_engagement_score.cc",
         "patchSetId": 12
@@ -67,6 +121,24 @@
       "revId": "afa4db254f416bca03676c1a58389e37cab3623c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb2a8c48_da436be9",
+        "filename": "chrome/browser/media/media_engagement_score.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-07-04T09:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f36e5f57_0b883cbd",
+      "revId": "afa4db254f416bca03676c1a58389e37cab3623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "df9e417a_4e688627",
+        "filename": "chrome/browser/media/media_engagement_score.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-07-04T09:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce83f073_51891fb1",
+      "revId": "afa4db254f416bca03676c1a58389e37cab3623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee19d802_f0023cb7",
         "filename": "chrome/browser/media/media_engagement_score.cc",
         "patchSetId": 12
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "dbc5de5d_09d7c23e",
+        "filename": "chrome/browser/media/media_engagement_score.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-07-04T09:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee19d802_f0023cb7",
+      "revId": "afa4db254f416bca03676c1a58389e37cab3623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73f96324_fdeac091",
         "filename": "chrome/browser/media/media_engagement_score.cc",
         "patchSetId": 12
@@ -115,6 +223,24 @@
       "writtenOn": "2017-07-03T14:48:55Z",
       "side": 1,
       "message": "If you like ternary operators, you could do:\n`return value.get() ? value : base::MakeUnique\u003cbase::DictionaryValue\u003e();`\n\nThis said, makes me wonder why this isn\u0027t using base::Optional but probably not worth returning base::Optional, DictionaryValue should.",
+      "revId": "afa4db254f416bca03676c1a58389e37cab3623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c80a7fa3_0a3436b3",
+        "filename": "chrome/browser/media/media_engagement_score.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-07-04T09:40:20Z",
+      "side": 1,
+      "message": "If I use a ternary operator it calls the destructor of value and the compiler throws an error",
+      "parentUuid": "73f96324_fdeac091",
       "revId": "afa4db254f416bca03676c1a58389e37cab3623c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "44b34dc8_c54ad490",
+        "filename": "chrome/browser/media/media_engagement_score.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-07-04T09:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74b06153_5b4c9445",
+      "revId": "afa4db254f416bca03676c1a58389e37cab3623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71f8f96b_2b15b314",
         "filename": "chrome/browser/media/media_engagement_score.h",
         "patchSetId": 12
@@ -152,6 +296,24 @@
       "revId": "afa4db254f416bca03676c1a58389e37cab3623c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "514d5a57_821725cf",
+        "filename": "chrome/browser/media/media_engagement_score.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-07-04T09:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71f8f96b_2b15b314",
+      "revId": "afa4db254f416bca03676c1a58389e37cab3623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "242682ef_4dcfcc0d",
+        "filename": "chrome/browser/media/media_engagement_score.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-07-04T09:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44adb00e_07afeb85",
+      "revId": "afa4db254f416bca03676c1a58389e37cab3623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7736dd62_48fc773b",
         "filename": "chrome/browser/media/media_engagement_score.h",
         "patchSetId": 12
@@ -186,6 +366,24 @@
       "revId": "afa4db254f416bca03676c1a58389e37cab3623c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6a1a991_8684e49e",
+        "filename": "chrome/browser/media/media_engagement_score.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-07-04T09:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7736dd62_48fc773b",
+      "revId": "afa4db254f416bca03676c1a58389e37cab3623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "9509ef5f_7330aa64",
+        "filename": "chrome/browser/media/media_engagement_score.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-07-04T09:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a3c6292_cc0f0b45",
+      "revId": "afa4db254f416bca03676c1a58389e37cab3623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "386f0930_98e4b0f4",
         "filename": "chrome/browser/media/media_engagement_score.h",
         "patchSetId": 12
@@ -220,6 +436,24 @@
       "revId": "afa4db254f416bca03676c1a58389e37cab3623c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87ded9dc_547296e3",
+        "filename": "chrome/browser/media/media_engagement_score.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-07-04T09:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "386f0930_98e4b0f4",
+      "revId": "afa4db254f416bca03676c1a58389e37cab3623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -240,6 +474,24 @@
     },
     {
       "key": {
+        "uuid": "dc2c6b11_d67074e8",
+        "filename": "chrome/browser/media/media_engagement_score.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-07-04T09:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56cbc665_5b6302e6",
+      "revId": "afa4db254f416bca03676c1a58389e37cab3623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56610320_542f2030",
         "filename": "chrome/browser/media/media_engagement_score.h",
         "patchSetId": 12
@@ -254,6 +506,24 @@
       "revId": "afa4db254f416bca03676c1a58389e37cab3623c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34441c6a_2cfa979e",
+        "filename": "chrome/browser/media/media_engagement_score.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-07-04T09:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56610320_542f2030",
+      "revId": "afa4db254f416bca03676c1a58389e37cab3623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -274,6 +544,24 @@
     },
     {
       "key": {
+        "uuid": "b9634501_8df94299",
+        "filename": "chrome/browser/media/media_engagement_score_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-07-04T09:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6dc7901b_82b64566",
+      "revId": "afa4db254f416bca03676c1a58389e37cab3623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e41ea4b9_245f01c8",
         "filename": "chrome/browser/media/media_engagement_score_unittest.cc",
         "patchSetId": 12
@@ -288,6 +576,24 @@
       "revId": "afa4db254f416bca03676c1a58389e37cab3623c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "522dfae6_711ee0a2",
+        "filename": "chrome/browser/media/media_engagement_score_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-07-04T09:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e41ea4b9_245f01c8",
+      "revId": "afa4db254f416bca03676c1a58389e37cab3623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -308,6 +614,24 @@
     },
     {
       "key": {
+        "uuid": "b24e4137_1c850719",
+        "filename": "chrome/browser/media/media_engagement_score_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-07-04T09:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab680331_67d8e8a1",
+      "revId": "afa4db254f416bca03676c1a58389e37cab3623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3ac8217_239e392b",
         "filename": "chrome/browser/media/media_engagement_score_unittest.cc",
         "patchSetId": 12
@@ -319,6 +643,24 @@
       "writtenOn": "2017-07-03T14:48:55Z",
       "side": 1,
       "message": "Should there be a test for UpdateScoreDict?\nMaybe you could add a test that adds stuff manually to the content settings and check that the MediaEngagementScore reflects it correctly?\nAlso something that reads the content settings after Commit() was called?",
+      "revId": "afa4db254f416bca03676c1a58389e37cab3623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98dc9cd0_f64fd8a2",
+        "filename": "chrome/browser/media/media_engagement_score_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-07-04T09:40:20Z",
+      "side": 1,
+      "message": "TestScoreInitializesAndUpdates that is called in EmptyDictionary, PartiallyEmptyDictionary and PopulatedDictionary tests UpdateScoreDict.\n\nAdded the other tests.",
+      "parentUuid": "d3ac8217_239e392b",
       "revId": "afa4db254f416bca03676c1a58389e37cab3623c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
