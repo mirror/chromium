@@ -32,88 +32,57 @@
 #include "platform/image-decoders/webp/WEBPImageDecoder.h"
 #include "platform/instrumentation/PlatformInstrumentation.h"
 #include "platform/wtf/PtrUtil.h"
+#include "third_party/skia/include/codec/SkCodec.h"
 
 namespace blink {
-
-inline bool MatchesJPEGSignature(const char* contents) {
-  return !memcmp(contents, "\xFF\xD8\xFF", 3);
-}
-
-inline bool MatchesPNGSignature(const char* contents) {
-  return !memcmp(contents, "\x89PNG\r\n\x1A\n", 8);
-}
-
-inline bool MatchesGIFSignature(const char* contents) {
-  return !memcmp(contents, "GIF87a", 6) || !memcmp(contents, "GIF89a", 6);
-}
-
-inline bool MatchesWebPSignature(const char* contents) {
-  return !memcmp(contents, "RIFF", 4) && !memcmp(contents + 8, "WEBPVP", 6);
-}
-
-inline bool MatchesICOSignature(const char* contents) {
-  return !memcmp(contents, "\x00\x00\x01\x00", 4);
-}
-
-inline bool MatchesCURSignature(const char* contents) {
-  return !memcmp(contents, "\x00\x00\x02\x00", 4);
-}
-
-inline bool MatchesBMPSignature(const char* contents) {
-  return !memcmp(contents, "BM", 2);
-}
-
-static constexpr size_t kLongestSignatureLength = sizeof("RIFF????WEBPVP") - 1;
 
 std::unique_ptr<ImageDecoder> ImageDecoder::Create(
     RefPtr<SegmentReader> data,
     bool data_complete,
     AlphaOption alpha_option,
     const ColorBehavior& color_behavior) {
-  // At least kLongestSignatureLength bytes are needed to sniff the signature.
-  if (data->size() < kLongestSignatureLength)
+  std::unique_ptr<SkCodec> codec(SkCodec::NewFromData(data->GetAsSkData()));
+  if (!codec)
     return nullptr;
 
   const size_t max_decoded_bytes =
       Platform::Current() ? Platform::Current()->MaxDecodedImageBytes()
                           : kNoDecodedImageByteLimit;
 
-  // Access the first kLongestSignatureLength chars to sniff the signature.
-  // (note: FastSharedBufferReader only makes a copy if the bytes are segmented)
-  char buffer[kLongestSignatureLength];
-  const FastSharedBufferReader fast_reader(data);
-  const char* contents =
-      fast_reader.GetConsecutiveData(0, kLongestSignatureLength, buffer);
-
   std::unique_ptr<ImageDecoder> decoder;
-  if (MatchesJPEGSignature(contents)) {
-    decoder.reset(
-        new JPEGImageDecoder(alpha_option, color_behavior, max_decoded_bytes));
-  } else if (MatchesPNGSignature(contents)) {
-    decoder.reset(
-        new PNGImageDecoder(alpha_option, color_behavior, max_decoded_bytes));
-  } else if (MatchesGIFSignature(contents)) {
-    decoder.reset(
-        new GIFImageDecoder(alpha_option, color_behavior, max_decoded_bytes));
-  } else if (MatchesWebPSignature(contents)) {
-    decoder.reset(
-        new WEBPImageDecoder(alpha_option, color_behavior, max_decoded_bytes));
-  } else if (MatchesICOSignature(contents) || MatchesCURSignature(contents)) {
-    decoder.reset(
-        new ICOImageDecoder(alpha_option, color_behavior, max_decoded_bytes));
-  } else if (MatchesBMPSignature(contents)) {
-    decoder.reset(
-        new BMPImageDecoder(alpha_option, color_behavior, max_decoded_bytes));
+  switch (codec->getEncodedFormat()) {
+    case SkEncodedImageFormat::kJPEG:
+      decoder.reset(new JPEGImageDecoder(alpha_option, color_behavior,
+                                         max_decoded_bytes));
+      break;
+    case SkEncodedImageFormat::kPNG:
+      decoder.reset(
+          new PNGImageDecoder(alpha_option, color_behavior, max_decoded_bytes));
+      break;
+    case SkEncodedImageFormat::kGIF:
+      decoder.reset(
+          new GIFImageDecoder(alpha_option, color_behavior, max_decoded_bytes));
+      break;
+    case SkEncodedImageFormat::kWEBP:
+      decoder.reset(new WEBPImageDecoder(alpha_option, color_behavior,
+                                         max_decoded_bytes));
+      break;
+    case SkEncodedImageFormat::kICO:
+      decoder.reset(
+          new ICOImageDecoder(alpha_option, color_behavior, max_decoded_bytes));
+      break;
+    case SkEncodedImageFormat::kBMP:
+      decoder.reset(
+          new BMPImageDecoder(alpha_option, color_behavior, max_decoded_bytes));
+      break;
+    default:
+      break;
   }
 
   if (decoder)
     decoder->SetData(std::move(data), data_complete);
 
   return decoder;
-}
-
-bool ImageDecoder::HasSufficientDataToSniffImageType(const SharedBuffer& data) {
-  return data.size() >= kLongestSignatureLength;
 }
 
 size_t ImageDecoder::FrameCount() {
