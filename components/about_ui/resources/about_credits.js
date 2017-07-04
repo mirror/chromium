@@ -6,6 +6,13 @@
 function $(id) { return document.getElementById(id); }
 /* eslint-enable no-restricted-properties */
 
+function onToggleKeyPress(e) {
+  if (e.keyCode == 13) {
+    var checkbox = e.currentTarget.previousElementSibling;
+    checkbox.checked = !checkbox.checked;
+  }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
   if (cr.isChromeOS) {
     var keyboardUtils = document.createElement('script');
@@ -18,4 +25,11 @@ document.addEventListener('DOMContentLoaded', function() {
     window.print();
     return false;
   };
+
+  // This block makes the license show/hide toggle when the Enter key is
+  // pressed.
+  var links = document.querySelectorAll('label');
+  for (var i = 0; i < links.length; ++i) {
+    links[i].onkeypress = onToggleKeyPress;
+  }
 });
