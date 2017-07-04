@@ -5,6 +5,7 @@
 #import "ios/chrome/browser/tabs/tab_model_selected_tab_observer.h"
 
 #include "base/logging.h"
+#import "ios/chrome/browser/metrics/tab_usage_recorder.h"
 #import "ios/chrome/browser/tabs/legacy_tab_helper.h"
 #import "ios/chrome/browser/tabs/tab.h"
 #import "ios/chrome/browser/tabs/tab_model.h"
@@ -26,6 +27,18 @@
 }
 
 #pragma mark WebStateListObserving
+
+- (void)webStateList:(WebStateList*)webStateList
+    didInsertWebState:(web::WebState*)webState
+              atIndex:(int)index
+           foreground:(BOOL)foreground {
+  if (foreground && _tabModel.tabUsageRecorder) {
+    Tab* tab = LegacyTabHelper::GetTabForWebState(webState);
+    DCHECK(tab);
+
+    _tabModel.tabUsageRecorder->TabCreatedForSelection(tab);
+  }
+}
 
 - (void)webStateList:(WebStateList*)webStateList
     didChangeActiveWebState:(web::WebState*)newWebState
