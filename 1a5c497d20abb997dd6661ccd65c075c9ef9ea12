@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b3e5d527_897be113",
+        "filename": "chrome/browser/android/vr_shell/ui_input_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-04T22:54:42Z",
+      "side": 1,
+      "message": "What about HandleInput?",
+      "parentUuid": "05a70a97_9e134b41",
+      "revId": "1a5c497d20abb997dd6661ccd65c075c9ef9ea12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a06f7692_10bb252c",
         "filename": "chrome/browser/android/vr_shell/ui_input_manager.h",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-04T21:13:58Z",
       "side": 1,
       "message": "queue looks unnecessary, but I could be missing its use.  Same with weak_ptr and maybe others?",
+      "revId": "1a5c497d20abb997dd6661ccd65c075c9ef9ea12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e896aab_0bce39e2",
+        "filename": "chrome/browser/android/vr_shell/ui_input_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-04T22:54:42Z",
+      "side": 1,
+      "message": "Yeah, will clean that up once the general structure is good. Good catch!",
+      "parentUuid": "a06f7692_10bb252c",
       "revId": "1a5c497d20abb997dd6661ccd65c075c9ef9ea12",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "0b5b80d8_a50eb2ed",
+        "filename": "chrome/browser/android/vr_shell/ui_input_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-04T22:54:42Z",
+      "side": 1,
+      "message": "Will do.",
+      "parentUuid": "cbc8fd3a_44162f0c",
+      "revId": "1a5c497d20abb997dd6661ccd65c075c9ef9ea12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b4c23a34_948f62c9",
         "filename": "chrome/browser/android/vr_shell/ui_input_manager.h",
         "patchSetId": 2
@@ -64,6 +118,30 @@
       "writtenOn": "2017-07-04T21:13:58Z",
       "side": 1,
       "message": "We\u0027re entering \"content\"; WebContents is a class that represents it.  Also, what about OnContent... (), to match what you have below (SendHover...())?  Ie, I suggest OnContentEnter(), OnContentLeave(), OnContentMove(), OnContentDown(), OnContentUp().",
+      "range": {
+        "startLine": 30,
+        "startChar": 15,
+        "endLine": 30,
+        "endChar": 33
+      },
+      "revId": "1a5c497d20abb997dd6661ccd65c075c9ef9ea12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a2785fe_310f3c6a",
+        "filename": "chrome/browser/android/vr_shell/ui_input_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-04T22:54:42Z",
+      "side": 1,
+      "message": "Yeah, I like your naming much better!",
+      "parentUuid": "b4c23a34_948f62c9",
       "range": {
         "startLine": 30,
         "startChar": 15,
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "dcdf6d73_ce71b928",
+        "filename": "chrome/browser/android/vr_shell/ui_input_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-04T22:54:42Z",
+      "side": 1,
+      "message": "I can get rid of the UNDEFINED. The idea behind CLICK (should be CLICKED maybe) is that the controller can be DOWN and UP within one frame. The state after the frame would be UP. The user would have still clicked though. This is also how the Cardboard trigger is encoded. If we have a pending Cardboard touch we encode it with CLICKED and the input manager sends an down and up to the hit element.",
+      "parentUuid": "9ffbdb0d_f37348cf",
+      "range": {
+        "startLine": 39,
+        "startChar": 6,
+        "endLine": 39,
+        "endChar": 7
+      },
+      "revId": "1a5c497d20abb997dd6661ccd65c075c9ef9ea12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "efde3348_0ab898d4",
         "filename": "chrome/browser/android/vr_shell/ui_input_manager.h",
         "patchSetId": 2
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "e79fc2ec_b6c318f0",
+        "filename": "chrome/browser/android/vr_shell/ui_input_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-04T22:54:42Z",
+      "side": 1,
+      "message": "I think this is the location where the laser comes out of the controller.",
+      "parentUuid": "efde3348_0ab898d4",
+      "range": {
+        "startLine": 43,
+        "startChar": 44,
+        "endLine": 43,
+        "endChar": 57
+      },
+      "revId": "1a5c497d20abb997dd6661ccd65c075c9ef9ea12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "89cb9755_635ef054",
         "filename": "chrome/browser/android/vr_shell/ui_input_manager.h",
         "patchSetId": 2
@@ -133,6 +259,24 @@
       "writtenOn": "2017-07-04T21:13:58Z",
       "side": 1,
       "message": "Do you think the scene should manage the reticle and beam?  Could those be a new kind of special element, where the scene just adds them and the renderer has no concept of them other than that?",
+      "revId": "1a5c497d20abb997dd6661ccd65c075c9ef9ea12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f892eaa5_558df00f",
+        "filename": "chrome/browser/android/vr_shell/ui_input_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-04T22:54:42Z",
+      "side": 1,
+      "message": "I like the idea of making the reticle and beam specialized UI elements. Should be a follow-up CL though?",
+      "parentUuid": "89cb9755_635ef054",
       "revId": "1a5c497d20abb997dd6661ccd65c075c9ef9ea12",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -245,6 +389,30 @@
       "side": 1,
       "message": "The transformation to web input events should be done in a UIElement derived class for the content rect. As a first step, we should move it out of vr_shell_gl.\n\nIn any case, all of the actual input logic should live in one class, not split in two classes like it is now, and we can clean up web event generation later.",
       "parentUuid": "cf1e3bbd_e4560168",
+      "range": {
+        "startLine": 612,
+        "startChar": 13,
+        "endLine": 612,
+        "endChar": 31
+      },
+      "revId": "1a5c497d20abb997dd6661ccd65c075c9ef9ea12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed90565a_f6b68df0",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-04T22:54:42Z",
+      "side": 1,
+      "message": "I think the generation of web input events should be separate from the UI framework since it is a very Chrome specific thing. So, I prefer a solution where the UI framework (which the UI elements and the input manager is part of) sends content hit information to some other instance and this other instance generates web input events. By doing so, we would be able to more easily switch UI frameworks. In this CL this other instance is VrShellGl and I agree we should move it somewhere else in the future/follow up CL.",
+      "parentUuid": "bc6b824f_c07fa266",
       "range": {
         "startLine": 612,
         "startChar": 13,

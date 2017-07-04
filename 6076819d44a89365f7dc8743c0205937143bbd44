@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "6884a138_eb387216",
+        "filename": "chrome/browser/android/vr_shell/ui_input_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-04T22:54:42Z",
+      "side": 1,
+      "message": "Ah ok. But in this case I\u0027m more concerned about not changing the pointer or setting it to null. The best thing would be to do a const reference. Then we don\u0027t have to consider null pointers at all.",
+      "parentUuid": "feafbd31_c5dd5d5b",
+      "revId": "6076819d44a89365f7dc8743c0205937143bbd44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40eb00ee_cc6f0c0b",
         "filename": "chrome/browser/android/vr_shell/vr_shell_gl.h",
         "patchSetId": 1
