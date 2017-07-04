@@ -190,7 +190,12 @@ TEST_F(WorkerThreadTest, SyncTerminate_OnIdle) {
   worker_thread_->WaitForInit();
 
   WorkerThread::TerminateAndWaitForAllWorkers();
-  EXPECT_EQ(ExitCode::kSyncForciblyTerminated, GetExitCode());
+
+  // The worker thread may gracefully shut down before forcible termination
+  // runs.
+  ExitCode exit_code = GetExitCode();
+  EXPECT_TRUE(ExitCode::kGracefullyTerminated == exit_code ||
+              ExitCode::kSyncForciblyTerminated == exit_code);
 }
 
 TEST_F(WorkerThreadTest, AsyncTerminate_ImmediatelyAfterStart) {
@@ -329,8 +334,8 @@ TEST_F(WorkerThreadTest, Terminate_WhileDebuggerTaskIsRunningOnInitialization) {
 
   // Focible termination request should also respect the running debugger
   // task.
-  worker_thread_->TerminateInternal(WorkerThread::TerminationMode::kForcible);
-  EXPECT_FALSE(IsForcibleTerminationTaskScheduled());
+  worker_thread_->MayForciblyTerminateExecution(
+      ExitCode::kSyncForciblyTerminated);
   EXPECT_EQ(ExitCode::kNotTerminated, GetExitCode());
 
   // Resume the debugger task. Shutdown starts after that.
@@ -369,8 +374,8 @@ TEST_F(WorkerThreadTest, Terminate_WhileDebuggerTaskIsRunning) {
 
   // Focible termination request should also respect the running debugger
   // task.
-  worker_thread_->TerminateInternal(WorkerThread::TerminationMode::kForcible);
-  EXPECT_FALSE(IsForcibleTerminationTaskScheduled());
+  worker_thread_->MayForciblyTerminateExecution(
+      ExitCode::kSyncForciblyTerminated);
   EXPECT_EQ(ExitCode::kNotTerminated, GetExitCode());
 
   // Resume the debugger task. Shutdown starts after that.
