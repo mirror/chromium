@@ -1,0 +1,147 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ffb0129e_e209a1e5",
+        "filename": "third_party/WebKit/LayoutTests/fast/history/scroll-restoration/scroll-restoration-same-doc.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-07-04T14:06:46Z",
+      "side": 1,
+      "message": "Do you actually need a \"root\" div or can this test just work with document.body?",
+      "range": {
+        "startLine": 23,
+        "startChar": 6,
+        "endLine": 23,
+        "endChar": 10
+      },
+      "revId": "dd8d9f01fa81c1ec5c7b90e2a66be62cf91d42ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "204e1815_593a1af7",
+        "filename": "third_party/WebKit/LayoutTests/fast/history/scroll-restoration/scroll-restoration-same-doc.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-07-04T14:06:46Z",
+      "side": 1,
+      "message": "s/let/const",
+      "revId": "dd8d9f01fa81c1ec5c7b90e2a66be62cf91d42ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fda08eaf_0d7651ee",
+        "filename": "third_party/WebKit/LayoutTests/fast/history/scroll-restoration/scroll-restoration-same-doc.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-07-04T14:06:46Z",
+      "side": 1,
+      "message": "replace with an assert for the exact scroll position expected.",
+      "revId": "dd8d9f01fa81c1ec5c7b90e2a66be62cf91d42ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acb1d67f_637c0b08",
+        "filename": "third_party/WebKit/LayoutTests/fast/history/scroll-restoration/scroll-restoration-same-doc.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-07-04T14:06:46Z",
+      "side": 1,
+      "message": "This button seems completely unnecessary. Just move p2() function\ncontent here.",
+      "range": {
+        "startLine": 49,
+        "startChar": 16,
+        "endLine": 49,
+        "endChar": 0
+      },
+      "revId": "dd8d9f01fa81c1ec5c7b90e2a66be62cf91d42ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7583fc4d_d2aae051",
+        "filename": "third_party/WebKit/LayoutTests/fast/history/scroll-restoration/scroll-restoration-same-doc.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-07-04T14:06:46Z",
+      "side": 1,
+      "message": "nit: This is grammatically incorrect. Most likely want \"page should restore scroll position to ....\"",
+      "range": {
+        "startLine": 52,
+        "startChar": 27,
+        "endLine": 52,
+        "endChar": 50
+      },
+      "revId": "dd8d9f01fa81c1ec5c7b90e2a66be62cf91d42ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c911b96_337e0557",
+        "filename": "third_party/WebKit/LayoutTests/fast/history/scroll-restoration/scroll-restoration-same-doc.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-07-04T14:06:46Z",
+      "side": 1,
+      "message": "this should assert the exact scroll position expected.",
+      "revId": "dd8d9f01fa81c1ec5c7b90e2a66be62cf91d42ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7e176a0_8819cd13",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-07-04T14:06:46Z",
+      "side": 1,
+      "message": "Doing an indiscriminate layout here seems excessive. An immediate layout\nis only necessary if the scroll position cannot be restored without it. \nFor example say the saved scroll position is (0,0), or the page is already\ntall enough to handle the scroll which means we do not need an immediate layout.\nI think these are common enough to try to avoid the cost of an early layout.\n\n\nSo I think it should be up to the scroll restoration logic to trigger a \nlayout if it needs to (i.e., when |can_restore_without_clamping| in [1]\nis false and we are in a same doc navigation.\n\n[1] https://codesearch.chromium.org/chromium/src/third_party/WebKit/Source/core/loader/FrameLoader.cpp?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d1094",
+      "range": {
+        "startLine": 566,
+        "startChar": 48,
+        "endLine": 566,
+        "endChar": 0
+      },
+      "revId": "dd8d9f01fa81c1ec5c7b90e2a66be62cf91d42ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
