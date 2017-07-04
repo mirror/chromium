@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8604a07_bd416e3f",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSShorthandPropertyAPIBorderImage.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-07-04T03:59:27Z",
+      "side": 1,
+      "message": "Nit: Let\u0027s negate the conditional here so that most of the code can be unindented.",
+      "revId": "80c9424ca0ceb06d479dde747a5934f43060f19d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
