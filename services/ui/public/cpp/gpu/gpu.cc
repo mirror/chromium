@@ -118,11 +118,22 @@ scoped_refptr<gpu::GpuChannelHost> Gpu::EstablishGpuChannelSync() {
     return nullptr;
   }
   OnEstablishedGpuChannel(client_id, std::move(channel_handle), gpu_info);
+
   return gpu_channel_;
 }
 
 gpu::GpuMemoryBufferManager* Gpu::GetGpuMemoryBufferManager() {
   return gpu_memory_buffer_manager_.get();
+}
+
+void Gpu::CreateVideoEncodeAccelerator(
+    media::mojom::VideoEncodeAcceleratorRequest vea_request) {
+  DCHECK(IsMainThread());
+  connector_->BindInterface(service_name_, &gpu_);
+  if (!gpu_.get())
+    return;
+  gpu_->CreateVideoEncodeAccelerator(std::move(vea_request));
+  gpu_.reset();
 }
 
 scoped_refptr<gpu::GpuChannelHost> Gpu::GetGpuChannel() {
