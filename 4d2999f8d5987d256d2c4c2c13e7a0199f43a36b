@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f335a86_ce7ed040",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-04T04:37:10Z",
+      "side": 1,
+      "message": "I\u0027m a little confused what\u0027s happening here.\n\nthread-\u003eTerminate()  is a regular termination\nthread-\u003eMayFocibleTerminateExuection() is the forcible stop?\n\nWhat\u0027s the difference between stop and terminate? What\u0027s \"the task\" we want to ensure runs?",
+      "revId": "4d2999f8d5987d256d2c4c2c13e7a0199f43a36b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95745152_50a1b070",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-04T04:37:10Z",
+      "side": 1,
+      "message": "\"to use\" -\u003e \"when using\"",
+      "revId": "4d2999f8d5987d256d2c4c2c13e7a0199f43a36b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f77b2131_a63601cc",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-04T04:37:10Z",
+      "side": 1,
+      "message": "If this is only used in tests, maybe it should add ForTesting()? at the end?",
+      "revId": "4d2999f8d5987d256d2c4c2c13e7a0199f43a36b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
