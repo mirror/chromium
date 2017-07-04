@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66e7b27f_3680a5c3",
+        "filename": "services/shape_detection/android/java/src/org/chromium/shape_detection/FaceDetectionImplGmsCore.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-04T00:18:15Z",
+      "side": 1,
+      "message": "if (!flag) continue;   ?\n\nAlso |flag| is not a descriptive name, what about\ne.g. s/flag/supportedLandmarkFound/ ?\n\nInitializing it to true is misguiding anyway.\n\nWhat about rewriting the code around l.97-111 like:\n\nint leftEyeIndex \u003d -1; \nint rightEyeIndex \u003d -1;\nint bottomMouthIndex \u003d -1;\n\nif (landmarkType \u003d\u003d Landmark.LEFT_EYE || landmarkType \u003d\u003d Landmark.RIGHT_EYE\n        || landmarkType \u003d\u003d Landmark.BOTTOM_MOUTH) {\n\n    if (landmark \u003d\u003d Landmark.LEFT_EYE) {\n        leftEyeIndex \u003d j;\n    } else if (landmark \u003d\u003d Landmark.RIGHT_EYE) {\n        rightEyeIndex \u003d j;\n    } else {\n        assert landmark \u003d\u003d Landmark.BOTTOM_MOUTH\n        bottomMouthIndex \u003d j;\n    }\n\n    // l.105-112 stay the same.\n\n}\n// New code you have in l.125-134; if any of the landmarks is\n// still set to -1 (\u003d\u003d not found), then fallback to original\n// implementation in the original l.89-94 .",
+      "range": {
+        "startLine": 111,
+        "startChar": 20,
+        "endLine": 111,
+        "endChar": 24
+      },
+      "revId": "cc4436988466d14181683efbab08f877a55caef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
