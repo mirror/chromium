@@ -18,4 +18,17 @@ document.addEventListener('DOMContentLoaded', function() {
     window.print();
     return false;
   };
+
+  var links = document.querySelectorAll('label');
+  for (var i = 0; i < links.length; ++i) {
+    (function() {
+      var link = links[i];
+      link.onkeypress = function(e) {
+        if (e.keyCode == 13) {
+          link.previousElementSibling.checked =
+              !link.previousElementSibling.checked;
+        }
+      };
+    })();
+  }
 });
