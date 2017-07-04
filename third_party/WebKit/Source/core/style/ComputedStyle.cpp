@@ -1331,10 +1331,10 @@ float ComputedStyle::FontSizeAdjust() const {
 bool ComputedStyle::HasFontSizeAdjust() const {
   return GetFontDescription().HasSizeAdjust();
 }
-FontWeight ComputedStyle::GetFontWeight() const {
+FontSelectionValue ComputedStyle::GetFontWeight() const {
   return GetFontDescription().Weight();
 }
-FontStretch ComputedStyle::GetFontStretch() const {
+FontSelectionValue ComputedStyle::GetFontStretch() const {
   return GetFontDescription().Stretch();
 }
 
@@ -1527,6 +1527,7 @@ bool ComputedStyle::HasIdenticalAscentDescentAndLineGap(
 const Length& ComputedStyle::SpecifiedLineHeight() const {
   return LineHeightInternal();
 }
+
 Length ComputedStyle::LineHeight() const {
   const Length& lh = LineHeightInternal();
   // Unlike getFontDescription().computedSize() and hence fontSize(), this is
