@@ -33,6 +33,24 @@
       "revId": "5ee7799c16ca3ec3016ce10420e6a2909324a605",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbac8a0e_23f56f5b",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-04T15:35:44Z",
+      "side": 1,
+      "message": "Also just a suggestion, does EnsureScriptExecutionTerminates() sound better to you?",
+      "parentUuid": "69891051_bf7697c3",
+      "revId": "5ee7799c16ca3ec3016ce10420e6a2909324a605",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
