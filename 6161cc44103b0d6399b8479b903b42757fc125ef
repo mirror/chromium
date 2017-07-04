@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7bd85a74_7b052ec3",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-07-04T11:33:22Z",
+      "side": 1,
+      "message": "Combined this with the loop above and didn\u0027t add the todo (since there isn\u0027t much benefit except avoiding a branch given that we are already iterating over all clients)",
+      "parentUuid": "22d3aa02_0f2150b9",
+      "range": {
+        "startLine": 202,
+        "startChar": 4,
+        "endLine": 202,
+        "endChar": 19
+      },
+      "revId": "6161cc44103b0d6399b8479b903b42757fc125ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a813405_2873a69d",
         "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "db3f7553_72ac2785",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-07-04T11:33:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a813405_2873a69d",
+      "range": {
+        "startLine": 238,
+        "startChar": 0,
+        "endLine": 238,
+        "endChar": 21
+      },
+      "revId": "6161cc44103b0d6399b8479b903b42757fc125ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "307be2f9_f0e884f3",
         "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
         "patchSetId": 1
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "58adbe92_56d858c5",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-07-04T11:33:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "307be2f9_f0e884f3",
+      "revId": "6161cc44103b0d6399b8479b903b42757fc125ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "158780ae_bbcc2934",
         "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.h",
         "patchSetId": 1
@@ -76,6 +142,30 @@
       "writtenOn": "2017-07-03T14:03:46Z",
       "side": 1,
       "message": "I think there was a mail from brettw@ a while ago about avoiding unordererd_map and just use either map or flat_map (or extremely rarely unordererd_map, but only if you fall into that special usage case).\nSee https://groups.google.com/a/chromium.org/d/msg/chromium-dev/rdxOHKzQmRY/fgMJCEGxCgAJ\n\nGiven that this is not a fastpath I\u0027d just go for map without overengineering it too much\n(But I understand why you did this. Before Brett\u0027s email my rationale has always been: \"do you need a map? YES; Do you care about ordering? NO --\u003e use unordered_map\")",
+      "range": {
+        "startLine": 87,
+        "startChar": 21,
+        "endLine": 87,
+        "endChar": 34
+      },
+      "revId": "6161cc44103b0d6399b8479b903b42757fc125ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06d36c27_bb3444d6",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-07-04T11:33:22Z",
+      "side": 1,
+      "message": "Mojo generates bindings with unordered_map :(\n\nFor example this mojo callback using a map: https://cs.chromium.org/chromium/src/services/device/public/interfaces/fingerprint.mojom?type\u003dcs\u0026q\u003df:.mojom$+%3D%3E+map\u0026sq\u003dpackage:chromium\u0026l\u003d39 genreates this code: https://cs.chromium.org/chromium/src/out/Debug/gen/services/device/public/interfaces/fingerprint.mojom.h?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d149",
+      "parentUuid": "158780ae_bbcc2934",
       "range": {
         "startLine": 87,
         "startChar": 21,
@@ -132,6 +222,30 @@
       "revId": "6161cc44103b0d6399b8479b903b42757fc125ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5969ff9e_c8d0f7cc",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-07-04T11:33:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e603fa8_07855af0",
+      "range": {
+        "startLine": 136,
+        "startChar": 34,
+        "endLine": 136,
+        "endChar": 70
+      },
+      "revId": "6161cc44103b0d6399b8479b903b42757fc125ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
