@@ -16,6 +16,24 @@
       "revId": "b874841fcadd40243a5f4184a827bbbd96d88a04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "921b28d9_0bc6bef1",
+        "filename": "third_party/WebKit/Source/modules/sensor/Accelerometer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1182699
+      },
+      "writtenOn": "2017-07-04T13:37:44Z",
+      "side": 1,
+      "message": "Would work for now, but would need to be modified again when we would introduce e.g., https://www.w3.org/TR/accelerometer/#gravitysensor-interface, maybe better to keep generic approach, so that we won\u0027t need unnecessary refactoring.",
+      "parentUuid": "27a59249_a70e204f",
+      "revId": "b874841fcadd40243a5f4184a827bbbd96d88a04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
