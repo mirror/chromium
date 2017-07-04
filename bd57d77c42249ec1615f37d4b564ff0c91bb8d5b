@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28e1023b_206987ed",
+        "filename": "chrome/browser/password_manager/password_store_x_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-04T15:47:49Z",
+      "side": 1,
+      "message": "I\u0027d remove it if everything passes.",
+      "range": {
+        "startLine": 393,
+        "startChar": 38,
+        "endLine": 393,
+        "endChar": 70
+      },
+      "revId": "bd57d77c42249ec1615f37d4b564ff0c91bb8d5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fb299e1_4ab4db86",
+        "filename": "components/password_manager/content/renderer/credential_manager_client_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-04T15:47:49Z",
+      "side": 1,
+      "message": "How about base::TaskScheduler::GetInstance()-\u003eFlushForTesting(); ?\nIt seems equivalent to the existing code and should quit earlier than RunAllBlockingPoolTasksUntilIdle()\nMy concern is that RunAllBlockingPoolTasksUntilIdle() may never quit in a browser test.",
+      "range": {
+        "startLine": 177,
+        "startChar": 11,
+        "endLine": 177,
+        "endChar": 43
+      },
+      "revId": "bd57d77c42249ec1615f37d4b564ff0c91bb8d5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d482d1d_30c9dd72",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliated_match_helper_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-04T15:47:49Z",
+      "side": 1,
+      "message": "unused?",
+      "range": {
+        "startLine": 16,
+        "startChar": 15,
+        "endLine": 16,
+        "endChar": 23
+      },
+      "revId": "bd57d77c42249ec1615f37d4b564ff0c91bb8d5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "658f0f32_04512b43",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_fetch_throttler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-04T15:47:49Z",
+      "side": 1,
+      "message": "It looks like a candidate for migration. We currently have a base::MessageLoop and we should drop it.",
+      "range": {
+        "startLine": 19,
+        "startChar": 15,
+        "endLine": 19,
+        "endChar": 23
+      },
+      "revId": "bd57d77c42249ec1615f37d4b564ff0c91bb8d5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b26249a6_4dbad3a8",
+        "filename": "components/password_manager/core/browser/import/password_importer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-04T15:47:49Z",
+      "side": 1,
+      "message": "Probably we shouldn\u0027t use base::MessageLoop here too",
+      "range": {
+        "startLine": 12,
+        "startChar": 28,
+        "endLine": 12,
+        "endChar": 40
+      },
+      "revId": "bd57d77c42249ec1615f37d4b564ff0c91bb8d5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
