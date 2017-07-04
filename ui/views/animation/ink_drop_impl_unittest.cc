@@ -60,6 +60,9 @@ class InkDropImplTest : public testing::Test {
   // Allows privileged access to the the |ink_drop_highlight_|.
   std::unique_ptr<test::InkDropImplTestApi> test_api_;
 
+  std::unique_ptr<base::AutoReset<gfx::Animation::RichAnimationRenderMode>>
+      animation_mode_reset_;
+
   DISALLOW_COPY_AND_ASSIGN(InkDropImplTest);
 };
 
@@ -70,7 +73,9 @@ InkDropImplTest::InkDropImplTest()
       ink_drop_host_(base::MakeUnique<TestInkDropHost>()),
       ink_drop_(
           base::MakeUnique<InkDropImpl>(ink_drop_host_.get(), gfx::Size())),
-      test_api_(base::MakeUnique<test::InkDropImplTestApi>(ink_drop_.get())) {
+      test_api_(base::MakeUnique<test::InkDropImplTestApi>(ink_drop_.get())),
+      animation_mode_reset_(gfx::Animation::SetRichAnimationRenderMode(
+          gfx::Animation::RichAnimationRenderMode::FORCE_DISABLED)) {
   ink_drop_host_->set_disable_timers_for_test(true);
 }
 

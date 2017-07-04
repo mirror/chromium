@@ -5,6 +5,7 @@
 #ifndef UI_GFX_ANIMATION_ANIMATION_H_
 #define UI_GFX_ANIMATION_ANIMATION_H_
 
+#include "base/auto_reset.h"
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
@@ -28,6 +29,14 @@ class AnimationDelegate;
 // GetCurrentValue() to return the value appropriate to the animation.
 class ANIMATION_EXPORT Animation : public AnimationContainerElement {
  public:
+  // Used with SetRichAnimationRenderMode() to force enable/disable rich
+  // animations during tests.
+  enum class RichAnimationRenderMode {
+    PLATFORM,
+    FORCE_ENABLED,
+    FORCE_DISABLED
+  };
+
   explicit Animation(base::TimeDelta timer_interval);
   ~Animation() override;
 
@@ -64,6 +73,11 @@ class ANIMATION_EXPORT Animation : public AnimationContainerElement {
   // to give guidance for heavy animations such as "start download" arrow.
   static bool ShouldRenderRichAnimation();
 
+  // Sets the rich animation rendering mode. Allows rich animations to be force
+  // enabled/disabled during tests.
+  static std::unique_ptr<base::AutoReset<RichAnimationRenderMode>>
+  SetRichAnimationRenderMode(RichAnimationRenderMode mode);
+
   // Determines on a per-platform basis whether scroll animations (e.g. produced
   // by home/end key) should be enabled. Should only be called from the browser
   // process.
@@ -92,6 +106,11 @@ class ANIMATION_EXPORT Animation : public AnimationContainerElement {
   base::TimeDelta GetTimerInterval() const override;
 
  private:
+  static bool ShouldRenderRichAnimationImpl();
+
+  // The mode in which to render rich animations.
+  static RichAnimationRenderMode rich_animation_rendering_mode_;
+
   // Interval for the animation.
   const base::TimeDelta timer_interval_;
 

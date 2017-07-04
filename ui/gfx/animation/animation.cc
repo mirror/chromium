@@ -4,6 +4,7 @@
 
 #include "ui/gfx/animation/animation.h"
 
+#include "base/memory/ptr_util.h"
 #include "build/build_config.h"
 #include "ui/gfx/animation/animation_container.h"
 #include "ui/gfx/animation/animation_delegate.h"
@@ -11,6 +12,10 @@
 #include "ui/gfx/geometry/rect.h"
 
 namespace gfx {
+
+// static
+Animation::RichAnimationRenderMode Animation::rich_animation_rendering_mode_ =
+    RichAnimationRenderMode::PLATFORM;
 
 Animation::Animation(base::TimeDelta timer_interval)
     : timer_interval_(timer_interval),
@@ -88,9 +93,23 @@ void Animation::SetContainer(AnimationContainer* container) {
     container_->Start(this);
 }
 
+bool Animation::ShouldRenderRichAnimation() {
+  if (rich_animation_rendering_mode_ == RichAnimationRenderMode::PLATFORM)
+    return ShouldRenderRichAnimationImpl();
+  return rich_animation_rendering_mode_ ==
+         RichAnimationRenderMode::FORCE_ENABLED;
+}
+
+std::unique_ptr<base::AutoReset<Animation::RichAnimationRenderMode>>
+Animation::SetRichAnimationRenderMode(RichAnimationRenderMode mode) {
+  DCHECK(rich_animation_rendering_mode_ == RichAnimationRenderMode::PLATFORM);
+  return base::MakeUnique<base::AutoReset<RichAnimationRenderMode>>(
+      &rich_animation_rendering_mode_, mode);
+}
+
 #if !defined(OS_WIN)
 // static
-bool Animation::ShouldRenderRichAnimation() {
+bool Animation::ShouldRenderRichAnimationImpl() {
   // Defined in platform specific file for Windows.
   return true;
 }

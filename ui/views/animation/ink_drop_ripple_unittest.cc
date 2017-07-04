@@ -53,11 +53,16 @@ class InkDropRippleTest
 
   std::unique_ptr<InkDropRippleTestApi> test_api_;
 
+  std::unique_ptr<base::AutoReset<gfx::Animation::RichAnimationRenderMode>>
+      animation_mode_reset_;
+
  private:
   DISALLOW_COPY_AND_ASSIGN(InkDropRippleTest);
 };
 
-InkDropRippleTest::InkDropRippleTest() {
+InkDropRippleTest::InkDropRippleTest()
+    : animation_mode_reset_(gfx::Animation::SetRichAnimationRenderMode(
+          gfx::Animation::RichAnimationRenderMode::FORCE_DISABLED)) {
   switch (GetParam()) {
     case SQUARE_INK_DROP_RIPPLE: {
       SquareInkDropRipple* square_ink_drop_ripple =

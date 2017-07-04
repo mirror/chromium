@@ -55,11 +55,17 @@ class InkDropHostViewTest : public testing::Test {
   // Provides internal access to |host_view_| test target.
   InkDropHostViewTestApi test_api_;
 
+  std::unique_ptr<base::AutoReset<gfx::Animation::RichAnimationRenderMode>>
+      animation_mode_reset_;
+
  private:
   DISALLOW_COPY_AND_ASSIGN(InkDropHostViewTest);
 };
 
-InkDropHostViewTest::InkDropHostViewTest() : test_api_(&host_view_) {}
+InkDropHostViewTest::InkDropHostViewTest()
+    : test_api_(&host_view_),
+      animation_mode_reset_(gfx::Animation::SetRichAnimationRenderMode(
+          gfx::Animation::RichAnimationRenderMode::FORCE_DISABLED)) {}
 
 InkDropHostViewTest::~InkDropHostViewTest() {}
 

@@ -49,10 +49,15 @@ class InkDropHighlightTest : public testing::Test {
   // Observer of the test target.
   TestInkDropHighlightObserver observer_;
 
+  std::unique_ptr<base::AutoReset<gfx::Animation::RichAnimationRenderMode>>
+      animation_mode_reset_;
+
   DISALLOW_COPY_AND_ASSIGN(InkDropHighlightTest);
 };
 
-InkDropHighlightTest::InkDropHighlightTest() {
+InkDropHighlightTest::InkDropHighlightTest()
+    : animation_mode_reset_(gfx::Animation::SetRichAnimationRenderMode(
+          gfx::Animation::RichAnimationRenderMode::FORCE_DISABLED)) {
   InitHighlight(base::MakeUnique<InkDropHighlight>(
       gfx::Size(10, 10), 3, gfx::PointF(), SK_ColorBLACK));
 }

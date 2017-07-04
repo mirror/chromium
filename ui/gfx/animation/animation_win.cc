@@ -9,7 +9,7 @@
 namespace gfx {
 
 // static
-bool Animation::ShouldRenderRichAnimation() {
+bool Animation::ShouldRenderRichAnimationImpl() {
   if (base::win::GetVersion() >= base::win::VERSION_VISTA) {
     BOOL result;
     // Get "Turn off all unnecessary animations" value.
