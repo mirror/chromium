@@ -16,10 +16,13 @@
 #include "base/path_service.h"
 #include "base/threading/thread_restrictions.h"
 #include "ui/gl/gl_bindings.h"
+#include "ui/gl/gl_egl_api_implementation.h"
+#include "ui/gl/gl_features.h"
 #include "ui/gl/gl_gl_api_implementation.h"
 #include "ui/gl/gl_implementation.h"
 #include "ui/gl/gl_osmesa_api_implementation.h"
 #include "ui/gl/gl_surface.h"
+#include "ui/gl/gl_surface_egl.h"
 #include "ui/gl/gpu_switching_manager.h"
 
 namespace gl {
@@ -126,6 +129,70 @@ bool InitializeStaticCGLInternal(GLImplementation implementation) {
   return true;
 }
 
+const char kGLESv2ANGLELibraryName[] = "libGLESv2.dylib";
+const char kEGLANGLELibraryName[] = "libEGL.dylib";
+
+#if BUILDFLAG(ENABLE_SWIFTSHADER)
+const char kGLESv2SwiftShaderLibraryName[] = "libGLESv2.dylib";
+const char kEGLSwiftShaderLibraryName[] = "libEGL.dylib";
+#endif
+
+bool InitializeStaticEGLInternal(GLImplementation implementation) {
+  base::FilePath glesv2_path;
+  base::FilePath egl_path;
+
+  if (implementation == kGLImplementationSwiftShaderGL) {
+#if BUILDFLAG(ENABLE_SWIFTSHADER)
+    base::FilePath module_path;
+    if (!PathService::Get(base::DIR_MODULE, &module_path))
+      return false;
+    module_path = module_path.Append("swiftshader/");
+
+    glesv2_path = module_path.Append(kGLESv2SwiftShaderLibraryName);
+    egl_path = module_path.Append(kEGLSwiftShaderLibraryName);
+#else
+    return false;
+#endif
+  } else {
+    base::FilePath module_path;
+    if (!PathService::Get(base::DIR_MODULE, &module_path))
+      return false;
+
+    glesv2_path = module_path.Append(kGLESv2ANGLELibraryName);
+    egl_path = module_path.Append(kEGLANGLELibraryName);
+  }
+
+  base::NativeLibrary gles_library = LoadLibraryAndPrintError(glesv2_path);
+  if (!gles_library)
+    return false;
+  base::NativeLibrary egl_library = LoadLibraryAndPrintError(egl_path);
+  if (!egl_library) {
+    base::UnloadNativeLibrary(gles_library);
+    return false;
+  }
+
+  GLGetProcAddressProc get_proc_address =
+      reinterpret_cast<GLGetProcAddressProc>(
+          base::GetFunctionPointerFromNativeLibrary(egl_library,
+                                                    "eglGetProcAddress"));
+  if (!get_proc_address) {
+    LOG(ERROR) << "eglGetProcAddress not found.";
+    base::UnloadNativeLibrary(egl_library);
+    base::UnloadNativeLibrary(gles_library);
+    return false;
+  }
+
+  SetGLGetProcAddressProc(get_proc_address);
+  AddGLNativeLibrary(egl_library);
+  AddGLNativeLibrary(gles_library);
+  SetGLImplementation(kGLImplementationEGLGLES2);
+
+  InitializeStaticGLBindingsGL();
+  InitializeStaticGLBindingsEGL();
+
+  return true;
+}
+
 }  // namespace
 
 bool InitializeGLOneOffPlatform() {
@@ -135,6 +202,12 @@ bool InitializeGLOneOffPlatform() {
     case kGLImplementationAppleGL:
       if (!InitializeOneOffForSandbox()) {
         LOG(ERROR) << "GLSurfaceCGL::InitializeOneOff failed.";
+        return false;
+      }
+      return true;
+    case kGLImplementationEGLGLES2:
+      if (!GLSurfaceEGL::InitializeOneOff(nullptr)) {
+        LOG(ERROR) << "GLSurfaceEGL::InitializeOneOff failed.";
         return false;
       }
       return true;
@@ -162,6 +235,8 @@ bool InitializeStaticGLBindings(GLImplementation implementation) {
     case kGLImplementationDesktopGLCoreProfile:
     case kGLImplementationAppleGL:
       return InitializeStaticCGLInternal(implementation);
+    case kGLImplementationEGLGLES2:
+      return InitializeStaticEGLInternal(implementation);
     case kGLImplementationMockGL:
     case kGLImplementationStubGL:
       SetGLImplementation(implementation);
