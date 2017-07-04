@@ -129,6 +129,11 @@
   },
   {
     "prefix": "off-main-thread-fetch",
+    "base": "http/tests/appcache/workers",
+    "args": ["--enable-features=OffMainThreadFetch"]
+  },
+  {
+    "prefix": "off-main-thread-fetch",
     "base": "http/tests/fetch/chromium",
     "args": ["--enable-features=OffMainThreadFetch"]
   },
