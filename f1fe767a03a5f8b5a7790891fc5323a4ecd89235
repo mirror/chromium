@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55264579_8e41df6b",
+        "filename": "ui/keyboard/test/DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2017-07-04T02:15:30Z",
+      "side": 1,
+      "message": "Maybe the comment is redundant now that it\u0027s under a test-specific DEPS file?",
+      "range": {
+        "startLine": 4,
+        "startChar": 46,
+        "endLine": 4,
+        "endChar": 74
+      },
+      "revId": "f1fe767a03a5f8b5a7790891fc5323a4ecd89235",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
