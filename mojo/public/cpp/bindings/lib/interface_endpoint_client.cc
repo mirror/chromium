@@ -52,7 +52,7 @@ class ResponderThunk : public MessageReceiverWithStatus {
       // way of knowing it should stop waiting for a response.
       if (task_runner_->RunsTasksInCurrentSequence()) {
         // Please note that even if this code is run from a different task
-        // runner on the same thread as |task_runner_|, it is okay to directly
+        // runner on the same sequence as |task_runner_|, it is okay to directly
         // call InterfaceEndpointClient::RaiseError(), because it will raise
         // error from the correct task runner asynchronously.
         if (endpoint_client_) {
