@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "db2d340e_38d9d406",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-04T01:58:04Z",
+      "side": 1,
+      "message": "ContainsKey(installed_urls_, web_script_url) (in base/stl_util.h) ?",
+      "revId": "50f7897dc906d6888662240acd55786339083b21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "74bb2963_ac1f9f73",
         "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
         "patchSetId": 15
@@ -64,6 +81,23 @@
       "writtenOn": "2017-07-04T01:34:02Z",
       "side": 1,
       "message": "What\u0027s the purpose of Create() instead of just making the ctor public?\n\nOK I just noticed kinuko@ had the same question. It\u0027d be nice to add comments or TODO in the code about why Create() exists in the meantime (in general if something prompted a question in code review, having a comment in the code would be useful).",
+      "revId": "50f7897dc906d6888662240acd55786339083b21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c55daa54_2cfb1559",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-04T01:58:04Z",
+      "side": 1,
+      "message": "Can we reserve the buffer in advance?\n\nscript_data.meta_data-\u003eReserveInitialCapacity(raw_script_data-\u003eMetaDataChunks().size())?",
       "revId": "50f7897dc906d6888662240acd55786339083b21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
