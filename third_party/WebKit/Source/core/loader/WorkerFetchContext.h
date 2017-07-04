@@ -33,8 +33,6 @@ class WorkerFetchContext final : public BaseFetchContext {
   static WorkerFetchContext* Create(WorkerOrWorkletGlobalScope&);
   virtual ~WorkerFetchContext();
 
-  ResourceFetcher* GetResourceFetcher();
-
   // BaseFetchContext implementation:
   RefPtr<WebTaskRunner> GetTaskRunner() const override {
     return loading_task_runner_;
