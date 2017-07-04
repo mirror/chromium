@@ -44,6 +44,15 @@ bool AreURLsEquivalent(const GURL& url1, const GURL& url2) {
          url1.path_piece() == url2.path_piece();
 }
 
+bool NeedsHomePageTile(const NTPTilesVector& tiles) {
+  for (const auto& tile : tiles) {
+    if (tile.source == TileSource::HOMEPAGE) {
+      return false;
+    }
+  }
+  return true;
+}
+
 }  // namespace
 
 MostVisitedSites::MostVisitedSites(
@@ -375,8 +384,8 @@ NTPTilesVector MostVisitedSites::CreatePopularSitesTiles(
   return popular_sites_tiles;
 }
 
-NTPTilesVector MostVisitedSites::CreatePersonalTilesWithHomeTile(
-    NTPTilesVector tiles) const {
+void MostVisitedSites::BuildHomeTileAndSave(NTPTilesVector tiles,
+                                            base::string16 home_page_title) {
   DCHECK(home_page_client_);
   DCHECK_GT(num_sites_, 0u);
 
@@ -385,6 +394,7 @@ NTPTilesVector MostVisitedSites::CreatePersonalTilesWithHomeTile(
   // Add the home tile as first tile.
   NTPTile home_tile;
   home_tile.url = home_page_url;
+  home_tile.title = home_page_title;
   home_tile.source = TileSource::HOMEPAGE;
   new_tiles.push_back(std::move(home_tile));
 
@@ -399,15 +409,18 @@ NTPTilesVector MostVisitedSites::CreatePersonalTilesWithHomeTile(
 
     new_tiles.push_back(std::move(tile));
   }
-  return new_tiles;
+  SaveNewTilesAndNotify(new_tiles);
 }
 
 void MostVisitedSites::SaveNewTilesAndNotify(NTPTilesVector personal_tiles) {
   std::set<std::string> used_hosts;
   size_t num_actual_tiles = 0u;
 
-  if (ShouldAddHomeTile()) {
-    personal_tiles = CreatePersonalTilesWithHomeTile(std::move(personal_tiles));
+  if (ShouldAddHomeTile() && NeedsHomePageTile(personal_tiles)) {
+    home_page_client_->QueryTitle(
+        base::BindOnce(&MostVisitedSites::BuildHomeTileAndSave,
+                       base::Unretained(this), std::move(personal_tiles)));
+    return;
   }
   AddToHostsAndTotalCount(personal_tiles, &used_hosts, &num_actual_tiles);
 
