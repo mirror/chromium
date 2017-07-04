@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "032885c1_0cb09826",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-04T14:49:50Z",
+      "side": 1,
+      "message": "\u003e Ah, that makes sense.\n\u003e \n\u003e In that case I\u0027d suggest:\n\u003e \"Schedule a regular async worker thread termination task, and forcibly terminate V8 script execution to ensure the task runs.\"\n\nSounds good. Done.\n\n\u003e It\u0027s a bit weird that MayForciblyTerminateExecution() means to forcibly terminate. Why does it say \"MayForciblyTerminate\"? Should it just call ForciblyTerminateExecution(), or are you exercising a code path on purpose?\n\n(I renamed this to TerminateScriptExecutionIfNeeded() kinuko@ suggested)\n\nIf a devtools task is running at this point, we don\u0027t forcibly terminate the V8 script execution because the devtools task is guaranteed to finish and interrupting the devtools task sometimes causes crashes because it heavily uses V8 APIs (V8 API calls after the forcible script termination leads to crash).",
+      "parentUuid": "9ce206c3_6709a510",
+      "revId": "4d2999f8d5987d256d2c4c2c13e7a0199f43a36b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "95745152_50a1b070",
         "filename": "third_party/WebKit/Source/core/workers/WorkerThread.h",
         "patchSetId": 5
@@ -69,6 +87,24 @@
       "revId": "4d2999f8d5987d256d2c4c2c13e7a0199f43a36b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c42c913_609f7d09",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-04T14:49:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95745152_50a1b070",
+      "revId": "4d2999f8d5987d256d2c4c2c13e7a0199f43a36b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -89,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "becfe92f_0d33f32e",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-04T14:49:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f77b2131_a63601cc",
+      "revId": "4d2999f8d5987d256d2c4c2c13e7a0199f43a36b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d61f45ef_8e190124",
         "filename": "third_party/WebKit/Source/core/workers/WorkerThread.h",
         "patchSetId": 5
@@ -106,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "fd1520e6_f0247449",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-04T14:49:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d61f45ef_8e190124",
+      "revId": "4d2999f8d5987d256d2c4c2c13e7a0199f43a36b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2a8f3b1_18b136ab",
         "filename": "third_party/WebKit/Source/core/workers/WorkerThread.h",
         "patchSetId": 5
@@ -120,6 +192,24 @@
       "revId": "4d2999f8d5987d256d2c4c2c13e7a0199f43a36b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3eaa7e4c_4ed9dcf7",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-04T14:49:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2a8f3b1_18b136ab",
+      "revId": "4d2999f8d5987d256d2c4c2c13e7a0199f43a36b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
