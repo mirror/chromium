@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49cb6824_4d915be8",
+        "filename": "components/arc/volume_mounter/volume_mounter_traits.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-04T05:34:35Z",
+      "side": 1,
+      "message": "This is not what I usually see in Chromium code.\nWhy did you put this?",
+      "range": {
+        "startLine": 18,
+        "startChar": 4,
+        "endLine": 18,
+        "endChar": 27
+      },
+      "revId": "a163a913b78b55e6a29adc657e68d2586d569ebd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "702c04ee_d70d233c",
+        "filename": "components/arc/volume_mounter/volume_mounter_traits.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-04T05:34:35Z",
+      "side": 1,
+      "message": "An enum can be an unexpected integer value (this results in undefined behavior, though).\nYou still need to put a return statement here.\nThe same goes for others.",
+      "revId": "a163a913b78b55e6a29adc657e68d2586d569ebd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
