@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8baf7e0d_fec4afb7",
+        "filename": "third_party/WebKit/Source/modules/plugins/DOMPluginArray.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-04T19:11:29Z",
+      "side": 1,
+      "message": "super-nit (drive-by): I think none of this class\u0027 base classes nor members require finalization, and there is no destructor. Can this extend GarbageCollected\u003cDOMPluginArray\u003e instead?",
+      "revId": "0a8e47404c40fb2d93cb6d868dc55fc834a94a91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
