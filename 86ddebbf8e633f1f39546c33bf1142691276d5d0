@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86a8f6b6_88fa6d98",
+        "filename": "components/payments/content/payment_request_state.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-04T18:25:56Z",
+      "side": 1,
+      "message": "Not all cards may be added here. Therefore below available_instruments_.size() is a better proxy.",
+      "range": {
+        "startLine": 296,
+        "startChar": 4,
+        "endLine": 296,
+        "endChar": 32
+      },
+      "revId": "86ddebbf8e633f1f39546c33bf1142691276d5d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9da7fb0_efcfffe8",
+        "filename": "components/payments/core/journey_logger.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-04T18:25:56Z",
+      "side": 1,
+      "message": "Do we have sufficient test coverage of this?",
+      "revId": "86ddebbf8e633f1f39546c33bf1142691276d5d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6459417_f4644ff9",
+        "filename": "components/payments/core/journey_logger_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 658,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-04T18:25:56Z",
+      "side": 1,
+      "message": "Can you use the /*bla_bla\u003d*/false style, would be clearer what\u0027s going on. The comment seems at odds with what is happening",
+      "revId": "86ddebbf8e633f1f39546c33bf1142691276d5d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86c8103d_5a372304",
+        "filename": "components/payments/core/journey_logger_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-04T18:25:56Z",
+      "side": 1,
+      "message": "This comment doesn\u0027t seem to reflect what\u0027s happening?",
+      "revId": "86ddebbf8e633f1f39546c33bf1142691276d5d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
