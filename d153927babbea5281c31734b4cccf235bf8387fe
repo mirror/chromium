@@ -16,6 +16,24 @@
       "revId": "d153927babbea5281c31734b4cccf235bf8387fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "199fbb04_33643aea",
+        "filename": "third_party/WebKit/Source/platform/LayoutLocale.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-07-04T20:56:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f137abf2_8312b2fc",
+      "revId": "d153927babbea5281c31734b4cccf235bf8387fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
