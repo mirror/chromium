@@ -64,8 +64,7 @@ ResourceLoader::ResourceLoader(ResourceFetcher* fetcher,
     : scheduler_client_id_(ResourceLoadScheduler::kInvalidClientId),
       fetcher_(fetcher),
       scheduler_(scheduler),
-      resource_(resource),
-      is_cache_aware_loading_activated_(false) {
+      resource_(resource) {
   DCHECK(resource_);
   DCHECK(fetcher_);
 
@@ -112,7 +111,8 @@ void ResourceLoader::StartWith(const ResourceRequest& request) {
 
   loader_ = Context().CreateURLLoader(request);
   DCHECK(loader_);
-  loader_->SetDefersLoading(Context().DefersLoading());
+  loader_->SetDefersLoading(Context().DefersLoading() ||
+                            is_defered_loading_activated_);
 
   if (request.GetKeepalive())
     keepalive_ = this;
@@ -149,11 +149,9 @@ void ResourceLoader::Restart(const ResourceRequest& request) {
 }
 
 void ResourceLoader::SetDefersLoading(bool defers) {
-  // TODO(toyoshim): Might be called before creating |loader_| if the request
-  // is throttled.
-  DCHECK(loader_);
-
-  loader_->SetDefersLoading(defers);
+  is_defered_loading_activated_ = defers;
+  if (loader_)
+    loader_->SetDefersLoading(defers);
 }
 
 void ResourceLoader::DidChangePriority(ResourceLoadPriority load_priority,
