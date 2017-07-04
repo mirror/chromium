@@ -18,7 +18,8 @@ class CAPTURE_EXPORT VideoCaptureBufferHandle {
  public:
   virtual ~VideoCaptureBufferHandle() {}
   virtual size_t mapped_size() const = 0;
-  virtual uint8_t* data() const = 0;
+  virtual uint8_t* data(size_t plane = VideoFrame::kYPlane,
+                        const gfx::Size& dimensions = gfx::Size()) const = 0;
   virtual const uint8_t* const_data() const = 0;
 };
 
