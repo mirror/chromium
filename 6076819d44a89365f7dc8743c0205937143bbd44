@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "9e2307a9_2a0a1236",
+        "filename": "chrome/browser/android/vr_shell/ui_input_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-04T16:30:44Z",
+      "side": 1,
+      "message": "That is what I thought, too. Do you know why?",
+      "parentUuid": "bf201a91_2d4fedb3",
+      "revId": "6076819d44a89365f7dc8743c0205937143bbd44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40eb00ee_cc6f0c0b",
         "filename": "chrome/browser/android/vr_shell/vr_shell_gl.h",
         "patchSetId": 1
