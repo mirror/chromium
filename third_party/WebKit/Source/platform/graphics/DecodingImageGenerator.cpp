@@ -132,7 +132,8 @@ bool DecodingImageGenerator::onQueryYUV8(SkYUVSizeInfo* size_info,
   if (color_space)
     *color_space = kJPEG_SkYUVColorSpace;
 
-  return frame_generator_->GetYUVComponentSizes(data_.Get(), size_info);
+  return frame_generator_->GetYUVComponentSizes(data_.Get(), size_info,
+                                                color_space);
 }
 
 bool DecodingImageGenerator::onGetYUV8Planes(const SkYUVSizeInfo& size_info,
@@ -146,9 +147,8 @@ bool DecodingImageGenerator::onGetYUV8Planes(const SkYUVSizeInfo& size_info,
                static_cast<int>(frame_index_));
 
   PlatformInstrumentation::WillDecodeLazyPixelRef(uniqueID());
-  bool decoded =
-      frame_generator_->DecodeToYUV(data_.Get(), frame_index_, size_info.fSizes,
-                                    planes, size_info.fWidthBytes);
+  bool decoded = frame_generator_->DecodeToYUV(data_.Get(), frame_index_,
+                                               size_info, planes);
   PlatformInstrumentation::DidDecodeLazyPixelRef();
 
   return decoded;
