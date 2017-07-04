@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3aaa0585_be4d1a87",
+        "filename": "ui/events/blink/input_handler_proxy_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-07-04T18:14:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ed5aa6c_7af01ccb",
+      "range": {
+        "startLine": 133,
+        "startChar": 10,
+        "endLine": 133,
+        "endChar": 23
+      },
+      "revId": "7c5edcd817f1ddb513fba1a3c1d45e656d117602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24252f2b_4be9dc58",
         "filename": "ui/events/blink/input_handler_proxy_unittest.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-04T16:46:45Z",
       "side": 1,
       "message": "While you\u0027re here...\n\nShould this be delta_y_or_scale?",
+      "range": {
+        "startLine": 564,
+        "startChar": 32,
+        "endLine": 564,
+        "endChar": 47
+      },
+      "revId": "7c5edcd817f1ddb513fba1a3c1d45e656d117602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eb273d52_6a741645",
+        "filename": "ui/events/blink/input_handler_proxy_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-07-04T18:14:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24252f2b_4be9dc58",
       "range": {
         "startLine": 564,
         "startChar": 32,
