@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d1ff09f_8a011183",
+        "filename": "content/test/gpu/gpu_tests/webgl_conformance_expectations.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-07-04T17:59:52Z",
+      "side": 1,
+      "message": "You are regressing something that is already shipping. This is not good. this test call createImageBitmap with the option \u0027premultiplyAlpha: \"none\"\u0027 so there should be no loss of precision in this case. The code should not be going through a premul intermediate.",
+      "revId": "f058e2d144d58f3c2b69bf7a05958eb8a4af354b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45b5189e_bd714f59",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-07-04T17:59:52Z",
+      "side": 1,
+      "message": "Using kPremultiplyAlpha intermediate unconditionally? This is not good.",
+      "range": {
+        "startLine": 262,
+        "startChar": 47,
+        "endLine": 262,
+        "endChar": 64
+      },
+      "revId": "f058e2d144d58f3c2b69bf7a05958eb8a4af354b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "377bb8a9_27e6f5fc",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-07-04T17:59:52Z",
+      "side": 1,
+      "message": "Here you are using kPremul_SkAlphaType even when parsed_options-\u003epremultiply_alpha is false. This is a problem IMHO.",
+      "range": {
+        "startLine": 266,
+        "startChar": 36,
+        "endLine": 266,
+        "endChar": 55
+      },
+      "revId": "f058e2d144d58f3c2b69bf7a05958eb8a4af354b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
