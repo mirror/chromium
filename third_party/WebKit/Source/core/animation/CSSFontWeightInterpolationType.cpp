@@ -5,7 +5,6 @@
 #include "core/animation/CSSFontWeightInterpolationType.h"
 
 #include <memory>
-#include "core/animation/FontWeightConversion.h"
 #include "core/css/CSSPrimitiveValueMappings.h"
 #include "core/css/resolver/StyleResolverState.h"
 #include "platform/wtf/PtrUtil.h"
@@ -16,12 +15,12 @@ class InheritedFontWeightChecker
     : public CSSInterpolationType::CSSConversionChecker {
  public:
   static std::unique_ptr<InheritedFontWeightChecker> Create(
-      FontWeight font_weight) {
+      FontSelectionValue font_weight) {
     return WTF::WrapUnique(new InheritedFontWeightChecker(font_weight));
   }
 
  private:
-  InheritedFontWeightChecker(FontWeight font_weight)
+  InheritedFontWeightChecker(FontSelectionValue font_weight)
       : font_weight_(font_weight) {}
 
   bool IsValid(const StyleResolverState& state,
@@ -33,9 +32,8 @@ class InheritedFontWeightChecker
 };
 
 InterpolationValue CSSFontWeightInterpolationType::CreateFontWeightValue(
-    FontWeight font_weight) const {
-  return InterpolationValue(
-      InterpolableNumber::Create(FontWeightToDouble(font_weight)));
+    FontSelectionValue font_weight) const {
+  return InterpolationValue(InterpolableNumber::Create(font_weight));
 }
 
 InterpolationValue CSSFontWeightInterpolationType::MaybeConvertNeutral(
@@ -47,7 +45,7 @@ InterpolationValue CSSFontWeightInterpolationType::MaybeConvertNeutral(
 InterpolationValue CSSFontWeightInterpolationType::MaybeConvertInitial(
     const StyleResolverState&,
     ConversionCheckers& conversion_checkers) const {
-  return CreateFontWeightValue(kFontWeightNormal);
+  return CreateFontWeightValue(NormalWeightValue());
 }
 
 InterpolationValue CSSFontWeightInterpolationType::MaybeConvertInherit(
@@ -55,7 +53,8 @@ InterpolationValue CSSFontWeightInterpolationType::MaybeConvertInherit(
     ConversionCheckers& conversion_checkers) const {
   if (!state.ParentStyle())
     return nullptr;
-  FontWeight inherited_font_weight = state.ParentStyle()->GetFontWeight();
+  FontSelectionValue inherited_font_weight =
+      state.ParentStyle()->GetFontWeight();
   conversion_checkers.push_back(
       InheritedFontWeightChecker::Create(inherited_font_weight));
   return CreateFontWeightValue(inherited_font_weight);
@@ -78,7 +77,8 @@ InterpolationValue CSSFontWeightInterpolationType::MaybeConvertValue(
     case CSSValueBolder:
     case CSSValueLighter: {
       DCHECK(state);
-      FontWeight inherited_font_weight = state->ParentStyle()->GetFontWeight();
+      FontSelectionValue inherited_font_weight =
+          state->ParentStyle()->GetFontWeight();
       conversion_checkers.push_back(
           InheritedFontWeightChecker::Create(inherited_font_weight));
       if (keyword == CSSValueBolder)
@@ -89,7 +89,9 @@ InterpolationValue CSSFontWeightInterpolationType::MaybeConvertValue(
     }
 
     default:
-      return CreateFontWeightValue(identifier_value.ConvertTo<FontWeight>());
+      DCHECK(value.IsPrimitiveValue());
+      return CreateFontWeightValue(
+          FontSelectionValue(ToCSSPrimitiveValue(value).GetFloatValue()));
   }
 }
 
@@ -103,8 +105,8 @@ void CSSFontWeightInterpolationType::ApplyStandardPropertyValue(
     const InterpolableValue& interpolable_value,
     const NonInterpolableValue*,
     StyleResolverState& state) const {
-  state.GetFontBuilder().SetWeight(
-      DoubleToFontWeight(ToInterpolableNumber(interpolable_value).Value()));
+  state.GetFontBuilder().SetWeight(FontSelectionValue(
+      static_cast<float>(ToInterpolableNumber(interpolable_value).Value())));
 }
 
 }  // namespace blink

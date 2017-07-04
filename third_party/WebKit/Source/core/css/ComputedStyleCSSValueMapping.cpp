@@ -756,16 +756,22 @@ static CSSPrimitiveValue* ValueForFontSize(const ComputedStyle& style) {
                                 style);
 }
 
-static CSSIdentifierValue* ValueForFontStretch(const ComputedStyle& style) {
-  return CSSIdentifierValue::Create(style.GetFontDescription().Stretch());
+// TODO: How about the @font-face context?
+static CSSPrimitiveValue* ValueForFontStretch(const ComputedStyle& style) {
+  // TODO: Map fixed known values to keywords?
+  return CSSPrimitiveValue::Create(style.GetFontDescription().Stretch(),
+                                   CSSPrimitiveValue::UnitType::kNumber);
 }
 
-static CSSIdentifierValue* ValueForFontStyle(const ComputedStyle& style) {
-  return CSSIdentifierValue::Create(style.GetFontDescription().Style());
+static CSSPrimitiveValue* ValueForFontStyle(const ComputedStyle& style) {
+  // TODO: I am not sure this is always a primitve value?
+  return CSSPrimitiveValue::Create(style.GetFontDescription().Style(),
+                                   CSSPrimitiveValue::UnitType::kNumber);
 }
 
-static CSSIdentifierValue* ValueForFontWeight(const ComputedStyle& style) {
-  return CSSIdentifierValue::Create(style.GetFontDescription().Weight());
+static CSSValue* ValueForFontWeight(const ComputedStyle& style) {
+  return CSSPrimitiveValue::Create(style.GetFontDescription().Weight(),
+                                   CSSPrimitiveValue::UnitType::kNumber);
 }
 
 static CSSIdentifierValue* ValueForFontVariantCaps(const ComputedStyle& style) {

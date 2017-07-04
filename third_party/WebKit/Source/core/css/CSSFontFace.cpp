@@ -144,7 +144,10 @@ void CSSFontFace::Load() {
   FontFamily font_family;
   font_family.SetFamily(font_face_->family());
   font_description.SetFamily(font_family);
-  font_description.SetTraits(font_face_->Traits());
+  // TODO: Double check, but it seems like we do not need to set Traits here, as
+  // the @font-face descriptor traits are capabilities, and not used for
+  // matching against local fonts.
+  // font_description.SetTraits(font_face_->Traits());
   Load(font_description);
 }
 

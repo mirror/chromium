@@ -134,9 +134,6 @@ STATIC_ASSERT_ENUM(WebClientRedirectPolicy::kNotClientRedirect,
 STATIC_ASSERT_ENUM(WebClientRedirectPolicy::kClientRedirect,
                    ClientRedirectPolicy::kClientRedirect);
 
-
-
-
 STATIC_ASSERT_ENUM(WebFrameOwnerProperties::ScrollingMode::kAuto,
                    kScrollbarAuto);
 STATIC_ASSERT_ENUM(WebFrameOwnerProperties::ScrollingMode::kAlwaysOff,
