@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df387b58_27472ae1",
+        "filename": "build/android/gyp/util/build_utils.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-04T17:56:08Z",
+      "side": 1,
+      "message": "nit: might be more useful to pass it zip_path? Generally zip_path is always known, but input_paths are often random. (e.g. zip_path is assets/*, but fs_path is ?)",
+      "revId": "f32efa55bc854f55b8d2fd83d1a666037d00442f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "766375de_df3c2f37",
+        "filename": "build/config/android/config.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-04T17:56:08Z",
+      "side": 1,
+      "message": "Would it make more sense for this to be applied per-target rather than globally?",
+      "revId": "f32efa55bc854f55b8d2fd83d1a666037d00442f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c3e62f3_6c753349",
+        "filename": "build/config/android/internal_rules.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 1634,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-04T17:56:08Z",
+      "side": 1,
+      "message": "nit: prefix all of these variables with _",
+      "range": {
+        "startLine": 1634,
+        "startChar": 6,
+        "endLine": 1634,
+        "endChar": 32
+      },
+      "revId": "f32efa55bc854f55b8d2fd83d1a666037d00442f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
