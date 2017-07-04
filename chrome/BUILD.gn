@@ -950,6 +950,20 @@ if (is_win) {
     }
   }
 
+  copy("angle_bundle_data_copy") {
+    sources = [
+      "$root_out_dir/libEGL.dylib",
+      "$root_out_dir/libGLESv2.dylib",
+    ]
+    outputs = [
+      "$root_out_dir/Chromium.app/Contents/Versions/$chrome_version_full/$chrome_framework_name.framework/Versions/A/{{source_file_part}}",
+    ]
+    deps = [
+      "//third_party/angle:libEGL",
+      "//third_party/angle:libGLESv2",
+    ]
+  }
+
   _should_bundle_widevine =
       (is_chrome_branded || enable_widevine) && enable_library_cdms
   if (_should_bundle_widevine) {
@@ -1225,6 +1239,7 @@ if (is_win) {
     ]
 
     deps = [
+      ":angle_bundle_data_copy",
       ":chrome_framework_helpers",
       ":chrome_framework_plugins",
       ":chrome_framework_resources",
