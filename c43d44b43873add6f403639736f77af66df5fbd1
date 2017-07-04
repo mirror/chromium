@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "95dfa5b3_97652c27",
+        "filename": "cc/surfaces/surface_dependency_deadline.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-04T22:10:47Z",
+      "side": 1,
+      "message": "We determine whether to report a missed frame or not and the fields based on the last args. Basically I want to make the two SurfaceDependencyDeadlines act as one, so I\u0027m copying everything over.",
+      "parentUuid": "3c85b7f0_36eef74d",
+      "revId": "c43d44b43873add6f403639736f77af66df5fbd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "978369d3_e4371fdf",
         "filename": "cc/surfaces/surface_dependency_tracker.cc",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "c43d44b43873add6f403639736f77af66df5fbd1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "677dc945_797927c4",
+        "filename": "cc/surfaces/surface_dependency_tracker.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-04T22:10:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "978369d3_e4371fdf",
+      "revId": "c43d44b43873add6f403639736f77af66df5fbd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b8512ff9_55bf7ac1",
+        "filename": "cc/surfaces/surface_dependency_tracker.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-04T22:10:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "049c4880_d98bb221",
+      "revId": "c43d44b43873add6f403639736f77af66df5fbd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78aaaf15_c0533ab5",
         "filename": "cc/surfaces/surface_synchronization_unittest.cc",
         "patchSetId": 11
@@ -64,6 +118,24 @@
       "writtenOn": "2017-07-04T21:20:41Z",
       "side": 1,
       "message": "Is it possible to get the default deadline from SurfaceDependencyTracker instead of hard-coding it here, or at least make it a const?",
+      "revId": "c43d44b43873add6f403639736f77af66df5fbd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2f32381_2ac2ee29",
+        "filename": "cc/surfaces/surface_synchronization_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1521,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-04T22:10:47Z",
+      "side": 1,
+      "message": "Well, I use different numbers in different places and this is max -1. I can update things but this will cause a lot of churn that I want to avoid in this CL. I\u0027ll punt here and do this in a separate CL.",
+      "parentUuid": "78aaaf15_c0533ab5",
       "revId": "c43d44b43873add6f403639736f77af66df5fbd1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
