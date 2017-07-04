@@ -8,4 +8,5 @@ include_rules = [
     "+web",
     "+public/platform",
     "+public/web",
+    "+skia",
 ]
