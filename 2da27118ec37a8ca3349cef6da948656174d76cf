@@ -22,6 +22,30 @@
       "revId": "2da27118ec37a8ca3349cef6da948656174d76cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ef89189_6a07b652",
+        "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasFrameDispatcherImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-07-04T15:29:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56e72c69_ee18249a",
+      "range": {
+        "startLine": 62,
+        "startChar": 52,
+        "endLine": 62,
+        "endChar": 65
+      },
+      "revId": "2da27118ec37a8ca3349cef6da948656174d76cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
