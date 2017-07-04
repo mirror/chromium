@@ -19,13 +19,26 @@ FontGlobalContext* FontGlobalContext::Get(CreateIfNeeded create_if_needed) {
   return *font_persistent;
 }
 
-FontGlobalContext::FontGlobalContext() {}
+FontGlobalContext::FontGlobalContext()
+    : default_locale_(nullptr),
+      system_locale_(nullptr),
+      default_locale_for_han_(nullptr),
+      has_default_locale_for_han_(false) {}
 
 void FontGlobalContext::ClearMemory() {
   if (!Get(kDoNotCreate))
     return;
 
   GetFontCache().Invalidate();
+}
+
+void FontGlobalContext::ClearForTesting() {
+  FontGlobalContext* ctx = Get();
+  ctx->default_locale_ = nullptr;
+  ctx->system_locale_ = nullptr;
+  ctx->default_locale_for_han_ = nullptr;
+  ctx->layout_locale_map_.clear();
+  ctx->font_cache_.Invalidate();
 }
 
 }  // namespace blink
