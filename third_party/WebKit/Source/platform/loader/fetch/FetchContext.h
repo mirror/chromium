@@ -174,6 +174,7 @@ class PLATFORM_EXPORT FetchContext
 
   virtual bool IsControlledByServiceWorker() const { return false; }
   virtual int64_t ServiceWorkerID() const { return -1; }
+  virtual int ApplicationCacheHostID() const { return 0; }
 
   virtual bool IsMainFrame() const { return true; }
   virtual bool DefersLoading() const { return false; }

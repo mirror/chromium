@@ -54,6 +54,9 @@ class WebWorkerFetchContext {
   // Reports the certificate error to the browser process.
   virtual void DidRunContentWithCertificateErrors(const WebURL& url) {}
   virtual void DidDisplayContentWithCertificateErrors(const WebURL& url) {}
+
+  virtual void SetApplicationCacheHostID(int id) {}
+  virtual int ApplicationCacheHostID() const { return 0; }
 };
 
 }  // namespace blink

@@ -134,6 +134,7 @@ class WebApplicationCacheHost {
   virtual void GetAssociatedCacheInfo(CacheInfo*) {}
   virtual void GetResourceList(WebVector<ResourceInfo>*) {}
   virtual void DeleteAssociatedCacheGroup() {}
+  virtual int GetHostID() const { return 0; }
 };
 
 }  // namespace blink

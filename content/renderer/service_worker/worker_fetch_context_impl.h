@@ -50,6 +50,8 @@ class WorkerFetchContextImpl : public blink::WebWorkerFetchContext,
   void DidRunContentWithCertificateErrors(const blink::WebURL& url) override;
   void DidDisplayContentWithCertificateErrors(
       const blink::WebURL& url) override;
+  void SetApplicationCacheHostID(int id) override;
+  int ApplicationCacheHostID() const override;
 
   // mojom::ServiceWorkerWorkerClient implementation:
   void SetControllerServiceWorker(int64_t controller_version_id) override;
@@ -88,6 +90,7 @@ class WorkerFetchContextImpl : public blink::WebWorkerFetchContext,
   int parent_frame_id_ = MSG_ROUTING_NONE;
   GURL first_party_for_cookies_;
   bool is_secure_context_ = false;
+  int appcache_host_id_ = 0;
 };
 
 }  // namespace content

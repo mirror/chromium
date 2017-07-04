@@ -661,6 +661,12 @@ int64_t FrameFetchContext::ServiceWorkerID() const {
              : -1;
 }
 
+int FrameFetchContext::ApplicationCacheHostID() const {
+  if (!document_loader_)
+    return 0;
+  return document_loader_->GetApplicationCacheHost()->GetHostID();
+}
+
 bool FrameFetchContext::IsMainFrame() const {
   if (IsDetached())
     return frozen_state_->is_main_frame;
