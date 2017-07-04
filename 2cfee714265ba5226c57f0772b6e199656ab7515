@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb580a45_5e5f8f2b",
+        "filename": "cc/input/input_handler.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-07-04T14:21:38Z",
+      "side": 1,
+      "message": "nit: whitelisted",
+      "range": {
+        "startLine": 203,
+        "startChar": 45,
+        "endLine": 203,
+        "endChar": 46
+      },
+      "revId": "2cfee714265ba5226c57f0772b6e199656ab7515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a6b6c195_c0597fa7",
+        "filename": "cc/input/input_handler.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-07-04T14:21:38Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be kTouchActionAuto?",
+      "range": {
+        "startLine": 205,
+        "startChar": 45,
+        "endLine": 205,
+        "endChar": 60
+      },
+      "revId": "2cfee714265ba5226c57f0772b6e199656ab7515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "68052a02_7fbab723",
+        "filename": "cc/layers/touch_action_region.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-07-04T14:21:38Z",
+      "side": 1,
+      "message": "Auto?",
+      "range": {
+        "startLine": 37,
+        "startChar": 54,
+        "endLine": 37,
+        "endChar": 58
+      },
+      "revId": "2cfee714265ba5226c57f0772b6e199656ab7515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ee41ba92_f25f3ccb",
+        "filename": "cc/layers/touch_action_region.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-07-04T14:21:38Z",
+      "side": 1,
+      "message": "Nit: In the case the -\u003e If the",
+      "range": {
+        "startLine": 30,
+        "startChar": 18,
+        "endLine": 30,
+        "endChar": 33
+      },
+      "revId": "2cfee714265ba5226c57f0772b6e199656ab7515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ddc16559_45fce45b",
+        "filename": "cc/layers/touch_action_region.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-07-04T14:21:38Z",
+      "side": 1,
+      "message": "Should this be kTouchActionAuto?",
+      "range": {
+        "startLine": 30,
+        "startChar": 49,
+        "endLine": 30,
+        "endChar": 64
+      },
+      "revId": "2cfee714265ba5226c57f0772b6e199656ab7515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5fb61275_6bb690e9",
+        "filename": "cc/layers/touch_action_region.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-07-04T14:21:38Z",
+      "side": 1,
+      "message": "explicitely -\u003e explicitly",
+      "range": {
+        "startLine": 31,
+        "startChar": 38,
+        "endLine": 31,
+        "endChar": 49
+      },
+      "revId": "2cfee714265ba5226c57f0772b6e199656ab7515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "354fe24f_544e7c20",
+        "filename": "cc/layers/touch_action_region_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-07-04T14:21:38Z",
+      "side": 1,
+      "message": "Auto? (And below)",
+      "range": {
+        "startLine": 23,
+        "startChar": 68,
+        "endLine": 23,
+        "endChar": 71
+      },
+      "revId": "2cfee714265ba5226c57f0772b6e199656ab7515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cc9621cb_90e07e36",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-07-04T14:21:38Z",
+      "side": 1,
+      "message": "Auto?",
+      "range": {
+        "startLine": 633,
+        "startChar": 38,
+        "endLine": 633,
+        "endChar": 41
+      },
+      "revId": "2cfee714265ba5226c57f0772b6e199656ab7515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dab42c68_caa02d6c",
+        "filename": "ui/events/blink/input_handler_proxy.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1131,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-07-04T14:21:38Z",
+      "side": 1,
+      "message": "Auto?",
+      "range": {
+        "startLine": 1131,
+        "startChar": 62,
+        "endLine": 1131,
+        "endChar": 65
+      },
+      "revId": "2cfee714265ba5226c57f0772b6e199656ab7515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c2b68007_7541dcfe",
+        "filename": "ui/events/blink/input_handler_proxy_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-07-04T14:21:38Z",
+      "side": 1,
+      "message": "Why can\u0027t this be in the anonymous namespace?",
+      "range": {
+        "startLine": 361,
+        "startChar": 37,
+        "endLine": 361,
+        "endChar": 54
+      },
+      "revId": "2cfee714265ba5226c57f0772b6e199656ab7515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0933009a_76af3940",
+        "filename": "ui/events/blink/input_handler_proxy_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 2471,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-07-04T14:21:38Z",
+      "side": 1,
+      "message": "Thanks - this looks great!",
+      "range": {
+        "startLine": 2466,
+        "startChar": 2,
+        "endLine": 2471,
+        "endChar": 62
+      },
+      "revId": "2cfee714265ba5226c57f0772b6e199656ab7515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
