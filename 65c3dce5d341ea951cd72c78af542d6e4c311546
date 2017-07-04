@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d93b7c61_3a0037e6",
+        "filename": "services/identity/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-04T14:34:24Z",
+      "side": 1,
+      "message": "blank space at the end of the line.",
+      "range": {
+        "startLine": 32,
+        "startChar": 61,
+        "endLine": 32,
+        "endChar": 74
+      },
+      "revId": "65c3dce5d341ea951cd72c78af542d6e4c311546",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
