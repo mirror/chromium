@@ -24,7 +24,7 @@ class CAPTURE_EXPORT SharedMemoryBufferHandle
   ~SharedMemoryBufferHandle() override;
 
   size_t mapped_size() const override;
-  uint8_t* data() const override;
+  uint8_t* data(size_t plane, const gfx::Size& dimensions) const override;
   const uint8_t* const_data() const override;
 
  private:
