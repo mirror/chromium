@@ -55,27 +55,6 @@ DOMPlugin* DOMPluginArray::item(unsigned index) {
   if (index >= dom_plugins_.size())
     return nullptr;
 
-  // TODO(lfg): Temporary to track down https://crbug.com/731239.
-  if (!GetPluginData()) {
-    LocalFrame* frame = GetFrame();
-    LocalFrameClient* client = GetFrame()->Client();
-    Settings* settings = GetFrame()->GetSettings();
-    ExecutionContext* context = GetExecutionContext();
-    Page* page = GetFrame()->GetPage();
-    bool allow_plugins =
-        frame->Loader().AllowPlugins(kNotAboutToInstantiatePlugin);
-
-    CHECK(false);
-
-    WTF::debug::Alias(frame);
-    WTF::debug::Alias(client);
-    WTF::debug::Alias(settings);
-    WTF::debug::Alias(context);
-    WTF::debug::Alias(page);
-    WTF::debug::Alias(&allow_plugins);
-  }
-  CHECK(main_frame_origin_->IsSameSchemeHostPort(GetPluginData()->Origin()));
-
   if (!dom_plugins_[index]) {
     dom_plugins_[index] =
         DOMPlugin::Create(GetFrame(), *GetPluginData()->Plugins()[index]);
