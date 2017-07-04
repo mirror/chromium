@@ -436,6 +436,7 @@ void FrameTreeNode::ResetNavigationRequest(bool keep_state,
   NavigationRequest::AssociatedSiteInstanceType site_instance_type =
       navigation_request_->associated_site_instance_type();
   navigation_request_.reset();
+  had_double_load_ = false;
 
   if (keep_state)
     return;
@@ -481,8 +482,11 @@ void FrameTreeNode::DidStartLoading(bool to_different_document,
     frame_tree_->ResetLoadProgress();
 
   // Notify the WebContents.
-  if (!was_previously_loading)
+  if (!was_previously_loading) {
     navigator()->GetDelegate()->DidStartLoading(this, to_different_document);
+  } else {
+    had_double_load_ = true;
+  }
 
   // Set initial load progress and update overall progress. This will notify
   // the WebContents of the load progress change.
@@ -495,6 +499,12 @@ void FrameTreeNode::DidStartLoading(bool to_different_document,
 void FrameTreeNode::DidStopLoading() {
   // Set final load progress and update overall progress. This will notify
   // the WebContents of the load progress change.
+
+  if (had_double_load_) {
+    had_double_load_ = false;
+    return;
+  }
+
   DidChangeLoadProgress(kLoadingProgressDone);
 
   // Notify the WebContents.
@@ -571,6 +581,14 @@ void FrameTreeNode::BeforeUnloadCanceled() {
 void FrameTreeNode::OnSetHasReceivedUserGesture() {
   render_manager_.OnSetHasReceivedUserGesture();
   replication_state_.has_received_user_gesture = true;
+}
+
+bool FrameTreeNode::had_double_load() {
+  return had_double_load_;
+}
+
+void FrameTreeNode::set_had_double_load(bool load) {
+  had_double_load_ = load;
 }
 
 FrameTreeNode* FrameTreeNode::GetSibling(int relative_offset) const {

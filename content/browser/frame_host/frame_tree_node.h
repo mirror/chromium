@@ -352,6 +352,10 @@ class CONTENT_EXPORT FrameTreeNode {
 
   void OnSetHasReceivedUserGesture();
 
+  bool had_double_load();
+
+  void set_had_double_load(bool);
+
  private:
   FRIEND_TEST_ALL_PREFIXES(SitePerProcessFeaturePolicyBrowserTest,
                            ContainerPolicyDynamic);
@@ -457,6 +461,8 @@ class CONTENT_EXPORT FrameTreeNode {
   // browser process activities to this node (when possible).  It is unrelated
   // to the core logic of FrameTreeNode.
   FrameTreeNodeBlameContext blame_context_;
+
+  bool had_double_load_;
 
   DISALLOW_COPY_AND_ASSIGN(FrameTreeNode);
 };
