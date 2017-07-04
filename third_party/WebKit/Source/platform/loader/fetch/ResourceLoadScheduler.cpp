@@ -4,24 +4,70 @@
 
 #include "platform/loader/fetch/ResourceLoadScheduler.h"
 
+#include "platform/RuntimeEnabledFeatures.h"
+
 namespace blink {
+
+namespace {
+
+// TODO(toyoshim): Should be managed via field trial flag.
+constexpr size_t kOutstandingThrottledLimit = 16u;
+
+}  // namespace
 
 constexpr ResourceLoadScheduler::ClientId
     ResourceLoadScheduler::kInvalidClientId;
 
-ResourceLoadScheduler::ResourceLoadScheduler() = default;
+ResourceLoadScheduler::ResourceLoadScheduler(FetchContext* context)
+    : context_(context) {
+  DCHECK(context);
+
+  if (!RuntimeEnabledFeatures::ResourceLoadSchedulerEnabled())
+    return;
+
+  auto* scheduler = context->GetScheduler();
+  if (!scheduler)
+    return;
+
+  is_enabled_ = true;
+  scheduler->AddThrottlingObserver(WebFrameScheduler::ObserverType::kLoader,
+                                   this);
+}
 
 DEFINE_TRACE(ResourceLoadScheduler) {
   visitor->Trace(pending_request_map_);
+  visitor->Trace(context_);
+}
+
+void ResourceLoadScheduler::Shutdown() {
+  // Do nothing if the feature is not enabled, or Shutdown() was already called.
+  if (is_shutdown_)
+    return;
+  is_shutdown_ = true;
+
+  if (!is_enabled_)
+    return;
+  auto* scheduler = context_->GetScheduler();
+  if (scheduler) {
+    // Assuming that When SetOutstandingLimitForTesting() is called,
+    // GetScheduler() returns nullptr or the runtime feature flag is enabled.
+    // Otherwise, RemoveThrottlingObserver() call below will hit an assertion.
+    scheduler->RemoveThrottlingObserver(
+        WebFrameScheduler::ObserverType::kLoader, this);
+  }
 }
 
 void ResourceLoadScheduler::Request(ResourceLoadSchedulerClient* client,
                                     ThrottleOption option,
                                     ResourceLoadScheduler::ClientId* id) {
   *id = GenerateClientId();
+  if (is_shutdown_)
+    return;
 
-  if (option == ThrottleOption::kCanNotBeThrottled)
-    return Run(*id, client);
+  if (!is_enabled_ || option == ThrottleOption::kCanNotBeThrottled) {
+    Run(*id, client);
+    return;
+  }
 
   pending_request_map_.insert(*id, client);
   pending_request_queue_.push_back(*id);
@@ -46,7 +92,7 @@ bool ResourceLoadScheduler::Release(
     pending_request_map_.erase(found);
     // Intentionally does not remove it from |pending_request_queue_|.
 
-    // Didn't any release running request, but the outstanding limit might be
+    // Didn't release any running requests, but the outstanding limit might be
     // changed to allow another request.
     if (option == ReleaseOption::kReleaseAndSchedule)
       MaybeRun();
@@ -56,8 +102,20 @@ bool ResourceLoadScheduler::Release(
 }
 
 void ResourceLoadScheduler::SetOutstandingLimitForTesting(size_t limit) {
-  outstanding_limit_ = limit;
-  MaybeRun();
+  SetOutstandingLimitAndMaybeRun(limit);
+  is_enabled_ = true;
+}
+
+void ResourceLoadScheduler::OnThrottlingStateChanged(
+    WebFrameScheduler::ThrottlingState state) {
+  switch (state) {
+    case WebFrameScheduler::ThrottlingState::kThrottled:
+      SetOutstandingLimitAndMaybeRun(kOutstandingThrottledLimit);
+      break;
+    case WebFrameScheduler::ThrottlingState::kNotThrottled:
+      SetOutstandingLimitAndMaybeRun(kOutstandingUnlimited);
+      break;
+  }
 }
 
 ResourceLoadScheduler::ClientId ResourceLoadScheduler::GenerateClientId() {
@@ -67,6 +125,9 @@ ResourceLoadScheduler::ClientId ResourceLoadScheduler::GenerateClientId() {
 }
 
 void ResourceLoadScheduler::MaybeRun() {
+  if (is_shutdown_)
+    return;
+
   while (!pending_request_queue_.empty()) {
     if (outstanding_limit_ && running_requests_.size() >= outstanding_limit_)
       return;
@@ -84,6 +145,11 @@ void ResourceLoadScheduler::Run(ResourceLoadScheduler::ClientId id,
                                 ResourceLoadSchedulerClient* client) {
   running_requests_.insert(id);
   client->Run();
+}
+
+void ResourceLoadScheduler::SetOutstandingLimitAndMaybeRun(size_t limit) {
+  outstanding_limit_ = limit;
+  MaybeRun();
 }
 
 }  // namespace blink
