@@ -34,6 +34,24 @@
       "revId": "70c87314e458c12141e123cc5612558d1c171028",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d3c5d66_8c209d95",
+        "filename": "ui/events/blink/input_handler_proxy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-07-04T15:29:24Z",
+      "side": 1,
+      "message": "Added comment:\n```\n  // Gesture events was already delayed by blocking events in rAF aligned\n  // queue. We want to avoid additional one frame delay by flushing the\n  // VSync queue immediately.\n  // The first GSU latency was tracked by:\n  // |smoothness.tough_scrolling_cases:first_gesture_scroll_update_latency|.\n```",
+      "parentUuid": "fbbfe3a8_28c7535d",
+      "revId": "70c87314e458c12141e123cc5612558d1c171028",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
