@@ -251,6 +251,7 @@ enum EffectiveConnectionType {
     [RaisesException] void startTrackingRepaints(Document document);
     [RaisesException] void stopTrackingRepaints(Document document);
 
+
     // |node| should be Document, HTMLIFrameElement, or unspecified.
     // If |node| is an HTMLIFrameElement, it assumes node.contentDocument is
     // specified without security checks. Unspecified means this document.
