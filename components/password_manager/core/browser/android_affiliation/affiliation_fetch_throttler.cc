@@ -9,7 +9,7 @@
 #include "base/logging.h"
 #include "base/rand_util.h"
 #include "base/sequenced_task_runner.h"
-#include "base/threading/thread_task_runner_handle.h"
+#include "base/threading/sequenced_task_runner_handle.h"
 #include "base/time/tick_clock.h"
 #include "base/time/time.h"
 #include "components/password_manager/core/browser/android_affiliation/affiliation_fetch_throttler_delegate.h"
