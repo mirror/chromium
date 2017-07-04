@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f954482_a6386b01",
+        "filename": "cc/surfaces/direct_layer_tree_frame_sink.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-04T18:50:29Z",
+      "side": 1,
+      "message": "should we unregister in detatchfromclient?",
+      "revId": "6717478f5cf2b59c15351f405ab99d0d1dd26647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05bd6883_c3c7983c",
+        "filename": "ui/compositor/test/in_process_context_factory.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-04T18:50:29Z",
+      "side": 1,
+      "message": "Should be removed?",
+      "revId": "6717478f5cf2b59c15351f405ab99d0d1dd26647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
