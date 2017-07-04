@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "613c1b1c_5568ed11",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/os_metrics_mac.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-04T08:54:46Z",
+      "side": 1,
+      "message": "just DCHECK_EQ(base::kNullProcessId, pid) should suffice here. even if this happens in production, getting the data of the current process is not the end of the world.",
+      "range": {
+        "startLine": 14,
+        "startChar": 2,
+        "endLine": 17,
+        "endChar": 3
+      },
+      "revId": "00970737c7035d297c2c5f179d9a29e94d531e68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "053d1a21_411bf7f6",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/os_metrics_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-04T08:54:46Z",
+      "side": 1,
+      "message": "ditto about just dcheck",
+      "range": {
+        "startLine": 14,
+        "startChar": 2,
+        "endLine": 17,
+        "endChar": 3
+      },
+      "revId": "00970737c7035d297c2c5f179d9a29e94d531e68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c04caa0c_107d23d5",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/process_metrics_memory_dump_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-04T08:54:46Z",
+      "side": 1,
+      "message": "This is now unused, or am I missing something?",
+      "range": {
+        "startLine": 639,
+        "startChar": 2,
+        "endLine": 639,
+        "endChar": 38
+      },
+      "revId": "00970737c7035d297c2c5f179d9a29e94d531e68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc093f83_2f776e0c",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/process_metrics_memory_dump_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-04T08:54:46Z",
+      "side": 1,
+      "message": "isn\u0027t this a dupe of line 646? I guess you don\u0027t want the line 646-647 and just this one",
+      "range": {
+        "startLine": 655,
+        "startChar": 2,
+        "endLine": 656,
+        "endChar": 40
+      },
+      "revId": "00970737c7035d297c2c5f179d9a29e94d531e68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
