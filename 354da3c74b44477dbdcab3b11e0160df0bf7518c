@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "fc0aa36b_736d8426",
+        "filename": "third_party/WebKit/Source/platform/LayoutLocale.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-07-04T16:59:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82d8959e_73d311f0",
+      "revId": "354da3c74b44477dbdcab3b11e0160df0bf7518c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42599ca7_af38f27f",
         "filename": "third_party/WebKit/Source/platform/LayoutLocale.cpp",
         "patchSetId": 4
@@ -51,6 +69,24 @@
       "revId": "354da3c74b44477dbdcab3b11e0160df0bf7518c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "001831bd_cbbaea2e",
+        "filename": "third_party/WebKit/Source/platform/LayoutLocale.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-07-04T16:59:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42599ca7_af38f27f",
+      "revId": "354da3c74b44477dbdcab3b11e0160df0bf7518c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "728aca95_3cb1bf2f",
+        "filename": "third_party/WebKit/Source/platform/LayoutLocale.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-07-04T16:59:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c794942e_70e99ea5",
+      "revId": "354da3c74b44477dbdcab3b11e0160df0bf7518c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5c36c37_cc4c5bda",
         "filename": "third_party/WebKit/Source/platform/LayoutLocale.h",
         "patchSetId": 4
@@ -88,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "01eeca07_bd5230da",
+        "filename": "third_party/WebKit/Source/platform/LayoutLocale.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-07-04T16:59:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5c36c37_cc4c5bda",
+      "revId": "354da3c74b44477dbdcab3b11e0160df0bf7518c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33ad66bd_ffa126c4",
         "filename": "third_party/WebKit/Source/platform/fonts/FontGlobalContext.h",
         "patchSetId": 4
@@ -102,6 +174,24 @@
       "revId": "354da3c74b44477dbdcab3b11e0160df0bf7518c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9641e4c_88a7b77b",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontGlobalContext.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-07-04T16:59:04Z",
+      "side": 1,
+      "message": "Added font_cache_ to the purge.",
+      "parentUuid": "33ad66bd_ffa126c4",
+      "revId": "354da3c74b44477dbdcab3b11e0160df0bf7518c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
