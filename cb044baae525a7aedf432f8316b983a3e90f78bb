@@ -37,6 +37,41 @@
     },
     {
       "key": {
+        "uuid": "15f381ff_6a27eaf4",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-04T07:37:53Z",
+      "side": 1,
+      "message": "\u003e Shutdown() will be called regardless of |is_enabled_|, and |is_enabled_| can be false here for users in Disabled study group.\n\nI see, you\u0027re right.\n\n\u003e Using |is_shutdown_| sounds more correct to protects from multiple calls.\n\n+1",
+      "parentUuid": "6ad529fc_2358e495",
+      "revId": "cb044baae525a7aedf432f8316b983a3e90f78bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62374e12_93376842",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-04T07:37:53Z",
+      "side": 1,
+      "message": "When -\u003e when",
+      "revId": "cb044baae525a7aedf432f8316b983a3e90f78bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "10d3d951_37795b8d",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
         "patchSetId": 8
@@ -127,6 +162,24 @@
       "revId": "cb044baae525a7aedf432f8316b983a3e90f78bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6de86935_183952da",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-04T07:37:53Z",
+      "side": 1,
+      "message": "I see, could we add some comments about them?",
+      "parentUuid": "b62f4725_55dd7a30",
+      "revId": "cb044baae525a7aedf432f8316b983a3e90f78bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
