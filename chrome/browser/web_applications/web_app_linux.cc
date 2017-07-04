@@ -8,6 +8,7 @@
 
 #include "base/environment.h"
 #include "base/logging.h"
+#include "base/threading/thread_restrictions.h"
 #include "build/build_config.h"
 #include "chrome/browser/shell_integration_linux.h"
 #include "content/public/browser/browser_thread.h"
@@ -26,7 +27,7 @@ bool CreatePlatformShortcuts(const base::FilePath& web_app_path,
                              const ShortcutLocations& creation_locations,
                              ShortcutCreationReason /*creation_reason*/) {
 #if !defined(OS_CHROMEOS)
-  DCHECK_CURRENTLY_ON(content::BrowserThread::FILE);
+  base::ThreadRestrictions::AssertIOAllowed();
   return shell_integration_linux::CreateDesktopShortcut(shortcut_info,
                                                         creation_locations);
 #else
@@ -45,7 +46,7 @@ void DeletePlatformShortcuts(const base::FilePath& web_app_path,
 void UpdatePlatformShortcuts(const base::FilePath& web_app_path,
                              const base::string16& /*old_app_title*/,
                              const ShortcutInfo& shortcut_info) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::FILE);
+  base::ThreadRestrictions::AssertIOAllowed();
 
   std::unique_ptr<base::Environment> env(base::Environment::Create());
 

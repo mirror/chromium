@@ -32,6 +32,7 @@
 #include "base/strings/sys_string_conversions.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/task_scheduler/post_task.h"
+#include "base/threading/thread_restrictions.h"
 #include "base/version.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/extensions/extension_ui_util.h"
@@ -217,7 +218,7 @@ bool HasSameUserDataDir(const base::FilePath& bundle_path) {
 
 void LaunchShimOnFileThread(const web_app::ShortcutInfo& shortcut_info,
                             bool launched_after_rebuild) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::FILE);
+  base::ThreadRestrictions::AssertIOAllowed();
   base::FilePath shim_path = web_app::GetAppInstallPath(shortcut_info);
 
   if (shim_path.empty() ||
@@ -254,7 +255,7 @@ void UpdatePlatformShortcutsInternal(
     const base::FilePath& app_data_path,
     const base::string16& old_app_title,
     const web_app::ShortcutInfo& shortcut_info) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::FILE);
+  base::ThreadRestrictions::AssertIOAllowed();
   if (AppShimsDisabledForTest() &&
       !g_app_shims_allow_update_and_launch_in_tests) {
     return;
@@ -1075,7 +1076,7 @@ bool CreatePlatformShortcuts(const base::FilePath& app_data_path,
                              const ShortcutInfo& shortcut_info,
                              const ShortcutLocations& creation_locations,
                              ShortcutCreationReason creation_reason) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::FILE);
+  base::ThreadRestrictions::AssertIOAllowed();
   if (AppShimsDisabledForTest())
     return true;
 
@@ -1085,7 +1086,7 @@ bool CreatePlatformShortcuts(const base::FilePath& app_data_path,
 
 void DeletePlatformShortcuts(const base::FilePath& app_data_path,
                              const ShortcutInfo& shortcut_info) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::FILE);
+  base::ThreadRestrictions::AssertIOAllowed();
   WebAppShortcutCreator shortcut_creator(app_data_path, &shortcut_info);
   shortcut_creator.DeleteShortcuts();
 }
@@ -1097,6 +1098,7 @@ void UpdatePlatformShortcuts(const base::FilePath& app_data_path,
 }
 
 void DeleteAllShortcutsForProfile(const base::FilePath& profile_path) {
+  base::ThreadRestrictions::AssertIOAllowed();
   const std::string profile_base_name = profile_path.BaseName().value();
   std::vector<base::FilePath> bundles = GetAllAppBundlesInPath(
       profile_path.Append(chrome::kWebAppDirname), profile_base_name);
