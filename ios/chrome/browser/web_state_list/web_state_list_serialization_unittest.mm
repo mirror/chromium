@@ -106,10 +106,14 @@ TEST_F(WebStateListSerializationTest, SerializationEmpty) {
 
 TEST_F(WebStateListSerializationTest, SerializationRoundTrip) {
   WebStateList original_web_state_list(web_state_list_delegate());
-  original_web_state_list.InsertWebState(0, SerializableTestWebState::Create());
-  original_web_state_list.InsertWebState(1, SerializableTestWebState::Create());
-  original_web_state_list.InsertWebState(2, SerializableTestWebState::Create());
-  original_web_state_list.InsertWebState(3, SerializableTestWebState::Create());
+  original_web_state_list.InsertWebState(0, SerializableTestWebState::Create(),
+                                         false);
+  original_web_state_list.InsertWebState(1, SerializableTestWebState::Create(),
+                                         false);
+  original_web_state_list.InsertWebState(2, SerializableTestWebState::Create(),
+                                         false);
+  original_web_state_list.InsertWebState(3, SerializableTestWebState::Create(),
+                                         false);
   original_web_state_list.SetOpenerOfWebStateAt(
       1, WebStateOpener(original_web_state_list.GetWebStateAt(0), 3));
   original_web_state_list.SetOpenerOfWebStateAt(
@@ -126,7 +130,8 @@ TEST_F(WebStateListSerializationTest, SerializationRoundTrip) {
 
   // Create a deserialized WebStateList and verify its contents.
   WebStateList restored_web_state_list(web_state_list_delegate());
-  restored_web_state_list.InsertWebState(0, SerializableTestWebState::Create());
+  restored_web_state_list.InsertWebState(0, SerializableTestWebState::Create(),
+                                         false);
   ASSERT_EQ(1, restored_web_state_list.count());
 
   DeserializeWebStateList(

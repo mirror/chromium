@@ -23,7 +23,8 @@ class WebStateListObserver {
   // specified index.
   virtual void WebStateInsertedAt(WebStateList* web_state_list,
                                   web::WebState* web_state,
-                                  int index);
+                                  int index,
+                                  bool foreground);
 
   // Invoked after the WebState at the specified index is moved to another
   // index.
