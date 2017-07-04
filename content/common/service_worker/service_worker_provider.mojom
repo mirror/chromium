@@ -6,6 +6,7 @@ module content.mojom;
 
 import "content/common/service_worker/service_worker_provider_interfaces.mojom";
 import "content/common/service_worker/service_worker_types.mojom";
+import "content/common/url_loader_factory.mojom";
 
 // A container object carried from the renderer to the browser process.
 // This contains the parameters to specify the provider on the browser side.
@@ -18,4 +19,5 @@ struct ServiceWorkerProviderHostInfo {
   bool is_parent_frame_secure;
   associated ServiceWorkerProviderHost& host_request;
   associated ServiceWorkerProvider client_ptr_info;
+  associated URLLoaderFactory? script_loader_factory_ptr_info;
 };
