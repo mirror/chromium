@@ -6,10 +6,7 @@
 #define ThreadableLoadingContext_h
 
 #include "core/CoreExport.h"
-#include "core/dom/TaskRunnerHelper.h"
-#include "core/frame/UseCounter.h"
-#include "platform/heap/GarbageCollected.h"
-#include "platform/weborigin/KURL.h"
+#include "platform/heap/Heap.h"
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/Noncopyable.h"
 
@@ -17,13 +14,12 @@ namespace blink {
 
 class BaseFetchContext;
 class Document;
+class ExecutionContext;
 class ResourceFetcher;
-class SecurityOrigin;
-class WebTaskRunner;
 class WorkerGlobalScope;
 
-// An abstract interface for top-level loading context.
-// This should be accessed only from the thread where the loading
+// A convenient holder for various contexts associated with the loading
+// activity. This should be accessed only from the thread where the loading
 // context is bound to (e.g. on the main thread).
 class CORE_EXPORT ThreadableLoadingContext
     : public GarbageCollected<ThreadableLoadingContext> {
@@ -36,15 +32,9 @@ class CORE_EXPORT ThreadableLoadingContext
   ThreadableLoadingContext() = default;
   virtual ~ThreadableLoadingContext() = default;
 
-  virtual bool IsContextThread() const = 0;
-
   virtual ResourceFetcher* GetResourceFetcher() = 0;
   virtual BaseFetchContext* GetFetchContext() = 0;
-  virtual bool IsSecureContext() const = 0;
-  virtual String UserAgent() const = 0;
-
-  // TODO(kinuko): Try getting rid of dependency to Document.
-  virtual Document* GetLoadingDocument() { return nullptr; }
+  virtual ExecutionContext* GetExecutionContext() = 0;
 
   DEFINE_INLINE_VIRTUAL_TRACE() {}
 };

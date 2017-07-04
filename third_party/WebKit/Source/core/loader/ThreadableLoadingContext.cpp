@@ -18,8 +18,6 @@ class DocumentThreadableLoadingContext final : public ThreadableLoadingContext {
 
   ~DocumentThreadableLoadingContext() override = default;
 
-  bool IsContextThread() const override { return document_->IsContextThread(); }
-
   ResourceFetcher* GetResourceFetcher() override {
     DCHECK(IsContextThread());
     return document_->Fetcher();
@@ -30,17 +28,7 @@ class DocumentThreadableLoadingContext final : public ThreadableLoadingContext {
     return static_cast<BaseFetchContext*>(&document_->Fetcher()->Context());
   }
 
-  bool IsSecureContext() const override {
-    DCHECK(IsContextThread());
-    return document_->IsSecureContext();
-  }
-
-  String UserAgent() const override {
-    DCHECK(IsContextThread());
-    return document_->UserAgent();
-  }
-
-  Document* GetLoadingDocument() override {
+  ExecutionContext* GetExecutionContext() override {
     DCHECK(IsContextThread());
     return document_.Get();
   }
@@ -51,6 +39,8 @@ class DocumentThreadableLoadingContext final : public ThreadableLoadingContext {
   }
 
  private:
+  bool IsContextThread() const { return document_->IsContextThread(); }
+
   Member<Document> document_;
 };
 
@@ -63,12 +53,6 @@ class WorkerThreadableLoadingContext : public ThreadableLoadingContext {
 
   ~WorkerThreadableLoadingContext() override = default;
 
-  bool IsContextThread() const override {
-    DCHECK(fetch_context_);
-    DCHECK(worker_global_scope_);
-    return worker_global_scope_->IsContextThread();
-  }
-
   ResourceFetcher* GetResourceFetcher() override {
     DCHECK(IsContextThread());
     return fetch_context_->GetResourceFetcher();
@@ -79,18 +63,9 @@ class WorkerThreadableLoadingContext : public ThreadableLoadingContext {
     return fetch_context_.Get();
   }
 
-  bool IsSecureContext() const override {
-    DCHECK(IsContextThread());
-    String error_message;
-    return worker_global_scope_->IsSecureContext(error_message);
+  ExecutionContext* GetExecutionContext() override {
+    return worker_global_scope_.Get();
   }
-
-  String UserAgent() const override {
-    DCHECK(IsContextThread());
-    return worker_global_scope_->UserAgent();
-  }
-
-  Document* GetLoadingDocument() override { return nullptr; }
 
   DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(fetch_context_);
@@ -99,6 +74,12 @@ class WorkerThreadableLoadingContext : public ThreadableLoadingContext {
   }
 
  private:
+  bool IsContextThread() const {
+    DCHECK(fetch_context_);
+    DCHECK(worker_global_scope_);
+    return worker_global_scope_->IsContextThread();
+  }
+
   Member<WorkerGlobalScope> worker_global_scope_;
   Member<WorkerFetchContext> fetch_context_;
 };

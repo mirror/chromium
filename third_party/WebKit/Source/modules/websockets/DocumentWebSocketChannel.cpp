@@ -247,10 +247,10 @@ bool DocumentWebSocketChannel::Connect(const KURL& url,
   }
 
   handle_->Initialize(std::move(socket_ptr));
-  handle_->Connect(url, protocols,
-                   loading_context_->GetFetchContext()->GetSecurityOrigin(),
-                   loading_context_->GetFetchContext()->GetFirstPartyForCookies(),
-                   loading_context_->UserAgent(), this);
+  handle_->Connect(
+      url, protocols, loading_context_->GetFetchContext()->GetSecurityOrigin(),
+      loading_context_->GetFetchContext()->GetFirstPartyForCookies(),
+      loading_context_->GetExecutionContext()->UserAgent(), this);
 
   // TODO(ricea): Maybe lookup GetDocument()->GetFrame() less often?
   if (handshake_throttle_ && GetDocument() && GetDocument()->GetFrame() &&
@@ -544,7 +544,10 @@ ThreadableLoadingContext* DocumentWebSocketChannel::LoadingContext() {
 }
 
 Document* DocumentWebSocketChannel::GetDocument() {
-  return loading_context_->GetLoadingDocument();
+  ExecutionContext* context = loading_context_->GetExecutionContext();
+  if (context->IsDocument())
+    return ToDocument(context);
+  return nullptr;
 }
 
 void DocumentWebSocketChannel::DidConnect(WebSocketHandle* handle,
