@@ -1428,6 +1428,8 @@ void PaintLayer::InsertOnlyThisLayerAfterStyleChange() {
     PaintLayer* before_child = GetLayoutObject().Parent()->FindNextLayer(
         parent_layer, &GetLayoutObject());
     parent_layer->AddChild(this, before_child);
+    parent_layer->UpdatePaginationRecursive(
+        parent_layer->EnclosingPaginationLayer());
   }
 
   // Remove all descendant layers from the hierarchy and add them to the new
