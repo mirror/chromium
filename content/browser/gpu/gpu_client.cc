@@ -48,6 +48,11 @@ void GpuClient::OnEstablishGpuChannel(
   callback.Run(render_process_id_, std::move(channel_handle), gpu_info);
 }
 
+void GpuClient::CreateVideoEncodeAccelerator(
+    media::mojom::VideoEncodeAcceleratorRequest vea_request) {
+  NOTIMPLEMENTED();
+}
+
 void GpuClient::OnCreateGpuMemoryBuffer(
     const CreateGpuMemoryBufferCallback& callback,
     const gfx::GpuMemoryBufferHandle& handle) {
@@ -74,6 +79,13 @@ void GpuClient::EstablishGpuChannel(
       preempts, allow_view_command_buffers, allow_real_time_streams,
       base::Bind(&GpuClient::OnEstablishGpuChannel, weak_factory_.GetWeakPtr(),
                  callback));
+}
+
+void GpuClient::CreateVideoEncodeAccelerator(
+    media::mojom::VideoEncodeAcceleratorRequest vea) {
+  GpuProcessHost* host = GpuProcessHost::Get();
+  if (host)
+    host->CreateVideoEncodeAccelerator(std::move(vea));
 }
 
 void GpuClient::CreateGpuMemoryBuffer(
