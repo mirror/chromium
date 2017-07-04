@@ -11,10 +11,12 @@
 #include <unordered_set>
 #include <vector>
 
+#include "base/containers/flat_map.h"
 #include "base/logging.h"
 #include "base/macros.h"
 #include "cc/surfaces/frame_sink_id.h"
 #include "cc/surfaces/primary_begin_frame_source.h"
+#include "cc/surfaces/surface_manager.h"
 #include "cc/surfaces/surfaces_export.h"
 
 namespace cc {
@@ -22,14 +24,18 @@ class BeginFrameSource;
 class FrameSinkManagerClient;
 
 namespace test {
+class CompositorFrameSinkSupportTest;
 class SurfaceSynchronizationTest;
 }
 
 class CC_SURFACES_EXPORT FrameSinkManager {
  public:
-  FrameSinkManager();
+  FrameSinkManager(SurfaceManager::LifetimeType lifetime_type =
+                       SurfaceManager::LifetimeType::SEQUENCES);
   ~FrameSinkManager();
 
+  void AddSurfaceObserver(SurfaceObserver* obs);
+  void RemoveSurfaceObserver(SurfaceObserver* obs);
   void RegisterFrameSinkId(const FrameSinkId& frame_sink_id);
 
   // Invalidate a frame_sink_id that might still have associated sequences,
@@ -71,29 +77,43 @@ class CC_SURFACES_EXPORT FrameSinkManager {
   void UnregisterFrameSinkHierarchy(const FrameSinkId& parent_frame_sink_id,
                                     const FrameSinkId& child_frame_sink_id);
 
-  // Export list of valid frame_sink_ids for SatisfyDestructionDeps in surface
-  // may be removed later when References replace Sequences
-  std::unordered_set<FrameSinkId, FrameSinkIdHash>* GetValidFrameSinkIds() {
-    return &valid_frame_sink_ids_;
-  }
+  // Drops the temporary reference for |surface_id|. If a surface reference has
+  // already been added from the parent to |surface_id| then this will do
+  // nothing.
+  void DropTemporaryReference(const SurfaceId& surface_id);
+
+  scoped_refptr<SurfaceReferenceFactory> GetReferenceFactory();
+
+  // Require that the given sequence number must be satisfied (using
+  // SatisfySequence) before the given surface can be destroyed.
+  void RequireSequence(const SurfaceId& surface_id,
+                       const SurfaceSequence& sequence);
+
+  // Satisfies the given sequence number. Once all sequence numbers that
+  // a surface depends on are satisfied, the surface can be destroyed.
+  void SatisfySequence(const SurfaceSequence& sequence);
+
+  void SetDependencyTracker(SurfaceDependencyTracker* dependency_tracker);
+
+  SurfaceManager* surface_manager() { return &surface_manager_; }
 
  private:
+  friend class test::CompositorFrameSinkSupportTest;
   friend class test::SurfaceSynchronizationTest;
 
-  void RecursivelyAttachBeginFrameSource(const FrameSinkId& frame_sink_id,
+  // |frame_sink_id| is passed by value instead of const refs here because we
+  // are getting |frame_sink_ids| from |frame_sink_source_map_|.
+  // |frame_sink_source_map_| is a container that can allocate new memory and
+  // move data between buffers, making the reference in the parameter invalid..
+  void RecursivelyAttachBeginFrameSource(FrameSinkId frame_sink_id,
                                          BeginFrameSource* source);
-  void RecursivelyDetachBeginFrameSource(const FrameSinkId& frame_sink_id,
+  void RecursivelyDetachBeginFrameSource(FrameSinkId frame_sink_id,
                                          BeginFrameSource* source);
 
   // Returns true if |child framesink| is or has |search_frame_sink_id| as a
   // child.
   bool ChildContains(const FrameSinkId& child_frame_sink_id,
                      const FrameSinkId& search_frame_sink_id) const;
-
-  // Set of valid framesink Ids. When a framesink Id  is removed from
-  // this set, any remaining (surface) sequences with that framesink are
-  // considered satisfied.
-  std::unordered_set<FrameSinkId, FrameSinkIdHash> valid_frame_sink_ids_;
 
   // Begin frame source routing. Both BeginFrameSource and
   // CompositorFrameSinkSupport pointers guaranteed alive by callers until
@@ -109,11 +129,10 @@ class CC_SURFACES_EXPORT FrameSinkManager {
     std::vector<FrameSinkId> children;
   };
 
-  std::unordered_map<FrameSinkId, FrameSinkManagerClient*, FrameSinkIdHash>
-      clients_;
-
+  base::flat_map<FrameSinkId, FrameSinkManagerClient*> clients_;
   std::unordered_map<FrameSinkId, FrameSinkSourceMapping, FrameSinkIdHash>
       frame_sink_source_map_;
+  SurfaceManager surface_manager_;
 
   // Set of BeginFrameSource along with associated FrameSinkIds. Any child
   // that is implicitly using this framesink must be reachable by the
