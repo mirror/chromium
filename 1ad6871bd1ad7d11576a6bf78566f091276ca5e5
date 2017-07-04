@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1bc6aaf8_ff86f2ac",
+        "filename": "ios/chrome/browser/ui/settings/password_details_collection_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-04T12:05:22Z",
+      "side": 1,
+      "message": "This is a shortcut for self-\u003e_weakDelegate, so the block will retain self behind the scenes. Use:\n[weakSelf-\u003e_weakDelegate deletePassword:weakSelf-\u003e_passwordForm];\n\nSince this is not a trivial/short block, you might consider doing the strong self dance too:\n\nPasswordDetailsCollectionViewController* strongSelf \u003d weakSelf;\nif (!strongSelf) {\n  return;\n}\n... use strongSelf ...",
+      "range": {
+        "startLine": 415,
+        "startChar": 17,
+        "endLine": 415,
+        "endChar": 30
+      },
+      "revId": "1ad6871bd1ad7d11576a6bf78566f091276ca5e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10614ed7_85d7d7b8",
+        "filename": "ios/chrome/browser/ui/settings/password_details_collection_view_controller_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-04T12:05:22Z",
+      "side": 1,
+      "message": "This breaks compilation. But do you need the mock at all now that you removed the only test using it?",
+      "revId": "1ad6871bd1ad7d11576a6bf78566f091276ca5e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
