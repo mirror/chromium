@@ -444,7 +444,9 @@ void RendererBlinkPlatformImpl::CacheMetadataInCacheStorage(
 }
 
 WebString RendererBlinkPlatformImpl::DefaultLocale() {
-  return WebString::FromASCII(RenderThread::Get()->GetLocale());
+  if (RenderThread::Get())
+    return WebString::FromASCII(RenderThread::Get()->GetLocale());
+  return WebString();
 }
 
 void RendererBlinkPlatformImpl::SuddenTerminationChanged(bool enabled) {
