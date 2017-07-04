@@ -22,7 +22,10 @@ ParentFrameTaskRunners::ParentFrameTaskRunners(LocalFrame* frame)
        {TaskType::kUnspecedTimer, TaskType::kUnspecedLoading,
         TaskType::kNetworking, TaskType::kPostedMessage,
         TaskType::kCanvasBlobSerialization, TaskType::kUnthrottled}) {
-    task_runners_.insert(type, TaskRunnerHelper::Get(type, frame));
+    auto task_runner =
+        frame ? TaskRunnerHelper::Get(type, frame)
+              : Platform::Current()->MainThread()->GetWebTaskRunner();
+    task_runners_.insert(type, std::move(task_runner));
   }
 }
 
