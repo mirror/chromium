@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d6dc371_af271f57",
+        "filename": "ios/chrome/browser/ui/content_suggestions/cells/suggested_content.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-04T12:41:17Z",
+      "side": 0,
+      "message": "Why this change?",
+      "revId": "08ff97980714bbfb42d9b0d50ac01feabce3e500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

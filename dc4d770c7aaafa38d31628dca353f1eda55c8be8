@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42371fb6_6d928b42",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_favicon_mediator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-04T12:41:17Z",
+      "side": 1,
+      "message": "*Fetches the favicon attributes?",
+      "revId": "dc4d770c7aaafa38d31628dca353f1eda55c8be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0edb6bdb_8f112815",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_favicon_mediator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-04T12:41:17Z",
+      "side": 1,
+      "message": "Nit: *tile",
+      "range": {
+        "startLine": 29,
+        "startChar": 51,
+        "endLine": 29,
+        "endChar": 56
+      },
+      "revId": "dc4d770c7aaafa38d31628dca353f1eda55c8be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9de578ed_db5be13a",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_mediator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-04T12:41:17Z",
+      "side": 1,
+      "message": "Nit: Do you even need to keep it around? You could forward the getter and setter to the faviconMediator.",
+      "revId": "dc4d770c7aaafa38d31628dca353f1eda55c8be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
