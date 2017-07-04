@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5815b5fb_1bf0ce1a",
+        "filename": "ios/chrome/browser/ui/settings/save_passwords_collection_view_controller_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-04T15:52:32Z",
+      "side": 1,
+      "message": "Do we need this declaration at all?",
+      "range": {
+        "startLine": 33,
+        "startChar": 4,
+        "endLine": 33,
+        "endChar": 19
+      },
+      "revId": "0a3a9ecbd705c9464b6785ad8101ab1d0c9909f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
