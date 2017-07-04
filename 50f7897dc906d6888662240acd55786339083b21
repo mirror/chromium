@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fb054feb_3418b442",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-04T05:51:54Z",
+      "side": 1,
+      "message": "Yes, it\u0027ll be passed from the browser process. Added TODO comment on |installed_urls| at l.17.",
+      "parentUuid": "19829965_de4340d7",
+      "revId": "50f7897dc906d6888662240acd55786339083b21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db2d340e_38d9d406",
         "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
         "patchSetId": 15
@@ -33,6 +51,24 @@
       "revId": "50f7897dc906d6888662240acd55786339083b21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42590daa_0bcb6e5a",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-04T05:51:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db2d340e_38d9d406",
+      "revId": "50f7897dc906d6888662240acd55786339083b21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2918ba54_11792092",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-04T05:51:54Z",
+      "side": 1,
+      "message": "Thanks, that seems reasonable to me. Removed the TRACE_EVENT.",
+      "parentUuid": "74bb2963_ac1f9f73",
+      "revId": "50f7897dc906d6888662240acd55786339083b21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8735ad7_9ddaa41d",
         "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
         "patchSetId": 15
@@ -67,6 +121,24 @@
       "revId": "50f7897dc906d6888662240acd55786339083b21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8191b4d0_05e67dcf",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-04T05:51:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8735ad7_9ddaa41d",
+      "revId": "50f7897dc906d6888662240acd55786339083b21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "ed1a1558_9d067079",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-04T05:51:54Z",
+      "side": 1,
+      "message": "Thanks, added a TODO comment in cc file.",
+      "parentUuid": "6dce4c98_f9a23fe2",
+      "revId": "50f7897dc906d6888662240acd55786339083b21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c55daa54_2cfb1559",
         "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.cpp",
         "patchSetId": 15
@@ -101,6 +191,24 @@
       "revId": "50f7897dc906d6888662240acd55786339083b21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f6ce46e_e689f8e7",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-04T05:51:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c55daa54_2cfb1559",
+      "revId": "50f7897dc906d6888662240acd55786339083b21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -124,6 +232,30 @@
       "revId": "50f7897dc906d6888662240acd55786339083b21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "031bed20_c571bd36",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerInstalledScriptsManager.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-04T05:51:54Z",
+      "side": 1,
+      "message": "As we chatted offline, I\u0027ve moved WebSWInstalledScriptsManager.cpp from modules/exported to platform/exported to fix compilation error.",
+      "parentUuid": "9b639bb8_795fa480",
+      "range": {
+        "startLine": 27,
+        "startChar": 8,
+        "endLine": 27,
+        "endChar": 29
+      },
+      "revId": "50f7897dc906d6888662240acd55786339083b21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
