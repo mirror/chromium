@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87b283e9_4d22ebd1",
+        "filename": "components/favicon/core/large_icon_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-07-04T14:47:53Z",
+      "side": 1,
+      "message": "Nit: This is probably slightly clearer:\n\ncallback.Run(success ? favicon_base::GoogleFaviconServerRequestStatus::SUCCESS : favicon_base::GoogleFaviconServerRequestStatus::FAILURE_ON_WRITE);",
+      "range": {
+        "startLine": 279,
+        "startChar": 72,
+        "endLine": 279,
+        "endChar": 0
+      },
+      "revId": "47c6a3368c9e95cd2132595330e26e1c00ff7f32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24c83070_8c2b33c2",
+        "filename": "components/favicon_base/favicon_types.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-07-04T14:47:53Z",
+      "side": 1,
+      "message": "Nit: \"cache\" -\u003e \"database\"",
+      "range": {
+        "startLine": 133,
+        "startChar": 57,
+        "endLine": 133,
+        "endChar": 62
+      },
+      "revId": "47c6a3368c9e95cd2132595330e26e1c00ff7f32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
