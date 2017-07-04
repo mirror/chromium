@@ -10,20 +10,18 @@ namespace chromeos {
 
 DeviceIdentityProvider::DeviceIdentityProvider(
     chromeos::DeviceOAuth2TokenService* token_service)
-    : token_service_(token_service) {}
+    : IdentityProvider(token_service) {}
 
 DeviceIdentityProvider::~DeviceIdentityProvider() {}
 
 std::string DeviceIdentityProvider::GetActiveUsername() {
-  return token_service_->GetRobotAccountId();
+  return static_cast<chromeos::DeviceOAuth2TokenService*>(GetTokenService())
+      ->GetRobotAccountId();
 }
 
 std::string DeviceIdentityProvider::GetActiveAccountId() {
-  return token_service_->GetRobotAccountId();
-}
-
-OAuth2TokenService* DeviceIdentityProvider::GetTokenService() {
-  return token_service_;
+  return static_cast<chromeos::DeviceOAuth2TokenService*>(GetTokenService())
+      ->GetRobotAccountId();
 }
 
 bool DeviceIdentityProvider::RequestLogin() {

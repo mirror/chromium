@@ -24,12 +24,27 @@
 // directly.
 class IdentityProvider : public OAuth2TokenService::Observer {
  public:
+  // Observer class for events related to the active account ID. The order of
+  // notification is guaranteed:
+  // * |OnActiveAccountLogin| is always called before
   class Observer {
    public:
     // Called when a GAIA account logs in and becomes the active account. All
     // account information is available when this method is called and all
     // |IdentityProvider| methods will return valid data.
     virtual void OnActiveAccountLogin() {}
+
+    // Called when a refresh token is available for the active account.
+    //
+    // During a sign-in flow, this method is guaranteed to be called only after
+    // |OnActiveAccountLogin| is called.
+    virtual void OnRefreshTokenAvailableForActiveAccount() {}
+
+    // Called when the refresh token of the active account is revoked.
+    //
+    // During a sign-in flow, this method is guaranteed to be called only after
+    // |OnActiveAccountLogin| is called.
+    virtual void OnRefreshTokenRevokedForActiveAccount() {}
 
     // Called when the active GAIA account logs out. The account information may
     // have been cleared already when this method is called. The
@@ -43,13 +58,6 @@ class IdentityProvider : public OAuth2TokenService::Observer {
 
   ~IdentityProvider() override;
 
-  // Adds and removes observers that will be notified of changes to the refresh
-  // token availability for the active account.
-  void AddActiveAccountRefreshTokenObserver(
-      OAuth2TokenService::Observer* observer);
-  void RemoveActiveAccountRefreshTokenObserver(
-      OAuth2TokenService::Observer* observer);
-
   // Gets the active account's user name.
   virtual std::string GetActiveUsername() = 0;
 
@@ -57,7 +65,7 @@ class IdentityProvider : public OAuth2TokenService::Observer {
   virtual std::string GetActiveAccountId() = 0;
 
   // Gets the token service vending OAuth tokens for all logged-in accounts.
-  virtual OAuth2TokenService* GetTokenService() = 0;
+  OAuth2TokenService* GetTokenService() { return token_service_; };
 
   // Requests login to a GAIA account. Implementations can show a login UI, log
   // in automatically if sufficient credentials are available or may ignore the
@@ -71,10 +79,9 @@ class IdentityProvider : public OAuth2TokenService::Observer {
   // OAuth2TokenService::Observer:
   void OnRefreshTokenAvailable(const std::string& account_id) override;
   void OnRefreshTokenRevoked(const std::string& account_id) override;
-  void OnRefreshTokensLoaded() override;
 
  protected:
-  IdentityProvider();
+  IdentityProvider(OAuth2TokenService* token_service);
 
   // Fires an OnActiveAccountLogin notification.
   void FireOnActiveAccountLogin();
@@ -83,10 +90,10 @@ class IdentityProvider : public OAuth2TokenService::Observer {
   void FireOnActiveAccountLogout();
 
  private:
+  // Weak reference to the token service. Must outlive this.
+  OAuth2TokenService* token_service_;
+
   base::ObserverList<Observer, true> observers_;
-  base::ObserverList<OAuth2TokenService::Observer, true>
-      token_service_observers_;
-  int token_service_observer_count_;
 
   DISALLOW_COPY_AND_ASSIGN(IdentityProvider);
 };

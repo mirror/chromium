@@ -22,12 +22,9 @@ class DeviceIdentityProvider : public IdentityProvider {
   // IdentityProvider:
   std::string GetActiveUsername() override;
   std::string GetActiveAccountId() override;
-  OAuth2TokenService* GetTokenService() override;
   bool RequestLogin() override;
 
  private:
-  chromeos::DeviceOAuth2TokenService* token_service_;
-
   DISALLOW_COPY_AND_ASSIGN(DeviceIdentityProvider);
 };
 
