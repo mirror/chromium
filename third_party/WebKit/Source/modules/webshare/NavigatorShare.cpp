@@ -132,7 +132,12 @@ ScriptPromise NavigatorShare::share(ScriptState* script_state,
 
   if (!service_) {
     LocalFrame* frame = doc->GetFrame();
-    DCHECK(frame);
+    if (!frame) {
+      DOMException* error = DOMException::Create(
+          kAbortError, "Internal error: Document frame is missing.");
+      return ScriptPromise::RejectWithDOMException(script_state, error);
+    }
+
     frame->GetInterfaceProvider()->GetInterface(mojo::MakeRequest(&service_));
     service_.set_connection_error_handler(ConvertToBaseCallback(WTF::Bind(
         &NavigatorShare::OnConnectionError, WrapWeakPersistent(this))));
