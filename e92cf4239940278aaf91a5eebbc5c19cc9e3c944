@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6894a5c_9c77c050",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-04T02:08:37Z",
+      "side": 1,
+      "message": "As requested, I added some API tests. I needed to introduce some helper methods to extract the context menu from the page and see if items were visible or not.\n\nLmk if this is on the right track. Alternative to API tests, we can instead add the tests to ExtensionContextMenuBrowserTest similar to this one: https://chromium.googlesource.com/chromium/src/+/177c0a83ff0164a684edd9390666b8fae1ab61ef/chrome/browser/extensions/extension_context_menu_browsertest.cc#230. The changes would be as follows:\n\n1.) Migrate test extensions from the directory ../test/data/extensions/api_tests/context_menus to  ../test/data/extensions/context_menus.\n\n2.) Check menu item visibility via menu.IsCommandIdVisible(...), which is a method I would have to add to RenderViewContextMenuBase and RenderViewContextMenu. \n\nIf this approach is better, one question is how to implement RenderViewContextMenuBase\u0027s IsCommandIdVisible(). Since the class has a SimpleMenuModel private member, the method could essentially be \u0027return menu_model_-\u003eIsItemVisibleAt(id). However, this might create a circular dependency b/c IsItemVisibleAt calls \u0027delegate-\u003eIsCommandIdVisisble(id)\u0027 and RenderViewContextMenuBase is a SimpleMenuModel::Delegate.\n\nAnyway, wdyt?",
+      "revId": "e92cf4239940278aaf91a5eebbc5c19cc9e3c944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c686b91_dc5282e8",
+        "filename": "chrome/browser/extensions/extension_context_menu_model_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-04T02:08:37Z",
+      "side": 1,
+      "message": "Related to the comment below. Is this check needed?",
+      "revId": "e92cf4239940278aaf91a5eebbc5c19cc9e3c944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "067642d4_aab264b8",
+        "filename": "chrome/browser/extensions/extension_context_menu_model_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-04T02:08:37Z",
+      "side": 1,
+      "message": "It doesn\u0027t appear that developers can toggle the visibility of standard menu items via chrome.contextMenus.create/update. Is the test below still needed?",
+      "revId": "e92cf4239940278aaf91a5eebbc5c19cc9e3c944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "588d6197_6e066624",
+        "filename": "chrome/browser/extensions/menu_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-04T02:08:37Z",
+      "side": 1,
+      "message": "TBD: Depends on when this patch lands.",
+      "range": {
+        "startLine": 249,
+        "startChar": 70,
+        "endLine": 249,
+        "endChar": 73
+      },
+      "revId": "e92cf4239940278aaf91a5eebbc5c19cc9e3c944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d561f580_c02da503",
+        "filename": "chrome/test/data/extensions/api_test/context_menus/item_visibility/create_item/background.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-04T02:08:37Z",
+      "side": 1,
+      "message": "Added this b/c the test fails if a success notification is not made in the background page.",
+      "revId": "e92cf4239940278aaf91a5eebbc5c19cc9e3c944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0256057_02a69963",
+        "filename": "chrome/test/data/extensions/api_test/context_menus/item_visibility/create_item/popup.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-04T02:08:37Z",
+      "side": 1,
+      "message": "For api tests, does chrome.test.assertNoLastError() need to be called in the callbacks for contextMenus.create and update?",
+      "revId": "e92cf4239940278aaf91a5eebbc5c19cc9e3c944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1c0e32b_cf93ad64",
+        "filename": "chrome/test/data/extensions/api_test/context_menus/item_visibility/item_limit/popup.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-04T02:08:37Z",
+      "side": 1,
+      "message": "Added for testing. Will remove log in next patch.",
+      "revId": "e92cf4239940278aaf91a5eebbc5c19cc9e3c944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dbd2ded_854645f0",
+        "filename": "chrome/test/data/extensions/api_test/context_menus/item_visibility/item_limit/popup.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-04T02:08:37Z",
+      "side": 1,
+      "message": "Added for testing. Will remove log in next patch.",
+      "revId": "e92cf4239940278aaf91a5eebbc5c19cc9e3c944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

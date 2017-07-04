@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "867caf95_571fb40d",
+        "filename": "chrome/browser/extensions/context_menu_matcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-04T02:08:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac3729b4_baba4395",
+      "revId": "1e5b791f09319def5147862f1ed067b475415b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9041e2d7_4a1305a7",
         "filename": "chrome/browser/extensions/extension_context_menu_model.cc",
         "patchSetId": 1
@@ -51,6 +69,24 @@
       "revId": "1e5b791f09319def5147862f1ed067b475415b2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1ba539d_86c7b5db",
+        "filename": "chrome/browser/extensions/extension_context_menu_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-04T02:08:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18fa4fec_acbb5663",
+      "revId": "1e5b791f09319def5147862f1ed067b475415b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -89,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "b6fba428_92070709",
+        "filename": "chrome/browser/extensions/extension_context_menu_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-04T02:08:37Z",
+      "side": 1,
+      "message": "Firstly, I added tests to ensure that we don\u0027t automatically hide standard menu items, like uninstall, here: https://chromium-review.googlesource.com/c/553578/1..2/chrome/browser/extensions/extension_context_menu_model_unittest.cc#347.\n\nSecondly, I think it makes that standard menu items should always be visible, hence the switch from return false to true here (line 188). \n\nHowever, if the item is unknown -- i.e. neither a standard menu item nor a one specified by the extension -- then maybe we should throw a NOTREACHED(). To account for that, we could do something like:\n\n switch (command_id) {\n    case NAME:\n     case CONFIGURE:\n    case INSPECT_POPUP: {\n    case UNINSTALL:\n    case TOGGLE_VISIBILITY:\n    case MANAGE:\n    case PAGE_ACCESS_SUBMENU:\n    case PAGE_ACCESS_RUN_ON_CLICK:\n    case PAGE_ACCESS_RUN_ON_SITE:\n    case PAGE_ACCESS_RUN_ON_ALL_SITES:\n      return true;\n    default:\n      NOTREACHED() \u003c\u003c \"Unknown command\" \u003c\u003c command_id;\n  }",
+      "parentUuid": "1cd778ca_59c30915",
+      "revId": "1e5b791f09319def5147862f1ed067b475415b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "28b8d171_d5ce1545",
         "filename": "chrome/browser/extensions/menu_manager.cc",
         "patchSetId": 1
@@ -100,6 +154,41 @@
       "writtenOn": "2017-06-29T20:20:45Z",
       "side": 1,
       "message": "Hmm... my understanding is that this populates a menu item from a dictionary stored in the preferences, but this means that old menu items won\u0027t have a visibility key.  We need to make sure that this is backwards-compatible.  Does this work with old items?  (Another possible test case)",
+      "revId": "1e5b791f09319def5147862f1ed067b475415b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad9afaac_99e0f2f0",
+        "filename": "chrome/browser/extensions/menu_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-04T02:08:37Z",
+      "side": 1,
+      "message": "Good catch. This isn\u0027t backwards-compatible. I tested this and it does not pass the MenuManagerTest.PopulateFromValue.\n\nTo account for the new key, I changed the code so that we don\u0027t return a nullptr if the kVisibleKey is not present. wdyt?",
+      "parentUuid": "28b8d171_d5ce1545",
+      "revId": "1e5b791f09319def5147862f1ed067b475415b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ae889c8_dffa36de",
+        "filename": "chrome/browser/renderer_context_menu/render_view_context_menu.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1441,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-04T02:08:37Z",
+      "side": 1,
+      "message": "I\u0027ll add the new line back in the next patch.",
       "revId": "1e5b791f09319def5147862f1ed067b475415b2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -120,6 +209,24 @@
       "revId": "1e5b791f09319def5147862f1ed067b475415b2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95415fbe_4bb45d42",
+        "filename": "chrome/common/extensions/api/chrome_web_view_internal.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-04T02:08:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ca51b0a_4351a0bc",
+      "revId": "1e5b791f09319def5147862f1ed067b475415b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -158,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "adee961d_cac51675",
+        "filename": "chrome/common/extensions/api/context_menus.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-04T02:08:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3947800b_b3e2ecf3",
+      "revId": "1e5b791f09319def5147862f1ed067b475415b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e5bac23_7c89de90",
         "filename": "ui/base/models/simple_menu_model.cc",
         "patchSetId": 1
@@ -190,6 +315,24 @@
       "revId": "1e5b791f09319def5147862f1ed067b475415b2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48baae24_b1151365",
+        "filename": "ui/base/models/simple_menu_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-04T02:08:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7903f964_1a3b55b6",
+      "revId": "1e5b791f09319def5147862f1ed067b475415b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
