@@ -36,6 +36,8 @@ component("controller") {
   sources = [
     "BlinkInitializer.cpp",
     "ControllerExport.h",
+    "WebDevToolsAgentImpl.cpp",
+    "WebDevToolsAgentImpl.h",
   ]
 
   if (is_mac) {
