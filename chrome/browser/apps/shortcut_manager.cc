@@ -9,6 +9,7 @@
 #include "base/compiler_specific.h"
 #include "base/strings/string16.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/task_scheduler/post_task.h"
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/extensions/extension_service.h"
@@ -136,8 +137,11 @@ void AppShortcutManager::OnProfileWillBeRemoved(
     const base::FilePath& profile_path) {
   if (profile_path != profile_->GetPath())
     return;
-  content::BrowserThread::PostTask(
-      content::BrowserThread::FILE, FROM_HERE,
+
+  base::PostTaskWithTraits(
+      FROM_HERE,
+      {base::MayBlock(), base::TaskPriority::BACKGROUND,
+       base::TaskShutdownBehavior::BLOCK_SHUTDOWN},
       base::BindOnce(&web_app::internals::DeleteAllShortcutsForProfile,
                      profile_path));
 }

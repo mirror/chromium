@@ -41,6 +41,15 @@ struct ShortcutInfo {
   ShortcutInfo();
   ~ShortcutInfo();
 
+  // Run an IO task on a worker thread. Ownership transfers to a closure that
+  // deletes |shortcut_info| on the UI thread when the task is complete.
+  static void PostIOTask(base::OnceCallback<void(const ShortcutInfo&)> task,
+                         std::unique_ptr<ShortcutInfo> shortcut_info);
+  static void PostIOTaskAndReply(
+      base::OnceCallback<void(const ShortcutInfo&)> task,
+      std::unique_ptr<ShortcutInfo> shortcut_info,
+      const base::Closure& reply);
+
   GURL url;
   // If |extension_id| is non-empty, this is short cut is to an extension-app
   // and the launch url will be detected at start-up. In this case, |url|
@@ -229,9 +238,9 @@ std::vector<base::FilePath> GetShortcutPaths(
 // |shortcut_info| contains info about the shortcut to create, and
 // |creation_locations| contains information about where to create them.
 bool CreatePlatformShortcuts(const base::FilePath& shortcut_data_path,
-                             const ShortcutInfo& shortcut_info,
                              const ShortcutLocations& creation_locations,
-                             ShortcutCreationReason creation_reason);
+                             ShortcutCreationReason creation_reason,
+                             const ShortcutInfo& shortcut_info);
 
 // Delete all the shortcuts we have added for this extension. This is the
 // platform specific implementation of the DeleteAllShortcuts function, and
@@ -253,10 +262,6 @@ void DeleteAllShortcutsForProfile(const base::FilePath& profile_path);
 // Sanitizes |name| and returns a version of it that is safe to use as an
 // on-disk file name .
 base::FilePath GetSanitizedFileName(const base::string16& name);
-
-// Clears |shortcut_info| and invokes |callback| unless it's null.
-void DeleteShortcutInfoOnUIThread(std::unique_ptr<ShortcutInfo> shortcut_info,
-                                  const base::Closure& callback);
 
 }  // namespace internals
 
