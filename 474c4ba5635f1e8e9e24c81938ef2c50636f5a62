@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "969ed202_db8af5df",
+        "filename": "chrome/browser/media/media_engagement_score.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-04T14:59:52Z",
+      "side": 1,
+      "message": "`SetLastMediaPlaybackTimeForTesting()` as it\u0027s used for testing :)\n\nThough, if the test is a friend, you could as well simply set the `last_media_playback_time_` from there?",
+      "revId": "474c4ba5635f1e8e9e24c81938ef2c50636f5a62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "635721a3_e6991950",
+        "filename": "chrome/browser/media/media_engagement_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-04T14:59:52Z",
+      "side": 1,
+      "message": "Why did you have to move this to public visibility?",
+      "revId": "474c4ba5635f1e8e9e24c81938ef2c50636f5a62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6aa93dfe_50518ea9",
+        "filename": "chrome/browser/media/media_engagement_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-04T14:59:52Z",
+      "side": 1,
+      "message": "nit: `two_days_ago`",
+      "revId": "474c4ba5635f1e8e9e24c81938ef2c50636f5a62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5b805c8_4d71bfe4",
+        "filename": "chrome/browser/media/media_engagement_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-04T14:59:52Z",
+      "side": 1,
+      "message": "A general advice on unit tests is to have them as scoped as possible. Here you could have had one unit test that checks for the edges being included, one for the middle, one for no time set and one for outside of the boundary. This is a general observations but, for example, if tests are slow for some reasons, it\u0027s better to combine them.",
+      "revId": "474c4ba5635f1e8e9e24c81938ef2c50636f5a62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
