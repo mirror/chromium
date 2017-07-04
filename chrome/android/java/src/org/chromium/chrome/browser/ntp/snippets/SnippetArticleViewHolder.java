@@ -50,7 +50,6 @@ import org.chromium.chrome.browser.widget.displaystyle.VerticalDisplayStyle;
 import org.chromium.ui.mojom.WindowOpenDisposition;
 
 import java.util.concurrent.TimeUnit;
-
 /**
  * A class that represents the view for a single card snippet.
  */
@@ -368,9 +367,11 @@ public class SnippetArticleViewHolder extends CardViewHolder implements Impressi
         // Code order here is important because the call to fetch a thumbnail above can be
         // synchronous (if the image is cached) or asynchronous (if not). In the first case, it will
         // immediately set a thumbnail on the mThumbnailView and no placeholder will be needed. In
-        // the second case, the placeholder will be replaced once the thumbnail is retrieved.
-        // We check here that there is no thumbnail already set on the mThumbnailView.
-        if (mThumbnailView.getDrawable() == null) {
+        // the second case, we set a placeholder until the image is retrieved.
+        // If the request's promise was fulfilled, then the thumbnail was fetched and no placeholder
+        // is needed.
+        if (!mThumbnailRequest.getPromise().isFulfilled()) {
+            // Set a placeholder for the type of the image.
             setThumbnailFromFileType(fileType);
         }
     }
