@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "591665f6_4e1ab01b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 25
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-04T22:29:02Z",
+      "side": 1,
+      "message": "Remove a trailing whitespace.",
+      "revId": "0d1f4ff10ad6c847bbe145f23648d89882e61862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb2489e5_6f9e1e6d",
+        "filename": "third_party/WebKit/Source/web/WebFactoryImpl.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-04T22:29:02Z",
+      "side": 1,
+      "message": "this blank line is unnecessary.",
+      "revId": "0d1f4ff10ad6c847bbe145f23648d89882e61862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
