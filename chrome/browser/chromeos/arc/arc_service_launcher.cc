@@ -171,6 +171,8 @@ void ArcServiceLauncher::OnPrimaryUserProfilePrepared(Profile* profile) {
   // and ones tied to the new profile are added, which is unexpected situation.
   // For compatibility, call Shutdown() here in case |profile| is not
   // allowed for ARC.
+  // TODO(yusukes): Once Shutdown() is removed, always call RequestStop() with
+  // |true|. We can actually remove the boolean parameter then.
   arc_session_manager_->Shutdown();
 
   if (!IsArcAllowedForProfile(profile))
@@ -204,6 +206,7 @@ void ArcServiceLauncher::OnPrimaryUserProfilePrepared(Profile* profile) {
   }
 
   arc_session_manager_->SetProfile(profile);
+  arc_session_manager_->Initialize();
   arc_play_store_enabled_preference_handler_ =
       base::MakeUnique<ArcPlayStoreEnabledPreferenceHandler>(
           profile, arc_session_manager_.get());
