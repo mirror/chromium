@@ -773,7 +773,7 @@ void HideButton(UIButton* button) {
 
 #pragma mark - ChromeIdentityServiceObserver
 
-- (void)onIdentityListChanged {
+- (void)identityListChanged {
   switch (_currentState) {
     case NULL_STATE:
     case DONE_STATE:
@@ -790,7 +790,7 @@ void HideButton(UIButton* button) {
   }
 }
 
-- (void)onChromeIdentityServiceWillBeDestroyed {
+- (void)chromeIdentityServiceWillBeDestroyed {
   _identityServiceObserver.reset();
 }
 
