@@ -22,6 +22,30 @@
       "revId": "cc4436988466d14181683efbab08f877a55caef3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4645a73e_e337e6d1",
+        "filename": "services/shape_detection/android/java/src/org/chromium/shape_detection/FaceDetectionImplGmsCore.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-07-04T02:15:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66e7b27f_3680a5c3",
+      "range": {
+        "startLine": 111,
+        "startChar": 20,
+        "endLine": 111,
+        "endChar": 24
+      },
+      "revId": "cc4436988466d14181683efbab08f877a55caef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
