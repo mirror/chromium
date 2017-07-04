@@ -54,7 +54,7 @@ void RunTenTimesTask(size_t* count, scoped_refptr<TaskQueue> timer_queue) {
 
 bool IsQueueBlocked(TaskQueue* task_queue) {
   internal::TaskQueueImpl* task_queue_impl =
-      reinterpret_cast<internal::TaskQueueImpl*>(task_queue);
+      task_queue->GetTaskQueueImplForTest();
   if (!task_queue_impl->IsQueueEnabled())
     return true;
   return task_queue_impl->GetFenceForTest() ==
@@ -99,7 +99,8 @@ class TaskQueueThrottlerTest : public testing::Test {
         mock_task_runner_, base::MakeUnique<TestTimeSource>(clock_.get()));
     scheduler_.reset(new RendererSchedulerImpl(delegate_));
     task_queue_throttler_ = scheduler_->task_queue_throttler();
-    timer_queue_ = scheduler_->NewTimerTaskQueue(TaskQueue::QueueType::TEST);
+    timer_queue_ =
+        scheduler_->NewTimerTaskQueue(MainThreadTaskQueue::QueueType::TEST);
   }
 
   void TearDown() override {
@@ -745,7 +746,7 @@ TEST_P(TaskQueueThrottlerWithAutoAdvancingTimeTest,
   std::vector<base::TimeTicks> run_times;
 
   scoped_refptr<TaskQueue> second_queue =
-      scheduler_->NewTimerTaskQueue(TaskQueue::QueueType::TEST);
+      scheduler_->NewTimerTaskQueue(MainThreadTaskQueue::QueueType::TEST);
 
   CPUTimeBudgetPool* pool =
       task_queue_throttler_->CreateCPUTimeBudgetPool("test");
@@ -1070,7 +1071,7 @@ TEST_P(TaskQueueThrottlerWithAutoAdvancingTimeTest,
   std::vector<base::TimeTicks> run_times;
 
   scoped_refptr<TaskQueue> second_queue =
-      scheduler_->NewTimerTaskQueue(TaskQueue::QueueType::TEST);
+      scheduler_->NewTimerTaskQueue(MainThreadTaskQueue::QueueType::TEST);
 
   task_queue_throttler_->IncreaseThrottleRefCount(timer_queue_.get());
   task_queue_throttler_->IncreaseThrottleRefCount(second_queue.get());
@@ -1106,7 +1107,7 @@ TEST_P(TaskQueueThrottlerWithAutoAdvancingTimeTest, TwoBudgetPools) {
   std::vector<base::TimeTicks> run_times;
 
   scoped_refptr<TaskQueue> second_queue =
-      scheduler_->NewTimerTaskQueue(TaskQueue::QueueType::TEST);
+      scheduler_->NewTimerTaskQueue(MainThreadTaskQueue::QueueType::TEST);
 
   CPUTimeBudgetPool* pool1 =
       task_queue_throttler_->CreateCPUTimeBudgetPool("test");
