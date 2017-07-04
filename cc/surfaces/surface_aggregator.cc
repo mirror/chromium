@@ -25,8 +25,8 @@
 #include "cc/quads/surface_draw_quad.h"
 #include "cc/quads/texture_draw_quad.h"
 #include "cc/resources/resource_provider.h"
-#include "cc/surfaces/compositor_frame_sink_support.h"
 #include "cc/surfaces/surface.h"
+#include "cc/surfaces/surface_client.h"
 #include "cc/surfaces/surface_manager.h"
 #include "cc/trees/blocking_task_runner.h"
 
@@ -122,12 +122,11 @@ SurfaceAggregator::ClipData SurfaceAggregator::CalculateClipRect(
   return out_clip;
 }
 
-static void UnrefHelper(
-    base::WeakPtr<CompositorFrameSinkSupport> compositor_frame_sink_support,
-    const std::vector<ReturnedResource>& resources,
-    BlockingTaskRunner* main_thread_task_runner) {
-  if (compositor_frame_sink_support)
-    compositor_frame_sink_support->UnrefResources(resources);
+static void UnrefHelper(base::WeakPtr<SurfaceClient> surface_client,
+                        const std::vector<ReturnedResource>& resources,
+                        BlockingTaskRunner* main_thread_task_runner) {
+  if (surface_client)
+    surface_client->UnrefResources(resources);
 }
 
 RenderPassId SurfaceAggregator::RemapPassId(RenderPassId surface_local_pass_id,
@@ -149,11 +148,10 @@ int SurfaceAggregator::ChildIdForSurface(Surface* surface) {
   auto it = surface_id_to_resource_child_id_.find(surface->surface_id());
   if (it == surface_id_to_resource_child_id_.end()) {
     int child_id = provider_->CreateChild(
-        base::Bind(&UnrefHelper, surface->compositor_frame_sink_support()));
-    if (surface->compositor_frame_sink_support()) {
+        base::Bind(&UnrefHelper, surface->surface_client()));
+    if (surface->surface_client()) {
       provider_->SetChildNeedsSyncTokens(
-          child_id,
-          surface->compositor_frame_sink_support()->needs_sync_points());
+          child_id, surface->surface_client()->NeedsSyncPoints());
     }
     surface_id_to_resource_child_id_[surface->surface_id()] = child_id;
     return child_id;
@@ -614,9 +612,8 @@ gfx::Rect SurfaceAggregator::PrewalkTree(const SurfaceId& surface_id,
   // TODO(jbauman): hack for unit tests that don't set up rp
   if (provider_) {
     child_id = ChildIdForSurface(surface);
-    if (surface->compositor_frame_sink_support())
-      surface->compositor_frame_sink_support()->RefResources(
-          frame.resource_list);
+    if (surface->surface_client())
+      surface->surface_client()->RefResources(frame.resource_list);
     provider_->ReceiveFromChild(child_id, frame.resource_list);
   }
   CHECK(debug_weak_this.get());

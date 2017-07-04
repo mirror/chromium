@@ -32,7 +32,7 @@ class LatencyInfo;
 
 namespace cc {
 
-class CompositorFrameSinkSupport;
+class SurfaceClient;
 class CopyOutputRequest;
 class SurfaceManager;
 
@@ -41,9 +41,9 @@ class CC_SURFACES_EXPORT Surface {
   using WillDrawCallback =
       base::RepeatingCallback<void(const LocalSurfaceId&, const gfx::Rect&)>;
 
-  Surface(
-      const SurfaceInfo& surface_info,
-      base::WeakPtr<CompositorFrameSinkSupport> compositor_frame_sink_support);
+  Surface(const SurfaceInfo& surface_info,
+          SurfaceManager* surface_manager,
+          base::WeakPtr<SurfaceClient> surface_client);
   ~Surface();
 
   const SurfaceId& surface_id() const { return surface_info_.id(); }
@@ -94,9 +94,7 @@ class CC_SURFACES_EXPORT Surface {
   void RunDrawCallback();
   void RunWillDrawCallback(const gfx::Rect& damage_rect);
 
-  base::WeakPtr<CompositorFrameSinkSupport> compositor_frame_sink_support() {
-    return compositor_frame_sink_support_;
-  }
+  base::WeakPtr<SurfaceClient> surface_client() { return surface_client_; }
 
   // Add a SurfaceSequence that must be satisfied before the Surface is
   // destroyed.
@@ -162,8 +160,8 @@ class CC_SURFACES_EXPORT Surface {
 
   SurfaceInfo surface_info_;
   SurfaceId previous_frame_surface_id_;
-  base::WeakPtr<CompositorFrameSinkSupport> compositor_frame_sink_support_;
   SurfaceManager* const surface_manager_;
+  base::WeakPtr<SurfaceClient> surface_client_;
 
   base::Optional<FrameData> pending_frame_data_;
   base::Optional<FrameData> active_frame_data_;
