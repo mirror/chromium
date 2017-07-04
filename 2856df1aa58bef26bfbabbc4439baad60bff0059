@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74e2ae63_38cdbb1e",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 2033,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-07-04T18:04:16Z",
+      "side": 1,
+      "message": "nit: you\u0027re capturing it here, not logging.",
+      "range": {
+        "startLine": 2033,
+        "startChar": 5,
+        "endLine": 2033,
+        "endChar": 8
+      },
+      "revId": "2856df1aa58bef26bfbabbc4439baad60bff0059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ba41cde_7395ecde",
+        "filename": "components/autofill/core/browser/autofill_manager.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-07-04T18:04:16Z",
+      "side": 1,
+      "message": "doesn\u0027t this need to be attached to a FormStructure instance, not the manager?\n\nThere can be multiple forms to a page, and the forms can be dynamic. IIUC, this will track the last time any form parsing was performed on the page, which isn\u0027t what I think you intend.",
+      "range": {
+        "startLine": 544,
+        "startChar": 18,
+        "endLine": 544,
+        "endChar": 40
+      },
+      "revId": "2856df1aa58bef26bfbabbc4439baad60bff0059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
