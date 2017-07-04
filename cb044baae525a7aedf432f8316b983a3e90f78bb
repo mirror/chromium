@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84197d98_838e465a",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-04T05:32:47Z",
+      "side": 1,
+      "message": "This code\u0027s probably not needed (or we can assert DCHECK(is_enabled_) in the if (scheduler) block below if we want more clarification)",
+      "revId": "cb044baae525a7aedf432f8316b983a3e90f78bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10d3d951_37795b8d",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-04T05:32:47Z",
+      "side": 1,
+      "message": "Not needed",
+      "revId": "cb044baae525a7aedf432f8316b983a3e90f78bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4930c3d7_0b20387d",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-04T05:32:47Z",
+      "side": 1,
+      "message": "Should we also check DHCECK(pending_request_queue_.empty()) here?",
+      "revId": "cb044baae525a7aedf432f8316b983a3e90f78bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ae80895_37fbe02b",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-04T05:32:47Z",
+      "side": 1,
+      "message": "nit: stale comment",
+      "revId": "cb044baae525a7aedf432f8316b983a3e90f78bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d91f4ef4_5f1c5082",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-04T05:32:47Z",
+      "side": 1,
+      "message": "You can maybe add a TODO comment to make this state enum once we start to have more states.",
+      "revId": "cb044baae525a7aedf432f8316b983a3e90f78bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4db07eb5_24b89c77",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-04T05:32:47Z",
+      "side": 1,
+      "message": "Maybe add a comment to note that this is mutable because this can be changed for testing",
+      "revId": "cb044baae525a7aedf432f8316b983a3e90f78bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
