@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de128266_24959bc3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 18
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-04T00:39:57Z",
+      "side": 1,
+      "message": "nit: Remove trailing whitespace",
+      "revId": "7631846918203a9bfde9dfbd251c4a152e45a7bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eda2008f_0f9b91de",
+        "filename": "third_party/WebKit/Source/controller/ControllerExport.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-04T00:39:57Z",
+      "side": 1,
+      "message": "This looks unnecessary.",
+      "revId": "7631846918203a9bfde9dfbd251c4a152e45a7bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ffb319d_ef9a113e",
+        "filename": "third_party/WebKit/Source/controller/ControllerExport.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-04T00:39:57Z",
+      "side": 1,
+      "message": "Wrong comment.",
+      "revId": "7631846918203a9bfde9dfbd251c4a152e45a7bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
