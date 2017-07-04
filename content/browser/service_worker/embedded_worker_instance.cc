@@ -84,8 +84,7 @@ void SetupOnUI(
              bool wait_for_debugger)>& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   RenderProcessHost* rph = RenderProcessHost::FromID(process_id);
-  // TODO(shimazu): Temporary CHECK to debug https://crbug.com/736649.
-  CHECK(rph);
+  DCHECK(rph);
   int worker_devtools_agent_route_id = rph->GetNextRoutingID();
   bool wait_for_debugger =
       ServiceWorkerDevToolsManager::GetInstance()->WorkerCreated(
@@ -94,6 +93,7 @@ void SetupOnUI(
               service_worker_context, service_worker_context_weak,
               service_worker_version_id, url, scope),
           is_installed);
+
   if (request.is_pending())
     BindInterface(rph, std::move(request));
   std::unique_ptr<EmbeddedWorkerInstance::DevToolsProxy> devtools_proxy =
@@ -192,38 +192,22 @@ class EmbeddedWorkerInstance::DevToolsProxy {
   DISALLOW_COPY_AND_ASSIGN(DevToolsProxy);
 };
 
-// A handle for a worker process managed by ServiceWorkerProcessManager on the
-// UI thread.
-class EmbeddedWorkerInstance::WorkerProcessHandle {
- public:
-  WorkerProcessHandle(const base::WeakPtr<ServiceWorkerContextCore>& context,
-                      int embedded_worker_id,
-                      int process_id,
-                      bool is_new_process)
-      : context_(context),
-        embedded_worker_id_(embedded_worker_id),
-        process_id_(process_id),
-        is_new_process_(is_new_process) {
-    DCHECK_NE(ChildProcessHost::kInvalidUniqueID, process_id_);
-  }
+EmbeddedWorkerInstance::WorkerProcessHandle::WorkerProcessHandle(
+    const base::WeakPtr<ServiceWorkerContextCore>& context,
+    int embedded_worker_id,
+    int process_id,
+    bool is_new_process)
+    : context_(context),
+      embedded_worker_id_(embedded_worker_id),
+      process_id_(process_id),
+      is_new_process_(is_new_process) {
+  DCHECK_NE(ChildProcessHost::kInvalidUniqueID, process_id_);
+}
 
-  ~WorkerProcessHandle() {
-    if (context_)
-      context_->process_manager()->ReleaseWorkerProcess(embedded_worker_id_);
-  }
-
-  int process_id() const { return process_id_; }
-  bool is_new_process() const { return is_new_process_; }
-
- private:
-  base::WeakPtr<ServiceWorkerContextCore> context_;
-
-  const int embedded_worker_id_;
-  const int process_id_;
-  const bool is_new_process_;
-
-  DISALLOW_COPY_AND_ASSIGN(WorkerProcessHandle);
-};
+EmbeddedWorkerInstance::WorkerProcessHandle::~WorkerProcessHandle() {
+  if (context_)
+    context_->process_manager()->ReleaseWorkerProcess(embedded_worker_id_);
+}
 
 // A task to allocate a worker process and to send a start worker message. This
 // is created on EmbeddedWorkerInstance::Start(), owned by the instance and
@@ -570,6 +554,7 @@ void EmbeddedWorkerInstance::OnProcessAllocated(
   DCHECK(!process_handle_);
 
   process_handle_ = std::move(handle);
+  registry_->BindWorkerToProcess(process_id(), embedded_worker_id());
   starting_phase_ = REGISTERING_TO_DEVTOOLS;
   start_situation_ = start_situation;
   for (auto& observer : listener_list_)
@@ -597,8 +582,7 @@ ServiceWorkerStatusCode EmbeddedWorkerInstance::SendStartWorker(
     std::unique_ptr<EmbeddedWorkerStartParams> params) {
   if (!context_)
     return SERVICE_WORKER_ERROR_ABORT;
-  // TODO(shimazu): Temporary CHECK to debug https://crbug.com/736649.
-  CHECK(pending_dispatcher_request_.is_pending());
+  DCHECK(pending_dispatcher_request_.is_pending());
 
   DCHECK(!instance_host_binding_.is_bound());
   mojom::EmbeddedWorkerInstanceHostAssociatedPtrInfo host_ptr_info;
@@ -607,7 +591,6 @@ ServiceWorkerStatusCode EmbeddedWorkerInstance::SendStartWorker(
   inflight_start_task_->set_start_worker_sent_time(base::TimeTicks::Now());
   client_->StartWorker(*params, std::move(pending_dispatcher_request_),
                        std::move(host_ptr_info));
-  registry_->BindWorkerToProcess(process_id(), embedded_worker_id());
   // TODO(shimazu): Check if script streaming is used for the starting worker.
   OnStartWorkerMessageSent(false /* is_script_streaming */);
   if (starting_phase() == SCRIPT_STREAMING) {

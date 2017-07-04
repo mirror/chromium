@@ -121,6 +121,21 @@ class EmbeddedWorkerInstanceTest : public testing::Test,
     return mojo::MakeRequest(&dispatchers_.back());
   }
 
+  void SimulateOnProcessAllocated(EmbeddedWorkerInstance* worker,
+                                  int process_id) {
+    auto handle = base::MakeUnique<EmbeddedWorkerInstance::WorkerProcessHandle>(
+        helper_->context()->AsWeakPtr(), worker->embedded_worker_id, process_id,
+        false /* is_new_process */);
+    worker->OnProcessAllocated(
+        std::move(handle),
+        ServiceWorkerMetrics::StartSituation::EXISTING_PROCESS);
+  }
+
+  void SetWorkerStatus(EmbeddedWorkerInstance* worker,
+                       EmbeddedWorkerStatus status) {
+    worker->status_ = status;
+  }
+
   ServiceWorkerContextCore* context() { return helper_->context(); }
 
   EmbeddedWorkerRegistry* embedded_worker_registry() {
@@ -833,6 +848,22 @@ TEST_F(EmbeddedWorkerInstanceTest, AddMessageToConsole) {
   worker->Stop();
   base::RunLoop().RunUntilIdle();
   EXPECT_EQ(EmbeddedWorkerStatus::STOPPED, worker->status());
+}
+
+// Test that a process crash immediately after process allocation
+// causes the worker to detach.
+TEST_F(EmbeddedWorkerInstanceTest, CrashAfterProcessAllocation) {
+  std::unique_ptr<EmbeddedWorkerInstance> worker =
+      embedded_worker_registry()->CreateWorker();
+  worker->AddListener(this);
+  SetWorkerStatus(worker.get(), EmbeddedWorkerStatus::STARTING);
+  SimulateOnProcessAllocated(worker.get(), 55 /* dummy process_id */);
+
+  // Calling RemoveProcess() should cause the worker to detach.
+  embedded_worker_registry()->RemoveProcess(55);
+  ASSERT_EQ(2u, events_.size());
+  EXPECT_EQ(PROCESS_ALLOCATED, events_[0].type);
+  EXPECT_EQ(DETACHED, events_[1].type);
 }
 
 }  // namespace content

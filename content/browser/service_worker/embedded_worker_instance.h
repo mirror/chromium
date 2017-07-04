@@ -194,8 +194,32 @@ class CONTENT_EXPORT EmbeddedWorkerInstance
  private:
   typedef base::ObserverList<Listener> ListenerList;
   class StartTask;
-  class WorkerProcessHandle;
+
+  // A handle for a worker process managed by ServiceWorkerProcessManager on the
+  // UI thread.
+  class WorkerProcessHandle {
+   public:
+    WorkerProcessHandle(const base::WeakPtr<ServiceWorkerContextCore>& context,
+                        int embedded_worker_id,
+                        int process_id,
+                        bool is_new_process);
+    ~WorkerProcessHandle();
+
+    int process_id() const { return process_id_; }
+    bool is_new_process() const { return is_new_process_; }
+
+   private:
+    base::WeakPtr<ServiceWorkerContextCore> context_;
+
+    const int embedded_worker_id_;
+    const int process_id_;
+    const bool is_new_process_;
+
+    DISALLOW_COPY_AND_ASSIGN(WorkerProcessHandle);
+  };
+
   friend class EmbeddedWorkerRegistry;
+  friend class EmbeddedWorkerInstanceTest;
   FRIEND_TEST_ALL_PREFIXES(EmbeddedWorkerInstanceTest, StartAndStop);
   FRIEND_TEST_ALL_PREFIXES(EmbeddedWorkerInstanceTest, DetachDuringStart);
   FRIEND_TEST_ALL_PREFIXES(EmbeddedWorkerInstanceTest, StopDuringStart);
