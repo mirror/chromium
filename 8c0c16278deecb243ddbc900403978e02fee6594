@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d11fadd_a53aee69",
+        "filename": "chrome/browser/permissions/permission_context_base_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 903,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-04T00:30:57Z",
+      "side": 1,
+      "message": "Technically we should check that clearing notifications also results in PUSH being cleared. But I don\u0027t feel strongly about testing it since the code will be removed soon and it\u0027s clear what is going on.",
+      "revId": "8c0c16278deecb243ddbc900403978e02fee6594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
