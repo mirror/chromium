@@ -100,21 +100,13 @@ class PLATFORM_EXPORT TaskQueueManager
 
   // Creates a task queue with the given |spec|.  Must be called on the thread
   // this class was created on.
-  scoped_refptr<internal::TaskQueueImpl> NewTaskQueue(
-      const TaskQueue::Spec& spec);
+  internal::TaskQueueImpl* NewTaskQueue(const TaskQueue::Spec& spec);
 
   class PLATFORM_EXPORT Observer {
    public:
     virtual ~Observer() {}
 
-    // Called when |queue| is unregistered.
-    virtual void OnUnregisterTaskQueue(
-        const scoped_refptr<TaskQueue>& queue) = 0;
-
-    // Called when the manager tried to execute a task from a disabled
-    // queue. See TaskQueue::Spec::SetShouldReportWhenExecutionBlocked.
-    virtual void OnTriedToExecuteBlockedTask(const TaskQueue& queue,
-                                             const base::PendingTask& task) = 0;
+    virtual void OnTriedToExecuteBlockedTask() = 0;
   };
 
   // Called once to set the Observer. This function is called on the main
@@ -135,7 +127,7 @@ class PLATFORM_EXPORT TaskQueueManager
 
   // Returns the currently executing TaskQueue if any. Must be called on the
   // thread this class was created on.
-  TaskQueue* currently_executing_task_queue() const {
+  internal::TaskQueueImpl* currently_executing_task_queue() const {
     DCHECK(main_thread_checker_.CalledOnValidThread());
     return currently_executing_task_queue_;
   }
@@ -227,7 +219,7 @@ class PLATFORM_EXPORT TaskQueueManager
   };
 
   // Unregisters a TaskQueue previously created by |NewTaskQueue()|.
-  void UnregisterTaskQueue(scoped_refptr<internal::TaskQueueImpl> task_queue);
+  void UnregisterTaskQueue(internal::TaskQueueImpl* task_queue);
 
   // TaskQueueSelector::Observer implementation:
   void OnTaskQueueEnabled(internal::TaskQueueImpl* queue) override;
@@ -315,11 +307,12 @@ class PLATFORM_EXPORT TaskQueueManager
   std::set<TimeDomain*> time_domains_;
   std::unique_ptr<RealTimeDomain> real_time_domain_;
 
-  std::set<scoped_refptr<internal::TaskQueueImpl>> queues_;
+  std::map<internal::TaskQueueImpl*, std::unique_ptr<internal::TaskQueueImpl>>
+      queues_;
 
   // We have to be careful when deleting a queue because some of the code uses
   // raw pointers and doesn't expect the rug to be pulled out from underneath.
-  std::set<scoped_refptr<internal::TaskQueueImpl>> queues_to_delete_;
+  std::set<std::unique_ptr<internal::TaskQueueImpl>> queues_to_delete_;
 
   internal::EnqueueOrderGenerator enqueue_order_generator_;
   base::debug::TaskAnnotator task_annotator_;
