@@ -2,6 +2,143 @@
   "comments": [
     {
       "key": {
+        "uuid": "05a70a97_9e134b41",
+        "filename": "chrome/browser/android/vr_shell/ui_input_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-04T21:13:58Z",
+      "side": 1,
+      "message": "Could we change this name to HandleControllerState() or something?  It really is not updating the controller.",
+      "revId": "1a5c497d20abb997dd6661ccd65c075c9ef9ea12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a06f7692_10bb252c",
+        "filename": "chrome/browser/android/vr_shell/ui_input_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-04T21:13:58Z",
+      "side": 1,
+      "message": "queue looks unnecessary, but I could be missing its use.  Same with weak_ptr and maybe others?",
+      "revId": "1a5c497d20abb997dd6661ccd65c075c9ef9ea12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbc8fd3a_44162f0c",
+        "filename": "chrome/browser/android/vr_shell/ui_input_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-04T21:13:58Z",
+      "side": 1,
+      "message": "As per recent group chat on docs, please provide some class-level blurbs on what exactly these classes do.",
+      "revId": "1a5c497d20abb997dd6661ccd65c075c9ef9ea12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4c23a34_948f62c9",
+        "filename": "chrome/browser/android/vr_shell/ui_input_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-04T21:13:58Z",
+      "side": 1,
+      "message": "We\u0027re entering \"content\"; WebContents is a class that represents it.  Also, what about OnContent... (), to match what you have below (SendHover...())?  Ie, I suggest OnContentEnter(), OnContentLeave(), OnContentMove(), OnContentDown(), OnContentUp().",
+      "range": {
+        "startLine": 30,
+        "startChar": 15,
+        "endLine": 30,
+        "endChar": 33
+      },
+      "revId": "1a5c497d20abb997dd6661ccd65c075c9ef9ea12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ffbdb0d_f37348cf",
+        "filename": "chrome/browser/android/vr_shell/ui_input_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-04T21:13:58Z",
+      "side": 1,
+      "message": "- Without looking at its use, this is weird.  A button can be clicked or not.  Why would it have both \"DOWN\" and \"CLICK\"?  And, undefined seems like it shouldn\u0027t exist.\n- You can put a comma after the last element to make them wrap one per line.",
+      "range": {
+        "startLine": 39,
+        "startChar": 6,
+        "endLine": 39,
+        "endChar": 7
+      },
+      "revId": "1a5c497d20abb997dd6661ccd65c075c9ef9ea12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efde3348_0ab898d4",
+        "filename": "chrome/browser/android/vr_shell/ui_input_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-04T21:13:58Z",
+      "side": 1,
+      "message": "Possibly \"controller_origion\" or \"controller_location\"?",
+      "range": {
+        "startLine": 43,
+        "startChar": 44,
+        "endLine": 43,
+        "endChar": 57
+      },
+      "revId": "1a5c497d20abb997dd6661ccd65c075c9ef9ea12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89cb9755_635ef054",
+        "filename": "chrome/browser/android/vr_shell/ui_input_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-04T21:13:58Z",
+      "side": 1,
+      "message": "Do you think the scene should manage the reticle and beam?  Could those be a new kind of special element, where the scene just adds them and the renderer has no concept of them other than that?",
+      "revId": "1a5c497d20abb997dd6661ccd65c075c9ef9ea12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5c50247c_5fa7b6c4",
         "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
         "patchSetId": 2
