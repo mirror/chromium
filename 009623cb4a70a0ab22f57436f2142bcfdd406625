@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b5c8cd0_83c6771b",
+        "filename": "components/signin/core/browser/signin_manager_base.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-04T09:47:12Z",
+      "side": 1,
+      "message": "This will probably become the AccountInfo as it looks like the email and the account ID are passed on GoogleSigninSucceeded and on GoogleSignedOut. So I\u0027ll have to pass it here as well.",
+      "range": {
+        "startLine": 81,
+        "startChar": 27,
+        "endLine": 81,
+        "endChar": 51
+      },
+      "revId": "009623cb4a70a0ab22f57436f2142bcfdd406625",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

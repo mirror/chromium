@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b45e4d60_960d7120",
+        "filename": "components/signin/core/browser/signin_manager_base.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-04T09:47:12Z",
+      "side": 1,
+      "message": "I kept this for now, until I understand from the usage if this is needed or not.",
+      "range": {
+        "startLine": 64,
+        "startChar": 4,
+        "endLine": 64,
+        "endChar": 36
+      },
+      "revId": "66466bc8362310c6f57f1b882d37ca6b3b49d78c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
