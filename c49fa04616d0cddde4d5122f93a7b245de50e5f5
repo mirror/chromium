@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9f0e668_c942236c",
+        "filename": "chrome/browser/chromeos/extensions/wallpaper_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-04T19:20:59Z",
+      "side": 1,
+      "message": "base::Passed is not needed anymore, right?",
+      "range": {
+        "startLine": 201,
+        "startChar": 43,
+        "endLine": 201,
+        "endChar": 49
+      },
+      "revId": "c49fa04616d0cddde4d5122f93a7b245de50e5f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8c9d133_7041a360",
+        "filename": "chrome/browser/chromeos/extensions/wallpaper_private_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-04T19:20:59Z",
+      "side": 1,
+      "message": "base::Passed needed?",
+      "range": {
+        "startLine": 373,
+        "startChar": 12,
+        "endLine": 373,
+        "endChar": 24
+      },
+      "revId": "c49fa04616d0cddde4d5122f93a7b245de50e5f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8453940a_25608a57",
+        "filename": "chrome/browser/chromeos/extensions/wallpaper_private_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-04T19:20:59Z",
+      "side": 1,
+      "message": "base::Passed needed?",
+      "range": {
+        "startLine": 512,
+        "startChar": 34,
+        "endLine": 512,
+        "endChar": 46
+      },
+      "revId": "c49fa04616d0cddde4d5122f93a7b245de50e5f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
