@@ -1,0 +1,10 @@
+CACHE MANIFEST
+
+appcache-worker.php?type=cached
+appcache-worker-import.php?type=cached
+appcache-worker-data.php?type=cached
+
+FALLBACK:
+appcache-worker.php?type=fallback appcache-worker.php?type=fallbacked
+appcache-worker-import.php?type=fallback appcache-worker-import.php?type=fallbacked
+appcache-worker-data.php?type=fallback appcache-worker-data.php?type=fallbacked
