@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b19fbc8e_ea422361",
+        "filename": "third_party/WebKit/Source/modules/webshare/NavigatorShare.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-07-04T04:58:36Z",
+      "side": 1,
+      "message": "This seems to come up when the navigator (and/or document) is detached. The error message should probably mention that.",
+      "range": {
+        "startLine": 137,
+        "startChar": 40,
+        "endLine": 137,
+        "endChar": 65
+      },
+      "revId": "64904aa8fb150ee51b13bf218056b81608e9ebec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
