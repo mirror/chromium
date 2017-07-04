@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7f218c09_6e26f824",
+        "filename": "ios/chrome/browser/chrome_browser_provider_observer_bridge.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-07-04T14:54:13Z",
+      "side": 1,
+      "message": "I would like to keep ChromeBrowserProviderObserver to be coherent with ChromeIdentityServiceObserver.",
+      "parentUuid": "f795084d_6f490264",
+      "revId": "7d8d800f07e33b9359e3f79660ff3b1cc6eec568",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3f39c9de_0b82012e",
         "filename": "ios/chrome/browser/chrome_browser_provider_observer_bridge.h",
         "patchSetId": 4
@@ -82,6 +100,72 @@
     },
     {
       "key": {
+        "uuid": "c8604220_8f12fe3f",
+        "filename": "ios/chrome/browser/chrome_browser_provider_observer_bridge.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-07-04T14:54:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f5900c8_d65b30cb",
+      "range": {
+        "startLine": 17,
+        "startChar": 8,
+        "endLine": 17,
+        "endChar": 40
+      },
+      "revId": "7d8d800f07e33b9359e3f79660ff3b1cc6eec568",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3bceec5a_72ffa99c",
+        "filename": "ios/chrome/browser/chrome_browser_provider_observer_bridge.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-07-04T14:54:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebe0a89b_78074dbe",
+      "revId": "7d8d800f07e33b9359e3f79660ff3b1cc6eec568",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "018320a8_3112d738",
+        "filename": "ios/chrome/browser/chrome_browser_provider_observer_bridge.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-07-04T14:54:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f39c9de_0b82012e",
+      "range": {
+        "startLine": 17,
+        "startChar": 70,
+        "endLine": 17,
+        "endChar": 78
+      },
+      "revId": "7d8d800f07e33b9359e3f79660ff3b1cc6eec568",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81fc304c_6fc744f5",
         "filename": "ios/chrome/browser/chrome_browser_provider_observer_bridge.h",
         "patchSetId": 4
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "b4e644b6_44802d12",
+        "filename": "ios/chrome/browser/chrome_browser_provider_observer_bridge.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-07-04T14:54:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81fc304c_6fc744f5",
+      "range": {
+        "startLine": 32,
+        "startChar": 34,
+        "endLine": 32,
+        "endChar": 52
+      },
+      "revId": "7d8d800f07e33b9359e3f79660ff3b1cc6eec568",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a17adaa0_8f22db58",
         "filename": "ios/chrome/browser/chrome_browser_provider_observer_bridge.h",
         "patchSetId": 4
@@ -116,6 +224,24 @@
       "writtenOn": "2017-07-04T14:10:59Z",
       "side": 1,
       "message": "This file is only included from objc file that are build with ARC enabled, so please use __weak instead of __unsafe_unretained as it is safer.\n\nAlso, remove \"// Weak.\" comment.\n\noptional: BTW, most of the other bridge observer classes owns the pointer, so maybe change this to __strong (though it will require refactoring of the observer class so you may chose not to do this).",
+      "revId": "7d8d800f07e33b9359e3f79660ff3b1cc6eec568",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0388381_695e52e5",
+        "filename": "ios/chrome/browser/chrome_browser_provider_observer_bridge.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-07-04T14:54:13Z",
+      "side": 1,
+      "message": "I don\u0027t understand the idea to retain the observer since the observer owns this instance.",
+      "parentUuid": "a17adaa0_8f22db58",
       "revId": "7d8d800f07e33b9359e3f79660ff3b1cc6eec568",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -142,6 +268,30 @@
       "revId": "7d8d800f07e33b9359e3f79660ff3b1cc6eec568",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ade0447_dcc4d222",
+        "filename": "ios/chrome/browser/chrome_browser_provider_observer_bridge_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-07-04T14:54:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "636e8c22_4d35b6fb",
+      "range": {
+        "startLine": 84,
+        "startChar": 30,
+        "endLine": 84,
+        "endChar": 45
+      },
+      "revId": "7d8d800f07e33b9359e3f79660ff3b1cc6eec568",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
