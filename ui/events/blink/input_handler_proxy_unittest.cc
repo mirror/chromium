@@ -133,7 +133,7 @@ WebScopedInputEvent CreateGestureScrollFlingPinch(WebInputEvent::Type type,
                                                   int y = 0) {
   WebGestureEvent gesture(type, WebInputEvent::kNoModifiers,
                           WebInputEvent::kTimeStampForTesting);
-  gesture.source_device = blink::kWebGestureDeviceTouchpad;
+  gesture.source_device = blink::kWebGestureDeviceTouchscreen;
   if (type == WebInputEvent::kGestureScrollUpdate) {
     gesture.data.scroll_update.delta_y = deltaYOrScale;
   } else if (type == WebInputEvent::kGestureFlingStart) {
@@ -3615,9 +3615,6 @@ TEST_P(InputHandlerProxyEventQueueTest, VSyncAlignedGestureScrollPinchScroll) {
       .WillRepeatedly(testing::Return(scroll_result_did_scroll_));
   EXPECT_CALL(mock_input_handler_, ScrollEnd(testing::_)).Times(2);
   EXPECT_CALL(mock_input_handler_, SetNeedsAnimateInput()).Times(1);
-  EXPECT_CALL(mock_input_handler_,
-              GetEventListenerProperties(cc::EventListenerClass::kMouseWheel))
-      .WillOnce(testing::Return(cc::EventListenerProperties::kNone));
   EXPECT_CALL(mock_input_handler_, PinchGestureBegin());
   // Two |GesturePinchUpdate| will be coalesced.
   EXPECT_CALL(mock_input_handler_,
@@ -3834,6 +3831,8 @@ TEST_P(InputHandlerProxyEventQueueTest, GestureScrollFlingOrder) {
       .WillRepeatedly(testing::Return(scroll_result_did_scroll_));
   EXPECT_CALL(mock_input_handler_, ScrollEnd(testing::_))
       .Times(::testing::AtLeast(1));
+  EXPECT_CALL(mock_input_handler_, FlingScrollBegin())
+      .WillOnce(testing::Return(kImplThreadScrollState));
 
   // Simulate scroll.
   HandleGestureEvent(WebInputEvent::kGestureScrollBegin);
@@ -3884,6 +3883,8 @@ TEST_P(InputHandlerProxyEventQueueTest, GestureScrollAfterFling) {
       .WillRepeatedly(testing::Return(scroll_result_did_scroll_));
   EXPECT_CALL(mock_input_handler_, ScrollEnd(testing::_))
       .Times(::testing::AtLeast(1));
+  EXPECT_CALL(mock_input_handler_, FlingScrollBegin())
+      .WillOnce(testing::Return(kImplThreadScrollState));
 
   // Simulate fling.
   HandleGestureEvent(WebInputEvent::kGestureScrollBegin);
