@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "143e447c_f638bad2",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-07-04T20:52:09Z",
+      "side": 1,
+      "message": "See below reply.",
+      "parentUuid": "4073f754_d47574a9",
+      "range": {
+        "startLine": 251,
+        "startChar": 21,
+        "endLine": 253,
+        "endChar": 14
+      },
+      "revId": "912505c09a2d0d80d50ecbd533783a32b048611a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a50792a6_63140e49",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-30T19:02:34Z",
       "side": 1,
       "message": "Why do you need to add this? When the StandbyThreadPolicy is ONE, we want one more SchedulerWorker than the number of tasks posted before Start().\n\nI believe that if you keep the condition as-is, you won\u0027t have to change TaskSchedulerWorkerPoolStandbyPolicyTest.InitLazy.",
+      "range": {
+        "startLine": 259,
+        "startChar": 72,
+        "endLine": 260,
+        "endChar": 48
+      },
+      "revId": "912505c09a2d0d80d50ecbd533783a32b048611a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "244e5526_da65bd93",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-07-04T20:52:09Z",
+      "side": 1,
+      "message": "There\u0027s a bunch of places where it is assumed that the workers_ list being empty means that the SchedulerWorkerPoolImpl wasn\u0027t initialized (i.e. Start wasn\u0027t called). \n\nThis is because when there were ALIVE and DETACHED workers, you\u0027d always add some workers within Start, even if they were all detached workers. But, since I changed it so there are only ALIVE workers, I wanted there to be a minimum of one worker created - even if the StandByPolicy is LAZY and no tasks were posted before startup. \n\nHere, I changed the code so that even if the StandByThreadPolicy is set to LAZY, and there were no wake ups before start, you\u0027ll still add one worker rather than zero.\n(though the way I did was very confusing, so I\u0027ll put a std::max here and try to fix up the comments).\n\nOtherwise, I\u0027d have to touch code in all the places where this is assumed. (it\u0027s not that many places, but making this change was simpler).\n\n(plus, the next stage of this project is to remove StandByPolicy anyways, so soon there\u0027d always be a at least one worker created anyways after start.)",
+      "parentUuid": "a50792a6_63140e49",
       "range": {
         "startLine": 259,
         "startChar": 72,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "44afbe5b_4e1f591f",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-07-04T20:52:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a565e690_9b033b45",
+      "range": {
+        "startLine": 268,
+        "startChar": 7,
+        "endLine": 268,
+        "endChar": 20
+      },
+      "revId": "912505c09a2d0d80d50ecbd533783a32b048611a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d690ebe9_7cbfc985",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "9f2c5ed0_7489aca1",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-07-04T20:52:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d690ebe9_7cbfc985",
+      "range": {
+        "startLine": 267,
+        "startChar": 57,
+        "endLine": 269,
+        "endChar": 58
+      },
+      "revId": "912505c09a2d0d80d50ecbd533783a32b048611a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99785bc9_b8e27bc9",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
         "patchSetId": 2
@@ -111,6 +207,24 @@
     },
     {
       "key": {
+        "uuid": "fd5e3aa6_94ed3185",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-07-04T20:52:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99785bc9_b8e27bc9",
+      "revId": "912505c09a2d0d80d50ecbd533783a32b048611a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16f103d2_de8a1662",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
         "patchSetId": 2
@@ -125,6 +239,24 @@
       "revId": "912505c09a2d0d80d50ecbd533783a32b048611a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5162c8c_4f120ddd",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-07-04T20:52:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16f103d2_de8a1662",
+      "revId": "912505c09a2d0d80d50ecbd533783a32b048611a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -151,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "de6b5ad4_fe43ee3f",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-07-04T20:52:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82fbae4a_7c461b49",
+      "range": {
+        "startLine": 634,
+        "startChar": 17,
+        "endLine": 634,
+        "endChar": 46
+      },
+      "revId": "912505c09a2d0d80d50ecbd533783a32b048611a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b4e9f67_b6cf2c23",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
         "patchSetId": 2
@@ -174,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "e6e525ec_051a43e1",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-07-04T20:52:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b4e9f67_b6cf2c23",
+      "range": {
+        "startLine": 679,
+        "startChar": 9,
+        "endLine": 679,
+        "endChar": 48
+      },
+      "revId": "912505c09a2d0d80d50ecbd533783a32b048611a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de64844d_2c0522a2",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
         "patchSetId": 2
@@ -188,6 +368,24 @@
       "revId": "912505c09a2d0d80d50ecbd533783a32b048611a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e61a2ef_b1115ed8",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 682,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-07-04T20:52:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de64844d_2c0522a2",
+      "revId": "912505c09a2d0d80d50ecbd533783a32b048611a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -214,6 +412,30 @@
     },
     {
       "key": {
+        "uuid": "1c7a2dfe_99cd5adc",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-07-04T20:52:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24750404_dee702c8",
+      "range": {
+        "startLine": 135,
+        "startChar": 56,
+        "endLine": 135,
+        "endChar": 71
+      },
+      "revId": "912505c09a2d0d80d50ecbd533783a32b048611a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c77b99a_ecc062f1",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
         "patchSetId": 2
@@ -225,6 +447,30 @@
       "writtenOn": "2017-06-30T19:02:34Z",
       "side": 1,
       "message": "can\u0027t be called before Start().",
+      "range": {
+        "startLine": 137,
+        "startChar": 65,
+        "endLine": 138,
+        "endChar": 41
+      },
+      "revId": "912505c09a2d0d80d50ecbd533783a32b048611a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "358e47ce_6e24b5f8",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-07-04T20:52:09Z",
+      "side": 1,
+      "message": "I avoided that wording because it\u0027s called within Start, after the part(s) in the Start where the relevant SchedulerWorkerPoolParams values are stored within the pool object.\n\nIs my avoidance being too nit-picky and I should change it to this less awkward wording, or is the current comment okay-ish?",
+      "parentUuid": "6c77b99a_ecc062f1",
       "range": {
         "startLine": 137,
         "startChar": 65,
@@ -260,6 +506,30 @@
     },
     {
       "key": {
+        "uuid": "5a1c2e03_8a69314f",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-07-04T20:52:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a2e4dbe_acd2d4be",
+      "range": {
+        "startLine": 210,
+        "startChar": 5,
+        "endLine": 210,
+        "endChar": 22
+      },
+      "revId": "912505c09a2d0d80d50ecbd533783a32b048611a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8b7c310_1ecc4e33",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
         "patchSetId": 2
@@ -283,6 +553,30 @@
     },
     {
       "key": {
+        "uuid": "0514b58d_85d71eca",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-07-04T20:52:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8b7c310_1ecc4e33",
+      "range": {
+        "startLine": 213,
+        "startChar": 2,
+        "endLine": 215,
+        "endChar": 31
+      },
+      "revId": "912505c09a2d0d80d50ecbd533783a32b048611a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "933ab4be_7e327c79",
         "filename": "base/task_scheduler/task_scheduler.h",
         "patchSetId": 2
@@ -303,6 +597,30 @@
       "revId": "912505c09a2d0d80d50ecbd533783a32b048611a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9a56bd5_a5d535da",
+        "filename": "base/task_scheduler/task_scheduler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-07-04T20:52:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "933ab4be_7e327c79",
+      "range": {
+        "startLine": 211,
+        "startChar": 38,
+        "endLine": 211,
+        "endChar": 48
+      },
+      "revId": "912505c09a2d0d80d50ecbd533783a32b048611a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
