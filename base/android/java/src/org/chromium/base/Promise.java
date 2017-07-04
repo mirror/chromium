@@ -333,4 +333,13 @@ public class Promise<T> {
             }
         };
     }
+
+    /**
+     * Must be called after the promise has been fulfilled.
+     * @return The promised result.
+     */
+    public T getResult() {
+        assert isFulfilled();
+        return mResult;
+    }
 }
