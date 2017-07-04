@@ -34,6 +34,24 @@
       "revId": "3b4d71ffdc6445f1f613b27deb4370f3f5ec66a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea588f3f_24608980",
+        "filename": "ios/chrome/browser/ui/settings/password_details_collection_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-07-04T19:27:06Z",
+      "side": 1,
+      "message": "It would be nice if they were inthe same file, but if the logic is much simpler in different files I would opt for that, so it seems ok.",
+      "parentUuid": "54a33ebb_54eb6366",
+      "revId": "3b4d71ffdc6445f1f613b27deb4370f3f5ec66a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
