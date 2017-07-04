@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85fedbca_663d5809",
+        "filename": "build/config/ios/rules.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 1636,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-04T16:19:23Z",
+      "side": 1,
+      "message": "The target is now named \"${target_name}_runner\" (at least that is the value of the variable _xcuitest_runner_target) . Please update the comment.",
+      "range": {
+        "startLine": 1636,
+        "startChar": 40,
+        "endLine": 1636,
+        "endChar": 61
+      },
+      "revId": "1cb7b4c1d80b2f6d974a3eba5f22dda6a48beb90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cec5001_b533aa36",
+        "filename": "build/config/ios/rules.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 1729,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-04T16:19:23Z",
+      "side": 1,
+      "message": "I don\u0027t understand this. The template \"create_signed_bundle\" will create both _CodeSignature and PkgInfo in the generated bundle, so those files will be overwritten. In fact, I would expect this to cause an error.",
+      "revId": "1cb7b4c1d80b2f6d974a3eba5f22dda6a48beb90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a06c04ac_fea4a6b9",
+        "filename": "build/config/ios/rules.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 1743,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-04T16:19:23Z",
+      "side": 1,
+      "message": "I\u0027m not sure I understand this target either. Are you trying to create a target that copy the system bundle XCTRunner.app from Xcode SDK with a copy of the XCTest in it? If so, can you put a comment explaining why this is done like that, and extract this to a separate template.",
+      "revId": "1cb7b4c1d80b2f6d974a3eba5f22dda6a48beb90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
