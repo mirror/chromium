@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27a59249_a70e204f",
+        "filename": "third_party/WebKit/Source/modules/sensor/Accelerometer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-07-04T13:17:31Z",
+      "side": 1,
+      "message": "optional: maybe Accelerometer(bool linear) : Sensor(.., linear ? SensorType::LINEAR_ACCELERATION : SensorType::ACCELEROMETE) // thus we limit sensor types potentially involved",
+      "revId": "b874841fcadd40243a5f4184a827bbbd96d88a04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
