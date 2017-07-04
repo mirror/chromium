@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77d45e54_9685630e",
+        "filename": "components/drive/chromeos/change_list_processor.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-04T05:24:26Z",
+      "side": 1,
+      "message": "How about putting this and ll. 230-234 in ApplyChangeLists() too?\n\nPreviously, we needed to make sure that My Drive root exists before applying changes. (https://codereview.chromium.org/26994002)\nHowever, now My Drive root always exists so IIUC we can safely move this changestamp update logic to the last part of this function, and share the same logic with the Team Drive version.",
+      "range": {
+        "startLine": 173,
+        "startChar": 0,
+        "endLine": 180,
+        "endChar": 0
+      },
+      "revId": "aff86ea14a8d5a2f7f69aa42e71bf12125c9f3f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "971fb14b_acfc0f12",
+        "filename": "components/drive/chromeos/change_list_processor.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-04T05:24:26Z",
+      "side": 1,
+      "message": "This function is used only once.\nHow about eliminating the function by doing the same thing directly here?",
+      "range": {
+        "startLine": 217,
+        "startChar": 20,
+        "endLine": 217,
+        "endChar": 36
+      },
+      "revId": "aff86ea14a8d5a2f7f69aa42e71bf12125c9f3f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13a2d705_04dc847c",
+        "filename": "components/drive/chromeos/change_list_processor.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-04T05:24:26Z",
+      "side": 1,
+      "message": "This looks unused?",
+      "range": {
+        "startLine": 288,
+        "startChar": 4,
+        "endLine": 288,
+        "endChar": 23
+      },
+      "revId": "aff86ea14a8d5a2f7f69aa42e71bf12125c9f3f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16baa7a6_fc124f62",
+        "filename": "components/drive/chromeos/change_list_processor.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-04T05:24:26Z",
+      "side": 1,
+      "message": "This method name is confusing.\n(e.g. I don\u0027t understand why ApplyUserChangeList and ApplyTeamDriveChangeList is singular while this one is plural)\n\nHow about something like ApplyChangeListInternal()?\n\"Internal\" is a popular suffix for this type of functions.\nhttps://cs.chromium.org/search/?q\u003d%5Cw%2BInternal%5Cb+case:yes\u0026sq\u003dpackage:chromium\u0026type\u003dcs",
+      "range": {
+        "startLine": 166,
+        "startChar": 12,
+        "endLine": 166,
+        "endChar": 28
+      },
+      "revId": "aff86ea14a8d5a2f7f69aa42e71bf12125c9f3f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
