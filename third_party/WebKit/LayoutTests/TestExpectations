@@ -2015,6 +2015,7 @@ crbug.com/626703 virtual/threaded/inspector/tracing/timeline-js/timeline-runtime
 crbug.com/626703 virtual/threaded/transitions/transition-end-event-multiple-03.html [ Pass Failure ]
 
 # ====== New tests from wpt-importer added here ======
+crbug.com/626703 [ Android Retina ] external/wpt/http/content_length.html [ Crash ]
 crbug.com/626703 external/wpt/css/css-tables-3/floats/floats-wrap-bfc-006b.xht [ Failure ]
 crbug.com/626703 external/wpt/css/css-tables-3/floats/floats-wrap-bfc-006c.xht [ Failure ]
 crbug.com/626703 external/wpt/html/webappapis/idle-callbacks/callback-xhr-sync.html [ Timeout ]
