@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c85b7f0_36eef74d",
+        "filename": "cc/surfaces/surface_dependency_deadline.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-07-04T21:20:41Z",
+      "side": 1,
+      "message": "Could you explain why we change the BeginFrameSource and last args here? Even if inheriting BeginFrameSource makes sense I don\u0027t think we should inherit last args? Technically the BeginFrameSource hasn\u0027t given us any args yet.",
+      "revId": "c43d44b43873add6f403639736f77af66df5fbd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "978369d3_e4371fdf",
+        "filename": "cc/surfaces/surface_dependency_tracker.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-07-04T21:20:41Z",
+      "side": 1,
+      "message": "This has an issue similar to what we discussed. If a frame for grandchild comes before child and the child is late, then we activate the child immediately but not the grandchild.",
+      "revId": "c43d44b43873add6f403639736f77af66df5fbd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "049c4880_d98bb221",
+        "filename": "cc/surfaces/surface_dependency_tracker.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-07-04T21:20:41Z",
+      "side": 1,
+      "message": "Can we sop recursing here if the deadline for |surface| didn\u0027t change?",
+      "revId": "c43d44b43873add6f403639736f77af66df5fbd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78aaaf15_c0533ab5",
+        "filename": "cc/surfaces/surface_synchronization_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1521,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-07-04T21:20:41Z",
+      "side": 1,
+      "message": "Is it possible to get the default deadline from SurfaceDependencyTracker instead of hard-coding it here, or at least make it a const?",
+      "revId": "c43d44b43873add6f403639736f77af66df5fbd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
