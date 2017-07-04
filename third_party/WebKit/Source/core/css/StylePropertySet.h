@@ -28,6 +28,7 @@
 #include "core/css/CSSProperty.h"
 #include "core/css/PropertySetCSSStyleDeclaration.h"
 #include "core/css/parser/CSSParserMode.h"
+#include "platform/wtf/CurrentTime.h"
 #include "platform/wtf/ListHashSet.h"
 #include "platform/wtf/Noncopyable.h"
 #include "platform/wtf/Vector.h"
@@ -142,12 +143,20 @@ class CORE_EXPORT StylePropertySet
   enum { kMaxArraySize = (1 << 28) - 1 };
 
   StylePropertySet(CSSParserMode css_parser_mode)
-      : css_parser_mode_(css_parser_mode), is_mutable_(true), array_size_(0) {}
+      : css_parser_mode_(css_parser_mode), is_mutable_(true), array_size_(0) {
+    printf("%f,construct,StylePropertySet,%p,%lu\n", WTF::CurrentTime(), this, sizeof(StylePropertySet));
+  }
 
   StylePropertySet(CSSParserMode css_parser_mode, unsigned immutable_array_size)
       : css_parser_mode_(css_parser_mode),
         is_mutable_(false),
-        array_size_(std::min(immutable_array_size, unsigned(kMaxArraySize))) {}
+        array_size_(std::min(immutable_array_size, unsigned(kMaxArraySize))) {
+    printf("%f,construct,StylePropertySet,%p,%lu\n", WTF::CurrentTime(), this, sizeof(StylePropertySet));
+  }
+
+  ~StylePropertySet() {
+    printf("%f,destruct,StylePropertySet,%p,%lu\n", WTF::CurrentTime(), this, sizeof(StylePropertySet));
+  }
 
   unsigned css_parser_mode_ : 3;
   mutable unsigned is_mutable_ : 1;

@@ -314,9 +314,11 @@ Node::Node(TreeScope* tree_scope, ConstructionType type)
   TrackForDebugging();
 #endif
   InstanceCounters::IncrementNodeCounter();
+  printf("%f,construct,Node,%p,%lu\n", WTF::CurrentTime(), this, sizeof(Node));
 }
 
 Node::~Node() {
+  printf("%f,destruct,Node,%p,%lu\n", WTF::CurrentTime(), this, sizeof(Node));
   if (!HasRareData() && !data_.node_layout_data_->IsSharedEmptyData())
     delete data_.node_layout_data_;
   InstanceCounters::DecrementNodeCounter();

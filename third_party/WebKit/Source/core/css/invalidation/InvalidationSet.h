@@ -35,6 +35,7 @@
 #include "core/CoreExport.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/Assertions.h"
+#include "platform/wtf/CurrentTime.h"
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/HashSet.h"
 #include "platform/wtf/RefPtr.h"
@@ -170,6 +171,7 @@ class CORE_EXPORT InvalidationSet {
   ~InvalidationSet() {
     CHECK(is_alive_);
     is_alive_ = false;
+    printf("%f,destruct,InvalidationSet,%p,%lu\n", WTF::CurrentTime(), this, sizeof(InvalidationSet));
   }
 
  private:

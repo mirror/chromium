@@ -235,6 +235,7 @@ LayoutObject::LayoutObject(Node* node)
   InstanceCounters::IncrementCounter(InstanceCounters::kLayoutObjectCounter);
   if (node_)
     GetFrameView()->IncrementLayoutObjectCount();
+  printf("%f,construct,LayoutObject,%p,%lu\n", WTF::CurrentTime(), this, sizeof(LayoutObject));
 }
 
 LayoutObject::~LayoutObject() {
@@ -242,6 +243,7 @@ LayoutObject::~LayoutObject() {
   DCHECK(!has_ax_object_);
 #endif
   InstanceCounters::DecrementCounter(InstanceCounters::kLayoutObjectCounter);
+  printf("%f,destruct,LayoutObject,%p,%lu\n", WTF::CurrentTime(), this, sizeof(LayoutObject));
 }
 
 bool LayoutObject::IsDescendantOf(const LayoutObject* obj) const {

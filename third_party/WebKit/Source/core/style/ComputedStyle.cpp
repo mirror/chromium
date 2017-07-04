@@ -86,6 +86,10 @@ struct SameSizeAsComputedStyle : public RefCounted<SameSizeAsComputedStyle> {
 // update the SameSizeAsComputedStyle struct to match the updated storage of
 // ComputedStyle.
 ASSERT_SIZE(ComputedStyle, SameSizeAsComputedStyle);
+ComputedStyle::~ComputedStyle() {
+  printf("%f,destruct,ComputedStyle,%p,%lu\n", WTF::CurrentTime(), this, sizeof(ComputedStyle));
+}
+
 
 RefPtr<ComputedStyle> ComputedStyle::Create() {
   return AdoptRef(new ComputedStyle(InitialStyle()));
@@ -128,7 +132,9 @@ ALWAYS_INLINE ComputedStyle::ComputedStyle()
 ALWAYS_INLINE ComputedStyle::ComputedStyle(const ComputedStyle& o)
     : ComputedStyleBase(o),
       RefCounted<ComputedStyle>(),
-      svg_style_(o.svg_style_) {}
+      svg_style_(o.svg_style_) {
+  printf("%f,copy,ComputedStyle,%p,%lu\n", WTF::CurrentTime(), this, sizeof(ComputedStyle));
+  }
 
 static StyleRecalcChange DiffPseudoStyles(const ComputedStyle& old_style,
                                           const ComputedStyle& new_style) {

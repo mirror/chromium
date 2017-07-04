@@ -10,7 +10,11 @@ class {{group.type_name}} : public RefCounted<{{group.type_name}}> {
   static PassRefPtr<{{group.type_name}}> Create() {
     return AdoptRef(new {{group.type_name}});
   }
+  ~{{group.type_name}}() {
+    printf("%f,destruct,{{group.type_name}},%p,%lu\n", WTF::CurrentTime(), this, sizeof({{group.type_name}}));
+  }
   PassRefPtr<{{group.type_name}}> Copy() const {
+    printf("%f,copy,{{group.type_name}},%p,%lu\n", WTF::CurrentTime(), this, sizeof({{group.type_name}}));
     return AdoptRef(new {{group.type_name}}(*this));
   }
 

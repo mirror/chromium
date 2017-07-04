@@ -63,7 +63,9 @@ InvalidationSet::InvalidationSet(InvalidationType type)
       tree_boundary_crossing_(false),
       insertion_point_crossing_(false),
       invalidates_slotted_(false),
-      is_alive_(true) {}
+      is_alive_(true) {
+  printf("%f,construct,InvalidationSet,%p,%lu\n", WTF::CurrentTime(), this, sizeof(InvalidationSet));
+}
 
 bool InvalidationSet::InvalidatesElement(Element& element) const {
   if (all_descendants_might_be_invalid_)

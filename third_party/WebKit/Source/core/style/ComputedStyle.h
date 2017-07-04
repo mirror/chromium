@@ -198,6 +198,7 @@ class ComputedStyle : public ComputedStyleBase,
 
  public:
   CORE_EXPORT static RefPtr<ComputedStyle> Create();
+  CORE_EXPORT ~ComputedStyle();
   static RefPtr<ComputedStyle> CreateAnonymousStyleWithDisplay(
       const ComputedStyle& parent_style,
       EDisplay);

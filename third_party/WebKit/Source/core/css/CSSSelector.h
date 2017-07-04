@@ -28,6 +28,7 @@
 #include "core/css/parser/CSSParserMode.h"
 #include "core/dom/QualifiedName.h"
 #include "core/style/ComputedStyleConstants.h"
+#include "platform/wtf/CurrentTime.h"
 #include "platform/wtf/RefCounted.h"
 
 namespace blink {
@@ -461,7 +462,9 @@ inline CSSSelector::CSSSelector()
       has_rare_data_(false),
       is_for_page_(false),
       tag_is_implicit_(false),
-      relation_is_affected_by_pseudo_content_(false) {}
+      relation_is_affected_by_pseudo_content_(false) {
+  printf("%f,construct,CSSSelector,%p,%lu\n", WTF::CurrentTime(), this, sizeof(CSSSelector));
+}
 
 inline CSSSelector::CSSSelector(const QualifiedName& tag_q_name,
                                 bool tag_is_implicit)
@@ -476,6 +479,7 @@ inline CSSSelector::CSSSelector(const QualifiedName& tag_q_name,
       relation_is_affected_by_pseudo_content_(false) {
   data_.tag_q_name_ = tag_q_name.Impl();
   data_.tag_q_name_->Ref();
+  printf("%f,construct,CSSSelector,%p,%lu\n", WTF::CurrentTime(), this, sizeof(CSSSelector));
 }
 
 inline CSSSelector::CSSSelector(const CSSSelector& o)
@@ -499,6 +503,7 @@ inline CSSSelector::CSSSelector(const CSSSelector& o)
     data_.value_ = o.data_.value_;
     data_.value_->Ref();
   }
+  printf("%f,construct,CSSSelector,%p,%lu\n", WTF::CurrentTime(), this, sizeof(CSSSelector));
 }
 
 inline CSSSelector::~CSSSelector() {
@@ -508,6 +513,7 @@ inline CSSSelector::~CSSSelector() {
     data_.rare_data_->Deref();
   else if (data_.value_)
     data_.value_->Deref();
+  printf("%f,destruct,CSSSelector,%p,%lu\n", WTF::CurrentTime(), this, sizeof(CSSSelector));
 }
 
 inline const QualifiedName& CSSSelector::TagQName() const {
