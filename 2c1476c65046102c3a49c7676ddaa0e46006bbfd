@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6fd38637_d466b917",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
+        "patchSetId": 5
+      },
+      "lineNbr": 651,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-07-04T05:42:53Z",
+      "side": 1,
+      "message": "Dashes instead of underscores.",
+      "revId": "2c1476c65046102c3a49c7676ddaa0e46006bbfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b2697f0_d86a3f66",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
+        "patchSetId": 5
+      },
+      "lineNbr": 1229,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-07-04T05:42:53Z",
+      "side": 1,
+      "message": "Dashes instead of underscores.",
+      "revId": "2c1476c65046102c3a49c7676ddaa0e46006bbfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
