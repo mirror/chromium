@@ -34,10 +34,12 @@ class WorkerFetchContext final : public BaseFetchContext {
   virtual ~WorkerFetchContext();
 
   ResourceFetcher* GetResourceFetcher();
-  KURL FirstPartyForCookies() const;
-  RefPtr<WebTaskRunner> GetTaskRunner() { return loading_task_runner_; }
 
   // BaseFetchContext implementation:
+  RefPtr<WebTaskRunner> GetTaskRunner() const override {
+    return loading_task_runner_;
+  }
+  KURL GetFirstPartyForCookies() const override;
   ContentSettingsClient* GetContentSettingsClient() const override;
   Settings* GetSettings() const override;
   SubresourceFilter* GetSubresourceFilter() const override;
