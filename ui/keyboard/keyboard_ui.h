@@ -31,10 +31,10 @@ class KEYBOARD_EXPORT KeyboardUI {
 
   // Gets the virtual keyboard window. May return null if the window has not yet
   // been created.
-  virtual aura::Window* GetKeyboardWindow() = 0;
+  virtual aura::Window* GetContentsWindow() = 0;
 
   // Whether the keyboard window has been created.
-  virtual bool HasKeyboardWindow() const = 0;
+  virtual bool HasContentsWindow() const = 0;
 
   // Whether this window should do an overscroll to avoid occlusion by the
   // virtual keyboard. IME windows and virtual keyboard windows should always
