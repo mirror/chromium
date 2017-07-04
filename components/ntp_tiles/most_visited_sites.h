@@ -12,6 +12,7 @@
 #include <string>
 #include <vector>
 
+#include "base/callback_forward.h"
 #include "base/compiler_specific.h"
 #include "base/files/file_path.h"
 #include "base/macros.h"
@@ -99,6 +100,8 @@ class MostVisitedSites : public history::TopSitesObserver,
     virtual bool IsHomePageEnabled() const = 0;
     virtual bool IsNewTabPageUsedAsHomePage() const = 0;
     virtual GURL GetHomepageUrl() const = 0;
+    virtual void QueryTitle(
+        base::OnceCallback<void(base::string16 title)> title_callback) = 0;
   };
 
   // Construct a MostVisitedSites instance.
@@ -208,10 +211,11 @@ class MostVisitedSites : public history::TopSitesObserver,
                                std::set<std::string>* hosts,
                                size_t* total_tile_count) const;
 
-  // Adds the home page as first tile to |tiles| and returns them as new vector.
+  // Adds the home page as tile to |tiles| and calls |SaveNewTilesAndNotify|.
   // Drops existing tiles with the same host as the home page and tiles that
   // would exceed the maximum.
-  NTPTilesVector CreatePersonalTilesWithHomeTile(NTPTilesVector tiles) const;
+  void BuildHomeTileAndSave(NTPTilesVector tiles,
+                            base::string16 home_page_title);
 
   // Returns true if there is a valid home page that can be pinned as tile.
   bool ShouldAddHomeTile() const;

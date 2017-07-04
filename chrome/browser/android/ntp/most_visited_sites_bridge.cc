@@ -10,11 +10,15 @@
 #include "base/android/jni_array.h"
 #include "base/android/jni_string.h"
 #include "base/android/scoped_java_ref.h"
+#include "base/strings/string16.h"
+#include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/history/history_service_factory.h"
 #include "chrome/browser/ntp_tiles/chrome_most_visited_sites_factory.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_android.h"
 #include "chrome/browser/thumbnails/thumbnail_list_source.h"
+#include "components/history/core/browser/history_service.h"
 #include "components/ntp_tiles/metrics.h"
 #include "components/ntp_tiles/most_visited_sites.h"
 #include "components/rappor/rappor_service_impl.h"
@@ -39,21 +43,79 @@ namespace {
 
 class JavaHomePageClient : public MostVisitedSites::HomePageClient {
  public:
-  JavaHomePageClient(JNIEnv* env, const JavaParamRef<jobject>& obj);
+  JavaHomePageClient(JNIEnv* env,
+                     const JavaParamRef<jobject>& obj,
+                     Profile* profile);
 
   bool IsHomePageEnabled() const override;
   bool IsNewTabPageUsedAsHomePage() const override;
   GURL GetHomepageUrl() const override;
+  void QueryTitle(
+      base::OnceCallback<void(base::string16 title)> title_callback) override;
 
  private:
+  void LoadTitleFromHistory();
+  void OnTitleEntryFound(bool success,
+                         const history::URLRow& row,
+                         const history::VisitVector& visits);
+
   ScopedJavaGlobalRef<jobject> client_;
+  Profile* profile_;
+
+  // Used in loading titles.
+  base::CancelableTaskTracker task_tracker_;
+  base::OnceCallback<void(base::string16 title)> title_callback_;
 
   DISALLOW_COPY_AND_ASSIGN(JavaHomePageClient);
 };
 
 JavaHomePageClient::JavaHomePageClient(JNIEnv* env,
-                                       const JavaParamRef<jobject>& obj)
-    : client_(env, obj) {}
+                                       const JavaParamRef<jobject>& obj,
+                                       Profile* profile)
+    : client_(env, obj), profile_(profile) {
+  DCHECK(profile);
+}
+
+void JavaHomePageClient::QueryTitle(
+    base::OnceCallback<void(base::string16 title)> title_callback) {
+  if (!title_callback_.is_null()) {
+    // A finished task always has to call the callback..
+    DCHECK(task_tracker_.HasTrackedTasks());
+    // If the last callback was not called, drop it as data would be stale.
+    task_tracker_.TryCancelAll();
+  }
+  DCHECK(!title_callback.is_null());
+  title_callback_ = std::move(title_callback);
+  GURL url = GetHomepageUrl();
+  if (url.is_empty()) {
+    std::move(title_callback_).Run(base::UTF8ToUTF16(url.spec()));
+    return;
+  }
+  history::HistoryService* const history_service =
+      HistoryServiceFactory::GetForProfileIfExists(
+          profile_, ServiceAccessType::EXPLICIT_ACCESS);
+  if (!history_service) {
+    std::move(title_callback_).Run(base::UTF8ToUTF16(url.spec()));
+    return;
+  }
+  // If the client is destroyed, the tracker will cancel this task automatically
+  // and the callback will not be called. Therefore, base::Unretained works.
+  history_service->QueryURL(url,
+                            /*want_visits=*/false,
+                            base::Bind(&JavaHomePageClient::OnTitleEntryFound,
+                                       base::Unretained(this)),
+                            &task_tracker_);
+}
+
+void JavaHomePageClient::OnTitleEntryFound(bool success,
+                                           const history::URLRow& row,
+                                           const history::VisitVector& visits) {
+  if (!success) {
+    std::move(title_callback_).Run(base::UTF8ToUTF16(GetHomepageUrl().spec()));
+    return;
+  }
+  std::move(title_callback_).Run(row.title());
+}
 
 bool JavaHomePageClient::IsHomePageEnabled() const {
   return Java_HomePageClient_isHomePageEnabled(AttachCurrentThread(), client_);
@@ -127,7 +189,8 @@ void MostVisitedSitesBridge::JavaObserver::OnIconMadeAvailable(
 }
 
 MostVisitedSitesBridge::MostVisitedSitesBridge(Profile* profile)
-    : most_visited_(ChromeMostVisitedSitesFactory::NewForProfile(profile)) {
+    : most_visited_(ChromeMostVisitedSitesFactory::NewForProfile(profile)),
+      profile_(profile) {
   // Register the thumbnails debugging page.
   // TODO(sfiera): find thumbnails a home. They don't belong here.
   content::URLDataSource::Add(profile, new ThumbnailListSource(profile));
@@ -161,7 +224,7 @@ void MostVisitedSitesBridge::SetHomePageClient(
     const base::android::JavaParamRef<jobject>& obj,
     const base::android::JavaParamRef<jobject>& j_client) {
   most_visited_->SetHomePageClient(
-      base::MakeUnique<JavaHomePageClient>(env, j_client));
+      base::MakeUnique<JavaHomePageClient>(env, j_client, profile_));
 }
 
 void MostVisitedSitesBridge::AddOrRemoveBlacklistedUrl(
