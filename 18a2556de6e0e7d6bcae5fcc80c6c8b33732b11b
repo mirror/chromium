@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c737481e_b7821a39",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-04T07:22:42Z",
+      "side": 1,
+      "message": "s/Because/Since/\ns/estimate/estimates/",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 7
+      },
+      "revId": "18a2556de6e0e7d6bcae5fcc80c6c8b33732b11b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80d8d91d_5faf17e1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-04T07:22:42Z",
+      "side": 1,
+      "message": "s/so//\n\nThe construction \"Because of A, so/then/therefore B\" does not \nwork in english like you think :-) .  The closest thing is\n\"Since A , B\", but in technical literature, you should always\nstrive for \"B because of A\", because it\u0027s clearer, e.g.:\n\n\"This CL changes the calculation of the face bounding box to be\nbased on eye distance where possible, because (otherwise) the \nGMScore and Android Face APIs give different results\".",
+      "range": {
+        "startLine": 11,
+        "startChar": 17,
+        "endLine": 11,
+        "endChar": 19
+      },
+      "revId": "18a2556de6e0e7d6bcae5fcc80c6c8b33732b11b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75c732b9_0fbb7e8f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-04T07:22:42Z",
+      "side": 1,
+      "message": "This is nothing new, so just mention that you\u0027re extending\nFaceDetectionImplTest in this CL.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 50
+      },
+      "revId": "18a2556de6e0e7d6bcae5fcc80c6c8b33732b11b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9002e0cd_f86874c1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-04T07:22:42Z",
+      "side": 1,
+      "message": "s/Those new test/These new tests/\ns/rolled up/rolled up in/",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 14
+      },
+      "revId": "18a2556de6e0e7d6bcae5fcc80c6c8b33732b11b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25dc1084_b5412012",
+        "filename": "services/shape_detection/android/java/src/org/chromium/shape_detection/FaceDetectionImplGmsCore.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-04T07:22:42Z",
+      "side": 1,
+      "message": "s/midPoint/midEyePoint/  ? (clearer).",
+      "range": {
+        "startLine": 132,
+        "startChar": 29,
+        "endLine": 132,
+        "endChar": 37
+      },
+      "revId": "18a2556de6e0e7d6bcae5fcc80c6c8b33732b11b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b02f241c_7f5c21a2",
+        "filename": "services/shape_detection/android/javatests/src/org/chromium/shape_detection/FaceDetectionImplTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-04T07:22:42Z",
+      "side": 1,
+      "message": "Can we add assert false; here plz? So potential\ndevelopers adding code here notice that they have to\nextend this block.",
+      "range": {
+        "startLine": 78,
+        "startChar": 12,
+        "endLine": 78,
+        "endChar": 24
+      },
+      "revId": "18a2556de6e0e7d6bcae5fcc80c6c8b33732b11b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
