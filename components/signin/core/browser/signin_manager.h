@@ -187,6 +187,8 @@ class SigninManager : public SigninManagerBase,
   void OnAccountUpdateFailed(const std::string& account_id) override;
 
   // OAuth2TokenService::Observer
+  void OnRefreshTokenAvailable(const std::string& account_id) override;
+  void OnRefreshTokenRevoked(const std::string& account_id) override;
   void OnRefreshTokensLoaded() override;
 
   // Called when a new request to re-authenticate a user is in progress.
@@ -215,14 +217,6 @@ class SigninManager : public SigninManagerBase,
   // Temporarily saves the oauth2 refresh token.  It will be passed to the
   // token service so that it does not need to mint new ones.
   std::string temp_refresh_token_;
-
-  // The SigninClient object associated with this object. Must outlive this
-  // object.
-  SigninClient* client_;
-
-  // The ProfileOAuth2TokenService instance associated with this object. Must
-  // outlive this object.
-  ProfileOAuth2TokenService* token_service_;
 
   // Object used to use the token to push a GAIA cookie into the cookie jar.
   GaiaCookieManagerService* cookie_manager_service_;

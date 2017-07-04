@@ -20,39 +20,29 @@ static const char* kAuthScope =
     "https://www.googleapis.com/auth/webhistory";
 static const int kMinTokenRefreshDelaySeconds = 300;  // 5 minutes
 
-
 SpeechAuthHelper::SpeechAuthHelper(Profile* profile, base::Clock* clock)
     : OAuth2TokenService::Consumer(kAuthScope),
       clock_(clock),
-      token_service_(ProfileOAuth2TokenServiceFactory::GetForProfile(profile)),
+      signin_manager_(SigninManagerFactory::GetForProfile(profile)),
       weak_factory_(this) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
-  // If token_service_ is NULL, we can't do anything. This might be NULL if the
+  // If signin_manager is NULL, we can't do anything. This might be NULL if the
   // profile is a guest user.
-  if (!token_service_)
-    return;
-
-  SigninManagerBase* signin_manager =
-      SigninManagerFactory::GetForProfile(profile);
   // Again, this might be NULL, and if it is, we can't proceed.
-  if (!signin_manager)
+  if (!signin_manager_)
     return;
 
-  authenticated_account_id_ = signin_manager->GetAuthenticatedAccountId();
-  if (!token_service_->RefreshTokenIsAvailable(authenticated_account_id_)) {
-    // Wait for the OAuth2 refresh token to be available before trying to obtain
-    // a speech token.
-    token_service_->AddObserver(this);
-  } else {
+  if (signin_manager_->IsAuthenticatedWithRefreshTokenAvailable())
     FetchAuthToken();
-  }
+  else
+    signin_manager_->AddObserver(this);
 }
 
 SpeechAuthHelper::~SpeechAuthHelper() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  if (token_service_)
-    token_service_->RemoveObserver(this);
+  if (signin_manager_)
+    signin_manager_->RemoveObserver(this);
 }
 
 void SpeechAuthHelper::OnGetTokenSuccess(
@@ -83,10 +73,13 @@ void SpeechAuthHelper::OnGetTokenFailure(
       base::TimeDelta::FromSeconds(kMinTokenRefreshDelaySeconds));
 }
 
-void SpeechAuthHelper::OnRefreshTokenAvailable(const std::string& account_id) {
+void SpeechAuthHelper::OnAuthenticatedAccountStateChanged(
+    const std::string& account_id,
+    const SigninManagerBase::Event& event) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  if (authenticated_account_id_ == account_id)
+  if (event == SigninManagerBase::SIGNIN_REFRESH_TOKEN_AVAILABLE) {
     FetchAuthToken();
+  }
 }
 
 void SpeechAuthHelper::ScheduleTokenFetch(const base::TimeDelta& fetch_delay) {
@@ -104,12 +97,11 @@ void SpeechAuthHelper::FetchAuthToken() {
   // consustructor, and so token_service_ and authenticated_account_id_ are
   // guaranteed to be valid at this point.
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  DCHECK(signin_manager_->IsAuthenticatedWithRefreshTokenAvailable());
   OAuth2TokenService::ScopeSet scopes;
   scopes.insert(kAuthScope);
-  auth_token_request_ = token_service_->StartRequest(
-      authenticated_account_id_,
-      scopes,
-      this);
+  auth_token_request_ = signin_manager_->token_service()->StartRequest(
+      signin_manager_->GetAuthenticatedAccountId(), scopes, this);
 }
 
 std::string SpeechAuthHelper::GetToken() const {

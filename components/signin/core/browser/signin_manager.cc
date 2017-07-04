@@ -31,11 +31,9 @@ SigninManager::SigninManager(SigninClient* client,
                              ProfileOAuth2TokenService* token_service,
                              AccountTrackerService* account_tracker_service,
                              GaiaCookieManagerService* cookie_manager_service)
-    : SigninManagerBase(client, account_tracker_service),
+    : SigninManagerBase(client, token_service, account_tracker_service),
       prohibit_signout_(false),
       type_(SIGNIN_TYPE_NONE),
-      client_(client),
-      token_service_(token_service),
       cookie_manager_service_(cookie_manager_service),
       signin_manager_signed_in_(false),
       user_info_fetched_by_account_tracker_(false),
@@ -44,8 +42,8 @@ SigninManager::SigninManager(SigninClient* client,
 SigninManager::~SigninManager() {}
 
 void SigninManager::InitTokenService() {
-  if (token_service_)
-    token_service_->LoadCredentials(GetAuthenticatedAccountId());
+  if (token_service())
+    token_service()->LoadCredentials(GetAuthenticatedAccountId());
 }
 
 std::string SigninManager::SigninTypeToString(SigninManager::SigninType type) {
@@ -125,7 +123,7 @@ void SigninManager::CopyCredentialsFrom(const SigninManager& source) {
   possibly_invalid_email_ = source.possibly_invalid_email_;
   temp_refresh_token_ = source.temp_refresh_token_;
   password_ = source.password_;
-  source.client_->AfterCredentialsCopied();
+  source.signin_client()->AfterCredentialsCopied();
 }
 
 void SigninManager::ClearTransientSigninData() {
@@ -149,7 +147,7 @@ void SigninManager::HandleAuthError(const GoogleServiceAuthError& error) {
 void SigninManager::SignOut(
     signin_metrics::ProfileSignout signout_source_metric,
     signin_metrics::SignoutDelete signout_delete_metric) {
-  client_->PreSignOut(
+  signin_client()->PreSignOut(
       base::Bind(&SigninManager::DoSignOut, base::Unretained(this),
                  signout_source_metric, signout_delete_metric),
       signout_source_metric);
@@ -186,15 +184,14 @@ void SigninManager::DoSignOut(
 
   const std::string account_id = GetAuthenticatedAccountId();
   const std::string username = GetAuthenticatedAccountInfo().email;
-  const base::Time signin_time =
-      base::Time::FromInternalValue(
-          client_->GetPrefs()->GetInt64(prefs::kSignedInTime));
+  const base::Time signin_time = base::Time::FromInternalValue(
+      signin_client()->GetPrefs()->GetInt64(prefs::kSignedInTime));
   clear_authenticated_user();
-  client_->GetPrefs()->ClearPref(prefs::kGoogleServicesHostedDomain);
-  client_->GetPrefs()->ClearPref(prefs::kGoogleServicesAccountId);
-  client_->GetPrefs()->ClearPref(prefs::kGoogleServicesUserAccountId);
-  client_->GetPrefs()->ClearPref(prefs::kSignedInTime);
-  client_->SignOut();
+  signin_client()->GetPrefs()->ClearPref(prefs::kGoogleServicesHostedDomain);
+  signin_client()->GetPrefs()->ClearPref(prefs::kGoogleServicesAccountId);
+  signin_client()->GetPrefs()->ClearPref(prefs::kGoogleServicesUserAccountId);
+  signin_client()->GetPrefs()->ClearPref(prefs::kSignedInTime);
+  signin_client()->SignOut();
 
   // Determine the duration the user was logged in and log that to UMA.
   if (!signin_time.is_null()) {
@@ -208,7 +205,7 @@ void SigninManager::DoSignOut(
   // profile is not connected to an account.
   LOG(WARNING) << "Revoking refresh token on server. Reason: sign out, "
                << "IsSigninAllowed: " << IsSigninAllowed();
-  token_service_->RevokeAllCredentials();
+  token_service()->RevokeAllCredentials();
 
   for (auto& observer : observer_list_)
     observer.GoogleSignedOut(account_id, username);
@@ -225,13 +222,12 @@ void SigninManager::Initialize(PrefService* local_state) {
         base::Bind(&SigninManager::OnGoogleServicesUsernamePatternChanged,
                    weak_pointer_factory_.GetWeakPtr()));
   }
-  signin_allowed_.Init(prefs::kSigninAllowed,
-                       client_->GetPrefs(),
+  signin_allowed_.Init(prefs::kSigninAllowed, signin_client()->GetPrefs(),
                        base::Bind(&SigninManager::OnSigninAllowedPrefChanged,
                                   base::Unretained(this)));
 
   std::string account_id =
-      client_->GetPrefs()->GetString(prefs::kGoogleServicesAccountId);
+      signin_client()->GetPrefs()->GetString(prefs::kGoogleServicesAccountId);
   std::string user = account_id.empty() ? std::string() :
       account_tracker_service()->GetAccountInfo(account_id).email;
   if ((!account_id.empty() && !IsAllowedUsername(user)) || !IsSigninAllowed()) {
@@ -243,7 +239,7 @@ void SigninManager::Initialize(PrefService* local_state) {
 
   if (account_tracker_service()->GetMigrationState() ==
       AccountTrackerService::MIGRATION_IN_PROGRESS) {
-    token_service_->AddObserver(this);
+    token_service()->AddObserver(this);
   }
   InitTokenService();
   account_tracker_service()->AddObserver(this);
@@ -335,7 +331,7 @@ void SigninManager::DisableOneClickSignIn(PrefService* prefs) {
 }
 
 void SigninManager::MergeSigninCredentialIntoCookieJar() {
-  if (!client_->ShouldMergeSigninCredentialsIntoCookieJar())
+  if (!signin_client()->ShouldMergeSigninCredentialsIntoCookieJar())
     return;
 
   if (!IsAuthenticated())
@@ -354,7 +350,7 @@ void SigninManager::CompletePendingSignin() {
   DCHECK(IsAuthenticated());
 
   std::string account_id = GetAuthenticatedAccountId();
-  token_service_->UpdateCredentials(account_id, temp_refresh_token_);
+  token_service()->UpdateCredentials(account_id, temp_refresh_token_);
   temp_refresh_token_.clear();
 
   MergeSigninCredentialIntoCookieJar();
@@ -372,8 +368,8 @@ void SigninManager::OnExternalSigninCompleted(const std::string& username) {
 }
 
 void SigninManager::OnSignedIn() {
-  client_->GetPrefs()->SetInt64(prefs::kSignedInTime,
-                                base::Time::Now().ToInternalValue());
+  signin_client()->GetPrefs()->SetInt64(prefs::kSignedInTime,
+                                        base::Time::Now().ToInternalValue());
   SetAuthenticatedAccountInfo(possibly_invalid_gaia_id_,
                               possibly_invalid_email_);
   const std::string gaia_id = possibly_invalid_gaia_id_;
@@ -383,22 +379,32 @@ void SigninManager::OnSignedIn() {
   possibly_invalid_email_.clear();
   signin_manager_signed_in_ = true;
 
+  AccountInfo authenticated_account = GetAuthenticatedAccountInfo();
   for (auto& observer : observer_list_) {
-    observer.GoogleSigninSucceeded(GetAuthenticatedAccountId(),
-                                   GetAuthenticatedAccountInfo().email);
+    observer.GoogleSigninSucceeded(authenticated_account.account_id,
+                                   authenticated_account.email);
 
-    observer.GoogleSigninSucceededWithPassword(
-        GetAuthenticatedAccountId(), GetAuthenticatedAccountInfo().email,
-        password_);
+    observer.GoogleSigninSucceededWithPassword(authenticated_account.account_id,
+                                               authenticated_account.email,
+                                               password_);
+
+    // Send account changed notification.
+    Event event = token_service()->RefreshTokenIsAvailable(
+                      authenticated_account.account_id)
+                      ? SIGNIN_REFRESH_TOKEN_AVAILABLE
+                      : SIGNIN_WAITING_FOR_REFRESH_TOKEN;
+    observer.OnAuthenticatedAccountStateChanged(GetAuthenticatedAccountId(),
+                                                event);
   }
 
-  client_->OnSignedIn(GetAuthenticatedAccountId(), gaia_id,
-                      GetAuthenticatedAccountInfo().email, password_);
+  signin_client()->OnSignedIn(GetAuthenticatedAccountId(), gaia_id,
+                              GetAuthenticatedAccountInfo().email, password_);
 
-  signin_metrics::LogSigninProfile(client_->IsFirstRun(),
-                                   client_->GetInstallDate());
+  signin_metrics::LogSigninProfile(signin_client()->IsFirstRun(),
+                                   signin_client()->GetInstallDate());
 
-  DisableOneClickSignIn(client_->GetPrefs());  // Don't ever offer again.
+  DisableOneClickSignIn(
+      signin_client()->GetPrefs());  // Don't ever offer again.
 
   PostSignedIn();
 }
@@ -407,8 +413,8 @@ void SigninManager::PostSignedIn() {
   if (!signin_manager_signed_in_ || !user_info_fetched_by_account_tracker_)
     return;
 
-  client_->PostSignedIn(GetAuthenticatedAccountId(),
-                        GetAuthenticatedAccountInfo().email, password_);
+  signin_client()->PostSignedIn(GetAuthenticatedAccountId(),
+                                GetAuthenticatedAccountInfo().email, password_);
   password_.clear();
 }
 
@@ -425,14 +431,41 @@ void SigninManager::OnAccountUpdateFailed(const std::string& account_id) {
   PostSignedIn();
 }
 
+void SigninManager::OnRefreshTokenAvailable(const std::string& account_id) {
+  if (GetAuthenticatedAccountId() != account_id)
+    return;
+  for (auto& observer : observer_list_) {
+    observer.OnAuthenticatedAccountStateChanged(GetAuthenticatedAccountId(),
+                                                SIGNIN_REFRESH_TOKEN_AVAILABLE);
+  }
+}
+
+void SigninManager::OnRefreshTokenRevoked(const std::string& account_id) {
+  if (GetAuthenticatedAccountId() != account_id)
+    return;
+  for (auto& observer : observer_list_) {
+    observer.OnAuthenticatedAccountStateChanged(GetAuthenticatedAccountId(),
+                                                SIGNIN_REFRESH_TOKEN_REVOKED);
+  }
+}
+
 void SigninManager::OnRefreshTokensLoaded() {
   if (account_tracker_service()->GetMigrationState() ==
       AccountTrackerService::MIGRATION_IN_PROGRESS) {
     account_tracker_service()->SetMigrationDone();
-    token_service_->RemoveObserver(this);
+  }
+
+  if (!IsAuthenticated())
+    return;
+
+  if (token_service()->RefreshTokenIsAvailable(GetAuthenticatedAccountId()))
+    return;
+
+  for (auto& observer : observer_list_) {
+    observer.OnAuthenticatedAccountStateChanged(
+        GetAuthenticatedAccountId(), SIGNIN_REFRESH_TOKEN_FAILED_TO_LOAD);
   }
 }
-
 void SigninManager::ProhibitSignout(bool prohibit_signout) {
   prohibit_signout_ = prohibit_signout;
 }
