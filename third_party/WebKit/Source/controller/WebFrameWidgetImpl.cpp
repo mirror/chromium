@@ -28,10 +28,11 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "web/WebFrameWidgetImpl.h"
+#include "controller/WebFrameWidgetImpl.h"
 
 #include <memory>
 
+#include "build/build_config.h"
 #include "controller/WebDevToolsAgentImpl.h"
 #include "core/animation/CompositorMutatorImpl.h"
 #include "core/dom/UserGestureIndicator.h"
@@ -829,9 +830,10 @@ void WebFrameWidgetImpl::HandleMouseDown(LocalFrame& main_frame,
 
   PageWidgetEventHandler::HandleMouseDown(main_frame, event);
 
-  if (event.button == WebMouseEvent::Button::kLeft && mouse_capture_node_)
+  if (event.button == WebMouseEvent::Button::kLeft && mouse_capture_node_) {
     mouse_capture_gesture_token_ =
         main_frame.GetEventHandler().TakeLastMouseDownGestureToken();
+  }
 
   if (view_impl->GetPagePopup() && page_popup &&
       ToWebPagePopupImpl(view_impl->GetPagePopup())
@@ -843,7 +845,7 @@ void WebFrameWidgetImpl::HandleMouseDown(LocalFrame& main_frame,
 
   // Dispatch the contextmenu event regardless of if the click was swallowed.
   if (!GetPage()->GetSettings().GetShowContextMenuOnMouseUp()) {
-#if OS(MACOSX)
+#if defined(OS_MACOSX)
     if (event.button == WebMouseEvent::Button::kRight ||
         (event.button == WebMouseEvent::Button::kLeft &&
          event.GetModifiers() & WebMouseEvent::kControlKey))
@@ -987,9 +989,9 @@ WebInputEventResult WebFrameWidgetImpl::HandleKeyEvent(
     return result;
   }
 
-#if !OS(MACOSX)
+#if !defined(OS_MACOSX)
   const WebInputEvent::Type kContextMenuKeyTriggeringEventType =
-#if OS(WIN)
+#if defined(OS_WIN)
       WebInputEvent::kKeyUp;
 #else
       WebInputEvent::kRawKeyDown;
@@ -1009,7 +1011,7 @@ WebInputEventResult WebFrameWidgetImpl::HandleKeyEvent(
     View()->SendContextMenuEvent(event);
     return WebInputEventResult::kHandledSystem;
   }
-#endif  // !OS(MACOSX)
+#endif  // !defined(OS_MACOSX)
 
   return WebInputEventResult::kNotHandled;
 }
@@ -1027,9 +1029,10 @@ WebInputEventResult WebFrameWidgetImpl::HandleCharEvent(
   suppress_next_keypress_event_ = false;
 
   LocalFrame* frame = ToLocalFrame(FocusedCoreFrame());
-  if (!frame)
+  if (!frame) {
     return suppress ? WebInputEventResult::kHandledSuppressed
                     : WebInputEventResult::kNotHandled;
+  }
 
   EventHandler& handler = frame->GetEventHandler();
 
@@ -1191,9 +1194,10 @@ HitTestResult WebFrameWidgetImpl::CoreHitTestResultAt(
 
 void WebFrameWidgetImpl::SetVisibilityState(
     WebPageVisibilityState visibility_state) {
-  if (layer_tree_view_)
+  if (layer_tree_view_) {
     layer_tree_view_->SetVisible(visibility_state ==
                                  kWebPageVisibilityStateVisible);
+  }
 }
 
 HitTestResult WebFrameWidgetImpl::HitTestResultForRootFramePos(
