@@ -46,6 +46,30 @@
       "revId": "6bb1c504688f8b29aabb0a8688adfc3b2b9d2b7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "809f52d7_6d84e5b8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticleViewHolder.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-04T13:22:14Z",
+      "side": 1,
+      "message": "@bauerb: Isn\u0027t that unnecessarily raising the API surface? Can we make better use of the promise pattern? Maybe additionally rejecting it when the request is cancelled? Trying to understand the design choice there. Is the issue with the previous patch set that reject() is not supposed to be called by the triggered task rather than by the caller?\n\nIf all we want is a \"isFulfilled()\" check we might as well just use a plain boolean in the request, no?\n\nunpopular_opinion_puffin.jpg",
+      "parentUuid": "ace1d3ee_de3629be",
+      "range": {
+        "startLine": 365,
+        "startChar": 12,
+        "endLine": 365,
+        "endChar": 29
+      },
+      "revId": "6bb1c504688f8b29aabb0a8688adfc3b2b9d2b7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
