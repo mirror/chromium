@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc4fbae6_a71c08ef",
+        "filename": "ios/chrome/browser/payments/payment_request.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-04T20:47:11Z",
+      "side": 1,
+      "message": "include base/memory/weak_ptr.h?",
+      "range": {
+        "startLine": 47,
+        "startChar": 12,
+        "endLine": 47,
+        "endChar": 25
+      },
+      "revId": "d2b8425855633d44fe960acc03c300a1bd486b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18c6aed5_d495ee4b",
+        "filename": "ios/chrome/browser/payments/payment_request.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-04T20:47:11Z",
+      "side": 1,
+      "message": "Please update the comment to something like:\nIf the merchant specified the card network as part of the \"basic-card\"\npayment method, use \"basic-card\" as the method_name. Otherwise, use\nthe name of the network.",
+      "range": {
+        "startLine": 256,
+        "startChar": 0,
+        "endLine": 258,
+        "endChar": 38
+      },
+      "revId": "d2b8425855633d44fe960acc03c300a1bd486b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "017e8f0f_aa56ae07",
+        "filename": "ios/chrome/browser/payments/payment_request.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-04T20:47:11Z",
+      "side": 1,
+      "message": "nit: I found out about base::ContainsValue recently. It\u0027s really useful!",
+      "range": {
+        "startLine": 260,
+        "startChar": 37,
+        "endLine": 260,
+        "endChar": 41
+      },
+      "revId": "d2b8425855633d44fe960acc03c300a1bd486b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3262224f_8e8bbec5",
+        "filename": "ios/chrome/browser/payments/payment_request.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-04T20:47:11Z",
+      "side": 1,
+      "message": "We now have the supported_card_types_set_! You should be able to determine the value for matches_merchant_type_exactly.",
+      "range": {
+        "startLine": 267,
+        "startChar": 5,
+        "endLine": 267,
+        "endChar": 9
+      },
+      "revId": "d2b8425855633d44fe960acc03c300a1bd486b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1341e357_738a0bac",
+        "filename": "ios/chrome/browser/ui/payments/credit_card_edit_coordinator.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-04T20:47:11Z",
+      "side": 1,
+      "message": "s/credit card/payment method",
+      "range": {
+        "startLine": 46,
+        "startChar": 7,
+        "endLine": 46,
+        "endChar": 18
+      },
+      "revId": "d2b8425855633d44fe960acc03c300a1bd486b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "240b6a1f_8a740f7f",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_coordinator_unittest.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-04T20:47:11Z",
+      "side": 1,
+      "message": "Do we still need this?",
+      "revId": "d2b8425855633d44fe960acc03c300a1bd486b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20cc8560_2219b4e6",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-04T20:47:11Z",
+      "side": 1,
+      "message": "Do we still need billingAddress?",
+      "range": {
+        "startLine": 81,
+        "startChar": 43,
+        "endLine": 81,
+        "endChar": 0
+      },
+      "revId": "d2b8425855633d44fe960acc03c300a1bd486b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

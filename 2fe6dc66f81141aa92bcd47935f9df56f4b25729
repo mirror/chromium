@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af4f05bd_b1b1804e",
+        "filename": "ios/chrome/browser/payments/payment_request.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-04T20:47:11Z",
+      "side": 0,
+      "message": "Why are you deleting this? bad rebase?",
+      "range": {
+        "startLine": 289,
+        "startChar": 23,
+        "endLine": 289,
+        "endChar": 46
+      },
+      "revId": "2fe6dc66f81141aa92bcd47935f9df56f4b25729",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
