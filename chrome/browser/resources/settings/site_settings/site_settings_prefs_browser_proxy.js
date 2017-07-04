@@ -45,12 +45,6 @@ var RawSiteException;
 var SiteException;
 
 /**
- * @typedef {{location: string,
- *            notifications: string}}
- */
-var CategoryDefaultsPref;
-
-/**
  * @typedef {{setting: string,
  *            source: ContentSettingProvider}}
  */

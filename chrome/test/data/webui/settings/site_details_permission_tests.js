@@ -12,8 +12,10 @@ suite('SiteDetailsPermission', function() {
 
   /**
    * An example pref with only camera allowed.
+   * @type {SiteSettingsPref}
    */
   var prefs = {
+    defaults: {camera: {setting: 'allow', source: undefined}},
     exceptions: {
       camera: [
         {
@@ -28,8 +30,10 @@ suite('SiteDetailsPermission', function() {
 
   /**
    * An example pref with only one entry allowed.
+   * @type {SiteSettingsPref}
    */
   var prefsCookies = {
+    defaults: {cookies: {setting: 'allow', source: undefined}},
     exceptions: {
       cookies: [
         {
@@ -138,6 +142,47 @@ suite('SiteDetailsPermission', function() {
         .then(function() {
           return validatePermissionFlipWorks(
               origin, settings.PermissionValues.BLOCK);
+        });
+  });
+
+  test('default string is correct', function() {
+    var origin = 'https://www.example.com';
+    browserProxy.setPrefs(prefs)
+    testElement.category = settings.ContentSettingsTypes.CAMERA;
+    testElement.label = 'Camera';
+    testElement.site = {
+      origin: origin,
+      embeddingOrigin: '',
+    };
+
+    return browserProxy.whenCalled('getDefaultValueForContentType')
+        .then(function() {
+          assertEquals(
+              'Allow (default)', testElement.defaultSettingString_,
+              'Default setting string should match prefs');
+          browserProxy.resetResolver('getDefaultValueForContentType');
+          prefs.defaults.camera.setting = 'block';
+          browserProxy.setPrefs(prefs);
+          // Trigger a call to siteChanged_() by touching |testElement.site|.
+          testElement.site = {origin: origin, embeddingOrigin: ''};
+          return browserProxy.whenCalled('getDefaultValueForContentType');
+        })
+        .then(function() {
+          assertEquals(
+              'Block (default)', testElement.defaultSettingString_,
+              'Default setting string should match prefs');
+          browserProxy.resetResolver('getDefaultValueForContentType');
+          prefs.defaults.camera.setting = 'ask';
+          browserProxy.setPrefs(prefs);
+          // Trigger a call to siteChanged_() by touching |testElement.site|.
+          testElement.site = {origin: origin, embeddingOrigin: ''};
+          testElement.siteChanged_(testElement.site);
+          return browserProxy.whenCalled('getDefaultValueForContentType');
+        })
+        .then(function() {
+          assertEquals(
+              'Ask (default)', testElement.defaultSettingString_,
+              'Default setting string should match prefs');
         });
   });
 });
