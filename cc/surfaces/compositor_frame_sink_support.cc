@@ -53,6 +53,40 @@ CompositorFrameSinkSupport::~CompositorFrameSinkSupport() {
     surface_manager_->InvalidateFrameSinkId(frame_sink_id_);
 }
 
+void CompositorFrameSinkSupport::OnSurfaceActivated(Surface* surface) {
+  DCHECK(surface->HasActiveFrame());
+  const CompositorFrame& frame = surface->GetActiveFrame();
+  if (!seen_first_frame_activation_) {
+    // SurfaceCreated only applies for the first Surface activation.
+    seen_first_frame_activation_ = true;
+
+    gfx::Size frame_size = frame.render_pass_list.back()->output_rect.size();
+    surface_manager_->SurfaceCreated(SurfaceInfo(
+        surface->surface_id(), frame.metadata.device_scale_factor, frame_size));
+  }
+  // Fire SurfaceCreated first so that a temporary reference is added before it
+  // is potentially transformed into a real reference by the client.
+  DCHECK(surface->active_referenced_surfaces());
+  UpdateSurfaceReferences(surface->surface_id().local_surface_id(),
+                          *surface->active_referenced_surfaces());
+  if (!surface_manager_->SurfaceModified(surface->surface_id(),
+                                         frame.metadata.begin_frame_ack)) {
+    TRACE_EVENT_INSTANT0("cc", "Damage not visible.", TRACE_EVENT_SCOPE_THREAD);
+    surface->RunDrawCallback();
+  }
+  surface_manager_->SurfaceActivated(surface);
+}
+
+void CompositorFrameSinkSupport::RefResources(
+    const std::vector<TransferableResource>& resources) {
+  surface_resource_holder_.RefResources(resources);
+}
+
+void CompositorFrameSinkSupport::UnrefResources(
+    const std::vector<ReturnedResource>& resources) {
+  surface_resource_holder_.UnrefResources(resources);
+}
+
 void CompositorFrameSinkSupport::ReturnResources(
     const std::vector<ReturnedResource>& resources) {
   if (resources.empty())
@@ -64,6 +98,15 @@ void CompositorFrameSinkSupport::ReturnResources(
 
   std::copy(resources.begin(), resources.end(),
             std::back_inserter(surface_returned_resources_));
+}
+
+void CompositorFrameSinkSupport::ReceiveFromChild(
+    const std::vector<TransferableResource>& resources) {
+  surface_resource_holder_.ReceiveFromChild(resources);
+}
+
+bool CompositorFrameSinkSupport::NeedsSyncPoints() const {
+  return needs_sync_points_;
 }
 
 void CompositorFrameSinkSupport::SetBeginFrameSource(
@@ -252,21 +295,6 @@ void CompositorFrameSinkSupport::ClaimTemporaryReference(
   surface_manager_->AssignTemporaryReference(surface_id, frame_sink_id_);
 }
 
-void CompositorFrameSinkSupport::ReceiveFromChild(
-    const std::vector<TransferableResource>& resources) {
-  surface_resource_holder_.ReceiveFromChild(resources);
-}
-
-void CompositorFrameSinkSupport::RefResources(
-    const std::vector<TransferableResource>& resources) {
-  surface_resource_holder_.RefResources(resources);
-}
-
-void CompositorFrameSinkSupport::UnrefResources(
-    const std::vector<ReturnedResource>& resources) {
-  surface_resource_holder_.UnrefResources(resources);
-}
-
 CompositorFrameSinkSupport::CompositorFrameSinkSupport(
     CompositorFrameSinkSupportClient* client,
     const FrameSinkId& frame_sink_id,
@@ -305,30 +333,6 @@ const BeginFrameArgs& CompositorFrameSinkSupport::LastUsedBeginFrameArgs()
 
 void CompositorFrameSinkSupport::OnBeginFrameSourcePausedChanged(bool paused) {}
 
-void CompositorFrameSinkSupport::OnSurfaceActivated(Surface* surface) {
-  DCHECK(surface->HasActiveFrame());
-  const CompositorFrame& frame = surface->GetActiveFrame();
-  if (!seen_first_frame_activation_) {
-    // SurfaceCreated only applies for the first Surface activation.
-    seen_first_frame_activation_ = true;
-
-    gfx::Size frame_size = frame.render_pass_list.back()->output_rect.size();
-    surface_manager_->SurfaceCreated(SurfaceInfo(
-        surface->surface_id(), frame.metadata.device_scale_factor, frame_size));
-  }
-  // Fire SurfaceCreated first so that a temporary reference is added before it
-  // is potentially transformed into a real reference by the client.
-  DCHECK(surface->active_referenced_surfaces());
-  UpdateSurfaceReferences(surface->surface_id().local_surface_id(),
-                          *surface->active_referenced_surfaces());
-  if (!surface_manager_->SurfaceModified(surface->surface_id(),
-                                         frame.metadata.begin_frame_ack)) {
-    TRACE_EVENT_INSTANT0("cc", "Damage not visible.", TRACE_EVENT_SCOPE_THREAD);
-    surface->RunDrawCallback();
-  }
-  surface_manager_->SurfaceActivated(surface);
-}
-
 void CompositorFrameSinkSupport::UpdateNeedsBeginFramesInternal() {
   if (!begin_frame_source_)
     return;
@@ -356,7 +360,7 @@ void CompositorFrameSinkSupport::RequestCopyOfSurface(
     return;
   Surface* current_surface =
       surface_manager_->GetSurfaceForId(current_surface_id_);
-  DCHECK_EQ(this, current_surface->compositor_frame_sink_support().get());
+  DCHECK_EQ(this, current_surface->surface_client().get());
   current_surface->RequestCopyOfOutput(std::move(copy_request));
   BeginFrameAck ack;
   ack.has_damage = true;

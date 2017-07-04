@@ -67,12 +67,11 @@ class CC_SURFACES_EXPORT SurfaceManager {
 
   void RequestSurfaceResolution(Surface* pending_surface);
 
-  // Creates a Surface for the given CompositorFrameSinkSupport. The surface
+  // Creates a Surface for the given SurfaceClient. The surface
   // will be destroyed when DestroySurface is called, all of its destruction
   // dependencies are satisfied, and it is not reachable from the root surface.
-  Surface* CreateSurface(
-      base::WeakPtr<CompositorFrameSinkSupport> compositor_frame_sink_support,
-      const SurfaceInfo& surface_info);
+  Surface* CreateSurface(base::WeakPtr<SurfaceClient> surface_client,
+                         const SurfaceInfo& surface_info);
 
   // Destroy the Surface once a set of sequence numbers has been satisfied.
   void DestroySurface(const SurfaceId& surface_id);
@@ -96,7 +95,7 @@ class CC_SURFACES_EXPORT SurfaceManager {
   // |ack.sequence_number| is only valid if called in response to a BeginFrame.
   bool SurfaceModified(const SurfaceId& surface_id, const BeginFrameAck& ack);
 
-  // Called when a CompositorFrame is submitted to a CompositorFrameSinkSupport
+  // Called when a CompositorFrame is submitted to a SurfaceClient
   // for a given |surface_id| for the first time.
   void SurfaceCreated(const SurfaceInfo& surface_info);
 
@@ -133,7 +132,7 @@ class CC_SURFACES_EXPORT SurfaceManager {
   // possibly because a renderer process has crashed.
   void InvalidateFrameSinkId(const FrameSinkId& frame_sink_id);
 
-  // CompositorFrameSinkSupport, hierarchy, and BeginFrameSource can be
+  // SurfaceClient, hierarchy, and BeginFrameSource can be
   // registered and unregistered in any order with respect to each other.
   //
   // This happens in practice, e.g. the relationship to between ui::Compositor /
