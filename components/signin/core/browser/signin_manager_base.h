@@ -41,6 +41,7 @@
 class AccountTrackerService;
 class PrefRegistrySimple;
 class PrefService;
+class ProfileOAuth2TokenService;
 class SigninClient;
 
 namespace browser_sync {
@@ -57,16 +58,43 @@ class PrefRegistrySyncable;
 
 class SigninManagerBase : public KeyedService {
  public:
+  enum Event {
+    // A new account was set as the authenticated account, however there is no
+    // refresh token available for the authenticated account yet.
+    SIGNIN_WAITING_FOR_REFRESH_TOKEN,
+    // A new account was set as the authenticated account and the. Or a new
+    // refresh token became available for the authenticated account ID.
+    SIGNIN_REFRESH_TOKEN_AVAILABLE,
+    // The refresh token for the authenticated account was removed.
+    SIGNIN_REFRESH_TOKEN_REVOKED,
+    // The token service failed to load a refresh token for the authenticated
+    // account.
+    SIGNIN_REFRESH_TOKEN_FAILED_TO_LOAD,
+    // The authenticated account was removed.
+    SIGNED_OUT,
+  };
   class Observer {
    public:
+    // Called when the state of the authenticated account changes, and passes
+    // the event that causes this change.
+    virtual void OnAuthenticatedAccountStateChanged(
+        const std::string& authenticated_account_id,
+        const SigninManagerBase::Event& event){};
+
     // Called when a user fails to sign into Google services such as sync.
     virtual void GoogleSigninFailed(const GoogleServiceAuthError& error) {}
 
     // Called when a user signs into Google services such as sync.
+    //
+    // DEPRECATED: Observers should listen for
+    // |OnAuthenticatedAccountStateChanged|.
     virtual void GoogleSigninSucceeded(const std::string& account_id,
                                        const std::string& username) {}
 
     // Called when the currently signed-in user for a user has been signed out.
+    //
+    // DEPRECATED: Observers should listen for
+    // |OnAuthenticatedAccountStateChanged|.
     virtual void GoogleSignedOut(const std::string& account_id,
                                  const std::string& username) {}
 
@@ -100,6 +128,7 @@ class SigninManagerBase : public KeyedService {
   };
 
   SigninManagerBase(SigninClient* client,
+                    ProfileOAuth2TokenService* token_service,
                     AccountTrackerService* account_tracker_service);
   ~SigninManagerBase() override;
 
@@ -146,6 +175,10 @@ class SigninManagerBase : public KeyedService {
   // Returns true if there is an authenticated user.
   bool IsAuthenticated() const;
 
+  // Returns true if there is an authenticated user and if there is a refresh
+  // token available for that account.
+  bool IsAuthenticatedWithRefreshTokenAvailable() const;
+
   // Returns true if there's a signin in progress.
   virtual bool AuthInProgress() const;
 
@@ -164,6 +197,10 @@ class SigninManagerBase : public KeyedService {
 
   // Gives access to the SigninClient instance associated with this instance.
   SigninClient* signin_client() const { return client_; }
+
+  // Returns the token service. Public as a convenience method to avoid
+  // always retrieving it from the browser context.
+  ProfileOAuth2TokenService* token_service() const { return token_service_; }
 
   // Adds a callback that will be called when this instance is shut down.Not
   // intended for general usage, but rather for usage only by the Identity
@@ -200,8 +237,18 @@ class SigninManagerBase : public KeyedService {
   friend class FakeSigninManagerBase;
   friend class FakeSigninManager;
 
+  // The SigninClient object associated with this object. Must outlive this
+  // object.
   SigninClient* client_;
+
+  // The ProfileOAuth2TokenService instance associated with this object. Must
+  // outlive this object.
+  ProfileOAuth2TokenService* token_service_;
+
+  // The AccountTrackerService instance associated with this object. Must
+  // outlive this object.
   AccountTrackerService* account_tracker_service_;
+
   bool initialized_;
 
   // Account id after successful authentication.

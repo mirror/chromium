@@ -28,12 +28,15 @@ using namespace signin_internals_util;
 
 SigninManagerBase::SigninManagerBase(
     SigninClient* client,
+    ProfileOAuth2TokenService* token_service,
     AccountTrackerService* account_tracker_service)
     : client_(client),
+      token_service_(token_service),
       account_tracker_service_(account_tracker_service),
       initialized_(false),
       weak_pointer_factory_(this) {
   DCHECK(client_);
+  DCHECK(token_service_);
   DCHECK(account_tracker_service_);
 }
 
