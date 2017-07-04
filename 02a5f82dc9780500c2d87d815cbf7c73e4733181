@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b512ae7_7e7d918e",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-04T14:30:46Z",
+      "side": 1,
+      "message": "This is actually checking that the tab made sound in the past 2 seconds. I guess we might not be able to do more without adding observers to the audibility state but maybe the comment should make this clear and a bug be opened to track?",
+      "revId": "02a5f82dc9780500c2d87d815cbf7c73e4733181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adfc57b7_6ca54413",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-04T14:30:46Z",
+      "side": 1,
+      "message": "I think you can avoid this by overriding TestWebContents and have it return a mock WasRecentlyAudible() value. Then, you would have to pass that WebContents to the test harness. Surprisingly, it seems not very clean as ::SetUp() call SetWebContents(CreateTestWebContonts()) and CrateTestWebContents() isn\u0027t virtual. I would recommend to call SetWebContents() and pass your own sub-class in the SetUp, after the parent\u0027s SetUp().",
+      "revId": "02a5f82dc9780500c2d87d815cbf7c73e4733181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cfeb533_f18c3539",
+        "filename": "chrome/browser/media/media_engagement_contents_observer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-04T14:30:46Z",
+      "side": 1,
+      "message": "nit: SimulateAudible()?",
+      "revId": "02a5f82dc9780500c2d87d815cbf7c73e4733181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2a4f10f_173de0d4",
+        "filename": "chrome/browser/media/media_engagement_contents_observer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-04T14:30:46Z",
+      "side": 1,
+      "message": "You might want to have a unit test just for this instead of adding the EXPECT_TRUE() here.",
+      "revId": "02a5f82dc9780500c2d87d815cbf7c73e4733181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d477418b_05e0103f",
+        "filename": "chrome/browser/media/media_engagement_contents_observer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-04T14:30:46Z",
+      "side": 1,
+      "message": "SimulateInaudible()?",
+      "revId": "02a5f82dc9780500c2d87d815cbf7c73e4733181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11cb0571_eef3c33e",
+        "filename": "chrome/browser/media/media_engagement_contents_observer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-04T14:30:46Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "02a5f82dc9780500c2d87d815cbf7c73e4733181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
