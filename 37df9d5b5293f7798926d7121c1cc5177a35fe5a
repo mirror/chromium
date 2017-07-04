@@ -16,6 +16,29 @@
       "revId": "37df9d5b5293f7798926d7121c1cc5177a35fe5a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14b943ef_d569ba38",
+        "filename": "content/browser/service_worker/embedded_worker_instance.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-04T03:37:21Z",
+      "side": 1,
+      "message": "You might be able to remove this in another patch because issue 604762 has already been closed.",
+      "range": {
+        "startLine": 111,
+        "startChar": 2,
+        "endLine": 112,
+        "endChar": 11
+      },
+      "revId": "37df9d5b5293f7798926d7121c1cc5177a35fe5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
