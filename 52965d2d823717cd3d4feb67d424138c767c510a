@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69c375a7_ff4d0b9e",
+        "filename": "ios/chrome/browser/ui/settings/password_details_collection_view_controller_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-04T11:15:31Z",
+      "side": 0,
+      "message": "I am removing this test because I did not fid a good way to interact with the UIAlertController to complete the deletion, and the process is now covered by the EG test.",
+      "range": {
+        "startLine": 254,
+        "startChar": 52,
+        "endLine": 254,
+        "endChar": 66
+      },
+      "revId": "52965d2d823717cd3d4feb67d424138c767c510a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
