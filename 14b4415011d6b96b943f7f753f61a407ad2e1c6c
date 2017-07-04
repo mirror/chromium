@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0f357ac_3162dfcb",
+        "filename": "components/about_ui/resources/about_credits.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-04T17:26:53Z",
+      "side": 1,
+      "message": "nit: add a comment saying what this block does (Makes show/hide links toggle when enter is pressed)",
+      "revId": "14b4415011d6b96b943f7f753f61a407ad2e1c6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3549353_77aea624",
+        "filename": "components/about_ui/resources/about_credits.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-04T17:26:53Z",
+      "side": 1,
+      "message": "Would look nicer to not require this. How about making a global function for the handler:\n\nfunction onToggleKeyPress(e) {\n  if (e.keyCode \u003d\u003d 13) {\n    var checkbox \u003d e.currentTarget.previousElementSibling;\n    ...\n  }\n}\n\nThen you can just loop through the elements and assign:\n  links[i].onkeypress \u003d onToggleKeyPress",
+      "range": {
+        "startLine": 24,
+        "startChar": 5,
+        "endLine": 24,
+        "endChar": 13
+      },
+      "revId": "14b4415011d6b96b943f7f753f61a407ad2e1c6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
