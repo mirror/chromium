@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "7385be80_d1d955e8",
+        "filename": "components/drive/chromeos/change_list_processor.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-07-04T07:42:52Z",
+      "side": 1,
+      "message": "Thanks. Did you mean that we should update resource_id here and then update changestamp by the shared code in ApplyChangeLists, or just keep this unchanged?\n(I feel the former would be better for readability, but increases # of write operation to the DB by 1. I guess we can ignore that bad effect as it\u0027s very small, but not sure.)",
+      "parentUuid": "b9f37cf3_b1ca09b6",
+      "range": {
+        "startLine": 173,
+        "startChar": 0,
+        "endLine": 180,
+        "endChar": 0
+      },
+      "revId": "aff86ea14a8d5a2f7f69aa42e71bf12125c9f3f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "971fb14b_acfc0f12",
         "filename": "components/drive/chromeos/change_list_processor.cc",
         "patchSetId": 13
