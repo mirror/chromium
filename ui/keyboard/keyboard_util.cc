@@ -188,8 +188,9 @@ bool IsExperimentalInputViewEnabled() {
 }
 
 bool IsFloatingVirtualKeyboardEnabled() {
-  return base::CommandLine::ForCurrentProcess()->HasSwitch(
-      switches::kEnableFloatingVirtualKeyboard);
+  return true;
+  // return base::CommandLine::ForCurrentProcess()->HasSwitch(
+  // switches::kEnableFloatingVirtualKeyboard);
 }
 
 bool IsGestureTypingEnabled() {

@@ -118,7 +118,7 @@ class KEYBOARD_EXPORT KeyboardController : public ui::InputMethodObserver,
 
   bool keyboard_locked() const { return keyboard_locked_; }
 
-  KeyboardMode keyboard_mode() const { return keyboard_mode_; }
+  KeyboardMode keyboard_mode() const { return FLOATING; }
 
   void SetKeyboardMode(KeyboardMode mode);
 

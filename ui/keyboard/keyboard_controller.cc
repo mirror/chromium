@@ -414,7 +414,7 @@ void KeyboardController::SetKeyboardMode(KeyboardMode mode) {
   if (keyboard_mode_ == mode)
     return;
 
-  keyboard_mode_ = mode;
+  keyboard_mode_ = FLOATING;
   // When keyboard is floating, no overscroll or resize is necessary. Sets
   // keyboard bounds to zero so overscroll or resize is disabled.
   if (keyboard_mode_ == FLOATING) {
