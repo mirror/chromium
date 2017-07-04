@@ -70,6 +70,30 @@
       "revId": "6bb1c504688f8b29aabb0a8688adfc3b2b9d2b7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "96607b84_c6c1d4f1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticleViewHolder.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-04T13:37:52Z",
+      "side": 1,
+      "message": "I would look at it the other way: If we already store a callback and a flag that tracks whether we\u0027re finished, we might as well use a Promise instead. Yes, rejection isn\u0027t really necessary here, because rejection propagates an error from the object back to the client, but the client is what cancels the request.\n\nWhat we could do is make the request itself inherit from Promise rather than owning one, to express that the thumbnail is a value that may not be there yet. OTOH, inheritance instead of composition isn\u0027t that popular either...",
+      "parentUuid": "809f52d7_6d84e5b8",
+      "range": {
+        "startLine": 365,
+        "startChar": 12,
+        "endLine": 365,
+        "endChar": 29
+      },
+      "revId": "6bb1c504688f8b29aabb0a8688adfc3b2b9d2b7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
