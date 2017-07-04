@@ -61,9 +61,9 @@ TEST_F(RangeTest, extractContentsWithDOMMutationEvent) {
   Element* const result = GetDocument().createElement("div");
   result->AppendChild(range->extractContents(ASSERT_NO_EXCEPTION));
 
-  EXPECT_EQ("<b>abc</b>", result->innerHTML())
+  EXPECT_EQ("<b>abc</b>", result->InnerHTMLAsString())
       << "DOM mutation event handler should not affect result.";
-  EXPECT_EQ("<span>DEF</span>", span_element->outerHTML())
+  EXPECT_EQ("<span>DEF</span>", span_element->OuterHTMLAsString())
       << "DOM mutation event handler should be executed.";
 }
 

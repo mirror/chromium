@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="/resources/testharness.js"></script>
+  <script src="/resources/testharnessreport.js"></script>
+  <script src="./support/helper.js"></script>
+
+  <meta http-equiv="Content-Security-Policy" content="require-safe-types">
+</head>
+<body>
+<script>
+  // String assignments throw.
+  test(t => {
+    var d = document.createElement('div');
+    assert_throws(new TypeError(), _ => {
+      d.innerHTML = "Fail.";
+    });
+  }, "`innerHTML = string` throws.");
+
+  // SafeHTML assignments work.
+  promise_test(t => {
+    return SafeHTML.escape(unescapedHTML).then(html => {
+      var d = document.createElement('div');
+      d.innerHTML = html;
+      assert_equals(d.innerText, unescapedHTML);
+    });
+  }, "innerHTML = SafeHTML.escape().");
+
+  promise_test(t => {
+    return SafeHTML.unsafelyCreate(unescapedHTML).then(html => {
+      var d = document.createElement('div');
+      d.innerHTML = html;
+      assert_equals(d.innerText, unescapedText);
+    });
+  }, "innerHTML = SafeHTML.unsafelyCreate().");
+</script>
+</body>
+</html>

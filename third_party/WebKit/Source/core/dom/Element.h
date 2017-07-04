@@ -73,6 +73,7 @@ class ScrollStateCallback;
 class ScrollToOptions;
 class ShadowRoot;
 class ShadowRootInit;
+class StringOrSafeHTML;
 class StylePropertySet;
 class StylePropertyMap;
 class V0CustomElementDefinition;
@@ -599,10 +600,10 @@ class CORE_EXPORT Element : public ContainerNode {
 
   virtual String innerText();
   String outerText();
-  String innerHTML() const;
-  String outerHTML() const;
-  void setInnerHTML(const String&, ExceptionState& = ASSERT_NO_EXCEPTION);
-  void setOuterHTML(const String&, ExceptionState&);
+  String InnerHTMLAsString() const;
+  String OuterHTMLAsString() const;
+  void setInnerHTML(const String& html, ExceptionState& = ASSERT_NO_EXCEPTION);
+  void setOuterHTML(const String& html, ExceptionState&);
 
   Element* insertAdjacentElement(const String& where,
                                  Element* new_child,
@@ -612,6 +613,17 @@ class CORE_EXPORT Element : public ContainerNode {
                           ExceptionState&);
   void insertAdjacentHTML(const String& where,
                           const String& html,
+                          ExceptionState&);
+
+  // SafeHTMLTypes variants of the above.
+  // TODO(mkwst): Write a spec for these bits.
+  void innerHTML(StringOrSafeHTML&) const;
+  void outerHTML(StringOrSafeHTML&) const;
+  void setInnerHTML(const StringOrSafeHTML&,
+                    ExceptionState& = ASSERT_NO_EXCEPTION);
+  void setOuterHTML(const StringOrSafeHTML&, ExceptionState&);
+  void insertAdjacentHTML(const String& where,
+                          const StringOrSafeHTML&,
                           ExceptionState&);
 
   void setPointerCapture(int pointer_id, ExceptionState&);

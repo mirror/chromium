@@ -150,6 +150,7 @@ class ResourceFetcher;
 class RootScrollerController;
 class SVGDocumentExtensions;
 class SVGUseElement;
+class SafeHTML;
 class ScriptElementBase;
 class ScriptRunner;
 class ScriptableDocumentParser;
@@ -609,6 +610,11 @@ class CORE_EXPORT Document : public ContainerNode,
                ExceptionState& = ASSERT_NO_EXCEPTION);
   void write(LocalDOMWindow*, const Vector<String>& text, ExceptionState&);
   void writeln(LocalDOMWindow*, const Vector<String>& text, ExceptionState&);
+
+  // SafeHTMLTypes variants of the above.
+  // TODO(mkwst): Write a spec for this.
+  void write(LocalDOMWindow*, SafeHTML*, ExceptionState&);
+  void writeln(LocalDOMWindow*, SafeHTML*, ExceptionState&);
 
   bool WellFormed() const { return well_formed_; }
 
