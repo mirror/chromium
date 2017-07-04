@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f137abf2_8312b2fc",
+        "filename": "third_party/WebKit/Source/platform/LayoutLocale.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-04T20:07:16Z",
+      "side": 1,
+      "message": "Since with your most recent change, this now has effects beyond LayoutLocale, maybe the caller should just call FontGlobalContext::ClearForTesting, so that it\u0027s apparent at the call site that more is being cleared?\n\n(I don\u0027t have an opinion on whether that test ought to be clearing the FontCache or not; I defer that to the font experts.)",
+      "revId": "d153927babbea5281c31734b4cccf235bf8387fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
