@@ -9,6 +9,7 @@
 #include <vector>
 
 #include "base/strings/string16.h"
+#include "base/values.h"
 #include "components/payments/core/basic_card_response.h"
 #include "components/payments/core/payment_address.h"
 #include "components/payments/core/payment_method_data.h"
@@ -264,7 +265,7 @@ class PaymentResponse {
 
   // A credit card response object used by the merchant to process the
   // transaction and determine successful fund transfer.
-  payments::BasicCardResponse details;
+  std::string details;
 
   // If request_shipping was set to true in the PaymentOptions passed to the
   // PaymentRequest constructor, this will be the full and final shipping
