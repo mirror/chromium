@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "02e73680_13efbb9e",
+        "filename": "ios/chrome/browser/ui/settings/password_details_collection_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-04T12:38:23Z",
+      "side": 1,
+      "message": "Thanks! I admit I copy-pasted the weakSelf stuff, but now you explained to me why is it used.\n\nI went with the strongSelf option and replaced the implicit self with strongSelf.",
+      "parentUuid": "1bc6aaf8_ff86f2ac",
+      "range": {
+        "startLine": 415,
+        "startChar": 17,
+        "endLine": 415,
+        "endChar": 30
+      },
+      "revId": "1ad6871bd1ad7d11576a6bf78566f091276ca5e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10614ed7_85d7d7b8",
         "filename": "ios/chrome/browser/ui/settings/password_details_collection_view_controller_unittest.mm",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "1ad6871bd1ad7d11576a6bf78566f091276ca5e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44defeb3_2d48f24a",
+        "filename": "ios/chrome/browser/ui/settings/password_details_collection_view_controller_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-04T12:38:23Z",
+      "side": 1,
+      "message": "PasswordDetailsCollectionViewController still wants a non-nil delegate. I put the method back in, but made it trivial.",
+      "parentUuid": "10614ed7_85d7d7b8",
+      "revId": "1ad6871bd1ad7d11576a6bf78566f091276ca5e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

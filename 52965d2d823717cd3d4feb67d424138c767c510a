@@ -22,6 +22,30 @@
       "revId": "52965d2d823717cd3d4feb67d424138c767c510a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3fb84c3_155f4226",
+        "filename": "ios/chrome/browser/ui/settings/password_details_collection_view_controller_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-04T12:38:23Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "69c375a7_ff4d0b9e",
+      "range": {
+        "startLine": 254,
+        "startChar": 52,
+        "endLine": 254,
+        "endChar": 66
+      },
+      "revId": "52965d2d823717cd3d4feb67d424138c767c510a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
