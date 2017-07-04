@@ -30,6 +30,7 @@
 
 #include "core/loader/BaseFetchContext.h"
 
+#include "core/dom/TaskRunnerHelper.h"
 #include "core/testing/NullExecutionContext.h"
 #include "platform/RuntimeEnabledFeatures.h"
 #include "testing/gmock/include/gmock/gmock.h"
@@ -44,6 +45,10 @@ class MockBaseFetchContext final : public BaseFetchContext {
   ~MockBaseFetchContext() override {}
 
   // BaseFetchContext overrides:
+  RefPtr<WebTaskRunner> GetTaskRunner() const override {
+    return TaskRunnerHelper::Get(TaskType::kNetworking, execution_context_);
+  }
+  KURL GetFirstPartyForCookies() const override { return KURL(); }
   ContentSettingsClient* GetContentSettingsClient() const override {
     return nullptr;
   }

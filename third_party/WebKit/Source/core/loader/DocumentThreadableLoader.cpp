@@ -39,6 +39,7 @@
 #include "core/frame/LocalFrameClient.h"
 #include "core/inspector/InspectorNetworkAgent.h"
 #include "core/inspector/InspectorTraceEvents.h"
+#include "core/loader/BaseFetchContext.h"
 #include "core/loader/DocumentThreadableLoaderClient.h"
 #include "core/loader/FrameLoader.h"
 #include "core/loader/ThreadableLoaderClient.h"
@@ -181,7 +182,7 @@ DocumentThreadableLoader::DocumentThreadableLoader(
       request_context_(WebURLRequest::kRequestContextUnspecified),
       fetch_request_mode_(WebURLRequest::kFetchRequestModeSameOrigin),
       fetch_credentials_mode_(WebURLRequest::kFetchCredentialsModeOmit),
-      timeout_timer_(loading_context_->GetTaskRunner(TaskType::kNetworking),
+      timeout_timer_(loading_context_->GetFetchContext()->GetTaskRunner(),
                      this,
                      &DocumentThreadableLoader::DidTimeout),
       request_started_seconds_(0.0),
@@ -855,7 +856,8 @@ void DocumentThreadableLoader::HandleResponse(
 
   if (response.WasFetchedViaServiceWorker()) {
     if (response.WasFetchedViaForeignFetch())
-      loading_context_->RecordUseCount(WebFeature::kForeignFetchInterception);
+      loading_context_->GetFetchContext()->CountUsage(
+          WebFeature::kForeignFetchInterception);
     if (response.WasFallbackRequiredByServiceWorker()) {
       // At this point we must have m_fallbackRequestForServiceWorker. (For
       // SharedWorker the request won't be CORS or CORS-with-preflight,
@@ -1236,7 +1238,7 @@ bool DocumentThreadableLoader::IsAllowedRedirect(
 
 const SecurityOrigin* DocumentThreadableLoader::GetSecurityOrigin() const {
   return security_origin_ ? security_origin_.Get()
-                          : loading_context_->GetSecurityOrigin();
+                          : loading_context_->GetFetchContext()->GetSecurityOrigin();
 }
 
 Document* DocumentThreadableLoader::GetDocument() const {

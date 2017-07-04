@@ -5,7 +5,6 @@
 #include "core/loader/ThreadableLoadingContext.h"
 
 #include "core/dom/Document.h"
-#include "core/dom/TaskRunnerHelper.h"
 #include "core/loader/WorkerFetchContext.h"
 #include "core/workers/WorkerGlobalScope.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
@@ -26,19 +25,14 @@ class DocumentThreadableLoadingContext final : public ThreadableLoadingContext {
     return document_->Fetcher();
   }
 
-  SecurityOrigin* GetSecurityOrigin() override {
+  BaseFetchContext* GetFetchContext() override {
     DCHECK(IsContextThread());
-    return document_->GetSecurityOrigin();
+    return static_cast<BaseFetchContext*>(&document_->Fetcher()->Context());
   }
 
   bool IsSecureContext() const override {
     DCHECK(IsContextThread());
     return document_->IsSecureContext();
-  }
-
-  KURL FirstPartyForCookies() const override {
-    DCHECK(IsContextThread());
-    return document_->FirstPartyForCookies();
   }
 
   String UserAgent() const override {
@@ -49,15 +43,6 @@ class DocumentThreadableLoadingContext final : public ThreadableLoadingContext {
   Document* GetLoadingDocument() override {
     DCHECK(IsContextThread());
     return document_.Get();
-  }
-
-  RefPtr<WebTaskRunner> GetTaskRunner(TaskType type) override {
-    DCHECK(IsContextThread());
-    return TaskRunnerHelper::Get(type, document_.Get());
-  }
-
-  void RecordUseCount(WebFeature feature) override {
-    UseCounter::Count(document_.Get(), feature);
   }
 
   DEFINE_INLINE_VIRTUAL_TRACE() {
@@ -89,9 +74,9 @@ class WorkerThreadableLoadingContext : public ThreadableLoadingContext {
     return fetch_context_->GetResourceFetcher();
   }
 
-  SecurityOrigin* GetSecurityOrigin() override {
+  BaseFetchContext* GetFetchContext() override {
     DCHECK(IsContextThread());
-    return worker_global_scope_->GetSecurityOrigin();
+    return fetch_context_.Get();
   }
 
   bool IsSecureContext() const override {
@@ -100,26 +85,12 @@ class WorkerThreadableLoadingContext : public ThreadableLoadingContext {
     return worker_global_scope_->IsSecureContext(error_message);
   }
 
-  KURL FirstPartyForCookies() const override {
-    DCHECK(IsContextThread());
-    return fetch_context_->FirstPartyForCookies();
-  }
-
   String UserAgent() const override {
     DCHECK(IsContextThread());
     return worker_global_scope_->UserAgent();
   }
 
   Document* GetLoadingDocument() override { return nullptr; }
-
-  RefPtr<WebTaskRunner> GetTaskRunner(TaskType type) override {
-    DCHECK(IsContextThread());
-    return fetch_context_->GetTaskRunner();
-  }
-
-  void RecordUseCount(WebFeature feature) override {
-    UseCounter::Count(worker_global_scope_, feature);
-  }
 
   DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(fetch_context_);
