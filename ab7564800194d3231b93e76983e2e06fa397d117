@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "19434487_00d56781",
+        "filename": "cc/surfaces/surface_dependency_tracker.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-04T20:07:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8031de04_bb7f6b2f",
+      "revId": "ab7564800194d3231b93e76983e2e06fa397d117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba7373d5_fccd427f",
         "filename": "cc/surfaces/surface_dependency_tracker.cc",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-04T18:35:28Z",
       "side": 1,
       "message": "If A depends on B and B depends on C, and we get the frame for C before B, then C doesn\u0027t inherit from B?",
+      "revId": "ab7564800194d3231b93e76983e2e06fa397d117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44c35eba_e3a578b5",
+        "filename": "cc/surfaces/surface_dependency_tracker.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-04T20:07:14Z",
+      "side": 1,
+      "message": "As discussed offline, I\u0027ve updated the code such that once B submits a CompositorFrame then it inherits its deadline from A and propagates it to C.",
+      "parentUuid": "ba7373d5_fccd427f",
       "revId": "ab7564800194d3231b93e76983e2e06fa397d117",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "ab7564800194d3231b93e76983e2e06fa397d117",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff1f7168_ea573e3f",
+        "filename": "cc/surfaces/surface_dependency_tracker.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-04T20:07:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0384186_f4e954bc",
+      "revId": "ab7564800194d3231b93e76983e2e06fa397d117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
