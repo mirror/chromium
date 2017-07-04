@@ -34,6 +34,24 @@
       "revId": "08ff97980714bbfb42d9b0d50ac01feabce3e500",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27402ec1_e22cbdc4",
+        "filename": "ios/chrome/browser/ui/content_suggestions/cells/suggested_content.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-04T13:57:38Z",
+      "side": 0,
+      "message": "What would it take to also remove it from the other UI cells? i.e. pass only a UIImage to them?",
+      "parentUuid": "97c82d13_858e09be",
+      "revId": "08ff97980714bbfb42d9b0d50ac01feabce3e500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
