@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e92fe0a_fe8b1c81",
+        "filename": "ios/chrome/browser/chrome_browser_provider_observer_bridge.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-04T15:12:18Z",
+      "side": 1,
+      "message": "Looks weird. Did you meant \"Called when a new ChromeIdentityService has been installed.\" or \"Called when the ChromeIdentityService has been changed.\"?",
+      "revId": "21eb652f5e63875146de7f11b24d4e641c8cb4a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3003949c_aa19b4d5",
+        "filename": "ios/chrome/browser/chrome_browser_provider_observer_bridge_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-04T15:12:18Z",
+      "side": 1,
+      "message": "nit: use base::MakeUnique\n\n  observer_bridge_ \u003d base::MakeUnique\u003cChromeBrowserProviderObserverBridge(self);",
+      "revId": "21eb652f5e63875146de7f11b24d4e641c8cb4a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23810f29_0fd516c5",
+        "filename": "ios/chrome/browser/chrome_browser_provider_observer_bridge_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-04T15:12:18Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN(ChromeBrowserProviderObserverBridgeTest);",
+      "revId": "21eb652f5e63875146de7f11b24d4e641c8cb4a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13dd8329_c411edbe",
+        "filename": "ios/chrome/browser/chrome_browser_provider_observer_bridge_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-04T15:12:18Z",
+      "side": 1,
+      "message": "Please do not use raw pointer and delete, but instead use std::unique_ptr\u003c\u003e.",
+      "revId": "21eb652f5e63875146de7f11b24d4e641c8cb4a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5930cdc_9ce6c06b",
+        "filename": "ios/chrome/browser/chrome_browser_provider_observer_bridge_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-04T15:12:18Z",
+      "side": 1,
+      "message": "Please do not use raw pointer and delete, but instead use std::unique_ptr\u003c\u003e.",
+      "revId": "21eb652f5e63875146de7f11b24d4e641c8cb4a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
