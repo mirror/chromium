@@ -101,6 +101,29 @@
       "revId": "50f7897dc906d6888662240acd55786339083b21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b639bb8_795fa480",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerInstalledScriptsManager.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-04T02:10:56Z",
+      "side": 1,
+      "message": "REG: linker errors on win bots. Probably BLINK_PLATFORM_EXPORT is not necessary because RawScriptData class is defined in modules/\n\n(c.f., https://chromium-review.googlesource.com/c/551398/)",
+      "range": {
+        "startLine": 27,
+        "startChar": 8,
+        "endLine": 27,
+        "endChar": 29
+      },
+      "revId": "50f7897dc906d6888662240acd55786339083b21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
