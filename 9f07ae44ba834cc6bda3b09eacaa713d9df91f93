@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "947a9e07_9ef555db",
+        "filename": "chrome/browser/ui/views/payments/payment_request_journey_logger_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-07-04T18:15:09Z",
+      "side": 1,
+      "message": "Good catch!",
+      "parentUuid": "82dbd89b_ae66b435",
+      "range": {
+        "startLine": 304,
+        "startChar": 63,
+        "endLine": 304,
+        "endChar": 74
+      },
+      "revId": "9f07ae44ba834cc6bda3b09eacaa713d9df91f93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "60a1ec4c_516d7b64",
         "filename": "components/payments/content/payment_request_state.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "cbd068e2_301722e5",
+        "filename": "components/payments/content/payment_request_state.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-07-04T18:15:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60a1ec4c_516d7b64",
+      "range": {
+        "startLine": 278,
+        "startChar": 13,
+        "endLine": 278,
+        "endChar": 31
+      },
+      "revId": "9f07ae44ba834cc6bda3b09eacaa713d9df91f93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "920c9d46_47ab0e15",
         "filename": "components/payments/content/payment_request_state.cc",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-07-02T19:41:17Z",
       "side": 1,
       "message": "Pretty sure this code runs even though the dialog is not shown. Is that OK?",
+      "range": {
+        "startLine": 295,
+        "startChar": 19,
+        "endLine": 295,
+        "endChar": 46
+      },
+      "revId": "9f07ae44ba834cc6bda3b09eacaa713d9df91f93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de43e13b_ab102b59",
+        "filename": "components/payments/content/payment_request_state.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-07-04T18:15:09Z",
+      "side": 1,
+      "message": "Yeah it should be the journey logger\u0027s job to handle what to log. I refactored it to make it clearer. Thanks",
+      "parentUuid": "920c9d46_47ab0e15",
       "range": {
         "startLine": 295,
         "startChar": 19,
