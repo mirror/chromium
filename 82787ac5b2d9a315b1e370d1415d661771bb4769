@@ -22,6 +22,30 @@
       "revId": "82787ac5b2d9a315b1e370d1415d661771bb4769",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f90c68b_a1e4a8cf",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_favicon_mediator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-04T13:49:03Z",
+      "side": 1,
+      "message": ":\u0027(",
+      "parentUuid": "a4d8333b_648ed4ba",
+      "range": {
+        "startLine": 40,
+        "startChar": 48,
+        "endLine": 40,
+        "endChar": 51
+      },
+      "revId": "82787ac5b2d9a315b1e370d1415d661771bb4769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
