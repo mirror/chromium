@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7a204ff_b9480ba1",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/util/FeatureUtilitiesTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-04T14:47:34Z",
+      "side": 1,
+      "message": "Here and below: Add a small comment explaining what true is: \"true /* addAccount */\"",
+      "range": {
+        "startLine": 215,
+        "startChar": 70,
+        "endLine": 215,
+        "endChar": 74
+      },
+      "revId": "618ff0d4ecc3a8d410dc8818bf4b1a073f930c4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38549de7_e4f52714",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-04T14:47:34Z",
+      "side": 1,
+      "message": "s/Will return/Returns",
+      "range": {
+        "startLine": 159,
+        "startChar": 7,
+        "endLine": 159,
+        "endChar": 18
+      },
+      "revId": "618ff0d4ecc3a8d410dc8818bf4b1a073f930c4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43e18898_94c0d690",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-04T14:47:34Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 200,
+        "startChar": 7,
+        "endLine": 200,
+        "endChar": 18
+      },
+      "revId": "618ff0d4ecc3a8d410dc8818bf4b1a073f930c4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75d05505_cdc97b84",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-04T14:47:34Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 241,
+        "startChar": 7,
+        "endLine": 241,
+        "endChar": 11
+      },
+      "revId": "618ff0d4ecc3a8d410dc8818bf4b1a073f930c4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
