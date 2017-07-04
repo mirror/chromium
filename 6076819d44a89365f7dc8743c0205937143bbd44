@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "bf201a91_2d4fedb3",
+        "filename": "chrome/browser/android/vr_shell/ui_input_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-04T15:21:16Z",
+      "side": 1,
+      "message": "Chrome almost never uses \"* const\", you should just use const UiScene* scene_;\nSame for UiInputManagerDelegate",
+      "parentUuid": "a4708c83_e40ae7d5",
+      "revId": "6076819d44a89365f7dc8743c0205937143bbd44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40eb00ee_cc6f0c0b",
         "filename": "chrome/browser/android/vr_shell/vr_shell_gl.h",
         "patchSetId": 1
