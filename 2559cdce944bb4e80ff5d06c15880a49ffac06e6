@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a25cf19b_f4e1bf39",
+        "filename": "chrome/browser/media/media_engagement_score.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-04T10:01:32Z",
+      "side": 1,
+      "message": "If we don\u0027t expect this to happen, we should probably DCHECK instead of early return.",
+      "revId": "2559cdce944bb4e80ff5d06c15880a49ffac06e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3f53199_00ca437d",
+        "filename": "chrome/browser/media/media_engagement_score.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-04T10:01:32Z",
+      "side": 1,
+      "message": "nit: I would swap |origin| and |clock| but feel free to ignore :)",
+      "revId": "2559cdce944bb4e80ff5d06c15880a49ffac06e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ed6af9c_693883da",
+        "filename": "chrome/browser/media/media_engagement_score.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-04T10:01:32Z",
+      "side": 1,
+      "message": "nit: not really owned by the service but has the lifetime of the Profile like the service which passes the pointer and owns |this|.",
+      "revId": "2559cdce944bb4e80ff5d06c15880a49ffac06e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18056019_ae9411bb",
+        "filename": "chrome/browser/media/media_engagement_score_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-04T10:01:32Z",
+      "side": 1,
+      "message": "I think this should probably happen outside of this method as it wasn\u0027t very clear from reading the tests that the time was changing after `UpdateScore()`.\n\nIn general, I think the name of this method could be improved as it reads like the internal `UpdateScoreDict()` but is very different. Maybe `SimulateVisitAndPlayback()`?",
+      "revId": "2559cdce944bb4e80ff5d06c15880a49ffac06e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

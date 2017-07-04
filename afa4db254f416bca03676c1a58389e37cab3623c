@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "ba2592a2_4d693371",
+        "filename": "chrome/browser/media/media_engagement_score.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-04T10:01:32Z",
+      "side": 1,
+      "message": "Oh, completely missed it was a delegating ctor :)",
+      "parentUuid": "4ae4eb26_45b93237",
+      "revId": "afa4db254f416bca03676c1a58389e37cab3623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71237330_4ebcaa14",
         "filename": "chrome/browser/media/media_engagement_score.cc",
         "patchSetId": 12
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "This throws a chromium style error: Complex constructor has an inlined body.\n\nhttps://www.chromium.org/developers/coding-style/chromium-style-checker-errors",
       "parentUuid": "71237330_4ebcaa14",
+      "revId": "afa4db254f416bca03676c1a58389e37cab3623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e03ce74f_cd5cb8d7",
+        "filename": "chrome/browser/media/media_engagement_score.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-04T10:01:32Z",
+      "side": 1,
+      "message": "I meant doing:\n```\nint media_playbacks_ \u003d 0;\nint visits_ \u003d 0;\n```\nin the header, not moving the whole ctor. Would that work?",
+      "parentUuid": "476ace0b_1b3dcc94",
       "revId": "afa4db254f416bca03676c1a58389e37cab3623c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -244,6 +280,24 @@
       "revId": "afa4db254f416bca03676c1a58389e37cab3623c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c12468db_e44fc3ec",
+        "filename": "chrome/browser/media/media_engagement_score.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-04T10:01:32Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c80a7fa3_0a3436b3",
+      "revId": "afa4db254f416bca03676c1a58389e37cab3623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -664,6 +718,24 @@
       "revId": "afa4db254f416bca03676c1a58389e37cab3623c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e6e6872_013b26e8",
+        "filename": "chrome/browser/media/media_engagement_score_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-04T10:01:32Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "98dc9cd0_f64fd8a2",
+      "revId": "afa4db254f416bca03676c1a58389e37cab3623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
