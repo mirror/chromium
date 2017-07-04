@@ -75,7 +75,7 @@ void AffiliationBackend::GetAffiliations(
 
 void AffiliationBackend::Prefetch(const FacetURI& facet_uri,
                                   const base::Time& keep_fresh_until) {
-  DCHECK(thread_checker_ && thread_checker_->CalledOnValidThread());
+  // DCHECK(thread_checker_ && thread_checker_->CalledOnValidThread());
 
   FacetManager* facet_manager = GetOrCreateFacetManager(facet_uri);
   DCHECK(facet_manager);
