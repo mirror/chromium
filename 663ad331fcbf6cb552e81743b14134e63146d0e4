@@ -16,6 +16,24 @@
       "revId": "663ad331fcbf6cb552e81743b14134e63146d0e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c571a71_b4d29829",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSShorthandPropertyAPIBorderImage.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-07-04T06:03:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ccd734f1_7fc7c77d",
+      "revId": "663ad331fcbf6cb552e81743b14134e63146d0e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
