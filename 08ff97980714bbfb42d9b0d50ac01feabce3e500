@@ -16,6 +16,24 @@
       "revId": "08ff97980714bbfb42d9b0d50ac01feabce3e500",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97c82d13_858e09be",
+        "filename": "ios/chrome/browser/ui/content_suggestions/cells/suggested_content.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-04T13:17:23Z",
+      "side": 0,
+      "message": "Because it is not needed anymore. This is accessible from the UI layer. As all the work on favicon is done in the mediator layer, no need to have it here.\nIt also allows me to remove it from what\u0027s new item and test item (where it was not used).",
+      "parentUuid": "3d6dc371_af271f57",
+      "revId": "08ff97980714bbfb42d9b0d50ac01feabce3e500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

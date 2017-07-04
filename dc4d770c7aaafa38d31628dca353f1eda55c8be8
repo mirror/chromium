@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "32f6be2e_effe4b0a",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_favicon_mediator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-04T13:17:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42371fb6_6d928b42",
+      "revId": "dc4d770c7aaafa38d31628dca353f1eda55c8be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0edb6bdb_8f112815",
         "filename": "ios/chrome/browser/content_suggestions/content_suggestions_favicon_mediator.mm",
         "patchSetId": 3
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "f1f6b197_da3c09ef",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_favicon_mediator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-04T13:17:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0edb6bdb_8f112815",
+      "range": {
+        "startLine": 29,
+        "startChar": 51,
+        "endLine": 29,
+        "endChar": 56
+      },
+      "revId": "dc4d770c7aaafa38d31628dca353f1eda55c8be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9de578ed_db5be13a",
         "filename": "ios/chrome/browser/content_suggestions/content_suggestions_mediator.mm",
         "patchSetId": 3
@@ -56,6 +98,24 @@
       "revId": "dc4d770c7aaafa38d31628dca353f1eda55c8be8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba97349b_6d7a6ff9",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_mediator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-04T13:17:23Z",
+      "side": 1,
+      "message": "Yes, it is used in other places (it is notified when some suggestions are available for example).",
+      "parentUuid": "9de578ed_db5be13a",
+      "revId": "dc4d770c7aaafa38d31628dca353f1eda55c8be8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
