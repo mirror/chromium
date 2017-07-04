@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4aacebf5_1b2c27eb",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-07-04T15:03:56Z",
+      "side": 1,
+      "message": "Hum... there were actual code paths it returns nullptr rather than crashing when I did trial and error on prototype version. Let me check again.",
+      "parentUuid": "5dd7552e_c35b54de",
+      "revId": "c7b644deb5f92910856771850cc137c8ab7422f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fcc77259_b15a1367",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/FetchContext.h",
         "patchSetId": 9
