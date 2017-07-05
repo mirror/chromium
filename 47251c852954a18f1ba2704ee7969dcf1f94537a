@@ -16,6 +16,24 @@
       "revId": "47251c852954a18f1ba2704ee7969dcf1f94537a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df6efafb_18d918df",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/WebEmbeddedWorkerImplTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-05T05:40:27Z",
+      "side": 1,
+      "message": "I chatted w/ shimazu@ offline and understand why this is placed here. This is for making sure calls on the mock during the exact time period, that is, during the ServeAsynchronousRequests().\n\n(Sorry for making you confused. I should have dropped the first sentence, especially \"about this change\" part :p)",
+      "parentUuid": "46da80c0_238ad87e",
+      "revId": "47251c852954a18f1ba2704ee7969dcf1f94537a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
