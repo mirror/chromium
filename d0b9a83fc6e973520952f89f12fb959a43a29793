@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "350b6c00_44c12cc8",
+        "filename": "content/browser/service_worker/service_worker_context_wrapper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 855,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-05T08:44:38Z",
+      "side": 1,
+      "message": "optional  I\u0027d prefer parens arround line 855",
+      "revId": "d0b9a83fc6e973520952f89f12fb959a43a29793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2773e228_1a10062e",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-05T08:44:38Z",
+      "side": 1,
+      "message": "This comment seems misplaced here since |blob_storage_context| and |loader_factoy_getter| doesn\u0027t seem here.",
+      "revId": "d0b9a83fc6e973520952f89f12fb959a43a29793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26d2d949_65820ba6",
+        "filename": "content/common/service_worker/service_worker.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-05T08:44:38Z",
+      "side": 1,
+      "message": "\"If servicification is enabled\" loks kind of funny in a mojom file... maybe just break the fourth wall and say \"if ServiceWorkerUtils::IsServicificationEnabled() is true\"",
+      "revId": "d0b9a83fc6e973520952f89f12fb959a43a29793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "63a949b5_22619fa1",
         "filename": "content/renderer/service_worker/service_worker_context_client.cc",
         "patchSetId": 7
@@ -13,6 +64,40 @@
       "writtenOn": "2017-07-05T08:27:32Z",
       "side": 1,
       "message": "nit: DCHECK(ServiceWorkerUtils::IsServicificationEnabled())?",
+      "revId": "d0b9a83fc6e973520952f89f12fb959a43a29793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76a3f7c6_53a5b9b8",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1101,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-05T08:44:38Z",
+      "side": 1,
+      "message": "webreq looks like non-Blink/Chromium style.\n\nwebreq -\u003e wrapped_request\n?",
+      "revId": "d0b9a83fc6e973520952f89f12fb959a43a29793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b60e5cb_df18be20",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerNetworkProvider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-05T08:44:38Z",
+      "side": 1,
+      "message": "Not sure I understand the second sentence. \"provider\" -\u003e \"provide\"? \"it\" -\u003e \"|this|\"?",
       "revId": "d0b9a83fc6e973520952f89f12fb959a43a29793",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
