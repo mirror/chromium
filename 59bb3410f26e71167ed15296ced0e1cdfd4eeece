@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3fe70b9_cbdefa27",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 1732,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-05T23:43:01Z",
+      "side": 1,
+      "message": "This fix looks fine to me. Having said that, I do think that this data dependency should be added by the js2gtest targets themselves at [1], instead of adding them here, since js2gtest.gni is what (I think) creates those folders (see [2]). Then, there would be no need to do anything special in this file.\n\n[1] https://cs.chromium.org/chromium/src/chrome/test/data/webui/BUILD.gn?l\u003d8,30,127\n[2] https://cs.chromium.org/chromium/src/chrome/test/base/js2gtest.gni?q\u003djs2gtest.gni\u0026sq\u003dpackage:chromium\u0026dr\u0026l\u003d29",
+      "revId": "59bb3410f26e71167ed15296ced0e1cdfd4eeece",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
