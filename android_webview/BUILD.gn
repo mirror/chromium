@@ -654,8 +654,6 @@ source_set("common") {
     "gpu/aw_content_gpu_client.h",
     "lib/aw_main_delegate.cc",
     "lib/aw_main_delegate.h",
-    "lib/webview_jni_onload.cc",
-    "lib/webview_jni_onload.h",
     "public/browser/draw_gl.h",
     "public/browser/draw_sw.h",
     "renderer/aw_content_renderer_client.cc",
