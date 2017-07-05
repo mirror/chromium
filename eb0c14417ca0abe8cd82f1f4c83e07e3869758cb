@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6bfccb46_b0b8b607",
+        "filename": "content/browser/gpu/gpu_process_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-05T05:49:31Z",
+      "side": 1,
+      "message": "Uh yeah! That allows the gpu_process_host.* to go unmodified.\nDone.",
+      "parentUuid": "3f571ac6_2794c7f0",
+      "revId": "eb0c14417ca0abe8cd82f1f4c83e07e3869758cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "806bddff_8455a806",
         "filename": "content/renderer/render_thread_impl.cc",
         "patchSetId": 9
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-05T04:31:35Z",
       "side": 1,
       "message": "This seems like an odd place to do this. When/where is the current vea created/initialized?",
+      "revId": "eb0c14417ca0abe8cd82f1f4c83e07e3869758cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b774cab_be0142ac",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1469,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-05T05:49:31Z",
+      "side": 1,
+      "message": "Currently the actual \"client\" side of the VEA is created inside\nrenderer_gpu_video_accelerator_factories; this CL leaves a TODO\ninside it while the playground CL [1] shows how it\u0027ll look like.\n\nI thought there\u0027s so much creation around this method that it\u0027d make \nsense to also instantiate the media::mojom::VideoEncodeAccelerator \nhere, but I could also do it in the ctor of \nRendererGpuVideoAcceleratorFactories, just let me know what you \nprefer.\n\n[1] https://chromium-review.googlesource.com/c/558846/9/content/renderer/media/renderer_gpu_video_accelerator_factories.cc#162",
+      "parentUuid": "806bddff_8455a806",
       "revId": "eb0c14417ca0abe8cd82f1f4c83e07e3869758cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6f02463c_27def015",
+        "filename": "services/ui/gpu/interfaces/gpu_service.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-05T05:49:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f1a8e85_0b0d4e5e",
+      "revId": "eb0c14417ca0abe8cd82f1f4c83e07e3869758cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c696140b_807009b9",
         "filename": "services/ui/public/cpp/gpu/gpu.cc",
         "patchSetId": 9
@@ -67,6 +121,24 @@
       "revId": "eb0c14417ca0abe8cd82f1f4c83e07e3869758cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "618f98ba_f27362ef",
+        "filename": "services/ui/public/cpp/gpu/gpu.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-05T05:49:31Z",
+      "side": 1,
+      "message": "Hmmm I saw that ToT has |gpu_| bound between EstablishGpuChannel() [1]\nand OnEstablishedGpuChannel() [2], so in my tests I always found |gpu_| \nnull, but what you say makes sense, so Done: I coded two paths: one \nfor when |gpu_| is found bound, and just used, and one where a \ntemporary ui::mojom::GpuPtr is bound just to use its\nCreateVideoEncodeAccelerator() method. \n\n[1] https://cs.chromium.org/chromium/src/services/ui/public/cpp/gpu/gpu.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d99\n[2] https://cs.chromium.org/chromium/src/services/ui/public/cpp/gpu/gpu.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d150",
+      "parentUuid": "c696140b_807009b9",
+      "revId": "eb0c14417ca0abe8cd82f1f4c83e07e3869758cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "e021730a_f1daa15a",
+        "filename": "services/ui/public/cpp/gpu/gpu.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-05T05:49:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5a0e7e8d_f1af338b",
+      "revId": "eb0c14417ca0abe8cd82f1f4c83e07e3869758cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6009b43_e1c568ab",
         "filename": "services/ui/public/cpp/gpu/gpu.cc",
         "patchSetId": 9
@@ -101,6 +191,24 @@
       "revId": "eb0c14417ca0abe8cd82f1f4c83e07e3869758cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aef0a938_408f3ef2",
+        "filename": "services/ui/public/cpp/gpu/gpu.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-05T05:49:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c6009b43_e1c568ab",
+      "revId": "eb0c14417ca0abe8cd82f1f4c83e07e3869758cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "17f4ba96_95e2f0e9",
+        "filename": "services/ui/public/cpp/gpu/gpu.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-05T05:49:31Z",
+      "side": 1,
+      "message": "Absolutely! Done.",
+      "parentUuid": "5d048714_e07f8961",
+      "revId": "eb0c14417ca0abe8cd82f1f4c83e07e3869758cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf7809eb_8570937d",
         "filename": "services/ui/public/interfaces/gpu.mojom",
         "patchSetId": 9
@@ -135,6 +261,24 @@
       "revId": "eb0c14417ca0abe8cd82f1f4c83e07e3869758cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3b6c6d1_fa4b02c2",
+        "filename": "services/ui/public/interfaces/gpu.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-05T05:49:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf7809eb_8570937d",
+      "revId": "eb0c14417ca0abe8cd82f1f4c83e07e3869758cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
