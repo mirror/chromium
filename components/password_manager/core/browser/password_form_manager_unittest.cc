@@ -795,6 +795,11 @@ class PasswordFormManagerTest : public testing::Test {
     PasswordFormManager form_manager(
         password_manager(), client(), client()->driver(), *observed_form(),
         base::MakeUnique<NiceMock<MockFormSaver>>(), fetcher);
+    form_manager.SetMetricsRecorder(
+        base::MakeRefCounted<PasswordFormMetricsRecorder>(
+            client()->IsMainFrameSecure(),
+            PasswordFormMetricsRecorder::CreateUkmEntryBuilder(
+                client()->GetUkmRecorder(), client()->GetUkmSourceId())));
 
     EXPECT_CALL(*client()->mock_driver()->mock_autofill_download_manager(),
                 StartUploadRequest(_, _, _, _, _))
@@ -3347,6 +3352,11 @@ TEST_F(PasswordFormManagerTest,
       base::MakeUnique<PasswordFormManager>(
           password_manager(), client(), client()->driver(), *observed_form(),
           base::MakeUnique<NiceMock<MockFormSaver>>(), fake_form_fetcher());
+  form_manager->SetMetricsRecorder(
+      base::MakeRefCounted<PasswordFormMetricsRecorder>(
+          client()->IsMainFrameSecure(),
+          PasswordFormMetricsRecorder::CreateUkmEntryBuilder(
+              client()->GetUkmRecorder(), client()->GetUkmSourceId())));
   fake_form_fetcher()->SetNonFederated(std::vector<const PasswordForm*>(), 0u);
   form_manager.reset();
 
@@ -3567,6 +3577,11 @@ TEST_F(PasswordFormManagerTest, SuppressedHTTPSFormsHistogram_NotRecordedFor) {
       base::MakeUnique<PasswordFormManager>(
           password_manager(), client(), client()->driver(), https_observed_form,
           base::MakeUnique<NiceMock<MockFormSaver>>(), &fetcher);
+  form_manager->SetMetricsRecorder(
+      base::MakeRefCounted<PasswordFormMetricsRecorder>(
+          client()->IsMainFrameSecure(),
+          PasswordFormMetricsRecorder::CreateUkmEntryBuilder(
+              client()->GetUkmRecorder(), client()->GetUkmSourceId())));
   fetcher.SetNonFederated(std::vector<const PasswordForm*>(), 0u);
   form_manager.reset();
 
