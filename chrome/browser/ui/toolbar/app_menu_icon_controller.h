@@ -66,19 +66,19 @@ class AppMenuIconController :
   void UpdateDelegate();
 
  private:
+#if defined(OS_WIN)
+  // EnumerateModulesModel::Observer:
+  void OnScanCompleted() override;
+  void OnConflictsAcknowledged() override;
+#endif
+
   // content::NotificationObserver:
   void Observe(int type,
                const content::NotificationSource& source,
                const content::NotificationDetails& details) override;
 
-  // UpgradeObserver implementation.
+  // UpgradeObserver:
   void OnUpgradeRecommended() override;
-
-#if defined(OS_WIN)
-  // EnumerateModulesModel:
-  void OnScanCompleted() override;
-  void OnConflictsAcknowledged() override;
-#endif
 
   Profile* profile_;
   Delegate* delegate_;
