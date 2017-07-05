@@ -237,7 +237,11 @@
     },
     type_name: {
     },
-
+    default_generated_functions: {
+      default: [],
+      valid_type: "list",
+      valid_values: ["getter", "setter", "initial", "reset", "mutable"],
+    },
     // - converter: "ConvertRadius"
     // The StyleBuilder will call the specified function on StyleBuilderConverter
     // to convert a CSSValue to an appropriate platform value
@@ -602,6 +606,7 @@
       type_name: "float",
       default_value: "1.0",
       field_group: "visual",
+      default_generated_functions: ["getter"],
     },
 
     {

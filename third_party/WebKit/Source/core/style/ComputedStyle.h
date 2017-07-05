@@ -865,8 +865,6 @@ class ComputedStyle : public ComputedStyleBase,
   }
 
   // zoom
-  static float InitialZoom() { return 1.0f; }
-  float Zoom() const { return ZoomInternal(); }
   float EffectiveZoom() const { return EffectiveZoomInternal(); }
   bool SetZoom(float);
   bool SetEffectiveZoom(float);
@@ -2599,7 +2597,7 @@ inline float AdjustScrollForAbsoluteZoom(float scroll_offset,
 }
 
 inline bool ComputedStyle::SetZoom(float f) {
-  if (ZoomInternal() == f)
+  if (Zoom() == f)
     return false;
   SetZoomInternal(f);
   SetEffectiveZoom(EffectiveZoom() * Zoom());
