@@ -16,6 +16,24 @@
       "revId": "3cb8b14fe847eaadec802229323f77d58cba6a97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94f14612_4ab8e949",
+        "filename": "third_party/WebKit/Source/platform/fonts/AcceptLanguagesResolver.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-07-05T14:31:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6f9d3db_6dfc997f",
+      "revId": "3cb8b14fe847eaadec802229323f77d58cba6a97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
