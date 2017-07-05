@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58930e36_ac5efbed",
+        "filename": "third_party/WebKit/Source/modules/sensor/Sensor.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1182699
+      },
+      "writtenOn": "2017-07-05T12:37:41Z",
+      "side": 1,
+      "message": "This guard condition looks similar to the one on line 306, 309. Maybe can be refactored?",
+      "revId": "246e91ed80de79d289ebdfe69af76d0c1d124c23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
