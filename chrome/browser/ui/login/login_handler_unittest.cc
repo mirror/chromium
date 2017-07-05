@@ -16,7 +16,7 @@ namespace {
 const char kHttpUrl[] = "http://example.com/foo/bar";
 const char kBasicAuthScheme[] = "Basic";
 const char kFooRealm[] = "Foo";
-const char kInsecureProxy[] = "Your connection to this site is not secure";
+const char kInsecureProxy[] = "Your connection to this site is not private";
 
 enum TargetType { PROXY, SERVER };
 
@@ -67,44 +67,37 @@ const struct TestCase {
     // Secure server
     {"https://www.nowhere.org/dir/index.html",
      {SERVER, kBasicAuthScheme, kFooRealm, nullptr},
-     {"https://www.nowhere.org requires a username and password.", "",
-      "https://www.nowhere.org/Foo"}},
+     {"https://www.nowhere.org", "", "https://www.nowhere.org/Foo"}},
 
     // URL uses default port.
     {"https://www.nowhere.org:443/dir/index.html",
      {SERVER, kBasicAuthScheme, kFooRealm, nullptr},
-     {"https://www.nowhere.org requires a username and password.", "",
-      "https://www.nowhere.org/Foo"}},
+     {"https://www.nowhere.org", "", "https://www.nowhere.org/Foo"}},
 
     // URL uses non-default port.
     {"https://www.nowhere.org:8443/dir/index.html",
      {SERVER, kBasicAuthScheme, kFooRealm, nullptr},
-     {"https://www.nowhere.org:8443 requires a username and password.", "",
-      "https://www.nowhere.org:8443/Foo"}},
+     {"https://www.nowhere.org:8443", "", "https://www.nowhere.org:8443/Foo"}},
 
     // URL has no trailing slash.
     {"https://www.nowhere.org",
      {SERVER, kBasicAuthScheme, kFooRealm, nullptr},
-     {"https://www.nowhere.org requires a username and password.", "",
-      "https://www.nowhere.org/Foo"}},
+     {"https://www.nowhere.org", "", "https://www.nowhere.org/Foo"}},
 
     // username:password
     {"https://foo:bar@www.nowhere.org/dir/index.html",
      {SERVER, kBasicAuthScheme, kFooRealm, nullptr},
-     {"https://www.nowhere.org requires a username and password.", "",
-      "https://www.nowhere.org/Foo"}},
+     {"https://www.nowhere.org", "", "https://www.nowhere.org/Foo"}},
 
     // query
     {"https://www.nowhere.org/dir/index.html?id=965362",
      {SERVER, kBasicAuthScheme, kFooRealm, nullptr},
-     {"https://www.nowhere.org requires a username and password.", "",
-      "https://www.nowhere.org/Foo"}},
+     {"https://www.nowhere.org", "", "https://www.nowhere.org/Foo"}},
 
     // reference
     {"https://www.nowhere.org/dir/index.html#toc",
      {SERVER, kBasicAuthScheme, kFooRealm, nullptr},
-     {"https://www.nowhere.org requires a username and password.", "",
-      "https://www.nowhere.org/Foo"}},
+     {"https://www.nowhere.org", "", "https://www.nowhere.org/Foo"}},
 };
 
 }  // namespace

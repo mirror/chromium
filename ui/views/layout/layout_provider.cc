@@ -106,4 +106,8 @@ int LayoutProvider::GetSnappedDialogWidth(int min_width) const {
   return std::max(min_width, 320);
 }
 
+bool LayoutProvider::ShouldShowCloseXOnDialog() const {
+  return true;
+}
+
 }  // namespace views
