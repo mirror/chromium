@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2dbd98e2_67854d47",
+        "filename": "third_party/WebKit/Source/modules/payments/CanMakePaymentEvent.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-05T13:26:18Z",
+      "side": 1,
+      "message": "https://github.com/w3c/payment-handler/pull/170",
+      "revId": "ca32a56f80cf8a558bcca75f728f1346daf5e1b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "affbfe72_3e4b4697",
+        "filename": "third_party/WebKit/Source/modules/payments/CanMakePaymentEvent.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-05T13:26:18Z",
+      "side": 1,
+      "message": "FYI, I\u0027ve removed \"total\" from CanMakePaymentEvent to avoid user fingerprinting.\n\nhttps://github.com/w3c/payment-handler/pull/170#issuecomment-313101655",
+      "revId": "ca32a56f80cf8a558bcca75f728f1346daf5e1b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "038209ed_25d88b04",
+        "filename": "third_party/WebKit/Source/modules/payments/CanMakePaymentEventInit.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-05T13:26:18Z",
+      "side": 1,
+      "message": "The dead link will confuse maintainers. Let\u0027s use the currently correct link and fix it later, when it\u0027s moved:\n\nhttps://github.com/w3c/payment-handler/pull/170",
+      "revId": "ca32a56f80cf8a558bcca75f728f1346daf5e1b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
