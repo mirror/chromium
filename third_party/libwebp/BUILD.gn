@@ -4,6 +4,7 @@
 
 import("//build/config/arm.gni")
 import("//build/config/sanitizers/sanitizers.gni")
+import("//build/symlink.gni")
 
 config("libwebp_config") {
   include_dirs = [ "./src" ]
@@ -513,5 +514,9 @@ if (current_toolchain == host_toolchain) {
       configs -= [ "//build/config/compiler:default_optimization" ]
       configs += [ "//build/config/compiler:optimize_max" ]
     }
+  }
+} else if (current_toolchain == default_toolchain) {
+  binary_symlink("cwebp") {
+    binary_label = ":cwebp($host_toolchain)"
   }
 }
