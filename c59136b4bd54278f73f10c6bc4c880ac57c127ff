@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8902d167_98b89e54",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-07-05T17:43:48Z",
+      "side": 1,
+      "message": "Not sure if it\u0027s worth clarifying, but is_exportable was using both Change-Id and commit position whereas test_importer was only using commit position.",
+      "revId": "c59136b4bd54278f73f10c6bc4c880ac57c127ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bf01d53_3950f1e0",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_importer_unittest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-07-05T17:43:48Z",
+      "side": 1,
+      "message": "Do you think this should have both a test for the position\u003d and change_id\u003d cases or do you think they\u0027d be redundant now?",
+      "revId": "c59136b4bd54278f73f10c6bc4c880ac57c127ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
