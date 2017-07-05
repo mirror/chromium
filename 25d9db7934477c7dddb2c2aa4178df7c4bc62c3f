@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4738b9a_a5d29b38",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css-paint-api/geometry-background-image-tiled1-ref.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-05T18:21:48Z",
+      "side": 1,
+      "message": "I don\u0027t think clearRect is necessary on a fresh canvas.",
+      "revId": "25d9db7934477c7dddb2c2aa4178df7c4bc62c3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89b03771_dd0c28cf",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css-paint-api/geometry-border-image1-ref.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-05T18:21:48Z",
+      "side": 1,
+      "message": "nit: use 200/220 to implicitly explain where the numbers come from. Also add a comment as to why - i.e. what\u0027s happening in the test case.",
+      "revId": "25d9db7934477c7dddb2c2aa4178df7c4bc62c3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "250c8cd5_7c5cc17d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css-paint-api/parse-input-arguments1.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-05T18:21:48Z",
+      "side": 1,
+      "message": "nit: call this something like testsPassed",
+      "range": {
+        "startLine": 20,
+        "startChar": 4,
+        "endLine": 20,
+        "endChar": 15
+      },
+      "revId": "25d9db7934477c7dddb2c2aa4178df7c4bc62c3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6793e984_bd30ee96",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css-paint-api/registered-properties-in-custom-paint.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-05T18:21:48Z",
+      "side": 1,
+      "message": "Can you draw text to indicate the error?",
+      "revId": "25d9db7934477c7dddb2c2aa4178df7c4bc62c3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
