@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06dea878_9d9099c5",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBRequest.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-07-05T21:55:13Z",
+      "side": 0,
+      "message": "Can we put a check like this back? Just something to make sure the last \u0027metric\u0027 isn\u0027t still recording / has already submitted it\u0027s \u0027end\u0027 trace event.",
+      "range": {
+        "startLine": 256,
+        "startChar": 0,
+        "endLine": 256,
+        "endChar": 33
+      },
+      "revId": "3e8047dfdb365ced762ab524b9082346e29ef4fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
