@@ -1,0 +1,147 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7895de31_899b0c74",
+        "filename": "chrome/browser/android/logo_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-05T11:49:16Z",
+      "side": 1,
+      "message": "Oh wow, the ImageDecoder API (and/or its use here) is horrible. It\u0027s not really clear who owns the ImageRequest*, and also it looks like if the decoding took a long time, but eventually completed, it\u0027d call OnImageDecoded/OnDecodeImageFailed on the now-invalid pointer. (It doesn\u0027t, because ~ImageRequest cancels the request in the decoder.)\n\nShould we put a TODO here to switch to the ImageDecoder from components/image_fetcher?",
+      "range": {
+        "startLine": 56,
+        "startChar": 65,
+        "endLine": 56,
+        "endChar": 0
+      },
+      "revId": "971b3f6e6359b6d2717e542c95fc5a7f0a4174a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd10687a_3866005c",
+        "filename": "chrome/browser/android/logo_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-05T11:49:16Z",
+      "side": 1,
+      "message": "I think the preferred pattern is now to have the class create its own task runner instead of having it passed in, since it knows best what traits it needs.",
+      "range": {
+        "startLine": 131,
+        "startChar": 60,
+        "endLine": 131,
+        "endChar": 0
+      },
+      "revId": "971b3f6e6359b6d2717e542c95fc5a7f0a4174a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "041ffd95_d0c76aa5",
+        "filename": "components/search_provider_logos/logo_tracker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-05T11:49:16Z",
+      "side": 1,
+      "message": "Neat! Unfortunate that it doesn\u0027t work with MakeUnique though...",
+      "range": {
+        "startLine": 78,
+        "startChar": 64,
+        "endLine": 78,
+        "endChar": 0
+      },
+      "revId": "971b3f6e6359b6d2717e542c95fc5a7f0a4174a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8ecdf116_1947c60e",
+        "filename": "components/search_provider_logos/logo_tracker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-05T11:49:16Z",
+      "side": 1,
+      "message": "I was wondering if assigning wouldn\u0027t do the same thing, but I guess that doesn\u0027t work because the types are different?",
+      "revId": "971b3f6e6359b6d2717e542c95fc5a7f0a4174a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99b25c54_28700320",
+        "filename": "components/search_provider_logos/logo_tracker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-05T11:49:16Z",
+      "side": 1,
+      "message": "Is MayBlock() required here? I don\u0027t think the parsing function will do I/O?",
+      "revId": "971b3f6e6359b6d2717e542c95fc5a7f0a4174a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ccb32b5_2e6407a8",
+        "filename": "components/search_provider_logos/logo_tracker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-05T11:49:16Z",
+      "side": 1,
+      "message": "nit: const\u0026 ?",
+      "range": {
+        "startLine": 106,
+        "startChar": 65,
+        "endLine": 106,
+        "endChar": 0
+      },
+      "revId": "971b3f6e6359b6d2717e542c95fc5a7f0a4174a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6a8dfb3_e70085e7",
+        "filename": "components/search_provider_logos/logo_tracker_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-05T11:49:16Z",
+      "side": 1,
+      "message": "nit: \"file thread\" isn\u0027t accurate anymore",
+      "revId": "971b3f6e6359b6d2717e542c95fc5a7f0a4174a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
