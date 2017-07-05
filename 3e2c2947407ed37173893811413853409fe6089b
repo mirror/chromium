@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "894846a5_7f5021b0",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1215055
+      },
+      "writtenOn": "2017-07-05T19:01:59Z",
+      "side": 1,
+      "message": "Agreed, I felt the same way. I\u0027ve factored out the arguments as you suggested.",
+      "parentUuid": "0c6a9aa7_eafa2e5a",
+      "revId": "3e2c2947407ed37173893811413853409fe6089b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e920978_ca853dcd",
         "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
         "patchSetId": 22
@@ -104,6 +122,24 @@
       "revId": "3e2c2947407ed37173893811413853409fe6089b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dd9a833_23a88ac2",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1215055
+      },
+      "writtenOn": "2017-07-05T19:01:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e920978_ca853dcd",
+      "revId": "3e2c2947407ed37173893811413853409fe6089b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -195,6 +231,24 @@
     },
     {
       "key": {
+        "uuid": "76bbc55a_dc11f8aa",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1215055
+      },
+      "writtenOn": "2017-07-05T19:01:59Z",
+      "side": 1,
+      "message": "I think the style guide issue is more pertinent than the workings of LazyInstance, since it seems from the comments in lazy_instance.h that the Leaky version of the class functions the same way as creating an anonymous pointer that leaks memory. I\u0027ve changed all requests to the method to use the getter method to comply with the style guide.",
+      "parentUuid": "876003f8_fcf5e02e",
+      "revId": "3e2c2947407ed37173893811413853409fe6089b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f7c10fc_50234257",
         "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
         "patchSetId": 22
@@ -229,6 +283,24 @@
     },
     {
       "key": {
+        "uuid": "da540da8_ebb7cf81",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1215055
+      },
+      "writtenOn": "2017-07-05T19:01:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01fe9afb_65791e35",
+      "revId": "3e2c2947407ed37173893811413853409fe6089b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d044314b_bdfd7a28",
         "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer_unittest.cc",
         "patchSetId": 22
@@ -243,6 +315,24 @@
       "revId": "3e2c2947407ed37173893811413853409fe6089b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12e709d2_d78850a2",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1215055
+      },
+      "writtenOn": "2017-07-05T19:01:59Z",
+      "side": 1,
+      "message": "Thanks \u003d)",
+      "parentUuid": "d044314b_bdfd7a28",
+      "revId": "3e2c2947407ed37173893811413853409fe6089b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -263,6 +353,24 @@
     },
     {
       "key": {
+        "uuid": "9315dcfa_3b6c4f88",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1215055
+      },
+      "writtenOn": "2017-07-05T19:01:59Z",
+      "side": 1,
+      "message": "It doesn\u0027t matter which error code was used, so I had followed the convention of the other page load metrics observer tests and left the error code as an int. I\u0027ve changed it to net::CONNECTION_REFUSED.",
+      "parentUuid": "f71788e6_eb48b60c",
+      "revId": "3e2c2947407ed37173893811413853409fe6089b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c6a49be_d805601f",
         "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer_unittest.cc",
         "patchSetId": 22
@@ -277,6 +385,24 @@
       "revId": "3e2c2947407ed37173893811413853409fe6089b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed640264_f15a2d4c",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1215055
+      },
+      "writtenOn": "2017-07-05T19:01:59Z",
+      "side": 1,
+      "message": "Sure, done.",
+      "parentUuid": "0c6a49be_d805601f",
+      "revId": "3e2c2947407ed37173893811413853409fe6089b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -297,6 +423,24 @@
     },
     {
       "key": {
+        "uuid": "0a7c78b9_290c8da8",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1215055
+      },
+      "writtenOn": "2017-07-05T19:01:59Z",
+      "side": 1,
+      "message": "Ah, I misunderstood the purpose of ExpectUniqueSample. Thanks, made the change.",
+      "parentUuid": "9ca04f6b_51903fcb",
+      "revId": "3e2c2947407ed37173893811413853409fe6089b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "738d78ac_126c171e",
         "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer_unittest.cc",
         "patchSetId": 22
@@ -314,6 +458,24 @@
     },
     {
       "key": {
+        "uuid": "e684a343_9138664e",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1215055
+      },
+      "writtenOn": "2017-07-05T19:01:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "738d78ac_126c171e",
+      "revId": "3e2c2947407ed37173893811413853409fe6089b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e587c432_875d1d3e",
         "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer_unittest.cc",
         "patchSetId": 22
@@ -328,6 +490,24 @@
       "revId": "3e2c2947407ed37173893811413853409fe6089b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42e8ca8f_848bcdd5",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1215055
+      },
+      "writtenOn": "2017-07-05T19:01:59Z",
+      "side": 1,
+      "message": "Sure, added a comment. It has to do with the fact that the DomainInfo entry will always be created, so the total number of UKM entries will be # metrics + 1.",
+      "parentUuid": "e587c432_875d1d3e",
+      "revId": "3e2c2947407ed37173893811413853409fe6089b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -360,6 +540,24 @@
       "side": 1,
       "message": "RE: the new test infra, a change with the new UKM test utility can be seen here:\nhttps://chromium-review.googlesource.com/c/558945/4/chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.h\n\nI\u0027ll try to land this in the next few days and you can update to use it.\n\nLet me know if anything you need is missing from that test class.",
       "parentUuid": "a855d440_13216168",
+      "revId": "3e2c2947407ed37173893811413853409fe6089b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48d71919_f61ada10",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1215055
+      },
+      "writtenOn": "2017-07-05T19:01:59Z",
+      "side": 1,
+      "message": "Starting at 1 is to skip the page domain info UKM entry. From the way UKM entries are recorded (at https://cs.chromium.org/chromium/src/components/ukm/ukm_recorder_impl.cc?sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d148 and https://cs.chromium.org/chromium/src/components/ukm/public/ukm_entry_builder.cc?sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d27), both the events and metrics are stored in vectors that are appended to for each new entry and metric, which is why I check them in the order I generate them from the observer.\n\nI personally believe this behavior should be codified in the documentation somewhere. I can understand that on the server side, it doesn\u0027t make sense to expect that the entries are received in any guaranteed order, but if they are generated from the same thread, I think it makes sense to expect that the order that entries are recorded is the same as the order in which they can be read back within Chrome.\n\nAs long as I can continue to rely on this behavior, I can relatively easily make the change to use the new test utility and shouldn\u0027t need any additional methods.",
+      "parentUuid": "54ebbcc1_346fa2c3",
       "revId": "3e2c2947407ed37173893811413853409fe6089b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
