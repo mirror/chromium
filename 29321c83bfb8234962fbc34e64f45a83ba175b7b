@@ -1,0 +1,199 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60089f3c_4398be10",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-05T15:03:19Z",
+      "side": 1,
+      "message": "Comment is now out of date",
+      "range": {
+        "startLine": 115,
+        "startChar": 97,
+        "endLine": 115,
+        "endChar": 0
+      },
+      "revId": "29321c83bfb8234962fbc34e64f45a83ba175b7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d2255a3_0f4914da",
+        "filename": "chrome/browser/android/ntp/most_visited_sites_bridge.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-05T15:03:19Z",
+      "side": 1,
+      "message": "nit: You want to bind it to OnTitleEntryFound, not QueryURL",
+      "range": {
+        "startLine": 105,
+        "startChar": 74,
+        "endLine": 105,
+        "endChar": 0
+      },
+      "revId": "29321c83bfb8234962fbc34e64f45a83ba175b7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a79dace4_dfe0c14b",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-05T15:03:19Z",
+      "side": 1,
+      "message": "nit: Maybe HasHomeTile? Otherwise it\u0027s IMO easy to confuse with ShouldAddHomeTile.",
+      "range": {
+        "startLine": 47,
+        "startChar": 53,
+        "endLine": 47,
+        "endChar": 0
+      },
+      "revId": "29321c83bfb8234962fbc34e64f45a83ba175b7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f784d827_c7046929",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-05T15:03:19Z",
+      "side": 1,
+      "message": "...AndNotify (long name, but more accurate, and consistent with SaveTilesAndNotify)\n\nMaybe better: Make this just InsertHomeTile, and call SaveTilesAndNotify directly in InitiateNotificationForNewTiles below?",
+      "revId": "29321c83bfb8234962fbc34e64f45a83ba175b7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94cb4c06_991d363a",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-05T15:03:19Z",
+      "side": 1,
+      "message": "Hm, how about passing in a non-optional string here, and adding an explicit OnHomePageTitleDetermined(optional\u003cstring\u003e) (which will call BuildHomeTileAndSave if the string is non-null)? As it is, you\u0027re kinda using the same method for two different things.",
+      "range": {
+        "startLine": 389,
+        "startChar": 60,
+        "endLine": 389,
+        "endChar": 0
+      },
+      "revId": "29321c83bfb8234962fbc34e64f45a83ba175b7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "898461a8_8172ecc7",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-05T15:03:19Z",
+      "side": 1,
+      "message": "Hm. So this means there\u0027ll be a bit of flicker, since you\u0027ll first see the URL, to be replaced more or less immediately by the title. I guess this typically only affects the very first NTP?\n(We could cache the homepage title here, but I\u0027m not sure it\u0027s worth it.)",
+      "range": {
+        "startLine": 423,
+        "startChar": 74,
+        "endLine": 423,
+        "endChar": 0
+      },
+      "revId": "29321c83bfb8234962fbc34e64f45a83ba175b7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f330260_e43e118a",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-05T15:03:19Z",
+      "side": 1,
+      "message": "Here: If this were just InsertHomeTile, you just have to remove the \"return\" below and things will work out, right?",
+      "range": {
+        "startLine": 424,
+        "startChar": 25,
+        "endLine": 424,
+        "endChar": 0
+      },
+      "revId": "29321c83bfb8234962fbc34e64f45a83ba175b7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58f089bb_a835771f",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-05T15:03:19Z",
+      "side": 1,
+      "message": "If you pass an empty string as the title, will the UI fall back to the URL anyway? If so, I\u0027d do that - no point in duplicating that logic.",
+      "revId": "29321c83bfb8234962fbc34e64f45a83ba175b7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61cfaf74_3cde01f8",
+        "filename": "components/ntp_tiles/most_visited_sites.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-05T15:03:19Z",
+      "side": 1,
+      "message": "optional: using TitleCallback \u003d ...",
+      "range": {
+        "startLine": 104,
+        "startChar": 77,
+        "endLine": 104,
+        "endChar": 0
+      },
+      "revId": "29321c83bfb8234962fbc34e64f45a83ba175b7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
