@@ -22,6 +22,30 @@
       "revId": "545eb3707c54d407e4125bac2bc46373e36b5c1b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "574ebe4f_370e8698",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-05T14:23:32Z",
+      "side": 1,
+      "message": "I prefer a follow up: just focusing on one thing and less rebasing :)",
+      "parentUuid": "48cbd0df_2bf919af",
+      "range": {
+        "startLine": 130,
+        "startChar": 0,
+        "endLine": 130,
+        "endChar": 71
+      },
+      "revId": "545eb3707c54d407e4125bac2bc46373e36b5c1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
