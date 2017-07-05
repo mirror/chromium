@@ -697,6 +697,57 @@ IN_PROC_BROWSER_TEST_F(SubresourceFilterBrowserTest,
 }
 
 IN_PROC_BROWSER_TEST_F(SubresourceFilterBrowserTest,
+                       InjectedIframe_HasActivation) {
+  const GURL url(GetTestUrl("subresource_filter/frame_injection.html"));
+  ConfigureAsPhishingURL(url);
+
+  const GURL image_url = GetTestUrl("google/logo.gif");
+  ASSERT_NO_FATAL_FAILURE(SetRulesetToDisallowURLsWithPathSuffix(".gif"));
+
+  ui_test_utils::NavigateToURL(browser(), url);
+
+  bool image_errored = false;
+  EXPECT_TRUE(content::ExecuteScriptAndExtractBool(
+      web_contents(),
+      base::StringPrintf("injectImage('%s')", image_url.spec().c_str()),
+      &image_errored));
+  EXPECT_TRUE(image_errored);
+}
+
+// With OOPIF the about:blank should be hosted in another process, so the top
+// level frame cannot communicate with it. So, the resource load will fail.
+//
+// For non-OOPIF, make sure we still fail the load.
+IN_PROC_BROWSER_TEST_F(SubresourceFilterBrowserTest,
+                       CrossSiteInjectedIframe_HasActivation) {
+  const GURL url(GetTestUrl("subresource_filter/frame_injection.html"));
+  ConfigureAsPhishingURL(url);
+
+  const GURL image_url = GetTestUrl("google/logo.gif");
+  ASSERT_NO_FATAL_FAILURE(SetRulesetToDisallowURLsWithPathSuffix(".gif"));
+
+  ui_test_utils::NavigateToURL(browser(), url);
+
+  // Navigate the iframe cross site, then to about:blank.
+  const GURL cross_site_url =
+      embedded_test_server()->GetURL("a.com", "/title1.html");
+  content::TestNavigationObserver navigation_observer(web_contents(), 1);
+  EXPECT_TRUE(content::ExecuteScript(
+      web_contents(), base::StringPrintf("navigateIframe('%s')",
+                                         cross_site_url.spec().c_str())));
+  navigation_observer.Wait();
+  EXPECT_TRUE(
+      content::ExecuteScript(web_contents(), "navigateIframe('about:blank')"));
+
+  bool image_errored = false;
+  EXPECT_TRUE(content::ExecuteScriptAndExtractBool(
+      web_contents(),
+      base::StringPrintf("injectImage('%s')", image_url.spec().c_str()),
+      &image_errored));
+  EXPECT_TRUE(image_errored);
+}
+
+IN_PROC_BROWSER_TEST_F(SubresourceFilterBrowserTest,
                        HistoryNavigationActivation) {
   content::ConsoleObserverDelegate console_observer(web_contents(),
                                                     kActivationConsoleMessage);

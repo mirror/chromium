@@ -31,7 +31,9 @@ SubresourceFilterAgent::SubresourceFilterAgent(
     content::RenderFrame* render_frame,
     UnverifiedRulesetDealer* ruleset_dealer)
     : content::RenderFrameObserver(render_frame),
-      ruleset_dealer_(ruleset_dealer) {
+      content::RenderFrameObserverTracker<SubresourceFilterAgent>(render_frame),
+      ruleset_dealer_(ruleset_dealer),
+      initial_parent_activation_state_(GetParentActivationState(render_frame)) {
   DCHECK(ruleset_dealer);
 }
 
@@ -57,6 +59,26 @@ void SubresourceFilterAgent::SendDocumentLoadStatistics(
     const DocumentLoadStatistics& statistics) {
   render_frame()->Send(new SubresourceFilterHostMsg_DocumentLoadStatistics(
       render_frame()->GetRoutingID(), statistics));
+}
+
+ActivationState SubresourceFilterAgent::GetActivationStateForLastCommittedLoad()
+    const {
+  return filter_for_last_committed_load_
+             ? filter_for_last_committed_load_->activation_state()
+             : ActivationState(ActivationLevel::DISABLED);
+}
+
+// static
+ActivationState SubresourceFilterAgent::GetParentActivationState(
+    content::RenderFrame* render_frame) {
+  blink::WebFrame* parent = render_frame->GetWebFrame()->Parent();
+  if (parent && parent->IsWebLocalFrame()) {
+    if (auto* agent = SubresourceFilterAgent::Get(
+            content::RenderFrame::FromWebFrame(parent->ToWebLocalFrame()))) {
+      return agent->GetActivationStateForLastCommittedLoad();
+    }
+  }
+  return ActivationState(ActivationLevel::DISABLED);
 }
 
 void SubresourceFilterAgent::OnActivateForNextCommittedLoad(
@@ -142,7 +164,12 @@ void SubresourceFilterAgent::DidCommitProvisionalLoad(
   // TODO(csharrison): Use WebURL and WebSecurityOrigin for efficiency here,
   // which require changes to the unit tests.
   const GURL& url = GetDocumentURL();
-  if (url.SchemeIsHTTPOrHTTPS() || url.SchemeIsFile()) {
+
+  bool url_is_about_blank = url == url::kAboutBlankURL;
+  if (url_is_about_blank)
+    activation_state_for_next_commit_ = initial_parent_activation_state_;
+
+  if (url.SchemeIsHTTPOrHTTPS() || url.SchemeIsFile() || url_is_about_blank) {
     RecordHistogramsOnLoadCommitted();
     if (activation_state_for_next_commit_.activation_level !=
             ActivationLevel::DISABLED &&
