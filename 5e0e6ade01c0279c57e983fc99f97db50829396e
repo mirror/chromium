@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0851eca1_69746093",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThreadTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-05T08:02:16Z",
+      "side": 1,
+      "message": "TerminateAllWorkersForTesting()",
+      "revId": "5e0e6ade01c0279c57e983fc99f97db50829396e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1443aa40_fdc15b27",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThreadTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-05T08:02:16Z",
+      "side": 1,
+      "message": "nit: Terminate() (throughout this file, maybe another CL?)",
+      "revId": "5e0e6ade01c0279c57e983fc99f97db50829396e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f52d7a62_74e88f84",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThreadTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-05T08:02:16Z",
+      "side": 1,
+      "message": "TerminateAllWorkersForTesting",
+      "revId": "5e0e6ade01c0279c57e983fc99f97db50829396e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
