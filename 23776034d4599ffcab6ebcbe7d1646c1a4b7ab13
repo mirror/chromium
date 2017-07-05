@@ -34,6 +34,24 @@
       "revId": "23776034d4599ffcab6ebcbe7d1646c1a4b7ab13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29816976_a779a108",
+        "filename": "third_party/WebKit/LayoutTests/FlagExpectations/enable-slimming-paint-v2",
+        "patchSetId": 7
+      },
+      "lineNbr": 1745,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-07-05T22:11:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c79cbe3_3d205deb",
+      "revId": "23776034d4599ffcab6ebcbe7d1646c1a4b7ab13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
