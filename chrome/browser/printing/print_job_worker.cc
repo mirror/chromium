@@ -189,17 +189,25 @@ void PrintJobWorker::UpdatePrintSettings(
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   PrintingContext::Result result =
       printing_context_->UpdatePrintSettings(*new_settings);
+  LOG(WARNING) << "is that from you?";
   GetSettingsDone(result);
 }
 
 void PrintJobWorker::GetSettingsDone(PrintingContext::Result result) {
+  LOG(WARNING) << "GetSettingsDone When did you called?";
   // Most PrintingContext functions may start a message loop and process
   // message recursively, so disable recursive task processing.
   // TODO(thestig): See above comment. SetNestableTasksAllowed(false) needs to
   // be called on the same thread as the previous call.  See
   // http://crbug.com/73466
   // MessageLoop::current()->SetNestableTasksAllowed(false);
-
+// #if defined(OS_ANDROID)
+//   PrintingContextDelegate* printing_context_delegate =
+//       static_cast<PrintingContextDelegate*>(printing_context_delegate_.get());
+//   content::WebContents* web_contents =
+//       printing_context_delegate->GetWebContents();
+//   web_contents->SetScriptedPrintFrame(nullptr);
+// #endif
   // We can't use OnFailure() here since owner_ may not support notifications.
 
   // PrintJob will create the new PrintedDocument.
@@ -208,6 +216,7 @@ void PrintJobWorker::GetSettingsDone(PrintingContext::Result result) {
                               make_scoped_refptr(owner_),
                               printing_context_->settings(),
                               result));
+
 }
 
 void PrintJobWorker::GetSettingsWithUI(
@@ -223,8 +232,14 @@ void PrintJobWorker::GetSettingsWithUI(
 
 #if defined(OS_ANDROID)
   if (is_scripted) {
+    LOG(WARNING) << "How many times does this got called TabAndroid";
     TabAndroid* tab =
         web_contents ? TabAndroid::FromWebContents(web_contents) : nullptr;
+    if (web_contents) {
+      LOG(WARNING) << "is sub frame? = " << web_contents->IsSubframe();
+    } else {
+      LOG(WARNING) << "web_contents does not exist.";
+    }
 
     // Regardless of whether the following call fails or not, the javascript
     // call will return since startPendingPrint will make it return immediately

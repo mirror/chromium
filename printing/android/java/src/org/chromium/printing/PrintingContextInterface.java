@@ -27,4 +27,6 @@ public interface PrintingContextInterface {
      * called when the process was initiated by the native side (window.print())
      */
     void showSystemDialogDone();
+
+    void clearScriptedPrintFrame();
 }

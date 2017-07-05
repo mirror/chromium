@@ -922,6 +922,13 @@ RenderFrameHostImpl* WebContentsImpl::GetFocusedFrame() {
   return focused_node->current_frame_host();
 }
 
+RenderFrameHostImpl* WebContentsImpl::GetScriptedPrintFrame() {
+  FrameTreeNode* scripted_print_node = frame_tree_.GetScriptedPrintFrame();
+  if (!scripted_print_node)
+    return nullptr;
+  return scripted_print_node->current_frame_host();
+}
+
 RenderFrameHostImpl* WebContentsImpl::FindFrameByFrameTreeNodeId(
     int frame_tree_node_id,
     int process_id) {
@@ -5076,6 +5083,10 @@ RenderFrameHost* WebContentsImpl::GetFocusedFrameIncludingInnerWebContents() {
     if (!focused_node)
       return contents->GetMainFrame();
   }
+}
+
+void WebContentsImpl::SetScriptedPrintFrame(FrameTreeNode* node) {
+  frame_tree_.SetScriptedPrintFrame(node);
 }
 
 void WebContentsImpl::OnFocusedElementChangedInFrame(
