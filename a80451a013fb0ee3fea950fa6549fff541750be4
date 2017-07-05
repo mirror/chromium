@@ -69,6 +69,30 @@
       "revId": "a80451a013fb0ee3fea950fa6549fff541750be4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fa836e0_56e2eacf",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/ImageDecoder.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1227910
+      },
+      "writtenOn": "2017-07-05T05:10:48Z",
+      "side": 1,
+      "message": "It\u0027s an initial preparation to move ImageDecoders to SkCodec. Idea about this patch is\n  - Initially use skia codec to find the image type\n  - Move all Image codec\u0027s to SkCodec. Submiited the WIP\n    patch for JPEG case https://chromium-review.googlesource.com/558340\n   - Later we no need separate class to decode the images. Only ImageDecoder is enough. We can remove all others like  JPEGImageDecoder, PNGImageDecoder, WEBPImageDecoder and etc",
+      "parentUuid": "9f0dc5d2_d3ec75ed",
+      "range": {
+        "startLine": 44,
+        "startChar": 7,
+        "endLine": 44,
+        "endChar": 17
+      },
+      "revId": "a80451a013fb0ee3fea950fa6549fff541750be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
