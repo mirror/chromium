@@ -16,6 +16,24 @@
       "revId": "533d5cf0ecbbaca0cc884131ac34856676a18fc8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b31ef09_7178f829",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 2606,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-07-05T18:05:56Z",
+      "side": 1,
+      "message": "The pushNodes.. command requires that a) the DOM domain is enabled and b) that the node is pushed to the client. We\u0027d like to avoid both for users that retrieve nodes (and their backend IDs) via the DOMSnapshot domain.\n\nPavel suggested adding a backendNodeId param here, but I\u0027m happy to add a separate command instead or move the param to the end if that\u0027s beneficial for compat.",
+      "parentUuid": "13050a24_901f1b8f",
+      "revId": "533d5cf0ecbbaca0cc884131ac34856676a18fc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
