@@ -2399,6 +2399,31 @@ if (enable_java_templates) {
       }
     }
 
+    # Generate apk opeartion related script.
+    if (!defined(invoker.create_apk_script) || invoker.create_apk_script) {
+      _apk_operations_target_name = "${target_name}__apk_operations"
+      action(_apk_operations_target_name) {
+        _generated_script = "$root_build_dir/bin/${invoker.target_name}"
+        script = "//build/android/gyp/create_apk_operations_script.py"
+        outputs = [
+          _generated_script,
+        ]
+        args = [
+          "--apk-to-install",
+          rebase_path(_final_apk_path, root_build_dir),
+          "--script-output-path",
+          rebase_path(_generated_script, root_build_dir),
+        ]
+        if (defined(invoker.command_line_flags_file)) {
+          args += [
+            "--command-line-flags-file",
+            invoker.command_line_flags_file,
+          ]
+        }
+      }
+      _final_deps += [ ":$_apk_operations_target_name" ]
+    }
+
     group(target_name) {
       if (_incremental_allowed && incremental_apk_by_default) {
         deps = [
@@ -2571,6 +2596,7 @@ if (enable_java_templates) {
         run_findbugs_override =
             invoker.run_findbugs_override && defined(invoker.java_files)
       }
+      create_apk_script = false
     }
 
     group(target_name) {
@@ -2659,6 +2685,7 @@ if (enable_java_templates) {
       deps = []
       forward_variables_from(invoker, "*")
       testonly = true
+      create_apk_script = false
 
       assert(!defined(invoker.proguard_enabled) || !invoker.proguard_enabled ||
              invoker.proguard_configs != [])
