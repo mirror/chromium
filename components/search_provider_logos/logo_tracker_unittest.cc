@@ -17,10 +17,10 @@
 #include "base/json/json_writer.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
-#include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/strings/string_piece.h"
 #include "base/strings/stringprintf.h"
+#include "base/test/scoped_task_environment.h"
 #include "base/test/simple_test_clock.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
@@ -314,15 +314,13 @@ class TestLogoDelegate : public LogoDelegate {
 class LogoTrackerTest : public ::testing::Test {
  protected:
   LogoTrackerTest()
-      : message_loop_(new base::MessageLoop()),
-        logo_url_("https://google.com/doodleoftheday?size=hp"),
+      : logo_url_("https://google.com/doodleoftheday?size=hp"),
         test_clock_(new base::SimpleTestClock()),
         logo_cache_(new NiceMock<MockLogoCache>()),
         fake_url_fetcher_factory_(NULL) {
     test_clock_->SetNow(base::Time::FromJsTime(INT64_C(1388686828000)));
     logo_tracker_ =
-        new LogoTracker(base::FilePath(), base::ThreadTaskRunnerHandle::Get(),
-                        base::ThreadTaskRunnerHandle::Get(),
+        new LogoTracker(base::FilePath(),
                         new net::TestURLRequestContextGetter(
                             base::ThreadTaskRunnerHandle::Get()),
                         std::unique_ptr<LogoDelegate>(new TestLogoDelegate()));
@@ -364,7 +362,7 @@ class LogoTrackerTest : public ::testing::Test {
   // asynchronous response(s).
   void GetLogo();
 
-  std::unique_ptr<base::MessageLoop> message_loop_;
+  base::test::ScopedTaskEnvironment task_environment_;
   GURL logo_url_;
   base::SimpleTestClock* test_clock_;
   NiceMock<MockLogoCache>* logo_cache_;
