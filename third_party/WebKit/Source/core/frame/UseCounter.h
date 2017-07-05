@@ -26,6 +26,7 @@
 #ifndef UseCounter_h
 #define UseCounter_h
 
+#include "WebFeature.h"
 #include "core/CSSPropertyNames.h"
 #include "core/CoreExport.h"
 #include "core/css/parser/CSSParserMode.h"
@@ -35,7 +36,6 @@
 #include "platform/wtf/BitVector.h"
 #include "platform/wtf/Noncopyable.h"
 #include "platform/wtf/text/WTFString.h"
-#include "public/platform/WebFeature.h"
 #include "v8/include/v8.h"
 
 namespace blink {
