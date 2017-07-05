@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "37158027_d54e46e0",
+        "filename": "media/base/content_decryption_module.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-07-05T20:09:52Z",
+      "side": 1,
+      "message": "What is the purpose of None? It seems strange that somebody would call this with the empty string. What does it check?",
+      "range": {
+        "startLine": 61,
+        "startChar": 2,
+        "endLine": 61,
+        "endChar": 18
+      },
+      "revId": "0f55e07d588f43097cce108302ed8233248f6a08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb9da38e_24a7e986",
         "filename": "media/blink/webcontentdecryptionmodule_impl.cc",
         "patchSetId": 2
@@ -13,6 +36,52 @@
       "writtenOn": "2017-06-30T17:17:35Z",
       "side": 1,
       "message": "These string format are not documented anywhere. It should be part of the spec/registry.",
+      "revId": "0f55e07d588f43097cce108302ed8233248f6a08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac3eac2b_dc9018d0",
+        "filename": "media/blink/webcontentdecryptionmodule_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-07-05T20:09:52Z",
+      "side": 1,
+      "message": "This is related to my previous comment (on why is None needed). Should the empty string be allowed?",
+      "range": {
+        "startLine": 39,
+        "startChar": 25,
+        "endLine": 39,
+        "endChar": 30
+      },
+      "revId": "0f55e07d588f43097cce108302ed8233248f6a08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e71e8a08_ccbe9bf7",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-07-05T20:09:52Z",
+      "side": 1,
+      "message": "As this is simply being output, would url.GetString().utf8() not do the same thing without creating a new object?",
+      "range": {
+        "startLine": 341,
+        "startChar": 54,
+        "endLine": 341,
+        "endChar": 63
+      },
       "revId": "0f55e07d588f43097cce108302ed8233248f6a08",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
