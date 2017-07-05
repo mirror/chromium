@@ -121,6 +121,22 @@ class EmbeddedWorkerInstanceTest : public testing::Test,
     return mojo::MakeRequest(&dispatchers_.back());
   }
 
+  void SetWorkerStatus(EmbeddedWorkerInstance* worker,
+                       EmbeddedWorkerStatus status) {
+    worker->status_ = status;
+  }
+
+  ServiceWorkerStatusCode SimulateSendStartWorker(
+      EmbeddedWorkerInstance* worker,
+      std::unique_ptr<EmbeddedWorkerStartParams> params) {
+    return worker->SendStartWorker(std::move(params));
+  }
+
+  bool RegistryHasProcess(int process_id) {
+    return embedded_worker_registry()->worker_process_map_.find(process_id) !=
+           embedded_worker_registry()->worker_process_map_.end();
+  }
+
   ServiceWorkerContextCore* context() { return helper_->context(); }
 
   EmbeddedWorkerRegistry* embedded_worker_registry() {
@@ -833,6 +849,18 @@ TEST_F(EmbeddedWorkerInstanceTest, AddMessageToConsole) {
   worker->Stop();
   base::RunLoop().RunUntilIdle();
   EXPECT_EQ(EmbeddedWorkerStatus::STOPPED, worker->status());
+}
+
+// Test that SendStartWorker checks if dispatcher host exists.
+TEST_F(EmbeddedWorkerInstanceTest, NoDispatcherHost) {
+  std::unique_ptr<EmbeddedWorkerInstance> worker =
+      embedded_worker_registry()->CreateWorker();
+  SetWorkerStatus(worker.get(), EmbeddedWorkerStatus::STARTING);
+  auto params = base::MakeUnique<EmbeddedWorkerStartParams>();
+  ServiceWorkerStatusCode result =
+      SimulateSendStartWorker(worker.get(), std::move(params));
+  EXPECT_EQ(SERVICE_WORKER_ERROR_IPC_FAILED, result);
+  SetWorkerStatus(worker.get(), EmbeddedWorkerStatus::STOPPED);
 }
 
 }  // namespace content
