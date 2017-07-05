@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cccf90ee_4940cd59",
+        "filename": "components/arc/volume_mounter/volume_mounter_traits.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-05T06:54:30Z",
+      "side": 1,
+      "message": "No need to have this line.\nWhen returning false, the output value won\u0027t be used.",
+      "range": {
+        "startLine": 44,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 51
+      },
+      "revId": "2eb4b04c0f7f2104fdef3702c2650cd2b51e0448",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d58ef7a7_dd62fbf4",
+        "filename": "components/arc/volume_mounter/volume_mounter_traits.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-05T06:54:30Z",
+      "side": 1,
+      "message": "ditto.",
+      "range": {
+        "startLine": 75,
+        "startChar": 2,
+        "endLine": 75,
+        "endChar": 65
+      },
+      "revId": "2eb4b04c0f7f2104fdef3702c2650cd2b51e0448",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
