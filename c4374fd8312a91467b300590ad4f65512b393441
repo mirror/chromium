@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "541496bd_11c477e1",
+        "filename": "chrome/browser/resources/settings/settings_ui/settings_ui.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-05T17:58:38Z",
+      "side": 1,
+      "message": "There are other places in the code, where we make similar assertions, for example https://cs.chromium.org/chromium/src/ui/webui/resources/cr_elements/cr_dialog/cr_dialog.js?sq\u003dpackage:chromium\u0026dr\u0026l\u003d113.\n\nTBH, I don\u0027t understand what this CL is fixing. The assertion here AFAIK represents an expectation that should always hold (prod or test).",
+      "revId": "c4374fd8312a91467b300590ad4f65512b393441",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
