@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88ce7987_71a23b74",
+        "filename": "third_party/WebKit/Source/modules/payments/PaymentEventDataConversion.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-05T13:32:23Z",
+      "side": 1,
+      "message": "2017",
+      "revId": "a62f945edc1c9062e4870f0383b44b5fc25bd91a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5159c88c_e59c3594",
+        "filename": "third_party/WebKit/public/platform/modules/payments/WebCanMakePaymentEventData.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-05T13:32:23Z",
+      "side": 1,
+      "message": "Need to remove total. Also, heads up: total will eventually change to be PaymentCurrencyAmount instead of PaymentItem (https://github.com/w3c/payment-handler/issues/179).",
+      "revId": "a62f945edc1c9062e4870f0383b44b5fc25bd91a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d62904a8_14ee9e55",
+        "filename": "third_party/WebKit/public/platform/modules/payments/WebPaymentRequestEventData.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-05T13:32:23Z",
+      "side": 1,
+      "message": "Need to add total.",
+      "revId": "a62f945edc1c9062e4870f0383b44b5fc25bd91a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
