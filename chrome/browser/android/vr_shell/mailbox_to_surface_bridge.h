@@ -6,8 +6,10 @@
 #define CHROME_BROWSER_ANDROID_VR_SHELL_MAILBOX_TO_SURFACE_BRIDGE_H_
 
 #include "base/memory/weak_ptr.h"
+#include "base/single_thread_task_runner.h"
 
 namespace gl {
+class ScopedJavaSurface;
 class SurfaceTexture;
 }
 
@@ -47,12 +49,15 @@ class MailboxToSurfaceBridge {
   scoped_refptr<cc::ContextProvider> context_provider_;
   gpu::gles2::GLES2Interface* gl_ = nullptr;
   int surface_handle_ = 0;
+  std::unique_ptr<gl::ScopedJavaSurface> surface_;
 
   // Saved state for a pending resize, the dimensions are only
   // valid if needs_resize_ is true.
   bool needs_resize_ = false;
   int resize_width_;
   int resize_height_;
+
+  scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
 
   // Must be last.
   base::WeakPtrFactory<MailboxToSurfaceBridge> weak_ptr_factory_;
