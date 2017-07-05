@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "959212fe_50799214",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-07-05T14:58:12Z",
+      "side": 0,
+      "message": "OnTriedToExecuteBlockedTask refactor is just several lines and all other changes are dependent on TaskQueue and TaskQueueImpl being different entities, so unfortunately that\u0027s not possible.",
+      "parentUuid": "580831c1_9c09df60",
+      "range": {
+        "startLine": 116,
+        "startChar": 17,
+        "endLine": 116,
+        "endChar": 44
+      },
+      "revId": "7a0173a58d82f11c7ea4463329a5b6dca15b9010",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24cdca58_5d0ad886",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/task_time_observer.h",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "7a0173a58d82f11c7ea4463329a5b6dca15b9010",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d02857eb_1fd45d12",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_time_observer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-07-05T14:58:12Z",
+      "side": 0,
+      "message": "Unfortunately, OnTaskCompleted stuff is tied to having MainThreadTaskQueue and removing TaskQueue* from TaskTimeObserver isn\u0027t worth splitting into a separate 10-line CL.",
+      "parentUuid": "24cdca58_5d0ad886",
+      "range": {
+        "startLine": 31,
+        "startChar": 30,
+        "endLine": 31,
+        "endChar": 39
+      },
+      "revId": "7a0173a58d82f11c7ea4463329a5b6dca15b9010",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

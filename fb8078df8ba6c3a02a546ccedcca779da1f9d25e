@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d53cfb50_ea78ebed",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-07-05T14:58:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "544d3f20_de8be192",
+      "range": {
+        "startLine": 123,
+        "startChar": 7,
+        "endLine": 123,
+        "endChar": 12
+      },
+      "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03a75cb0_f77d1abd",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.cc",
         "patchSetId": 5
@@ -752,6 +776,24 @@
     },
     {
       "key": {
+        "uuid": "09cf197b_797c671c",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-07-05T14:58:12Z",
+      "side": 1,
+      "message": "For layering (and testing) purposes looks better if TaskQueueManager was to deal only with TaskQueueImpl.",
+      "parentUuid": "d7313b6b_916c280f",
+      "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6abdc93_ca490975",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.h",
         "patchSetId": 5
@@ -1148,6 +1190,30 @@
       "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ba404ee_73c8aae4",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/main_thread_task_queue.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-07-05T14:58:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a55a1eda_90e6f414",
+      "range": {
+        "startLine": 17,
+        "startChar": 13,
+        "endLine": 17,
+        "endChar": 22
+      },
+      "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
