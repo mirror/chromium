@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "222b0a9b_7dca8d9d",
+        "filename": "components/offline_pages/core/background/request_coordinator_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-07-05T17:23:45Z",
+      "side": 1,
+      "message": "s/last_request/last_requests/",
+      "revId": "a47d391f413db010d9c6217a1eb7467997459f65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
