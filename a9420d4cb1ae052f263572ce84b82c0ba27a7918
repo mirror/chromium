@@ -721,6 +721,24 @@
     },
     {
       "key": {
+        "uuid": "cdaa4cce_22285add",
+        "filename": "ui/compositor/compositor.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-07-05T23:03:10Z",
+      "side": 1,
+      "message": "My initial understanding is that FrameSinkManager and FrameSinkManagerImpl are becoming one thing and HostFrameSinkManager is its out-of-process proxy. The comment above HostFrameSinkManager says that HostFrameSinkManager is intended to replace SurfaceManager so I assumed that GetFrameSinkManager will be redundant once all of the viz structuring is done.\n\nIs that not the picture you have in mind?",
+      "parentUuid": "092744f6_7470c62e",
+      "revId": "a9420d4cb1ae052f263572ce84b82c0ba27a7918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c4d599c_290535dc",
         "filename": "ui/compositor/test/in_process_context_factory.h",
         "patchSetId": 20
