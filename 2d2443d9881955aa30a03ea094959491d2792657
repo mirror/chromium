@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16e9f411_f9e80d66",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 17977,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-05T18:45:47Z",
+      "side": 1,
+      "message": "I\u0027m surprised there aren\u0027t other failure codes such as 401 or 403.\n\nHow are these recorded?\n\nIf as a response to this comment, you decide to put a catch-all bucke for all other failures, the best practice is to put that first.\nhttps://chromium.googlesource.com/chromium/src.git/+/HEAD/tools/metrics/histograms/README.md#Enum-Histograms",
+      "range": {
+        "startLine": 17977,
+        "startChar": 2,
+        "endLine": 17977,
+        "endChar": 6
+      },
+      "revId": "2d2443d9881955aa30a03ea094959491d2792657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03e48c86_7543e72d",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 46106,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-05T18:45:47Z",
+      "side": 1,
+      "message": "Please confirm: is is both Android and iOS, right?  (If so, no changes needed.)",
+      "range": {
+        "startLine": 46106,
+        "startChar": 4,
+        "endLine": 46106,
+        "endChar": 10
+      },
+      "revId": "2d2443d9881955aa30a03ea094959491d2792657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6eff6909_79509cc9",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 46108,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-05T18:45:47Z",
+      "side": 1,
+      "message": "nit: tiles surface -\u003e tile\n(either that, or omit \"of the tiles surface\" altogether)",
+      "range": {
+        "startLine": 46108,
+        "startChar": 31,
+        "endLine": 46108,
+        "endChar": 36
+      },
+      "revId": "2d2443d9881955aa30a03ea094959491d2792657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
