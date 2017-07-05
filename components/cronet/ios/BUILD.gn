@@ -58,6 +58,7 @@ _cronet_deps = [
   "//components/metrics/proto:proto",
   "//components/prefs:prefs",
   "//ios/net:net",
+  "//ios/web/public/global_state",
   "//ios/web:user_agent",
   "//net",
   "//url",
