@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "f655f5be_7925e4d6",
+        "filename": "ui/compositor/clip_recorder.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-05T20:21:43Z",
+      "side": 1,
+      "message": "It was a bit different as the RAII object would have to pass through to the PaintOpBuffer, and expose all the same things that POB exposes. Whereas now it could be a concrete thing modifying the DisplayItemList and isn\u0027t so API-dependent.\n\nWhat happens if you go and push() without Start, and then have no visual rect (when you want a visual rect tho)? Is that a crasher? We used to DCHECK this, I think.\n\nDeeper thought: If DIL returned an RAII object that had the push API, maybe you could just instantiate that without the DIL for cases where you want to release the POB from it? Like \"RAII DisplayItemList::StartPaint()\" and \"RAII POB::Factory()\" or something?",
+      "parentUuid": "90a5a9ac_a23549b5",
+      "revId": "12ccfac98fad7e3d4006e8355014b93518ed4ad8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3761526a_0fcada1e",
         "filename": "ui/compositor/paint_cache.cc",
         "patchSetId": 12
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "\u003e unpaired\n\nDone.\n\n\u003e \n\u003e This feels like an explanation due to using the wrong API? Maybe the PaintRecorder could have the DIL instead? It\u0027s still a bunch of more constructors being called on these things tho there too?\n\nIn this class, we could technically just not call StartPaint and EndPaint at all and things would work just fine. I\u0027ve added them here since that\u0027s the pattern of calls that we always have. If we change this to eliminate start and rename Ends to something like Flushes, then I could just remove them here since then the API doesn\u0027t require them (ie they aren\u0027t called start/end paint).",
       "parentUuid": "3761526a_0fcada1e",
+      "revId": "12ccfac98fad7e3d4006e8355014b93518ed4ad8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7e4e5e9_c26cd03b",
+        "filename": "ui/compositor/paint_cache.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-05T20:21:43Z",
+      "side": 1,
+      "message": "At the high level, I am wondering why this class owns display_item_list_ instead of PaintRecorder since it wants to ReleaseAsRecord, and could give that record to the cache?",
+      "parentUuid": "f3008c59_9e8496ea",
       "revId": "12ccfac98fad7e3d4006e8355014b93518ed4ad8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
