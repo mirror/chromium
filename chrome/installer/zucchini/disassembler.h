@@ -43,7 +43,7 @@ class ReferenceWriter {
 
 // A ReferenceGroup is associated with a specific |type| and has convenience
 // methods to obtain readers and writers for that type. A ReferenceGroup does
-// not store references; it is a lighweight class that communicates with the
+// not store references; it is a lightweight class that communicates with the
 // disassembler to operate on them.
 class ReferenceGroup {
  public:
@@ -87,18 +87,18 @@ class ReferenceGroup {
                                              Disassembler* disasm) const;
 
   // Returns traits describing the reference type.
-  ReferenceTypeTraits Traits() const;
+  ReferenceTypeTraits traits() const { return traits_; }
 
-  // Shorthand for Traits().width.
-  offset_t Width() const;
+  // Shorthand for traits().width.
+  offset_t width() const { return traits().width; }
 
-  // Shorthand for Traits().type_tag.
-  TypeTag TypeTag() const;
+  // Shorthand for traits().type_tag.
+  TypeTag type_tag() const { return traits().type_tag; }
 
-  // Shorthand for Traits().pool_tag.
-  PoolTag PoolTag() const;
+  // Shorthand for traits().pool_tag.
+  PoolTag pool_tag() const { return traits().pool_tag; }
 
- protected:
+ private:
   ReferenceTypeTraits traits_;
   ReaderFactory reader_factory_ = nullptr;
   WriterFactory writer_factory_ = nullptr;

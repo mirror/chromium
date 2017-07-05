@@ -17,19 +17,19 @@ using offset_t = uint32_t;
 
 // Used to uniquely identify a reference group.
 // Strongly typed objects are used to avoid ambiguitees with PoolTag.
-struct TypeTag : TypedValue<TypeTag, uint8_t> {
+struct TypeTag : public TypedValue<TypeTag, uint8_t> {
   // inheriting constructor:
   using TypedValue<TypeTag, uint8_t>::TypedValue;
 };
 
 // Used to uniquely identify a pool.
-struct PoolTag : TypedValue<PoolTag, uint8_t> {
+struct PoolTag : public TypedValue<PoolTag, uint8_t> {
   // inheriting constructor:
   using TypedValue<PoolTag, uint8_t>::TypedValue;
 };
 
-constexpr TypeTag kNoTypeTag = 0xFF;
-constexpr PoolTag kNoPoolTag = 0xFF;
+constexpr TypeTag kNoTypeTag(0xFF);
+constexpr PoolTag kNoPoolTag(0xFF);
 
 // Specification of references in an image file.
 struct ReferenceTypeTraits {
@@ -55,7 +55,7 @@ struct Reference {
   offset_t target;
 };
 
-inline bool operator==(Reference a, Reference b) {
+inline bool operator==(const Reference& a, const Reference& b) {
   return a.location == b.location && a.target == b.target;
 }
 
