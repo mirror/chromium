@@ -162,6 +162,24 @@
     },
     {
       "key": {
+        "uuid": "f48bb6dd_c862329b",
+        "filename": "ui/compositor/paint_cache.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-05T20:45:46Z",
+      "side": 1,
+      "message": "\u003e Do you mean cc::PaintRecorder here or ui::PaintRecorder?\n\nLol, sorry I mean ui::PaintRecorder.",
+      "parentUuid": "25315acd_cf8d887b",
+      "revId": "12ccfac98fad7e3d4006e8355014b93518ed4ad8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1e12b3b2_2479f449",
         "filename": "ui/compositor/paint_cache.h",
         "patchSetId": 12
