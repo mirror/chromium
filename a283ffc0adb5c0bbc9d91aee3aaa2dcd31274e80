@@ -16,6 +16,24 @@
       "revId": "a283ffc0adb5c0bbc9d91aee3aaa2dcd31274e80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84efae60_a1b20038",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-05T11:03:41Z",
+      "side": 1,
+      "message": "(Oops, you\u0027re done. Please ignore this comment)",
+      "parentUuid": "a1cf3d6c_5af59653",
+      "revId": "a283ffc0adb5c0bbc9d91aee3aaa2dcd31274e80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
