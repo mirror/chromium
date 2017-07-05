@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c688748_b31c4336",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-05T00:44:53Z",
+      "side": 1,
+      "message": "nit: Instead of lowerbounding the length to be 2 with max(..., 2), alternatively we could assert that there\u0027s more than one keyword e.g.\n\n    assert(len(property_[\u0027keywords\u0027]) \u003e 1)\n\nNo strong opinions though, nainar, WDYT?",
+      "revId": "af231a1eb091e5865de3d56bd20e608fb1511cce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe88316c_dd4d309e",
+        "filename": "third_party/WebKit/Source/core/css/ComputedStyleExtraFields.json5",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-05T00:44:53Z",
+      "side": 1,
+      "message": "Let\u0027s remove this line now that we don\u0027t need it anymore.",
+      "revId": "af231a1eb091e5865de3d56bd20e608fb1511cce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
