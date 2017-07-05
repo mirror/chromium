@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "190fef08_b2a647bb",
+        "filename": "chrome/browser/thumbnails/simple_thumbnail_crop.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-05T10:16:11Z",
+      "side": 1,
+      "message": "We could just remove the class and make the above global functions instead. WDYT?",
+      "range": {
+        "startLine": 45,
+        "startChar": 27,
+        "endLine": 45,
+        "endChar": 0
+      },
+      "revId": "8cf662297274ead10c6c4a4cd3f8ddeb9191575d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
