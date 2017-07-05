@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f7cbde0_c27d1bda",
+        "filename": "android_webview/browser/aw_metrics_service_client.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-07-05T21:28:45Z",
+      "side": 0,
+      "message": "Is the blank line removed on purpose?",
+      "revId": "0a117ead86796e0e3f92329ba75a06b12c101784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
