@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4c55a979_7d4e141b",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-07-05T22:46:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8864487_d2da4d71",
+      "range": {
+        "startLine": 510,
+        "startChar": 29,
+        "endLine": 510,
+        "endChar": 40
+      },
+      "revId": "705f4e9df097a8e8eb8fdd2b825ef9694dbf7c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b12a9c3_66a0348c",
         "filename": "content/browser/loader/resource_scheduler.cc",
         "patchSetId": 33
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-05T19:26:56Z",
       "side": 1,
       "message": "Only updating this on new requests seems weird to me - that means that when requests complete, and we\u0027re looking to start pending requests, we won\u0027t update it.  But then we magically will when the renderer issues a new request.\n\nI\u0027d suggest either watching the NQE for changes, and updating it as needed (Calling LoadAnyStartablePEndingREquests as needed) or calculating it in every ShouldStartRequest call.",
+      "range": {
+        "startLine": 537,
+        "startChar": 10,
+        "endLine": 537,
+        "endChar": 52
+      },
+      "revId": "705f4e9df097a8e8eb8fdd2b825ef9694dbf7c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc0cc51a_456547f6",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-07-05T22:46:19Z",
+      "side": 1,
+      "message": "It\u0027s not computed on each request. It is computed for each page load. The value is reset whenever the OnNavigate callback occurs, which IIUC is a new page load. The reason behind this is we want to see the effect of particular choice of the value on the entire page load. WDYT?",
+      "parentUuid": "3b12a9c3_66a0348c",
       "range": {
         "startLine": 537,
         "startChar": 10,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "76c57618_b4a60d4b",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-07-05T22:46:19Z",
+      "side": 1,
+      "message": "Bug introduced in a previous patch. Fixed.",
+      "parentUuid": "ce01d1fd_e77d4588",
+      "range": {
+        "startLine": 812,
+        "startChar": 6,
+        "endLine": 812,
+        "endChar": 40
+      },
+      "revId": "705f4e9df097a8e8eb8fdd2b825ef9694dbf7c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1180c062_60b9ac51",
         "filename": "content/browser/loader/resource_scheduler.cc",
         "patchSetId": 33
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "400da34e_b9c0b5c0",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 817,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-07-05T22:46:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1180c062_60b9ac51",
+      "range": {
+        "startLine": 817,
+        "startChar": 47,
+        "endLine": 817,
+        "endChar": 0
+      },
+      "revId": "705f4e9df097a8e8eb8fdd2b825ef9694dbf7c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e76a242_7aa0a18d",
         "filename": "content/browser/loader/resource_scheduler.cc",
         "patchSetId": 33
@@ -111,6 +207,24 @@
     },
     {
       "key": {
+        "uuid": "6fb89780_0584c1cc",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 925,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-07-05T22:46:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e76a242_7aa0a18d",
+      "revId": "705f4e9df097a8e8eb8fdd2b825ef9694dbf7c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6bb59e77_b3b93774",
         "filename": "content/browser/loader/resource_scheduler.cc",
         "patchSetId": 33
@@ -122,6 +236,30 @@
       "writtenOn": "2017-07-05T19:26:56Z",
       "side": 1,
       "message": "Do we need this bit?  Seems like if max_requests_for_bdp_ranges_ is empty, we can assume it\u0027s not enabled?",
+      "range": {
+        "startLine": 1116,
+        "startChar": 29,
+        "endLine": 1116,
+        "endChar": 38
+      },
+      "revId": "705f4e9df097a8e8eb8fdd2b825ef9694dbf7c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7bcfa89_3542a776",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 1116,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-07-05T22:46:19Z",
+      "side": 1,
+      "message": "I think this is a little more readable than the other option.",
+      "parentUuid": "6bb59e77_b3b93774",
       "range": {
         "startLine": 1116,
         "startChar": 29,
