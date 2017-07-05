@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ecfd3a3_3f35777a",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_layout.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-05T12:04:21Z",
+      "side": 1,
+      "message": "You should probably use static_cast.",
+      "revId": "49c726947dfe967fe6e35066203f618c9555386b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
