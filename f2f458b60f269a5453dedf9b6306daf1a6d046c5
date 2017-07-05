@@ -16,6 +16,24 @@
       "revId": "f2f458b60f269a5453dedf9b6306daf1a6d046c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fccf5f44_cdc38a55",
+        "filename": "net/disk_cache/memory/mem_entry_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-07-05T18:10:19Z",
+      "side": 1,
+      "message": "Whoops, I meant to remove cache_type. I had it thinking I could differentiate between media/http/app but memory is one of the types, and if we\u0027re here our type is memory :(\n\nRemoved.\n\nIn terms of APPCACHE, we make a huge memcache and use the quotamanager to enforce a smaller size.",
+      "parentUuid": "48d479e1_0d32a518",
+      "revId": "f2f458b60f269a5453dedf9b6306daf1a6d046c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
