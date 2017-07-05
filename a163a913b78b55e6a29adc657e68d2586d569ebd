@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "32e563a0_e42dc502",
+        "filename": "components/arc/volume_mounter/volume_mounter_traits.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1221932
+      },
+      "writtenOn": "2017-07-05T06:43:02Z",
+      "side": 1,
+      "message": "Google cpp style seems to have similar macro, and I found some chromium code has this comment after very quick search. But apparently that are just some rare cases in chromium. I\u0027m removing this.",
+      "parentUuid": "49cb6824_4d915be8",
+      "range": {
+        "startLine": 18,
+        "startChar": 4,
+        "endLine": 18,
+        "endChar": 27
+      },
+      "revId": "a163a913b78b55e6a29adc657e68d2586d569ebd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "702c04ee_d70d233c",
         "filename": "components/arc/volume_mounter/volume_mounter_traits.cc",
         "patchSetId": 23
@@ -39,6 +63,24 @@
       "revId": "a163a913b78b55e6a29adc657e68d2586d569ebd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05f8bd3d_bd81a2f6",
+        "filename": "components/arc/volume_mounter/volume_mounter_traits.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1221932
+      },
+      "writtenOn": "2017-07-05T06:43:02Z",
+      "side": 1,
+      "message": "aha - I thought this is an alias for __builtin_unreachable. Adding return statements.",
+      "parentUuid": "702c04ee_d70d233c",
+      "revId": "a163a913b78b55e6a29adc657e68d2586d569ebd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
