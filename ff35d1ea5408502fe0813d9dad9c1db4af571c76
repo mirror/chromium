@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5554ff88_5fabc262",
+        "filename": "third_party/WebKit/public/platform/WebLayerTreeView.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-07-05T18:46:00Z",
+      "side": 1,
+      "message": "We should initialize each of the below pointers to nullptr?",
+      "revId": "ff35d1ea5408502fe0813d9dad9c1db4af571c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
