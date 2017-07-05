@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "876dc8e1_9e75dbe7",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_header_view_controller_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-05T11:49:22Z",
+      "side": 1,
+      "message": "Not changed as it will either move to its own file or be merged with the delegate.",
+      "range": {
+        "startLine": 19,
+        "startChar": 10,
+        "endLine": 19,
+        "endChar": 58
+      },
+      "revId": "7c45cc94809ccba1faeaac4be737fa33b4ce0a6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
