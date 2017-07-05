@@ -2,6 +2,74 @@
   "comments": [
     {
       "key": {
+        "uuid": "e763f7bc_9cd8db4f",
+        "filename": "ios/chrome/browser/content_suggestions/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-05T11:57:50Z",
+      "side": 1,
+      "message": "Shouldn\u0027t it move to i/c/b/ui/content_suggestions?\nAnd maybe integrated in Showcase if it makes sense? (Even just for basic display.)",
+      "revId": "7c45cc94809ccba1faeaac4be737fa33b4ce0a6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3480b52_7200e352",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_coordinator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-05T11:57:50Z",
+      "side": 1,
+      "message": "Drive-by comment from an assigned reviewer: Who uses headerController and viewController in the public API of this coordinator?",
+      "revId": "7c45cc94809ccba1faeaac4be737fa33b4ce0a6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26474c04_23177a10",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_coordinator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-05T11:57:50Z",
+      "side": 1,
+      "message": "Drive-by comment from an assigned reviewer: Why not a property?",
+      "revId": "7c45cc94809ccba1faeaac4be737fa33b4ce0a6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7795be6_343abb6a",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_coordinator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-05T11:57:50Z",
+      "side": 1,
+      "message": "I think you are missing the step where you add the headerController\u0027s view to the suggestionsViewController\u0027s view.",
+      "revId": "7c45cc94809ccba1faeaac4be737fa33b4ce0a6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "876dc8e1_9e75dbe7",
         "filename": "ios/chrome/browser/content_suggestions/content_suggestions_header_view_controller_delegate.h",
         "patchSetId": 1
@@ -13,6 +81,30 @@
       "writtenOn": "2017-07-05T11:49:22Z",
       "side": 1,
       "message": "Not changed as it will either move to its own file or be merged with the delegate.",
+      "range": {
+        "startLine": 19,
+        "startChar": 10,
+        "endLine": 19,
+        "endChar": 58
+      },
+      "revId": "7c45cc94809ccba1faeaac4be737fa33b4ce0a6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "462d2f5b_9f881e66",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_header_view_controller_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-05T11:57:50Z",
+      "side": 1,
+      "message": "In both cases, why not renaming? Would it change too many other files?",
+      "parentUuid": "876dc8e1_9e75dbe7",
       "range": {
         "startLine": 19,
         "startChar": 10,
