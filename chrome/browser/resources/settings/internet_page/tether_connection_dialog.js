@@ -89,6 +89,32 @@ Polymer({
   },
 
   /**
+   * Retrieves a confirmation image that corresponds to signal
+   * strength of the tether host.  Custom icons are used here instead of a
+   * <cr-network-icon> because this dialog uses a special color scheme.
+   *
+   * @param {!CrOnc.NetworkProperties} networkProperties The network properties.
+   * @return {string} The name of the icon to be used to represent the network's
+   * signal strength.
+   */
+  getSignalStrength_: function(networkProperties) {
+    var percentage = this.get('Tether.SignalStrength', networkProperties);
+    var signalStrength;
+    if (percentage >= 0 && percentage <= 24) {
+      signalStrength = '0';
+    } else if (percentage >= 25 && percentage <= 49) {
+      signalStrength = '1';
+    } else if (percentage >= 50 && percentage <= 74) {
+      signalStrength = '2';
+    } else if (percentage >= 75 && percentage <= 99) {
+      signalStrength = '3';
+    } else {
+      signalStrength = '4';
+    }
+    return 'settings:signal-cellular-' + signalStrength + '-bar';
+  },
+
+  /**
    * @param {!CrOnc.NetworkProperties} networkProperties The network properties.
    * @return {string}
    * @private
