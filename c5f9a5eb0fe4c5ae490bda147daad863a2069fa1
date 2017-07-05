@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84978cbb_003400af",
+        "filename": "components/language/DEPS",
+        "patchSetId": 5
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-07-05T07:18:19Z",
+      "side": 1,
+      "message": "isn\u0027t sync_preferences browser only?",
+      "revId": "c5f9a5eb0fe4c5ae490bda147daad863a2069fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4f06e5c_bcf5d929",
+        "filename": "components/language/OWNERS",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-07-05T07:18:19Z",
+      "side": 1,
+      "message": "only chromium committers can be owners",
+      "revId": "c5f9a5eb0fe4c5ae490bda147daad863a2069fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d07a094b_1eb69b61",
+        "filename": "components/language/core/browser/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-07-05T07:18:19Z",
+      "side": 1,
+      "message": "where are resources and strings needed?",
+      "revId": "c5f9a5eb0fe4c5ae490bda147daad863a2069fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
