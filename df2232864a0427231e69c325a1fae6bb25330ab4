@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "d596fb65_71275aed",
+        "filename": "cc/surfaces/surface_aggregator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-05T20:37:32Z",
+      "side": 1,
+      "message": "For my own learning: How does each being destroyed without the other happen?",
+      "parentUuid": "ed09e240_1f5c03ce",
+      "revId": "df2232864a0427231e69c325a1fae6bb25330ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5b9ab509_e166f7db",
         "filename": "cc/surfaces/surface_manager.h",
         "patchSetId": 3
