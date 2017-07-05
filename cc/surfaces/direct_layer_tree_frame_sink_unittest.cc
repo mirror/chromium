@@ -86,7 +86,7 @@ class DirectLayerTreeFrameSinkTest : public testing::Test {
     render_pass->SetNew(1, display_rect_, damage_rect, gfx::Transform());
 
     CompositorFrame frame = test::MakeEmptyCompositorFrame();
-    frame.metadata.begin_frame_ack = BeginFrameAck(0, 1, 1, true);
+    frame.metadata.begin_frame_ack = BeginFrameAck(0, 1, true);
     frame.render_pass_list.push_back(std::move(render_pass));
 
     layer_tree_frame_sink_->SubmitCompositorFrame(std::move(frame));

@@ -104,7 +104,7 @@ SurfaceId MakeSurfaceId(const FrameSinkId& frame_sink_id, uint32_t local_id) {
 struct TestFrameData : public LayerTreeHostImpl::FrameData {
   TestFrameData() {
     // Set ack to something valid, so DCHECKs don't complain.
-    begin_frame_ack = BeginFrameAck(0, 1, 1, true);
+    begin_frame_ack = BeginFrameAck(0, 1, true);
   }
 };
 
