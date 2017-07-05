@@ -16,6 +16,24 @@
       "revId": "5b3ea1db1a23436be009cd4a5df411bf6fc69ea8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7331cde4_40eb1459",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/SubstituteData.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-07-05T16:08:54Z",
+      "side": 1,
+      "message": "Done.\n\n(But then I have to reintroduce the KURL temporary. Should be ok, though, since the copy elision rule should apply here.)",
+      "parentUuid": "d4045074_fbe4b6c2",
+      "revId": "5b3ea1db1a23436be009cd4a5df411bf6fc69ea8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
