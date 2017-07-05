@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f571ac6_2794c7f0",
+        "filename": "content/browser/gpu/gpu_process_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-05T04:31:35Z",
+      "side": 1,
+      "message": "Since this is not doing any extra work, the caller could alternatively get GpuProcessHost::gpu_service() and call the mojom API directly.",
+      "revId": "eb0c14417ca0abe8cd82f1f4c83e07e3869758cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "806bddff_8455a806",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1469,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-05T04:31:35Z",
+      "side": 1,
+      "message": "This seems like an odd place to do this. When/where is the current vea created/initialized?",
+      "revId": "eb0c14417ca0abe8cd82f1f4c83e07e3869758cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f1a8e85_0b0d4e5e",
+        "filename": "services/ui/gpu/interfaces/gpu_service.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-05T04:31:35Z",
+      "side": 1,
+      "message": "Creates, binds",
+      "revId": "eb0c14417ca0abe8cd82f1f4c83e07e3869758cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c696140b_807009b9",
+        "filename": "services/ui/public/cpp/gpu/gpu.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-05T04:31:35Z",
+      "side": 1,
+      "message": "You should check if |gpu_| is already bound.",
+      "revId": "eb0c14417ca0abe8cd82f1f4c83e07e3869758cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a0e7e8d_f1af338b",
+        "filename": "services/ui/public/cpp/gpu/gpu.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-05T04:31:35Z",
+      "side": 1,
+      "message": "You shouldn\u0027t need to check for null here.",
+      "revId": "eb0c14417ca0abe8cd82f1f4c83e07e3869758cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6009b43_e1c568ab",
+        "filename": "services/ui/public/cpp/gpu/gpu.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-05T04:31:35Z",
+      "side": 1,
+      "message": "You shouldn\u0027t do this if |gpu_| was already bound when this function is called.",
+      "revId": "eb0c14417ca0abe8cd82f1f4c83e07e3869758cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d048714_e07f8961",
+        "filename": "services/ui/public/cpp/gpu/gpu.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-05T04:31:35Z",
+      "side": 1,
+      "message": "super nit: move it up above the overrides?",
+      "revId": "eb0c14417ca0abe8cd82f1f4c83e07e3869758cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf7809eb_8570937d",
+        "filename": "services/ui/public/interfaces/gpu.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-05T04:31:35Z",
+      "side": 1,
+      "message": "Creates, binds.",
+      "revId": "eb0c14417ca0abe8cd82f1f4c83e07e3869758cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
