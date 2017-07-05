@@ -237,7 +237,15 @@
     },
     type_name: {
     },
-
+    // The default_generated_functions property will allow us to set
+    // the functions we would like to auto generate so that we wont have
+    // to implement all of the public function of storage-only in case
+    // some of them are trivial
+    default_generated_functions: {
+      default: [],
+      valid_type: "list",
+      valid_values: ["getter", "setter", "reset", "mutable"],
+    },
     // - converter: "ConvertRadius"
     // The StyleBuilder will call the specified function on StyleBuilderConverter
     // to convert a CSSValue to an appropriate platform value
@@ -602,6 +610,7 @@
       type_name: "float",
       default_value: "1.0",
       field_group: "visual",
+      default_generated_functions: ["getter"],
     },
 
     {
