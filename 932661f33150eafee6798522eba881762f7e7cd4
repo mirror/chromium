@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "977df037_cc854007",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 2153,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-07-05T23:08:49Z",
+      "side": 1,
+      "message": "nit: You should just comment the variable name inline i.e. /* is_navigation_stream_request */ instead of the rationale, IMHO. If you disagree, fix the comment to add a space after \"request\".",
+      "range": {
+        "startLine": 2153,
+        "startChar": 38,
+        "endLine": 2153,
+        "endChar": 48
+      },
+      "revId": "932661f33150eafee6798522eba881762f7e7cd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
