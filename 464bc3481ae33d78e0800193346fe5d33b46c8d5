@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a1d58ca_5f0c423f",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliated_match_helper_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-05T14:39:17Z",
+      "side": 1,
+      "message": "formatting nit: It makes me sad if this what clang-format produces... :(",
+      "revId": "464bc3481ae33d78e0800193346fe5d33b46c8d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

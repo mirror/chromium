@@ -1,0 +1,141 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "028a62d2_f2e45b73",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliated_match_helper_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-05T14:39:17Z",
+      "side": 1,
+      "message": "Can we simplify this a bit?\n\nFacet is an aggregate type, so for each element in this array, we could omit FacetBrandingInfo{} and rely on aggregate initialization implicitly copy-initializing omitted members from {}.\n\nWhile due to a defect in the standard this could mean FacetBrandingInfo being either aggregate-initialized from {}, or value-initialized, this should be no problem, as |icon_url| and |name| are fine regardless of whether they are value-initialized (from {}) or default-initialized (by FacetBrandingInfo::default ctor).\n\nOf course it might not work with MSVC \u003e:).",
+      "revId": "49f368967bcf9dfba9d499c62dc44ede7926c2a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "972f7c42_926df2a4",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_backend_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-05T14:39:17Z",
+      "side": 1,
+      "message": "nit: Same here and in a couple of files below.",
+      "range": {
+        "startLine": 109,
+        "startChar": 57,
+        "endLine": 109,
+        "endChar": 74
+      },
+      "revId": "49f368967bcf9dfba9d499c62dc44ede7926c2a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "859f2005_4d7db9a9",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_fetcher_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-05T14:39:17Z",
+      "side": 1,
+      "message": "Are there specific reasons you are using the FBI{} format instead of FBI()? \n\nMy (potentially incorrect) understanding is that they are equivalent except for aggregate types, in case of which the former is ambiguous (could be value-initialization or aggregate-initialization), while the latter can only be value-initialization.",
+      "range": {
+        "startLine": 148,
+        "startChar": 24,
+        "endLine": 148,
+        "endChar": 43
+      },
+      "revId": "49f368967bcf9dfba9d499c62dc44ede7926c2a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41e7761c_f78b3e20",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-05T14:39:17Z",
+      "side": 1,
+      "message": "naming nit: ExtractFacetURIsSorted",
+      "range": {
+        "startLine": 312,
+        "startChar": 9,
+        "endLine": 312,
+        "endChar": 18
+      },
+      "revId": "49f368967bcf9dfba9d499c62dc44ede7926c2a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b61e11e3_d2cc3818",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-05T14:39:17Z",
+      "side": 1,
+      "message": "Phasing suggestion:\n\n// Human readable name of this facet, or empty if this information is not available.\n//\n// For example, this would be something like \"Netflix\" for the popular video-on-demand application corresponding to FacetURIs `android://...@com.netflix.mediaclient` and `https://netflix.com`.",
+      "revId": "49f368967bcf9dfba9d499c62dc44ede7926c2a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87822fa9_d91c1069",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-05T14:39:17Z",
+      "side": 1,
+      "message": "nit: Same here.",
+      "revId": "49f368967bcf9dfba9d499c62dc44ede7926c2a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed98b6a9_7494ccc4",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_utils_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-05T14:39:17Z",
+      "side": 1,
+      "message": "Given that the data type definition is final already, please complete these tests to define the expected equalivalence behavior with regard to the |icon_url| field.",
+      "revId": "49f368967bcf9dfba9d499c62dc44ede7926c2a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

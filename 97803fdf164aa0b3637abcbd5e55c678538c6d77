@@ -169,6 +169,30 @@
       "revId": "97803fdf164aa0b3637abcbd5e55c678538c6d77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27b2ab15_b1dbb910",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-05T14:39:17Z",
+      "side": 1,
+      "message": "I\u0027d just optimize away saying `Facet struct`, it is there on the next line again anyway.",
+      "parentUuid": "8b89dc56_820446d7",
+      "range": {
+        "startLine": 164,
+        "startChar": 3,
+        "endLine": 164,
+        "endChar": 17
+      },
+      "revId": "97803fdf164aa0b3637abcbd5e55c678538c6d77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
