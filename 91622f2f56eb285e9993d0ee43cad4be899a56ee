@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "682428b9_c6e34a57",
+        "filename": "components/viz/client/client_layer_tree_frame_sink.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-05T19:28:46Z",
+      "side": 1,
+      "message": "Maybe this could be a separate parameter to SubmitCompositorFrame? Adding a field to the metadata means this field exists in all kinds of unrelated places when we really only mean for it to be used between here and where SubmitCompositorFrame lands.\n\nAlternatively, what if the local_surface_id_ was just always changed when this tracing category was on, would that work cuz you\u0027d get something to follow?",
+      "revId": "91622f2f56eb285e9993d0ee43cad4be899a56ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
