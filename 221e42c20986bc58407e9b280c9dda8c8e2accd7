@@ -131,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "4379375c_c56bf5e3",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-05T22:59:05Z",
+      "side": 1,
+      "message": "Right, the style guide is essentially saying \"don\u0027t use unsigned unless you have to\" and IMO comparing against unsigned things is a good reason to prefer unsigned.",
+      "parentUuid": "b2f9b12f_93d78578",
+      "range": {
+        "startLine": 591,
+        "startChar": 10,
+        "endLine": 591,
+        "endChar": 26
+      },
+      "revId": "221e42c20986bc58407e9b280c9dda8c8e2accd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a599762b_18a42d55",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
         "patchSetId": 3
