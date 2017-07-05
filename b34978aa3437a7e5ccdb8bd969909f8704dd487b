@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff0cca2c_fc64dcfe",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-07-05T00:08:52Z",
+      "side": 1,
+      "message": "Where it belongs -\u003e mention file inline here.",
+      "revId": "b34978aa3437a7e5ccdb8bd969909f8704dd487b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
