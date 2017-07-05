@@ -93,7 +93,7 @@ public class CustomTabActivityTestRule extends ChromeActivityTestRule<CustomTabA
             public boolean isSatisfied() {
                 return DeferredStartupHandler.getInstance().isDeferredStartupCompleteForApp();
             }
-        }, STARTUP_TIMEOUT_MS, CriteriaHelper.DEFAULT_POLLING_INTERVAL);
+        }, LONG_TIMEOUT_MS, CriteriaHelper.DEFAULT_POLLING_INTERVAL);
         Assert.assertNotNull(tab);
         Assert.assertNotNull(tab.getView());
         Assert.assertTrue(tab.isCurrentlyACustomTab());
