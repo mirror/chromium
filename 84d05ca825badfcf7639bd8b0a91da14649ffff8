@@ -16,6 +16,24 @@
       "revId": "84d05ca825badfcf7639bd8b0a91da14649ffff8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1a1cec1_2ad092d2",
+        "filename": "third_party/WebKit/Source/core/loader/BaseFetchContext.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-05T02:39:48Z",
+      "side": 1,
+      "message": "Not really, just felt having CountUsage in public and CountDeprecation in protected looked a bit weird. (I can move it back if it looks better)",
+      "parentUuid": "35979c64_d8bcff09",
+      "revId": "84d05ca825badfcf7639bd8b0a91da14649ffff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
