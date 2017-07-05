@@ -83,6 +83,12 @@ class CORE_EXPORT ImageBitmap final
                              uint32_t height,
                              bool is_image_bitmap_premultiplied,
                              bool is_image_bitmap_origin_clean);
+  static ImageBitmap* CreateAsync(
+      ImageElementBase*,
+      Optional<IntRect>,
+      Document*,
+      ScriptPromiseResolver*,
+      const ImageBitmapOptions& = ImageBitmapOptions());
   static sk_sp<SkImage> GetSkImageFromDecoder(
       std::unique_ptr<ImageDecoder>,
       SkColorType* decoded_color_type = nullptr,
@@ -143,6 +149,11 @@ class CORE_EXPORT ImageBitmap final
               Optional<IntRect>,
               Document*,
               const ImageBitmapOptions&);
+  ImageBitmap(ImageElementBase*,
+              Optional<IntRect>,
+              Document*,
+              ScriptPromiseResolver*,
+              const ImageBitmapOptions&);
   ImageBitmap(HTMLVideoElement*,
               Optional<IntRect>,
               Document*,
@@ -160,6 +171,11 @@ class CORE_EXPORT ImageBitmap final
               uint32_t height,
               bool is_image_bitmap_premultiplied,
               bool is_image_bitmap_origin_clean);
+  void DecodeImageOnBackground(RefPtr<WebTaskRunner>,
+                               ScriptPromiseResolver*,
+                               sk_sp<PaintRecord>,
+                               IntSize);
+  void ResolvePromiseOnOriginalThread(ScriptPromiseResolver*, sk_sp<SkImage>);
 
   RefPtr<StaticBitmapImage> image_;
   bool is_neutered_ = false;
