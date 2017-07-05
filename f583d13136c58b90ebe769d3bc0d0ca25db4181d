@@ -16,6 +16,24 @@
       "revId": "f583d13136c58b90ebe769d3bc0d0ca25db4181d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d52ca1a9_d141240a",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-07-05T10:58:00Z",
+      "side": 1,
+      "message": "Thanks for the comments. Yes, it is indeed raster. The current PS is still too early for review. There are a few cases that needs to be taken care of. I will send it out for review once it is ready.",
+      "parentUuid": "68b1a14c_32a6c91a",
+      "revId": "f583d13136c58b90ebe769d3bc0d0ca25db4181d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
