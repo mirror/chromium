@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48d479e1_0d32a518",
+        "filename": "net/disk_cache/memory/mem_entry_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-07-05T18:04:11Z",
+      "side": 1,
+      "message": "Are you sure you want to ignore cache_type here?\n(Partly why I am asking is that I am still wondering how the whole \"unlimited cache size\" thing for APPCACHE is supposed to work with MemCache)",
+      "revId": "f2f458b60f269a5453dedf9b6306daf1a6d046c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
