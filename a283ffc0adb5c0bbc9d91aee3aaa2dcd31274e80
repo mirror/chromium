@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1cf3d6c_5af59653",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-05T11:02:57Z",
+      "side": 1,
+      "message": "Maybe something like:\n\nBlobURLLoaderFactory\u0027s ctor posts a task to finalize the initialization, but the task doesn\u0027t retain the reference of the factory itself (which causes addref-in-dtor assertion failure).  This change fixes the issue by introducing a static Create method and posting a task there with the reference.",
+      "revId": "a283ffc0adb5c0bbc9d91aee3aaa2dcd31274e80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
