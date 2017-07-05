@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd11f223_bf88eda4",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 871,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-05T01:54:39Z",
+      "side": 0,
+      "message": "TestBrowserThreadBundle also includes ScopedTaskEnvironment which provides a TaskScheduler, I\u0027m surprised you no longer need that.\n\nMight be the root cause of LocalStorageContextMojoTestWithService.CorruptionOnDisk failing on bots with this CL?\n\nYou may also need a content::RunAllBlockingPoolTasksUntilIdle() somewhere in that test as documented here: https://chromium.googlesource.com/chromium/src/+/lkcr/docs/task_scheduler_migration.md#Other-relevant-mappings-for-tests",
+      "revId": "d74f1fcf603fd78c3cd9e0a3123db98e4a1767e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
