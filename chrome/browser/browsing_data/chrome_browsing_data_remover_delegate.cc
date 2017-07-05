@@ -56,6 +56,7 @@
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_settings.h"
 #include "components/domain_reliability/service.h"
 #include "components/history/core/browser/history_service.h"
+#include "components/language/core/browser/url_language_histogram.h"
 #include "components/nacl/browser/nacl_browser.h"
 #include "components/nacl/browser/pnacl_host.h"
 #include "components/ntp_snippets/bookmarks/bookmark_last_visit_utils.h"
@@ -67,7 +68,6 @@
 #include "components/previews/core/previews_ui_service.h"
 #include "components/search_engines/template_url_service.h"
 #include "components/sessions/core/tab_restore_service.h"
-#include "components/translate/core/browser/language_model.h"
 #include "components/web_cache/browser/web_cache_manager.h"
 #include "content/public/browser/browsing_data_filter_builder.h"
 #include "content/public/browser/plugin_data_remover.h"
@@ -475,10 +475,10 @@ void ChromeBrowsingDataRemoverDelegate::RemoveEmbedderData(
                                                   filter, bookmark_model);
     }
 
-    translate::LanguageModel* language_model =
+    language::UrlLanguageHistogram* language_histogram =
         LanguageModelFactory::GetInstance()->GetForBrowserContext(profile_);
-    if (language_model) {
-      language_model->ClearHistory(delete_begin_, delete_end_);
+    if (language_histogram) {
+      language_histogram->ClearHistory(delete_begin_, delete_end_);
     }
 
 #if BUILDFLAG(ENABLE_EXTENSIONS)

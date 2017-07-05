@@ -10,6 +10,7 @@
 
 #include "base/macros.h"
 #include "chrome/browser/ui/translate/translate_bubble_model.h"
+#include "components/language/core/browser/url_language_histogram.h"
 #include "components/translate/content/browser/content_translate_driver.h"
 #include "components/translate/core/browser/translate_client.h"
 #include "components/translate/core/browser/translate_step.h"
@@ -25,8 +26,11 @@ class WebContents;
 
 class PrefService;
 
+namespace language {
+class UrlLanguageHistogram;
+}  // namespace language
+
 namespace translate {
-class LanguageModel;
 class LanguageState;
 class TranslateAcceptLanguages;
 class TranslatePrefs;
@@ -137,9 +141,9 @@ class ChromeTranslateClient
   translate::ContentTranslateDriver translate_driver_;
   std::unique_ptr<translate::TranslateManager> translate_manager_;
 
-  // Model to be notified about detected language of every page visited. Not
+  // Histogram to be notified about detected language of every page visited. Not
   // owned here.
-  translate::LanguageModel* language_model_;
+  language::UrlLanguageHistogram* language_histogram_;
 
   DISALLOW_COPY_AND_ASSIGN(ChromeTranslateClient);
 };

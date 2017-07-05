@@ -7,7 +7,7 @@
 #include "chrome/browser/profiles/profile.h"
 #include "components/keyed_service/content/browser_context_dependency_manager.h"
 #include "components/keyed_service/core/keyed_service.h"
-#include "components/translate/core/browser/language_model.h"
+#include "components/language/core/browser/url_language_histogram.h"
 
 // static
 LanguageModelFactory*
@@ -16,9 +16,9 @@ LanguageModelFactory::GetInstance() {
 }
 
 // static
-translate::LanguageModel* LanguageModelFactory::GetForBrowserContext(
+language::UrlLanguageHistogram* LanguageModelFactory::GetForBrowserContext(
     content::BrowserContext* browser_context) {
-  return static_cast<translate::LanguageModel*>(
+  return static_cast<language::UrlLanguageHistogram*>(
       GetInstance()->GetServiceForBrowserContext(browser_context, true));
 }
 
@@ -32,5 +32,5 @@ LanguageModelFactory::~LanguageModelFactory() {}
 KeyedService* LanguageModelFactory::BuildServiceInstanceFor(
     content::BrowserContext* browser_context) const {
   Profile* profile = Profile::FromBrowserContext(browser_context);
-  return new translate::LanguageModel(profile->GetPrefs());
+  return new language::UrlLanguageHistogram(profile->GetPrefs());
 }
