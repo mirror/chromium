@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a83ae465_89e49cb0",
+        "filename": "testing/buildbot/gn_isolate_map.pyl",
+        "patchSetId": 4
+      },
+      "lineNbr": 898,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-07-05T16:11:03Z",
+      "side": 1,
+      "message": "I think this should be the only necessary change in this CL.",
+      "revId": "1c54219de9a8fb312f019cf3fc3725e937a39d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
