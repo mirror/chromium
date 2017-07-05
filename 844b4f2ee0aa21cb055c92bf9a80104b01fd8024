@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b55729fa_b746cb04",
+        "filename": "services/test/user_id/public/interfaces/user_id.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-07-05T19:50:22Z",
+      "side": 1,
+      "message": "nit: Can we call this UserIDForTest to indicate that only expect to use this for a test?",
+      "range": {
+        "startLine": 9,
+        "startChar": 10,
+        "endLine": 9,
+        "endChar": 16
+      },
+      "revId": "844b4f2ee0aa21cb055c92bf9a80104b01fd8024",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
