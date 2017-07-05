@@ -12,6 +12,7 @@
 #include "base/stl_util.h"
 #include "cc/output/copy_output_request.h"
 #include "cc/surfaces/compositor_frame_sink_support.h"
+#include "cc/surfaces/frame_sink_manager.h"
 #include "cc/surfaces/local_surface_id_allocator.h"
 #include "cc/surfaces/surface_manager.h"
 #include "cc/surfaces/surface_resource_holder_client.h"
@@ -28,7 +29,8 @@ Surface::Surface(
     : surface_info_(surface_info),
       previous_frame_surface_id_(surface_info.id()),
       compositor_frame_sink_support_(std::move(compositor_frame_sink_support)),
-      surface_manager_(compositor_frame_sink_support_->surface_manager()),
+      surface_manager_(compositor_frame_sink_support_->frame_sink_manager()
+                           ->surface_manager()),
       frame_index_(kFrameIndexStart) {}
 
 Surface::~Surface() {
@@ -319,8 +321,8 @@ void Surface::AddDestructionDependency(SurfaceSequence sequence) {
 }
 
 void Surface::SatisfyDestructionDependencies(
-    std::unordered_set<SurfaceSequence, SurfaceSequenceHash>* sequences,
-    std::unordered_set<FrameSinkId, FrameSinkIdHash>* valid_frame_sink_ids) {
+    base::flat_set<SurfaceSequence>* sequences,
+    base::flat_set<FrameSinkId>* valid_frame_sink_ids) {
   base::EraseIf(destruction_dependencies_,
                 [sequences, valid_frame_sink_ids](SurfaceSequence seq) {
                   return (!!sequences->erase(seq) ||
