@@ -22,6 +22,30 @@
       "revId": "c984f640259030d9363d03eebb5b7db3ecef8fb1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e107abb0_1ef1afe2",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/jpeg/JPEGImageDecoder.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-07-05T13:32:28Z",
+      "side": 1,
+      "message": "In keeping with other code in ImageDecoder, this would be:\n\n  if (index)",
+      "parentUuid": "010d5a2f_7ebe083b",
+      "range": {
+        "startLine": 150,
+        "startChar": 11,
+        "endLine": 150,
+        "endChar": 12
+      },
+      "revId": "c984f640259030d9363d03eebb5b7db3ecef8fb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
