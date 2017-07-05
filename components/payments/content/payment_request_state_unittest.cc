@@ -324,4 +324,45 @@ TEST_F(PaymentRequestStateTest, SelectedShippingAddressMessage_Normalized) {
   EXPECT_EQ("16502111111", selected_shipping_address()->phone);
 }
 
+TEST_F(PaymentRequestStateTest, ModifierAppliedToTotal) {
+  // The method data supports everything in basic-card.
+  mojom::PaymentMethodDataPtr entry = mojom::PaymentMethodData::New();
+  entry->supported_methods.push_back("basic-card");
+  std::vector<mojom::PaymentMethodDataPtr> method_data;
+  method_data.push_back(std::move(entry));
+  mojom::PaymentDetailsPtr details = mojom::PaymentDetails::New();
+  mojom::PaymentItemPtr total = mojom::PaymentItem::New();
+  mojom::PaymentCurrencyAmountPtr total_amount =
+      mojom::PaymentCurrencyAmount::New();
+  total_amount->value = "1.00";
+  total->amount = std::move(total_amount);
+  details->total = std::move(total);
+  mojom::PaymentDetailsModifierPtr modifier =
+      mojom::PaymentDetailsModifier::New();
+  mojom::PaymentMethodDataPtr modifier_entry = mojom::PaymentMethodData::New();
+  modifier_entry->supported_methods.push_back("basic-card");
+  modifier->method_data = std::move(modifier_entry);
+  mojom::PaymentItemPtr modified_total = mojom::PaymentItem::New();
+  mojom::PaymentCurrencyAmountPtr modified_amount =
+      mojom::PaymentCurrencyAmount::New();
+  modified_amount->value = "2.00";
+  modified_total->amount = std::move(modified_amount);
+  modifier->total = std::move(modified_total);
+  mojom::PaymentItemPtr modifier_item = mojom::PaymentItem::New();
+  modifier->additional_display_items.push_back(std::move(modifier_item));
+  details->modifiers.push_back(std::move(modifier));
+  RecreateStateWithOptionsAndDetails(
+      mojom::PaymentOptions::New(), std::move(details), std::move(method_data));
+  EXPECT_TRUE(state()->selected_instrument());
+  EXPECT_EQ("2.00",
+            spec()->GetTotal(state()->selected_instrument())->amount->value);
+  EXPECT_EQ(1U, spec()->GetDisplayItems(state()->selected_instrument()).size());
+
+  state()->SetSelectedInstrument(nullptr);
+  EXPECT_FALSE(state()->selected_instrument());
+  EXPECT_EQ("1.00",
+            spec()->GetTotal(state()->selected_instrument())->amount->value);
+  EXPECT_EQ(0U, spec()->GetDisplayItems(state()->selected_instrument()).size());
+}
+
 }  // namespace payments

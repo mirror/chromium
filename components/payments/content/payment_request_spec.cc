@@ -8,6 +8,7 @@
 
 #include "base/logging.h"
 #include "base/strings/utf_string_conversions.h"
+#include "components/payments/core/payment_instrument.h"
 #include "components/payments/core/payment_method_data.h"
 #include "components/payments/core/payment_request_data_util.h"
 #include "components/strings/grit/components_strings.h"
@@ -159,6 +160,52 @@ bool PaymentRequestSpec::IsMixedCurrency() const {
                      [&total_currency](const mojom::PaymentItemPtr& item) {
                        return item->amount->currency != total_currency;
                      });
+}
+
+const mojom::PaymentItemPtr& PaymentRequestSpec::GetTotal(
+    PaymentInstrument* selected_instrument) const {
+  const mojom::PaymentDetailsModifierPtr* modifier =
+      GetApplicableModifier(selected_instrument);
+  return modifier ? (*modifier)->total : details().total;
+}
+
+std::vector<const mojom::PaymentItemPtr*> PaymentRequestSpec::GetDisplayItems(
+    PaymentInstrument* selected_instrument) const {
+  std::vector<const mojom::PaymentItemPtr*> display_items;
+  const mojom::PaymentDetailsModifierPtr* modifier =
+      GetApplicableModifier(selected_instrument);
+  for (const auto& item : details().display_items) {
+    display_items.push_back(&item);
+  }
+
+  if (modifier) {
+    for (const auto& additional_item : (*modifier)->additional_display_items) {
+      display_items.push_back(&additional_item);
+    }
+  }
+  return display_items;
+}
+
+const std::vector<mojom::PaymentShippingOptionPtr>&
+PaymentRequestSpec::GetShippingOptions() const {
+  return details().shipping_options;
+}
+
+const mojom::PaymentDetailsModifierPtr*
+PaymentRequestSpec::GetApplicableModifier(
+    PaymentInstrument* selected_instrument) const {
+  if (!selected_instrument)
+    return nullptr;
+
+  for (const auto& modifier : details().modifiers) {
+    for (const auto& supported_method :
+         modifier->method_data->supported_methods) {
+      if (selected_instrument->IsValidForForMethod(supported_method)) {
+        return &modifier;
+      }
+    }
+  }
+  return nullptr;
 }
 
 void PaymentRequestSpec::PopulateValidatedMethodData(
