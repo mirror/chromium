@@ -24,6 +24,7 @@
 #include "net/base/ip_endpoint.h"
 #include "net/base/net_errors.h"
 #include "net/base/port_util.h"
+#include "net/base/test_completion_callback.h"
 #include "net/cert/pem_tokenizer.h"
 #include "net/cert/test_root_certs.h"
 #include "net/log/net_log_source.h"
@@ -289,6 +290,48 @@ scoped_refptr<X509Certificate> EmbeddedTestServer::GetCertificate() const {
   return ImportCertFromFile(certs_dir, GetCertificateName());
 }
 
+static void SocketRead(net::StreamSocket* socket,
+                       net::IOBuffer* buffer,
+                       int buffer_length,
+                       int* last_result) {
+  net::TestCompletionCallback callback;
+  *last_result = callback.GetResult(
+      socket->Read(buffer, buffer_length, callback.callback()));
+}
+
+static void SocketWrite(net::StreamSocket* socket,
+                        net::IOBuffer* buffer,
+                        int buffer_length,
+                        int* last_result) {
+  net::TestCompletionCallback callback;
+  *last_result = callback.GetResult(
+      socket->Write(buffer, buffer_length, callback.callback()));
+}
+
+int EmbeddedTestServer::WriteRaw(StreamSocket* socket,
+                                 net::IOBuffer* buffer,
+                                 int buffer_length) {
+  int last_result;
+  if (!PostTaskToIOThreadAndWait(
+          base::Bind(&SocketWrite, base::ConstRef(socket),
+                     base::ConstRef(buffer), buffer_length, &last_result))) {
+    return -1;
+  }
+  return last_result;
+}
+
+int EmbeddedTestServer::ReadRaw(StreamSocket* socket,
+                                net::IOBuffer* buffer,
+                                int buffer_length) {
+  int last_result;
+  if (!PostTaskToIOThreadAndWait(base::Bind(&SocketRead, base::ConstRef(socket),
+                                            base::ConstRef(buffer),
+                                            buffer_length, &last_result))) {
+    return -1;
+  }
+  return last_result;
+}
+
 void EmbeddedTestServer::ServeFilesFromDirectory(
     const base::FilePath& directory) {
   RegisterRequestHandler(base::Bind(&HandleFileRequest, directory));
@@ -406,6 +449,13 @@ void EmbeddedTestServer::HandleAcceptResult(
 }
 
 void EmbeddedTestServer::ReadData(HttpConnection* connection) {
+  if (connection_listener_) {
+    if (connection_listener_->ConnectionEstablished(
+            connection->socket_.get())) {
+      return;
+    }
+  }
+
   while (true) {
     int rv =
         connection->ReadData(base::Bind(&EmbeddedTestServer::OnReadCompleted,

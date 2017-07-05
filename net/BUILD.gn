@@ -2493,6 +2493,7 @@ static_library("test_support") {
     "test/embedded_test_server/default_handlers.h",
     "test/embedded_test_server/embedded_test_server.cc",
     "test/embedded_test_server/embedded_test_server.h",
+    "test/embedded_test_server/embedded_test_server_connection_listener.cc",
     "test/embedded_test_server/embedded_test_server_connection_listener.h",
     "test/embedded_test_server/http_connection.cc",
     "test/embedded_test_server/http_connection.h",

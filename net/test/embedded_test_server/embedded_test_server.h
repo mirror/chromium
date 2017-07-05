@@ -187,6 +187,14 @@ class EmbeddedTestServer {
   // Returns the certificate that the server is using.
   scoped_refptr<X509Certificate> GetCertificate() const;
 
+  // Writes |buffer| to the |socket| and waits until completion, returning the
+  // result of the write.
+  int WriteRaw(StreamSocket* socket, net::IOBuffer* buffer, int buffer_length);
+
+  // Reads |buffer| from the |socket| and waits until completion, returning the
+  // result of the read.
+  int ReadRaw(StreamSocket* socket, net::IOBuffer* buffer, int buffer_length);
+
   // Registers request handler which serves files from |directory|.
   // For instance, a request to "/foo.html" is served by "foo.html" under
   // |directory|. Files under sub directories are also handled in the same way

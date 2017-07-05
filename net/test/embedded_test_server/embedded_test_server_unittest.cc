@@ -19,11 +19,17 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "crypto/nss_util.h"
 #include "net/base/test_completion_callback.h"
+#include "net/cert/cert_verifier.h"
+#include "net/cert/ct_policy_enforcer.h"
+#include "net/cert/multi_log_ct_verifier.h"
 #include "net/http/http_response_headers.h"
 #include "net/log/net_log_source.h"
 #include "net/log/test_net_log.h"
 #include "net/socket/client_socket_factory.h"
+#include "net/socket/client_socket_handle.h"
+#include "net/socket/ssl_client_socket.h"
 #include "net/socket/stream_socket.h"
+#include "net/socket/tcp_client_socket.h"
 #include "net/test/embedded_test_server/embedded_test_server_connection_listener.h"
 #include "net/test/embedded_test_server/http_request.h"
 #include "net/test/embedded_test_server/http_response.h"
@@ -118,6 +124,60 @@ class TestConnectionListener
   mutable base::Lock lock_;
 
   DISALLOW_COPY_AND_ASSIGN(TestConnectionListener);
+};
+
+class TestRawListener
+    : public net::test_server::EmbeddedTestServerConnectionListener {
+ public:
+  TestRawListener(EmbeddedTestServer* server)
+      : server_(server),
+        socket_(nullptr),
+        task_runner_(base::ThreadTaskRunnerHandle::Get()) {}
+
+  ~TestRawListener() override {}
+
+  // Get called from the EmbeddedTestServer thread to be notified that
+  // a connection was accepted.
+  bool ConnectionEstablished(StreamSocket* socket) override {
+    socket_ = socket;
+    task_runner_->PostTask(FROM_HERE, accept_loop_.QuitClosure());
+    return true;
+  }
+
+  void WaitUntilFirstConnectionAccepted() { accept_loop_.Run(); }
+
+  int ReadExactLength(net::IOBuffer* buffer, int buffer_length) {
+    scoped_refptr<net::DrainableIOBuffer> draining_buffer(
+        new net::DrainableIOBuffer(buffer, buffer_length));
+    while (draining_buffer->BytesRemaining() > 0) {
+      int read_result = server_->ReadRaw(socket_, draining_buffer.get(),
+                                         draining_buffer->BytesRemaining());
+      EXPECT_GT(read_result, 0);
+      draining_buffer->DidConsume(read_result);
+    }
+    return buffer_length;
+  }
+
+  int WriteExactLength(net::IOBuffer* buffer, int buffer_length) {
+    scoped_refptr<net::DrainableIOBuffer> draining_buffer(
+        new net::DrainableIOBuffer(buffer, buffer_length));
+    while (draining_buffer->BytesRemaining() > 0) {
+      int write_result = server_->WriteRaw(socket_, draining_buffer.get(),
+                                           draining_buffer->BytesRemaining());
+      EXPECT_GT(write_result, 0);
+      draining_buffer->DidConsume(write_result);
+    }
+    return buffer_length;
+  }
+
+ private:
+  EmbeddedTestServer* server_;
+  StreamSocket* socket_;
+
+  base::RunLoop accept_loop_;
+  scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
+
+  DISALLOW_COPY_AND_ASSIGN(TestRawListener);
 };
 
 class EmbeddedTestServerTest
@@ -355,6 +415,50 @@ TEST_P(EmbeddedTestServerTest, ConnectionListenerRead) {
   WaitForResponses(1);
   EXPECT_EQ(1u, connection_listener_.SocketAcceptedCount());
   EXPECT_TRUE(connection_listener_.DidReadFromSocket());
+}
+
+TEST_P(EmbeddedTestServerTest, RawListener) {
+  TestRawListener* raw_listener = new TestRawListener(server_.get());
+  server_->SetConnectionListener(raw_listener);
+  ASSERT_TRUE(server_->Start());
+
+  net::AddressList address_list;
+  ASSERT_TRUE(server_->GetAddressList(&address_list));
+
+  std::unique_ptr<StreamSocket> socket =
+      ClientSocketFactory::GetDefaultFactory()->CreateTransportClientSocket(
+          address_list, NULL, NULL, NetLogSource());
+  TestCompletionCallback callback;
+  ASSERT_THAT(callback.GetResult(socket->Connect(callback.callback())), IsOk());
+  ASSERT_TRUE(socket->IsConnected());
+
+  if (GetParam() == EmbeddedTestServer::TYPE_HTTPS) {
+    std::unique_ptr<ClientSocketHandle> connection(new ClientSocketHandle);
+    connection->SetSocket(std::move(socket));
+    SSLClientSocketContext context;
+    std::unique_ptr<CertVerifier> verifier = CertVerifier::CreateDefault();
+    context.cert_verifier = verifier.get();
+    context.transport_security_state = new TransportSecurityState;
+    context.cert_transparency_verifier = new MultiLogCTVerifier;
+    context.ct_policy_enforcer = new CTPolicyEnforcer;
+    socket = ClientSocketFactory::GetDefaultFactory()->CreateSSLClientSocket(
+        std::move(connection), server_->host_port_pair(), SSLConfig(), context);
+    TestCompletionCallback callback;
+    callback.GetResult(socket->Connect(callback.callback()));
+    ASSERT_TRUE(socket->IsConnected());
+  }
+
+  scoped_refptr<net::StringIOBuffer> hello_buffer(
+      new net::StringIOBuffer("hello"));
+  int msg_len = hello_buffer->size();
+
+  TestCompletionCallback write_callback;
+  socket->Write(hello_buffer.get(), msg_len, write_callback.callback());
+
+  scoped_refptr<net::IOBuffer> recv_buffer(new net::IOBuffer(msg_len));
+  int read = raw_listener->ReadExactLength(recv_buffer.get(), msg_len);
+  EXPECT_EQ(msg_len, read);
+  EXPECT_EQ("hello", std::string(recv_buffer->data(), msg_len));
 }
 
 TEST_P(EmbeddedTestServerTest, ConcurrentFetches) {

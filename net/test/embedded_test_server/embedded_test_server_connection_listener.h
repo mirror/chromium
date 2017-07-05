@@ -15,10 +15,14 @@ namespace test_server {
 class EmbeddedTestServerConnectionListener {
  public:
   // Notified when a socket was accepted by the EmbeddedTestServer.
-  virtual void AcceptedSocket(const StreamSocket& socket) = 0;
+  virtual void AcceptedSocket(const StreamSocket& socket);
+
+  // Notified once a connection has been established. Returns true if the
+  // listener has taken ownership of the socket.
+  virtual bool ConnectionEstablished(StreamSocket* socket);
 
   // Notified when a socket was read from by the EmbeddedTestServer.
-  virtual void ReadFromSocket(const StreamSocket& socket, int rv) = 0;
+  virtual void ReadFromSocket(const StreamSocket& socket, int rv);
 
  protected:
   EmbeddedTestServerConnectionListener() {}
