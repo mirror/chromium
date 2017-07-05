@@ -112,6 +112,7 @@ ThrottlingURLLoader::ThrottlingURLLoader(
   if (throttles.size() > 0) {
     // TODO(yzshen): Implement a URLLoaderThrottle subclass which handles a list
     // of URLLoaderThrottles.
+
     CHECK_EQ(1u, throttles.size());
     throttle_ = std::move(throttles[0]);
     throttle_->set_delegate(this);

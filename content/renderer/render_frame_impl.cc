@@ -4251,6 +4251,7 @@ void RenderFrameImpl::WillSendRequest(blink::WebURLRequest& request) {
   }
 
   std::vector<std::unique_ptr<URLLoaderThrottle>> throttles;
+
   GURL new_url;
   if (GetContentClient()->renderer()->WillSendRequest(
           frame_, transition_type, request.Url(), &throttles, &new_url)) {

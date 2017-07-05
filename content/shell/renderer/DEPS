@@ -4,5 +4,6 @@ include_rules = [
   "+components/web_cache/renderer",
   "+components/plugins/renderer",
   "+content/shell/test_runner",
+  "+content/renderer/net",
   "+services/service_manager/public/cpp",
 ]

@@ -15,7 +15,9 @@
 #include "content/public/child/child_thread.h"
 #include "content/public/common/service_manager_connection.h"
 #include "content/public/common/simple_connection_filter.h"
+#include "content/public/renderer/render_frame.h"
 #include "content/public/test/test_service.mojom.h"
+#include "content/renderer/net/cors_url_loader_throttle.h"
 #include "content/shell/common/power_monitor_test_impl.h"
 #include "content/shell/common/shell_switches.h"
 #include "content/shell/renderer/shell_render_view_observer.h"
@@ -23,6 +25,7 @@
 #include "mojo/public/cpp/system/message_pipe.h"
 #include "ppapi/features/features.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
+#include "third_party/WebKit/public/web/WebLocalFrame.h"
 #include "third_party/WebKit/public/web/WebTestingSupport.h"
 #include "third_party/WebKit/public/web/WebView.h"
 #include "v8/include/v8.h"
@@ -101,6 +104,22 @@ void CreateTestService(const service_manager::BindSourceInfo& source_info,
 ShellContentRendererClient::ShellContentRendererClient() {}
 
 ShellContentRendererClient::~ShellContentRendererClient() {
+}
+
+bool ShellContentRendererClient::WillSendRequest(
+    blink::WebLocalFrame* frame,
+    ui::PageTransition transition_type,
+    const blink::WebURL& url,
+    std::vector<std::unique_ptr<URLLoaderThrottle>>* throttles,
+    GURL* new_url) {
+  // RenderFrame* render_frame = content::RenderFrame::FromWebFrame(frame);
+
+  printf(" ShellContentRendererClient::WillSendRequest %s\n",
+         url.GetString().Ascii().data());
+
+  // throttles->push_back(base::MakeUnique<CORSURLLoaderThrottle>());
+
+  return false;
 }
 
 void ShellContentRendererClient::RenderThreadStarted() {

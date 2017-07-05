@@ -39,6 +39,7 @@
 #include "content/public/child/resource_dispatcher_delegate.h"
 #include "content/public/common/resource_response.h"
 #include "content/public/common/resource_type.h"
+#include "content/renderer/net/cors_url_loader_throttle.h"
 #include "net/base/net_errors.h"
 #include "net/base/request_priority.h"
 #include "net/http/http_response_headers.h"
@@ -636,8 +637,19 @@ int ResourceDispatcher::StartAsync(
     mojo::ScopedDataPipeConsumerHandle consumer_handle) {
   CheckSchemeForReferrerPolicy(*request);
 
+  // TODO(hintzed) probably not the right place to add the cors throttle, but we
+  // do have the url_loader_factory here.
+
+  // Need a different RequestID for the Preflight:
+  CORSURLLoaderThrottle::RequestInfo requestInfo = {routing_id, MakeRequestID(),
+                                                    mojom::kURLLoadOptionNone};
+
+  throttles.push_back(base::MakeUnique<CORSURLLoaderThrottle>(
+      requestInfo, *request, *url_loader_factory, loading_task_runner));
+
   // Compute a unique request_id for this renderer process.
   int request_id = MakeRequestID();
+
   pending_requests_[request_id] = base::MakeUnique<PendingRequestInfo>(
       std::move(peer), request->resource_type, request->origin_pid,
       frame_origin, request->url, request->download_to_file);
