@@ -2225,6 +2225,7 @@ if (enable_java_templates) {
                                "alternative_android_sdk_jar",
                                "android_aapt_path",
                                "app_as_shared_lib",
+                               "convert_to_webp",
                                "deps",
                                "exclude_xxxhdpi",
                                "extensions_to_not_compress",

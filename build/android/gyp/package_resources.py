@@ -13,10 +13,12 @@ https://android.googlesource.com/platform/sdk/+/master/files/ant/build.xml
 """
 # pylint: enable=C0301
 
+import multiprocessing.pool
 import optparse
 import os
 import re
 import shutil
+import subprocess
 import sys
 import zipfile
 
@@ -88,6 +90,9 @@ DENSITY_SPLITS = {
 }
 
 
+CONVERT_TO_WEBP = ['-mt', '-quiet', '-m', '6', '-q', '100', '-lossless', '-o']
+
+
 def _ParseArgs(args):
   """Parses command line options.
 
@@ -143,6 +148,10 @@ def _ParseArgs(args):
                     default='[]',
                     help='GN list of globs that say which xxxhdpi images to '
                          'include even when --exclude-xxxhdpi is set.')
+  parser.add_option('--convert-to-webp', action='store_true',
+                    help='Convert png files to webp format.')
+  parser.add_option('--webp-binary', default='',
+                    help='Path to the cwebp binary.')
 
   options, positional_args = parser.parse_args(args)
 
@@ -339,6 +348,10 @@ def _CreateExtractPredicate(dep_zips, exclude_xxxhdpi, xxxhdpi_whitelist):
 def _OnStaleMd5(package_command, options):
   with build_utils.TempDir() as temp_dir:
     if options.resource_zips:
+      pool = multiprocessing.pool.ThreadPool(10)
+      def ConvertImage(path):
+        args = [options.webp_binary, path] + CONVERT_TO_WEBP + [path]
+        subprocess.check_call(args)
       dep_zips = options.resource_zips
       extract_predicate = _CreateExtractPredicate(
           dep_zips, options.exclude_xxxhdpi, options.xxxhdpi_whitelist)
@@ -346,8 +359,17 @@ def _OnStaleMd5(package_command, options):
         subdir = os.path.join(temp_dir, os.path.basename(z))
         if os.path.exists(subdir):
           raise Exception('Resource zip name conflict: ' + os.path.basename(z))
-        if build_utils.ExtractAll(z, path=subdir, predicate=extract_predicate):
-          package_command += PackageArgsForExtractedZip(subdir)
+        extracted_files = build_utils.ExtractAll(
+            z, path=subdir, predicate=extract_predicate)
+        if extracted_files and options.convert_to_webp:
+          for f in extracted_files:
+            if f.endswith('.png') and not f.endswith('.9.png'):
+              pool.apply_async(ConvertImage, args=(f,))
+      pool.close()
+      pool.join()
+      for z in dep_zips:
+        subdir = os.path.join(temp_dir, os.path.basename(z))
+        package_command += PackageArgsForExtractedZip(subdir)
 
     build_utils.CheckOutput(
         package_command, print_stdout=False, print_stderr=False)
@@ -379,6 +401,9 @@ def main(args):
 
   input_strings = [options.exclude_xxxhdpi] + options.xxxhdpi_whitelist
   input_strings.extend(package_command)
+  if options.convert_to_webp:
+    # This is necessary to ensure conversion if the option is toggled.
+    input_strings.extend("convert_to_webp")
 
   # The md5_check.py doesn't count file path in md5 intentionally,
   # in order to repackage resources when assets' name changed, we need
