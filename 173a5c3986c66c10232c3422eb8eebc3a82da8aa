@@ -34,6 +34,24 @@
       "revId": "173a5c3986c66c10232c3422eb8eebc3a82da8aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb6414c2_0011a6aa",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 983,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-07-05T21:11:17Z",
+      "side": 1,
+      "message": "\u003e I agree but I think we should snap here as it matches SPV1\u0026cc behavior and would be a large project to change. For example, cc::Layer\u0027s scroll container bounds are integers too.\n\nHmm. Ok, please add an explanatory comment here then.\n\u003e \n\u003e I think this is where SPV1 does the equivalent snapping, though I didn\u0027t confirm this: CompositedLayerMapping::UpdateScrollingLayerGeometry\n\nIt\u0027s here:\n\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/layout/compositing/CompositedLayerMapping.cpp?type\u003dcs\u0026q\u003dUpdateScrollingLayerGeometry\u0026sq\u003dpackage:chromium\u0026l\u003d1453",
+      "parentUuid": "b67e51b7_b6881157",
+      "revId": "173a5c3986c66c10232c3422eb8eebc3a82da8aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
