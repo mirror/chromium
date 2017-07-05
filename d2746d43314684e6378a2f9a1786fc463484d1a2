@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0bb9bbd_2fdc662d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-05T17:26:30Z",
+      "side": 1,
+      "message": "Update description.",
+      "range": {
+        "startLine": 7,
+        "startChar": 56,
+        "endLine": 7,
+        "endChar": 68
+      },
+      "revId": "d2746d43314684e6378a2f9a1786fc463484d1a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d320eace_b3ed8dcf",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-05T17:26:30Z",
+      "side": 1,
+      "message": "nit: s/scroller_size_metrics_recorded/scroller_size_metrics_recorded_",
+      "range": {
+        "startLine": 219,
+        "startChar": 6,
+        "endLine": 219,
+        "endChar": 36
+      },
+      "revId": "d2746d43314684e6378a2f9a1786fc463484d1a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee977220_d731d164",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 2226,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-05T17:26:30Z",
+      "side": 1,
+      "message": "If this is not set it just means there are no scrollable areas right? We should probably execute the rest of the code still.",
+      "range": {
+        "startLine": 2226,
+        "startChar": 41,
+        "endLine": 2226,
+        "endChar": 58
+      },
+      "revId": "d2746d43314684e6378a2f9a1786fc463484d1a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d12e0cf_17e24c78",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 2227,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-05T17:26:30Z",
+      "side": 1,
+      "message": "This should never be true given that you call after updating all lifecycle phases, is it?",
+      "range": {
+        "startLine": 2227,
+        "startChar": 6,
+        "endLine": 2227,
+        "endChar": 61
+      },
+      "revId": "d2746d43314684e6378a2f9a1786fc463484d1a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ba271ac_119ccffd",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 2232,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-05T17:26:30Z",
+      "side": 1,
+      "message": "This won\u0027t include the root frame will it?",
+      "revId": "d2746d43314684e6378a2f9a1786fc463484d1a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e113a528_c5b349f4",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 2244,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-05T17:26:30Z",
+      "side": 1,
+      "message": "Reading over the code it seems to me that this condition will only be true for child frames (which are scrollable areas in the parent frame) - which we should still record like any other.",
+      "range": {
+        "startLine": 2244,
+        "startChar": 11,
+        "endLine": 2244,
+        "endChar": 62
+      },
+      "revId": "d2746d43314684e6378a2f9a1786fc463484d1a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
