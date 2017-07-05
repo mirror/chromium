@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df801295_d9038173",
+        "filename": "third_party/WebKit/Source/core/page/Page.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-05T20:14:16Z",
+      "side": 1,
+      "message": "super-nit: this newline is a little weird here",
+      "revId": "6d575ee1c7d2871ddba93a42fa5e15b97c89a22c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca0eee32_64ef4584",
+        "filename": "third_party/WebKit/Source/core/page/Page.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-05T20:14:16Z",
+      "side": 1,
+      "message": "nit: calling SettingsChanged when Settings hasn\u0027t actually changed seems confusing; maybe just factor out the code that happens in that case into a member function (\"NotifyPluginsChanged\" or something along those lines)",
+      "revId": "6d575ee1c7d2871ddba93a42fa5e15b97c89a22c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3b9d622_34d04907",
+        "filename": "third_party/WebKit/Source/web/WebKit.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-05T20:14:16Z",
+      "side": 1,
+      "message": "Maybe expand the command in WebKit.h to clarify that this causes a web-visible (and IIUC unspecced) change to |navigator.plugins| (and why we are choosing to do it anyway)?",
+      "revId": "6d575ee1c7d2871ddba93a42fa5e15b97c89a22c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
