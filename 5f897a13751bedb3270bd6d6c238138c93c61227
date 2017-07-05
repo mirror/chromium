@@ -1,0 +1,186 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46220e76_3b707fd6",
+        "filename": "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-05T18:21:28Z",
+      "side": 1,
+      "message": "#include gtest",
+      "revId": "5f897a13751bedb3270bd6d6c238138c93c61227",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2ffd667_521bab00",
+        "filename": "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-05T18:21:28Z",
+      "side": 1,
+      "message": "Can we pull out the hash computation so it isn\u0027t done for every loop iteration?",
+      "revId": "5f897a13751bedb3270bd6d6c238138c93c61227",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "effe1a6d_19bb8055",
+        "filename": "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-05T18:21:28Z",
+      "side": 1,
+      "message": "Can we put this in a separate file? The functionality is sufficient enough that I think it\u0027ll make things more readable.",
+      "range": {
+        "startLine": 34,
+        "startChar": 8,
+        "endLine": 34,
+        "endChar": 17
+      },
+      "revId": "5f897a13751bedb3270bd6d6c238138c93c61227",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a992bec_ed182ab1",
+        "filename": "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-05T18:21:28Z",
+      "side": 1,
+      "message": "nit: don\u0027t inline the constructor",
+      "revId": "5f897a13751bedb3270bd6d6c238138c93c61227",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "316982f2_d8b2b7b3",
+        "filename": "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-05T18:21:28Z",
+      "side": 1,
+      "message": "Might want to explain that this swaps out the global UKM recorder. I wouldn\u0027t be opposed to naming it as such either.",
+      "revId": "5f897a13751bedb3270bd6d6c238138c93c61227",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24b5175a_dbf5cf06",
+        "filename": "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-05T18:21:28Z",
+      "side": 1,
+      "message": "Number of UKMSources recorded.",
+      "revId": "5f897a13751bedb3270bd6d6c238138c93c61227",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34995b86_aaa34c88",
+        "filename": "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-05T18:21:28Z",
+      "side": 1,
+      "message": "Number of {UKMEntrys, UKMEntries} recorded. Pick which formality you care about :)",
+      "revId": "5f897a13751bedb3270bd6d6c238138c93c61227",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c76773d_018f8ff7",
+        "filename": "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-05T18:21:28Z",
+      "side": 1,
+      "message": "#include \u003cvector\u003e",
+      "revId": "5f897a13751bedb3270bd6d6c238138c93c61227",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3b2f7e1_a3a44051",
+        "filename": "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-05T18:21:28Z",
+      "side": 1,
+      "message": "#include \"base/compiler_specific.h\"",
+      "range": {
+        "startLine": 53,
+        "startChar": 43,
+        "endLine": 53,
+        "endChar": 61
+      },
+      "revId": "5f897a13751bedb3270bd6d6c238138c93c61227",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09385678_64d4c58e",
+        "filename": "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-05T18:21:28Z",
+      "side": 1,
+      "message": "Can you document these three methods? I\u0027m not quite sure what |event| or |name| is (admittedly I don\u0027t know this code very well).",
+      "revId": "5f897a13751bedb3270bd6d6c238138c93c61227",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
