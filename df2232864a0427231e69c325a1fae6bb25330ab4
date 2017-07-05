@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2ea4726_26175b83",
+        "filename": "cc/surfaces/surface.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-05T20:12:20Z",
+      "side": 1,
+      "message": "const",
+      "revId": "df2232864a0427231e69c325a1fae6bb25330ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea7ff5a1_cff742fe",
+        "filename": "cc/surfaces/surface_aggregator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-05T20:12:20Z",
+      "side": 1,
+      "message": "Oh, does this need to worry about being called after SurfaceAggregator is destroyed now, or no?",
+      "revId": "df2232864a0427231e69c325a1fae6bb25330ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b9ab509_e166f7db",
+        "filename": "cc/surfaces/surface_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-05T20:12:20Z",
+      "side": 1,
+      "message": "missed rewrap here",
+      "revId": "df2232864a0427231e69c325a1fae6bb25330ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
