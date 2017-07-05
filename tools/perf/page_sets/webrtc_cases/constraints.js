@@ -140,7 +140,14 @@ function createPeerConnection() {
   timestampPrev = 0;
   localPeerConnection = new RTCPeerConnection(null);
   remotePeerConnection = new RTCPeerConnection(null);
-  localPeerConnection.addStream(localStream);
+  localStream.getTracks().forEach(
+    function(track) {
+      localPeerConnection.addTrack(
+        track,
+        localStream
+      );
+    }
+  );
   console.log('localPeerConnection creating offer');
   localPeerConnection.onnegotiationeeded = function() {
     console.log('Negotiation needed - localPeerConnection');
@@ -150,27 +157,25 @@ function createPeerConnection() {
   };
   localPeerConnection.onicecandidate = function(e) {
     console.log('Candidate localPeerConnection');
-    if (e.candidate) {
-      remotePeerConnection.addIceCandidate(e.candidate)
-      .then(
-        onAddIceCandidateSuccess,
-        onAddIceCandidateError
-      );
-    }
+    remotePeerConnection.addIceCandidate(e.candidate)
+    .then(
+      onAddIceCandidateSuccess,
+      onAddIceCandidateError
+    );
   };
   remotePeerConnection.onicecandidate = function(e) {
     console.log('Candidate remotePeerConnection');
-    if (e.candidate) {
-      localPeerConnection.addIceCandidate(e.candidate)
-      .then(
-        onAddIceCandidateSuccess,
-        onAddIceCandidateError
-      );
-    }
+    localPeerConnection.addIceCandidate(e.candidate)
+    .then(
+      onAddIceCandidateSuccess,
+      onAddIceCandidateError
+    );
   };
-  remotePeerConnection.onaddstream = function(e) {
-    console.log('remotePeerConnection got stream');
-    remoteVideo.srcObject = e.stream;
+  remotePeerConnection.ontrack = function(e) {
+    if (remoteVideo.srcObject !== e.streams[0]) {
+      console.log('remotePeerConnection got stream');
+      remoteVideo.srcObject = e.streams[0];
+    }
   };
   localPeerConnection.createOffer().then(
     function(desc) {
