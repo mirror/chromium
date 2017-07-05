@@ -1,0 +1,163 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24113ac9_7455df6b",
+        "filename": "chrome/browser/android/ntp/most_visited_sites_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-05T06:29:43Z",
+      "side": 1,
+      "message": "nit: double \".\"",
+      "revId": "a2d2e0607640fad22e8533d06c0b5423c92f4c1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f61858ca_5e1f375e",
+        "filename": "chrome/browser/android/ntp/most_visited_sites_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-05T06:29:43Z",
+      "side": 1,
+      "message": "url is empty here, so this will just be an empty string, right?",
+      "revId": "a2d2e0607640fad22e8533d06c0b5423c92f4c1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4efb7fd0_c3694f3f",
+        "filename": "chrome/browser/android/ntp/most_visited_sites_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-05T06:29:43Z",
+      "side": 1,
+      "message": "Instead of having title_callback_ as a member, can we just bind it to OnTitleEntryFound here?\nThen we also wouldn\u0027t need the canceling stuff above, which I *think* is mostly here to protect title_callback_?",
+      "revId": "a2d2e0607640fad22e8533d06c0b5423c92f4c1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ef511b1_6c765ebe",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-05T06:29:43Z",
+      "side": 1,
+      "message": "nit: These two can move below the home page stuff.",
+      "revId": "a2d2e0607640fad22e8533d06c0b5423c92f4c1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a431f17_3fbbf0da",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-05T06:29:43Z",
+      "side": 1,
+      "message": "Hm. So if for some reason, adding the home page tile fails, we\u0027d end up in an endless loop here.\n(I think it\u0027ll work correctly right now, but a) it\u0027s not obvious from reading the code, especially with the async stuff going on, and b) it\u0027s fragile, some \"unrelated\" change elsewhere could break this.)\nCan we split this method up so it doesn\u0027t (indirectly) call itself?",
+      "revId": "a2d2e0607640fad22e8533d06c0b5423c92f4c1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b39e666_672aa543",
+        "filename": "components/ntp_tiles/most_visited_sites.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-05T06:29:43Z",
+      "side": 1,
+      "message": "nit: GetHomePageUrl (capital P) for consistency?",
+      "revId": "a2d2e0607640fad22e8533d06c0b5423c92f4c1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56e39e39_a60cad40",
+        "filename": "components/ntp_tiles/most_visited_sites.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-05T06:29:43Z",
+      "side": 1,
+      "message": "nit: QueryHomePageTitle? (all the other methods have HomePage in the name)",
+      "range": {
+        "startLine": 103,
+        "startChar": 28,
+        "endLine": 103,
+        "endChar": 0
+      },
+      "revId": "a2d2e0607640fad22e8533d06c0b5423c92f4c1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "407c6179_5cead21d",
+        "filename": "components/ntp_tiles/most_visited_sites.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-05T06:29:43Z",
+      "side": 1,
+      "message": "const string16\u0026",
+      "revId": "a2d2e0607640fad22e8533d06c0b5423c92f4c1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd55829b_51c48ad4",
+        "filename": "components/ntp_tiles/most_visited_sites.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-05T06:29:43Z",
+      "side": 1,
+      "message": "const \u0026",
+      "revId": "a2d2e0607640fad22e8533d06c0b5423c92f4c1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
