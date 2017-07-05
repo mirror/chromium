@@ -24,14 +24,31 @@
  *
  */
 
-#include "core/dom/ClientRect.h"
+#include "core/geometry/DOMRectList.h"
 
 namespace blink {
 
-ClientRect::ClientRect() {}
+DOMRectList::DOMRectList() {}
 
-ClientRect::ClientRect(const IntRect& rect) : rect_(rect) {}
+DOMRectList::DOMRectList(const Vector<FloatQuad>& quads) {
+  list_.ReserveInitialCapacity(quads.size());
+  for (const auto& quad : quads)
+    list_.push_back(DOMRect::fromFloatRect(quad.BoundingBox()));
+}
 
-ClientRect::ClientRect(const FloatRect& rect) : rect_(rect) {}
+unsigned DOMRectList::length() const {
+  return list_.size();
+}
+
+DOMRect* DOMRectList::item(unsigned index) {
+  if (index >= list_.size())
+    return nullptr;
+
+  return list_[index].Get();
+}
+
+DEFINE_TRACE(DOMRectList) {
+  visitor->Trace(list_);
+}
 
 }  // namespace blink

@@ -24,19 +24,53 @@
  *
  */
 
-// An old version of CSSOM View Module defines the ClientRect interface:
-// https://www.w3.org/TR/2011/WD-cssom-view-20110804/#the-clientrect-interface
+#ifndef DOMRectList_h
+#define DOMRectList_h
 
-// It has since been replaced by DOMRect in CSSOM View Module and
-// Geometry Interfaces Module:
-// https://dev.w3.org/csswg/cssom-view/#extension-to-the-element-interface
-// https://dev.w3.org/fxtf/geometry/#DOMRect
+#include "core/CoreExport.h"
+#include "core/geometry/DOMRect.h"
+#include "platform/bindings/ScriptWrappable.h"
+#include "platform/geometry/FloatQuad.h"
+#include "platform/heap/Handle.h"
 
-interface ClientRect {
-    readonly attribute float top;
-    readonly attribute float right;
-    readonly attribute float bottom;
-    readonly attribute float left;
-    readonly attribute float width;
-    readonly attribute float height;
+namespace blink {
+
+class CORE_EXPORT DOMRectList final : public GarbageCollected<DOMRectList>,
+                                      public ScriptWrappable {
+  DEFINE_WRAPPERTYPEINFO();
+
+ public:
+  static DOMRectList* Create() { return new DOMRectList; }
+  static DOMRectList* Create(const Vector<FloatQuad>& quads) {
+    return new DOMRectList(quads);
+  }
+
+  template <typename Rects>
+  static DOMRectList* Create(const Rects& rects) {
+    return new DOMRectList(rects);
+  }
+
+  unsigned length() const;
+  DOMRect* item(unsigned index);
+  // DOMRect* AnonymousIndexedGetter(unsigned index) { return item(index); }
+
+  DECLARE_TRACE();
+
+ private:
+  DOMRectList();
+
+  template <typename Rects>
+  explicit DOMRectList(const Rects& rects) {
+    list_.ReserveInitialCapacity(rects.size());
+    for (const auto& r : rects)
+      list_.push_back(DOMRect::fromFloatRect(FloatRect(r)));
+  }
+
+  explicit DOMRectList(const Vector<FloatQuad>&);
+
+  HeapVector<Member<DOMRect>> list_;
 };
+
+}  // namespace blink
+
+#endif  // DOMRectList_h
