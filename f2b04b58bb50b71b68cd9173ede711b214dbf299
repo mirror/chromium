@@ -16,6 +16,47 @@
       "revId": "f2b04b58bb50b71b68cd9173ede711b214dbf299",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b442acf9_5c0d4e7c",
+        "filename": "ash/shelf/shelf_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-05T19:44:11Z",
+      "side": 1,
+      "message": "Acknowledged; as an aside, I wonder why MenuHost sets auto_release_capture to false.",
+      "parentUuid": "16104441_97591dc1",
+      "revId": "f2b04b58bb50b71b68cd9173ede711b214dbf299",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "03c69c9f_f67ab3e3",
+        "filename": "chrome/browser/ui/ash/launcher/chrome_launcher_controller_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2205,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-05T19:44:11Z",
+      "side": 1,
+      "message": "Can you test that the context menu is showing after right-clicking, or can you change the test name and add a comment explaining the purpose of testing that right-clicking doesn\u0027t set a non-null drag_view? (it\u0027s not clear how this test is related to context menus, and really, it\u0027s not clear to me how this test checks the defective behavior reported in the bug or the mouse capture that is now manually released)",
+      "range": {
+        "startLine": 2205,
+        "startChar": 19,
+        "endLine": 2205,
+        "endChar": 20
+      },
+      "revId": "f2b04b58bb50b71b68cd9173ede711b214dbf299",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
