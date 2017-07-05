@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cbce9b5c_d282c5ac",
+        "filename": "cc/surfaces/compositor_frame_sink_support.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-07-05T19:37:54Z",
+      "side": 1,
+      "message": "I wasn\u0027t necessary since FrameSinkManager also has a SurfaceManager accessor.\nI left it there so that Surface didn\u0027t have to know about FrameSinkManager. It didn\u0027t matter that much since Surface knows about CompositorFrameSinkSupport anyway.\nIt\u0027s removed.",
+      "parentUuid": "029cb011_d460b811",
+      "revId": "a9420d4cb1ae052f263572ce84b82c0ba27a7918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf473aaf_90831af3",
         "filename": "cc/surfaces/frame_sink_manager.cc",
         "patchSetId": 20
@@ -33,6 +51,24 @@
       "revId": "a9420d4cb1ae052f263572ce84b82c0ba27a7918",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c02eefe_edfae9be",
+        "filename": "cc/surfaces/frame_sink_manager.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-07-05T19:37:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf473aaf_90831af3",
+      "revId": "a9420d4cb1ae052f263572ce84b82c0ba27a7918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "8f0df6ed_da6cc6e8",
+        "filename": "cc/surfaces/frame_sink_manager.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-07-05T19:37:54Z",
+      "side": 1,
+      "message": "Yes. Now that I realized copying the |frame_sink_id| fixes the bug, this line no longer exists.",
+      "parentUuid": "774fca40_e50bd8a6",
+      "revId": "a9420d4cb1ae052f263572ce84b82c0ba27a7918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1042718d_8c675d7f",
         "filename": "cc/surfaces/frame_sink_manager.cc",
         "patchSetId": 20
@@ -67,6 +121,24 @@
       "revId": "a9420d4cb1ae052f263572ce84b82c0ba27a7918",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72b818df_3e5d011e",
+        "filename": "cc/surfaces/frame_sink_manager.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-07-05T19:37:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1042718d_8c675d7f",
+      "revId": "a9420d4cb1ae052f263572ce84b82c0ba27a7918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "886426d1_07923408",
+        "filename": "cc/surfaces/frame_sink_manager.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-07-05T19:37:54Z",
+      "side": 1,
+      "message": "I think SurfaceSequence is mostly legacy stuff and will be gone at some point in the future? It shouldn\u0027t be part of the mojo API because it shouldn\u0027t exist in the future. I removed them and had all existing callsites getting the SurfaceManager instead.",
+      "parentUuid": "5914121b_3078d254",
+      "revId": "a9420d4cb1ae052f263572ce84b82c0ba27a7918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a64b58a0_4622db58",
         "filename": "cc/surfaces/frame_sink_manager.cc",
         "patchSetId": 20
@@ -101,6 +191,24 @@
       "revId": "a9420d4cb1ae052f263572ce84b82c0ba27a7918",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecde0ef7_aea8fd61",
+        "filename": "cc/surfaces/frame_sink_manager.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-07-05T19:37:54Z",
+      "side": 1,
+      "message": "It\u0027s removed since it won\u0027t be part of the mojo API.",
+      "parentUuid": "a64b58a0_4622db58",
+      "revId": "a9420d4cb1ae052f263572ce84b82c0ba27a7918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "c5496f53_fb328caf",
+        "filename": "cc/surfaces/frame_sink_manager.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-07-05T19:37:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6335402a_ee516ffe",
+      "revId": "a9420d4cb1ae052f263572ce84b82c0ba27a7918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2fdb7b1_42130c07",
         "filename": "cc/surfaces/frame_sink_manager.h",
         "patchSetId": 20
@@ -135,6 +261,24 @@
       "revId": "a9420d4cb1ae052f263572ce84b82c0ba27a7918",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da957705_a27fb33f",
+        "filename": "cc/surfaces/frame_sink_manager.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-07-05T19:37:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2fdb7b1_42130c07",
+      "revId": "a9420d4cb1ae052f263572ce84b82c0ba27a7918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "1e28d563_ef1e4099",
+        "filename": "cc/surfaces/frame_sink_manager.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-07-05T19:37:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87cca38b_d9ca0752",
+      "revId": "a9420d4cb1ae052f263572ce84b82c0ba27a7918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bdcbc14e_37a53c15",
         "filename": "cc/surfaces/surface_manager.h",
         "patchSetId": 20
@@ -169,6 +331,24 @@
       "revId": "a9420d4cb1ae052f263572ce84b82c0ba27a7918",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "261d303b_7e57f620",
+        "filename": "cc/surfaces/surface_manager.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-07-05T19:37:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bdcbc14e_37a53c15",
+      "revId": "a9420d4cb1ae052f263572ce84b82c0ba27a7918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "4dede2bc_7e5352df",
+        "filename": "cc/surfaces/surface_manager.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-07-05T19:37:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a529a90c_1049280f",
+      "revId": "a9420d4cb1ae052f263572ce84b82c0ba27a7918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8802b64e_5c0305dc",
         "filename": "cc/surfaces/surface_manager.h",
         "patchSetId": 20
@@ -203,6 +401,24 @@
       "revId": "a9420d4cb1ae052f263572ce84b82c0ba27a7918",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60dcb8e9_9c3ef3a3",
+        "filename": "cc/surfaces/surface_manager.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-07-05T19:37:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8802b64e_5c0305dc",
+      "revId": "a9420d4cb1ae052f263572ce84b82c0ba27a7918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "26cdba23_668647e0",
+        "filename": "cc/test/test_layer_tree_frame_sink.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-07-05T19:37:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09770a7a_c5b0a199",
+      "revId": "a9420d4cb1ae052f263572ce84b82c0ba27a7918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30aa1025_99f90dc1",
         "filename": "content/browser/renderer_host/compositor_impl_android.cc",
         "patchSetId": 20
@@ -237,6 +471,24 @@
       "revId": "a9420d4cb1ae052f263572ce84b82c0ba27a7918",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a66e7e1_285f5443",
+        "filename": "content/browser/renderer_host/compositor_impl_android.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-07-05T19:37:54Z",
+      "side": 1,
+      "message": "I changed the field names to more appropriately reflect their types.",
+      "parentUuid": "30aa1025_99f90dc1",
+      "revId": "a9420d4cb1ae052f263572ce84b82c0ba27a7918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -257,6 +509,24 @@
     },
     {
       "key": {
+        "uuid": "efaa3665_91bafa5a",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 3411,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-07-05T19:37:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40a524d2_85c23f22",
+      "revId": "a9420d4cb1ae052f263572ce84b82c0ba27a7918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4e9dd01_6d02a944",
         "filename": "content/renderer/android/synchronous_layer_tree_frame_sink.cc",
         "patchSetId": 20
@@ -271,6 +541,24 @@
       "revId": "a9420d4cb1ae052f263572ce84b82c0ba27a7918",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e7338f1_5904f360",
+        "filename": "content/renderer/android/synchronous_layer_tree_frame_sink.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-07-05T19:37:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4e9dd01_6d02a944",
+      "revId": "a9420d4cb1ae052f263572ce84b82c0ba27a7918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -291,6 +579,24 @@
     },
     {
       "key": {
+        "uuid": "47789a35_000cf3f6",
+        "filename": "ui/android/delegated_frame_host_android.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-07-05T19:37:54Z",
+      "side": 1,
+      "message": "I reverted it to take a SurfaceManager* as we don\u0027t want to plumb reference_factory() to FSM",
+      "parentUuid": "451663fa_a655b164",
+      "revId": "a9420d4cb1ae052f263572ce84b82c0ba27a7918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4cf51534_646775ee",
         "filename": "ui/android/delegated_frame_host_android.h",
         "patchSetId": 20
@@ -305,6 +611,24 @@
       "revId": "a9420d4cb1ae052f263572ce84b82c0ba27a7918",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b148ef7_fd6dbe7e",
+        "filename": "ui/android/delegated_frame_host_android.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-07-05T19:37:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4cf51534_646775ee",
+      "revId": "a9420d4cb1ae052f263572ce84b82c0ba27a7918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -325,6 +649,24 @@
     },
     {
       "key": {
+        "uuid": "6552fda4_9cd0760c",
+        "filename": "ui/compositor/compositor.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-07-05T19:37:54Z",
+      "side": 1,
+      "message": "I added a TODO since we\u0027re planning to merge FrameSinkManager into FrameSinkManagerImpl.",
+      "parentUuid": "3dcc37ad_39737d48",
+      "revId": "a9420d4cb1ae052f263572ce84b82c0ba27a7918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c4d599c_290535dc",
         "filename": "ui/compositor/test/in_process_context_factory.h",
         "patchSetId": 20
@@ -342,6 +684,24 @@
     },
     {
       "key": {
+        "uuid": "c3036151_61d3bc0f",
+        "filename": "ui/compositor/test/in_process_context_factory.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-07-05T19:37:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c4d599c_290535dc",
+      "revId": "a9420d4cb1ae052f263572ce84b82c0ba27a7918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "716bc341_284bc999",
         "filename": "ui/compositor/test/in_process_context_factory.h",
         "patchSetId": 20
@@ -356,6 +716,24 @@
       "revId": "a9420d4cb1ae052f263572ce84b82c0ba27a7918",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5d02bee_acd269ed",
+        "filename": "ui/compositor/test/in_process_context_factory.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-07-05T19:37:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "716bc341_284bc999",
+      "revId": "a9420d4cb1ae052f263572ce84b82c0ba27a7918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

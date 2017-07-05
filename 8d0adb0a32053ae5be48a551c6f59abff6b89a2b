@@ -16,6 +16,24 @@
       "revId": "8d0adb0a32053ae5be48a551c6f59abff6b89a2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d2f80d0_63c20a5a",
+        "filename": "cc/surfaces/surface_manager.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-07-05T19:37:54Z",
+      "side": 0,
+      "message": "It probably got lost while I moved things around. It\u0027s restored now.",
+      "parentUuid": "620d042c_2df9a6c3",
+      "revId": "8d0adb0a32053ae5be48a551c6f59abff6b89a2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

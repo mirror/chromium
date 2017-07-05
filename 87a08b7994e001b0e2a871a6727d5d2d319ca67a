@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "539c98e5_2c07f971",
+        "filename": "cc/surfaces/compositor_frame_sink_support.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-07-05T19:37:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2609d1c8_299bd5ed",
+      "revId": "87a08b7994e001b0e2a871a6727d5d2d319ca67a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb8aa6ba_3dec34e6",
         "filename": "cc/surfaces/frame_sink_manager.cc",
         "patchSetId": 17
@@ -33,6 +51,24 @@
       "revId": "87a08b7994e001b0e2a871a6727d5d2d319ca67a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07f73ba3_8ef756c7",
+        "filename": "cc/surfaces/frame_sink_manager.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-07-05T19:37:54Z",
+      "side": 1,
+      "message": "This method no longer exists.",
+      "parentUuid": "fb8aa6ba_3dec34e6",
+      "revId": "87a08b7994e001b0e2a871a6727d5d2d319ca67a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a6e4a8fc_1568e50c",
+        "filename": "cc/surfaces/frame_sink_manager.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-07-05T19:37:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1101735_5324aa4a",
+      "revId": "87a08b7994e001b0e2a871a6727d5d2d319ca67a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "297d5a80_97f05d66",
         "filename": "cc/surfaces/frame_sink_manager.h",
         "patchSetId": 17
@@ -67,6 +121,24 @@
       "revId": "87a08b7994e001b0e2a871a6727d5d2d319ca67a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f34552c0_a337bfaf",
+        "filename": "cc/surfaces/frame_sink_manager.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-07-05T19:37:54Z",
+      "side": 1,
+      "message": "This method no longer exists.",
+      "parentUuid": "297d5a80_97f05d66",
+      "revId": "87a08b7994e001b0e2a871a6727d5d2d319ca67a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "f9424a88_08e0dcdb",
+        "filename": "cc/surfaces/frame_sink_manager.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-07-05T19:37:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a126d954_c7dde5d7",
+      "revId": "87a08b7994e001b0e2a871a6727d5d2d319ca67a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b441e856_fd6ea533",
         "filename": "cc/surfaces/frame_sink_manager.h",
         "patchSetId": 17
@@ -101,6 +191,24 @@
       "revId": "87a08b7994e001b0e2a871a6727d5d2d319ca67a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71123c8e_1f1d1da4",
+        "filename": "cc/surfaces/frame_sink_manager.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-07-05T19:37:54Z",
+      "side": 1,
+      "message": "It\u0027s not strategically placed below the 2 maps. I moved it to be the first member.",
+      "parentUuid": "b441e856_fd6ea533",
+      "revId": "87a08b7994e001b0e2a871a6727d5d2d319ca67a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "bf784440_223107a1",
+        "filename": "cc/surfaces/surface_manager.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-07-05T19:37:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9990ec70_dbdb03f8",
+      "revId": "87a08b7994e001b0e2a871a6727d5d2d319ca67a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd76da54_202ccb55",
         "filename": "cc/surfaces/surface_manager.h",
         "patchSetId": 17
@@ -135,6 +261,24 @@
       "revId": "87a08b7994e001b0e2a871a6727d5d2d319ca67a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f66c3e9b_1fa3a3c5",
+        "filename": "cc/surfaces/surface_manager.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-07-05T19:37:54Z",
+      "side": 1,
+      "message": "It returns a const ref now.",
+      "parentUuid": "dd76da54_202ccb55",
+      "revId": "87a08b7994e001b0e2a871a6727d5d2d319ca67a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "30f4f3a1_eac0f205",
+        "filename": "cc/surfaces/surface_manager.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-07-05T19:37:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a11a41ca_47b03c85",
+      "revId": "87a08b7994e001b0e2a871a6727d5d2d319ca67a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6d6f036_7ad9d5e9",
         "filename": "cc/surfaces/surface_manager.h",
         "patchSetId": 17
@@ -169,6 +331,24 @@
       "revId": "87a08b7994e001b0e2a871a6727d5d2d319ca67a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "190e2e97_68af8664",
+        "filename": "cc/surfaces/surface_manager.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-07-05T19:37:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6d6f036_7ad9d5e9",
+      "revId": "87a08b7994e001b0e2a871a6727d5d2d319ca67a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "fa6dc6a6_7b53dc6d",
+        "filename": "cc/test/test_layer_tree_frame_sink.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-07-05T19:37:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d9419ce_b5c17af4",
+      "revId": "87a08b7994e001b0e2a871a6727d5d2d319ca67a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5eb49d41_8f17495c",
         "filename": "content/browser/browser_main_loop.h",
         "patchSetId": 17
@@ -203,6 +401,24 @@
       "revId": "87a08b7994e001b0e2a871a6727d5d2d319ca67a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7b32cab_54e1b5c5",
+        "filename": "content/browser/browser_main_loop.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-07-05T19:37:54Z",
+      "side": 1,
+      "message": "The FrameSinkManager* here is passed into DirectLayerTreeFrameSink to create a CompositorFrameSinkSupport and thus can\u0027t be replaced with FrameSinkManagerImpl.",
+      "parentUuid": "5eb49d41_8f17495c",
+      "revId": "87a08b7994e001b0e2a871a6727d5d2d319ca67a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
