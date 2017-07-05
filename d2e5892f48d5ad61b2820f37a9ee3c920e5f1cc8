@@ -25,6 +25,213 @@
     },
     {
       "key": {
+        "uuid": "defbbf53_4c2a2dce",
+        "filename": "build/android/gyp/package_resources.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-05T20:26:02Z",
+      "side": 1,
+      "message": "nit: prefix with _. Perhaps call also suffix with \"_ARGS\"",
+      "range": {
+        "startLine": 93,
+        "startChar": 0,
+        "endLine": 93,
+        "endChar": 15
+      },
+      "revId": "d2e5892f48d5ad61b2820f37a9ee3c920e5f1cc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41484c6b_9948c29b",
+        "filename": "build/android/gyp/package_resources.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-05T20:26:02Z",
+      "side": 1,
+      "message": "nit: convert_image() for nested functions",
+      "range": {
+        "startLine": 352,
+        "startChar": 10,
+        "endLine": 352,
+        "endChar": 22
+      },
+      "revId": "d2e5892f48d5ad61b2820f37a9ee3c920e5f1cc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf451799_4a0542c5",
+        "filename": "build/android/gyp/package_resources.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-05T20:26:02Z",
+      "side": 1,
+      "message": "Using .png as an extension for the webp is confusing. Could you change the extension to webp (and delete the input file once it\u0027s done)?",
+      "range": {
+        "startLine": 353,
+        "startChar": 65,
+        "endLine": 353,
+        "endChar": 67
+      },
+      "revId": "d2e5892f48d5ad61b2820f37a9ee3c920e5f1cc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "449bcbba_77ef8b3a",
+        "filename": "build/android/gyp/package_resources.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-05T20:26:02Z",
+      "side": 1,
+      "message": "I think this would be easier if all the webp were moved into a helper.\n\nHow about collecting all pngs when extracting, then passing them to a helper? e.g.:\n\npng_paths \u003d []\nfor ....:\n  png_paths.extend(f for f in extracted_files\n                   if f.endswith(\u0027.png\u0027) and not f.endswith(\u0027.9.png\u0027))\n\nif png_paths and options.convert_to_webp:\n  _ConvertToWebp(png_paths)",
+      "range": {
+        "startLine": 364,
+        "startChar": 11,
+        "endLine": 364,
+        "endChar": 26
+      },
+      "revId": "d2e5892f48d5ad61b2820f37a9ee3c920e5f1cc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e0f7da3_7dd3cb5e",
+        "filename": "build/android/gyp/package_resources.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-05T20:26:02Z",
+      "side": 1,
+      "message": "Before this was only being added when ExtractAll returned an empty list.",
+      "range": {
+        "startLine": 372,
+        "startChar": 8,
+        "endLine": 372,
+        "endChar": 23
+      },
+      "revId": "d2e5892f48d5ad61b2820f37a9ee3c920e5f1cc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "987a68c4_352deaed",
+        "filename": "build/config/android/internal_rules.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 1637,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-05T20:26:02Z",
+      "side": 1,
+      "message": "Nit: add this dep only when convert_to_webp is set. I\u0027d just move it down into the args+\u003d block.",
+      "range": {
+        "startLine": 1637,
+        "startChar": 11,
+        "endLine": 1637,
+        "endChar": 15
+      },
+      "revId": "d2e5892f48d5ad61b2820f37a9ee3c920e5f1cc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1532fea1_95498e83",
+        "filename": "build/config/android/internal_rules.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 1719,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-05T20:26:02Z",
+      "side": 1,
+      "message": "nit: pass root_build_dir as 2nd param",
+      "range": {
+        "startLine": 1719,
+        "startChar": 12,
+        "endLine": 1719,
+        "endChar": 23
+      },
+      "revId": "d2e5892f48d5ad61b2820f37a9ee3c920e5f1cc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0999090a_f8e296df",
+        "filename": "build/config/android/rules.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 2228,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-05T20:26:02Z",
+      "side": 1,
+      "message": "Add template docs for this parameter in the comments above the template.",
+      "range": {
+        "startLine": 2228,
+        "startChar": 32,
+        "endLine": 2228,
+        "endChar": 47
+      },
+      "revId": "d2e5892f48d5ad61b2820f37a9ee3c920e5f1cc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "970f1981_146da45d",
+        "filename": "chrome/android/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 864,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-05T20:26:02Z",
+      "side": 1,
+      "message": "If you want to do the enabling in a follow-up, I\u0027d prefer just leaving this out entirely for now.",
+      "range": {
+        "startLine": 863,
+        "startChar": 0,
+        "endLine": 864,
+        "endChar": 35
+      },
+      "revId": "d2e5892f48d5ad61b2820f37a9ee3c920e5f1cc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "93514365_dda40a9f",
         "filename": "third_party/libwebp/BUILD.gn",
         "patchSetId": 2
@@ -72,6 +279,24 @@
       "side": 1,
       "message": "I had seen imagediff:\n\"//tools/imagediff($host_toolchain)\", [1].\nand the note in that gn file for symlinks is for compatibility with gyp [2] which I don\u0027t think should be an issue.\n\n[1] https://cs.chromium.org/chromium/src/BUILD.gn?rcl\u003d3c79d018fb4953a250235e6bcbafe7a18d52dc52\u0026l\u003d195\n[2] https://cs.chromium.org/chromium/src/tools/imagediff/BUILD.gn?rcl\u003d3c79d018fb4953a250235e6bcbafe7a18d52dc52\u0026l\u003d27",
       "parentUuid": "9de9879c_4975b17a",
+      "revId": "d2e5892f48d5ad61b2820f37a9ee3c920e5f1cc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "04ae73d6_183b0f77",
+        "filename": "third_party/libwebp/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-05T20:26:02Z",
+      "side": 1,
+      "message": "Yeah, in this case it shouldn\u0027t be necessary to create a symlink. Doing so also make the file not work on Windows, which should be avoided when possible.\n\nUse \"//$target($host_toolchain)\" for the dep, and to get the path, use:\nget_label_info(\"//$target($host_toolchain)\", \"root_out_dir\") + \"/cwebp\"",
+      "parentUuid": "7b056ddf_a8b44b01",
       "revId": "d2e5892f48d5ad61b2820f37a9ee3c920e5f1cc8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
