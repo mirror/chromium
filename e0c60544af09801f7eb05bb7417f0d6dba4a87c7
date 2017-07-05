@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c9c37bd_b54b510c",
+        "filename": "ui/events/devices/DEPS",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-05T18:58:46Z",
+      "side": 1,
+      "message": "sadrul asked for specific_include_rules, which can also limit the files that the rule applies to",
+      "revId": "e0c60544af09801f7eb05bb7417f0d6dba4a87c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
