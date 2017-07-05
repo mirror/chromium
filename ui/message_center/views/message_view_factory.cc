@@ -43,14 +43,12 @@ MessageView* MessageViewFactory::Create(MessageCenterController* controller,
         notification_view = new NotificationView(controller, notification);
       break;
     }
-#if defined(TOOLKIT_VIEWS) && !defined(OS_MACOSX)
     case NOTIFICATION_TYPE_CUSTOM:
       notification_view =
           notification.delegate()
               ->CreateCustomMessageView(controller, notification)
               .release();
       break;
-#endif
     default:
       // If the caller asks for an unrecognized kind of view (entirely possible
       // if an application is running on an older version of this code that
