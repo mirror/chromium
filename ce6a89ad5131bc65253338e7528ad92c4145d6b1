@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2222e9a_df404280",
+        "filename": "content/renderer/media/media_factory.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-05T16:25:20Z",
+      "side": 1,
+      "message": "Could you remove the condition and make the DCHECK() conditional in the implementation? Going forward that if() will be always true but will unlikely be cleaned up. Alternatively, you can replace it with `if (base::FeatureList::IsEnabled(media::kNewRemotePlaybackPipeline))`",
+      "revId": "ce6a89ad5131bc65253338e7528ad92c4145d6b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fa8f296_8252130f",
+        "filename": "media/remoting/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-05T16:25:20Z",
+      "side": 1,
+      "message": "I thought that only media/blink/ could deal with Blink code. Shouldn\u0027t you add an extra level of layering here?",
+      "revId": "ce6a89ad5131bc65253338e7528ad92c4145d6b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
