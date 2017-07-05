@@ -15,16 +15,23 @@ namespace ios {
 
 ScopedCriticalAction::ScopedCriticalAction()
     : core_(new ScopedCriticalAction::Core()) {
+  core_->StartBackgroundTask();
 }
 
 ScopedCriticalAction::~ScopedCriticalAction() {
   core_->EndBackgroundTask();
 }
 
+ScopedCriticalAction::Core::Core() = default;
+
+ScopedCriticalAction::Core::~Core() {
+  DCHECK_EQ(background_task_id_, UIBackgroundTaskInvalid);
+}
+
 // This implementation calls |beginBackgroundTaskWithExpirationHandler:| when
 // instantiated and |endBackgroundTask:| when destroyed, creating a scope whose
 // execution will continue (temporarily) even after the app is backgrounded.
-ScopedCriticalAction::Core::Core() {
+void ScopedCriticalAction::Core::StartBackgroundTask() {
   scoped_refptr<ScopedCriticalAction::Core> core = this;
   background_task_id_ = [[UIApplication sharedApplication]
       beginBackgroundTaskWithExpirationHandler:^{
@@ -40,10 +47,6 @@ ScopedCriticalAction::Core::Core() {
   } else {
     VLOG(3) << "Beginning background task with id " << background_task_id_;
   }
-}
-
-ScopedCriticalAction::Core::~Core() {
-  DCHECK_EQ(background_task_id_, UIBackgroundTaskInvalid);
 }
 
 void ScopedCriticalAction::Core::EndBackgroundTask() {
