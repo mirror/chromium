@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ad7a72a_9075e30f",
+        "filename": "services/ui/public/cpp/gpu/gpu.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-07-05T18:03:03Z",
+      "side": 1,
+      "message": "Should we do this on gpu_ ?",
+      "revId": "e86bf2f4c3d85448e8200d2c2683f6e9ab05f1c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
