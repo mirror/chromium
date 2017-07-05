@@ -22,6 +22,30 @@
       "revId": "4c626c53509997a7b65151b1c9ed2d4b158ab766",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40ee155e_fe354e7c",
+        "filename": "media/capture/video/video_capture_device_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-07-05T18:10:21Z",
+      "side": 0,
+      "message": "\u003e I assume you created this CL based on this TODO.\n\u003e It may be that things have shifted around since this TODO was created. \n\u003e The classes SharedMemoryBufferHandle and VideoCaptureBufferHandle are currently not specific to any frame format, and I don\u0027t think it is a good idea to make them specific to I420.\n\nMy bad. I created this CL assuming SharedMemoryBufferHandle to be specific to I420.\nI will drop this CL.\n\n\u003e I would be okay with simply deleting this TODO.\n\u003e \n\u003e If we really want to move this logic out of VideoCaptureDeviceClient, IMO it should go to some utility class that is specific to I420.",
+      "parentUuid": "5853dfd2_73c099d8",
+      "range": {
+        "startLine": 445,
+        "startChar": 0,
+        "endLine": 446,
+        "endChar": 64
+      },
+      "revId": "4c626c53509997a7b65151b1c9ed2d4b158ab766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
