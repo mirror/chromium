@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0416469_a8745701",
+        "filename": "third_party/WebKit/Source/platform/Language.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-05T19:03:03Z",
+      "side": 1,
+      "message": "super-nit: \"Platform\" being capitalized here is a little weird (I\u0027d have thought about it as \"the default language of this platform\" as opposed to being the language of the Platform object itself. No strong feelings, though.",
+      "revId": "187a67665f969364a68aaa1976b12d4407b51569",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

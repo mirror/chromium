@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2128d2f8_4e64c46c",
+        "filename": "third_party/WebKit/Source/platform/Language.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-05T19:03:03Z",
+      "side": 1,
+      "message": "nit: we generally leave the anonymous namespace inside the main namespace (here, \"namespace blink\")",
+      "revId": "4308b5de869aed4d046eabb92d6eeb133c5002fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35e073d3_8f12f492",
+        "filename": "third_party/WebKit/Source/platform/Language.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-05T19:03:03Z",
+      "side": 1,
+      "message": "Remove or update this comment to indicate that it\u0027s now expected to be a static string.\n\nDCHECK(g_platform_language-\u003eImpl()-\u003eIsStatic())\n    \u003c\u003c \"global language string is used from multiple threads, and must be static\";\n\nin PlatformLanguage might be reasonable as a sanity check",
+      "revId": "4308b5de869aed4d046eabb92d6eeb133c5002fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d96aa3b5_e3ec2eb0",
+        "filename": "third_party/WebKit/Source/platform/Language.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-05T19:03:03Z",
+      "side": 1,
+      "message": "nit: might as well DEFINE_STATIC_LOCAL since this can only be called from the main thread?",
+      "revId": "4308b5de869aed4d046eabb92d6eeb133c5002fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a4ecf31_dac35a16",
+        "filename": "third_party/WebKit/Source/platform/Language.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-05T19:03:03Z",
+      "side": 1,
+      "message": "super-nit: \"const AtomicString\"",
+      "revId": "4308b5de869aed4d046eabb92d6eeb133c5002fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f5a9f21_a6ee9b5d",
+        "filename": "third_party/WebKit/Source/platform/Language.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-05T19:03:03Z",
+      "side": 1,
+      "message": "nit: This is namespace blink; \"blink::\" qualifier is unnecessary",
+      "revId": "4308b5de869aed4d046eabb92d6eeb133c5002fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da7801a3_bc041521",
+        "filename": "third_party/WebKit/Source/platform/Language.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-05T19:03:03Z",
+      "side": 1,
+      "message": "super-nit: no need for this null check; it\u0027s the only way of setting this value, and it\u0027s always set to the same thing anyhow",
+      "revId": "4308b5de869aed4d046eabb92d6eeb133c5002fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
