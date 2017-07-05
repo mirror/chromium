@@ -123,6 +123,24 @@
       "revId": "ad9351d8001ebf91649a87e9d6e9bc4de5e2ef24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b62d9ac_12de4660",
+        "filename": "components/ntp_snippets/content_suggestions_metrics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-05T13:56:59Z",
+      "side": 1,
+      "message": "I\u0027d argue the UI has to do the exact same logic anyway to populate the \"visible\" flags. But we\u0027ve bikeshedded this long enough :)\nCan you put a comment in the header about the meaning of \"visible\" though? Otherwise it\u0027s easy to get it wrong (-\u003e iOS!)",
+      "parentUuid": "032894b3_65a8a3e9",
+      "revId": "ad9351d8001ebf91649a87e9d6e9bc4de5e2ef24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
