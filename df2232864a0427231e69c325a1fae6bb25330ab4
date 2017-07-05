@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "98d590a5_09a47b2e",
+        "filename": "cc/surfaces/surface_aggregator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-05T20:14:34Z",
+      "side": 1,
+      "message": "Oh, I see the Bind is using WeakPtr, so nvm we good. To make sure I get it tho:\n\nThe |Surface| can be destroyed before the Unref happens. And also, the |SurfaceClient| may be destroyed *without* |Surface| being destroyed before the Unref happens? IOW these two can each independently be destroyed (in any order)?",
+      "parentUuid": "ea7ff5a1_cff742fe",
+      "revId": "df2232864a0427231e69c325a1fae6bb25330ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5b9ab509_e166f7db",
         "filename": "cc/surfaces/surface_manager.h",
         "patchSetId": 3
