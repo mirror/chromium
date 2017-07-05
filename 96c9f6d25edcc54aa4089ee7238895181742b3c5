@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22de92f2_5883fe28",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-05T10:59:51Z",
+      "side": 1,
+      "message": "Or even construct this directly in DownloadThumbnailRequest.",
+      "range": {
+        "startLine": 86,
+        "startChar": 8,
+        "endLine": 86,
+        "endChar": 50
+      },
+      "revId": "96c9f6d25edcc54aa4089ee7238895181742b3c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

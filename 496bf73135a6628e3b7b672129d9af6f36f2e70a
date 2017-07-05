@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "2178c4a1_7cd6ae3d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticleViewHolder.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-05T10:59:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "44818e82_b608bee7",
+      "range": {
+        "startLine": 363,
+        "startChar": 12,
+        "endLine": 363,
+        "endChar": 29
+      },
+      "revId": "496bf73135a6628e3b7b672129d9af6f36f2e70a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89ebef74_c231bbe2",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticleViewHolder.java",
         "patchSetId": 4
