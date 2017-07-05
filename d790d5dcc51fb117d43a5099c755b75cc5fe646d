@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6c0f99ca_85aee531",
+        "filename": "chrome/browser/extensions/api/dial/dial_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-07-05T22:35:30Z",
+      "side": 1,
+      "message": "I don\u0027t think it would be too difficult, though it would mean adding a mutex around network id access.  I can add another patch after this one to explore that option.",
+      "parentUuid": "62cbc72e_7ddd4600",
+      "revId": "d790d5dcc51fb117d43a5099c755b75cc5fe646d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5097f140_15de94b4",
         "filename": "chrome/common/extensions/api/dial.idl",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "d790d5dcc51fb117d43a5099c755b75cc5fe646d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebdba0b3_83060829",
+        "filename": "chrome/common/extensions/api/dial.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-07-05T22:35:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5097f140_15de94b4",
+      "revId": "d790d5dcc51fb117d43a5099c755b75cc5fe646d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6686106d_d465d809",
+        "filename": "chrome/test/data/extensions/api_test/dial/experimental/get_network_id.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-07-05T22:35:30Z",
+      "side": 1,
+      "message": "Same comment about a change-detector test.  LMK what you think.",
+      "parentUuid": "f18ae1d2_34869e4f",
+      "revId": "d790d5dcc51fb117d43a5099c755b75cc5fe646d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4569ee69_931842c5",
         "filename": "chrome/test/data/extensions/api_test/dial/experimental/network_id_changed.js",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2017-06-26T23:26:28Z",
       "side": 1,
       "message": "Can you assert the exact ids computed for networkIds[0] and networkIds[1]?",
+      "revId": "d790d5dcc51fb117d43a5099c755b75cc5fe646d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72f0638c_d6982695",
+        "filename": "chrome/test/data/extensions/api_test/dial/experimental/network_id_changed.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-07-05T22:35:30Z",
+      "side": 1,
+      "message": "I feel like that would be a bit of a change-detector test, but I can if you feel it\u0027s better.",
+      "parentUuid": "4569ee69_931842c5",
       "revId": "d790d5dcc51fb117d43a5099c755b75cc5fe646d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
