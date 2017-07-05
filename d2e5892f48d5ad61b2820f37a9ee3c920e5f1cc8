@@ -57,6 +57,24 @@
       "revId": "d2e5892f48d5ad61b2820f37a9ee3c920e5f1cc8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7b056ddf_a8b44b01",
+        "filename": "third_party/libwebp/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1002219
+      },
+      "writtenOn": "2017-07-05T19:43:20Z",
+      "side": 1,
+      "message": "I had seen imagediff:\n\"//tools/imagediff($host_toolchain)\", [1].\nand the note in that gn file for symlinks is for compatibility with gyp [2] which I don\u0027t think should be an issue.\n\n[1] https://cs.chromium.org/chromium/src/BUILD.gn?rcl\u003d3c79d018fb4953a250235e6bcbafe7a18d52dc52\u0026l\u003d195\n[2] https://cs.chromium.org/chromium/src/tools/imagediff/BUILD.gn?rcl\u003d3c79d018fb4953a250235e6bcbafe7a18d52dc52\u0026l\u003d27",
+      "parentUuid": "9de9879c_4975b17a",
+      "revId": "d2e5892f48d5ad61b2820f37a9ee3c920e5f1cc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
