@@ -760,6 +760,8 @@ BLACKLISTED_DEVICES = [
     'build152-m1',  # crbug.com/736593
     # All Linux perf bots (crbug.com/732463)
     'build148-m1', 'build149-m1', 'build150-m1', 'build151-m1', 'build152-m1',
+    # crbug.com/739471
+    'build180-b4',
 ]
 
 
