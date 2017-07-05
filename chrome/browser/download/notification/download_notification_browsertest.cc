@@ -488,7 +488,7 @@ IN_PROC_BROWSER_TEST_F(DownloadNotificationTest, DownloadDangerousFile) {
   NotificationAddObserver notification_add_observer;
 
   // Cicks the "keep" button.
-  notification()->ButtonClick(1);  // 2nd button: "Keep"
+  notification()->delegate()->ButtonClick(1);  // 2nd button: "Keep"
   // Clicking makes the message center closed.
   GetMessageCenter()->SetVisibility(message_center::VISIBILITY_TRANSIENT);
 
@@ -540,7 +540,7 @@ IN_PROC_BROWSER_TEST_F(DownloadNotificationTest, DiscardDangerousFile) {
   NotificationRemoveObserver notification_close_observer;
 
   // Clicks the "Discard" button.
-  notification()->ButtonClick(0);  // 1st button: "Discard"
+  notification()->delegate()->ButtonClick(0);  // 1st button: "Discard"
   // Clicking makes the message center closed.
   GetMessageCenter()->SetVisibility(message_center::VISIBILITY_TRANSIENT);
 
@@ -971,7 +971,7 @@ IN_PROC_BROWSER_TEST_F(DownloadNotificationTest, CancelDownload) {
 
   // Cancels the notification by clicking the "cancel' button.
   NotificationRemoveObserver notification_close_observer;
-  notification()->ButtonClick(1);
+  notification()->delegate()->ButtonClick(1);
   EXPECT_EQ(notification_id(), notification_close_observer.Wait());
   EXPECT_EQ(0u, GetMessageCenter()->GetVisibleNotifications().size());
 

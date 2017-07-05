@@ -490,7 +490,7 @@ TEST_F(WebUsbDetectorTest,
   ASSERT_TRUE(notification_1 != nullptr);
   EXPECT_EQ(2, tab_strip_model->count());
 
-  notification_1->Click();
+  notification_1->delegate()->Click();
   EXPECT_EQ(2, tab_strip_model->count());
   content::WebContents* web_contents =
       tab_strip_model->GetWebContentsAt(tab_strip_model->active_index());
@@ -516,7 +516,7 @@ TEST_F(WebUsbDetectorTest, NotificationClickedWhileNoTabUrlIsLandingPage) {
   ASSERT_TRUE(notification_1 != nullptr);
   EXPECT_EQ(0, tab_strip_model->count());
 
-  notification_1->Click();
+  notification_1->delegate()->Click();
   EXPECT_EQ(1, tab_strip_model->count());
   content::WebContents* web_contents =
       tab_strip_model->GetWebContentsAt(tab_strip_model->active_index());

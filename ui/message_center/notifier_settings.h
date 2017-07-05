@@ -31,15 +31,7 @@ class MessagePopupCollectionTest;
 
 class MessageCenterNotificationManagerTest;
 class Notification;
-class NotifierSettingsDelegate;
 class NotifierSettingsProvider;
-
-// Brings up the settings dialog and returns a weak reference to the delegate,
-// which is typically the view. If the dialog already exists, it is brought to
-// the front, otherwise it is created.
-MESSAGE_CENTER_EXPORT NotifierSettingsDelegate* ShowSettings(
-    NotifierSettingsProvider* provider,
-    gfx::NativeView context);
 
 // The struct to distinguish the notifiers.
 struct MESSAGE_CENTER_EXPORT NotifierId {
@@ -70,7 +62,7 @@ struct MESSAGE_CENTER_EXPORT NotifierId {
   // The identifier of the app notifier. Empty if it's WEB_PAGE.
   std::string id;
 
-  // The URL pattern of the notifer.
+  // The URL pattern of the notifier.
   GURL url;
 
   // The identifier of the profile where the notification is created. This is

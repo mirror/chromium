@@ -293,7 +293,7 @@ TEST_F(PrivetNotificationsNotificationTest, AddToCloudPrint) {
 
   ASSERT_EQ(1U, ui_manager()->GetNotificationCount());
   const auto& notification = ui_manager()->GetNotificationAt(0);
-  notification.ButtonClick(0 /* add */);
+  notification.delegate()->ButtonClick(0 /* add */);
 
   EXPECT_EQ("chrome://devices/", service.open_tab_url().spec());
   EXPECT_EQ(1U, service.open_tab_count());
@@ -307,7 +307,7 @@ TEST_F(PrivetNotificationsNotificationTest, DontShowAgain) {
 
   ASSERT_EQ(1U, ui_manager()->GetNotificationCount());
   const auto& notification = ui_manager()->GetNotificationAt(0);
-  notification.ButtonClick(1 /* don't show again */);
+  notification.delegate()->ButtonClick(1 /* don't show again */);
 
   EXPECT_EQ("", service.open_tab_url().spec());
   EXPECT_EQ(0U, service.open_tab_count());

@@ -276,7 +276,6 @@ class MESSAGE_CENTER_EXPORT Notification {
   void set_progress(int progress) { optional_fields_.progress = progress; }
   // End unpacked values.
 
-  // Images fetched asynchronously.
   const gfx::Image& icon() const { return icon_; }
   void set_icon(const gfx::Image& icon) { icon_ = icon; }
 
@@ -288,7 +287,6 @@ class MESSAGE_CENTER_EXPORT Notification {
     optional_fields_.small_image = image;
   }
 
-  // Buttons, with icons fetched asynchronously.
   const std::vector<ButtonInfo>& buttons() const {
     return optional_fields_.buttons;
   }
@@ -346,13 +344,6 @@ class MESSAGE_CENTER_EXPORT Notification {
   // Set the priority to SYSTEM. The system priority user needs to call this
   // method explicitly, to avoid setting it accidentally.
   void SetSystemPriority();
-
-  // Delegate actions.
-  void Display() const { delegate()->Display(); }
-  bool HasClickedListener() const { return delegate()->HasClickedListener(); }
-  void Click() const { delegate()->Click(); }
-  void ButtonClick(int index) const { delegate()->ButtonClick(index); }
-  void Close(bool by_user) const { delegate()->Close(by_user); }
 
   // Helper method to create a simple system notification. |click_callback|
   // will be invoked when the notification is clicked.

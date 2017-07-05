@@ -43,7 +43,7 @@ class MESSAGE_CENTER_EXPORT NotifierSettingsView
 
   bool IsScrollable();
 
-  // Overridden from NotifierSettingsDelegate:
+  // Overridden from NotifierSettingsObserver:
   void UpdateIconImage(const NotifierId& notifier_id,
                        const gfx::Image& icon) override;
   void NotifierGroupChanged() override;
