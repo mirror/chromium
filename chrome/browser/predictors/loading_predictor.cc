@@ -38,13 +38,33 @@ LoadingPredictor::~LoadingPredictor() = default;
 void LoadingPredictor::PrepareForPageLoad(const GURL& url, HintOrigin origin) {
   if (active_hints_.find(url) != active_hints_.end())
     return;
-  ResourcePrefetchPredictor::Prediction prediction;
-  if (!resource_prefetch_predictor_->GetPrefetchData(url, &prediction))
-    return;
 
-  // To report hint durations.
-  active_hints_.emplace(url, base::TimeTicks::Now());
-  MaybeAddPrefetch(url, prediction, origin);
+  bool hint_activated = false;
+
+  {
+    ResourcePrefetchPredictor::Prediction prediction;
+    if (resource_prefetch_predictor_->GetPrefetchData(url, &prediction)) {
+      MaybeAddPrefetch(url, prediction.subresource_urls, origin);
+      hint_activated = true;
+    }
+  }
+
+  {
+    PreconnectPrediction prediction;
+    if (resource_prefetch_predictor_->PredictPreconnectOrigins(url,
+                                                               &prediction)) {
+      if (!prediction.preconnect_origins.empty())
+        MaybeAddPreconnect(url, prediction.preconnect_origins, origin);
+      if (!prediction.preresolve_hosts.empty())
+        MaybeAddPreresolve(url, prediction.preresolve_hosts, origin);
+      hint_activated = true;
+    }
+  }
+
+  if (hint_activated) {
+    // To report hint durations.
+    active_hints_.emplace(url, base::TimeTicks::Now());
+  }
 }
 
 void LoadingPredictor::CancelPageLoadHint(const GURL& url) {
@@ -126,7 +146,7 @@ std::map<GURL, base::TimeTicks>::iterator LoadingPredictor::CancelActiveHint(
 
   const GURL& url = hint_it->first;
   MaybeRemovePrefetch(url);
-
+  MaybeRemovePreresolve(url);
   UMA_HISTOGRAM_TIMES(
       internal::kResourcePrefetchPredictorPrefetchingDurationHistogram,
       base::TimeTicks::Now() - hint_it->second);
@@ -165,10 +185,9 @@ void LoadingPredictor::CleanupAbandonedHintsAndNavigations(
   }
 }
 
-void LoadingPredictor::MaybeAddPrefetch(
-    const GURL& url,
-    const ResourcePrefetchPredictor::Prediction& prediction,
-    HintOrigin origin) {
+void LoadingPredictor::MaybeAddPrefetch(const GURL& url,
+                                        const std::vector<GURL>& urls,
+                                        HintOrigin origin) {
   if (!config_.IsPrefetchingEnabledForOrigin(profile_, origin))
     return;
   std::string host = url.host();
@@ -178,8 +197,7 @@ void LoadingPredictor::MaybeAddPrefetch(
   auto prefetcher = base::MakeUnique<ResourcePrefetcher>(
       GetWeakPtr(), profile_->GetRequestContext(),
       config_.max_prefetches_inflight_per_navigation,
-      config_.max_prefetches_inflight_per_host_per_navigation, url,
-      prediction.subresource_urls);
+      config_.max_prefetches_inflight_per_host_per_navigation, url, urls);
   // base::Unretained(prefetcher.get()) is fine, as |prefetcher| is always
   // destructed on the IO thread, and the destruction task is posted from the
   // UI thread, after the current task. Since the IO thread is FIFO, then
@@ -238,6 +256,28 @@ void LoadingPredictor::ResourcePrefetcherFinished(
                      std::move(it->second.first)));
 
   prefetches_.erase(it);
+}
+
+void LoadingPredictor::MaybeAddPreconnect(const GURL& url,
+                                          const std::vector<GURL>& origins,
+                                          HintOrigin origin) {
+  if (!config_.IsPreconnectEnabledForOrigin(profile_, origin))
+    return;
+
+  NOTIMPLEMENTED();
+}
+
+void LoadingPredictor::MaybeAddPreresolve(const GURL& url,
+                                          const std::vector<GURL>& hosts,
+                                          HintOrigin origin) {
+  if (!config_.IsPreconnectEnabledForOrigin(profile_, origin))
+    return;
+
+  NOTIMPLEMENTED();
+}
+
+void LoadingPredictor::MaybeRemovePreresolve(const GURL& url) {
+  NOTIMPLEMENTED();
 }
 
 TestLoadingObserver::~TestLoadingObserver() {

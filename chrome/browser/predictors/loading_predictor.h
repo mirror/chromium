@@ -92,15 +92,27 @@ class LoadingPredictor : public KeyedService,
       std::map<GURL, base::TimeTicks>::iterator hint_it);
   void CleanupAbandonedHintsAndNavigations(const NavigationID& navigation_id);
 
-  // May start a prefetch for |url| with the data from |prediction|, and a
-  // given hint |origin|. A new prefetch may not start if there is already
-  // one in flight, for instance.
+  // May start a prefetch of |urls| for |url| with a given hint |origin|. A new
+  // prefetch may not start if there is already one in flight, for instance.
   void MaybeAddPrefetch(const GURL& url,
-                        const ResourcePrefetchPredictor::Prediction& prediction,
+                        const std::vector<GURL>& urls,
                         HintOrigin origin);
-
   // If a prefetch exists for |url|, stop it.
   void MaybeRemovePrefetch(const GURL& url);
+
+  // May start a preconnect to |origins| for |url| with a given hint |origin|.
+  // There is no corresponding MaybeRemovePreconnect() because preconnect is
+  // fire-and-forget.
+  void MaybeAddPreconnect(const GURL& url,
+                          const std::vector<GURL>& origins,
+                          HintOrigin origin);
+
+  // May start a preresolve of |hosts| for |url| with a given hint |origin|.
+  void MaybeAddPreresolve(const GURL& url,
+                          const std::vector<GURL>& hosts,
+                          HintOrigin origin);
+  // If a preresolve exists for |url|, stop it.
+  void MaybeRemovePreresolve(const GURL& url);
 
   // For testing.
   void set_mock_resource_prefetch_predictor(
