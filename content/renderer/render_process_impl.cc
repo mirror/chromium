@@ -147,6 +147,10 @@ RenderProcessImpl::RenderProcessImpl(
   SetV8FlagIfFeature(features::kWebAssemblyTrapHandler, "--wasm-trap-handler");
   SetV8FlagIfFeature(features::kSharedArrayBuffer,
                      "--harmony-sharedarraybuffer");
+  // TODO(kouhei): Gate under feature.
+  std::string dynamic_import_flag("--harmony-dynamic-import");
+  v8::V8::SetFlagsFromString(dynamic_import_flag.c_str(),
+                             static_cast<int>(dynamic_import_flag.size()));
 
   const base::CommandLine& command_line =
       *base::CommandLine::ForCurrentProcess();

@@ -4,6 +4,7 @@
 
 #include "core/testing/DummyModulator.h"
 
+#include "bindings/core/v8/ScriptPromiseResolver.h"
 #include "bindings/core/v8/ScriptValue.h"
 #include "core/dom/ScriptModuleResolver.h"
 
@@ -17,8 +18,13 @@ class EmptyScriptModuleResolver final : public ScriptModuleResolver {
 
   // We ignore {Unr,R}egisterModuleScript() calls caused by
   // ModuleScript::CreateForTest().
-  void RegisterModuleScript(ModuleScript*) override {}
-  void UnregisterModuleScript(ModuleScript*) override {}
+  void RegisterModuleScript(ModuleScript*) final {}
+  void UnregisterModuleScript(ModuleScript*) final {}
+  void ResolveDynamically(const String& specifier,
+                          const String& referrer,
+                          ScriptPromiseResolver* promise_resolver) final {
+    promise_resolver->Reject();
+  }
 
   ScriptModule Resolve(const String& specifier,
                        const ScriptModule& referrer,
