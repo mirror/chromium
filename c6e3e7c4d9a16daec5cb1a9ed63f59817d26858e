@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be7785c9_e19a103f",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-05T04:43:25Z",
+      "side": 1,
+      "message": "nit:\n\n\u0027Shutdown() in ArcServiceLauncher::OnPrimaryUserProfilePrepared()\u0027 might be better.",
+      "range": {
+        "startLine": 493,
+        "startChar": 29,
+        "endLine": 493,
+        "endChar": 39
+      },
+      "revId": "c6e3e7c4d9a16daec5cb1a9ed63f59817d26858e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
