@@ -11,6 +11,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
+import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
@@ -26,6 +27,7 @@ import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.Callback;
 import org.chromium.base.Log;
 import org.chromium.base.VisibleForTesting;
+import org.chromium.base.annotations.RemovableInRelease;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.favicon.LargeIconBridge.LargeIconCallback;
@@ -37,6 +39,7 @@ import org.chromium.ui.mojom.WindowOpenDisposition;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -68,7 +71,7 @@ public class TileGroup implements MostVisitedSites.Observer {
         void setMostVisitedSitesObserver(MostVisitedSites.Observer observer, int maxResults);
 
         /**
-         * Called when the NTP has completely finished loading (all views will be inflated
+         * Called when the tile group has completely finished loading (all views will be inflated
          * and any dependent resources will have been loaded).
          * @param tiles The tiles owned by the {@link TileGroup}. Used to record metrics.
          */
@@ -79,6 +82,17 @@ public class TileGroup implements MostVisitedSites.Observer {
          * necessary cleanups. This instance must not be used after this method is called.
          */
         void destroy();
+    }
+
+    @VisibleForTesting
+    @IntDef({TileTask.FETCH_DATA, TileTask.SCHEDULE_ICON_FETCH, TileTask.FETCH_ICON})
+    @interface TileTask {
+        /** An event that should result in new data being loaded happened. */ // TODO(dgn) remove?
+        int FETCH_DATA = 1;
+        /** New tile data has been loaded and we are expecting the related icons to be fetched. */
+        int SCHEDULE_ICON_FETCH = 2;
+        /** The icon for a tile is being fetched. */
+        int FETCH_ICON = 3;
     }
 
     /**
@@ -107,16 +121,6 @@ public class TileGroup implements MostVisitedSites.Observer {
          * @param tile The tile for which the visibility of the offline badge has changed.
          */
         void onTileOfflineBadgeVisibilityChanged(Tile tile);
-
-        /**
-         * Called when an asynchronous loading task has started.
-         */
-        void onLoadTaskAdded();
-
-        /**
-         * Called when an asynchronous loading task has completed.
-         */
-        void onLoadTaskCompleted();
     }
 
     private static final String TAG = "TileGroup";
@@ -130,6 +134,8 @@ public class TileGroup implements MostVisitedSites.Observer {
     private final ContextMenuManager mContextMenuManager;
     private final Delegate mTileGroupDelegate;
     private final Observer mObserver;
+    private final List<Integer> mPendingTasks = new ArrayList<>();
+
     private final int mTitleLinesCount;
     private final int mMinIconSize;
     private final int mDesiredIconSize;
@@ -240,6 +246,7 @@ public class TileGroup implements MostVisitedSites.Observer {
             expectedChangeCompleted = true;
         }
 
+        Log.d("DGN", "onMostVisitedURLsAvailable()");
         if (!mHasReceivedData || !mUiDelegate.isVisible() || expectedChangeCompleted) loadTiles();
     }
 
@@ -259,7 +266,7 @@ public class TileGroup implements MostVisitedSites.Observer {
      * @param maxResults The maximum number of sites to retrieve.
      */
     public void startObserving(int maxResults) {
-        mObserver.onLoadTaskAdded();
+        addTask(TileTask.FETCH_DATA);
         mTileGroupDelegate.setMostVisitedSitesObserver(this, maxResults);
     }
 
@@ -293,6 +300,9 @@ public class TileGroup implements MostVisitedSites.Observer {
 
             parent.addView(tileView);
         }
+
+        // Icon fetch scheduling was done when building the tile views.
+        if (isLoadTracked()) removeTask(TileTask.SCHEDULE_ICON_FETCH);
     }
 
     public Tile[] getTiles() {
@@ -304,8 +314,10 @@ public class TileGroup implements MostVisitedSites.Observer {
     }
 
     /** To be called when the view displaying the tile group becomes visible. */
-    public void onSwitchToForeground() {
+    public void onSwitchToForeground(boolean trackLoadTask) {
+        if (trackLoadTask) addTask(TileTask.FETCH_DATA);
         if (mPendingTiles != null) loadTiles();
+        if (trackLoadTask) removeTask(TileTask.FETCH_DATA);
     }
 
     /**
@@ -323,10 +335,11 @@ public class TileGroup implements MostVisitedSites.Observer {
                                     .inflate(R.layout.tile_view, parentView, false);
         tileView.initialize(tile, mTitleLinesCount, condensed);
 
+        if (trackLoadTask) addTask(TileTask.FETCH_ICON);
+
         // Note: It is important that the callbacks below don't keep a reference to the tile or
         // modify them as there is no guarantee that the same tile would be used to update the view.
-        LargeIconCallback iconCallback = new LargeIconCallbackImpl(tile.getUrl(), trackLoadTask);
-        if (trackLoadTask) mObserver.onLoadTaskAdded();
+        LargeIconCallback iconCallback = new LargeIconCallbackImpl(tile.getUrl(), isLoadTracked());
         loadWhitelistIcon(tile, iconCallback);
 
         TileInteractionDelegate delegate = new TileInteractionDelegate(tile.getUrl());
@@ -382,6 +395,8 @@ public class TileGroup implements MostVisitedSites.Observer {
         mTiles = mPendingTiles.toArray(new Tile[mPendingTiles.size()]);
         mPendingTiles = null;
 
+        Log.d("DGN", "loadTiles: dataChanged=%b, countChanged=%b, initialLoad=%b", dataChanged, countChanged, isInitialLoad);
+
         if (!dataChanged) return;
 
         if (mOfflineModelObserver != null) {
@@ -389,8 +404,11 @@ public class TileGroup implements MostVisitedSites.Observer {
         }
 
         if (countChanged) mObserver.onTileCountChanged();
+
+        if (isLoadTracked()) addTask(TileTask.SCHEDULE_ICON_FETCH);
         mObserver.onTileDataChanged();
-        if (isInitialLoad) mObserver.onLoadTaskCompleted();
+
+        if (isInitialLoad) removeTask(TileTask.FETCH_DATA);
     }
 
     /** @return A tile matching the provided URL, or {@code null} if none is found. */
@@ -400,6 +418,65 @@ public class TileGroup implements MostVisitedSites.Observer {
             if (tile.getUrl().equals(url)) return tile;
         }
         return null;
+    }
+
+    private void addTask(@TileTask int task) {
+        Log.d("DGN", "addTask(%s)", getTaskName(task)); // TODO(dgn): Remove before submit
+
+        mPendingTasks.add(task);
+        logTasks();
+    }
+
+    private void removeTask(@TileTask int task) {
+        Log.d("DGN", "removeTask(%s)", getTaskName(task)); // TODO(dgn): Remove before submit
+
+        // We track both tasks that are rather strict, and other that are triggered by callers and
+        // less reliable (FETCH_DATA). For example as the backend data is updated or the view
+        // brought to the foreground we might attempt to load new data multiple times without
+        // necessarily triggering a UI update. In that case we allow removing the untracked tasks
+        // without triggering a loadComplete event.
+        boolean removedTask = mPendingTasks.remove(Integer.valueOf(task));
+        assert removedTask;
+
+        logTasks();
+
+        if (mPendingTasks.isEmpty()) mTileGroupDelegate.onLoadingComplete(getTiles());
+    }
+
+    private boolean isLoadTracked() {
+//        return true;
+        return mPendingTasks.contains(TileTask.FETCH_DATA) || mPendingTasks.contains(TileTask.SCHEDULE_ICON_FETCH);
+    }
+
+
+    // TODO(dgn): Remove before submit
+    @RemovableInRelease
+    private String getTaskName(@TileTask int task) {
+        switch (task) {
+            case TileTask.FETCH_DATA:
+                return "FETCH_DATA";
+            case TileTask.FETCH_ICON:
+                return "FETCH_ICON";
+            case TileTask.SCHEDULE_ICON_FETCH:
+                return "SCHEDULE_ICON_FETCH";
+            default:
+                return Integer.toString(task);
+        }
+    }
+
+    // TODO(dgn): Remove before submit
+    @RemovableInRelease
+    private void logTasks() {
+        StringBuilder sb = new StringBuilder();
+        for (@TileTask int task : mPendingTasks) {
+            sb.append(" ").append(getTaskName(task));
+        }
+        Log.d("DGN", "pending tile load tasks: %s", sb.toString());
+    }
+
+    @VisibleForTesting
+    boolean isTaskPending(@TileTask int task) {
+        return mPendingTasks.contains(task);
     }
 
     private class LargeIconCallbackImpl implements LargeIconCallback {
@@ -440,7 +517,7 @@ public class TileGroup implements MostVisitedSites.Observer {
             }
 
             // This call needs to be made after the tiles are completely initialised, for UMA.
-            if (mTrackLoadTask) mObserver.onLoadTaskCompleted();
+            if (mTrackLoadTask) removeTask(TileTask.FETCH_ICON);
         }
     }
 

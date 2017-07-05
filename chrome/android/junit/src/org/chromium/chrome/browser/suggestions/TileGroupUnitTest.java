@@ -4,16 +4,23 @@
 
 package org.chromium.chrome.browser.suggestions;
 
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertTrue;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
@@ -36,6 +43,7 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
+import org.robolectric.shadows.ShadowLog;
 
 import org.chromium.base.Callback;
 import org.chromium.chrome.browser.ChromeFeatureList;
@@ -45,13 +53,16 @@ import org.chromium.chrome.browser.offlinepages.OfflinePageBridge;
 import org.chromium.chrome.test.util.browser.Features;
 import org.chromium.testing.local.LocalRobolectricTestRunner;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Unit tests for {@link TileGroup}.
  */
 @RunWith(LocalRobolectricTestRunner.class)
 @Config(manifest = Config.NONE)
 @Features(@Features.Register(ChromeFeatureList.NTP_OFFLINE_PAGES_FEATURE_NAME))
-public class TileGroupTest {
+public class TileGroupUnitTest {
     private static final int MAX_TILES_TO_FETCH = 4;
     private static final int TILE_TITLE_LINES = 1;
     private static final String[] URLS = {"https://www.google.com", "https://tellmedadjokes.com"};
@@ -63,12 +74,15 @@ public class TileGroupTest {
     private TileGroup.Observer mTileGroupObserver;
 
     private FakeTileGroupDelegate mTileGroupDelegate;
+    private FakeImageFetcher mImageFetcher;
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-
-        mTileGroupDelegate = new FakeTileGroupDelegate();
+        System.out.println("######## Initial value of ShadowLog.stream: " + ShadowLog.stream);
+        ShadowLog.stream = System.out;
+        mTileGroupDelegate = spy(new FakeTileGroupDelegate());
+        mImageFetcher = new FakeImageFetcher();
     }
 
     @Test
@@ -83,8 +97,11 @@ public class TileGroupTest {
         // The TileGroup.Observer methods should be called even though no tiles are added, which is
         // an initialisation but not real state change.
         verify(mTileGroupObserver).onTileCountChanged();
-        verify(mTileGroupObserver).onLoadTaskCompleted();
         verify(mTileGroupObserver).onTileDataChanged();
+        verify(mTileGroupDelegate, never()).onLoadingComplete(any(Tile[].class));
+
+        assertTrue(tileGroup.isTaskPending(TileGroup.TileTask.SCHEDULE_ICON_FETCH));
+        assertFalse(tileGroup.isTaskPending(TileGroup.TileTask.FETCH_DATA));
     }
 
     @Test
@@ -98,8 +115,13 @@ public class TileGroupTest {
         notifyTileUrlsAvailable(URLS);
 
         verify(mTileGroupObserver).onTileCountChanged();
-        verify(mTileGroupObserver).onLoadTaskCompleted();
         verify(mTileGroupObserver).onTileDataChanged();
+        verify(mTileGroupDelegate, never()).onLoadingComplete(any(Tile[].class));
+
+        assertTrue(tileGroup.isTaskPending(TileGroup.TileTask.SCHEDULE_ICON_FETCH));
+        assertFalse(tileGroup.isTaskPending(TileGroup.TileTask.FETCH_DATA));
+
+        // TODO: also render?
     }
 
     @Test
@@ -130,13 +152,14 @@ public class TileGroupTest {
         // First initialisation
         notifyTileUrlsAvailable(URLS);
         reset(mTileGroupObserver);
+        reset(mTileGroupDelegate);
 
         // Notify the about different URLs, but the same number. #onTileCountChanged() should not be
         // called.
         notifyTileUrlsAvailable("foo", "bar");
         verify(mTileGroupObserver, never()).onTileCountChanged(); // Tile count is still 2
-        verify(mTileGroupObserver, never()).onLoadTaskCompleted(); // No load task the second time.
         verify(mTileGroupObserver).onTileDataChanged(); // Data DID change.
+        verify(mTileGroupDelegate, never()).onLoadingComplete(any(Tile[].class)); // No load task the second time.
     }
 
     @Test
@@ -150,10 +173,11 @@ public class TileGroupTest {
         // First initialisation
         notifyTileUrlsAvailable(URLS);
         reset(mTileGroupObserver);
+        reset(mTileGroupDelegate);
 
         notifyTileUrlsAvailable(URLS[0]);
         verify(mTileGroupObserver).onTileCountChanged(); // Tile count DID change.
-        verify(mTileGroupObserver, never()).onLoadTaskCompleted(); // No load task the second time.
+        verify(mTileGroupDelegate, never()).onLoadingComplete(any(Tile[].class)); // No load task the second time.
         verify(mTileGroupObserver).onTileDataChanged(); // Data DID change.
     }
 
@@ -191,7 +215,7 @@ public class TileGroupTest {
 
         // Simulating a switch from background to foreground should force the tilegrid to load the
         // new data.
-        tileGroup.onSwitchToForeground();
+        tileGroup.onSwitchToForeground(true);
         verify(mTileGroupObserver).onTileDataChanged();
     }
 
@@ -300,73 +324,75 @@ public class TileGroupTest {
         tileGroup.startObserving(MAX_TILES_TO_FETCH);
         notifyTileUrlsAvailable(URLS); // Initialise the internal state to include the test tile.
         reset(mTileGroupObserver);
+        reset(mTileGroupDelegate);
         Tile tile = tileGroup.getTiles()[0];
 
         ViewGroup layout = new FrameLayout(RuntimeEnvironment.application, null);
-        tileGroup.buildTileView(tile, layout, /* trackLoadTask = */ true, /* condensed = */ false);
+        tileGroup.renderTileViews(layout, /* trackLoadTasks =  */ true, /* condensed = */ false);
 
-        verify(mTileGroupObserver).onLoadTaskAdded();
+        // Loading complete should be delayed until the icons are done loading.
+        verify(mTileGroupDelegate, never()).onLoadingComplete(any(Tile[].class));
 
         ArgumentCaptor<LargeIconCallback> captor = ArgumentCaptor.forClass(LargeIconCallback.class);
-        verify(uiDelegate.getImageFetcher())
+        verify(uiDelegate.getImageFetcher(), times(URLS.length))
                 .makeLargeIconRequest(any(String.class), anyInt(), captor.capture());
         for (LargeIconCallback cb : captor.getAllValues()) {
             cb.onLargeIconAvailable(mock(Bitmap.class), Color.BLACK, /* isColorDefault = */ false);
         }
 
-        verify(mTileGroupObserver).onLoadTaskCompleted();
-        verify(mTileGroupObserver).onTileIconChanged(tile);
+        verify(mTileGroupDelegate).onLoadingComplete(any(Tile[].class));
+        verify(mTileGroupObserver).onTileIconChanged(eq(tile));
+        verify(mTileGroupObserver, times(URLS.length)).onTileIconChanged(any(Tile.class));
+    }
+
+
+    private TileGroup initialiseTileGroup(String... urls) {
+        SuggestionsUiDelegate uiDelegate = mock(SuggestionsUiDelegate.class);
+        when(uiDelegate.getImageFetcher()).thenReturn(mImageFetcher);
+
+        TileGroup tileGroup = new TileGroup(RuntimeEnvironment.application, uiDelegate,
+                mock(ContextMenuManager.class), mTileGroupDelegate, mTileGroupObserver,
+                mock(OfflinePageBridge.class), TILE_TITLE_LINES);
+        tileGroup.startObserving(MAX_TILES_TO_FETCH);
+        notifyTileUrlsAvailable(urls);
+
+        ViewGroup layout = new FrameLayout(RuntimeEnvironment.application, null);
+        tileGroup.renderTileViews(layout, /* trackLoadTask = */ false, /* condensed = */ false);
+
+        reset(mTileGroupObserver);
+        reset(mTileGroupDelegate);
+        return tileGroup;
     }
 
     @Test
     public void testIconLoadingNoTask() {
-        SuggestionsUiDelegate uiDelegate = mock(SuggestionsUiDelegate.class);
-        when(uiDelegate.getImageFetcher()).thenReturn(mock(ImageFetcher.class));
-        TileGroup tileGroup = new TileGroup(RuntimeEnvironment.application, uiDelegate,
-                mock(ContextMenuManager.class), mTileGroupDelegate, mTileGroupObserver,
-                mock(OfflinePageBridge.class), TILE_TITLE_LINES);
-        tileGroup.startObserving(MAX_TILES_TO_FETCH);
-        notifyTileUrlsAvailable(URLS); // Initialise the internal state to include the test tile.
-        reset(mTileGroupObserver);
-        Tile tile = tileGroup.getTiles()[0];
+        TileGroup tileGroup = initialiseTileGroup();
+        notifyTileUrlsAvailable(URLS);
+//        Tile tile = tileGroup.getTiles()[0];
+//        tileGroup.onSwitchToForeground();
 
+        verify(mTileGroupObserver).onTileDataChanged();
         ViewGroup layout = new FrameLayout(RuntimeEnvironment.application, null);
-        tileGroup.buildTileView(tile, layout, /* trackLoadTask = */ false, /* condensed = */ false);
+//        tileGroup.buildTileView(tile, layout, /* trackLoadTask = */ false, /* condensed = */ false);
+        tileGroup.renderTileViews(layout, /* trackLoadTasks =  */ false, /* condensed = */ false);
 
-        verify(mTileGroupObserver, never()).onLoadTaskAdded();
+        mImageFetcher.fulfillLargeIconRequests();
 
-        ArgumentCaptor<LargeIconCallback> captor = ArgumentCaptor.forClass(LargeIconCallback.class);
-        verify(uiDelegate.getImageFetcher())
-                .makeLargeIconRequest(any(String.class), anyInt(), captor.capture());
-        for (LargeIconCallback cb : captor.getAllValues()) {
-            cb.onLargeIconAvailable(mock(Bitmap.class), Color.BLACK, /* isColorDefault = */ false);
-        }
-
-        verify(mTileGroupObserver, never()).onLoadTaskCompleted();
-        verify(mTileGroupObserver).onTileIconChanged(tile);
+        verify(mTileGroupDelegate, never()).onLoadingComplete(any(Tile[].class));
+        verify(mTileGroupObserver, times(URLS.length)).onTileIconChanged(any(Tile.class));
     }
 
     @Test
     public void testIconLoadingWhenTileNotRegistered() {
-        SuggestionsUiDelegate uiDelegate = mock(SuggestionsUiDelegate.class);
-        when(uiDelegate.getImageFetcher()).thenReturn(mock(ImageFetcher.class));
-        TileGroup tileGroup = new TileGroup(RuntimeEnvironment.application, uiDelegate,
-                mock(ContextMenuManager.class), mTileGroupDelegate, mTileGroupObserver,
-                mock(OfflinePageBridge.class), TILE_TITLE_LINES);
-        tileGroup.startObserving(MAX_TILES_TO_FETCH);
-        reset(mTileGroupObserver);
+        TileGroup tileGroup = initialiseTileGroup();
         Tile tile = new Tile("title", URLS[0], "", 0, TileSource.POPULAR);
 
         ViewGroup layout = new FrameLayout(RuntimeEnvironment.application, null);
         tileGroup.buildTileView(tile, layout, /* trackLoadTask = */ true, /* condensed = */ false);
-        verify(mTileGroupObserver).onLoadTaskAdded();
 
-        ArgumentCaptor<LargeIconCallback> captor = ArgumentCaptor.forClass(LargeIconCallback.class);
-        verify(uiDelegate.getImageFetcher())
-                .makeLargeIconRequest(any(String.class), anyInt(), captor.capture());
-        captor.getValue().onLargeIconAvailable(mock(Bitmap.class), Color.BLACK, false);
+        assertEquals(1, mImageFetcher.getPendingIconCallbackCount());
+        mImageFetcher.fulfillLargeIconRequests();
 
-        verify(mTileGroupObserver).onLoadTaskCompleted();
         verify(mTileGroupObserver, never()).onTileIconChanged(tile);
     }
 
@@ -425,5 +451,33 @@ public class TileGroupTest {
 
         @Override
         public void destroy() {}
+    }
+
+    private class FakeImageFetcher extends ImageFetcher {
+        private final List<LargeIconCallback> mCallbackList = new ArrayList<>();
+
+        public FakeImageFetcher() {
+            super(null, null, null);
+        }
+
+        @Override
+        public void makeLargeIconRequest(String url, int size, LargeIconCallback callback) {
+            mCallbackList.add(callback);
+        }
+
+        public void fulfillLargeIconRequests(Bitmap bitmap, int color, boolean isColorDefault) {
+            for (LargeIconCallback callback : mCallbackList) {
+                callback.onLargeIconAvailable(bitmap, color, isColorDefault);
+            }
+            mCallbackList.clear();
+        }
+
+        public int getPendingIconCallbackCount() {
+            return mCallbackList.size();
+        }
+
+        public void fulfillLargeIconRequests() {
+            fulfillLargeIconRequests(mock(Bitmap.class), Color.BLACK, false);
+        }
     }
 }
