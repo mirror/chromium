@@ -82,6 +82,11 @@
 #include "ui/base/ime/linux/text_edit_key_bindings_delegate_auralinux.h"
 #endif
 
+#if defined(OS_LINUX) || defined(OS_WIN)
+#include "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker.h"
+#include "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker_factory.h"
+#endif
+
 using content::NavigationEntry;
 using content::NavigationController;
 using content::WebContents;
@@ -350,6 +355,9 @@ void BrowserCommandController::ExecuteCommandWithDisposition(
       CloseWindow(browser_);
       break;
     case IDC_NEW_TAB:
+      new_tab_feature_engagement_tracker::
+          NewTabFeatureEngagementTrackerFactory::GetForProfile(profile())
+              ->NotifyNewTabOpened();
       NewTab(browser_);
       break;
     case IDC_CLOSE_TAB:
