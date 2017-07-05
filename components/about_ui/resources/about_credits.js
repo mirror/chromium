@@ -18,4 +18,9 @@ document.addEventListener('DOMContentLoaded', function() {
     window.print();
     return false;
   };
+
+  document.addEventListener('keypress', function(e) {
+    if (e.key == 'Enter' && e.target.tagName == 'LABEL')
+      e.target.previousElementSibling.click();
+  });
 });
