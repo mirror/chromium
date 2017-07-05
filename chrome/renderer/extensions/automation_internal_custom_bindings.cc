@@ -804,6 +804,11 @@ void AutomationInternalCustomBindings::GetSchemaAdditions(
   for (int i = ui::AX_NAME_FROM_NONE; i <= ui::AX_NAME_FROM_LAST; ++i)
     name_from_type.Set(i, ui::ToString(static_cast<ui::AXNameFrom>(i)));
 
+  gin::DataObjectBuilder control_mode(isolate);
+  for (int i = ui::AX_CONTROL_MODE_NOT_A_CONTROL; i <= ui::AX_CONTROL_MODE_LAST;
+       ++i)
+    control_mode.Set(i, ui::ToString(static_cast<ui::AXControlMode>(i)));
+
   gin::DataObjectBuilder description_from_type(isolate);
   for (int i = ui::AX_DESCRIPTION_FROM_NONE; i <= ui::AX_DESCRIPTION_FROM_LAST;
        ++i) {
@@ -814,6 +819,7 @@ void AutomationInternalCustomBindings::GetSchemaAdditions(
   args.GetReturnValue().Set(
       gin::DataObjectBuilder(isolate)
           .Set("NameFromType", name_from_type.Build())
+          .Set("ControlMode", control_mode.Build())
           .Set("DescriptionFromType", description_from_type.Build())
           .Build());
 }
