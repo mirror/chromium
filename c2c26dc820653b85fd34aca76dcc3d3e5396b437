@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "59e5040d_14dafc82",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-07-05T23:39:06Z",
+      "side": 1,
+      "message": "i420 is generally going to be most commonly used",
+      "parentUuid": "595aba5b_5f45e980",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 75
+      },
+      "revId": "c2c26dc820653b85fd34aca76dcc3d3e5396b437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c31fa59d_04245d00",
         "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
         "patchSetId": 7
@@ -53,6 +77,24 @@
       "writtenOn": "2017-07-05T21:08:37Z",
       "side": 1,
       "message": "Will we be notified of resolution changes, or will frames just start coming in with different resolutions?",
+      "revId": "c2c26dc820653b85fd34aca76dcc3d3e5396b437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13af68c7_fe84004e",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-07-05T23:39:06Z",
+      "side": 1,
+      "message": "the latter",
+      "parentUuid": "d26bace9_1a49fb90",
       "revId": "c2c26dc820653b85fd34aca76dcc3d3e5396b437",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -93,6 +135,24 @@
     },
     {
       "key": {
+        "uuid": "7478f46d_4cdd6d01",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-07-05T23:39:06Z",
+      "side": 1,
+      "message": "does webrtc communicate which profiles are supported? or perhaps webrtc supports a single h264 profile?",
+      "parentUuid": "8b8171fa_5a36a108",
+      "revId": "c2c26dc820653b85fd34aca76dcc3d3e5396b437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cc4c4188_e594e041",
         "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
         "patchSetId": 7
@@ -104,6 +164,24 @@
       "writtenOn": "2017-07-05T21:08:37Z",
       "side": 1,
       "message": "See this todo: how do we calculate an initial bitrate",
+      "revId": "c2c26dc820653b85fd34aca76dcc3d3e5396b437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a462db07_f3d4271d",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-07-05T23:39:06Z",
+      "side": 1,
+      "message": "is there a way to change it later?\n\nwebrtc gives estimated bandwidth - can we give it to ghe encoder? \n\nif it can\u0027t be changed dynamically, it should be some value based on frame size.\n\nprotocol perftests may be useful for determining the calculation of this bitrate value",
+      "parentUuid": "cc4c4188_e594e041",
       "revId": "c2c26dc820653b85fd34aca76dcc3d3e5396b437",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +216,30 @@
       "writtenOn": "2017-07-05T21:08:37Z",
       "side": 1,
       "message": "what\u0027s the easiest way to do this? can it be done in the process of converting rgb to yuv?",
+      "range": {
+        "startLine": 109,
+        "startChar": 0,
+        "endLine": 109,
+        "endChar": 53
+      },
+      "revId": "c2c26dc820653b85fd34aca76dcc3d3e5396b437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d96bfb6_6c859ad6",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-07-05T23:39:06Z",
+      "side": 1,
+      "message": "when we use libyuv to convert, we should just be converting into the visible region",
+      "parentUuid": "4bb8f106_9013fa05",
       "range": {
         "startLine": 109,
         "startChar": 0,
@@ -201,6 +303,24 @@
       "writtenOn": "2017-07-05T21:08:37Z",
       "side": 1,
       "message": "See this todo.",
+      "revId": "c2c26dc820653b85fd34aca76dcc3d3e5396b437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed3cc023_80666efb",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-07-05T23:39:06Z",
+      "side": 1,
+      "message": "Only one encode will be out at a time - this shouldn\u0027t matter - just have one",
+      "parentUuid": "28a68498_a3c027d3",
       "revId": "c2c26dc820653b85fd34aca76dcc3d3e5396b437",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
