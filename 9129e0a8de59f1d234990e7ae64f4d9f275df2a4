@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e7236012_db5b0fc5",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/NewTabPageUiCaptureTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115854
+      },
+      "writtenOn": "2017-07-05T12:47:00Z",
+      "side": 1,
+      "message": "Slightly different solution, as discussed.",
+      "parentUuid": "7d672da6_633e62a8",
+      "range": {
+        "startLine": 64,
+        "startChar": 36,
+        "endLine": 64,
+        "endChar": 56
+      },
+      "revId": "9129e0a8de59f1d234990e7ae64f4d9f275df2a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "955c5202_5f862838",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/NewTabPageUiCaptureTest.java",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "9129e0a8de59f1d234990e7ae64f4d9f275df2a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89cc46b2_19867ca1",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/NewTabPageUiCaptureTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115854
+      },
+      "writtenOn": "2017-07-05T12:47:00Z",
+      "side": 1,
+      "message": "TODO added",
+      "parentUuid": "955c5202_5f862838",
+      "revId": "9129e0a8de59f1d234990e7ae64f4d9f275df2a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "7f845404_20ab7934",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/NtpUiCaptureTestData.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115854
+      },
+      "writtenOn": "2017-07-05T12:47:00Z",
+      "side": 1,
+      "message": "Gets messier if we ever want to change the sources in future, and doing like this seems more consistent.",
+      "parentUuid": "6d46492d_4474e658",
+      "range": {
+        "startLine": 40,
+        "startChar": 31,
+        "endLine": 40,
+        "endChar": 56
+      },
+      "revId": "9129e0a8de59f1d234990e7ae64f4d9f275df2a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42eae207_8c6334ce",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/NtpUiCaptureTestData.java",
         "patchSetId": 3
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "c4e2d9fa_b43067e3",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/NtpUiCaptureTestData.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115854
+      },
+      "writtenOn": "2017-07-05T12:47:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42eae207_8c6334ce",
+      "revId": "9129e0a8de59f1d234990e7ae64f4d9f275df2a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ee406de_5d86da1a",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/NtpUiCaptureTestData.java",
         "patchSetId": 3
@@ -96,6 +180,24 @@
       "revId": "9129e0a8de59f1d234990e7ae64f4d9f275df2a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83ecb076_76afe0e5",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/NtpUiCaptureTestData.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115854
+      },
+      "writtenOn": "2017-07-05T12:47:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ee406de_5d86da1a",
+      "revId": "9129e0a8de59f1d234990e7ae64f4d9f275df2a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "bb16be04_988c1c82",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/NtpUiCaptureTestData.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115854
+      },
+      "writtenOn": "2017-07-05T12:47:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da1d431b_8253cc05",
+      "range": {
+        "startLine": 87,
+        "startChar": 59,
+        "endLine": 87,
+        "endChar": 70
+      },
+      "revId": "9129e0a8de59f1d234990e7ae64f4d9f275df2a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "066a4bf5_81c5cabb",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/NtpUiCaptureTestData.java",
         "patchSetId": 3
@@ -142,6 +268,30 @@
       "revId": "9129e0a8de59f1d234990e7ae64f4d9f275df2a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ff62167_1d8aedc8",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/NtpUiCaptureTestData.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1115854
+      },
+      "writtenOn": "2017-07-05T12:47:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "066a4bf5_81c5cabb",
+      "range": {
+        "startLine": 93,
+        "startChar": 36,
+        "endLine": 93,
+        "endChar": 56
+      },
+      "revId": "9129e0a8de59f1d234990e7ae64f4d9f275df2a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -168,6 +318,30 @@
     },
     {
       "key": {
+        "uuid": "b6117653_21c1393c",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/NtpUiCaptureTestData.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115854
+      },
+      "writtenOn": "2017-07-05T12:47:00Z",
+      "side": 1,
+      "message": "Yes, wanted to include examples with default favicon. Could possibly have favicon for a few more, but didn\u0027t seem to matter much either way as long as I had at least one.\n\nMay update this when I revise the data based on Pete\u0027s document, but I think that will be a separate CL.",
+      "parentUuid": "0d42db8c_718fec4e",
+      "range": {
+        "startLine": 105,
+        "startChar": 29,
+        "endLine": 105,
+        "endChar": 36
+      },
+      "revId": "9129e0a8de59f1d234990e7ae64f4d9f275df2a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fae719cb_275c5c56",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/NtpUiCaptureTestData.java",
         "patchSetId": 3
@@ -188,6 +362,30 @@
       "revId": "9129e0a8de59f1d234990e7ae64f4d9f275df2a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30117724_7313e711",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/NtpUiCaptureTestData.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1115854
+      },
+      "writtenOn": "2017-07-05T12:47:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fae719cb_275c5c56",
+      "range": {
+        "startLine": 134,
+        "startChar": 37,
+        "endLine": 134,
+        "endChar": 43
+      },
+      "revId": "9129e0a8de59f1d234990e7ae64f4d9f275df2a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
