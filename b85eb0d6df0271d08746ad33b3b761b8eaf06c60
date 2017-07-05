@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "47f87a10_e25dc14a",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_container_view_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-05T14:44:13Z",
+      "side": 1,
+      "message": "The animator is.\nFor the context: the context needs to know the container view, and this should be decided by the container view controller (idem for the animation clean-up block). The coordinator (or any other transitioning delegate) should not have a hand on that, that would be a violation of the separation of concerns.\nHere I follow the pattern of UIKit with UINavigationController and UIPresentationController, where the container view controller creates the context, asks the transitioning delegate for the animator, then starts the animator with its context.\n\nThat way all transitioning delegates are on equal footing: they just provide animation controllers.",
+      "parentUuid": "fccac642_14726e8b",
+      "range": {
+        "startLine": 130,
+        "startChar": 34,
+        "endLine": 130,
+        "endChar": 41
+      },
+      "revId": "b85eb0d6df0271d08746ad33b3b761b8eaf06c60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92a1be57_b1d5ede3",
         "filename": "ios/clean/chrome/browser/ui/tab/tab_container_view_controller.mm",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-05T12:57:02Z",
       "side": 1,
       "message": "I\u0027m not sure what I think about using the existing UIKit protocol for this. It\u0027s probably correct since this is an animated view controller transition, but I think I was expecting a parallel protocol for this use.",
+      "range": {
+        "startLine": 140,
+        "startChar": 7,
+        "endLine": 140,
+        "endChar": 44
+      },
+      "revId": "b85eb0d6df0271d08746ad33b3b761b8eaf06c60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8df6357b_700faeb4",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_container_view_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-05T14:44:13Z",
+      "side": 1,
+      "message": "The protocol is \"a set of methods for implementing the animations for a custom view controller transition.\" For containment, we still need a duration and animations given a context, exactly what this protocol covers.\nMaybe the conceptual difference can be in the context protocol, where from and to can be nil?",
+      "parentUuid": "92a1be57_b1d5ede3",
       "range": {
         "startLine": 140,
         "startChar": 7,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "bbe1b7ef_f23aafec",
+        "filename": "ios/clean/chrome/browser/ui/transitions/containment_transition_context.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-05T14:44:13Z",
+      "side": 1,
+      "message": "I don\u0027t control its first (read-only) definition, as part of UIViewControllerContextTransitioning:\nhttps://developer.apple.com/documentation/uikit/uiviewcontrollercontexttransitioning/1622045-containerview?language\u003dobjc",
+      "parentUuid": "c2454577_80baa026",
+      "range": {
+        "startLine": 14,
+        "startChar": 21,
+        "endLine": 14,
+        "endChar": 27
+      },
+      "revId": "b85eb0d6df0271d08746ad33b3b761b8eaf06c60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09730c0f_19eb48ae",
         "filename": "ios/clean/chrome/browser/ui/transitions/containment_transition_context.mm",
         "patchSetId": 6
@@ -91,6 +163,30 @@
       "revId": "b85eb0d6df0271d08746ad33b3b761b8eaf06c60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eab582d9_5da7a1b0",
+        "filename": "ios/clean/chrome/browser/ui/transitions/containment_transition_context.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-05T14:44:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09730c0f_19eb48ae",
+      "range": {
+        "startLine": 18,
+        "startChar": 29,
+        "endLine": 18,
+        "endChar": 41
+      },
+      "revId": "b85eb0d6df0271d08746ad33b3b761b8eaf06c60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
