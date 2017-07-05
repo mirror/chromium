@@ -41,6 +41,7 @@
 #include "net/url_request/url_request.h"
 #include "net/url_request/url_request_context.h"
 #include "ui/base/l10n/l10n_util.h"
+#include "ui/base/material_design/material_design_controller.h"
 #include "ui/gfx/text_elider.h"
 #include "url/origin.h"
 
@@ -507,16 +508,21 @@ void LoginHandler::GetDialogStrings(const GURL& request_url,
             auth_info.challenger, url_formatter::SchemeDisplay::SHOW));
     authority_url = auth_info.challenger.GetURL();
   } else {
-    *authority = l10n_util::GetStringFUTF16(
-        IDS_LOGIN_DIALOG_AUTHORITY,
-        url_formatter::FormatUrlForSecurityDisplay(request_url));
+    // For non-proxy requests using --secondary-ui-md, only show the URL.
+    if (ui::MaterialDesignController::IsSecondaryUiMaterial()) {
+      *authority = url_formatter::FormatUrlForSecurityDisplay(request_url);
+    } else {
+      *authority = l10n_util::GetStringFUTF16(
+          IDS_LOGIN_DIALOG_AUTHORITY,
+          url_formatter::FormatUrlForSecurityDisplay(request_url));
+    }
     authority_url = request_url;
   }
 
   if (!content::IsOriginSecure(authority_url)) {
     // TODO(asanka): The string should be different for proxies and servers.
     // http://crbug.com/620756
-    *explanation = l10n_util::GetStringUTF16(IDS_PAGE_INFO_NOT_SECURE_SUMMARY);
+    *explanation = l10n_util::GetStringUTF16(IDS_LOGIN_DIALOG_NOT_PRIVATE);
   } else {
     explanation->clear();
   }
