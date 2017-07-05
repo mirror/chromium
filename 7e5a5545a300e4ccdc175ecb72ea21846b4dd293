@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb18ce58_991c1b54",
+        "filename": "chrome/browser/media/media_engagement_service.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-05T09:17:18Z",
+      "side": 1,
+      "message": "I think you can forward declare this.",
+      "revId": "7e5a5545a300e4ccdc175ecb72ea21846b4dd293",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b33b9fe3_c65b1f5d",
+        "filename": "chrome/browser/media/media_engagement_service.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-05T09:17:18Z",
+      "side": 1,
+      "message": "I think you can avoid the #include and instead forward declare GURL.",
+      "revId": "7e5a5545a300e4ccdc175ecb72ea21846b4dd293",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df891425_923e898e",
+        "filename": "chrome/browser/media/media_engagement_service_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-05T09:17:18Z",
+      "side": 1,
+      "message": "Maybe `RecordVisitAndPlayback()` would be clearer?",
+      "revId": "7e5a5545a300e4ccdc175ecb72ea21846b4dd293",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "275edb94_9ee26988",
+        "filename": "chrome/browser/media/media_engagement_service_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-05T09:17:18Z",
+      "side": 1,
+      "message": "As said in another comment, I think it would be better to not advance the clock magically in `RecordPlayback()` as it wouldn\u0027t be clear to the reader that there would be this side effect. Easy solution would be to name this `AdvanceClockAndRecordPlayback()` and rename `Interact()` too. The goal here is that reading a TEST_F should give the gist of what\u0027s happening.",
+      "revId": "7e5a5545a300e4ccdc175ecb72ea21846b4dd293",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
