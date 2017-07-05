@@ -1375,6 +1375,7 @@ public class AwContents implements SmartClipProvider {
     //--------------------------------------------------------------------------------------------
 
     public void onDraw(Canvas canvas) {
+        Log.e(TAG, "in onDraw");
         try {
             TraceEvent.begin("AwContents.onDraw");
             mAwViewMethods.onDraw(canvas);
@@ -3113,6 +3114,7 @@ public class AwContents implements SmartClipProvider {
 
     @Override
     public void setSmartClipResultHandler(final Handler resultHandler) {
+        Log.w(TAG, "in setSmartClipResultHandler");
         if (isDestroyedOrNoOperation(WARN)) return;
 
         mWebContents.setSmartClipResultHandler(resultHandler);
@@ -3138,7 +3140,9 @@ public class AwContents implements SmartClipProvider {
 
         @Override
         public void onDraw(Canvas canvas) {
+            Log.e(TAG, "in onDraw");
             if (isDestroyedOrNoOperation(NO_WARN)) {
+                Log.e(TAG, "in onDraw, after destroy");
                 TraceEvent.instant("EarlyOut_destroyed");
                 canvas.drawColor(getEffectiveBackgroundColor());
                 return;
@@ -3147,6 +3151,7 @@ public class AwContents implements SmartClipProvider {
             // For hardware draws, the clip at onDraw time could be different
             // from the clip during DrawGL.
             if (!canvas.isHardwareAccelerated() && !canvas.getClipBounds(mClipBoundsTemporary)) {
+                Log.e(TAG, "in onDraw, early out");
                 TraceEvent.instant("EarlyOut_software_empty_clip");
                 return;
             }
@@ -3173,6 +3178,7 @@ public class AwContents implements SmartClipProvider {
             boolean did_draw = nativeOnDraw(mNativeAwContents, canvas,
                     canvas.isHardwareAccelerated(), scrollX, scrollY, globalVisibleRect.left,
                     globalVisibleRect.top, globalVisibleRect.right, globalVisibleRect.bottom);
+            Log.e(TAG, "in onDraw, did_draw = " + did_draw);
             if (did_draw && canvas.isHardwareAccelerated() && !FORCE_AUXILIARY_BITMAP_RENDERING) {
                 did_draw = mCurrentFunctor.requestDrawGL(canvas);
             }
@@ -3199,11 +3205,13 @@ public class AwContents implements SmartClipProvider {
 
         @Override
         public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+            Log.w(TAG, "in onMeasure");
             mLayoutSizer.onMeasure(widthMeasureSpec, heightMeasureSpec);
         }
 
         @Override
         public void requestFocus() {
+            Log.w(TAG, "in requestFocus");
             if (isDestroyedOrNoOperation(NO_WARN)) return;
             if (!mContainerView.isInTouchMode() && mSettings.shouldFocusFirstNode()) {
                 nativeFocusFirstNode(mNativeAwContents);
@@ -3212,6 +3220,7 @@ public class AwContents implements SmartClipProvider {
 
         @Override
         public void setLayerType(int layerType, Paint paint) {
+            Log.w(TAG, "in setLayerType");
             mLayerType = layerType;
             updateHardwareAcceleratedFeaturesToggle();
         }
@@ -3225,23 +3234,27 @@ public class AwContents implements SmartClipProvider {
 
         @Override
         public InputConnection onCreateInputConnection(EditorInfo outAttrs) {
+            Log.w(TAG, "in onCreateInputConnection");
             return isDestroyedOrNoOperation(NO_WARN) ? null
                     : mContentViewCore.onCreateInputConnection(outAttrs);
         }
 
         @Override
         public boolean onDragEvent(DragEvent event) {
+            Log.w(TAG, "in onDragEvent");
             return mWebContents.getEventForwarder().onDragEvent(event, mContainerView);
         }
 
         @Override
         public boolean onKeyUp(int keyCode, KeyEvent event) {
+            Log.w(TAG, "in onKeyUp");
             return isDestroyedOrNoOperation(NO_WARN) ? false
                     : mContentViewCore.onKeyUp(keyCode, event);
         }
 
         @Override
         public boolean dispatchKeyEvent(KeyEvent event) {
+            Log.w(TAG, "in dispatchKeyEvent");
             if (isDestroyedOrNoOperation(NO_WARN)) return false;
             if (isDpadEvent(event)) {
                 mSettings.setSpatialNavigationEnabled(true);
@@ -3275,6 +3288,7 @@ public class AwContents implements SmartClipProvider {
 
         @Override
         public boolean onTouchEvent(MotionEvent event) {
+            Log.w(TAG, "in onTouchEvent");
             if (isDestroyedOrNoOperation(NO_WARN)) return false;
             if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
                 mSettings.setSpatialNavigationEnabled(false);
@@ -3315,12 +3329,14 @@ public class AwContents implements SmartClipProvider {
 
         @Override
         public boolean onGenericMotionEvent(MotionEvent event) {
+            Log.w(TAG, "in onGenericMotionEvent");
             return isDestroyedOrNoOperation(NO_WARN) ? false
                     : mContentViewCore.onGenericMotionEvent(event);
         }
 
         @Override
         public void onConfigurationChanged(Configuration newConfig) {
+            Log.w(TAG, "in onConfigurationChanged");
             if (!isDestroyedOrNoOperation(NO_WARN)) {
                 mContentViewCore.onConfigurationChanged(newConfig);
             }
@@ -3328,6 +3344,7 @@ public class AwContents implements SmartClipProvider {
 
         @Override
         public void onAttachedToWindow() {
+            Log.w(TAG, "in onAttachedToWindow");
             if (isDestroyedOrNoOperation(NO_WARN)) return;
             if (mIsAttachedToWindow) {
                 Log.w(TAG, "onAttachedToWindow called when already attached. Ignoring");
@@ -3336,6 +3353,8 @@ public class AwContents implements SmartClipProvider {
             mIsAttachedToWindow = true;
 
             mContentViewCore.onAttachedToWindow();
+            Log.e(TAG, "in onAttachedToWindow, calling nativeOnAttachedToWindow (%d, %d)",
+                    mContainerView.getWidth(), mContainerView.getHeight());
             nativeOnAttachedToWindow(mNativeAwContents, mContainerView.getWidth(),
                     mContainerView.getHeight());
             updateHardwareAcceleratedFeaturesToggle();
@@ -3352,6 +3371,7 @@ public class AwContents implements SmartClipProvider {
 
         @Override
         public void onDetachedFromWindow() {
+            Log.w(TAG, "in onDetachedFromWindow");
             if (isDestroyedOrNoOperation(NO_WARN)) return;
             if (!mIsAttachedToWindow) {
                 Log.w(TAG, "onDetachedFromWindow called when already detached. Ignoring");
@@ -3377,6 +3397,7 @@ public class AwContents implements SmartClipProvider {
 
         @Override
         public void onWindowFocusChanged(boolean hasWindowFocus) {
+            Log.w(TAG, "in onWindowFocusChanged");
             if (isDestroyedOrNoOperation(NO_WARN)) return;
             mWindowFocused = hasWindowFocus;
             mContentViewCore.onWindowFocusChanged(hasWindowFocus);
@@ -3384,6 +3405,7 @@ public class AwContents implements SmartClipProvider {
 
         @Override
         public void onFocusChanged(boolean focused, int direction, Rect previouslyFocusedRect) {
+            Log.w(TAG, "in onFocusChanged");
             if (isDestroyedOrNoOperation(NO_WARN)) return;
             mContainerViewFocused = focused;
             mContentViewCore.onFocusChanged(focused, false /* hideKeyboardOnBlur */);
@@ -3391,6 +3413,7 @@ public class AwContents implements SmartClipProvider {
 
         @Override
         public void onSizeChanged(int w, int h, int ow, int oh) {
+            Log.w(TAG, "in onSizeChanged");
             if (isDestroyedOrNoOperation(NO_WARN)) return;
             mScrollOffsetManager.setContainerViewSize(w, h);
             // The AwLayoutSizer needs to go first so that if we're in
@@ -3404,6 +3427,7 @@ public class AwContents implements SmartClipProvider {
 
         @Override
         public void onVisibilityChanged(View changedView, int visibility) {
+            Log.w(TAG, "in onVisibilityChanged");
             boolean viewVisible = mContainerView.getVisibility() == View.VISIBLE;
             if (mIsViewVisible == viewVisible) return;
             setViewVisibilityInternal(viewVisible);
@@ -3411,6 +3435,7 @@ public class AwContents implements SmartClipProvider {
 
         @Override
         public void onWindowVisibilityChanged(int visibility) {
+            Log.w(TAG, "in onWindowVisibilityChanged");
             boolean windowVisible = visibility == View.VISIBLE;
             if (mIsWindowVisible == windowVisible) return;
             setWindowVisibilityInternal(windowVisible);
@@ -3418,6 +3443,7 @@ public class AwContents implements SmartClipProvider {
 
         @Override
         public void onContainerViewScrollChanged(int l, int t, int oldl, int oldt) {
+            Log.w(TAG, "in onContainerViewScrollChanged");
             // A side-effect of View.onScrollChanged is that the scroll accessibility event being
             // sent by the base class implementation. This is completely hidden from the base
             // classes and cannot be prevented, which is why we need the code below.
@@ -3428,6 +3454,7 @@ public class AwContents implements SmartClipProvider {
         @Override
         public void onContainerViewOverScrolled(int scrollX, int scrollY, boolean clampedX,
                 boolean clampedY) {
+            Log.w(TAG, "in onContainerViewOverScrolled");
             int oldX = mContainerView.getScrollX();
             int oldY = mContainerView.getScrollY();
 
@@ -3443,31 +3470,37 @@ public class AwContents implements SmartClipProvider {
 
         @Override
         public int computeHorizontalScrollRange() {
+            Log.w(TAG, "in computeHorizontalScrollRange");
             return mScrollOffsetManager.computeHorizontalScrollRange();
         }
 
         @Override
         public int computeHorizontalScrollOffset() {
+            Log.w(TAG, "in computeHorizontalScrollOffset");
             return mScrollOffsetManager.computeHorizontalScrollOffset();
         }
 
         @Override
         public int computeVerticalScrollRange() {
+            Log.w(TAG, "in computeVerticalScrollRange");
             return mScrollOffsetManager.computeVerticalScrollRange();
         }
 
         @Override
         public int computeVerticalScrollOffset() {
+            Log.w(TAG, "in computeVerticalScrollOffset");
             return mScrollOffsetManager.computeVerticalScrollOffset();
         }
 
         @Override
         public int computeVerticalScrollExtent() {
+            Log.w(TAG, "in computeVerticalScrollExtent");
             return mScrollOffsetManager.computeVerticalScrollExtent();
         }
 
         @Override
         public void computeScroll() {
+            Log.w(TAG, "in computeScroll");
             if (isDestroyedOrNoOperation(NO_WARN)) return;
             nativeOnComputeScroll(mNativeAwContents, AnimationUtils.currentAnimationTimeMillis());
         }
