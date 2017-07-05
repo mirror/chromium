@@ -298,6 +298,16 @@ public class Promise<T> {
     }
 
     /**
+     * Must be called after the promise has been fulfilled.
+     *
+     * @return The promised result.
+     */
+    public T getResult() {
+        assert isFulfilled();
+        return mResult;
+    }
+
+    /**
      * Convenience method to return a Promise fulfilled with the given result.
      */
     public static <T> Promise<T> fulfilled(T result) {
