@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04c65b05_db81c3f0",
+        "filename": "content/browser/renderer_host/input/legacy_input_router_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-05T16:00:23Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we only generate touch actions for touch starts?",
+      "revId": "42c08a972f33bf4d2edcf2fbf8482853fd1568fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed522d35_b74973dd",
+        "filename": "content/common/input/input_event_ack.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-05T16:00:23Z",
+      "side": 1,
+      "message": "It\u0027s strange to use a pointer and heap allocation for a simple type (enum). How about adding an invalid value to the enum? i.e. kInvalidTouchAction \u003d -1 (or perhaps kNoTouchAction to denote that the value is valid for non-touch acks). Then you can assert that touch action is invalid for acks on everything but touch starts.",
+      "revId": "42c08a972f33bf4d2edcf2fbf8482853fd1568fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5364f38_2e3f5573",
+        "filename": "content/renderer/input/render_widget_input_handler.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-05T16:00:23Z",
+      "side": 1,
+      "message": "nit: Remove, just comment what this variable is for.",
+      "range": {
+        "startLine": 79,
+        "startChar": 5,
+        "endLine": 79,
+        "endChar": 48
+      },
+      "revId": "42c08a972f33bf4d2edcf2fbf8482853fd1568fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb67ee67_67a84fd8",
+        "filename": "content/renderer/input/render_widget_input_handler.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-05T16:00:23Z",
+      "side": 1,
+      "message": "s/cause a/has an associated",
+      "range": {
+        "startLine": 80,
+        "startChar": 59,
+        "endLine": 80,
+        "endChar": 66
+      },
+      "revId": "42c08a972f33bf4d2edcf2fbf8482853fd1568fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
