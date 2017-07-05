@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c0e6d8c_81c240ef",
+        "filename": "services/ui/public/interfaces/gpu.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-05T06:11:57Z",
+      "side": 1,
+      "message": "IIRC gpu.mojom is only used from renderer [1], and currently\nJDAs are only created from the Browser process [2]. Hence\nthe only place where we need to add a factory method is \nGpuProcessHost - gpu_service.mojom - GpuService (and we can\nfind GpuProcessHost a la [3]).  Correct?\n\n(I think that when mojifying interfaces is better to leave\nthe current dialogues as unchanged as possible -- so, although\nwe might think it\u0027s interesting to make JDAs available to\nrenderer(s), all that should happen in other CLs).\n\n[1] see the diagram in https://goo.gl/HkwYvA\n[2] https://cs.chromium.org/chromium/src/content/browser/renderer_host/media/in_process_video_capture_device_launcher.cc?dr\u003dC\u0026l\u003d159\n[3] https://cs.chromium.org/chromium/src/content/browser/renderer_host/media/video_capture_gpu_jpeg_decoder.cc?dr\u003dCSs\u0026l\u003d227",
+      "range": {
+        "startLine": 33,
+        "startChar": 2,
+        "endLine": 33,
+        "endChar": 19
+      },
+      "revId": "8356ddd70771c954c97aeb274f664031bd455a01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
