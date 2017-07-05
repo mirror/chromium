@@ -110,6 +110,30 @@
       "revId": "e1e85a1107432588ee1a16be51733f3a3f287316",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "239720a1_bc173350",
+        "filename": "services/ui/ws/gpu_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-05T04:46:04Z",
+      "side": 1,
+      "message": "It can get it from ui::[Default]GpuHost.",
+      "parentUuid": "9d796011_1dae6c72",
+      "range": {
+        "startLine": 69,
+        "startChar": 19,
+        "endLine": 69,
+        "endChar": 0
+      },
+      "revId": "e1e85a1107432588ee1a16be51733f3a3f287316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
