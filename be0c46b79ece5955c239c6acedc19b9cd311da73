@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e504a9ab_19c5443e",
+        "filename": "build/android/gyp/package_resources.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1123219
+      },
+      "writtenOn": "2017-07-05T21:59:21Z",
+      "side": 1,
+      "message": "What\u0027s the special case with \"*.9.png\"? I think that deserves a comment.",
+      "range": {
+        "startLine": 379,
+        "startChar": 53,
+        "endLine": 379,
+        "endChar": 78
+      },
+      "revId": "be0c46b79ece5955c239c6acedc19b9cd311da73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7da7d02_b8ab4dca",
+        "filename": "build/config/android/rules.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 1525,
+      "author": {
+        "id": 1123219
+      },
+      "writtenOn": "2017-07-05T21:59:21Z",
+      "side": 1,
+      "message": "Maybe \"png_to_webp\" is a better name given you are only converting PNGs (and not all images) to WebP.",
+      "range": {
+        "startLine": 1525,
+        "startChar": 6,
+        "endLine": 1525,
+        "endChar": 21
+      },
+      "revId": "be0c46b79ece5955c239c6acedc19b9cd311da73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
