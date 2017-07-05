@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68b1a14c_32a6c91a",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-07-05T03:46:57Z",
+      "side": 1,
+      "message": "It\u0027s raster, not decode, right?",
+      "revId": "f583d13136c58b90ebe769d3bc0d0ca25db4181d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
