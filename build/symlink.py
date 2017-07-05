@@ -15,6 +15,7 @@ the sources (basenames identical to their source).
 
 import errno
 import optparse
+import os
 import os.path
 import shutil
 import sys
@@ -36,8 +37,15 @@ def Main(argv):
     if len(sources) == 1 and not os.path.isdir(target):
       t = target
     t = os.path.expanduser(t)
-    if os.path.realpath(t) == s:
-      continue
+
+    # Recreate symlink to update timestamp of symlink
+    # if it has been already there.
+    try:
+      os.remove(t)
+    except OSError as e:
+      if e.errno != errno.ENOENT:
+        raise
+
     try:
       os.symlink(s, t)
     except OSError, e:
