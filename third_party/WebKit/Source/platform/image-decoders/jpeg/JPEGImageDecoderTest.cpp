@@ -87,49 +87,37 @@ void ReadYUV(size_t max_decoded_bytes,
   std::unique_ptr<ImageDecoder> decoder = CreateDecoder(max_decoded_bytes);
   decoder->SetData(data.Get(), true);
 
-  // Setting a dummy ImagePlanes object signals to the decoder that we want to
-  // do YUV decoding.
-  std::unique_ptr<ImagePlanes> dummy_image_planes =
-      WTF::MakeUnique<ImagePlanes>();
-  decoder->SetImagePlanes(std::move(dummy_image_planes));
-
   bool size_is_available = decoder->IsSizeAvailable();
   ASSERT_TRUE(size_is_available);
 
-  IntSize size = decoder->DecodedSize();
-  IntSize y_size = decoder->DecodedYUVSize(0);
-  IntSize u_size = decoder->DecodedYUVSize(1);
-  IntSize v_size = decoder->DecodedYUVSize(2);
+  SkYUVSizeInfo info;
+  SkYUVColorSpace color_space = kJPEG_SkYUVColorSpace;
 
-  ASSERT_TRUE(size.Width() == y_size.Width());
-  ASSERT_TRUE(size.Height() == y_size.Height());
-  ASSERT_TRUE(u_size.Width() == v_size.Width());
-  ASSERT_TRUE(u_size.Height() == v_size.Height());
+  ASSERT_TRUE(decoder->onQueryYUV8(&info, &color_space));
 
-  *output_y_width = y_size.Width();
-  *output_y_height = y_size.Height();
-  *output_uv_width = u_size.Width();
-  *output_uv_height = u_size.Height();
+  *output_y_width = info.fSizes[SkYUVSizeInfo::kY].width();
+  *output_y_height = info.fSizes[SkYUVSizeInfo::kY].height();
+  *output_uv_width = info.fSizes[SkYUVSizeInfo::kU].width();
+  *output_uv_height = info.fSizes[SkYUVSizeInfo::kU].height();
 
-  size_t row_bytes[3];
-  row_bytes[0] = decoder->DecodedYUVWidthBytes(0);
-  row_bytes[1] = decoder->DecodedYUVWidthBytes(1);
-  row_bytes[2] = decoder->DecodedYUVWidthBytes(2);
+  // Allocate the memory for the YUV decode
+  RefPtr<ArrayBuffer> buffer(
+      ArrayBuffer::Create(info.fWidthBytes[SkYUVSizeInfo::kY] *
+                                  info.fSizes[SkYUVSizeInfo::kY].height() +
+                              info.fWidthBytes[SkYUVSizeInfo::kU] *
+                                  info.fSizes[SkYUVSizeInfo::kU].height() +
+                              info.fWidthBytes[SkYUVSizeInfo::kV] *
+                                  info.fSizes[SkYUVSizeInfo::kV].height(),
+                          1));
 
-  RefPtr<ArrayBuffer> buffer(ArrayBuffer::Create(
-      row_bytes[0] * y_size.Height() + row_bytes[1] * u_size.Height() +
-          row_bytes[2] * v_size.Height(),
-      1));
   void* planes[3];
   planes[0] = buffer->Data();
-  planes[1] = ((char*)planes[0]) + row_bytes[0] * y_size.Height();
-  planes[2] = ((char*)planes[1]) + row_bytes[1] * u_size.Height();
+  planes[1] = ((char*)planes[0]) + info.fWidthBytes[SkYUVSizeInfo::kY] *
+                                       info.fSizes[SkYUVSizeInfo::kY].height();
+  planes[2] = ((char*)planes[1]) + info.fWidthBytes[SkYUVSizeInfo::kU] *
+                                       info.fSizes[SkYUVSizeInfo::kU].height();
 
-  std::unique_ptr<ImagePlanes> image_planes =
-      WTF::MakeUnique<ImagePlanes>(planes, row_bytes);
-  decoder->SetImagePlanes(std::move(image_planes));
-
-  ASSERT_TRUE(decoder->DecodeToYUV());
+  ASSERT_TRUE(decoder->DecodeToYUV(info, planes));
 }
 
 // Tests failure on a too big image.
@@ -262,10 +250,7 @@ TEST(JPEGImageDecoderTest, yuv) {
   std::unique_ptr<ImageDecoder> decoder = CreateDecoder(230 * 230 * 4);
   decoder->SetData(data.Get(), true);
 
-  std::unique_ptr<ImagePlanes> image_planes = WTF::MakeUnique<ImagePlanes>();
-  decoder->SetImagePlanes(std::move(image_planes));
   ASSERT_TRUE(decoder->IsSizeAvailable());
-  ASSERT_FALSE(decoder->CanDecodeToYUV());
 }
 
 TEST(JPEGImageDecoderTest,
