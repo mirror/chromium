@@ -208,14 +208,15 @@ void TileItemView::UpdateBackgroundColor() {
   if (white_selected_color_enabled_) {
     SetBackground(nullptr);
     SchedulePaint();
-    return;
+    // return;
   }
 
   std::unique_ptr<views::Background> background;
   SkColor background_color = parent_background_color_;
 
   if (selected_) {
-    background_color = kSelectedColor;
+    // background_color = kSelectedColor;
+    background_color = kGridSelectedColor;
     background = views::CreateSolidBackground(background_color);
   } else if (image_shadow_animator_) {
     if (state() == STATE_HOVERED || state() == STATE_PRESSED)
