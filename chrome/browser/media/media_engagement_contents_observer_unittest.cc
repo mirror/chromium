@@ -12,7 +12,24 @@
 #include "chrome/test/base/testing_profile.h"
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/web_contents.h"
+#include "content/test/test_web_contents.h"
 #include "testing/gtest/include/gtest/gtest.h"
+
+// Mocks out WasRecentlyAudible for testing.
+class MockWebContents : public content::TestWebContents {
+ public:
+  explicit MockWebContents(content::BrowserContext* context)
+      : content::TestWebContents(context) {}
+
+  bool WasRecentlyAudible() override { return was_recently_audible_; }
+
+  void SetWasRecentlyAudible(bool audible) { was_recently_audible_ = audible; }
+
+ private:
+  bool was_recently_audible_ = false;
+
+  DISALLOW_COPY_AND_ASSIGN(MockWebContents);
+};
 
 class MediaEngagementContentsObserverTest
     : public ChromeRenderViewHostTestHarness {
@@ -22,6 +39,14 @@ class MediaEngagementContentsObserverTest
 
     ChromeRenderViewHostTestHarness::SetUp();
 
+    scoped_refptr<content::SiteInstance> site_instance =
+        content::SiteInstance::Create(browser_context());
+    site_instance->GetProcess()->Init();
+    MockWebContents* mock_web_contents = new MockWebContents(browser_context());
+    mock_web_contents->Init(content::WebContents::CreateParams(
+        browser_context(), std::move(site_instance)));
+    SetContents(mock_web_contents);
+
     MediaEngagementService* service = MediaEngagementService::Get(profile());
     ASSERT_TRUE(service);
     contents_observer_ =
@@ -30,7 +55,7 @@ class MediaEngagementContentsObserverTest
     playback_timer_ = new base::MockTimer(true, false);
     contents_observer_->SetTimerForTest(base::WrapUnique(playback_timer_));
 
-    ASSERT_FALSE(GetStoredPlayerStatesCount());
+    SimulateInaudible();
   }
 
   bool IsTimerRunning() const { return playback_timer_->IsRunning(); }
@@ -101,6 +126,12 @@ class MediaEngagementContentsObserverTest
 
   void SimulatePlaybackTimerFired() { playback_timer_->Fire(); }
 
+  void SimulateAudible() { mock_web_contents()->SetWasRecentlyAudible(true); }
+
+  void SimulateInaudible() {
+    mock_web_contents()->SetWasRecentlyAudible(false);
+  }
+
  private:
   // contents_observer_ auto-destroys when WebContents is destroyed.
   MediaEngagementContentsObserver* contents_observer_;
@@ -108,6 +139,10 @@ class MediaEngagementContentsObserverTest
   base::test::ScopedFeatureList scoped_feature_list_;
 
   base::MockTimer* playback_timer_;
+
+  MockWebContents* mock_web_contents() {
+    return static_cast<MockWebContents*>(web_contents());
+  }
 };
 
 // TODO(mlamouri): test that visits are not recorded multiple times when a
@@ -153,8 +188,8 @@ TEST_F(MediaEngagementContentsObserverTest, AreConditionsMet) {
 
   web_contents()->SetAudioMuted(true);
   EXPECT_FALSE(AreConditionsMet());
-
   web_contents()->SetAudioMuted(false);
+
   SimulateIsHidden();
   EXPECT_FALSE(AreConditionsMet());
 
@@ -233,6 +268,7 @@ TEST_F(MediaEngagementContentsObserverTest,
        SignificantPlaybackRecordedWhenTimerFires) {
   SimulatePlaybackStarted(0);
   SimulateIsVisible();
+  SimulateAudible();
   web_contents()->SetAudioMuted(false);
   SimulateResizeEvent(0, MediaEngagementContentsObserver::kSignificantSize);
   EXPECT_TRUE(IsTimerRunning());
@@ -240,6 +276,16 @@ TEST_F(MediaEngagementContentsObserverTest,
 
   SimulatePlaybackTimerFired();
   EXPECT_TRUE(WasSignificantPlaybackRecorded());
+}
+
+TEST_F(MediaEngagementContentsObserverTest,
+       SignificantPlaybackNotRecordedIfAudioSilent) {
+  SimulatePlaybackStarted(0);
+  SimulateIsVisible();
+  SimulateInaudible();
+  web_contents()->SetAudioMuted(false);
+  EXPECT_FALSE(IsTimerRunning());
+  EXPECT_FALSE(WasSignificantPlaybackRecorded());
 }
 
 TEST_F(MediaEngagementContentsObserverTest, DoNotRecordAudiolessTrack) {
