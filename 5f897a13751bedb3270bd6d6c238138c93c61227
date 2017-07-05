@@ -242,6 +242,24 @@
     },
     {
       "key": {
+        "uuid": "7bd04849_70796307",
+        "filename": "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-05T22:18:01Z",
+      "side": 1,
+      "message": "Thanks! It is sad that compilers can\u0027t optimize this away. You probably know this, but an inline function is a hint to the compiler rather than a requirement that the given function be inlined. It\u0027s also interesting that this is inconsistent with the Google style guide.",
+      "parentUuid": "7b63d6a8_f12d0852",
+      "revId": "5f897a13751bedb3270bd6d6c238138c93c61227",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "316982f2_d8b2b7b3",
         "filename": "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.h",
         "patchSetId": 4
