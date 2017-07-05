@@ -36,7 +36,8 @@ class RenderWidgetFullscreenPepper : public RenderWidget,
       CompositorDependencies* compositor_deps,
       PepperPluginInstanceImpl* plugin,
       const GURL& active_url,
-      const ScreenInfo& screen_info);
+      const ScreenInfo& screen_info,
+      bool wait_for_all_pipeline_stages_before_draw);
 
   // pepper::FullscreenContainer API.
   void Invalidate() override;
@@ -61,7 +62,8 @@ class RenderWidgetFullscreenPepper : public RenderWidget,
                                CompositorDependencies* compositor_deps,
                                PepperPluginInstanceImpl* plugin,
                                const GURL& active_url,
-                               const ScreenInfo& screen_info);
+                               const ScreenInfo& screen_info,
+                               bool wait_for_all_pipeline_stages_before_draw);
   ~RenderWidgetFullscreenPepper() override;
 
   // RenderWidget API.

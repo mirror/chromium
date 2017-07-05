@@ -286,10 +286,12 @@ std::unique_ptr<cc::LayerTreeHost> RenderWidgetCompositor::CreateLayerTreeHost(
     cc::MutatorHost* mutator_host,
     CompositorDependencies* deps,
     float device_scale_factor,
-    const ScreenInfo& screen_info) {
+    const ScreenInfo& screen_info,
+    bool wait_for_all_pipeline_stages_before_draw) {
   base::CommandLine* cmd = base::CommandLine::ForCurrentProcess();
   cc::LayerTreeSettings settings = GenerateLayerTreeSettings(
-      *cmd, deps, device_scale_factor, client->IsForSubframe(), screen_info);
+      *cmd, deps, device_scale_factor, client->IsForSubframe(), screen_info,
+      wait_for_all_pipeline_stages_before_draw);
 
   const bool is_threaded = !!deps->GetCompositorImplThreadTaskRunner();
 
@@ -327,7 +329,8 @@ cc::LayerTreeSettings RenderWidgetCompositor::GenerateLayerTreeSettings(
     CompositorDependencies* compositor_deps,
     float device_scale_factor,
     bool is_for_subframe,
-    const ScreenInfo& screen_info) {
+    const ScreenInfo& screen_info,
+    bool wait_for_all_pipeline_stages_before_draw) {
   cc::LayerTreeSettings settings;
 
   settings.is_layer_tree_for_subframe = is_for_subframe;
@@ -541,6 +544,9 @@ cc::LayerTreeSettings RenderWidgetCompositor::GenerateLayerTreeSettings(
 
   settings.disallow_non_exact_resource_reuse =
       cmd.HasSwitch(cc::switches::kDisallowNonExactResourceReuse);
+
+  settings.wait_for_all_pipeline_stages_before_draw =
+      wait_for_all_pipeline_stages_before_draw;
 
   return settings;
 }

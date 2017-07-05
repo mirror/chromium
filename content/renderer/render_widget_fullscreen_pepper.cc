@@ -253,12 +253,14 @@ RenderWidgetFullscreenPepper* RenderWidgetFullscreenPepper::Create(
     CompositorDependencies* compositor_deps,
     PepperPluginInstanceImpl* plugin,
     const GURL& active_url,
-    const ScreenInfo& screen_info) {
+    const ScreenInfo& screen_info,
+    bool wait_for_all_pipeline_stages_before_draw) {
   DCHECK_NE(MSG_ROUTING_NONE, routing_id);
   DCHECK(!show_callback.is_null());
   scoped_refptr<RenderWidgetFullscreenPepper> widget(
-      new RenderWidgetFullscreenPepper(routing_id, compositor_deps, plugin,
-                                       active_url, screen_info));
+      new RenderWidgetFullscreenPepper(
+          routing_id, compositor_deps, plugin, active_url, screen_info,
+          wait_for_all_pipeline_stages_before_draw));
   widget->Init(show_callback, new PepperWidget(widget.get()));
   widget->AddRef();
   return widget.get();
@@ -269,14 +271,16 @@ RenderWidgetFullscreenPepper::RenderWidgetFullscreenPepper(
     CompositorDependencies* compositor_deps,
     PepperPluginInstanceImpl* plugin,
     const GURL& active_url,
-    const ScreenInfo& screen_info)
+    const ScreenInfo& screen_info,
+    bool wait_for_all_pipeline_stages_before_draw)
     : RenderWidget(routing_id,
                    compositor_deps,
                    blink::kWebPopupTypeNone,
                    screen_info,
                    false,
                    false,
-                   false),
+                   false,
+                   wait_for_all_pipeline_stages_before_draw),
       active_url_(active_url),
       plugin_(plugin),
       layer_(NULL),

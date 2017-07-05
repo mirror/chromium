@@ -72,6 +72,11 @@ struct CreateViewParams {
 
   // The ICC profile of the output color space to use for image decode.
   gfx.mojom.ICCProfile image_decode_color_space;
+
+  // Whether the RenderWidgetCompositor should wait for all compositing pipeline
+  // stages (main thread, commit, tiles, activation) before triggering a
+  // BeginFrame deadline and producing a CompositorFrame.
+  bool wait_for_all_pipeline_stages_before_draw;
 };
 
 struct CreateFrameWidgetParams {
@@ -82,6 +87,11 @@ struct CreateFrameWidgetParams {
 
   // Tells the new RenderWidget whether it is initially hidden.
   bool hidden;
+
+  // Whether the RenderWidgetCompositor should wait for all compositing pipeline
+  // stages (main thread, commit, tiles, activation) before triggering a
+  // BeginFrame deadline and producing a CompositorFrame.
+  bool wait_for_all_pipeline_stages_before_draw;
 };
 
 struct CreateFrameParams {
