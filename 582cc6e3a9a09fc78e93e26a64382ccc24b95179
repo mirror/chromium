@@ -140,6 +140,30 @@
     },
     {
       "key": {
+        "uuid": "ade5cc93_50d0378d",
+        "filename": "components/omnibox/browser/autocomplete_provider_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-07-05T19:51:33Z",
+      "side": 1,
+      "message": "I had a similar thought but I hesitated at the need to add another method (ResetSession) to AutocompleteProviderClient. I prefer this but I\u0027m open to changing it if you think the extra method is worth it.",
+      "parentUuid": "8f278a16_61e05367",
+      "range": {
+        "startLine": 130,
+        "startChar": 15,
+        "endLine": 130,
+        "endChar": 22
+      },
+      "revId": "582cc6e3a9a09fc78e93e26a64382ccc24b95179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "84818b77_6c106874",
         "filename": "components/omnibox/browser/autocomplete_provider_client.h",
         "patchSetId": 1
