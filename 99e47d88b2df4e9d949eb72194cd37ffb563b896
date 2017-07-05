@@ -45,6 +45,23 @@
       "revId": "99e47d88b2df4e9d949eb72194cd37ffb563b896",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5d32c45_6ad59d31",
+        "filename": "ui/events/DEPS",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-05T04:39:16Z",
+      "side": 1,
+      "message": "Can you move this into ui/events/devices/DEPS? (maybe with a specific_include_rules)",
+      "revId": "99e47d88b2df4e9d949eb72194cd37ffb563b896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
