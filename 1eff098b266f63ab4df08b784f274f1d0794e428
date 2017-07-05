@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b16505ef_94162699",
+        "filename": "chrome/browser/password_manager/native_backend_libsecret_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-05T09:50:57Z",
+      "side": 1,
+      "message": "Thanks, Vasilii, I should have read the documentation more carefully.\nDone in a separate CL.",
+      "parentUuid": "aa814a98_a9649049",
+      "range": {
+        "startLine": 346,
+        "startChar": 10,
+        "endLine": 346,
+        "endChar": 17
+      },
+      "revId": "1eff098b266f63ab4df08b784f274f1d0794e428",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f200a98d_8fa8772c",
         "filename": "chrome/browser/password_manager/password_store_x_unittest.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "1eff098b266f63ab4df08b784f274f1d0794e428",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "196ecf47_ebd86bdc",
+        "filename": "chrome/browser/password_manager/password_store_x_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-05T09:50:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f200a98d_8fa8772c",
+      "range": {
+        "startLine": 335,
+        "startChar": 15,
+        "endLine": 335,
+        "endChar": 29
+      },
+      "revId": "1eff098b266f63ab4df08b784f274f1d0794e428",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "2e3c237a_477b8d4a",
+        "filename": "components/password_manager/content/browser/credential_manager_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-05T09:50:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "425b0ddb_66424ffc",
+      "range": {
+        "startLine": 170,
+        "startChar": 23,
+        "endLine": 170,
+        "endChar": 34
+      },
+      "revId": "1eff098b266f63ab4df08b784f274f1d0794e428",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79f927c9_21d0ccba",
         "filename": "components/password_manager/content/renderer/credential_manager_client_browsertest.cc",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "1eff098b266f63ab4df08b784f274f1d0794e428",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc468532_64e4ef3e",
+        "filename": "components/password_manager/content/renderer/credential_manager_client_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-05T09:50:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79f927c9_21d0ccba",
+      "range": {
+        "startLine": 178,
+        "startChar": 6,
+        "endLine": 178,
+        "endChar": 15
+      },
+      "revId": "1eff098b266f63ab4df08b784f274f1d0794e428",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "e9faa290_20e38637",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliated_match_helper_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-05T09:50:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f844d622_87756519",
+      "range": {
+        "startLine": 19,
+        "startChar": 25,
+        "endLine": 19,
+        "endChar": 53
+      },
+      "revId": "1eff098b266f63ab4df08b784f274f1d0794e428",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89c12e43_2c7f61ae",
         "filename": "components/password_manager/core/browser/android_affiliation/affiliation_backend.cc",
         "patchSetId": 5
@@ -137,6 +257,30 @@
       "revId": "1eff098b266f63ab4df08b784f274f1d0794e428",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "816064fa_6bfd7d4b",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_backend.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-05T09:50:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89c12e43_2c7f61ae",
+      "range": {
+        "startLine": 46,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 8
+      },
+      "revId": "1eff098b266f63ab4df08b784f274f1d0794e428",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "5f021f8a_158f013e",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_fetch_throttler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-05T09:50:57Z",
+      "side": 1,
+      "message": "I don\u0027t think so, good point.",
+      "parentUuid": "538495eb_a4c0ebcf",
+      "range": {
+        "startLine": 12,
+        "startChar": 25,
+        "endLine": 12,
+        "endChar": 53
+      },
+      "revId": "1eff098b266f63ab4df08b784f274f1d0794e428",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3dc0a86f_d980048c",
         "filename": "components/password_manager/core/browser/android_affiliation/affiliation_fetch_throttler_unittest.cc",
         "patchSetId": 5
@@ -183,6 +351,30 @@
       "revId": "1eff098b266f63ab4df08b784f274f1d0794e428",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7700b608_90de5dfe",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_fetch_throttler_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-05T09:50:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3dc0a86f_d980048c",
+      "range": {
+        "startLine": 21,
+        "startChar": 25,
+        "endLine": 21,
+        "endChar": 53
+      },
+      "revId": "1eff098b266f63ab4df08b784f274f1d0794e428",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "ad78b8cb_dc2f56cc",
+        "filename": "components/password_manager/core/browser/import/password_importer_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-05T09:50:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "754322e3_48c00c36",
+      "range": {
+        "startLine": 16,
+        "startChar": 25,
+        "endLine": 16,
+        "endChar": 53
+      },
+      "revId": "1eff098b266f63ab4df08b784f274f1d0794e428",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05132b09_45840cf4",
         "filename": "components/password_manager/core/browser/password_store.h",
         "patchSetId": 5
@@ -220,6 +436,30 @@
       "writtenOn": "2017-07-04T09:51:03Z",
       "side": 1,
       "message": "Do you want to fix the comments here and below?",
+      "range": {
+        "startLine": 336,
+        "startChar": 46,
+        "endLine": 336,
+        "endChar": 48
+      },
+      "revId": "1eff098b266f63ab4df08b784f274f1d0794e428",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "381107c9_22852053",
+        "filename": "components/password_manager/core/browser/password_store.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-05T09:50:57Z",
+      "side": 1,
+      "message": "But is it not still true, that DB thread is used by default? It should be removed in a follow-up CL.",
+      "parentUuid": "05132b09_45840cf4",
       "range": {
         "startLine": 336,
         "startChar": 46,
