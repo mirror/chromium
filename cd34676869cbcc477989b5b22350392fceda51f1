@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66ff19e3_b7cef3d2",
+        "filename": "content/browser/indexed_db/indexed_db_dispatcher_host_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-07-05T21:48:41Z",
+      "side": 1,
+      "message": "Initialize to error, here and above.",
+      "revId": "cd34676869cbcc477989b5b22350392fceda51f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e66c63b8_26298db2",
+        "filename": "content/browser/indexed_db/indexed_db_dispatcher_host_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-07-05T21:48:41Z",
+      "side": 1,
+      "message": "EXPECT_EQ(::indexed_db::mojom::Status::OK, callback_result); here and above",
+      "range": {
+        "startLine": 630,
+        "startChar": 0,
+        "endLine": 630,
+        "endChar": 66
+      },
+      "revId": "cd34676869cbcc477989b5b22350392fceda51f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e813d08_5a6e412c",
+        "filename": "content/common/indexed_db/indexed_db.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-07-05T21:48:41Z",
+      "side": 1,
+      "message": "Just to avoid confusion w/ naming, can you rename this to CompactionStatus?",
+      "revId": "cd34676869cbcc477989b5b22350392fceda51f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
