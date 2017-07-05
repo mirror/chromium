@@ -19,6 +19,143 @@
     },
     {
       "key": {
+        "uuid": "f49f0c79_b2931291",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-05T20:24:49Z",
+      "side": 1,
+      "message": "I think either test file would be fine; they\u0027re pretty similar.\n\nRe adding IsCommandIdVisible to RenderViewContextMenu, we may have to do that regardless.  Otherwise, the items may still show up (even if they\u0027re specified as not visible) in the renderer context menus.  That would be a good thing to test.",
+      "parentUuid": "a6894a5c_9c77c050",
+      "revId": "e92cf4239940278aaf91a5eebbc5c19cc9e3c944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62fc6a66_ff768072",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-05T20:24:49Z",
+      "side": 1,
+      "message": "This isn\u0027t actually a page action, right?",
+      "revId": "e92cf4239940278aaf91a5eebbc5c19cc9e3c944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a9597ac_0efc6042",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-05T20:24:49Z",
+      "side": 1,
+      "message": "This will be leaked, won\u0027t it?",
+      "revId": "e92cf4239940278aaf91a5eebbc5c19cc9e3c944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4812199_9c4295e8",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-05T20:24:49Z",
+      "side": 1,
+      "message": "The flow of these tests is a bit strange.  Instead, I think we would be better off using the background page to run the tests and using that rather than doing a navigation to a specific page within the extension and having a stub background page.  This would also help with some race conditions that are involved here, where since the creation/update methods are async, there\u0027s a chance they may not have finished by the time we check the results.",
+      "revId": "e92cf4239940278aaf91a5eebbc5c19cc9e3c944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac5c5a5a_47389599",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-05T20:24:49Z",
+      "side": 1,
+      "message": "Ideally, we\u0027d be able to check more of the content here.  In particular, just checking the number of items might not be correct if the items themselves are incorrect (e.g., we expect A, B, C, but have A, B, D, a check for a length of 3 passes).",
+      "revId": "e92cf4239940278aaf91a5eebbc5c19cc9e3c944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0657351c_242ce990",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menus_api_helpers.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-05T20:24:49Z",
+      "side": 1,
+      "message": "nit: visible is a std::unique_ptr, which has an operator bool(), so we can just do\nif (create_properties.visible)\n\n(i.e., remove the .get() call)\n\nDitto below on line 224",
+      "revId": "e92cf4239940278aaf91a5eebbc5c19cc9e3c944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61f4144c_1acec26b",
+        "filename": "chrome/browser/extensions/extension_context_menu_model.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-05T20:24:49Z",
+      "side": 1,
+      "message": "Maybe add a comment:\n// Standard menu items are always visible.",
+      "revId": "e92cf4239940278aaf91a5eebbc5c19cc9e3c944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2dfa87c_37d20a13",
+        "filename": "chrome/browser/extensions/extension_context_menu_model_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-05T20:24:49Z",
+      "side": 1,
+      "message": "Are these parens needed?",
+      "revId": "e92cf4239940278aaf91a5eebbc5c19cc9e3c944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8c686b91_dc5282e8",
         "filename": "chrome/browser/extensions/extension_context_menu_model_unittest.cc",
         "patchSetId": 2
@@ -36,6 +173,24 @@
     },
     {
       "key": {
+        "uuid": "ac9f7b32_aa9d915e",
+        "filename": "chrome/browser/extensions/extension_context_menu_model_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-05T20:24:49Z",
+      "side": 1,
+      "message": "Can\u0027t hurt. :)",
+      "parentUuid": "8c686b91_dc5282e8",
+      "revId": "e92cf4239940278aaf91a5eebbc5c19cc9e3c944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "067642d4_aab264b8",
         "filename": "chrome/browser/extensions/extension_context_menu_model_unittest.cc",
         "patchSetId": 2
@@ -47,6 +202,24 @@
       "writtenOn": "2017-07-04T02:08:37Z",
       "side": 1,
       "message": "It doesn\u0027t appear that developers can toggle the visibility of standard menu items via chrome.contextMenus.create/update. Is the test below still needed?",
+      "revId": "e92cf4239940278aaf91a5eebbc5c19cc9e3c944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a9609ed_ec2de013",
+        "filename": "chrome/browser/extensions/extension_context_menu_model_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-05T20:24:49Z",
+      "side": 1,
+      "message": "It\u0027s probably still useful, since the context model now has visibility logic.  If this test had existed before, it would have caught the bug in the previous patchset where the chrome-provided menu items wouldn\u0027t be visible.  So I\u0027d say it\u0027s worth keeping.",
+      "parentUuid": "067642d4_aab264b8",
       "revId": "e92cf4239940278aaf91a5eebbc5c19cc9e3c944",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -76,6 +249,23 @@
     },
     {
       "key": {
+        "uuid": "15cdf831_17941dac",
+        "filename": "chrome/browser/extensions/menu_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-05T20:24:49Z",
+      "side": 1,
+      "message": "nit: We should maybe add a TODO(catmullings): Remove this in MXX+3 when all prefs should be migrated.",
+      "revId": "e92cf4239940278aaf91a5eebbc5c19cc9e3c944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d561f580_c02da503",
         "filename": "chrome/test/data/extensions/api_test/context_menus/item_visibility/create_item/background.js",
         "patchSetId": 2
@@ -93,6 +283,41 @@
     },
     {
       "key": {
+        "uuid": "609aa8d0_4efe10de",
+        "filename": "chrome/test/data/extensions/api_test/context_menus/item_visibility/create_item/background.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-05T20:24:49Z",
+      "side": 1,
+      "message": "The result catcher waits for a message to be sent by the extension, and ends once it is sent.  However, this means that no tests will be run after this point.  We should probably be using notifyPass() from the test file, once the tests are done.",
+      "parentUuid": "d561f580_c02da503",
+      "revId": "e92cf4239940278aaf91a5eebbc5c19cc9e3c944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04914656_475bf04d",
+        "filename": "chrome/test/data/extensions/api_test/context_menus/item_visibility/create_item/popup.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-05T20:24:49Z",
+      "side": 1,
+      "message": "No (c)",
+      "revId": "e92cf4239940278aaf91a5eebbc5c19cc9e3c944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a0256057_02a69963",
         "filename": "chrome/test/data/extensions/api_test/context_menus/item_visibility/create_item/popup.js",
         "patchSetId": 2
@@ -104,6 +329,64 @@
       "writtenOn": "2017-07-04T02:08:37Z",
       "side": 1,
       "message": "For api tests, does chrome.test.assertNoLastError() need to be called in the callbacks for contextMenus.create and update?",
+      "revId": "e92cf4239940278aaf91a5eebbc5c19cc9e3c944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c9467d6_4cfa35a8",
+        "filename": "chrome/test/data/extensions/api_test/context_menus/item_visibility/create_item/popup.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-05T20:24:49Z",
+      "side": 1,
+      "message": "js keys shouldn\u0027t have quotes, and js should use single-quotes (\u0027 vs \")",
+      "range": {
+        "startLine": 6,
+        "startChar": 28,
+        "endLine": 6,
+        "endChar": 35
+      },
+      "revId": "e92cf4239940278aaf91a5eebbc5c19cc9e3c944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5407569_80487df8",
+        "filename": "chrome/test/data/extensions/api_test/context_menus/item_visibility/create_item/popup.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-05T20:24:49Z",
+      "side": 1,
+      "message": "It\u0027s probably best to.  Other assertions might otherwise fail, but this is a good check.",
+      "parentUuid": "a0256057_02a69963",
+      "revId": "e92cf4239940278aaf91a5eebbc5c19cc9e3c944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bd4e887_3fb069fc",
+        "filename": "chrome/test/data/extensions/api_test/context_menus/item_visibility/create_item/popup.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-05T20:24:49Z",
+      "side": 1,
+      "message": "Remove trailing newlines",
       "revId": "e92cf4239940278aaf91a5eebbc5c19cc9e3c944",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
