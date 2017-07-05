@@ -71,6 +71,7 @@ class RenderViewHost;
 class RenderWidgetHost;
 class RenderWidgetHostView;
 class WebContentsDelegate;
+class FrameTreeNode;
 struct CustomContextMenuContext;
 struct DropData;
 struct Manifest;
@@ -250,6 +251,9 @@ class WebContents : public PageNavigator,
 
   // Returns the focused frame for the currently active view.
   virtual RenderFrameHost* GetFocusedFrame() = 0;
+
+  virtual RenderFrameHost* GetScriptedPrintFrame() = 0;
+  virtual void SetScriptedPrintFrame(FrameTreeNode* node) = 0;
 
   // Returns the current RenderFrameHost for a given FrameTreeNode ID if it is
   // part of this frame tree, not including frames in any inner WebContents.
