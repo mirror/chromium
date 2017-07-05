@@ -22,6 +22,30 @@
       "revId": "aae0b2399ef0eae92dde4f0c1662e6952505ac06",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f02502b3_ec9ab989",
+        "filename": "docs/testing/web_platform_tests.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-05T20:55:51Z",
+      "side": 1,
+      "message": "Right now, the importer adds Skip lines to TestExpectations for tests which look like manual tests; a couple times in the past I\u0027ve manually moved those lines over to NeverFixTests.\n\n\"Cleaning up TestExpectations\" could potentially part of the rotation, but it\u0027s not critical/urgent.",
+      "parentUuid": "912b76bc_6e75ff2f",
+      "range": {
+        "startLine": 159,
+        "startChar": 1,
+        "endLine": 159,
+        "endChar": 14
+      },
+      "revId": "aae0b2399ef0eae92dde4f0c1662e6952505ac06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
