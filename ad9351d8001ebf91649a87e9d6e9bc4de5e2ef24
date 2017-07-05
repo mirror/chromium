@@ -87,6 +87,24 @@
       "revId": "ad9351d8001ebf91649a87e9d6e9bc4de5e2ef24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "943350d2_b125255d",
+        "filename": "components/ntp_snippets/content_suggestions_metrics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-05T13:18:22Z",
+      "side": 1,
+      "message": "I meant \"not visible\" as in \"the user just hasn\u0027t scrolled down far enough\", which is not what\u0027s meant here (IIUC).\nMaybe it\u0027s just me - if nobody else is confused by the term, then I guess it\u0027s fine.\n\nHigher-level comment: A different approach would be to simply exclude the \"theoretically-existing-but-empty-and-not-shown\" categories here (not even pass them in from the UI). Since we only count visible sections in the SectionCount histogram below, that seems more consistent. WDYT?",
+      "parentUuid": "0b5bdac6_1a9a99f6",
+      "revId": "ad9351d8001ebf91649a87e9d6e9bc4de5e2ef24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
