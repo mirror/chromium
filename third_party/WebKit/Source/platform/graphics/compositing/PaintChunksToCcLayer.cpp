@@ -44,9 +44,9 @@ static void ApplyClipsBetweenStates(const PropertyTreeState& local_state,
   bool antialias = false;
 
   {
-    cc::PaintOpBuffer* buffer = cc_list.StartPaint();
-    buffer->push<cc::SaveOp>();
-    buffer->push<cc::ClipRectOp>(combined_clip.Rect(), SkClipOp::kIntersect,
+    cc_list.StartPaint();
+    cc_list.push<cc::SaveOp>();
+    cc_list.push<cc::ClipRectOp>(combined_clip.Rect(), SkClipOp::kIntersect,
                                  antialias);
     cc_list.EndPaintOfPairedBegin();
   }
@@ -81,9 +81,9 @@ static void RecordPairedBeginDisplayItems(
         SkMatrix skmatrix =
             static_cast<SkMatrix>(TransformationMatrix::ToSkMatrix44(matrix));
         {
-          cc::PaintOpBuffer* buffer = cc_list.StartPaint();
-          buffer->push<cc::SaveOp>();
-          buffer->push<cc::ConcatOp>(skmatrix);
+          cc_list.StartPaint();
+          cc_list.push<cc::SaveOp>();
+          cc_list.push<cc::ConcatOp>(skmatrix);
           cc_list.EndPaintOfPairedBegin();
         }
         needed_restores.push_back(1);
@@ -142,18 +142,18 @@ static void RecordPairedBeginDisplayItems(
               GraphicsContext::WebCoreColorFilterToSkiaColorFilter(
                   paired_state->Effect()->GetColorFilter()));
 
-          cc::PaintOpBuffer* buffer = cc_list.StartPaint();
+          cc_list.StartPaint();
           // TODO(chrishtr): compute bounds as necessary.
-          buffer->push<cc::SaveLayerOp>(nullptr, &flags);
+          cc_list.push<cc::SaveLayerOp>(nullptr, &flags);
           cc_list.EndPaintOfPairedBegin();
         }
         needed_restores.push_back(1);
 
         {
-          cc::PaintOpBuffer* buffer = cc_list.StartPaint();
+          cc_list.StartPaint();
 
-          buffer->push<cc::SaveOp>();
-          buffer->push<cc::TranslateOp>(filter_origin.X(), filter_origin.Y());
+          cc_list.push<cc::SaveOp>();
+          cc_list.push<cc::TranslateOp>(filter_origin.X(), filter_origin.Y());
 
           cc::PaintFlags flags;
           flags.setImageFilter(cc::RenderSurfaceFilters::BuildImageFilter(
@@ -162,8 +162,8 @@ static void RecordPairedBeginDisplayItems(
 
           SkRect layer_bounds = clip_rect;
           layer_bounds.offset(-filter_origin.X(), -filter_origin.Y());
-          buffer->push<cc::SaveLayerOp>(&layer_bounds, &flags);
-          buffer->push<cc::TranslateOp>(-filter_origin.X(), -filter_origin.Y());
+          cc_list.push<cc::SaveLayerOp>(&layer_bounds, &flags);
+          cc_list.push<cc::TranslateOp>(-filter_origin.X(), -filter_origin.Y());
 
           cc_list.EndPaintOfPairedBegin();
         }
@@ -189,10 +189,10 @@ static void RecordPairedEndDisplayItems(const Vector<int>& needed_restores,
                                         cc::DisplayItemList& cc_list) {
   // TODO(danakj): This loop could use base::Reversed once it's allowed here.
   for (auto it = needed_restores.rbegin(); it != needed_restores.rend(); ++it) {
-    cc::PaintOpBuffer* buffer = cc_list.StartPaint();
+    cc_list.StartPaint();
     int num_restores = *it;
     for (int i = 0; i < num_restores; ++i)
-      buffer->push<cc::RestoreOp>();
+      cc_list.push<cc::RestoreOp>();
     cc_list.EndPaintOfPairedEnd();
   }
 }
@@ -216,8 +216,8 @@ static void AppendDisplayItemToCcDisplayItemList(
     // reworking visual rects further for SPv2, so for now we just pass a
     // visual rect large enough to make sure items raster.
     {
-      cc::PaintOpBuffer* buffer = cc_list.StartPaint();
-      buffer->push<cc::DrawRecordOp>(std::move(record));
+      cc_list.StartPaint();
+      cc_list.push<cc::DrawRecordOp>(std::move(record));
       cc_list.EndPaintOfUnpaired(g_large_rect);
     }
   }
@@ -230,14 +230,18 @@ scoped_refptr<cc::DisplayItemList> PaintChunksToCcLayer::Convert(
     const PropertyTreeState& layer_state,
     const gfx::Vector2dF& layer_offset,
     const DisplayItemList& display_items,
-    RasterUnderInvalidationCheckingParams* under_invalidation_checking_params) {
-  auto cc_list = make_scoped_refptr(new cc::DisplayItemList);
+    RasterUnderInvalidationCheckingParams* under_invalidation_checking_params,
+    bool to_be_released_as_record) {
+  auto cc_list = make_scoped_refptr(new cc::DisplayItemList(
+      to_be_released_as_record
+          ? cc::DisplayItemList::kToBeReleasedAsPaintOpBuffer
+          : cc::DisplayItemList::kTopLevelDisplayItemList));
 
   bool need_translate = !layer_offset.IsZero();
   if (need_translate) {
-    cc::PaintOpBuffer* buffer = cc_list->StartPaint();
-    buffer->push<cc::SaveOp>();
-    buffer->push<cc::TranslateOp>(-layer_offset.x(), -layer_offset.y());
+    cc_list->StartPaint();
+    cc_list->push<cc::SaveOp>();
+    cc_list->push<cc::TranslateOp>(-layer_offset.x(), -layer_offset.y());
     cc_list->EndPaintOfPairedBegin();
   }
 
@@ -267,8 +271,8 @@ scoped_refptr<cc::DisplayItemList> PaintChunksToCcLayer::Convert(
   }
 
   if (need_translate) {
-    cc::PaintOpBuffer* buffer = cc_list->StartPaint();
-    buffer->push<cc::RestoreOp>();
+    cc_list->StartPaint();
+    cc_list->push<cc::RestoreOp>();
     cc_list->EndPaintOfPairedEnd();
   }
 
@@ -279,14 +283,15 @@ scoped_refptr<cc::DisplayItemList> PaintChunksToCcLayer::Convert(
     // Create a complete cloned list for under-invalidation checking. We can't
     // use cc_list because it is not finalized yet.
     auto list_clone =
-        Convert(paint_chunks, layer_state, layer_offset, display_items);
+        Convert(paint_chunks, layer_state, layer_offset, display_items, nullptr,
+                true /* to be released as record below */);
     recorder.getRecordingCanvas()->drawPicture(list_clone->ReleaseAsRecord());
     params.tracking.CheckUnderInvalidations(params.debug_name,
                                             recorder.finishRecordingAsPicture(),
                                             params.interest_rect);
     if (auto record = params.tracking.under_invalidation_record) {
-      cc::PaintOpBuffer* buffer = cc_list->StartPaint();
-      buffer->push<cc::DrawRecordOp>(record);
+      cc_list->StartPaint();
+      cc_list->push<cc::DrawRecordOp>(record);
       cc_list->EndPaintOfUnpaired(g_large_rect);
     }
   }
