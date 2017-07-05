@@ -48,6 +48,29 @@
     },
     {
       "key": {
+        "uuid": "96869389_f9d5d543",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-07-05T08:48:11Z",
+      "side": 1,
+      "message": "this is just a vanilla getter shouldn\u0027t this be impl() const in the .h?  Or perhaps s/impl_/task_queue_impl_  and this would be task_queue_impl() const",
+      "range": {
+        "startLine": 179,
+        "startChar": 36,
+        "endLine": 179,
+        "endChar": 52
+      },
+      "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b2262ee7_481e6234",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.h",
         "patchSetId": 5
@@ -111,6 +134,29 @@
     },
     {
       "key": {
+        "uuid": "d9e217af_a15e9daa",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-07-05T08:48:11Z",
+      "side": 1,
+      "message": "We don\u0027t really need this.  The only test that uses this is TaskQueueManagerTest, what I\u0027d suggest doing is \n\nclass TestTaskQueue : public TaskQueue {\n public:\n  using TaskQueue::GetTaskQueueImp;\n\n  explicit TestTaskQueue(internal::TaskQueueImpl* impl);\n};\n \nAnd using TestTaskQueue in TaskQueueManagerTest",
+      "range": {
+        "startLine": 226,
+        "startChar": 27,
+        "endLine": 226,
+        "endChar": 50
+      },
+      "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6bb94f5_a4e71de6",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.h",
         "patchSetId": 5
@@ -157,6 +203,75 @@
     },
     {
       "key": {
+        "uuid": "d56f40e1_a077bcce",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-07-05T08:48:11Z",
+      "side": 1,
+      "message": "We can get rid of these by using the TestTaskQueue",
+      "range": {
+        "startLine": 231,
+        "startChar": 15,
+        "endLine": 231,
+        "endChar": 49
+      },
+      "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59a2a135_f7997e9d",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-07-05T08:48:11Z",
+      "side": 1,
+      "message": "explicit",
+      "range": {
+        "startLine": 235,
+        "startChar": 2,
+        "endLine": 235,
+        "endChar": 11
+      },
+      "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ee1b2bc_a8c31e71",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-07-05T08:48:11Z",
+      "side": 1,
+      "message": "Please add a comment documenting ownership of impl_",
+      "range": {
+        "startLine": 243,
+        "startChar": 27,
+        "endLine": 243,
+        "endChar": 32
+      },
+      "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d1197404_5b13299e",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_impl.cc",
         "patchSetId": 5
@@ -196,6 +311,29 @@
         "startChar": 12,
         "endLine": 172,
         "endChar": 20
+      },
+      "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e92a6b9_0e526535",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-07-05T08:48:11Z",
+      "side": 1,
+      "message": "Is this used? Gerrit doesn\u0027t have nice searching so I can\u0027t tell easily, but it looks like it isn\u0027t.",
+      "range": {
+        "startLine": 272,
+        "startChar": 7,
+        "endLine": 272,
+        "endChar": 29
       },
       "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -254,6 +392,282 @@
       "writtenOn": "2017-07-05T08:29:30Z",
       "side": 1,
       "message": "How about we do something like this instead:\n\ntemplate \u003ctypename T, typename... Args\u003e\nT* MakeTaskQueue(const TaskQueue::Spec\u0026 spec, Args\u0026\u0026... args) {\n  return new T(CreateTaskQueueImpl(spec) /* private method */, std::forward\u003cArgs\u003e(args)...);\n}\n\nThat way the caller doesn\u0027t have to deal with internal::TaskQueueImpl at all.",
+      "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6abdc93_ca490975",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-07-05T08:48:11Z",
+      "side": 1,
+      "message": "I\u0027d like to revisit the ownership design here.  While this probably works, it feels odd.\n\nWhat IMO would be more natural is for TaskQueue to own TaskQueueImpl and for |queues_| and |queues_to_delete_| to remain unchanged.",
+      "range": {
+        "startLine": 310,
+        "startChar": 40,
+        "endLine": 310,
+        "endChar": 41
+      },
+      "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f97c8a8c_72d1d539",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/idle_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-07-05T08:48:11Z",
+      "side": 1,
+      "message": "std::move?",
+      "range": {
+        "startLine": 27,
+        "startChar": 18,
+        "endLine": 27,
+        "endChar": 28
+      },
+      "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "621c66bd_7de906e2",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/scheduler_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-07-05T08:48:11Z",
+      "side": 1,
+      "message": "I wonder if we still need this class.  I guess being able to ask for the DefaultTaskQueue and ControlTaskQueue is somewhat useful although most things that need them could just be given them.",
+      "range": {
+        "startLine": 22,
+        "startChar": 22,
+        "endLine": 22,
+        "endChar": 37
+      },
+      "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3a8c47e_b0e271b0",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_task_queue.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-07-05T08:48:11Z",
+      "side": 1,
+      "message": "Moving a pointer doesn\u0027t do anything, please remove.",
+      "range": {
+        "startLine": 13,
+        "startChar": 21,
+        "endLine": 13,
+        "endChar": 25
+      },
+      "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35a2847b_e4095cdd",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_task_queue.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-07-05T08:48:11Z",
+      "side": 1,
+      "message": "explicit",
+      "range": {
+        "startLine": 15,
+        "startChar": 2,
+        "endLine": 15,
+        "endChar": 17
+      },
+      "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1c72a4f_1238e3a2",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/main_thread_scheduler_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-07-05T08:48:11Z",
+      "side": 1,
+      "message": "If ShedulerHelper was to go away, this could be folded into RendererScheduelrImpl",
+      "range": {
+        "startLine": 17,
+        "startChar": 22,
+        "endLine": 17,
+        "endChar": 47
+      },
+      "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3d84fe0_d03d47df",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/main_thread_task_queue.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-07-05T08:48:11Z",
+      "side": 1,
+      "message": "NOTREACHED();",
+      "range": {
+        "startLine": 40,
+        "startChar": 6,
+        "endLine": 40,
+        "endChar": 12
+      },
+      "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67091ab4_0dd1264e",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/main_thread_task_queue.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-07-05T08:48:11Z",
+      "side": 1,
+      "message": "Do you need this return for it to compile?",
+      "range": {
+        "startLine": 44,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 8
+      },
+      "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a55a1eda_90e6f414",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/main_thread_task_queue.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-07-05T08:48:11Z",
+      "side": 1,
+      "message": "I do like the separation of concerns that arises from this.",
+      "range": {
+        "startLine": 17,
+        "startChar": 13,
+        "endLine": 17,
+        "endChar": 22
+      },
+      "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a54559d4_a0fd5ef1",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/main_thread_task_queue.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-07-05T08:48:11Z",
+      "side": 1,
+      "message": "I wonder if the call sites would be more readable if this was GetSpecForType?",
+      "range": {
+        "startLine": 40,
+        "startChar": 25,
+        "endLine": 40,
+        "endChar": 32
+      },
+      "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4eb6b120_167dff55",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/main_thread_task_queue.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-07-05T08:48:11Z",
+      "side": 1,
+      "message": "QueueType queue_type() const { return queue_type_; } ?",
+      "range": {
+        "startLine": 44,
+        "startChar": 12,
+        "endLine": 44,
+        "endChar": 24
+      },
+      "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a09d977_f63d6d1f",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/main_thread_task_queue.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-07-05T08:48:11Z",
+      "side": 1,
+      "message": "s/Reference/Needed",
+      "range": {
+        "startLine": 60,
+        "startChar": 5,
+        "endLine": 60,
+        "endChar": 14
+      },
       "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

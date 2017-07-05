@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "580831c1_9c09df60",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-07-05T08:48:11Z",
+      "side": 0,
+      "message": "If possible this should also be in a separate CL.",
+      "range": {
+        "startLine": 116,
+        "startChar": 17,
+        "endLine": 116,
+        "endChar": 44
+      },
+      "revId": "7a0173a58d82f11c7ea4463329a5b6dca15b9010",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24cdca58_5d0ad886",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_time_observer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-07-05T08:48:11Z",
+      "side": 0,
+      "message": "If possible, could you please split this refactor (and the OnTaskCompleted stuff) off into a separate CL?",
+      "range": {
+        "startLine": 31,
+        "startChar": 30,
+        "endLine": 31,
+        "endChar": 39
+      },
+      "revId": "7a0173a58d82f11c7ea4463329a5b6dca15b9010",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
