@@ -11,6 +11,7 @@
 #import "base/mac/bind_objc_block.h"
 #include "base/metrics/histogram_macros.h"
 #include "components/metrics/metrics_service.h"
+#include "components/ntp_snippets/content_suggestions_service.h"
 #import "ios/chrome/app/application_delegate/app_navigation.h"
 #import "ios/chrome/app/application_delegate/browser_launcher.h"
 #import "ios/chrome/app/application_delegate/memory_warning_helper.h"
@@ -30,8 +31,10 @@
 #include "ios/chrome/browser/crash_report/breakpad_helper.h"
 #import "ios/chrome/browser/crash_report/crash_report_background_uploader.h"
 #import "ios/chrome/browser/device_sharing/device_sharing_manager.h"
+#include "ios/chrome/browser/experimental_flags.h"
 #import "ios/chrome/browser/geolocation/omnibox_geolocation_config.h"
 #import "ios/chrome/browser/metrics/previous_session_info.h"
+#include "ios/chrome/browser/ntp_snippets/ios_chrome_content_suggestions_service_factory.h"
 #import "ios/chrome/browser/ui/authentication/signed_in_accounts_view_controller.h"
 #include "ios/chrome/browser/ui/background_generator.h"
 #import "ios/chrome/browser/ui/browser_view_controller.h"
@@ -306,6 +309,14 @@ initWithBrowserLauncher:(id<BrowserLauncher>)browserLauncher
           shouldBePresentedForBrowserState:currentBrowserState]) {
     [appNavigation presentSignedInAccountsViewControllerForBrowserState:
                        currentBrowserState];
+  }
+
+  if (experimental_flags::IsSuggestionsUIEnabled()) {
+    ntp_snippets::ContentSuggestionsService* contentSuggestionsService =
+        IOSChromeContentSuggestionsServiceFactory::GetForBrowserState(
+            currentBrowserState);
+    contentSuggestionsService->remote_suggestions_scheduler()
+        ->OnBrowserForegrounded();
   }
 
   // If the current browser state is not OTR, check for cookie loss.

@@ -27,6 +27,7 @@
 #include "components/content_settings/core/browser/host_content_settings_map.h"
 #include "components/metrics/metrics_pref_names.h"
 #include "components/metrics/metrics_service.h"
+#include "components/ntp_snippets/content_suggestions_service.h"
 #include "components/prefs/pref_change_registrar.h"
 #include "components/signin/core/browser/signin_manager.h"
 #include "components/url_formatter/url_formatter.h"
@@ -79,6 +80,7 @@
 #import "ios/chrome/browser/metrics/previous_session_info.h"
 #import "ios/chrome/browser/net/cookie_util.h"
 #include "ios/chrome/browser/net/crl_set_fetcher.h"
+#include "ios/chrome/browser/ntp_snippets/ios_chrome_content_suggestions_service_factory.h"
 #include "ios/chrome/browser/pref_names.h"
 #include "ios/chrome/browser/prefs/pref_observer_bridge.h"
 #import "ios/chrome/browser/reading_list/reading_list_download_service.h"
@@ -712,6 +714,15 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
   [self scheduleStartupCleanupTasks];
   [MetricsMediator logLaunchMetricsWithStartupInformation:self
                                    browserViewInformation:_browserViewWrangler];
+  if (experimental_flags::IsSuggestionsUIEnabled() && self.isColdStart) {
+    ntp_snippets::ContentSuggestionsService* contentSuggestionsService =
+        IOSChromeContentSuggestionsServiceFactory::GetForBrowserState(
+            _mainBrowserState);
+    contentSuggestionsService->remote_suggestions_scheduler()
+        ->OnBrowserColdStart();
+    contentSuggestionsService->remote_suggestions_scheduler()
+        ->OnBrowserForegrounded();
+  }
 
   [self scheduleLowPriorityStartupTasks];
 
