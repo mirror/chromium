@@ -34,15 +34,8 @@
 namespace blink {
 
 struct WebAssociatedURLLoaderOptions {
-  enum PreflightPolicy {
-    kConsiderPreflight,
-    kPreventPreflight
-  };
-
   WebAssociatedURLLoaderOptions()
-      : untrusted_http(false),
-        expose_all_response_headers(false),
-        preflight_policy(kConsiderPreflight) {}
+      : untrusted_http(false), expose_all_response_headers(false) {}
 
   // Whether to validate the method and headers as if this was an
   // XMLHttpRequest.
@@ -51,8 +44,6 @@ struct WebAssociatedURLLoaderOptions {
   // If policy is to use access control, whether to expose non-whitelisted
   // response headers to the client.
   bool expose_all_response_headers;
-
-  PreflightPolicy preflight_policy;
 };
 
 }  // namespace blink

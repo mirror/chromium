@@ -117,9 +117,6 @@ void ResourceMultiBufferDataProvider::Start() {
     WebAssociatedURLLoaderOptions options;
     if (url_data_->cors_mode() != UrlData::CORS_UNSPECIFIED) {
       options.expose_all_response_headers = true;
-      // The author header set is empty, no preflight should go ahead.
-      options.preflight_policy =
-          WebAssociatedURLLoaderOptions::kPreventPreflight;
       request.SetFetchRequestMode(WebURLRequest::kFetchRequestModeCORS);
       if (url_data_->cors_mode() != UrlData::CORS_USE_CREDENTIALS) {
         request.SetFetchCredentialsMode(

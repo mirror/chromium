@@ -197,9 +197,6 @@ void DocumentThreadableLoader::Start(const ResourceRequest& request) {
 
   bool cors_enabled = IsCORSEnabledRequestMode(request.GetFetchRequestMode());
 
-  // kPreventPreflight can be used only when the CORS is enabled.
-  DCHECK(options_.preflight_policy == kConsiderPreflight || cors_enabled);
-
   if (cors_enabled) {
     cors_redirect_limit_ = kMaxCORSRedirects;
   }
@@ -409,13 +406,6 @@ void DocumentThreadableLoader::MakeCrossOriginAccessRequest(
 
   if (request.GetFetchRequestMode() !=
       WebURLRequest::kFetchRequestModeCORSWithForcedPreflight) {
-    if (options_.preflight_policy == kPreventPreflight) {
-      PrepareCrossOriginRequest(cross_origin_request);
-      LoadRequest(cross_origin_request, cross_origin_options);
-      return;
-    }
-
-    DCHECK_EQ(options_.preflight_policy, kConsiderPreflight);
 
     // We use ContainsOnlyCORSSafelistedOrForbiddenHeaders() here since
     // |request| may have been modified in the process of loading (not from

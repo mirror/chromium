@@ -355,11 +355,6 @@ WebAssociatedURLLoaderImpl::~WebAssociatedURLLoaderImpl() {
   Cancel();
 }
 
-STATIC_ASSERT_ENUM(WebAssociatedURLLoaderOptions::kConsiderPreflight,
-                   kConsiderPreflight);
-STATIC_ASSERT_ENUM(WebAssociatedURLLoaderOptions::kPreventPreflight,
-                   kPreventPreflight);
-
 void WebAssociatedURLLoaderImpl::LoadAsynchronously(
     const WebURLRequest& request,
     WebAssociatedURLLoaderClient* client) {
@@ -393,8 +388,6 @@ void WebAssociatedURLLoaderImpl::LoadAsynchronously(
 
   if (allow_load) {
     ThreadableLoaderOptions options;
-    options.preflight_policy =
-        static_cast<PreflightPolicy>(options_.preflight_policy);
 
     ResourceLoaderOptions resource_loader_options;
     resource_loader_options.data_buffering_policy = kDoNotBufferData;

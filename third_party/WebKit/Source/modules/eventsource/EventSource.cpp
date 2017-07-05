@@ -154,7 +154,6 @@ void EventSource::Connect() {
   SecurityOrigin* origin = execution_context.GetSecurityOrigin();
 
   ThreadableLoaderOptions options;
-  options.preflight_policy = kPreventPreflight;
 
   ResourceLoaderOptions resource_loader_options;
   resource_loader_options.data_buffering_policy = kDoNotBufferData;
