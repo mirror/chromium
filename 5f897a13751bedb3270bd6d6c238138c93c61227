@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "65a52cfb_b95f761c",
+        "filename": "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1215055
+      },
+      "writtenOn": "2017-07-05T22:51:04Z",
+      "side": 1,
+      "message": "Okay, that sounds fine to me.",
+      "parentUuid": "a9b869df_71ff6413",
+      "revId": "5f897a13751bedb3270bd6d6c238138c93c61227",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "022551b1_7fcc3bcc",
         "filename": "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.cc",
         "patchSetId": 4
@@ -136,6 +154,24 @@
       "side": 1,
       "message": "Thanks! I\u0027ve added a variant that allows for verifying multiple metrics with the same name were logged.\n\nI do not want tests to make assumptions about the order that metrics are provided to tests in, so I\u0027m trying to clean up the test API to avoid this going forward.",
       "parentUuid": "022551b1_7fcc3bcc",
+      "revId": "5f897a13751bedb3270bd6d6c238138c93c61227",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d250243b_a3a55d4e",
+        "filename": "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1215055
+      },
+      "writtenOn": "2017-07-05T22:51:04Z",
+      "side": 1,
+      "message": "Is the expectation that UKM entries will always be merged on source ID into a single entry at the server, or will it be possible to examine the individual entries that were generated? Based on the example on the Detailed Design section and example on page 7 of go/ukm-api, it seems like it is the latter, in which case there could reasonably be a need to test that a specific combination of metric values were generated within a single entry.\n\nTo accommodate tests for such cases and prevent them from assuming the order of the entries or metrics, maybe it would make sense to add a method ExpectEntry that checks if an entry with a given set of metric values is present:\n\nvoid UkmTester::ExpectEntry(const ukm::UkmSource\u0026 source, const char* event, const std::vector\u003cUkmMetric\u003e\u0026 expected_metric_values);",
+      "parentUuid": "0a48ff6c_8d5108b1",
       "revId": "5f897a13751bedb3270bd6d6c238138c93c61227",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
