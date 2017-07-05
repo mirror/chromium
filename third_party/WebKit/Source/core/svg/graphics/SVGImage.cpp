@@ -370,6 +370,21 @@ void SVGImage::DrawPatternForContainer(GraphicsContext& context,
   context.DrawRect(dst_rect, flags);
 }
 
+sk_sp<PaintRecord> SVGImage::PaintRecordForContainer(
+    const KURL& url,
+    const IntSize& container_size) {
+  if (!page_)
+    return nullptr;
+
+  const FloatRect container_rect((FloatPoint()), FloatSize(container_size));
+
+  PaintRecorder recorder;
+  PaintCanvas* canvas = recorder.beginRecording(container_rect);
+  DrawForContainer(canvas, PaintFlags(), container_rect.Size(), 1,
+                   container_rect, container_rect, url);
+  return recorder.finishRecordingAsPicture();
+}
+
 sk_sp<SkImage> SVGImage::ImageForCurrentFrameForContainer(
     const KURL& url,
     const IntSize& container_size) {
