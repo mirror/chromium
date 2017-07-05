@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "2d5f2783_1fbe5f47",
+        "filename": "components/cronet/ios/ios_global_state_cronet_configuration.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-07-05T18:29:14Z",
+      "side": 1,
+      "message": "Ok, great. Thank you. PTAL at https://chromium-review.googlesource.com/c/552763 where I removed this.",
+      "parentUuid": "fb5d47fb_7b6252fe",
+      "range": {
+        "startLine": 14,
+        "startChar": 10,
+        "endLine": 14,
+        "endChar": 19
+      },
+      "revId": "33e57643c1ce856ac8073638d6ba4b8835b307e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a58d2b16_b1ecd0cb",
         "filename": "ios/web/public/global_state/ios_global_state.mm",
         "patchSetId": 3
@@ -132,6 +156,30 @@
       "side": 1,
       "message": "Ack",
       "parentUuid": "d5a5ae3d_cb2c3a0d",
+      "range": {
+        "startLine": 62,
+        "startChar": 4,
+        "endLine": 62,
+        "endChar": 27
+      },
+      "revId": "33e57643c1ce856ac8073638d6ba4b8835b307e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5587e956_64fd24d8",
+        "filename": "ios/web/public/global_state/ios_global_state.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-07-05T18:29:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "057a9dcd_cdad6532",
       "range": {
         "startLine": 62,
         "startChar": 4,

@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "83719931_860c6600",
+        "filename": "components/cronet/ios/cronet_environment.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-07-05T18:29:14Z",
+      "side": 1,
+      "message": "I like the struct CreateParams and it is consistent with ios/web. I\u0027m updated to use that.",
+      "parentUuid": "d9173c75_9d42b405",
+      "range": {
+        "startLine": 114,
+        "startChar": 33,
+        "endLine": 114,
+        "endChar": 34
+      },
+      "revId": "314d7c704033b9a049fab430ad7432293f27c1e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae75ebf8_f1c38212",
         "filename": "components/cronet/ios/ios_global_state_cronet_configuration.mm",
         "patchSetId": 6
@@ -144,6 +168,30 @@
     },
     {
       "key": {
+        "uuid": "8ec97e0a_77d0bb7e",
+        "filename": "components/cronet/ios/ios_global_state_cronet_configuration.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-07-05T18:29:14Z",
+      "side": 1,
+      "message": "yes, I just hadn\u0027t rebased this CL yet. It should be gone in the latest patch.",
+      "parentUuid": "ae75ebf8_f1c38212",
+      "range": {
+        "startLine": 14,
+        "startChar": 2,
+        "endLine": 14,
+        "endChar": 8
+      },
+      "revId": "314d7c704033b9a049fab430ad7432293f27c1e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e150e7dd_030f7eaa",
         "filename": "ios/web/public/global_state/ios_global_state.h",
         "patchSetId": 6
@@ -164,6 +212,30 @@
       "revId": "314d7c704033b9a049fab430ad7432293f27c1e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae4af957_f7cad258",
+        "filename": "ios/web/public/global_state/ios_global_state.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-07-05T18:29:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e150e7dd_030f7eaa",
+      "range": {
+        "startLine": 14,
+        "startChar": 6,
+        "endLine": 14,
+        "endChar": 18
+      },
+      "revId": "314d7c704033b9a049fab430ad7432293f27c1e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
