@@ -9,7 +9,10 @@
 #include "mojo/edk/embedder/embedder.h"
 #include "mojo/edk/embedder/scoped_ipc_support.h"
 
+#include <iostream>
+
 int main(int argc, char** argv) {
+  std::cout << "Reached Unit Test Entry Point!" << std::endl;
   base::TestSuite test_suite(argc, argv);
 
   base::Thread ipc_thread("IPC thread");

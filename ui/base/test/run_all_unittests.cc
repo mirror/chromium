@@ -12,6 +12,8 @@
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/base/ui_base_paths.h"
 
+#include <iostream>
+
 #if defined(OS_ANDROID)
 #include "base/android/jni_android.h"
 #include "ui/base/android/ui_base_jni_registrar.h"
@@ -105,6 +107,7 @@ void UIBaseTestSuite::Shutdown() {
 }  // namespace
 
 int main(int argc, char** argv) {
+  std::cout << "Reached Unit Test Entry Point!" << std::endl;
   UIBaseTestSuite test_suite(argc, argv);
 
   return base::LaunchUnitTests(argc,
