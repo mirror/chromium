@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e1f65c4_c52a6100",
+        "filename": "content/child/web_url_loader_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-05T07:16:04Z",
+      "side": 1,
+      "message": "Do this need to be \"static\"? If you care about the performance, it may be good to place the statements in DCHECK_IS_ON.",
+      "revId": "7f234e76923b81961a4f9e89d709d41493c6eed3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fee7c72_1750db39",
+        "filename": "content/child/web_url_loader_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-05T07:16:04Z",
+      "side": 1,
+      "message": "I am under an impression that (url_loader_factory_ || LoadingWithMojo is enabled) is more accurate. What do you think?",
+      "revId": "7f234e76923b81961a4f9e89d709d41493c6eed3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
