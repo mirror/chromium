@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e7902b9d_4bf90fae",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css-paint-api/geometry-background-image-tiled1-ref.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-07-05T19:03:38Z",
+      "side": 1,
+      "message": "Done, and clear it every where in this CL.",
+      "parentUuid": "f4738b9a_a5d29b38",
+      "revId": "25d9db7934477c7dddb2c2aa4178df7c4bc62c3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "89b03771_dd0c28cf",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css-paint-api/geometry-border-image1-ref.html",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "25d9db7934477c7dddb2c2aa4178df7c4bc62c3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd02fbbb_62f26cfc",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css-paint-api/geometry-border-image1-ref.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-07-05T19:03:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89b03771_dd0c28cf",
+      "revId": "25d9db7934477c7dddb2c2aa4178df7c4bc62c3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "057b3c77_c4bab713",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css-paint-api/parse-input-arguments1.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-07-05T19:03:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "250c8cd5_7c5cc17d",
+      "range": {
+        "startLine": 20,
+        "startChar": 4,
+        "endLine": 20,
+        "endChar": 15
+      },
+      "revId": "25d9db7934477c7dddb2c2aa4178df7c4bc62c3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6793e984_bd30ee96",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css-paint-api/registered-properties-in-custom-paint.html",
         "patchSetId": 2
@@ -70,6 +130,24 @@
       "writtenOn": "2017-07-05T18:21:48Z",
       "side": 1,
       "message": "Can you draw text to indicate the error?",
+      "revId": "25d9db7934477c7dddb2c2aa4178df7c4bc62c3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dab43ec_babba3a2",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css-paint-api/registered-properties-in-custom-paint.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-07-05T19:03:38Z",
+      "side": 1,
+      "message": "Per offline discussion, since PaintRenderingContext2D doesn\u0027t have strokeText/fillText, will leave it as what it is.",
+      "parentUuid": "6793e984_bd30ee96",
       "revId": "25d9db7934477c7dddb2c2aa4178df7c4bc62c3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
