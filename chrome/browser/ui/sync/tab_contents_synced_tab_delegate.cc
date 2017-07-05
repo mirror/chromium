@@ -116,7 +116,8 @@ void TabContentsSyncedTabDelegate::GetSerializedNavigationAtIndex(
   if (entry) {
     *serialized_entry =
         sessions::ContentSerializedNavigationBuilder::FromNavigationEntry(
-            i, *entry);
+            i, *entry,
+            sessions::ContentSerializedNavigationBuilder::EXCLUDE_PAGE_STATE);
   }
 }
 
