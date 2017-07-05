@@ -34,6 +34,24 @@
       "revId": "84d05ca825badfcf7639bd8b0a91da14649ffff8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "093b95d2_3af9bb52",
+        "filename": "third_party/WebKit/Source/core/loader/BaseFetchContext.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-07-05T03:05:34Z",
+      "side": 1,
+      "message": "I see.\nSounds good.",
+      "parentUuid": "b1a1cec1_2ad092d2",
+      "revId": "84d05ca825badfcf7639bd8b0a91da14649ffff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
