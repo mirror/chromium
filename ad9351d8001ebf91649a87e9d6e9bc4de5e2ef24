@@ -105,6 +105,24 @@
       "revId": "ad9351d8001ebf91649a87e9d6e9bc4de5e2ef24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "032894b3_65a8a3e9",
+        "filename": "components/ntp_snippets/content_suggestions_metrics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-05T13:44:36Z",
+      "side": 1,
+      "message": "\u003e I meant \"not visible\" as in \"the user just hasn\u0027t scrolled down \n\u003e far enough\", which is not what\u0027s meant here (IIUC).\n\nTrue, here the definition is more like \"can potentially be seen by the user\". I feel like \"shown\" corresponds to your understanding (e.g. as in OnPageShown and OnSuggestionShown). Thus, \"visible\" seems ok. I rephrased the histogram comment to make this clear though.\n\n\u003e A different approach would be to simply exclude the \n\u003e \"theoretically-existing-but-empty-and-not-shown\" \n\u003e categories here (not even pass them in from the UI)\n\nI feel like doing more work closer to the metric recording is better for understanding. Also explicitly asking which sections are visible feels less error prone. Thus, I would prefer to leave it like this.",
+      "parentUuid": "943350d2_b125255d",
+      "revId": "ad9351d8001ebf91649a87e9d6e9bc4de5e2ef24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
