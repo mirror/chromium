@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "a50dfd7b_026edcbd",
+        "filename": "ui/compositor/clip_recorder.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-05T20:45:06Z",
+      "side": 1,
+      "message": "\u003e Because in the latter case, it\u0027s exactly the same in the sense that it would have to pass through to some other object (DIL instead of POB)\n\nI mean the latter, and I would expect DIL to no longer have any push methods, they\u0027d move to the RAII thing.\n\n\u003e but that can be done via a DCHECK or two in Finalize call (ie, if this is top level, then visual_rects.size() \u003d\u003d pob.size() or something along those lines)\n\nThat sounds like a good idea to me.\n\n\u003e Do you mean for RAII to have two ctors, one that takes DIL and one that creates a self owned POB?\n\nI was thinking DIL and \"SomethingElse\" can each return the RAII. The SomethingElse spits out a POB when you\u0027re done. The DIL continues to exist after.\n\n\u003e I\u0027m kind of hoping to eliminate code that creates pobs on its own.\n\nI think \"SomethingElse\" satisfies that condition for you, and I agree, it\u0027s nice to enforce going thru this other API which means no creating POB on your own.",
+      "parentUuid": "23b77b8a_c44cc4ad",
+      "revId": "12ccfac98fad7e3d4006e8355014b93518ed4ad8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3761526a_0fcada1e",
         "filename": "ui/compositor/paint_cache.cc",
         "patchSetId": 12
