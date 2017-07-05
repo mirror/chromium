@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cbc9c0e4_5cf07d11",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontGlobalContext.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-05T19:58:25Z",
+      "side": 1,
+      "message": "super-nit: Get() just once, here and above?",
+      "revId": "426cb7cddb248d2e71aff54dc842f223d2082fb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
