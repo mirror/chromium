@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "679bddfb_fe00fc47",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
+        "patchSetId": 4
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-05T08:06:34Z",
+      "side": 1,
+      "message": "Hmm, you know how there\u0027s a bunch of \"custom\" parameters in the JSON? like custom_all etc. I wonder if it\u0027s better if we did like \"custom_functions\": [\"getter\"] to have a handwritten getter, but this means inverting all the logic. Might be something to consider when we\u0027ve moved all the storage_only fields to this thing.",
+      "parentUuid": "7897760b_1f6e91b0",
+      "revId": "2ccb7a7774027114d2b716a0821ca3b6c1cd5e46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b8905232_f2fefe8d",
         "filename": "third_party/WebKit/Source/core/style/ComputedStyle.h",
         "patchSetId": 4
