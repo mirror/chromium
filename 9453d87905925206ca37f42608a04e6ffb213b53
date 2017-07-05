@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1dfa0ba0_b9da94d0",
+        "filename": "chrome/browser/predictors/loading_predictor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-07-05T08:14:15Z",
+      "side": 1,
+      "message": "Is it possible in the case where we have both types of prediction that the second one will skip ahead of the first one in the task queue of the DNS resolution threads?",
+      "range": {
+        "startLine": 59,
+        "startChar": 8,
+        "endLine": 59,
+        "endChar": 26
+      },
+      "revId": "9453d87905925206ca37f42608a04e6ffb213b53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fd4f6b1_f3e34c27",
+        "filename": "chrome/browser/predictors/loading_predictor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-07-05T08:14:15Z",
+      "side": 1,
+      "message": "nit:\nNOTIMPLEMENTED()?\n\n(with an unconditional return before, otherwise the static_assert() would bite you).",
+      "range": {
+        "startLine": 267,
+        "startChar": 10,
+        "endLine": 267,
+        "endChar": 18
+      },
+      "revId": "9453d87905925206ca37f42608a04e6ffb213b53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b3ce908_dd3ab73e",
+        "filename": "chrome/browser/predictors/loading_predictor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-07-05T08:14:15Z",
+      "side": 1,
+      "message": "Is it necessarily fire and forget?\n\nFor instance, a good way to rate limit the connections is to first do a DNS resolution, and wait for its completion before connecting to the origin, since DNS necessarily has to precede the connection.\n\nUnless it\u0027s a connection to an HTTP/2 origin for which we already have a socket ready, in which case we don\u0027t do anything (but in this case as well, waiting for the DNS resolution may be a good idea).",
+      "revId": "9453d87905925206ca37f42608a04e6ffb213b53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
