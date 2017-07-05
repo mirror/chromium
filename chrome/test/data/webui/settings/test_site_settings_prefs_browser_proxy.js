@@ -5,6 +5,27 @@
 /**
  * Only used for tests.
  * @typedef {{
+ *   ads: !DefaultContentSetting,
+ *   auto_downloads: !DefaultContentSetting,
+ *   background_sync: !DefaultContentSetting,
+ *   camera: !DefaultContentSetting,
+ *   cookies: !DefaultContentSetting,
+ *   geolocation: !DefaultContentSetting,
+ *   javascript: !DefaultContentSetting,
+ *   mic: !DefaultContentSetting,
+ *   midiDevices: !DefaultContentSetting,
+ *   notifications: !DefaultContentSetting,
+ *   plugins: !DefaultContentSetting,
+ *   images: !DefaultContentSetting,
+ *   popups: !DefaultContentSetting,
+ *   unsandboxed_plugins: !DefaultContentSetting,
+ * }}
+ */
+var CategoryDefaultsPref;
+
+/**
+ * Only used for tests.
+ * @typedef {{
  *   auto_downloads: !Array<!RawSiteException>},
  *   background_sync: !Array<!RawSiteException>},
  *   camera: !Array<!RawSiteException>},
@@ -23,7 +44,7 @@
 var ExceptionListPref;
 
 /**
- * In the real (non-test) code, these data come from the C++ handler.
+ * In the real (non-test) code, this data comes from the C++ handler.
  * Only used for tests.
  * @typedef {{defaults: CategoryDefaultsPref,
  *            exceptions: ExceptionListPref}}
@@ -36,20 +57,20 @@ var SiteSettingsPref;
  */
 var prefsEmpty = {
   defaults: {
-    ads: '',
-    auto_downloads: '',
-    background_sync: '',
-    camera: '',
-    cookies: '',
-    geolocation: '',
-    javascript: '',
-    mic: '',
-    midiDevices: '',
-    notifications: '',
-    plugins: '',
-    images: '',
-    popups: '',
-    unsandboxed_plugins: '',
+    ads: {},
+    auto_downloads: {},
+    background_sync: {},
+    camera: {},
+    cookies: {},
+    geolocation: {},
+    javascript: {},
+    mic: {},
+    midiDevices: {},
+    notifications: {},
+    plugins: {},
+    images: {},
+    popups: {},
+    unsandboxed_plugins: {},
   },
   exceptions: {
     ads: [],
@@ -206,7 +227,7 @@ TestSiteSettingsPrefsBrowserProxy.prototype = {
     } else if (contentType == settings.ContentSettingsTypes.AUTOMATIC_DOWNLOADS) {
       pref = this.prefs_.defaults.auto_downloads;
     } else if (contentType == settings.ContentSettingsTypes.BACKGROUND_SYNC) {
-      pref = this.prefs_.background_sync;
+      pref = this.prefs_.defaults.background_sync;
     } else if (contentType == settings.ContentSettingsTypes.CAMERA) {
       pref = this.prefs_.defaults.camera;
     } else if (contentType == settings.ContentSettingsTypes.COOKIES) {
