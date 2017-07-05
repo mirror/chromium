@@ -22412,6 +22412,7 @@ from previous Chrome versions.
   <int value="-716953514" label="disable-password-separated-signin-flow"/>
   <int value="-715733307" label="force-effective-connection-type"/>
   <int value="-714710496" label="VideoFullscreenOrientationLock:disabled"/>
+  <int value="-714284659" label="OmniboxSpeculativeServiceWorkerStart:enabled"/>
   <int value="-711890895" label="enable-website-settings-manager"/>
   <int value="-709058455" label="ui-slow-animations"/>
   <int value="-699767107" label="enable-sync-app-list"/>
@@ -22428,6 +22429,8 @@ from previous Chrome versions.
   <int value="-645455405" label="MacViewsNativeDialogs:enabled"/>
   <int value="-641719457" label="disable-compositor-touch-hit-testing"/>
   <int value="-631740127" label="inert-visual-viewport"/>
+  <int value="-631613604"
+      label="OmniboxSpeculativeServiceWorkerStart:disabled"/>
   <int value="-622685174" label="enable-pdf-material-ui"/>
   <int value="-620030047" label="CrosCompUpdates:disabled"/>
   <int value="-617452890" label="media-router"/>
