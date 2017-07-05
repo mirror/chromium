@@ -255,7 +255,7 @@ public class WebappModeTest {
         });
         ChromeActivity chromeActivity =
                 (ChromeActivity) ApplicationStatus.getLastTrackedFocusedActivity();
-        mTestRule.waitForFullLoad(chromeActivity, WEBAPP_1_TITLE);
+        mTestRule.waitForFullLoad(chromeActivity, WEBAPP_1_TITLE, true /* waitLongerForLoad */);
 
         // Firing a correct Intent should start a WebappActivity instance instead of the browser.
         fireWebappIntent(WEBAPP_2_ID, WEBAPP_2_URL, WEBAPP_2_TITLE, WEBAPP_ICON, true);
