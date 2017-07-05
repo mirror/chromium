@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c035414_8ee38dc3",
+        "filename": "chromecast/app/cast_test_launcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1216499
+      },
+      "writtenOn": "2017-07-05T17:34:04Z",
+      "side": 0,
+      "message": "This launcher is also used for browser tests: //chromecast:cast_shell_browsertests. IIUC using fewer parallel jobs is supposed to be used for browsertests which launch child processes? If so, wouldn\u0027t this change break that recommendation?",
+      "revId": "d5588cf4ffb5a932dcbfd87cd7761d390c790ea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
