@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0ff8d864_8cecfca6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPageView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-05T20:45:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "781c5c6a_c7541053",
+      "revId": "63854eadfc201067c7d51479a23a80252086af35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "583c411e_7c03259d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPageView.java",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "63854eadfc201067c7d51479a23a80252086af35",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f559b78_8a97e753",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPageView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-05T20:45:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "583c411e_7c03259d",
+      "revId": "63854eadfc201067c7d51479a23a80252086af35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "73aca6b1_0c5a5f60",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPageView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-05T20:45:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4cd44135_f67fcd3c",
+      "range": {
+        "startLine": 561,
+        "startChar": 16,
+        "endLine": 561,
+        "endChar": 28
+      },
+      "revId": "63854eadfc201067c7d51479a23a80252086af35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4e7e398_168dd152",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroup.java",
         "patchSetId": 1
@@ -79,6 +139,30 @@
       "revId": "63854eadfc201067c7d51479a23a80252086af35",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ca4496d_e36c73ac",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroup.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-05T20:45:20Z",
+      "side": 1,
+      "message": "needs to be visible for testing :(",
+      "parentUuid": "c4e7e398_168dd152",
+      "range": {
+        "startLine": 87,
+        "startChar": 15,
+        "endLine": 87,
+        "endChar": 23
+      },
+      "revId": "63854eadfc201067c7d51479a23a80252086af35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -129,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "99c97aab_943be8bf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroup.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-05T20:45:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c6d36ab_e5054392",
+      "range": {
+        "startLine": 547,
+        "startChar": 18,
+        "endLine": 547,
+        "endChar": 29
+      },
+      "revId": "63854eadfc201067c7d51479a23a80252086af35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0e45988_ba84186b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroup.java",
         "patchSetId": 1
@@ -149,6 +257,30 @@
       "revId": "63854eadfc201067c7d51479a23a80252086af35",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b79b7295_73352193",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroup.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-05T20:45:20Z",
+      "side": 1,
+      "message": "We do allow duplicate entries, as we want to have one FETCH_ICON task for each tile (up to 12)\n\nMade final.",
+      "parentUuid": "c0e45988_ba84186b",
+      "range": {
+        "startLine": 548,
+        "startChar": 8,
+        "endLine": 548,
+        "endChar": 12
+      },
+      "revId": "63854eadfc201067c7d51479a23a80252086af35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -175,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "003ab54d_d420522d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroup.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-05T20:45:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "191c689f_48902cad",
+      "range": {
+        "startLine": 559,
+        "startChar": 20,
+        "endLine": 559,
+        "endChar": 34
+      },
+      "revId": "63854eadfc201067c7d51479a23a80252086af35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7d89ecd_1fb51443",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroup.java",
         "patchSetId": 1
@@ -195,6 +351,30 @@
       "revId": "63854eadfc201067c7d51479a23a80252086af35",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c0e39e1_78fc6905",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroup.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-05T20:45:20Z",
+      "side": 1,
+      "message": "No but I\u0027ll remove the function anyway.",
+      "parentUuid": "f7d89ecd_1fb51443",
+      "range": {
+        "startLine": 577,
+        "startChar": 20,
+        "endLine": 577,
+        "endChar": 49
+      },
+      "revId": "63854eadfc201067c7d51479a23a80252086af35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -221,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "80256aab_ed4a8ce1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroupDelegateImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-05T20:45:20Z",
+      "side": 1,
+      "message": "True... I\u0027ll assert there then.",
+      "parentUuid": "f668a45c_fe0c2888",
+      "range": {
+        "startLine": 109,
+        "startChar": 43,
+        "endLine": 109,
+        "endChar": 96
+      },
+      "revId": "63854eadfc201067c7d51479a23a80252086af35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dbadcc77_e6d4c7e1",
         "filename": "chrome/android/junit/src/org/chromium/chrome/browser/suggestions/TileGridTest.java",
         "patchSetId": 1
@@ -235,6 +439,24 @@
       "revId": "63854eadfc201067c7d51479a23a80252086af35",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba9d09b7_51571f2d",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/suggestions/TileGridTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-05T20:45:20Z",
+      "side": 1,
+      "message": "Removed files and added/modified tests in TileGroupUnitTest",
+      "parentUuid": "dbadcc77_e6d4c7e1",
+      "revId": "63854eadfc201067c7d51479a23a80252086af35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
