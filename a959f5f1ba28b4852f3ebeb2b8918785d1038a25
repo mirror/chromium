@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "211273a8_5ee7b76a",
+        "filename": "WATCHLISTS",
+        "patchSetId": 6
+      },
+      "lineNbr": 1330,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-07-05T06:42:49Z",
+      "side": 1,
+      "message": "This line should be \u0027|third_party/WebKit/Source/bindings/core/v8/.*CustomElement\u0027",
+      "revId": "a959f5f1ba28b4852f3ebeb2b8918785d1038a25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bce6591f_c007bf5f",
+        "filename": "WATCHLISTS",
+        "patchSetId": 6
+      },
+      "lineNbr": 1595,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-07-05T06:42:49Z",
+      "side": 1,
+      "message": "L1594-1595 should be \u0027|third_party/WebKit/Source/bindings/core/v8/.*CustomElement\u0027",
+      "revId": "a959f5f1ba28b4852f3ebeb2b8918785d1038a25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
