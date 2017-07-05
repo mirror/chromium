@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c0fc5db_ae5880c2",
+        "filename": "content/shell/test_runner/test_runner.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1799,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-07-05T19:37:54Z",
+      "side": 1,
+      "message": "I just wanted to double-check if it is sufficient to call SetPluginsEnabled on |main_view_|\u0027s settings.  If we need to call SetPluginsEnabled on all the windows/views (some layout tests open secondary windows), then maybe we can iterate over |TestInterfaces::window_list_|.",
+      "range": {
+        "startLine": 1799,
+        "startChar": 6,
+        "endLine": 1799,
+        "endChar": 16
+      },
+      "revId": "cc2126951104f2282b20c1ca9f0a93d5fd0344be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
