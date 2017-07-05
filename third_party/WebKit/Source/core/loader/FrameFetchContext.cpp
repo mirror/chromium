@@ -1096,6 +1096,17 @@ std::unique_ptr<WebURLLoader> FrameFetchContext::CreateURLLoader(
   } else {
     task_runner = GetTaskRunner();
   }
+
+  if (MasterDocumentLoader()->GetServiceWorkerNetworkProvider()) {
+    WrappedResourceRequest webreq(request);
+    auto loader =
+        MasterDocumentLoader()
+            ->GetServiceWorkerNetworkProvider()
+            ->CreateURLLoader(webreq, task_runner->ToSingleThreadTaskRunner());
+    if (loader)
+      return loader;
+  }
+
   return GetFrame()->CreateURLLoader(request, task_runner.Get());
 }
 
