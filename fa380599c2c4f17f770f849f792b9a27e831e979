@@ -332,6 +332,30 @@
     },
     {
       "key": {
+        "uuid": "50bf1e6e_d7896c97",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-05T21:09:55Z",
+      "side": 1,
+      "message": "The declaration should be Profile* const profile_;",
+      "parentUuid": "cad20006_09fd4408",
+      "range": {
+        "startLine": 35,
+        "startChar": 2,
+        "endLine": 35,
+        "endChar": 10
+      },
+      "revId": "fa380599c2c4f17f770f849f792b9a27e831e979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "74138517_ebecafa7",
         "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker_factory.cc",
         "patchSetId": 23
