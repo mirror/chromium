@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "a6b7ee5d_77d71d7e",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-05T09:03:53Z",
+      "side": 1,
+      "message": "Do we want to make this called only once per process, or should g_outstanding_throttled_limit be a field variable of this class? (Repeatedly overriding a global variable feels a bit weird)",
+      "revId": "bdb8c2e23f5b82d08b2d15e3572cd1505ce5cd87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6f6de960_de946bf8",
         "filename": "third_party/WebKit/Source/platform/loader/field_trial/LoaderTrial.cpp",
         "patchSetId": 1
@@ -36,6 +53,24 @@
       "writtenOn": "2017-07-05T08:25:59Z",
       "side": 1,
       "message": "Logic is not so big to have such a separate class, but I do it just because I do not want to allow to include base files for everyone under platform/loader. WDYT?",
+      "revId": "bdb8c2e23f5b82d08b2d15e3572cd1505ce5cd87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4173e431_43b8a6c7",
+        "filename": "third_party/WebKit/Source/platform/loader/field_trial/LoaderTrial.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-05T09:03:53Z",
+      "side": 1,
+      "message": "base/ usage in Platform feels just ok, I think it\u0027s fine to start with having this code in a static anon function in ResourceLoadScheduler.cpp, at least until we start to see more code needing to use this.",
+      "parentUuid": "6f6de960_de946bf8",
       "revId": "bdb8c2e23f5b82d08b2d15e3572cd1505ce5cd87",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
