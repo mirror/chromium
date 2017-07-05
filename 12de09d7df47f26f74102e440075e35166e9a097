@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e7dc8a93_b388d8cb",
+        "filename": "cc/surfaces/surface.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-05T20:23:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad2ead52_9f41a5db",
+      "revId": "12de09d7df47f26f74102e440075e35166e9a097",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46509be7_f338d6cb",
         "filename": "cc/surfaces/surface.cc",
         "patchSetId": 14
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-05T19:57:29Z",
       "side": 1,
       "message": "similar comment here.. single insertion is fine, but there are typically faster containers for this (like a vector), and then building a flat set out of a vector is faster if that\u0027s the desired final container.",
+      "revId": "12de09d7df47f26f74102e440075e35166e9a097",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3da8eb1a_5a5b9dba",
+        "filename": "cc/surfaces/surface.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-05T20:23:33Z",
+      "side": 1,
+      "message": "In this case, it is the desired final container.",
+      "parentUuid": "46509be7_f338d6cb",
       "revId": "12de09d7df47f26f74102e440075e35166e9a097",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "41883c15_c57fe254",
+        "filename": "cc/surfaces/surface.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-05T20:23:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c59d80b7_b677c8bc",
+      "range": {
+        "startLine": 137,
+        "startChar": 23,
+        "endLine": 137,
+        "endChar": 32
+      },
+      "revId": "12de09d7df47f26f74102e440075e35166e9a097",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a81db688_accdc7bf",
         "filename": "cc/surfaces/surface.h",
         "patchSetId": 14
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "ac4b0d56_184d6f30",
+        "filename": "cc/surfaces/surface.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-05T20:23:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a81db688_accdc7bf",
+      "revId": "12de09d7df47f26f74102e440075e35166e9a097",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5d7dd46_84da743b",
         "filename": "cc/surfaces/surface_dependency_deadline.h",
         "patchSetId": 14
@@ -87,6 +165,24 @@
       "writtenOn": "2017-07-05T19:57:29Z",
       "side": 1,
       "message": "You state the assumptions and return values, but can you also add a sentence saying what this function does?",
+      "revId": "12de09d7df47f26f74102e440075e35166e9a097",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "866727a6_522c85ad",
+        "filename": "cc/surfaces/surface_dependency_deadline.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-05T20:23:33Z",
+      "side": 1,
+      "message": "Ahh, assumes means \"takes on\" here. Fixed.",
+      "parentUuid": "a5d7dd46_84da743b",
       "revId": "12de09d7df47f26f74102e440075e35166e9a097",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
