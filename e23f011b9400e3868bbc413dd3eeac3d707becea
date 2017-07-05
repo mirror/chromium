@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4980348_0eb49664",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-05T04:25:32Z",
+      "side": 1,
+      "message": "typo: is -\u003e are, LayouTests -\u003e LayoutTests.",
+      "revId": "e23f011b9400e3868bbc413dd3eeac3d707becea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a21fb8d1_701a961e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/browsers/offline/appcache/workers/appcache-worker.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-05T04:25:32Z",
+      "side": 1,
+      "message": "nit: personally I wouldn\u0027t keep the service worker indent style :) I think it\u0027s not standard and there should be standard ways to write promise chains these days (but honestly I don\u0027t know what it is).\n\nbut up to you",
+      "revId": "e23f011b9400e3868bbc413dd3eeac3d707becea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38a78be8_e4a03634",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/browsers/offline/appcache/workers/appcache-worker.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-05T04:25:32Z",
+      "side": 1,
+      "message": "Q: Why does DedicatedWorker have diff behavior than SharedWorker?",
+      "revId": "e23f011b9400e3868bbc413dd3eeac3d707becea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3aec342_72746f59",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/browsers/offline/appcache/workers/resources/appcache-shared-worker-not-in-cache.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-05T04:25:32Z",
+      "side": 1,
+      "message": "spelling: mismatch",
+      "revId": "e23f011b9400e3868bbc413dd3eeac3d707becea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ceea7ffc_32007eac",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/browsers/offline/appcache/workers/resources/appcache-worker.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-05T04:25:32Z",
+      "side": 1,
+      "message": "mismatch",
+      "revId": "e23f011b9400e3868bbc413dd3eeac3d707becea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
