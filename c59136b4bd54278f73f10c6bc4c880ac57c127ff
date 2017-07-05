@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d7cebd30_8d239660",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-05T17:48:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8902d167_98b89e54",
+      "revId": "c59136b4bd54278f73f10c6bc4c880ac57c127ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6bf01d53_3950f1e0",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_importer_unittest.py",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "c59136b4bd54278f73f10c6bc4c880ac57c127ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1345c62_da35f043",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_importer_unittest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-05T17:48:06Z",
+      "side": 1,
+      "message": "I\u0027m expecting that after full migration to Gerrit, we can change pr_for_chromium_commit to just use Change Id, since Change Id will then be available on all commits -- so Change Id could be the main way to match PRs with commits, and commit position could be a temporary fallback.",
+      "parentUuid": "6bf01d53_3950f1e0",
+      "revId": "c59136b4bd54278f73f10c6bc4c880ac57c127ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
