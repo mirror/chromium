@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af2db3d4_d94b3862",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/os_metrics_win.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-05T11:09:22Z",
+      "side": 1,
+      "message": "\u003d 0. otherwise if the call below fails you\u0027ll get a random number",
+      "revId": "3defdfd762b391f28a6c58ab5a9f815ad08db2dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "133842a8_c0587aef",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/process_metrics_memory_dump_provider.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-05T11:09:22Z",
+      "side": 1,
+      "message": "this is back :)",
+      "range": {
+        "startLine": 645,
+        "startChar": 2,
+        "endLine": 646,
+        "endChar": 40
+      },
+      "revId": "3defdfd762b391f28a6c58ab5a9f815ad08db2dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
