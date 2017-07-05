@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06e10c56_618fef36",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-07-05T18:18:44Z",
+      "side": 1,
+      "message": "drop the \"get\" prefix.",
+      "revId": "9fb74307cb849897798766f884b7b07663fd949c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "652f205b_0ce63309",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-07-05T18:18:44Z",
+      "side": 1,
+      "message": "1) check for chrome:\n2) Message should be \"Cannot audit internal chrome pages\" or alike.",
+      "revId": "9fb74307cb849897798766f884b7b07663fd949c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
