@@ -258,6 +258,10 @@ class PasswordFormManager : public FormFetcher::Consumer {
 
   FormSaver* form_saver() { return form_saver_.get(); }
 
+  // Use this at most once to set a non-null recorder.
+  void SetMetricsRecorder(
+      scoped_refptr<PasswordFormMetricsRecorder> metrics_recorder);
+
   // Clears references to matches derived from the associated FormFetcher data.
   // After calling this, the PasswordFormManager holds no references to objects
   // owned by the associated FormFetcher. This does not cause removing |this| as
@@ -549,8 +553,9 @@ class PasswordFormManager : public FormFetcher::Consumer {
   // was created, is secure.
   bool is_main_frame_secure_ = false;
 
-  // Takes care of recording metrics and events for this PasswordFormManager.
-  const scoped_refptr<PasswordFormMetricsRecorder> metrics_recorder_;
+  // Takes care of recording metrics and events for this PasswordFormManager. It
+  // can be null.
+  scoped_refptr<PasswordFormMetricsRecorder> metrics_recorder_;
 
   DISALLOW_COPY_AND_ASSIGN(PasswordFormManager);
 };
