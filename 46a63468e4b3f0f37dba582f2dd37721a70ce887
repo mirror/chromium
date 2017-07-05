@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae43b19a_2534b0e1",
+        "filename": "content/browser/service_worker/embedded_worker_instance_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 858,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-05T07:15:57Z",
+      "side": 1,
+      "message": "nit: this is not necessary here?",
+      "range": {
+        "startLine": 858,
+        "startChar": 2,
+        "endLine": 858,
+        "endChar": 62
+      },
+      "revId": "46a63468e4b3f0f37dba582f2dd37721a70ce887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
