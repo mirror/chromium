@@ -11,6 +11,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
+import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
@@ -117,6 +118,17 @@ public class TileGroup implements MostVisitedSites.Observer {
          * Called when an asynchronous loading task has completed.
          */
         void onLoadTaskCompleted();
+    }
+
+    @VisibleForTesting
+    @IntDef({TileTask.FETCH_DATA, TileTask.SCHEDULE_ICON_FETCH, TileTask.FETCH_ICON})
+    @interface TileTask {
+        /** An event that should result in new data being loaded happened. */ // TODO(dgn) remove?
+        int FETCH_DATA = 1;
+        /** New tile data has been loaded and we are expecting the related icons to be fetched. */
+        int SCHEDULE_ICON_FETCH = 2;
+        /** The icon for a tile is being fetched. */
+        int FETCH_ICON = 3;
     }
 
     private static final String TAG = "TileGroup";
