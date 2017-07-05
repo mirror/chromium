@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05d12c8f_436b1627",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticleViewHolder.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-05T09:13:16Z",
+      "side": 1,
+      "message": "Why don\u0027t you have the ImageFetcher create the Promise?",
+      "range": {
+        "startLine": 368,
+        "startChar": 47,
+        "endLine": 368,
+        "endChar": 70
+      },
+      "revId": "d3ccb506d9b3772119d09cd48425fb689d54fb90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12394777_98080598",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticleViewHolder.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-05T09:13:16Z",
+      "side": 1,
+      "message": "The else isn\u0027t necessary if the previous block returns at the end.",
+      "range": {
+        "startLine": 375,
+        "startChar": 13,
+        "endLine": 375,
+        "endChar": 20
+      },
+      "revId": "d3ccb506d9b3772119d09cd48425fb689d54fb90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
