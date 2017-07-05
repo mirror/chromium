@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-package org.chromium.content.browser;
+package org.chromium.base.process_launcher;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,8 +13,6 @@ import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
 import org.chromium.base.TraceEvent;
 import org.chromium.base.annotations.SuppressFBWarnings;
-import org.chromium.base.process_launcher.ChildProcessConstants;
-import org.chromium.base.process_launcher.FileDescriptorInfo;
 
 import java.io.IOException;
 
@@ -164,7 +162,7 @@ public class ChildProcessLauncher {
 
                         @Override
                         public void onChildProcessDied(ChildProcessConnection connection) {
-                            assert LauncherThread.runningOnLauncherThread();
+                            assert isRunningOnLauncherThread();
                             assert mConnection == connection;
                             ChildProcessLauncher.this.onChildProcessDied();
                         }
@@ -284,7 +282,7 @@ public class ChildProcessLauncher {
     }
 
     private void onChildProcessDied() {
-        assert LauncherThread.runningOnLauncherThread();
+        assert isRunningOnLauncherThread();
         if (getPid() != 0) {
             mDelegate.onConnectionLost(mConnection);
         }
