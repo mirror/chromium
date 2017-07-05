@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b2da31a_7fc4945c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroup.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-05T14:29:37Z",
+      "side": 1,
+      "message": "Bit of an odd todo. Maybe put it on the previous line and say why you might want to remove it.",
+      "range": {
+        "startLine": 126,
+        "startChar": 81,
+        "endLine": 126,
+        "endChar": 85
+      },
+      "revId": "63917465bfee4f0dda3dc2bca6bed418aa7f586b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
