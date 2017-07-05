@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79015e45_48bc7bff",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_suggestions_provider_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-05T14:17:31Z",
+      "side": 1,
+      "message": "insert \" or \"",
+      "range": {
+        "startLine": 114,
+        "startChar": 41,
+        "endLine": 114,
+        "endChar": 42
+      },
+      "revId": "6caf201874c7453fe82c5513410dbca42940d316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
