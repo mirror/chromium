@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6dad191e_3b4ba985",
+        "filename": "media/capture/video/shared_memory_buffer_handle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1119929
+      },
+      "writtenOn": "2017-07-05T01:58:28Z",
+      "side": 1,
+      "message": "It is strange and unsafe to ask user for dimensions. Note that with incorrect dimensions, this function is going to return out of bound pointers...",
+      "range": {
+        "startLine": 24,
+        "startChar": 40,
+        "endLine": 24,
+        "endChar": 67
+      },
+      "revId": "fa7790c250fbc78cf9904d809a0253c713237175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89e409cd_bef8bc77",
+        "filename": "media/capture/video/shared_memory_buffer_handle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1119929
+      },
+      "writtenOn": "2017-07-05T01:58:28Z",
+      "side": 1,
+      "message": "I suppose this makes SharedMemoryBufferHandle capable of describing only I420 buffers. Even if it\u0027s fine for now, it should be clearly visible for interface users, e.g. with a format() method always returning I420 and consumers asserting that.",
+      "range": {
+        "startLine": 25,
+        "startChar": 41,
+        "endLine": 25,
+        "endChar": 58
+      },
+      "revId": "fa7790c250fbc78cf9904d809a0253c713237175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
