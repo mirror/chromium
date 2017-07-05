@@ -22,6 +22,30 @@
       "revId": "6379e4be5affacfda160948c3d7e484e356c80e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f914d6e6_36ac628e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticleViewHolder.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-07-05T16:16:26Z",
+      "side": 1,
+      "message": "Since we already have the image in the cache, we want to set it immediately rather than setting a placeholder, waiting for the looper to pick up the callback and then having to fade between the placeholder and the thumbnail. This avoids flashes in the UI when the page is refreshed as we just set the image immediately.",
+      "parentUuid": "d29704ff_56cc5b0d",
+      "range": {
+        "startLine": 379,
+        "startChar": 12,
+        "endLine": 384,
+        "endChar": 13
+      },
+      "revId": "6379e4be5affacfda160948c3d7e484e356c80e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
