@@ -15,14 +15,16 @@ namespace ios {
 class ChromeBrowserState;
 }
 
-namespace translate {
-class LanguageModel;
+namespace language {
+class UrlLanguageHistogram;
 }
 
+// TODO(crbug.com/739227): This class should be called
+// UrlLanguageHistogramFactory and should belong to the language feature.
 class LanguageModelFactory : public BrowserStateKeyedServiceFactory {
  public:
   static LanguageModelFactory* GetInstance();
-  static translate::LanguageModel* GetForBrowserState(
+  static language::UrlLanguageHistogram* GetForBrowserState(
       ios::ChromeBrowserState* browser_state);
 
  private:

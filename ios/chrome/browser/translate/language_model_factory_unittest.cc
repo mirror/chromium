@@ -36,7 +36,7 @@ TEST_F(LanguageModelFactoryTest, NotCreatedInIncognito) {
 
   ios::ChromeBrowserState* otr_browser_state =
       chrome_browser_state()->GetOffTheRecordChromeBrowserState();
-  translate::LanguageModel* language_model =
+  language::UrlLanguageHistogram* language_model =
       LanguageModelFactory::GetForBrowserState(otr_browser_state);
   EXPECT_THAT(language_model, IsNull());
 }

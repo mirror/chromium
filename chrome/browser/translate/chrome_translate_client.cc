@@ -35,7 +35,6 @@
 #include "components/sync/driver/sync_driver_switches.h"
 #include "components/sync/protocol/user_event_specifics.pb.h"
 #include "components/sync/user_events/user_event_service.h"
-#include "components/translate/core/browser/language_model.h"
 #include "components/translate/core/browser/language_state.h"
 #include "components/translate/core/browser/page_translated_details.h"
 #include "components/translate/core/browser/translate_accept_languages.h"
@@ -121,8 +120,9 @@ ChromeTranslateClient::ChromeTranslateClient(content::WebContents* web_contents)
           translate::TranslateRankerFactory::GetForBrowserContext(
               web_contents->GetBrowserContext()),
           prefs::kAcceptLanguages)),
-      language_model_(LanguageModelFactory::GetInstance()->GetForBrowserContext(
-          web_contents->GetBrowserContext())) {
+      language_histogram_(
+          LanguageModelFactory::GetInstance()->GetForBrowserContext(
+              web_contents->GetBrowserContext())) {
   translate_driver_.AddObserver(this);
   translate_driver_.set_translate_manager(translate_manager_.get());
 }
@@ -391,8 +391,8 @@ void ChromeTranslateClient::OnLanguageDetermined(
   RecordLanguageDetectionEvent(details);
   // Unless we have no language model (e.g., in incognito), notify the model
   // about detected language of every page visited.
-  if (language_model_ && details.is_cld_reliable)
-    language_model_->OnPageVisited(details.cld_language);
+  if (language_histogram_ && details.is_cld_reliable)
+    language_histogram_->OnPageVisited(details.cld_language);
 }
 
 void ChromeTranslateClient::OnPageTranslated(

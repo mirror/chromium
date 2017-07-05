@@ -9,15 +9,17 @@
 #include "base/memory/singleton.h"
 #include "components/keyed_service/content/browser_context_keyed_service_factory.h"
 
-namespace translate {
-class LanguageModel;
+namespace language {
+class UrlLanguageHistogram;
 }
 
+// TODO(crbug.com/739227): This class should be called
+// UrlLanguageHistogramFactory and should belong to the language feature.
 class LanguageModelFactory
     : public BrowserContextKeyedServiceFactory {
  public:
   static LanguageModelFactory* GetInstance();
-  static translate::LanguageModel* GetForBrowserContext(
+  static language::UrlLanguageHistogram* GetForBrowserContext(
       content::BrowserContext* browser_context);
 
  private:

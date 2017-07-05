@@ -19,12 +19,12 @@
 #include "components/autofill/core/browser/webdata/autofill_webdata_service.h"
 #include "components/history/core/browser/history_service.h"
 #include "components/keyed_service/core/service_access_type.h"
+#include "components/language/core/browser/url_language_histogram.h"
 #include "components/omnibox/browser/omnibox_pref_names.h"
 #include "components/password_manager/core/browser/password_store.h"
 #include "components/prefs/pref_service.h"
 #include "components/search_engines/template_url_service.h"
 #include "components/sessions/core/tab_restore_service.h"
-#include "components/translate/core/browser/language_model.h"
 #include "ios/chrome/browser/application_context.h"
 #include "ios/chrome/browser/autofill/personal_data_manager_factory.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
@@ -247,11 +247,11 @@ void IOSChromeBrowsingDataRemover::RemoveImpl(int remove_mask) {
         data_manager->Refresh();
     }
 
-    // Remove language model history.
-    translate::LanguageModel* language_model =
+    // Remove language histogram history.
+    language::UrlLanguageHistogram* language_histogram =
         LanguageModelFactory::GetForBrowserState(browser_state_);
-    if (language_model) {
-      language_model->ClearHistory(delete_begin_, delete_end_);
+    if (language_histogram) {
+      language_histogram->ClearHistory(delete_begin_, delete_end_);
     }
   }
 

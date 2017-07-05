@@ -7,7 +7,7 @@
 #include "base/memory/ptr_util.h"
 #include "components/keyed_service/core/keyed_service.h"
 #include "components/keyed_service/ios/browser_state_dependency_manager.h"
-#include "components/translate/core/browser/language_model.h"
+#include "components/language/core/browser/url_language_histogram.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 
 // static
@@ -16,9 +16,9 @@ LanguageModelFactory* LanguageModelFactory::GetInstance() {
 }
 
 // static
-translate::LanguageModel* LanguageModelFactory::GetForBrowserState(
+language::UrlLanguageHistogram* LanguageModelFactory::GetForBrowserState(
     ios::ChromeBrowserState* const state) {
-  return static_cast<translate::LanguageModel*>(
+  return static_cast<language::UrlLanguageHistogram*>(
       GetInstance()->GetServiceForBrowserState(state, true));
 }
 
@@ -33,5 +33,6 @@ std::unique_ptr<KeyedService> LanguageModelFactory::BuildServiceInstanceFor(
     web::BrowserState* context) const {
   ios::ChromeBrowserState* browser_state =
       ios::ChromeBrowserState::FromBrowserState(context);
-  return base::MakeUnique<translate::LanguageModel>(browser_state->GetPrefs());
+  return base::MakeUnique<language::UrlLanguageHistogram>(
+      browser_state->GetPrefs());
 }
