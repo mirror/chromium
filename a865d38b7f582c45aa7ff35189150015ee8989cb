@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be6e9067_68b80fd5",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position-3/position-sticky-inflow-position.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2017-07-05T19:38:50Z",
+      "side": 1,
+      "message": "Maybe we should scroll the element as the deleted test does?",
+      "revId": "a865d38b7f582c45aa7ff35189150015ee8989cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
