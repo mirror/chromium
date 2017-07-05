@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ebc6fcbe_1ab12530",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-05T17:54:50Z",
+      "side": 1,
+      "message": "decltype(workers_)",
+      "range": {
+        "startLine": 414,
+        "startChar": 2,
+        "endLine": 414,
+        "endChar": 45
+      },
+      "revId": "cb208830594cfac0eb4db81f779f2ef2da10e3cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4365691_fe6a3cef",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-05T17:54:50Z",
+      "side": 1,
+      "message": "Move this statement closer to the DCHECK_LE line below.",
+      "range": {
+        "startLine": 621,
+        "startChar": 2,
+        "endLine": 621,
+        "endChar": 53
+      },
+      "revId": "cb208830594cfac0eb4db81f779f2ef2da10e3cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "830ae14b_5515778e",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-05T17:54:50Z",
+      "side": 1,
+      "message": "After looking at this change, I\u0027m wondering if it would be simpler to just bring workers_lock_ and idle_workers_stack_lock_ together. \n\nBoth locks are held during the creation of a thread and for waking up a thread.\n\nWe will need just workers_lock_ when we start mutating the workers_ and worker_capacity) variables, which hopefully shouldn\u0027t be that often.\n\nOtherwise, this lock appears to primarily be used to DCHECKs or tests. \n\nWhat do you think?",
+      "range": {
+        "startLine": 159,
+        "startChar": 2,
+        "endLine": 159,
+        "endChar": 38
+      },
+      "revId": "cb208830594cfac0eb4db81f779f2ef2da10e3cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
