@@ -16,6 +16,24 @@
       "revId": "f2f0c554c9a15032e95f78c1b78504dcfc2c09c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3360a9db_1b4ced35",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position-3/position-sticky-grid.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-07-05T19:59:42Z",
+      "side": 1,
+      "message": "Per the WPT guide, you are meant to render an opaque green rectangle over a opaque red rectangle. http://web-platform-tests.org/writing-tests/rendering.html - \"[a] green square is often rendered over a red square, such that when the test fails there is red visible on the page\"",
+      "parentUuid": "c7c0c771_ac890929",
+      "revId": "f2f0c554c9a15032e95f78c1b78504dcfc2c09c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
