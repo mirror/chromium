@@ -247,7 +247,7 @@ class CORE_EXPORT FrameLoader final {
                           HistoryItem*,
                           ClientRedirectPolicy,
                           Document*);
-  void RestoreScrollPositionAndViewStateForLoadType(FrameLoadType);
+  void RestoreScrollPositionAndViewStateForLoadType(FrameLoadType, bool);
 
   void ScheduleCheckCompleted();
 

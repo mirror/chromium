@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+
+<style>
+  #bigdiv {
+    width: 200px;
+    height: 1100px;
+  }
+</style>
+
+<div id="bigdiv">
+</div>
+
+<script>
+  const bigdiv = document.getElementById("bigdiv");
+
+  window.onpopstate = (event) => {
+    document.body.appendChild(bigdiv);
+  };
+</script>
+
+<script src="../../../resources/testharness.js"></script>
+<script src="../../../resources/testharnessreport.js"></script>
+
+<script>
+  'use strict';
+  async_test((t) => {
+    // 1. scroll to bottom. 
+    window.scrollBy(0, 1000);
+    const scroll_y = window.scrollY;
+    assert_equals(scroll_y, 516);
+
+    // 2. remove bigdiv and push state.
+    document.body.removeChild(bigdiv);
+    history.pushState(1, null, "page2.html");
+
+    // 3. navigation back. page should restore scroll position to scroll_y.
+    history.back();
+
+    function verify() {
+      if (window.location.toString().includes("scroll-restoration-same-doc.html")) {
+        t.step(() => {
+          assert_equals(window.scrollY, scroll_y);
+        });
+        t.done();
+      } else {
+        setTimeout(verify, 10);
+      }
+    }
+
+    setTimeout(verify, 10);
+  }, "load-in-same-doc-and-change-DOM-onpopstate");
+</script>

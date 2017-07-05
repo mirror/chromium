@@ -565,7 +565,7 @@ void FrameLoader::LoadInSameDocument(
                                        : SerializedScriptValue::NullValue());
 
   if (history_item)
-    RestoreScrollPositionAndViewStateForLoadType(frame_load_type);
+    RestoreScrollPositionAndViewStateForLoadType(frame_load_type, true);
 
   // We need to scroll to the fragment whether or not a hash change occurred,
   // since the user might have scrolled since the previous navigation.
@@ -1062,11 +1062,13 @@ bool FrameLoader::IsLoadingMainFrame() const {
 void FrameLoader::RestoreScrollPositionAndViewState() {
   if (!frame_->GetPage() || !GetDocumentLoader())
     return;
-  RestoreScrollPositionAndViewStateForLoadType(GetDocumentLoader()->LoadType());
+  RestoreScrollPositionAndViewStateForLoadType(GetDocumentLoader()->LoadType(),
+                                               false);
 }
 
 void FrameLoader::RestoreScrollPositionAndViewStateForLoadType(
-    FrameLoadType load_type) {
+    FrameLoadType load_type,
+    bool should_layout_when_cannot_restore_without_clamping) {
   LocalFrameView* view = frame_->View();
   if (!view || !view->LayoutViewportScrollableArea() ||
       !state_machine_.CommittedFirstRealDocumentLoad() ||
@@ -1094,6 +1096,17 @@ void FrameLoader::RestoreScrollPositionAndViewStateForLoadType(
   bool can_restore_without_clamping =
       view->LayoutViewportScrollableArea()->ClampScrollOffset(
           history_item->GetScrollOffset()) == history_item->GetScrollOffset();
+
+  // Here |can_restore_without_clamping| is false, maybe need a layout to get
+  // correct content size.
+  if (!can_restore_without_clamping &&
+      should_layout_when_cannot_restore_without_clamping) {
+    frame_->GetDocument()->UpdateStyleAndLayout();
+    can_restore_without_clamping =
+        view->LayoutViewportScrollableArea()->ClampScrollOffset(
+            history_item->GetScrollOffset()) == history_item->GetScrollOffset();
+  }
+
   bool can_restore_without_annoying_user =
       !GetDocumentLoader()->GetInitialScrollState().was_scrolled_by_user &&
       (can_restore_without_clamping || !frame_->IsLoading() ||
