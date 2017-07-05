@@ -159,6 +159,8 @@ gfx::Vector2dF BrowserControlsOffsetManager::ScrollBy(
   // content. If the top controls have no height, the content should scroll
   // immediately.
   gfx::Vector2dF applied_delta(0.f, old_top_offset - ContentTopOffset());
+  LOG(WARNING) << "mdjones: applied " << old_top_offset << " "
+               << ContentTopOffset();
   return pending_delta - applied_delta;
 }
 

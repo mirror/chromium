@@ -31,10 +31,13 @@ class CORE_EXPORT BrowserControls final
   float LayoutHeight();
   // The amount that browser controls are currently shown.
   float ContentOffset();
+  float BottomContentOffset();
 
-  float Height() const { return height_; }
+  float TopHeight() const { return top_height_; }
+  float BottomHeight() const { return bottom_height_; }
+  float TotalHeight() const { return top_height_ + bottom_height_; }
   bool ShrinkViewport() const { return shrink_viewport_; }
-  void SetHeight(float height, bool shrink_viewport);
+  void SetHeight(float top_height, float bottom_height, bool shrink_viewport);
 
   float ShownRatio() const { return shown_ratio_; }
   void SetShownRatio(float);
@@ -58,7 +61,8 @@ class CORE_EXPORT BrowserControls final
   Member<const Page> page_;
 
   // The browser controls height regardless of whether it is visible or not.
-  float height_;
+  float top_height_;
+  float bottom_height_;
 
   // The browser controls shown amount (normalized from 0 to 1) since the last
   // compositor commit. This value is updated from two sources:

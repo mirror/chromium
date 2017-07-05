@@ -7875,7 +7875,7 @@ TEST_F(WebFrameTest, FrameViewScrollAccountsForBrowserControls) {
 
   float browser_controls_height = 40;
   web_view->ResizeWithBrowserControls(WebSize(100, 100),
-                                      browser_controls_height, false);
+                                      browser_controls_height, 0, false);
   web_view->SetPageScaleFactor(2.0f);
   web_view->UpdateAllLifecyclePhases();
 
@@ -7904,7 +7904,7 @@ TEST_F(WebFrameTest, FrameViewScrollAccountsForBrowserControls) {
   // matches that of the CC
   web_view->ApplyViewportDeltas(WebFloatSize(), WebFloatSize(), WebFloatSize(),
                                 1.0f, 30.0f / browser_controls_height);
-  web_view->ResizeWithBrowserControls(WebSize(100, 60), 40.0f, true);
+  web_view->ResizeWithBrowserControls(WebSize(100, 60), 40.0f, 0, true);
   web_view->UpdateAllLifecyclePhases();
   EXPECT_SIZE_EQ(ScrollOffset(0, 1940), frame_view->MaximumScrollOffset());
 
@@ -7918,7 +7918,7 @@ TEST_F(WebFrameTest, FrameViewScrollAccountsForBrowserControls) {
   web_view->ApplyViewportDeltas(WebFloatSize(), WebFloatSize(), WebFloatSize(),
                                 1.0f, -30.0f / browser_controls_height);
   web_view->ResizeWithBrowserControls(WebSize(100, 100),
-                                      browser_controls_height, false);
+                                      browser_controls_height, 0, false);
   web_view->UpdateAllLifecyclePhases();
   EXPECT_SIZE_EQ(ScrollOffset(0, 1900), frame_view->MaximumScrollOffset());
 
@@ -10732,7 +10732,7 @@ TEST_F(WebFrameTest, RootLayerMinimumHeight) {
   WebViewBase* web_view = web_view_helper.WebView();
   web_view->ResizeWithBrowserControls(
       WebSize(kViewportWidth, kViewportHeight - kBrowserControlsHeight),
-      kBrowserControlsHeight, true);
+      kBrowserControlsHeight, 0, true);
 
   InitializeWithHTML(
       *web_view->MainFrameImpl()->GetFrame(),
@@ -10763,7 +10763,7 @@ TEST_F(WebFrameTest, RootLayerMinimumHeight) {
   document->View()->SetTracksPaintInvalidations(true);
 
   web_view->ResizeWithBrowserControls(WebSize(kViewportWidth, kViewportHeight),
-                                      kBrowserControlsHeight, false);
+                                      kBrowserControlsHeight, 0, false);
 
   EXPECT_EQ(kViewportHeight,
             compositor->RootLayer()->BoundingBoxForCompositing().Height());
@@ -11514,7 +11514,7 @@ TEST_F(WebFrameTest, DISABLE_ON_TSAN(TestNonCompositedOverlayScrollbarsFade)) {
   mock_overlay_theme.SetOverlayScrollbarFadeOutDelay(
       kMockOverlayFadeOutDelayMs / 1000.0);
 
-  web_view_impl->ResizeWithBrowserControls(WebSize(640, 480), 0, false);
+  web_view_impl->ResizeWithBrowserControls(WebSize(640, 480), 0, 0, false);
 
   WebURL base_url = URLTestHelpers::ToKURL("http://example.com/");
   FrameTestHelpers::LoadHTMLString(web_view_impl->MainFrameImpl(),
