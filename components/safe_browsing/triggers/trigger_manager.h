@@ -9,6 +9,7 @@
 
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "components/safe_browsing/triggers/trigger_throttler.h"
 #include "components/security_interstitials/content/unsafe_resource.h"
 #include "components/security_interstitials/core/base_safe_browsing_error_ui.h"
 #include "content/public/browser/web_contents.h"
@@ -27,10 +28,6 @@ namespace safe_browsing {
 
 class BaseUIManager;
 class ThreatDetails;
-
-enum class SafeBrowsingTriggerType {
-  SECURITY_INTERSTITIAL,
-};
 
 // A wrapper around different kinds of data collectors that can be active on a
 // given browser tab. Any given field can be null or empty if the associated
@@ -120,6 +117,9 @@ class TriggerManager {
 
   // Map of the data collectors running on each tabs.
   DataCollectorsMap data_collectors_map_;
+
+  // Keeps track of how often triggers fire and throttles them when needed.
+  TriggerThrottler trigger_throttler_;
 
   DISALLOW_COPY_AND_ASSIGN(TriggerManager);
 };
