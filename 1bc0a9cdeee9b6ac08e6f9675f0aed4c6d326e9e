@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f7ec495_3bb1112b",
+        "filename": "components/payments/core/autofill_payment_instrument.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-05T18:54:49Z",
+      "side": 1,
+      "message": "ForFor",
+      "revId": "1bc0a9cdeee9b6ac08e6f9675f0aed4c6d326e9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
