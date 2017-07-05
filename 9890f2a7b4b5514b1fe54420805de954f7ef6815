@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7fedf10_964bed3f",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-05T11:37:33Z",
+      "side": 1,
+      "message": "well ... :)",
+      "range": {
+        "startLine": 145,
+        "startChar": 0,
+        "endLine": 145,
+        "endChar": 16
+      },
+      "revId": "9890f2a7b4b5514b1fe54420805de954f7ef6815",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
