@@ -224,6 +224,24 @@
     },
     {
       "key": {
+        "uuid": "7b63d6a8_f12d0852",
+        "filename": "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-05T22:10:06Z",
+      "side": 1,
+      "message": "Sure:\nhttps://www.chromium.org/developers/coding-style/cpp-dos-and-donts\n\nSee section \"Stop inlining constructors and destructors\"",
+      "parentUuid": "ed1565b1_615b6752",
+      "revId": "5f897a13751bedb3270bd6d6c238138c93c61227",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "316982f2_d8b2b7b3",
         "filename": "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.h",
         "patchSetId": 4
