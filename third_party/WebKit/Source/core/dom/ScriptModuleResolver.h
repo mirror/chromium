@@ -42,6 +42,12 @@ class CORE_EXPORT ScriptModuleResolver
   virtual ScriptModule Resolve(const String& specifier,
                                const ScriptModule& referrer,
                                ExceptionState&) = 0;
+
+  // Implements "Runtime Semantics: HostImportModuleDynamically"
+  // https://tc39.github.io/proposal-dynamic-import/#sec-hostimportmoduledynamically
+  virtual void ResolveDynamically(const String& specifier,
+                                  const String& referrer,
+                                  ScriptModuleResolver*) = 0;
 };
 
 }  // namespace blink
