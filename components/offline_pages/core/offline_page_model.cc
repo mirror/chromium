@@ -23,15 +23,29 @@ OfflinePageModel::SavePageParams::SavePageParams(const SavePageParams& other) {
   request_origin = other.request_origin;
 }
 
-OfflinePageModel::SavePageParams::~SavePageParams() {}
+OfflinePageModel::SavePageParams::~SavePageParams() = default;
+
+OfflinePageModel::ImportPageParams::ImportPageParams() = default;
+
+OfflinePageModel::ImportPageParams::ImportPageParams(
+    const ImportPageParams& other) {
+  url = other.url;
+  client_id = other.client_id;
+  original_url = other.original_url;
+  title = other.title;
+  file_path = other.file_path;
+  file_size = other.file_size;
+}
+
+OfflinePageModel::ImportPageParams::~ImportPageParams() = default;
 
 // static
 bool OfflinePageModel::CanSaveURL(const GURL& url) {
   return url.is_valid() && url.SchemeIsHTTPOrHTTPS();
 }
 
-OfflinePageModel::OfflinePageModel() {}
+OfflinePageModel::OfflinePageModel() = default;
 
-OfflinePageModel::~OfflinePageModel() {}
+OfflinePageModel::~OfflinePageModel() = default;
 
 }  // namespace offline_pages

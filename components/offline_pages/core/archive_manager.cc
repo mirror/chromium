@@ -78,6 +78,17 @@ void GetStorageStatsImpl(const base::FilePath& archive_dir,
   task_runner->PostTask(FROM_HERE, base::Bind(callback, storage_stats));
 }
 
+void MoveFile(const base::FilePath& src_path,
+              const base::FilePath& dest_path,
+              scoped_refptr<base::SequencedTaskRunner> task_runner,
+              const base::Callback<void(const base::FilePath&)>& callback) {
+  bool result = base::Move(src_path, dest_path);
+  base::FilePath result_path;
+  if (result)
+    result_path = dest_path;
+  task_runner->PostTask(FROM_HERE, base::Bind(callback, result_path));
+}
+
 }  // namespace
 
 // protected and used for testing.
@@ -129,6 +140,16 @@ void ArchiveManager::GetStorageStats(
     const StorageStatsCallback& callback) const {
   task_runner_->PostTask(
       FROM_HERE, base::Bind(GetStorageStatsImpl, archives_dir_,
+                            base::ThreadTaskRunnerHandle::Get(), callback));
+}
+
+void ArchiveManager::ImportArchive(
+    const base::FilePath& src_path,
+    const base::Callback<void(const base::FilePath&)>& callback) {
+  base::FilePath dest_path =
+      archives_dir_.Append(src_path.BaseName()).ReplaceExtension(".mhtml");
+  task_runner_->PostTask(
+      FROM_HERE, base::Bind(MoveFile, src_path, dest_path,
                             base::ThreadTaskRunnerHandle::Get(), callback));
 }
 
