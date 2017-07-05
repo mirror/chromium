@@ -2191,6 +2191,22 @@ IN_PROC_BROWSER_TEST_F(ShelfAppBrowserTest, DISABLED_DragOffShelf) {
   EXPECT_FALSE(test.IsOverflowButtonVisible());
 }
 
+IN_PROC_BROWSER_TEST_F(ShelfAppBrowserTest, ShelfButtonContextMenu) {
+  ui::test::EventGenerator generator(ash::Shell::GetPrimaryRootWindow(),
+                                     gfx::Point());
+  ash::test::ShelfViewTestAPI test(shelf_->GetShelfViewForTesting());
+  const int browser_index = GetIndexOfShelfItemType(ash::TYPE_BROWSER_SHORTCUT);
+  ASSERT_LE(0, browser_index);
+  ash::ShelfButton* button = test.GetButton(browser_index);
+  ASSERT_TRUE(button);
+  const gfx::Rect bounds = button->GetBoundsInScreen();
+  generator.MoveMouseTo(bounds.CenterPoint().x(), bounds.CenterPoint().y());
+  generator.PressRightButton();
+  EXPECT_FALSE(test.shelf_view()->drag_view());
+  generator.ReleaseRightButton();
+  EXPECT_FALSE(test.shelf_view()->drag_view());
+}
+
 // Check that clicking on an app shelf item launches a new browser.
 IN_PROC_BROWSER_TEST_F(ShelfAppBrowserTest, ClickItem) {
   // Get a number of interfaces we need.
