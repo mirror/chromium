@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "009bc9ee_b608a5b3",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-05T14:58:13Z",
+      "side": 1,
+      "message": "Please add something along the lines of:\n\n\"Reporting happens on destruction of the metrics recorder. Note that UKM metrics are reported for intervals of length metrics::GetUploadInterval(). Only metrics that are reported from the time of creating the PasswordFormMetricsRecorder until the end of current upload interval are recorded. Everything after the end of the current upload interval is discarded. For this reason, it is essential that references are not just kept until browser shutdown.\"",
+      "revId": "6cd583600b3f05a6ce87cea6c7b057b88febb77f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
