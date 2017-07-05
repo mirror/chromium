@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script src="resources/load-event-helpers.js"></script>
+<link rel="help" href="https://html.spec.whatwg.org/multipage/#execute-the-script-block">
+</head>
+<script>
+"use strict";
+var test6_classic_load = event_test('6th Clause, Step 23 of prepare a script',
+    false, false);
+
+document.write(
+    '<link rel="stylesheet" href="resources/slow.py"></link>' +
+    '<script onload="onLoad(test6_classic_load);" ' +
+    'onerror="onError(test6_classic_load);"' +
+    '>"use strict";onExecute(test6_classic_load);</scr' + 'ipt>');
+</script>
