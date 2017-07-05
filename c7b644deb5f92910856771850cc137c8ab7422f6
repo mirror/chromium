@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "79b274e4_b79e8448",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-05T02:52:53Z",
+      "side": 1,
+      "message": "After detach is called we can\u0027t be sure if GetFrame() returns valid frame. \n\nThis should probably just return nullptr if IsDetached() is true?",
+      "parentUuid": "4aacebf5_1b2c27eb",
+      "revId": "c7b644deb5f92910856771850cc137c8ab7422f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fcc77259_b15a1367",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/FetchContext.h",
         "patchSetId": 9
