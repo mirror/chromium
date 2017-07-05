@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50c76641_58fec886",
+        "filename": "content/browser/media/android/media_resource_getter_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-07-05T21:56:37Z",
+      "side": 0,
+      "message": "Keep DCHECK but ensure it\u0027s the network one now?",
+      "revId": "6402a1d09eb71ef6219aeef123b5175f69e4bf36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3846a116_01ce6525",
+        "filename": "content/browser/media/android/media_resource_getter_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-07-05T21:56:37Z",
+      "side": 0,
+      "message": "Ditto.",
+      "revId": "6402a1d09eb71ef6219aeef123b5175f69e4bf36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
