@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "551a21e3_34032785",
+        "filename": "third_party/WebKit/LayoutTests/fast/history/scroll-restoration/scroll-restoration-same-doc.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-07-05T20:17:11Z",
+      "side": 1,
+      "message": "I don\u0027t see why this test is split into two \u003cscript\u003es. Please make them one.",
+      "range": {
+        "startLine": 13,
+        "startChar": 1,
+        "endLine": 13,
+        "endChar": 7
+      },
+      "revId": "a2d343ad205522c4a6aef2ed4dd4d8eb61018118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5494ca89_f2e0ca5e",
+        "filename": "third_party/WebKit/LayoutTests/fast/history/scroll-restoration/scroll-restoration-same-doc.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-07-05T20:17:11Z",
+      "side": 1,
+      "message": "This is an odd number. Instead you should either 1) make #bigdiv taller (e.g., 500px) to ensure when you scroll to 1000px there is enough content. 2) scroll to something smaller e.g., 100px\n\nI want to see the scrollBy value match the assertion here to avoid any confusion.",
+      "range": {
+        "startLine": 30,
+        "startChar": 28,
+        "endLine": 30,
+        "endChar": 31
+      },
+      "revId": "a2d343ad205522c4a6aef2ed4dd4d8eb61018118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fd15d66_82716324",
+        "filename": "third_party/WebKit/LayoutTests/fast/history/scroll-restoration/scroll-restoration-same-doc.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-07-05T20:17:11Z",
+      "side": 1,
+      "message": "I think these two steps should be reversed:\n- create a new history item (i.e., pushState)\n- store scroll position 0 for that item by removing the child.\nThe fact that this currently works may be due to layout happening \nasync but I don\u0027t think your test should rely on that behavior.\n\nActually, please assert that after step 2 window.scrollY \u003d\u003d 0.",
+      "revId": "a2d343ad205522c4a6aef2ed4dd4d8eb61018118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f61dfc0_247b7f42",
+        "filename": "third_party/WebKit/LayoutTests/fast/history/scroll-restoration/scroll-restoration-same-doc.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-07-05T20:17:11Z",
+      "side": 1,
+      "message": "ditt. You should assert against a constant value here.",
+      "range": {
+        "startLine": 42,
+        "startChar": 40,
+        "endLine": 42,
+        "endChar": 48
+      },
+      "revId": "a2d343ad205522c4a6aef2ed4dd4d8eb61018118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddcb67f5_d5daff3b",
+        "filename": "third_party/WebKit/LayoutTests/fast/history/scroll-restoration/scroll-restoration-same-doc.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-07-05T20:17:11Z",
+      "side": 1,
+      "message": "These two setTimeout of 10ms seem redundant and inefficient. \nIn particular you want to verify the scroll position right after \u0027popstate\u0027 event. \nSo I suggest you do the following:\n\nonpopstate() \u003d\u003e {\n  //... remove element\n  \n  setTimeout(()\u003d\u003e{// can even be a requestAnimationFrame.\n    //... verify scroll position.\n  }, 0);\n\n}",
+      "range": {
+        "startLine": 50,
+        "startChar": 4,
+        "endLine": 50,
+        "endChar": 14
+      },
+      "revId": "a2d343ad205522c4a6aef2ed4dd4d8eb61018118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "208675a0_af918ee6",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1066,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-07-05T20:17:11Z",
+      "side": 1,
+      "message": "Blink style is to prefer using a descriptive enum instead of a bool.\nSee core/loader/FrameLoaderTypes.h for examples of this. Maybe it is even\nOK to use pre-existing HistoryLoadType. In particular, I think the proposed\nsemantic is 1) for same doc navigation, allow layout if necessary 2) for cross\ndoc navigations don\u0027t allow layout as we trigger the process once document\nload completes. So knowing history load type should be enough to determine\nthe layout policy.",
+      "range": {
+        "startLine": 1066,
+        "startChar": 47,
+        "endLine": 1066,
+        "endChar": 52
+      },
+      "revId": "a2d343ad205522c4a6aef2ed4dd4d8eb61018118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc86006d_0949245c",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1093,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-07-05T20:17:11Z",
+      "side": 1,
+      "message": "You change is adding a new case to this behavior please update the comment to reflect this.\nSomething like:\n\n4. forcing a layout if necessary to avoid clamping\n5. ignore clamp detection if [...] or after load complete, or for same doc history navigation, [...]",
+      "range": {
+        "startLine": 1093,
+        "startChar": 8,
+        "endLine": 1093,
+        "endChar": 14
+      },
+      "revId": "a2d343ad205522c4a6aef2ed4dd4d8eb61018118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53b0a850_e546a59a",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1105,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-07-05T20:17:11Z",
+      "side": 1,
+      "message": "Is this necessary? Perhaps instead of this we should just consider restoring in this case\neven with clamp because we will not get another chance to restore for same doc history navs.\n\nFor example see below, where we restore if |!frame-\u003eIsLoading()| even if it means to clamp.\nI think the above case falls under the same category.",
+      "range": {
+        "startLine": 1105,
+        "startChar": 4,
+        "endLine": 1105,
+        "endChar": 32
+      },
+      "revId": "a2d343ad205522c4a6aef2ed4dd4d8eb61018118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
