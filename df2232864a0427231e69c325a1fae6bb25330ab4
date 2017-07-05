@@ -144,6 +144,24 @@
     },
     {
       "key": {
+        "uuid": "822a9257_c194222b",
+        "filename": "cc/surfaces/surface_aggregator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-05T20:52:24Z",
+      "side": 1,
+      "message": "Hmm, unit tests fail:\n\nReceived signal 11 SEGV_MAPERR 000000000058\n#0 0x7fafeaa04b3c base::debug::StackTrace::StackTrace()\n#1 0x7fafeaa046a1 base::debug::(anonymous namespace)::StackDumpSignalHandler()\n#2 0x7fafeba22330 \u003cunknown\u003e\n#3 0x7fafeaa285a0 \u003cunknown\u003e\n#4 0x7fafebdd649c cc::Surface::UnrefResources()\n#5 0x7fafeb93d734 cc::ResourceProvider::DeleteAndReturnUnusedResourcesToChild()\n#6 0x7fafeb93ab0e cc::ResourceProvider::DestroyChildInternal()\n#7 0x7fafebdddafb cc::SurfaceAggregator::ReleaseResources()\n#8 0x7fafebde6391 cc::SurfaceManager::SurfaceDiscarded()\n#9 0x7fafebdd607f cc::Surface::~Surface()\n#10 0x7fafebde5d6b cc::SurfaceManager::DestroySurfaceInternal()\n#11 0x7fafebde4dcb cc::SurfaceManager::GarbageCollectSurfaces()\n#12 0x7fafebde4bc1 cc::SurfaceManager::DestroySurface()\n#13 0x7fafebdc9672 cc::CompositorFrameSinkSupport::~CompositorFrameSinkSupport()\n#14 0x7fafebdc980e cc::CompositorFrameSinkSupport::~CompositorFrameSinkSupport()\n#15 0x00000105d04a cc::TestLayerTreeFrameSink::DetachFromClient()\n#16 0x7fafeb991acb cc::LayerTreeHostImpl::ReleaseLayerTreeFrameSink()\n\n\nThis looks like a bug, because today resources will never return to the client if the CompositorFrameSinkSuppoprt is going away...maybe that\u0027s deliberate?",
+      "parentUuid": "957ff9bf_c7ef28ac",
+      "revId": "df2232864a0427231e69c325a1fae6bb25330ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5b9ab509_e166f7db",
         "filename": "cc/surfaces/surface_manager.h",
         "patchSetId": 3
