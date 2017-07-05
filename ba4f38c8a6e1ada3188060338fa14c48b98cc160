@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4cbf0c16_638eb172",
+        "filename": "chrome/browser/ui/views/passwords/auto_signin_first_run_dialog_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-07-05T14:24:55Z",
+      "side": 1,
+      "message": "I suspect the reasoning for this hard-coded value is that the dialog could wind up way too wide since the text won\u0027t be wrapped at a reasonable width.\n\nI used 0 so that under harmony, the returned value would be 320... otherwise if the dialog were sized based on the child views or the kDesiredWidth value of 370 were used, the dialog would be 512 or larger.",
+      "parentUuid": "05abaa52_ccda8109",
+      "revId": "ba4f38c8a6e1ada3188060338fa14c48b98cc160",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "36d31b46_3c8c0386",
         "filename": "chrome/browser/ui/views/passwords/auto_signin_first_run_dialog_view.cc",
         "patchSetId": 4
@@ -47,6 +65,24 @@
       "writtenOn": "2017-07-01T02:45:42Z",
       "side": 1,
       "message": "It seems like this is manually creating a dialog bottom button row.  I would assume the reason for that is to avoid having esc trigger the \"cancel\" button.  But we can simply make \"close\" not call \"cancel\" and get that same effect.  I think what you want is probably something like https://chromium-review.googlesource.com/c/557139/ .",
+      "revId": "ba4f38c8a6e1ada3188060338fa14c48b98cc160",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d49af5dc_1f010f0e",
+        "filename": "chrome/browser/ui/views/passwords/auto_signin_first_run_dialog_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-07-05T14:24:55Z",
+      "side": 1,
+      "message": "That reason is explicitly stated in GetDialogButtons(), which is as you say.\n\nThe original author probably didn\u0027t know how to do this. I\u0027ll look into it.",
+      "parentUuid": "5008fe26_8798c4a8",
       "revId": "ba4f38c8a6e1ada3188060338fa14c48b98cc160",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
