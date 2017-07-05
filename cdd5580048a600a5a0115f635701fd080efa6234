@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc8e1260_1c873163",
+        "filename": "chrome/browser/android/vr_shell/mailbox_to_surface_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-05T15:00:00Z",
+      "side": 1,
+      "message": "Right. The callback is called on the UI thread, because BrowserGpuChannelHostFactory needs to be accessed in the UI thread.",
+      "revId": "cdd5580048a600a5a0115f635701fd080efa6234",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91950ebe_5256be40",
+        "filename": "chrome/browser/android/vr_shell/mailbox_to_surface_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-05T15:00:00Z",
+      "side": 1,
+      "message": "This is still issuing the request on the non-UI thread, which can cause problems (BGPUCHF is not thread-safe).",
+      "revId": "cdd5580048a600a5a0115f635701fd080efa6234",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
