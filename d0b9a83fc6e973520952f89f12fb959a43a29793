@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63a949b5_22619fa1",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-05T08:27:32Z",
+      "side": 1,
+      "message": "nit: DCHECK(ServiceWorkerUtils::IsServicificationEnabled())?",
+      "revId": "d0b9a83fc6e973520952f89f12fb959a43a29793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
