@@ -304,6 +304,16 @@ PluginData* Page::GetPluginData(SecurityOrigin* main_frame_origin) {
   return plugin_data_.Get();
 }
 
+void Page::ResetPluginData() {
+  for (Page* page : AllPages()) {
+    if (page->plugin_data_) {
+      page->plugin_data_->ResetPluginData();
+
+      page->SettingsChanged(SettingsDelegate::kPluginsChange);
+    }
+  }
+}
+
 void Page::SetValidationMessageClient(ValidationMessageClient* client) {
   validation_message_client_ = client;
 }
