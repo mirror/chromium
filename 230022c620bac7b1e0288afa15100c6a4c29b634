@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "953b5d07_e2203109",
+        "filename": "third_party/WebKit/Source/core/animation/CSSVarCycleInterpolationType.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-07-05T04:31:40Z",
+      "side": 1,
+      "message": "I like having a named function much more than needing a comment. Done.",
+      "parentUuid": "c8ac9fe1_57c88212",
+      "revId": "230022c620bac7b1e0288afa15100c6a4c29b634",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d290e4a5_45650227",
         "filename": "third_party/WebKit/Source/core/animation/CSSVarCycleInterpolationType.cpp",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "230022c620bac7b1e0288afa15100c6a4c29b634",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e072ad8_de3813b4",
+        "filename": "third_party/WebKit/Source/core/animation/CSSVarCycleInterpolationType.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-07-05T04:31:40Z",
+      "side": 1,
+      "message": "Rewrote it to be more clear that its unsetting the custom property.",
+      "parentUuid": "d290e4a5_45650227",
+      "revId": "230022c620bac7b1e0288afa15100c6a4c29b634",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d6d98335_9d2ece4a",
+        "filename": "third_party/WebKit/Source/core/animation/CSSVarCycleInterpolationType.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-07-05T04:31:40Z",
+      "side": 1,
+      "message": "Updated to have spec link.",
+      "parentUuid": "0216a240_5306f49b",
+      "revId": "230022c620bac7b1e0288afa15100c6a4c29b634",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e65b67ea_791dcc60",
         "filename": "third_party/WebKit/Source/core/animation/CSSVarCycleInterpolationType.h",
         "patchSetId": 9
@@ -67,6 +121,24 @@
       "revId": "230022c620bac7b1e0288afa15100c6a4c29b634",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "575aab7d_b949b8fb",
+        "filename": "third_party/WebKit/Source/core/animation/CSSVarCycleInterpolationType.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-07-05T04:31:40Z",
+      "side": 1,
+      "message": "The behaviour for Composite() isn\u0027t a default behaviour and does make sense to handle here.\n\nStarted with a comment for MaybeConvertUnderlyingValue() but turned it into an assert instead.",
+      "parentUuid": "e65b67ea_791dcc60",
+      "revId": "230022c620bac7b1e0288afa15100c6a4c29b634",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
