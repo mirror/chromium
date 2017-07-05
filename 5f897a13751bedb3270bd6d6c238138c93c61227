@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "24f9eb37_a22dec74",
+        "filename": "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-05T22:05:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46220e76_3b707fd6",
+      "revId": "5f897a13751bedb3270bd6d6c238138c93c61227",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2ffd667_521bab00",
         "filename": "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "5f897a13751bedb3270bd6d6c238138c93c61227",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5585ea1_495ebbbb",
+        "filename": "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-05T22:05:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2ffd667_521bab00",
+      "revId": "5f897a13751bedb3270bd6d6c238138c93c61227",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a9b869df_71ff6413",
+        "filename": "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-05T22:05:13Z",
+      "side": 1,
+      "message": "I think HasMetric is ok - it just asserts that there\u0027s at least one instance of the given metric. I will add a version that returns the number of metric samples as well, and will address the ExpectMetric comment below.",
+      "parentUuid": "5af06af9_1495f958",
+      "revId": "5f897a13751bedb3270bd6d6c238138c93c61227",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "022551b1_7fcc3bcc",
         "filename": "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.cc",
         "patchSetId": 4
@@ -64,6 +118,24 @@
       "writtenOn": "2017-07-05T20:38:42Z",
       "side": 1,
       "message": "Implementing ExpectMetric this way will break unit tests for users of UKM that generate multiple entries for the same source ID with the same metrics inside them but different metric values for each entry because TestUkmRecorder::FindMetric will always return the first instance of the metric in the merged entry.\n\nThere should be a way to verify individual entries as ExpectMetric previously did. If this new behavior is desired, I would suggest creating a second method for verifying an individual entry  (e.g. ExpectMetricInEntry).",
+      "revId": "5f897a13751bedb3270bd6d6c238138c93c61227",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a48ff6c_8d5108b1",
+        "filename": "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-05T22:05:13Z",
+      "side": 1,
+      "message": "Thanks! I\u0027ve added a variant that allows for verifying multiple metrics with the same name were logged.\n\nI do not want tests to make assumptions about the order that metrics are provided to tests in, so I\u0027m trying to clean up the test API to avoid this going forward.",
+      "parentUuid": "022551b1_7fcc3bcc",
       "revId": "5f897a13751bedb3270bd6d6c238138c93c61227",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "708daf34_5cca4568",
+        "filename": "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-05T22:05:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "effe1a6d_19bb8055",
+      "range": {
+        "startLine": 34,
+        "startChar": 8,
+        "endLine": 34,
+        "endChar": 17
+      },
+      "revId": "5f897a13751bedb3270bd6d6c238138c93c61227",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a992bec_ed182ab1",
         "filename": "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.h",
         "patchSetId": 4
@@ -104,6 +200,24 @@
       "writtenOn": "2017-07-05T18:21:28Z",
       "side": 1,
       "message": "nit: don\u0027t inline the constructor",
+      "revId": "5f897a13751bedb3270bd6d6c238138c93c61227",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed1565b1_615b6752",
+        "filename": "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-05T22:05:13Z",
+      "side": 1,
+      "message": "happy to make the change but not clear to me why. can you share the reason not to do this?",
+      "parentUuid": "9a992bec_ed182ab1",
       "revId": "5f897a13751bedb3270bd6d6c238138c93c61227",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "84b9df94_3556d17b",
+        "filename": "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-05T22:05:13Z",
+      "side": 1,
+      "message": "I decided to move ownership for the recorder to the parent, and pass in a test recorder to the constructor.",
+      "parentUuid": "316982f2_d8b2b7b3",
+      "revId": "5f897a13751bedb3270bd6d6c238138c93c61227",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24b5175a_dbf5cf06",
         "filename": "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.h",
         "patchSetId": 4
@@ -138,6 +270,24 @@
       "writtenOn": "2017-07-05T18:21:28Z",
       "side": 1,
       "message": "Number of UKMSources recorded.",
+      "revId": "5f897a13751bedb3270bd6d6c238138c93c61227",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "893d9b65_a1be1c37",
+        "filename": "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-05T22:05:13Z",
+      "side": 1,
+      "message": "Done. I added \"UKM\" to the comment - the intent is to talk at a high level about sources and entries, rather than referring to specific class types, so I used \"UKM sources\" rather than UkmSources here.",
+      "parentUuid": "24b5175a_dbf5cf06",
       "revId": "5f897a13751bedb3270bd6d6c238138c93c61227",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -161,6 +311,24 @@
     },
     {
       "key": {
+        "uuid": "a574b8fc_e059d60a",
+        "filename": "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-05T22:05:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34995b86_aaa34c88",
+      "revId": "5f897a13751bedb3270bd6d6c238138c93c61227",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c76773d_018f8ff7",
         "filename": "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.h",
         "patchSetId": 4
@@ -175,6 +343,24 @@
       "revId": "5f897a13751bedb3270bd6d6c238138c93c61227",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95b31b58_b2613afe",
+        "filename": "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-05T22:05:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c76773d_018f8ff7",
+      "revId": "5f897a13751bedb3270bd6d6c238138c93c61227",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -201,6 +387,30 @@
     },
     {
       "key": {
+        "uuid": "e9925771_0c418645",
+        "filename": "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-05T22:05:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3b2f7e1_a3a44051",
+      "range": {
+        "startLine": 53,
+        "startChar": 43,
+        "endLine": 53,
+        "endChar": 61
+      },
+      "revId": "5f897a13751bedb3270bd6d6c238138c93c61227",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09385678_64d4c58e",
         "filename": "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.h",
         "patchSetId": 4
@@ -215,6 +425,24 @@
       "revId": "5f897a13751bedb3270bd6d6c238138c93c61227",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29ab357d_a21bae33",
+        "filename": "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-05T22:05:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09385678_64d4c58e",
+      "revId": "5f897a13751bedb3270bd6d6c238138c93c61227",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
