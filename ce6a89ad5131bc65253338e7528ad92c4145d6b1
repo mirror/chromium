@@ -69,6 +69,24 @@
       "revId": "ce6a89ad5131bc65253338e7528ad92c4145d6b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd8480a8_75ec54ba",
+        "filename": "media/remoting/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-05T20:10:39Z",
+      "side": 1,
+      "message": "Somehow I didn\u0027t see the ramifications of this earlier.\n\nSo, yes, this would be the first time media/remoting code had a direct dependency on Blink code, and in the past, we\u0027ve typically done pass-thru via WMPI for things like this.\n\nSuggestion: Instead of having RendererController know about blink::WebRemotePlaybackClient, can we replace SetRemotePlaybackClient() with a SetSourceChangedCallback(base::Callback\u003c...\u003e)? That might be all we need to resolve the layering concern.",
+      "parentUuid": "a30c50b9_db3099c6",
+      "revId": "ce6a89ad5131bc65253338e7528ad92c4145d6b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
