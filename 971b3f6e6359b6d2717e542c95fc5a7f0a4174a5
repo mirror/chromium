@@ -25,6 +25,53 @@
     },
     {
       "key": {
+        "uuid": "2985a534_d4cfb8fa",
+        "filename": "chrome/browser/android/logo_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-05T14:24:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7895de31_899b0c74",
+      "range": {
+        "startLine": 56,
+        "startChar": 65,
+        "endLine": 56,
+        "endChar": 0
+      },
+      "revId": "971b3f6e6359b6d2717e542c95fc5a7f0a4174a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ecdfa62b_110e0dfd",
+        "filename": "chrome/browser/android/logo_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-05T14:24:27Z",
+      "side": 1,
+      "message": "Sylvain: I used USER_VISIBLE here because this blocks loading the cached icon which is shown to the user, so I think we do want to give it priority.",
+      "range": {
+        "startLine": 130,
+        "startChar": 51,
+        "endLine": 130,
+        "endChar": 63
+      },
+      "revId": "971b3f6e6359b6d2717e542c95fc5a7f0a4174a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fd10687a_3866005c",
         "filename": "chrome/browser/android/logo_service.cc",
         "patchSetId": 4
@@ -45,6 +92,30 @@
       "revId": "971b3f6e6359b6d2717e542c95fc5a7f0a4174a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7dd7b66_a519355a",
+        "filename": "chrome/browser/android/logo_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-05T14:24:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd10687a_3866005c",
+      "range": {
+        "startLine": 131,
+        "startChar": 60,
+        "endLine": 131,
+        "endChar": 0
+      },
+      "revId": "971b3f6e6359b6d2717e542c95fc5a7f0a4174a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "74207a0b_2f43210e",
+        "filename": "components/search_provider_logos/logo_tracker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-05T14:24:27Z",
+      "side": 1,
+      "message": "Sort of -- assigning would also copy the deleter over, which we *don\u0027t* want, but I think because the types are incompatible, that avoids doing it by accident.",
+      "parentUuid": "8ecdf116_1947c60e",
+      "revId": "971b3f6e6359b6d2717e542c95fc5a7f0a4174a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99b25c54_28700320",
         "filename": "components/search_provider_logos/logo_tracker.cc",
         "patchSetId": 4
@@ -102,6 +191,24 @@
       "revId": "971b3f6e6359b6d2717e542c95fc5a7f0a4174a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bf1b6d1_543b8117",
+        "filename": "components/search_provider_logos/logo_tracker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-05T14:24:27Z",
+      "side": 1,
+      "message": "Dunno... AFAIK MayBlock() is for anything that might take longer, and this used to be run on a background thread, so the assumption seems to have been that parsing would take a while, even if it\u0027s just CPU.",
+      "parentUuid": "99b25c54_28700320",
+      "revId": "971b3f6e6359b6d2717e542c95fc5a7f0a4174a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -128,6 +235,30 @@
     },
     {
       "key": {
+        "uuid": "d1a6787a_5cf4843c",
+        "filename": "components/search_provider_logos/logo_tracker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-05T14:24:27Z",
+      "side": 1,
+      "message": "I\u0027ve removed the parameter, but const scoped_refptr\u0026 is discouraged now (scoped_refptr is appropriate when passing a reference, and const* otherwise).",
+      "parentUuid": "8ccb32b5_2e6407a8",
+      "range": {
+        "startLine": 106,
+        "startChar": 65,
+        "endLine": 106,
+        "endChar": 0
+      },
+      "revId": "971b3f6e6359b6d2717e542c95fc5a7f0a4174a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6a8dfb3_e70085e7",
         "filename": "components/search_provider_logos/logo_tracker_unittest.cc",
         "patchSetId": 4
@@ -142,6 +273,24 @@
       "revId": "971b3f6e6359b6d2717e542c95fc5a7f0a4174a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f3545eb_cbf17fcc",
+        "filename": "components/search_provider_logos/logo_tracker_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-05T14:24:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6a8dfb3_e70085e7",
+      "revId": "971b3f6e6359b6d2717e542c95fc5a7f0a4174a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
