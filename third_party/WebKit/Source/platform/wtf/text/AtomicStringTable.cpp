@@ -193,7 +193,7 @@ StringImpl* AtomicStringTable::Add(StringImpl* string) {
   if (!result->IsAtomic())
     result->SetIsAtomic(true);
 
-  DCHECK(!string->IsStatic() || result->IsStatic());
+  DCHECK(!string->IsStatic() || result->IsStatic()) << string;
   return result;
 }
 
