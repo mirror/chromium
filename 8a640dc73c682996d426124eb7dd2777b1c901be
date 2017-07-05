@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3d3538b_da10d8d8",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/NewTabPageUiCaptureTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-05T13:07:47Z",
+      "side": 1,
+      "message": "nit: shouldn\u0027t that comment be javadoc",
+      "range": {
+        "startLine": 65,
+        "startChar": 26,
+        "endLine": 65,
+        "endChar": 27
+      },
+      "revId": "8a640dc73c682996d426124eb7dd2777b1c901be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59951133_85c3946c",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/NtpUiCaptureTestData.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-05T13:07:47Z",
+      "side": 1,
+      "message": "maybe add new lines between each variable? The blob is intimidating right now.",
+      "range": {
+        "startLine": 38,
+        "startChar": 34,
+        "endLine": 38,
+        "endChar": 58
+      },
+      "revId": "8a640dc73c682996d426124eb7dd2777b1c901be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7155a369_f83de788",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/NtpUiCaptureTestData.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-05T13:07:47Z",
+      "side": 1,
+      "message": "could be public, I\u0027d imagine other tests might want to use it outside of a factory?",
+      "range": {
+        "startLine": 119,
+        "startChar": 36,
+        "endLine": 119,
+        "endChar": 58
+      },
+      "revId": "8a640dc73c682996d426124eb7dd2777b1c901be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65b1324c_06c1cdd2",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/util/browser/suggestions/SuggestionsDependenciesRule.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-05T13:07:47Z",
+      "side": 1,
+      "message": "final?",
+      "range": {
+        "startLine": 29,
+        "startChar": 12,
+        "endLine": 29,
+        "endChar": 23
+      },
+      "revId": "8a640dc73c682996d426124eb7dd2777b1c901be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
