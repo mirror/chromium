@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a8cea019_42d1dba1",
+        "filename": "android_webview/browser/aw_safe_browsing_resource_throttle.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-07-05T22:28:54Z",
+      "side": 1,
+      "message": "This should be called here: https://cs.chromium.org/chromium/src/components/safe_browsing/base_resource_throttle.cc?type\u003dcs\u0026q\u003dStartDisplayingBlockingPageHelper\u0026sq\u003dpackage:chromium\u0026l\u003d283",
+      "parentUuid": "d8e03966_6dccaf6e",
+      "range": {
+        "startLine": 56,
+        "startChar": 37,
+        "endLine": 56,
+        "endChar": 70
+      },
+      "revId": "0a28dc7f0ca93761c90f2370df940d929cd8fd06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed8b070c_908f2e31",
         "filename": "android_webview/browser/aw_safe_browsing_resource_throttle.cc",
         "patchSetId": 11
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-05T21:26:28Z",
       "side": 1,
       "message": "This DCHECK isn\u0027t super useful since you are directly de-referncing this pointer on line 63 anyway and it\u0027ll fail just as loudly there.\n\nAnd if you remove it, perhaps you can just replace this method\u0027s call with the PostTask directly?",
+      "range": {
+        "startLine": 58,
+        "startChar": 9,
+        "endLine": 58,
+        "endChar": 17
+      },
+      "revId": "0a28dc7f0ca93761c90f2370df940d929cd8fd06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b03b507_1de5b7c1",
+        "filename": "android_webview/browser/aw_safe_browsing_resource_throttle.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-07-05T22:28:54Z",
+      "side": 1,
+      "message": "Do you mean to move the body of StartApplicationResponse into this method? I initially tried to bind+post AwContentsClientBridge::OnSafeBrowsingHit, but this failed because AwContentsClientBridge is not a weak pointer.\n\nIf you meant something else, let me know.",
+      "parentUuid": "ed8b070c_908f2e31",
       "range": {
         "startLine": 58,
         "startChar": 9,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1989c867_b6de991a",
+        "filename": "android_webview/browser/aw_safe_browsing_resource_throttle.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-07-05T22:28:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50c3f1c6_27d8747b",
+      "range": {
+        "startLine": 66,
+        "startChar": 3,
+        "endLine": 66,
+        "endChar": 9
+      },
+      "revId": "0a28dc7f0ca93761c90f2370df940d929cd8fd06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "148e47fe_6c7a0116",
         "filename": "android_webview/browser/aw_safe_browsing_resource_throttle.cc",
         "patchSetId": 11
@@ -91,6 +163,30 @@
       "revId": "0a28dc7f0ca93761c90f2370df940d929cd8fd06",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28917fc1_5b1b9323",
+        "filename": "android_webview/browser/aw_safe_browsing_resource_throttle.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-07-05T22:28:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "148e47fe_6c7a0116",
+      "range": {
+        "startLine": 85,
+        "startChar": 3,
+        "endLine": 85,
+        "endChar": 9
+      },
+      "revId": "0a28dc7f0ca93761c90f2370df940d929cd8fd06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "d020443c_a20cb218",
+        "filename": "android_webview/browser/aw_safe_browsing_resource_throttle.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-07-05T22:28:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd926d53_6143ff2c",
+      "range": {
+        "startLine": 112,
+        "startChar": 3,
+        "endLine": 112,
+        "endChar": 0
+      },
+      "revId": "0a28dc7f0ca93761c90f2370df940d929cd8fd06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1fbbdb7_fd13ea65",
         "filename": "android_webview/browser/aw_safe_browsing_ui_manager.cc",
         "patchSetId": 11
@@ -137,6 +257,30 @@
       "revId": "0a28dc7f0ca93761c90f2370df940d929cd8fd06",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b68f63d2_78591c20",
+        "filename": "android_webview/browser/aw_safe_browsing_ui_manager.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-07-05T22:28:54Z",
+      "side": 1,
+      "message": "Done. Method is also inlined.",
+      "parentUuid": "b1fbbdb7_fd13ea65",
+      "range": {
+        "startLine": 108,
+        "startChar": 30,
+        "endLine": 108,
+        "endChar": 57
+      },
+      "revId": "0a28dc7f0ca93761c90f2370df940d929cd8fd06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
