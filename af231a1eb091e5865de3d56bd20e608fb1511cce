@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "16a650e4_cff6c450",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-07-05T00:49:59Z",
+      "side": 1,
+      "message": "The CL description should be more detailed. This CL is allowing us to computed size for storage_only fields that are keywords. \n\nMay I suggest:\n\n\"\nComputed size of storage_only fields in ComputedStyle if keywords are provided\n\n\u003cExplain why this is necessary.\u003e\n\n\"",
+      "revId": "af231a1eb091e5865de3d56bd20e608fb1511cce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0c688748_b31c4336",
         "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
         "patchSetId": 1
@@ -13,6 +30,24 @@
       "writtenOn": "2017-07-05T00:44:53Z",
       "side": 1,
       "message": "nit: Instead of lowerbounding the length to be 2 with max(..., 2), alternatively we could assert that there\u0027s more than one keyword e.g.\n\n    assert(len(property_[\u0027keywords\u0027]) \u003e 1)\n\nNo strong opinions though, nainar, WDYT?",
+      "revId": "af231a1eb091e5865de3d56bd20e608fb1511cce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e5ae931_2f396530",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-07-05T00:49:59Z",
+      "side": 1,
+      "message": "Yep, agreed here. Makes the code more readable. A large if statement that requires us to parse what the statement is doing in our head isn\u0027t the best idea for those who follow in our footsteps and edit the code. \n\nA comment would be helpful here as well explaining what you are doing.",
+      "parentUuid": "0c688748_b31c4336",
       "revId": "af231a1eb091e5865de3d56bd20e608fb1511cce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
