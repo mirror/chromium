@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "48863219_d65971d6",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-07-05T11:38:49Z",
+      "side": 1,
+      "message": "Because observer expects to receive a reference to TaskQueue, not TaskQueueImpl. Extra hoop is required to get a reference to a TaskQueue.",
+      "parentUuid": "03a75cb0_f77d1abd",
+      "range": {
+        "startLine": 168,
+        "startChar": 6,
+        "endLine": 168,
+        "endChar": 14
+      },
+      "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96869389_f9d5d543",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.cc",
         "patchSetId": 5
@@ -68,6 +92,30 @@
       "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5624ab92_e539cc29",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-07-05T11:38:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96869389_f9d5d543",
+      "range": {
+        "startLine": 179,
+        "startChar": 36,
+        "endLine": 179,
+        "endChar": 52
+      },
+      "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "43a5105d_7eea7d7f",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-07-05T11:38:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2262ee7_481e6234",
+      "range": {
+        "startLine": 8,
+        "startChar": 15,
+        "endLine": 8,
+        "endChar": 30
+      },
+      "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a44c688_4d79be80",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.h",
         "patchSetId": 5
@@ -117,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "bbb0fb8e_c1bd9350",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-07-05T11:38:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a44c688_4d79be80",
+      "range": {
+        "startLine": 83,
+        "startChar": 4,
+        "endLine": 83,
+        "endChar": 8
+      },
+      "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3170510_28e5b7fd",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.h",
         "patchSetId": 5
@@ -131,6 +227,24 @@
       "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c9a859f_3d62d31b",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-07-05T11:38:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3170510_28e5b7fd",
+      "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +271,30 @@
     },
     {
       "key": {
+        "uuid": "c9df9680_9c9e5d1c",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-07-05T11:38:49Z",
+      "side": 1,
+      "message": "Done. Note that we still have TaskQueueThrottlerTest, which needs access without an option to construct TaskQueue.",
+      "parentUuid": "d9e217af_a15e9daa",
+      "range": {
+        "startLine": 226,
+        "startChar": 27,
+        "endLine": 226,
+        "endChar": 50
+      },
+      "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6bb94f5_a4e71de6",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.h",
         "patchSetId": 5
@@ -177,6 +315,30 @@
       "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b85bb95e_4b6b24f2",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-07-05T11:38:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6bb94f5_a4e71de6",
+      "range": {
+        "startLine": 228,
+        "startChar": 1,
+        "endLine": 228,
+        "endChar": 10
+      },
+      "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -203,6 +365,30 @@
     },
     {
       "key": {
+        "uuid": "c920b0ce_450b58b1",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-07-05T11:38:49Z",
+      "side": 1,
+      "message": "At the moment we need it for TaskQueue enabled voter: task queue enabled voter needs to have a reference to TaskQueue to keep it alive and avoid accessing deleted TaskQueueImpl. Given that this dependency is ultrasoft (TaskQueueImpl is forward-declared here, comparable with GetTaskQueueImpl()) it\u0027s fine for now.",
+      "parentUuid": "0d529918_5f3cf978",
+      "range": {
+        "startLine": 229,
+        "startChar": 8,
+        "endLine": 229,
+        "endChar": 9
+      },
+      "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d56f40e1_a077bcce",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.h",
         "patchSetId": 5
@@ -223,6 +409,30 @@
       "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dbb2d0d_bf3a53d6",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-07-05T11:38:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d56f40e1_a077bcce",
+      "range": {
+        "startLine": 231,
+        "startChar": 15,
+        "endLine": 231,
+        "endChar": 49
+      },
+      "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -249,6 +459,30 @@
     },
     {
       "key": {
+        "uuid": "66defb68_2fd202c8",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-07-05T11:38:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59a2a135_f7997e9d",
+      "range": {
+        "startLine": 235,
+        "startChar": 2,
+        "endLine": 235,
+        "endChar": 11
+      },
+      "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ee1b2bc_a8c31e71",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.h",
         "patchSetId": 5
@@ -269,6 +503,30 @@
       "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6967ecf7_e31a7765",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-07-05T11:38:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ee1b2bc_a8c31e71",
+      "range": {
+        "startLine": 243,
+        "startChar": 27,
+        "endLine": 243,
+        "endChar": 32
+      },
+      "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -295,6 +553,30 @@
     },
     {
       "key": {
+        "uuid": "f645c68e_de5d5cc2",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-07-05T11:38:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1197404_5b13299e",
+      "range": {
+        "startLine": 442,
+        "startChar": 4,
+        "endLine": 442,
+        "endChar": 5
+      },
+      "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33cff896_722f7e1f",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_impl.h",
         "patchSetId": 5
@@ -306,6 +588,30 @@
       "writtenOn": "2017-07-05T08:29:30Z",
       "side": 1,
       "message": "base::Callback already has optionality built-in (is_null()) so no need to wrap in an optional.",
+      "range": {
+        "startLine": 172,
+        "startChar": 12,
+        "endLine": 172,
+        "endChar": 20
+      },
+      "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15973855_e540ef58",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-07-05T11:38:49Z",
+      "side": 1,
+      "message": "To be honest, I prefer having a base::nullopt to mean \"please clear this callback\". I believe that it improves readability. WDYT?",
+      "parentUuid": "33cff896_722f7e1f",
       "range": {
         "startLine": 172,
         "startChar": 12,
@@ -338,6 +644,30 @@
       "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3be0776_0cacb1fd",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-07-05T11:38:49Z",
+      "side": 1,
+      "message": "Yes, in TaskQueueSelector unittest.",
+      "parentUuid": "5e92a6b9_0e526535",
+      "range": {
+        "startLine": 272,
+        "startChar": 7,
+        "endLine": 272,
+        "endChar": 29
+      },
+      "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -381,6 +711,30 @@
     },
     {
       "key": {
+        "uuid": "1f1ad1e3_2df9402e",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-07-05T11:38:49Z",
+      "side": 1,
+      "message": "Not really, the problem with task queue voter is that we need a TaskQueue to manage lifetime. In a test without a TQM (task_queue_selector unittest) it can pose a problem, so I introduced SetQueueEnabledForTest for this case.",
+      "parentUuid": "915115ab_12b02130",
+      "range": {
+        "startLine": 326,
+        "startChar": 9,
+        "endLine": 326,
+        "endChar": 28
+      },
+      "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7313b6b_916c280f",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.h",
         "patchSetId": 5
@@ -421,6 +775,30 @@
     },
     {
       "key": {
+        "uuid": "590af923_00e48037",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-07-05T11:38:49Z",
+      "side": 1,
+      "message": "See the top-level reply.",
+      "parentUuid": "a6abdc93_ca490975",
+      "range": {
+        "startLine": 310,
+        "startChar": 40,
+        "endLine": 310,
+        "endChar": 41
+      },
+      "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f97c8a8c_72d1d539",
         "filename": "third_party/WebKit/Source/platform/scheduler/child/idle_helper.cc",
         "patchSetId": 5
@@ -441,6 +819,30 @@
       "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c73b432c_dc96947e",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/idle_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-07-05T11:38:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f97c8a8c_72d1d539",
+      "range": {
+        "startLine": 27,
+        "startChar": 18,
+        "endLine": 27,
+        "endChar": 28
+      },
+      "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -467,6 +869,30 @@
     },
     {
       "key": {
+        "uuid": "f8344387_51693a4c",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/scheduler_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-07-05T11:38:49Z",
+      "side": 1,
+      "message": "It\u0027s needed by IdleHelper, which provides common functionality both for workers and main thread, so let\u0027s keep it for now (this patch is already big enough :) ).",
+      "parentUuid": "621c66bd_7de906e2",
+      "range": {
+        "startLine": 22,
+        "startChar": 22,
+        "endLine": 22,
+        "endChar": 37
+      },
+      "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3a8c47e_b0e271b0",
         "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_task_queue.cc",
         "patchSetId": 5
@@ -487,6 +913,30 @@
       "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c9e8966_1fa8e494",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_task_queue.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-07-05T11:38:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3a8c47e_b0e271b0",
+      "range": {
+        "startLine": 13,
+        "startChar": 21,
+        "endLine": 13,
+        "endChar": 25
+      },
+      "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -513,6 +963,30 @@
     },
     {
       "key": {
+        "uuid": "e2fb4540_c2702d35",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_task_queue.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-07-05T11:38:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35a2847b_e4095cdd",
+      "range": {
+        "startLine": 15,
+        "startChar": 2,
+        "endLine": 15,
+        "endChar": 17
+      },
+      "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1c72a4f_1238e3a2",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/main_thread_scheduler_helper.h",
         "patchSetId": 5
@@ -533,6 +1007,30 @@
       "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb973dcc_4f6fc1ef",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/main_thread_scheduler_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-07-05T11:38:49Z",
+      "side": 1,
+      "message": "Let\u0027s keep it for now. Also, I have a feeling that RendererSchedulerImpl is already too big and can use a refactoring to move some parts out, not in.",
+      "parentUuid": "b1c72a4f_1238e3a2",
+      "range": {
+        "startLine": 17,
+        "startChar": 22,
+        "endLine": 17,
+        "endChar": 47
+      },
+      "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -559,6 +1057,30 @@
     },
     {
       "key": {
+        "uuid": "d950ca32_0bb8f5f1",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/main_thread_task_queue.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-07-05T11:38:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3d84fe0_d03d47df",
+      "range": {
+        "startLine": 40,
+        "startChar": 6,
+        "endLine": 40,
+        "endChar": 12
+      },
+      "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67091ab4_0dd1264e",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/main_thread_task_queue.cc",
         "patchSetId": 5
@@ -579,6 +1101,30 @@
       "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0808e72_0fc43813",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/main_thread_task_queue.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-07-05T11:38:49Z",
+      "side": 1,
+      "message": "Yes (but only on some platforms).",
+      "parentUuid": "67091ab4_0dd1264e",
+      "range": {
+        "startLine": 44,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 8
+      },
+      "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -628,6 +1174,30 @@
     },
     {
       "key": {
+        "uuid": "c8883c44_02a360c4",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/main_thread_task_queue.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-07-05T11:38:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a54559d4_a0fd5ef1",
+      "range": {
+        "startLine": 40,
+        "startChar": 25,
+        "endLine": 40,
+        "endChar": 32
+      },
+      "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4eb6b120_167dff55",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/main_thread_task_queue.h",
         "patchSetId": 5
@@ -651,6 +1221,30 @@
     },
     {
       "key": {
+        "uuid": "3d783bff_df81f48e",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/main_thread_task_queue.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-07-05T11:38:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4eb6b120_167dff55",
+      "range": {
+        "startLine": 44,
+        "startChar": 12,
+        "endLine": 44,
+        "endChar": 24
+      },
+      "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a09d977_f63d6d1f",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/main_thread_task_queue.h",
         "patchSetId": 5
@@ -671,6 +1265,30 @@
       "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91279a37_979c0ce4",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/main_thread_task_queue.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-07-05T11:38:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a09d977_f63d6d1f",
+      "range": {
+        "startLine": 60,
+        "startChar": 5,
+        "endLine": 60,
+        "endChar": 14
+      },
+      "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
