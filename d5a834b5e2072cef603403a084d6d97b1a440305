@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88799235_e5744e88",
+        "filename": "build/config/android/config.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-07-05T18:39:27Z",
+      "side": 1,
+      "message": "This isnt added to deps right? Because this target is not defined on downstream builders it seems.\n\nhttps://cs.chromium.org/chromium/src/android_webview/BUILD.gn?sq\u003dpackage:chromium\u0026dr\u003dC\u0026l\u003d968",
+      "revId": "d5a834b5e2072cef603403a084d6d97b1a440305",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
