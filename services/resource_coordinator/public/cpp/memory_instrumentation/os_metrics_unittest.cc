@@ -8,6 +8,8 @@
 
 namespace memory_instrumentation {
 
+namespace OSMetrics {
+
 TEST(OSMetricsTest, GivesNonZeroResults) {
   base::ProcessId pid = base::GetCurrentProcId();
   mojom::RawOSMemDumpPtr dump = GetOSMemoryDump(pid);
@@ -19,5 +21,7 @@ TEST(OSMetricsTest, GivesNonZeroResults) {
   EXPECT_GT(dump->platform_private_footprint.phys_footprint, 0u);
 #endif
 }
+
+}  // namespace OSMetrics
 
 }  // namespace memory_instrumentation

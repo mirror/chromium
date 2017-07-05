@@ -17,6 +17,7 @@
 #include "base/trace_event/process_memory_maps.h"
 #include "base/trace_event/process_memory_totals.h"
 #include "base/trace_event/trace_event_argument.h"
+#include "services/resource_coordinator/public/cpp/memory_instrumentation/os_metrics.h"
 #include "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -208,7 +209,7 @@ TEST(ProcessMetricsMemoryDumpProviderTest, ParseProcSmaps) {
                                                    dump_args);
   base::ScopedFILE empty_file(OpenFile(base::FilePath("/dev/null"), "r"));
   ASSERT_TRUE(empty_file.get());
-  ProcessMetricsMemoryDumpProvider::proc_smaps_for_testing = empty_file.get();
+  OSMetrics::SetProcSmapsForTesting(empty_file.get());
   pmmdp->OnMemoryDump(dump_args, &pmd_invalid);
   ASSERT_FALSE(pmd_invalid.has_process_mmaps());
 
@@ -217,7 +218,7 @@ TEST(ProcessMetricsMemoryDumpProviderTest, ParseProcSmaps) {
                                              dump_args);
   base::ScopedFILE temp_file1;
   CreateTempFileWithContents(kTestSmaps1, &temp_file1);
-  ProcessMetricsMemoryDumpProvider::proc_smaps_for_testing = temp_file1.get();
+  OSMetrics::SetProcSmapsForTesting(temp_file1.get());
   pmmdp->OnMemoryDump(dump_args, &pmd_1);
   ASSERT_TRUE(pmd_1.has_process_mmaps());
   const auto& regions_1 = pmd_1.process_mmaps()->vm_regions();
@@ -250,7 +251,7 @@ TEST(ProcessMetricsMemoryDumpProviderTest, ParseProcSmaps) {
                                              dump_args);
   base::ScopedFILE temp_file2;
   CreateTempFileWithContents(kTestSmaps2, &temp_file2);
-  ProcessMetricsMemoryDumpProvider::proc_smaps_for_testing = temp_file2.get();
+  OSMetrics::SetProcSmapsForTesting(temp_file2.get());
   pmmdp->OnMemoryDump(dump_args, &pmd_2);
   ASSERT_TRUE(pmd_2.has_process_mmaps());
   const auto& regions_2 = pmd_2.process_mmaps()->vm_regions();
