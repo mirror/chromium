@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "627c799c_29689893",
+        "filename": "cc/surfaces/compositor_frame_sink_support.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-05T20:04:37Z",
+      "side": 1,
+      "message": "Keeping it public matches the cc style.",
+      "parentUuid": "651b85c5_ed59ecc2",
+      "range": {
+        "startLine": 50,
+        "startChar": 34,
+        "endLine": 50,
+        "endChar": 0
+      },
+      "revId": "aea04640d0e67ab9345a43381c2e930fd36c36d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "05078f5d_46a2231d",
         "filename": "cc/surfaces/compositor_frame_sink_support.h",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "aea04640d0e67ab9345a43381c2e930fd36c36d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50cfbc7d_fc028b13",
+        "filename": "cc/surfaces/compositor_frame_sink_support.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-05T20:04:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05078f5d_46a2231d",
+      "revId": "aea04640d0e67ab9345a43381c2e930fd36c36d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "1128a79d_da48b36d",
+        "filename": "cc/surfaces/surface.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-05T20:04:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "594a26c8_e96dd330",
+      "revId": "aea04640d0e67ab9345a43381c2e930fd36c36d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ca6feb6_5284a37e",
         "filename": "cc/surfaces/surface_client.h",
         "patchSetId": 2
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "8d3628c9_2e3e9483",
+        "filename": "cc/surfaces/surface_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-05T20:04:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ca6feb6_5284a37e",
+      "revId": "aea04640d0e67ab9345a43381c2e930fd36c36d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5da009e_05e30cdf",
         "filename": "cc/surfaces/surface_manager.h",
         "patchSetId": 2
@@ -90,6 +168,24 @@
       "revId": "aea04640d0e67ab9345a43381c2e930fd36c36d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7b7d032_6019e404",
+        "filename": "cc/surfaces/surface_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-05T20:04:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5da009e_05e30cdf",
+      "revId": "aea04640d0e67ab9345a43381c2e930fd36c36d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
