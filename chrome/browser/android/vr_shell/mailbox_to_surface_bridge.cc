@@ -9,8 +9,10 @@
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/sys_info.h"
+#include "base/threading/thread_task_runner_handle.h"
 #include "cc/output/context_provider.h"
 #include "content/public/browser/android/compositor.h"
+#include "content/public/browser/browser_thread.h"
 #include "gpu/GLES2/gl2extchromium.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "gpu/command_buffer/common/mailbox.h"
@@ -136,7 +138,9 @@ GLuint ConsumeTexture(gpu::gles2::GLES2Interface* gl,
 
 namespace vr_shell {
 
-MailboxToSurfaceBridge::MailboxToSurfaceBridge() : weak_ptr_factory_(this) {}
+MailboxToSurfaceBridge::MailboxToSurfaceBridge()
+    : task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      weak_ptr_factory_(this) {}
 
 MailboxToSurfaceBridge::~MailboxToSurfaceBridge() {
   if (surface_handle_) {
@@ -149,6 +153,21 @@ MailboxToSurfaceBridge::~MailboxToSurfaceBridge() {
 
 void MailboxToSurfaceBridge::OnContextAvailable(
     scoped_refptr<cc::ContextProvider> provider) {
+  // OnContextAvailable is indirectly called in a callback which gets called
+  // after GPU channel established. The callback will be called on UI thread if
+  // the request was sent before initial GPU channel established. All callbacks
+  // are saved in a vector and called on UI thread after initial channel is
+  // established. If the channel already established, they are called
+  // immediately on the same thread as the request.
+  // See BrowserGpuChannelHostFactory::EstablishGupChannel for details.
+  // For auto-present WebVR case, if Chrome is not in the background, we made
+  // the request in CreateSurface before initial GPU channel established.
+  if (!task_runner_->BelongsToCurrentThread()) {
+    task_runner_->PostTask(
+        FROM_HERE, base::Bind(&MailboxToSurfaceBridge::OnContextAvailable,
+                              base::Unretained(this), std::move(provider)));
+    return;
+  }
   // Must save a reference to the ContextProvider to keep it alive,
   // otherwise the GL context created from it becomes invalid.
   context_provider_ = std::move(provider);
@@ -173,10 +192,10 @@ void MailboxToSurfaceBridge::CreateSurface(
   gpu::GpuSurfaceTracker* tracker = gpu::GpuSurfaceTracker::Get();
   ANativeWindow_acquire(window);
   // Skip ANativeWindow_setBuffersGeometry, the default size appears to work.
-  auto surface = base::MakeUnique<gl::ScopedJavaSurface>(surface_texture);
+  surface_ = base::MakeUnique<gl::ScopedJavaSurface>(surface_texture);
   surface_handle_ =
       tracker->AddSurfaceForNativeWidget(gpu::GpuSurfaceTracker::SurfaceRecord(
-          window, surface->j_surface().obj()));
+          window, surface_->j_surface().obj()));
   // Unregistering happens in the destructor.
   ANativeWindow_release(window);
 
