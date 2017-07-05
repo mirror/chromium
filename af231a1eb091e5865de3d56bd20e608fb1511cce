@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "3a5a1d9f_a98def42",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-07-05T02:14:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9e5ae931_2f396530",
+      "revId": "af231a1eb091e5865de3d56bd20e608fb1511cce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe88316c_dd4d309e",
         "filename": "third_party/WebKit/Source/core/css/ComputedStyleExtraFields.json5",
         "patchSetId": 1
