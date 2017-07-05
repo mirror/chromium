@@ -74,7 +74,7 @@ static Mutex& ThreadSetMutex() {
 }
 
 static int GetNextWorkerThreadId() {
-  DCHECK(IsMainThread());
+  // TODO(nhiroki): Lock or atomic increment.
   static int next_worker_thread_id = 1;
   CHECK_LT(next_worker_thread_id, std::numeric_limits<int>::max());
   return next_worker_thread_id++;
@@ -95,7 +95,6 @@ WorkerThread::~WorkerThread() {
 
 void WorkerThread::Start(std::unique_ptr<WorkerThreadStartupData> startup_data,
                          ParentFrameTaskRunners* parent_frame_task_runners) {
-  DCHECK(IsMainThread());
   if (requested_to_start_)
     return;
 
@@ -278,7 +277,7 @@ unsigned WorkerThread::WorkerThreadCount() {
 }
 
 HashSet<WorkerThread*>& WorkerThread::WorkerThreads() {
-  DCHECK(IsMainThread());
+  // TODO(nhiroki): Make this thread-safe.
   DEFINE_STATIC_LOCAL(HashSet<WorkerThread*>, threads, ());
   return threads;
 }
@@ -306,6 +305,11 @@ bool WorkerThread::IsForciblyTerminated() {
   return false;
 }
 
+ExitCode WorkerThread::GetExitCodeForTesting() {
+  MutexLocker lock(thread_state_mutex_);
+  return exit_code_;
+}
+
 InterfaceProvider* WorkerThread::GetInterfaceProvider() {
   // TODO(https://crbug.com/734210): Instead of returning this interface
   // provider, which maps to a RenderProcessHost in the browser process, this
@@ -325,7 +329,6 @@ WorkerThread::WorkerThread(ThreadableLoadingContext* loading_context,
           new WaitableEvent(WaitableEvent::ResetPolicy::kManual,
                             WaitableEvent::InitialState::kNonSignaled))),
       worker_thread_lifecycle_context_(new WorkerThreadLifecycleContext) {
-  DCHECK(IsMainThread());
   MutexLocker lock(ThreadSetMutex());
   WorkerThreads().insert(this);
 }
@@ -608,11 +611,6 @@ bool WorkerThread::IsThreadStateMutexLocked(const MutexLocker& /* unused */) {
 bool WorkerThread::CheckRequestedToTerminateOnWorkerThread() {
   MutexLocker lock(thread_state_mutex_);
   return requested_to_terminate_;
-}
-
-ExitCode WorkerThread::GetExitCodeForTesting() {
-  MutexLocker lock(thread_state_mutex_);
-  return exit_code_;
 }
 
 }  // namespace blink

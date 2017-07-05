@@ -8,13 +8,7 @@
 
 namespace blink {
 
-WorkerThreadLifecycleContext::WorkerThreadLifecycleContext() {
-  DCHECK(IsMainThread());
-}
-
-WorkerThreadLifecycleContext::~WorkerThreadLifecycleContext() {
-  DCHECK(IsMainThread());
-}
+WorkerThreadLifecycleContext::~WorkerThreadLifecycleContext() {}
 
 void WorkerThreadLifecycleContext::NotifyContextDestroyed() {
   DCHECK(IsMainThread());
