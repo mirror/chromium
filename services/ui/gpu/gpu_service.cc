@@ -406,6 +406,13 @@ void GpuService::EstablishGpuChannel(
   callback.Run(std::move(pipe.handle1));
 }
 
+void GpuService::CreateJpegDecodeAccelerator(
+    media::mojom::GpuJpegDecodeAcceleratorRequest request) {
+  DCHECK(io_runner_->BelongsToCurrentThread());
+  // TODO(c.padhi): Implement this, see https://crbug.com/699255.
+  NOTIMPLEMENTED();
+}
+
 void GpuService::CloseChannel(int32_t client_id) {
   if (io_runner_->BelongsToCurrentThread()) {
     main_runner_->PostTask(
