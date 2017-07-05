@@ -115,7 +115,9 @@ class WebLayerTreeView {
 
   // Set browser controls height. If |shrinkViewport| is set to true, then Blink
   // shrunk the viewport clip layers by the browser controls height.
-  virtual void SetBrowserControlsHeight(float height, bool shrink_viewport) {}
+  virtual void SetBrowserControlsHeight(float height,
+                                        float bottom_height,
+                                        bool shrink_viewport) {}
 
   // Flow control and scheduling ---------------------------------------
 
