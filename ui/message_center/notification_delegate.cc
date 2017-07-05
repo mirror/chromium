@@ -33,6 +33,12 @@ bool NotificationDelegate::ShouldDisplaySettingsButton() {
   return false;
 }
 
+std::unique_ptr<MessageView> NotificationDelegate::CreateCustomMessageView(
+    MessageCenterController* controller,
+    const Notification& notification) {
+  return nullptr;
+}
+
 // HandleNotificationClickedDelegate:
 
 HandleNotificationClickedDelegate::HandleNotificationClickedDelegate(

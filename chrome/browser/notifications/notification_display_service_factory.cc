@@ -6,6 +6,7 @@
 
 #include "base/command_line.h"
 #include "base/memory/singleton.h"
+#include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/notifications/message_center_display_service.h"
 #include "chrome/browser/notifications/notification_ui_manager.h"
@@ -38,10 +39,7 @@ NotificationDisplayServiceFactory::NotificationDisplayServiceFactory()
           BrowserContextDependencyManager::GetInstance()) {}
 
 // Selection of the implementation works as follows:
-//   - Android always uses the NativeNotificationDisplayService.
-//   - Mac uses the NativeNotificationDisplayService by default but
-//     can revert to MessageCenterDisplayService via
-//     chrome://flags#enable-native-notifications or Finch
+//   - Android and Mac always use the NativeNotificationDisplayService.
 //   - Linux uses MessageCenterDisplayService by default but can switch
 //     to NativeNotificationDisplayService via
 //     chrome://flags#enable-native-notifications
@@ -49,7 +47,7 @@ NotificationDisplayServiceFactory::NotificationDisplayServiceFactory()
 KeyedService* NotificationDisplayServiceFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {
 #if BUILDFLAG(ENABLE_NATIVE_NOTIFICATIONS)
-#if defined(OS_ANDROID)
+#if defined(OS_ANDROID) || defined(OS_MACOSX)
   DCHECK(base::FeatureList::IsEnabled(features::kNativeNotifications));
   return new NativeNotificationDisplayService(
       Profile::FromBrowserContext(context),
