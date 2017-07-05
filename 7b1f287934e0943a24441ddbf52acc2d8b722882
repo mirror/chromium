@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "897363ec_4594e3ac",
+        "filename": "chrome/browser/image_decoder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-05T17:21:05Z",
+      "side": 1,
+      "message": "why not BindOnce here?",
+      "revId": "7b1f287934e0943a24441ddbf52acc2d8b722882",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "160d815e_a2dad75c",
+        "filename": "services/data_decoder/public/cpp/decode_image.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-05T17:21:05Z",
+      "side": 1,
+      "message": "why not BindOnce here?",
+      "revId": "7b1f287934e0943a24441ddbf52acc2d8b722882",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
