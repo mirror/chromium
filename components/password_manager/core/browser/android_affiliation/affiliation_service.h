@@ -144,7 +144,7 @@ class AffiliationService : public KeyedService {
   // The second version will only potentially remove data corresponding to the
   // given |facet_uri|, but still only as long as the data is no longer needed.
   virtual void TrimCache();
-  virtual void TrimCacheForFacet(const FacetURI& facet_uri);
+  virtual void TrimCacheForFacetURI(const FacetURI& facet_uri);
 
   // Posts a task to the |backend_task_runner| to delete the cache database file
   // at |db_path|, and all auxiliary files. The database must be closed before
