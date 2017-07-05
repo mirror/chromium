@@ -1101,6 +1101,10 @@ IPC_MESSAGE_ROUTED2(FrameHostMsg_RenderProcessGone,
 // Sent by the renderer when the frame becomes focused.
 IPC_MESSAGE_ROUTED0(FrameHostMsg_FrameFocused)
 
+// Sent by the renderer when there is a window.print() triggered from this
+// frame.
+IPC_MESSAGE_ROUTED0(FrameHostMsg_ScriptedPrint)
+
 // Sent when the renderer starts a provisional load for a frame.
 IPC_MESSAGE_ROUTED3(FrameHostMsg_DidStartProvisionalLoad,
                     GURL /* url */,

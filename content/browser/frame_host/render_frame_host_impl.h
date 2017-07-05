@@ -705,6 +705,7 @@ class CONTENT_EXPORT RenderFrameHostImpl
                                 const base::string16& source_id);
   void OnDetach();
   void OnFrameFocused();
+  void OnScriptedPrint();
   void OnOpenURL(const FrameHostMsg_OpenURL_Params& params);
   void OnCancelInitialHistoryLoad();
   void OnDocumentOnLoadCompleted(
