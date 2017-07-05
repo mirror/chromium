@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5000e5d_5443e5f3",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/content-security-policy/securitypolicyviolation/img-path-and-srcelement-correct.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-07-05T09:22:32Z",
+      "side": 1,
+      "message": "Nit: I\u0027d suggest naming this something like `targeting-img.html` (and renaming `targeting.html` to something like `targeting-script-style.html` (or splitting it up into `script` and `style`).\n\nI\u0027d also suggest swiping some of the more exotic test cases from that file to make sure we\u0027re doing the right thing in edge cases.",
+      "revId": "8e03f5271c0daaa06e479cf60d83385f3778c87c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b93e86ce_3044eaa5",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/content-security-policy/securitypolicyviolation/img-path-and-srcelement-correct.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-07-05T09:22:32Z",
+      "side": 1,
+      "message": "Nit: `securitypolicyviolation`, here and elsewhere.",
+      "revId": "8e03f5271c0daaa06e479cf60d83385f3778c87c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9431c274_37446093",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/content-security-policy/securitypolicyviolation/img-path-and-srcelement-correct.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-07-05T09:22:32Z",
+      "side": 1,
+      "message": "Can you check whether this still has a `sourceFile`/`lineNumber`?",
+      "revId": "8e03f5271c0daaa06e479cf60d83385f3778c87c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "895e7372_4de69340",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/content-security-policy/securitypolicyviolation/img-path-and-srcelement-correct.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-07-05T09:22:32Z",
+      "side": 1,
+      "message": "Style nit: I prefer to write tests like:\n\n```\nasync_test(t \u003d\u003e {\n    document.addEventListener(..., ...);\n}, \"securitypolicyviolation event for img ...\");\n```",
+      "revId": "8e03f5271c0daaa06e479cf60d83385f3778c87c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4299c06c_9f91c635",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/content-security-policy/securitypolicyviolation/script-path-and-srcelement-correct.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-07-05T09:22:32Z",
+      "side": 1,
+      "message": "Did you consider adding these cases to the existing `targeting.html`?",
+      "revId": "8e03f5271c0daaa06e479cf60d83385f3778c87c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54399a32_c8daf797",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptElementBase.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-07-05T09:22:32Z",
+      "side": 1,
+      "message": "Perhaps rename this to `GetElement()`? It doesn\u0027t seem like it should be possible to have a `ScriptElementBase` without also having an `Element*`. When does that happen?",
+      "revId": "8e03f5271c0daaa06e479cf60d83385f3778c87c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21225e65_5323d83d",
+        "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicy.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1062,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-07-05T09:22:32Z",
+      "side": 1,
+      "message": "Every time I look at this file, I realize again how ugly all this templated mess is. We need to clean it up at some point.",
+      "revId": "8e03f5271c0daaa06e479cf60d83385f3778c87c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
