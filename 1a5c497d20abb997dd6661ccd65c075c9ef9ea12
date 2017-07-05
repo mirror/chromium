@@ -533,6 +533,30 @@
     },
     {
       "key": {
+        "uuid": "dd5f7a4a_59d085f1",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-05T14:53:13Z",
+      "side": 1,
+      "message": "I\u0027m going to insist that we don\u0027t have two separate places for input handling. Scroll/fling should be processed in the same place as click/hover.\n\nThis doesn\u0027t mean web gestures have to be created in the InputManager, you can decide to send a scroll in the InputManager, then generate the actual scroll event elsewhere if you want.\n\nHowever, I don\u0027t understand your objection to moving the web input event generation into InputManager. The UI framework has nothing to do with this, we need to generate web input events no matter which UI framework we use.",
+      "parentUuid": "ed90565a_f6b68df0",
+      "range": {
+        "startLine": 612,
+        "startChar": 13,
+        "endLine": 612,
+        "endChar": 31
+      },
+      "revId": "1a5c497d20abb997dd6661ccd65c075c9ef9ea12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6cd2a67b_da33bcb6",
         "filename": "chrome/browser/android/vr_shell/vr_shell_gl.h",
         "patchSetId": 2

@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "ee4c438b_814fd1b4",
+        "filename": "chrome/browser/android/vr_shell/ui_input_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-05T14:53:13Z",
+      "side": 1,
+      "message": "If we set the pointer in the constructor, then you don\u0027t have to worry about null pointers anyways. This is pretty standard practice.",
+      "parentUuid": "6884a138_eb387216",
+      "revId": "6076819d44a89365f7dc8743c0205937143bbd44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40eb00ee_cc6f0c0b",
         "filename": "chrome/browser/android/vr_shell/vr_shell_gl.h",
         "patchSetId": 1
