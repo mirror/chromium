@@ -86,15 +86,15 @@ class TestExporterTest(unittest.TestCase):
             'pr_with_position',
             'pr_with_change_id',
             'create_pr',
-            'add_label "default"',
+            'add_label "chromium-export"',
             'pr_with_position',
             'pr_with_change_id',
             'create_pr',
-            'add_label "default"',
+            'add_label "chromium-export"',
             'pr_with_position',
             'pr_with_change_id',
             'create_pr',
-            'add_label "default"',
+            'add_label "chromium-export"',
         ])
         self.assertEqual(test_exporter.wpt_github.pull_requests_created, [
             ('chromium-export-c881563d73', 'older fake text', 'older fake text'),
@@ -143,13 +143,15 @@ class TestExporterTest(unittest.TestCase):
         test_exporter.run()
         self.assertEqual(test_exporter.wpt_github.calls, [
             'pr_with_position',
+            'remove_label "do not merge yet"',
             'get_pr_branch',
             'merge_pull_request',
             'pr_with_position',
             'create_pr',
-            'add_label "default"',
+            'add_label "chromium-export"',
             'pr_with_position',
             'pr_with_position',
+            'remove_label "do not merge yet"',
             'get_pr_branch',
             'merge_pull_request',
             'delete_remote_branch',
@@ -185,7 +187,7 @@ class TestExporterTest(unittest.TestCase):
         self.assertEqual(test_exporter.wpt_github.calls, [
             'pr_with_change_id',
             'create_pr',
-            'add_label "default"',
+            'add_label "chromium-export"',
             'add_label "do not merge yet"',
         ])
         self.assertEqual(test_exporter.wpt_github.pull_requests_created, [
@@ -290,6 +292,7 @@ class TestExporterTest(unittest.TestCase):
         self.assertEqual(test_exporter.wpt_github.calls, [
             'pr_with_position',
             'pr_with_change_id',
+            'remove_label "do not merge yet"',
             'get_pr_branch',
             'merge_pull_request',
             'delete_remote_branch',
