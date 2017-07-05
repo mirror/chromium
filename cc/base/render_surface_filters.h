@@ -8,6 +8,7 @@
 #include "base/macros.h"
 #include "cc/base/base_export.h"
 #include "third_party/skia/include/core/SkRefCnt.h"
+#include "third_party/skia/include/effects/SkBlurImageFilter.h"
 #include "ui/gfx/geometry/vector2d_f.h"
 
 class GrContext;
@@ -33,7 +34,9 @@ class CC_BASE_EXPORT RenderSurfaceFilters {
   static sk_sp<SkImageFilter> BuildImageFilter(
       const FilterOperations& filters,
       const gfx::SizeF& size,
-      const gfx::Vector2dF& offset = gfx::Vector2dF(0, 0));
+      const gfx::Vector2dF& offset = gfx::Vector2dF(0, 0),
+      SkBlurImageFilter::TileMode tileMode =
+          SkBlurImageFilter::kClampToBlack_TileMode);
 
  private:
   DISALLOW_IMPLICIT_CONSTRUCTORS(RenderSurfaceFilters);
