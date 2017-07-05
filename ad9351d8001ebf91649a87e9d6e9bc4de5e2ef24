@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0cd91c70_3319a6e6",
+        "filename": "components/ntp_snippets/content_suggestions_metrics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-05T06:51:43Z",
+      "side": 1,
+      "message": "nit: DCHECK that the sizes match?",
+      "revId": "ad9351d8001ebf91649a87e9d6e9bc4de5e2ef24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c31dd6a_559fdc78",
+        "filename": "components/ntp_snippets/content_suggestions_metrics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-05T06:51:43Z",
+      "side": 1,
+      "message": "High-level question: What does it mean if a category it not visible? Can we find a better name? (I\u0027m assuming it doesn\u0027t mean \"visible on the screen\").",
+      "revId": "ad9351d8001ebf91649a87e9d6e9bc4de5e2ef24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
