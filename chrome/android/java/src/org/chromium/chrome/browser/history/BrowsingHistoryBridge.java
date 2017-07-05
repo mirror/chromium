@@ -17,8 +17,10 @@ public class BrowsingHistoryBridge implements HistoryProvider {
     private boolean mRemovingItems;
     private boolean mHasPendingRemoveRequest;
 
-    public BrowsingHistoryBridge() {
-        mNativeHistoryBridge = nativeInit(Profile.getLastUsedProfile());
+    public BrowsingHistoryBridge(boolean isIncognito) {
+        mNativeHistoryBridge =
+                nativeInit(isIncognito ? Profile.getLastUsedProfile().getOffTheRecordProfile()
+                                       : Profile.getLastUsedProfile().getOriginalProfile());
     }
 
     @Override
