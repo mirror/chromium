@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b6f6e44_cd49c92c",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1487,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-05T02:00:37Z",
+      "side": 1,
+      "message": "Can you add CHECK(BrowserThread::CurrentlyOn(BrowserThread::IO)) here?",
+      "revId": "c0c09e03d812b085d5907e6c63f5eaefa6c28379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31e77cb0_e3e5f913",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-05T02:00:37Z",
+      "side": 1,
+      "message": "IO thread -\u003e the IO thread",
+      "revId": "c0c09e03d812b085d5907e6c63f5eaefa6c28379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
