@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "101559ac_96ebcafb",
+        "filename": "chrome/browser/android/vr_shell/ui_elements/ui_element.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-05T17:29:55Z",
+      "side": 1,
+      "message": "- s/Analgous/Analogous/\n- Should specify units (it was going to be meters, right?)",
+      "range": {
+        "startLine": 175,
+        "startChar": 38,
+        "endLine": 175,
+        "endChar": 46
+      },
+      "revId": "7150d9508318534e692ab4fcef88b40488ef0de7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "64e5abe1_2423f4f7",
         "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
         "patchSetId": 4
@@ -17,6 +40,53 @@
         "startLine": 1322,
         "startChar": 18,
         "endLine": 1322,
+        "endChar": 31
+      },
+      "revId": "7150d9508318534e692ab4fcef88b40488ef0de7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b7cc8d9_98b16524",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1322,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-05T17:29:55Z",
+      "side": 1,
+      "message": "Element\u0027s corner radius is suppose to be meters, so I think this is converting to a fraction of size, and being converted back (with width) in the renderer.  I\u0027d prefer if this was a pixel-based number or something though, as opposed to fraction.",
+      "parentUuid": "64e5abe1_2423f4f7",
+      "range": {
+        "startLine": 1322,
+        "startChar": 18,
+        "endLine": 1322,
+        "endChar": 31
+      },
+      "revId": "7150d9508318534e692ab4fcef88b40488ef0de7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c97c0cc9_c0dd0347",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_renderer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-05T17:29:55Z",
+      "side": 1,
+      "message": "Unit should be documented as well.",
+      "range": {
+        "startLine": 109,
+        "startChar": 18,
+        "endLine": 109,
         "endChar": 31
       },
       "revId": "7150d9508318534e692ab4fcef88b40488ef0de7",
