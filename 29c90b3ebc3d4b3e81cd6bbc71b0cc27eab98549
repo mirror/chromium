@@ -34,6 +34,24 @@
       "revId": "29c90b3ebc3d4b3e81cd6bbc71b0cc27eab98549",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf14e21c_8089b99c",
+        "filename": "content/public/browser/android/motion_event_synthesizer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-05T18:17:21Z",
+      "side": 1,
+      "message": "\u003e \u003e Don\u0027t even need ViewAndroid since you can get that from WebContents. \n\u003e \n\u003e You can\u0027t get the ViewAndroid from WebContents here. The embedder (VrShell) comes with its own WindowAndroid (and a child VA I\u0027m adding in this CL).\n\nwhy not? what\u0027s wrong with WebContents-\u003eWebContentsViewAndroid-\u003eViewAndroid?\n\n\u003e It is different from that formed by WebContents/RenderWidgetHostView. I suspect it\u0027s because VrShell was built on top of Chrome to use Tab/WebContents but needed a Window of different factors.\n\nYeah, they go through the tab reparenting path to reparent to a different window.\n\n\u003e \n\u003e That said, I still think gfx::NativeView (ViewAndroid) can be a right argument for this API. Passing WebContents to keep the reference to it may work but would look confusing if both WC/VA are used.\n\u003e \n\u003e How about ViewAndroid(Delegate) play the role of WebContentsImpl in this regard? VAD is also per-WebContent object. So it can hold a reference to a Java object like this (no reference in Java, weak global in native only). Then I can still keep one parameter (ViewAndroid) for the interface.\n\nVAD is mostly a delegate interface though (I guess it has a bunch of non-trivial default implementations that ideally would not be there). Holding onto refs to content things is a content-internal concern.\n\n\u003e \n\u003e If this kind of gc concern due to weak ptrs can happen for other classes as well, a general java object reference holder may be useful - you just pass the java object to it and when VAD is gone (along with WebContents) it clears up the reference. MotionEventSynthesizer will stop propagating events accordingly.\n\nThere\u0027s nothing general about lifetime though. There could very well be java things that\u0027s tied to lifetime of a frame rather than contents.\n\n\u003e \n\u003e Other possibility would be for the embedder to pass a dummy WebContents added just to hold the reference and provide the right Window/ViewAndroid. I think this is not as good as the other because WebContents is expensive to create.\n\nyeah don\u0027t do that\n\n\u003e  \n\u003e \u003e but an interface that doesn\u0027t mention webcontents, although that seems a bit overkill\n\u003e \n\u003e I\u0027ve been removing the references to WebContents/CVC in RenderWidgetHost/View one at a time to resolve all the layering violations - don\u0027t want to do the reverse..",
+      "parentUuid": "15f09e94_15d2de19",
+      "revId": "29c90b3ebc3d4b3e81cd6bbc71b0cc27eab98549",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
