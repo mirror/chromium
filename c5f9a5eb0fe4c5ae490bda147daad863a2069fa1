@@ -50,6 +50,75 @@
       "revId": "c5f9a5eb0fe4c5ae490bda147daad863a2069fa1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3136454_bb3617d6",
+        "filename": "components/ntp_snippets/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-05T07:47:03Z",
+      "side": 1,
+      "message": "Is this still needed?",
+      "range": {
+        "startLine": 136,
+        "startChar": 42,
+        "endLine": 136,
+        "endChar": 0
+      },
+      "revId": "c5f9a5eb0fe4c5ae490bda147daad863a2069fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91483841_accfc0e2",
+        "filename": "components/ntp_snippets/DEPS",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-05T07:47:03Z",
+      "side": 1,
+      "message": "Alphabetize please",
+      "range": {
+        "startLine": 16,
+        "startChar": 38,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "c5f9a5eb0fe4c5ae490bda147daad863a2069fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bbb4752_0c1e6668",
+        "filename": "components/ntp_snippets/remote/json_request.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-05T07:47:03Z",
+      "side": 1,
+      "message": "Alphabetize please",
+      "range": {
+        "startLine": 44,
+        "startChar": 37,
+        "endLine": 44,
+        "endChar": 0
+      },
+      "revId": "c5f9a5eb0fe4c5ae490bda147daad863a2069fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
