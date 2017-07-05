@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09410933_c6fa2b64",
+        "filename": "chrome/browser/media/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-05T16:02:24Z",
+      "side": 1,
+      "message": "What happens if you drop this?",
+      "revId": "860056db3314b53e7377b72a52a2404cc93477b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
