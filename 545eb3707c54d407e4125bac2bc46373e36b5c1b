@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48cbd0df_2bf919af",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-05T14:20:09Z",
+      "side": 1,
+      "message": "nit: Do you plan to do it in a follow-up CL? This does not seem too much additional work / line changes for the current CL. Nevertheless, I totally understand if you want to avoid it growing further.",
+      "range": {
+        "startLine": 130,
+        "startChar": 0,
+        "endLine": 130,
+        "endChar": 71
+      },
+      "revId": "545eb3707c54d407e4125bac2bc46373e36b5c1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
