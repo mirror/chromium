@@ -103,6 +103,18 @@ class WebServiceWorkerNetworkProviderImpl
     request.SetExtraData(extra_data.release());
   }
 
+  std::unique_ptr<blink::WebURLLoader> CreateURLLoader(
+      const blink::WebURLRequest& request,
+      base::SingleThreadTaskRunner* task_runner) override {
+    RenderThreadImpl* child_thread = RenderThreadImpl::current();
+    if (child_thread && provider_->script_loader_factory()) {
+      return base::MakeUnique<WebURLLoaderImpl>(
+          child_thread->resource_dispatcher(), task_runner,
+          provider_->script_loader_factory());
+    }
+    return nullptr;
+  }
+
   int GetProviderID() const override { return provider_->provider_id(); }
 
  private:
