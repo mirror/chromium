@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53dc5e58_a9619d20",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002219
+      },
+      "writtenOn": "2017-07-05T19:24:06Z",
+      "side": 1,
+      "message": "webp",
+      "range": {
+        "startLine": 7,
+        "startChar": 29,
+        "endLine": 7,
+        "endChar": 32
+      },
+      "revId": "d2e5892f48d5ad61b2820f37a9ee3c920e5f1cc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93514365_dda40a9f",
+        "filename": "third_party/libwebp/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1002219
+      },
+      "writtenOn": "2017-07-05T19:24:06Z",
+      "side": 1,
+      "message": "you could refer to the target this way where it\u0027s used, but either way is fine by me",
+      "revId": "d2e5892f48d5ad61b2820f37a9ee3c920e5f1cc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
