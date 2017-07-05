@@ -57,6 +57,30 @@
       "revId": "f2b04b58bb50b71b68cd9173ede711b214dbf299",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e1b2ea1_8b939fcf",
+        "filename": "chrome/browser/ui/ash/launcher/chrome_launcher_controller_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2205,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-07-05T20:07:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03c69c9f_f67ab3e3",
+      "range": {
+        "startLine": 2205,
+        "startChar": 19,
+        "endLine": 2205,
+        "endChar": 20
+      },
+      "revId": "f2b04b58bb50b71b68cd9173ede711b214dbf299",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
