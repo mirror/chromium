@@ -39,6 +39,8 @@ class ScopedCriticalAction {
    public:
     Core();
 
+    // Informs the OS that the background task has started.
+    void StartBackgroundTask();
     // Informs the OS that the background task has completed.
     void EndBackgroundTask();
 
