@@ -102,6 +102,7 @@ class PaymentRequestCoordinatorTest : public PlatformTest {
     payment_request_->SetPrefService(pref_service_.get());
   }
 
+  web::TestWebThreadBundle thread_bundle_;
   autofill::AutofillProfile autofill_profile_;
   autofill::CreditCard credit_card_;
   std::unique_ptr<PrefService> pref_service_;

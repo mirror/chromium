@@ -18,6 +18,7 @@
 #import "ios/chrome/browser/ui/browser_view_controller.h"
 #import "ios/chrome/test/base/scoped_block_swizzler.h"
 #import "ios/testing/ocmock_complex_type_helper.h"
+#include "ios/web/public/test/test_web_thread_bundle.h"
 #import "net/base/mac/url_conversions.h"
 #include "testing/platform_test.h"
 #import "third_party/ocmock/OCMock/OCMock.h"
@@ -144,6 +145,7 @@ class URLOpenerTest : public PlatformTest {
   }
 
  private:
+  web::TestWebThreadBundle thread_bundle_;
   MainController* main_controller_;
 };
 

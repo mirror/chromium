@@ -6,6 +6,7 @@
 
 #import "ios/chrome/browser/browser_state/test_chrome_browser_state.h"
 #include "ios/chrome/browser/tabs/tab.h"
+#include "ios/web/public/test/test_web_thread_bundle.h"
 #include "testing/platform_test.h"
 #import "third_party/ocmock/OCMock/OCMock.h"
 #include "ui/base/test/ios/ui_image_test_utils.h"
@@ -37,6 +38,7 @@ class ChromeActivityItemThumbnailGeneratorTest : public PlatformTest {
     [[[tab_ stub] andReturnValue:OCMOCK_VALUE(browserState)] browserState];
   }
 
+  web::TestWebThreadBundle thread_bundle_;
   std::unique_ptr<TestChromeBrowserState> chrome_browser_state_;
   id tab_;
 };

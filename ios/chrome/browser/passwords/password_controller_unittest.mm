@@ -32,6 +32,7 @@
 #import "ios/web/public/navigation_manager.h"
 #include "ios/web/public/ssl_status.h"
 #import "ios/web/public/test/fakes/test_web_state.h"
+#include "ios/web/public/test/test_web_thread_bundle.h"
 #import "ios/web/public/test/web_test_with_web_state.h"
 #import "ios/web/public/web_state/web_state.h"
 #include "testing/gmock/include/gmock/gmock.h"
@@ -1287,6 +1288,7 @@ TEST_F(PasswordControllerTest, CheckIncorrectData) {
 // The test case below does not need the heavy fixture from above, but it
 // needs to use MockWebState.
 TEST(PasswordControllerTestSimple, SaveOnNonHTMLLandingPage) {
+  web::TestWebThreadBundle thread_bundle;
   TestChromeBrowserState::Builder builder;
   std::unique_ptr<TestChromeBrowserState> browser_state(builder.Build());
   MockWebState web_state;
