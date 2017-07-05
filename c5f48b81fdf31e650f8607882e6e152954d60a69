@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c872d11e_d0826ff0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-07-05T07:06:31Z",
+      "side": 1,
+      "message": "please format the commit message such that there\u0027s a short first line summarizing the commit, followed by an empty line followed by however many paragraphs of details you want to add.",
+      "revId": "c5f48b81fdf31e650f8607882e6e152954d60a69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
