@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "af921163_e2a9285a",
+        "filename": "third_party/WebKit/LayoutTests/FlagExpectations/enable-slimming-paint-v2",
+        "patchSetId": 11
+      },
+      "lineNbr": 1662,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-07-05T21:40:20Z",
+      "side": 1,
+      "message": "Good question. I think these are harmless but nevertheless intriguing. Will investigate today.",
+      "parentUuid": "7b1d43b7_c3f2fb6b",
+      "revId": "09e9b162902d6ba5d28c1be1ec180c1f4bd85993",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5f1a505c_8075e0f2",
         "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositorTest.cpp",
         "patchSetId": 11
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-30T00:02:39Z",
       "side": 1,
       "message": "Why this change? Was it buggy before?",
+      "revId": "09e9b162902d6ba5d28c1be1ec180c1f4bd85993",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bad5d49_6349537c",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositorTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 1482,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-07-05T21:40:20Z",
+      "side": 1,
+      "message": "The PictureMatcher didn\u0027t handle space conversion quite right. The draw rect and clip rects were intersected without taking transform space into account, and only mapped to screen space at last step. This CL fixed it.",
+      "parentUuid": "5f1a505c_8075e0f2",
       "revId": "09e9b162902d6ba5d28c1be1ec180c1f4bd85993",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "fec401c9_876db71d",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintChunksToCcLayer.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-07-05T21:40:20Z",
+      "side": 1,
+      "message": "This was first added to workaround a RTree issue: https://codereview.chromium.org/2225563002/diff/100001/third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositor.cpp\nNot sure if it still applies. We can investigate later.",
+      "parentUuid": "bf37d8f2_c6dd82e3",
+      "revId": "09e9b162902d6ba5d28c1be1ec180c1f4bd85993",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f90f0bd_087d2ed9",
         "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintChunksToCcLayer.cpp",
         "patchSetId": 11
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "b191d1b6_f7924d90",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintChunksToCcLayer.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-07-05T21:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f90f0bd_087d2ed9",
+      "revId": "09e9b162902d6ba5d28c1be1ec180c1f4bd85993",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3dd78e3_c9cc50f6",
         "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintChunksToCcLayer.cpp",
         "patchSetId": 11
@@ -81,6 +153,24 @@
       "writtenOn": "2017-06-30T00:02:39Z",
       "side": 1,
       "message": "It appears that the effect stack is a sequence of \u003ceffect, \u003cclips\u003e, effect, \u003cclips\u003e, ...\u003e\nin terms of the order of restores. It\u0027s confusing to also have a clip_stack_. Could\nclip_stack_ be removed if it was represented as an entry at the bottom of effect_stack_\nwith a sentinel effect value?",
+      "revId": "09e9b162902d6ba5d28c1be1ec180c1f4bd85993",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4443341_0e7c9e58",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintChunksToCcLayer.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-07-05T21:40:20Z",
+      "side": 1,
+      "message": "Good idea! Unifying the stacks will also improve run-time performance. Done.",
+      "parentUuid": "a3dd78e3_c9cc50f6",
       "revId": "09e9b162902d6ba5d28c1be1ec180c1f4bd85993",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "1157e380_20d32535",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintChunksToCcLayer.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-07-05T21:40:20Z",
+      "side": 1,
+      "message": "Matching the begin effect display item.",
+      "parentUuid": "05b7d671_5f9808d6",
+      "revId": "09e9b162902d6ba5d28c1be1ec180c1f4bd85993",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "785c872f_fd984783",
         "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintChunksToCcLayerTest.cpp",
         "patchSetId": 11
@@ -115,6 +223,24 @@
       "writtenOn": "2017-06-30T00:02:39Z",
       "side": 1,
       "message": "Is this one exactly the same as the comment in the non-test file? If not it would be great\nto make them match exactly, for even better explanatory effect",
+      "revId": "09e9b162902d6ba5d28c1be1ec180c1f4bd85993",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec0ac9a5_b5d47a82",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintChunksToCcLayerTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-07-05T21:40:20Z",
+      "side": 1,
+      "message": "Yes they are. :)",
+      "parentUuid": "785c872f_fd984783",
       "revId": "09e9b162902d6ba5d28c1be1ec180c1f4bd85993",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "61291ba2_a7a4eba4",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintChunksToCcLayerTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-07-05T21:40:20Z",
+      "side": 1,
+      "message": "fast/css/fixed-overlaps-absolute-in-clip.html",
+      "parentUuid": "00a55c28_43d0fe10",
+      "revId": "09e9b162902d6ba5d28c1be1ec180c1f4bd85993",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "87609a24_6b1bf2b0",
         "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintChunksToCcLayerTest.cpp",
         "patchSetId": 11
@@ -149,6 +293,24 @@
       "writtenOn": "2017-06-30T00:02:39Z",
       "side": 1,
       "message": "ditto",
+      "revId": "09e9b162902d6ba5d28c1be1ec180c1f4bd85993",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35d7eef9_e17eae2a",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintChunksToCcLayerTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-07-05T21:40:20Z",
+      "side": 1,
+      "message": "I believe one was added for a invalidation bug. (The classic \"my paint ancestor is not my containing block ancestor\" example.) I forgot where though.",
+      "parentUuid": "87609a24_6b1bf2b0",
       "revId": "09e9b162902d6ba5d28c1be1ec180c1f4bd85993",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
