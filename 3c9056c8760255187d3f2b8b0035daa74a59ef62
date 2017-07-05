@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ae68d85_2b4d0dd5",
+        "filename": "ui/gl/gl_image_io_surface.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1106289
+      },
+      "writtenOn": "2017-07-05T14:04:31Z",
+      "side": 1,
+      "message": "|| is_swiftshader\n\nWe could add it when we\u0027re ready to add SwiftShader support too. Just making a note of it.",
+      "range": {
+        "startLine": 195,
+        "startChar": 49,
+        "endLine": 195,
+        "endChar": 57
+      },
+      "revId": "3c9056c8760255187d3f2b8b0035daa74a59ef62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0cb1471_a4bf591f",
+        "filename": "ui/gl/init/gl_initializer_mac.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1106289
+      },
+      "writtenOn": "2017-07-05T14:04:31Z",
+      "side": 1,
+      "message": "Due to crbug.com/735920 we currently have to use different library names. Anyway, no need to change this now. Just making note of it.",
+      "range": {
+        "startLine": 136,
+        "startChar": 0,
+        "endLine": 137,
+        "endChar": 57
+      },
+      "revId": "3c9056c8760255187d3f2b8b0035daa74a59ef62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
