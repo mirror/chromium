@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d1b44b5_e8d8e10c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-07-05T02:50:55Z",
+      "side": 1,
+      "message": "CL descriptions and titles should be at most 72 characters long.\n\nAlso take out the word regular - does\u0027t add context.",
+      "revId": "f75a2fd63b339c99103d4d0f65fc22b9df0ed88a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

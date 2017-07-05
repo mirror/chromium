@@ -2,6 +2,74 @@
   "comments": [
     {
       "key": {
+        "uuid": "7672c6b9_c8ea16a1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-07-05T02:50:55Z",
+      "side": 1,
+      "message": "Remove word regular - doesnt add value.",
+      "revId": "657629e553bcc1ad7bf9d13a4a7c90877ab1b736",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5476b8ca_534787e7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-07-05T02:50:55Z",
+      "side": 1,
+      "message": "Remove extra newline",
+      "revId": "657629e553bcc1ad7bf9d13a4a7c90877ab1b736",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4328a494_5650e529",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-07-05T02:50:55Z",
+      "side": 1,
+      "message": "\"Some storage-only properties have only enum keywords.\" Delete this sentence. Doesn\u0027t add value.\n\n\"We would like to automatically calculate the size of the property given its set of keyword.\" -\u003e\n\"We would like to automatically calculate the size of the property given a set of keywords.\"",
+      "revId": "657629e553bcc1ad7bf9d13a4a7c90877ab1b736",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e80fc866_e8cd537e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-07-05T02:50:55Z",
+      "side": 1,
+      "message": "Remove this line. \n\nAdds no value.",
+      "revId": "657629e553bcc1ad7bf9d13a4a7c90877ab1b736",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8749343e_f2f2482a",
         "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
         "patchSetId": 8
@@ -13,6 +81,40 @@
       "writtenOn": "2017-07-05T02:31:07Z",
       "side": 1,
       "message": "nit: I would also put the name of the property in the assert so it\u0027s easier to find where the error happened",
+      "revId": "657629e553bcc1ad7bf9d13a4a7c90877ab1b736",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc1e906c_94568f21",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-07-05T02:50:55Z",
+      "side": 1,
+      "message": "\"is represent as a\" -\u003e \"is represented as a\"",
+      "revId": "657629e553bcc1ad7bf9d13a4a7c90877ab1b736",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41bd304c_e74645b2",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-07-05T02:50:55Z",
+      "side": 1,
+      "message": "\"in size\" -\u003e \"here\"",
       "revId": "657629e553bcc1ad7bf9d13a4a7c90877ab1b736",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
