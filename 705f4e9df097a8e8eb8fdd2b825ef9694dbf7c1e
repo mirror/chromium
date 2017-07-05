@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8864487_d2da4d71",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-05T19:26:56Z",
+      "side": 1,
+      "message": "This should take an NQE instead of a random URLRequest which it doesn\u0027t really care about.",
+      "range": {
+        "startLine": 510,
+        "startChar": 29,
+        "endLine": 510,
+        "endChar": 40
+      },
+      "revId": "705f4e9df097a8e8eb8fdd2b825ef9694dbf7c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b12a9c3_66a0348c",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-05T19:26:56Z",
+      "side": 1,
+      "message": "Only updating this on new requests seems weird to me - that means that when requests complete, and we\u0027re looking to start pending requests, we won\u0027t update it.  But then we magically will when the renderer issues a new request.\n\nI\u0027d suggest either watching the NQE for changes, and updating it as needed (Calling LoadAnyStartablePEndingREquests as needed) or calculating it in every ShouldStartRequest call.",
+      "range": {
+        "startLine": 537,
+        "startChar": 10,
+        "endLine": 537,
+        "endChar": 52
+      },
+      "revId": "705f4e9df097a8e8eb8fdd2b825ef9694dbf7c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce01d1fd_e77d4588",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-05T19:26:56Z",
+      "side": 1,
+      "message": "This isn\u0027t called from anywhere, and it\u0027s not clear to me how this is intended to interact with ComputeMaxDelayableRequestsNetworkOverride.",
+      "range": {
+        "startLine": 812,
+        "startChar": 6,
+        "endLine": 812,
+        "endChar": 40
+      },
+      "revId": "705f4e9df097a8e8eb8fdd2b825ef9694dbf7c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1180c062_60b9ac51",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 817,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-05T19:26:56Z",
+      "side": 1,
+      "message": "Having both a min and a max seems unnecessary...Can we just have a bunch of in-order maxes instead?",
+      "range": {
+        "startLine": 817,
+        "startChar": 47,
+        "endLine": 817,
+        "endChar": 0
+      },
+      "revId": "705f4e9df097a8e8eb8fdd2b825ef9694dbf7c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e76a242_7aa0a18d",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 925,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-05T19:26:56Z",
+      "side": 1,
+      "message": "Add braces",
+      "revId": "705f4e9df097a8e8eb8fdd2b825ef9694dbf7c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bb59e77_b3b93774",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 1116,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-05T19:26:56Z",
+      "side": 1,
+      "message": "Do we need this bit?  Seems like if max_requests_for_bdp_ranges_ is empty, we can assume it\u0027s not enabled?",
+      "range": {
+        "startLine": 1116,
+        "startChar": 29,
+        "endLine": 1116,
+        "endChar": 38
+      },
+      "revId": "705f4e9df097a8e8eb8fdd2b825ef9694dbf7c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
