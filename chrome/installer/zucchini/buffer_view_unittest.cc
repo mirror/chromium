@@ -14,14 +14,12 @@ namespace zucchini {
 
 class BufferViewTest : public testing::Test {
  protected:
-  static constexpr size_t kLen = 10;
+  enum : size_t { kLen = 10 };
 
   // Some tests might modify this.
   uint8_t bytes_[kLen] = {0x10, 0x32, 0x54, 0x76, 0x98,
                           0xBA, 0xDC, 0xFE, 0x10, 0x00};
 };
-
-constexpr size_t BufferViewTest::kLen;
 
 TEST_F(BufferViewTest, Size) {
   for (size_t len = 0; len <= kLen; ++len) {

@@ -10,14 +10,15 @@
 #include <type_traits>
 
 #include "base/logging.h"
+#include "base/numerics/checked_math.h"
 
 namespace zucchini {
 namespace internal {
 
-// A class that encapsulates a contiguous sequence of raw data.
-// It does not own the memory region it encapsulates.
-// BufferViewBase should not be used directly; it is an implementation
-// used for both BufferView and MutableBufferView.
+// A class that encapsulates a contiguous sequence of raw data and meant to be
+// used a value type. It does not own the memory region it encapsulates.
+// BufferViewBase should not be used directly; it is an implementation used for
+// both BufferView and MutableBufferView.
 template <class T>
 class BufferViewBase {
  public:
@@ -40,7 +41,10 @@ class BufferViewBase {
   BufferViewBase() = default;
 
   BufferViewBase(iterator first, size_type size)
-      : first_(first), last_(first_ + size) {}
+      : first_(first), last_(first_ + size) {
+    DCHECK(last_ >= first_);
+  }
+
   BufferViewBase(const BufferViewBase&) = default;
   BufferViewBase& operator=(const BufferViewBase&) = default;
 
@@ -53,9 +57,10 @@ class BufferViewBase {
 
   // Element access
 
-  // Returns the raw value at specified location pos.
+  // Returns the raw value at specified location |pos|.
+  // If |pos| is not within the range of the buffer, the process is terminated.
   reference operator[](size_type pos) const {
-    DCHECK(first_ + pos < last_);
+    CHECK(first_ + pos < last_);
     return first_[pos];
   }
 
@@ -78,12 +83,13 @@ class BufferViewBase {
 
 }  // namespace internal
 
-// A class that encapsulates a constant contiguous sequence of raw data.
-// It does not own the memory region it refers to.
+// A class that encapsulates a constant contiguous sequence of raw data and
+// meant to be used a value type. It does not own the memory region it
+// encapsulates.
 using BufferView = internal::BufferViewBase<const uint8_t>;
 
-// A class that encapsulates a mutable contiguous sequence of raw data.
-// It does not own the memory region it refers to.
+// A class that encapsulates a mutable contiguous sequence of raw data and meant
+// to be used a value type. It does not own the memory region it encapsulates.
 using MutableBufferView = internal::BufferViewBase<uint8_t>;
 
 }  // namespace zucchini
