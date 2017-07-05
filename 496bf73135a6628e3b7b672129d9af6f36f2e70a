@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "44818e82_b608bee7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticleViewHolder.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-07-05T10:47:58Z",
+      "side": 1,
+      "message": "Great :)",
+      "parentUuid": "fba35119_df1f8a58",
+      "range": {
+        "startLine": 363,
+        "startChar": 12,
+        "endLine": 363,
+        "endChar": 29
+      },
+      "revId": "496bf73135a6628e3b7b672129d9af6f36f2e70a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "89ebef74_c231bbe2",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticleViewHolder.java",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "feff3fa3_86e4cf6f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticleViewHolder.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-07-05T10:47:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89ebef74_c231bbe2",
+      "range": {
+        "startLine": 424,
+        "startChar": 29,
+        "endLine": 424,
+        "endChar": 65
+      },
+      "revId": "496bf73135a6628e3b7b672129d9af6f36f2e70a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb0242c8_c611edfa",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
         "patchSetId": 4
@@ -68,6 +116,30 @@
       "revId": "496bf73135a6628e3b7b672129d9af6f36f2e70a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6236c1de_38fc1df0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-07-05T10:47:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb0242c8_c611edfa",
+      "range": {
+        "startLine": 83,
+        "startChar": 60,
+        "endLine": 83,
+        "endChar": 85
+      },
+      "revId": "496bf73135a6628e3b7b672129d9af6f36f2e70a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
