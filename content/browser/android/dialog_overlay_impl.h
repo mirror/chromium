@@ -8,6 +8,7 @@
 #include "base/android/jni_android.h"
 #include "base/android/jni_weak_ref.h"
 #include "base/android/scoped_java_ref.h"
+#include "base/callback.h"
 #include "base/unguessable_token.h"
 #include "content/browser/android/content_view_core_impl.h"
 #include "content/browser/android/content_view_core_impl_observer.h"
@@ -44,6 +45,9 @@ class DialogOverlayImpl : public ContentViewCoreImplObserver {
   // Unregister for tokens if we're registered, and clear |cvc_|.
   void UnregisterForTokensIfNeeded();
 
+  void SetOverlayStoppingCB(base::OnceClosure closure);
+  void RequestStop();
+
  private:
   // Look up the ContentViewCore for |renderer_pid_| and |render_frame_id_|.
   ContentViewCoreImpl* GetContentViewCore();
@@ -52,6 +56,8 @@ class DialogOverlayImpl : public ContentViewCoreImplObserver {
   JavaObjectWeakGlobalRef obj_;
 
   base::UnguessableToken token_;
+
+  base::OnceClosure overlay_stopping_cb_;
 
   // ContentViewCoreImpl instance that we're registered with as an observer.
   ContentViewCoreImpl* cvc_;

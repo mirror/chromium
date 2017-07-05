@@ -145,6 +145,14 @@ ContentViewCoreImpl* DialogOverlayImpl::GetContentViewCore() {
   return cvc;
 }
 
+void DialogOverlayImpl::SetOverlayStoppingCB(base::OnceClosure closure) {
+  overlay_stopping_cb_ = std::move(closure);
+}
+
+void DialogOverlayImpl::RequestStop() {
+  // TODO
+}
+
 static jint RegisterSurface(JNIEnv* env,
                             const base::android::JavaParamRef<jclass>& jcaller,
                             const JavaParamRef<jobject>& surface) {
