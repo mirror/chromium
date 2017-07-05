@@ -258,7 +258,14 @@ const CGFloat kHintLabelSidePadding = 12;
 // If Google is not the default search engine, hide the logo, doodle and
 // fakebox.
 - (void)updateLogoAndFakeboxDisplay {
-  // TODO(crbug.com/700375): implement this.
+  if (self.logoVendor.showingLogo != self.logoIsShowing) {
+    self.logoVendor.showingLogo = self.logoIsShowing;
+    [_doodleHeightConstraint
+        setConstant:content_suggestions::doodleHeight(self.logoIsShowing)];
+    if (IsIPadIdiom())
+      [self.fakeOmnibox setHidden:!self.logoIsShowing];
+    [self.collectionSynchronizer invalidateLayout];
+  }
 }
 
 // Adds the constraints for the |logoView|, the |fakeomnibox| related to the
