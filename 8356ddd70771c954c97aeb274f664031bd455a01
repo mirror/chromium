@@ -22,6 +22,30 @@
       "revId": "8356ddd70771c954c97aeb274f664031bd455a01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71fe5357_e8019e0e",
+        "filename": "services/ui/public/interfaces/gpu.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-05T06:30:52Z",
+      "side": 1,
+      "message": "\u003e IIRC gpu.mojom is only used from renderer [1], and currently\n\u003e JDAs are only created from the Browser process [2].\n\nNote that with mus, the browser process does not have access to mojom.GpuService. It only has access to mojom.Gpu.\n\nI am making changes so that browser has only access to mojom.Gpu in non-mus config too (wip CL: https://codereview.chromium.org/2967573002/ There will be a small part in browser that will have access to mojom.GpuService too, but that will not be accessible to other parts of the browser). So even if we want to restrict the access to browser, I think it makes sense to do that with mojom.Gpu.\n\n\u003e Hence\n\u003e the only place where we need to add a factory method is \n\u003e GpuProcessHost - gpu_service.mojom - GpuService (and we can\n\u003e find GpuProcessHost a la [3]).  Correct?\n\u003e \n\u003e (I think that when mojifying interfaces is better to leave\n\u003e the current dialogues as unchanged as possible -- so, although\n\u003e we might think it\u0027s interesting to make JDAs available to\n\u003e renderer(s), all that should happen in other CLs).\n\u003e \n\u003e [1] see the diagram in https://goo.gl/HkwYvA\n\u003e [2] https://cs.chromium.org/chromium/src/content/browser/renderer_host/media/in_process_video_capture_device_launcher.cc?dr\u003dC\u0026l\u003d159\n\u003e [3] https://cs.chromium.org/chromium/src/content/browser/renderer_host/media/video_capture_gpu_jpeg_decoder.cc?dr\u003dCSs\u0026l\u003d227",
+      "parentUuid": "6c0e6d8c_81c240ef",
+      "range": {
+        "startLine": 33,
+        "startChar": 2,
+        "endLine": 33,
+        "endChar": 19
+      },
+      "revId": "8356ddd70771c954c97aeb274f664031bd455a01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
