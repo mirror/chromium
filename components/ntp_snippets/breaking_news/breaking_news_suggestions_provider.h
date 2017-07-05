@@ -66,7 +66,7 @@ class BreakingNewsSuggestionsProvider final
   void NotifyNewSuggestions(
       std::vector<std::unique_ptr<RemoteSuggestion>> suggestions);
 
-  std::unique_ptr<BreakingNewsListener> breaking_news_listener_;
+  std::unique_ptr<BreakingNewsListener> breaking_news_raw_data_provider_;
   std::unique_ptr<base::Clock> clock_;
 
   // The database for persisting suggestions.
