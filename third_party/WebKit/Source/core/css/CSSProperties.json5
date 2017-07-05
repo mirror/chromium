@@ -101,6 +101,8 @@
         "storage_only",
         // Field is stored as a wrapper_pointer_name to a class.
         "pointer",
+        // Preset "length" for external and Length class
+        "length"
       ],
     },
 
@@ -1948,9 +1950,7 @@
       api_methods: ["parseSingleValue"],
       converter: "ConvertLength",
       interpolable: true,
-      field_template: "external",
-      include_paths: ["platform/Length.h"],
-      type_name: "Length",
+      field_template: "length",
       field_group: "surround",
       default_value: "Length(kFixed)",
     },
