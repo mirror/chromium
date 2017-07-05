@@ -3820,6 +3820,10 @@ bool WebContentsImpl::ShouldAllowRunningInsecureContent(
       web_contents, allowed_per_prefs, origin, resource_url);
 }
 
+bool WebContentsImpl::ShouldWaitForAllPipelineStagesBeforeDraw() {
+  return GetDelegate()->ShouldWaitForAllPipelineStagesBeforeDraw(this);
+}
+
 #if defined(OS_ANDROID)
 base::android::ScopedJavaLocalRef<jobject>
 WebContentsImpl::GetJavaRenderFrameHostDelegate() {
