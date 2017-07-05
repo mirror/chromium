@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26df4666_63e278cf",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-07-05T18:11:31Z",
+      "side": 1,
+      "message": "can you give indication here of potential outputs",
+      "range": {
+        "startLine": 478,
+        "startChar": 14,
+        "endLine": 478,
+        "endChar": 21
+      },
+      "revId": "84771bf767c49d129868c9709838bda188ffc638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
