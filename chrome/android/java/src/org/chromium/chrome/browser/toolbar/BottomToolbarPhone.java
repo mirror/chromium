@@ -90,7 +90,8 @@ public class BottomToolbarPhone extends ToolbarPhone {
 
             boolean buttonsClickable = heightFraction == 0.f;
             mToggleTabStackButton.setClickable(buttonsClickable);
-            mMenuButton.setClickable(buttonsClickable);
+            mMenuButton.setClickable(
+                    !urlHasFocus() && (buttonsClickable || mBottomSheet.isShowingNewTab()));
             if (!mUseToolbarHandle) mExpandButton.setClickable(buttonsClickable);
         }
     };
@@ -164,6 +165,9 @@ public class BottomToolbarPhone extends ToolbarPhone {
 
     /** The current right position of the location bar background. */
     private int mLocationBarBackgroundRightPosition;
+
+    /** Whether the menu button should be shown while the sheet is open. */
+    private boolean mShowMenuButtonWhenSheetOpen;
 
     /**
      * Constructs a BottomToolbarPhone object.
@@ -383,16 +387,31 @@ public class BottomToolbarPhone extends ToolbarPhone {
         return mLocationBarBackgroundRightPosition;
     }
 
+    private int getToolbarButtonsWidthForBackgroundOffset() {
+        return mShowMenuButtonWhenSheetOpen
+                ? mToolbarButtonsContainer.getMeasuredWidth() - mMenuButton.getMeasuredWidth()
+                : mToolbarButtonsContainer.getMeasuredWidth();
+    }
+
     private int getLocationBarBackgroundLeftOffset() {
         return !ApiCompatibilityUtils.isLayoutRtl(this)
                 ? 0
-                : mToolbarButtonsContainer.getMeasuredWidth() - mToolbarSidePadding;
+                : getToolbarButtonsWidthForBackgroundOffset() - mToolbarSidePadding;
     }
 
     private int getLocationBarBackgroundRightOffset() {
         return !ApiCompatibilityUtils.isLayoutRtl(this)
-                ? mToolbarButtonsContainer.getMeasuredWidth() - mToolbarSidePadding
+                ? getToolbarButtonsWidthForBackgroundOffset() - mToolbarSidePadding
                 : 0;
+    }
+
+    @Override
+    protected int getBoundsAfterAccountingForRightButtons() {
+        if (!mShowMenuButtonWhenSheetOpen || !shouldHideToolbarButtons()) {
+            return super.getBoundsAfterAccountingForRightButtons();
+        }
+
+        return mMenuButton.getMeasuredWidth() + mToolbarSidePadding;
     }
 
     @Override
@@ -513,6 +532,12 @@ public class BottomToolbarPhone extends ToolbarPhone {
         } else {
             ColorStateList tint = isIncognito() ? mLightModeTint : mDarkModeTint;
             mExpandButton.setTint(tint);
+        }
+
+        if (mBottomSheet.isSheetOpen()) {
+            mShowMenuButtonWhenSheetOpen = mBottomSheet.isShowingNewTab();
+            setButtonVisibilityAndTranslation();
+            mMenuButton.setClickable(!urlHasFocus() && mBottomSheet.isShowingNewTab());
         }
     }
 
@@ -676,6 +701,7 @@ public class BottomToolbarPhone extends ToolbarPhone {
                 mAnimatingToolbarButtonAppearance = visible;
 
                 if (!visible) {
+                    mShowMenuButtonWhenSheetOpen = mBottomSheet.isShowingNewTab();
                     mShouldHideToolbarButtons = true;
                     mLayoutLocationBarInFocusedMode = true;
                     requestLayout();
@@ -699,6 +725,7 @@ public class BottomToolbarPhone extends ToolbarPhone {
                     mShouldHideToolbarButtons = false;
                     mDisableLocationBarRelayout = false;
                     mLayoutLocationBarInFocusedMode = false;
+                    mShowMenuButtonWhenSheetOpen = false;
                     requestLayout();
                 }
 
@@ -716,20 +743,16 @@ public class BottomToolbarPhone extends ToolbarPhone {
         if (urlHasFocus()) {
             mShouldHideToolbarButtons = true;
             mToolbarButtonVisibilityPercent = 0.f;
+            mMenuButton.setClickable(false);
+        } else {
+            mMenuButton.setClickable(!mBottomSheet.isSheetOpen() || mBottomSheet.isShowingNewTab());
         }
     }
 
     private void updateToolbarButtonVisibility() {
         boolean isRtl = ApiCompatibilityUtils.isLayoutRtl(this);
-        float toolbarButtonsContainerWidth = mToolbarButtonsContainer.getMeasuredWidth();
-        float toolbarButtonsTranslationX =
-                toolbarButtonsContainerWidth * (1.f - mToolbarButtonVisibilityPercent);
-        if (isRtl) toolbarButtonsTranslationX *= -1;
 
-        mToolbarButtonsContainer.setTranslationX(toolbarButtonsTranslationX);
-        mToolbarButtonsContainer.setAlpha(mToolbarButtonVisibilityPercent);
-        mToolbarButtonsContainer.setVisibility(
-                mToolbarButtonVisibilityPercent > 0.f ? View.VISIBLE : View.INVISIBLE);
+        setButtonVisibilityAndTranslation();
 
         float locationBarTranslationX;
         boolean isLocationBarRtl = ApiCompatibilityUtils.isLayoutRtl(mLocationBar);
@@ -760,5 +783,46 @@ public class BottomToolbarPhone extends ToolbarPhone {
         // bar text as a result of the bounds changing.
         mLocationBar.invalidate();
         invalidate();
+    }
+
+    private void setButtonVisibilityAndTranslation() {
+        if (mShowMenuButtonWhenSheetOpen) {
+            mToolbarButtonsContainer.setTranslationX(0);
+            mToolbarButtonsContainer.setAlpha(1.f);
+            mToolbarButtonsContainer.setVisibility(View.VISIBLE);
+
+            float buttonAlpha = mToolbarButtonVisibilityPercent <= 0.5
+                    ? 0
+                    : 1.f - ((1.f - mToolbarButtonVisibilityPercent) * 2);
+            mToggleTabStackButton.setAlpha(buttonAlpha);
+            mToggleTabStackButton.setVisibility(
+                    mToolbarButtonVisibilityPercent > 0.f ? View.VISIBLE : View.INVISIBLE);
+
+            if (!mUseToolbarHandle) {
+                if (mTabSwitcherState != ENTERING_TAB_SWITCHER) mExpandButton.setAlpha(buttonAlpha);
+                mExpandButton.setVisibility(
+                        mToolbarButtonVisibilityPercent > 0.f ? View.VISIBLE : View.INVISIBLE);
+            }
+        } else {
+            mToggleTabStackButton.setAlpha(1.f);
+            mToggleTabStackButton.setVisibility(View.VISIBLE);
+
+            if (!mUseToolbarHandle) {
+                if (mTabSwitcherState != ENTERING_TAB_SWITCHER) mExpandButton.setAlpha(1.f);
+                mExpandButton.setVisibility(View.VISIBLE);
+            }
+
+            boolean isRtl = ApiCompatibilityUtils.isLayoutRtl(this);
+
+            float toolbarButtonsContainerWidth = mToolbarButtonsContainer.getMeasuredWidth();
+            float toolbarButtonsTranslationX =
+                    toolbarButtonsContainerWidth * (1.f - mToolbarButtonVisibilityPercent);
+            if (isRtl) toolbarButtonsTranslationX *= -1;
+
+            mToolbarButtonsContainer.setTranslationX(toolbarButtonsTranslationX);
+            mToolbarButtonsContainer.setAlpha(mToolbarButtonVisibilityPercent);
+            mToolbarButtonsContainer.setVisibility(
+                    mToolbarButtonVisibilityPercent > 0.f ? View.VISIBLE : View.INVISIBLE);
+        }
     }
 }
