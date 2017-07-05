@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4e4a037a_0689b9db",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-07-05T11:15:51Z",
+      "side": 1,
+      "message": "Nice, thanks.",
+      "parentUuid": "7a631425_8b127d61",
+      "range": {
+        "startLine": 230,
+        "startChar": 64,
+        "endLine": 230,
+        "endChar": 87
+      },
+      "revId": "7264893c327e3bb92565900abbaa26412af91391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8dbc3ba6_b9b67a4f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsMetrics.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "7264893c327e3bb92565900abbaa26412af91391",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8efca945_4929b005",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsMetrics.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-07-05T11:15:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8dbc3ba6_b9b67a4f",
+      "range": {
+        "startLine": 107,
+        "startChar": 58,
+        "endLine": 107,
+        "endChar": 65
+      },
+      "revId": "7264893c327e3bb92565900abbaa26412af91391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
