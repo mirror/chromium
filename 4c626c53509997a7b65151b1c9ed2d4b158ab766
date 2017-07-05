@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "074e1288_89b54dea",
+        "filename": "media/capture/video/video_capture_device_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-07-05T18:19:40Z",
+      "side": 0,
+      "message": "I am sorry if this TODO mislead you. There has been a lot of refactor going on in these classes with the ongoing mojo project and most of the stuff will be outdated soon(hopefully). This TODO was referring to VideoCaptureDevice::Client::Buffer::data()[0] which no longer exists. Additionally, we no longer consider I420 as the only supported format. \n\nI would go with chfremer@s suggestion and only deleting this TODO.\n\n[0] https://chromium.googlesource.com/chromium/src/+/bcd0585fc2b25d2f87d15982e7aeae4b8364888a/media/capture/video/video_capture_device.h",
+      "revId": "4c626c53509997a7b65151b1c9ed2d4b158ab766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5853dfd2_73c099d8",
         "filename": "media/capture/video/video_capture_device_client.cc",
         "patchSetId": 4
