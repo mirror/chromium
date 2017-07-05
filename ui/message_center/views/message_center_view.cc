@@ -539,15 +539,10 @@ void MessageCenterView::Update(bool animate) {
   else
     SetVisibilityMode(Mode::NOTIFICATIONS, animate);
 
-  if (no_message_views) {
+  if (no_message_views)
     scroller_->SetFocusBehavior(FocusBehavior::NEVER);
-  } else {
-#if defined(OS_MACOSX)
-    scroller_->SetFocusBehavior(FocusBehavior::ACCESSIBLE_ONLY);
-#else
+  else
     scroller_->SetFocusBehavior(FocusBehavior::ALWAYS);
-#endif
-  }
 
   UpdateButtonBarStatus();
 

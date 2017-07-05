@@ -43,7 +43,7 @@ MessageView* MessageViewFactory::Create(MessageCenterController* controller,
         notification_view = new NotificationView(controller, notification);
       break;
     }
-#if defined(TOOLKIT_VIEWS) && !defined(OS_MACOSX)
+#if defined(TOOLKIT_VIEWS)
     case NOTIFICATION_TYPE_CUSTOM:
       notification_view =
           notification.delegate()

@@ -6,11 +6,10 @@
 #include "ui/message_center/message_center.h"
 
 // This file contains dummy implementation of MessageCenter and used to compile
-// and link with Android and iOS implementations of Chrome which do not have
-// notification systems yet. This is to avoid spreading compile-time flags
-// everywhere in the code.
-#if !defined(OS_ANDROID) && !defined(OS_IOS)
-#error This file should only be used in Android or iOS builds.
+// and link with the Android and Mac implementations which do not use the
+// message center. This avoids spreading compile-time flags throughout the code.
+#if !defined(OS_ANDROID) && !defined(OS_MACOSX)
+#error This file should only be used in Android or Mac builds.
 #endif
 
 namespace message_center {
