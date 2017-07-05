@@ -314,6 +314,30 @@
     },
     {
       "key": {
+        "uuid": "7ee9e891_e8dfcc49",
+        "filename": "chrome/browser/android/vr_shell/ui_input_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-05T14:36:06Z",
+      "side": 1,
+      "message": "Yeah, that sounds good to me.",
+      "parentUuid": "b4159a92_ca70f273",
+      "range": {
+        "startLine": 43,
+        "startChar": 44,
+        "endLine": 43,
+        "endChar": 57
+      },
+      "revId": "1a5c497d20abb997dd6661ccd65c075c9ef9ea12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "89cb9755_635ef054",
         "filename": "chrome/browser/android/vr_shell/ui_input_manager.h",
         "patchSetId": 2
