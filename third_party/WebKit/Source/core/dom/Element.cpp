@@ -1725,6 +1725,8 @@ void Element::RemovedFrom(ContainerNode* insertion_point) {
     }
   }
 
+  GetDocument().GetRootScrollerController().ElementRemoved(*this);
+
   if (Fullscreen* fullscreen = Fullscreen::FromIfExists(GetDocument()))
     fullscreen->ElementRemoved(*this);
 

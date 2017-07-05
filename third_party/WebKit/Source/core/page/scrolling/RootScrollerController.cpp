@@ -137,6 +137,9 @@ void RootScrollerController::RecomputeEffectiveRootScroller() {
 }
 
 bool RootScrollerController::IsValidRootScroller(const Element& element) const {
+  if (!element.IsInTreeScope())
+    return false;
+
   if (!element.GetLayoutObject())
     return false;
 
@@ -205,6 +208,14 @@ bool RootScrollerController::ScrollsViewport(const Element& element) const {
     return element == document_->documentElement();
 
   return element == effective_root_scroller_.Get();
+}
+
+void RootScrollerController::ElementRemoved(const Element& element) {
+  if (&element != effective_root_scroller_)
+    return;
+
+  RecomputeEffectiveRootScroller();
+  DCHECK(&element != effective_root_scroller_);
 }
 
 }  // namespace blink
