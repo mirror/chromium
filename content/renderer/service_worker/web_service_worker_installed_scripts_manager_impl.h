@@ -7,6 +7,7 @@
 
 #include <set>
 
+#include "content/common/service_worker/service_worker_installed_scripts_manager.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerInstalledScriptsManager.h"
 
 namespace content {
@@ -14,8 +15,9 @@ namespace content {
 class WebServiceWorkerInstalledScriptsManagerImpl final
     : NON_EXPORTED_BASE(public blink::WebServiceWorkerInstalledScriptsManager) {
  public:
-  static std::unique_ptr<blink::WebServiceWorkerInstalledScriptsManager>
-  Create();
+  static std::unique_ptr<blink::WebServiceWorkerInstalledScriptsManager> Create(
+      mojom::ServiceWorkerInstalledScriptsInfoPtr installed_scripts_info,
+      scoped_refptr<base::SingleThreadTaskRunner> io_task_runner);
 
   ~WebServiceWorkerInstalledScriptsManagerImpl() override;
 
@@ -24,11 +26,19 @@ class WebServiceWorkerInstalledScriptsManagerImpl final
   std::unique_ptr<RawScriptData> GetRawScriptData(
       const blink::WebURL& script_url) override;
 
+  // Called from internally on the io thread.
+  void FinishScriptTransfer(const GURL& script_url,
+                            std::unique_ptr<RawScriptData> script_data);
+
  private:
+  class ScriptData;
+
   explicit WebServiceWorkerInstalledScriptsManagerImpl(
       std::vector<GURL>&& installed_urls);
 
   const std::set<GURL> installed_urls_;
+
+  std::unique_ptr<ScriptData> script_data_;
 };
 
 }  // namespace content
