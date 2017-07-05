@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab97ecb3_6da98c52",
+        "filename": "chrome/browser/ui/ash/launcher/chrome_launcher_controller_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2216,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-05T20:48:47Z",
+      "side": 1,
+      "message": "optional nit: \"is set to |button|\".",
+      "range": {
+        "startLine": 2216,
+        "startChar": 68,
+        "endLine": 2216,
+        "endChar": 69
+      },
+      "revId": "22dd9cb02778f05509e37ead4d969f2c7917d32e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
