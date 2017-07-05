@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18f9f287_1be0ab44",
+        "filename": "cc/base/render_surface_filters.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1116015
+      },
+      "writtenOn": "2017-07-05T19:31:53Z",
+      "side": 1,
+      "message": "Ideally, we should make the tile mode part of FilterOperation and add this parameter to CreateBlurFilter() instead of here. That would allow it to be used for FEGaussianBlur.edgeMode in Blink in the future. I\u0027m ok with leaving it here for now, though.\n\nThe cc folks also may want you to create a cc-specific enum, rather than using the Skia one, but I leave that up to Dana.",
+      "revId": "ecf6fdd9fa1da84168e1e9fd2d994c720674bd27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
