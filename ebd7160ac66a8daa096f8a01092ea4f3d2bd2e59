@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "98a5dd3f_4be1ee97",
+        "filename": "content/browser/media/android/media_resource_getter_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-07-05T21:26:33Z",
+      "side": 1,
+      "message": "We should keep this for Android WebView.\nBTW, is media pipeline actually handling Android WebView apk resources (file://android_asset/...)? This should be a bug. These are apk resources, and they shouldn\u0027t be handled by media pipeline, the file path is not readable and requires special handling.",
+      "parentUuid": "58432c10_046c832a",
+      "revId": "ebd7160ac66a8daa096f8a01092ea4f3d2bd2e59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d8667fef_2cf9a667",
         "filename": "content/browser/media/android/media_resource_getter_impl.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-05T20:30:42Z",
       "side": 1,
       "message": "This says it must only be called on the \"network task runner\"; is this a problem?",
+      "revId": "ebd7160ac66a8daa096f8a01092ea4f3d2bd2e59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da0bb0eb_d0676cfd",
+        "filename": "content/browser/media/android/media_resource_getter_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-07-05T21:26:33Z",
+      "side": 1,
+      "message": "Good catch, posting all the tasks to the task_runner returned from context_getter_-\u003e GetNetworkTaskRunner().",
+      "parentUuid": "d8667fef_2cf9a667",
       "revId": "ebd7160ac66a8daa096f8a01092ea4f3d2bd2e59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2a8fc33b_d34351fe",
+        "filename": "content/browser/media/android/media_resource_getter_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-07-05T21:26:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7bccd17_ee8830de",
+      "revId": "ebd7160ac66a8daa096f8a01092ea4f3d2bd2e59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0487a69_53394222",
         "filename": "content/browser/media/android/media_resource_getter_impl.cc",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "ebd7160ac66a8daa096f8a01092ea4f3d2bd2e59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a97ffd0_24048d6a",
+        "filename": "content/browser/media/android/media_resource_getter_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-07-05T21:26:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0487a69_53394222",
+      "revId": "ebd7160ac66a8daa096f8a01092ea4f3d2bd2e59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "af9fe258_841377c5",
+        "filename": "content/browser/media/android/media_resource_getter_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-07-05T21:26:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d02c6c9c_4ea75d14",
+      "revId": "ebd7160ac66a8daa096f8a01092ea4f3d2bd2e59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72b58914_b7813793",
         "filename": "content/browser/media/android/media_resource_getter_impl.cc",
         "patchSetId": 1
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "90a312b3_b851dda1",
+        "filename": "content/browser/media/android/media_resource_getter_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-07-05T21:26:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72b58914_b7813793",
+      "revId": "ebd7160ac66a8daa096f8a01092ea4f3d2bd2e59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8adb09db_9f5f5185",
         "filename": "content/browser/media/android/media_resource_getter_impl.cc",
         "patchSetId": 1
@@ -115,6 +223,24 @@
       "writtenOn": "2017-07-05T20:30:42Z",
       "side": 1,
       "message": "Can be removed.",
+      "revId": "ebd7160ac66a8daa096f8a01092ea4f3d2bd2e59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3757c9b4_5ccf0ec5",
+        "filename": "content/browser/media/android/media_resource_getter_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-07-05T21:26:33Z",
+      "side": 1,
+      "message": "see my comments above",
+      "parentUuid": "8adb09db_9f5f5185",
       "revId": "ebd7160ac66a8daa096f8a01092ea4f3d2bd2e59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
