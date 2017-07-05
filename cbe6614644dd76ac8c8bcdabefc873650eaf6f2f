@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87834d7a_d23910b1",
+        "filename": "content/browser/devtools/devtools_http_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-07-05T23:27:28Z",
+      "side": 1,
+      "message": "100MB. Mb stands for megabit.",
+      "revId": "cbe6614644dd76ac8c8bcdabefc873650eaf6f2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
