@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d44b348_1a81ba5c",
+        "filename": "third_party/WebKit/Source/modules/encryptedmedia/MediaKeys.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-05T15:12:35Z",
+      "side": 1,
+      "message": "nit: `\u003d default;`",
+      "revId": "3f24fd81fa63eac3988fae10debd191ab13ab6a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85653121_37d0a1bb",
+        "filename": "third_party/WebKit/Source/modules/encryptedmedia/MediaKeys.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-05T15:12:35Z",
+      "side": 1,
+      "message": "This is handled in the next CL but minHDCPVersion() could be the empty string in which case, we could reject with a TypeError. Though, I think in general, we should use an enum as random strings are not the right approach. No need to delay this CL as we can modify it later.",
+      "revId": "3f24fd81fa63eac3988fae10debd191ab13ab6a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
