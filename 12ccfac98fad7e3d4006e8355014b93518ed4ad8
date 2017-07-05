@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "90a5a9ac_a23549b5",
+        "filename": "ui/compositor/clip_recorder.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-05T20:11:01Z",
+      "side": 1,
+      "message": "Why do you say that the RAII object seems easier now? That is, why was it more difficult before?\n\nFWIW, StartPaint with this patch only marks a bool stating that we\u0027re in painting, so technically it\u0027s not exactly required. We could rename End calls to something like FlushVisualRect or something along those lines. Those are are also optional for cases where we\u0027re going to release the POB from it.",
+      "parentUuid": "484a294c_8a865926",
+      "revId": "12ccfac98fad7e3d4006e8355014b93518ed4ad8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3761526a_0fcada1e",
         "filename": "ui/compositor/paint_cache.cc",
         "patchSetId": 12
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-05T18:58:32Z",
       "side": 1,
       "message": "unpaired\n\nThis feels like an explanation due to using the wrong API? Maybe the PaintRecorder could have the DIL instead? It\u0027s still a bunch of more constructors being called on these things tho there too?",
+      "revId": "12ccfac98fad7e3d4006e8355014b93518ed4ad8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3008c59_9e8496ea",
+        "filename": "ui/compositor/paint_cache.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-05T20:11:01Z",
+      "side": 1,
+      "message": "\u003e unpaired\n\nDone.\n\n\u003e \n\u003e This feels like an explanation due to using the wrong API? Maybe the PaintRecorder could have the DIL instead? It\u0027s still a bunch of more constructors being called on these things tho there too?\n\nIn this class, we could technically just not call StartPaint and EndPaint at all and things would work just fine. I\u0027ve added them here since that\u0027s the pattern of calls that we always have. If we change this to eliminate start and rename Ends to something like Flushes, then I could just remove them here since then the API doesn\u0027t require them (ie they aren\u0027t called start/end paint).",
+      "parentUuid": "3761526a_0fcada1e",
       "revId": "12ccfac98fad7e3d4006e8355014b93518ed4ad8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "12ccfac98fad7e3d4006e8355014b93518ed4ad8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c423cd2_7562006a",
+        "filename": "ui/compositor/paint_cache.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-05T20:11:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e12b3b2_2479f449",
+      "revId": "12ccfac98fad7e3d4006e8355014b93518ed4ad8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
