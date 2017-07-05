@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58432c10_046c832a",
+        "filename": "content/browser/media/android/media_resource_getter_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-07-05T20:30:42Z",
+      "side": 1,
+      "message": "This and related methods are all unused now so can be removed.",
+      "revId": "ebd7160ac66a8daa096f8a01092ea4f3d2bd2e59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8667fef_2cf9a667",
+        "filename": "content/browser/media/android/media_resource_getter_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-07-05T20:30:42Z",
+      "side": 1,
+      "message": "This says it must only be called on the \"network task runner\"; is this a problem?",
+      "revId": "ebd7160ac66a8daa096f8a01092ea4f3d2bd2e59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7bccd17_ee8830de",
+        "filename": "content/browser/media/android/media_resource_getter_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-07-05T20:30:42Z",
+      "side": 1,
+      "message": "This says it must only be called on the \"network task runner\"; is this a problem?",
+      "revId": "ebd7160ac66a8daa096f8a01092ea4f3d2bd2e59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0487a69_53394222",
+        "filename": "content/browser/media/android/media_resource_getter_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-07-05T20:30:42Z",
+      "side": 1,
+      "message": "Comments say this must be invoked on the \"network thread.\"",
+      "revId": "ebd7160ac66a8daa096f8a01092ea4f3d2bd2e59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d02c6c9c_4ea75d14",
+        "filename": "content/browser/media/android/media_resource_getter_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-07-05T20:30:42Z",
+      "side": 1,
+      "message": "This method is documented as only being allowed on the IO thread. Is that a problem?",
+      "revId": "ebd7160ac66a8daa096f8a01092ea4f3d2bd2e59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72b58914_b7813793",
+        "filename": "content/browser/media/android/media_resource_getter_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-07-05T20:30:42Z",
+      "side": 1,
+      "message": "Ditto; network thread only.",
+      "revId": "ebd7160ac66a8daa096f8a01092ea4f3d2bd2e59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8adb09db_9f5f5185",
+        "filename": "content/browser/media/android/media_resource_getter_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-07-05T20:30:42Z",
+      "side": 1,
+      "message": "Can be removed.",
+      "revId": "ebd7160ac66a8daa096f8a01092ea4f3d2bd2e59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
