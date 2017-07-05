@@ -30,7 +30,7 @@ class MediaEngagementContentsObserverTest
     playback_timer_ = new base::MockTimer(true, false);
     contents_observer_->SetTimerForTest(base::WrapUnique(playback_timer_));
 
-    ASSERT_FALSE(GetStoredPlayerStatesCount());
+    SimulateInaudible();
   }
 
   bool IsTimerRunning() const { return playback_timer_->IsRunning(); }
@@ -101,6 +101,10 @@ class MediaEngagementContentsObserverTest
 
   void SimulatePlaybackTimerFired() { playback_timer_->Fire(); }
 
+  void SimulateAudible() { web_contents()->OnAudioStateChanged(true); }
+
+  void SimulateInaudible() { web_contents()->OnAudioStateChanged(false); }
+
  private:
   // contents_observer_ auto-destroys when WebContents is destroyed.
   MediaEngagementContentsObserver* contents_observer_;
@@ -153,8 +157,8 @@ TEST_F(MediaEngagementContentsObserverTest, AreConditionsMet) {
 
   web_contents()->SetAudioMuted(true);
   EXPECT_FALSE(AreConditionsMet());
-
   web_contents()->SetAudioMuted(false);
+
   SimulateIsHidden();
   EXPECT_FALSE(AreConditionsMet());
 
@@ -233,6 +237,7 @@ TEST_F(MediaEngagementContentsObserverTest,
        SignificantPlaybackRecordedWhenTimerFires) {
   SimulatePlaybackStarted(0);
   SimulateIsVisible();
+  SimulateAudible();
   web_contents()->SetAudioMuted(false);
   SimulateResizeEvent(0, MediaEngagementContentsObserver::kSignificantSize);
   EXPECT_TRUE(IsTimerRunning());
@@ -240,6 +245,19 @@ TEST_F(MediaEngagementContentsObserverTest,
 
   SimulatePlaybackTimerFired();
   EXPECT_TRUE(WasSignificantPlaybackRecorded());
+}
+
+TEST_F(MediaEngagementContentsObserverTest,
+       SignificantPlaybackNotRecordedIfAudioSilent) {
+  SimulatePlaybackStarted(0);
+  SimulateIsVisible();
+  SimulateInaudible();
+  web_contents()->SetAudioMuted(false);
+  EXPECT_TRUE(IsTimerRunning());
+  EXPECT_FALSE(WasSignificantPlaybackRecorded());
+
+  SimulatePlaybackTimerFired();
+  EXPECT_FALSE(WasSignificantPlaybackRecorded());
 }
 
 TEST_F(MediaEngagementContentsObserverTest, DoNotRecordAudiolessTrack) {
