@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9e2c854c_955fec80",
+        "filename": "build/config/ios/rules.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 1636,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-07-05T21:06:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85fedbca_663d5809",
+      "range": {
+        "startLine": 1636,
+        "startChar": 40,
+        "endLine": 1636,
+        "endChar": 61
+      },
+      "revId": "1cb7b4c1d80b2f6d974a3eba5f22dda6a48beb90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6cec5001_b533aa36",
         "filename": "build/config/ios/rules.gni",
         "patchSetId": 4
@@ -36,6 +60,24 @@
       "writtenOn": "2017-07-04T16:19:23Z",
       "side": 1,
       "message": "I don\u0027t understand this. The template \"create_signed_bundle\" will create both _CodeSignature and PkgInfo in the generated bundle, so those files will be overwritten. In fact, I would expect this to cause an error.",
+      "revId": "1cb7b4c1d80b2f6d974a3eba5f22dda6a48beb90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b845de7_a30990c1",
+        "filename": "build/config/ios/rules.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 1729,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-07-05T21:06:29Z",
+      "side": 1,
+      "message": "Yes, the _CodeSignature will be overwritten, and this didn\u0027t cause an error because we always call \"codesign\" with \"--force\" option, which always overwrite existing code signature. Thanks for catching this! I think I\u0027ll stop copying _CodeSignature.\n\nAs regarding PkgInfo, I don\u0027t think create_signed_bundle will create it in the generated bundle. I copied it because it\u0027s also copied by XCUITest target created using Xcode. I\u0027m not sure how critical is PkgInfo, it seems that the tests run with or without the PkgInfo, could you please provide some guidance on how this should be best handled?",
+      "parentUuid": "6cec5001_b533aa36",
       "revId": "1cb7b4c1d80b2f6d974a3eba5f22dda6a48beb90",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -56,6 +98,24 @@
       "revId": "1cb7b4c1d80b2f6d974a3eba5f22dda6a48beb90",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af81cf75_88eeb1d2",
+        "filename": "build/config/ios/rules.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 1743,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-07-05T21:06:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a06c04ac_fea4a6b9",
+      "revId": "1cb7b4c1d80b2f6d974a3eba5f22dda6a48beb90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
