@@ -7,12 +7,15 @@ package org.chromium.chrome.browser.suggestions;
 import android.support.v7.widget.RecyclerView;
 
 import org.chromium.base.Callback;
+import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.browser.ntp.NewTabPage;
 import org.chromium.chrome.browser.ntp.snippets.CategoryInt;
 import org.chromium.chrome.browser.ntp.snippets.SnippetArticle;
 import org.chromium.chrome.browser.preferences.ChromePreferenceManager;
 import org.chromium.chrome.browser.tab.Tab;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * Exposes methods to report suggestions related events, for UMA or Fetch scheduling purposes.
@@ -82,6 +85,17 @@ public abstract class SuggestionsMetrics {
                 SuggestionsEventReporterBridge.onSuggestionTargetVisited(category, visit.duration);
             }
         });
+    }
+
+    /**
+     * Measures the amount of time it takes for date formatting in order to track StrictMode
+     * violations.
+     * See https://crbug.com/639877
+     * @param duration Duration of date formatting.
+     */
+    static void recordDateFormattingDuration(long duration) {
+        RecordHistogram.recordTimesHistogram(
+                "Android.StrictMode.SnippetUIBuildTime", duration, TimeUnit.MILLISECONDS);
     }
 
     /**
