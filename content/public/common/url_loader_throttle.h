@@ -6,6 +6,7 @@
 #define CONTENT_PUBLIC_COMMON_URL_LOADER_THROTTLE_H_
 
 #include "content/common/content_export.h"
+#include "content/public/common/resource_response.h"
 #include "content/public/common/resource_type.h"
 
 class GURL;
@@ -52,7 +53,7 @@ class CONTENT_EXPORT URLLoaderThrottle {
                                    bool* defer) {}
 
   // Called when the response headers and meta data are available.
-  virtual void WillProcessResponse(bool* defer) {}
+  virtual void WillProcessResponse(const ResourceResponseHead&, bool* defer) {}
 
   void set_delegate(Delegate* delegate) { delegate_ = delegate; }
 

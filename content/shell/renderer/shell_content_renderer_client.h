@@ -10,7 +10,9 @@
 #include "base/compiler_specific.h"
 #include "build/build_config.h"
 #include "content/public/renderer/content_renderer_client.h"
+#include "content/renderer/net/cors_url_loader_throttle.h"
 #include "media/mojo/features.h"
+#include "third_party/WebKit/public/web/WebLocalFrame.h"
 
 namespace web_cache {
 class WebCacheImpl;
@@ -26,6 +28,12 @@ class ShellContentRendererClient : public ContentRendererClient {
   // ContentRendererClient implementation.
   void RenderThreadStarted() override;
   void RenderViewCreated(RenderView* render_view) override;
+  bool WillSendRequest(
+      blink::WebLocalFrame* frame,
+      ui::PageTransition transition_type,
+      const blink::WebURL& url,
+      std::vector<std::unique_ptr<content::URLLoaderThrottle>>* throttles,
+      GURL* new_url) override;
 
   // TODO(mkwst): These toggle based on the kEnablePepperTesting flag. Do we
   // need that outside of layout tests?
