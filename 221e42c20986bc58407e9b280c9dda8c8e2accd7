@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "82c5824a_bdfa8e5d",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-07-05T18:02:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0f6d65a_99fb38e8",
+      "revId": "221e42c20986bc58407e9b280c9dda8c8e2accd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2799675e_ee8803ee",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
         "patchSetId": 3
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "d271e366_950ae4e2",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-07-05T18:02:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2799675e_ee8803ee",
+      "range": {
+        "startLine": 268,
+        "startChar": 10,
+        "endLine": 268,
+        "endChar": 33
+      },
+      "revId": "221e42c20986bc58407e9b280c9dda8c8e2accd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84d7d076_45842e2d",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
         "patchSetId": 3
@@ -53,6 +95,30 @@
       "writtenOn": "2017-07-05T02:31:20Z",
       "side": 1,
       "message": "Or make |worker_capacity_| size_t? (it\u0027s clearly not meant to ever be negative)",
+      "range": {
+        "startLine": 591,
+        "startChar": 10,
+        "endLine": 591,
+        "endChar": 26
+      },
+      "revId": "221e42c20986bc58407e9b280c9dda8c8e2accd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2f9b12f_93d78578",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-07-05T18:02:57Z",
+      "side": 1,
+      "message": "I wanted to avoid it because |worker_capacity_| is now returned in \n\nint SchedulerWorkerPoolImpl::GetMaxConcurrentTasksDeprecated()\n\n(though, originally it was just returning the size of |workers_|, which is size_t, so me returning another size_t and letting it implicitly convert wouldn\u0027t make things worse. I don\u0027t know why the compiler doesn\u0027t complain about this implicit conversion).\n\nI see in the style guide, it says size_t can be used \"when appropriate\", but unsigned types should be avoided. Why and when is size_t okay? (size_t is also unsigned)?",
+      "parentUuid": "84d7d076_45842e2d",
       "range": {
         "startLine": 591,
         "startChar": 10,
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "bf0b0041_9bb61501",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-07-05T18:02:57Z",
+      "side": 1,
+      "message": "Do I need to also say something along the lines that |workers_| must be in a valid state (or something like that?) (I\u0027m not sure what the right way to word this is, but valid isn\u0027t quite the right word;if a temp version of the workers vector was in |workers_| (e.g. due to a move), then the vector itself might be valid, but the vector might be overwritten later).",
+      "parentUuid": "a599762b_18a42d55",
+      "revId": "221e42c20986bc58407e9b280c9dda8c8e2accd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6f3f873b_3bcc7f74",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
         "patchSetId": 3
@@ -93,6 +177,30 @@
       "writtenOn": "2017-07-05T02:31:20Z",
       "side": 1,
       "message": "This sentence doesn\u0027t flow right grammatically? Not sure how to interpret?",
+      "range": {
+        "startLine": 641,
+        "startChar": 47,
+        "endLine": 642,
+        "endChar": 26
+      },
+      "revId": "221e42c20986bc58407e9b280c9dda8c8e2accd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8be6b43_34b230f7",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-07-05T18:02:57Z",
+      "side": 1,
+      "message": "Sorry, not sure what happened there. What I have there makes no sense.\n\nI wanted to say this:\n\n  // SchedulerWorker needs |workers_lock_| as a predecessor for its thread lock\n  // because in WakeUpOneWorker, |workers_lock_| is first acquired and then\n  // the thread lock is acquired when WakeUp is called on the worker.\n\n(i.e. WakeUpOneWorker acquires |workers_lock_| then calls WakeUp on a worker. WakeUp acquires the worker\u0027s thread lock. Since |workers_lock_| is already acquired, the thread lock needs |workers_lock_| as a predecessor).",
+      "parentUuid": "6f3f873b_3bcc7f74",
       "range": {
         "startLine": 641,
         "startChar": 47,
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "9d38b6b9_b7dcc037",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-07-05T18:02:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20504823_2f91cfe5",
+      "range": {
+        "startLine": 138,
+        "startChar": 33,
+        "endLine": 138,
+        "endChar": 50
+      },
+      "revId": "221e42c20986bc58407e9b280c9dda8c8e2accd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb32a276_145d8533",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
         "patchSetId": 3
@@ -142,6 +274,24 @@
       "revId": "221e42c20986bc58407e9b280c9dda8c8e2accd7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0a4f9c3_a338947c",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-07-05T18:02:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb32a276_145d8533",
+      "revId": "221e42c20986bc58407e9b280c9dda8c8e2accd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

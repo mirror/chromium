@@ -16,6 +16,24 @@
       "revId": "5dad4daade26497f0b725a6d5685ea1666e34c50",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a41ab995_454d6041",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-07-05T18:02:57Z",
+      "side": 0,
+      "message": "I\u0027ve put it in its own CL.\n\n(See: https://chromium-review.googlesource.com/c/559970/1)\n\nI\u0027ve made that CL dependent on the CL that added the |workers_lock_| even though the those two CLs are completely independent on each other since I\u0027m not sure I\u0027d make this CL depend on two different CLs. Is that fine?",
+      "parentUuid": "cf9ae27e_50be1cf6",
+      "revId": "5dad4daade26497f0b725a6d5685ea1666e34c50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
