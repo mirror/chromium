@@ -409,10 +409,33 @@ NetworkLog.PageLoad = class {
     /** @type {number} */
     this.contentLoadTime;
     this.mainRequest = mainRequest;
+
+    this._showDataSaverWarningIfNeeded();
+  }
+
+  async _showDataSaverWarningIfNeeded() {
+    var manager = SDK.NetworkManager.forRequest(this.mainRequest);
+    if (!manager)
+      return;
+    if (!this.mainRequest.finished)
+      await this.mainRequest.once(SDK.NetworkRequest.Events.FinishedLoading);
+    var viaHeader = this.mainRequest.responseHeaderValue('via');
+    if (!NetworkLog.PageLoad._dataSaverMessageWasShown && viaHeader &&
+        viaHeader.indexOf('Chrome-Compression-Proxy') !== -1) {
+      var message = Common.UIString(
+          'Consider disabling %s while debugging. For more info see: %s', Common.UIString('Chrome Data Saver'),
+          'https://support.google.com/chrome/answer/2392284?hl=en');
+      manager.dispatchEventToListeners(
+          SDK.NetworkManager.Events.MessageGenerated,
+          {message: message, requestId: this.mainRequest.requestId(), warning: true});
+      NetworkLog.PageLoad._dataSaverMessageWasShown = true;
+    }
   }
 };
 
 NetworkLog.PageLoad._lastIdentifier = 0;
+
+NetworkLog.PageLoad._dataSaverMessageWasShown = false;
 
 /** @typedef {!{initiators: !Set<!SDK.NetworkRequest>, initiated: !Set<!SDK.NetworkRequest>}} */
 NetworkLog.NetworkLog.InitiatorGraph;

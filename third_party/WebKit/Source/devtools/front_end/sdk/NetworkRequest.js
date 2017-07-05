@@ -80,7 +80,14 @@ SDK.NetworkRequest = class extends Common.Object {
     /** @type {!Array.<!SDK.NetworkRequest.EventSourceMessage>} */
     this._eventSourceMessages = [];
 
+    /** @type {!Object<string, (string|undefined)>} */
     this._responseHeaderValues = {};
+    this._responseHeadersText = '';
+
+    /** @type {!Array<!SDK.NetworkRequest.NameValue>} */
+    this._requestHeaders = [];
+    /** @type {!Object<string, (string|undefined)>} */
+    this._requestHeaderValues = {};
 
     this._remoteAddress = '';
 
@@ -604,7 +611,7 @@ SDK.NetworkRequest = class extends Common.Object {
    * @return {!Array.<!SDK.NetworkRequest.NameValue>}
    */
   requestHeaders() {
-    return this._requestHeaders || [];
+    return this._requestHeaders;
   }
 
   /**
@@ -638,7 +645,10 @@ SDK.NetworkRequest = class extends Common.Object {
    * @return {string|undefined}
    */
   requestHeaderValue(headerName) {
-    return this._headerValue(this.requestHeaders(), headerName);
+    if (headerName in this._requestHeaderValues)
+      return this._requestHeaderValues[headerName];
+    this._requestHeaderValues[headerName] = this._computeHeaderValue(this.requestHeaders(), headerName);
+    return this._requestHeaderValues[headerName];
   }
 
   /**
@@ -732,12 +742,10 @@ SDK.NetworkRequest = class extends Common.Object {
    * @return {string|undefined}
    */
   responseHeaderValue(headerName) {
-    var value = this._responseHeaderValues[headerName];
-    if (value === undefined) {
-      value = this._headerValue(this.responseHeaders, headerName);
-      this._responseHeaderValues[headerName] = (value !== undefined) ? value : null;
-    }
-    return (value !== null) ? value : undefined;
+    if (headerName in this._responseHeaderValues)
+      return this._responseHeaderValues[headerName];
+    this._responseHeaderValues[headerName] = this._computeHeaderValue(this.responseHeaders, headerName);
+    return this._responseHeaderValues[headerName];
   }
 
   /**
@@ -845,7 +853,7 @@ SDK.NetworkRequest = class extends Common.Object {
    * @param {string} headerName
    * @return {string|undefined}
    */
-  _headerValue(headers, headerName) {
+  _computeHeaderValue(headers, headerName) {
     headerName = headerName.toLowerCase();
 
     var values = [];
