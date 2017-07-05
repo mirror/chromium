@@ -39,6 +39,48 @@
       "revId": "96c9f6d25edcc54aa4089ee7238895181742b3c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c51b6973_96580264",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-07-05T11:31:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3239f6f4_78bf04b0",
+      "revId": "96c9f6d25edcc54aa4089ee7238895181742b3c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "882b8ed4_c134b2eb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-07-05T11:31:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22de92f2_5883fe28",
+      "range": {
+        "startLine": 86,
+        "startChar": 8,
+        "endLine": 86,
+        "endChar": 50
+      },
+      "revId": "96c9f6d25edcc54aa4089ee7238895181742b3c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
