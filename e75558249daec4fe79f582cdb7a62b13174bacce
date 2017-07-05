@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7fa06de_741619c8",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-05T16:17:37Z",
+      "side": 1,
+      "message": "This will be forgotten next time UpdateWebkitPreferences is called. You probably want to plug into ChromeContentBrowserClient::OverrideWebkitPrefs",
+      "revId": "e75558249daec4fe79f582cdb7a62b13174bacce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a286f590_34730ad8",
+        "filename": "chrome/browser/media/media_engagement_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-05T16:17:37Z",
+      "side": 1,
+      "message": "nit: \u003e\u003d ?",
+      "revId": "e75558249daec4fe79f582cdb7a62b13174bacce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81b5b691_00d399b7",
+        "filename": "media/base/media_switches.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-05T16:17:37Z",
+      "side": 1,
+      "message": "Actually, it should be CamelCase (feel free to update \"media-engagement\" while you are at it.",
+      "revId": "e75558249daec4fe79f582cdb7a62b13174bacce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
