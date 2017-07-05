@@ -22,6 +22,30 @@
       "revId": "ebfb7cf21ec92306a39f6a8f721c578d1097dd04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7432efff_a5bbb55a",
+        "filename": "services/resource_coordinator/tracing/agent_registry.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-07-05T15:15:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3f3e933_24c7dbb9",
+      "range": {
+        "startLine": 37,
+        "startChar": 4,
+        "endLine": 38,
+        "endChar": 0
+      },
+      "revId": "ebfb7cf21ec92306a39f6a8f721c578d1097dd04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
