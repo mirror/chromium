@@ -16,6 +16,24 @@
       "revId": "bde63f8aad80824278e107b59be62f5e24134c42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d909a41_dbd7019a",
+        "filename": "chrome/browser/chrome_service_worker_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 729,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-05T08:46:14Z",
+      "side": 1,
+      "message": "Ahhhh maybe.\n\nI\u0027m just going to delete this test from this CL anyway.",
+      "parentUuid": "f540c545_828d2bdc",
+      "revId": "bde63f8aad80824278e107b59be62f5e24134c42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
