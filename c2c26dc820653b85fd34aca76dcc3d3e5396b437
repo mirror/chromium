@@ -1,0 +1,255 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "595aba5b_5f45e980",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-07-05T21:08:37Z",
+      "side": 1,
+      "message": "How can we determine what pixel format is needed here? The accelerated hardware on my Windows box seems to only want I420, but this might be different elsewhere.",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 75
+      },
+      "revId": "c2c26dc820653b85fd34aca76dcc3d3e5396b437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c31fa59d_04245d00",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-07-05T21:08:37Z",
+      "side": 1,
+      "message": "See this todo.",
+      "revId": "c2c26dc820653b85fd34aca76dcc3d3e5396b437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d26bace9_1a49fb90",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-07-05T21:08:37Z",
+      "side": 1,
+      "message": "Will we be notified of resolution changes, or will frames just start coming in with different resolutions?",
+      "revId": "c2c26dc820653b85fd34aca76dcc3d3e5396b437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b83908b_8a22dc5b",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-07-05T21:08:37Z",
+      "side": 1,
+      "message": "Currently, the encoder will be initialized only after the first Encode() request, and all requests made to the encoder before it is initialized are simply dropped. This is \"simple\" as it doesn\u0027t require any additional initialization - the encoder can be constructed and Encode() can be called immediately, but the first calls to Encode() will be useless. Would there be some other way to do this that would be considered better? I.e.:\n- an Initialize() call (like what I had previously) which must be called manually before Encode(), and calls to Encode() before initialization is complete are errors, In this case, the call to Initialize() would need to know information about the size of the DesktopFrame\n- a way to save calls to Encode() made while the encoder is initializing. This way the encoder can be called when it is initialized and the requests can be fulfilled.",
+      "revId": "c2c26dc820653b85fd34aca76dcc3d3e5396b437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b8171fa_5a36a108",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-07-05T21:08:37Z",
+      "side": 1,
+      "message": "GetSupportedProfiles will give us a list of output codec profiles (not input as the comment incorrectly states). How do we pick which profile to use? i.e. we might know we want to use h264, but do we want high or low quality?",
+      "revId": "c2c26dc820653b85fd34aca76dcc3d3e5396b437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc4c4188_e594e041",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-07-05T21:08:37Z",
+      "side": 1,
+      "message": "See this todo: how do we calculate an initial bitrate",
+      "revId": "c2c26dc820653b85fd34aca76dcc3d3e5396b437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3cfc204_fdf7f5d0",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-07-05T21:08:37Z",
+      "side": 1,
+      "message": "See how we\u0027re keeping track of timestamp - does this make sense?",
+      "revId": "c2c26dc820653b85fd34aca76dcc3d3e5396b437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bb8f106_9013fa05",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-07-05T21:08:37Z",
+      "side": 1,
+      "message": "what\u0027s the easiest way to do this? can it be done in the process of converting rgb to yuv?",
+      "range": {
+        "startLine": 109,
+        "startChar": 0,
+        "endLine": 109,
+        "endChar": 53
+      },
+      "revId": "c2c26dc820653b85fd34aca76dcc3d3e5396b437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "965a1bec_6dde6317",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-07-05T21:08:37Z",
+      "side": 1,
+      "message": "See todos.",
+      "revId": "c2c26dc820653b85fd34aca76dcc3d3e5396b437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ebd0465_c237e77d",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-07-05T21:08:37Z",
+      "side": 1,
+      "message": "this will potentially be rewritten or removed entirely based on where initialization ends up being done.",
+      "range": {
+        "startLine": 229,
+        "startChar": 0,
+        "endLine": 250,
+        "endChar": 1
+      },
+      "revId": "c2c26dc820653b85fd34aca76dcc3d3e5396b437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28a68498_a3c027d3",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-07-05T21:08:37Z",
+      "side": 1,
+      "message": "See this todo.",
+      "revId": "c2c26dc820653b85fd34aca76dcc3d3e5396b437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7645f6d_18848f4c",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-07-05T21:08:37Z",
+      "side": 1,
+      "message": "delete",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 49
+      },
+      "revId": "c2c26dc820653b85fd34aca76dcc3d3e5396b437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10f55dd8_ef68d661",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-07-05T21:08:37Z",
+      "side": 1,
+      "message": "delete",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 79,
+        "endChar": 66
+      },
+      "revId": "c2c26dc820653b85fd34aca76dcc3d3e5396b437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
