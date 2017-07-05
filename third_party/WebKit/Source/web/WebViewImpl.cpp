@@ -3819,13 +3819,20 @@ void WebViewImpl::RegisterViewportLayersWithCompositor() {
   // the mehtod.
   visual_viewport.SetScrollLayerOnScrollbars(layout_viewport_scroll_web_layer);
 
-  layer_tree_view_->RegisterViewportLayers(
-      visual_viewport.OverscrollElasticityLayer()->PlatformLayer(),
-      visual_viewport.PageScaleLayer()->PlatformLayer(),
-      visual_viewport.ContainerLayer()->PlatformLayer(),
-      layout_viewport_container_web_layer,
-      visual_viewport.ScrollLayer()->PlatformLayer(),
-      layout_viewport_scroll_web_layer);
+  WebLayerTreeView::ViewportWebLayers viewport_web_layers;
+  viewport_web_layers.overscroll_elasticity =
+      visual_viewport.OverscrollElasticityLayer()->PlatformLayer();
+  viewport_web_layers.page_scale =
+      visual_viewport.PageScaleLayer()->PlatformLayer();
+  viewport_web_layers.inner_viewport_container =
+      visual_viewport.ContainerLayer()->PlatformLayer();
+  viewport_web_layers.outer_viewport_container =
+      layout_viewport_container_web_layer;
+  viewport_web_layers.inner_viewport_scroll =
+      visual_viewport.ScrollLayer()->PlatformLayer();
+  viewport_web_layers.outer_viewport_scroll = layout_viewport_scroll_web_layer;
+
+  layer_tree_view_->RegisterViewportLayers(viewport_web_layers);
 }
 
 void WebViewImpl::SetRootGraphicsLayer(GraphicsLayer* graphics_layer) {

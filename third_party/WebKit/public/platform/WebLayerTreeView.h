@@ -139,14 +139,20 @@ class WebLayerTreeView {
   // Prevents updates to layer tree from becoming visible.
   virtual void SetDeferCommits(bool defer_commits) {}
 
+  struct ViewportWebLayers {
+    ViewportWebLayers() {}
+    ~ViewportWebLayers() {}
+    const WebLayer* overscroll_elasticity;
+    const WebLayer* page_scale;
+    const WebLayer* inner_viewport_container;
+    const WebLayer* outer_viewport_container;
+    const WebLayer* inner_viewport_scroll;
+    const WebLayer* outer_viewport_scroll;
+  };
+
   // Identify key viewport layers to the compositor.
   virtual void RegisterViewportLayers(
-      const WebLayer* overscroll_elasticity_layer,
-      const WebLayer* page_scale_layer,
-      const WebLayer* inner_viewport_container_layer,
-      const WebLayer* outer_viewport_container_layer,
-      const WebLayer* inner_viewport_scroll_layer,
-      const WebLayer* outer_viewport_scroll_layer) {}
+      const ViewportWebLayers& viewport_web_layers) {}
   virtual void ClearViewportLayers() {}
 
   // Used to update the active selection bounds.
