@@ -1768,6 +1768,7 @@ if (is_android) {
         "//device/gamepad",
         "//device/generic_sensor",
         "//device/sensors",
+        "//ui/events/devices",
       ]
     }
   }
