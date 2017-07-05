@@ -1,0 +1,262 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "544d3f20_de8be192",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-07-05T08:29:30Z",
+      "side": 1,
+      "message": "This can be called on any thread but impl_ can be reset at any time on the main thread. Do we need a lock?",
+      "range": {
+        "startLine": 123,
+        "startChar": 7,
+        "endLine": 123,
+        "endChar": 12
+      },
+      "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03a75cb0_f77d1abd",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-07-05T08:29:30Z",
+      "side": 1,
+      "message": "I\u0027m not sure I understand why we can\u0027t register the observer directly on the TaskQueueImpl and avoid all the trampolines?",
+      "range": {
+        "startLine": 168,
+        "startChar": 6,
+        "endLine": 168,
+        "endChar": 14
+      },
+      "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2262ee7_481e6234",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-07-05T08:29:30Z",
+      "side": 1,
+      "message": "Is this used?",
+      "range": {
+        "startLine": 8,
+        "startChar": 15,
+        "endLine": 8,
+        "endChar": 30
+      },
+      "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a44c688_4d79be80",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-07-05T08:29:30Z",
+      "side": 1,
+      "message": "explicit",
+      "range": {
+        "startLine": 83,
+        "startChar": 4,
+        "endLine": 83,
+        "endChar": 8
+      },
+      "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3170510_28e5b7fd",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-07-05T08:29:30Z",
+      "side": 1,
+      "message": "Since name is required by the constructor do we need this?",
+      "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6bb94f5_a4e71de6",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-07-05T08:29:30Z",
+      "side": 1,
+      "message": "Could most of these be private instead? Which fields are needed by subclasses?",
+      "range": {
+        "startLine": 228,
+        "startChar": 1,
+        "endLine": 228,
+        "endChar": 10
+      },
+      "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d529918_5f3cf978",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-07-05T08:29:30Z",
+      "side": 1,
+      "message": "Can we avoid a cyclic dependency between these two classes?",
+      "range": {
+        "startLine": 229,
+        "startChar": 8,
+        "endLine": 229,
+        "endChar": 9
+      },
+      "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1197404_5b13299e",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-07-05T08:29:30Z",
+      "side": 1,
+      "message": "Did you mean to get rid of the tracing? This check is now useless.",
+      "range": {
+        "startLine": 442,
+        "startChar": 4,
+        "endLine": 442,
+        "endChar": 5
+      },
+      "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33cff896_722f7e1f",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-07-05T08:29:30Z",
+      "side": 1,
+      "message": "base::Callback already has optionality built-in (is_null()) so no need to wrap in an optional.",
+      "range": {
+        "startLine": 172,
+        "startChar": 12,
+        "endLine": 172,
+        "endChar": 20
+      },
+      "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cb33e6f_e75ce517",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-07-05T08:29:30Z",
+      "side": 1,
+      "message": "Ditto about callbacks already being optional.",
+      "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "915115ab_12b02130",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-07-05T08:29:30Z",
+      "side": 1,
+      "message": "Can we avoid introducing this much test support logic here? Could we use a voter instead?",
+      "range": {
+        "startLine": 326,
+        "startChar": 9,
+        "endLine": 326,
+        "endChar": 28
+      },
+      "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7313b6b_916c280f",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-07-05T08:29:30Z",
+      "side": 1,
+      "message": "How about we do something like this instead:\n\ntemplate \u003ctypename T, typename... Args\u003e\nT* MakeTaskQueue(const TaskQueue::Spec\u0026 spec, Args\u0026\u0026... args) {\n  return new T(CreateTaskQueueImpl(spec) /* private method */, std::forward\u003cArgs\u003e(args)...);\n}\n\nThat way the caller doesn\u0027t have to deal with internal::TaskQueueImpl at all.",
+      "revId": "fb8078df8ba6c3a02a546ccedcca779da1f9d25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
