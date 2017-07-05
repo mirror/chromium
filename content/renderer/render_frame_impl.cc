@@ -983,6 +983,7 @@ RenderFrameImpl* RenderFrameImpl::CreateMainFrame(
     bool hidden,
     const ScreenInfo& screen_info,
     CompositorDependencies* compositor_deps,
+    bool wait_for_all_pipeline_stages_before_draw,
     blink::WebFrame* opener,
     const FrameReplicationState& replicated_state) {
   // A main frame RenderFrame must have a RenderWidget.
@@ -1000,7 +1001,8 @@ RenderFrameImpl* RenderFrameImpl::CreateMainFrame(
       WebString::FromUTF8(replicated_state.name),
       replicated_state.sandbox_flags);
   render_frame->render_widget_ = RenderWidget::CreateForFrame(
-      widget_routing_id, hidden, screen_info, compositor_deps, web_frame);
+      widget_routing_id, hidden, screen_info, compositor_deps,
+      wait_for_all_pipeline_stages_before_draw, web_frame);
   // TODO(avi): This DCHECK is to track cleanup for https://crbug.com/545684
   DCHECK_EQ(render_view->GetWidget(), render_frame->render_widget_)
       << "Main frame is no longer reusing the RenderView as its widget! "
@@ -1082,7 +1084,8 @@ void RenderFrameImpl::CreateFrame(
           SiteIsolationPolicy::AreCrossProcessFramesPossible());
     render_frame->render_widget_ = RenderWidget::CreateForFrame(
         widget_params.routing_id, widget_params.hidden,
-        render_frame->render_view_->screen_info(), compositor_deps, web_frame);
+        render_frame->render_view_->screen_info(), compositor_deps,
+        widget_params.wait_for_all_pipeline_stages_before_draw, web_frame);
     // TODO(avi): The main frame re-uses the RenderViewImpl as its widget, so
     // avoid double-registering the frame as an observer.
     // https://crbug.com/545684
@@ -1442,7 +1445,8 @@ RenderWidgetFullscreenPepper* RenderFrameImpl::CreatePepperFullscreenContainer(
   RenderWidgetFullscreenPepper* widget = RenderWidgetFullscreenPepper::Create(
       fullscreen_widget_routing_id, show_callback,
       GetRenderWidget()->compositor_deps(), plugin, active_url,
-      GetRenderWidget()->screen_info());
+      GetRenderWidget()->screen_info(),
+      GetRenderWidget()->wait_for_all_pipeline_stages_before_draw());
   // TODO(nick): The show() handshake seems like unnecessary complexity here,
   // since there's no real delay between CreateFullscreenWidget and
   // ShowCreatedFullscreenWidget. Would it be simpler to have the

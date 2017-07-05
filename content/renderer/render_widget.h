@@ -136,17 +136,21 @@ class CONTENT_EXPORT RenderWidget
  public:
   // Creates a new RenderWidget for a popup. |opener| is the RenderView that
   // this widget lives inside.
-  static RenderWidget* CreateForPopup(RenderViewImpl* opener,
-                                      CompositorDependencies* compositor_deps,
-                                      blink::WebPopupType popup_type,
-                                      const ScreenInfo& screen_info);
+  static RenderWidget* CreateForPopup(
+      RenderViewImpl* opener,
+      CompositorDependencies* compositor_deps,
+      blink::WebPopupType popup_type,
+      const ScreenInfo& screen_info,
+      bool wait_for_all_pipeline_stages_before_draw);
 
   // Creates a new RenderWidget that will be attached to a RenderFrame.
-  static RenderWidget* CreateForFrame(int widget_routing_id,
-                                      bool hidden,
-                                      const ScreenInfo& screen_info,
-                                      CompositorDependencies* compositor_deps,
-                                      blink::WebLocalFrame* frame);
+  static RenderWidget* CreateForFrame(
+      int widget_routing_id,
+      bool hidden,
+      const ScreenInfo& screen_info,
+      CompositorDependencies* compositor_deps,
+      bool wait_for_all_pipeline_stages_before_draw,
+      blink::WebLocalFrame* frame);
 
   // Used by content_layouttest_support to hook into the creation of
   // RenderWidgets.
@@ -154,6 +158,7 @@ class CONTENT_EXPORT RenderWidget
                                                        CompositorDependencies*,
                                                        blink::WebPopupType,
                                                        const ScreenInfo&,
+                                                       bool,
                                                        bool,
                                                        bool,
                                                        bool);
@@ -427,6 +432,10 @@ class CONTENT_EXPORT RenderWidget
 
   scoped_refptr<MainThreadEventQueue> GetInputEventQueue();
 
+  bool wait_for_all_pipeline_stages_before_draw() const {
+    return wait_for_all_pipeline_stages_before_draw_;
+  }
+
  protected:
   // Friend RefCounted so that the dtor can be non-public. Using this class
   // without ref-counting is an error.
@@ -446,7 +455,8 @@ class CONTENT_EXPORT RenderWidget
                const ScreenInfo& screen_info,
                bool swapped_out,
                bool hidden,
-               bool never_visible);
+               bool never_visible,
+               bool wait_for_all_pipeline_stages_before_draw);
 
   ~RenderWidget() override;
 
@@ -701,6 +711,10 @@ class CONTENT_EXPORT RenderWidget
 
   // Indicates that we are never visible, so never produce graphical output.
   const bool compositor_never_visible_;
+
+  // Whether the compositor should wait for all pipeline stages before
+  // triggering a BeginFrame deadline.
+  const bool wait_for_all_pipeline_stages_before_draw_;
 
   // Indicates whether tab-initiated fullscreen was granted.
   bool is_fullscreen_granted_;

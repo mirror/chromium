@@ -70,14 +70,16 @@ class CONTENT_EXPORT RenderWidgetCompositor
       CompositorDependencies* compositor_deps,
       float device_scale_factor,
       bool is_for_subframe,
-      const ScreenInfo& screen_info);
+      const ScreenInfo& screen_info,
+      bool wait_for_all_pipeline_stages_before_draw);
   static std::unique_ptr<cc::LayerTreeHost> CreateLayerTreeHost(
       cc::LayerTreeHostClient* client,
       cc::LayerTreeHostSingleThreadClient* single_thread_client,
       cc::MutatorHost* mutator_host,
       CompositorDependencies* deps,
       float device_scale_factor,
-      const ScreenInfo& screen_info);
+      const ScreenInfo& screen_info,
+      bool wait_for_all_pipeline_stages_before_draw);
 
   void Initialize(std::unique_ptr<cc::LayerTreeHost> layer_tree_host,
                   std::unique_ptr<cc::AnimationHost> animation_host);

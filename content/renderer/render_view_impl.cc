@@ -528,7 +528,8 @@ RenderViewImpl::RenderViewImpl(CompositorDependencies* compositor_deps,
                    params.initial_size.screen_info,
                    params.swapped_out,
                    params.hidden,
-                   params.never_visible),
+                   params.never_visible,
+                   params.wait_for_all_pipeline_stages_before_draw),
       webkit_preferences_(params.web_preferences),
       send_content_state_immediately_(false),
       enabled_bindings_(0),
@@ -630,7 +631,8 @@ void RenderViewImpl::Initialize(
   if (params.main_frame_routing_id != MSG_ROUTING_NONE) {
     main_render_frame_ = RenderFrameImpl::CreateMainFrame(
         this, params.main_frame_routing_id, params.main_frame_widget_routing_id,
-        params.hidden, screen_info(), compositor_deps_, opener_frame,
+        params.hidden, screen_info(), compositor_deps_,
+        wait_for_all_pipeline_stages_before_draw(), opener_frame,
         params.replicated_frame_state);
   }
 
@@ -1451,8 +1453,9 @@ WebView* RenderViewImpl::CreateView(WebLocalFrame* creator,
 }
 
 WebWidget* RenderViewImpl::CreatePopupMenu(blink::WebPopupType popup_type) {
-  RenderWidget* widget = RenderWidget::CreateForPopup(this, compositor_deps_,
-                                                      popup_type, screen_info_);
+  RenderWidget* widget = RenderWidget::CreateForPopup(
+      this, compositor_deps_, popup_type, screen_info_,
+      wait_for_all_pipeline_stages_before_draw());
   if (!widget)
     return NULL;
   if (screen_metrics_emulator_) {

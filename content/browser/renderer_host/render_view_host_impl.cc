@@ -322,6 +322,8 @@ bool RenderViewHostImpl::CreateRenderView(
   params->min_size = GetWidget()->min_size_for_auto_resize();
   params->max_size = GetWidget()->max_size_for_auto_resize();
   params->page_zoom_level = delegate_->GetPendingPageZoomLevel();
+  params->wait_for_all_pipeline_stages_before_draw =
+      delegate_->ShouldWaitForAllPipelineStagesBeforeDraw();
 
   bool force_srgb_image_decode_color_space = false;
   // Pretend that HDR displays are sRGB so that we do not have inconsistent
