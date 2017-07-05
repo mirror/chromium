@@ -212,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "afa9bf91_d17586a3",
+        "filename": "components/search_provider_logos/logo_tracker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-05T14:30:07Z",
+      "side": 1,
+      "message": "Huh, my understanding is that it may block on stuff that *doesn\u0027t* use CPU, such as file I/O, sockets, etc. If it applied to \"just CPU\", then every TaskRunner would have it (or why even run it in the background), no?\nBut the documentation isn\u0027t very clear; it doesn\u0027t say what \"block\" means exactly.",
+      "parentUuid": "0bf1b6d1_543b8117",
+      "revId": "971b3f6e6359b6d2717e542c95fc5a7f0a4174a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ccb32b5_2e6407a8",
         "filename": "components/search_provider_logos/logo_tracker.h",
         "patchSetId": 4
