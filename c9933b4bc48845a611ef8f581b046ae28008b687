@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6f5409c_157bcbae",
+        "filename": "chrome/browser/chromeos/arc/downloads_watcher/arc_downloads_watcher_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-05T04:37:48Z",
+      "side": 1,
+      "message": "nit/style: could you elide brace for one-line-body-condition if-stmt, for consistency?",
+      "revId": "c9933b4bc48845a611ef8f581b046ae28008b687",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
