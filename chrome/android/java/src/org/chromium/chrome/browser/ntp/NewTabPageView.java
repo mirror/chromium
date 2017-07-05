@@ -113,18 +113,23 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
     private UiConfig mUiConfig;
     private Runnable mSnapScrollRunnable;
     private Runnable mUpdateSearchBoxOnScrollRunnable;
-    private boolean mFirstShow = true;
+
+    /**
+     * Whether the tiles shown in the layout have finished loading.
+     * With {@link #mHasShownView}, it's one of the 2 flags used to track initialisation progress.
+     */
+    private boolean mTilesLoaded;
+
+    /**
+     * Whether the view has been shown at least once.
+     * With {@link #mTilesLoaded}, it's one of the 2 flags used to track initialisation progress.
+     */
+    private boolean mHasShownView;
+
     private boolean mSearchProviderHasLogo = true;
     private boolean mPendingSnapScroll;
     private boolean mInitialized;
     private int mLastScrollY = -1;
-
-    /**
-     * The number of asynchronous tasks that need to complete before the page is done loading.
-     * This starts at one to track when the view is finished attaching to the window.
-     */
-    private int mPendingLoadTasks = 1;
-    private boolean mLoadHasCompleted;
 
     private float mUrlFocusChangePercent;
     private boolean mDisableUrlFocusChangeAnimations;
@@ -161,6 +166,12 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
          * displayed to the user.
          */
         boolean isCurrentPage();
+
+        /**
+         * Called when the NTP has completely finished loading (all views will be inflated
+         * and any dependent resources will have been loaded).
+         */
+        void onLoadingComplete();
     }
 
     /**
@@ -540,22 +551,30 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
     }
 
     /**
-     * Decrements the count of pending load tasks and notifies the manager when the page load
-     * is complete.
+     * Should be called every time of the the flags used to track initialisation progress changes.
+     * Finalises initialisation once all the preliminary steps are complete.
+     *
+     * @see #mHasShownView
+     * @see #mTilesLoaded
      */
-    private void loadTaskCompleted() {
-        assert mPendingLoadTasks > 0;
-        mPendingLoadTasks--;
-        if (mPendingLoadTasks == 0) {
-            if (mLoadHasCompleted) {
-                assert false;
-            } else {
-                mLoadHasCompleted = true;
-                mTileGroupDelegate.onLoadingComplete(mTileGroup.getTiles());
-                // Load the logo after everything else is finished, since it's lower priority.
-                loadSearchProviderLogo();
-            }
-        }
+    private void onInitializationProgressChanged() {
+        if (!hasLoadCompleted()) return;
+
+        mManager.onLoadingComplete();
+
+        // Load the logo after everything else is finished, since it's lower priority.
+        loadSearchProviderLogo();
+    }
+
+    /**
+     * To be called to notify that the tiles have finished loading. Will do nothing if a load was
+     * previously completed.
+     */
+    public void onTilesLoaded() {
+        if (mTilesLoaded) return;
+        mTilesLoaded = true;
+
+        onInitializationProgressChanged();
     }
 
     /**
@@ -743,9 +762,9 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
         super.onAttachedToWindow();
         assert mManager != null;
 
-        if (mFirstShow) {
-            loadTaskCompleted();
-            mFirstShow = false;
+        if (!mHasShownView) {
+            mHasShownView = true;
+            onInitializationProgressChanged();
             NewTabPageUma.recordSearchAvailableLoadTime(mActivity);
             TraceEvent.instant("NewTabPageSearchAvailable)");
         } else {
@@ -900,12 +919,16 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
         return mRecyclerView.getScrollPosition();
     }
 
+    private boolean hasLoadCompleted() {
+        return mHasShownView && mTilesLoaded;
+    }
+
     // TileGroup.Observer interface.
 
     @Override
     public void onTileDataChanged() {
         mTileGroup.renderTileViews(
-                mTileGridLayout, !mLoadHasCompleted, shouldUseCondensedTileLayout());
+                mTileGridLayout, !hasLoadCompleted(), shouldUseCondensedTileLayout());
         mSnapshotTileGridChanged = true;
 
         // The page contents are initially hidden; otherwise they'll be drawn centered on the page
@@ -934,16 +957,6 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
     public void onTileOfflineBadgeVisibilityChanged(Tile tile) {
         mTileGridLayout.updateOfflineBadge(tile);
         mSnapshotTileGridChanged = true;
-    }
-
-    @Override
-    public void onLoadTaskAdded() {
-        mPendingLoadTasks++;
-    }
-
-    @Override
-    public void onLoadTaskCompleted() {
-        loadTaskCompleted();
     }
 
     private class SnapScrollRunnable implements Runnable {
