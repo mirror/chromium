@@ -43,6 +43,7 @@ class GestureNavSimple : public OverscrollControllerDelegate {
   WebContentsImpl* web_contents_;
   std::unique_ptr<Affordance> affordance_;
   float completion_threshold_;
+  float max_delta_;
 
   DISALLOW_COPY_AND_ASSIGN(GestureNavSimple);
 };
