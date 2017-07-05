@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f8543b8_5caa736c",
+        "filename": "content/shell/browser/shell_network_delegate.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-05T20:23:51Z",
+      "side": 1,
+      "message": "I\u0027d suggest replacing this with:\n\nnet_log::LogUrlsToFile::LogRequest(request);\n\n(i.e., no null check, and having LogRequest take care of both that and grabbing the URL).  It shares more code across consumers, and it means that consumers don\u0027t have to know or care what LogUrlsToFile is doing behind the scene, making refactoring easier.\n\nI\u0027d also suggest always instantiating a LogUrlsToFile object, and just having it do nothing in the common case.  In terms of memory use, there\u0027s not much difference, but it does mean the code will be a bit more tested when not enabled, and we\u0027d have one less way to crash with a null dereference error.\n\nDespite all the text I\u0027m dedicating to this suggestion, I\u0027m fine with it as-is.",
+      "range": {
+        "startLine": 48,
+        "startChar": 40,
+        "endLine": 48,
+        "endChar": 41
+      },
+      "revId": "d7da1a9b69da38b89ad734cdae8d39fef069b0be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a31a14ed_08bee6a0",
+        "filename": "net/log/log_urls_to_file.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-05T20:23:51Z",
+      "side": 1,
+      "message": "I\u0027m not sure about putting this in net/ - it doesn\u0027t use any net/ classes, and net/ doesn\u0027t depend on it.  I\u0027d tend to think components/net_log/ wold be a better place.  That does have an unfortunate dependency on data_reduction_proxy, but since this is just for content/shell, I think that\u0027s fine?  eroman may have other thoughts on this.  Long term, this can be moved into the network service, but that\u0027s a ways off.  The net_log component is debatable, since it has nothing to do with net_log, but it doesn\u0027t really seem to fit in any other component, and doesn\u0027t seem worth adding a new one.\n\nAlso, if this is in net, it should be in the net namespace (not the net_log one, which is only for components/net_log), and since this isn\u0027t actually used by net_log itself, it would probably make more sense in net/url_request/.",
+      "range": {
+        "startLine": 15,
+        "startChar": 19,
+        "endLine": 15,
+        "endChar": 0
+      },
+      "revId": "d7da1a9b69da38b89ad734cdae8d39fef069b0be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c5e3b71_43f1d5b4",
+        "filename": "net/log/log_urls_to_file.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-05T20:23:51Z",
+      "side": 1,
+      "message": "nit:  const base::FilePath\u0026.\n\nActually, if this is in a component, I\u0027d suggest having the component having a switches.h or foo_switches.h, or somesuch, and having this code read the switch itself when instantiated.  Then this code is more self-contained, and there\u0027s no need to worry about it being instantiated on one thread and exclusively used on another after that.",
+      "range": {
+        "startLine": 29,
+        "startChar": 21,
+        "endLine": 29,
+        "endChar": 29
+      },
+      "revId": "d7da1a9b69da38b89ad734cdae8d39fef069b0be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "637ea404_dfe6eefc",
+        "filename": "net/log/log_urls_to_file.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-05T20:23:51Z",
+      "side": 1,
+      "message": "Since this isn\u0027t thread safe, should add a base::SequenceChecker, and use DCHECK(sequence_checker_.CalledOnValidSequence()); in LogURL.",
+      "range": {
+        "startLine": 38,
+        "startChar": 25,
+        "endLine": 38,
+        "endChar": 0
+      },
+      "revId": "d7da1a9b69da38b89ad734cdae8d39fef069b0be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
