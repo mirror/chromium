@@ -1,0 +1,147 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0f6d65a_99fb38e8",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-05T02:31:20Z",
+      "side": 1,
+      "message": "Make this the else block of the matching \u003c check on 268?",
+      "revId": "221e42c20986bc58407e9b280c9dda8c8e2accd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2799675e_ee8803ee",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-05T02:31:20Z",
+      "side": 1,
+      "message": "|index| is already an int, no need to cast",
+      "range": {
+        "startLine": 268,
+        "startChar": 10,
+        "endLine": 268,
+        "endChar": 33
+      },
+      "revId": "221e42c20986bc58407e9b280c9dda8c8e2accd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84d7d076_45842e2d",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-05T02:31:20Z",
+      "side": 1,
+      "message": "Or make |worker_capacity_| size_t? (it\u0027s clearly not meant to ever be negative)",
+      "range": {
+        "startLine": 591,
+        "startChar": 10,
+        "endLine": 591,
+        "endChar": 26
+      },
+      "revId": "221e42c20986bc58407e9b280c9dda8c8e2accd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a599762b_18a42d55",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-05T02:31:20Z",
+      "side": 1,
+      "message": "Document this requirement in method meta comment in header.",
+      "revId": "221e42c20986bc58407e9b280c9dda8c8e2accd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f3f873b_3bcc7f74",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-05T02:31:20Z",
+      "side": 1,
+      "message": "This sentence doesn\u0027t flow right grammatically? Not sure how to interpret?",
+      "range": {
+        "startLine": 641,
+        "startChar": 47,
+        "endLine": 642,
+        "endChar": 26
+      },
+      "revId": "221e42c20986bc58407e9b280c9dda8c8e2accd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20504823_2f91cfe5",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-05T02:31:20Z",
+      "side": 1,
+      "message": "AddNewWorker() seems sufficient (you can specify in comments that it\u0027ll also be started as you did but the method name doesn\u0027t need to specify the full state IMO).",
+      "range": {
+        "startLine": 138,
+        "startChar": 33,
+        "endLine": 138,
+        "endChar": 50
+      },
+      "revId": "221e42c20986bc58407e9b280c9dda8c8e2accd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb32a276_145d8533",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-05T02:31:20Z",
+      "side": 1,
+      "message": "Add a comment on StandByPolicy::LAZY about this (i.e. a TODO(jeffreyhe) as this effectively makes this policy moot already)",
+      "revId": "221e42c20986bc58407e9b280c9dda8c8e2accd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

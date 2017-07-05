@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf9ae27e_50be1cf6",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-05T02:31:20Z",
+      "side": 0,
+      "message": "I\u0027d prefer this as a standalone CL but at the very least this should be mentioned in the CL description (a matching google3 CL to fixup profiler dashboard hashes (no more *) will also be required, i.e. like https://critique.corp.google.com/#review/155769671).",
+      "revId": "5dad4daade26497f0b725a6d5685ea1666e34c50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
