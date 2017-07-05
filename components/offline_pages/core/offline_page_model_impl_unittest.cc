@@ -226,7 +226,8 @@ OfflinePageModelImplTest::OfflinePageModelImplTest()
       last_save_result_(SavePageResult::CANCELLED),
       last_save_offline_id_(-1),
       last_delete_result_(DeletePageResult::CANCELLED),
-      last_deleted_offline_id_(-1) {}
+      last_deleted_offline_id_(-1),
+      last_deleted_request_origin("") {}
 
 OfflinePageModelImplTest::~OfflinePageModelImplTest() {}
 
