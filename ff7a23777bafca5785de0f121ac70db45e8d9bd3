@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b7cba8c_0b958e28",
+        "filename": "chrome/browser/ui/views/login_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-05T11:55:50Z",
+      "side": 1,
+      "message": "This is weird - there was too much space between the title and content.",
+      "range": {
+        "startLine": 52,
+        "startChar": 13,
+        "endLine": 52,
+        "endChar": 29
+      },
+      "revId": "ff7a23777bafca5785de0f121ac70db45e8d9bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb950519_32affde4",
+        "filename": "chrome/browser/ui/views/login_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-05T11:55:50Z",
+      "side": 1,
+      "message": "And this is weird - it needs \"something extra\" for the space between the last textfield and the buttons",
+      "range": {
+        "startLine": 75,
+        "startChar": 34,
+        "endLine": 75,
+        "endChar": 74
+      },
+      "revId": "ff7a23777bafca5785de0f121ac70db45e8d9bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
