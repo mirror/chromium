@@ -15,9 +15,9 @@
 namespace ntp_snippets {
 namespace metrics {
 
-void OnPageShown(
-    const std::vector<std::pair<Category, int>>& suggestions_per_category,
-    int visible_categories_count);
+void OnPageShown(const std::vector<Category>& categories,
+                 const std::vector<int>& suggestions_per_category,
+                 const std::vector<bool>& is_category_visible);
 
 // Should only be called once per NTP for each suggestion.
 void OnSuggestionShown(int global_position,
