@@ -36,6 +36,8 @@ component("controller") {
     "BlinkInitializer.cpp",
     "BlinkInitializer.h",
     "ControllerExport.h",
+    "WebDevToolsAgentImpl.cpp",
+    "WebDevToolsAgentImpl.h",
   ]
 
   if (is_mac) {
