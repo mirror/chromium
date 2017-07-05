@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9ab4386_a880cca4",
+        "filename": "components/password_manager/core/browser/sql_table_builder_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-05T13:29:07Z",
+      "side": 1,
+      "message": "Is the preservation of order part of the API contract? I\u0027m not sure it should be: there is no need for that given that the database column order does not matter. If so, let\u0027s change ElementsAre to UnordereredElementsAre.\n\nAlso below (in fact, all occurrences of ElementsAre in this file, though for the 1-element ones it does not currently make a difference other than documenting the expectation properly).",
+      "range": {
+        "startLine": 317,
+        "startChar": 42,
+        "endLine": 317,
+        "endChar": 53
+      },
+      "revId": "41ea16f4c1d15d0fa5e0dca1face6ef882c83e74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
