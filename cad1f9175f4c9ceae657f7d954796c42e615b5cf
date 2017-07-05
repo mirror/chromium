@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a63c2709_101cba28",
+        "filename": "chrome/installer/zucchini/buffer_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-05T21:55:48Z",
+      "side": 1,
+      "message": "Redundant, since you ended up using DCHECK?",
+      "range": {
+        "startLine": 13,
+        "startChar": 24,
+        "endLine": 13,
+        "endChar": 36
+      },
+      "revId": "cad1f9175f4c9ceae657f7d954796c42e615b5cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9b16a21_1f90665f",
+        "filename": "chrome/installer/zucchini/buffer_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-05T21:55:48Z",
+      "side": 1,
+      "message": "\"as a\"?",
+      "range": {
+        "startLine": 19,
+        "startChar": 8,
+        "endLine": 19,
+        "endChar": 9
+      },
+      "revId": "cad1f9175f4c9ceae657f7d954796c42e615b5cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a95e5f24_3e1c32a9",
+        "filename": "chrome/installer/zucchini/buffer_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-05T21:55:48Z",
+      "side": 1,
+      "message": "Please measure the performance impact of this change.",
+      "range": {
+        "startLine": 63,
+        "startChar": 4,
+        "endLine": 63,
+        "endChar": 9
+      },
+      "revId": "cad1f9175f4c9ceae657f7d954796c42e615b5cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce9a6caa_6e84d25d",
+        "filename": "chrome/installer/zucchini/buffer_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-05T21:55:48Z",
+      "side": 1,
+      "message": "Better to merge the comments, e.g.:\n\n// Classes to encapsulate a contiguous sequence of raw data, without owning the encapsulated memory regions. These are intended to be used as value types.",
+      "range": {
+        "startLine": 86,
+        "startChar": 0,
+        "endLine": 86,
+        "endChar": 1
+      },
+      "revId": "cad1f9175f4c9ceae657f7d954796c42e615b5cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1880ef40_1121167d",
+        "filename": "chrome/installer/zucchini/buffer_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-05T21:55:48Z",
+      "side": 1,
+      "message": "Maybe rename to ConstBufferView?  Then the names are self-explanatory.",
+      "range": {
+        "startLine": 89,
+        "startChar": 6,
+        "endLine": 89,
+        "endChar": 16
+      },
+      "revId": "cad1f9175f4c9ceae657f7d954796c42e615b5cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac63c2ce_2ad5f270",
+        "filename": "chrome/installer/zucchini/disassembler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-05T21:55:48Z",
+      "side": 1,
+      "message": "Should return type be const ReferenceTypeTraits\u0026?",
+      "range": {
+        "startLine": 90,
+        "startChar": 2,
+        "endLine": 90,
+        "endChar": 21
+      },
+      "revId": "cad1f9175f4c9ceae657f7d954796c42e615b5cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b1e8930_afa84c78",
+        "filename": "chrome/installer/zucchini/typed_value.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-05T21:55:48Z",
+      "side": 1,
+      "message": "grt@ suggestion re. s/needs to be/must be/?",
+      "range": {
+        "startLine": 14,
+        "startChar": 41,
+        "endLine": 14,
+        "endChar": 46
+      },
+      "revId": "cad1f9175f4c9ceae657f7d954796c42e615b5cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47b90519_5c3eb1b6",
+        "filename": "chrome/installer/zucchini/typed_value.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-05T21:55:48Z",
+      "side": 1,
+      "message": "Use INT instead of T?",
+      "range": {
+        "startLine": 17,
+        "startChar": 4,
+        "endLine": 17,
+        "endChar": 5
+      },
+      "revId": "cad1f9175f4c9ceae657f7d954796c42e615b5cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38f31de9_30faa292",
+        "filename": "chrome/installer/zucchini/typed_value.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-05T21:55:48Z",
+      "side": 1,
+      "message": "I\u0027m surprised \u0027git cl lint\u0027 didn\u0027t pick this up?",
+      "range": {
+        "startLine": 28,
+        "startChar": 2,
+        "endLine": 28,
+        "endChar": 10
+      },
+      "revId": "cad1f9175f4c9ceae657f7d954796c42e615b5cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
