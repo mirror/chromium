@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9618da2c_6ac560f2",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8Initializer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-07-05T06:24:54Z",
+      "side": 1,
+      "message": "gunasekalan: Would you investigate this? \"context\" seems broken here that GetAlignedPointerFromEmbedderData returns invalid value.",
+      "range": {
+        "startLine": 330,
+        "startChar": 44,
+        "endLine": 330,
+        "endChar": 0
+      },
+      "revId": "ed884b13e7c142f6bbc6a8d8180499aa8d4bc13d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5edae5da_be824268",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptModuleResolverImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-07-05T06:24:54Z",
+      "side": 1,
+      "message": "I\u0027m not sure if we really need proper nonce impl.\nMy understanding of \"nonce\" is that it is checked by CSP if the script can run.\nHere, we copy the referrer\u0027s nonce value so that the dynamic imported module script is also allowed to run.\n\nThis means that the CSP check for the imported module script will never fail. Can we omit the code for inheriting nonce entirely and simply tell the CSP check to pass?",
+      "revId": "ed884b13e7c142f6bbc6a8d8180499aa8d4bc13d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91f8f1be_878c1a23",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptModuleResolverImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-07-05T06:24:54Z",
+      "side": 1,
+      "message": "\"parser state\" isn\u0027t used in the current spec, so I\u0027m thinking of omitting this too.\nAlso, I\u0027m not sure if the dynamic imported script from parser inserted script should be also marked as parser inserted.",
+      "revId": "ed884b13e7c142f6bbc6a8d8180499aa8d4bc13d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96b29c61_92491acc",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptModuleResolverImpl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-07-05T06:24:54Z",
+      "side": 1,
+      "message": "It turns out I didn\u0027t use record_to_module_script_map_ implementing this, so let me move this to Modulator.",
+      "revId": "ed884b13e7c142f6bbc6a8d8180499aa8d4bc13d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
