@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc292575_e49f9828",
+        "filename": "chrome/browser/android/logo_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-05T16:42:54Z",
+      "side": 1,
+      "message": "Maybe inline this method?",
+      "revId": "b6d81f28acc0d8b522acfd47ed6e380adbbc4708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85219469_3f8db6bb",
+        "filename": "components/search_provider_logos/google_logo_api.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-05T16:42:54Z",
+      "side": 1,
+      "message": "Nit: Other places in this file don\u0027t use braces.",
+      "range": {
+        "startLine": 36,
+        "startChar": 61,
+        "endLine": 36,
+        "endChar": 63
+      },
+      "revId": "b6d81f28acc0d8b522acfd47ed6e380adbbc4708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73615ea0_5b7945bb",
+        "filename": "components/search_provider_logos/google_logo_api.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-05T16:42:54Z",
+      "side": 1,
+      "message": "Nit: std::unique_ptr has a bool() overload, so the .get() isn\u0027t necessary.",
+      "range": {
+        "startLine": 249,
+        "startChar": 13,
+        "endLine": 249,
+        "endChar": 19
+      },
+      "revId": "b6d81f28acc0d8b522acfd47ed6e380adbbc4708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ddc8e24_fd6b3406",
+        "filename": "components/search_provider_logos/google_logo_api.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-05T16:42:54Z",
+      "side": 1,
+      "message": "base::MakeRefCounted\u003c\u003e?",
+      "range": {
+        "startLine": 308,
+        "startChar": 26,
+        "endLine": 308,
+        "endChar": 52
+      },
+      "revId": "b6d81f28acc0d8b522acfd47ed6e380adbbc4708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
