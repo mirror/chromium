@@ -16,6 +16,24 @@
       "revId": "977d550166e323b548973d6f3b9e82382766bca1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd888ef5_d2ea7c3b",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-07-05T15:35:03Z",
+      "side": 1,
+      "message": "We use it to define scopes where we want to measure RuntimeCallStats and send trace events, i.e. where script is run. Technically RCS is still measured outside the scopes as well, but the data is reset when we enter a scope and we only dump data collected since. This is to match the data more closely with the data collected by V8 RCS (so that the stats collected are actually a breakdown of the \u0027Blink C++\u0027 category collected by V8 RCS).",
+      "parentUuid": "1dfd1373_d557792d",
+      "revId": "977d550166e323b548973d6f3b9e82382766bca1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
