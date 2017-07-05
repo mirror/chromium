@@ -296,6 +296,24 @@
     },
     {
       "key": {
+        "uuid": "939c7b97_008afc86",
+        "filename": "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-05T23:38:32Z",
+      "side": 1,
+      "message": "Technically it isn\u0027t against our guide to violate this, but it is suggested.\n\nWe also have [1] to generate a style error for constructors that will generate a lot of inlined code.\n\n[1]: https://www.chromium.org/developers/coding-style/chromium-style-checker-errors#TOC-Constructor-Destructor-Errors",
+      "parentUuid": "7bd04849_70796307",
+      "revId": "5f897a13751bedb3270bd6d6c238138c93c61227",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "316982f2_d8b2b7b3",
         "filename": "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.h",
         "patchSetId": 4
