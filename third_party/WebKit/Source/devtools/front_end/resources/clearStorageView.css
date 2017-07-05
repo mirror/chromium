@@ -23,6 +23,11 @@
     display: inline;
 }
 
+.usage-breakdown-legend {
+    position: absolute;
+    margin-left: 110px;
+}
+
 .usage-breakdown-legend-title {
     display: inline-block;
 }
