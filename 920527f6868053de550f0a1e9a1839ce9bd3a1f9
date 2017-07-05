@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b38ad607_be95d47f",
+        "filename": "components/language/util/adminregionsdata.csv",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-07-05T01:36:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e6de010_3fbb2fa8",
+      "revId": "920527f6868053de550f0a1e9a1839ce9bd3a1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9302264e_68122379",
         "filename": "components/language/util/adminregionsdata.csv",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "920527f6868053de550f0a1e9a1839ce9bd3a1f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3542bc12_c8ab192c",
+        "filename": "components/language/util/adminregionsdata.csv",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-07-05T01:36:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9302264e_68122379",
+      "revId": "920527f6868053de550f0a1e9a1839ce9bd3a1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "25f8ab29_f47f7342",
+        "filename": "components/language/util/convert_s2_cell.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-07-05T01:36:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3282abbe_65eadca7",
+      "revId": "920527f6868053de550f0a1e9a1839ce9bd3a1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "142111a3_26835169",
         "filename": "components/language/util/convert_s2_cell.py",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "920527f6868053de550f0a1e9a1839ce9bd3a1f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ee0bca1_6d170c09",
+        "filename": "components/language/util/convert_s2_cell.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-07-05T01:36:36Z",
+      "side": 1,
+      "message": "I\u0027m not sure, but the example code I followed use 4 space indents.\n\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/html/parser/create-html-entity-table?type\u003dcs\u0026l\u003d122",
+      "parentUuid": "142111a3_26835169",
+      "revId": "920527f6868053de550f0a1e9a1839ce9bd3a1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "ddb0b111_a2117671",
+        "filename": "components/language/util/convert_s2_cell.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-07-05T01:36:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7542bb09_f26bef04",
+      "revId": "920527f6868053de550f0a1e9a1839ce9bd3a1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af795e73_277fcc14",
         "filename": "components/language/util/language_code_locator.h",
         "patchSetId": 1
@@ -101,6 +191,24 @@
       "revId": "920527f6868053de550f0a1e9a1839ce9bd3a1f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "248a72d7_a6cb9f87",
+        "filename": "components/language/util/language_code_locator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-07-05T01:36:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af795e73_277fcc14",
+      "revId": "920527f6868053de550f0a1e9a1839ce9bd3a1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "6a4a27aa_41a7ed8c",
+        "filename": "components/language/util/language_code_locator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-07-05T01:36:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10ae86b0_a71f6e23",
+      "revId": "920527f6868053de550f0a1e9a1839ce9bd3a1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "677cec5c_98469105",
         "filename": "components/language/util/language_code_locator.h",
         "patchSetId": 1
@@ -135,6 +261,24 @@
       "revId": "920527f6868053de550f0a1e9a1839ce9bd3a1f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b252e92f_762e190d",
+        "filename": "components/language/util/language_code_locator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-07-05T01:36:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "677cec5c_98469105",
+      "revId": "920527f6868053de550f0a1e9a1839ce9bd3a1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
