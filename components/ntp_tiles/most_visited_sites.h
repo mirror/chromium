@@ -12,6 +12,7 @@
 #include <string>
 #include <vector>
 
+#include "base/callback_forward.h"
 #include "base/compiler_specific.h"
 #include "base/files/file_path.h"
 #include "base/macros.h"
@@ -98,7 +99,10 @@ class MostVisitedSites : public history::TopSitesObserver,
     virtual ~HomePageClient() = default;
     virtual bool IsHomePageEnabled() const = 0;
     virtual bool IsNewTabPageUsedAsHomePage() const = 0;
-    virtual GURL GetHomepageUrl() const = 0;
+    virtual GURL GetHomePageUrl() const = 0;
+    virtual void QueryHomePageTitle(
+        base::OnceCallback<void(const base::Optional<base::string16>& title)>
+            title_callback) = 0;
   };
 
   // Construct a MostVisitedSites instance.
@@ -193,10 +197,14 @@ class MostVisitedSites : public history::TopSitesObserver,
       const std::set<std::string>& used_hosts,
       size_t num_actual_tiles);
 
+  // Initiates a query for the home page tile if needed and calls
+  // |SaveTilesAndNotify| in the end.
+  void InitiateNotificationForNewTiles(NTPTilesVector new_tiles);
+
   // Takes the personal tiles, creates and merges in whitelist and popular tiles
   // if appropriate, and saves the new tiles. Notifies the observer if the tiles
   // were actually changed.
-  void SaveNewTilesAndNotify(NTPTilesVector personal_tiles);
+  void SaveTilesAndNotify(NTPTilesVector personal_tiles);
 
   void OnPopularSitesDownloaded(bool success);
 
@@ -208,10 +216,12 @@ class MostVisitedSites : public history::TopSitesObserver,
                                std::set<std::string>* hosts,
                                size_t* total_tile_count) const;
 
-  // Adds the home page as first tile to |tiles| and returns them as new vector.
+  // Adds the home page as tile to |tiles| and calls |SaveNewTilesAndNotify|.
   // Drops existing tiles with the same host as the home page and tiles that
   // would exceed the maximum.
-  NTPTilesVector CreatePersonalTilesWithHomeTile(NTPTilesVector tiles) const;
+  void BuildHomeTileAndSave(
+      NTPTilesVector tiles,
+      const base::Optional<base::string16>& home_page_title);
 
   // Returns true if there is a valid home page that can be pinned as tile.
   bool ShouldAddHomeTile() const;

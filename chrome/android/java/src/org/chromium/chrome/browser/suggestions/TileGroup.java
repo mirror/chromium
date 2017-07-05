@@ -415,6 +415,7 @@ public class TileGroup implements MostVisitedSites.Observer {
         public void onLargeIconAvailable(
                 @Nullable Bitmap icon, int fallbackColor, boolean isFallbackColorDefault) {
             Tile tile = getTile(mUrl);
+
             if (tile != null) { // The tile might have been removed.
                 if (icon == null) {
                     mIconGenerator.setBackgroundColor(fallbackColor);
