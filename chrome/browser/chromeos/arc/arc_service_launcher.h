@@ -33,6 +33,11 @@ class ArcServiceLauncher {
   // destroyed.
   void Shutdown();
 
+  // Called just before most of BrowserContextKeyedService instance creation.
+  // Set the given |profile| to ArcSessionManager, if the profile is allowed
+  // to use ARC.
+  void MaybeSetProfile(Profile* profile);
+
   // Called when the main profile is initialized after user logs in.
   void OnPrimaryUserProfilePrepared(Profile* profile);
 
