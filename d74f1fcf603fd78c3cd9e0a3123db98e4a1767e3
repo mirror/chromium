@@ -16,6 +16,24 @@
       "revId": "d74f1fcf603fd78c3cd9e0a3123db98e4a1767e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33c28668_104919b7",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 871,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-07-05T20:04:39Z",
+      "side": 0,
+      "message": "\u003e TestBrowserThreadBundle also includes ScopedTaskEnvironment which provides a TaskScheduler, I\u0027m surprised you no longer need that.\n\nservice_manager::test::ServiceTest already includes a ScopedTaskEnvironment, so this TestBrowserThreadBundle wasn\u0027t actually providing the TaskScheduler anyway.\n\n\u003e Might be the root cause of LocalStorageContextMojoTestWithService.CorruptionOnDisk failing on bots with this CL?\n\nNot sure which failures you\u0027re talking about? I might have overlooked it but I don\u0027t see any relevant test failures on any bots with this CL?\n\nThere are the weird unit_tests failures that I initially dismissed as being irrelevant/bot problems (being that they have no output at all), but they do seem to be persistent/triggered by my CL, so I guess I have some more investigating to do... locally I seem to be getting a bunch of timeouts, so that at least gives me something to look in to.\n\n\u003e \n\u003e You may also need a content::RunAllBlockingPoolTasksUntilIdle() somewhere in that test as documented here: https://chromium.googlesource.com/chromium/src/+/lkcr/docs/task_scheduler_migration.md#Other-relevant-mappings-for-tests\n\nI think I\u0027m fine without. All the RunUntilIdle and similar calls in these tests are to make sure all tasks on the current thread are processed. It doesn\u0027t really matter if tasks on all background queues have ran as well.",
+      "parentUuid": "fd11f223_bf88eda4",
+      "revId": "d74f1fcf603fd78c3cd9e0a3123db98e4a1767e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
