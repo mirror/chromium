@@ -9,9 +9,11 @@
 #include "core/html/HTMLVideoElement.h"
 #include "core/html/ImageData.h"
 #include "core/offscreencanvas/OffscreenCanvas.h"
+#include "platform/CrossThreadFunctional.h"
 #include "platform/graphics/CanvasColorParams.h"
 #include "platform/graphics/skia/SkiaUtils.h"
 #include "platform/image-decoders/ImageDecoder.h"
+#include "platform/threading/BackgroundTaskRunner.h"
 #include "platform/wtf/CheckedNumeric.h"
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/RefPtr.h"
@@ -470,6 +472,56 @@ static PassRefPtr<StaticBitmapImage> CropImageAndApplyColorSpaceConversion(
   }
   return StaticBitmapImage::Create(
       GetSkImageWithAlphaDisposition(skia_image, kDontPremultiplyAlpha));
+}
+
+ImageBitmap::ImageBitmap(ImageElementBase* image,
+                         Optional<IntRect> crop_rect,
+                         Document* document,
+                         ScriptPromiseResolver* resolver,
+                         const ImageBitmapOptions& options) {
+  RefPtr<Image> input = image->CachedImage()->GetImage();
+  sk_sp<PaintRecord> paint_record =
+      input->PaintRecordForContainer(NullURL(), input->Size());
+  RefPtr<WebTaskRunner> task_runner =
+      Platform::Current()->CurrentThread()->GetWebTaskRunner();
+  BackgroundTaskRunner::PostOnBackgroundThread(
+      BLINK_FROM_HERE,
+      CrossThreadBind(&ImageBitmap::DecodeImageOnBackground,
+                      WrapCrossThreadPersistent(this), std::move(task_runner),
+                      WrapCrossThreadPersistent(resolver),
+                      std::move(paint_record), input->Size()));
+}
+
+void ImageBitmap::DecodeImageOnBackground(RefPtr<WebTaskRunner> task_runner,
+                                          ScriptPromiseResolver* resolver,
+                                          sk_sp<PaintRecord> paint_record,
+                                          IntSize container_size) {
+  DCHECK(!IsMainThread());
+  const FloatRect container_rect((FloatPoint()), FloatSize(container_size));
+  sk_sp<SkImage> skia_image = SkImage::MakeFromPicture(
+      ToSkPicture(paint_record, container_rect),
+      SkISize::Make(container_size.Width(), container_size.Height()), nullptr,
+      nullptr, SkImage::BitDepth::kU8, SkColorSpace::MakeSRGB());
+  task_runner->PostTask(
+      BLINK_FROM_HERE,
+      CrossThreadBind(&ImageBitmap::ResolvePromiseOnOriginalThread,
+                      WrapCrossThreadPersistent(this),
+                      WrapCrossThreadPersistent(resolver),
+                      std::move(skia_image)));
+}
+
+void ImageBitmap::ResolvePromiseOnOriginalThread(
+    ScriptPromiseResolver* resolver,
+    sk_sp<SkImage> skia_image) {
+  DCHECK(IsMainThread());
+  image_ = StaticBitmapImage::Create(skia_image);
+  if (image_) {
+    resolver->Resolve(this);
+  } else {
+    resolver->Reject(
+        ScriptValue(resolver->GetScriptState(),
+                    v8::Null(resolver->GetScriptState()->GetIsolate())));
+  }
 }
 
 ImageBitmap::ImageBitmap(ImageElementBase* image,
@@ -945,6 +997,14 @@ ImageBitmap* ImageBitmap::Create(const void* pixel_data,
   return new ImageBitmap(pixel_data, width, height,
                          is_image_bitmap_premultiplied,
                          is_image_bitmap_origin_clean);
+}
+
+ImageBitmap* ImageBitmap::CreateAsync(ImageElementBase* image,
+                                      Optional<IntRect> crop_rect,
+                                      Document* document,
+                                      ScriptPromiseResolver* resolver,
+                                      const ImageBitmapOptions& options) {
+  return new ImageBitmap(image, crop_rect, document, resolver, options);
 }
 
 void ImageBitmap::close() {
