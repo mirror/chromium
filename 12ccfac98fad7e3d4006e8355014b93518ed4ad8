@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "3543e913_0faaed41",
+        "filename": "ui/compositor/clip_recorder.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-05T22:03:28Z",
+      "side": 1,
+      "message": "Ok, there maybe something here, but I\u0027m kind of hesitant why add \"SomethingElse\" if DIL already handles that at the cost of a couple of vectors/rtree that remain empty throughout. Is the concern memory here?\n\nAlso, is this something you think should be a part of this patch or can this be follow-up work?",
+      "parentUuid": "a50dfd7b_026edcbd",
+      "revId": "12ccfac98fad7e3d4006e8355014b93518ed4ad8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3761526a_0fcada1e",
         "filename": "ui/compositor/paint_cache.cc",
         "patchSetId": 12
@@ -174,6 +192,24 @@
       "side": 1,
       "message": "\u003e Do you mean cc::PaintRecorder here or ui::PaintRecorder?\n\nLol, sorry I mean ui::PaintRecorder.",
       "parentUuid": "25315acd_cf8d887b",
+      "revId": "12ccfac98fad7e3d4006e8355014b93518ed4ad8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58cf0de9_b23b2b9f",
+        "filename": "ui/compositor/paint_cache.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-05T22:03:28Z",
+      "side": 1,
+      "message": "Erm, PaintRecorder takes an optional PaintCache in the ctor and instantiates the recording canvas with it. I\u0027m a bit unsure what you mean by PaintCache owning PaintRecorder...",
+      "parentUuid": "f48bb6dd_c862329b",
       "revId": "12ccfac98fad7e3d4006e8355014b93518ed4ad8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
