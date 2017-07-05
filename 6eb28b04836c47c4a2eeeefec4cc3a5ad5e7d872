@@ -70,6 +70,24 @@
       "revId": "6eb28b04836c47c4a2eeeefec4cc3a5ad5e7d872",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "275df137_33e91566",
+        "filename": "build/android/lint/suppress.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1113224
+      },
+      "writtenOn": "2017-07-05T08:11:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2aeea23b_2b39c297",
+      "revId": "6eb28b04836c47c4a2eeeefec4cc3a5ad5e7d872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
