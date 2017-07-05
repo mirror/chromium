@@ -39,6 +39,24 @@
       "revId": "d2e5892f48d5ad61b2820f37a9ee3c920e5f1cc8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9de9879c_4975b17a",
+        "filename": "third_party/libwebp/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-07-05T19:30:00Z",
+      "side": 1,
+      "message": "Is there another way to reference this target while also creating the symlink?",
+      "parentUuid": "93514365_dda40a9f",
+      "revId": "d2e5892f48d5ad61b2820f37a9ee3c920e5f1cc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
