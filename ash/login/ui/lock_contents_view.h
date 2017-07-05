@@ -77,6 +77,10 @@ class ASH_EXPORT LockContentsView : public views::View,
 
   void UpdateAuthMethodsForAuthUser(bool animate);
 
+  // Make the user at |user_index| the auth user. We pass in the index because
+  // the actual user may change.
+  void SwapToAuthUser(int user_index);
+
   std::vector<UserState> users_;
 
   LoginDataDispatcher* const data_dispatcher_;  // Unowned.

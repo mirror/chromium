@@ -6,8 +6,13 @@
 
 #include "ash/login/ui/lock_screen.h"
 #include "ash/login/ui/login_auth_user_view.h"
+#include "ash/login/ui/login_constants.h"
 #include "ash/login/ui/login_display_style.h"
+#include "ash/login/ui/login_pin_view.h"
 #include "ash/login/ui/login_user_view.h"
+#include "ash/login/ui/pin_keyboard_animation.h"
+#include "ui/compositor/layer_animation_sequence.h"
+#include "ui/compositor/layer_animator.h"
 #include "ui/gfx/geometry/insets.h"
 #include "ui/views/animation/bounds_animator.h"
 #include "ui/views/background.h"
@@ -35,10 +40,6 @@ constexpr int kSmallVerticalDistanceBetweenUsersDp = 53;
 constexpr int kExtraSmallHorizontalPaddingLeftOfRightOfUserListDp = 72;
 // The vertical padding between each entry in the extra-small user row
 constexpr int kExtraSmallVerticalDistanceBetweenUsersDp = 32;
-
-// Duration (in milliseconds) of the auth user view animation, ie, when enabling
-// or disabling the PIN keyboard.
-constexpr int kAuthUserViewAnimationDurationMs = 100;
 
 // Builds a view with the given preferred size.
 views::View* MakePreferredSizeView(gfx::Size size) {
@@ -114,10 +115,11 @@ void LockContentsView::OnUsersChanged(
                                 ash::LockScreen::Get()->Destroy();
                             }));
   AddChildView(auth_user_view_);
-  auth_user_view_animator_ =
-      base::MakeUnique<views::BoundsAnimator>(auth_user_view_->parent());
+  auth_user_view_animator_ = base::MakeUnique<views::BoundsAnimator>(
+      auth_user_view_->non_pin_root()->parent());
   auth_user_view_animator_->SetAnimationDuration(
-      kAuthUserViewAnimationDurationMs);
+      kUserChangeAnimationDurationMs);
+  auth_user_view_animator_->set_tween_type(gfx::Tween::FAST_OUT_SLOW_IN);
   UpdateAuthMethodsForAuthUser(false /*animate*/);
 
   // Build layout for additional users.
@@ -150,9 +152,11 @@ void LockContentsView::CreateLowDensityLayout(
   // Space between auth user and alternative user.
   AddChildView(MakePreferredSizeView(
       gfx::Size(kDistanceBetweenUsersInTwoUserModeDp, 30)));
+  // TODO(jdufault): When alt_user_view is clicked we should show auth methods.
   auto* alt_user_view =
-      new LoginUserView(LoginDisplayStyle::kLarge, false /*show_dropdown*/);
-  alt_user_view->UpdateForUser(users[1]);
+      new LoginUserView(LoginDisplayStyle::kLarge, false /*show_dropdown*/,
+                        base::BindRepeating(&base::DoNothing) /*on_tap*/);
+  alt_user_view->UpdateForUser(users[1], false /*animate*/);
   user_views_.push_back(alt_user_view);
   AddChildView(alt_user_view);
 }
@@ -175,9 +179,11 @@ void LockContentsView::CreateMediumDensityLayout(
   row->SetLayoutManager(layout);
   for (std::size_t i = 1u; i < users.size(); ++i) {
     auto* view =
-        new LoginUserView(LoginDisplayStyle::kSmall, false /*show_dropdown*/);
+        new LoginUserView(LoginDisplayStyle::kSmall, false /*show_dropdown*/,
+                          base::Bind(&LockContentsView::SwapToAuthUser,
+                                     base::Unretained(this), i - 1) /*on_tap*/);
     user_views_.push_back(view);
-    view->UpdateForUser(users[i]);
+    view->UpdateForUser(users[i], false /*animate*/);
     row->AddChildView(view);
   }
 }
@@ -206,10 +212,12 @@ void LockContentsView::CreateHighDensityLayout(
       LoginUserView::WidthForLayoutStyle(LoginDisplayStyle::kExtraSmall));
   row->SetLayoutManager(row_layout);
   for (std::size_t i = 1u; i < users.size(); ++i) {
-    auto* view = new LoginUserView(LoginDisplayStyle::kExtraSmall,
-                                   false /*show_dropdown*/);
+    auto* view = new LoginUserView(
+        LoginDisplayStyle::kExtraSmall, false /*show_dropdown*/,
+        base::Bind(&LockContentsView::SwapToAuthUser, base::Unretained(this),
+                   i - 1) /*on_tap*/);
     user_views_.push_back(view);
-    view->UpdateForUser(users[i]);
+    view->UpdateForUser(users[i], false /*animate*/);
     row->AddChildView(view);
   }
 
@@ -231,23 +239,77 @@ LockContentsView::UserState* LockContentsView::FindStateForUser(
 
 void LockContentsView::UpdateAuthMethodsForAuthUser(bool animate) {
   LockContentsView::UserState* state =
-      FindStateForUser(auth_user_view_->current_user());
+      FindStateForUser(auth_user_view_->current_user()->account_id);
   DCHECK(state);
+
+  bool had_pin =
+      (auth_user_view_->auth_methods() & LoginAuthUserView::AUTH_PIN) != 0;
+  bool has_pin = state->show_pin;
 
   uint32_t auth_methods = LoginAuthUserView::AUTH_NONE;
   if (state->show_pin)
     auth_methods |= LoginAuthUserView::AUTH_PIN;
 
   // Update to the new layout. Capture existing size so we are able to animate.
-  gfx::Rect existing_bounds = auth_user_view_->bounds();
+  int top_y_start = auth_user_view_->non_pin_root()->GetBoundsInScreen().y();
+  int pin_y_start = auth_user_view_->pin_view()->GetBoundsInScreen().y();
   auth_user_view_->SetAuthMethods(auth_methods);
   Layout();
 
-  if (animate) {
-    gfx::Rect new_bounds = auth_user_view_->bounds();
-    auth_user_view_->SetBoundsRect(existing_bounds);
-    auth_user_view_animator_->AnimateViewTo(auth_user_view_, new_bounds);
+  if (animate && has_pin != had_pin) {
+    // PIN view animation requires a layer.
+    if (!auth_user_view_->pin_view()->layer()) {
+      auth_user_view_->pin_view()->SetPaintToLayer();
+      auth_user_view_->pin_view()->layer()->SetFillsBoundsOpaquely(false);
+    }
+
+    // Hiding PIN keyboard.
+    if (had_pin && !has_pin) {
+      // Non-PIN content will be painted outside of it's bounds as it animates
+      // to the correct position. This requires a layer to display properly.
+      if (!auth_user_view_->non_pin_root()->layer()) {
+        auth_user_view_->non_pin_root()->SetPaintToLayer();
+        auth_user_view_->non_pin_root()->layer()->SetFillsBoundsOpaquely(false);
+      }
+
+      auth_user_view_->pin_view()->SetVisible(true);
+      int pin_y_end = auth_user_view_->pin_view()->GetBoundsInScreen().y();
+      gfx::Rect pin_bounds = auth_user_view_->pin_view()->bounds();
+      pin_bounds.set_y(pin_y_start - pin_y_end);
+      auth_user_view_->pin_view()->SetBoundsRect(pin_bounds);
+    }
+
+    // PIN keyboard animation.
+    auto transition = base::MakeUnique<PinKeyboardAnimation>(
+        has_pin /*grow*/, auth_user_view_->pin_view()->height(),
+        base::TimeDelta::FromMilliseconds(kUserChangeAnimationDurationMs),
+        gfx::Tween::FAST_OUT_SLOW_IN);
+    auto* sequence = new ui::LayerAnimationSequence(std::move(transition));
+    ui::LayerAnimator* pin_animator =
+        auth_user_view_->pin_view()->layer()->GetAnimator();
+    pin_animator->StopAnimating();
+    pin_animator->ScheduleAnimation(sequence);
+
+    // User view (ie, non-PIN keyboard) animation.
+    int top_y_end = auth_user_view_->non_pin_root()->GetBoundsInScreen().y();
+    gfx::Rect bounds_end = auth_user_view_->non_pin_root()->bounds();
+    gfx::Rect bounds_start = bounds_end;
+    bounds_start.set_y(top_y_start - top_y_end);
+    auth_user_view_->non_pin_root()->SetBoundsRect(bounds_start);
+    auth_user_view_animator_->AnimateViewTo(auth_user_view_->non_pin_root(),
+                                            bounds_end);
   }
+}
+
+void LockContentsView::SwapToAuthUser(int user_index) {
+  auto* view = user_views_[user_index];
+  mojom::UserInfoPtr previous_auth_user =
+      auth_user_view_->current_user()->Clone();
+  mojom::UserInfoPtr new_auth_user = view->current_user()->Clone();
+
+  view->UpdateForUser(previous_auth_user, true /*animate*/);
+  auth_user_view_->UpdateForUser(new_auth_user);
+  UpdateAuthMethodsForAuthUser(true /*animate*/);
 }
 
 }  // namespace ash
