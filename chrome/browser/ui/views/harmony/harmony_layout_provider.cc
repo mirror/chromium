@@ -70,6 +70,25 @@ int HarmonyLayoutProvider::GetDistanceMetric(int metric) const {
   return 0;
 }
 
+const views::TypographyProvider& HarmonyLayoutProvider::GetTypographyProvider()
+    const {
+  return typography_provider_;
+}
+
+int HarmonyLayoutProvider::GetSnappedDialogWidth(int min_width) const {
+  for (int snap_point : {320, 448, 512}) {
+    if (min_width <= snap_point)
+      return snap_point;
+  }
+
+  return ((min_width + kHarmonyLayoutUnit - 1) / kHarmonyLayoutUnit) *
+         kHarmonyLayoutUnit;
+}
+
+bool HarmonyLayoutProvider::ShouldShowCloseXOnDialog() const {
+  return false;
+}
+
 views::GridLayout::Alignment
 HarmonyLayoutProvider::GetControlLabelGridAlignment() const {
   return views::GridLayout::LEADING;
@@ -85,19 +104,4 @@ bool HarmonyLayoutProvider::ShouldShowWindowIcon() const {
 
 bool HarmonyLayoutProvider::IsHarmonyMode() const {
   return true;
-}
-
-int HarmonyLayoutProvider::GetSnappedDialogWidth(int min_width) const {
-  for (int snap_point : {320, 448, 512}) {
-    if (min_width <= snap_point)
-      return snap_point;
-  }
-
-  return ((min_width + kHarmonyLayoutUnit - 1) / kHarmonyLayoutUnit) *
-         kHarmonyLayoutUnit;
-}
-
-const views::TypographyProvider& HarmonyLayoutProvider::GetTypographyProvider()
-    const {
-  return typography_provider_;
 }

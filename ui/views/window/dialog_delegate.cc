@@ -188,6 +188,10 @@ DialogDelegate* DialogDelegate::AsDialogDelegate() {
   return this;
 }
 
+bool DialogDelegate::ShouldShowCloseButton() const {
+  return LayoutProvider::Get()->ShouldShowCloseXOnDialog();
+}
+
 ClientView* DialogDelegate::CreateClientView(Widget* widget) {
   return new DialogClientView(widget, GetContentsView());
 }
