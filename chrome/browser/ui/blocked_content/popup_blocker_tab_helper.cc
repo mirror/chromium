@@ -41,18 +41,34 @@ struct PopupBlockerTabHelper::BlockedRequest {
   blink::mojom::WindowFeatures window_features;
 };
 
-bool PopupBlockerTabHelper::ConsiderForPopupBlocking(
+bool PopupBlockerTabHelper::ShouldBlockPopup(
     content::WebContents* web_contents,
     bool user_gesture,
+    const GURL& opener_top_level_frame_url,
     const content::OpenURLParams* open_url_params) {
   DCHECK(web_contents);
   CHECK(!open_url_params || open_url_params->user_gesture == user_gesture);
+
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kDisablePopupBlocking)) {
     return false;
   }
 
   if (!user_gesture)
+    return true;
+
+  Profile* profile =
+      Profile::FromBrowserContext(web_contents->GetBrowserContext());
+  // XXX Something about opener_top_level_frame_url being valid?
+  ContentSetting content_setting =
+      HostContentSettingsMapFactory::GetForProfile(profile)->GetContentSetting(
+          opener_top_level_frame_url, opener_top_level_frame_url,
+          CONTENT_SETTINGS_TYPE_POPUPS, std::string());
+  if (content_setting == CONTENT_SETTING_BLOCK)
+    return true;
+  if (content_setting == CONTENT_SETTING_ASK && open_url_params &&
+      (open_url_params->disposition == WindowOpenDisposition::NEW_POPUP ||
+       open_url_params->disposition == WindowOpenDisposition::NEW_WINDOW))
     return true;
 
   // The subresource_filter triggers an extra aggressive popup blocker on
@@ -99,7 +115,8 @@ void PopupBlockerTabHelper::PopupNotificationVisibilityChanged(
 }
 
 bool PopupBlockerTabHelper::MaybeBlockPopup(
-    const chrome::NavigateParams& params,
+    const chrome::NavigateParams& navigate_params,
+    const content::OpenURLParams& open_url_params,
     const blink::mojom::WindowFeatures& window_features) {
   // A page can't spawn popups (or do anything else, either) until its load
   // commits, so when we reach here, the popup was spawned by the
@@ -111,17 +128,12 @@ bool PopupBlockerTabHelper::MaybeBlockPopup(
   content::NavigationEntry* entry =
       web_contents()->GetController().GetLastCommittedEntry();
   GURL creator = entry ? entry->GetVirtualURL() : GURL();
-  Profile* profile =
-      Profile::FromBrowserContext(web_contents()->GetBrowserContext());
 
-  if (creator.is_valid() &&
-      HostContentSettingsMapFactory::GetForProfile(profile)->GetContentSetting(
-          creator, creator, CONTENT_SETTINGS_TYPE_POPUPS, std::string()) ==
-          CONTENT_SETTING_ALLOW) {
+  if (ShouldBlockPopup(web_contents(), open_url_params.user_gesture, creator,
+                       &open_url_params))
     return false;
-  }
 
-  AddBlockedPopup(params, window_features);
+  AddBlockedPopup(navigate_params, window_features);
   return true;
 }
 
