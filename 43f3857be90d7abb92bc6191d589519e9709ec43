@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d2236c1_ddb14b8d",
+        "filename": "third_party/WebKit/LayoutTests/vr/requestAnimationFrame_consistentTimestamps.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-07-05T20:53:50Z",
+      "side": 1,
+      "message": "250 ms seems like a larger tolerance than is necessary - is the test flaky at lower values? Or is this test only meant to catch major differences in timestamps when switching between magic window/presentation (on the order of seconds) ?",
+      "range": {
+        "startLine": 23,
+        "startChar": 8,
+        "endLine": 23,
+        "endChar": 20
+      },
+      "revId": "43f3857be90d7abb92bc6191d589519e9709ec43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8ddd4d5_5ef00795",
+        "filename": "third_party/WebKit/LayoutTests/vr/requestAnimationFrame_consistentTimestamps.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-07-05T20:53:50Z",
+      "side": 1,
+      "message": "Nit: Use assert_approx_equals(actual, expected, epsilon) instead.",
+      "range": {
+        "startLine": 32,
+        "startChar": 12,
+        "endLine": 32,
+        "endChar": 28
+      },
+      "revId": "43f3857be90d7abb92bc6191d589519e9709ec43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72d33535_2680132a",
+        "filename": "third_party/WebKit/LayoutTests/vr/requestAnimationFrame_consistentTimestamps.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-07-05T20:53:50Z",
+      "side": 1,
+      "message": "Are we only concerned with timestamps being consistent in the magic window -\u003e presentation case, and not presentation -\u003e magic window?",
+      "range": {
+        "startLine": 39,
+        "startChar": 10,
+        "endLine": 39,
+        "endChar": 28
+      },
+      "revId": "43f3857be90d7abb92bc6191d589519e9709ec43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
