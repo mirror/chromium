@@ -276,6 +276,17 @@ void FeatureList::SetInstance(std::unique_ptr<FeatureList> instance) {
 
   // Note: Intentional leak of global singleton.
   g_instance = instance.release();
+
+#if DCHECK_IS_ON() && (defined(ADDRESS_SANITIZER) || defined(SYZYASAN))
+  // Update the behaviour of LOG_DCHECK to match the Feature configuration.
+  static const base::Feature kDCheckIsFatalFeature{
+      "DcheckIsFatal", base::FEATURE_DISABLED_BY_DEFAULT};
+  if (base::FeatureList::IsEnabled(kDCheckIsFatalFeature)) {
+    logging::LOG_DCHECK = logging::LOG_FATAL;
+  } else {
+    logging::LOG_DCHECK = logging::LOG_INFO;
+  }
+#endif  // DCHECK_IS_ON() && (defined(ADDRESS_SANITIZER) || defined(SYZYASAN))
 }
 
 // static
