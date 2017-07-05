@@ -109,10 +109,14 @@ public class DownloadSharedPreferenceHelper {
 
     /**
      * Gets a list of stored SharedPreference entries.
-     * return A list of DownloadSharedPreferenceEntry stored in SharedPrefs.
+     * @return A list of DownloadSharedPreferenceEntry stored in SharedPrefs.
      */
     public List<DownloadSharedPreferenceEntry> getEntries() {
-        return mDownloadSharedPreferenceEntries;
+        List<DownloadSharedPreferenceEntry> pendingEntries = new ArrayList<>();
+        for (DownloadSharedPreferenceEntry entry : mDownloadSharedPreferenceEntries) {
+            if (!entry.isSuccessful) pendingEntries.add(entry);
+        }
+        return pendingEntries;
     }
 
     /**
@@ -126,8 +130,7 @@ public class DownloadSharedPreferenceHelper {
             DownloadSharedPreferenceEntry entry =
                     DownloadSharedPreferenceEntry.parseFromString(entryString);
             if (entry.notificationId > 0) {
-                mDownloadSharedPreferenceEntries.add(
-                        DownloadSharedPreferenceEntry.parseFromString(entryString));
+                mDownloadSharedPreferenceEntries.add(entry);
             }
         }
     }

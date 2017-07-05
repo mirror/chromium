@@ -1403,10 +1403,12 @@ public class DownloadManagerService
     }
 
     @CalledByNative
-    private void onDownloadItemRemoved(String guid, boolean isOffTheRecord) {
+    private void onDownloadItemRemoved(DownloadItem item, boolean isOffTheRecord) {
         for (DownloadHistoryAdapter adapter : mHistoryAdapters) {
-            adapter.onDownloadItemRemoved(guid, isOffTheRecord);
+            adapter.onDownloadItemRemoved(item.getId(), isOffTheRecord);
         }
+
+        broadcastDownloadAction(item, DownloadNotificationService.ACTION_DOWNLOAD_REMOVED);
     }
 
     /**
