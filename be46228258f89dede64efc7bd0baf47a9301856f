@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e0956ad_eb39bff3",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/common.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-05T21:48:12Z",
+      "side": 1,
+      "message": "This is only used in test_export, so it could be moved there if you think it\u0027s reasonable. To make the name slightly more specific you could also call it PROVISIONAL_PR_LABEL.",
+      "revId": "be46228258f89dede64efc7bd0baf47a9301856f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5038a741_a7d938b2",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-05T21:48:12Z",
+      "side": 1,
+      "message": "This comment seems unnecessary.",
+      "revId": "be46228258f89dede64efc7bd0baf47a9301856f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c34e8d00_5dbb2d3a",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_github.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-05T21:48:12Z",
+      "side": 1,
+      "message": "This could be done in this CL; I don\u0027t have much of a preference for what is done, but one option is to add:\n\nclass GitHubError(Exception):\n    \"\"\"Raised when an GitHub sends a non-OK response status for a request.\"\"\"\n\nat the top-level of this module.",
+      "revId": "be46228258f89dede64efc7bd0baf47a9301856f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1de8b10_de10c5af",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_github_mock.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-05T21:48:12Z",
+      "side": 1,
+      "message": "It doesn\u0027t seem like there\u0027s any place where we\u0027d expect to call add_label or remove_label without specifying the label string, right? Could the label parameter be made required?",
+      "revId": "be46228258f89dede64efc7bd0baf47a9301856f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
