@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e6de010_3fbb2fa8",
+        "filename": "components/language/util/adminregionsdata.csv",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1212429
+      },
+      "writtenOn": "2017-07-05T01:16:12Z",
+      "side": 1,
+      "message": "I think all this util code should probably be in c/l/core/util",
+      "revId": "920527f6868053de550f0a1e9a1839ce9bd3a1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9302264e_68122379",
+        "filename": "components/language/util/adminregionsdata.csv",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1212429
+      },
+      "writtenOn": "2017-07-05T01:16:12Z",
+      "side": 1,
+      "message": "Note you will need to wait for martis@ CL that will create and configure components/language",
+      "revId": "920527f6868053de550f0a1e9a1839ce9bd3a1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3282abbe_65eadca7",
+        "filename": "components/language/util/convert_s2_cell.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1212429
+      },
+      "writtenOn": "2017-07-05T01:16:12Z",
+      "side": 1,
+      "message": "Can you add a comment saying what this does? E.g. what is the format of lang_districts",
+      "revId": "920527f6868053de550f0a1e9a1839ce9bd3a1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "142111a3_26835169",
+        "filename": "components/language/util/convert_s2_cell.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1212429
+      },
+      "writtenOn": "2017-07-05T01:16:12Z",
+      "side": 1,
+      "message": "Does the chrome python style use 4 space indents?",
+      "revId": "920527f6868053de550f0a1e9a1839ce9bd3a1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7542bb09_f26bef04",
+        "filename": "components/language/util/convert_s2_cell.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1212429
+      },
+      "writtenOn": "2017-07-05T01:16:12Z",
+      "side": 1,
+      "message": "Note you will need more comments that this.",
+      "revId": "920527f6868053de550f0a1e9a1839ce9bd3a1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af795e73_277fcc14",
+        "filename": "components/language/util/language_code_locator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1212429
+      },
+      "writtenOn": "2017-07-05T01:16:12Z",
+      "side": 1,
+      "message": "explicit is not needed",
+      "revId": "920527f6868053de550f0a1e9a1839ce9bd3a1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10ae86b0_a71f6e23",
+        "filename": "components/language/util/language_code_locator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1212429
+      },
+      "writtenOn": "2017-07-05T01:16:12Z",
+      "side": 1,
+      "message": "const method?",
+      "revId": "920527f6868053de550f0a1e9a1839ce9bd3a1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "677cec5c_98469105",
+        "filename": "components/language/util/language_code_locator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1212429
+      },
+      "writtenOn": "2017-07-05T01:16:12Z",
+      "side": 1,
+      "message": "Should it be FindLangCode() or GetLangCode()?\nAlso I prefer Language to Lang",
+      "revId": "920527f6868053de550f0a1e9a1839ce9bd3a1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
