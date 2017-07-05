@@ -16,6 +16,24 @@
       "revId": "0c90faa5e8dc5be55c35c780799a8c1d3436e4fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "542b64e0_db92d8e7",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-07-05T17:16:08Z",
+      "side": 1,
+      "message": "I think ctors and dtors here are just code that runs.  I don\u0027t think there\u0027s undefined behavior here.  The \"ctor\" here for these types was the memset(0) in the reader for \"complicated\" types.\n\nYou\u0027re right though that this is slightly confusing, so I:\n-changed the deserialize functions to call the in place constructor\n-removed the memset from the reader\n-added default constructors to every op so that I could call it here\n-made those default constructors private so external callers couldn\u0027t call them\n-made all the PaintOps into classes since now most aren\u0027t entirely public and are a mix of public and private, which just felt weird to leave as structs",
+      "parentUuid": "73a1809b_dcac2415",
+      "revId": "0c90faa5e8dc5be55c35c780799a8c1d3436e4fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
