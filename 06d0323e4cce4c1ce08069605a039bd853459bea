@@ -52,6 +52,24 @@
       "revId": "06d0323e4cce4c1ce08069605a039bd853459bea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d1bc2962_3ccd2084",
+        "filename": "components/metrics/machine_id_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-05T22:43:17Z",
+      "side": 1,
+      "message": "\u003e I think it still needs updating. This comment is leftover from the CreateInstance method and has nothing to do with HasId.\n\nDone.\n\n\u003e \n\u003e Also, does it make sense to say \"posting a task to GetMachineId\"? (This is a real question, I don\u0027t know, it doesn\u0027t seem right to me though)\n\nIt\u0027s not quite semantically correct, rephrased.",
+      "parentUuid": "e8999671_d1cd27ed",
+      "revId": "06d0323e4cce4c1ce08069605a039bd853459bea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
