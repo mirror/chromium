@@ -12,8 +12,23 @@ suite('SiteDetails', function() {
 
   /**
    * An example pref with 1 allowed in each category.
+   * @type {SiteSettingsPref}
    */
   var prefs = {
+    defaults: {
+      auto_downloads: {setting: 'ask', source: undefined},
+      background_sync: {setting: 'allow', source: undefined},
+      camera: {setting: 'ask', source: undefined},
+      cookies: {setting: 'allow', source: undefined},
+      geolocation: {setting: 'ask', source: undefined},
+      images: {setting: 'allow', source: undefined},
+      javascript: {setting: 'allow', source: undefined},
+      mic: {setting: 'ask', source: undefined},
+      notifications: {setting: 'ask', source: undefined},
+      plugins: {setting: 'ask', source: undefined},
+      popups: {setting: 'block', source: undefined},
+      unsandboxed_plugins: {setting: 'ask', source: undefined},
+    },
     exceptions: {
       auto_downloads: [
         {
@@ -59,7 +74,7 @@ suite('SiteDetails', function() {
         {
           embeddingOrigin: 'https://foo-allow.com:443',
           origin: 'https://foo-allow.com:443',
-          setting: 'allow',
+          setting: 'default',
           source: 'preference',
         },
       ],
@@ -99,7 +114,7 @@ suite('SiteDetails', function() {
         {
           embeddingOrigin: 'https://foo-allow.com:443',
           origin: 'https://foo-allow.com:443',
-          setting: 'allow',
+          setting: 'default',
           source: 'preference',
         },
       ],
@@ -158,8 +173,13 @@ suite('SiteDetails', function() {
           .forEach(function(siteDetailsPermission) {
             // Verify settings match the values specified in |prefs|.
             var setting = 'allow';
-            if (siteDetailsPermission.site.category == 'location')
+            if (siteDetailsPermission.site.category == 'location') {
               setting = 'block';
+            } else if (
+                siteDetailsPermission.site.category == 'images' ||
+                siteDetailsPermission.site.category == 'popups') {
+              setting = 'default';
+            }
             assertEquals(setting, siteDetailsPermission.site.setting);
             assertEquals(setting, siteDetailsPermission.$.permission.value);
           });

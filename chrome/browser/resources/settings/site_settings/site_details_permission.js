@@ -18,6 +18,18 @@ Polymer({
      * @type {SiteException}
      */
     site: Object,
+
+    /**
+     * The default setting string for this permission category.
+     * @type {string}
+     * @private
+     */
+    defaultSettingString_: {
+      type: String,
+      value: function() {
+        return loadTimeData.getString('siteSettingsActionAskDefault');
+      }
+    }
   },
 
   observers: ['siteChanged_(site, category)'],
@@ -53,6 +65,7 @@ Polymer({
    * @private
    */
   siteChanged_: function(site) {
+    this.updateDefaultSettingString_();
     this.$.permission.value = site.setting;
   },
 
@@ -91,8 +104,35 @@ Polymer({
    * @private
    */
   onPermissionSelectionChange_: function() {
+    if (this.$.permission.value == settings.PermissionValues.DEFAULT) {
+      this.resetPermission();
+      return;
+    }
     this.browserProxy.setCategoryPermissionForOrigin(
         this.site.origin, this.site.embeddingOrigin, this.category,
         this.$.permission.value, this.site.incognito);
+  },
+
+  /**
+   * Updates the string used for this permission category's default setting.
+   * @private
+   */
+  updateDefaultSettingString_: function() {
+    this.browserProxy.getDefaultValueForContentType(this.category)
+        .then(function(defaultValue) {
+          var stringId;
+          if (defaultValue.setting == settings.PermissionValues.ASK ||
+              defaultValue.setting ==
+                  settings.PermissionValues.IMPORTANT_CONTENT)
+            stringId = 'siteSettingsActionAskDefault';
+          else if (defaultValue.setting == settings.PermissionValues.ALLOW)
+            stringId = 'siteSettingsActionAllowDefault';
+          else if (defaultValue.setting == settings.PermissionValues.BLOCK)
+            stringId = 'siteSettingsActionBlockDefault';
+          assert(
+              stringId,
+              'Unhandled return value from getDefaultValueForContentType.');
+          this.defaultSettingString_ = loadTimeData.getString(stringId);
+        }.bind(this));
   },
 });

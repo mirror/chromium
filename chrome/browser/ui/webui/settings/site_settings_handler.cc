@@ -176,6 +176,12 @@ ContentSetting GetContentSettingForOrigin(const GURL& origin,
         content_settings::ValueToContentSetting(value.get());
   }
 
+  // Distinguish between default settings and non-default settings.
+  if (info.primary_pattern == ContentSettingsPattern::Wildcard() &&
+      info.secondary_pattern == ContentSettingsPattern::Wildcard()) {
+    result.content_setting = CONTENT_SETTING_DEFAULT;
+  }
+
   // Retrieve the source of the content setting.
   *source_string =
       ConvertContentSettingSourceToString(info.source, result.source);
