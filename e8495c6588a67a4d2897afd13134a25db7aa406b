@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5701ef0f_89c93274",
+        "filename": "ios/chrome/browser/google/google_logo_service.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-05T15:05:14Z",
+      "side": 1,
+      "message": "nit: please change both \"new\" to base::MakeUnique\u003c\u003e here too :-)",
+      "range": {
+        "startLine": 102,
+        "startChar": 8,
+        "endLine": 102,
+        "endChar": 11
+      },
+      "revId": "e8495c6588a67a4d2897afd13134a25db7aa406b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
