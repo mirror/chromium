@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5dbf604_aa20375c",
+        "filename": "chrome/browser/autocomplete/chrome_autocomplete_provider_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-05T19:28:29Z",
+      "side": 1,
+      "message": "optional nit: put into anonymous namespace",
+      "range": {
+        "startLine": 68,
+        "startChar": 13,
+        "endLine": 68,
+        "endChar": 14
+      },
+      "revId": "582cc6e3a9a09fc78e93e26a64382ccc24b95179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e64929d_02c7dafd",
+        "filename": "components/omnibox/browser/autocomplete_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-05T19:28:29Z",
+      "side": 1,
+      "message": "This description doesn\u0027t seem right.  You don\u0027t check that the default match is a query.",
+      "range": {
+        "startLine": 345,
+        "startChar": 25,
+        "endLine": 345,
+        "endChar": 26
+      },
+      "revId": "582cc6e3a9a09fc78e93e26a64382ccc24b95179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd874c19_1fabfc02",
+        "filename": "components/omnibox/browser/autocomplete_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-05T19:28:29Z",
+      "side": 1,
+      "message": "nit: usually we put parens around binary operators",
+      "range": {
+        "startLine": 348,
+        "startChar": 6,
+        "endLine": 348,
+        "endChar": 11
+      },
+      "revId": "582cc6e3a9a09fc78e93e26a64382ccc24b95179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57a6ba0d_c0455c1c",
+        "filename": "components/omnibox/browser/autocomplete_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-05T19:28:29Z",
+      "side": 1,
+      "message": "Under what conditions is this false?\n\n(Without giving it much thought, I\u0027d think this should basically always be true.  If you don\u0027t know when it\u0027ll be false--it\u0027s just guarding the call below--say so in the comment that it\u0027s just to protect against an invalid derefence.)",
+      "range": {
+        "startLine": 349,
+        "startChar": 41,
+        "endLine": 349,
+        "endChar": 44
+      },
+      "revId": "582cc6e3a9a09fc78e93e26a64382ccc24b95179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae0a8739_91848f97",
+        "filename": "components/omnibox/browser/autocomplete_provider_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-05T19:28:29Z",
+      "side": 1,
+      "message": "nit: somehow this seems better placed near PrefetchImage(), before OnAutocompleteControllerResultReady().",
+      "range": {
+        "startLine": 127,
+        "startChar": 13,
+        "endLine": 127,
+        "endChar": 17
+      },
+      "revId": "582cc6e3a9a09fc78e93e26a64382ccc24b95179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f278a16_61e05367",
+        "filename": "components/omnibox/browser/autocomplete_provider_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-05T19:28:29Z",
+      "side": 1,
+      "message": "I\u0027m wondering if the code and function semantics would be easier of the ChromeAutocompleteProviderClient was the one that enforced the \"once per session\" restriction.  I.e., it keeps track of it rather than the callers.",
+      "range": {
+        "startLine": 130,
+        "startChar": 15,
+        "endLine": 130,
+        "endChar": 22
+      },
+      "revId": "582cc6e3a9a09fc78e93e26a64382ccc24b95179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84818b77_6c106874",
+        "filename": "components/omnibox/browser/autocomplete_provider_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-05T19:28:29Z",
+      "side": 1,
+      "message": "If this is just for *search* service workers, please use search in the GURL name.",
+      "range": {
+        "startLine": 131,
+        "startChar": 45,
+        "endLine": 131,
+        "endChar": 46
+      },
+      "revId": "582cc6e3a9a09fc78e93e26a64382ccc24b95179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
