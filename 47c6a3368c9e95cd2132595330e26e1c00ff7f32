@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "75aa3edc_799bd943",
+        "filename": "components/favicon/core/large_icon_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-05T07:25:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87b283e9_4d22ebd1",
+      "range": {
+        "startLine": 279,
+        "startChar": 72,
+        "endLine": 279,
+        "endChar": 0
+      },
+      "revId": "47c6a3368c9e95cd2132595330e26e1c00ff7f32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24c83070_8c2b33c2",
         "filename": "components/favicon_base/favicon_types.h",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "47c6a3368c9e95cd2132595330e26e1c00ff7f32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4fbae8f_7fccbc63",
+        "filename": "components/favicon_base/favicon_types.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-05T07:25:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24c83070_8c2b33c2",
+      "range": {
+        "startLine": 133,
+        "startChar": 57,
+        "endLine": 133,
+        "endChar": 62
+      },
+      "revId": "47c6a3368c9e95cd2132595330e26e1c00ff7f32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
