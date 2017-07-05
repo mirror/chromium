@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "37cad6b8_6e7aff7b",
+        "filename": "gpu/ipc/service/gpu_channel_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1105324
+      },
+      "writtenOn": "2017-07-05T14:05:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "975a22d6_819f58cf",
+      "revId": "53df816a66945f93165fd42817bf5f5d33dbbafd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "387cad2f_04d6e6e6",
         "filename": "gpu/ipc/service/gpu_channel_manager.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "53df816a66945f93165fd42817bf5f5d33dbbafd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "946033df_405607f2",
+        "filename": "gpu/ipc/service/gpu_channel_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1105324
+      },
+      "writtenOn": "2017-07-05T14:05:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "387cad2f_04d6e6e6",
+      "revId": "53df816a66945f93165fd42817bf5f5d33dbbafd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
