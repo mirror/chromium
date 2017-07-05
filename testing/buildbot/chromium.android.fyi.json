@@ -1868,12 +1868,6 @@
       {
         "test": "webview_instrumentation_test_apk"
       }
-    ],
-    "scripts": [
-      {
-        "name": "telemetry_perf_unittests",
-        "script": "telemetry_perf_unittests.py"
-      }
     ]
   },
   "Unswarmed N5X Tests Dummy Builder": {
@@ -2055,12 +2049,6 @@
       },
       {
         "test": "webview_instrumentation_test_apk"
-      }
-    ],
-    "scripts": [
-      {
-        "name": "telemetry_perf_unittests",
-        "script": "telemetry_perf_unittests.py"
       }
     ]
   },
