@@ -50,6 +50,10 @@ class WorkerFetchContextImpl : public blink::WebWorkerFetchContext,
   void DidRunContentWithCertificateErrors(const blink::WebURL& url) override;
   void DidDisplayContentWithCertificateErrors(
       const blink::WebURL& url) override;
+  void SetSubresourceFilter(
+      std::unique_ptr<blink::WebDocumentSubresourceFilter>) override;
+  std::unique_ptr<blink::WebDocumentSubresourceFilter> TakeSubresourceFilter()
+      override;
 
   // mojom::ServiceWorkerWorkerClient implementation:
   void SetControllerServiceWorker(int64_t controller_version_id) override;
@@ -84,6 +88,7 @@ class WorkerFetchContextImpl : public blink::WebWorkerFetchContext,
   int controller_version_id_ = kInvalidServiceWorkerVersionId;
 
   scoped_refptr<ThreadSafeSender> thread_safe_sender_;
+  std::unique_ptr<blink::WebDocumentSubresourceFilter> subresource_filter_;
   bool is_data_saver_enabled_ = false;
   int parent_frame_id_ = MSG_ROUTING_NONE;
   GURL first_party_for_cookies_;
