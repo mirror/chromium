@@ -22,6 +22,30 @@
       "revId": "c8aba23c4b42ccfb6e6220b2c8ff24bd88eb0fdb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d51558f_35993be3",
+        "filename": "components/about_ui/resources/about_credits.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-07-05T19:33:13Z",
+      "side": 1,
+      "message": "Many thanks!",
+      "parentUuid": "3c6f016e_dea109be",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 5
+      },
+      "revId": "c8aba23c4b42ccfb6e6220b2c8ff24bd88eb0fdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
