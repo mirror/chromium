@@ -920,7 +920,7 @@ sk_sp<SkImage> GLRenderer::ApplyBackgroundFilters(
       (rect.bottom_left() - unclipped_rect.bottom_left());
   sk_sp<SkImageFilter> filter = RenderSurfaceFilters::BuildImageFilter(
       background_filters, gfx::SizeF(background_texture->size()),
-      clipping_offset);
+      clipping_offset, SkBlurImageFilter::kClamp_TileMode);
 
   // TODO(senorblanco): background filters should be moved to the
   // makeWithFilter fast-path, and go back to calling ApplyImageFilter().

@@ -12,7 +12,6 @@
 #include "cc/base/filter_operations.h"
 #include "third_party/skia/include/core/SkImageFilter.h"
 #include "third_party/skia/include/effects/SkAlphaThresholdFilter.h"
-#include "third_party/skia/include/effects/SkBlurImageFilter.h"
 #include "third_party/skia/include/effects/SkColorFilterImageFilter.h"
 #include "third_party/skia/include/effects/SkColorMatrixFilter.h"
 #include "third_party/skia/include/effects/SkComposeImageFilter.h"
@@ -155,7 +154,8 @@ sk_sp<SkImageFilter> CreateMatrixImageFilter(const SkScalar matrix[20],
 sk_sp<SkImageFilter> RenderSurfaceFilters::BuildImageFilter(
     const FilterOperations& filters,
     const gfx::SizeF& size,
-    const gfx::Vector2dF& offset) {
+    const gfx::Vector2dF& offset,
+    SkBlurImageFilter::TileMode tileMode) {
   sk_sp<SkImageFilter> image_filter;
   SkScalar matrix[20];
   for (size_t i = 0; i < filters.size(); ++i) {
@@ -194,8 +194,9 @@ sk_sp<SkImageFilter> RenderSurfaceFilters::BuildImageFilter(
         image_filter = CreateMatrixImageFilter(matrix, std::move(image_filter));
         break;
       case FilterOperation::BLUR:
-        image_filter = SkBlurImageFilter::Make(op.amount(), op.amount(),
-                                               std::move(image_filter));
+        image_filter =
+            SkBlurImageFilter::Make(op.amount(), op.amount(),
+                                    std::move(image_filter), nullptr, tileMode);
         break;
       case FilterOperation::DROP_SHADOW:
         image_filter = SkDropShadowImageFilter::Make(
