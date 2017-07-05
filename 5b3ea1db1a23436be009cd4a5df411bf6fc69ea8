@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4045074_fbe4b6c2",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/SubstituteData.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-05T14:39:57Z",
+      "side": 1,
+      "message": "nit: you can probably just use delegated constructor to save some duplicated initialization",
+      "revId": "5b3ea1db1a23436be009cd4a5df411bf6fc69ea8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
