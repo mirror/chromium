@@ -54,6 +54,10 @@ class MockWPTGitHub(object):
         self.calls.append('add_label "%s"' % label)
         return {}, 200
 
+    def remove_label(self, _, label='default'):
+        self.calls.append('remove_label "%s"' % label)
+        return {}, 204
+
     def get_pr_branch(self, number):
         self.calls.append('get_pr_branch')
         return 'fake branch for PR {}'.format(number)

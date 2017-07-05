@@ -143,6 +143,7 @@ class TestExporterTest(unittest.TestCase):
         test_exporter.run()
         self.assertEqual(test_exporter.wpt_github.calls, [
             'pr_with_position',
+            'remove_label "do not merge yet"',
             'get_pr_branch',
             'merge_pull_request',
             'pr_with_position',
@@ -150,6 +151,7 @@ class TestExporterTest(unittest.TestCase):
             'add_label "default"',
             'pr_with_position',
             'pr_with_position',
+            'remove_label "do not merge yet"',
             'get_pr_branch',
             'merge_pull_request',
             'delete_remote_branch',
@@ -290,6 +292,7 @@ class TestExporterTest(unittest.TestCase):
         self.assertEqual(test_exporter.wpt_github.calls, [
             'pr_with_position',
             'pr_with_change_id',
+            'remove_label "do not merge yet"',
             'get_pr_branch',
             'merge_pull_request',
             'delete_remote_branch',

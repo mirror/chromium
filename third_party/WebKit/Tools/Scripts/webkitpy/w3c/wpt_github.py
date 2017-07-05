@@ -119,6 +119,18 @@ class WPTGitHub(object):
         body = [label]
         return self.request(path, method='POST', body=body)
 
+    def remove_label(self, number, label):
+        path = '/repos/%s/%s/issues/%d/labels/%s' % (
+            WPT_GH_ORG,
+            WPT_GH_REPO_NAME,
+            number,
+            label,
+        )
+        _, status_code = self.request(path, method='DELETE')
+        if status_code != 204:
+            # TODO(jeffcarp): Raise more specific exception
+            raise Exception('Received non-204 status code attempting to delete remote branch: {}'.format(status_code))
+
     def in_flight_pull_requests(self):
         path = '/search/issues?q=repo:{}/{}%20is:open%20type:pr%20label:{}'.format(
             WPT_GH_ORG,
