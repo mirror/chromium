@@ -26,16 +26,12 @@ TEST_F(SimpleThumbnailCropTest, GetCanvasCopyInfo) {
   gfx::Size expected_2x_size = gfx::ScaleToFlooredSize(thumbnail_size, 2.0);
   float desired_aspect =
       static_cast<float>(thumbnail_size.width()) / thumbnail_size.height();
-  scoped_refptr<thumbnails::ThumbnailingAlgorithm> algorithm(
-      new SimpleThumbnailCrop(thumbnail_size));
   gfx::Rect clipping_rect_result;
   gfx::Size target_size_result;
 
-  thumbnails::ClipResult clip_result = algorithm->GetCanvasCopyInfo(
-      gfx::Size(400, 210),
-      ui::SCALE_FACTOR_200P,
-      &clipping_rect_result,
-      &target_size_result);
+  thumbnails::ClipResult clip_result = SimpleThumbnailCrop::GetCanvasCopyInfo(
+      gfx::Size(400, 210), ui::SCALE_FACTOR_200P, thumbnail_size,
+      &clipping_rect_result, &target_size_result);
   gfx::Size clipping_size = clipping_rect_result.size();
   float clip_aspect =
       static_cast<float>(clipping_size.width()) / clipping_size.height();
@@ -43,11 +39,9 @@ TEST_F(SimpleThumbnailCropTest, GetCanvasCopyInfo) {
   EXPECT_EQ(expected_2x_size, target_size_result);
   EXPECT_NEAR(desired_aspect, clip_aspect, 0.01);
 
-  clip_result = algorithm->GetCanvasCopyInfo(
-      gfx::Size(600, 200),
-      ui::SCALE_FACTOR_200P,
-      &clipping_rect_result,
-      &target_size_result);
+  clip_result = SimpleThumbnailCrop::GetCanvasCopyInfo(
+      gfx::Size(600, 200), ui::SCALE_FACTOR_200P, thumbnail_size,
+      &clipping_rect_result, &target_size_result);
   clipping_size = clipping_rect_result.size();
   clip_aspect =
       static_cast<float>(clipping_size.width()) / clipping_size.height();
@@ -55,11 +49,9 @@ TEST_F(SimpleThumbnailCropTest, GetCanvasCopyInfo) {
   EXPECT_EQ(expected_2x_size, target_size_result);
   EXPECT_NEAR(desired_aspect, clip_aspect, 0.01);
 
-  clip_result = algorithm->GetCanvasCopyInfo(
-      gfx::Size(300, 600),
-      ui::SCALE_FACTOR_200P,
-      &clipping_rect_result,
-      &target_size_result);
+  clip_result = SimpleThumbnailCrop::GetCanvasCopyInfo(
+      gfx::Size(300, 600), ui::SCALE_FACTOR_200P, thumbnail_size,
+      &clipping_rect_result, &target_size_result);
   clipping_size = clipping_rect_result.size();
   clip_aspect =
       static_cast<float>(clipping_size.width()) / clipping_size.height();
@@ -67,19 +59,15 @@ TEST_F(SimpleThumbnailCropTest, GetCanvasCopyInfo) {
   EXPECT_EQ(expected_2x_size, target_size_result);
   EXPECT_NEAR(desired_aspect, clip_aspect, 0.01);
 
-  clip_result = algorithm->GetCanvasCopyInfo(
-      gfx::Size(200, 100),
-      ui::SCALE_FACTOR_200P,
-      &clipping_rect_result,
-      &target_size_result);
+  clip_result = SimpleThumbnailCrop::GetCanvasCopyInfo(
+      gfx::Size(200, 100), ui::SCALE_FACTOR_200P, thumbnail_size,
+      &clipping_rect_result, &target_size_result);
   EXPECT_EQ(thumbnails::CLIP_RESULT_SOURCE_IS_SMALLER, clip_result);
   EXPECT_EQ(expected_2x_size, target_size_result);
 }
 
 TEST_F(SimpleThumbnailCropTest, GetCanvasCopyInfoDifferentScales) {
   gfx::Size thumbnail_size(200, 120);
-  scoped_refptr<thumbnails::ThumbnailingAlgorithm> algorithm(
-      new SimpleThumbnailCrop(thumbnail_size));
 
   gfx::Rect clipping_rect_result;
   gfx::Size target_size_result;
@@ -87,19 +75,22 @@ TEST_F(SimpleThumbnailCropTest, GetCanvasCopyInfoDifferentScales) {
   gfx::Size expected_2x_size = gfx::ScaleToFlooredSize(thumbnail_size, 2.0);
 
   // Test at 1x scale. Expect a 2x thumbnail (we do this for quality).
-  algorithm->GetCanvasCopyInfo(gfx::Size(400, 210), ui::SCALE_FACTOR_100P,
-                               &clipping_rect_result, &target_size_result);
+  SimpleThumbnailCrop::GetCanvasCopyInfo(
+      gfx::Size(400, 210), ui::SCALE_FACTOR_100P, thumbnail_size,
+      &clipping_rect_result, &target_size_result);
   EXPECT_EQ(expected_2x_size, target_size_result);
 
   // Test at 2x scale.
-  algorithm->GetCanvasCopyInfo(gfx::Size(400, 210), ui::SCALE_FACTOR_200P,
-                               &clipping_rect_result, &target_size_result);
+  SimpleThumbnailCrop::GetCanvasCopyInfo(
+      gfx::Size(400, 210), ui::SCALE_FACTOR_200P, thumbnail_size,
+      &clipping_rect_result, &target_size_result);
   EXPECT_EQ(expected_2x_size, target_size_result);
 
   // Test at 3x scale.
   gfx::Size expected_3x_size = gfx::ScaleToFlooredSize(thumbnail_size, 3.0);
-  algorithm->GetCanvasCopyInfo(gfx::Size(400, 210), ui::SCALE_FACTOR_300P,
-                               &clipping_rect_result, &target_size_result);
+  SimpleThumbnailCrop::GetCanvasCopyInfo(
+      gfx::Size(400, 210), ui::SCALE_FACTOR_300P, thumbnail_size,
+      &clipping_rect_result, &target_size_result);
   EXPECT_EQ(expected_3x_size, target_size_result);
 }
 
