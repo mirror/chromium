@@ -269,12 +269,16 @@ void FormFetcherImpl::Fetch() {
 }
 
 std::unique_ptr<FormFetcher> FormFetcherImpl::Clone() {
-  DCHECK_EQ(State::NOT_WAITING, state_);
-
   // Create the copy without the "HTTPS migration" activated. If it was needed,
   // then it was done by |this| already.
   auto result = base::MakeUnique<FormFetcherImpl>(
       form_digest_, client_, false, should_query_suppressed_forms_);
+
+  if (state_ != State::NOT_WAITING) {
+    // There are no store results to copy, trigger a Fetch on the clone instead.
+    result->Fetch();
+    return result;
+  }
 
   result->non_federated_ = MakeCopies(this->non_federated_);
   result->federated_ = MakeCopies(this->federated_);
