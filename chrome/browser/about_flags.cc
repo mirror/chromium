@@ -3123,6 +3123,11 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kModuleScriptsDescription, kOsAll,
      FEATURE_VALUE_TYPE(features::kModuleScripts)},
 
+    {"enable-resource-load-scheduler",
+     flag_descriptions::kResourceLoadSchedulerName,
+     flag_descriptions::kResourceLoadSchedulerDescription, kOsAll,
+     FEATURE_VALUE_TYPE(features::kResourceLoadScheduler)},
+
     // NOTE: Adding new command-line switches requires adding corresponding
     // entries to enum "LoginCustomFlags" in histograms/enums.xml. See note in
     // enums.xml and don't forget to run AboutFlagsHistogramTest unit test.

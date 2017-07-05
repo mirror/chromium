@@ -5,13 +5,24 @@
 #include "platform/loader/fetch/ResourceLoadScheduler.h"
 
 #include "platform/RuntimeEnabledFeatures.h"
+#include "platform/loader/field_trial/LoaderTrial.h"
 
 namespace blink {
 
 namespace {
 
-// TODO(toyoshim): Should be managed via field trial flag.
-constexpr size_t kOutstandingThrottledLimit = 16u;
+// Field trial name.
+const char kResourceLoadSchedulerTrial[] = "ResourceLoadScheduler";
+
+// Field trial parameter names.
+const char kOutstandingLimitForBackgroundFrameName[] = "bg_limit";
+
+// Field trial default parameters.
+constexpr size_t kOutstandingLimitForBackgroundFrameDefault = 16u;
+
+// Outstanding limit for throttled frames. Managed via the field trial.
+size_t g_outstanding_throttled_limit =
+    kOutstandingLimitForBackgroundFrameDefault;
 
 }  // namespace
 
@@ -24,6 +35,12 @@ ResourceLoadScheduler::ResourceLoadScheduler(FetchContext* context)
 
   if (!RuntimeEnabledFeatures::ResourceLoadSchedulerEnabled())
     return;
+
+  // Initialize field trial parameters through settings for the assigned group.
+  LoaderTrial trial(kResourceLoadSchedulerTrial);
+  g_outstanding_throttled_limit =
+      trial.GetUint32Param(kOutstandingLimitForBackgroundFrameName,
+                           kOutstandingLimitForBackgroundFrameDefault);
 
   auto* scheduler = context->GetFrameScheduler();
   if (!scheduler)
@@ -108,7 +125,7 @@ void ResourceLoadScheduler::OnThrottlingStateChanged(
     WebFrameScheduler::ThrottlingState state) {
   switch (state) {
     case WebFrameScheduler::ThrottlingState::kThrottled:
-      SetOutstandingLimitAndMaybeRun(kOutstandingThrottledLimit);
+      SetOutstandingLimitAndMaybeRun(g_outstanding_throttled_limit);
       break;
     case WebFrameScheduler::ThrottlingState::kNotThrottled:
       SetOutstandingLimitAndMaybeRun(kOutstandingUnlimited);

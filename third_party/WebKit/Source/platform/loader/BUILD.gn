@@ -77,6 +77,8 @@ source_set("loader") {
     "fetch/TextResourceDecoderOptions.h",
     "fetch/UniqueIdentifier.cpp",
     "fetch/UniqueIdentifier.h",
+    "field_trial/LoaderTrial.cpp",
+    "field_trial/LoaderTrial.h",
   ]
 
   sources += get_target_outputs(
