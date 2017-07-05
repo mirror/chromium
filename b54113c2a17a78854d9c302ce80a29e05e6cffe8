@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3123194f_164bff56",
+        "filename": "components/about_ui/resources/about_credits.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2017-07-05T20:38:13Z",
+      "side": 1,
+      "message": "note: key probabbbbbly works, but there is a polyfill in ui/webui/resources/js/util.js that we added for some reason (just not sure if it\u0027s still necessary)\n\nhttps://cs.chromium.org/chromium/src/ui/webui/resources/js/util.js?q\u003dutil.js\u0026sq\u003dpackage:chromium\u0026dr\u0026l\u003d436",
+      "range": {
+        "startLine": 23,
+        "startChar": 18,
+        "endLine": 23,
+        "endChar": 23
+      },
+      "revId": "b54113c2a17a78854d9c302ce80a29e05e6cffe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
