@@ -12,6 +12,10 @@
 #include "media/remoting/metrics.h"
 #include "media/remoting/shared_session.h"
 
+namespace blink {
+class WebRemotePlaybackClient;
+}  // namespace blink
+
 namespace media {
 namespace remoting {
 
@@ -41,6 +45,7 @@ class RendererController final : public SharedSession::Client,
   void OnRemotePlaybackDisabled(bool disabled) override;
   void OnPlaying() override;
   void OnPaused() override;
+  void OnDataSourceInitialized(const GURL& url_after_redirects) override;
   void SetClient(MediaObserverClient* client) override;
 
   base::WeakPtr<RendererController> GetWeakPtr() {
@@ -68,6 +73,9 @@ class RendererController final : public SharedSession::Client,
   // this controller.
   void OnRendererFatalError(StopTrigger stop_trigger);
 
+  void SetRemotePlaybackClient(
+      blink::WebRemotePlaybackClient* remote_playback_client);
+
  private:
   bool has_audio() const {
     return pipeline_metadata_.has_audio &&
@@ -88,6 +96,7 @@ class RendererController final : public SharedSession::Client,
   bool IsVideoCodecSupported();
   bool IsAudioCodecSupported();
   bool IsRemoteSinkAvailable();
+  bool IsAudioOrVideoSupported();
 
   // Helper to decide whether to enter or leave Remoting mode.
   bool ShouldBeRemoting();
@@ -98,6 +107,11 @@ class RendererController final : public SharedSession::Client,
   // |stop_trigger| must be the reason.
   void UpdateAndMaybeSwitch(StartTrigger start_trigger,
                             StopTrigger stop_trigger);
+
+  // Updates |remote_playback_client_| with the currently known info about the
+  // source (url, CORS and metadata). Must be called whenever any of the info
+  // changes.
+  void UpdateRemotePlaybackClientWithSource();
 
   // Indicates whether this media element is in full screen.
   bool is_fullscreen_ = false;
@@ -143,11 +157,18 @@ class RendererController final : public SharedSession::Client,
   // Current pipeline metadata.
   PipelineMetadata pipeline_metadata_;
 
+  // Current data source information.
+  GURL url_after_redirects_;
+
   // Records session events of interest.
   SessionMetricsRecorder metrics_recorder_;
 
-  // Not own by this class. Can only be set once by calling SetClient().
+  // Not owned by this class. Can only be set once by calling SetClient().
   MediaObserverClient* client_ = nullptr;
+
+  // Not owned by this class. Can only be set once by calling
+  // SetRemotePlaybackClient().
+  blink::WebRemotePlaybackClient* remote_playback_client_ = nullptr;
 
   base::WeakPtrFactory<RendererController> weak_factory_;
 
