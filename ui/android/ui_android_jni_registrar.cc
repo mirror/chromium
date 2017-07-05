@@ -13,12 +13,15 @@
 #include "ui/android/screen_android.h"
 #include "ui/android/view_android.h"
 #include "ui/android/window_android.h"
+#include "ui/events/devices/input_device_observer_android.h"
 
 namespace ui {
 
 static base::android::RegistrationMethod kAndroidRegisteredMethods[] = {
     {"DisplayAndroidManager", ui::RegisterScreenAndroid},
     {"EventForwarder", ui::RegisterEventForwarder},
+    {"InputDeviceObserver",
+     InputDeviceObserverAndroid::RegisterInputDeviceObserver},
     {"ResourceFactory", ui::RegisterResourceFactory},
     {"ResourceManager", ui::ResourceManagerImpl::RegisterResourceManager},
     {"WindowAndroid", WindowAndroid::RegisterWindowAndroid},
