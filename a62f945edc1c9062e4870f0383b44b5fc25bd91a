@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "76b2cf93_e64fab33",
+        "filename": "third_party/WebKit/Source/modules/payments/PaymentEventDataConversion.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2017-07-05T17:12:32Z",
+      "side": 1,
+      "message": "The file isn\u0027t a new file. Just rename and add one function.\nI tried --similarity option but it still is marked as \u0027A\u0027.",
+      "parentUuid": "88ce7987_71a23b74",
+      "revId": "a62f945edc1c9062e4870f0383b44b5fc25bd91a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5159c88c_e59c3594",
         "filename": "third_party/WebKit/public/platform/modules/payments/WebCanMakePaymentEventData.h",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "81dcce3a_94e44a8f",
+        "filename": "third_party/WebKit/public/platform/modules/payments/WebCanMakePaymentEventData.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2017-07-05T17:12:32Z",
+      "side": 1,
+      "message": "Done.\n\nYep. I saw the your comment at the issue and I\u0027m waiting for your PR!\nIf you are busy, I can make a PR quickly when I fix it in follow-up CL.\n\nThank you!",
+      "parentUuid": "5159c88c_e59c3594",
+      "revId": "a62f945edc1c9062e4870f0383b44b5fc25bd91a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d62904a8_14ee9e55",
         "filename": "third_party/WebKit/public/platform/modules/payments/WebPaymentRequestEventData.h",
         "patchSetId": 6
@@ -50,6 +86,24 @@
       "revId": "a62f945edc1c9062e4870f0383b44b5fc25bd91a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01750825_51e50869",
+        "filename": "third_party/WebKit/public/platform/modules/payments/WebPaymentRequestEventData.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2017-07-05T17:12:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d62904a8_14ee9e55",
+      "revId": "a62f945edc1c9062e4870f0383b44b5fc25bd91a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
