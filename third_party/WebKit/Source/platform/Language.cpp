@@ -28,7 +28,7 @@
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/Platform.h"
 
-namespace blink {
+namespace {
 
 static String CanonicalizeLanguageIdentifier(const String& language_code) {
   String copied_code = language_code;
@@ -37,22 +37,45 @@ static String CanonicalizeLanguageIdentifier(const String& language_code) {
   return copied_code;
 }
 
-static const AtomicString& PlatformLanguage() {
-  DEFINE_STATIC_LOCAL(AtomicString, computed_default_language, ());
-  if (computed_default_language.IsEmpty()) {
-    computed_default_language = AtomicString(
-        CanonicalizeLanguageIdentifier(Platform::Current()->DefaultLocale()));
-    DCHECK(!computed_default_language.IsEmpty());
+// Main thread AtomicString. IsolatedCopy needed for any other thread.
+const AtomicString* g_platform_language = nullptr;
+
+const AtomicString& PlatformLanguage() {
+  return *g_platform_language;
+}
+
+Vector<AtomicString>& PreferredLanguagesOverride() {
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(ThreadSpecific<Vector<AtomicString>>,
+                                  thread_specific_languages, ());
+  return *thread_specific_languages;
+}
+
+}  // namespace
+
+namespace blink {
+
+void InitializePlatformLanguage() {
+  DCHECK(IsMainThread());
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(
+      AtomicString, platform_language, (([]() {
+        String canonicalized = CanonicalizeLanguageIdentifier(
+            blink::Platform::Current()->DefaultLocale());
+        StringImpl* impl = StringImpl::CreateStatic(
+            reinterpret_cast<const char*>(canonicalized.Characters8()),
+            canonicalized.length(),
+            StringHasher::ComputeHashAndMaskTop8Bits(
+                canonicalized.Characters8(), canonicalized.length()));
+
+        return AtomicString(impl);
+      })()));
+
+  if (!g_platform_language) {
+    g_platform_language = &platform_language;
   }
-  return computed_default_language;
 }
 
-static Vector<AtomicString>& PreferredLanguagesOverride() {
-  DEFINE_STATIC_LOCAL(Vector<AtomicString>, override, ());
-  return override;
-}
-
-void OverrideUserPreferredLanguages(const Vector<AtomicString>& override) {
+void OverrideUserPreferredLanguagesForTesting(
+    const Vector<AtomicString>& override) {
   Vector<AtomicString>& canonicalized = PreferredLanguagesOverride();
   canonicalized.resize(0);
   canonicalized.ReserveCapacity(override.size());
