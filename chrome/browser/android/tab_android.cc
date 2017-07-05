@@ -576,7 +576,8 @@ bool TabAndroid::Print(JNIEnv* env, const JavaParamRef<jobject>& obj) {
   if (!print_view_manager)
     return false;
 
-  print_view_manager->PrintNow(printing::GetFrameToPrint(web_contents()));
+  print_view_manager->PrintNow(
+      printing::GetRenderFrameHostToPrint(web_contents()));
   return true;
 }
 

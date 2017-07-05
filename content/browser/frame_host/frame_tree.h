@@ -149,12 +149,17 @@ class CONTENT_EXPORT FrameTree {
   // Returns the focused frame.
   FrameTreeNode* GetFocusedFrame();
 
+  // Returns the frame which fired window.print().
+  FrameTreeNode* GetScriptedPrintFrame();
+
   // Sets the focused frame to |node|.  |source| identifies the SiteInstance
   // that initiated this focus change.  If this FrameTree has SiteInstances
   // other than |source|, those SiteInstances will be notified about the new
   // focused frame.   Note that |source| may differ from |node|'s current
   // SiteInstance (e.g., this happens for cross-process window.focus() calls).
   void SetFocusedFrame(FrameTreeNode* node, SiteInstance* source);
+
+  void SetScriptedPrintFrame(FrameTreeNode* node);
 
   // Allows a client to listen for frame removal.  The listener should expect
   // to receive the RenderViewHostImpl containing the frame and the renderer-
@@ -242,6 +247,8 @@ class CONTENT_EXPORT FrameTree {
   FrameTreeNode* root_;
 
   int focused_frame_tree_node_id_;
+
+  int scripted_print_frame_tree_node_id_;
 
   base::Callback<void(RenderFrameHost*)> on_frame_removed_;
 
