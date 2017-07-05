@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a08a347_fe67b72b",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-05T07:41:49Z",
+      "side": 1,
+      "message": "I\u0027ve tried to fix this (https://crrev.com/c/559228/ ) by using io_task_runner-\u003ePostTaskAndReply with splitting the start worker task into two part, but I found potential ordering issue between StartWorker and other IPCs reaching to EmbeddedWorkerInstanceClientImpl.\nI feel WaitableEvent is useful and safer than posting task if it\u0027s acceptable (and it might be acceptable because the io thread is basically free compared to the main thread).\nDoes anyone have suggestion?",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 50
+      },
+      "revId": "0bf68cc35cc929e7e4de64d08feb9dbde48d2ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
