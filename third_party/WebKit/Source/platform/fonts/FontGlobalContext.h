@@ -17,7 +17,11 @@ struct hb_font_funcs_t;
 
 namespace blink {
 
+class LayoutLocale;
 class FontCache;
+
+using LayoutLocaleMap =
+    HashMap<AtomicString, RefPtr<LayoutLocale>, CaseFoldingHash>;
 
 enum CreateIfNeeded { kDoNotCreate, kCreate };
 
@@ -43,8 +47,43 @@ class PLATFORM_EXPORT FontGlobalContext {
     Get()->harfbuzz_font_funcs_ = funcs;
   }
 
+  static inline LayoutLocaleMap& GetLayoutLocaleMap() {
+    return Get()->layout_locale_map_;
+  }
+
+  static inline const LayoutLocale* GetDefaultLayoutLocale() {
+    return Get()->default_locale_;
+  }
+  static inline void SetDefaultLayoutLocale(const LayoutLocale* locale) {
+    Get()->default_locale_ = locale;
+  }
+  static inline const LayoutLocale* GetSystemLayoutLocale() {
+    return Get()->system_locale_;
+  }
+  static inline void SetSystemLayoutLocale(const LayoutLocale* locale) {
+    Get()->system_locale_ = locale;
+  }
+
+  static inline const LayoutLocale* GetDefaultLocaleForHan() {
+    DCHECK(Get()->has_default_locale_for_han_);
+    return Get()->default_locale_for_han_;
+  }
+  static inline void SetDefaultLocaleForHan(const LayoutLocale* locale) {
+    Get()->default_locale_for_han_ = locale;
+    Get()->has_default_locale_for_han_ = true;
+  }
+  static inline void InvalidateLocaleForHan() {
+    Get()->default_locale_for_han_ = nullptr;
+    Get()->has_default_locale_for_han_ = false;
+  }
+  static inline bool HasDefaultLocaleForHan() {
+    return Get()->has_default_locale_for_han_;
+  }
+
   // Called by MemoryCoordinator to clear memory.
   static void ClearMemory();
+
+  static void ClearForTesting();
 
  private:
   friend class WTF::ThreadSpecific<FontGlobalContext>;
@@ -56,6 +95,12 @@ class PLATFORM_EXPORT FontGlobalContext {
   HarfBuzzFontCache harf_buzz_font_cache_;
 
   hb_font_funcs_t* harfbuzz_font_funcs_;
+
+  LayoutLocaleMap layout_locale_map_;
+  const LayoutLocale* default_locale_;
+  const LayoutLocale* system_locale_;
+  const LayoutLocale* default_locale_for_han_;
+  bool has_default_locale_for_han_;
 };
 
 }  // namespace blink
