@@ -299,7 +299,9 @@ public class PrintingControllerImpl implements PrintingController, PdfGenerator 
         }
 
         if (mContextFromScriptInitiation != null) {
+            Log.w("chromium", "onfinish");
             mContextFromScriptInitiation.showSystemDialogDone();
+            mContextFromScriptInitiation.clearScriptedPrintFrame();
             mContextFromScriptInitiation = null;
         }
 

@@ -19,6 +19,8 @@
 #include "chrome/browser/printing/print_view_manager_basic.h"
 #endif  // BUILDFLAG(ENABLE_PRINT_PREVIEW)
 
+#include "base/logging.h"
+
 namespace printing {
 
 namespace {
@@ -120,6 +122,19 @@ content::RenderFrameHost* GetFrameToPrint(content::WebContents* contents) {
   return (focused_frame && focused_frame->HasSelection())
              ? focused_frame
              : contents->GetMainFrame();
+}
+
+content::RenderFrameHost* GetRenderFrameHostToPrint(content::WebContents* contents) {
+  auto* scripted_print_frame = contents->GetScriptedPrintFrame();
+  LOG(WARNING) << "scripted_print_frame = " << scripted_print_frame;
+  if (scripted_print_frame)
+    return scripted_print_frame;
+  auto* focused_frame = contents->GetFocusedFrame();
+  LOG(WARNING) << "focused_frame = " << focused_frame;
+  if (focused_frame && focused_frame->HasSelection())
+    return focused_frame;
+  LOG(WARNING) << "main_frame = " << contents->GetMainFrame();
+  return contents->GetMainFrame();
 }
 
 }  // namespace printing

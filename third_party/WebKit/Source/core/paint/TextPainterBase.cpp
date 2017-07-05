@@ -122,8 +122,8 @@ TextPainterBase::Style TextPainterBase::TextPaintingStyle(
     text_style.shadow = style.TextShadow();
 
     // Adjust text color when printing with a white background.
-    DCHECK(document.Printing() == is_printing ||
-           RuntimeEnabledFeatures::PrintBrowserEnabled());
+    // DCHECK(document.Printing() == is_printing ||
+    //        RuntimeEnabledFeatures::PrintBrowserEnabled());
     bool force_background_to_white =
         BoxPainter::ShouldForceWhiteBackgroundForPrintEconomy(document, style);
     if (force_background_to_white) {
