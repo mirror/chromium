@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "45fad0d7_5981b84a",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-07-05T07:22:52Z",
+      "side": 1,
+      "message": "marked as resolved",
+      "parentUuid": "15f381ff_6a27eaf4",
+      "revId": "cb044baae525a7aedf432f8316b983a3e90f78bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62374e12_93376842",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
         "patchSetId": 8
@@ -69,6 +87,24 @@
       "revId": "cb044baae525a7aedf432f8316b983a3e90f78bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2b4d950_4dc9bd64",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-07-05T07:22:52Z",
+      "side": 1,
+      "message": "remove these comments and change this to SECURITY_CHECK. Also for testing, I add a rule to reset outstanding limit before Shutdown() to set is_enabled_ false.",
+      "parentUuid": "62374e12_93376842",
+      "revId": "cb044baae525a7aedf432f8316b983a3e90f78bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -180,6 +216,24 @@
       "revId": "cb044baae525a7aedf432f8316b983a3e90f78bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abc032a5_6230db49",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-07-05T07:22:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6de86935_183952da",
+      "revId": "cb044baae525a7aedf432f8316b983a3e90f78bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

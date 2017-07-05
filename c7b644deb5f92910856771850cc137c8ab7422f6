@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "de4b0f5e_aded1444",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-07-05T07:22:52Z",
+      "side": 1,
+      "message": "OK, current implementation works with such checks.\nLet me update this to reflect Yutaka and Kinuko\u0027s ideas.",
+      "parentUuid": "79b274e4_b79e8448",
+      "revId": "c7b644deb5f92910856771850cc137c8ab7422f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fcc77259_b15a1367",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/FetchContext.h",
         "patchSetId": 9
@@ -69,6 +87,24 @@
       "revId": "c7b644deb5f92910856771850cc137c8ab7422f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1e2bf0c_a54af238",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/FetchContext.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-07-05T07:22:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fcc77259_b15a1367",
+      "revId": "c7b644deb5f92910856771850cc137c8ab7422f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -89,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "4274a4c8_87f5f242",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-07-05T07:22:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efe23d73_4e28155f",
+      "revId": "c7b644deb5f92910856771850cc137c8ab7422f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90be6855_49ddd126",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
         "patchSetId": 9
@@ -103,6 +157,24 @@
       "revId": "c7b644deb5f92910856771850cc137c8ab7422f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e12382cf_74a3254e",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-07-05T07:22:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90be6855_49ddd126",
+      "revId": "c7b644deb5f92910856771850cc137c8ab7422f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
