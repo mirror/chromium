@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4208c2b6_c8552642",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 25
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-07-05T18:12:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "996a88aa_5cec7560",
+      "revId": "da65c017f05d5f9eb013dc61c924c006b674d197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5bd5894a_075beeb0",
         "filename": "chrome/browser/offline_pages/prefetch/prefetch_service_factory.cc",
         "patchSetId": 25
@@ -33,6 +51,24 @@
       "revId": "da65c017f05d5f9eb013dc61c924c006b674d197",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d42aed8_2c6552c0",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_service_factory.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-07-05T18:12:09Z",
+      "side": 1,
+      "message": "This stays that way per our discussion.",
+      "parentUuid": "5bd5894a_075beeb0",
+      "revId": "da65c017f05d5f9eb013dc61c924c006b674d197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "dd81ce07_ba896e28",
+        "filename": "chrome/common/chrome_constants.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-07-05T18:12:09Z",
+      "side": 1,
+      "message": "Our code can stay, per discussion.",
+      "parentUuid": "ca504f96_f24eeff7",
+      "revId": "da65c017f05d5f9eb013dc61c924c006b674d197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3df6ed8c_03f84a10",
         "filename": "components/offline_pages/core/prefetch/add_unique_urls_task.cc",
         "patchSetId": 25
@@ -103,6 +157,24 @@
       "revId": "da65c017f05d5f9eb013dc61c924c006b674d197",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b75a29c_f7a9db64",
+        "filename": "components/offline_pages/core/prefetch/add_unique_urls_task.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-07-05T18:12:09Z",
+      "side": 1,
+      "message": "This can stay that way per our discussion and provided prefetch item documentation.",
+      "parentUuid": "99c10ed1_dcea6734",
+      "revId": "da65c017f05d5f9eb013dc61c924c006b674d197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -141,6 +213,24 @@
     },
     {
       "key": {
+        "uuid": "e7867a32_9c13dbd8",
+        "filename": "components/offline_pages/core/prefetch/add_unique_urls_task.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-07-05T18:12:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a26d4a9a_73908eeb",
+      "revId": "da65c017f05d5f9eb013dc61c924c006b674d197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "285ff6aa_e9a1daf2",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.cc",
         "patchSetId": 25
@@ -173,6 +263,24 @@
       "revId": "da65c017f05d5f9eb013dc61c924c006b674d197",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fb934f0_0af35dbb",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-07-05T18:12:09Z",
+      "side": 1,
+      "message": "Documentation provided. This looks OK per our discussion.",
+      "parentUuid": "2788695b_9bd0d51e",
+      "revId": "da65c017f05d5f9eb013dc61c924c006b674d197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -246,6 +354,24 @@
     },
     {
       "key": {
+        "uuid": "b1482e3d_ffbd8ecd",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-07-05T18:12:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f46cbe22_76ff88b6",
+      "revId": "da65c017f05d5f9eb013dc61c924c006b674d197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8f6e3ea_6e7d52b0",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.cc",
         "patchSetId": 25
@@ -266,6 +392,30 @@
       "revId": "da65c017f05d5f9eb013dc61c924c006b674d197",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "612246be_cc3aa976",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-07-05T18:12:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8f6e3ea_6e7d52b0",
+      "range": {
+        "startLine": 90,
+        "startChar": 6,
+        "endLine": 90,
+        "endChar": 19
+      },
+      "revId": "da65c017f05d5f9eb013dc61c924c006b674d197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -301,6 +451,24 @@
       "revId": "da65c017f05d5f9eb013dc61c924c006b674d197",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "391e9e3e_d079beea",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-07-05T18:12:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9cd9711d_0f032e01",
+      "revId": "da65c017f05d5f9eb013dc61c924c006b674d197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
