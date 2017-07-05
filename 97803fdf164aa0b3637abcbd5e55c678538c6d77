@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "56447f3a_3588d8d0",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_database_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-05T09:22:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59278427_921a04b8",
+      "revId": "97803fdf164aa0b3637abcbd5e55c678538c6d77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1162df72_7e6ebfad",
         "filename": "components/password_manager/core/browser/android_affiliation/affiliation_utils.h",
         "patchSetId": 1
@@ -51,6 +69,24 @@
       "revId": "97803fdf164aa0b3637abcbd5e55c678538c6d77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64e962d8_8ae6cde0",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-05T09:22:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1162df72_7e6ebfad",
+      "revId": "97803fdf164aa0b3637abcbd5e55c678538c6d77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "e8062a41_cb5a516c",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-05T09:22:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa5ee6cf_08d56b3a",
+      "revId": "97803fdf164aa0b3637abcbd5e55c678538c6d77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e96b1039_85ab95a0",
         "filename": "components/password_manager/core/browser/android_affiliation/affiliation_utils.h",
         "patchSetId": 1
@@ -82,6 +136,30 @@
       "writtenOn": "2017-07-03T13:49:51Z",
       "side": 1,
       "message": "nit: s///",
+      "range": {
+        "startLine": 164,
+        "startChar": 3,
+        "endLine": 164,
+        "endChar": 17
+      },
+      "revId": "97803fdf164aa0b3637abcbd5e55c678538c6d77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b89dc56_820446d7",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-05T09:22:38Z",
+      "side": 1,
+      "message": "I\u0027m not quite sure what you mean here, could you please clarify?",
+      "parentUuid": "e96b1039_85ab95a0",
       "range": {
         "startLine": 164,
         "startChar": 3,

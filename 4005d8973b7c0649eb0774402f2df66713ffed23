@@ -16,6 +16,24 @@
       "revId": "4005d8973b7c0649eb0774402f2df66713ffed23",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0bf3255_d014c3c3",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-05T09:22:38Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "dbbced1c_0c6887ca",
+      "revId": "4005d8973b7c0649eb0774402f2df66713ffed23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
