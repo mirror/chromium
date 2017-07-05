@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "23b77b8a_c44cc4ad",
+        "filename": "ui/compositor/clip_recorder.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-05T20:40:43Z",
+      "side": 1,
+      "message": "\u003e It was a bit different as the RAII object would have to pass through to the PaintOpBuffer, and expose all the same things that POB exposes. Whereas now it could be a concrete thing modifying the DisplayItemList and isn\u0027t so API-dependent.\n\nI\u0027m not sure I understand :\\ Do you mean RAII scope(display_item_list?); and then display_item_list.push? or do you mean RAII scope(display_item_list); scope.push? Because in the latter case, it\u0027s exactly the same in the sense that it would have to pass through to some other object (DIL instead of POB). In the former case though, you still have an issue that people might forget to scope things, but I guess that might be easy enough to dcheck. In either case, where would we specify the visual rect if needed?\n\n\u003e \n\u003e What happens if you go and push() without Start, and then have no visual rect (when you want a visual rect tho)? Is that a crasher? We used to DCHECK this, I think.\n\nIt\u0027s not a crasher right now. Previously, it was not possible since DIL didn\u0027t expose push functionality and the only way to get a POB was to call StartPaint (which then would DCHECK if you didn\u0027t end paint). I agree that we should probably make it a crasher somehow, but that can be done via a DCHECK or two in Finalize call (ie, if this is top level, then visual_rects.size() \u003d\u003d pob.size() or something along those lines)\n\n\u003e \n\u003e Deeper thought: If DIL returned an RAII object that had the push API, maybe you could just instantiate that without the DIL for cases where you want to release the POB from it? Like \"RAII DisplayItemList::StartPaint()\" and \"RAII POB::Factory()\" or something?\n\nDo you mean for RAII to have two ctors, one that takes DIL and one that creates a self owned POB? Wouldn\u0027t the API be different then? In one case, you would RAII and push and after the scope ends, you have a DIL. In the other case, you would RAII and push but then have to release (for lack of a better word) pob from it before the scope ends. Or do you mean pass a pob into it?\n\nI\u0027m kind of hoping to eliminate code that creates pobs on its own. Is that something you disagree with?",
+      "parentUuid": "f655f5be_7925e4d6",
+      "revId": "12ccfac98fad7e3d4006e8355014b93518ed4ad8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3761526a_0fcada1e",
         "filename": "ui/compositor/paint_cache.cc",
         "patchSetId": 12
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "At the high level, I am wondering why this class owns display_item_list_ instead of PaintRecorder since it wants to ReleaseAsRecord, and could give that record to the cache?",
       "parentUuid": "f3008c59_9e8496ea",
+      "revId": "12ccfac98fad7e3d4006e8355014b93518ed4ad8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25315acd_cf8d887b",
+        "filename": "ui/compositor/paint_cache.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-05T20:40:43Z",
+      "side": 1,
+      "message": "This change is mostly just eliminating the POB usage outside of cc/paint. Do you mean cc::PaintRecorder here or ui::PaintRecorder?\n\ncc::PaintRecorder does basically exactly what PaintCache does here, so we could use it here except that it would complicate ui::PaintRecorder ctor a bit..",
+      "parentUuid": "c7e4e5e9_c26cd03b",
       "revId": "12ccfac98fad7e3d4006e8355014b93518ed4ad8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
