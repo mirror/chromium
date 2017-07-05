@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f5c3bcd3_fb968324",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1487,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-05T02:12:46Z",
+      "side": 1,
+      "message": "Didn\u0027t 100% audit the callsites, but sure. Done.",
+      "parentUuid": "9b6f6e44_cd49c92c",
+      "revId": "c0c09e03d812b085d5907e6c63f5eaefa6c28379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31e77cb0_e3e5f913",
         "filename": "content/browser/service_worker/service_worker_dispatcher_host.h",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "c0c09e03d812b085d5907e6c63f5eaefa6c28379",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b054f60e_f3de1283",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-05T02:12:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31e77cb0_e3e5f913",
+      "revId": "c0c09e03d812b085d5907e6c63f5eaefa6c28379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
