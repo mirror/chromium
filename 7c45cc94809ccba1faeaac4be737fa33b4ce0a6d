@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4ef8e04b_3fe53fa9",
+        "filename": "ios/chrome/browser/content_suggestions/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-05T12:13:07Z",
+      "side": 1,
+      "message": "Weeeeell, if we forget the fact that it is including a toolbar, a ReadingList model and a URLLoader, maybe :D",
+      "parentUuid": "e763f7bc_9cd8db4f",
+      "revId": "7c45cc94809ccba1faeaac4be737fa33b4ce0a6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3480b52_7200e352",
         "filename": "ios/chrome/browser/content_suggestions/content_suggestions_coordinator.h",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "7c45cc94809ccba1faeaac4be737fa33b4ce0a6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44992f84_120c1e95",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_coordinator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-05T12:13:07Z",
+      "side": 1,
+      "message": "The NewTabPageController use the headerController and the viewController.\n- the headerController to access the toolbarView owner by the headerController\n- the viewController because the NTPController is the one in charge of adding child view controller.",
+      "parentUuid": "d3480b52_7200e352",
+      "revId": "7c45cc94809ccba1faeaac4be737fa33b4ce0a6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "82ffd509_3a438dfe",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_coordinator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-05T12:13:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26474c04_23177a10",
+      "revId": "7c45cc94809ccba1faeaac4be737fa33b4ce0a6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7795be6_343abb6a",
         "filename": "ios/chrome/browser/content_suggestions/content_suggestions_coordinator.mm",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "7c45cc94809ccba1faeaac4be737fa33b4ce0a6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b626b22_22105139",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_coordinator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-05T12:13:07Z",
+      "side": 1,
+      "message": "This is why I did not use a ViewController at the beginning: the \"view\" is the header view. So it is added inside the collection view.",
+      "parentUuid": "a7795be6_343abb6a",
+      "revId": "7c45cc94809ccba1faeaac4be737fa33b4ce0a6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +177,30 @@
       "side": 1,
       "message": "In both cases, why not renaming? Would it change too many other files?",
       "parentUuid": "876dc8e1_9e75dbe7",
+      "range": {
+        "startLine": 19,
+        "startChar": 10,
+        "endLine": 19,
+        "endChar": 58
+      },
+      "revId": "7c45cc94809ccba1faeaac4be737fa33b4ce0a6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3f1541fc_109e4e9f",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_header_view_controller_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-05T12:13:07Z",
+      "side": 1,
+      "message": "No, I forgot so I just put a comment :D\nI will rename it in the second patchset.",
+      "parentUuid": "462d2f5b_9f881e66",
       "range": {
         "startLine": 19,
         "startChar": 10,
