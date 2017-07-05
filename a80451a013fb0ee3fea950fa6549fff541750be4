@@ -117,6 +117,30 @@
       "revId": "a80451a013fb0ee3fea950fa6549fff541750be4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d215037_a634ef41",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/ImageDecoder.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1125499
+      },
+      "writtenOn": "2017-07-05T09:10:38Z",
+      "side": 1,
+      "message": "I think perhaps a good way to handle this (SkCodec or Blink ImageDecoder) is a virtual function like:\nbool CanHandleFormat(RefPtr\u003cSegmentReader\u003e data);\nThen ImageDecoder here can loop over all of its known ImageDecoder types, checking if any can handle the format.\n\nThat puts the actual buffer check in the ImageDecoder itself.\nSame idea applies to if it goes into SkCodec.\n\nThere could also be a size_t MinimumBufferSize();",
+      "parentUuid": "9fa836e0_56e2eacf",
+      "range": {
+        "startLine": 44,
+        "startChar": 7,
+        "endLine": 44,
+        "endChar": 17
+      },
+      "revId": "a80451a013fb0ee3fea950fa6549fff541750be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
