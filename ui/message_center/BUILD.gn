@@ -32,7 +32,7 @@ component("message_center") {
 
   defines = [ "MESSAGE_CENTER_IMPLEMENTATION" ]
 
-  if (!is_ios && !is_android) {
+  if (!is_ios && !is_android && !is_mac) {
     deps += [
       ":message_center_vector_icons",
       "//base:i18n",
@@ -56,14 +56,6 @@ component("message_center") {
       "//build/config/compiler:no_size_t_to_int_warning",
     ]
     sources = [
-      "cocoa/notification_controller.h",
-      "cocoa/notification_controller.mm",
-      "cocoa/opaque_views.h",
-      "cocoa/opaque_views.mm",
-      "cocoa/popup_collection.h",
-      "cocoa/popup_collection.mm",
-      "cocoa/popup_controller.h",
-      "cocoa/popup_controller.mm",
       "message_center.cc",
       "message_center.h",
       "message_center_export.h",
@@ -105,16 +97,7 @@ component("message_center") {
       ]
     }
 
-    if (is_mac) {
-      libs = [
-        "AppKit.framework",
-        "Foundation.framework",
-      ]
-    }
-
-    # On Mac, toolkit-views builds still use the Cocoa UI. Keep this in sync
-    # with message_center_unittests below.
-    if (toolkit_views && !is_mac) {
+    if (toolkit_views) {
       sources += [
         "notification_delegate_views.cc",
         "views/bounded_label.cc",
@@ -178,10 +161,9 @@ component("message_center") {
       "notification_delegate.h",
     ]
 
-    # Android implements its own notification UI manager instead of deferring to
-    # the message center (when notifications are enabled). Include a minimal
-    # set of files required for notifications on Android.
-    if (is_android) {
+    # Android and Mac defer to system notifications, but still have minimal
+    # dependencies on the message center code.
+    if (is_android || is_mac) {
       sources += [
         "notification.cc",
         "notification.h",
@@ -195,7 +177,7 @@ component("message_center") {
 static_library("test_support") {
   testonly = true
 
-  if (!is_ios && !is_android) {
+  if (!is_ios && !is_android && !is_mac) {
     sources = [
       "fake_message_center.cc",
       "fake_message_center.h",
@@ -247,22 +229,15 @@ test("message_center_unittests") {
     "//ui/resources:ui_test_pak_data",
   ]
 
-  if (!is_ios && !is_android) {
+  if (!is_ios && !is_android && !is_mac) {
     sources += [
-      "cocoa/notification_controller_unittest.mm",
-      "cocoa/popup_collection_unittest.mm",
-      "cocoa/popup_controller_unittest.mm",
       "message_center_impl_unittest.cc",
       "message_center_tray_unittest.cc",
       "notification_delegate_unittest.cc",
       "notification_list_unittest.cc",
     ]
 
-    if (is_mac) {
-      deps += [ "//ui/gfx:test_support" ]
-    }
-
-    if (toolkit_views && !is_mac) {
+    if (toolkit_views) {
       sources += [
         "views/bounded_label_unittest.cc",
         "views/message_center_view_unittest.cc",
@@ -289,5 +264,5 @@ test("message_center_unittests") {
         "//ui/message_center/mojo:test_interfaces",
       ]
     }
-  }  # !is_ios && !is_android
+  }  # !is_ios && !is_android && !is_mac
 }
