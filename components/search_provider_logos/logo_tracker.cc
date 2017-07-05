@@ -11,6 +11,8 @@
 #include "base/message_loop/message_loop.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/task_runner_util.h"
+#include "base/task_scheduler/post_task.h"
+#include "base/task_scheduler/task_traits.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/default_clock.h"
 #include "components/data_use_measurement/core/data_use_user_data.h"
@@ -70,8 +72,6 @@ void DeleteLogoCacheOnFileThread(LogoCache* logo_cache) {
 
 LogoTracker::LogoTracker(
     base::FilePath cached_logo_directory,
-    scoped_refptr<base::SequencedTaskRunner> file_task_runner,
-    scoped_refptr<base::TaskRunner> background_task_runner,
     scoped_refptr<net::URLRequestContextGetter> request_context_getter,
     std::unique_ptr<LogoDelegate> delegate)
     : is_idle_(true),
@@ -79,8 +79,10 @@ LogoTracker::LogoTracker(
       logo_delegate_(std::move(delegate)),
       logo_cache_(new LogoCache(cached_logo_directory)),
       clock_(new base::DefaultClock()),
-      file_task_runner_(file_task_runner),
-      background_task_runner_(background_task_runner),
+      file_task_runner_(base::CreateSequencedTaskRunnerWithTraits({
+          base::MayBlock(), base::TaskPriority::BACKGROUND,
+          base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN,
+      })),
       request_context_getter_(request_context_getter),
       weak_ptr_factory_(this) {}
 
@@ -362,8 +364,10 @@ void LogoTracker::OnURLFetchComplete(const net::URLFetcher* source) {
   bool from_http_cache = source->WasCached();
 
   bool* parsing_failed = new bool(false);
-  base::PostTaskAndReplyWithResult(
-      background_task_runner_.get(), FROM_HERE,
+  base::PostTaskWithTraitsAndReplyWithResult(
+      FROM_HERE,
+      {base::MayBlock(), base::TaskPriority::BACKGROUND,
+       base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
       base::Bind(parse_logo_response_func_, base::Passed(&response),
                  response_time, parsing_failed),
       base::Bind(&LogoTracker::OnFreshLogoParsed,

@@ -126,9 +126,7 @@ void LogoService::GetLogo(search_provider_logos::LogoObserver* observer) {
   if (!logo_tracker_) {
     logo_tracker_ = base::MakeUnique<LogoTracker>(
         profile_->GetPath().Append(kCachedLogoDirectory),
-        BrowserThread::GetTaskRunnerForThread(BrowserThread::FILE),
-        BrowserThread::GetBlockingPool(), profile_->GetRequestContext(),
-        base::MakeUnique<ChromeLogoDelegate>());
+        profile_->GetRequestContext(), base::MakeUnique<ChromeLogoDelegate>());
   }
 
   GURL url =

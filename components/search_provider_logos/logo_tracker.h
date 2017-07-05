@@ -93,18 +93,10 @@ class LogoTracker : public net::URLFetcherDelegate {
   // |cached_logo_directory| is the directory in which the cached logo and its
   // metadata should be saved.
   //
-  // |file_task_runner| is the SequencedTaskRunner that should be used to run
-  // file system operations.
-  //
-  // |background_task_runner| is the TaskRunner that should be used to for
-  // CPU-intensive background operations.
-  //
   // |request_context_getter| is the URLRequestContextGetter used to download
   // the logo.
   explicit LogoTracker(
       base::FilePath cached_logo_directory,
-      scoped_refptr<base::SequencedTaskRunner> file_task_runner,
-      scoped_refptr<base::TaskRunner> background_task_runner,
       scoped_refptr<net::URLRequestContextGetter> request_context_getter,
       std::unique_ptr<LogoDelegate> delegate);
 
@@ -242,9 +234,6 @@ class LogoTracker : public net::URLFetcherDelegate {
 
   // The SequencedTaskRunner on which file system operations will be run.
   scoped_refptr<base::SequencedTaskRunner> file_task_runner_;
-
-  // The TaskRunner on which the server's response will be parsed.
-  scoped_refptr<base::TaskRunner> background_task_runner_;
 
   // The URLRequestContextGetter used for network requests.
   scoped_refptr<net::URLRequestContextGetter> request_context_getter_;

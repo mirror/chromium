@@ -14,7 +14,7 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/ref_counted_memory.h"
-#include "base/threading/thread_checker.h"
+#include "base/sequence_checker.h"
 #include "components/search_provider_logos/logo_common.h"
 
 namespace search_provider_logos {
@@ -117,7 +117,7 @@ class LogoCache {
   int logo_num_bytes_;
 
   // Ensure LogoCache is only used on a single thread.
-  base::ThreadChecker thread_checker_;
+  SEQUENCE_CHECKER(sequence_checker_);
 
   DISALLOW_COPY_AND_ASSIGN(LogoCache);
 };
