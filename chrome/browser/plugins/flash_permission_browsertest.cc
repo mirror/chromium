@@ -73,6 +73,8 @@ class FlashPermissionBrowserTest : public PermissionsBrowserTest {
       EXPECT_TRUE(reload_waiter.Wait());
     } else {
       EXPECT_TRUE(RunScriptReturnBool("triggerPrompt();"));
+      // content::WaitForLoadStop(GetWebContents());
+
       // Make a round trip to the renderer to flush any old did stop IPCs,
       // otherwise they can race with the next navigation and cause it to be
       // cancelled if it's the same URL.
@@ -211,6 +213,7 @@ IN_PROC_BROWSER_TEST_F(FlashPermissionBrowserTest, AllowFileURL) {
 IN_PROC_BROWSER_TEST_F(FlashPermissionBrowserTest, BlockFileURL) {
   base::FilePath test_path;
   PathService::Get(chrome::DIR_TEST_DATA, &test_path);
+
   ui_test_utils::NavigateToURL(
       browser(), GURL("file://" + test_path.AsUTF8Unsafe() + test_url()));
   CommonFailsIfBlocked();
