@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "5cfe710d_47ee0c8d",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-07-05T18:30:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2033a8c_8a514e54",
+      "revId": "f7f2c8e36f41d44ba559cf66fc5c7d41b4d63adf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6210c1c8_97184e1c",
         "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.cc",
         "patchSetId": 21
@@ -81,6 +99,30 @@
       "revId": "f7f2c8e36f41d44ba559cf66fc5c7d41b4d63adf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5aa754b0_159cd3dd",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-07-05T18:30:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56d89913_70dbd0cb",
+      "range": {
+        "startLine": 62,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 3
+      },
+      "revId": "f7f2c8e36f41d44ba559cf66fc5c7d41b4d63adf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -178,6 +220,30 @@
     },
     {
       "key": {
+        "uuid": "ebf807c1_2a72a31b",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-07-05T18:30:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df91ee4f_e877d77e",
+      "range": {
+        "startLine": 91,
+        "startChar": 9,
+        "endLine": 91,
+        "endChar": 45
+      },
+      "revId": "f7f2c8e36f41d44ba559cf66fc5c7d41b4d63adf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "150794f4_5aa19256",
         "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.h",
         "patchSetId": 21
@@ -213,6 +279,24 @@
     },
     {
       "key": {
+        "uuid": "7dbb4597_68b2d620",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-07-05T18:30:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "468725d2_49d2c1e5",
+      "revId": "f7f2c8e36f41d44ba559cf66fc5c7d41b4d63adf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72e649ef_642ce3cf",
         "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.h",
         "patchSetId": 21
@@ -245,6 +329,24 @@
       "revId": "f7f2c8e36f41d44ba559cf66fc5c7d41b4d63adf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1c5dc1f_20b7f3ad",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-07-05T18:30:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2dc96b2_2b446387",
+      "revId": "f7f2c8e36f41d44ba559cf66fc5c7d41b4d63adf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -362,6 +464,24 @@
       "revId": "f7f2c8e36f41d44ba559cf66fc5c7d41b4d63adf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "423e9553_d56c71a8",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-07-05T18:30:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9845e307_7f6c4b20",
+      "revId": "f7f2c8e36f41d44ba559cf66fc5c7d41b4d63adf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

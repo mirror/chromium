@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "2894d450_d1fea0fb",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-07-05T18:30:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56f9f52b_c22e355f",
+      "range": {
+        "startLine": 102,
+        "startChar": 7,
+        "endLine": 102,
+        "endChar": 12
+      },
+      "revId": "9f069dc5898d450e10aff356ac146306ade30f11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84bb2ad6_af66b907",
         "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.cc",
         "patchSetId": 20
@@ -140,6 +164,30 @@
       "revId": "9f069dc5898d450e10aff356ac146306ade30f11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2cbd7a0_d098ff25",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-07-05T18:30:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "273aa8eb_06d841ef",
+      "range": {
+        "startLine": 104,
+        "startChar": 4,
+        "endLine": 104,
+        "endChar": 25
+      },
+      "revId": "9f069dc5898d450e10aff356ac146306ade30f11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -422,6 +470,30 @@
       "revId": "9f069dc5898d450e10aff356ac146306ade30f11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12bdea35_83ae5c49",
+        "filename": "chrome/browser/feature_engagement_tracker/new_tab_feature_engagement_tracker_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-07-05T18:30:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3e03205_ba77643c",
+      "range": {
+        "startLine": 142,
+        "startChar": 1,
+        "endLine": 142,
+        "endChar": 0
+      },
+      "revId": "9f069dc5898d450e10aff356ac146306ade30f11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
