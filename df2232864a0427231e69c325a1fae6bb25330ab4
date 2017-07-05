@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "c6296c36_f3ff413b",
+        "filename": "cc/surfaces/surface_aggregator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-05T20:40:35Z",
+      "side": 1,
+      "message": "SurfaceClient goes away when the client (say Blink renderer) goes away, but the browser is still embedding it. The next display frame will still use the surface but the client is gone.\n\nSurfaceAggregator could go away if the display goes away but the surface may be on another display.\n\nI don\u0027t think Surface can actually be destroyed before unref happens, except maybe, frame eviction? I\u0027m actually not sure about that one.",
+      "parentUuid": "d596fb65_71275aed",
+      "revId": "df2232864a0427231e69c325a1fae6bb25330ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5b9ab509_e166f7db",
         "filename": "cc/surfaces/surface_manager.h",
         "patchSetId": 3
