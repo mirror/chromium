@@ -297,11 +297,12 @@ void OfflinePageBridge::OfflinePageAdded(OfflinePageModel* model,
       env, java_ref_, ToJavaOfflinePageItem(env, added_page));
 }
 
-void OfflinePageBridge::OfflinePageDeleted(int64_t offline_id,
-                                           const ClientId& client_id) {
+void OfflinePageBridge::OfflinePageDeleted(
+    const OfflinePageModel::DeletedPageInfo& page_info) {
   JNIEnv* env = base::android::AttachCurrentThread();
-  Java_OfflinePageBridge_offlinePageDeleted(env, java_ref_, offline_id,
-                                            CreateClientId(env, client_id));
+  Java_OfflinePageBridge_offlinePageDeleted(
+      env, java_ref_, page_info.offline_id,
+      CreateClientId(env, page_info.client_id));
 }
 
 void OfflinePageBridge::CheckPagesExistOffline(

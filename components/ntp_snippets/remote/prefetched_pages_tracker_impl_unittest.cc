@@ -141,7 +141,8 @@ TEST_F(PrefetchedPagesTrackerImplTest, ShouldDeletePrefetchedURLWhenNotified) {
 
   ASSERT_TRUE(
       tracker.PrefetchedOfflinePageExists(GURL("http://prefetched.com")));
-  tracker.OfflinePageDeleted(item.offline_id, item.client_id);
+  tracker.OfflinePageDeleted(offline_pages::OfflinePageModel::DeletedPageInfo(
+      item.offline_id, item.client_id, ""));
   EXPECT_FALSE(
       tracker.PrefetchedOfflinePageExists(GURL("http://prefetched.com")));
 }
