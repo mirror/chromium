@@ -34,6 +34,24 @@
       "revId": "d74f1fcf603fd78c3cd9e0a3123db98e4a1767e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6796f85d_3387bcbe",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 871,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-07-05T20:22:58Z",
+      "side": 0,
+      "message": "\u003e There are the weird unit_tests failures that I initially dismissed as being irrelevant/bot problems (being that they have no output at all), but they do seem to be persistent/triggered by my CL, so I guess I have some more investigating to do... locally I seem to be getting a bunch of timeouts, so that at least gives me something to look in to.\n\nAs it turns out, at least some of these failures were extensions unit tests again, that were timing out because of deadlock; this time because they were using TestBrowserThreadBundle, which internally uses ScopedAsyncTaskScheduler rather than ScopedTaskEnvironment, and that still had the number of threads set to 1. So I also updated that class to use 2 threads per pool, let\u0027s see if that fixed all issues...",
+      "parentUuid": "33c28668_104919b7",
+      "revId": "d74f1fcf603fd78c3cd9e0a3123db98e4a1767e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
