@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "23985f58_84eb9f6e",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliated_match_helper_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-05T15:19:15Z",
+      "side": 1,
+      "message": "Done, let\u0027s see what the bots say :)",
+      "parentUuid": "028a62d2_f2e45b73",
+      "revId": "49f368967bcf9dfba9d499c62dc44ede7926c2a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "972f7c42_926df2a4",
         "filename": "components/password_manager/core/browser/android_affiliation/affiliation_backend_unittest.cc",
         "patchSetId": 3
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "7cd237a2_1f75b216",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_backend_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-05T15:19:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "972f7c42_926df2a4",
+      "range": {
+        "startLine": 109,
+        "startChar": 57,
+        "endLine": 109,
+        "endChar": 74
+      },
+      "revId": "49f368967bcf9dfba9d499c62dc44ede7926c2a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "859f2005_4d7db9a9",
         "filename": "components/password_manager/core/browser/android_affiliation/affiliation_fetcher_unittest.cc",
         "patchSetId": 3
@@ -53,6 +95,30 @@
       "writtenOn": "2017-07-05T14:39:17Z",
       "side": 1,
       "message": "Are there specific reasons you are using the FBI{} format instead of FBI()? \n\nMy (potentially incorrect) understanding is that they are equivalent except for aggregate types, in case of which the former is ambiguous (could be value-initialization or aggregate-initialization), while the latter can only be value-initialization.",
+      "range": {
+        "startLine": 148,
+        "startChar": 24,
+        "endLine": 148,
+        "endChar": 43
+      },
+      "revId": "49f368967bcf9dfba9d499c62dc44ede7926c2a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7988e9af_570e0fe8",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_fetcher_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-05T15:19:15Z",
+      "side": 1,
+      "message": "No, no specific reason, I was just used to typing {} everywhere ;) Should be irrelevant now, though.",
+      "parentUuid": "859f2005_4d7db9a9",
       "range": {
         "startLine": 148,
         "startChar": 24,
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "3b39bb8f_7d3f0026",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-05T15:19:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41e7761c_f78b3e20",
+      "range": {
+        "startLine": 312,
+        "startChar": 9,
+        "endLine": 312,
+        "endChar": 18
+      },
+      "revId": "49f368967bcf9dfba9d499c62dc44ede7926c2a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b61e11e3_d2cc3818",
         "filename": "components/password_manager/core/browser/android_affiliation/affiliation_utils.h",
         "patchSetId": 3
@@ -102,6 +192,24 @@
       "revId": "49f368967bcf9dfba9d499c62dc44ede7926c2a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99bc8949_bdecde37",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-05T15:19:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b61e11e3_d2cc3818",
+      "revId": "49f368967bcf9dfba9d499c62dc44ede7926c2a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "d3ce9d2d_12848af3",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-05T15:19:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87822fa9_d91c1069",
+      "revId": "49f368967bcf9dfba9d499c62dc44ede7926c2a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed98b6a9_7494ccc4",
         "filename": "components/password_manager/core/browser/android_affiliation/affiliation_utils_unittest.cc",
         "patchSetId": 3
@@ -136,6 +262,24 @@
       "revId": "49f368967bcf9dfba9d499c62dc44ede7926c2a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bad380e_a720bf9a",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_utils_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-05T15:19:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed98b6a9_7494ccc4",
+      "revId": "49f368967bcf9dfba9d499c62dc44ede7926c2a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
