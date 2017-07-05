@@ -934,8 +934,22 @@ void ResourceProvider::CopyToResource(ResourceId id,
 }
 
 void ResourceProvider::GenerateSyncTokenForResource(ResourceId resource_id) {
+  gpu::SyncToken sync_token;
+  GLES2Interface* gl = ContextGL();
+  DCHECK(gl);
+
+  const uint64_t fence_sync = gl->InsertFenceSyncCHROMIUM();
+  gl->OrderingBarrierCHROMIUM();
+  gl->GenUnverifiedSyncTokenCHROMIUM(fence_sync, sync_token.GetData());
+
   Resource* resource = GetResource(resource_id);
-  if (!resource->needs_sync_token())
+  resource->UpdateSyncToken(sync_token);
+  resource->SetSynchronized();
+}
+
+void ResourceProvider::GenerateSyncTokenForResources(
+    const ResourceIdArray& resource_ids) {
+  if (resource_ids.empty())
     return;
 
   gpu::SyncToken sync_token;
@@ -946,30 +960,10 @@ void ResourceProvider::GenerateSyncTokenForResource(ResourceId resource_id) {
   gl->OrderingBarrierCHROMIUM();
   gl->GenUnverifiedSyncTokenCHROMIUM(fence_sync, sync_token.GetData());
 
-  resource->UpdateSyncToken(sync_token);
-  resource->SetSynchronized();
-}
-
-void ResourceProvider::GenerateSyncTokenForResources(
-    const ResourceIdArray& resource_ids) {
-  gpu::SyncToken sync_token;
-  bool created_sync_token = false;
   for (ResourceId id : resource_ids) {
     Resource* resource = GetResource(id);
-    if (resource->needs_sync_token()) {
-      if (!created_sync_token) {
-        GLES2Interface* gl = ContextGL();
-        DCHECK(gl);
-
-        const uint64_t fence_sync = gl->InsertFenceSyncCHROMIUM();
-        gl->OrderingBarrierCHROMIUM();
-        gl->GenUnverifiedSyncTokenCHROMIUM(fence_sync, sync_token.GetData());
-        created_sync_token = true;
-      }
-
-      resource->UpdateSyncToken(sync_token);
-      resource->SetSynchronized();
-    }
+    resource->UpdateSyncToken(sync_token);
+    resource->SetSynchronized();
   }
 }
 
