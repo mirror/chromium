@@ -217,7 +217,6 @@ chrome.automation.StateType = {
   BUSY: 'busy',
   COLLAPSED: 'collapsed',
   DEFAULT: 'default',
-  DISABLED: 'disabled',
   EDITABLE: 'editable',
   EXPANDED: 'expanded',
   FOCUSABLE: 'focusable',
@@ -231,7 +230,6 @@ chrome.automation.StateType = {
   MULTISELECTABLE: 'multiselectable',
   OFFSCREEN: 'offscreen',
   PROTECTED: 'protected',
-  READ_ONLY: 'readOnly',
   REQUIRED: 'required',
   RICHLY_EDITABLE: 'richlyEditable',
   SELECTABLE: 'selectable',
@@ -914,13 +912,6 @@ chrome.automation.AutomationNode.prototype.accessKey;
 chrome.automation.AutomationNode.prototype.ariaInvalidValue;
 
 /**
- * The value of the aria-readonly attribute, if applicable.
- * @type {(boolean|undefined)}
- * @see https://developer.chrome.com/extensions/automation#type-ariaReadonly
- */
-chrome.automation.AutomationNode.prototype.ariaReadonly;
-
-/**
  * The CSS display attribute for this node, if applicable.
  * @type {(string|undefined)}
  * @see https://developer.chrome.com/extensions/automation#type-display
@@ -942,7 +933,14 @@ chrome.automation.AutomationNode.prototype.imageDataUrl;
 chrome.automation.AutomationNode.prototype.language;
 
 /**
- * Tri-state describing checkbox or radio button: 'false' | 'true' | 'mixed'
+ * State describing checkbox or radio button: 'enabled' | 'disabled' | 'readOnly' | undefined (if not a control)
+ * @type {(string|undefined)}
+ * @see https://developer.chrome.com/extensions/automation#type-controlMode
+ */
+chrome.automation.AutomationNode.prototype.controlMode;
+
+/**
+ * The RGBA foreground color of this subtree, as an integer. Tri-state describing checkbox or radio button: 'false' | 'true' | 'mixed'
  * @type {(string|undefined)}
  * @see https://developer.chrome.com/extensions/automation#type-checked
  */

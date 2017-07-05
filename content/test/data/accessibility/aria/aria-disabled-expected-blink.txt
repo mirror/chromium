@@ -1,4 +1,13 @@
 rootWebArea
 ++genericContainer
-++++textField disabled
+++++textField
+++++textField controlMode=disabled
+++++textField
+++genericContainer controlMode=disabled
+++++textField controlMode=disabled
+++++textField controlMode=disabled
+++++textField
+++genericContainer
+++++textField
+++++textField controlMode=disabled
 ++++textField
