@@ -13,6 +13,8 @@ namespace content {
 
 struct CONTENT_EXPORT EmbeddedWorkerStartParams {
   EmbeddedWorkerStartParams();
+  EmbeddedWorkerStartParams(EmbeddedWorkerStartParams&& other);
+  ~EmbeddedWorkerStartParams();
 
   int embedded_worker_id;
   int64_t service_worker_version_id;
@@ -23,6 +25,9 @@ struct CONTENT_EXPORT EmbeddedWorkerStartParams {
   bool wait_for_debugger;
   bool is_installed;
   EmbeddedWorkerSettings settings;
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(EmbeddedWorkerStartParams);
 };
 
 }  // namespace content

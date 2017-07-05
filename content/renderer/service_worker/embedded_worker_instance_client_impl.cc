@@ -54,7 +54,7 @@ void EmbeddedWorkerInstanceClientImpl::WorkerContextDestroyed() {
 }
 
 void EmbeddedWorkerInstanceClientImpl::StartWorker(
-    const EmbeddedWorkerStartParams& params,
+    EmbeddedWorkerStartParams params,
     mojom::ServiceWorkerEventDispatcherRequest dispatcher_request,
     mojom::ServiceWorkerInstalledScriptsInfoPtr installed_scripts_info,
     mojom::EmbeddedWorkerInstanceHostAssociatedPtrInfo instance_host) {
@@ -69,8 +69,16 @@ void EmbeddedWorkerInstanceClientImpl::StartWorker(
       std::move(instance_host), std::move(temporal_self_));
   client->set_blink_initialized_time(blink_initialized_time_);
   client->set_start_worker_received_time(base::TimeTicks::Now());
-  wrapper_ = StartWorkerContext(params, std::move(installed_scripts_info),
-                                std::move(client));
+  std::unique_ptr<blink::WebServiceWorkerInstalledScriptsManager> manager;
+  if (ServiceWorkerUtils::IsScriptStreamingEnabled()) {
+    WebServiceWorkerInstalledScriptsManagerImpl::Create(
+        std::move(installed_scripts_info), io_thread_runner_,
+        base::BindOnce(&EmbeddedWorkerInstanceClientImpl::StartWorkerContext,
+                       base::Unretained(this), base::Passed(&params),
+                       base::Passed(&client)));
+    return;
+  }
+  StartWorkerContext(std::move(params), std::move(client), nullptr);
 }
 
 void EmbeddedWorkerInstanceClientImpl::StopWorker() {
@@ -114,17 +122,11 @@ void EmbeddedWorkerInstanceClientImpl::OnError() {
   temporal_self_.reset();
 }
 
-std::unique_ptr<EmbeddedWorkerInstanceClientImpl::WorkerWrapper>
-EmbeddedWorkerInstanceClientImpl::StartWorkerContext(
-    const EmbeddedWorkerStartParams& params,
-    mojom::ServiceWorkerInstalledScriptsInfoPtr installed_scripts_info,
-    std::unique_ptr<ServiceWorkerContextClient> context_client) {
-  std::unique_ptr<blink::WebServiceWorkerInstalledScriptsManager> manager;
-  if (ServiceWorkerUtils::IsScriptStreamingEnabled())
-    manager = WebServiceWorkerInstalledScriptsManagerImpl::Create(
-        std::move(installed_scripts_info), io_thread_runner_);
-
-  auto wrapper = base::MakeUnique<WorkerWrapper>(
+void EmbeddedWorkerInstanceClientImpl::StartWorkerContext(
+    EmbeddedWorkerStartParams params,
+    std::unique_ptr<ServiceWorkerContextClient> context_client,
+    std::unique_ptr<blink::WebServiceWorkerInstalledScriptsManager> manager) {
+  wrapper_ = base::MakeUnique<WorkerWrapper>(
       blink::WebEmbeddedWorker::Create(std::move(context_client),
                                        std::move(manager), nullptr),
       params.worker_devtools_agent_route_id);
@@ -145,8 +147,7 @@ EmbeddedWorkerInstanceClientImpl::StartWorkerContext(
           ? blink::WebEmbeddedWorkerStartData::kPauseAfterDownload
           : blink::WebEmbeddedWorkerStartData::kDontPauseAfterDownload;
 
-  wrapper->worker()->StartWorkerContext(start_data);
-  return wrapper;
+  wrapper_->worker()->StartWorkerContext(start_data);
 }
 
 }  // namespace content

@@ -15,9 +15,12 @@ namespace content {
 class WebServiceWorkerInstalledScriptsManagerImpl final
     : NON_EXPORTED_BASE(public blink::WebServiceWorkerInstalledScriptsManager) {
  public:
-  static std::unique_ptr<blink::WebServiceWorkerInstalledScriptsManager> Create(
+  using CreatedOnceCallback = base::OnceCallback<void(
+      std::unique_ptr<blink::WebServiceWorkerInstalledScriptsManager>)>;
+  static void Create(
       mojom::ServiceWorkerInstalledScriptsInfoPtr installed_scripts_info,
-      scoped_refptr<base::SingleThreadTaskRunner> io_task_runner);
+      scoped_refptr<base::SingleThreadTaskRunner> io_task_runner,
+      CreatedOnceCallback callback);
 
   ~WebServiceWorkerInstalledScriptsManagerImpl() override;
 
@@ -27,6 +30,9 @@ class WebServiceWorkerInstalledScriptsManagerImpl final
       const blink::WebURL& script_url) override;
 
  private:
+  static void OnCreatedInternal(std::vector<GURL> installed_urls,
+                                CreatedOnceCallback callback);
+
   explicit WebServiceWorkerInstalledScriptsManagerImpl(
       std::vector<GURL>&& installed_urls);
 

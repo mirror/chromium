@@ -15,10 +15,9 @@ namespace {
 class Internal : public mojom::ServiceWorkerInstalledScriptsManager {
  public:
   // Called on IO
-  static void Create(mojom::ServiceWorkerInstalledScriptsManagerRequest request,
-                     base::WaitableEvent* event) {
+  static void Create(
+      mojom::ServiceWorkerInstalledScriptsManagerRequest request) {
     mojo::MakeStrongBinding(base::MakeUnique<Internal>(), std::move(request));
-    event->Signal();
   }
 
   // Implements mojom::ServiceWorkerInstalledScriptsManager.
@@ -34,25 +33,30 @@ class Internal : public mojom::ServiceWorkerInstalledScriptsManager {
 }  // namespace
 
 // static
-std::unique_ptr<blink::WebServiceWorkerInstalledScriptsManager>
-WebServiceWorkerInstalledScriptsManagerImpl::Create(
+void WebServiceWorkerInstalledScriptsManagerImpl::Create(
     mojom::ServiceWorkerInstalledScriptsInfoPtr installed_scripts_info,
-    scoped_refptr<base::SingleThreadTaskRunner> io_task_runner) {
+    scoped_refptr<base::SingleThreadTaskRunner> io_task_runner,
+    CreatedOnceCallback callback) {
+  // TODO(shimazu): Pass |this| to Internal::Create as parent
+  io_task_runner->PostTaskAndReply(
+      FROM_HERE,
+      base::BindOnce(&Internal::Create,
+                     std::move(installed_scripts_info->manager_request)),
+      base::BindOnce(
+          &WebServiceWorkerInstalledScriptsManagerImpl::OnCreatedInternal,
+          base::Passed(&installed_scripts_info->installed_urls),
+          base::Passed(&callback)));
+}
+
+// static
+void WebServiceWorkerInstalledScriptsManagerImpl::OnCreatedInternal(
+    std::vector<GURL> installed_urls,
+    CreatedOnceCallback callback) {
   auto installed_scripts_manager =
       base::WrapUnique<WebServiceWorkerInstalledScriptsManagerImpl>(
           new WebServiceWorkerInstalledScriptsManagerImpl(
-              std::move(installed_scripts_info->installed_urls)));
-  // TODO(shimazu): Don't use waitable event here.
-  base::WaitableEvent event(base::WaitableEvent::ResetPolicy::AUTOMATIC,
-                            base::WaitableEvent::InitialState::NOT_SIGNALED);
-  // TODO(shimazu): Pass |this| as parent
-  io_task_runner->PostTask(
-      FROM_HERE,
-      base::BindOnce(&Internal::Create,
-                     std::move(installed_scripts_info->manager_request),
-                     &event));
-  event.Wait();
-  return base::WrapUnique(installed_scripts_manager.release());
+              std::move(installed_urls)));
+  std::move(callback).Run(std::move(installed_scripts_manager));
 }
 
 WebServiceWorkerInstalledScriptsManagerImpl::

@@ -16,6 +16,7 @@
 namespace blink {
 
 class WebEmbeddedWorker;
+class WebServiceWorkerInstalledScriptsManager;
 
 }  // namespace blink
 
@@ -73,7 +74,7 @@ class EmbeddedWorkerInstanceClientImpl
 
   // mojom::EmbeddedWorkerInstanceClient implementation
   void StartWorker(
-      const EmbeddedWorkerStartParams& params,
+      EmbeddedWorkerStartParams params,
       mojom::ServiceWorkerEventDispatcherRequest dispatcher_request,
       mojom::ServiceWorkerInstalledScriptsInfoPtr installed_scripts_info,
       mojom::EmbeddedWorkerInstanceHostAssociatedPtrInfo instance_host)
@@ -86,10 +87,10 @@ class EmbeddedWorkerInstanceClientImpl
   // Handler of connection error bound to |binding_|
   void OnError();
 
-  std::unique_ptr<WorkerWrapper> StartWorkerContext(
-      const EmbeddedWorkerStartParams& params,
-      mojom::ServiceWorkerInstalledScriptsInfoPtr installed_scripts_info,
-      std::unique_ptr<ServiceWorkerContextClient> context_client);
+  void StartWorkerContext(
+      EmbeddedWorkerStartParams params,
+      std::unique_ptr<ServiceWorkerContextClient> context_client,
+      std::unique_ptr<blink::WebServiceWorkerInstalledScriptsManager> manager);
 
   mojo::Binding<mojom::EmbeddedWorkerInstanceClient> binding_;
 

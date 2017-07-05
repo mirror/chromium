@@ -81,7 +81,7 @@ class EmbeddedWorkerTestHelper : public IPC::Sender,
    protected:
     // Implementation of mojo interfaces.
     void StartWorker(
-        const EmbeddedWorkerStartParams& params,
+        EmbeddedWorkerStartParams params,
         mojom::ServiceWorkerEventDispatcherRequest dispatcher_request,
         mojom::ServiceWorkerInstalledScriptsInfoPtr installed_scripts_info,
         mojom::EmbeddedWorkerInstanceHostAssociatedPtrInfo instance_host)
@@ -266,7 +266,7 @@ class EmbeddedWorkerTestHelper : public IPC::Sender,
   class MockServiceWorkerEventDispatcher;
 
   void OnStartWorkerStub(
-      const EmbeddedWorkerStartParams& params,
+      EmbeddedWorkerStartParams params,
       mojom::ServiceWorkerEventDispatcherRequest request,
       mojom::EmbeddedWorkerInstanceHostAssociatedPtrInfo instance_host);
   void OnResumeAfterDownloadStub(int embedded_worker_id);

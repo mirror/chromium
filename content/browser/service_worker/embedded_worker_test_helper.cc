@@ -71,7 +71,7 @@ EmbeddedWorkerTestHelper::MockEmbeddedWorkerInstanceClient::
     ~MockEmbeddedWorkerInstanceClient() {}
 
 void EmbeddedWorkerTestHelper::MockEmbeddedWorkerInstanceClient::StartWorker(
-    const EmbeddedWorkerStartParams& params,
+    EmbeddedWorkerStartParams params,
     mojom::ServiceWorkerEventDispatcherRequest dispatcher_request,
     mojom::ServiceWorkerInstalledScriptsInfoPtr installed_scripts_info,
     mojom::EmbeddedWorkerInstanceHostAssociatedPtrInfo instance_host) {
@@ -85,7 +85,7 @@ void EmbeddedWorkerTestHelper::MockEmbeddedWorkerInstanceClient::StartWorker(
   ASSERT_TRUE(worker);
   EXPECT_EQ(EmbeddedWorkerStatus::STARTING, worker->status());
 
-  helper_->OnStartWorkerStub(params, std::move(dispatcher_request),
+  helper_->OnStartWorkerStub(std::move(params), std::move(dispatcher_request),
                              std::move(instance_host));
 }
 
@@ -631,7 +631,7 @@ void EmbeddedWorkerTestHelper::SimulateSend(IPC::Message* message) {
 }
 
 void EmbeddedWorkerTestHelper::OnStartWorkerStub(
-    const EmbeddedWorkerStartParams& params,
+    EmbeddedWorkerStartParams params,
     mojom::ServiceWorkerEventDispatcherRequest request,
     mojom::EmbeddedWorkerInstanceHostAssociatedPtrInfo instance_host) {
   EmbeddedWorkerInstance* worker =

@@ -609,9 +609,9 @@ ServiceWorkerStatusCode EmbeddedWorkerInstance::SendStartWorker(
   const bool is_script_streaming =
       pending_installed_scripts_info_->installed_urls.size() > 0;
   inflight_start_task_->set_start_worker_sent_time(base::TimeTicks::Now());
-  client_->StartWorker(*params, std::move(pending_dispatcher_request_),
-                       std::move(pending_installed_scripts_info_),
-                       std::move(host_ptr_info));
+  client_->StartWorker(
+      std::move(*params), std::move(pending_dispatcher_request_),
+      std::move(pending_installed_scripts_info_), std::move(host_ptr_info));
   registry_->BindWorkerToProcess(process_id(), embedded_worker_id());
   OnStartWorkerMessageSent(is_script_streaming);
   if (starting_phase() == SCRIPT_STREAMING) {

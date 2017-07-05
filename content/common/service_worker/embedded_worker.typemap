@@ -7,4 +7,4 @@ public_headers =
     [ "//content/common/service_worker/embedded_worker_start_params.h" ]
 traits_headers =
     [ "//content/common/service_worker/embedded_worker_messages.h" ]
-type_mappings = [ "content.mojom.EmbeddedWorkerStartParams=::content::EmbeddedWorkerStartParams" ]
+type_mappings = [ "content.mojom.EmbeddedWorkerStartParams=::content::EmbeddedWorkerStartParams[move_only]" ]

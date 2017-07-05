@@ -742,7 +742,7 @@ class FailEmbeddedWorkerInstanceClientImpl
 
  private:
   void StartWorker(
-      const EmbeddedWorkerStartParams& /* unused */,
+      EmbeddedWorkerStartParams /* unused */,
       mojom::ServiceWorkerEventDispatcherRequest /* unused */,
       mojom::ServiceWorkerInstalledScriptsInfoPtr /* unused */,
       mojom::EmbeddedWorkerInstanceHostAssociatedPtrInfo /* unused */)

@@ -6,6 +6,9 @@
 
 namespace content {
 
-EmbeddedWorkerStartParams::EmbeddedWorkerStartParams() {}
+EmbeddedWorkerStartParams::EmbeddedWorkerStartParams() = default;
+EmbeddedWorkerStartParams::~EmbeddedWorkerStartParams() = default;
+EmbeddedWorkerStartParams::EmbeddedWorkerStartParams(
+    EmbeddedWorkerStartParams&&) = default;
 
 }  // namespace content
