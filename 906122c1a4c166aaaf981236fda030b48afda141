@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f754e89_8d7ca257",
+        "filename": "build/android/gyp/merge_manifest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-05T15:21:22Z",
+      "side": 1,
+      "message": "In order to not hardcode this version number here, it would be better to pass --output-directory as a flag (which in .gn just means doing \"--output-directory\u003d.\").\n\nThen read the value from build_vars.txt.\n\nAlso, I think I\u0027ve seen that preview SDKs have these jars without versions appended to them, so it might be a good idea to call the variable \"android_tools_version_suffix\" or something along those lines.\n\nWhere to add the GN variable:\nhttps://cs.chromium.org/chromium/src/build/config/android/config.gni?q\u003dconfig.gni\u0026sq\u003dpackage:chromium\u0026l\u003d45\n\nWhere to write it to build_vars.txt:\nhttps://cs.chromium.org/chromium/src/build/android/BUILD.gn?sq\u003dpackage:chromium\u0026q\u003dfile:%5C.gn+write_file+build_vars\u0026l\u003d57\n\nHow to read build_vars.txt:\nhttps://cs.chromium.org/chromium/src/build/android/resource_sizes.py?type\u003dcs\u0026q\u003dfile:%5C.py+build_vars.txt\u0026l\u003d775\n\nIf you wanted to add a ReadBuildVars() to build_utils.py, I\u0027d be fine with that. If you want to just copy/paste, that\u0027s fine with me as well.",
+      "range": {
+        "startLine": 19,
+        "startChar": 25,
+        "endLine": 19,
+        "endChar": 32
+      },
+      "revId": "906122c1a4c166aaaf981236fda030b48afda141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b6b307a_97f5d334",
+        "filename": "build/android/gyp/merge_manifest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-05T15:21:22Z",
+      "side": 1,
+      "message": "Likewise, it\u0027s better to use build_vars.txt\u0027s android_sdk_root value.",
+      "range": {
+        "startLine": 20,
+        "startChar": 43,
+        "endLine": 20,
+        "endChar": 59
+      },
+      "revId": "906122c1a4c166aaaf981236fda030b48afda141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65279af1_55b1bd42",
+        "filename": "build/android/gyp/merge_manifest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-05T15:21:22Z",
+      "side": 1,
+      "message": "nit: List -\u003e GN list",
+      "range": {
+        "startLine": 43,
+        "startChar": 28,
+        "endLine": 43,
+        "endChar": 32
+      },
+      "revId": "906122c1a4c166aaaf981236fda030b48afda141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b584b34b_0b0cd2d5",
+        "filename": "build/android/gyp/write_build_config.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-05T15:21:22Z",
+      "side": 1,
+      "message": "Wrapping here is a bit funny. I\u0027d suggest:\n\nconfig[\u0027extra_android_manifests\u0027] \u003d filter(None, (\n    d.get(\u0027android_manifest\u0027) for d in all_resources_deps))",
+      "range": {
+        "startLine": 710,
+        "startChar": 43,
+        "endLine": 710,
+        "endChar": 44
+      },
+      "revId": "906122c1a4c166aaaf981236fda030b48afda141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4daea33a_bb5c128d",
+        "filename": "build/config/android/rules.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 1856,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-05T15:21:22Z",
+      "side": 1,
+      "message": "nit: prefix with _ (do so far all variables that are not parameters to a template)",
+      "range": {
+        "startLine": 1856,
+        "startChar": 4,
+        "endLine": 1856,
+        "endChar": 27
+      },
+      "revId": "906122c1a4c166aaaf981236fda030b48afda141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
