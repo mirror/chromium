@@ -62,6 +62,7 @@ class CORE_EXPORT ClassicPendingScript final
  private:
   enum ReadyState {
     // These states are considered "not ready".
+    kInConstructor,
     kWaitingForResource,
     kWaitingForStreaming,
     // These states are considered "ready".
