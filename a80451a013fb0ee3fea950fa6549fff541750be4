@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "1047a4a4_97326636",
+        "filename": "third_party/WebKit/Source/platform/graphics/ImageSource.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-07-05T02:13:21Z",
+      "side": 1,
+      "message": "Compared to code-left, this is a behavioral change.\n\nAnd it looks to me like it\u0027d cause the core/loader to fail image decoder instantiations when there is insufficient data to sniff.",
+      "range": {
+        "startLine": 67,
+        "startChar": 9,
+        "endLine": 67,
+        "endChar": 18
+      },
+      "revId": "a80451a013fb0ee3fea950fa6549fff541750be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f0dc5d2_d3ec75ed",
         "filename": "third_party/WebKit/Source/platform/image-decoders/ImageDecoder.cpp",
         "patchSetId": 7
@@ -13,6 +36,30 @@
       "writtenOn": "2017-07-04T21:36:38Z",
       "side": 1,
       "message": "I like the general idea of this.\nI would prefer the ImageDecoder not know specifics of each image type, such as the signature.\n\nHowever, this probably isn\u0027t the way to do it.\n\nThis line will create a SkCodec, which sets up everything it needs to decode the image. Plus, the way SkCodec works is it parses the data it is given. So we will parse on this line.\n\nBut further below, we use the existing Blink image decoders to decode.\n\nYou could imagine a situation where we parse a bunch of information, then discard it and create a new image decoder which re-parses it.",
+      "range": {
+        "startLine": 44,
+        "startChar": 7,
+        "endLine": 44,
+        "endChar": 17
+      },
+      "revId": "a80451a013fb0ee3fea950fa6549fff541750be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b87433f_5caaa8b8",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/ImageDecoder.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-07-05T02:13:21Z",
+      "side": 1,
+      "message": "And I wonder about the cost of that creating and discarding and re-creating.\n\nImageDecoder needs to sniff at the request of core/loader to provide it with an image decoder to use for the resource being loaded.  The sniffing code has to live somewhere and ImageDecoder seems like the reasonable place for it.  Not sure why it needs to depend on SkCodec though.",
+      "parentUuid": "9f0dc5d2_d3ec75ed",
       "range": {
         "startLine": 44,
         "startChar": 7,
