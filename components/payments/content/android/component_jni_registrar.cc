@@ -19,7 +19,7 @@ namespace android {
 static base::android::RegistrationMethod kPaymentsRegisteredMethods[] = {
     {"CurrencyFormatter", CurrencyFormatterAndroid::Register},
     {"OriginSecurityChecker", RegisterOriginSecurityChecker},
-    {"PaymentManifestDownloader", RegisterPaymentManifestDownloader},
+    {"PaymentManifestDownloader", PaymentManifestDownloaderAndroid::Register},
     {"PaymentManifestParser", RegisterPaymentManifestParser},
     {"PaymentValidator", RegisterPaymentValidator},
 };
