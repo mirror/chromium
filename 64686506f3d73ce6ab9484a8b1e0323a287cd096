@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b99a6ae_58746678",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBRequest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-07-05T21:20:12Z",
+      "side": 1,
+      "message": "This would be the first use of std::atomic in Blink. So far as I can tell, this is fine, but you may want to sanity check w/ haraken@ \n\nIt looks like we have a slight preference for the std::atomic\u003cT\u003e form in Chromium, rather than the typedefs.\n\nAlso, there is base::AtomicSequenceNumber - it looks like we are now (soon?) allowed to use base in Blink, so that may be a better choice.",
+      "range": {
+        "startLine": 90,
+        "startChar": 14,
+        "endLine": 90,
+        "endChar": 27
+      },
+      "revId": "64686506f3d73ce6ab9484a8b1e0323a287cd096",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
