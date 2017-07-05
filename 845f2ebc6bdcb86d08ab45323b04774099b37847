@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "75562882_48e4936d",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_favicon_mediator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-05T07:26:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7ebc334_042ad431",
+      "revId": "845f2ebc6bdcb86d08ab45323b04774099b37847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0abbb77f_da6d8780",
         "filename": "ios/chrome/browser/content_suggestions/content_suggestions_favicon_mediator.mm",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "845f2ebc6bdcb86d08ab45323b04774099b37847",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9ef37de_8451f2ac",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_favicon_mediator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-05T07:26:19Z",
+      "side": 1,
+      "message": "No, the tile type is calculated based on the favicon attributes. So setting the attributes is enough to have the correct tile type.",
+      "parentUuid": "0abbb77f_da6d8780",
+      "revId": "845f2ebc6bdcb86d08ab45323b04774099b37847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
