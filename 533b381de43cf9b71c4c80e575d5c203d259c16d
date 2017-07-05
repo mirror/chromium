@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4345f3cc_0c337dc6",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-07-05T15:55:31Z",
+      "side": 1,
+      "message": "nit: End sentence with a period.",
+      "revId": "533b381de43cf9b71c4c80e575d5c203d259c16d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "787f90b1_22f0bc5a",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-07-05T15:55:31Z",
+      "side": 1,
+      "message": "It would be appropriate to add a DCHECK that this element is in the map -- e.g. DCHECK(touchscreen_gesture_target_map_.count(unique_touch_event_id) \u003e 0);",
+      "revId": "533b381de43cf9b71c4c80e575d5c203d259c16d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6da2d4ed_8890e4e8",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-07-05T15:55:31Z",
+      "side": 1,
+      "message": "Maybe add a DCHECK that this event id isn\u0027t already in the map. We are introducing assumptions about behavior here and this will give us informative crashes in debug builds if for some reason they are broken.",
+      "revId": "533b381de43cf9b71c4c80e575d5c203d259c16d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b831a0db_0c53ecf6",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 804,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-07-05T15:55:31Z",
+      "side": 1,
+      "message": "Maybe add DCHECK_IMPLIES(event-\u003eunique_touch_event_id \u003d\u003d 0, no_matching_id);\nThis verifies an event id of 0 is never added to the map.",
+      "revId": "533b381de43cf9b71c4c80e575d5c203d259c16d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ba07fbb_a0c22c70",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 811,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-07-05T15:55:31Z",
+      "side": 1,
+      "message": "nit: End sentence with period.",
+      "revId": "533b381de43cf9b71c4c80e575d5c203d259c16d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f662b69_8d708a1d",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-07-05T15:55:31Z",
+      "side": 1,
+      "message": "Actually there is a line that I removed recently that was trying to flag cases where we expect a matching touch event but didn\u0027t get one. Can we add this back in for cases where unique_touch_event_id !\u003d 0 but no_matching_id is true?\nUMA_HISTOGRAM_BOOLEAN(\"Event.FrameEventRouting.NoGestureTarget\", no_target);",
+      "revId": "533b381de43cf9b71c4c80e575d5c203d259c16d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c99197f1_4dd2847b",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1701,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-07-05T15:55:31Z",
+      "side": 1,
+      "message": "nit: Chromium style guide requires braces around the if body when it spans multiple lines, even when it is a single statement.\n\nRelated: make sure to run \"git cl format\" on this patch, which automatically fixes up some formatting issues, such as max line length and whitespace rules.",
+      "revId": "533b381de43cf9b71c4c80e575d5c203d259c16d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44486c72_4548d006",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1705,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-07-05T15:55:31Z",
+      "side": 1,
+      "message": "I wonder if it is it possible for the unique_touch_event_id to be zero here. I would guess not but I don\u0027t know if there are exceptions.",
+      "revId": "533b381de43cf9b71c4c80e575d5c203d259c16d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cadf109_03bf67f0",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1065,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-07-05T15:55:31Z",
+      "side": 1,
+      "message": "Same comment as above about needing braces.",
+      "revId": "533b381de43cf9b71c4c80e575d5c203d259c16d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03c27265_cebb5477",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 5922,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-07-05T15:55:31Z",
+      "side": 1,
+      "message": "nit: End sentence with period.",
+      "revId": "533b381de43cf9b71c4c80e575d5c203d259c16d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b7294e9_515a8f3d",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 6160,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-07-05T15:55:31Z",
+      "side": 1,
+      "message": "I think this test has to be limited to running on Android and Aura, since we don\u0027t handle touch event acks on Mac.",
+      "revId": "533b381de43cf9b71c4c80e575d5c203d259c16d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
