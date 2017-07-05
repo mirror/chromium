@@ -249,4 +249,9 @@ bool PrintingContextAndroid::RegisterPrintingContext(JNIEnv* env) {
   return RegisterNativesImpl(env);
 }
 
+// static
+void ClearScriptedPrintFrame(JNIEnv*, const JavaParamRef<jobject>&) {
+
+}
+
 }  // namespace printing

@@ -1504,6 +1504,8 @@ void PrintWebViewHelper::Print(blink::WebLocalFrame* frame,
                                const blink::WebNode& node,
                                bool is_scripted) {
   // If still not finished with earlier print request simply ignore.
+  LOG(WARNING) << "frame = " << frame;
+  LOG(WARNING) << "this = " << this;
   if (prep_frame_view_)
     return;
 

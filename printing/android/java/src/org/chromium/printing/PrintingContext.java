@@ -150,9 +150,16 @@ public class PrintingContext implements PrintingContextInterface {
         nativeShowSystemDialogDone(mNativeObject);
     }
 
+    @Override
+    public void clearScriptedPrintFrame() {
+        nativeClearScriptedPrintFrame();
+    }
+
     private native void nativeAskUserForSettingsReply(
             long nativePrintingContextAndroid,
             boolean success);
 
     private native void nativeShowSystemDialogDone(long nativePrintingContextAndroid);
+
+    private native void nativeClearScriptedPrintFrame();
 }
