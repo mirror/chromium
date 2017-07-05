@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d29704ff_56cc5b0d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticleViewHolder.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2017-07-05T16:04:26Z",
+      "side": 1,
+      "message": "Is there any reason to do this immediately rather than just wait for the callback to immediately run after being posted to the looper? I\u0027m very wary of code which might do something synchronously or asynchronously - it\u0027s usually better just always do it asynchronously in a new callback to avoid surprises.",
+      "range": {
+        "startLine": 379,
+        "startChar": 12,
+        "endLine": 384,
+        "endChar": 13
+      },
+      "revId": "6379e4be5affacfda160948c3d7e484e356c80e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
