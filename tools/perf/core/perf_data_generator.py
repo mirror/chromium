@@ -674,12 +674,20 @@ def generate_cplusplus_isolate_script_test(dimension):
   ]
 
 
+ALL_PLATFORMS = ['win', 'mac', 'linux', 'android']
+
+def BenchmarkDisabledOnAllPlatforms(benchmark):
+  disabled_tags = decorators.GetDisabledAttributes(benchmark)
+
+  return 'all' in disabled_tags or sorted(
+      disabled_tags) == sorted(ALL_PLATFORMS)
+
 def ShouldBenchmarkBeScheduled(benchmark, platform):
   disabled_tags = decorators.GetDisabledAttributes(benchmark)
   enabled_tags = decorators.GetEnabledAttributes(benchmark)
 
   # Don't run benchmarks which are disabled on all platforms.
-  if 'all' in disabled_tags:
+  if BenchmarkDisabledOnAllPlatforms(benchmark):
     return False
 
   # If we're not on android, don't run mobile benchmarks.
@@ -922,7 +930,7 @@ def get_all_benchmarks_metadata(metadata):
   benchmark_list = current_benchmarks()
 
   for benchmark in benchmark_list:
-    disabled = 'all' in decorators.GetDisabledAttributes(benchmark)
+    disabled = BenchmarkDisabledOnAllPlatforms(benchmark)
 
     emails = decorators.GetEmails(benchmark)
     if emails:
