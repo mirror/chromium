@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "fc984f90_a9347db1",
+        "filename": "components/payments/content/payment_request_state.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-05T19:30:45Z",
+      "side": 1,
+      "message": "If the website doesn\u0027t support Amex but you have one, available_instruments().size() !\u003d cards.size(), no?",
+      "parentUuid": "791d2dce_2c984739",
+      "range": {
+        "startLine": 296,
+        "startChar": 4,
+        "endLine": 296,
+        "endChar": 32
+      },
+      "revId": "86ddebbf8e633f1f39546c33bf1142691276d5d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c9da7fb0_efcfffe8",
         "filename": "components/payments/core/journey_logger.cc",
         "patchSetId": 5
