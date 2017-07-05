@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64e5abe1_2423f4f7",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1322,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-05T15:12:32Z",
+      "side": 1,
+      "message": "caveat: I don\u0027t really understand how this code works :P\n\nThis looks wrong though. Why do we only care about radius / x? Are we going to get non-circular borders for rectangular elements, as this is using the x fraction and not the y fraction?",
+      "range": {
+        "startLine": 1322,
+        "startChar": 18,
+        "endLine": 1322,
+        "endChar": 31
+      },
+      "revId": "7150d9508318534e692ab4fcef88b40488ef0de7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
