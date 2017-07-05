@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ac414c5_bc9205e9",
+        "filename": "android_webview/system_webview_apk_tmpl.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-05T17:47:40Z",
+      "side": 1,
+      "message": "comment why it\u0027s needed?",
+      "revId": "4b40ed3f0eee8b14d14f3c6c574b19e15d3b90ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
