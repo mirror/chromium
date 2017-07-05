@@ -18,6 +18,7 @@
 #include "content/public/browser/web_contents.h"
 #include "net/url_request/url_request.h"
 #include "ui/base/l10n/l10n_util.h"
+#include "ui/base/material_design/material_design_controller.h"
 #include "ui/views/widget/widget.h"
 #include "ui/views/window/dialog_delegate.h"
 
@@ -46,6 +47,10 @@ class LoginHandlerViews : public LoginHandler, public views::DialogDelegate {
   void OnLoginModelDestroying() override {}
 
   // views::DialogDelegate:
+  bool ShouldShowCloseButton() const override {
+    return !ui::MaterialDesignController::IsSecondaryUiMaterial();
+  }
+
   base::string16 GetDialogButtonLabel(ui::DialogButton button) const override {
     if (button == ui::DIALOG_BUTTON_OK)
       return l10n_util::GetStringUTF16(IDS_LOGIN_DIALOG_OK_BUTTON_LABEL);
