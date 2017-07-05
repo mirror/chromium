@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "base/auto_reset.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/string16.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/time/time.h"
@@ -91,6 +92,13 @@ void FormSaverImpl::WipeOutdatedCopies(
       ++it;
     }
   }
+}
+
+std::unique_ptr<FormSaver> FormSaverImpl::Clone() {
+  auto result = base::MakeUnique<FormSaverImpl>(store_);
+  if (presaved_)
+    result->presaved_ = base::MakeUnique<PasswordForm>(*presaved_);
+  return std::move(result);
 }
 
 void FormSaverImpl::SaveImpl(
