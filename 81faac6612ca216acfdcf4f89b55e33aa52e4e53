@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cdd2fcff_96976ac8",
+        "filename": "chrome/browser/media/cast_transport_host_filter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-07-05T18:20:04Z",
+      "side": 1,
+      "message": "Add  \u003dfalse initializer here instead of the constructor.",
+      "range": {
+        "startLine": 110,
+        "startChar": 7,
+        "endLine": 110,
+        "endChar": 40
+      },
+      "revId": "81faac6612ca216acfdcf4f89b55e33aa52e4e53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
