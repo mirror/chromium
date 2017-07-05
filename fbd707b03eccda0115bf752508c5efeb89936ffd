@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb3c14f6_975dee8e",
+        "filename": "chrome/browser/ui/views/frame/browser_window_property_manager_browsertest_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-05T08:47:18Z",
+      "side": 1,
+      "message": "It seems like the core issue here is that ExtensionBrowserTest::LoadExtensionXXX() return raw pointers when they should be returning scoped_refptrs.\n\nIs it possible to fix that as a separate patchset?  Otherwise there are who knows how many other potential problems happening elsewhere.",
+      "revId": "fbd707b03eccda0115bf752508c5efeb89936ffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
