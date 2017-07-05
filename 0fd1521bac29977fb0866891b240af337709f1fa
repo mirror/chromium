@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06e07f26_54ffbe05",
+        "filename": "chrome/browser/ntp_tiles/ntp_tiles_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-05T15:50:01Z",
+      "side": 1,
+      "message": "I don\u0027t know if this file makes sense for this test. If the suite is increased to cover ntp_tiles, then maybe. I\u0027m happy to move it to a better location if you prefer.",
+      "revId": "0fd1521bac29977fb0866891b240af337709f1fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
