@@ -38,11 +38,8 @@ settings.ContentSettingsTypes = {
 /**
  * Contains the possible string values for a given contentSettingsType.
  * @enum {string}
- *
- * TODO(dschuyler): This should be rename as ContentSetting to maintain
- * nomenclature with C++.
  */
-settings.PermissionValues = {
+settings.ContentSetting = {
   DEFAULT: 'default',
   ALLOW: 'allow',
   BLOCK: 'block',

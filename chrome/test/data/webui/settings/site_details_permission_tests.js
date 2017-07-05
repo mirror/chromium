@@ -100,14 +100,14 @@ suite('SiteDetailsPermission', function() {
         'Widget should be labelled correctly');
 
     // Flip the permission and validate that prefs stay in sync.
-    return validatePermissionFlipWorks(origin, settings.PermissionValues.ALLOW)
+    return validatePermissionFlipWorks(origin, settings.ContentSetting.ALLOW)
         .then(function() {
           return validatePermissionFlipWorks(
-              origin, settings.PermissionValues.BLOCK);
+              origin, settings.ContentSetting.BLOCK);
         })
         .then(function() {
           return validatePermissionFlipWorks(
-              origin, settings.PermissionValues.ALLOW);
+              origin, settings.ContentSetting.ALLOW);
         });
   });
 
@@ -130,14 +130,14 @@ suite('SiteDetailsPermission', function() {
 
     // Flip the permission and validate that prefs stay in sync.
     return validatePermissionFlipWorks(
-               origin, settings.PermissionValues.SESSION_ONLY)
+               origin, settings.ContentSetting.SESSION_ONLY)
         .then(function() {
           return validatePermissionFlipWorks(
-              origin, settings.PermissionValues.ALLOW);
+              origin, settings.ContentSetting.ALLOW);
         })
         .then(function() {
           return validatePermissionFlipWorks(
-              origin, settings.PermissionValues.BLOCK);
+              origin, settings.ContentSetting.BLOCK);
         });
   });
 });
