@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bf825953_ebfc9880",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-07-05T23:21:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06e10c56_618fef36",
+      "revId": "9fb74307cb849897798766f884b7b07663fd949c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "652f205b_0ce63309",
         "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-05T18:18:44Z",
       "side": 1,
       "message": "1) check for chrome:\n2) Message should be \"Cannot audit internal chrome pages\" or alike.",
+      "revId": "9fb74307cb849897798766f884b7b07663fd949c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f81bd167_161d2b3b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-07-05T23:21:15Z",
+      "side": 1,
+      "message": "deja vu :)\n\nwdyt re: \"Do we care? There were Chrome teams using LH for perf tracking, and it still works fine on most chrome:// URLs from within DevTools (just not extension).\"",
+      "parentUuid": "652f205b_0ce63309",
       "revId": "9fb74307cb849897798766f884b7b07663fd949c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
