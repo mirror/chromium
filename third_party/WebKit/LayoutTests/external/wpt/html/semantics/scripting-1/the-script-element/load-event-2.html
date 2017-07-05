@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script src="resources/load-event-helpers.js"></script>
+<link rel="help" href="https://html.spec.whatwg.org/multipage/#execute-the-script-block">
+<script>
+var test5_classic_load = event_test('5th Clause, Step 23 of prepare a script', false, false);
+</script>
+
+<link rel="stylesheet" href="resources/slow.py"></link>
+<!-- This is testing 5th Clause of Step 23 of prepare a script:
+the case where an inline classic script is inserted by parser while there is
+an loading stylesheet. Therefore, it is critical to place a
+<link rel="stylesheet"> just above the <script> to be tested. -->
+<script onload="onLoad(test5_classic_load);" onerror="onError(test5_classic_load);">
+onExecute(test5_classic_load);
+</script>
+</head>
