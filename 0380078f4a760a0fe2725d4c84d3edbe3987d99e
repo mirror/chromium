@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47e3c019_803de68e",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/jpeg/JPEGImageDecoder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1125499
+      },
+      "writtenOn": "2017-07-05T07:31:33Z",
+      "side": 0,
+      "message": "You\u0027ll want to keep this since on line 71 on the right we still have std::unique_ptr.",
+      "range": {
+        "startLine": 30,
+        "startChar": 10,
+        "endLine": 30,
+        "endChar": 16
+      },
+      "revId": "0380078f4a760a0fe2725d4c84d3edbe3987d99e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "010d5a2f_7ebe083b",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/jpeg/JPEGImageDecoder.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1125499
+      },
+      "writtenOn": "2017-07-05T07:31:33Z",
+      "side": 1,
+      "message": "This isn\u0027t very important, but it is interesting:\n\nCPUs treat 0 as a special value. The flag register holds information for greater-than-zero, less-than-zero, is-zero, etc. The optimizer might realize \u003e\u003d 1 is the same as \u003e 0. But it might not. I also think \u003e 0 is easier to read.",
+      "range": {
+        "startLine": 150,
+        "startChar": 11,
+        "endLine": 150,
+        "endChar": 12
+      },
+      "revId": "c984f640259030d9363d03eebb5b7db3ecef8fb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
