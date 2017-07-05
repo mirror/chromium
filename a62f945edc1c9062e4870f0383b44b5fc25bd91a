@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "2da7aeac_5572f271",
+        "filename": "third_party/WebKit/public/platform/modules/payments/WebCanMakePaymentEventData.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-05T17:20:29Z",
+      "side": 1,
+      "message": "\u003e I can make a PR quickly when I fix it in follow-up CL.\n\nPlease do that.",
+      "parentUuid": "81dcce3a_94e44a8f",
+      "revId": "a62f945edc1c9062e4870f0383b44b5fc25bd91a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d62904a8_14ee9e55",
         "filename": "third_party/WebKit/public/platform/modules/payments/WebPaymentRequestEventData.h",
         "patchSetId": 6
