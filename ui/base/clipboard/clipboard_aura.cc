@@ -350,6 +350,8 @@ class ClipboardDataBuilder {
   }
 
   static void WriteText(const char* text_data, size_t text_len) {
+    LOG(ERROR) << "ClipboardDataBuilder::WriteText(): "
+               << std::string(text_data, text_len);
     ClipboardData* data = GetCurrentData();
     data->set_text(std::string(text_data, text_len));
   }
@@ -358,12 +360,17 @@ class ClipboardDataBuilder {
                         size_t markup_len,
                         const char* url_data,
                         size_t url_len) {
+    LOG(ERROR) << "ClipboardDataBuilder::WriteHTML(): markup:"
+               << std::string(markup_data, markup_len)
+               << "url: " << std::string(url_data, url_len);
     ClipboardData* data = GetCurrentData();
     data->set_markup_data(std::string(markup_data, markup_len));
     data->set_url(std::string(url_data, url_len));
   }
 
   static void WriteRTF(const char* rtf_data, size_t rtf_len) {
+    LOG(ERROR) << "ClipboardDataBuilder::WriteRTF()"
+               << std::string(rtf_data, rtf_len);
     ClipboardData* data = GetCurrentData();
     data->SetRTFData(std::string(rtf_data, rtf_len));
   }
@@ -372,17 +379,24 @@ class ClipboardDataBuilder {
                             size_t title_len,
                             const char* url_data,
                             size_t url_len) {
+    LOG(ERROR) << "ClipboardDataBuilder::WriteBookmark(): title:"
+               << std::string(title_data, title_len)
+               << "  url:" << std::string(url_data, url_len);
     ClipboardData* data = GetCurrentData();
     data->set_bookmark_title(std::string(title_data, title_len));
     data->set_bookmark_url(std::string(url_data, url_len));
   }
 
   static void WriteWebSmartPaste() {
+    LOG(ERROR) << "ClipboardDataBuilder::WriteWebSmartPaste()";
+
     ClipboardData* data = GetCurrentData();
     data->set_web_smart_paste(true);
   }
 
   static void WriteBitmap(const SkBitmap& bitmap) {
+    LOG(ERROR) << "ClipboardDataBuilder::WriteBitmap()";
+
     ClipboardData* data = GetCurrentData();
     data->SetBitmapData(bitmap);
   }
@@ -390,6 +404,8 @@ class ClipboardDataBuilder {
   static void WriteData(const std::string& format,
                         const char* data_data,
                         size_t data_len) {
+    LOG(ERROR) << "ClipboardDataBuilder::WriteData(): format: " << format
+               << " data: " << std::string(data_data, data_len);
     ClipboardData* data = GetCurrentData();
     data->SetCustomData(format, std::string(data_data, data_len));
   }
