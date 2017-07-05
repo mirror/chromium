@@ -6,6 +6,7 @@
 #define ScriptModuleResolverImpl_h
 
 #include "bindings/core/v8/ScriptModule.h"
+#include "bindings/core/v8/ScriptPromiseResolver.h"
 #include "core/CoreExport.h"
 #include "core/dom/ContextLifecycleObserver.h"
 #include "core/dom/ScriptModuleResolver.h"
@@ -43,6 +44,9 @@ class CORE_EXPORT ScriptModuleResolverImpl final
 
   void RegisterModuleScript(ModuleScript*) final;
   void UnregisterModuleScript(ModuleScript*) final;
+  void ResolveDynamically(const String& specifier,
+                          const String& referrer,
+                          ScriptPromiseResolver*) final;
 
   // Implements "Runtime Semantics: HostResolveImportedModule" per HTML spec.
   // https://html.spec.whatwg.org/#hostresolveimportedmodule(referencingmodule,-specifier)
@@ -52,6 +56,8 @@ class CORE_EXPORT ScriptModuleResolverImpl final
 
   // Implements ContextLifecycleObserver:
   void ContextDestroyed(ExecutionContext*) final;
+
+  class DynamicResolver;
 
   // Corresponds to the spec concept "referencingModule.[[HostDefined]]".
   // crbug.com/725816 : ScriptModule contains strong ref to v8::Module thus we

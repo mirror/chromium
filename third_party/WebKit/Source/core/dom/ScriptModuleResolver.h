@@ -12,8 +12,9 @@
 
 namespace blink {
 
-class ScriptModule;
 class ModuleScript;
+class ScriptModule;
+class ScriptPromiseResolver;
 
 // The ScriptModuleResolver interface is used from V8 module bindings
 // when it need the ScriptModule's descendants.
@@ -42,6 +43,12 @@ class CORE_EXPORT ScriptModuleResolver
   virtual ScriptModule Resolve(const String& specifier,
                                const ScriptModule& referrer,
                                ExceptionState&) = 0;
+
+  // Implements "Runtime Semantics: HostImportModuleDynamically"
+  // https://tc39.github.io/proposal-dynamic-import/#sec-hostimportmoduledynamically
+  virtual void ResolveDynamically(const String& specifier,
+                                  const String& referrer,
+                                  ScriptPromiseResolver*) = 0;
 };
 
 }  // namespace blink
