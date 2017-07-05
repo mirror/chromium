@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "95db8979_53313650",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1202079
+      },
+      "writtenOn": "2017-07-05T22:40:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9832a5e5_6af36382",
+      "revId": "33a2f5e9f672bd4ca5bfc6fac4137b4c3492a7e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46bb1fb4_079babc0",
         "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
         "patchSetId": 2
@@ -39,6 +57,30 @@
       "revId": "33a2f5e9f672bd4ca5bfc6fac4137b4c3492a7e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eafa51c4_efe7ecbd",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1202079
+      },
+      "writtenOn": "2017-07-05T22:40:38Z",
+      "side": 1,
+      "message": "commented out EncodeImagePngAndSaveToDisk. doing some refactoring, but won\u0027t write to disk anymore.",
+      "parentUuid": "46bb1fb4_079babc0",
+      "range": {
+        "startLine": 41,
+        "startChar": 28,
+        "endLine": 41,
+        "endChar": 29
+      },
+      "revId": "33a2f5e9f672bd4ca5bfc6fac4137b4c3492a7e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -137,6 +179,30 @@
     },
     {
       "key": {
+        "uuid": "4bb73f70_6f95e309",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1202079
+      },
+      "writtenOn": "2017-07-05T22:40:38Z",
+      "side": 1,
+      "message": "commented out function. won\u0027t write to disk anymore. under refactoring.",
+      "parentUuid": "33c36e1b_dd2a7ae5",
+      "range": {
+        "startLine": 50,
+        "startChar": 13,
+        "endLine": 50,
+        "endChar": 32
+      },
+      "revId": "33a2f5e9f672bd4ca5bfc6fac4137b4c3492a7e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce90f642_b2f33c8c",
         "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
         "patchSetId": 2
@@ -157,6 +223,30 @@
       "revId": "33a2f5e9f672bd4ca5bfc6fac4137b4c3492a7e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6525ef85_dea971a2",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1202079
+      },
+      "writtenOn": "2017-07-05T22:40:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce90f642_b2f33c8c",
+      "range": {
+        "startLine": 87,
+        "startChar": 5,
+        "endLine": 87,
+        "endChar": 24
+      },
+      "revId": "33a2f5e9f672bd4ca5bfc6fac4137b4c3492a7e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -183,6 +273,30 @@
     },
     {
       "key": {
+        "uuid": "b7f71a81_6c0775cf",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1202079
+      },
+      "writtenOn": "2017-07-05T22:40:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0626c3d8_51d9a3d3",
+      "range": {
+        "startLine": 88,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 28
+      },
+      "revId": "33a2f5e9f672bd4ca5bfc6fac4137b4c3492a7e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ad51f4c_8aa4f114",
         "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
         "patchSetId": 2
@@ -203,6 +317,30 @@
       "revId": "33a2f5e9f672bd4ca5bfc6fac4137b4c3492a7e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07b88f3b_f3afd369",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1202079
+      },
+      "writtenOn": "2017-07-05T22:40:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ad51f4c_8aa4f114",
+      "range": {
+        "startLine": 141,
+        "startChar": 0,
+        "endLine": 142,
+        "endChar": 22
+      },
+      "revId": "33a2f5e9f672bd4ca5bfc6fac4137b4c3492a7e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -229,6 +367,30 @@
     },
     {
       "key": {
+        "uuid": "ea489e37_32b70c9a",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1202079
+      },
+      "writtenOn": "2017-07-05T22:40:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58258235_c9a14dd4",
+      "range": {
+        "startLine": 177,
+        "startChar": 2,
+        "endLine": 177,
+        "endChar": 36
+      },
+      "revId": "33a2f5e9f672bd4ca5bfc6fac4137b4c3492a7e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e228ce25_62f5372b",
         "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
         "patchSetId": 2
@@ -246,6 +408,24 @@
     },
     {
       "key": {
+        "uuid": "9d854f1e_ddee37fc",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1202079
+      },
+      "writtenOn": "2017-07-05T22:40:38Z",
+      "side": 1,
+      "message": "queued fd... will be closed in future CL. Added comment.",
+      "parentUuid": "e228ce25_62f5372b",
+      "revId": "33a2f5e9f672bd4ca5bfc6fac4137b4c3492a7e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f521161_2af177dd",
         "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
         "patchSetId": 2
@@ -257,6 +437,30 @@
       "writtenOn": "2017-06-30T16:59:39Z",
       "side": 1,
       "message": "You cannot in general perform this. What if it\u0027s a pipe?\n\nIt\u0027s probably better to do post this task to a blocking threadpool and read from there, and keep reading until the data\u0027s exhausted (maybe set a reasonable maximum size to avoid running out of memory).",
+      "range": {
+        "startLine": 206,
+        "startChar": 0,
+        "endLine": 207,
+        "endChar": 37
+      },
+      "revId": "33a2f5e9f672bd4ca5bfc6fac4137b4c3492a7e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95f70c28_5a3ed4f1",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1202079
+      },
+      "writtenOn": "2017-07-05T22:40:38Z",
+      "side": 1,
+      "message": "I control the other side of the bridge and I know they are files (although I\u0027ll have to double check it). If I confirm that they are always files, should I keep this code?",
+      "parentUuid": "9f521161_2af177dd",
       "range": {
         "startLine": 206,
         "startChar": 0,
@@ -292,6 +496,30 @@
     },
     {
       "key": {
+        "uuid": "f7f9ab35_74d122c8",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1202079
+      },
+      "writtenOn": "2017-07-05T22:40:38Z",
+      "side": 1,
+      "message": "yes, thanks. that code was not finished. fixed.",
+      "parentUuid": "8fb771cf_cb4e20c6",
+      "range": {
+        "startLine": 210,
+        "startChar": 6,
+        "endLine": 210,
+        "endChar": 80
+      },
+      "revId": "33a2f5e9f672bd4ca5bfc6fac4137b4c3492a7e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "768d8d21_c7087b71",
         "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
         "patchSetId": 2
@@ -315,6 +543,30 @@
     },
     {
       "key": {
+        "uuid": "e501e3a4_a976fd85",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1202079
+      },
+      "writtenOn": "2017-07-05T22:40:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "768d8d21_c7087b71",
+      "range": {
+        "startLine": 271,
+        "startChar": 54,
+        "endLine": 271,
+        "endChar": 76
+      },
+      "revId": "33a2f5e9f672bd4ca5bfc6fac4137b4c3492a7e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35a89f99_48eda579",
         "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
         "patchSetId": 2
@@ -332,6 +584,24 @@
     },
     {
       "key": {
+        "uuid": "6b9d15b5_d0c784bd",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1202079
+      },
+      "writtenOn": "2017-07-05T22:40:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35a89f99_48eda579",
+      "revId": "33a2f5e9f672bd4ca5bfc6fac4137b4c3492a7e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70f41e35_81008b54",
         "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
         "patchSetId": 2
@@ -343,6 +613,24 @@
       "writtenOn": "2017-06-30T17:34:14Z",
       "side": 1,
       "message": "When can this be deleted? Looks not closed until Chrome is shutdown?",
+      "revId": "33a2f5e9f672bd4ca5bfc6fac4137b4c3492a7e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0358df04_b4609778",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1202079
+      },
+      "writtenOn": "2017-07-05T22:40:38Z",
+      "side": 1,
+      "message": "yes. thanks. will be fixed in future CL.",
+      "parentUuid": "70f41e35_81008b54",
       "revId": "33a2f5e9f672bd4ca5bfc6fac4137b4c3492a7e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -372,6 +660,30 @@
     },
     {
       "key": {
+        "uuid": "6b2e5aa1_f872296e",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1202079
+      },
+      "writtenOn": "2017-07-05T22:40:38Z",
+      "side": 1,
+      "message": "Ok. while in research mode, I\u0027ll use an \"unsupported\" type and send error messages through it. I\u0027ll remove or change it Optional when research is finished.",
+      "parentUuid": "3ad0cd0e_cb71d1c9",
+      "range": {
+        "startLine": 394,
+        "startChar": 42,
+        "endLine": 394,
+        "endChar": 60
+      },
+      "revId": "33a2f5e9f672bd4ca5bfc6fac4137b4c3492a7e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5e0ea57_ee93e49b",
         "filename": "components/arc/clipboard/arc_clipboard_bridge.h",
         "patchSetId": 2
@@ -386,6 +698,24 @@
       "revId": "33a2f5e9f672bd4ca5bfc6fac4137b4c3492a7e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bca189df_d2f69c33",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1202079
+      },
+      "writtenOn": "2017-07-05T22:40:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5e0ea57_ee93e49b",
+      "revId": "33a2f5e9f672bd4ca5bfc6fac4137b4c3492a7e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -412,6 +742,30 @@
     },
     {
       "key": {
+        "uuid": "7fb4868c_cf5cebe1",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1202079
+      },
+      "writtenOn": "2017-07-05T22:40:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2700aebe_255146f7",
+      "range": {
+        "startLine": 48,
+        "startChar": 16,
+        "endLine": 48,
+        "endChar": 21
+      },
+      "revId": "33a2f5e9f672bd4ca5bfc6fac4137b4c3492a7e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7188404_051fb3c3",
         "filename": "components/arc/common/clipboard.mojom",
         "patchSetId": 2
@@ -435,6 +789,30 @@
     },
     {
       "key": {
+        "uuid": "17391d2a_911fbf3e",
+        "filename": "components/arc/common/clipboard.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1202079
+      },
+      "writtenOn": "2017-07-05T22:40:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7188404_051fb3c3",
+      "range": {
+        "startLine": 23,
+        "startChar": 15,
+        "endLine": 23,
+        "endChar": 24
+      },
+      "revId": "33a2f5e9f672bd4ca5bfc6fac4137b4c3492a7e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fed1dc20_913221e1",
         "filename": "components/arc/common/clipboard.mojom",
         "patchSetId": 2
@@ -449,6 +827,24 @@
       "revId": "33a2f5e9f672bd4ca5bfc6fac4137b4c3492a7e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a440f806_6c9b6c3b",
+        "filename": "components/arc/common/clipboard.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1202079
+      },
+      "writtenOn": "2017-07-05T22:40:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fed1dc20_913221e1",
+      "revId": "33a2f5e9f672bd4ca5bfc6fac4137b4c3492a7e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -475,6 +871,30 @@
     },
     {
       "key": {
+        "uuid": "5de80164_86d00421",
+        "filename": "components/arc/common/clipboard.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1202079
+      },
+      "writtenOn": "2017-07-05T22:40:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfa4bd12_9b660ec6",
+      "range": {
+        "startLine": 44,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 16
+      },
+      "revId": "33a2f5e9f672bd4ca5bfc6fac4137b4c3492a7e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "585afda4_633b12f9",
         "filename": "components/arc/common/clipboard.mojom",
         "patchSetId": 2
@@ -498,6 +918,30 @@
     },
     {
       "key": {
+        "uuid": "8aab1882_5179466a",
+        "filename": "components/arc/common/clipboard.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1202079
+      },
+      "writtenOn": "2017-07-05T22:40:38Z",
+      "side": 1,
+      "message": "That was code from my previous PoC. Removed.",
+      "parentUuid": "585afda4_633b12f9",
+      "range": {
+        "startLine": 66,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 37
+      },
+      "revId": "33a2f5e9f672bd4ca5bfc6fac4137b4c3492a7e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29063a7a_095e5edc",
         "filename": "components/arc/common/clipboard.mojom",
         "patchSetId": 2
@@ -518,6 +962,30 @@
       "revId": "33a2f5e9f672bd4ca5bfc6fac4137b4c3492a7e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ca80acb_f5c30abd",
+        "filename": "components/arc/common/clipboard.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1202079
+      },
+      "writtenOn": "2017-07-05T22:40:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29063a7a_095e5edc",
+      "range": {
+        "startLine": 68,
+        "startChar": 2,
+        "endLine": 68,
+        "endChar": 48
+      },
+      "revId": "33a2f5e9f672bd4ca5bfc6fac4137b4c3492a7e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
