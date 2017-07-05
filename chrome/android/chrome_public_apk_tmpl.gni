@@ -143,6 +143,9 @@ template("monochrome_public_apk_tmpl") {
         proguard_configs = []
       }
       proguard_configs += [ "//android_webview/apk/java/proguard.flags" ]
+
+      # TODO(wnwen): Enable after http://crbug.com/695482 is resolved.
+      #convert_to_webp = true
     }
   }
 }
