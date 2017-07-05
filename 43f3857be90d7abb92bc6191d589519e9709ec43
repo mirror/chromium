@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "024cf9eb_193e89f6",
+        "filename": "third_party/WebKit/LayoutTests/vr/requestAnimationFrame_consistentTimestamps.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-05T21:14:13Z",
+      "side": 1,
+      "message": "Yeah, the test is flaky at lower values, with ~48ms it was failing like 1/100 times or so. 250ms is kind of arbitrary, but it didn\u0027t fail in 1000 runs so I just left it at that.\n\nThe difference in an error case is on the order of millions of seconds, so the tolerance can be pretty big to detect the kind of error this is preventing :P",
+      "parentUuid": "3d2236c1_ddb14b8d",
+      "range": {
+        "startLine": 23,
+        "startChar": 8,
+        "endLine": 23,
+        "endChar": 20
+      },
+      "revId": "43f3857be90d7abb92bc6191d589519e9709ec43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8ddd4d5_5ef00795",
         "filename": "third_party/WebKit/LayoutTests/vr/requestAnimationFrame_consistentTimestamps.html",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "3200861a_3906c4c9",
+        "filename": "third_party/WebKit/LayoutTests/vr/requestAnimationFrame_consistentTimestamps.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-05T21:14:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8ddd4d5_5ef00795",
+      "range": {
+        "startLine": 32,
+        "startChar": 12,
+        "endLine": 32,
+        "endChar": 28
+      },
+      "revId": "43f3857be90d7abb92bc6191d589519e9709ec43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72d33535_2680132a",
         "filename": "third_party/WebKit/LayoutTests/vr/requestAnimationFrame_consistentTimestamps.html",
         "patchSetId": 3
@@ -68,6 +116,30 @@
       "revId": "43f3857be90d7abb92bc6191d589519e9709ec43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5eb682e_c17af8a1",
+        "filename": "third_party/WebKit/LayoutTests/vr/requestAnimationFrame_consistentTimestamps.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-05T21:14:13Z",
+      "side": 1,
+      "message": "Well yes we care about both, but I think it\u0027s fine not to also test that case, as it makes the test simpler, faster and less flaky. I can\u0027t imagine the kind of mistake that would break this one way but not the other, so I think it\u0027s fine not to be too exhaustive here.",
+      "parentUuid": "72d33535_2680132a",
+      "range": {
+        "startLine": 39,
+        "startChar": 10,
+        "endLine": 39,
+        "endChar": 28
+      },
+      "revId": "43f3857be90d7abb92bc6191d589519e9709ec43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
