@@ -101,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "b6cd7359_c174c10d",
+        "filename": "cc/surfaces/surface.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-05T20:31:33Z",
+      "side": 1,
+      "message": "No clue. Restored.",
+      "parentUuid": "feb4bd44_1378ff36",
+      "revId": "aea04640d0e67ab9345a43381c2e930fd36c36d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "594a26c8_e96dd330",
         "filename": "cc/surfaces/surface.h",
         "patchSetId": 2
