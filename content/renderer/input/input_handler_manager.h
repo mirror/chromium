@@ -87,7 +87,8 @@ class CONTENT_EXPORT InputHandlerManager {
       base::Callback<void(InputEventAckState,
                           ui::WebScopedInputEvent,
                           const ui::LatencyInfo&,
-                          std::unique_ptr<ui::DidOverscrollParams>)>;
+                          std::unique_ptr<ui::DidOverscrollParams>,
+                          cc::TouchAction)>;
   // Called from the compositor's thread.
   virtual void HandleInputEvent(int routing_id,
                                 ui::WebScopedInputEvent input_event,
@@ -139,7 +140,8 @@ class CONTENT_EXPORT InputHandlerManager {
       ui::InputHandlerProxy::EventDisposition event_disposition,
       ui::WebScopedInputEvent input_event,
       const ui::LatencyInfo& latency_info,
-      std::unique_ptr<ui::DidOverscrollParams> overscroll_params);
+      std::unique_ptr<ui::DidOverscrollParams> overscroll_params,
+      cc::TouchAction touch_action);
 
   using InputHandlerMap =
       std::unordered_map<int,  // routing_id

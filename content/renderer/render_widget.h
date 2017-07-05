@@ -264,6 +264,7 @@ class CONTENT_EXPORT RenderWidget
 
   void OnDidHandleKeyEvent() override;
   void OnDidOverscroll(const ui::DidOverscrollParams& params) override;
+  void OnSetTouchAction(cc::TouchAction touch_action) override;
   void SetInputHandler(RenderWidgetInputHandler* input_handler) override;
   void ShowVirtualKeyboard() override;
   void UpdateTextInputState() override;
@@ -850,7 +851,8 @@ class CONTENT_EXPORT RenderWidget
                          uint32_t touch_event_id,
                          InputEventAckState ack_state,
                          const ui::LatencyInfo& latency_info,
-                         std::unique_ptr<ui::DidOverscrollParams>);
+                         std::unique_ptr<ui::DidOverscrollParams>,
+                         cc::TouchAction);
 
   // Indicates whether this widget has focus.
   bool has_focus_;

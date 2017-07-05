@@ -457,6 +457,10 @@ void LegacyInputRouterImpl::OnInputEventAck(const InputEventAck& ack) {
            ack.type == WebInputEvent::kGestureScrollUpdate);
     OnDidOverscroll(*ack.overscroll);
   }
+  if (ack.touch_action != cc::kNoTouchAction) {
+    DCHECK(ack.type == WebInputEvent::kTouchStart);
+    touch_action_filter_.OnSetTouchAction(ack.touch_action);
+  }
 
   ProcessInputEventAck(ack.type, ack.state, ack.latency,
                        ack.unique_touch_event_id, RENDERER);

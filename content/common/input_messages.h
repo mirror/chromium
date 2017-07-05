@@ -64,7 +64,9 @@ IPC_ENUM_TRAITS_MAX_VALUE(
     content::SyntheticPointerActionParams::Button::BUTTON_MAX)
 IPC_ENUM_TRAITS_MAX_VALUE(content::InputEventDispatchType,
                           content::InputEventDispatchType::DISPATCH_TYPE_MAX)
-IPC_ENUM_TRAITS_MAX_VALUE(cc::TouchAction, cc::kTouchActionMax)
+IPC_ENUM_TRAITS_MIN_MAX_VALUE(cc::TouchAction,
+                              cc::kNoTouchAction,
+                              cc::kTouchActionMax)
 IPC_ENUM_TRAITS_MIN_MAX_VALUE(blink::WebPointerProperties::Button,
                               blink::WebPointerProperties::Button::kNoButton,
                               blink::WebPointerProperties::Button::kLastEntry)
@@ -138,6 +140,7 @@ IPC_STRUCT_TRAITS_BEGIN(content::InputEventAck)
   IPC_STRUCT_TRAITS_MEMBER(state)
   IPC_STRUCT_TRAITS_MEMBER(latency)
   IPC_STRUCT_TRAITS_MEMBER(overscroll)
+  IPC_STRUCT_TRAITS_MEMBER(touch_action)
   IPC_STRUCT_TRAITS_MEMBER(unique_touch_event_id)
 IPC_STRUCT_TRAITS_END()
 

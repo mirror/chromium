@@ -19,6 +19,8 @@ namespace cc {
 const size_t kTouchActionBits = 6;
 
 enum TouchAction {
+  // Used to indicate non-touch acks
+  kNoTouchAction = -1,
   // No scrolling or zooming allowed.
   kTouchActionNone = 0x0,
   kTouchActionPanLeft = 0x1,
