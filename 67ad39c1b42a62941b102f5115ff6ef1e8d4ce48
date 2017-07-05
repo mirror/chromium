@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e37e8b9_53751e1c",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 898,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-05T05:51:33Z",
+      "side": 1,
+      "message": "or @dict maybe? https://github.com/google/closure-compiler/wiki/Annotating-JavaScript-for-the-Closure-Compiler#dict",
+      "range": {
+        "startLine": 898,
+        "startChar": 4,
+        "endLine": 898,
+        "endChar": 33
+      },
+      "revId": "67ad39c1b42a62941b102f5115ff6ef1e8d4ce48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
