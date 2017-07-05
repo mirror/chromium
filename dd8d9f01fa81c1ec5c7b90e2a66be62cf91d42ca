@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ed5f1674_7ed54977",
+        "filename": "third_party/WebKit/LayoutTests/fast/history/scroll-restoration/scroll-restoration-same-doc.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-07-05T14:52:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ffb0129e_e209a1e5",
+      "range": {
+        "startLine": 23,
+        "startChar": 6,
+        "endLine": 23,
+        "endChar": 10
+      },
+      "revId": "dd8d9f01fa81c1ec5c7b90e2a66be62cf91d42ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "204e1815_593a1af7",
         "filename": "third_party/WebKit/LayoutTests/fast/history/scroll-restoration/scroll-restoration-same-doc.html",
         "patchSetId": 5
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "efecf6ab_7be77192",
+        "filename": "third_party/WebKit/LayoutTests/fast/history/scroll-restoration/scroll-restoration-same-doc.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-07-05T14:52:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "204e1815_593a1af7",
+      "revId": "dd8d9f01fa81c1ec5c7b90e2a66be62cf91d42ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fda08eaf_0d7651ee",
         "filename": "third_party/WebKit/LayoutTests/fast/history/scroll-restoration/scroll-restoration-same-doc.html",
         "patchSetId": 5
@@ -56,6 +98,24 @@
       "revId": "dd8d9f01fa81c1ec5c7b90e2a66be62cf91d42ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08f7eeb3_8ada944d",
+        "filename": "third_party/WebKit/LayoutTests/fast/history/scroll-restoration/scroll-restoration-same-doc.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-07-05T14:52:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fda08eaf_0d7651ee",
+      "revId": "dd8d9f01fa81c1ec5c7b90e2a66be62cf91d42ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "131aae80_1f33b154",
+        "filename": "third_party/WebKit/LayoutTests/fast/history/scroll-restoration/scroll-restoration-same-doc.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-07-05T14:52:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "acb1d67f_637c0b08",
+      "range": {
+        "startLine": 49,
+        "startChar": 16,
+        "endLine": 49,
+        "endChar": 0
+      },
+      "revId": "dd8d9f01fa81c1ec5c7b90e2a66be62cf91d42ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7583fc4d_d2aae051",
         "filename": "third_party/WebKit/LayoutTests/fast/history/scroll-restoration/scroll-restoration-same-doc.html",
         "patchSetId": 5
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "40e14f82_9a9b3713",
+        "filename": "third_party/WebKit/LayoutTests/fast/history/scroll-restoration/scroll-restoration-same-doc.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-07-05T14:52:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7583fc4d_d2aae051",
+      "range": {
+        "startLine": 52,
+        "startChar": 27,
+        "endLine": 52,
+        "endChar": 50
+      },
+      "revId": "dd8d9f01fa81c1ec5c7b90e2a66be62cf91d42ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c911b96_337e0557",
         "filename": "third_party/WebKit/LayoutTests/fast/history/scroll-restoration/scroll-restoration-same-doc.html",
         "patchSetId": 5
@@ -119,6 +227,24 @@
       "revId": "dd8d9f01fa81c1ec5c7b90e2a66be62cf91d42ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c51fce56_1162dac1",
+        "filename": "third_party/WebKit/LayoutTests/fast/history/scroll-restoration/scroll-restoration-same-doc.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-07-05T14:52:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c911b96_337e0557",
+      "revId": "dd8d9f01fa81c1ec5c7b90e2a66be62cf91d42ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -142,6 +268,30 @@
       "revId": "dd8d9f01fa81c1ec5c7b90e2a66be62cf91d42ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9ce2b81_849cb300",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-07-05T14:52:16Z",
+      "side": 1,
+      "message": "Moved to RestoreScrollPositionAndViewStateForLoadType, also add a flag to avoid RestoreScrollPositionAndViewState try layout when can_restore_without_clamping is false.",
+      "parentUuid": "a7e176a0_8819cd13",
+      "range": {
+        "startLine": 566,
+        "startChar": 48,
+        "endLine": 566,
+        "endChar": 0
+      },
+      "revId": "dd8d9f01fa81c1ec5c7b90e2a66be62cf91d42ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
