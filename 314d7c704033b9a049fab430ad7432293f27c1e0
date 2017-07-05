@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "596e8204_c3e65539",
+        "filename": "components/cronet/ios/cronet_environment.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-05T15:09:17Z",
+      "side": 1,
+      "message": "I didn\u0027t say to use default argument, I said use a struct with a constructor. Something like this:\n\n  namespace ios_global_state {\n    struct CreateParams {\n      CreateParams() : argc(0), argv(nullptr), install_at_exit_manager(false) {}\n\n      int argc;\n      char** argv;\n      bool install_at_exit_manager;\n    };\n\n    void Create(const CreateParams\u0026 create_params);\n  }\n\nThen it can be used like this:\n\n  ios_global_state::CreateParams create_params;\n  create_params.install_at_exit_manager \u003d true;\n  ios_global_state::Create(create_params);\n\nI think this is not against any of the Style Guide rules.",
+      "parentUuid": "1dd12b08_72b98c97",
+      "range": {
+        "startLine": 114,
+        "startChar": 33,
+        "endLine": 114,
+        "endChar": 34
+      },
+      "revId": "314d7c704033b9a049fab430ad7432293f27c1e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e150e7dd_030f7eaa",
         "filename": "ios/web/public/global_state/ios_global_state.h",
         "patchSetId": 6
