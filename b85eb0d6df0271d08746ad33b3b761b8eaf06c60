@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fccac642_14726e8b",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_container_view_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-05T12:57:02Z",
+      "side": 1,
+      "message": "Should this (and the animator) be something that the view controller gets from its transitioning delegate?",
+      "range": {
+        "startLine": 130,
+        "startChar": 34,
+        "endLine": 130,
+        "endChar": 41
+      },
+      "revId": "b85eb0d6df0271d08746ad33b3b761b8eaf06c60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92a1be57_b1d5ede3",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_container_view_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-05T12:57:02Z",
+      "side": 1,
+      "message": "I\u0027m not sure what I think about using the existing UIKit protocol for this. It\u0027s probably correct since this is an animated view controller transition, but I think I was expecting a parallel protocol for this use.",
+      "range": {
+        "startLine": 140,
+        "startChar": 7,
+        "endLine": 140,
+        "endChar": 44
+      },
+      "revId": "b85eb0d6df0271d08746ad33b3b761b8eaf06c60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2454577_80baa026",
+        "filename": "ios/clean/chrome/browser/ui/transitions/containment_transition_context.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-05T12:57:02Z",
+      "side": 1,
+      "message": "This can probably be weak?",
+      "range": {
+        "startLine": 14,
+        "startChar": 21,
+        "endLine": 14,
+        "endChar": 27
+      },
+      "revId": "b85eb0d6df0271d08746ad33b3b761b8eaf06c60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09730c0f_19eb48ae",
+        "filename": "ios/clean/chrome/browser/ui/transitions/containment_transition_context.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-05T12:57:02Z",
+      "side": 1,
+      "message": "Generics for the collections?",
+      "range": {
+        "startLine": 18,
+        "startChar": 29,
+        "endLine": 18,
+        "endChar": 41
+      },
+      "revId": "b85eb0d6df0271d08746ad33b3b761b8eaf06c60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
