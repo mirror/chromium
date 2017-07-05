@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4baa6d90_71772f40",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/gerrit.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-05T21:16:54Z",
+      "side": 1,
+      "message": "This is because we don\u0027t need detailed accounts information anymore, because we don\u0027t need to see the list of reviewers anymore, right?",
+      "revId": "e9c06cd9daa49b415b7d0206b72ddf00eaa51d25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "307e8ab1_b631e135",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-05T21:16:54Z",
+      "side": 1,
+      "message": "Or perhaps: \"CL is still set as Work In Progress\" or \"CL has not yet been marked as started\"?",
+      "revId": "e9c06cd9daa49b415b7d0206b72ddf00eaa51d25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
