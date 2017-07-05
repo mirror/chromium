@@ -123,6 +123,12 @@ class AutocompleteProviderClient {
   // Called after creation of |keyword_provider| to allow the client to
   // configure the provider if desired.
   virtual void ConfigureKeywordProvider(KeywordProvider* keyword_provider) {}
+
+  // Sends a hint to the service worker context that navigation to the provided
+  // search URL is likely. On platforms where this is supported, the serivce
+  // worker lookup can be expensive so this method should only be called once
+  // per input session.
+  virtual void StartSearchServiceWorker(const GURL& destination_url) {}
 };
 
 #endif  // COMPONENTS_OMNIBOX_BROWSER_AUTOCOMPLETE_PROVIDER_CLIENT_H_

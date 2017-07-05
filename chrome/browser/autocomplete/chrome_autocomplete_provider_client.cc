@@ -6,6 +6,7 @@
 
 #include <stddef.h>
 
+#include "base/bind.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
@@ -31,6 +32,8 @@
 #include "components/prefs/pref_service.h"
 #include "components/sync/driver/sync_service_utils.h"
 #include "content/public/browser/notification_service.h"
+#include "content/public/browser/service_worker_context.h"
+#include "content/public/browser/storage_partition.h"
 #include "extensions/features/features.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
 
@@ -61,6 +64,9 @@ const char* const kChromeSettingsSubPages[] = {
 
 }  // namespace
 #endif  // !defined(OS_ANDROID)
+
+// A callback that does nothing after the search service worker is started.
+void NoopCallback(content::StartServiceWorkerForNavigationHintResult) {}
 
 ChromeAutocompleteProviderClient::ChromeAutocompleteProviderClient(
     Profile* profile)
@@ -290,4 +296,19 @@ void ChromeAutocompleteProviderClient::OnAutocompleteControllerResultReady(
       chrome::NOTIFICATION_AUTOCOMPLETE_CONTROLLER_RESULT_READY,
       content::Source<AutocompleteController>(controller),
       content::NotificationService::NoDetails());
+}
+
+void ChromeAutocompleteProviderClient::StartSearchServiceWorker(
+    const GURL& destination_url) {
+  content::StoragePartition* partition =
+      content::BrowserContext::GetDefaultStoragePartition(profile_);
+  if (!partition)
+    return;
+
+  content::ServiceWorkerContext* context = partition->GetServiceWorkerContext();
+  if (!context)
+    return;
+
+  context->StartServiceWorkerForNavigationHint(destination_url,
+                                               base::Bind(&NoopCallback));
 }

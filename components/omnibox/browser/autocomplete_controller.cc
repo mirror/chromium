@@ -204,6 +204,7 @@ AutocompleteController::AutocompleteController(
       stop_timer_duration_(OmniboxFieldTrial::StopTimerFieldTrialDuration()),
       done_(true),
       in_start_(false),
+      search_service_worker_started_(false),
       template_url_service_(provider_client_->GetTemplateURLService()) {
   provider_types &= ~OmniboxFieldTrial::GetDisabledProviderTypes();
   if (provider_types & AutocompleteProvider::TYPE_BOOKMARK)
@@ -341,6 +342,17 @@ void AutocompleteController::Start(const AutocompleteInput& input) {
   // need the edit model to update the display.
   UpdateResult(false, true);
 
+  // If we have a default query match and have not already done so, send a hint
+  // that navigation to a search URL is likely so that any associated service
+  // worker can be started.
+  if (input.type() == metrics::OmniboxInputType::QUERY &&
+      result_.default_match() != result_.end() &&
+      !search_service_worker_started_) {
+    search_service_worker_started_ = true;
+    provider_client_->StartSearchServiceWorker(
+        result_.default_match()->destination_url);
+  }
+
   if (!done_) {
     StartExpireTimer();
     StartStopTimer();
@@ -400,6 +412,8 @@ void AutocompleteController::AddProvidersInfo(
 }
 
 void AutocompleteController::ResetSession() {
+  search_service_worker_started_ = false;
+
   for (Providers::const_iterator i(providers_.begin()); i != providers_.end();
        ++i)
     (*i)->ResetSession();
