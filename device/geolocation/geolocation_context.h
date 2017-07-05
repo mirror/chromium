@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef DEVICE_GEOLOCATION_GEOLOCATION_SERVICE_CONTEXT_H_
-#define DEVICE_GEOLOCATION_GEOLOCATION_SERVICE_CONTEXT_H_
+#ifndef DEVICE_GEOLOCATION_GEOLOCATION_CONTEXT_H_
+#define DEVICE_GEOLOCATION_GEOLOCATION_CONTEXT_H_
 
 #include <memory>
 #include <vector>
@@ -18,24 +18,24 @@ struct BindSourceInfo;
 
 namespace device {
 
-class GeolocationServiceImpl;
+class GeolocationImpl;
 struct Geoposition;
 
-// Provides information to a set of GeolocationServiceImpl instances that are
+// Provides information to a set of GeolocationImpl instances that are
 // associated with a given context. Notably, allows pausing and resuming
 // geolocation on these instances.
-class DEVICE_GEOLOCATION_EXPORT GeolocationServiceContext {
+class DEVICE_GEOLOCATION_EXPORT GeolocationContext {
  public:
-  GeolocationServiceContext();
-  virtual ~GeolocationServiceContext();
+  GeolocationContext();
+  virtual ~GeolocationContext();
 
-  // Creates a GeolocationServiceImpl that is weakly bound to |request|.
+  // Creates a GeolocationImpl that is weakly bound to |request|.
   void CreateService(const service_manager::BindSourceInfo& source_info,
-                     mojom::GeolocationServiceRequest request);
+                     mojom::GeolocationRequest request);
 
   // Called when a service has a connection error. After this call, it is no
   // longer safe to access |service|.
-  void ServiceHadConnectionError(GeolocationServiceImpl* service);
+  void ServiceHadConnectionError(GeolocationImpl* service);
 
   // Enables geolocation override. This method can be used to trigger possible
   // location-specific behavior in a particular context.
@@ -45,13 +45,13 @@ class DEVICE_GEOLOCATION_EXPORT GeolocationServiceContext {
   void ClearOverride();
 
  private:
-  std::vector<std::unique_ptr<GeolocationServiceImpl>> services_;
+  std::vector<std::unique_ptr<GeolocationImpl>> services_;
 
   std::unique_ptr<Geoposition> geoposition_override_;
 
-  DISALLOW_COPY_AND_ASSIGN(GeolocationServiceContext);
+  DISALLOW_COPY_AND_ASSIGN(GeolocationContext);
 };
 
 }  // namespace device
 
-#endif  // DEVICE_GEOLOCATION_GEOLOCATION_SERVICE_CONTEXT_H_
+#endif  // DEVICE_GEOLOCATION_GEOLOCATION_CONTEXT_H_
