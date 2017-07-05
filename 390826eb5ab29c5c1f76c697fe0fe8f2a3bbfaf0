@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "7da9ca91_26160904",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_listener.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-05T10:38:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9907785b_7759b710",
+      "range": {
+        "startLine": 15,
+        "startChar": 6,
+        "endLine": 15,
+        "endChar": 26
+      },
+      "revId": "390826eb5ab29c5c1f76c697fe0fe8f2a3bbfaf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da8e4175_ed3bfe43",
         "filename": "components/ntp_snippets/breaking_news/breaking_news_listener.h",
         "patchSetId": 4
@@ -108,6 +132,30 @@
       "side": 1,
       "message": "More precisely it is needed when you are going to delete the derived class object through a pointer to a base class.\n\nhttps://stackoverflow.com/questions/461203/when-to-use-virtual-destructors\n\nFor example, imagine the destructor here is not virtual and there is a derived class A : public BreakingNewsListener. Then when ones does std::unique_ptr\u003cBreakingNewsListener\u003e ptr \u003d MakeUnique\u003cA\u003e(), there will be a undefined behavior (e.g. a memory leak), because A\u0027s destructor won\u0027t be called.",
       "parentUuid": "92ac7fcb_d2a8eb3d",
+      "range": {
+        "startLine": 28,
+        "startChar": 11,
+        "endLine": 28,
+        "endChar": 31
+      },
+      "revId": "390826eb5ab29c5c1f76c697fe0fe8f2a3bbfaf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "99e6f0af_b56ea657",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_listener.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-05T10:38:10Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "c2ca7209_e3d838d6",
       "range": {
         "startLine": 28,
         "startChar": 11,
@@ -191,6 +239,30 @@
     },
     {
       "key": {
+        "uuid": "c7290d96_a3a47718",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_suggestions_provider_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-05T10:38:10Z",
+      "side": 1,
+      "message": "Agreed, please put ASSERT here. We\u0027ve had quite some discussions on how to write unit-tests since that code has initially been written.",
+      "parentUuid": "17ba1f1b_b3359256",
+      "range": {
+        "startLine": 41,
+        "startChar": 4,
+        "endLine": 41,
+        "endChar": 15
+      },
+      "revId": "390826eb5ab29c5c1f76c697fe0fe8f2a3bbfaf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "16d228be_6bd79f95",
         "filename": "components/ntp_snippets/breaking_news/breaking_news_suggestions_provider_unittest.cc",
         "patchSetId": 4
@@ -226,6 +298,30 @@
       "side": 1,
       "message": "It\u0027s just that hopefully he will fix it when he fixes this as well ;-)\nhttps://cs.chromium.org/chromium/src/components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc?l\u003d722\u0026rcl\u003d7c72ce06f5f925b7309ede559ba7d8880ea1146c",
       "parentUuid": "16d228be_6bd79f95",
+      "range": {
+        "startLine": 63,
+        "startChar": 12,
+        "endLine": 63,
+        "endChar": 17
+      },
+      "revId": "390826eb5ab29c5c1f76c697fe0fe8f2a3bbfaf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c38bbd5_009dc857",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_suggestions_provider_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-05T10:38:10Z",
+      "side": 1,
+      "message": "I understand your hope but he will fix neither this nor that in any foreseeable future :) \n\nIf you want somebody else to fix something he is not aware of, put crbug.com/[bug number] in all the TODO comments related to that bug. The person, when fixing the bug, can then look up all places it affects.\n\nOtherwise, put TODO(mamir). This does not mean you have to fix it. The main purpose is to document that you were aware of a problem here when you created/touched the code.",
+      "parentUuid": "d7dfe289_c2d4ee50",
       "range": {
         "startLine": 63,
         "startChar": 12,
