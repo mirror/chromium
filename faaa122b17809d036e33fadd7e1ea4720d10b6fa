@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a15916c_af4a5c4e",
+        "filename": "chrome/browser/ui/webui/conflicts_handler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-05T09:23:46Z",
+      "side": 1,
+      "message": "Tiny nit: \"ID\" unless you\u0027re talking Freudian psychology :)",
+      "range": {
+        "startLine": 39,
+        "startChar": 9,
+        "endLine": 39,
+        "endChar": 11
+      },
+      "revId": "faaa122b17809d036e33fadd7e1ea4720d10b6fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

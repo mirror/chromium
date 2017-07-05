@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f3361e1_98d299ca",
+        "filename": "chrome/browser/ui/webui/conflicts_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-05T09:23:46Z",
+      "side": 1,
+      "message": "Hm, a CHECK seems fairly strong for what is essentially supposed to never happen. I think what we would really do here is kill the renderer process if it sends malformed messages, but that is going to require some more infrastructure. I filed https://crbug.com/739291 for that; could you add a TODO here referencing it?",
+      "range": {
+        "startLine": 37,
+        "startChar": 2,
+        "endLine": 37,
+        "endChar": 7
+      },
+      "revId": "8fb8fa79820af6b5f3dcf82f440788c7d50bb550",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
