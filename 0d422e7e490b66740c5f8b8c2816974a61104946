@@ -1,0 +1,349 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2ca53a4_698adf94",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-07-05T14:18:36Z",
+      "side": 1,
+      "message": "Protect*\n\n... while you\u0027re in here :)",
+      "range": {
+        "startLine": 444,
+        "startChar": 5,
+        "endLine": 444,
+        "endChar": 12
+      },
+      "revId": "0d422e7e490b66740c5f8b8c2816974a61104946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9edf39f0_4b52259e",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-07-05T14:18:36Z",
+      "side": 1,
+      "message": "Repeat the comment from the CL description (that unload handlers tend to indicate unsaved state)",
+      "range": {
+        "startLine": 471,
+        "startChar": 12,
+        "endLine": 471,
+        "endChar": 36
+      },
+      "revId": "0d422e7e490b66740c5f8b8c2816974a61104946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3af45de_7fe20e23",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-07-05T14:18:36Z",
+      "side": 1,
+      "message": "It appears this CL handles this comment and the associated bug. Oystein commented on the related bug, but this comment can be removed.",
+      "range": {
+        "startLine": 479,
+        "startChar": 31,
+        "endLine": 479,
+        "endChar": 37
+      },
+      "revId": "0d422e7e490b66740c5f8b8c2816974a61104946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24da4bbc_0230e371",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 652,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-07-05T14:18:36Z",
+      "side": 1,
+      "message": "If there\u0027s no render frame should this default to false? Under what conditions can that occur? If it\u0027s not expected, we should DCHECK. Otherwise, we should explicitly handle and document the case.",
+      "range": {
+        "startLine": 652,
+        "startChar": 14,
+        "endLine": 652,
+        "endChar": 38
+      },
+      "revId": "0d422e7e490b66740c5f8b8c2816974a61104946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fc4e1fa_80905194",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 728,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-07-05T14:18:36Z",
+      "side": 1,
+      "message": "This was recently removed by this CL:\n\nhttps://chromium-review.googlesource.com/c/527688/30/chrome/browser/resource_coordinator/tab_manager.cc#b697\n\nI think adding it back was an unintentional error during the rebase?",
+      "range": {
+        "startLine": 728,
+        "startChar": 19,
+        "endLine": 728,
+        "endChar": 25
+      },
+      "revId": "0d422e7e490b66740c5f8b8c2816974a61104946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13c24113_b2693b41",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-07-05T14:18:36Z",
+      "side": 1,
+      "message": "I thought we had decided to *always* fast shutdown in kUrgentShutdown mode on ChromeOS, even if there\u0027s a beforeunload handler, as the kernel process killer will effectively have that behaviour anyways?",
+      "range": {
+        "startLine": 776,
+        "startChar": 20,
+        "endLine": 776,
+        "endChar": 35
+      },
+      "revId": "0d422e7e490b66740c5f8b8c2816974a61104946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84758fe7_4b55291c",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-07-05T14:18:36Z",
+      "side": 1,
+      "message": "Can we document what will happen to the discard if |condition| is incompatible with the properties of the tab? Should we document the list of conditions a tab is expected to satisfy in order to successfully be discarded under a given condition?",
+      "range": {
+        "startLine": 101,
+        "startChar": 18,
+        "endLine": 101,
+        "endChar": 37
+      },
+      "revId": "0d422e7e490b66740c5f8b8c2816974a61104946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9043e3db_1a30a6ee",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-07-05T14:18:36Z",
+      "side": 1,
+      "message": "ProactiveFastShutdownBlockedByUnloadHandler?",
+      "range": {
+        "startLine": 630,
+        "startChar": 39,
+        "endLine": 630,
+        "endChar": 73
+      },
+      "revId": "0d422e7e490b66740c5f8b8c2816974a61104946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3548b703_abacc0bc",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-07-05T14:18:36Z",
+      "side": 1,
+      "message": "Can you document whether or not unload handlers interact with this test at all?",
+      "range": {
+        "startLine": 704,
+        "startChar": 37,
+        "endLine": 704,
+        "endChar": 38
+      },
+      "revId": "0d422e7e490b66740c5f8b8c2816974a61104946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ac07ae7_dfa5f97a",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 723,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-07-05T14:18:36Z",
+      "side": 1,
+      "message": "Right now this tests the \"proactive\" logic. If we expect the same outcome for \"urgent\" killing, please parameterize the test and test both.",
+      "range": {
+        "startLine": 723,
+        "startChar": 39,
+        "endLine": 723,
+        "endChar": 74
+      },
+      "revId": "0d422e7e490b66740c5f8b8c2816974a61104946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a56dc7d_3083a19f",
+        "filename": "content/browser/memory/memory_coordinator_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-07-05T14:18:36Z",
+      "side": 1,
+      "message": "Can this use the enum as well?",
+      "range": {
+        "startLine": 140,
+        "startChar": 23,
+        "endLine": 140,
+        "endChar": 40
+      },
+      "revId": "0d422e7e490b66740c5f8b8c2816974a61104946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ce68d39_bb50b1bc",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2991,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-07-05T14:18:36Z",
+      "side": 1,
+      "message": "deliberately*",
+      "range": {
+        "startLine": 2991,
+        "startChar": 8,
+        "endLine": 2991,
+        "endChar": 20
+      },
+      "revId": "0d422e7e490b66740c5f8b8c2816974a61104946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6931357_3c5ff7b1",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2992,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-07-05T14:18:36Z",
+      "side": 1,
+      "message": "situations*",
+      "range": {
+        "startLine": 2992,
+        "startChar": 23,
+        "endLine": 2992,
+        "endChar": 32
+      },
+      "revId": "0d422e7e490b66740c5f8b8c2816974a61104946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9566410_c5312d38",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2993,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-07-05T14:18:36Z",
+      "side": 1,
+      "message": "by by",
+      "range": {
+        "startLine": 2993,
+        "startChar": 55,
+        "endLine": 2993,
+        "endChar": 61
+      },
+      "revId": "0d422e7e490b66740c5f8b8c2816974a61104946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a63fd0b5_b0da6971",
+        "filename": "content/public/browser/render_process_host.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-07-05T14:18:36Z",
+      "side": 1,
+      "message": "This warrants some documentation as to what makes it \"unsafe\".",
+      "range": {
+        "startLine": 209,
+        "startChar": 15,
+        "endLine": 209,
+        "endChar": 50
+      },
+      "revId": "0d422e7e490b66740c5f8b8c2816974a61104946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
