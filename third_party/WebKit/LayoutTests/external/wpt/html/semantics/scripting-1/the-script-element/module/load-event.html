@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script src="../resources/load-event-helpers.js"></script>
+<link rel="help" href="https://html.spec.whatwg.org/multipage/#execute-the-script-block">
+</head>
+<script>
+"use strict";
+var test1_module_load = event_test('Successful script: 1st Clause, Step 23 of prepare a script', true, false);
+var test3_module_load = event_test('Successful dynamic script: 3rd Clause, Step 23 of prepare a script', true, false);
+var test4_module_load = event_test('Successful script: 4th Clause, Step 23 of prepare a script', true, false);
+var test4_module_dynamic_load = event_test('Successful dynamic script: 4th Clause, Step 23 of prepare a script', true, false);
+var test1_module_error = event_test('Failing script: 1st Clause, Step 23 of prepare a script', false, true);
+var test3_module_error = event_test('Failing dynamic script: 3rd Clause, Step 23 of prepare a script', false, true);
+var test4_module_error = event_test('Failing script: 4th Clause, Step 23 of prepare a script', false, true);
+var test4_module_dynamic_error = event_test('Failing dynamic script: 4th Clause, Step 23 of prepare a script', false, true);
+
+var script3_module_load = document.createElement('script');
+script3_module_load.setAttribute('type', 'module');
+script3_module_load.onload = onLoad.bind(undefined, test3_module_load);
+script3_module_load.onerror = onError.bind(undefined, test3_module_load);
+script3_module_load.async = false;
+script3_module_load.src = "../resources/load-event.py?test=test3_module_load";
+document.head.appendChild(script3_module_load);
+
+var script3_module_error = document.createElement('script');
+script3_module_error.setAttribute('type', 'module');
+script3_module_error.onload = onLoad.bind(undefined, test3_module_error);
+script3_module_error.onerror = onError.bind(undefined, test3_module_error);
+script3_module_error.async = false;
+script3_module_error.src = "../resources/load-event.py?test=test3_module_error";
+document.head.appendChild(script3_module_error);
+
+var script4_module_dynamic_load = document.createElement('script');
+script4_module_dynamic_load.setAttribute('type', 'module');
+script4_module_dynamic_load.onload = onLoad.bind(undefined, test4_module_dynamic_load);
+script4_module_dynamic_load.onerror = onError.bind(undefined, test4_module_dynamic_load);
+script4_module_dynamic_load.async = true;
+script4_module_dynamic_load.src = "../resources/load-event.py?test=test4_module_dynamic_load";
+document.head.appendChild(script4_module_dynamic_load);
+
+var script4_module_dynamic_error = document.createElement('script');
+script4_module_dynamic_error.setAttribute('type', 'module');
+script4_module_dynamic_error.onload = onLoad.bind(undefined, test4_module_dynamic_error);
+script4_module_dynamic_error.onerror = onError.bind(undefined, test4_module_dynamic_error);
+script4_module_dynamic_error.async = true;
+script4_module_dynamic_error.src = "../resources/load-event.py?test=test4_module_dynamic_error";
+document.head.appendChild(script4_module_dynamic_error);
+</script>
+
+<script src="../resources/load-event.py?test=test1_module_load" onload="onLoad(test1_module_load);" onerror="onError(test1_module_load);" type="module"></script>
+<script src="../resources/load-event.py?test=test4_module_load" onload="onLoad(test4_module_load);" onerror="onError(test4_module_load);" type="module" async></script>
+<script src="../resources/load-event.py?test=test1_module_error" onload="onLoad(test1_module_error);" onerror="onError(test1_module_error);" type="module"></script>
+<script src="../resources/load-event.py?test=test4_module_error" onload="onLoad(test4_module_error);" onerror="onError(test4_module_error);" type="module" async></script>
