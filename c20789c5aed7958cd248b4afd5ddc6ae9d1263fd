@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1b72cc4_a37c2fff",
+        "filename": "chrome/common/extensions/api/certificate_provider.idl",
+        "patchSetId": 12
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-05T17:48:27Z",
+      "side": 1,
+      "message": "I\u0027d use $(ref: platformKeys chrome.platformKeys) here (so the documentation links to the API).",
+      "range": {
+        "startLine": 7,
+        "startChar": 58,
+        "endLine": 7,
+        "endChar": 71
+      },
+      "revId": "c20789c5aed7958cd248b4afd5ddc6ae9d1263fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f222d7a1_532e0e75",
+        "filename": "chrome/common/extensions/api/platform_keys.idl",
+        "patchSetId": 12
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-05T17:48:27Z",
+      "side": 1,
+      "message": "nit: using $(ref:certificateProvider) would probably be a bit more useful",
+      "range": {
+        "startLine": 7,
+        "startChar": 21,
+        "endLine": 7,
+        "endChar": 47
+      },
+      "revId": "c20789c5aed7958cd248b4afd5ddc6ae9d1263fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ba81390_6b1b499c",
+        "filename": "chrome/common/extensions/api/platform_keys.idl",
+        "patchSetId": 12
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-05T17:48:27Z",
+      "side": 1,
+      "message": "Can you remove this space.",
+      "range": {
+        "startLine": 9,
+        "startChar": 35,
+        "endLine": 9,
+        "endChar": 36
+      },
+      "revId": "c20789c5aed7958cd248b4afd5ddc6ae9d1263fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b217632_b780d92d",
+        "filename": "chrome/common/extensions/api/platform_keys.idl",
+        "patchSetId": 12
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-05T17:48:27Z",
+      "side": 1,
+      "message": "\u003ccode\u003enone\u003c/code\u003e",
+      "range": {
+        "startLine": 138,
+        "startChar": 18,
+        "endLine": 138,
+        "endChar": 22
+      },
+      "revId": "c20789c5aed7958cd248b4afd5ddc6ae9d1263fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fafe1806_892f09bf",
+        "filename": "chrome/common/extensions/api/platform_keys_internal.idl",
+        "patchSetId": 12
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-05T17:48:27Z",
+      "side": 1,
+      "message": "how about:\nAdditionally, |algorithm| object will contain the hash algorithm passed to the $(ref: getPublicKey) call, if a hash algorithm was used.",
+      "range": {
+        "startLine": 19,
+        "startChar": 51,
+        "endLine": 19,
+        "endChar": 63
+      },
+      "revId": "c20789c5aed7958cd248b4afd5ddc6ae9d1263fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12b7b25a_b99f747e",
+        "filename": "chrome/common/extensions/api/platform_keys_internal.idl",
+        "patchSetId": 12
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-05T17:48:27Z",
+      "side": 1,
+      "message": "use \u003ccode\u003etokenId\u003c/code\u003e to be consistent with other references to arguments.",
+      "range": {
+        "startLine": 53,
+        "startChar": 68,
+        "endLine": 53,
+        "endChar": 75
+      },
+      "revId": "c20789c5aed7958cd248b4afd5ddc6ae9d1263fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57e5a342_5cd2491b",
+        "filename": "chrome/common/extensions/api/platform_keys_internal.idl",
+        "patchSetId": 12
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-05T17:48:27Z",
+      "side": 1,
+      "message": "this is not used anymore",
+      "range": {
+        "startLine": 54,
+        "startChar": 58,
+        "endLine": 54,
+        "endChar": 71
+      },
+      "revId": "c20789c5aed7958cd248b4afd5ddc6ae9d1263fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d91405aa_972b273a",
+        "filename": "chrome/common/extensions/api/platform_keys_internal.idl",
+        "patchSetId": 12
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-05T17:48:27Z",
+      "side": 1,
+      "message": "$(ref: selectClientCertificates)",
+      "range": {
+        "startLine": 61,
+        "startChar": 53,
+        "endLine": 61,
+        "endChar": 77
+      },
+      "revId": "c20789c5aed7958cd248b4afd5ddc6ae9d1263fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
