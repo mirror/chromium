@@ -189,7 +189,7 @@ public class NewTabPageAdapter extends Adapter<NewTabPageViewHolder> implements 
             mSections.refreshSuggestions();
         }
 
-        if (mTileGrid != null) mTileGrid.getTileGroup().onSwitchToForeground();
+        if (mTileGrid != null) mTileGrid.getTileGroup().onSwitchToForeground(/* trackLoadTasks = */ true);
     }
 
     public int getAboveTheFoldPosition() {
