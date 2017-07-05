@@ -121,6 +121,29 @@
     },
     {
       "key": {
+        "uuid": "ae75ebf8_f1c38212",
+        "filename": "components/cronet/ios/ios_global_state_cronet_configuration.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-07-05T16:53:47Z",
+      "side": 1,
+      "message": "I don\u0027t see this file referenced in BUILD.gn anymore. Should it be removed?",
+      "range": {
+        "startLine": 14,
+        "startChar": 2,
+        "endLine": 14,
+        "endChar": 8
+      },
+      "revId": "314d7c704033b9a049fab430ad7432293f27c1e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e150e7dd_030f7eaa",
         "filename": "ios/web/public/global_state/ios_global_state.h",
         "patchSetId": 6
