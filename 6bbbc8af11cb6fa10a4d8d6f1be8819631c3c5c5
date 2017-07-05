@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58ff5bad_61950a13",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-05T06:06:34Z",
+      "side": 1,
+      "message": "A few notes:\n-We should check that the source of the setting is user-defined when determining whether it\u0027s the default.\n-I think it\u0027s clearer to return the actual setting value, even if it\u0027s the default, and indicate that it\u0027s the default setting in another way\n-To do that we could either just pass out a source_string that indicates that it\u0027s the default value being used or pass out a boolean.",
+      "revId": "6bbbc8af11cb6fa10a4d8d6f1be8819631c3c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
