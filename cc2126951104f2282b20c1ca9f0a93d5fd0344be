@@ -22,6 +22,30 @@
       "revId": "cc2126951104f2282b20c1ca9f0a93d5fd0344be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd3dafb5_e54cbf2a",
+        "filename": "content/shell/test_runner/test_runner.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1799,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-07-05T20:16:57Z",
+      "side": 1,
+      "message": "Yes, I believe you are correct. In order to preserve the existing behavior, we should enforce the setting across all WebViews in all renderer processes.",
+      "parentUuid": "0c0fc5db_ae5880c2",
+      "range": {
+        "startLine": 1799,
+        "startChar": 6,
+        "endLine": 1799,
+        "endChar": 16
+      },
+      "revId": "cc2126951104f2282b20c1ca9f0a93d5fd0344be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
