@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "b1bd4837_1779ac34",
+        "filename": "chrome/browser/memory/memory_kills_monitor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-05T04:29:31Z",
+      "side": 1,
+      "message": "Can this be non-static member variables? This would make the code much easier to read IMO. Currently the state of the object is scattered across the file.",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 62,
+        "endChar": 27
+      },
+      "revId": "096664136705df8d01be8f2f3daa1c0d8e74f631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "42d7d405_186759dc",
         "filename": "chrome/browser/memory/memory_kills_monitor.cc",
         "patchSetId": 1
@@ -19,6 +42,46 @@
     },
     {
       "key": {
+        "uuid": "e3c7ae9e_cef19b2b",
+        "filename": "chrome/browser/memory/memory_kills_monitor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-05T04:29:31Z",
+      "side": 1,
+      "message": "return; missing unless you\u0027re okay with SEGV.",
+      "revId": "096664136705df8d01be8f2f3daa1c0d8e74f631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0608f1d8_76e17239",
+        "filename": "chrome/browser/memory/memory_kills_monitor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-05T04:29:31Z",
+      "side": 1,
+      "message": "remove?",
+      "range": {
+        "startLine": 139,
+        "startChar": 34,
+        "endLine": 139,
+        "endChar": 35
+      },
+      "revId": "096664136705df8d01be8f2f3daa1c0d8e74f631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "443f942d_b122ce53",
         "filename": "chrome/browser/memory/memory_kills_monitor.cc",
         "patchSetId": 1
@@ -30,6 +93,29 @@
       "writtenOn": "2017-06-25T15:59:29Z",
       "side": 1,
       "message": "nit: Now this can be DCHECK(!g_instance); ?",
+      "revId": "096664136705df8d01be8f2f3daa1c0d8e74f631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4f5d26a_3c55d987",
+        "filename": "chrome/browser/memory/memory_kills_monitor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-05T04:29:31Z",
+      "side": 1,
+      "message": "What is this for? Using C++ volatile in Chromium seems really unusual.",
+      "range": {
+        "startLine": 145,
+        "startChar": 9,
+        "endLine": 145,
+        "endChar": 17
+      },
       "revId": "096664136705df8d01be8f2f3daa1c0d8e74f631",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +173,91 @@
     },
     {
       "key": {
+        "uuid": "362feeec_88e98df2",
+        "filename": "chrome/browser/memory/memory_kills_monitor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-05T04:29:31Z",
+      "side": 1,
+      "message": "unused variable",
+      "revId": "096664136705df8d01be8f2f3daa1c0d8e74f631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa167aad_f930493a",
+        "filename": "chrome/browser/memory/memory_kills_monitor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-05T04:29:31Z",
+      "side": 1,
+      "message": "As hidehiko@ pointed out, this seems to have a race. Can you talk to the kernel team to come up with a better interface between the kernel and Chrome? Please add a TODO and file a bug if you agree.",
+      "revId": "096664136705df8d01be8f2f3daa1c0d8e74f631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0af8f30_c51130f5",
+        "filename": "chrome/browser/memory/memory_kills_monitor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-05T04:29:31Z",
+      "side": 1,
+      "message": "What happens if the line exceeds the buffer size? Can you add a test case or two for that?",
+      "revId": "096664136705df8d01be8f2f3daa1c0d8e74f631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aa0a662_b6564fac",
+        "filename": "chrome/browser/memory/memory_kills_monitor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-05T04:29:31Z",
+      "side": 1,
+      "message": "What happens if the browser process for user session crashes and restarts? Is StartMonitoring() called again maybe??",
+      "revId": "096664136705df8d01be8f2f3daa1c0d8e74f631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9fad0c9_02724335",
+        "filename": "chrome/browser/memory/memory_kills_monitor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-05T04:29:31Z",
+      "side": 1,
+      "message": "We want to monitor OOM kills even when ARC is not enabled, correct? (e.g. for opt-out users.)\n\nIf so, why do we use the prefix \"Arc.\" for UMA?",
+      "revId": "096664136705df8d01be8f2f3daa1c0d8e74f631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b1eb3627_e87968c8",
         "filename": "chrome/browser/memory/memory_kills_monitor.cc",
         "patchSetId": 1
@@ -121,6 +292,29 @@
     },
     {
       "key": {
+        "uuid": "82397613_09719439",
+        "filename": "chrome/browser/memory/memory_kills_monitor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-05T04:29:31Z",
+      "side": 1,
+      "message": "Having base::Time as a static variable seems to violate the style guide.\nhttps://google.github.io/styleguide/cppguide.html#Static_and_Global_Variables\n\nI\u0027d suggest you move 258-259 to the class as non-static vars.",
+      "range": {
+        "startLine": 258,
+        "startChar": 9,
+        "endLine": 258,
+        "endChar": 19
+      },
+      "revId": "096664136705df8d01be8f2f3daa1c0d8e74f631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c37c968_abd0a169",
         "filename": "chrome/browser/memory/memory_kills_monitor.h",
         "patchSetId": 1
@@ -138,6 +332,23 @@
     },
     {
       "key": {
+        "uuid": "5a71d375_39bfbc3e",
+        "filename": "chrome/browser/memory/memory_kills_monitor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-05T04:29:31Z",
+      "side": 1,
+      "message": "You should probably also mention that the caller has to delete the Handle on Chrome shutdown.",
+      "revId": "096664136705df8d01be8f2f3daa1c0d8e74f631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e55ae448_33223eeb",
         "filename": "chrome/browser/memory/memory_kills_monitor.h",
         "patchSetId": 1
@@ -149,6 +360,58 @@
       "writtenOn": "2017-06-25T15:59:29Z",
       "side": 1,
       "message": "Since you touch this, could you make Handle just non-copyable/non-movable, and return std::unique_ptr\u003cHandle\u003e instead?",
+      "revId": "096664136705df8d01be8f2f3daa1c0d8e74f631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc43eaed_27593e1c",
+        "filename": "chrome/browser/memory/memory_kills_monitor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-05T04:29:31Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "e55ae448_33223eeb",
+      "revId": "096664136705df8d01be8f2f3daa1c0d8e74f631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe20eddd_ab2cb389",
+        "filename": "chrome/browser/memory/memory_kills_monitor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-05T04:29:31Z",
+      "side": 1,
+      "message": "Logs",
+      "revId": "096664136705df8d01be8f2f3daa1c0d8e74f631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28d095d0_8154dae5",
+        "filename": "chrome/browser/memory/memory_kills_monitor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-05T04:29:31Z",
+      "side": 1,
+      "message": "Always",
       "revId": "096664136705df8d01be8f2f3daa1c0d8e74f631",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
