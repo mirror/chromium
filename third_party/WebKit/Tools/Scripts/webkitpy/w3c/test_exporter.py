@@ -53,7 +53,7 @@ class TestExporter(object):
         for cl in gerrit_cls:
             _log.info('Found Gerrit in-flight CL: "%s" %s', cl.subject, cl.url)
 
-            if not cl.reviewers:
+            if not cl.has_review_started:
                 _log.info('CL has no reviewers, skipping.')
                 continue
 
