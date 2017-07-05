@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c6f016e_dea109be",
+        "filename": "components/about_ui/resources/about_credits.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2017-07-05T16:51:16Z",
+      "side": 1,
+      "message": "I think you could make only 1 event listener and filter the events received.\n\ndocument.addEventListener(\u0027keypress\u0027, function() {\n  if (e.key \u003d\u003d \u0027Enter\u0027 \u0026\u0026 e.target.tagName \u003d\u003d \u0027LABEL\u0027)\n    e.target.previousElementSibling.click();\n});",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 5
+      },
+      "revId": "c8aba23c4b42ccfb6e6220b2c8ff24bd88eb0fdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
