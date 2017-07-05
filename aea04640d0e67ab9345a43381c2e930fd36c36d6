@@ -22,6 +22,74 @@
       "revId": "aea04640d0e67ab9345a43381c2e930fd36c36d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05078f5d_46a2231d",
+        "filename": "cc/surfaces/compositor_frame_sink_support.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-05T15:47:37Z",
+      "side": 1,
+      "message": "This seems like something we could tell the surface instead of having to ask out to here? It\u0027s not like this is changing over the life of the Surface?",
+      "revId": "aea04640d0e67ab9345a43381c2e930fd36c36d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "594a26c8_e96dd330",
+        "filename": "cc/surfaces/surface.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-05T15:47:37Z",
+      "side": 1,
+      "message": "IWBN if Surface exposed methods needed by Aggregator and then went thru its client to execute them, rather than just returning a pointer to the client which people could use without Surface knowing about it.",
+      "revId": "aea04640d0e67ab9345a43381c2e930fd36c36d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ca6feb6_5284a37e",
+        "filename": "cc/surfaces/surface_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-05T15:47:37Z",
+      "side": 1,
+      "message": "forward declare everything you can, which is everything I think?",
+      "revId": "aea04640d0e67ab9345a43381c2e930fd36c36d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5da009e_05e30cdf",
+        "filename": "cc/surfaces/surface_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-05T15:47:37Z",
+      "side": 1,
+      "message": "rewrap comments in here",
+      "revId": "aea04640d0e67ab9345a43381c2e930fd36c36d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
