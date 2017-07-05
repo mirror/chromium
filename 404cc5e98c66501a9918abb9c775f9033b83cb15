@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "a3d53bae_08eb984f",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/constants.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-07-05T20:56:44Z",
+      "side": 1,
+      "message": "This should still work because aria-disabled is checked whether something is a control or not. I\u0027m adding these cases to aria-disabled.html in the dump tree tests and giving it a spin.",
+      "parentUuid": "61c902d8_2673fd96",
+      "revId": "404cc5e98c66501a9918abb9c775f9033b83cb15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01f02d9a_38d9c436",
         "filename": "chrome/browser/ui/views/download/download_item_view.cc",
         "patchSetId": 17
@@ -70,6 +88,24 @@
     },
     {
       "key": {
+        "uuid": "e97d2b97_949c3c29",
+        "filename": "chrome/browser/ui/views/download/download_item_view.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-07-05T20:56:44Z",
+      "side": 1,
+      "message": "I don\u0027t disagree that it\u0027s a downside. It\u0027s something we all ended up agreeing on over email, and I wasn\u0027t aware of this as a problem. The question is whether it\u0027s worth throwing all this away or whether the advantages still win out.\n\nDo you mind chatting with Dominic about it since you guys sit near each other?",
+      "parentUuid": "01f02d9a_38d9c436",
+      "revId": "404cc5e98c66501a9918abb9c775f9033b83cb15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f38ad2a7_68393898",
         "filename": "content/browser/accessibility/browser_accessibility_auralinux.cc",
         "patchSetId": 17
@@ -81,6 +117,24 @@
       "writtenOn": "2017-06-30T22:11:33Z",
       "side": 1,
       "message": "Can you just define the missing constant?",
+      "revId": "404cc5e98c66501a9918abb9c775f9033b83cb15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6d4683a0_30902eeb",
+        "filename": "content/browser/accessibility/browser_accessibility_auralinux.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-07-05T20:56:44Z",
+      "side": 1,
+      "message": "We don\u0027t define constants when they\u0027re missing, but we gracefully degrade to sensible fallbacks (e.g. if ATK_ROLE_VIDEO is missing we use ATK_ROLE_SECTION).\nI\u0027ve modified the code to use the ATK_STATE_READ_ONLY constant only if it\u0027s available.",
+      "parentUuid": "f38ad2a7_68393898",
       "revId": "404cc5e98c66501a9918abb9c775f9033b83cb15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -104,6 +158,24 @@
     },
     {
       "key": {
+        "uuid": "302f16f2_86481b0b",
+        "filename": "ui/views/accessibility/native_view_accessibility_base.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-07-05T20:56:44Z",
+      "side": 1,
+      "message": "I was replacing the lines that were there, but you\u0027re right. Since it calls view_-\u003eGetAccessibleNodeData(\u0026date_) I don\u0027t see why we need this at all. The specific class needs to add the control mode.",
+      "parentUuid": "af7e23c8_80e12443",
+      "revId": "404cc5e98c66501a9918abb9c775f9033b83cb15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e46c205_e86d1a8c",
         "filename": "ui/views/controls/textfield/textfield.cc",
         "patchSetId": 17
@@ -115,6 +187,24 @@
       "writtenOn": "2017-06-30T22:11:33Z",
       "side": 1,
       "message": "This logic seems wrong. !enabled should take precedence, right?",
+      "revId": "404cc5e98c66501a9918abb9c775f9033b83cb15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "676ecc0b_6ef8d228",
+        "filename": "ui/views/controls/textfield/textfield.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 925,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-07-05T20:56:44Z",
+      "side": 1,
+      "message": "Right, if something is both !enabled and readonly, the logic would have failed. I\u0027ve switched to check !enabled first.",
+      "parentUuid": "1e46c205_e86d1a8c",
       "revId": "404cc5e98c66501a9918abb9c775f9033b83cb15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
