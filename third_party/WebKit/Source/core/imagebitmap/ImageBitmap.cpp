@@ -9,9 +9,11 @@
 #include "core/html/HTMLVideoElement.h"
 #include "core/html/ImageData.h"
 #include "core/offscreencanvas/OffscreenCanvas.h"
+#include "platform/CrossThreadFunctional.h"
 #include "platform/graphics/CanvasColorParams.h"
 #include "platform/graphics/skia/SkiaUtils.h"
 #include "platform/image-decoders/ImageDecoder.h"
+#include "platform/threading/BackgroundTaskRunner.h"
 #include "platform/wtf/CheckedNumeric.h"
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/RefPtr.h"
@@ -322,6 +324,23 @@ static void ApplyColorSpaceConversion(sk_sp<SkImage>& image,
   image = colored_image;
 }
 
+static RefPtr<StaticBitmapImage> MakeSkImageFromSkSurface(
+    const ParsedOptions& parsed_options,
+    const SkAlphaType alpha_type) {
+  SkImageInfo info = SkImageInfo::Make(
+      parsed_options.crop_rect.Width(), parsed_options.crop_rect.Height(),
+      parsed_options.color_params.GetSkColorType(), alpha_type,
+      parsed_options.color_params.GetSkColorSpace());
+  if (parsed_options.should_scale_input) {
+    info =
+        info.makeWH(parsed_options.resize_width, parsed_options.resize_height);
+  }
+  sk_sp<SkSurface> surface = SkSurface::MakeRaster(info);
+  if (!surface)
+    return nullptr;
+  return StaticBitmapImage::Create(surface->makeImageSnapshot());
+}
+
 sk_sp<SkImage> ImageBitmap::GetSkImageFromDecoder(
     std::unique_ptr<ImageDecoder> decoder,
     SkColorType* decoded_color_type,
@@ -383,18 +402,7 @@ static PassRefPtr<StaticBitmapImage> CropImageAndApplyColorSpaceConversion(
   // return a transparent black image, respecting the color_params but
   // ignoring premultiply_alpha.
   if (src_rect.IsEmpty()) {
-    SkImageInfo info = SkImageInfo::Make(
-        parsed_options.crop_rect.Width(), parsed_options.crop_rect.Height(),
-        parsed_options.color_params.GetSkColorType(), kPremul_SkAlphaType,
-        parsed_options.color_params.GetSkColorSpace());
-    if (parsed_options.should_scale_input) {
-      info = info.makeWH(parsed_options.resize_width,
-                         parsed_options.resize_height);
-    }
-    sk_sp<SkSurface> surface = SkSurface::MakeRaster(info);
-    if (!surface)
-      return nullptr;
-    return StaticBitmapImage::Create(surface->makeImageSnapshot());
+    return MakeSkImageFromSkSurface(parsed_options, kPremul_SkAlphaType);
   }
 
   sk_sp<SkImage> skia_image = image->ImageForCurrentFrame();
@@ -472,6 +480,92 @@ static PassRefPtr<StaticBitmapImage> CropImageAndApplyColorSpaceConversion(
       GetSkImageWithAlphaDisposition(skia_image, kDontPremultiplyAlpha));
 }
 
+void ImageBitmap::RasterImageOnBackground(
+    RefPtr<WebTaskRunner> task_runner,
+    ScriptPromiseResolver* resolver,
+    std::unique_ptr<PaintRecorder> paint_recorder,
+    const IntRect& dst_rect,
+    bool origin_clean,
+    bool premultiply_alpha) {
+  DCHECK(!IsMainThread());
+  sk_sp<SkImage> skia_image = SkImage::MakeFromPicture(
+      ToSkPicture(paint_recorder->finishRecordingAsPicture(), dst_rect),
+      SkISize::Make(dst_rect.Width(), dst_rect.Height()), nullptr, nullptr,
+      SkImage::BitDepth::kU8, SkColorSpace::MakeSRGB());
+  task_runner->PostTask(
+      BLINK_FROM_HERE,
+      CrossThreadBind(&ImageBitmap::ResolvePromiseOnOriginalThread,
+                      WrapCrossThreadPersistent(this),
+                      WrapCrossThreadPersistent(resolver),
+                      std::move(skia_image), origin_clean, premultiply_alpha));
+}
+
+void ImageBitmap::ResolvePromiseOnOriginalThread(
+    ScriptPromiseResolver* resolver,
+    sk_sp<SkImage> skia_image,
+    bool origin_clean,
+    bool premultiply_alpha) {
+  DCHECK(IsMainThread());
+  if (!premultiply_alpha) {
+    skia_image =
+        GetSkImageWithAlphaDisposition(skia_image, kDontPremultiplyAlpha);
+  }
+  image_ = StaticBitmapImage::Create(skia_image);
+  image_->SetOriginClean(origin_clean);
+  image_->SetPremultiplied(premultiply_alpha);
+  if (image_) {
+    resolver->Resolve(this);
+  } else {
+    resolver->Reject(
+        ScriptValue(resolver->GetScriptState(),
+                    v8::Null(resolver->GetScriptState()->GetIsolate())));
+  }
+}
+
+ImageBitmap::ImageBitmap(ImageElementBase* image,
+                         Optional<IntRect> crop_rect,
+                         Document* document,
+                         ScriptPromiseResolver* resolver,
+                         const ImageBitmapOptions& options) {
+  RefPtr<Image> input = image->CachedImage()->GetImage();
+  ParsedOptions parsed_options =
+      ParseOptions(options, crop_rect, image->BitmapSourceSize());
+  if (DstBufferSizeHasOverflow(parsed_options)) {
+    resolver->Reject(
+        ScriptValue(resolver->GetScriptState(),
+                    v8::Null(resolver->GetScriptState()->GetIsolate())));
+    return;
+  }
+
+  IntRect input_rect(IntPoint(), input->Size());
+  const IntRect src_rect = Intersection(input_rect, parsed_options.crop_rect);
+
+  // In the case when |crop_rect| doesn't intersect the source image, we return
+  // a transparent black image, respecting the color_params but ignoring
+  // poremultiply_alpha.
+  if (src_rect.IsEmpty()) {
+    image_ = MakeSkImageFromSkSurface(parsed_options, kPremul_SkAlphaType);
+    return;
+  }
+
+  IntRect draw_src_rect(parsed_options.crop_rect);
+  IntRect draw_dst_rect(0, 0, parsed_options.resize_width,
+                        parsed_options.resize_height);
+  std::unique_ptr<PaintRecorder> paint_recorder =
+      input->PaintRecorderForContainer(NullURL(), input->Size(), draw_src_rect,
+                                       draw_dst_rect, parsed_options.flip_y);
+  RefPtr<WebTaskRunner> task_runner =
+      Platform::Current()->CurrentThread()->GetWebTaskRunner();
+  BackgroundTaskRunner::PostOnBackgroundThread(
+      BLINK_FROM_HERE,
+      CrossThreadBind(&ImageBitmap::RasterImageOnBackground,
+                      WrapCrossThreadPersistent(this), std::move(task_runner),
+                      WrapCrossThreadPersistent(resolver),
+                      WTF::Passed(std::move(paint_recorder)), draw_dst_rect,
+                      !image->WouldTaintOrigin(document->GetSecurityOrigin()),
+                      parsed_options.premultiply_alpha));
+}
+
 ImageBitmap::ImageBitmap(ImageElementBase* image,
                          Optional<IntRect> crop_rect,
                          Document* document,
@@ -479,8 +573,9 @@ ImageBitmap::ImageBitmap(ImageElementBase* image,
   RefPtr<Image> input = image->CachedImage()->GetImage();
   ParsedOptions parsed_options =
       ParseOptions(options, crop_rect, image->BitmapSourceSize());
-  if (DstBufferSizeHasOverflow(parsed_options))
+  if (DstBufferSizeHasOverflow(parsed_options)) {
     return;
+  }
 
   bool is_premultiply_alpha_reverted = false;
   if (!parsed_options.premultiply_alpha) {
@@ -945,6 +1040,14 @@ ImageBitmap* ImageBitmap::Create(const void* pixel_data,
   return new ImageBitmap(pixel_data, width, height,
                          is_image_bitmap_premultiplied,
                          is_image_bitmap_origin_clean);
+}
+
+ImageBitmap* ImageBitmap::CreateAsync(ImageElementBase* image,
+                                      Optional<IntRect> crop_rect,
+                                      Document* document,
+                                      ScriptPromiseResolver* resolver,
+                                      const ImageBitmapOptions& options) {
+  return new ImageBitmap(image, crop_rect, document, resolver, options);
 }
 
 void ImageBitmap::close() {
