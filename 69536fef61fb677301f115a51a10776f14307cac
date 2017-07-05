@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "130a959e_e1d3cf12",
+        "filename": "ios/chrome/app/strings/ios_strings.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 761,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-05T14:44:28Z",
+      "side": 1,
+      "message": "Where is this displayed? Do we only have 10em?",
+      "range": {
+        "startLine": 761,
+        "startChar": 104,
+        "endLine": 761,
+        "endChar": 108
+      },
+      "revId": "69536fef61fb677301f115a51a10776f14307cac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a610604_2774d6ab",
+        "filename": "ios/chrome/browser/ui/ntp/new_tab_page_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-05T14:44:28Z",
+      "side": 1,
+      "message": "nit: to avoid allocating memory for nothing, maybe change this to the following:\n\n  NSString* home \u003d experimental_flags::IsSuggestionsUIEnabled()\n      ? l10n_util::GetNSString(IDS_IOS_NEW_TAB_HOME)\n      : l10n_util::GetNSString(IDS_IOS_NEW_TAB_MOST_VISITED);",
+      "revId": "69536fef61fb677301f115a51a10776f14307cac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
