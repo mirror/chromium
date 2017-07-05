@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8749343e_f2f2482a",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-05T02:31:07Z",
+      "side": 1,
+      "message": "nit: I would also put the name of the property in the assert so it\u0027s easier to find where the error happened",
+      "revId": "657629e553bcc1ad7bf9d13a4a7c90877ab1b736",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
