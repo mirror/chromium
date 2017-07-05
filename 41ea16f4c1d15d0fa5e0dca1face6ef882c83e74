@@ -22,6 +22,30 @@
       "revId": "41ea16f4c1d15d0fa5e0dca1face6ef882c83e74",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5e5d622_cb4d9f8d",
+        "filename": "components/password_manager/core/browser/sql_table_builder_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-05T13:48:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9ab4386_a880cca4",
+      "range": {
+        "startLine": 317,
+        "startChar": 42,
+        "endLine": 317,
+        "endChar": 53
+      },
+      "revId": "41ea16f4c1d15d0fa5e0dca1face6ef882c83e74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
