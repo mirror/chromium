@@ -1,24 +1,62 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
+<head>
 <script src="/resources/testharness.js"></script>
 <script src="/resources/testharnessreport.js"></script>
+<script src="resources/load-event-helpers.js"></script>
 <link rel="help" href="https://html.spec.whatwg.org/multipage/#execute-the-script-block">
-<link rel="author" title="Domenic Denicola" href="mailto:d@domenic.me">
-
+</head>
 <script>
 "use strict";
+var test1_classic_load = event_test('Successful script: 1st Clause, Step 23 of prepare a script', true, false);
+var test2_classic_load = event_test('Successful script: 2nd Clause, Step 23 of prepare a script', true, false);
+var test3_classic_load = event_test('Successful dynamic script: 3rd Clause, Step 23 of prepare a script', true, false);
+var test4_classic_load = event_test('Successful script: 4th Clause, Step 23 of prepare a script', true, false);
+var test4_classic_dynamic_load = event_test('Successful dynamic script: 4th Clause, Step 23 of prepare a script', true, false);
+var test1_classic_error = event_test('Failing script: 1st Clause, Step 23 of prepare a script', false, true);
+var test2_classic_error = event_test('Failing script: 2nd Clause, Step 23 of prepare a script', false, true);
+var test3_classic_error = event_test('Failing dynamic script: 3rd Clause, Step 23 of prepare a script', false, true);
+var test4_classic_error = event_test('Failing script: 4th Clause, Step 23 of prepare a script', false, true);
+var test4_classic_dynamic_error = event_test('Failing dynamic script: 4th Clause, Step 23 of prepare a script', false, true);
+var test6_classic_load = event_test('6th Clause, Step 23 of prepare a script', false, false);
 
-async_test(function(t) {
-    window.scriptExecuting = function () {
-        setTimeout(t.step_func_done(() => {
-            assert_equals(window.onloadHappened, undefined);
-        }), 0);
-    };
-}, "load events should not be fired for inline scripts");
+var script3_classic_load = document.createElement('script');
+script3_classic_load.onload = onLoad.bind(undefined, test3_classic_load);
+script3_classic_load.onerror = onError.bind(undefined, test3_classic_load);
+script3_classic_load.async = false;
+script3_classic_load.src = "resources/load-event.py?test=test3_classic_load";
+document.head.appendChild(script3_classic_load);
+
+var script3_classic_error = document.createElement('script');
+script3_classic_error.onload = onLoad.bind(undefined, test3_classic_error);
+script3_classic_error.onerror = onError.bind(undefined, test3_classic_error);
+script3_classic_error.async = false;
+script3_classic_error.src = "resources/load-event.py?test=test3_classic_error";
+document.head.appendChild(script3_classic_error);
+
+var script4_classic_dynamic_load = document.createElement('script');
+script4_classic_dynamic_load.onload = onLoad.bind(undefined, test4_classic_dynamic_load);
+script4_classic_dynamic_load.onerror = onError.bind(undefined, test4_classic_dynamic_load);
+script4_classic_dynamic_load.async = true;
+script4_classic_dynamic_load.src = "resources/load-event.py?test=test4_classic_dynamic_load";
+document.head.appendChild(script4_classic_dynamic_load);
+
+var script4_classic_dynamic_error = document.createElement('script');
+script4_classic_dynamic_error.onload = onLoad.bind(undefined, test4_classic_dynamic_error);
+script4_classic_dynamic_error.onerror = onError.bind(undefined, test4_classic_dynamic_error);
+script4_classic_dynamic_error.async = true;
+script4_classic_dynamic_error.src = "resources/load-event.py?test=test4_classic_dynamic_error";
+document.head.appendChild(script4_classic_dynamic_error);
 </script>
 
+<script src="resources/load-event.py?test=test1_classic_load" onload="onLoad(test1_classic_load);" onerror="onError(test1_classic_load);" defer></script>
+<script src="resources/load-event.py?test=test2_classic_load" onload="onLoad(test2_classic_load);" onerror="onError(test2_classic_load);"></script>
+<script src="resources/load-event.py?test=test4_classic_load" onload="onLoad(test4_classic_load);" onerror="onError(test4_classic_load);" async></script>
+<script src="resources/load-event.py?test=test1_classic_error" onload="onLoad(test1_classic_error);" onerror="onError(test1_classic_error);" defer></script>
+<script src="resources/load-event.py?test=test2_classic_error" onload="onLoad(test2_classic_error);" onerror="onError(test2_classic_error);"></script>
+<script src="resources/load-event.py?test=test4_classic_error" onload="onLoad(test4_classic_error);" onerror="onError(test4_classic_error);" async></script>
 
-<script onload="window.onloadHappened = true;">
+<script onload="onLoad(test6_classic_load);" onerror="onError(test6_classic_load);">
 "use strict";
-window.scriptExecuting();
+onExecute(test6_classic_load);
 </script>
