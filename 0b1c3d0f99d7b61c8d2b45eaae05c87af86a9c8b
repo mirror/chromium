@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e0e6c9a5_71d59208",
+        "filename": "cc/surfaces/frame_sink_manager.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-07-05T21:24:50Z",
+      "side": 1,
+      "message": "Comment added. \n\nFrameSinkManagerTest.ParentWithoutClientRetained_LateBeginFrameRegistration failed without the copy after I changed |frame_sink_source_map_| to base::flat_map.\nThe symptom is that |frame_sink_id| changes after line |mapping \u003d frame_sink_source_map_[frame_sink_id_copy]| since a new entry is added to the map if |frame_sink_id| isn\u0027t a key in the map. The insert might move the map in memory and we end up referencing invalid memory location.\n\nWe can either copy |mapping.children| below or |frame_sink_id|. I changed it to copy the FrameSinkId before passing to RecursivelyAttachBeginFrameSource so that it\u0027s easier to understand.",
+      "parentUuid": "39c97d23_de0d5aef",
+      "revId": "0b1c3d0f99d7b61c8d2b45eaae05c87af86a9c8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "150a0f18_4f0041fc",
         "filename": "cc/surfaces/frame_sink_manager.h",
         "patchSetId": 21
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "bd1cc4aa_8e02af8b",
+        "filename": "cc/surfaces/frame_sink_manager.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-07-05T21:24:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "150a0f18_4f0041fc",
+      "revId": "0b1c3d0f99d7b61c8d2b45eaae05c87af86a9c8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11d2a492_512a5a5c",
         "filename": "cc/surfaces/surface_manager.h",
         "patchSetId": 21
@@ -50,6 +86,24 @@
       "revId": "0b1c3d0f99d7b61c8d2b45eaae05c87af86a9c8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a8c0e4b_72991381",
+        "filename": "cc/surfaces/surface_manager.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-07-05T21:24:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11d2a492_512a5a5c",
+      "revId": "0b1c3d0f99d7b61c8d2b45eaae05c87af86a9c8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
