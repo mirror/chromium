@@ -44,21 +44,6 @@ base::FilePath DoodleDirectory() {
       base::SysNSStringToUTF8([NSString pathWithComponents:path_components]));
 }
 
-// Returns the URL where the doodle can be downloaded, e.g.
-// https://www.google.com/async/newtab_mobile. This depends on the user's
-// Google domain.
-GURL GetGoogleDoodleURL(ios::ChromeBrowserState* browser_state) {
-  GURL google_base_url(
-      ios::UIThreadSearchTermsData(browser_state).GoogleBaseURLValue());
-  // SetPathStr() requires its argument to stay in scope as long as
-  // |replacements| is, so a std::string is needed, instead of a char*.
-  std::string path = kGoogleDoodleURLPath;
-  GURL::Replacements replacements;
-  replacements.SetPathStr(path);
-
-  return google_base_url.ReplaceComponents(replacements);
-}
-
 class IOSChromeLogoDelegate : public search_provider_logos::LogoDelegate {
  public:
   IOSChromeLogoDelegate() {}
@@ -108,11 +93,15 @@ void GoogleLogoService::GetLogo(search_provider_logos::LogoObserver* observer) {
             new IOSChromeLogoDelegate())));
   }
 
+  GURL google_base_url(
+      ios::UIThreadSearchTermsData(browser_state_).GoogleBaseURLValue());
+
   logo_tracker_->SetServerAPI(
-      GetGoogleDoodleURL(browser_state_),
-      base::Bind(&search_provider_logos::GoogleParseLogoResponse),
-      base::Bind(&search_provider_logos::GoogleAppendQueryparamsToLogoURL,
-                 false /* gray_background */));
+      search_provider_logos::GetGoogleDoodleURL(google_base_url),
+      search_provider_logos::GetGoogleParseLogoResponseCallback(
+          google_base_url),
+      search_provider_logos::GetGoogleAppendQueryparamsCallback(
+          /*gray_background=*/false));
   logo_tracker_->GetLogo(observer);
 }
 
