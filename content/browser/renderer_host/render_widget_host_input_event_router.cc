@@ -874,7 +874,8 @@ void RenderWidgetHostInputEventRouter::RouteTouchpadGestureEvent(
   DCHECK_EQ(blink::kWebGestureDeviceTouchpad, event->source_device);
 
   if (event->GetType() == blink::WebInputEvent::kGesturePinchBegin ||
-      event->GetType() == blink::WebInputEvent::kGestureFlingStart) {
+      event->GetType() == blink::WebInputEvent::kGestureFlingStart ||
+      event->GetType() == blink::WebInputEvent::kGestureDoubleTap) {
     gfx::Point transformed_point;
     gfx::Point original_point(event->x, event->y);
     touchpad_gesture_target_.target =

@@ -1538,10 +1538,25 @@ bool RenderWidgetHostViewMac::ShouldRouteEvent(
   // TODO(wjmaclean): Update this function if RenderWidgetHostViewMac implements
   // OnTouchEvent(), to match what we are doing in RenderWidgetHostViewAura.
   DCHECK(WebInputEvent::IsMouseEventType(event.GetType()) ||
-         event.GetType() == WebInputEvent::kMouseWheel);
+         event.GetType() == WebInputEvent::kMouseWheel ||
+         event.GetType() == WebInputEvent::kGesturePinchBegin ||
+         event.GetType() == WebInputEvent::kGesturePinchUpdate ||
+         event.GetType() == WebInputEvent::kGesturePinchEnd ||
+         event.GetType() == WebInputEvent::kGestureDoubleTap);
   return render_widget_host_->delegate() &&
          render_widget_host_->delegate()->GetInputEventRouter() &&
          SiteIsolationPolicy::AreCrossProcessFramesPossible();
+}
+
+void RenderWidgetHostViewMac::SendRoutableGesture(WebGestureEvent* event) {
+  if (ShouldRouteEvent(*event)) {
+    DCHECK(event->source_device ==
+           blink::WebGestureDevice::kWebGestureDeviceTouchpad);
+    render_widget_host_->delegate()->GetInputEventRouter()->RouteGestureEvent(
+        this, event, ui::LatencyInfo(ui::SourceEventType::WHEEL));
+    return;
+  }
+  render_widget_host_->ForwardGestureEvent(*event);
 }
 
 void RenderWidgetHostViewMac::ProcessMouseEvent(
@@ -2385,7 +2400,8 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
   if (gestureBeginPinchSent_) {
     WebGestureEvent endEvent(WebGestureEventBuilder::Build(event, self));
     endEvent.SetType(WebInputEvent::kGesturePinchEnd);
-    renderWidgetHostView_->render_widget_host_->ForwardGestureEvent(endEvent);
+    endEvent.source_device = blink::WebGestureDevice::kWebGestureDeviceTouchpad;
+    renderWidgetHostView_->SendRoutableGesture(&endEvent);
     gestureBeginPinchSent_ = NO;
   }
 }
@@ -2407,12 +2423,17 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
 }
 
 - (void)smartMagnifyWithEvent:(NSEvent*)event {
-  const WebGestureEvent& smartMagnifyEvent =
+  // TODO(wjmaclean): Not sure if it makes sense to route this or not. In
+  // web_input_event_builders_mac.cc the NSEventTypeSmartMagnify is turned
+  // into WebInputEvent::kGestureDoubleTap, but if you look as references to
+  // kGestureDoubleTap in WebViewImpl, it says it's only supported on Android.
+  // Unlike GesturePinchX events, which can be canceled in the renderer with
+  // a wheel event handler, kGestureDoubleTap cannot be cancelled, and may
+  // lead to undesired zooming behaviour in PDFs (for example).
+  WebGestureEvent smartMagnifyEvent =
       WebGestureEventBuilder::Build(event, self);
-  if (renderWidgetHostView_ && renderWidgetHostView_->render_widget_host_) {
-    renderWidgetHostView_->render_widget_host_->ForwardGestureEvent(
-        smartMagnifyEvent);
-  }
+  if (renderWidgetHostView_ && renderWidgetHostView_->render_widget_host_)
+    renderWidgetHostView_->SendRoutableGesture(&smartMagnifyEvent);
 }
 
 - (void)showLookUpDictionaryOverlayInternal:(NSAttributedString*) string
@@ -2627,14 +2648,16 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
     }
     WebGestureEvent beginEvent(*gestureBeginEvent_);
     beginEvent.SetType(WebInputEvent::kGesturePinchBegin);
-    renderWidgetHostView_->render_widget_host_->ForwardGestureEvent(beginEvent);
+    beginEvent.source_device =
+        blink::WebGestureDevice::kWebGestureDeviceTouchpad;
+    renderWidgetHostView_->SendRoutableGesture(&beginEvent);
     gestureBeginPinchSent_ = YES;
   }
 
   // Send a GesturePinchUpdate event.
   WebGestureEvent updateEvent = WebGestureEventBuilder::Build(event, self);
   updateEvent.data.pinch_update.zoom_disabled = !pinchHasReachedZoomThreshold_;
-  renderWidgetHostView_->render_widget_host_->ForwardGestureEvent(updateEvent);
+  renderWidgetHostView_->SendRoutableGesture(&updateEvent);
 }
 
 - (void)viewWillMoveToWindow:(NSWindow*)newWindow {
