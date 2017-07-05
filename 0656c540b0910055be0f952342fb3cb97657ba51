@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aba8081b_f5ea0b5f",
+        "filename": "tools/perf/page_sets/webrtc_cases/pause-play.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1226821
+      },
+      "writtenOn": "2017-07-05T19:58:03Z",
+      "side": 1,
+      "message": "This class is unused, right?",
+      "revId": "0656c540b0910055be0f952342fb3cb97657ba51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e032c194_5bc4b031",
+        "filename": "tools/perf/page_sets/webrtc_cases/pause-play.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1226821
+      },
+      "writtenOn": "2017-07-05T19:58:03Z",
+      "side": 1,
+      "message": "add a \";\"",
+      "range": {
+        "startLine": 153,
+        "startChar": 30,
+        "endLine": 153,
+        "endChar": 36
+      },
+      "revId": "0656c540b0910055be0f952342fb3cb97657ba51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
