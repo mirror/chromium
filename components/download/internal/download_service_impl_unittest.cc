@@ -94,6 +94,12 @@ TEST_F(DownloadServiceImplTest, TestApiPassThrough) {
   service_->ResumeDownload(params.guid);
   service_->CancelDownload(params.guid);
   service_->ChangeDownloadCriteria(params.guid, scheduling_params);
+
+  StartupStatus startup_status;
+  startup_status.driver_ok = true;
+  startup_status.model_ok = true;
+  startup_status.file_monitor_ok = true;
+  service_->OnControllerInitialized(startup_status);
 }
 
 }  // namespace download

@@ -56,6 +56,7 @@ class ControllerImpl : public Controller,
 
   // Controller implementation.
   void Initialize() override;
+  void SetStartupListener(StartupListener* listener) override;
   const StartupStatus* GetStartupStatus() override;
   void StartDownload(const DownloadParams& params) override;
   void PauseDownload(const std::string& guid) override;
@@ -136,19 +137,19 @@ class ControllerImpl : public Controller,
       DownloadParams::StartResult result,
       const DownloadParams::StartCallback& callback);
 
-  // Entry point for a scheduled task after the task is fired.
-  void ProcessScheduledTasks();
-
   // Handles and clears any pending task finished callbacks.
   void HandleTaskFinished(DownloadTaskType task_type,
                           bool needs_reschedule,
                           stats::ScheduledTaskStatus status);
+  void OnCompleteCleanupTask();
 
   void HandleCompleteDownload(CompletionType type, const std::string& guid);
 
   // Find more available entries to download, until the number of active entries
   // reached maximum.
   void ActivateMoreDownloads();
+
+  void RemoveCleanupEligibleDownloads();
 
   void HandleExternalDownload(const std::string& guid, bool active);
 
@@ -178,6 +179,7 @@ class ControllerImpl : public Controller,
   // Kills the downloads which have surpassed their cancel_after time.
   void KillTimedOutDownloads();
 
+  StartupListener* startup_listener_;
   Configuration* config_;
 
   // The directory in which the downloaded files are stored.
