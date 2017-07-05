@@ -31,6 +31,7 @@
 #include "bindings/core/v8/ExceptionMessages.h"
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/ScrollIntoViewOptionsOrBoolean.h"
+#include "bindings/core/v8/StringOrSafeHTML.h"
 #include "bindings/core/v8/V8DOMActivityLogger.h"
 #include "core/CSSValueKeywords.h"
 #include "core/SVGNames.h"
@@ -82,6 +83,7 @@
 #include "core/dom/Text.h"
 #include "core/dom/V0InsertionPoint.h"
 #include "core/dom/WhitespaceAttacher.h"
+#include "core/dom/safetypes/SafeHTML.h"
 #include "core/editing/EditingUtilities.h"
 #include "core/editing/FrameSelection.h"
 #include "core/editing/iterators/TextIterator.h"
@@ -2950,12 +2952,37 @@ void Element::DispatchFocusOutEvent(
                          new_focused_element, source_capabilities));
 }
 
-String Element::innerHTML() const {
+String Element::InnerHTMLAsString() const {
   return CreateMarkup(this, kChildrenOnly);
 }
 
-String Element::outerHTML() const {
+String Element::OuterHTMLAsString() const {
   return CreateMarkup(this);
+}
+
+void Element::innerHTML(StringOrSafeHTML& result) const {
+  result.setString(InnerHTMLAsString());
+}
+
+void Element::outerHTML(StringOrSafeHTML& result) const {
+  result.setString(OuterHTMLAsString());
+}
+
+void Element::setInnerHTML(const StringOrSafeHTML& stringOrHtml,
+                           ExceptionState& exception_state) {
+  DCHECK(stringOrHtml.isString() ||
+         RuntimeEnabledFeatures::SafeHTMLTypesEnabled());
+
+  if (stringOrHtml.isString() && GetDocument().RequireSafeTypes()) {
+    exception_state.ThrowTypeError(
+        "This document requires `SafeHTML` assignment.");
+    return;
+  }
+
+  String html = stringOrHtml.isString()
+                    ? stringOrHtml.getAsString()
+                    : stringOrHtml.getAsSafeHTML()->toString();
+  setInnerHTML(html, exception_state);
 }
 
 void Element::setInnerHTML(const String& html,
@@ -2968,6 +2995,23 @@ void Element::setInnerHTML(const String& html,
       container = toHTMLTemplateElement(this)->content();
     ReplaceChildrenWithFragment(container, fragment, exception_state);
   }
+}
+
+void Element::setOuterHTML(const StringOrSafeHTML& stringOrHtml,
+                           ExceptionState& exception_state) {
+  DCHECK(stringOrHtml.isString() ||
+         RuntimeEnabledFeatures::SafeHTMLTypesEnabled());
+
+  if (stringOrHtml.isString() && GetDocument().RequireSafeTypes()) {
+    exception_state.ThrowTypeError(
+        "This document requires `SafeHTML` assignment.");
+    return;
+  }
+
+  String html = stringOrHtml.isString()
+                    ? stringOrHtml.getAsString()
+                    : stringOrHtml.getAsSafeHTML()->toString();
+  setOuterHTML(html, exception_state);
 }
 
 void Element::setOuterHTML(const String& html,
@@ -3106,6 +3150,24 @@ void Element::insertAdjacentText(const String& where,
                                  const String& text,
                                  ExceptionState& exception_state) {
   InsertAdjacent(where, GetDocument().createTextNode(text), exception_state);
+}
+
+void Element::insertAdjacentHTML(const String& where,
+                                 const StringOrSafeHTML& stringOrHtml,
+                                 ExceptionState& exception_state) {
+  DCHECK(stringOrHtml.isString() ||
+         RuntimeEnabledFeatures::SafeHTMLTypesEnabled());
+
+  if (stringOrHtml.isString() && GetDocument().RequireSafeTypes()) {
+    exception_state.ThrowTypeError(
+        "This document requires `SafeHTML` assignment.");
+    return;
+  }
+
+  String markup = stringOrHtml.isString()
+                      ? stringOrHtml.getAsString()
+                      : stringOrHtml.getAsSafeHTML()->toString();
+  insertAdjacentHTML(where, markup, exception_state);
 }
 
 void Element::insertAdjacentHTML(const String& where,

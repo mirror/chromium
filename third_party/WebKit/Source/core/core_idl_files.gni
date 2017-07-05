@@ -139,6 +139,8 @@ core_idl_files = get_path_info([
                                  "dom/Uint8Array.idl",
                                  "dom/Uint8ClampedArray.idl",
                                  "dom/XMLDocument.idl",
+                                 "dom/safetypes/SafeHTML.idl",
+                                 "dom/safetypes/SafeURL.idl",
                                  "editing/Selection.idl",
                                  "events/AnimationEvent.idl",
                                  "events/AnimationPlaybackEvent.idl",
