@@ -5493,9 +5493,16 @@ class CursorMessageFilter : public content::BrowserMessageFilter {
 
 // Verify that we receive a mouse cursor update message when we mouse over
 // a text field contained in an out-of-process iframe.
-// Fails under TSan.  http://crbug.com/545237
+#if defined(OS_ANDROID)
+// Android does not have mouse cursors.
+#define MAYBE_CursorUpdateFromReceivedFromCrossSiteIframe \
+  DISABLED_CursorUpdateFromReceivedFromCrossSiteIframe
+#else
+#define MAYBE_CursorUpdateFromReceivedFromCrossSiteIframe \
+  CursorUpdateFromReceivedFromCrossSiteIframe
+#endif
 IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
-                       DISABLED_CursorUpdateFromReceivedFromCrossSiteIframe) {
+                       MAYBE_CursorUpdateFromReceivedFromCrossSiteIframe) {
   GURL main_url(embedded_test_server()->GetURL(
       "/frame_tree/page_with_positioned_frame.html"));
   EXPECT_TRUE(NavigateToURL(shell(), main_url));
@@ -5505,6 +5512,8 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
   FrameTreeNode* child_node = root->child_at(0);
   EXPECT_NE(shell()->web_contents()->GetSiteInstance(),
             child_node->current_frame_host()->GetSiteInstance());
+
+  WaitForChildFrameSurfaceReady(child_node->current_frame_host());
 
   scoped_refptr<CursorMessageFilter> filter = new CursorMessageFilter();
   child_node->current_frame_host()->GetProcess()->AddFilter(filter.get());
