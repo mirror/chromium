@@ -39,6 +39,8 @@ template("system_webview_apk_tmpl") {
       "*.9.*",  # Most nine-patches contain shadows.
     ]
 
+    never_incremental = true
+
     if (is_java_debug) {
       enable_multidex = true
     } else {
