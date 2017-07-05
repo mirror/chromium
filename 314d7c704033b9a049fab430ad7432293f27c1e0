@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "1dd12b08_72b98c97",
+        "filename": "components/cronet/ios/cronet_environment.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-05T14:41:08Z",
+      "side": 1,
+      "message": "Style Guide slightly discourages default arguments in favor of functions overload:\nhttps://engdoc.corp.google.com/eng/doc/devguide/cpp/styleguide.shtml?cl\u003dhead#Default_Arguments\n\nThought that \"discouragement\" fills quite weak from Style Guide language.",
+      "parentUuid": "8d309306_544838dc",
+      "range": {
+        "startLine": 114,
+        "startChar": 33,
+        "endLine": 114,
+        "endChar": 34
+      },
+      "revId": "314d7c704033b9a049fab430ad7432293f27c1e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e150e7dd_030f7eaa",
         "filename": "ios/web/public/global_state/ios_global_state.h",
         "patchSetId": 6
