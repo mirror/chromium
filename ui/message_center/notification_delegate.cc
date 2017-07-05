@@ -6,6 +6,10 @@
 
 #include "base/logging.h"
 
+#if defined(TOOLKIT_VIEWS)
+#include "ui/message_center/views/message_view.h"
+#endif
+
 namespace message_center {
 
 // NotificationDelegate:
@@ -32,6 +36,14 @@ bool NotificationDelegate::SettingsClick() {
 bool NotificationDelegate::ShouldDisplaySettingsButton() {
   return false;
 }
+
+#if defined(TOOLKIT_VIEWS)
+std::unique_ptr<MessageView> NotificationDelegate::CreateCustomMessageView(
+    MessageCenterController* controller,
+    const Notification& notification) {
+  return nullptr;
+}
+#endif
 
 // HandleNotificationClickedDelegate:
 
