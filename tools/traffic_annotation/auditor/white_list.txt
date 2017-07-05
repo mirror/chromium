@@ -1,0 +1,6 @@
+# This is a comma separated file, specifiying white list for network traffic
+# anntoation auditor. Refer to AuditorException::ExceptionType in
+# 'tools/traffic_annotation/auditor/traffic_annotation_auditor.h' for types.
+all,tools
+missing,net/url_request/url_fetcher.cc
+missing,net/url_request/url_request_context.cc
