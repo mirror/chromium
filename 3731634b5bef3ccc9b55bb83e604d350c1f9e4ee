@@ -331,6 +331,30 @@
     },
     {
       "key": {
+        "uuid": "b00f93d5_95f8f77a",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_suggestions_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-05T09:29:31Z",
+      "side": 1,
+      "message": "It does not mean that this is right :) ASSERT still feels much better here (and there as well).\n\nI am closing this thread, because there is the same one started by jkrcal@.",
+      "parentUuid": "1913ced7_cfb81f2a",
+      "range": {
+        "startLine": 41,
+        "startChar": 4,
+        "endLine": 41,
+        "endChar": 15
+      },
+      "revId": "3731634b5bef3ccc9b55bb83e604d350c1f9e4ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d394dc2_075f6f7d",
         "filename": "components/ntp_snippets/breaking_news/breaking_news_suggestions_provider_unittest.cc",
         "patchSetId": 3

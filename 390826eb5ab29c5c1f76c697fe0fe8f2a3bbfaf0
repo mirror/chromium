@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "c2ca7209_e3d838d6",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_listener.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-05T09:29:31Z",
+      "side": 1,
+      "message": "More precisely it is needed when you are going to delete the derived class object through a pointer to a base class.\n\nhttps://stackoverflow.com/questions/461203/when-to-use-virtual-destructors\n\nFor example, imagine the destructor here is not virtual and there is a derived class A : public BreakingNewsListener. Then when ones does std::unique_ptr\u003cBreakingNewsListener\u003e ptr \u003d MakeUnique\u003cA\u003e(), there will be a undefined behavior (e.g. a memory leak), because A\u0027s destructor won\u0027t be called.",
+      "parentUuid": "92ac7fcb_d2a8eb3d",
+      "range": {
+        "startLine": 28,
+        "startChar": 11,
+        "endLine": 28,
+        "endChar": 31
+      },
+      "revId": "390826eb5ab29c5c1f76c697fe0fe8f2a3bbfaf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "393fcf65_dfa917ad",
         "filename": "components/ntp_snippets/breaking_news/breaking_news_suggestions_provider_unittest.cc",
         "patchSetId": 4
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "I am trying to be consistent with this\n\nhttps://cs.chromium.org/chromium/src/components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc?l\u003d643",
       "parentUuid": "393fcf65_dfa917ad",
+      "range": {
+        "startLine": 41,
+        "startChar": 4,
+        "endLine": 41,
+        "endChar": 15
+      },
+      "revId": "390826eb5ab29c5c1f76c697fe0fe8f2a3bbfaf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17ba1f1b_b3359256",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_suggestions_provider_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-05T09:29:31Z",
+      "side": 1,
+      "message": "It does not mean that this is right :) ASSERT still feels much better here (and there as well).",
+      "parentUuid": "e092b0de_1714821b",
       "range": {
         "startLine": 41,
         "startChar": 4,
