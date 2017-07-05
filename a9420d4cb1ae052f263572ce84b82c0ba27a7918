@@ -703,6 +703,24 @@
     },
     {
       "key": {
+        "uuid": "092744f6_7470c62e",
+        "filename": "ui/compositor/compositor.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-05T21:43:28Z",
+      "side": 1,
+      "message": "Sorry, I meant to ask about the meaning, not when it\u0027s happening. The TODO says this will be removed but I found that surprising.. I thought it would just be renamed. And I was wondering if we should be saying something about when this is null cuz it can be null in some configs, or no?",
+      "parentUuid": "83fc1c62_2b2bd35f",
+      "revId": "a9420d4cb1ae052f263572ce84b82c0ba27a7918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c4d599c_290535dc",
         "filename": "ui/compositor/test/in_process_context_factory.h",
         "patchSetId": 20
