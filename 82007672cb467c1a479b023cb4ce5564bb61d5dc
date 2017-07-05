@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "182467a1_f4841c6a",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/controllers/test_result_writer.py",
+        "patchSetId": 55
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-05T22:28:53Z",
+      "side": 1,
+      "message": "Nit: add period at end of sentence.",
+      "revId": "82007672cb467c1a479b023cb4ce5564bb61d5dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "863edced_aaa4ac8f",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/base.py",
+        "patchSetId": 55
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-05T22:28:53Z",
+      "side": 1,
+      "message": "Optionally, we can now explicitly note that paths are \"test paths\" or \"test names\", and are not necessarily file paths.",
+      "revId": "82007672cb467c1a479b023cb4ce5564bb61d5dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e9d0f79_8e8925b4",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/base.py",
+        "patchSetId": 55
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-05T22:28:53Z",
+      "side": 1,
+      "message": "Still necessary to skip .svn?",
+      "revId": "82007672cb467c1a479b023cb4ce5564bb61d5dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b253e298_cbfd805f",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/base.py",
+        "patchSetId": 55
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-05T22:28:53Z",
+      "side": 1,
+      "message": "Are we considering virtual tests based on wpt tests to be wpt tests?\n\nCurrently is_wpt_test would return True for both external/wpt/foo/bar.html and virtual/quux/external/foo/bar.html.",
+      "revId": "82007672cb467c1a479b023cb4ce5564bb61d5dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b17ef9a_ae13bf5b",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/tool/commands/rebaseline_cl_unittest.py",
+        "patchSetId": 55
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-05T22:28:53Z",
+      "side": 1,
+      "message": "I think I\u0027d prefer to change setUp to add /test.checkout/LayoutTests/external/wpt/MANIFEST.json to the mock filesystem rather than hit this case in each of the tests.",
+      "revId": "82007672cb467c1a479b023cb4ce5564bb61d5dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7dd0610_ff3d288c",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_manifest.py",
+        "patchSetId": 55
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-05T22:28:53Z",
+      "side": 1,
+      "message": "For style consistency:\n\nOther docstrings here usually start with a verb in third-person singular form (\"Checks\") and have one short summary line followed by details.",
+      "revId": "82007672cb467c1a479b023cb4ce5564bb61d5dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
