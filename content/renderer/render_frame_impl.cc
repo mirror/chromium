@@ -1539,6 +1539,11 @@ MediaStreamDispatcher* RenderFrameImpl::GetMediaStreamDispatcher() {
 }
 
 void RenderFrameImpl::ScriptedPrint(bool user_initiated) {
+  LOG(WARNING) << "user_initiated = " << user_initiated;
+  LOG(WARNING) << "routing_id_ = " << routing_id_;
+  LOG(WARNING) << "before send routing_id_";
+  Send(new FrameHostMsg_ScriptedPrint(routing_id_));
+  LOG(WARNING) << "after send routing_id_";
   for (auto& observer : observers_)
     observer.ScriptedPrint(user_initiated);
 }
