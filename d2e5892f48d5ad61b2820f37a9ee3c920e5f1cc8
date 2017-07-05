@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "54c93702_ba04c69e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-07-05T21:50:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53dc5e58_a9619d20",
+      "range": {
+        "startLine": 7,
+        "startChar": 29,
+        "endLine": 7,
+        "endChar": 32
+      },
+      "revId": "d2e5892f48d5ad61b2820f37a9ee3c920e5f1cc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "defbbf53_4c2a2dce",
         "filename": "build/android/gyp/package_resources.py",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "d2e5892f48d5ad61b2820f37a9ee3c920e5f1cc8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a596280f_9b2a4acf",
+        "filename": "build/android/gyp/package_resources.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-07-05T21:50:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "defbbf53_4c2a2dce",
+      "range": {
+        "startLine": 93,
+        "startChar": 0,
+        "endLine": 93,
+        "endChar": 15
+      },
+      "revId": "d2e5892f48d5ad61b2820f37a9ee3c920e5f1cc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4cb660fd_f962e96e",
+        "filename": "build/android/gyp/package_resources.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-07-05T21:50:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41484c6b_9948c29b",
+      "range": {
+        "startLine": 352,
+        "startChar": 10,
+        "endLine": 352,
+        "endChar": 22
+      },
+      "revId": "d2e5892f48d5ad61b2820f37a9ee3c920e5f1cc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf451799_4a0542c5",
         "filename": "build/android/gyp/package_resources.py",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "d2e5892f48d5ad61b2820f37a9ee3c920e5f1cc8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75817bb6_244283a6",
+        "filename": "build/android/gyp/package_resources.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-07-05T21:50:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf451799_4a0542c5",
+      "range": {
+        "startLine": 353,
+        "startChar": 65,
+        "endLine": 353,
+        "endChar": 67
+      },
+      "revId": "d2e5892f48d5ad61b2820f37a9ee3c920e5f1cc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "42d7bc5b_7001751c",
+        "filename": "build/android/gyp/package_resources.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-07-05T21:50:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "449bcbba_77ef8b3a",
+      "range": {
+        "startLine": 364,
+        "startChar": 11,
+        "endLine": 364,
+        "endChar": 26
+      },
+      "revId": "d2e5892f48d5ad61b2820f37a9ee3c920e5f1cc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e0f7da3_7dd3cb5e",
         "filename": "build/android/gyp/package_resources.py",
         "patchSetId": 2
@@ -137,6 +257,30 @@
       "revId": "d2e5892f48d5ad61b2820f37a9ee3c920e5f1cc8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42c4b85b_e73f04ba",
+        "filename": "build/android/gyp/package_resources.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-07-05T21:50:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1e0f7da3_7dd3cb5e",
+      "range": {
+        "startLine": 372,
+        "startChar": 8,
+        "endLine": 372,
+        "endChar": 23
+      },
+      "revId": "d2e5892f48d5ad61b2820f37a9ee3c920e5f1cc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "33bb8ffb_81f7ed25",
+        "filename": "build/config/android/internal_rules.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 1637,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-07-05T21:50:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "987a68c4_352deaed",
+      "range": {
+        "startLine": 1637,
+        "startChar": 11,
+        "endLine": 1637,
+        "endChar": 15
+      },
+      "revId": "d2e5892f48d5ad61b2820f37a9ee3c920e5f1cc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1532fea1_95498e83",
         "filename": "build/config/android/internal_rules.gni",
         "patchSetId": 2
@@ -183,6 +351,30 @@
       "revId": "d2e5892f48d5ad61b2820f37a9ee3c920e5f1cc8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05d3eb4b_efbfe256",
+        "filename": "build/config/android/internal_rules.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 1719,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-07-05T21:50:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1532fea1_95498e83",
+      "range": {
+        "startLine": 1719,
+        "startChar": 12,
+        "endLine": 1719,
+        "endChar": 23
+      },
+      "revId": "d2e5892f48d5ad61b2820f37a9ee3c920e5f1cc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "9b8435bf_9d261506",
+        "filename": "build/config/android/rules.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 2228,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-07-05T21:50:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0999090a_f8e296df",
+      "range": {
+        "startLine": 2228,
+        "startChar": 32,
+        "endLine": 2228,
+        "endChar": 47
+      },
+      "revId": "d2e5892f48d5ad61b2820f37a9ee3c920e5f1cc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "970f1981_146da45d",
         "filename": "chrome/android/BUILD.gn",
         "patchSetId": 2
@@ -229,6 +445,30 @@
       "revId": "d2e5892f48d5ad61b2820f37a9ee3c920e5f1cc8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45c0253b_da007657",
+        "filename": "chrome/android/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 864,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-07-05T21:50:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "970f1981_146da45d",
+      "range": {
+        "startLine": 863,
+        "startChar": 0,
+        "endLine": 864,
+        "endChar": 35
+      },
+      "revId": "d2e5892f48d5ad61b2820f37a9ee3c920e5f1cc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -297,6 +537,24 @@
       "side": 1,
       "message": "Yeah, in this case it shouldn\u0027t be necessary to create a symlink. Doing so also make the file not work on Windows, which should be avoided when possible.\n\nUse \"//$target($host_toolchain)\" for the dep, and to get the path, use:\nget_label_info(\"//$target($host_toolchain)\", \"root_out_dir\") + \"/cwebp\"",
       "parentUuid": "7b056ddf_a8b44b01",
+      "revId": "d2e5892f48d5ad61b2820f37a9ee3c920e5f1cc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7b6bcbc_6c78fd80",
+        "filename": "third_party/libwebp/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-07-05T21:50:31Z",
+      "side": 1,
+      "message": "Done, thanks!",
+      "parentUuid": "04ae73d6_183b0f77",
       "revId": "d2e5892f48d5ad61b2820f37a9ee3c920e5f1cc8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
