@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2e7da437_3d6ebc0d",
+        "filename": "content/renderer/media/media_factory.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-07-05T17:40:21Z",
+      "side": 1,
+      "message": "depending on new pipeline flag sgtm",
+      "parentUuid": "f2222e9a_df404280",
+      "revId": "ce6a89ad5131bc65253338e7528ad92c4145d6b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1fa8f296_8252130f",
         "filename": "media/remoting/BUILD.gn",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-05T16:25:20Z",
       "side": 1,
       "message": "I thought that only media/blink/ could deal with Blink code. Shouldn\u0027t you add an extra level of layering here?",
+      "revId": "ce6a89ad5131bc65253338e7528ad92c4145d6b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a30c50b9_db3099c6",
+        "filename": "media/remoting/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-07-05T17:40:21Z",
+      "side": 1,
+      "message": "Wait, you advocate for extra layering?\nI expected Yuri to highlight that if it was a violation.",
+      "parentUuid": "1fa8f296_8252130f",
       "revId": "ce6a89ad5131bc65253338e7528ad92c4145d6b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
