@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29437cb2_275ddff9",
+        "filename": "components/safe_browsing/triggers/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-05T16:46:04Z",
+      "side": 1,
+      "message": "Just a suggestion: If you make a separate target for the code and the test, you can compile and test your changes more granularly. This becomes much more useful when the directory becomes more populated.",
+      "range": {
+        "startLine": 11,
+        "startChar": 5,
+        "endLine": 11,
+        "endChar": 22
+      },
+      "revId": "257b0f3188898292b6302f29f9d3d519740a8c38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a47a91b4_8d64b20a",
+        "filename": "components/safe_browsing/triggers/trigger_throttler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-05T16:46:04Z",
+      "side": 1,
+      "message": "Use std::numeric_limits\u003csize_t\u003e::max() instead",
+      "range": {
+        "startLine": 13,
+        "startChar": 10,
+        "endLine": 13,
+        "endChar": 32
+      },
+      "revId": "257b0f3188898292b6302f29f9d3d519740a8c38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3fef438_d7f9e756",
+        "filename": "components/safe_browsing/triggers/trigger_throttler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-05T16:46:04Z",
+      "side": 1,
+      "message": "This should return size_t (non-negative)",
+      "range": {
+        "startLine": 15,
+        "startChar": 4,
+        "endLine": 15,
+        "endChar": 27
+      },
+      "revId": "257b0f3188898292b6302f29f9d3d519740a8c38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98ad8050_3a42da42",
+        "filename": "components/safe_browsing/triggers/trigger_throttler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-05T16:46:04Z",
+      "side": 1,
+      "message": "I am afraid that having a default here might cause silent skipping of triggers.\n\nDo you think it would be better to have a NOTREACHED here?\nWhat\u0027s a valid use-case for a trigger type with no quota?",
+      "range": {
+        "startLine": 21,
+        "startChar": 8,
+        "endLine": 21,
+        "endChar": 9
+      },
+      "revId": "257b0f3188898292b6302f29f9d3d519740a8c38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81d961a0_97e3bed2",
+        "filename": "components/safe_browsing/triggers/trigger_throttler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-05T16:46:04Z",
+      "side": 1,
+      "message": "then you probably won\u0027t need this cast.",
+      "range": {
+        "startLine": 49,
+        "startChar": 22,
+        "endLine": 49,
+        "endChar": 33
+      },
+      "revId": "257b0f3188898292b6302f29f9d3d519740a8c38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8baa237_b1e8f6e9",
+        "filename": "components/safe_browsing/triggers/trigger_throttler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-05T16:46:04Z",
+      "side": 1,
+      "message": "since we\u0027re using FromDays(1) in two places, I think it\u0027d be best to have a constant defined on top for this value (1) and use that in both the places.",
+      "range": {
+        "startLine": 83,
+        "startChar": 77,
+        "endLine": 83,
+        "endChar": 78
+      },
+      "revId": "257b0f3188898292b6302f29f9d3d519740a8c38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b1852ef_61e6a7c0",
+        "filename": "components/safe_browsing/triggers/trigger_throttler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-05T16:46:04Z",
+      "side": 1,
+      "message": "When can this happen?\n\ntmp_trigger_times is strictly a subset of trigger_times so this condition implies that trigger_times.size() for events with \"timestamp \u003e min_timestamp.ToTimeT()\" can be greater than trigger_quota. How is that possible?",
+      "range": {
+        "startLine": 93,
+        "startChar": 27,
+        "endLine": 93,
+        "endChar": 44
+      },
+      "revId": "257b0f3188898292b6302f29f9d3d519740a8c38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ede8d9fd_a9af19a4",
+        "filename": "components/safe_browsing/triggers/trigger_throttler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-05T16:46:04Z",
+      "side": 1,
+      "message": "trigger_events_[trigger_type].swap(tmp_trigger_times) might be more efficient.",
+      "range": {
+        "startLine": 101,
+        "startChar": 4,
+        "endLine": 101,
+        "endChar": 53
+      },
+      "revId": "257b0f3188898292b6302f29f9d3d519740a8c38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "020a98d1_f0ab4037",
+        "filename": "components/safe_browsing/triggers/trigger_throttler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-05T16:46:04Z",
+      "side": 1,
+      "message": "since this is in the safe_browsing namespace, can we drop the prefix \u0027SafeBrowsing\u0027?",
+      "range": {
+        "startLine": 16,
+        "startChar": 11,
+        "endLine": 16,
+        "endChar": 34
+      },
+      "revId": "257b0f3188898292b6302f29f9d3d519740a8c38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5133d07b_0f57f10d",
+        "filename": "components/safe_browsing/triggers/trigger_throttler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-05T16:46:04Z",
+      "side": 1,
+      "message": "nit: remove",
+      "range": {
+        "startLine": 58,
+        "startChar": 3,
+        "endLine": 58,
+        "endChar": 12
+      },
+      "revId": "257b0f3188898292b6302f29f9d3d519740a8c38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25000a5b_25339848",
+        "filename": "components/safe_browsing/triggers/trigger_throttler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-05T16:46:04Z",
+      "side": 1,
+      "message": "Since we\u0027re adding a bunch of code for other trigger types, I am thinking if it\u0027d be worthwhile to add an UNUSED enum value so that we can test out the code. I\u0027m not sure if that\u0027s the right thing to do.",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 65
+      },
+      "revId": "257b0f3188898292b6302f29f9d3d519740a8c38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
