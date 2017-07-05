@@ -14,6 +14,9 @@
 #include "base/values.h"
 #include "chrome/browser/printing/print_job_worker.h"
 
+
+#include "base/logging.h"
+
 namespace printing {
 
 PrinterQuery::PrinterQuery(int render_process_id, int render_frame_id)
@@ -33,6 +36,8 @@ PrinterQuery::~PrinterQuery() {
 
 void PrinterQuery::GetSettingsDone(const PrintSettings& new_settings,
                                    PrintingContext::Result result) {
+  LOG(WARNING) << "GetSettingsDone called";
+  LOG(WARNING) << "worker_ = " << worker_.get();
   is_print_dialog_box_shown_ = false;
   last_status_ = result;
   if (result != PrintingContext::FAILED) {

@@ -383,7 +383,7 @@ void TextAutosizer::InflateAutoTable(LayoutTable* table) {
 }
 
 void TextAutosizer::EndLayout(LayoutBlock* block) {
-  DCHECK(ShouldHandleLayout());
+  // DCHECK(ShouldHandleLayout());
 
   if (block == first_block_to_begin_layout_) {
     first_block_to_begin_layout_ = nullptr;
