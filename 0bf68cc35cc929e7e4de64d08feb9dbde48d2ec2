@@ -2,6 +2,278 @@
   "comments": [
     {
       "key": {
+        "uuid": "ac90882a_8f130bf6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-05T08:31:54Z",
+      "side": 1,
+      "message": "add a Mojo interface",
+      "revId": "0bf68cc35cc929e7e4de64d08feb9dbde48d2ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "408723a6_01529911",
+        "filename": "content/browser/service_worker/embedded_worker_instance.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-05T08:31:54Z",
+      "side": 1,
+      "message": "If the worker is already installed, |installed_scripts_info| holds information about its scripts; otherwise, it is empty.",
+      "revId": "0bf68cc35cc929e7e4de64d08feb9dbde48d2ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6e2072e_cca3307d",
+        "filename": "content/browser/service_worker/embedded_worker_instance.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-05T08:31:54Z",
+      "side": 1,
+      "message": "This looks like part of the TODO. Suggest changing line 294 to \"Remove |pending_dispatcher_request_| after...",
+      "revId": "0bf68cc35cc929e7e4de64d08feb9dbde48d2ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08edcab5_e8be2eb3",
+        "filename": "content/browser/service_worker/embedded_worker_instance_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-05T08:31:54Z",
+      "side": 1,
+      "message": "What\u0027s left to implement?",
+      "revId": "0bf68cc35cc929e7e4de64d08feb9dbde48d2ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddea5cd8_d8c687d8",
+        "filename": "content/browser/service_worker/embedded_worker_instance_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-05T08:31:54Z",
+      "side": 1,
+      "message": "// Mojo endpoints.",
+      "revId": "0bf68cc35cc929e7e4de64d08feb9dbde48d2ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "989298ec_a141e21d",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-05T08:31:54Z",
+      "side": 1,
+      "message": "Are all these headers used? Seems like not.",
+      "revId": "0bf68cc35cc929e7e4de64d08feb9dbde48d2ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9d2f574_e0d55ce3",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-05T08:31:54Z",
+      "side": 1,
+      "message": "Does this header use map, memory, weak_ptr? Seems like it doesn\u0027t but maybe the mojom types do under the covers?",
+      "revId": "0bf68cc35cc929e7e4de64d08feb9dbde48d2ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23827922_a7ea996c",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-05T08:31:54Z",
+      "side": 1,
+      "message": "Mojo data pipes?\n\nCan we say anything about lifetime of this class here? Who owns it?",
+      "revId": "0bf68cc35cc929e7e4de64d08feb9dbde48d2ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "063b9e8e_21b9a5e6",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-05T08:31:54Z",
+      "side": 1,
+      "message": "\"Creates a Mojo struct\"\n\n\"and sets the information\" -\u003e \"sets it with the information\" or just \"with the information\"",
+      "revId": "0bf68cc35cc929e7e4de64d08feb9dbde48d2ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1c3bda5_0dfef474",
+        "filename": "content/common/service_worker/service_worker_installed_scripts_manager.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-05T08:31:54Z",
+      "side": 1,
+      "message": "Contains information about the scripts of an installed service worker.",
+      "revId": "0bf68cc35cc929e7e4de64d08feb9dbde48d2ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31945a44_df556517",
+        "filename": "content/common/service_worker/service_worker_installed_scripts_manager.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-05T08:31:54Z",
+      "side": 1,
+      "message": "nit: second sentence is better on TransferInstalledScript, unless you plan to add more functions here that the comment would also apply to?",
+      "revId": "0bf68cc35cc929e7e4de64d08feb9dbde48d2ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd717ac7_d345d2d5",
+        "filename": "content/common/service_worker/service_worker_installed_scripts_manager.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-05T08:31:54Z",
+      "side": 1,
+      "message": "suggest:\n|headers| holds the HTTP headers of the script. |body| is a handle for receiving the script body. |meta_data| is a handle for receiving the V8 code cached metadata.",
+      "revId": "0bf68cc35cc929e7e4de64d08feb9dbde48d2ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69e0ff47_ddfa43ce",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-05T08:31:54Z",
+      "side": 1,
+      "message": "DCHECK_CURRENTLY_ON(IO)\n(and then the comment isnt\u0027 needed)",
+      "revId": "0bf68cc35cc929e7e4de64d08feb9dbde48d2ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e48062a0_f975da90",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-05T08:31:54Z",
+      "side": 1,
+      "message": "IO thread",
+      "revId": "0bf68cc35cc929e7e4de64d08feb9dbde48d2ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d7c97b5_ed74fae0",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-05T08:31:54Z",
+      "side": 1,
+      "message": "same DCHECK_CURRENTLY_ON(IO)",
+      "revId": "0bf68cc35cc929e7e4de64d08feb9dbde48d2ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1c6d297_695f97e0",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-05T08:31:54Z",
+      "side": 1,
+      "message": "Since we\u0027re posting task here I\u0027d like to knwo what thread we are on now. Can you DCHECK_CURRENTL_ON something here?",
+      "revId": "0bf68cc35cc929e7e4de64d08feb9dbde48d2ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0a08a347_fe67b72b",
         "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
         "patchSetId": 3
@@ -18,6 +290,53 @@
         "startChar": 2,
         "endLine": 45,
         "endChar": 50
+      },
+      "revId": "0bf68cc35cc929e7e4de64d08feb9dbde48d2ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd4faebb_d14b2a31",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-05T08:31:54Z",
+      "side": 1,
+      "message": "Can you elaborate more about the ordering issues? How does WaitableEvent itself fix the issues?\n\n(And if we decide to use waitableevent, remove the TODO)",
+      "parentUuid": "0a08a347_fe67b72b",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 50
+      },
+      "revId": "0bf68cc35cc929e7e4de64d08feb9dbde48d2ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24c6bfc8_2cec35d3",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-05T08:31:54Z",
+      "side": 1,
+      "message": "Is this blocking? What  thread are we on?",
+      "range": {
+        "startLine": 54,
+        "startChar": 8,
+        "endLine": 54,
+        "endChar": 12
       },
       "revId": "0bf68cc35cc929e7e4de64d08feb9dbde48d2ec2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
