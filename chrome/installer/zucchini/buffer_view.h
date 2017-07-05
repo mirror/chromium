@@ -71,6 +71,12 @@ class BufferViewBase {
     last_ = first_ + new_size;
   }
 
+  // Moves the start of the view forward by n bytes.
+  void remove_prefix(size_type n) {
+    DCHECK(n <= size());
+    first_ += n;
+  }
+
  private:
   iterator first_ = nullptr;
   iterator last_ = nullptr;
