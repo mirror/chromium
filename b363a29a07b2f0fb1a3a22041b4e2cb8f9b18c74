@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f407bc1a_bad6b583",
+        "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-05T20:17:53Z",
+      "side": 1,
+      "message": "nit: Place \"{\" on previous line.",
+      "range": {
+        "startLine": 13,
+        "startChar": 12,
+        "endLine": 13,
+        "endChar": 0
+      },
+      "revId": "b363a29a07b2f0fb1a3a22041b4e2cb8f9b18c74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73744b0e_d9fd804c",
+        "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-05T20:17:53Z",
+      "side": 1,
+      "message": "nit: For .title and .body, please add a comment saying that these selectors add extra properties to the definitions originally part of \u003ccr-dialog\u003e.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 12
+      },
+      "revId": "b363a29a07b2f0fb1a3a22041b4e2cb8f9b18c74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
