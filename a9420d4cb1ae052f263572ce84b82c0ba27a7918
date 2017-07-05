@@ -667,6 +667,24 @@
     },
     {
       "key": {
+        "uuid": "ecad8f56_f0c01a92",
+        "filename": "ui/compositor/compositor.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-05T20:35:53Z",
+      "side": 1,
+      "message": "Will this be removed at that time, or renamed to GetFrameSinkManagerImpl()? If the former then lg. I was thinking more along the lines that this is null when the display compositor is out of process.",
+      "parentUuid": "6552fda4_9cd0760c",
+      "revId": "a9420d4cb1ae052f263572ce84b82c0ba27a7918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c4d599c_290535dc",
         "filename": "ui/compositor/test/in_process_context_factory.h",
         "patchSetId": 20
