@@ -16,6 +16,24 @@
       "revId": "11330ac0e4e0dbeb82565f5276f73714025885db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4361737d_0cab6c07",
+        "filename": "gpu/command_buffer/common/gles2_cmd_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1105284
+      },
+      "writtenOn": "2017-07-05T20:47:07Z",
+      "side": 1,
+      "message": "The hotspot when profiling was in the CheckedNumeric multiply code which this avoids.  That said, I could still avoid one of the two the multiplies given that the multiplication of the type size and elements_per_unit is guaranteed to never overflow.  I could also add a DCHECK with CheckedNumerics that the result has not overflowed.\n\nI\u0027m fine without landing it too but it was the 2nd highest hotspot in chrome_child.dll with the passthrough command buffer so it could be worth optimizing.",
+      "parentUuid": "049fede9_fd785e47",
+      "revId": "11330ac0e4e0dbeb82565f5276f73714025885db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
