@@ -45,6 +45,54 @@
       "revId": "b363a29a07b2f0fb1a3a22041b4e2cb8f9b18c74",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ef874b4_1bb270ad",
+        "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-05T20:58:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73744b0e_d9fd804c",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 12
+      },
+      "revId": "b363a29a07b2f0fb1a3a22041b4e2cb8f9b18c74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a69853f7_176a734e",
+        "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-05T20:58:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f407bc1a_bad6b583",
+      "range": {
+        "startLine": 13,
+        "startChar": 12,
+        "endLine": 13,
+        "endChar": 0
+      },
+      "revId": "b363a29a07b2f0fb1a3a22041b4e2cb8f9b18c74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
