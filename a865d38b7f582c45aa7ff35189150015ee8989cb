@@ -16,6 +16,24 @@
       "revId": "a865d38b7f582c45aa7ff35189150015ee8989cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f50a7b66_2627c357",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position-3/position-sticky-inflow-position.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-07-05T20:01:23Z",
+      "side": 1,
+      "message": "I don\u0027t believe that scrolling services a purpose in this test - the sticky constraint is already active without doing so. Happy to change it if there\u0027s a concrete reason.",
+      "parentUuid": "be6e9067_68b80fd5",
+      "revId": "a865d38b7f582c45aa7ff35189150015ee8989cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
