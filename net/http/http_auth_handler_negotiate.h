@@ -39,7 +39,7 @@ class NET_EXPORT_PRIVATE HttpAuthHandlerNegotiate : public HttpAuthHandler {
 #elif defined(OS_WIN)
   typedef SSPILibrary AuthLibrary;
   typedef HttpAuthSSPI AuthSystem;
-#elif defined(OS_POSIX)
+#elif defined(OS_POSIX) && !defined(OS_FUCHSIA)
   typedef GSSAPILibrary AuthLibrary;
   typedef HttpAuthGSSAPI AuthSystem;
 #endif
@@ -51,7 +51,7 @@ class NET_EXPORT_PRIVATE HttpAuthHandlerNegotiate : public HttpAuthHandler {
 
     void set_host_resolver(HostResolver* host_resolver);
 
-#if !defined(OS_ANDROID)
+#if !defined(OS_ANDROID) && !defined(OS_FUCHSIA)
     // Sets the system library to use, thereby assuming ownership of
     // |auth_library|.
     void set_library(std::unique_ptr<AuthLibrary> auth_provider) {
@@ -75,13 +75,13 @@ class NET_EXPORT_PRIVATE HttpAuthHandlerNegotiate : public HttpAuthHandler {
     ULONG max_token_length_;
 #endif
     bool is_unsupported_;
-#if !defined(OS_ANDROID)
+#if !defined(OS_ANDROID) && !defined(OS_FUCHSIA)
     std::unique_ptr<AuthLibrary> auth_library_;
 #endif
   };
 
   HttpAuthHandlerNegotiate(
-#if !defined(OS_ANDROID)
+#if !defined(OS_ANDROID) && !defined(OS_FUCHSIA)
       AuthLibrary* auth_library,
 #endif
 #if defined(OS_WIN)

@@ -29,9 +29,9 @@
 #include <objbase.h>
 #endif  // OS_WIN
 
-#if !defined(OS_MACOSX) && !defined(OS_NACL) && !defined(OS_WIN)
+#if defined(OS_LINUX) || defined(OS_ANDROID)
 #include "net/base/address_tracker_linux.h"
-#endif  // !OS_MACOSX && !OS_NACL && !OS_WIN
+#endif  // OS_LINUX || OS_ANDROID
 
 #if defined(OS_WIN)
 #include "net/base/network_interfaces_win.h"
@@ -39,9 +39,9 @@
 #include "net/base/network_interfaces_posix.h"
 #if defined(OS_MACOSX)
 #include "net/base/network_interfaces_mac.h"
-#else  // OS_MACOSX
+#elif defined(OS_LINUX) || defined(OS_ANDROID)
 #include "net/base/network_interfaces_linux.h"
-#endif  // OS_MACOSX
+#endif  // OS_LINUX || OS_ANDROID
 #endif  // OS_WIN
 
 namespace net {
@@ -150,7 +150,9 @@ TEST(NetworkInterfacesTest, GetNetworkList) {
   }
 }
 
+#if !defined(OS_FUCHSIA)
 static const char ifname_em1[] = "em1";
+
 #if defined(OS_WIN)
 static const char ifname_vm[] = "VMnet";
 #else
@@ -167,6 +169,9 @@ static const unsigned char kIPv6LocalAddr[] = {
 static const unsigned char kIPv6Addr[] =
   {0x24, 0x01, 0xfa, 0x00, 0x00, 0x04, 0x10, 0x00, 0xbe, 0x30, 0x5b, 0xff,
    0xfe, 0xe5, 0x00, 0xc3};
+
+#endif  // !OS_FUCHSIA
+
 #if defined(OS_WIN)
 static const unsigned char kIPv6AddrPrefix[] =
   {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -178,7 +183,7 @@ static const unsigned char kIPv6Netmask[] =
    0x00, 0x00, 0x00, 0x00};
 #endif  // OS_MACOSX
 
-#if !defined(OS_MACOSX) && !defined(OS_WIN) && !defined(OS_NACL)
+#if defined(OS_LINUX) || defined(OS_ANDROID)
 
 char* CopyInterfaceName(const char* ifname, int ifname_size, char* output) {
   EXPECT_LT(ifname_size, IF_NAMESIZE);
