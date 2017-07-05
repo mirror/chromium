@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "f73824ff_dec895e0",
+        "filename": "third_party/WebKit/public/platform/WebLayerTreeView.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-07-05T21:47:48Z",
+      "side": 1,
+      "message": "Nit: if it doesn\u0027t conflict, what do you think about just \"ViewportLayers\"? The Web part doesn\u0027t really add any information.",
+      "revId": "ff35d1ea5408502fe0813d9dad9c1db4af571c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5554ff88_5fabc262",
         "filename": "third_party/WebKit/public/platform/WebLayerTreeView.h",
         "patchSetId": 1
@@ -13,6 +30,24 @@
       "writtenOn": "2017-07-05T18:46:00Z",
       "side": 1,
       "message": "We should initialize each of the below pointers to nullptr?",
+      "revId": "ff35d1ea5408502fe0813d9dad9c1db4af571c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7a67637_51db42bf",
+        "filename": "third_party/WebKit/public/platform/WebLayerTreeView.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-07-05T21:47:48Z",
+      "side": 1,
+      "message": "Yeah, please do initialize to nullptr. I think that is the cause of the GraphicsLayerTest failure.\n\nThese initializers can be done inline like in https://cs.chromium.org/chromium/src/cc/trees/layer_tree_impl.h?type\u003dcs\u0026q\u003dstruct+Viewportlayers\u0026sq\u003dpackage:chromium\u0026l\u003d215:\nconst WebLayer* page_scale \u003d nullptr; etc",
+      "parentUuid": "5554ff88_5fabc262",
       "revId": "ff35d1ea5408502fe0813d9dad9c1db4af571c76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
