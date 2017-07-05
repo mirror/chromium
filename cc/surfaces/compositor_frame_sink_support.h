@@ -23,6 +23,7 @@
 namespace cc {
 
 class CompositorFrameSinkSupportClient;
+class FrameSinkManager;
 class Surface;
 class SurfaceManager;
 
@@ -33,7 +34,7 @@ class CC_SURFACES_EXPORT CompositorFrameSinkSupport
  public:
   static std::unique_ptr<CompositorFrameSinkSupport> Create(
       CompositorFrameSinkSupportClient* client,
-      SurfaceManager* surface_manager,
+      FrameSinkManager* frame_sink_manager,
       const FrameSinkId& frame_sink_id,
       bool is_root,
       bool handles_frame_sink_id_invalidation,
@@ -43,7 +44,7 @@ class CC_SURFACES_EXPORT CompositorFrameSinkSupport
 
   const FrameSinkId& frame_sink_id() const { return frame_sink_id_; }
 
-  SurfaceManager* surface_manager() { return surface_manager_; }
+  FrameSinkManager* frame_sink_manager() { return frame_sink_manager_; }
   bool needs_sync_points() { return needs_sync_points_; }
 
   // SurfaceResourceHolderClient implementation.
@@ -76,7 +77,7 @@ class CC_SURFACES_EXPORT CompositorFrameSinkSupport
                              bool handles_frame_sink_id_invalidation,
                              bool needs_sync_points);
 
-  void Init(SurfaceManager* surface_manager);
+  void Init(FrameSinkManager* frame_sink_manager);
 
  private:
   // Updates surface references using |active_referenced_surfaces| from the most
@@ -104,6 +105,7 @@ class CC_SURFACES_EXPORT CompositorFrameSinkSupport
 
   CompositorFrameSinkSupportClient* const client_;
 
+  FrameSinkManager* frame_sink_manager_ = nullptr;
   SurfaceManager* surface_manager_ = nullptr;
 
   const FrameSinkId frame_sink_id_;
