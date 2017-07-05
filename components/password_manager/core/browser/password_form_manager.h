@@ -273,6 +273,15 @@ class PasswordFormManager : public FormFetcher::Consumer {
   // adds itself as a consumer of the new one.
   void GrabFetcher(std::unique_ptr<FormFetcher> fetcher);
 
+  // Create a copy of |*this| which can be passed to the code handling
+  // save-password related UI. This omits some parts of the internal data, so
+  // the result is not identical to the original. |form_saver| is passed to the
+  // constructor of the clone.
+  // TODO(crbug.com/739366): Replace with translating one appropriate class into
+  // another one.
+  std::unique_ptr<PasswordFormManager> Clone(
+      std::unique_ptr<FormSaver> form_saver);
+
  protected:
   // FormFetcher::Consumer:
   void ProcessMatches(
