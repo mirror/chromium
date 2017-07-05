@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e5608836_97a9eae0",
+        "filename": "content/browser/service_worker/service_worker_context_wrapper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 855,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-05T09:14:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "350b6c00_44c12cc8",
+      "revId": "d0b9a83fc6e973520952f89f12fb959a43a29793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2773e228_1a10062e",
         "filename": "content/browser/service_worker/service_worker_dispatcher_host.h",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-05T08:44:38Z",
       "side": 1,
       "message": "This comment seems misplaced here since |blob_storage_context| and |loader_factoy_getter| doesn\u0027t seem here.",
+      "revId": "d0b9a83fc6e973520952f89f12fb959a43a29793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc99d7e6_5409ef79",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-05T09:14:12Z",
+      "side": 1,
+      "message": ":O Removed.",
+      "parentUuid": "2773e228_1a10062e",
       "revId": "d0b9a83fc6e973520952f89f12fb959a43a29793",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "45adfde8_e9d7fd43",
+        "filename": "content/common/service_worker/service_worker.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-05T09:14:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26d2d949_65820ba6",
+      "revId": "d0b9a83fc6e973520952f89f12fb959a43a29793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63a949b5_22619fa1",
         "filename": "content/renderer/service_worker/service_worker_context_client.cc",
         "patchSetId": 7
@@ -67,6 +121,24 @@
       "revId": "d0b9a83fc6e973520952f89f12fb959a43a29793",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e955618_d62bf717",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-05T09:14:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63a949b5_22619fa1",
+      "revId": "d0b9a83fc6e973520952f89f12fb959a43a29793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "825ae2ad_673301f8",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1101,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-05T09:14:12Z",
+      "side": 1,
+      "message": "webreq is actually used in multiple other places, let me keep it as is in this CL (can create a follow-up)",
+      "parentUuid": "76a3f7c6_53a5b9b8",
+      "revId": "d0b9a83fc6e973520952f89f12fb959a43a29793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7b60e5cb_df18be20",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerNetworkProvider.h",
         "patchSetId": 7
@@ -101,6 +191,24 @@
       "revId": "d0b9a83fc6e973520952f89f12fb959a43a29793",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62235c31_95d55abc",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerNetworkProvider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-05T09:14:12Z",
+      "side": 1,
+      "message": "Done, I think you understood the second sentence correctly :)",
+      "parentUuid": "7b60e5cb_df18be20",
+      "revId": "d0b9a83fc6e973520952f89f12fb959a43a29793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
