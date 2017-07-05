@@ -36,6 +36,40 @@
     },
     {
       "key": {
+        "uuid": "5af06af9_1495f958",
+        "filename": "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1215055
+      },
+      "writtenOn": "2017-07-05T20:38:42Z",
+      "side": 1,
+      "message": "Same issue as for ExpectMetric below.",
+      "revId": "5f897a13751bedb3270bd6d6c238138c93c61227",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "022551b1_7fcc3bcc",
+        "filename": "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1215055
+      },
+      "writtenOn": "2017-07-05T20:38:42Z",
+      "side": 1,
+      "message": "Implementing ExpectMetric this way will break unit tests for users of UKM that generate multiple entries for the same source ID with the same metrics inside them but different metric values for each entry because TestUkmRecorder::FindMetric will always return the first instance of the metric in the merged entry.\n\nThere should be a way to verify individual entries as ExpectMetric previously did. If this new behavior is desired, I would suggest creating a second method for verifying an individual entry  (e.g. ExpectMetricInEntry).",
+      "revId": "5f897a13751bedb3270bd6d6c238138c93c61227",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "effe1a6d_19bb8055",
         "filename": "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.h",
         "patchSetId": 4
