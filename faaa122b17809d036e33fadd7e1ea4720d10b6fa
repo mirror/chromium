@@ -22,6 +22,30 @@
       "revId": "faaa122b17809d036e33fadd7e1ea4720d10b6fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a2dd213_fe713fba",
+        "filename": "chrome/browser/ui/webui/conflicts_handler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-07-05T15:02:33Z",
+      "side": 1,
+      "message": "Reference to Freud removed.",
+      "parentUuid": "7a15916c_af4a5c4e",
+      "range": {
+        "startLine": 39,
+        "startChar": 9,
+        "endLine": 39,
+        "endChar": 11
+      },
+      "revId": "faaa122b17809d036e33fadd7e1ea4720d10b6fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
