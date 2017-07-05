@@ -178,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "aeaa7c7a_9dc6b2df",
+        "filename": "components/offline_pages/core/prefetch/add_unique_urls_task.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-07-05T18:49:14Z",
+      "side": 1,
+      "message": "For posterity (and for my memory if we come back to this): The primary key will remain randomly generated because it may be desirable to merge records from 3 tables that all have randomly assigned primary keys used as IDs into a single table, and this strategy reduces the likelihood of collisions.",
+      "parentUuid": "7b75a29c_f7a9db64",
+      "revId": "da65c017f05d5f9eb013dc61c924c006b674d197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c76e899d_396ed4df",
         "filename": "components/offline_pages/core/prefetch/add_unique_urls_task.cc",
         "patchSetId": 25
@@ -466,6 +484,24 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "9cd9711d_0f032e01",
+      "revId": "da65c017f05d5f9eb013dc61c924c006b674d197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aff04ed_b271dc0d",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-07-05T18:49:14Z",
+      "side": 1,
+      "message": "For your own sanity, please make time for implementing recovery before this hits stable. Based on our discussion, I think that the approach I pointed at would be significantly better than nothing. If the database is corrupted and SQLite\u0027s recovery fails, razing and starting over at least gets the feature unstuck.",
+      "parentUuid": "391e9e3e_d079beea",
       "revId": "da65c017f05d5f9eb013dc61c924c006b674d197",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
