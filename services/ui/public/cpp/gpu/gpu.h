@@ -50,6 +50,9 @@ class Gpu : public gpu::GpuChannelHostFactory,
   scoped_refptr<gpu::GpuChannelHost> EstablishGpuChannelSync() override;
   gpu::GpuMemoryBufferManager* GetGpuMemoryBufferManager() override;
 
+  void CreateVideoEncodeAccelerator(
+      media::mojom::VideoEncodeAcceleratorRequest vea);
+
  private:
   friend struct base::DefaultSingletonTraits<Gpu>;
 
