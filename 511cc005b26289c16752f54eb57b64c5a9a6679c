@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a634447e_2d1bf0e8",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-06T16:53:20Z",
+      "side": 1,
+      "message": "Here the de-duping is actually fine - we just filter out popular sites, which are host-only.",
+      "range": {
+        "startLine": 368,
+        "startChar": 69,
+        "endLine": 368,
+        "endChar": 0
+      },
+      "revId": "511cc005b26289c16752f54eb57b64c5a9a6679c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e423ec7_77f991b0",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-06T16:53:20Z",
+      "side": 1,
+      "message": "Here it\u0027s potentially not fine, since we might remove personal tiles, which do have a path.",
+      "range": {
+        "startLine": 417,
+        "startChar": 50,
+        "endLine": 417,
+        "endChar": 0
+      },
+      "revId": "511cc005b26289c16752f54eb57b64c5a9a6679c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
