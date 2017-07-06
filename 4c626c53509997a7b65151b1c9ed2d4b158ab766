@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e15e5e7a_4ec675d4",
+        "filename": "media/capture/video/video_capture_device_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-07-06T11:29:22Z",
+      "side": 0,
+      "message": "\u003e I am sorry if this TODO mislead you. There has been a lot of refactor going on in these classes with the ongoing mojo project and most of the stuff will be outdated soon(hopefully). This TODO was referring to VideoCaptureDevice::Client::Buffer::data()[0] which no longer exists. Additionally, we no longer consider I420 as the only supported format. \n\nThat\u0027s alright. May be I should have had a discussion before attempting this change.\nAnyway, I have updated this CL to delete the TODO. \nAlso, I have added a minor refactor of removing InitializeI420PlanePointers(), if that\u0027s okay with you?.\n\n\u003e I would go with chfremer@s suggestion and only deleting this TODO.\n\u003e \n\u003e [0] https://chromium.googlesource.com/chromium/src/+/bcd0585fc2b25d2f87d15982e7aeae4b8364888a/media/capture/video/video_capture_device.h",
+      "parentUuid": "074e1288_89b54dea",
+      "revId": "4c626c53509997a7b65151b1c9ed2d4b158ab766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5853dfd2_73c099d8",
         "filename": "media/capture/video/video_capture_device_client.cc",
         "patchSetId": 4
