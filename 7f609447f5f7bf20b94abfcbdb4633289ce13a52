@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32b2e865_20f61c6f",
+        "filename": "components/password_manager/core/browser/form_fetcher_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-06T11:30:30Z",
+      "side": 1,
+      "message": "Are you sure that return result; doesn\u0027t work here and below?",
+      "range": {
+        "startLine": 280,
+        "startChar": 0,
+        "endLine": 280,
+        "endChar": 29
+      },
+      "revId": "7f609447f5f7bf20b94abfcbdb4633289ce13a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e55d1e68_260dbc67",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-06T11:30:30Z",
+      "side": 1,
+      "message": "Why isn\u0027t it part of FakeFormFetcher?",
+      "range": {
+        "startLine": 123,
+        "startChar": 31,
+        "endLine": 123,
+        "endChar": 36
+      },
+      "revId": "7f609447f5f7bf20b94abfcbdb4633289ce13a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
