@@ -379,6 +379,30 @@
     },
     {
       "key": {
+        "uuid": "c44532a3_14d17452",
+        "filename": "components/safe_browsing/triggers/trigger_throttler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-07-06T18:21:30Z",
+      "side": 1,
+      "message": "Ok, keeping it simple sounds good. Thanks!",
+      "parentUuid": "07cfe9f7_2202e5ad",
+      "range": {
+        "startLine": 93,
+        "startChar": 27,
+        "endLine": 93,
+        "endChar": 44
+      },
+      "revId": "257b0f3188898292b6302f29f9d3d519740a8c38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ede8d9fd_a9af19a4",
         "filename": "components/safe_browsing/triggers/trigger_throttler.cc",
         "patchSetId": 1
