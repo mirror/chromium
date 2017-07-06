@@ -1,0 +1,24 @@
+<iframe id="empty"></iframe>
+<iframe id="js" src="javascript:'<html><\/html>'"></iframe>
+<script>
+function injectImageIntoEmptyFrame(imageSrc) {
+  injectImage(document.getElementById("empty"), imageSrc);
+}
+
+function injectImageIntoJavascriptFrame(imageSrc) {
+  injectImage(document.getElementById("js"), imageSrc);
+}
+
+function injectImage(frame, imageSrc) {
+  var image = new Image();
+  image.src = imageSrc;
+  image.onload = () => { window.domAutomationController.send(false); }
+  image.onerror = () => { window.domAutomationController.send(true); }
+  frame.contentDocument.body.appendChild(image);
+}
+
+function navigateIframe(src) {
+  var subframe = document.getElementsByTagName('iframe')[0];
+  subframe.contentWindow.location = src;
+}
+</script>
