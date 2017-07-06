@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b6f48976_9ae67012",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_base_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-06T18:56:56Z",
+      "side": 1,
+      "message": "It does seem a little arbitrary, but we need to avoid going over the window border, which would be 3-4 pixels for some windows (certainly mine on Linux). Add another few pixels so that it doesn\u0027t go right up to the window border, and you get 10. I could change to 8 without too much visual impact, but that seems arbitrary as well :)",
+      "parentUuid": "f426028b_0744e8f8",
+      "revId": "88ba50a61da1236d99f9b0a62de0d081e9e5d487",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de4c14a7_0259eabc",
         "filename": "chrome/browser/ui/views/autofill/autofill_popup_base_view.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "88ba50a61da1236d99f9b0a62de0d081e9e5d487",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7b1ae00_77f9f7f2",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_base_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-06T18:56:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de4c14a7_0259eabc",
+      "revId": "88ba50a61da1236d99f9b0a62de0d081e9e5d487",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "25bcbb89_f0783b48",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_base_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-06T18:56:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e353ed7_bc5707da",
+      "revId": "88ba50a61da1236d99f9b0a62de0d081e9e5d487",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb67db51_8f5eadf6",
         "filename": "chrome/browser/ui/views/autofill/autofill_popup_base_view.cc",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "88ba50a61da1236d99f9b0a62de0d081e9e5d487",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39045f7f_c8f2bcda",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_base_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-06T18:56:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb67db51_8f5eadf6",
+      "revId": "88ba50a61da1236d99f9b0a62de0d081e9e5d487",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "fc127e4e_09a41692",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_base_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-06T18:56:56Z",
+      "side": 1,
+      "message": "This was the situation: https://drive.google.com/file/d/0B3xzZ-vFr2LRX3dXdi1ONklVeTg/view?usp\u003dsharing. Seeing this supports the |kPopupBottomMargin| that we\u0027ve added, to make sure the popup with scrollbar doesn\u0027t go over the window border.",
+      "parentUuid": "aaf25404_e388e4e8",
+      "revId": "88ba50a61da1236d99f9b0a62de0d081e9e5d487",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61903e3f_8ab12491",
         "filename": "chrome/browser/ui/views/autofill/autofill_popup_base_view.cc",
         "patchSetId": 2
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "69928fda_29fc2fa7",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_base_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-06T18:56:56Z",
+      "side": 1,
+      "message": "Moved the constant to anonymous namespace. It\u0027s still used on cocoa, will make more local once I implement the scrollbar there.",
+      "parentUuid": "61903e3f_8ab12491",
+      "revId": "88ba50a61da1236d99f9b0a62de0d081e9e5d487",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45c19f90_c7799538",
         "filename": "chrome/browser/ui/views/autofill/autofill_popup_base_view.h",
         "patchSetId": 2
@@ -118,6 +226,24 @@
       "revId": "88ba50a61da1236d99f9b0a62de0d081e9e5d487",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6c549e9_0398ff28",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_base_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-06T18:56:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45c19f90_c7799538",
+      "revId": "88ba50a61da1236d99f9b0a62de0d081e9e5d487",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
