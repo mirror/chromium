@@ -445,6 +445,10 @@ class MenuControllerTest : public ViewsTestBase {
     menu_controller_->OnMouseReleased(source, event);
   }
 
+  void ViewMousePressed(View* source, const ui::MouseEvent& event) {
+    source->OnMousePressed(event);
+  }
+
   void Accept(MenuItemView* item, int event_flags) {
     menu_controller_->Accept(item, event_flags);
   }
@@ -1415,6 +1419,47 @@ TEST_F(MenuControllerTest, RepostEventToEmptyMenuItem) {
   TestAsyncEscapeKey();
   EXPECT_EQ(nested_controller_delegate_2->on_menu_closed_called(), 1);
   EXPECT_EQ(menu_controller_delegate(), GetCurrentDelegate());
+}
+
+// Drag the mouse from an external view into a menu
+// When the mouse leaves the menu while still in the process of dragging
+// the menu item view highlight should turn off
+TEST_F(MenuControllerTest, DragFromViewIntoMenuAndExit) {
+  SubmenuView* sub_menu = menu_item()->GetSubmenu();
+  MenuItemView* first_item = sub_menu->GetMenuItemAt(0);
+
+  std::unique_ptr<View> drag_view = base::MakeUnique<View>();
+  drag_view->SetBoundsRect(gfx::Rect(0, 500, 100, 100));
+  sub_menu->ShowAt(owner(), gfx::Rect(0, 0, 100, 100), false);
+  gfx::Point press_location(drag_view->bounds().CenterPoint());
+  gfx::Point drag_location(first_item->bounds().CenterPoint());
+  gfx::Point release_location(200, 50);
+
+  // Begin drag on an external view
+  ui::MouseEvent press_event(ui::ET_MOUSE_PRESSED, press_location,
+                             press_location, ui::EventTimeForNow(),
+                             ui::EF_LEFT_MOUSE_BUTTON, 0);
+  ViewMousePressed(drag_view.get(), press_event);
+
+  // Drag into a menu item
+  ui::MouseEvent drag_event_enter(ui::ET_MOUSE_DRAGGED, drag_location,
+                                  drag_location, ui::EventTimeForNow(),
+                                  ui::EF_LEFT_MOUSE_BUTTON, 0);
+  ProcessMouseDragged(sub_menu, drag_event_enter);
+  EXPECT_EQ(first_item->IsSelected(), 1);
+
+  // Drag out of the menu item
+  ui::MouseEvent drag_event_exit(ui::ET_MOUSE_DRAGGED, release_location,
+                                 release_location, ui::EventTimeForNow(),
+                                 ui::EF_LEFT_MOUSE_BUTTON, 0);
+  ProcessMouseDragged(sub_menu, drag_event_exit);
+  EXPECT_EQ(first_item->IsSelected(), 0);
+
+  // Complete drag with release
+  ui::MouseEvent release_event(ui::ET_MOUSE_RELEASED, release_location,
+                               release_location, ui::EventTimeForNow(),
+                               ui::EF_LEFT_MOUSE_BUTTON, 0);
+  ProcessMouseReleased(sub_menu, release_event);
 }
 
 #endif  // defined(USE_AURA)

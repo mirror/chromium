@@ -80,6 +80,10 @@ class ViewObserver;
 class Widget;
 class WordLookupClient;
 
+namespace test {
+class MenuControllerTest;
+}
+
 namespace internal {
 class PreEventDispatchHandler;
 class PostEventDispatchHandler;
@@ -1289,6 +1293,7 @@ class VIEWS_EXPORT View : public ui::LayerDelegate,
   friend class internal::PostEventDispatchHandler;
   friend class internal::RootView;
   friend class internal::ScopedChildrenLock;
+  friend class test::MenuControllerTest;
   friend class FocusManager;
   friend class ViewLayerTest;
   friend class Widget;
