@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4592de19_1bc772a6",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-07-06T23:50:59Z",
+      "side": 1,
+      "message": "Is there a way to do that in native code? Its only ever done in Java in the codebase.\n\nWhat changed that would make it necessary now but not before?",
+      "parentUuid": "b955487f_d52e0092",
+      "revId": "5effa4dbc274cc7952353b981e7d7338d7307bbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aa7cac16_0adab9b5",
         "filename": "android_webview/browser/aw_metrics_service_client.cc",
         "patchSetId": 2
@@ -39,6 +57,30 @@
       "revId": "5effa4dbc274cc7952353b981e7d7338d7307bbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf0817b5_9ba6be5b",
+        "filename": "android_webview/browser/aw_metrics_service_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-07-06T23:50:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa7cac16_0adab9b5",
+      "range": {
+        "startLine": 41,
+        "startChar": 19,
+        "endLine": 41,
+        "endChar": 0
+      },
+      "revId": "5effa4dbc274cc7952353b981e7d7338d7307bbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "9cbdc8dd_a515abe4",
+        "filename": "android_webview/browser/aw_metrics_service_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-07-06T23:50:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4c8d0af_de02972b",
+      "range": {
+        "startLine": 75,
+        "startChar": 25,
+        "endLine": 75,
+        "endChar": 34
+      },
+      "revId": "5effa4dbc274cc7952353b981e7d7338d7307bbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "060d8b28_9956c289",
         "filename": "android_webview/browser/aw_metrics_service_client.cc",
         "patchSetId": 2
@@ -85,6 +151,30 @@
       "revId": "5effa4dbc274cc7952353b981e7d7338d7307bbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab027c08_2bd3bdc5",
+        "filename": "android_webview/browser/aw_metrics_service_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-07-06T23:50:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "060d8b28_9956c289",
+      "range": {
+        "startLine": 98,
+        "startChar": 8,
+        "endLine": 98,
+        "endChar": 0
+      },
+      "revId": "5effa4dbc274cc7952353b981e7d7338d7307bbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "8addb5c4_2472670e",
+        "filename": "android_webview/browser/aw_metrics_service_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-07-06T23:50:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b59b0966_32cf5a06",
+      "range": {
+        "startLine": 125,
+        "startChar": 27,
+        "endLine": 125,
+        "endChar": 28
+      },
+      "revId": "5effa4dbc274cc7952353b981e7d7338d7307bbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23b660fe_09522d55",
         "filename": "android_webview/browser/aw_metrics_service_client.h",
         "patchSetId": 2
@@ -131,6 +245,30 @@
       "revId": "5effa4dbc274cc7952353b981e7d7338d7307bbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1850b571_ab713411",
+        "filename": "android_webview/browser/aw_metrics_service_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-07-06T23:50:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23b660fe_09522d55",
+      "range": {
+        "startLine": 47,
+        "startChar": 39,
+        "endLine": 47,
+        "endChar": 0
+      },
+      "revId": "5effa4dbc274cc7952353b981e7d7338d7307bbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
