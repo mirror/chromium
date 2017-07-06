@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "14f3ca29_7ba95e2c",
+        "filename": "media/BUILD.gn",
+        "patchSetId": 13
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1115461
+      },
+      "writtenOn": "2017-07-06T03:31:51Z",
+      "side": 1,
+      "message": "Yes, It is not needed.\n\nDone.",
+      "parentUuid": "3c764789_db8c1cf2",
+      "revId": "3e34360a1e8224054f5b9d3eb663545bc0fe77b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9fd55e79_63b184df",
         "filename": "media/BUILD.gn",
         "patchSetId": 13
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "92b78ec1_641f5978",
+        "filename": "media/BUILD.gn",
+        "patchSetId": 13
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1115461
+      },
+      "writtenOn": "2017-07-06T03:31:51Z",
+      "side": 1,
+      "message": "//media/cdm needs //ui/gfx/geometry:geometry.\n\nI made //ui/gfx/geometry:geometry private here and added //ui/gfx/geometry:geometry for //media/cdm as private.",
+      "parentUuid": "9fd55e79_63b184df",
+      "revId": "3e34360a1e8224054f5b9d3eb663545bc0fe77b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3c0506a8_a8adecbe",
         "filename": "media/mojo/services/BUILD.gn",
         "patchSetId": 13
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-05T17:01:49Z",
       "side": 1,
       "message": "ISTM we don\u0027t need this here either...",
+      "revId": "3e34360a1e8224054f5b9d3eb663545bc0fe77b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2aed728e_9b53d0af",
+        "filename": "media/mojo/services/BUILD.gn",
+        "patchSetId": 13
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115461
+      },
+      "writtenOn": "2017-07-06T03:31:51Z",
+      "side": 1,
+      "message": "It is needed for it.\nERROR at //media/mojo/services/mojo_cdm_allocator.cc:15:11: Can\u0027t include this header from here.\n#include \"media/cdm/api/content_decryption_module.h\"\n\n\nBut now, I removed it and made //media/cdm:cdm_api public in //media/cdm.",
+      "parentUuid": "3c0506a8_a8adecbe",
       "revId": "3e34360a1e8224054f5b9d3eb663545bc0fe77b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
