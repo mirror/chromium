@@ -54,65 +54,75 @@ namespace WTF {
 template <class T>
 class TreeNode {
  public:
-  typedef T NodeType;
+  using NodeType = T;
+  TreeNode() { next_ = previous_ = Here(); }
 
-  TreeNode()
-      : next_(0), previous_(0), parent_(0), first_child_(0), last_child_(0) {}
-
-  NodeType* Next() const { return next_; }
-  NodeType* Previous() const { return previous_; }
+  NodeType* Next() const {
+    if (!HasSibling())
+      return nullptr;
+    if (parent_ && next_ == parent_->first_child_)
+      return nullptr;
+    return next_;
+  }
+  NodeType* Previous() const {
+    if (!HasSibling())
+      return nullptr;
+    if (parent_ && Here() == parent_->first_child_)
+      return nullptr;
+    return previous_;
+  }
+  NodeType* RawNext() const { return next_; }
+  NodeType* RawPrevious() const { return previous_; }
   NodeType* Parent() const { return parent_; }
   NodeType* FirstChild() const { return first_child_; }
-  NodeType* LastChild() const { return last_child_; }
+  NodeType* LastChild() const {
+    return first_child_ ? first_child_->previous_ : nullptr;
+  }
+  bool HasSibling() const { return next_ != Here(); }
   NodeType* Here() const {
     return static_cast<NodeType*>(const_cast<TreeNode*>(this));
   }
 
-  bool Orphan() const {
-    return !parent_ && !next_ && !previous_ && !first_child_ && !last_child_;
-  }
+  // TODO: rename IsOrphan()
+  bool Orphan() const { return !parent_ && !HasSibling() && !first_child_; }
   bool HasChildren() const { return first_child_; }
 
   void InsertBefore(NodeType* new_child, NodeType* ref_child) {
     DCHECK(!new_child->Parent());
-    DCHECK(!new_child->Next());
-    DCHECK(!new_child->Previous());
-
-    DCHECK(!ref_child || this == ref_child->Parent());
+    DCHECK(!new_child->HasSibling());
+    DCHECK(!ref_child || Here() == ref_child->Parent());
 
     if (!ref_child) {
       AppendChild(new_child);
       return;
     }
 
-    NodeType* new_previous = ref_child->Previous();
+    NodeType* new_previous = ref_child->RawPrevious();
+    DCHECK(new_previous);
     new_child->parent_ = Here();
     new_child->next_ = ref_child;
     new_child->previous_ = new_previous;
     ref_child->previous_ = new_child;
-    if (new_previous)
-      new_previous->next_ = new_child;
-    else
+    new_previous->next_ = new_child;
+    if (first_child_ == ref_child)
       first_child_ = new_child;
   }
 
   void AppendChild(NodeType* child) {
     DCHECK(!child->Parent());
-    DCHECK(!child->Next());
-    DCHECK(!child->Previous());
+    DCHECK(!child->HasSibling());
 
     child->parent_ = Here();
 
-    if (!last_child_) {
-      DCHECK(!first_child_);
-      last_child_ = first_child_ = child;
+    if (!first_child_) {
+      first_child_ = child;
       return;
     }
 
-    DCHECK(!last_child_->next_);
-    NodeType* old_last = last_child_;
-    last_child_ = child;
-
+    NodeType* old_last = first_child_->previous_;
+    DCHECK(old_last);
+    first_child_->previous_ = child;
+    child->next_ = first_child_;
     child->previous_ = old_last;
     old_last->next_ = child;
   }
@@ -120,19 +130,25 @@ class TreeNode {
   NodeType* RemoveChild(NodeType* child) {
     DCHECK_EQ(child->Parent(), this);
 
+    child->parent_ = nullptr;
+
+    if (!child->HasSibling()) {
+      first_child_ = nullptr;
+      return child;
+    }
+
     if (first_child_ == child)
-      first_child_ = child->Next();
-    if (last_child_ == child)
-      last_child_ = child->Previous();
+      first_child_ = child->RawNext();
 
-    NodeType* old_next = child->Next();
-    NodeType* old_previous = child->Previous();
-    child->parent_ = child->next_ = child->previous_ = 0;
+    NodeType* old_next = child->RawNext();
+    NodeType* old_previous = child->RawPrevious();
 
-    if (old_next)
-      old_next->previous_ = old_previous;
-    if (old_previous)
-      old_previous->next_ = old_next;
+    DCHECK(old_next);
+    old_next->previous_ = old_previous;
+    DCHECK(old_previous);
+    old_previous->next_ = old_next;
+
+    child->next_ = child->previous_ = child;
 
     return child;
   }
@@ -142,37 +158,37 @@ class TreeNode {
     while (old_parent->HasChildren()) {
       NodeType* child = old_parent->FirstChild();
       old_parent->RemoveChild(child);
-      this->AppendChild(child);
+      AppendChild(child);
     }
   }
 
  private:
-  NodeType* next_;
-  NodeType* previous_;
-  NodeType* parent_;
-  NodeType* first_child_;
-  NodeType* last_child_;
+  NodeType* next_ = nullptr;
+  NodeType* previous_ = nullptr;
+  NodeType* parent_ = nullptr;
+  NodeType* first_child_ = nullptr;
 };
 
 template <class T>
 inline typename TreeNode<T>::NodeType* TraverseNext(
     const TreeNode<T>* current,
-    const TreeNode<T>* stay_within = 0) {
+    const TreeNode<T>* stay_within = nullptr) {
   if (typename TreeNode<T>::NodeType* next = current->FirstChild())
     return next;
   if (current == stay_within)
-    return 0;
-  if (typename TreeNode<T>::NodeType* next = current->Next())
+    return nullptr;
+  typename TreeNode<T>::NodeType* next = current->RawNext();
+  if (current->HasSibling() && next != current->Parent()->FirstChild())
     return next;
   for (typename TreeNode<T>::NodeType* parent = current->Parent(); parent;
        parent = parent->Parent()) {
     if (parent == stay_within)
-      return 0;
-    if (typename TreeNode<T>::NodeType* next = parent->Next())
+      return nullptr;
+    typename TreeNode<T>::NodeType* next = parent->RawNext();
+    if (parent->HasSibling() && next != parent->Parent()->FirstChild())
       return next;
   }
-
-  return 0;
+  return nullptr;
 }
 
 template <class T>
@@ -187,12 +203,12 @@ inline typename TreeNode<T>::NodeType* TraverseFirstPostOrder(
 template <class T>
 inline typename TreeNode<T>::NodeType* TraverseNextPostOrder(
     const TreeNode<T>* current,
-    const TreeNode<T>* stay_within = 0) {
+    const TreeNode<T>* stay_within = nullptr) {
   if (current == stay_within)
-    return 0;
+    return nullptr;
 
-  typename TreeNode<T>::NodeType* next = current->Next();
-  if (!next)
+  typename TreeNode<T>::NodeType* next = current->RawNext();
+  if (!current->HasSibling() || next == current->Parent()->FirstChild())
     return current->Parent();
   while (next->FirstChild())
     next = next->FirstChild();
