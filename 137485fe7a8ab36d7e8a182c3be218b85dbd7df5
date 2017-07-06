@@ -68,6 +68,30 @@
       "revId": "137485fe7a8ab36d7e8a182c3be218b85dbd7df5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5d73242_53f53bca",
+        "filename": "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-06T14:37:55Z",
+      "side": 1,
+      "message": "Yeah - when browser-side nav is active it affects the way the main resource is loaded in both the main and child frames.",
+      "parentUuid": "0270b1ea_e9556af9",
+      "range": {
+        "startLine": 105,
+        "startChar": 38,
+        "endLine": 105,
+        "endChar": 61
+      },
+      "revId": "137485fe7a8ab36d7e8a182c3be218b85dbd7df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
