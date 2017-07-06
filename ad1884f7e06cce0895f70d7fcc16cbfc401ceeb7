@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "efd755eb_7f9f9adc",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-06T16:25:33Z",
+      "side": 1,
+      "message": "Does this mean if we have a very long path and a very short width to display it in, we will elide the end of the domain (incl. TLD) + path instead of the subdomain + path?\n\nIf so that seems like another TODO for a later fix.  We should probably check whether the string would fit if we replaced the whole path with an ellipsis; if so, we\u0027re good to elide using the existing method, but if not, then we should further elide from the front.\n\nWhich is basically what the code below will do.  I wonder whether the loop this was guarding has disappeared and this code can just go away, or if it\u0027s merely moved to a helper and we still have a concern.",
+      "revId": "ad1884f7e06cce0895f70d7fcc16cbfc401ceeb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "020e39b4_13c8e598",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-06T16:25:33Z",
+      "side": 1,
+      "message": "Nit: Remove blank line?",
+      "revId": "ad1884f7e06cce0895f70d7fcc16cbfc401ceeb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
