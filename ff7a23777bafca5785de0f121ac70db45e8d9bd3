@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "633ed498_6b937252",
+        "filename": "chrome/browser/ui/login/login_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-06T11:43:26Z",
+      "side": 1,
+      "message": "Yeah I did that initially.. the problem is that even Android is using the code here :/. The strings are concatenated with a space in\n\n\nScopedJavaLocalRef\u003cjstring\u003e ChromeHttpAuthHandler::GetMessageBody(\n    JNIEnv* env,\n    const JavaParamRef\u003cjobject\u003e\u0026) {\n  if (explanation_.empty())\n    return ConvertUTF16ToJavaString(env, authority_);\n  return ConvertUTF16ToJavaString(\n      env, authority_ + base::ASCIIToUTF16(\" \") + explanation_);\n}\n\n\nSo the new message in android would go from \n\n\"http://httpbin.org/ requires a username and password. Your connection to this site is not secure.\"\n\nto\n\n\"http://httpbin.org/ Your connection to this site is not secure.\"\n\nI guess I can filter based on android instead.\n\nPretty sure this isn\u0027t used on ios. I guess OS_ANDROID is a better filter anyway, since someone might come along and delete the other branch when we make secondary ui MD default.",
+      "parentUuid": "9c9a581e_9aa53219",
+      "range": {
+        "startLine": 512,
+        "startChar": 38,
+        "endLine": 512,
+        "endChar": 59
+      },
+      "revId": "ff7a23777bafca5785de0f121ac70db45e8d9bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5b9a209_3204b8a9",
         "filename": "chrome/browser/ui/views/harmony/layout_helper.cc",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "63bd70d7_b4a8ee6f",
+        "filename": "chrome/browser/ui/views/harmony/layout_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-06T11:43:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5b9a209_3204b8a9",
+      "range": {
+        "startLine": 5,
+        "startChar": 42,
+        "endLine": 5,
+        "endChar": 55
+      },
+      "revId": "ff7a23777bafca5785de0f121ac70db45e8d9bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fec4eb79_423e68d7",
         "filename": "chrome/browser/ui/views/harmony/layout_helper.cc",
         "patchSetId": 6
@@ -59,6 +107,30 @@
       "writtenOn": "2017-07-05T21:52:15Z",
       "side": 1,
       "message": "28pt seems like an odd number... I\u0027ll ask Alan why it should be this height. If it\u0027s arbitrary it seems worth making a layout metric, since there might be other textfields that don\u0027t go through this path.",
+      "range": {
+        "startLine": 25,
+        "startChar": 16,
+        "endLine": 25,
+        "endChar": 40
+      },
+      "revId": "ff7a23777bafca5785de0f121ac70db45e8d9bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3caddd2a_e3a9f163",
+        "filename": "chrome/browser/ui/views/harmony/layout_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-06T11:43:26Z",
+      "side": 1,
+      "message": "Ack - haven\u0027t resolved this yet.",
+      "parentUuid": "fec4eb79_423e68d7",
       "range": {
         "startLine": 25,
         "startChar": 16,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "f8413432_c53326e4",
+        "filename": "chrome/browser/ui/views/harmony/layout_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-06T11:43:26Z",
+      "side": 1,
+      "message": "Done - thanks!",
+      "parentUuid": "2f9279f1_d8951181",
+      "range": {
+        "startLine": 26,
+        "startChar": 16,
+        "endLine": 26,
+        "endChar": 49
+      },
+      "revId": "ff7a23777bafca5785de0f121ac70db45e8d9bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f12c6643_ddbddc3f",
         "filename": "chrome/browser/ui/views/harmony/layout_helper.cc",
         "patchSetId": 6
@@ -114,6 +210,30 @@
       "revId": "ff7a23777bafca5785de0f121ac70db45e8d9bd3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06dc0942_f5abb82a",
+        "filename": "chrome/browser/ui/views/harmony/layout_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-06T11:43:26Z",
+      "side": 1,
+      "message": "It\u0027s in AddHeaderLabel, I\u0027ll add a comment there (and add a bit more here too - there\u0027s a weird quirk of GridLayout where it won\u0027t let you span the first column if it\u0027s padding, which I guess is fair since it\u0027s that column which determines alignment and other things, and it won\u0027t be configured if it\u0027s padding)",
+      "parentUuid": "f12c6643_ddbddc3f",
+      "range": {
+        "startLine": 42,
+        "startChar": 5,
+        "endLine": 42,
+        "endChar": 35
+      },
+      "revId": "ff7a23777bafca5785de0f121ac70db45e8d9bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "d830846e_c225bb2d",
+        "filename": "chrome/browser/ui/views/harmony/layout_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-06T11:43:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37d0ed92_20ae9567",
+      "range": {
+        "startLine": 60,
+        "startChar": 42,
+        "endLine": 60,
+        "endChar": 75
+      },
+      "revId": "ff7a23777bafca5785de0f121ac70db45e8d9bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b114700e_93bbbc6b",
         "filename": "chrome/browser/ui/views/harmony/layout_helper.cc",
         "patchSetId": 6
@@ -160,6 +304,30 @@
       "revId": "ff7a23777bafca5785de0f121ac70db45e8d9bd3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d22bff42_44718a12",
+        "filename": "chrome/browser/ui/views/harmony/layout_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-06T11:43:26Z",
+      "side": 1,
+      "message": "Awesome - great advice! Done.",
+      "parentUuid": "b114700e_93bbbc6b",
+      "range": {
+        "startLine": 63,
+        "startChar": 12,
+        "endLine": 63,
+        "endChar": 28
+      },
+      "revId": "ff7a23777bafca5785de0f121ac70db45e8d9bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -210,6 +378,30 @@
     },
     {
       "key": {
+        "uuid": "c0bcd918_1b9d458f",
+        "filename": "chrome/browser/ui/views/login_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-06T11:43:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a09a560c_109a072e",
+      "range": {
+        "startLine": 52,
+        "startChar": 13,
+        "endLine": 52,
+        "endChar": 29
+      },
+      "revId": "ff7a23777bafca5785de0f121ac70db45e8d9bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47f83e39_a2b4458b",
         "filename": "chrome/browser/ui/views/login_view.cc",
         "patchSetId": 6
@@ -230,6 +422,30 @@
       "revId": "ff7a23777bafca5785de0f121ac70db45e8d9bd3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "177d85ef_1925dc29",
+        "filename": "chrome/browser/ui/views/login_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-06T11:43:26Z",
+      "side": 1,
+      "message": "yeah - this was just to clobber the old border to remove those 8px :) - removed for now.",
+      "parentUuid": "47f83e39_a2b4458b",
+      "range": {
+        "startLine": 56,
+        "startChar": 19,
+        "endLine": 56,
+        "endChar": 36
+      },
+      "revId": "ff7a23777bafca5785de0f121ac70db45e8d9bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -277,6 +493,30 @@
       "revId": "ff7a23777bafca5785de0f121ac70db45e8d9bd3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e6f334f_3a93b35f",
+        "filename": "chrome/browser/ui/views/login_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-06T11:43:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0431302_eea4c879",
+      "range": {
+        "startLine": 75,
+        "startChar": 34,
+        "endLine": 75,
+        "endChar": 74
+      },
+      "revId": "ff7a23777bafca5785de0f121ac70db45e8d9bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
