@@ -52,6 +52,24 @@
       "revId": "533d5cf0ecbbaca0cc884131ac34856676a18fc8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b36c7ee1_7c1672cc",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 2606,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-07-06T13:49:47Z",
+      "side": 1,
+      "message": "Ack, leaving as-is. Let me know if the param needs to go to the end.",
+      "parentUuid": "d3536237_d1e08c4a",
+      "revId": "533d5cf0ecbbaca0cc884131ac34856676a18fc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
