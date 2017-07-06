@@ -23,6 +23,7 @@
 namespace media {
 
 struct PendingDecode {
+  static PendingDecode CreateEos();
   PendingDecode(scoped_refptr<DecoderBuffer> buffer,
                 VideoDecoder::DecodeCB decode_cb);
   PendingDecode(PendingDecode&& other);
@@ -97,12 +98,6 @@ class MEDIA_GPU_EXPORT MediaCodecVideoDecoder : public VideoDecoder {
     kSurfaceDestroyed,
   };
 
-  enum class DrainType {
-    kFlush,
-    kReset,
-    kDestroy,
-  };
-
   // Finishes initialization.
   void StartLazyInit();
   void OnVideoFrameFactoryInitialized(
@@ -124,6 +119,9 @@ class MEDIA_GPU_EXPORT MediaCodecVideoDecoder : public VideoDecoder {
   bool DequeueOutput();
   void ManageTimer(bool start_timer);
 
+  void StartDrainingCodec();
+  void OnCodecDrained();
+
   // Sets |state_| and runs pending callbacks.
   void HandleError();
 
@@ -138,11 +136,18 @@ class MEDIA_GPU_EXPORT MediaCodecVideoDecoder : public VideoDecoder {
 
   State state_;
   bool lazy_init_pending_;
+  bool destruction_pending_;
   std::deque<PendingDecode> pending_decodes_;
-  VideoFrameFactory::OutputWithReleaseMailboxCB output_cb_;
 
-  // The ongoing drain operation, if any.
-  base::Optional<DrainType> drain_type_;
+  // The current reset cb if a Reset() is in progress.
+  base::Closure reset_cb_;
+
+  // The EOS decode cb for the current drain operation, to be called when the
+  // codec outputs an EOS buffer. Non-null while the EOS is propagating through
+  // the codec.
+  VideoDecoder::DecodeCB eos_decode_cb_;
+
+  VideoFrameFactory::OutputWithReleaseMailboxCB output_cb_;
   VideoDecoderConfig decoder_config_;
 
   // The surface bundle that we're transitioning to, if any.
@@ -177,11 +182,11 @@ class MEDIA_GPU_EXPORT MediaCodecVideoDecoder : public VideoDecoder {
   // codec with.
   std::unique_ptr<AndroidVideoSurfaceChooser> surface_chooser_;
 
-  // The factory for creating VideoFrames from CodecOutputBuffers.
-  std::unique_ptr<VideoFrameFactory> video_frame_factory_;
-
   // Current state for the chooser.
   AndroidVideoSurfaceChooser::State chooser_state_;
+
+  // The factory for creating VideoFrames from CodecOutputBuffers.
+  std::unique_ptr<VideoFrameFactory> video_frame_factory_;
 
   // An optional factory callback for creating mojo AndroidOverlays.
   AndroidOverlayMojoFactoryCB overlay_factory_cb_;

@@ -86,6 +86,12 @@ void CodecAllocatorAdapter::OnCodecConfigured(
   codec_created_cb.Run(std::move(media_codec));
 }
 
+// static
+PendingDecode PendingDecode::CreateEos() {
+  auto nop = [](DecodeStatus s) {};
+  return {DecoderBuffer::CreateEOSBuffer(), base::Bind(nop)};
+}
+
 PendingDecode::PendingDecode(scoped_refptr<DecoderBuffer> buffer,
                              VideoDecoder::DecodeCB decode_cb)
     : buffer(buffer), decode_cb(decode_cb) {}
@@ -102,6 +108,7 @@ MediaCodecVideoDecoder::MediaCodecVideoDecoder(
     std::unique_ptr<VideoFrameFactory> video_frame_factory)
     : state_(State::kBeforeSurfaceInit),
       lazy_init_pending_(true),
+      destruction_pending_(false),
       output_cb_(output_cb),
       gpu_task_runner_(gpu_task_runner),
       get_stub_cb_(get_stub_cb),
@@ -154,6 +161,14 @@ void MediaCodecVideoDecoder::Initialize(const VideoDecoderConfig& config,
   // resources will be reported as a decode error on the first decode.
   // TODO(watk): Initialize the CDM before calling init_cb.
   init_cb.Run(true);
+  /*
+  if (codec_->SupportsFlush(device_info_)) {
+    if (!codec_->Flush())
+      HandleError();
+  } else {
+    ReleaseCodec();
+  }
+  */
 }
 
 void MediaCodecVideoDecoder::StartLazyInit() {
@@ -371,6 +386,41 @@ void MediaCodecVideoDecoder::ManageTimer(bool start_timer) {
   }
 }
 
+void MediaCodecVideoDecoder::StartDrainingCodec() {
+  DVLOG(2) << __func__;
+  for (auto& pending_decode : pending_decodes_)
+    pending_decode.decode_cb.Run(DecodeStatus::ABORTED);
+  pending_decodes_.clear();
+
+  // Skip the drain if possible. Only VP8 codecs require draining because we've
+  // seen VP8 codecs hang in release() or flush() if they're not drained.
+  // (http://crbug.com/598963).
+  if (!codec_ || codec_->IsEmpty() || codec_config_->codec != kCodecVP8) {
+    OnCodecDrained();
+    return;
+  }
+
+  // Queue EOS if required.
+  if (!codec_->IsDraining())
+    pending_decodes_.emplace_back(PendingDecode::CreateEos());
+}
+
+// Note: Even though MediaCodec requires that flush() is called before new
+// buffers are submitted after an EOS, we don't do it here. We have to flush as
+// lazily as possible to avoid unbacking unrendered frames.
+void MediaCodecVideoDecoder::OnCodecDrained() {
+  DVLOG(2) << __func__;
+  if (destruction_pending_) {
+    // TODO(watk): Delete |this|.
+    return;
+  }
+
+  if (eos_decode_cb_)
+    base::ResetAndReturn(&eos_decode_cb_).Run(DecodeStatus::OK);
+  if (reset_cb_)
+    base::ResetAndReturn(&reset_cb_).Run();
+}
+
 bool MediaCodecVideoDecoder::QueueInput() {
   DVLOG(4) << __func__;
   if (state_ == State::kError || state_ == State::kWaitingForCodec ||
@@ -398,9 +448,7 @@ bool MediaCodecVideoDecoder::QueueInput() {
 
   if (pending_decode.buffer->end_of_stream()) {
     codec_->QueueEOS(input_buffer);
-    pending_decode.decode_cb.Run(DecodeStatus::OK);
-    // TODO(watk): Make CodecWrapper track this.
-    drain_type_ = DrainType::kFlush;
+    eos_decode_cb_ = std::move(pending_decode.decode_cb);
     return true;
   }
 
@@ -459,12 +507,13 @@ bool MediaCodecVideoDecoder::DequeueOutput() {
            << " size=" << output_buffer->size().ToString() << " eos=" << eos;
 
   if (eos) {
-    // TODO(watk): Complete the pending drain.
+    OnCodecDrained();
     return false;
   }
 
-  if (drain_type_ == DrainType::kReset || drain_type_ == DrainType::kDestroy) {
-    // Returning here discards |output_buffer| without rendering it.
+  if (destruction_pending_ || reset_cb_) {
+    // During teardown or a Reset() we want to discard |output_buffer| without
+    // rendering it.
     return true;
   }
 
@@ -476,7 +525,8 @@ bool MediaCodecVideoDecoder::DequeueOutput() {
 
 void MediaCodecVideoDecoder::Reset(const base::Closure& closure) {
   DVLOG(2) << __func__;
-  NOTIMPLEMENTED();
+  reset_cb_ = std::move(closure);
+  StartDrainingCodec();
 }
 
 void MediaCodecVideoDecoder::HandleError() {
@@ -485,6 +535,10 @@ void MediaCodecVideoDecoder::HandleError() {
   for (auto& pending_decode : pending_decodes_)
     pending_decode.decode_cb.Run(DecodeStatus::DECODE_ERROR);
   pending_decodes_.clear();
+  if (eos_decode_cb_)
+    base::ResetAndReturn(&eos_decode_cb_).Run(DecodeStatus::DECODE_ERROR);
+  if (reset_cb_)
+    base::ResetAndReturn(&reset_cb_).Run();
 }
 
 void MediaCodecVideoDecoder::ReleaseCodec() {
