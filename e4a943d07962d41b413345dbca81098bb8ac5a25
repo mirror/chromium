@@ -16,6 +16,24 @@
       "revId": "e4a943d07962d41b413345dbca81098bb8ac5a25",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd0e750a_b33eb4da",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintChunksToCcLayer.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-07-06T22:14:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b08ce884_fdf59a55",
+      "revId": "e4a943d07962d41b413345dbca81098bb8ac5a25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

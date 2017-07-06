@@ -143,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "6238279b_01fbefce",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintChunksToCcLayer.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-07-06T22:14:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83ff2591_4e1464ff",
+      "revId": "09e9b162902d6ba5d28c1be1ec180c1f4bd85993",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f90f0bd_087d2ed9",
         "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintChunksToCcLayer.cpp",
         "patchSetId": 11
@@ -298,6 +316,24 @@
       "revId": "09e9b162902d6ba5d28c1be1ec180c1f4bd85993",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d93bf344_38a3a175",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintChunksToCcLayerTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-07-06T22:14:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e25b150d_b0147d10",
+      "revId": "09e9b162902d6ba5d28c1be1ec180c1f4bd85993",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
