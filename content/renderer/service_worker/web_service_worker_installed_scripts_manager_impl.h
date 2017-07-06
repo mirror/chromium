@@ -7,6 +7,7 @@
 
 #include <set>
 
+#include "content/common/service_worker/service_worker_installed_scripts_manager.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerInstalledScriptsManager.h"
 
 namespace content {
@@ -14,8 +15,9 @@ namespace content {
 class WebServiceWorkerInstalledScriptsManagerImpl final
     : NON_EXPORTED_BASE(public blink::WebServiceWorkerInstalledScriptsManager) {
  public:
-  static std::unique_ptr<blink::WebServiceWorkerInstalledScriptsManager>
-  Create();
+  static std::unique_ptr<blink::WebServiceWorkerInstalledScriptsManager> Create(
+      mojom::ServiceWorkerInstalledScriptsInfoPtr installed_scripts_info,
+      scoped_refptr<base::SingleThreadTaskRunner> io_task_runner);
 
   ~WebServiceWorkerInstalledScriptsManagerImpl() override;
 
