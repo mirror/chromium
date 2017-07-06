@@ -6,7 +6,9 @@
 
 #include "base/strings/utf_string_conversions.h"
 #include "services/ui/public/interfaces/window_manager_constants.mojom.h"
+#include "ui/base/resource/resource_bundle.h"
 #include "ui/gfx/image/image_skia.h"
+#include "ui/resources/grit/ui_resources.h"
 #include "ui/views/view.h"
 #include "ui/views/views_delegate.h"
 #include "ui/views/widget/widget.h"
@@ -109,6 +111,8 @@ gfx::ImageSkia WidgetDelegate::GetWindowAppIcon() {
 
 // Returns the icon to be displayed in the window.
 gfx::ImageSkia WidgetDelegate::GetWindowIcon() {
+  ui::ResourceBundle& rb = ui::ResourceBundle::GetSharedInstance();
+  return *rb.GetImageSkiaNamed(IDR_DEFAULT_FAVICON);
   return gfx::ImageSkia();
 }
 
