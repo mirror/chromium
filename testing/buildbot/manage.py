@@ -166,6 +166,7 @@ SKIP_GN_ISOLATE_MAP_TARGETS = {
   'ios_web_unittests',
 
   # These are listed in Builders that are skipped for other reasons.
+  'android_tools',
   'chrome_junit_tests',
   'components_background_task_scheduler_junit_tests',
   'components_gcm_driver_junit_tests',
@@ -183,6 +184,7 @@ SKIP_GN_ISOLATE_MAP_TARGETS = {
   'net_junit_tests',
   'net_junit_tests',
   'service_junit_tests',
+  'system_webview_shell_layout_test_apk',
   'ui_junit_tests',
   'vrcore_fps_test',
   'webapk_client_junit_tests',

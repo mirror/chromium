@@ -81,6 +81,10 @@
     "label": "//ui/accessibility:accessibility_unittests",
     "type": "console_test_launcher",
   },
+  "android_tools": {
+    "label": "//tools/android:android_tools",
+    "type": "additional_compile_target",
+  },
   "android_webview_unittests": {
     "label": "//android_webview/test:android_webview_unittests",
     "type": "console_test_launcher",
@@ -876,6 +880,10 @@
   "system_webview_apk": {
     "label": "//android_webview:system_webview_apk",
     "type": "additional_compile_target",
+  },
+  "system_webview_shell_layout_test_apk": {
+    "label": "//android_webview/tools/system_webview_shell:system_webview_shell_layout_test_apk",
+    "type": "console_test_launcher",
   },
   "telemetry_gpu_integration_test": {
     "label": "//chrome/test:telemetry_gpu_integration_test",
