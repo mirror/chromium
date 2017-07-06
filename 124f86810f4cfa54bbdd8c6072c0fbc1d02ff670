@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "f3588151_be74173e",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-06T16:51:37Z",
+      "side": 1,
+      "message": "Popular sites can\u0027t, but personal (TopSites/MostLikely) can, since they keep the full path.",
+      "parentUuid": "4b3d356a_3c165ddb",
+      "range": {
+        "startLine": 415,
+        "startChar": 50,
+        "endLine": 415,
+        "endChar": 0
+      },
+      "revId": "124f86810f4cfa54bbdd8c6072c0fbc1d02ff670",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d895ce50_90bc64b2",
         "filename": "components/ntp_tiles/most_visited_sites.cc",
         "patchSetId": 5
