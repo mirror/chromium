@@ -64,6 +64,9 @@ declare_args() {
 
   # Whether or not we should use position independent code.
   use_pic = true
+
+  # Whether we plan on using valgrind's memcheck on the resulting binaries.
+  using_memcheck = false
 }
 
 # Determine whether to enable or disable frame pointers, based on the platform
