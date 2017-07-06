@@ -106,7 +106,8 @@
   ntp_snippets::ContentSuggestionsService* contentSuggestionsService =
       IOSChromeContentSuggestionsServiceFactory::GetForBrowserState(
           self.browserState);
-  contentSuggestionsService->remote_suggestions_scheduler()->OnNTPOpened();
+  contentSuggestionsService->remote_suggestions_scheduler()
+      ->OnSuggestionsSurfaceOpened();
 
   self.headerController = [[ContentSuggestionsHeaderController alloc] init];
   self.headerController.dispatcher = self.dispatcher;
