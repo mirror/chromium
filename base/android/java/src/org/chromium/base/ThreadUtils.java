@@ -242,6 +242,7 @@ public class ThreadUtils {
      * @return true iff the current thread is the main (UI) thread.
      */
     public static boolean runningOnUiThread() {
+        System.out.println("** JAY ** runningOnUiThread " + Looper.myLooper());
         return getUiThreadHandler().getLooper() == Looper.myLooper();
     }
 
