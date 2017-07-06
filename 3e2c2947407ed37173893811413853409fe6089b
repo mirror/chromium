@@ -266,6 +266,24 @@
     },
     {
       "key": {
+        "uuid": "b9461e76_ff99d945",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1215055
+      },
+      "writtenOn": "2017-07-06T21:30:15Z",
+      "side": 1,
+      "message": "Added a comment addressing the fact that the table was copied from IPAddress::IsReservedIPv4. Also filed bug 739856 to change the code once the required method is added to IPAddress to retrieve the information. For now, the code will be left as-is.",
+      "parentUuid": "0f7c10fc_50234257",
+      "revId": "3e2c2947407ed37173893811413853409fe6089b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01fe9afb_65791e35",
         "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.h",
         "patchSetId": 22
@@ -561,6 +579,24 @@
       "revId": "3e2c2947407ed37173893811413853409fe6089b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "132e3dc1_59b2bb2f",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1215055
+      },
+      "writtenOn": "2017-07-06T21:30:15Z",
+      "side": 1,
+      "message": "I\u0027ve updated the test to use the new methods in page_load_metrics::test::UkmTester, which eliminates the need to assume the order of the UKM entries.",
+      "parentUuid": "48d71919_f61ada10",
+      "revId": "3e2c2947407ed37173893811413853409fe6089b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
