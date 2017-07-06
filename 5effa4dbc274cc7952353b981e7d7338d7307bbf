@@ -16,6 +16,121 @@
       "revId": "5effa4dbc274cc7952353b981e7d7338d7307bbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa7cac16_0adab9b5",
+        "filename": "android_webview/browser/aw_metrics_service_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-06T21:42:13Z",
+      "side": 1,
+      "message": "Nit: Add an empty line before it as well as a comment. Suggest also naming it so it\u0027s clearer what it\u0027s for. e.g. g_client_id_guid.",
+      "range": {
+        "startLine": 41,
+        "startChar": 19,
+        "endLine": 41,
+        "endChar": 0
+      },
+      "revId": "5effa4dbc274cc7952353b981e7d7338d7307bbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4c8d0af_de02972b",
+        "filename": "android_webview/browser/aw_metrics_service_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-06T21:42:13Z",
+      "side": 1,
+      "message": "Nit: No {}\u0027s",
+      "range": {
+        "startLine": 75,
+        "startChar": 25,
+        "endLine": 75,
+        "endChar": 34
+      },
+      "revId": "5effa4dbc274cc7952353b981e7d7338d7307bbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "060d8b28_9956c289",
+        "filename": "android_webview/browser/aw_metrics_service_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-06T21:42:13Z",
+      "side": 1,
+      "message": "Nit: No else after return.",
+      "range": {
+        "startLine": 98,
+        "startChar": 8,
+        "endLine": 98,
+        "endChar": 0
+      },
+      "revId": "5effa4dbc274cc7952353b981e7d7338d7307bbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b59b0966_32cf5a06",
+        "filename": "android_webview/browser/aw_metrics_service_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-06T21:42:13Z",
+      "side": 1,
+      "message": "DCHECK_EQ",
+      "range": {
+        "startLine": 125,
+        "startChar": 27,
+        "endLine": 125,
+        "endChar": 28
+      },
+      "revId": "5effa4dbc274cc7952353b981e7d7338d7307bbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23b660fe_09522d55",
+        "filename": "android_webview/browser/aw_metrics_service_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-06T21:42:13Z",
+      "side": 1,
+      "message": "Nit: Empty lines between functions. Also, add a comment.",
+      "range": {
+        "startLine": 47,
+        "startChar": 39,
+        "endLine": 47,
+        "endChar": 0
+      },
+      "revId": "5effa4dbc274cc7952353b981e7d7338d7307bbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
