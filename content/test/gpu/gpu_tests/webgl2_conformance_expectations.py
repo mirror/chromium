@@ -57,6 +57,9 @@ class WebGL2ConformanceExpectations(WebGLConformanceExpectations):
     self.Fail('conformance/textures/misc/tex-sub-image-2d-bad-args.html',
         bug=625738)
 
+    # Need to implement new lifetime/deletion semantics.
+    self.Fail('conformance2/vertex_arrays/vertex-array-object.html', bug=739604)
+
     self.Fail('conformance/glsl/misc/uninitialized-local-global-variables.html',
         bug=1966) # angle bug ID
     self.Fail('conformance2/glsl3/uninitialized-local-global-variables.html',
