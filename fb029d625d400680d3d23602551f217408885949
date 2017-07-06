@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4034a544_899e593d",
+        "filename": "content/browser/service_worker/embedded_worker_instance.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-06T08:35:12Z",
+      "side": 1,
+      "message": "We\u0027re in OnceCallback, we can use std::move when we need to pass it on (or const ref works too of course)",
+      "parentUuid": "8dbdef7a_826e2b62",
+      "revId": "fb029d625d400680d3d23602551f217408885949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2830226b_fa98ab91",
         "filename": "content/browser/service_worker/embedded_worker_instance.cc",
         "patchSetId": 1
@@ -30,6 +48,41 @@
       "writtenOn": "2017-07-06T07:52:21Z",
       "side": 1,
       "message": "This is kosher, right? I\u0027m getting the WeakPtr on the IO thread, but it\u0027ll only be used on UI thread in the posted task.",
+      "revId": "fb029d625d400680d3d23602551f217408885949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0678403_2e2ebf3c",
+        "filename": "content/browser/service_worker/embedded_worker_instance.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-06T08:35:12Z",
+      "side": 1,
+      "message": "(See my comment at AsWeakPtr)",
+      "parentUuid": "2830226b_fa98ab91",
+      "revId": "fb029d625d400680d3d23602551f217408885949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d4b86b9_94e0727e",
+        "filename": "content/browser/service_worker/service_worker_process_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-06T08:35:12Z",
+      "side": 1,
+      "message": "I don\u0027t think GetWeakPtr is thread-safe, this should probably just return weak_this_ instead, with a clear comment why it\u0027s so and how it should be used (e.g. safe to call on other threads but need to be de-reference only on UI thread)",
       "revId": "fb029d625d400680d3d23602551f217408885949",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
