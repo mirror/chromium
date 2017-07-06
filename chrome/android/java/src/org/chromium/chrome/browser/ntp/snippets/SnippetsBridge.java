@@ -66,17 +66,17 @@ public class SnippetsBridge implements SuggestionsSource {
     }
 
     /**
-     * Reschedules the fetching of snippets.
+     * Notifies to the C++ ContentSuggestionsService that Chrome on Android has been upgraded.
      */
-    public static void rescheduleFetching() {
-        nativeRemoteSuggestionsSchedulerRescheduleFetching();
+    public static void onBrowserUpgraded() {
+        nativeRemoteSuggestionsSchedulerOnBrowserUpgraded();
     }
 
     /**
-     * Fetches remote suggestions in background.
+     * Notifies to the C++ ContentSuggestionsService that the persistent fetching scheduler woke up.
      */
-    public static void fetchRemoteSuggestionsFromBackground() {
-        nativeRemoteSuggestionsSchedulerOnFetchDue();
+    public static void onPersistentSchedulerWakeUp() {
+        nativeRemoteSuggestionsSchedulerOnPersistentSchedulerWakeUp();
     }
 
     public static void setRemoteSuggestionsEnabled(boolean enabled) {
@@ -254,8 +254,8 @@ public class SnippetsBridge implements SuggestionsSource {
     private native long nativeInit(Profile profile);
     private native void nativeDestroy(long nativeNTPSnippetsBridge);
     private native void nativeReloadSuggestions(long nativeNTPSnippetsBridge);
-    private static native void nativeRemoteSuggestionsSchedulerOnFetchDue();
-    private static native void nativeRemoteSuggestionsSchedulerRescheduleFetching();
+    private static native void nativeRemoteSuggestionsSchedulerOnPersistentSchedulerWakeUp();
+    private static native void nativeRemoteSuggestionsSchedulerOnBrowserUpgraded();
     private static native void nativeSetRemoteSuggestionsEnabled(boolean enabled);
     private static native boolean nativeAreRemoteSuggestionsEnabled();
     private static native boolean nativeAreRemoteSuggestionsManaged();

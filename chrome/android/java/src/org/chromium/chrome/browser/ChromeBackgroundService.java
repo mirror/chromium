@@ -99,12 +99,12 @@ public class ChromeBackgroundService extends GcmTaskService {
 
     @VisibleForTesting
     protected void fetchSnippets() {
-        SnippetsBridge.fetchRemoteSuggestionsFromBackground();
+        SnippetsBridge.onPersistentSchedulerWakeUp();
     }
 
     @VisibleForTesting
-    protected void rescheduleFetching() {
-        SnippetsBridge.rescheduleFetching();
+    protected void onBrowserUpgraded() {
+        SnippetsBridge.onBrowserUpgraded();
     }
 
     private void handlePrecache(Context context, String tag) {
@@ -163,7 +163,7 @@ public class ChromeBackgroundService extends GcmTaskService {
             if (!SnippetsLauncher.hasInstance()) {
                 launchBrowser(this, /*tag=*/""); // The |tag| doesn't matter here.
             }
-            rescheduleFetching();
+            onBrowserUpgraded();
         }
     }
 
