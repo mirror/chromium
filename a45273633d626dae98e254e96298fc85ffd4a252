@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bcdc4389_bb5b7089",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/gerrit.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-07-06T18:30:35Z",
+      "side": 1,
+      "message": "I think those are probably from separate CLs, I\u0027ll make a note to remove one.",
+      "parentUuid": "5701b043_d42f9a25",
+      "range": {
+        "startLine": 115,
+        "startChar": 11,
+        "endLine": 115,
+        "endChar": 15
+      },
+      "revId": "a45273633d626dae98e254e96298fc85ffd4a252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9716224_92776504",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/gerrit.py",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-06T11:12:13Z",
       "side": 1,
       "message": "jeffcarp@, there weren\u0027t any existing tests for this. OK anyway?",
+      "range": {
+        "startLine": 121,
+        "startChar": 22,
+        "endLine": 121,
+        "endChar": 23
+      },
+      "revId": "a45273633d626dae98e254e96298fc85ffd4a252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e22046c_63fbb50a",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/gerrit.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-07-06T18:30:35Z",
+      "side": 1,
+      "message": "sgtm. I will also make a note to add a unit test.",
+      "parentUuid": "e9716224_92776504",
       "range": {
         "startLine": 121,
         "startChar": 22,
