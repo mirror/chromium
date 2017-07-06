@@ -89,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "15e41576_4b4d810c",
+        "filename": "content/browser/service_worker/embedded_worker_instance.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-06T15:35:48Z",
+      "side": 1,
+      "message": "OK please expand the TODO to explain the plan. Can you also explain  what is stopping us from making it a Mojo struct today?",
+      "parentUuid": "bc7ba39c_d701e93c",
+      "revId": "0bf68cc35cc929e7e4de64d08feb9dbde48d2ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08edcab5_e8be2eb3",
         "filename": "content/browser/service_worker/embedded_worker_instance_unittest.cc",
         "patchSetId": 3

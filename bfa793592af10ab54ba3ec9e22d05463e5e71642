@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5efa7183_306cdcde",
+        "filename": "content/common/service_worker/service_worker_utils.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-06T15:35:48Z",
+      "side": 0,
+      "message": "Intentional? This is used for kInvalidServiceWorkerProviderId.",
+      "revId": "bfa793592af10ab54ba3ec9e22d05463e5e71642",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

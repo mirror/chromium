@@ -1,0 +1,180 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09f00673_7e247c46",
+        "filename": "content/browser/service_worker/embedded_worker_instance.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-06T15:35:48Z",
+      "side": 1,
+      "message": "Ah, I think this should be \"null\" not empty. I was confused about whether mojo struct ptrs can be null.",
+      "revId": "e0f18ce70a413a811b891d4f357fae0b6ed0f7e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a53d6c3e_62584cb2",
+        "filename": "content/browser/service_worker/embedded_worker_instance.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-06T15:35:48Z",
+      "side": 1,
+      "message": "nit: Does this really need \"pending_\" in front of it? It looks like the scripts are pending installation. I prefer just removing \"pending_\". If we must keep it, add a comment about what it means.",
+      "revId": "e0f18ce70a413a811b891d4f357fae0b6ed0f7e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e79928e0_80239262",
+        "filename": "content/browser/service_worker/embedded_worker_test_helper.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-06T15:35:48Z",
+      "side": 1,
+      "message": "// mojom::EmbeddedWorkerInstanceClient implementation.",
+      "revId": "e0f18ce70a413a811b891d4f357fae0b6ed0f7e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b31b452d_d6c043bf",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-06T15:35:48Z",
+      "side": 1,
+      "message": "Maybe: \"ServiceWorkerInstalledScriptsSender is owned by ServiceWorkerVersion. It is created for worker startup and lives as long as the worker is running.\"",
+      "revId": "e0f18ce70a413a811b891d4f357fae0b6ed0f7e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "678ace8b_f0356f0e",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-06T15:35:48Z",
+      "side": 1,
+      "message": "\"sets it\"",
+      "revId": "e0f18ce70a413a811b891d4f357fae0b6ed0f7e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e302f73_7c7e0b90",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1477,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-06T15:35:48Z",
+      "side": 1,
+      "message": "newbie question: At this point is DCHECK(!installed_scripts_info) true? If so, the previous suggestion about \"empty\" should be \"null\" I guess.",
+      "range": {
+        "startLine": 1477,
+        "startChar": 9,
+        "endLine": 1477,
+        "endChar": 45
+      },
+      "revId": "e0f18ce70a413a811b891d4f357fae0b6ed0f7e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9f27605_754131af",
+        "filename": "content/common/service_worker/service_worker_installed_scripts_manager.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-06T15:35:48Z",
+      "side": 1,
+      "message": "\"streaming is started\" seems superfluous and a bit confusing... reader doesn\u0027t know what streaming means.\n\nJust \"Contains information about a service worker script.\" maybe.",
+      "revId": "e0f18ce70a413a811b891d4f357fae0b6ed0f7e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f889dd1_700f4ac5",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-06T15:35:48Z",
+      "side": 1,
+      "message": "A Create() function that doesn\u0027t return anything is a little unconventional.\n\nCan you add more documentation about why class Internal is needed, and what Create() is doing?\n\n// Creates and binds a new Internal instance to |request|.\nmaybe",
+      "revId": "e0f18ce70a413a811b891d4f357fae0b6ed0f7e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca6c9d58_47db7251",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-06T15:35:48Z",
+      "side": 1,
+      "message": "Is this called on the main thread? Or it\u0027s unknown?",
+      "revId": "e0f18ce70a413a811b891d4f357fae0b6ed0f7e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc36da69_d1f875e5",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-06T15:35:48Z",
+      "side": 1,
+      "message": "Generally, TODOs should say what is to be done, and give a hint at what must change before the TODO is actionable. Can you expand this somehow? Also, I\u0027m not sure what \"parent\" means.",
+      "revId": "e0f18ce70a413a811b891d4f357fae0b6ed0f7e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
