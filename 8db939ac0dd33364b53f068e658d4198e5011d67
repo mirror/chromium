@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f7a46a4_90c9fadb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000853
+      },
+      "writtenOn": "2017-07-06T13:21:27Z",
+      "side": 1,
+      "message": "shouldn\u0027t it be \"BUG\u003dchromium:739365\" ?",
+      "range": {
+        "startLine": 9,
+        "startChar": 3,
+        "endLine": 9,
+        "endChar": 4
+      },
+      "revId": "8db939ac0dd33364b53f068e658d4198e5011d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53f1ebc1_adda2bf9",
+        "filename": "third_party/WebKit/LayoutTests/MSANExpectations",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000853
+      },
+      "writtenOn": "2017-07-06T13:21:27Z",
+      "side": 1,
+      "message": "I don\u0027t think we need to mention this. There should be enough info in the bug.",
+      "range": {
+        "startLine": 64,
+        "startChar": 21,
+        "endLine": 64,
+        "endChar": 23
+      },
+      "revId": "8db939ac0dd33364b53f068e658d4198e5011d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
