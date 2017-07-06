@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "51dc62ed_116f0c0f",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-07-06T13:05:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75a13729_f2b1d7f5",
+      "range": {
+        "startLine": 425,
+        "startChar": 5,
+        "endLine": 425,
+        "endChar": 26
+      },
+      "revId": "64c66dcd566caff6bf79f8e1b429c41dd32c7a41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8aff6cef_640104f6",
         "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "64c66dcd566caff6bf79f8e1b429c41dd32c7a41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2092cfea_024b32fd",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-07-06T13:05:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8aff6cef_640104f6",
+      "range": {
+        "startLine": 157,
+        "startChar": 55,
+        "endLine": 157,
+        "endChar": 62
+      },
+      "revId": "64c66dcd566caff6bf79f8e1b429c41dd32c7a41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "9daf1181_beb2ed79",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-07-06T13:05:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b80ff278_99f57d01",
+      "range": {
+        "startLine": 182,
+        "startChar": 34,
+        "endLine": 182,
+        "endChar": 42
+      },
+      "revId": "64c66dcd566caff6bf79f8e1b429c41dd32c7a41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "141c78be_d8092df1",
         "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.h",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "64c66dcd566caff6bf79f8e1b429c41dd32c7a41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcf35279_cbbdf0db",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-07-06T13:05:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "141c78be_d8092df1",
+      "range": {
+        "startLine": 185,
+        "startChar": 47,
+        "endLine": 185,
+        "endChar": 57
+      },
+      "revId": "64c66dcd566caff6bf79f8e1b429c41dd32c7a41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +236,54 @@
     },
     {
       "key": {
+        "uuid": "e0645038_7a3cd9ee",
+        "filename": "tools/traffic_annotation/auditor/white_list.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-07-06T13:05:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7bc5e51d_c88dd803",
+      "range": {
+        "startLine": 1,
+        "startChar": 34,
+        "endLine": 1,
+        "endChar": 45
+      },
+      "revId": "64c66dcd566caff6bf79f8e1b429c41dd32c7a41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6b5ddbc0_2b025112",
+        "filename": "tools/traffic_annotation/auditor/white_list.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-07-06T13:05:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8932f9f5_e3b41ca3",
+      "range": {
+        "startLine": 1,
+        "startChar": 45,
+        "endLine": 1,
+        "endChar": 46
+      },
+      "revId": "64c66dcd566caff6bf79f8e1b429c41dd32c7a41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24c84045_7073c599",
         "filename": "tools/traffic_annotation/auditor/white_list.txt",
         "patchSetId": 2
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "45958f4a_af35cf18",
+        "filename": "tools/traffic_annotation/auditor/white_list.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-07-06T13:05:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24c84045_7073c599",
+      "range": {
+        "startLine": 2,
+        "startChar": 2,
+        "endLine": 2,
+        "endChar": 12
+      },
+      "revId": "64c66dcd566caff6bf79f8e1b429c41dd32c7a41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0546733c_f1950f58",
         "filename": "tools/traffic_annotation/auditor/white_list.txt",
         "patchSetId": 2
@@ -183,6 +351,30 @@
       "revId": "64c66dcd566caff6bf79f8e1b429c41dd32c7a41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77c9f1d7_0005adf5",
+        "filename": "tools/traffic_annotation/auditor/white_list.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-07-06T13:05:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0546733c_f1950f58",
+      "range": {
+        "startLine": 3,
+        "startChar": 75,
+        "endLine": 3,
+        "endChar": 76
+      },
+      "revId": "64c66dcd566caff6bf79f8e1b429c41dd32c7a41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
