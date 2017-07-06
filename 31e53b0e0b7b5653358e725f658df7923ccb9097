@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5fbf3f7a_0fa51f7e",
+        "filename": "chrome/browser/extensions/BUILD.gn",
+        "patchSetId": 25
+      },
+      "lineNbr": 991,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-06T14:42:00Z",
+      "side": 1,
+      "message": "This should just be \"//chrome/browser/resources/chromeos/zip_archiver\",\n(the \":zip_archiver\" is redundant).",
+      "range": {
+        "startLine": 991,
+        "startChar": 34,
+        "endLine": 991,
+        "endChar": 42
+      },
+      "revId": "31e53b0e0b7b5653358e725f658df7923ccb9097",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9262bbcb_1771c06c",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/BUILD.gn",
+        "patchSetId": 25
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-06T14:42:00Z",
+      "side": 1,
+      "message": "I don\u0027t see you using anything from here. Can you delete the import?",
+      "revId": "31e53b0e0b7b5653358e725f658df7923ccb9097",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6fc964f_8c34b829",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/cpp/BUILD.gn",
+        "patchSetId": 25
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-06T14:42:00Z",
+      "side": 1,
+      "message": "Can you add to the top here:\n  assert(is_nacl, \"This file should only be built in NaCl\")",
+      "revId": "31e53b0e0b7b5653358e725f658df7923ccb9097",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
