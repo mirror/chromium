@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f7e454ec_79728edd",
+        "filename": "storage/browser/blob/blob_registry_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-07-06T20:55:31Z",
+      "side": 1,
+      "message": "Correct. Transporting bytes is its own almost-1000-line patch (WIP at https://chromium-review.googlesource.com/c/558192), so this is indeed still ignoring bytes (and file) elements.",
+      "parentUuid": "017fe0af_3bfc810b",
+      "range": {
+        "startLine": 227,
+        "startChar": 0,
+        "endLine": 227,
+        "endChar": 68
+      },
+      "revId": "0257ec174cfb52ce120b157d6f2b8068af4fade1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c9917f0_17856c16",
         "filename": "storage/browser/blob/blob_storage_context.cc",
         "patchSetId": 13
@@ -45,6 +69,30 @@
       "revId": "0257ec174cfb52ce120b157d6f2b8068af4fade1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c653084_57414871",
+        "filename": "storage/browser/blob/blob_storage_context.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-07-06T20:55:31Z",
+      "side": 1,
+      "message": "Done, although I\u0027m curious why you prefer std::swap over move assignment? As far as I can tell both should do more or less the same thing, with the same efficiency, given that previous_building_state is going to get destroyed anyway, and it seems like a move more accurately represents the intention of the code...",
+      "parentUuid": "4c9917f0_17856c16",
+      "range": {
+        "startLine": 551,
+        "startChar": 0,
+        "endLine": 551,
+        "endChar": 48
+      },
+      "revId": "0257ec174cfb52ce120b157d6f2b8068af4fade1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
