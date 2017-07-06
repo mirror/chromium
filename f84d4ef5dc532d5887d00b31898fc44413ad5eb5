@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "596a6ba7_ddefbf30",
+        "filename": "chrome/browser/resources/media/media_engagement.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-06T18:04:02Z",
+      "side": 1,
+      "message": "Can this be null? If not the annotation should start with \"!\" prefix. See https://github.com/google/closure-compiler/wiki/Annotating-JavaScript-for-the-Closure-Compiler#non-nullable-type.",
+      "revId": "f84d4ef5dc532d5887d00b31898fc44413ad5eb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "770cb62e_1b597ec8",
+        "filename": "chrome/browser/resources/media/media_engagement.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-06T18:04:02Z",
+      "side": 1,
+      "message": "!HTMLElement",
+      "revId": "f84d4ef5dc532d5887d00b31898fc44413ad5eb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "238a8894_d5bc41c1",
+        "filename": "chrome/browser/resources/media/media_engagement.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-06T18:04:02Z",
+      "side": 1,
+      "message": "There is an easier (and less verbose) way of creating new elements, using HTML\u0027s \u003ctemplate\u003e element along with document.importNode(). The example at https://developer.mozilla.org/en-US/docs/Web/HTML/Element/template#Example is achieving exactly what is done here (adding new rows on a \u003ctable\u003e).\n\nThis would eliminate the need to for the repeated calls to createElementWithClassName(), and in general the need to reconstruct the entire row from scratch every time.",
+      "revId": "f84d4ef5dc532d5887d00b31898fc44413ad5eb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffaeaa75_ab235d40",
+        "filename": "chrome/browser/resources/media/media_engagement.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-06T18:04:02Z",
+      "side": 1,
+      "message": "Per styluguide, always use braces, see https://google.github.io/styleguide/jsguide.html#formatting-braces-all.\n\nEven before this addition to the styleguide, the older version required to always use braces when the if statement body spans more than one line.",
+      "revId": "f84d4ef5dc532d5887d00b31898fc44413ad5eb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb8e31db_fe5230ed",
+        "filename": "chrome/browser/resources/media/media_engagement.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-06T18:04:02Z",
+      "side": 1,
+      "message": "Indentation is off by 4.",
+      "revId": "f84d4ef5dc532d5887d00b31898fc44413ad5eb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7831224f_470d8dab",
+        "filename": "chrome/browser/resources/media/media_engagement.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-06T18:04:02Z",
+      "side": 1,
+      "message": "Why is the call to Number() necessary? Isn\u0027t the result of \"Math.round(score * 100) / 100\" already a Number?",
+      "revId": "f84d4ef5dc532d5887d00b31898fc44413ad5eb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4e39f78_86f93143",
+        "filename": "chrome/browser/resources/media/media_engagement.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-06T18:04:02Z",
+      "side": 1,
+      "message": "If roundScore() is used only here, is there a good reason to have it as a separate function? Can we just inline it here?",
+      "revId": "f84d4ef5dc532d5887d00b31898fc44413ad5eb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
