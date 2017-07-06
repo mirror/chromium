@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "c530a69c_875f6b23",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-06T07:56:48Z",
+      "side": 1,
+      "message": "WebContents::GetLastCommittedURL() should correspond to the URL of the main frame.",
+      "parentUuid": "c736349d_534819da",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 50
+      },
+      "revId": "a04f3f2839ec3271728d84ff3c13603754a885a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0124a921_0987973a",
         "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
         "patchSetId": 1
