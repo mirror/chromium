@@ -168,9 +168,14 @@ class CC_EXPORT ResourceProvider
                       const uint8_t* image,
                       const gfx::Size& image_size);
 
-  // Generates sync tokesn for resources which need a sync token.
+  // Generates sync token for resources which need a sync token.
   void GenerateSyncTokenForResource(ResourceId resource_id);
   void GenerateSyncTokenForResources(const ResourceIdArray& resource_ids);
+
+  // Mark resource as synchronized. This allows empty sync tokens to be passed
+  // across process boundaries in cases where commands have already executed in
+  // the gpu process.
+  void SetResourceSynchronized(ResourceId resource_id);
 
   // Gets the most recent sync token from the indicated resources.
   gpu::SyncToken GetSyncTokenForResources(const ResourceIdArray& resource_ids);
@@ -303,7 +308,6 @@ class CC_EXPORT ResourceProvider
 
     void set_sync_token(const gpu::SyncToken& sync_token) {
       sync_token_ = sync_token;
-      has_sync_token_ = true;
     }
 
     void set_synchronized(bool synchronized) { synchronized_ = synchronized; }
@@ -317,7 +321,6 @@ class CC_EXPORT ResourceProvider
     gfx::Size size_;
     TextureMailbox mailbox_;
     gpu::SyncToken sync_token_;
-    bool has_sync_token_;
     bool synchronized_;
     base::ThreadChecker thread_checker_;
     gfx::ColorSpace color_space_;
@@ -603,14 +606,14 @@ class CC_EXPORT ResourceProvider
              GLenum filter);
     Resource(Resource&& other);
 
-    bool needs_sync_token() const { return needs_sync_token_; }
+    bool NeedsSyncToken() const;
 
     SynchronizationState synchronization_state() const {
       return synchronization_state_;
     }
 
     const TextureMailbox& mailbox() const { return mailbox_; }
-    void set_mailbox(const TextureMailbox& mailbox);
+    void SetMailbox(const TextureMailbox& mailbox);
 
     void SetLocallyUsed();
     void SetSynchronized();
@@ -684,7 +687,6 @@ class CC_EXPORT ResourceProvider
 
    private:
     SynchronizationState synchronization_state_ = SYNCHRONIZED;
-    bool needs_sync_token_ = false;
     TextureMailbox mailbox_;
 
     DISALLOW_COPY_AND_ASSIGN(Resource);
