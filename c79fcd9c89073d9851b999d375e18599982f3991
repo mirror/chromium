@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "224195df_bd0a113a",
+        "filename": "chrome/browser/chromeos/arc/arc_service_launcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-06T04:25:04Z",
+      "side": 1,
+      "message": "Good catch. Done.\n\nNote that now we should be able to remove the bool arg (mentioned in the TODO).",
+      "parentUuid": "2a60f86a_3b7116b7",
+      "revId": "c79fcd9c89073d9851b999d375e18599982f3991",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60c2bb09_44cf43e5",
         "filename": "chrome/browser/chromeos/arc/arc_service_launcher.cc",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "85e23e19_44a23292",
+        "filename": "chrome/browser/chromeos/arc/arc_service_launcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-06T04:25:04Z",
+      "side": 1,
+      "message": "Reordered the comment. Does it work for you?",
+      "parentUuid": "60c2bb09_44cf43e5",
+      "revId": "c79fcd9c89073d9851b999d375e18599982f3991",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55f0816d_7794ec7e",
         "filename": "chrome/browser/chromeos/arc/arc_service_launcher.cc",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-05T21:00:23Z",
       "side": 1,
       "message": "Do you need these? If you want to add this to easily troubleshoot during the transition, please remove it when it\u0027s done.",
+      "revId": "c79fcd9c89073d9851b999d375e18599982f3991",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fe7f563_f540e94c",
+        "filename": "chrome/browser/chromeos/arc/arc_service_launcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-06T04:25:04Z",
+      "side": 1,
+      "message": "Yes, I\u0027d like to keep this, even after the refactoring I\u0027m working on.",
+      "parentUuid": "55f0816d_7794ec7e",
       "revId": "c79fcd9c89073d9851b999d375e18599982f3991",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
