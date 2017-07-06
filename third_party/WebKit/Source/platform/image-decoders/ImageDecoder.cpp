@@ -424,32 +424,6 @@ size_t ImageDecoder::FindRequiredPreviousFrame(size_t frame_index,
   }
 }
 
-ImagePlanes::ImagePlanes() {
-  for (int i = 0; i < 3; ++i) {
-    planes_[i] = 0;
-    row_bytes_[i] = 0;
-  }
-}
-
-ImagePlanes::ImagePlanes(void* planes[3], const size_t row_bytes[3]) {
-  for (int i = 0; i < 3; ++i) {
-    planes_[i] = planes[i];
-    row_bytes_[i] = row_bytes[i];
-  }
-}
-
-void* ImagePlanes::Plane(int i) {
-  DCHECK_GE(i, 0);
-  DCHECK_LT(i, 3);
-  return planes_[i];
-}
-
-size_t ImagePlanes::RowBytes(int i) const {
-  DCHECK_GE(i, 0);
-  DCHECK_LT(i, 3);
-  return row_bytes_[i];
-}
-
 void ImageDecoder::SetEmbeddedColorProfile(const char* icc_data,
                                            unsigned icc_length) {
   sk_sp<SkColorSpace> color_space = SkColorSpace::MakeICC(icc_data, icc_length);
