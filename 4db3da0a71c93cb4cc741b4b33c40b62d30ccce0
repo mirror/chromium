@@ -175,6 +175,24 @@
       "revId": "4db3da0a71c93cb4cc741b4b33c40b62d30ccce0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04c74ac0_a5729330",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 1030,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-06T19:12:18Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s that hard to have it passed along with the OnRenderViewHostCreated message - in RenderViewHostImpl.  GetProcess()-\u003eGetStoragePartition()-\u003eGetURLRequestContext() returns a URLRequestContextGetter, which you can pass over to the IO thread along with the IDs.  Then you can grab the NQE from that (And you can cache it from there - I agree it\u0027s weird to steal it and cache it from the URLRequest itself).",
+      "parentUuid": "9ace0114_72fa46db",
+      "revId": "4db3da0a71c93cb4cc741b4b33c40b62d30ccce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
