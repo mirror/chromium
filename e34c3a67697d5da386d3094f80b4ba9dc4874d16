@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6adaa8b4_8cbee314",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/NewTabPageAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-06T17:43:54Z",
+      "side": 1,
+      "message": "should we mark the recycler view @nullable?",
+      "range": {
+        "startLine": 259,
+        "startChar": 40,
+        "endLine": 259,
+        "endChar": 52
+      },
+      "revId": "e34c3a67697d5da386d3094f80b4ba9dc4874d16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
