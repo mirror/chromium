@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7480557_7c526d74",
+        "filename": "third_party/WebKit/public/platform/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-07-06T10:51:25Z",
+      "side": 1,
+      "message": "Nit: Would you mind adding an explanatory comment, similar to the comment in //tools/metrics/histograms/OWNERS explaining the `enums.xml` carveout?\n\nThanks!",
+      "revId": "ddf1f8b470d3b1cbfad48f6f64384f84b01c8873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
