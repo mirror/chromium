@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "32ed29a9_ac6559f3",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-07-06T21:55:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a5f46f15_8b774e3e",
+      "revId": "8c381d15553a3afefcaf73c24af79bd9b27d57e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cda779ab_34201f69",
         "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
         "patchSetId": 3
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "4a09a710_988424d5",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-07-06T21:55:34Z",
+      "side": 1,
+      "message": "I\u0027m still confident in my recommendation here. In all likelihood we aren\u0027t going to have many MAC entries, so the resource cost of additional heap allocations will be small. The readability improvements in using standard data structures outweigh the runtime penalties in this case.\n\nWe could still use signed chars w/static_cast, right? That would cut down on template code generation since the price of string\u003cchar\u003e is already paid.",
+      "parentUuid": "fa6c66a5_67eedaf7",
+      "revId": "8c381d15553a3afefcaf73c24af79bd9b27d57e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c301df7b_24651365",
         "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
         "patchSetId": 3
@@ -101,6 +137,24 @@
       "side": 1,
       "message": "Not without defining new traits which I feel is more work for this use case.",
       "parentUuid": "c301df7b_24651365",
+      "revId": "8c381d15553a3afefcaf73c24af79bd9b27d57e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8537b337_d694d507",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-07-06T21:55:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6947e63b_48c74424",
       "revId": "8c381d15553a3afefcaf73c24af79bd9b27d57e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -422,6 +476,24 @@
     },
     {
       "key": {
+        "uuid": "dcf156e0_69b06f20",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-07-06T21:55:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f82783eb_5f8533f9",
+      "revId": "8c381d15553a3afefcaf73c24af79bd9b27d57e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ced9bee_91297e38",
         "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
         "patchSetId": 3
@@ -527,6 +599,24 @@
     },
     {
       "key": {
+        "uuid": "3f90702f_18b67fcb",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-07-06T21:55:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2414c405_96b0d318",
+      "revId": "8c381d15553a3afefcaf73c24af79bd9b27d57e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8848274_605681be",
         "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
         "patchSetId": 3
@@ -597,6 +687,24 @@
     },
     {
       "key": {
+        "uuid": "8b4c549b_94728b1b",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-07-06T21:55:34Z",
+      "side": 1,
+      "message": "Given that this function won\u0027t be called very often, and it\u0027s basically fixed overhead, I think it\u0027s OK to simplify the solution \u0026 use just the resizable heap allocated buffer.",
+      "parentUuid": "e7e87dc0_ff0214e1",
+      "revId": "8c381d15553a3afefcaf73c24af79bd9b27d57e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31ed7113_f0e34270",
         "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
         "patchSetId": 3
@@ -626,6 +734,24 @@
       "side": 1,
       "message": "No, the first iteration uses a stack-allocated buffer.  Only if that fails do we do the loop, which uses heap allocation.  This strategy was copied from existing //net/ code.",
       "parentUuid": "31ed7113_f0e34270",
+      "revId": "8c381d15553a3afefcaf73c24af79bd9b27d57e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "396e282b_cf19c8fa",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-07-06T21:55:34Z",
+      "side": 1,
+      "message": "Can you point to the example in net? It seems like a premature optimization to apply the same technique in this case.",
+      "parentUuid": "c3bb23d4_d3e77f42",
       "revId": "8c381d15553a3afefcaf73c24af79bd9b27d57e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

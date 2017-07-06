@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "b5b4d5a5_a3cc5457",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-07-06T21:55:34Z",
+      "side": 1,
+      "message": "Why isn\u0027t the discovery stuff in the media_router namespace?",
+      "revId": "d74ea322425b290807067cde6219ea9a90dde1f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4d1d4646_e9632aea",
         "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
         "patchSetId": 4
@@ -36,6 +53,23 @@
         "endLine": 25,
         "endChar": 0
       },
+      "revId": "d74ea322425b290807067cde6219ea9a90dde1f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec4f83a5_df8914e1",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-07-06T21:55:34Z",
+      "side": 1,
+      "message": "What about just running memcmp against the bytes of the entire struct? It\u0027d improve readability and efficiency.",
       "revId": "d74ea322425b290807067cde6219ea9a90dde1f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -88,6 +122,74 @@
     },
     {
       "key": {
+        "uuid": "4ae769e8_7d8f7e51",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-07-06T21:55:34Z",
+      "side": 1,
+      "message": "Add a comment for this function.",
+      "revId": "d74ea322425b290807067cde6219ea9a90dde1f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a667f33_575f2a8b",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-07-06T21:55:34Z",
+      "side": 1,
+      "message": "No need to use assignment here (it\u0027s an unnecessary operator\u003d(\u0026\u0026)); just pass the object ctor arguments as arguments to unique_ptr.\n\nstd::unique_ptr\u003cMIB...\u003e interface_table(arg0, arg1)",
+      "revId": "d74ea322425b290807067cde6219ea9a90dde1f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb2b27de_355f03e4",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-07-06T21:55:34Z",
+      "side": 1,
+      "message": "Add a comment for this function.",
+      "revId": "d74ea322425b290807067cde6219ea9a90dde1f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58eced8e_8803b785",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-07-06T21:55:34Z",
+      "side": 1,
+      "message": "Add a comment for this function.",
+      "revId": "d74ea322425b290807067cde6219ea9a90dde1f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8834929a_b5f432db",
         "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
         "patchSetId": 4
@@ -128,6 +230,57 @@
         "endLine": 174,
         "endChar": 24
       },
+      "revId": "d74ea322425b290807067cde6219ea9a90dde1f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91f56686_d083f9de",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-07-06T21:55:34Z",
+      "side": 1,
+      "message": "nit: add newlines to distinguish chunks w/multiline comments:\n\n// c0\n// c1\nx \u003dfoo()\n\n// c0\n// c1\ny \u003d bar()",
+      "revId": "d74ea322425b290807067cde6219ea9a90dde1f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce2aef55_860f69c2",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-07-06T21:55:34Z",
+      "side": 1,
+      "message": "Remove \"static\"",
+      "revId": "d74ea322425b290807067cde6219ea9a90dde1f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0332cdc2_c70b656c",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-07-06T21:55:34Z",
+      "side": 1,
+      "message": "kAddressFlags",
       "revId": "d74ea322425b290807067cde6219ea9a90dde1f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
