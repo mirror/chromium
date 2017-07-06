@@ -58,6 +58,17 @@ Common.ResourceType = class {
   }
 
   /**
+   * @param {?string} mimeType
+   * @return {!Common.ResourceType}
+   */
+  static fromMimeType(mimeType) {
+    var type = mimeType.match(/\w*\/\w*/)[0];
+
+    var resourceType = type && Common.ResourceType._resourceTypeByMimeType.get(type);
+    return resourceType || Common.resourceTypes.Other;
+  }
+
+  /**
    * @return {string}
    */
   name() {
@@ -272,4 +283,21 @@ Common.ResourceType._mimeTypeByExtension = new Map([
 
   // Font
   ['ttf', 'font/opentype'], ['otf', 'font/opentype'], ['ttc', 'font/opentype'], ['woff', 'application/font-woff']
+]);
+
+Common.ResourceType._resourceTypeByMimeType = new Map([
+  // Web types
+  ['text/javascript', Common.resourceTypes.Script], ['text/css', Common.resourceTypes.Stylesheet],
+  ['text/html', Common.resourceTypes.Document], ['text/html', Common.resourceTypes.Document],
+
+  // Image
+  ['image/jpeg', Common.resourceTypes.Image], ['image/jpeg', Common.resourceTypes.Image],
+  ['image/svg', Common.resourceTypes.Image], ['image/gif', Common.resourceTypes.Image],
+  ['image/webp', Common.resourceTypes.Image], ['image/png', Common.resourceTypes.Image],
+  ['image/ico', Common.resourceTypes.Image], ['image/tiff', Common.resourceTypes.Image],
+  ['image/tif', Common.resourceTypes.Image], ['image/bmp', Common.resourceTypes.Image],
+
+  // Font
+  ['font/opentype', Common.resourceTypes.Font], ['font/opentype', Common.resourceTypes.Font],
+  ['font/opentype', Common.resourceTypes.Font], ['application/font-woff', Common.resourceTypes.Font]
 ]);
