@@ -67,6 +67,8 @@ class OfflinePageModelImpl : public OfflinePageModel, public KeyedService {
   void SavePage(const SavePageParams& save_page_params,
                 std::unique_ptr<OfflinePageArchiver> archiver,
                 const SavePageCallback& callback) override;
+  void ImportPage(const ImportPageParams& import_page_params,
+                  const SavePageCallback& callback) override;
   void MarkPageAccessed(int64_t offline_id) override;
   void DeletePagesByOfflineId(const std::vector<int64_t>& offline_ids,
                               const DeletePageCallback& callback) override;
@@ -166,8 +168,17 @@ class OfflinePageModelImpl : public OfflinePageModel, public KeyedService {
                            const base::FilePath& file_path,
                            const base::string16& title,
                            int64_t file_size);
-  void OnAddOfflinePageDone(OfflinePageArchiver* archiver,
-                            const base::FilePath& file_path,
+  void AddOfflinePage(const GURL& url,
+                      const GURL& original_url,
+                      const std::string& request_origin,
+                      int64_t offline_id,
+                      const ClientId& client_id,
+                      const base::Time& start_time,
+                      const base::FilePath& file_path,
+                      const base::string16& title,
+                      int64_t file_size,
+                      const SavePageCallback& callback);
+  void OnAddOfflinePageDone(const base::FilePath& file_path,
                             const SavePageCallback& callback,
                             const OfflinePageItem& offline_page,
                             ItemActionStatus status);
@@ -176,6 +187,15 @@ class OfflinePageModelImpl : public OfflinePageModel, public KeyedService {
                           const ClientId& client_id,
                           int64_t offline_id);
   void DeletePendingArchiver(OfflinePageArchiver* archiver);
+
+  // Stepes for importing an archive.
+  void ImportPageWhenLoadDone(const ImportPageParams& import_page_params,
+                              const SavePageCallback& callback);
+  void OnImportArchiveDone(const ImportPageParams& import_page_params,
+                           int64_t offline_id,
+                           const base::Time& start_time,
+                           const SavePageCallback& callback,
+                           const base::FilePath& archive_path);
 
   // Steps for deleting files and data for an offline page.
   void OnDeleteArchiveFilesDone(const std::vector<int64_t>& offline_ids,

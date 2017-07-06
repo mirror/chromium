@@ -391,6 +391,42 @@ void OfflinePageModelImpl::SavePage(
   pending_archivers_.push_back(std::move(archiver));
 }
 
+void OfflinePageModelImpl::ImportPage(
+    const ImportPageParams& import_page_params,
+    const SavePageCallback& callback) {
+  RunWhenLoaded(base::Bind(&OfflinePageModelImpl::ImportPageWhenLoadDone,
+                           weak_ptr_factory_.GetWeakPtr(), import_page_params,
+                           callback));
+}
+
+void OfflinePageModelImpl::ImportPageWhenLoadDone(
+    const ImportPageParams& import_page_params,
+    const SavePageCallback& callback) {
+  archive_manager_->ImportArchive(
+      import_page_params.file_path,
+      base::Bind(&OfflinePageModelImpl::OnImportArchiveDone,
+                 weak_ptr_factory_.GetWeakPtr(), import_page_params,
+                 GenerateOfflineId(), GetCurrentTime(), callback));
+}
+
+void OfflinePageModelImpl::OnImportArchiveDone(
+    const ImportPageParams& import_page_params,
+    int64_t offline_id,
+    const base::Time& start_time,
+    const SavePageCallback& callback,
+    const base::FilePath& archive_path) {
+  if (archive_path.empty()) {
+    InformSavePageDone(callback, SavePageResult::ARCHIVE_CREATION_FAILED,
+                       import_page_params.client_id, offline_id);
+    return;
+  }
+
+  AddOfflinePage(import_page_params.url, import_page_params.original_url,
+                 std::string(), offline_id, import_page_params.client_id,
+                 start_time, archive_path, import_page_params.title,
+                 import_page_params.file_size, callback);
+}
+
 void OfflinePageModelImpl::MarkPageAccessed(int64_t offline_id) {
   RunWhenLoaded(base::Bind(&OfflinePageModelImpl::MarkPageAccessedWhenLoadDone,
                            weak_ptr_factory_.GetWeakPtr(), offline_id));
@@ -711,11 +747,12 @@ void OfflinePageModelImpl::OnCreateArchiveDone(
     const base::FilePath& file_path,
     const base::string16& title,
     int64_t file_size) {
+  DeletePendingArchiver(archiver);
+
   if (archiver_result != ArchiverResult::SUCCESSFULLY_CREATED) {
     SavePageResult result = ToSavePageResult(archiver_result);
     InformSavePageDone(
         callback, result, save_page_params.client_id, offline_id);
-    DeletePendingArchiver(archiver);
     return;
   }
 
@@ -723,24 +760,37 @@ void OfflinePageModelImpl::OnCreateArchiveDone(
     DVLOG(1) << "Saved URL does not match requested URL.";
     InformSavePageDone(callback, SavePageResult::ARCHIVE_CREATION_FAILED,
                        save_page_params.client_id, offline_id);
-    DeletePendingArchiver(archiver);
     return;
   }
 
-  OfflinePageItem offline_page_item(saved_url, offline_id,
-                                    save_page_params.client_id, file_path,
+  AddOfflinePage(saved_url, save_page_params.original_url,
+                 save_page_params.request_origin, offline_id,
+                 save_page_params.client_id, start_time, file_path, title,
+                 file_size, callback);
+}
+
+void OfflinePageModelImpl::AddOfflinePage(const GURL& url,
+                                          const GURL& original_url,
+                                          const std::string& request_origin,
+                                          int64_t offline_id,
+                                          const ClientId& client_id,
+                                          const base::Time& start_time,
+                                          const base::FilePath& file_path,
+                                          const base::string16& title,
+                                          int64_t file_size,
+                                          const SavePageCallback& callback) {
+  OfflinePageItem offline_page_item(url, offline_id, client_id, file_path,
                                     file_size, start_time);
   offline_page_item.title = title;
-  offline_page_item.original_url = save_page_params.original_url;
-  offline_page_item.request_origin = save_page_params.request_origin;
+  offline_page_item.original_url = original_url;
+  offline_page_item.request_origin = request_origin;
   store_->AddOfflinePage(offline_page_item,
                          base::Bind(&OfflinePageModelImpl::OnAddOfflinePageDone,
-                                    weak_ptr_factory_.GetWeakPtr(), archiver,
-                                    file_path, callback, offline_page_item));
+                                    weak_ptr_factory_.GetWeakPtr(), file_path,
+                                    callback, offline_page_item));
 }
 
 void OfflinePageModelImpl::OnAddOfflinePageDone(
-    OfflinePageArchiver* archiver,
     const base::FilePath& file_path,
     const SavePageCallback& callback,
     const OfflinePageItem& offline_page,
@@ -769,8 +819,6 @@ void OfflinePageModelImpl::OnAddOfflinePageDone(
   } else {
     PostClearStorageIfNeededTask(false /* delayed */);
   }
-
-  DeletePendingArchiver(archiver);
 
   // We don't want to notify observers if the add failed.
   if (result != SavePageResult::SUCCESS)

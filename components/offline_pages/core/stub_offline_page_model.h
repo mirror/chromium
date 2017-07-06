@@ -28,6 +28,8 @@ class StubOfflinePageModel : public OfflinePageModel, public KeyedService {
   void SavePage(const SavePageParams& save_page_params,
                 std::unique_ptr<OfflinePageArchiver> archiver,
                 const SavePageCallback& callback) override;
+  void ImportPage(const ImportPageParams& import_page_params,
+                  const SavePageCallback& callback) override;
   void MarkPageAccessed(int64_t offline_id) override;
   void DeletePagesByOfflineId(const std::vector<int64_t>& offline_ids,
                               const DeletePageCallback& callback) override;
