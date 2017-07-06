@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "790a493d_0d30cb0e",
+        "filename": "cc/trees/layer_tree_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-07-06T17:25:26Z",
+      "side": 0,
+      "message": "I do not think this scenario happens when we do not depend on Layers.",
+      "revId": "afef048df9416f31f2d90535c3ca946ac3f43b80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
