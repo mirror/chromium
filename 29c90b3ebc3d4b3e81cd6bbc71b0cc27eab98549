@@ -88,6 +88,24 @@
       "revId": "29c90b3ebc3d4b3e81cd6bbc71b0cc27eab98549",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9332afdf_08158ab3",
+        "filename": "content/public/browser/android/motion_event_synthesizer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-07-06T17:29:53Z",
+      "side": 1,
+      "message": "\u003e That just sounds like needing to correctly handle tab reparenting in general, whenever the container view is cached in java.\n\nDoes it? VAD is per-content, not per-tab object. I think it needs to happen not as a part of reparenting task but of content switching task for the current tab, which can happen repeatedly in the reparented state. \n\nI\u0027m still trying to figure out the consequence of having a new VAD in place of current one work for a WebContents when in VrShell. Again, this happens only for native Java UI pages. Embedder does not access its CVC (and hence its container view). I *think* it will limit the cases where the container view is cached in java, and even so, it basically puts them in a hold-on state, letting the VrShell VAD forward touch events temporarily for MotionEventSynthesizer, and then will be able to restore the old VAD when VrShell gets paired with a new WebContents or destroyed.\n\nThat\u0027s how I hope it will work... would be very helpful if you see any side effect.",
+      "parentUuid": "efa53ac1_029bcaec",
+      "revId": "29c90b3ebc3d4b3e81cd6bbc71b0cc27eab98549",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
