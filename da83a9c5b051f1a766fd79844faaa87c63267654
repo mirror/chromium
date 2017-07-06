@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "772ec589_3d62bbf4",
+        "filename": "third_party/WebKit/Source/core/geometry/DOMRect.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-07-06T21:57:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e025362_dd1c4d39",
+      "range": {
+        "startLine": 26,
+        "startChar": 18,
+        "endLine": 26,
+        "endChar": 31
+      },
+      "revId": "da83a9c5b051f1a766fd79844faaa87c63267654",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "295fe018_95ece5a8",
         "filename": "third_party/WebKit/Source/core/geometry/DOMRectList.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "da83a9c5b051f1a766fd79844faaa87c63267654",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21cfba89_576523e1",
+        "filename": "third_party/WebKit/Source/core/geometry/DOMRectList.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-07-06T21:57:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "295fe018_95ece5a8",
+      "range": {
+        "startLine": 55,
+        "startChar": 13,
+        "endLine": 55,
+        "endChar": 14
+      },
+      "revId": "da83a9c5b051f1a766fd79844faaa87c63267654",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "20b36985_dc52d3ce",
+        "filename": "third_party/WebKit/Source/core/geometry/DOMRectList.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-07-06T21:57:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5eb56b0_4eea94c9",
+      "range": {
+        "startLine": 5,
+        "startChar": 11,
+        "endLine": 5,
+        "endChar": 14
+      },
+      "revId": "da83a9c5b051f1a766fd79844faaa87c63267654",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "731a7452_89c0003c",
         "filename": "third_party/WebKit/Source/core/geometry/DOMRectList.idl",
         "patchSetId": 2
@@ -85,6 +157,24 @@
       "revId": "da83a9c5b051f1a766fd79844faaa87c63267654",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8aee4583_2053211a",
+        "filename": "third_party/WebKit/Source/core/geometry/DOMRectList.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-07-06T21:57:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "731a7452_89c0003c",
+      "revId": "da83a9c5b051f1a766fd79844faaa87c63267654",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -108,6 +198,30 @@
       "revId": "da83a9c5b051f1a766fd79844faaa87c63267654",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deec34ae_5d15d685",
+        "filename": "third_party/WebKit/Source/core/geometry/DOMRectReadOnly.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-07-06T21:57:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3e998a7_8b2aa1b0",
+      "range": {
+        "startLine": 29,
+        "startChar": 26,
+        "endLine": 29,
+        "endChar": 37
+      },
+      "revId": "da83a9c5b051f1a766fd79844faaa87c63267654",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
