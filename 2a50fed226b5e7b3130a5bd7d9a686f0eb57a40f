@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb44a7d5_d97dead0",
+        "filename": "chrome/browser/chrome_content_browser_manifest_overlay.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-07-06T18:00:54Z",
+      "side": 1,
+      "message": "we chatted - you want to not group under this comment. (what does this comment mean?)",
+      "range": {
+        "startLine": 72,
+        "startChar": 12,
+        "endLine": 72,
+        "endChar": 72
+      },
+      "revId": "2a50fed226b5e7b3130a5bd7d9a686f0eb57a40f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
