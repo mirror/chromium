@@ -50,6 +50,24 @@
       "revId": "aefffaf3bb6e0566a2ffef5973c94624e44a9914",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c09e70d0_18174020",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-07-06T15:40:26Z",
+      "side": 1,
+      "message": "It\u0027s simulating the user removing the channel (eg by clearing data) and recreating it. I guess I could make the comment clearer.",
+      "parentUuid": "36d9e78d_fbc26d63",
+      "revId": "aefffaf3bb6e0566a2ffef5973c94624e44a9914",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
