@@ -36,6 +36,29 @@
     },
     {
       "key": {
+        "uuid": "37ea047f_87118148",
+        "filename": "ios/chrome/browser/ui/commands/browser_commands.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-06T12:46:31Z",
+      "side": 1,
+      "message": "s/Navigate/Navigates?\n(Same above/below)",
+      "range": {
+        "startLine": 15,
+        "startChar": 3,
+        "endLine": 15,
+        "endChar": 11
+      },
+      "revId": "e98286315b695f4873152a0ca70b98739a8e3c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "96b7fc77_c31fc02e",
         "filename": "ios/chrome/browser/ui/key_commands_provider.mm",
         "patchSetId": 2
@@ -47,6 +70,29 @@
       "writtenOn": "2017-07-06T12:45:34Z",
       "side": 1,
       "message": "IIUC, you don\u0027t need the copy anymore in ARC.\nhttps://developer.apple.com/library/content/releasenotes/ObjectiveC/RN-TransitioningToARC/Introduction/Introduction.html Look for \"How do blocks work in ARC?\".",
+      "revId": "e98286315b695f4873152a0ca70b98739a8e3c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e8f8df5_ce1c0b75",
+        "filename": "ios/chrome/browser/ui/key_commands_provider.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-06T12:46:31Z",
+      "side": 1,
+      "message": "You probably don\u0027t need copy with ARC.",
+      "range": {
+        "startLine": 50,
+        "startChar": 6,
+        "endLine": 50,
+        "endChar": 10
+      },
       "revId": "e98286315b695f4873152a0ca70b98739a8e3c4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -98,6 +144,29 @@
       "writtenOn": "2017-07-06T12:45:34Z",
       "side": 1,
       "message": "Tiny nit: missing period.",
+      "revId": "e98286315b695f4873152a0ca70b98739a8e3c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e51fa439_5e68a26f",
+        "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-06T12:46:31Z",
+      "side": 1,
+      "message": "You are using property accessors from inside init.",
+      "range": {
+        "startLine": 387,
+        "startChar": 2,
+        "endLine": 387,
+        "endChar": 7
+      },
       "revId": "e98286315b695f4873152a0ca70b98739a8e3c4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
