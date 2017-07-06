@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f6d79b8_ee225455",
+        "filename": "third_party/WebKit/Source/core/mojo/MojoWatcher.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-07-06T00:14:59Z",
+      "side": 1,
+      "message": "What is the benefit of \"\u003d default\" here?  Inline {} in the header is more common.",
+      "range": {
+        "startLine": 46,
+        "startChar": 30,
+        "endLine": 46,
+        "endChar": 37
+      },
+      "revId": "7e88d4773b9ece8fbce20fcef0fa291a5caf2814",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
