@@ -442,6 +442,7 @@ void ChromeBrowserMainPartsWin::PrepareRestartOnCrashEnviroment(
 // static
 void ChromeBrowserMainPartsWin::RegisterApplicationRestart(
     const base::CommandLine& parsed_command_line) {
+  auto original_cmd = parsed_command_line.GetCommandLineString();
   base::ScopedNativeLibrary library(base::FilePath(L"kernel32.dll"));
   // Get the function pointer for RegisterApplicationRestart.
   RegisterApplicationRestartProc register_application_restart =
@@ -467,7 +468,9 @@ void ChromeBrowserMainPartsWin::RegisterApplicationRestart(
   if (FAILED(hr)) {
     if (hr == E_INVALIDARG) {
       LOG(WARNING) << "Command line too long for RegisterApplicationRestart: "
-                   << command_line_string;
+                   << command_line_string
+                   << "\nLen: " << command_line_string.length()
+                   << "\nOrg: " << original_cmd;
     } else {
       NOTREACHED() << "RegisterApplicationRestart failed. hr: " << hr
                    << ", command_line: " << command_line_string;
