@@ -16,6 +16,24 @@
       "revId": "f4aeea2a426506ce215c25cb166e9a50705c0e32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81c36131_e7833df1",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/networkPanel.css",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-07-06T21:04:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9caf8e6_5533f619",
+      "revId": "f4aeea2a426506ce215c25cb166e9a50705c0e32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
