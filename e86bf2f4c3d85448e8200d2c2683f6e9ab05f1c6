@@ -16,6 +16,24 @@
       "revId": "e86bf2f4c3d85448e8200d2c2683f6e9ab05f1c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cff9338_8fea2f8c",
+        "filename": "services/ui/public/cpp/gpu/gpu.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-06T02:29:57Z",
+      "side": 1,
+      "message": "I see |gpu_| as being a member variable only to hold on\nto it between EstablishGpuChannel{Sync}() and \nOnEstablishedGpuChannel() (and to potentially avoid races \nbetween those two), but in this case we just need to bind\nto it temporarily.  Can use |gpu_| if you guys prefer it.",
+      "parentUuid": "3ad7a72a_9075e30f",
+      "revId": "e86bf2f4c3d85448e8200d2c2683f6e9ab05f1c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
