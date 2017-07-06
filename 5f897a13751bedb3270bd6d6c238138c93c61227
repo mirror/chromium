@@ -214,6 +214,24 @@
     },
     {
       "key": {
+        "uuid": "905eba62_9b793ec5",
+        "filename": "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1215055
+      },
+      "writtenOn": "2017-07-06T15:57:47Z",
+      "side": 1,
+      "message": "LGTM, thanks!",
+      "parentUuid": "8174d5ba_049e9849",
+      "revId": "5f897a13751bedb3270bd6d6c238138c93c61227",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "effe1a6d_19bb8055",
         "filename": "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.h",
         "patchSetId": 4
