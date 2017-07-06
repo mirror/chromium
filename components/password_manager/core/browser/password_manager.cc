@@ -760,7 +760,9 @@ void PasswordManager::OnLoginSuccessful() {
         provisional_save_manager_->password_overridden() ||
         provisional_save_manager_->retry_password_form_password_update();
     if (client_->PromptUserToSaveOrUpdatePassword(
-            std::move(provisional_save_manager_), update_password)) {
+            std::move(provisional_save_manager_), update_password,
+            PasswordFormMetricsRecorder::SaveBubbleTrigger::
+                kPasswordManagerSuggestion)) {
       if (logger)
         logger->LogMessage(Logger::STRING_SHOW_PASSWORD_PROMPT);
     }

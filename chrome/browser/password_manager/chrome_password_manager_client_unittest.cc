@@ -16,20 +16,26 @@
 #include "base/strings/string16.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/test/histogram_tester.h"
+#include "build/build_config.h"
 #include "chrome/browser/metrics/chrome_metrics_service_accessor.h"
 #include "chrome/browser/sync/profile_sync_service_factory.h"
 #include "chrome/browser/sync/profile_sync_test_util.h"
+#include "chrome/browser/ui/passwords/manage_passwords_ui_controller_mock.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/test/base/chrome_render_view_host_test_harness.h"
 #include "chrome/test/base/testing_profile.h"
 #include "components/autofill/content/common/autofill_agent.mojom.h"
 #include "components/password_manager/content/browser/password_manager_internals_service_factory.h"
 #include "components/password_manager/core/browser/credentials_filter.h"
+#include "components/password_manager/core/browser/fake_form_fetcher.h"
 #include "components/password_manager/core/browser/log_manager.h"
 #include "components/password_manager/core/browser/log_receiver.h"
 #include "components/password_manager/core/browser/log_router.h"
 #include "components/password_manager/core/browser/password_manager_internals_service.h"
 #include "components/password_manager/core/browser/password_manager_test_utils.h"
+#include "components/password_manager/core/browser/stub_form_saver.h"
+#include "components/password_manager/core/browser/stub_password_manager_driver.h"
 #include "components/password_manager/core/common/credential_manager_types.h"
 #include "components/password_manager/core/common/password_manager_pref_names.h"
 #include "components/prefs/pref_registry_simple.h"
@@ -37,6 +43,7 @@
 #include "components/prefs/testing_pref_service.h"
 #include "components/sessions/content/content_record_password_state.h"
 #include "components/sync_preferences/testing_pref_service_syncable.h"
+#include "components/ukm/test_ukm_recorder.h"
 #include "components/version_info/version_info.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/web_contents.h"
@@ -59,6 +66,7 @@
 using browser_sync::ProfileSyncServiceMock;
 using content::BrowserContext;
 using content::WebContents;
+using password_manager::PasswordFormMetricsRecorder;
 using sessions::GetPasswordStateFromNavigation;
 using sessions::SerializedNavigationEntry;
 using testing::Return;
@@ -199,6 +207,7 @@ class ChromePasswordManagerClientTest : public ChromeRenderViewHostTestHarness {
  public:
   ChromePasswordManagerClientTest()
       : field_trial_list_(nullptr), metrics_enabled_(false) {}
+  ~ChromePasswordManagerClientTest() override = default;
   void SetUp() override;
   void TearDown() override;
 
@@ -644,3 +653,86 @@ TEST_F(ChromePasswordManagerClientTest,
 }
 
 #endif
+
+// The parameter of this test indicates whether the bubble is triggered by an
+// update (instead of a save new credential trigger).
+class ChromePasswordManagerClientTestTriggerLogging
+    : public ChromePasswordManagerClientTest,
+      public ::testing::WithParamInterface<bool> {
+ public:
+  ChromePasswordManagerClientTestTriggerLogging() = default;
+  ~ChromePasswordManagerClientTestTriggerLogging() override = default;
+};
+
+// Verify that triggering a save or update bubble triggers UKM metrics.
+TEST_P(ChromePasswordManagerClientTestTriggerLogging, TestSaveTriggerLogging) {
+  bool update_password = GetParam();
+
+  SCOPED_TRACE(::testing::Message() << "update_password = " << update_password);
+  ukm::TestUkmRecorder test_ukm_recorder;
+
+#if !defined(OS_ANDROID) && !defined(OS_IOS)
+  // Create a mock UI controller so that is's properly bound.
+  ManagePasswordsUIControllerMock* ui_controller =
+      new ManagePasswordsUIControllerMock(web_contents());
+  EXPECT_CALL(*ui_controller, GetCurrentInteractionStats())
+      .Times(::testing::AnyNumber());
+#endif  // !defined(OS_ANDROID) && !defined(OS_IOS)
+
+  NavigateAndCommit(GURL("https://accounts.google.com"));
+
+  autofill::PasswordForm observed_form;
+  observed_form.origin = GURL("https://accounts.google.com/a/LoginAuth");
+  observed_form.action = GURL("https://accounts.google.com/a/Login");
+  observed_form.username_element = base::ASCIIToUTF16("Email");
+  observed_form.password_element = base::ASCIIToUTF16("Passwd");
+  observed_form.submit_element = base::ASCIIToUTF16("signIn");
+  observed_form.signon_realm = "https://accounts.google.com";
+
+  ChromePasswordManagerClient* client = GetClient();
+  password_manager::PasswordManager password_manager(client);
+  password_manager::StubPasswordManagerDriver driver;
+  password_manager::FakeFormFetcher form_fetcher;
+
+  auto form_to_save = base::MakeUnique<password_manager::PasswordFormManager>(
+      &password_manager, client, driver.AsWeakPtr(), observed_form,
+      base::MakeUnique<password_manager::StubFormSaver>(), &form_fetcher);
+
+  PasswordFormMetricsRecorder::SaveBubbleTrigger trigger =
+      PasswordFormMetricsRecorder::SaveBubbleTrigger::
+          kPasswordManagerSuggestion;
+
+  client->PromptUserToSaveOrUpdatePassword(std::move(form_to_save),
+                                           update_password, trigger);
+
+  // Delete contents such that the ManagePasswordsUIControllerMock and its owned
+  // PasswordFormManager are destroyed. This triggers the reporting of metrics.
+  DeleteContents();
+
+  const ukm::mojom::UkmEntry* ukm_entry =
+      test_ukm_recorder.GetEntryForEntryName("PasswordForm");
+  ASSERT_TRUE(ukm_entry);
+
+  struct {
+    const char* metric;
+    int64_t value;
+  } kExpectations[] = {
+      {"Saving.Prompt.Shown", update_password ? 0 : 1},
+      {"Updating.Prompt.Shown", update_password ? 1 : 0},
+      {update_password ? "Updating.Prompt.Trigger" : "Saving.Prompt.Trigger",
+       static_cast<int64_t>(
+           password_manager::PasswordFormMetricsRecorder::SaveBubbleTrigger::
+               kPasswordManagerSuggestion)}};
+
+  for (const auto& expectation : kExpectations) {
+    SCOPED_TRACE(expectation.metric);
+    auto* metric =
+        ukm::TestUkmRecorder::FindMetric(ukm_entry, expectation.metric);
+    ASSERT_TRUE(metric);
+    EXPECT_EQ(expectation.value, metric->value);
+  }
+}
+
+INSTANTIATE_TEST_CASE_P(/*no extra name*/,
+                        ChromePasswordManagerClientTestTriggerLogging,
+                        ::testing::Bool());

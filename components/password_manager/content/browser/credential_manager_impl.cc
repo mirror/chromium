@@ -123,7 +123,9 @@ void CredentialManagerImpl::OnProvisionalSaveComplete() {
   }
 
   // Otherwise, this is a new form, so as the user if they'd like to save.
-  client_->PromptUserToSaveOrUpdatePassword(std::move(form_manager_), false);
+  client_->PromptUserToSaveOrUpdatePassword(
+      std::move(form_manager_), false,
+      PasswordFormMetricsRecorder::SaveBubbleTrigger::kCredentialMgmtAPI);
 }
 
 void CredentialManagerImpl::PreventSilentAccess(
