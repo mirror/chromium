@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ffec5b10_1436f229",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_header_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-07-06T12:46:04Z",
+      "side": 1,
+      "message": "This function is so confusing. But it\u0027s not your fault. So lgtm.",
+      "range": {
+        "startLine": 259,
+        "startChar": 22,
+        "endLine": 259,
+        "endChar": 28
+      },
+      "revId": "05b6a70b6166ba28618b1354db0b47efe40dbe81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
