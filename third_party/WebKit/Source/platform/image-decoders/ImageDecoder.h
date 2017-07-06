@@ -41,6 +41,7 @@
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/Platform.h"
 #include "third_party/skia/include/core/SkColorSpaceXform.h"
+#include "third_party/skia/include/core/SkYUVSizeInfo.h"
 
 namespace blink {
 
@@ -53,24 +54,6 @@ inline SkColorSpaceXform::ColorFormat XformColorFormat() {
   return SkColorSpaceXform::kBGRA_8888_ColorFormat;
 }
 #endif
-
-// ImagePlanes can be used to decode color components into provided buffers
-// instead of using an ImageFrame.
-class PLATFORM_EXPORT ImagePlanes final {
-  USING_FAST_MALLOC(ImagePlanes);
-  WTF_MAKE_NONCOPYABLE(ImagePlanes);
-
- public:
-  ImagePlanes();
-  ImagePlanes(void* planes[3], const size_t row_bytes[3]);
-
-  void* Plane(int);
-  size_t RowBytes(int) const;
-
- private:
-  void* planes_[3];
-  size_t row_bytes_[3];
-};
 
 // ImageDecoder is a base for all format-specific decoders
 // (e.g. JPEGImageDecoder). This base manages the ImageFrame cache.
@@ -144,18 +127,11 @@ class PLATFORM_EXPORT ImageDecoder {
   // return the actual decoded size.
   virtual IntSize DecodedSize() const { return Size(); }
 
-  // Image decoders that support YUV decoding must override this to
-  // provide the size of each component.
-  virtual IntSize DecodedYUVSize(int component) const {
+  // Image decoders that support YUV decoding must override this method.
+  virtual bool onQueryYUV8(SkYUVSizeInfo* size_info,
+                           SkYUVColorSpace* color_space) const {
     NOTREACHED();
-    return IntSize();
-  }
-
-  // Image decoders that support YUV decoding must override this to
-  // return the width of each row of the memory allocation.
-  virtual size_t DecodedYUVWidthBytes(int component) const {
-    NOTREACHED();
-    return 0;
+    return false;
   }
 
   // This will only differ from size() for ICO (where each frame is a
@@ -276,8 +252,9 @@ class PLATFORM_EXPORT ImageDecoder {
   }
 
   virtual bool CanDecodeToYUV() { return false; }
-  virtual bool DecodeToYUV() { return false; }
-  virtual void SetImagePlanes(std::unique_ptr<ImagePlanes>) {}
+  virtual bool DecodeToYUV(const SkYUVSizeInfo& sizeInfo, void* planes[3]) {
+    return false;
+  }
 
  protected:
   ImageDecoder(AlphaOption alpha_option,
