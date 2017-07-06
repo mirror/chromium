@@ -232,7 +232,7 @@ std::string GetWifiSSID() {
     return internal::GetWifiSSIDFromInterfaceListInternal(
         networks, internal::GetInterfaceSSID);
   }
-  return "";
+  return std::string();
 }
 
 }  // namespace net

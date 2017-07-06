@@ -60,7 +60,7 @@ WifiPHYLayerProtocol GetWifiPHYLayerProtocol() {
 }
 
 std::unique_ptr<ScopedWifiOptions> SetWifiOptions(int options) {
-  return std::unique_ptr<ScopedWifiOptions>();
+  return nullptr;
 }
 
 }  // namespace net
