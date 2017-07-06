@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d6b36e09_35763b2f",
+        "filename": "chrome/browser/resources/settings/android_apps_page/android_apps_subpage.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-06T23:13:29Z",
+      "side": 1,
+      "message": "Let\u0027s chat about specifying unused parameters outside of this CL. There\u0027s more I\u0027d like to get your thoughts on that relate to unused parameters.\nEither way, I\u0027d rather not make such changes as part of a mechanical change.",
+      "parentUuid": "0ee8fff9_0e63045d",
+      "revId": "513285faf5b8cf00af1d480b7811bf7e6ba3a5a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4a946021_0b03658f",
         "filename": "chrome/browser/resources/settings/internet_page/network_apnlist.js",
         "patchSetId": 3
