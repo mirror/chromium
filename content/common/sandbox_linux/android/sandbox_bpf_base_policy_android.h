@@ -5,28 +5,19 @@
 #ifndef CONTENT_COMMON_SANDBOX_LINUX_ANDROID_SANDBOX_BPF_BASE_POLICY_ANDROID_H_
 #define CONTENT_COMMON_SANDBOX_LINUX_ANDROID_SANDBOX_BPF_BASE_POLICY_ANDROID_H_
 
-#include <sys/types.h>
-
 #include "base/macros.h"
-#include "content/common/sandbox_linux/sandbox_bpf_base_policy_linux.h"
+#include "sandbox/linux/seccomp-bpf-helpers/baseline_policy_android.h"
 
 namespace content {
 
-// This class builds on top of the generic Linux baseline policy to reduce
-// Linux kernel attack surface. It augments the list of allowed syscalls to
-// allow ones required by the Android runtime.
-class SandboxBPFBasePolicyAndroid : public SandboxBPFBasePolicy {
+// TODO(rsesek): This class should be folded into content::SandboxBPFBasePolicy.
+// https://crbug.com/739879
+class SandboxBPFBasePolicyAndroid : public sandbox::BaselinePolicyAndroid {
  public:
   SandboxBPFBasePolicyAndroid();
   ~SandboxBPFBasePolicyAndroid() override;
 
-  // sandbox::SandboxBPFPolicy:
-  sandbox::bpf_dsl::ResultExpr EvaluateSyscall(
-      int system_call_number) const override;
-
  private:
-  const pid_t pid_;
-
   DISALLOW_COPY_AND_ASSIGN(SandboxBPFBasePolicyAndroid);
 };
 
