@@ -1021,12 +1021,16 @@ void LayerTreeHost::SetViewportSize(const gfx::Size& device_viewport_size) {
   SetNeedsCommit();
 }
 
-void LayerTreeHost::SetBrowserControlsHeight(float height, bool shrink) {
+void LayerTreeHost::SetBrowserControlsHeight(float height,
+                                             float bottom_height,
+                                             bool shrink) {
   if (top_controls_height_ == height &&
+      bottom_controls_height_ == bottom_height &&
       browser_controls_shrink_blink_size_ == shrink)
     return;
 
   top_controls_height_ = height;
+  bottom_controls_height_ = bottom_height;
   browser_controls_shrink_blink_size_ = shrink;
   SetNeedsCommit();
 }
