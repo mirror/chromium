@@ -46,6 +46,30 @@
       "revId": "0f49a6085f457b68295251409dc0a626212d8c28",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5550ec04_8ea3c6af",
+        "filename": "components/password_manager/core/browser/sql_table_builder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-06T17:26:47Z",
+      "side": 1,
+      "message": "Done: http://crbug.com/739776",
+      "parentUuid": "704742e5_39bdc24b",
+      "range": {
+        "startLine": 79,
+        "startChar": 25,
+        "endLine": 79,
+        "endChar": 26
+      },
+      "revId": "0f49a6085f457b68295251409dc0a626212d8c28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
