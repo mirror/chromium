@@ -22,6 +22,30 @@
       "revId": "f0500c3202eac183bbe23bfaa1dda1b048536974",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "624a0220_c6698af4",
+        "filename": "ui/events/blink/input_handler_proxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-07-06T20:43:12Z",
+      "side": 1,
+      "message": "I think I implemented this how you intended. Let me know if this isn\u0027t what you were thinking.",
+      "parentUuid": "d53b711d_c3660870",
+      "range": {
+        "startLine": 82,
+        "startChar": 43,
+        "endLine": 82,
+        "endChar": 54
+      },
+      "revId": "f0500c3202eac183bbe23bfaa1dda1b048536974",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
