@@ -415,6 +415,13 @@ void GpuService::CloseChannel(int32_t client_id) {
   gpu_channel_manager_->RemoveChannel(client_id);
 }
 
+void GpuService::CreateJpegDecodeAccelerator(
+    media::mojom::GpuJpegDecodeAcceleratorRequest jda_request) {
+  DCHECK(io_runner_->BelongsToCurrentThread());
+  // TODO(c.padhi): Implement this, see https://crbug.com/699255.
+  NOTIMPLEMENTED();
+}
+
 void GpuService::LoadedShader(const std::string& data) {
   if (io_runner_->BelongsToCurrentThread()) {
     main_runner_->PostTask(

@@ -44,6 +44,9 @@ class Gpu : public gpu::GpuChannelHostFactory,
   scoped_refptr<cc::ContextProvider> CreateContextProvider(
       scoped_refptr<gpu::GpuChannelHost> gpu_channel);
 
+  void CreateJpegDecodeAccelerator(
+      media::mojom::GpuJpegDecodeAcceleratorRequest jda_request);
+
   // gpu::GpuChannelEstablishFactory:
   void EstablishGpuChannel(
       const gpu::GpuChannelEstablishedCallback& callback) override;

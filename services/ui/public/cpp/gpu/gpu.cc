@@ -90,6 +90,14 @@ scoped_refptr<cc::ContextProvider> Gpu::CreateContextProvider(
       shared_context_provider, ui::command_buffer_metrics::MUS_CLIENT_CONTEXT));
 }
 
+void Gpu::CreateJpegDecodeAccelerator(
+    media::mojom::GpuJpegDecodeAcceleratorRequest jda_request) {
+  DCHECK(IsMainThread());
+  if (!gpu_.is_bound())
+    gpu_ = factory_.Run();
+  gpu_->CreateJpegDecodeAccelerator(std::move(jda_request));
+}
+
 void Gpu::EstablishGpuChannel(
     const gpu::GpuChannelEstablishedCallback& callback) {
   DCHECK(IsMainThread());

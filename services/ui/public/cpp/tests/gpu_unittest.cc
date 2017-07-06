@@ -61,6 +61,9 @@ class TestGpuImpl : public mojom::Gpu {
   void DestroyGpuMemoryBuffer(gfx::GpuMemoryBufferId id,
                               const gpu::SyncToken& sync_token) override {}
 
+  void CreateJpegDecodeAccelerator(
+      media::mojom::GpuJpegDecodeAcceleratorRequest jda_request) override {}
+
  private:
   EstablishGpuChannelCallback establish_channel_callback_;
 

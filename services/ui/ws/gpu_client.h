@@ -52,6 +52,8 @@ class GpuClient : public mojom::Gpu {
       const mojom::Gpu::CreateGpuMemoryBufferCallback& callback) override;
   void DestroyGpuMemoryBuffer(gfx::GpuMemoryBufferId id,
                               const gpu::SyncToken& sync_token) override;
+  void CreateJpegDecodeAccelerator(
+      media::mojom::GpuJpegDecodeAcceleratorRequest jda_request) override;
 
   const int client_id_;
 
