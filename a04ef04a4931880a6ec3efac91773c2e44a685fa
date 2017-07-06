@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30badb72_cd5792c3",
+        "filename": "third_party/WebKit/public/platform/WebLayerTreeView.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-07-06T15:57:01Z",
+      "side": 1,
+      "message": "Nit: Is this constructor and destructor needed? If not, please remove.",
+      "revId": "a04ef04a4931880a6ec3efac91773c2e44a685fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
