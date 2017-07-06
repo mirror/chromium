@@ -72,6 +72,52 @@
     },
     {
       "key": {
+        "uuid": "64e3332e_b49deacd",
+        "filename": "content/browser/service_worker/service_worker_process_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-06T09:20:06Z",
+      "side": 1,
+      "message": "ChildProcessHost::kInvalidUniqueID?",
+      "range": {
+        "startLine": 164,
+        "startChar": 25,
+        "endLine": 164,
+        "endChar": 27
+      },
+      "revId": "fb029d625d400680d3d23602551f217408885949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "738cbae6_1a5c67a4",
+        "filename": "content/browser/service_worker/service_worker_process_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-06T09:20:06Z",
+      "side": 1,
+      "message": "Can I ask you why |data_saver_enabled| is read in ServiceWorkerProcessManager? Is it because of some historical reasons?",
+      "range": {
+        "startLine": 169,
+        "startChar": 2,
+        "endLine": 169,
+        "endChar": 39
+      },
+      "revId": "fb029d625d400680d3d23602551f217408885949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6d4b86b9_94e0727e",
         "filename": "content/browser/service_worker/service_worker_process_manager.h",
         "patchSetId": 1
@@ -83,6 +129,29 @@
       "writtenOn": "2017-07-06T08:35:12Z",
       "side": 1,
       "message": "I don\u0027t think GetWeakPtr is thread-safe, this should probably just return weak_this_ instead, with a clear comment why it\u0027s so and how it should be used (e.g. safe to call on other threads but need to be de-reference only on UI thread)",
+      "revId": "fb029d625d400680d3d23602551f217408885949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c57561c7_0c0ba11b",
+        "filename": "content/browser/service_worker/service_worker_process_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-06T09:20:06Z",
+      "side": 1,
+      "message": "Should this be the first member?\n\nhttps://cs.chromium.org/chromium/src/content/public/test/test_browser_thread_bundle.h?type\u003dcs\u0026q\u003dcontent::TestBrowserThreadBundle+\u0026sq\u003dpackage:chromium\u0026l\u003d79",
+      "range": {
+        "startLine": 55,
+        "startChar": 2,
+        "endLine": 55,
+        "endChar": 49
+      },
       "revId": "fb029d625d400680d3d23602551f217408885949",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
