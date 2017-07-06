@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "abe8717b_ef52a3cd",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1332,
+      "author": {
+        "id": 1211423
+      },
+      "writtenOn": "2017-07-06T19:05:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ca772fa_8e02501a",
+      "range": {
+        "startLine": 1332,
+        "startChar": 5,
+        "endLine": 1332,
+        "endChar": 11
+      },
+      "revId": "908735b39238a13f0928ba7f40b2ed24b7eb0e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "688c2906_05a56226",
         "filename": "chrome/browser/ui/browser_command_controller.cc",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "908735b39238a13f0928ba7f40b2ed24b7eb0e18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c26870a9_097a02b4",
+        "filename": "chrome/browser/ui/browser_command_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1211423
+      },
+      "writtenOn": "2017-07-06T19:05:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "688c2906_05a56226",
+      "range": {
+        "startLine": 88,
+        "startChar": 15,
+        "endLine": 88,
+        "endChar": 30
+      },
+      "revId": "908735b39238a13f0928ba7f40b2ed24b7eb0e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "2ab1d477_5ef2c372",
+        "filename": "chrome/browser/ui/browser_command_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1211423
+      },
+      "writtenOn": "2017-07-06T19:05:38Z",
+      "side": 1,
+      "message": "Verified that the BrowserCommandController is not needed, since the BrowserWindow can be accessed through Browser directly. Deleting.",
+      "parentUuid": "48685789_79a4e797",
+      "range": {
+        "startLine": 64,
+        "startChar": 7,
+        "endLine": 64,
+        "endChar": 35
+      },
+      "revId": "908735b39238a13f0928ba7f40b2ed24b7eb0e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bcdf9624_c9ae1d96",
         "filename": "chrome/browser/ui/browser_navigator.cc",
         "patchSetId": 6
@@ -88,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "c81f80d5_1c91f197",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1211423
+      },
+      "writtenOn": "2017-07-06T19:05:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bcdf9624_c9ae1d96",
+      "revId": "908735b39238a13f0928ba7f40b2ed24b7eb0e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b3a27fc_da9bf300",
         "filename": "chrome/browser/ui/browser_window.h",
         "patchSetId": 6
@@ -99,6 +189,30 @@
       "writtenOn": "2017-06-30T17:51:58Z",
       "side": 1,
       "message": "This needs a function comment, and possibly a lengthy one, because of how complicated it is. Also, what will it do on non-Mac?",
+      "range": {
+        "startLine": 179,
+        "startChar": 15,
+        "endLine": 179,
+        "endChar": 43
+      },
+      "revId": "908735b39238a13f0928ba7f40b2ed24b7eb0e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e6bc5d5_99a38e31",
+        "filename": "chrome/browser/ui/browser_window.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1211423
+      },
+      "writtenOn": "2017-07-06T19:05:38Z",
+      "side": 1,
+      "message": "The reason why this is here is because when calling the Browser\u0027s BrowserWindow, the compiler gave us errors when trying to make this method (saying that it wasn\u0027t declared on BrowserWindow) only declared in the browser_window_cocoa implementation. By declaring it here it made us able to call it. Is there another way to call BrowserWindowCocoa\u0027s methods without having them declared in BrowserWindow?",
+      "parentUuid": "5b3a27fc_da9bf300",
       "range": {
         "startLine": 179,
         "startChar": 15,
@@ -128,6 +242,24 @@
     },
     {
       "key": {
+        "uuid": "9b0adb92_8f922fe7",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1211423
+      },
+      "writtenOn": "2017-07-06T19:05:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4af2083b_299b4ca3",
+      "revId": "908735b39238a13f0928ba7f40b2ed24b7eb0e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6093c624_483d60f7",
         "filename": "chrome/browser/ui/cocoa/browser_window_controller.mm",
         "patchSetId": 6
@@ -142,6 +274,24 @@
       "revId": "908735b39238a13f0928ba7f40b2ed24b7eb0e18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e22e7ad8_cbfed537",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1211423
+      },
+      "writtenOn": "2017-07-06T19:05:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6093c624_483d60f7",
+      "revId": "908735b39238a13f0928ba7f40b2ed24b7eb0e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -168,6 +318,30 @@
     },
     {
       "key": {
+        "uuid": "38cd53d4_77d3fd13",
+        "filename": "chrome/browser/ui/cocoa/browser_window_touch_bar.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1211423
+      },
+      "writtenOn": "2017-07-06T19:05:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f1ed00d_24a0a094",
+      "range": {
+        "startLine": 25,
+        "startChar": 1,
+        "endLine": 25,
+        "endChar": 9
+      },
+      "revId": "908735b39238a13f0928ba7f40b2ed24b7eb0e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9192f9e_7fa5f78b",
         "filename": "chrome/browser/ui/cocoa/browser_window_touch_bar.mm",
         "patchSetId": 6
@@ -182,6 +356,24 @@
       "revId": "908735b39238a13f0928ba7f40b2ed24b7eb0e18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c7f399b_6fad0616",
+        "filename": "chrome/browser/ui/cocoa/browser_window_touch_bar.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1211423
+      },
+      "writtenOn": "2017-07-06T19:05:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9192f9e_7fa5f78b",
+      "revId": "908735b39238a13f0928ba7f40b2ed24b7eb0e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -208,6 +400,30 @@
     },
     {
       "key": {
+        "uuid": "b4531001_7c116020",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 906,
+      "author": {
+        "id": 1211423
+      },
+      "writtenOn": "2017-07-06T19:05:38Z",
+      "side": 1,
+      "message": "It was for testing for the beginning, and now it\u0027s unused. Deleted.",
+      "parentUuid": "151c53ba_6784257c",
+      "range": {
+        "startLine": 906,
+        "startChar": 16,
+        "endLine": 906,
+        "endChar": 29
+      },
+      "revId": "908735b39238a13f0928ba7f40b2ed24b7eb0e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d484d0c8_1d567605",
         "filename": "components/neterror/resources/offline.js",
         "patchSetId": 6
@@ -231,6 +447,30 @@
     },
     {
       "key": {
+        "uuid": "e50fa282_d63bd38f",
+        "filename": "components/neterror/resources/offline.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1211423
+      },
+      "writtenOn": "2017-07-06T19:05:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d484d0c8_1d567605",
+      "range": {
+        "startLine": 486,
+        "startChar": 1,
+        "endLine": 486,
+        "endChar": 5
+      },
+      "revId": "908735b39238a13f0928ba7f40b2ed24b7eb0e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "888333e6_5478d5e3",
         "filename": "components/neterror/resources/offline.js",
         "patchSetId": 6
@@ -242,6 +482,30 @@
       "writtenOn": "2017-06-30T17:51:58Z",
       "side": 1,
       "message": "What is this for?",
+      "range": {
+        "startLine": 510,
+        "startChar": 4,
+        "endLine": 510,
+        "endChar": 11
+      },
+      "revId": "908735b39238a13f0928ba7f40b2ed24b7eb0e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfd4695f_6c8a3fb5",
+        "filename": "components/neterror/resources/offline.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1211423
+      },
+      "writtenOn": "2017-07-06T19:05:38Z",
+      "side": 1,
+      "message": "This just verifies that when you touch the button in the \"prototype\" displayed in the touch bar, it\u0027s actually being pressed.",
+      "parentUuid": "888333e6_5478d5e3",
       "range": {
         "startLine": 510,
         "startChar": 4,
@@ -277,6 +541,30 @@
     },
     {
       "key": {
+        "uuid": "7c71c3c7_1332c4e1",
+        "filename": "components/neterror/resources/offline.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1211423
+      },
+      "writtenOn": "2017-07-06T19:05:38Z",
+      "side": 1,
+      "message": "The sx,.. properties have been assigned to a function, and a draw function has been implemented in the PopupDino prototype, so it should be better now. :)",
+      "parentUuid": "ce927aeb_33e15603",
+      "range": {
+        "startLine": 527,
+        "startChar": 9,
+        "endLine": 527,
+        "endChar": 22
+      },
+      "revId": "908735b39238a13f0928ba7f40b2ed24b7eb0e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2151915_3e0b5d03",
         "filename": "content/browser/renderer_host/input/web_input_event_builders_mac.h",
         "patchSetId": 6
@@ -291,6 +579,24 @@
       "revId": "908735b39238a13f0928ba7f40b2ed24b7eb0e18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8566bf8_a43e81a4",
+        "filename": "content/browser/renderer_host/input/web_input_event_builders_mac.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1211423
+      },
+      "writtenOn": "2017-07-06T19:05:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2151915_3e0b5d03",
+      "revId": "908735b39238a13f0928ba7f40b2ed24b7eb0e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -317,6 +623,30 @@
     },
     {
       "key": {
+        "uuid": "d78c36e4_4d0048ff",
+        "filename": "content/browser/renderer_host/input/web_input_event_builders_mac.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1211423
+      },
+      "writtenOn": "2017-07-06T19:05:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f5faa45_2ea3de46",
+      "range": {
+        "startLine": 259,
+        "startChar": 6,
+        "endLine": 259,
+        "endChar": 17
+      },
+      "revId": "908735b39238a13f0928ba7f40b2ed24b7eb0e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22318481_d00f877b",
         "filename": "content/browser/renderer_host/input/web_input_event_builders_mac.mm",
         "patchSetId": 6
@@ -337,6 +667,30 @@
       "revId": "908735b39238a13f0928ba7f40b2ed24b7eb0e18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5710e06_26465535",
+        "filename": "content/browser/renderer_host/input/web_input_event_builders_mac.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1211423
+      },
+      "writtenOn": "2017-07-06T19:05:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22318481_d00f877b",
+      "range": {
+        "startLine": 261,
+        "startChar": 19,
+        "endLine": 261,
+        "endChar": 20
+      },
+      "revId": "908735b39238a13f0928ba7f40b2ed24b7eb0e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -363,6 +717,30 @@
     },
     {
       "key": {
+        "uuid": "0a0601cb_2a5ac23e",
+        "filename": "content/browser/renderer_host/render_widget_host_view_mac.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 2417,
+      "author": {
+        "id": 1211423
+      },
+      "writtenOn": "2017-07-06T19:05:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95334b42_358b2600",
+      "range": {
+        "startLine": 2417,
+        "startChar": 8,
+        "endLine": 2417,
+        "endChar": 29
+      },
+      "revId": "908735b39238a13f0928ba7f40b2ed24b7eb0e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6e17c99_e8fe90c2",
         "filename": "content/browser/web_contents/web_contents_impl.cc",
         "patchSetId": 6
@@ -386,6 +764,30 @@
     },
     {
       "key": {
+        "uuid": "0f33b99d_a13b72c5",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1211423
+      },
+      "writtenOn": "2017-07-06T19:05:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6e17c99_e8fe90c2",
+      "range": {
+        "startLine": 530,
+        "startChar": 2,
+        "endLine": 530,
+        "endChar": 15
+      },
+      "revId": "908735b39238a13f0928ba7f40b2ed24b7eb0e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "556d4210_4ece4322",
         "filename": "content/browser/web_contents/web_contents_impl.cc",
         "patchSetId": 6
@@ -397,6 +799,30 @@
       "writtenOn": "2017-06-30T17:51:58Z",
       "side": 1,
       "message": "I do not think this logic belongs in WebContentsImpl or in //content generally. Instead, the Chrome layer should be observing this WebContents, then showing/hiding the popup WebContents in the touchbar.",
+      "range": {
+        "startLine": 1471,
+        "startChar": 25,
+        "endLine": 1471,
+        "endChar": 39
+      },
+      "revId": "908735b39238a13f0928ba7f40b2ed24b7eb0e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "124f7227_8896027e",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1471,
+      "author": {
+        "id": 1211423
+      },
+      "writtenOn": "2017-07-06T19:05:38Z",
+      "side": 1,
+      "message": "Do we have to use a pre-existing WebContentsObserver? Or should we have our own if needed?",
+      "parentUuid": "556d4210_4ece4322",
       "range": {
         "startLine": 1471,
         "startChar": 25,
@@ -478,6 +904,30 @@
     },
     {
       "key": {
+        "uuid": "d3927604_3589fc9f",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 3643,
+      "author": {
+        "id": 1211423
+      },
+      "writtenOn": "2017-07-06T19:05:38Z",
+      "side": 1,
+      "message": "This is what tells the WebContents initially if the page it\u0027s displaying is an error page, which determines if it hides popups and redirects it to the Touchbar or not.",
+      "parentUuid": "02764bdc_f922da9f",
+      "range": {
+        "startLine": 3643,
+        "startChar": 27,
+        "endLine": 3643,
+        "endChar": 38
+      },
+      "revId": "908735b39238a13f0928ba7f40b2ed24b7eb0e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb16b4e5_e8fd562c",
         "filename": "content/browser/web_contents/web_contents_impl.h",
         "patchSetId": 6
@@ -489,6 +939,30 @@
       "writtenOn": "2017-06-30T17:51:58Z",
       "side": 1,
       "message": "this should not be public and should it be a raw pointer? who owns it?",
+      "range": {
+        "startLine": 131,
+        "startChar": 19,
+        "endLine": 131,
+        "endChar": 33
+      },
+      "revId": "908735b39238a13f0928ba7f40b2ed24b7eb0e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a1a4ba4_be68aa90",
+        "filename": "content/browser/web_contents/web_contents_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1211423
+      },
+      "writtenOn": "2017-07-06T19:05:38Z",
+      "side": 1,
+      "message": "Moved to private and made a setter public. It is a raw pointer as it belongs to the popup window\u0027s WebContents, which we need a reference to when giving its view to the touchbar, so that what is displayed in the touchbar is able to update based on actions and content changing in the popup window, which in turn updated the WebContents and view referenced by the pointer in the Touchbar.",
+      "parentUuid": "cb16b4e5_e8fd562c",
       "range": {
         "startLine": 131,
         "startChar": 19,
@@ -524,6 +998,30 @@
     },
     {
       "key": {
+        "uuid": "277000e0_295c4508",
+        "filename": "content/browser/web_contents/web_contents_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 892,
+      "author": {
+        "id": 1211423
+      },
+      "writtenOn": "2017-07-06T19:05:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b93fde2_3dcc7636",
+      "range": {
+        "startLine": 892,
+        "startChar": 7,
+        "endLine": 892,
+        "endChar": 20
+      },
+      "revId": "908735b39238a13f0928ba7f40b2ed24b7eb0e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56d22a3f_2f2802b7",
         "filename": "content/public/browser/web_contents_delegate.h",
         "patchSetId": 6
@@ -538,6 +1036,24 @@
       "revId": "908735b39238a13f0928ba7f40b2ed24b7eb0e18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efcbb781_49f272fb",
+        "filename": "content/public/browser/web_contents_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1211423
+      },
+      "writtenOn": "2017-07-06T19:05:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56d22a3f_2f2802b7",
+      "revId": "908735b39238a13f0928ba7f40b2ed24b7eb0e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
