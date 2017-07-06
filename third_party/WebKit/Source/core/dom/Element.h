@@ -47,10 +47,10 @@ class AccessibleNode;
 class Attr;
 class Attribute;
 class CSSStyleDeclaration;
-class ClientRect;
-class ClientRectList;
 class CompositorMutation;
 class CustomElementDefinition;
+class DOMRect;
+class DOMRectList;
 class DOMStringMap;
 class DOMTokenList;
 class ElementRareData;
@@ -263,8 +263,8 @@ class CORE_EXPORT Element : public ContainerNode {
   // used to show popups beside this element.
   IntRect VisibleBoundsInVisualViewport() const;
 
-  ClientRectList* getClientRects();
-  ClientRect* getBoundingClientRect();
+  DOMRectList* getClientRects();
+  DOMRect* getBoundingClientRect();
 
   bool HasNonEmptyLayoutSize() const;
 
