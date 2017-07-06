@@ -52,6 +52,24 @@
       "revId": "ccc15cfa30d02b30e15344f8a51d7784cb11f434",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f199156a_1b7e9be9",
+        "filename": "testing/buildbot/gn_isolate_map.pyl",
+        "patchSetId": 3
+      },
+      "lineNbr": 1074,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-07-06T19:30:00Z",
+      "side": 1,
+      "message": "I changed it to windowed in the rebased version.",
+      "parentUuid": "8cbdd688_32137550",
+      "revId": "ccc15cfa30d02b30e15344f8a51d7784cb11f434",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
