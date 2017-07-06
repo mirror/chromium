@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43877edc_2a399fef",
+        "filename": "ios/chrome/browser/tabs/tab_parenting_observer.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-06T14:29:41Z",
+      "side": 1,
+      "message": "Why is the pool needed? This is non-obvious, so a comment is warraned. Also, I want to know.",
+      "range": {
+        "startLine": 38,
+        "startChar": 3,
+        "endLine": 38,
+        "endChar": 18
+      },
+      "revId": "0982df81dd2313d6ea9c5762b0ad9bf96667b6ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1dd27ae_df797349",
+        "filename": "ios/chrome/browser/web_state_list/web_state_list.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-06T14:29:41Z",
+      "side": 1,
+      "message": "I\u0027m wary of continuing to add parameters to functions. What would you think about the public API being \n\nInsertWebState()\nInsertAndActivateWebState()\nAppendWebState()\nAppendAndActivateWebState()\n\n?",
+      "range": {
+        "startLine": 90,
+        "startChar": 7,
+        "endLine": 90,
+        "endChar": 21
+      },
+      "revId": "0982df81dd2313d6ea9c5762b0ad9bf96667b6ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "261c386a_db56567d",
+        "filename": "ios/chrome/browser/web_state_list/web_state_list_observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-06T14:29:41Z",
+      "side": 1,
+      "message": "Please add a comment describing the new parameter.",
+      "range": {
+        "startLine": 23,
+        "startChar": 21,
+        "endLine": 23,
+        "endChar": 0
+      },
+      "revId": "0982df81dd2313d6ea9c5762b0ad9bf96667b6ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76d45acc_696aec03",
+        "filename": "ios/chrome/browser/web_state_list/web_state_list_observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-06T14:29:41Z",
+      "side": 1,
+      "message": "Can we standardize on \u0027activated\u0027 instead of \u0027foreground\u0027? I don\u0027t like having two terms for the same thing.",
+      "range": {
+        "startLine": 27,
+        "startChar": 39,
+        "endLine": 27,
+        "endChar": 49
+      },
+      "revId": "0982df81dd2313d6ea9c5762b0ad9bf96667b6ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
