@@ -255,6 +255,9 @@ readingListCollectionViewController:
         rendererInitiated:NO];
 
   [self stop];
+
+  FeatureEngagementTrackerFactory::GetForBrowserState(self.browserState)
+      ->NotifyEvent(feature_engagement_tracker::events::kOpenedReadingListItem);
 }
 
 - (void)readingListCollectionViewController:
@@ -325,6 +328,9 @@ readingListCollectionViewController:
                             appendTo:kLastTab];
 
   [self stop];
+
+  FeatureEngagementTrackerFactory::GetForBrowserState(self.browserState)
+      ->NotifyEvent(feature_engagement_tracker::events::kOpenedReadingListItem);
 }
 
 @end
