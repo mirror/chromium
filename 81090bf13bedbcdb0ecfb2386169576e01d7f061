@@ -70,6 +70,30 @@
       "revId": "81090bf13bedbcdb0ecfb2386169576e01d7f061",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "863fb9d0_d966ac91",
+        "filename": "ios/web/public/global_state/ios_global_state.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-06T16:49:48Z",
+      "side": 1,
+      "message": "This is needed for iOS to receive experimental scheduling parameters.\n\nIf Cronet would like to opt-out of this, then this call should still be made in web_main_loop.mm so iOS can still receive these parameters.\n\nYou can use content as a template on how to request this from web_main_loop.mm:\nhttps://cs.chromium.org/chromium/src/content/browser/browser_main_loop.cc?rcl\u003dddc753934758db1cccdfc5491af7b58735a5c6f2\u0026l\u003d945",
+      "parentUuid": "d7679317_8c44c680",
+      "range": {
+        "startLine": 56,
+        "startChar": 8,
+        "endLine": 56,
+        "endChar": 27
+      },
+      "revId": "81090bf13bedbcdb0ecfb2386169576e01d7f061",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
