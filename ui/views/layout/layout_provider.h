@@ -35,6 +35,8 @@ enum InsetsMetric {
   // Padding to add to vector image buttons to increase their click and touch
   // target size.
   INSETS_VECTOR_IMAGE_BUTTON,
+  // Internal border around checkboxes and radio buttons.
+  INSETS_CHECKBOX_RADIO_BUTTON,
 
   // Embedders must start Insets enum values from this value.
   VIEWS_INSETS_END,
