@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "7f66347d_33c9dcf7",
+        "filename": "chrome/browser/resources/settings/android_apps_page/android_apps_subpage.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-06T23:21:40Z",
+      "side": 1,
+      "message": "I don\u0027t mind leaving this for a separate cleanup. My initial thinking is that those parameters are not needed and this CL is updating some useless type annotations. Instead of doing that, and in a way validate the existence of those annotations, we could do both types of cleanups in the same CL (update used Event parameter annotations, and remove unused ones in a single step), given that both cleanups are very mechanical.",
+      "parentUuid": "d6b36e09_35763b2f",
+      "revId": "513285faf5b8cf00af1d480b7811bf7e6ba3a5a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4a946021_0b03658f",
         "filename": "chrome/browser/resources/settings/internet_page/network_apnlist.js",
         "patchSetId": 3
