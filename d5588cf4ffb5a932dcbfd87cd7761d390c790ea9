@@ -16,6 +16,24 @@
       "revId": "d5588cf4ffb5a932dcbfd87cd7761d390c790ea9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c526b47e_d6abe568",
+        "filename": "chromecast/app/cast_test_launcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1122985
+      },
+      "writtenOn": "2017-07-06T19:57:07Z",
+      "side": 0,
+      "message": "Ack.  Undone this, I will update the CL description.",
+      "parentUuid": "5c035414_8ee38dc3",
+      "revId": "d5588cf4ffb5a932dcbfd87cd7761d390c790ea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
