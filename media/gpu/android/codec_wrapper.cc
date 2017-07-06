@@ -27,6 +27,8 @@ class CodecWrapperImpl : public base::RefCountedThreadSafe<CodecWrapperImpl> {
   bool HasValidCodecOutputBuffers() const;
   void DiscardCodecOutputBuffers();
   bool SupportsFlush(DeviceInfo* device_info) const;
+  bool IsEmpty();
+  bool IsDraining();
   bool Flush();
   MediaCodecStatus QueueInputBuffer(int index,
                                     const uint8_t* data,
@@ -67,6 +69,13 @@ class CodecWrapperImpl : public base::RefCountedThreadSafe<CodecWrapperImpl> {
   std::unique_ptr<MediaCodecBridge> codec_;
   bool in_error_state_;
 
+  // Whether the codec has not had any inputs queued since the last Flush().
+  bool is_empty_;
+
+  // Whether an EOS has been queued but Flush() has not been called. Note: It
+  // remains true after the EOS is dequeued.
+  bool is_draining_;
+
   // Buffer ids are unique for a given CodecWrapper and map to MediaCodec buffer
   // indices.
   int64_t next_buffer_id_;
@@ -93,11 +102,18 @@ bool CodecOutputBuffer::ReleaseToSurface() {
 }
 
 CodecWrapperImpl::CodecWrapperImpl(std::unique_ptr<MediaCodecBridge> codec)
-    : codec_(std::move(codec)), in_error_state_(false), next_buffer_id_(0) {}
+    : codec_(std::move(codec)),
+      in_error_state_(false),
+      is_empty_(true),
+      is_draining_(false),
+      next_buffer_id_(0) {
+  DVLOG(2) << __func__;
+}
 
 CodecWrapperImpl::~CodecWrapperImpl() = default;
 
 std::unique_ptr<MediaCodecBridge> CodecWrapperImpl::TakeCodec() {
+  DVLOG(2) << __func__;
   base::AutoLock l(lock_);
   if (!codec_)
     return nullptr;
@@ -106,16 +122,19 @@ std::unique_ptr<MediaCodecBridge> CodecWrapperImpl::TakeCodec() {
 }
 
 bool CodecWrapperImpl::HasValidCodecOutputBuffers() const {
+  DVLOG(2) << __func__;
   base::AutoLock l(lock_);
   return !buffer_ids_.empty();
 }
 
 void CodecWrapperImpl::DiscardCodecOutputBuffers() {
+  DVLOG(2) << __func__;
   base::AutoLock l(lock_);
   DiscardCodecOutputBuffers_Locked();
 }
 
 void CodecWrapperImpl::DiscardCodecOutputBuffers_Locked() {
+  DVLOG(2) << __func__;
   lock_.AssertAcquired();
   for (auto& kv : buffer_ids_)
     codec_->ReleaseOutputBuffer(kv.second, false);
@@ -123,11 +142,23 @@ void CodecWrapperImpl::DiscardCodecOutputBuffers_Locked() {
 }
 
 bool CodecWrapperImpl::SupportsFlush(DeviceInfo* device_info) const {
+  DVLOG(2) << __func__;
   base::AutoLock l(lock_);
   return !device_info->CodecNeedsFlushWorkaround(codec_.get());
 }
 
+bool CodecWrapperImpl::IsEmpty() {
+  base::AutoLock l(lock_);
+  return is_empty_;
+}
+
+bool CodecWrapperImpl::IsDraining() {
+  base::AutoLock l(lock_);
+  return is_draining_;
+}
+
 bool CodecWrapperImpl::Flush() {
+  DVLOG(2) << __func__;
   base::AutoLock l(lock_);
   DCHECK(codec_ && !in_error_state_);
 
@@ -138,6 +169,8 @@ bool CodecWrapperImpl::Flush() {
     in_error_state_ = true;
     return false;
   }
+  is_empty_ = true;
+  is_draining_ = false;
   return true;
 }
 
@@ -146,6 +179,7 @@ MediaCodecStatus CodecWrapperImpl::QueueInputBuffer(
     const uint8_t* data,
     size_t data_size,
     base::TimeDelta presentation_time) {
+  DVLOG(4) << __func__;
   base::AutoLock l(lock_);
   DCHECK(codec_ && !in_error_state_);
 
@@ -153,6 +187,8 @@ MediaCodecStatus CodecWrapperImpl::QueueInputBuffer(
       codec_->QueueInputBuffer(index, data, data_size, presentation_time);
   if (status == MEDIA_CODEC_ERROR)
     in_error_state_ = true;
+  else
+    is_empty_ = false;
   return status;
 }
 
@@ -165,6 +201,7 @@ MediaCodecStatus CodecWrapperImpl::QueueSecureInputBuffer(
     const std::vector<SubsampleEntry>& subsamples,
     const EncryptionScheme& encryption_scheme,
     base::TimeDelta presentation_time) {
+  DVLOG(4) << __func__;
   base::AutoLock l(lock_);
   DCHECK(codec_ && !in_error_state_);
 
@@ -173,17 +210,25 @@ MediaCodecStatus CodecWrapperImpl::QueueSecureInputBuffer(
       presentation_time);
   if (status == MEDIA_CODEC_ERROR)
     in_error_state_ = true;
+  else
+    is_empty_ = false;
   return status;
 }
 
 void CodecWrapperImpl::QueueEOS(int input_buffer_index) {
+  DVLOG(2) << __func__;
   base::AutoLock l(lock_);
   DCHECK(codec_ && !in_error_state_);
+  // Some MediaCodecs consider it an error to get an EOS as the first buffer
+  // (http://crbug.com/672268).
+  DCHECK(!is_empty_);
+  is_draining_ = true;
   codec_->QueueEOS(input_buffer_index);
 }
 
 MediaCodecStatus CodecWrapperImpl::DequeueInputBuffer(base::TimeDelta timeout,
                                                       int* index) {
+  DVLOG(4) << __func__;
   base::AutoLock l(lock_);
   DCHECK(codec_ && !in_error_state_);
   auto status = codec_->DequeueInputBuffer(timeout, index);
@@ -197,6 +242,7 @@ MediaCodecStatus CodecWrapperImpl::DequeueOutputBuffer(
     base::TimeDelta* presentation_time,
     bool* end_of_stream,
     std::unique_ptr<CodecOutputBuffer>* codec_buffer) {
+  DVLOG(4) << __func__;
   base::AutoLock l(lock_);
   DCHECK(codec_ && !in_error_state_);
   // If |*codec_buffer| were not null, deleting it may deadlock when it
@@ -246,6 +292,7 @@ MediaCodecStatus CodecWrapperImpl::DequeueOutputBuffer(
 }
 
 bool CodecWrapperImpl::SetSurface(jobject surface) {
+  DVLOG(2) << __func__;
   base::AutoLock l(lock_);
   DCHECK(codec_ && !in_error_state_);
 
@@ -256,6 +303,7 @@ bool CodecWrapperImpl::SetSurface(jobject surface) {
 }
 
 bool CodecWrapperImpl::ReleaseCodecOutputBuffer(int64_t id, bool render) {
+  DVLOG(2) << __func__;
   base::AutoLock l(lock_);
   if (!codec_ || in_error_state_)
     return false;
@@ -297,6 +345,14 @@ void CodecWrapper::DiscardCodecOutputBuffers() {
 
 bool CodecWrapper::SupportsFlush(DeviceInfo* device_info) const {
   return impl_->SupportsFlush(device_info);
+}
+
+bool CodecWrapper::IsEmpty() {
+  return impl_->IsEmpty();
+}
+
+bool CodecWrapper::IsDraining() {
+  return impl_->IsDraining();
 }
 
 bool CodecWrapper::Flush() {

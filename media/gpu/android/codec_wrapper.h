@@ -83,6 +83,13 @@ class MEDIA_GPU_EXPORT CodecWrapper {
   // Whether the codec supports Flush().
   bool SupportsFlush(DeviceInfo* device_info) const;
 
+  // Whether the codec has not had any inputs queued since the last Flush().
+  bool IsEmpty();
+
+  // Whether an EOS has been queued but Flush() has not been called. It stays
+  // true after the EOS is dequeued, until Flush() is called.
+  bool IsDraining();
+
   // See MediaCodecBridge documentation for the following.
   bool Flush();
   MediaCodecStatus QueueInputBuffer(int index,
