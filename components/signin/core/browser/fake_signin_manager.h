@@ -24,6 +24,10 @@ class FakeSigninManagerBase : public SigninManagerBase {
   ~FakeSigninManagerBase() override;
 
   void SignIn(const std::string& account_id);
+
+  // Fires the GoogleSigninSucceeded() notification to all registered
+  // observers with the information of the primary account.
+  void FireGoogleSigninSucceeded();
 };
 
 #if !defined(OS_CHROMEOS)

@@ -335,6 +335,64 @@ TEST_F(IdentityManagerTest, GetPrimaryAccountWhenAvailableTokenAvailableLater) {
   EXPECT_TRUE(account_state.is_primary_account);
 }
 
+// Check that GetPrimaryAccountWhenAvailable() returns the expected account info
+// in the case where the token is available before the call is received but the
+// account is made authenticated only *after* the call is received.
+TEST_F(IdentityManagerTest,
+       GetPrimaryAccountWhenAvailableAuthenticationAvailableLater) {
+  AccountInfo account_info;
+  AccountState account_state;
+
+  // Set the refresh token, but don't sign in yet.
+  std::string account_id_to_use =
+      account_tracker()->SeedAccountInfo(kTestGaiaId, kTestEmail);
+  token_service()->UpdateCredentials(account_id_to_use, kTestRefreshToken);
+  base::RunLoop run_loop;
+  identity_manager_->GetPrimaryAccountWhenAvailable(base::Bind(
+      &IdentityManagerTest::OnPrimaryAccountAvailable, base::Unretained(this),
+      run_loop.QuitClosure(), base::Unretained(&account_info),
+      base::Unretained(&account_state)));
+
+  // Verify that the account is present and has a refresh token, but that the
+  // primary account is not yet considered available (this also serves to ensure
+  // that the preceding call has been received by the Identity Manager before
+  // proceeding).
+  base::RunLoop run_loop2;
+  identity_manager_->GetAccountInfoFromGaiaId(
+      kTestGaiaId,
+      base::Bind(&IdentityManagerTest::OnReceivedAccountInfoFromGaiaId,
+                 base::Unretained(this), run_loop2.QuitClosure()));
+  run_loop2.Run();
+
+  EXPECT_TRUE(account_info_from_gaia_id_);
+  EXPECT_EQ(account_id_to_use, account_info_from_gaia_id_->account_id);
+  EXPECT_EQ(kTestGaiaId, account_info_from_gaia_id_->gaia);
+  EXPECT_EQ(kTestEmail, account_info_from_gaia_id_->email);
+  EXPECT_TRUE(account_state_from_gaia_id_.has_refresh_token);
+  EXPECT_FALSE(account_state_from_gaia_id_.is_primary_account);
+
+  EXPECT_TRUE(account_info.account_id.empty());
+
+  // Set the account as the authenticated account and check that the callback is
+  // invoked as expected (i.e., the primary account is now considered
+  // available).
+  signin_manager()->SetAuthenticatedAccountInfo(kTestGaiaId, kTestEmail);
+
+  // Note: SigninManagerBase does not fire the GoogleSigninSucceeded
+  // notification by default. However, this notification needs to be fired for
+  // the IdentityManager to become aware of the state change.
+  static_cast<FakeSigninManagerBase*>(signin_manager())
+      ->FireGoogleSigninSucceeded();
+  run_loop.Run();
+
+  EXPECT_EQ(signin_manager()->GetAuthenticatedAccountId(),
+            account_info.account_id);
+  EXPECT_EQ(kTestGaiaId, account_info.gaia);
+  EXPECT_EQ(kTestEmail, account_info.email);
+  EXPECT_TRUE(account_state.has_refresh_token);
+  EXPECT_TRUE(account_state.is_primary_account);
+}
+
 // Check that GetPrimaryAccountWhenAvailable() returns the expected account
 // info to all callers in the case where the primary account is made available
 // after multiple overlapping calls have been received.
