@@ -46,6 +46,30 @@
       "revId": "8cf662297274ead10c6c4a4cd3f8ddeb9191575d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9e4d456_6cb2823a",
+        "filename": "chrome/browser/thumbnails/simple_thumbnail_crop.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-06T12:52:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33d6ce01_eb5c71d1",
+      "range": {
+        "startLine": 45,
+        "startChar": 27,
+        "endLine": 45,
+        "endChar": 0
+      },
+      "revId": "8cf662297274ead10c6c4a4cd3f8ddeb9191575d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
