@@ -204,7 +204,7 @@ BOOL ShouldCellsBeFullWidth(UITraitCollection* collection) {
         UIEdgeInsetsMake(0, self.cardStyleMargin, 0, self.cardStyleMargin);
   }
   [self.collectionUpdater updateMostVisitedForSize:size];
-  [self.collectionView.collectionViewLayout invalidateLayout];
+  [self.collectionView reloadData];
 }
 
 - (void)willTransitionToTraitCollection:(UITraitCollection*)newCollection
@@ -220,7 +220,6 @@ BOOL ShouldCellsBeFullWidth(UITraitCollection* collection) {
         UIEdgeInsetsMake(0, self.cardStyleMargin, 0, self.cardStyleMargin);
     self.styler.cellStyle = MDCCollectionViewCellStyleCard;
   }
-  [self.collectionView.collectionViewLayout invalidateLayout];
 }
 
 #pragma mark - UICollectionViewDelegate
