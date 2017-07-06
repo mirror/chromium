@@ -4,25 +4,29 @@
 
 #include "ash/login/ui/login_pin_view.h"
 
+#include "ash/ash_constants.h"
+#include "ash/resources/vector_icons/vector_icons.h"
 #include "base/callback.h"
 #include "base/strings/utf_string_conversions.h"
+#include "ui/gfx/paint_vector_icon.h"
 #include "ui/views/controls/button/label_button.h"
 #include "ui/views/layout/box_layout.h"
+#include "ui/views/painter.h"
 
 namespace ash {
 namespace {
 
 const char* kPinLabels[] = {
     "+",      // 0
-    " ABC",   // 1
-    " DEF",   // 2
-    " GHI",   // 3
-    " JKL",   // 4
-    " MNO",   // 5
-    " PQRS",  // 6
-    " TUV",   // 7
-    " WXYZ",  // 8
-    " MNO",   // 9
+    "",       // 1
+    " ABC",   // 2
+    " DEF",   // 3
+    " GHI",   // 4
+    " JKL",   // 5
+    " MNO",   // 6
+    " PQRS",  // 7
+    " TUV",   // 8
+    " WXYZ",  // 9
 };
 
 const char* kLoginPinViewClassName = "LoginPinView";
@@ -32,7 +36,12 @@ const int kBackspaceButtonId = -1;
 
 base::string16 GetButtonLabelForNumber(int value) {
   DCHECK(value >= 0 && value < int{arraysize(kPinLabels)});
-  return base::ASCIIToUTF16(std::to_string(value) + kPinLabels[value]);
+  return base::ASCIIToUTF16(std::to_string(value));
+}
+
+base::string16 GetButtonSubLabelForNumber(int value) {
+  DCHECK(value >= 0 && value < int{arraysize(kPinLabels)});
+  return base::ASCIIToUTF16(kPinLabels[value]);
 }
 
 // Returns the view id for the given pin number.
@@ -42,22 +51,51 @@ int GetViewIdForPinNumber(int number) {
   return number + 1;
 }
 
-// TODO(jdufault): Get pin button visuals to spec.
-class PinButton : public views::LabelButton, public views::ButtonListener {
+class PinButton : public views::CustomButton, public views::ButtonListener {
  public:
-  PinButton(const base::string16& label, const base::Closure& on_press)
-      : views::LabelButton(this, label), on_press_(on_press) {
-    SetFocusBehavior(FocusBehavior::ALWAYS);
+  // For digit button.
+  PinButton(const base::string16& label,
+            const base::string16& sub_label,
+            const base::Closure& on_press)
+      : views::CustomButton(this), on_press_(on_press) {
+    Init();
+    const gfx::FontList& base_font_list = views::Label::GetDefaultFontList();
+    label_ = new views::Label(label, views::style::CONTEXT_BUTTON,
+                              views::style::STYLE_PRIMARY);
+    sub_label_ = new views::Label(sub_label, views::style::CONTEXT_BUTTON,
+                                  views::style::STYLE_PRIMARY);
 
-    SetEnabledTextColors(SK_ColorWHITE);
-    SetPreferredSize(
-        gfx::Size(LoginPinView::kButtonSizeDp, LoginPinView::kButtonSizeDp));
+    label_->SetEnabledColor(SK_ColorWHITE);
+    sub_label_->SetEnabledColor(
+        SkColorSetA(SK_ColorWHITE, LoginPinView::kButtonSubLabelAlpha));
+    label_->SetAutoColorReadabilityEnabled(false);
+    sub_label_->SetAutoColorReadabilityEnabled(false);
+    label_->SetFontList(base_font_list.Derive(8, gfx::Font::FontStyle::NORMAL,
+                                              gfx::Font::Weight::LIGHT));
+    sub_label_->SetFontList(base_font_list.Derive(
+        -3, gfx::Font::FontStyle::NORMAL, gfx::Font::Weight::NORMAL));
+
+    AddChildView(label_);
+    AddChildView(sub_label_);
   }
 
   PinButton(int value, const LoginPinView::OnPinKey& on_key)
-      : PinButton(GetButtonLabelForNumber(value), base::Bind(on_key, value)) {
+      : PinButton(GetButtonLabelForNumber(value),
+                  GetButtonSubLabelForNumber(value),
+                  base::Bind(on_key, value)) {
     set_id(GetViewIdForPinNumber(value));
   }
+
+  // For backspace button.
+  PinButton(const base::Closure& on_press)
+      : views::CustomButton(this), on_press_(on_press) {
+    Init();
+    image_ = new views::ImageView();
+    image_->SetImage(
+        gfx::CreateVectorIcon(kLockScreenBackspaceIcon, SK_ColorWHITE));
+    AddChildView(image_);
+  }
+
   ~PinButton() override = default;
 
   // views::ButtonListener:
@@ -68,8 +106,24 @@ class PinButton : public views::LabelButton, public views::ButtonListener {
       on_press_.Run();
   }
 
+  void Init() {
+    SetFocusBehavior(FocusBehavior::ALWAYS);
+    SetPreferredSize(
+        gfx::Size(LoginPinView::kButtonSizeDp, LoginPinView::kButtonSizeDp));
+    SetFocusPainter(views::Painter::CreateSolidFocusPainter(
+        ash::kFocusBorderColor, ash::kFocusBorderThickness, gfx::InsetsF()));
+    SetLayoutManager(new views::BoxLayout(views::BoxLayout::kVertical));
+    auto* top_spacing = new views::View();
+    top_spacing->SetPreferredSize(gfx::Size(LoginPinView::kButtonSizeDp,
+                                            LoginPinView::kButtonTopSpacingDp));
+    AddChildView(top_spacing);
+  }
+
  private:
   base::Closure on_press_;
+  views::Label* label_;
+  views::Label* sub_label_;
+  views::ImageView* image_;
 
   DISALLOW_COPY_AND_ASSIGN(PinButton);
 };
@@ -80,6 +134,10 @@ class PinButton : public views::LabelButton, public views::ButtonListener {
 const int LoginPinView::kButtonSeparatorSizeDp = 30;
 // static
 const int LoginPinView::kButtonSizeDp = 48;
+// static
+const int LoginPinView::kButtonTopSpacingDp = 10;
+// static
+const SkAlpha LoginPinView::kButtonSubLabelAlpha = 0x57;
 
 LoginPinView::TestApi::TestApi(LoginPinView* view) : view_(view) {}
 
@@ -135,7 +193,7 @@ LoginPinView::LoginPinView(const OnPinKey& on_key,
   spacer->SetPreferredSize(gfx::Size(kButtonSizeDp, kButtonSizeDp));
   row->AddChildView(spacer);
   row->AddChildView(new PinButton(0, on_key_));
-  auto* backspace = new PinButton(base::ASCIIToUTF16("x"), on_backspace_);
+  auto* backspace = new PinButton(on_backspace_);
   backspace->set_id(kBackspaceButtonId);
   row->AddChildView(backspace);
 }
