@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e033843c_48dd574f",
+        "filename": "codereview.settings",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1141499
+      },
+      "writtenOn": "2017-07-06T17:59:18Z",
+      "side": 1,
+      "message": "👍",
+      "range": {
+        "startLine": 4,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 17
+      },
+      "revId": "da898317f933201de6b5baea42e98ba5e5ba4e34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
