@@ -52,6 +52,24 @@
       "revId": "d74f1fcf603fd78c3cd9e0a3123db98e4a1767e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "df0d29fa_6b12a7a1",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 871,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-07-06T17:34:15Z",
+      "side": 0,
+      "message": "Ah, now I see what CorruptionOnDisk failure you were talking about, yes, that indeed does need a RunAllBlcokingPoolTasksUntilIdle (I think).",
+      "parentUuid": "6796f85d_3387bcbe",
+      "revId": "d74f1fcf603fd78c3cd9e0a3123db98e4a1767e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
