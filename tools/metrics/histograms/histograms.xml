@@ -37673,6 +37673,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Net.HttpContentLengthV2" units="bytes">
+  <owner>bengr@chromium.org</owner>
+  <summary>
+    Like Net.HttpContentLength, but with a more accurate assignment of direct,
+    HTTP requests.
+  </summary>
+</histogram>
+
 <histogram name="Net.HttpContentLengthWithValidOCL" units="bytes">
   <owner>bengr@chromium.org</owner>
   <summary>
@@ -37755,6 +37763,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     Size specified in the X-Original-Content-Length header. If this header is
     not present in the response, the size of the response body is used.
+  </summary>
+</histogram>
+
+<histogram name="Net.HttpOriginalContentLengthV2" units="bytes">
+  <owner>bengr@chromium.org</owner>
+  <summary>
+    Net.HttpOriginalContentLength with non-data reduction proxy traffic properly
+    labeled with the &quot;Direct&quot; suffix.
   </summary>
 </histogram>
 
@@ -93035,7 +93051,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <suffix name="Https"/>
   <suffix name="Video"/>
   <affected-histogram name="Net.HttpContentLength"/>
+  <affected-histogram name="Net.HttpContentLengthV2"/>
   <affected-histogram name="Net.HttpOriginalContentLength"/>
+  <affected-histogram name="Net.HttpOriginalContentLengthV2"/>
 </histogram_suffixes>
 
 <histogram_suffixes name="NetHttpContentLengthType2" separator=".">
@@ -93051,8 +93069,12 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
       label="Bytes of traffic that passed through the Data Reduction Proxy"/>
   <affected-histogram name="Net.HttpContentLength.Http"/>
   <affected-histogram name="Net.HttpContentLength.Https"/>
+  <affected-histogram name="Net.HttpContentLengthV2.Http"/>
+  <affected-histogram name="Net.HttpContentLengthV2.Https"/>
   <affected-histogram name="Net.HttpOriginalContentLength.Http"/>
   <affected-histogram name="Net.HttpOriginalContentLength.Https"/>
+  <affected-histogram name="Net.HttpOriginalContentLengthV2.Http"/>
+  <affected-histogram name="Net.HttpOriginalContentLengthV2.Https"/>
 </histogram_suffixes>
 
 <histogram_suffixes name="NetHttpContentLengthType3" separator=".">
@@ -93065,6 +93087,30 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <affected-histogram name="Net.HttpContentLength.Https.Direct"/>
   <affected-histogram name="Net.HttpContentLength.Https.Other"/>
   <affected-histogram name="Net.HttpContentLength.Https.ViaDRP"/>
+  <affected-histogram name="Net.HttpContentLengthV2.Http.BypassedDRP"/>
+  <affected-histogram name="Net.HttpContentLengthV2.Http.Direct"/>
+  <affected-histogram name="Net.HttpContentLengthV2.Http.Other"/>
+  <affected-histogram name="Net.HttpContentLengthV2.Http.ViaDRP"/>
+  <affected-histogram name="Net.HttpContentLengthV2.Https.BypassedDRP"/>
+  <affected-histogram name="Net.HttpContentLengthV2.Https.Direct"/>
+  <affected-histogram name="Net.HttpContentLengthV2.Https.Other"/>
+  <affected-histogram name="Net.HttpContentLengthV2.Https.ViaDRP"/>
+  <affected-histogram name="Net.HttpOriginalContentLength.Http.BypassedDRP"/>
+  <affected-histogram name="Net.HttpOriginalContentLength.Http.Direct"/>
+  <affected-histogram name="Net.HttpOriginalContentLength.Http.Other"/>
+  <affected-histogram name="Net.HttpOriginalContentLength.Http.ViaDRP"/>
+  <affected-histogram name="Net.HttpOriginalContentLength.Https.BypassedDRP"/>
+  <affected-histogram name="Net.HttpOriginalContentLength.Https.Direct"/>
+  <affected-histogram name="Net.HttpOriginalContentLength.Https.Other"/>
+  <affected-histogram name="Net.HttpOriginalContentLength.Https.ViaDRP"/>
+  <affected-histogram name="Net.HttpOriginalContentLengthV2.Http.BypassedDRP"/>
+  <affected-histogram name="Net.HttpOriginalContentLengthV2.Http.Direct"/>
+  <affected-histogram name="Net.HttpOriginalContentLengthV2.Http.Other"/>
+  <affected-histogram name="Net.HttpOriginalContentLengthV2.Http.ViaDRP"/>
+  <affected-histogram name="Net.HttpOriginalContentLengthV2.Https.BypassedDRP"/>
+  <affected-histogram name="Net.HttpOriginalContentLengthV2.Https.Direct"/>
+  <affected-histogram name="Net.HttpOriginalContentLengthV2.Https.Other"/>
+  <affected-histogram name="Net.HttpOriginalContentLengthV2.Https.ViaDRP"/>
 </histogram_suffixes>
 
 <histogram_suffixes name="NetHttpProxyConnectLatencySecure" separator=".">
