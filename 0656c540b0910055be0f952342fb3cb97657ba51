@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "71c8f1b7_08be5e93",
+        "filename": "tools/perf/page_sets/webrtc_cases/pause-play.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1226821
+      },
+      "writtenOn": "2017-07-06T07:12:22Z",
+      "side": 1,
+      "message": "Instead of hard-coding \u0027video\u0027, can we make this a variable so that we re-use the code for an audio only test?\n\nvar feed \u003d document.createElement(this.feedType);\nfeed.autoplay \u003d false;\n...\n\nreturn feed;",
+      "range": {
+        "startLine": 41,
+        "startChar": 40,
+        "endLine": 41,
+        "endChar": 45
+      },
+      "revId": "0656c540b0910055be0f952342fb3cb97657ba51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e032c194_5bc4b031",
         "filename": "tools/perf/page_sets/webrtc_cases/pause-play.js",
         "patchSetId": 3
