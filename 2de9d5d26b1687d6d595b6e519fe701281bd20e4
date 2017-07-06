@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f99466ed_ceb9aae6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-06T12:37:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "264b210d_79efd128",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 3
+      },
+      "revId": "2de9d5d26b1687d6d595b6e519fe701281bd20e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8521924_f06798fc",
         "filename": "ios/chrome/browser/ui/settings/passwords_settings_egtest.mm",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "2de9d5d26b1687d6d595b6e519fe701281bd20e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "847a2f34_194e924e",
+        "filename": "ios/chrome/browser/ui/settings/passwords_settings_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-06T12:37:35Z",
+      "side": 1,
+      "message": "Thanks, that\u0027s a good point about disabling by accident! (And IWYU in general, of course.)",
+      "parentUuid": "a8521924_f06798fc",
+      "revId": "2de9d5d26b1687d6d595b6e519fe701281bd20e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
