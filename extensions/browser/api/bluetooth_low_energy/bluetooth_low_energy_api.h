@@ -89,34 +89,6 @@ namespace api {
 // Base class for bluetoothLowEnergy API functions. This class handles some of
 // the common logic involved in all API functions, such as checking for
 // platform support and returning the correct error.
-//
-// DEPRECATED: This inherits from AsyncExtensionFunction, which we're trying to
-// get rid of for various reasons. Please inherit from the
-// BluetoothLowEnergyExtensionFunction class instead.
-class BluetoothLowEnergyExtensionFunctionDeprecated
-    : public AsyncExtensionFunction {
- public:
-  BluetoothLowEnergyExtensionFunctionDeprecated();
-
- protected:
-  ~BluetoothLowEnergyExtensionFunctionDeprecated() override;
-
-  // AsyncExtensionFunction override.
-  bool RunAsync() override;
-
-  // Implemented by individual bluetoothLowEnergy extension functions to perform
-  // the body of the function. This invoked asynchonously after RunAsync after
-  // the BluetoothLowEnergyEventRouter has obtained a handle on the
-  // BluetoothAdapter.
-  virtual bool DoWork() = 0;
-
- private:
-  DISALLOW_COPY_AND_ASSIGN(BluetoothLowEnergyExtensionFunctionDeprecated);
-};
-
-// Replacement for BluetoothLowEnergyExtensionFunctionDeprecated. Has the same
-// functionality except that instead of the SendResponse/return combo, we'll
-// return our response with Respond().
 class BluetoothLowEnergyExtensionFunction : public UIThreadExtensionFunction {
  public:
   BluetoothLowEnergyExtensionFunction();
@@ -133,6 +105,9 @@ class BluetoothLowEnergyExtensionFunction : public UIThreadExtensionFunction {
   // BluetoothAdapter.
   virtual void DoWork() = 0;
 
+  // ValidationFailure override to be usable inside DoWork().
+  static void ValidationFailure(BluetoothLowEnergyExtensionFunction* function);
+
   BluetoothLowEnergyEventRouter* event_router_;
 
  private:
@@ -146,7 +121,6 @@ class BluetoothLowEnergyExtensionFunction : public UIThreadExtensionFunction {
 // handles some of the common logic involved in all API peripheral mode
 // functions, such as checking for peripheral permissions and returning the
 // correct error.
-template <typename Params>
 class BLEPeripheralExtensionFunction
     : public BluetoothLowEnergyExtensionFunction {
  public:
@@ -158,19 +132,12 @@ class BLEPeripheralExtensionFunction
   // ExtensionFunction override.
   ResponseAction Run() override;
 
-// Causes link error on Windows. API will never be on Windows, so #ifdefing.
-#if !defined(OS_WIN)
-  std::unique_ptr<Params> params_;
-#else
-  Params* params_;
-#endif
-
  private:
   DISALLOW_COPY_AND_ASSIGN(BLEPeripheralExtensionFunction);
 };
 
 class BluetoothLowEnergyConnectFunction
-    : public BluetoothLowEnergyExtensionFunctionDeprecated {
+    : public BluetoothLowEnergyExtensionFunction {
  public:
   DECLARE_EXTENSION_FUNCTION("bluetoothLowEnergy.connect",
                              BLUETOOTHLOWENERGY_CONNECT);
@@ -178,8 +145,8 @@ class BluetoothLowEnergyConnectFunction
  protected:
   ~BluetoothLowEnergyConnectFunction() override {}
 
-  // BluetoothLowEnergyExtensionFunctionDeprecated override.
-  bool DoWork() override;
+  // BluetoothLowEnergyExtensionFunction override.
+  void DoWork() override;
 
  private:
   // Success and error callbacks, called by
@@ -189,7 +156,7 @@ class BluetoothLowEnergyConnectFunction
 };
 
 class BluetoothLowEnergyDisconnectFunction
-    : public BluetoothLowEnergyExtensionFunctionDeprecated {
+    : public BluetoothLowEnergyExtensionFunction {
  public:
   DECLARE_EXTENSION_FUNCTION("bluetoothLowEnergy.disconnect",
                              BLUETOOTHLOWENERGY_DISCONNECT);
@@ -197,8 +164,8 @@ class BluetoothLowEnergyDisconnectFunction
  protected:
   ~BluetoothLowEnergyDisconnectFunction() override {}
 
-  // BluetoothLowEnergyExtensionFunctionDeprecated override.
-  bool DoWork() override;
+  // BluetoothLowEnergyExtensionFunction override.
+  void DoWork() override;
 
  private:
   // Success and error callbacks, called by
@@ -208,7 +175,7 @@ class BluetoothLowEnergyDisconnectFunction
 };
 
 class BluetoothLowEnergyGetServiceFunction
-    : public BluetoothLowEnergyExtensionFunctionDeprecated {
+    : public BluetoothLowEnergyExtensionFunction {
  public:
   DECLARE_EXTENSION_FUNCTION("bluetoothLowEnergy.getService",
                              BLUETOOTHLOWENERGY_GETSERVICE);
@@ -216,12 +183,12 @@ class BluetoothLowEnergyGetServiceFunction
  protected:
   ~BluetoothLowEnergyGetServiceFunction() override {}
 
-  // BluetoothLowEnergyExtensionFunctionDeprecated override.
-  bool DoWork() override;
+  // BluetoothLowEnergyExtensionFunction override.
+  void DoWork() override;
 };
 
 class BluetoothLowEnergyGetServicesFunction
-    : public BluetoothLowEnergyExtensionFunctionDeprecated {
+    : public BluetoothLowEnergyExtensionFunction {
  public:
   DECLARE_EXTENSION_FUNCTION("bluetoothLowEnergy.getServices",
                              BLUETOOTHLOWENERGY_GETSERVICES);
@@ -229,12 +196,12 @@ class BluetoothLowEnergyGetServicesFunction
  protected:
   ~BluetoothLowEnergyGetServicesFunction() override {}
 
-  // BluetoothLowEnergyExtensionFunctionDeprecated override.
-  bool DoWork() override;
+  // BluetoothLowEnergyExtensionFunction override.
+  void DoWork() override;
 };
 
 class BluetoothLowEnergyGetCharacteristicFunction
-    : public BluetoothLowEnergyExtensionFunctionDeprecated {
+    : public BluetoothLowEnergyExtensionFunction {
  public:
   DECLARE_EXTENSION_FUNCTION("bluetoothLowEnergy.getCharacteristic",
                              BLUETOOTHLOWENERGY_GETCHARACTERISTIC);
@@ -242,12 +209,12 @@ class BluetoothLowEnergyGetCharacteristicFunction
  protected:
   ~BluetoothLowEnergyGetCharacteristicFunction() override {}
 
-  // BluetoothLowEnergyExtensionFunctionDeprecated override.
-  bool DoWork() override;
+  // BluetoothLowEnergyExtensionFunction override.
+  void DoWork() override;
 };
 
 class BluetoothLowEnergyGetCharacteristicsFunction
-    : public BluetoothLowEnergyExtensionFunctionDeprecated {
+    : public BluetoothLowEnergyExtensionFunction {
  public:
   DECLARE_EXTENSION_FUNCTION("bluetoothLowEnergy.getCharacteristics",
                              BLUETOOTHLOWENERGY_GETCHARACTERISTICS);
@@ -255,12 +222,12 @@ class BluetoothLowEnergyGetCharacteristicsFunction
  protected:
   ~BluetoothLowEnergyGetCharacteristicsFunction() override {}
 
-  // BluetoothLowEnergyExtensionFunctionDeprecated override.
-  bool DoWork() override;
+  // BluetoothLowEnergyExtensionFunction override.
+  void DoWork() override;
 };
 
 class BluetoothLowEnergyGetIncludedServicesFunction
-    : public BluetoothLowEnergyExtensionFunctionDeprecated {
+    : public BluetoothLowEnergyExtensionFunction {
  public:
   DECLARE_EXTENSION_FUNCTION("bluetoothLowEnergy.getIncludedServices",
                              BLUETOOTHLOWENERGY_GETINCLUDEDSERVICES);
@@ -268,12 +235,12 @@ class BluetoothLowEnergyGetIncludedServicesFunction
  protected:
   ~BluetoothLowEnergyGetIncludedServicesFunction() override {}
 
-  // BluetoothLowEnergyExtensionFunctionDeprecated override.
-  bool DoWork() override;
+  // BluetoothLowEnergyExtensionFunction override.
+  void DoWork() override;
 };
 
 class BluetoothLowEnergyGetDescriptorFunction
-    : public BluetoothLowEnergyExtensionFunctionDeprecated {
+    : public BluetoothLowEnergyExtensionFunction {
  public:
   DECLARE_EXTENSION_FUNCTION("bluetoothLowEnergy.getDescriptor",
                              BLUETOOTHLOWENERGY_GETDESCRIPTOR);
@@ -281,12 +248,12 @@ class BluetoothLowEnergyGetDescriptorFunction
  protected:
   ~BluetoothLowEnergyGetDescriptorFunction() override {}
 
-  // BluetoothLowEnergyExtensionFunctionDeprecated override.
-  bool DoWork() override;
+  // BluetoothLowEnergyExtensionFunction override.
+  void DoWork() override;
 };
 
 class BluetoothLowEnergyGetDescriptorsFunction
-    : public BluetoothLowEnergyExtensionFunctionDeprecated {
+    : public BluetoothLowEnergyExtensionFunction {
  public:
   DECLARE_EXTENSION_FUNCTION("bluetoothLowEnergy.getDescriptors",
                              BLUETOOTHLOWENERGY_GETDESCRIPTORS);
@@ -294,12 +261,12 @@ class BluetoothLowEnergyGetDescriptorsFunction
  protected:
   ~BluetoothLowEnergyGetDescriptorsFunction() override {}
 
-  // BluetoothLowEnergyExtensionFunctionDeprecated override.
-  bool DoWork() override;
+  // BluetoothLowEnergyExtensionFunction override.
+  void DoWork() override;
 };
 
 class BluetoothLowEnergyReadCharacteristicValueFunction
-    : public BluetoothLowEnergyExtensionFunctionDeprecated {
+    : public BluetoothLowEnergyExtensionFunction {
  public:
   DECLARE_EXTENSION_FUNCTION("bluetoothLowEnergy.readCharacteristicValue",
                              BLUETOOTHLOWENERGY_READCHARACTERISTICVALUE);
@@ -307,8 +274,8 @@ class BluetoothLowEnergyReadCharacteristicValueFunction
  protected:
   ~BluetoothLowEnergyReadCharacteristicValueFunction() override {}
 
-  // BluetoothLowEnergyExtensionFunctionDeprecated override.
-  bool DoWork() override;
+  // BluetoothLowEnergyExtensionFunction override.
+  void DoWork() override;
 
  private:
   // Success and error callbacks, called by
@@ -321,7 +288,7 @@ class BluetoothLowEnergyReadCharacteristicValueFunction
 };
 
 class BluetoothLowEnergyWriteCharacteristicValueFunction
-    : public BluetoothLowEnergyExtensionFunctionDeprecated {
+    : public BluetoothLowEnergyExtensionFunction {
  public:
   DECLARE_EXTENSION_FUNCTION("bluetoothLowEnergy.writeCharacteristicValue",
                              BLUETOOTHLOWENERGY_WRITECHARACTERISTICVALUE);
@@ -329,8 +296,8 @@ class BluetoothLowEnergyWriteCharacteristicValueFunction
  protected:
   ~BluetoothLowEnergyWriteCharacteristicValueFunction() override {}
 
-  // BluetoothLowEnergyExtensionFunctionDeprecated override.
-  bool DoWork() override;
+  // BluetoothLowEnergyExtensionFunction override.
+  void DoWork() override;
 
  private:
   // Success and error callbacks, called by
@@ -343,7 +310,7 @@ class BluetoothLowEnergyWriteCharacteristicValueFunction
 };
 
 class BluetoothLowEnergyStartCharacteristicNotificationsFunction
-    : public BluetoothLowEnergyExtensionFunctionDeprecated {
+    : public BluetoothLowEnergyExtensionFunction {
  public:
   DECLARE_EXTENSION_FUNCTION(
       "bluetoothLowEnergy.startCharacteristicNotifications",
@@ -352,8 +319,8 @@ class BluetoothLowEnergyStartCharacteristicNotificationsFunction
  protected:
   ~BluetoothLowEnergyStartCharacteristicNotificationsFunction() override {}
 
-  // BluetoothLowEnergyExtensionFunctionDeprecated override.
-  bool DoWork() override;
+  // BluetoothLowEnergyExtensionFunction override.
+  void DoWork() override;
 
  private:
   // Success and error callbacks, called by
@@ -363,7 +330,7 @@ class BluetoothLowEnergyStartCharacteristicNotificationsFunction
 };
 
 class BluetoothLowEnergyStopCharacteristicNotificationsFunction
-    : public BluetoothLowEnergyExtensionFunctionDeprecated {
+    : public BluetoothLowEnergyExtensionFunction {
  public:
   DECLARE_EXTENSION_FUNCTION(
       "bluetoothLowEnergy.stopCharacteristicNotifications",
@@ -372,8 +339,8 @@ class BluetoothLowEnergyStopCharacteristicNotificationsFunction
  protected:
   ~BluetoothLowEnergyStopCharacteristicNotificationsFunction() override {}
 
-  // BluetoothLowEnergyExtensionFunctionDeprecated override.
-  bool DoWork() override;
+  // BluetoothLowEnergyExtensionFunction override.
+  void DoWork() override;
 
  private:
   // Success and error callbacks, called by
@@ -383,7 +350,7 @@ class BluetoothLowEnergyStopCharacteristicNotificationsFunction
 };
 
 class BluetoothLowEnergyReadDescriptorValueFunction
-    : public BluetoothLowEnergyExtensionFunctionDeprecated {
+    : public BluetoothLowEnergyExtensionFunction {
  public:
   DECLARE_EXTENSION_FUNCTION("bluetoothLowEnergy.readDescriptorValue",
                              BLUETOOTHLOWENERGY_READDESCRIPTORVALUE);
@@ -391,8 +358,8 @@ class BluetoothLowEnergyReadDescriptorValueFunction
  protected:
   ~BluetoothLowEnergyReadDescriptorValueFunction() override {}
 
-  // BluetoothLowEnergyExtensionFunctionDeprecated override.
-  bool DoWork() override;
+  // BluetoothLowEnergyExtensionFunction override.
+  void DoWork() override;
 
  private:
   // Success and error callbacks, called by
@@ -405,7 +372,7 @@ class BluetoothLowEnergyReadDescriptorValueFunction
 };
 
 class BluetoothLowEnergyWriteDescriptorValueFunction
-    : public BluetoothLowEnergyExtensionFunctionDeprecated {
+    : public BluetoothLowEnergyExtensionFunction {
  public:
   DECLARE_EXTENSION_FUNCTION("bluetoothLowEnergy.writeDescriptorValue",
                              BLUETOOTHLOWENERGY_WRITEDESCRIPTORVALUE);
@@ -413,8 +380,8 @@ class BluetoothLowEnergyWriteDescriptorValueFunction
  protected:
   ~BluetoothLowEnergyWriteDescriptorValueFunction() override {}
 
-  // BluetoothLowEnergyExtensionFunctionDeprecated override.
-  bool DoWork() override;
+  // BluetoothLowEnergyExtensionFunction override.
+  void DoWork() override;
 
  private:
   // Success and error callbacks, called by
@@ -427,7 +394,7 @@ class BluetoothLowEnergyWriteDescriptorValueFunction
 };
 
 class BluetoothLowEnergyAdvertisementFunction
-    : public BluetoothLowEnergyExtensionFunctionDeprecated {
+    : public BLEPeripheralExtensionFunction {
  public:
   BluetoothLowEnergyAdvertisementFunction();
 
@@ -441,7 +408,7 @@ class BluetoothLowEnergyAdvertisementFunction
   const base::hash_set<int>* GetAdvertisementIds();
 
   // ExtensionFunction override.
-  bool RunAsync() override;
+  ResponseAction Run() override;
 
  private:
   void Initialize();
@@ -460,8 +427,8 @@ class BluetoothLowEnergyRegisterAdvertisementFunction
  protected:
   ~BluetoothLowEnergyRegisterAdvertisementFunction() override {}
 
-  // BluetoothLowEnergyExtensionFunctionDeprecated override.
-  bool DoWork() override;
+  // BluetoothLowEnergyExtensionFunction override.
+  void DoWork() override;
 
  private:
   void SuccessCallback(scoped_refptr<device::BluetoothAdvertisement>);
@@ -477,8 +444,8 @@ class BluetoothLowEnergyUnregisterAdvertisementFunction
  protected:
   ~BluetoothLowEnergyUnregisterAdvertisementFunction() override {}
 
-  // BluetoothLowEnergyExtensionFunctionDeprecated override.
-  bool DoWork() override;
+  // BluetoothLowEnergyExtensionFunction override.
+  void DoWork() override;
 
  private:
   void SuccessCallback(int advertisement_id);
@@ -495,8 +462,8 @@ class BluetoothLowEnergyResetAdvertisingFunction
  protected:
   ~BluetoothLowEnergyResetAdvertisingFunction() override {}
 
-  // BluetoothLowEnergyExtensionFunctionDeprecated override.
-  bool DoWork() override;
+  // BluetoothLowEnergyExtensionFunction override.
+  void DoWork() override;
 
  private:
   void SuccessCallback();
@@ -504,9 +471,7 @@ class BluetoothLowEnergyResetAdvertisingFunction
 };
 
 class BluetoothLowEnergySetAdvertisingIntervalFunction
-    : public BLEPeripheralExtensionFunction<
-          extensions::api::bluetooth_low_energy::SetAdvertisingInterval::
-              Params> {
+    : public BLEPeripheralExtensionFunction {
  public:
   DECLARE_EXTENSION_FUNCTION("bluetoothLowEnergy.setAdvertisingInterval",
                              BLUETOOTHLOWENERGY_SETADVERTISINGINTERVAL);
@@ -514,7 +479,7 @@ class BluetoothLowEnergySetAdvertisingIntervalFunction
  protected:
   ~BluetoothLowEnergySetAdvertisingIntervalFunction() override {}
 
-  // BluetoothLowEnergyExtensionFunctionDeprecated override.
+  // BluetoothLowEnergyExtensionFunction override.
   void DoWork() override;
 
  private:
@@ -523,8 +488,7 @@ class BluetoothLowEnergySetAdvertisingIntervalFunction
 };
 
 class BluetoothLowEnergyCreateServiceFunction
-    : public BLEPeripheralExtensionFunction<
-          extensions::api::bluetooth_low_energy::CreateService::Params> {
+    : public BLEPeripheralExtensionFunction {
  public:
   DECLARE_EXTENSION_FUNCTION("bluetoothLowEnergy.createService",
                              BLUETOOTHLOWENERGY_CREATESERVICE);
@@ -537,8 +501,7 @@ class BluetoothLowEnergyCreateServiceFunction
 };
 
 class BluetoothLowEnergyCreateCharacteristicFunction
-    : public BLEPeripheralExtensionFunction<
-          extensions::api::bluetooth_low_energy::CreateCharacteristic::Params> {
+    : public BLEPeripheralExtensionFunction {
  public:
   DECLARE_EXTENSION_FUNCTION("bluetoothLowEnergy.createCharacteristic",
                              BLUETOOTHLOWENERGY_CREATECHARACTERISTIC);
@@ -551,9 +514,7 @@ class BluetoothLowEnergyCreateCharacteristicFunction
 };
 
 class BluetoothLowEnergyNotifyCharacteristicValueChangedFunction
-    : public BLEPeripheralExtensionFunction<
-          extensions::api::bluetooth_low_energy::
-              NotifyCharacteristicValueChanged::Params> {
+    : public BLEPeripheralExtensionFunction {
  public:
   DECLARE_EXTENSION_FUNCTION(
       "bluetoothLowEnergy.notifyCharacteristicValueChanged",
@@ -567,8 +528,7 @@ class BluetoothLowEnergyNotifyCharacteristicValueChangedFunction
 };
 
 class BluetoothLowEnergyCreateDescriptorFunction
-    : public BLEPeripheralExtensionFunction<
-          extensions::api::bluetooth_low_energy::CreateDescriptor::Params> {
+    : public BLEPeripheralExtensionFunction {
  public:
   DECLARE_EXTENSION_FUNCTION("bluetoothLowEnergy.createDescriptor",
                              BLUETOOTHLOWENERGY_CREATEDESCRIPTOR);
@@ -581,8 +541,7 @@ class BluetoothLowEnergyCreateDescriptorFunction
 };
 
 class BluetoothLowEnergyRegisterServiceFunction
-    : public BLEPeripheralExtensionFunction<
-          extensions::api::bluetooth_low_energy::RegisterService::Params> {
+    : public BLEPeripheralExtensionFunction {
  public:
   DECLARE_EXTENSION_FUNCTION("bluetoothLowEnergy.registerService",
                              BLUETOOTHLOWENERGY_REGISTERSERVICE);
@@ -599,8 +558,7 @@ class BluetoothLowEnergyRegisterServiceFunction
 };
 
 class BluetoothLowEnergyUnregisterServiceFunction
-    : public BLEPeripheralExtensionFunction<
-          extensions::api::bluetooth_low_energy::UnregisterService::Params> {
+    : public BLEPeripheralExtensionFunction {
  public:
   DECLARE_EXTENSION_FUNCTION("bluetoothLowEnergy.unregisterService",
                              BLUETOOTHLOWENERGY_UNREGISTERSERVICE);
@@ -619,8 +577,7 @@ class BluetoothLowEnergyUnregisterServiceFunction
 };
 
 class BluetoothLowEnergyRemoveServiceFunction
-    : public BLEPeripheralExtensionFunction<
-          extensions::api::bluetooth_low_energy::RemoveService::Params> {
+    : public BLEPeripheralExtensionFunction {
  public:
   DECLARE_EXTENSION_FUNCTION("bluetoothLowEnergy.removeService",
                              BLUETOOTHLOWENERGY_REMOVESERVICE);
@@ -633,8 +590,7 @@ class BluetoothLowEnergyRemoveServiceFunction
 };
 
 class BluetoothLowEnergySendRequestResponseFunction
-    : public BLEPeripheralExtensionFunction<
-          extensions::api::bluetooth_low_energy::SendRequestResponse::Params> {
+    : public BLEPeripheralExtensionFunction {
  public:
   DECLARE_EXTENSION_FUNCTION("bluetoothLowEnergy.sendRequestResponse",
                              BLUETOOTHLOWENERGY_SENDREQUESTRESPONSE);
