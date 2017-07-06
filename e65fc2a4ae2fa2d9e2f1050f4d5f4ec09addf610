@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "613dbb90_d473e551",
+        "filename": "chrome/browser/media/cast_transport_host_filter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-06T03:51:54Z",
+      "side": 1,
+      "message": "I\u0027m not generally a fan of adding bools to classes just to support \"for testing\" behavior. Could you instead provide a way for the test to provide a mock/no-op device::mojom::WakeLock instance, and set |wake_lock_| so the code in CastTransportHostFilter::GetWakeLock() never tries to auto-create it?",
+      "range": {
+        "startLine": 110,
+        "startChar": 7,
+        "endLine": 110,
+        "endChar": 40
+      },
+      "revId": "e65fc2a4ae2fa2d9e2f1050f4d5f4ec09addf610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
