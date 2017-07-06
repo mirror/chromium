@@ -860,7 +860,6 @@ cc_test("cc_unittests") {
 
     # Surfaces test files.
     "surfaces/compositor_frame_sink_support_unittest.cc",
-    "surfaces/direct_layer_tree_frame_sink_unittest.cc",
     "surfaces/display_scheduler_unittest.cc",
     "surfaces/display_unittest.cc",
     "surfaces/referenced_surface_tracker_unittest.cc",
