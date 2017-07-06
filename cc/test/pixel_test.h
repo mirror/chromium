@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "base/files/file_util.h"
+#include "base/message_loop/message_loop.h"
 #include "cc/output/gl_renderer.h"
 #include "cc/output/software_renderer.h"
 #include "cc/quads/render_pass.h"
@@ -54,6 +55,7 @@ class PixelTest : public testing::Test {
     return output_surface_->context_provider();
   }
 
+  std::unique_ptr<base::MessageLoop> message_loop_;
   LayerTreeSettings settings_;
   RendererSettings renderer_settings_;
   gfx::Size device_viewport_size_;
