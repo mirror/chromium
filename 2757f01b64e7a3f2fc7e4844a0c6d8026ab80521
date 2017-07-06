@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3724df73_33be2fc8",
+        "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-07-06T09:14:41Z",
+      "side": 1,
+      "message": "Tiny nit: If you do `if (Element* el \u003d GetElement()) {` here you can reuse |el| below.",
+      "revId": "2757f01b64e7a3f2fc7e4844a0c6d8026ab80521",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e4b1f4f_77121d2d",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ScriptResource.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-07-06T09:14:41Z",
+      "side": 1,
+      "message": "DCHECK is probably fine; crashing the renderer here in production seems like overkill for this assertion.",
+      "revId": "2757f01b64e7a3f2fc7e4844a0c6d8026ab80521",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
