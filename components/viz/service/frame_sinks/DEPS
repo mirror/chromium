@@ -1,7 +1,9 @@
 include_rules = [
   "+cc/base",
   "+cc/ipc",
+  "+cc/output",
   "+cc/surfaces",
   "+cc/scheduler",
+  "+cc/test",
   "+components/viz/display_embedder",
 ]
