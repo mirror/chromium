@@ -104,6 +104,24 @@
       "revId": "edbd6db87d25ccf9286e98584c449adbbd233f62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f4ac7ac_16fdc931",
+        "filename": "ui/webui/resources/cr_elements/shared_vars_css.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-06T20:36:42Z",
+      "side": 1,
+      "message": "calc() is executed at runtime AFAIU. My expectation (although I have not verified) is that given that it holds only literal values (no percentanges), it would not be causing any noticeable performance difference.\n\nEither way, this was an optional suggestion.",
+      "parentUuid": "7056eb25_f5070f29",
+      "revId": "edbd6db87d25ccf9286e98584c449adbbd233f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec073c65_e24140c9",
+        "filename": "ui/webui/resources/cr_elements/cr_expand_button/cr_expand_button.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-06T20:36:42Z",
+      "side": 1,
+      "message": "Nit: Should this be !Event?",
+      "revId": "954dac50b49f8468fa810ad66fb62529e7f74399",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
