@@ -16,6 +16,24 @@
       "revId": "5c6c7cc6cc6056e48bc79f626c6ed66ff9076463",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52bf2871_33ce3de2",
+        "filename": "components/arc/crash_collector/arc_crash_collector_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-06T10:55:35Z",
+      "side": 1,
+      "message": "Good catch. Done.",
+      "parentUuid": "97f640d1_ff655001",
+      "revId": "5c6c7cc6cc6056e48bc79f626c6ed66ff9076463",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
