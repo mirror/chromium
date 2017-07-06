@@ -16,6 +16,24 @@
       "revId": "8b2b15d05722db60113f3385d83eacc00e359d27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d05737ff_c5d183a9",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-06T17:56:03Z",
+      "side": 1,
+      "message": "Yes, we might need to make a sweep to clean them up. At this point there is still much code-wise to do to migrate password manager off content threads.",
+      "parentUuid": "1ff92699_a240f535",
+      "revId": "8b2b15d05722db60113f3385d83eacc00e359d27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
