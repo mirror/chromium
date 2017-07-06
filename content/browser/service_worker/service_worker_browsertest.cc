@@ -17,6 +17,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/run_loop.h"
+#include "base/scheduler/post_task.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/string16.h"
 #include "base/strings/string_number_conversions.h"
@@ -2657,7 +2658,7 @@ class CacheStorageSideDataSizeChecker
     blob_data_handle_ = std::move(blob_data_handle);
     blob_reader_ = blob_data_handle_->CreateReader(
         file_system_context_,
-        BrowserThread::GetTaskRunnerForThread(BrowserThread::FILE).get());
+        base::CreateSequencedTaskRunnerWithTraits({base::MayBlock()}));
     const storage::BlobReader::Status status = blob_reader_->CalculateSize(
         base::Bind(&self::OnBlobReaderCalculateSizeCallback, this, result,
                    continuation));
