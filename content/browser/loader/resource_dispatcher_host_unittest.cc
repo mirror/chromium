@@ -21,6 +21,8 @@
 #include "base/single_thread_task_runner.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_split.h"
+#include "base/task_scheduler/post_task.h"
+#include "base/task_scheduler/task_traits.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "content/browser/browser_thread_impl.h"
 #include "content/browser/child_process_security_policy_impl.h"
@@ -3279,7 +3281,8 @@ TEST_F(ResourceDispatcherHostTest, RegisterDownloadedTempFile) {
   scoped_refptr<ShareableFileReference> deletable_file =
       ShareableFileReference::GetOrCreate(
           file_path, ShareableFileReference::DELETE_ON_FINAL_RELEASE,
-          BrowserThread::GetTaskRunnerForThread(BrowserThread::FILE).get());
+          base::CreateSingleThreadTaskRunnerWithTraits({base::MayBlock()})
+              .get());
 
   // Not readable.
   EXPECT_FALSE(ChildProcessSecurityPolicyImpl::GetInstance()->CanReadFile(
@@ -3325,7 +3328,8 @@ TEST_F(ResourceDispatcherHostTest, RegisterDownloadedTempFileWithMojo) {
   scoped_refptr<ShareableFileReference> deletable_file =
       ShareableFileReference::GetOrCreate(
           file_path, ShareableFileReference::DELETE_ON_FINAL_RELEASE,
-          BrowserThread::GetTaskRunnerForThread(BrowserThread::FILE).get());
+          base::CreateSingleThreadTaskRunnerWithTraits({base::MayBlock()})
+              .get());
 
   // Not readable.
   EXPECT_FALSE(ChildProcessSecurityPolicyImpl::GetInstance()->CanReadFile(
@@ -3374,7 +3378,8 @@ TEST_F(ResourceDispatcherHostTest, ReleaseTemporiesOnProcessExit) {
   scoped_refptr<ShareableFileReference> deletable_file =
       ShareableFileReference::GetOrCreate(
           file_path, ShareableFileReference::DELETE_ON_FINAL_RELEASE,
-          BrowserThread::GetTaskRunnerForThread(BrowserThread::FILE).get());
+          base::CreateSingleThreadTaskRunnerWithTraits({base::MayBlock()})
+              .get());
 
   // Register it for a resource request.
   host_.RegisterDownloadedTempFile(filter_->child_id(), kRequestID, file_path);
