@@ -5,7 +5,10 @@
 #ifndef WebWorkerFetchContext_h
 #define WebWorkerFetchContext_h
 
+#include <memory>
+
 #include "public/platform/WebApplicationCacheHost.h"
+#include "public/platform/WebDocumentSubresourceFilter.h"
 #include "public/platform/WebURL.h"
 
 namespace base {
@@ -16,6 +19,7 @@ namespace blink {
 
 class WebURLLoader;
 class WebURLRequest;
+class WebDocumentSubresourceFilter;
 
 // WebWorkerFetchContext is a per-worker object created on the main thread,
 // passed to a worker (dedicated, shared and service worker) and initialized on
@@ -59,6 +63,13 @@ class WebWorkerFetchContext {
   virtual void SetApplicationCacheHostID(int id) {}
   virtual int ApplicationCacheHostID() const {
     return WebApplicationCacheHost::kAppCacheNoHostId;
+  }
+
+  virtual void SetSubresourceFilterBuilder(
+      std::unique_ptr<WebDocumentSubresourceFilter::Builder>) {}
+  virtual std::unique_ptr<WebDocumentSubresourceFilter>
+  TakeSubresourceFilter() {
+    return nullptr;
   }
 };
 
