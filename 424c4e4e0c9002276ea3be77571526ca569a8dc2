@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "998ef237_c299a79a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 16
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-06T18:15:21Z",
+      "side": 1,
+      "message": "It can\u0027t be before layout because we need to verify the geometry is valid (viewport-filling).\n\nDo you mean move it out of FrameView::UpdateLayout or into a different Lifecycle stage? There\u0027s a comment in DocumentLifecycle:CanAdvanceTo (https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/dom/DocumentLifecycle.cpp?sq\u003dpackage:chromium\u0026l\u003d186) that explicitly says we can sync style recalc from LayoutClean, is that wrong? I\u0027m not especially attached to the location, I just want to make sure I can put this somewhere where we don\u0027t miss layouts.",
+      "parentUuid": "a401e974_c56d760d",
+      "revId": "424c4e4e0c9002276ea3be77571526ca569a8dc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c585a29b_b24c9edb",
         "filename": "third_party/WebKit/LayoutTests/virtual/android/fast/rootscroller/browser-controls-background.html",
         "patchSetId": 16
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "de216c10_dab52523",
+        "filename": "third_party/WebKit/LayoutTests/virtual/android/fast/rootscroller/browser-controls-background.html",
+        "patchSetId": 16
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-06T18:15:21Z",
+      "side": 1,
+      "message": "Right, I\u0027m really looking to verify that the background actually looks correct which we can\u0027t do from a unit test (not in a maintainable, convenient way). I could add a unit test to make sure the style on LayoutView is set correctly but I find having these kind of integration tests gives me much more confidence that nothing is broken.\n\nThis would eventually be upstreamed to WPT too, which we can\u0027t do for unit tests.",
+      "parentUuid": "8dbc9d72_264609dd",
+      "revId": "424c4e4e0c9002276ea3be77571526ca569a8dc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "908116ce_0a5e5d73",
         "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
         "patchSetId": 16
@@ -83,6 +119,24 @@
       "writtenOn": "2017-07-06T17:49:46Z",
       "side": 1,
       "message": "Any reason why this isn\u0027t inside the \u0027if\u0027 block?",
+      "revId": "424c4e4e0c9002276ea3be77571526ca569a8dc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ac7ff92_aae5e909",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 1886,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-06T18:15:21Z",
+      "side": 1,
+      "message": "Yup, if the RefPtr goes out of scope it\u0027ll delete the ComputedStyle pointed to by backround_style. I suppose I could make background_style a refptr and adjust the body block similarly, would you prefer that?",
+      "parentUuid": "908116ce_0a5e5d73",
       "revId": "424c4e4e0c9002276ea3be77571526ca569a8dc2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
