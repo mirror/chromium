@@ -96,6 +96,10 @@ CONTENT_EXPORT extern const base::Feature kWebVRExperimentalRendering;
 CONTENT_EXPORT
 extern const base::Feature kSendBeaconThrowForBlobWithNonSimpleType;
 
+#if defined(OS_MACOSX)
+CONTENT_EXPORT extern const base::Feature kContentFullscreen;
+#endif
+
 #if defined(OS_ANDROID)
 CONTENT_EXPORT extern const base::Feature kAndroidAutofillAccessibility;
 CONTENT_EXPORT extern const base::Feature kImeThread;
