@@ -24,6 +24,7 @@ class WebFormElement;
 class WebNode;
 class WebString;
 struct WebURLError;
+class WebWorkerFetchContext;
 }
 
 namespace content {
@@ -126,6 +127,8 @@ class CONTENT_EXPORT RenderFrameObserver : public IPC::Listener,
 
   // Called when draggable regions change.
   virtual void DraggableRegionsChanged() {}
+
+  virtual void WillCreateWorkerFetchContext(blink::WebWorkerFetchContext*) {}
 
   // IPC::Listener implementation.
   bool OnMessageReceived(const IPC::Message& message) override;

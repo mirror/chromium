@@ -29,6 +29,13 @@ class WebDocumentSubresourceFilter {
   virtual bool ShouldLogToConsole() = 0;
 };
 
+class WebSubresourceFilterInfo {
+ public:
+  virtual ~WebSubresourceFilterInfo() {}
+  virtual std::unique_ptr<WebDocumentSubresourceFilter>
+  TakeSubresourceFilter() = 0;
+};
+
 }  // namespace blink
 
 #endif  // WebDocumentSubresourceFilter_h

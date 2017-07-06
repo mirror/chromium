@@ -50,6 +50,8 @@ class RulesetDealer {
   // For testing only.
   bool has_cached_ruleset() const { return !!weak_cached_ruleset_.get(); }
 
+  base::File DuplicateRulesetFile();
+
  protected:
   bool CalledOnValidSequence() const {
     return sequence_checker_.CalledOnValidSequence();

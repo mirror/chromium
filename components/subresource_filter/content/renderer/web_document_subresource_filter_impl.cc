@@ -6,6 +6,8 @@
 
 #include <utility>
 
+#include "base/bind.h"
+#include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "components/subresource_filter/core/common/activation_state.h"
 #include "components/subresource_filter/core/common/load_policy.h"
@@ -90,6 +92,8 @@ WebLoadPolicy ToWebLoadPolicy(LoadPolicy load_policy) {
   }
 }
 
+void NoOpCallback() {}
+
 }  // namespace
 
 WebDocumentSubresourceFilterImpl::~WebDocumentSubresourceFilterImpl() = default;
@@ -136,6 +140,26 @@ WebLoadPolicy WebDocumentSubresourceFilterImpl::getLoadPolicyImpl(
 
   // TODO(pkalinnikov): Would be good to avoid converting to GURL.
   return ToWebLoadPolicy(filter_.GetLoadPolicy(GURL(url), element_type));
+}
+
+WebSubresourceFilterInfoImpl::WebSubresourceFilterInfoImpl(
+    url::Origin document_origin,
+    ActivationState activation_state,
+    base::File ruleset_file)
+    : document_origin_(document_origin),
+      activation_state_(activation_state),
+      ruleset_file_(std::move(ruleset_file)) {}
+
+WebSubresourceFilterInfoImpl::~WebSubresourceFilterInfoImpl() {}
+
+std::unique_ptr<blink::WebDocumentSubresourceFilter>
+WebSubresourceFilterInfoImpl::TakeSubresourceFilter() {
+  DCHECK(ruleset_file_.IsValid());
+  scoped_refptr<const MemoryMappedRuleset> ruleset(
+      new MemoryMappedRuleset(std::move(ruleset_file_)));
+  return base::MakeUnique<WebDocumentSubresourceFilterImpl>(
+      document_origin_, activation_state_, std::move(ruleset),
+      base::BindOnce(&NoOpCallback));
 }
 
 }  // namespace subresource_filter
