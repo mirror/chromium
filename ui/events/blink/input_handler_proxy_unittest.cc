@@ -319,6 +319,7 @@ class MockInputHandlerProxyClient
                     const gfx::PointF& causal_event_viewport_point));
   void DidStopFlinging() override {}
   void DidAnimateForInput() override {}
+  void SetWhiteListedTouchAction(cc::TouchAction touch_action) override {}
 
  private:
   DISALLOW_COPY_AND_ASSIGN(MockInputHandlerProxyClient);
