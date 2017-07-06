@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bead23b6_b3abf642",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ChildConnectionAllocator.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-07-06T23:58:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e22f8074_4ddd4313",
+      "revId": "b89a9acd12dc3ebdb78ddaf5dbd976b1209aea1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "022222d1_981820e8",
         "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessLauncher.java",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-06T21:37:06Z",
       "side": 1,
       "message": "having two paths here is really odd.\n\nshould spare connection pretend to be an allocator (or BoundConnectionProvider) instead?",
+      "revId": "b89a9acd12dc3ebdb78ddaf5dbd976b1209aea1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "189ec1d8_9da4b794",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessLauncher.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-07-06T23:58:10Z",
+      "side": 1,
+      "message": "I originally tried to unify them, but it ends up making things more complicated than having 2 different paths.\nIn the allocator case we do retry if no connection is available, which we don\u0027t want to do with the spare connection. And shoehorning the spare connection as an allocator does not work well either, as the connection is created early on and that does not align well with the allocator API.",
+      "parentUuid": "022222d1_981820e8",
       "revId": "b89a9acd12dc3ebdb78ddaf5dbd976b1209aea1b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "74f71829_640d6e0f",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessLauncher.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-07-06T23:58:10Z",
+      "side": 1,
+      "message": "Yes, removed. (and added checks in ChildProcessLauncherTest to catch that each callback is invoked only once)",
+      "parentUuid": "8eff6bf4_ee23b3a4",
+      "revId": "b89a9acd12dc3ebdb78ddaf5dbd976b1209aea1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6de26df7_f2f69f01",
         "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessLauncherHelper.java",
         "patchSetId": 8
@@ -64,6 +118,24 @@
       "writtenOn": "2017-07-06T21:37:06Z",
       "side": 1,
       "message": "should this be an assert now? or rather, any reason why initLinker is spread more apart rather than being called from populateServiceBundle or from this method?",
+      "revId": "b89a9acd12dc3ebdb78ddaf5dbd976b1209aea1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57c6bb64_875f4b41",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessLauncherHelper.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-07-06T23:58:10Z",
+      "side": 1,
+      "message": "I don\u0027t think it should be an assert (the linker might be disabled somehow).\ninitLinker can definitively be moved to this method.",
+      "parentUuid": "6de26df7_f2f69f01",
       "revId": "b89a9acd12dc3ebdb78ddaf5dbd976b1209aea1b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "32063cd8_01951736",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessLauncherHelper.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-07-06T23:58:10Z",
+      "side": 1,
+      "message": "It\u0027s a convenience so calling code can be more compact. (ala chaining)",
+      "parentUuid": "202b65a6_5ccd143c",
+      "revId": "b89a9acd12dc3ebdb78ddaf5dbd976b1209aea1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f6293b1d_6007f48b",
         "filename": "content/shell/android/shell_apk/AndroidManifest.xml.jinja2",
         "patchSetId": 8
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "95de09a8_777b31b9",
+        "filename": "content/shell/android/shell_apk/AndroidManifest.xml.jinja2",
+        "patchSetId": 8
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-07-06T23:58:10Z",
+      "side": 1,
+      "message": "Not sure it matters. Set it to true.",
+      "parentUuid": "f6293b1d_6007f48b",
+      "revId": "b89a9acd12dc3ebdb78ddaf5dbd976b1209aea1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3e0df1a0_426968eb",
         "filename": "content/shell/android/shell_apk/src/org/chromium/content_shell_apk/TestProcessService.java",
         "patchSetId": 8
@@ -115,6 +223,24 @@
       "writtenOn": "2017-07-06T21:37:06Z",
       "side": 1,
       "message": "entirely duplicated and unneeded file?",
+      "revId": "b89a9acd12dc3ebdb78ddaf5dbd976b1209aea1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cf360d8_da93432b",
+        "filename": "content/shell/android/shell_apk/src/org/chromium/content_shell_apk/TestProcessService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-07-06T23:58:10Z",
+      "side": 1,
+      "message": "Oops, left over file. Removed.",
+      "parentUuid": "3e0df1a0_426968eb",
       "revId": "b89a9acd12dc3ebdb78ddaf5dbd976b1209aea1b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
