@@ -143,6 +143,41 @@
     },
     {
       "key": {
+        "uuid": "8286657e_f3683bc9",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 1886,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-07-06T18:33:01Z",
+      "side": 1,
+      "message": "It\u0027s a bit odd that this method uses a combination of RefPtr\u003cComputedStyle\u003e and const ComputedStyle* for style objects that are assumed to be non-null, but I guess that\u0027s not your fault.  No need to change it.",
+      "parentUuid": "6ac7ff92_aae5e909",
+      "revId": "424c4e4e0c9002276ea3be77571526ca569a8dc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a80e3e7b_1d2201a8",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 1296,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-07-06T18:33:01Z",
+      "side": 1,
+      "message": "It makes me a bit queasy to add more subtle lifecycle tomfoolery to this method, which is already chock full of shenanigans.  Can you try moving some code outside of this scope, and see what breaks?  Or maybe even convert this to:\n\nLifecycle().AdvanceTo(DocumentLifecycle::kLayoutClean);",
+      "revId": "424c4e4e0c9002276ea3be77571526ca569a8dc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1dc7a641_92726717",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
         "patchSetId": 16
