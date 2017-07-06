@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19365e89_c223fe44",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_fetcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-06T14:05:50Z",
+      "side": 1,
+      "message": "When talking to battre@ yesterday, he suggested to also support localized Play names by providing the appropriate locale. While the Affiliation API supports setting a locale (https://codesearch.chromium.org/chromium/src/components/password_manager/core/browser/android_affiliation/affiliation_api.proto?l\u003d32), I actually don\u0027t know how to get hold of that information from within //components. The only API I could find is |GetApplicationLocale()|, however this is bound to the |g_browser_process| global variable and only available within //chrome. Do you happen to know how to solve this issue?",
+      "revId": "08623eab803e0a04c391d14d4c7f3bd03c517e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
