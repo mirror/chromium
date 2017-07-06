@@ -171,7 +171,7 @@ class RootScrollerTest : public ::testing::Test,
                               &ConfigureSettings);
 
     // Initialize browser controls to be shown.
-    GetWebView()->ResizeWithBrowserControls(IntSize(400, 400), 50, true);
+    GetWebView()->ResizeWithBrowserControls(IntSize(400, 400), 50, 0, true);
     GetWebView()->GetBrowserControls().SetShownRatio(1);
 
     MainFrameView()->UpdateAllLifecyclePhases();
@@ -260,7 +260,7 @@ TEST_P(RootScrollerTest, TestSetRootScroller) {
     EXPECT_FLOAT_EQ(1, GetBrowserControls().ShownRatio());
     GetWebView()->HandleInputEvent(
         GenerateTouchGestureEvent(WebInputEvent::kGestureScrollUpdate, 0,
-                                  -GetBrowserControls().Height()));
+                                  -GetBrowserControls().TopHeight()));
     EXPECT_FLOAT_EQ(0, GetBrowserControls().ShownRatio());
   }
 
@@ -637,7 +637,7 @@ TEST_P(RootScrollerTest, AlwaysCreateCompositedScrollingLayers) {
                                    "<div id='container'></div>",
                                    base_url);
 
-  GetWebView()->ResizeWithBrowserControls(IntSize(400, 400), 50, true);
+  GetWebView()->ResizeWithBrowserControls(IntSize(400, 400), 50, 0, true);
   MainFrameView()->UpdateAllLifecyclePhases();
 
   Element* container = MainFrame()->GetDocument()->getElementById("container");
@@ -909,7 +909,7 @@ TEST_P(RootScrollerTest, TopControlsAdjustmentAppliedToRootScroller) {
                                    "</div>",
                                    base_url);
 
-  GetWebView()->ResizeWithBrowserControls(IntSize(400, 400), 50, true);
+  GetWebView()->ResizeWithBrowserControls(IntSize(400, 400), 50, 0, true);
   MainFrameView()->UpdateAllLifecyclePhases();
 
   Element* container = MainFrame()->GetDocument()->getElementById("container");
@@ -928,8 +928,9 @@ TEST_P(RootScrollerTest, TopControlsAdjustmentAppliedToRootScroller) {
   GetWebView()->HandleInputEvent(
       GenerateTouchGestureEvent(WebInputEvent::kGestureScrollBegin));
   ASSERT_EQ(1, GetBrowserControls().ShownRatio());
-  GetWebView()->HandleInputEvent(GenerateTouchGestureEvent(
-      WebInputEvent::kGestureScrollUpdate, 0, -GetBrowserControls().Height()));
+  GetWebView()->HandleInputEvent(
+      GenerateTouchGestureEvent(WebInputEvent::kGestureScrollUpdate, 0,
+                                -GetBrowserControls().TopHeight()));
   ASSERT_EQ(0, GetBrowserControls().ShownRatio());
   EXPECT_EQ(1000 - 450, container_scroller->MaximumScrollOffset().Height());
 
@@ -939,7 +940,7 @@ TEST_P(RootScrollerTest, TopControlsAdjustmentAppliedToRootScroller) {
 
   GetWebView()->HandleInputEvent(
       GenerateTouchGestureEvent(WebInputEvent::kGestureScrollEnd));
-  GetWebView()->ResizeWithBrowserControls(IntSize(400, 450), 50, false);
+  GetWebView()->ResizeWithBrowserControls(IntSize(400, 450), 50, 0, false);
   EXPECT_EQ(1000 - 450, container_scroller->MaximumScrollOffset().Height());
 }
 
@@ -949,7 +950,7 @@ TEST_P(RootScrollerTest, RotationAnchoring) {
   ScrollableArea* container_scroller;
 
   {
-    GetWebView()->ResizeWithBrowserControls(IntSize(250, 1000), 0, true);
+    GetWebView()->ResizeWithBrowserControls(IntSize(250, 1000), 0, 0, true);
     MainFrameView()->UpdateAllLifecyclePhases();
 
     Element* container =
@@ -990,7 +991,7 @@ TEST_P(RootScrollerTest, RotationAnchoring) {
   }
 
   // Now do a rotation resize.
-  GetWebView()->ResizeWithBrowserControls(IntSize(1000, 250), 50, false);
+  GetWebView()->ResizeWithBrowserControls(IntSize(1000, 250), 50, 0, false);
   MainFrameView()->UpdateAllLifecyclePhases();
 
   // The visual viewport should remain fully filled by the target.
@@ -1049,7 +1050,7 @@ TEST_P(RootScrollerTest, IFrameRootScrollerGetsNonFixedLayoutSize) {
   // Hide the URL bar, the iframe's frame rect should expand but the layout
   // size should remain the same.
   {
-    GetWebView()->ResizeWithBrowserControls(IntSize(400, 450), 50, false);
+    GetWebView()->ResizeWithBrowserControls(IntSize(400, 450), 50, 0, false);
     MainFrameView()->UpdateAllLifecyclePhases();
     EXPECT_EQ(IntSize(400, 400), iframe_view->GetLayoutSize());
     EXPECT_EQ(IntSize(400, 450), iframe_view->Size());
@@ -1057,19 +1058,19 @@ TEST_P(RootScrollerTest, IFrameRootScrollerGetsNonFixedLayoutSize) {
 
   // Simulate a rotation. This time the layout size should reflect the resize.
   {
-    GetWebView()->ResizeWithBrowserControls(IntSize(450, 400), 50, false);
+    GetWebView()->ResizeWithBrowserControls(IntSize(450, 400), 50, 0, false);
     MainFrameView()->UpdateAllLifecyclePhases();
     EXPECT_EQ(IntSize(450, 350), iframe_view->GetLayoutSize());
     EXPECT_EQ(IntSize(450, 400), iframe_view->Size());
 
     // "Un-rotate" for following tests.
-    GetWebView()->ResizeWithBrowserControls(IntSize(400, 450), 50, false);
+    GetWebView()->ResizeWithBrowserControls(IntSize(400, 450), 50, 0, false);
     MainFrameView()->UpdateAllLifecyclePhases();
   }
 
   // Show the URL bar again. The frame rect should match the viewport.
   {
-    GetWebView()->ResizeWithBrowserControls(IntSize(400, 400), 50, true);
+    GetWebView()->ResizeWithBrowserControls(IntSize(400, 400), 50, 0, true);
     MainFrameView()->UpdateAllLifecyclePhases();
     EXPECT_EQ(IntSize(400, 400), iframe_view->GetLayoutSize());
     EXPECT_EQ(IntSize(400, 400), iframe_view->Size());
@@ -1078,7 +1079,7 @@ TEST_P(RootScrollerTest, IFrameRootScrollerGetsNonFixedLayoutSize) {
   // Hide the URL bar and reset the rootScroller. The iframe should go back to
   // tracking layout size by frame rect.
   {
-    GetWebView()->ResizeWithBrowserControls(IntSize(400, 450), 50, false);
+    GetWebView()->ResizeWithBrowserControls(IntSize(400, 450), 50, 0, false);
     MainFrameView()->UpdateAllLifecyclePhases();
     EXPECT_EQ(IntSize(400, 400), iframe_view->GetLayoutSize());
     EXPECT_EQ(IntSize(400, 450), iframe_view->Size());
@@ -1148,13 +1149,13 @@ class RootScrollerHitTest : public RootScrollerTest {
     ASSERT_EQ(1, GetBrowserControls().ShownRatio());
     GetWebView()->HandleInputEvent(
         GenerateTouchGestureEvent(WebInputEvent::kGestureScrollUpdate, 0,
-                                  -GetBrowserControls().Height()));
+                                  -GetBrowserControls().TopHeight()));
     ASSERT_EQ(0, GetBrowserControls().ShownRatio());
     GetWebView()->HandleInputEvent(GenerateTouchGestureEvent(
         WebInputEvent::kGestureScrollUpdate, 0, -100000));
     GetWebView()->HandleInputEvent(
         GenerateTouchGestureEvent(WebInputEvent::kGestureScrollEnd));
-    GetWebView()->ResizeWithBrowserControls(IntSize(400, 450), 50, false);
+    GetWebView()->ResizeWithBrowserControls(IntSize(400, 450), 50, 0, false);
   }
 };
 
