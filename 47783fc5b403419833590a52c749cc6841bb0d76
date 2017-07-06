@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "faa9590d_3c2a1803",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-07-06T20:43:36Z",
+      "side": 1,
+      "message": "nit: Can you add a bit more detail to your CL title and description? Anyone looking through git logs / commit history (say, to track down a regression) should be able to get a general sense of what your CL changes just by skimming the description.",
+      "range": {
+        "startLine": 7,
+        "startChar": 12,
+        "endLine": 7,
+        "endChar": 17
+      },
+      "revId": "47783fc5b403419833590a52c749cc6841bb0d76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ae1beffd_b175d247",
         "filename": "ash/login/ui/login_pin_view.cc",
         "patchSetId": 2
