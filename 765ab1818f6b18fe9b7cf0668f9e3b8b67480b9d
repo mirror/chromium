@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "dd738dad_35fe3836",
+        "filename": "build/android/pylib/local/device/local_device_instrumentation_test_run.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-07-06T17:32:41Z",
+      "side": 1,
+      "message": "hah, seems I missed the forest for the trees. Good point. devil doesn\u0027t do anything too sophisticated in this case.\n\nI\u0027d be fine w/ --replace-system-package disabling concurrent adb or dying with an error if someone tries to use both.",
+      "parentUuid": "7f577956_403148ef",
+      "revId": "765ab1818f6b18fe9b7cf0668f9e3b8b67480b9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b5770440_523fe4bb",
         "filename": "build/android/pylib/local/device/local_device_instrumentation_test_run.py",
         "patchSetId": 4
