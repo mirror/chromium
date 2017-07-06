@@ -46,6 +46,30 @@
       "revId": "6379e4be5affacfda160948c3d7e484e356c80e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fb2212c_f3a63f41",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticleViewHolder.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2017-07-06T13:20:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f914d6e6_36ac628e",
+      "range": {
+        "startLine": 379,
+        "startChar": 12,
+        "endLine": 384,
+        "endChar": 13
+      },
+      "revId": "6379e4be5affacfda160948c3d7e484e356c80e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
