@@ -28,6 +28,7 @@
 #include "content/public/browser/page_navigator.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_widget_host_view.h"
+#include "content/public/browser/site_instance.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/common/child_process_host.h"
@@ -216,6 +217,8 @@ void OpenWindowOnUI(
           url, Referrer(script_url, blink::kWebReferrerPolicyDefault)),
       disposition, ui::PAGE_TRANSITION_AUTO_TOPLEVEL,
       true /* is_renderer_initiated */);
+  params.source_site_instance =
+      SiteInstance::CreateForURL(browser_context, url);
 
   GetContentClient()->browser()->OpenURL(browser_context, params,
                                          base::Bind(&DidOpenURLOnUI, callback));
