@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "550a7615_625eac36",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position-3/position-sticky-grid.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-06T17:42:43Z",
+      "side": 1,
+      "message": "nit: remove empty line after DOCTYPE",
+      "revId": "f2f0c554c9a15032e95f78c1b78504dcfc2c09c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c7c0c771_ac890929",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position-3/position-sticky-grid.html",
         "patchSetId": 1
@@ -31,6 +48,23 @@
       "side": 1,
       "message": "Per the WPT guide, you are meant to render an opaque green rectangle over a opaque red rectangle. http://web-platform-tests.org/writing-tests/rendering.html - \"[a] green square is often rendered over a red square, such that when the test fails there is red visible on the page\"",
       "parentUuid": "c7c0c771_ac890929",
+      "revId": "f2f0c554c9a15032e95f78c1b78504dcfc2c09c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e05bfb61_b91e188a",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position-3/position-sticky-grid.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-06T17:42:43Z",
+      "side": 1,
+      "message": "nit: inconsistent indentation. The style guide doesn\u0027t seem to call out a specific indentation (other than using spaces rather than tabs - https://github.com/w3c/web-platform-tests/blob/master/docs/_writing-tests/general-guidelines.md), but probably best to use 2 space indent for consistency with the rest of the tests.",
       "revId": "f2f0c554c9a15032e95f78c1b78504dcfc2c09c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
