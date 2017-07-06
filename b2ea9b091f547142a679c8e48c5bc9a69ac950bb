@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7b7c3139_3aa68603",
+        "filename": "third_party/WebKit/Source/core/html/parser/CSSPreloadScanner.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-06T11:31:32Z",
+      "side": 1,
+      "message": "My understanding is that this flag was needed because we did preload reference state transition when a client is added and some resource clients want to avoid that. This change moves the state transition timing from when the client is added to when matching is done. Hence the problem doesn\u0027t exist with this CL, I think.",
+      "parentUuid": "622cbcd2_1b58ff0b",
+      "range": {
+        "startLine": 269,
+        "startChar": 27,
+        "endLine": 269,
+        "endChar": 28
+      },
+      "revId": "b2ea9b091f547142a679c8e48c5bc9a69ac950bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "258b5f25_5fefc07b",
         "filename": "third_party/WebKit/Source/core/loader/LinkLoader.cpp",
         "patchSetId": 18
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "96baaecc_69006ff7",
+        "filename": "third_party/WebKit/Source/core/loader/LinkLoader.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-06T11:31:32Z",
+      "side": 1,
+      "message": "Thanks! Done at https://chromium-review.googlesource.com/c/558597/.",
+      "parentUuid": "258b5f25_5fefc07b",
+      "range": {
+        "startLine": 484,
+        "startChar": 10,
+        "endLine": 484,
+        "endChar": 28
+      },
+      "revId": "b2ea9b091f547142a679c8e48c5bc9a69ac950bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1fe85e9c_ee177d35",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.h",
         "patchSetId": 18
@@ -59,6 +107,30 @@
       "writtenOn": "2017-06-30T07:59:30Z",
       "side": 1,
       "message": "Does removing the counter still enable the \"multiple ResourceFetchers\" case? Are we testing for it?",
+      "range": {
+        "startLine": 236,
+        "startChar": 7,
+        "endLine": 236,
+        "endChar": 19
+      },
+      "revId": "b2ea9b091f547142a679c8e48c5bc9a69ac950bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59da8289_ce5a3284",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-06T11:31:32Z",
+      "side": 1,
+      "message": "Sorry, can you explain what you mean by \"multiple ResourceFetchers case\"?",
+      "parentUuid": "1fe85e9c_ee177d35",
       "range": {
         "startLine": 236,
         "startChar": 7,
