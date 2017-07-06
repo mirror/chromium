@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "082826d9_9b151b25",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-07-06T01:05:45Z",
+      "side": 1,
+      "message": "While we are here, can we please change these to their new enum counter parts instead of \u0027magic-strings\u0027? (ie: Protocol.Security.MixedContentType.OptionallyBlockable)",
+      "range": {
+        "startLine": 247,
+        "startChar": 42,
+        "endLine": 247,
+        "endChar": 64
+      },
+      "revId": "842867703fe902ee730a796899fa3ad3e9dc4b01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee84c84d_02e0d05f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-07-06T01:05:45Z",
+      "side": 1,
+      "message": "ditto: Protocol.Security.MixedContentType.Blockable",
+      "range": {
+        "startLine": 249,
+        "startChar": 42,
+        "endLine": 249,
+        "endChar": 53
+      },
+      "revId": "842867703fe902ee730a796899fa3ad3e9dc4b01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b207b7f9_ab942588",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-07-06T01:05:45Z",
+      "side": 1,
+      "message": "ditto: Protocol.Security.MixedContentType.Blockable",
+      "range": {
+        "startLine": 251,
+        "startChar": 42,
+        "endLine": 251,
+        "endChar": 53
+      },
+      "revId": "842867703fe902ee730a796899fa3ad3e9dc4b01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e54e5f7f_f32cd28e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-07-06T01:05:45Z",
+      "side": 1,
+      "message": "ditto: Protocol.Security.MixedContentType.None",
+      "range": {
+        "startLine": 253,
+        "startChar": 42,
+        "endLine": 253,
+        "endChar": 48
+      },
+      "revId": "842867703fe902ee730a796899fa3ad3e9dc4b01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d23acac_89865b72",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 1027,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-07-06T01:05:45Z",
+      "side": 1,
+      "message": "ditto: ditto: Protocol.Security.MixedContentType.None",
+      "range": {
+        "startLine": 1027,
+        "startChar": 37,
+        "endLine": 1027,
+        "endChar": 43
+      },
+      "revId": "842867703fe902ee730a796899fa3ad3e9dc4b01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a649075d_df2cac53",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 1032,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-07-06T01:05:45Z",
+      "side": 1,
+      "message": "ditto: Protocol.Security.MixedContentType.OptionallyBlockable",
+      "range": {
+        "startLine": 1032,
+        "startChar": 37,
+        "endLine": 1032,
+        "endChar": 59
+      },
+      "revId": "842867703fe902ee730a796899fa3ad3e9dc4b01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6bb9585_2a648022",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 1037,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-07-06T01:05:45Z",
+      "side": 1,
+      "message": "ditto: Protocol.Security.MixedContentType.Blockable",
+      "range": {
+        "startLine": 1037,
+        "startChar": 37,
+        "endLine": 1037,
+        "endChar": 48
+      },
+      "revId": "842867703fe902ee730a796899fa3ad3e9dc4b01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
