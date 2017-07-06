@@ -77,15 +77,15 @@ TEST_F(VirtualKeyboardAlwaysOnTopControllerTest, NotifyKeyboardBoundsChanged) {
       Shell::GetContainer(root_window, kShellWindowId_VirtualKeyboardContainer);
   ASSERT_TRUE(keyboard_container);
   keyboard_container->Show();
-  aura::Window* keyboard_window =
-      keyboard_controller->ui()->GetKeyboardWindow();
-  keyboard_container->AddChild(keyboard_window);
-  keyboard_window->set_owned_by_parent(false);
+  aura::Window* contents_window =
+      keyboard_controller->ui()->GetContentsWindow();
+  keyboard_container->AddChild(contents_window);
+  contents_window->set_owned_by_parent(false);
   const int kKeyboardHeight = 200;
   gfx::Rect keyboard_bounds = keyboard::FullWidthKeyboardBoundsFromRootBounds(
       root_window->bounds(), kKeyboardHeight);
-  keyboard_window->SetBounds(keyboard_bounds);
-  keyboard_window->Show();
+  contents_window->SetBounds(keyboard_bounds);
+  contents_window->Show();
   keyboard_controller->NotifyKeyboardBoundsChanging(keyboard_bounds);
   // Verify that test manager was notified of bounds change.
   ASSERT_TRUE(manager->keyboard_bounds_changed());
