@@ -103,6 +103,9 @@ class VIEWS_EXPORT LayoutProvider {
   // |min_width|.
   virtual int GetSnappedDialogWidth(int min_width) const;
 
+  // Returns whether non-bubble dialogs should have a close [x] by default.
+  virtual bool ShouldShowCloseXOnDialog() const;
+
  private:
   DefaultTypographyProvider typography_provider_;
 

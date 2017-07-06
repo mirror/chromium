@@ -37,6 +37,11 @@ enum ChromeDistanceMetric {
   DISTANCE_UNRELATED_CONTROL_HORIZONTAL_LARGE,
   // Larger vertical spacing between unrelated controls.
   DISTANCE_UNRELATED_CONTROL_VERTICAL_LARGE,
+  // Horizontal indent of input fields on a web-modal dialog, relative to the
+  // dialog title and message. Not used for bubbles.
+  DISTANCE_WEB_MODAL_INPUT_FIELD_HORIZONTAL_INDENT,
+  // Minimum width of a Label asking for input on a web modal dialog.
+  DISTANCE_WEB_MODAL_INPUT_LABEL_MINIMIUM_WIDTH,
 };
 
 class ChromeLayoutProvider : public views::LayoutProvider {

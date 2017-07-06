@@ -19,12 +19,14 @@ class HarmonyLayoutProvider : public ChromeLayoutProvider {
 
   gfx::Insets GetInsetsMetric(int metric) const override;
   int GetDistanceMetric(int metric) const override;
+  const views::TypographyProvider& GetTypographyProvider() const override;
+  int GetSnappedDialogWidth(int min_width) const override;
+  bool ShouldShowCloseXOnDialog() const override;
+
   views::GridLayout::Alignment GetControlLabelGridAlignment() const override;
   bool UseExtraDialogPadding() const override;
   bool ShouldShowWindowIcon() const override;
   bool IsHarmonyMode() const override;
-  const views::TypographyProvider& GetTypographyProvider() const override;
-  int GetSnappedDialogWidth(int min_width) const override;
 
  private:
   const HarmonyTypographyProvider typography_provider_;

@@ -5,17 +5,37 @@
 #include "chrome/browser/ui/views/login_view.h"
 
 #include "chrome/browser/ui/views/harmony/chrome_layout_provider.h"
+#include "chrome/browser/ui/views/harmony/chrome_typography.h"
+#include "chrome/browser/ui/views/harmony/textfield_layout.h"
 #include "components/strings/grit/components_strings.h"
 #include "ui/base/l10n/l10n_util.h"
+#include "ui/views/border.h"
 #include "ui/views/controls/label.h"
 #include "ui/views/controls/textfield/textfield.h"
 #include "ui/views/layout/grid_layout.h"
 
-static const int kMessageWidth = 320;
-static const int kTextfieldStackHorizontalSpacing = 30;
+namespace {
 
-using password_manager::LoginModel;
-using views::GridLayout;
+constexpr int kColumnSetId = 0;
+constexpr float kFixed = 0.f;
+
+// Adds a label that fills an entire row of |layout|; spanning all columns.
+void AddHeaderLabel(views::GridLayout* layout,
+                    const base::string16& text,
+                    int text_style) {
+  constexpr int kHeaderRowSpan = 1;
+  const int col_span = layout->GetColumnSet(kColumnSetId)->num_columns();
+
+  views::Label* label =
+      new views::Label(text, views::style::CONTEXT_LABEL, text_style);
+  label->SetMultiLine(true);
+  label->SetHorizontalAlignment(gfx::ALIGN_LEFT);
+  label->SetAllowCharacterBreak(true);
+  layout->StartRow(kFixed, kColumnSetId);
+  layout->AddView(label, col_span, kHeaderRowSpan);
+}
+
+}  // namespace
 
 ///////////////////////////////////////////////////////////////////////////////
 // LoginView, public:
@@ -23,78 +43,33 @@ using views::GridLayout;
 LoginView::LoginView(const base::string16& authority,
                      const base::string16& explanation,
                      LoginHandler::LoginModelData* login_model_data)
-    : username_field_(new views::Textfield()),
-      password_field_(new views::Textfield()),
-      username_label_(new views::Label(
-          l10n_util::GetStringUTF16(IDS_LOGIN_DIALOG_USERNAME_FIELD))),
-      password_label_(new views::Label(
-          l10n_util::GetStringUTF16(IDS_LOGIN_DIALOG_PASSWORD_FIELD))),
-      authority_label_(new views::Label(authority)),
-      message_label_(nullptr),
-      login_model_(login_model_data ? login_model_data->model : nullptr) {
-  ChromeLayoutProvider* provider = ChromeLayoutProvider::Get();
-  password_field_->SetTextInputType(ui::TEXT_INPUT_TYPE_PASSWORD);
+    : login_model_(login_model_data ? login_model_data->model : nullptr) {
+  constexpr int kMessageWidth = 320;
 
-  authority_label_->SetMultiLine(true);
-  authority_label_->SetHorizontalAlignment(gfx::ALIGN_LEFT);
-  authority_label_->SetAllowCharacterBreak(true);
+  ChromeLayoutProvider* provider = ChromeLayoutProvider::Get();
 
   // Initialize the Grid Layout Manager used for this dialog box.
-  GridLayout* layout = GridLayout::CreatePanel(this);
+  views::GridLayout* layout = views::GridLayout::CreatePanel(this);
+  gfx::Insets insets = provider->GetInsetsMetric(views::INSETS_DIALOG_CONTENTS);
+  layout->set_minimum_size(gfx::Size(kMessageWidth + insets.width(), 0));
 
-  // Add the column set for the information message at the top of the dialog
-  // box.
-  const int single_column_view_set_id = 0;
-  views::ColumnSet* column_set =
-      layout->AddColumnSet(single_column_view_set_id);
-  column_set->AddColumn(GridLayout::FILL, GridLayout::FILL, 1,
-                        GridLayout::FIXED, kMessageWidth, 0);
+  ConfigureTextfieldStack(layout, kColumnSetId);
 
-  // Add the column set for the user name and password fields and labels.
-  const int labels_column_set_id = 1;
-  column_set = layout->AddColumnSet(labels_column_set_id);
-  if (provider->UseExtraDialogPadding())
-    column_set->AddPaddingColumn(0, kTextfieldStackHorizontalSpacing);
-  column_set->AddColumn(provider->GetControlLabelGridAlignment(),
-                        GridLayout::CENTER, 0, GridLayout::USE_PREF, 0, 0);
-  column_set->AddPaddingColumn(
-      0,
-      provider->GetDistanceMetric(views::DISTANCE_RELATED_CONTROL_HORIZONTAL));
-  column_set->AddColumn(GridLayout::FILL, GridLayout::CENTER, 1,
-                        GridLayout::USE_PREF, 0, 0);
-  if (provider->UseExtraDialogPadding())
-    column_set->AddPaddingColumn(0, kTextfieldStackHorizontalSpacing);
+  AddHeaderLabel(layout, authority, views::style::STYLE_PRIMARY);
+  AddHeaderLabel(layout, explanation, STYLE_SECONDARY);
 
-  layout->StartRow(0, single_column_view_set_id);
-  layout->AddView(authority_label_);
-  if (!explanation.empty()) {
-    message_label_ = new views::Label(explanation);
-    message_label_->SetMultiLine(true);
-    message_label_->SetHorizontalAlignment(gfx::ALIGN_LEFT);
-    message_label_->SetAllowCharacterBreak(true);
-    layout->AddPaddingRow(0, provider->GetDistanceMetric(
-                                 views::DISTANCE_RELATED_CONTROL_VERTICAL));
-    layout->StartRow(0, single_column_view_set_id);
-    layout->AddView(message_label_);
-  }
-
-  layout->AddPaddingRow(0, provider->GetDistanceMetric(
-                               DISTANCE_UNRELATED_CONTROL_VERTICAL_LARGE));
-
-  layout->StartRow(0, labels_column_set_id);
-  layout->AddView(username_label_);
-  layout->AddView(username_field_);
-
-  layout->AddPaddingRow(
-      0, provider->GetDistanceMetric(views::DISTANCE_RELATED_CONTROL_VERTICAL));
-
-  layout->StartRow(0, labels_column_set_id);
-  layout->AddView(password_label_);
-  layout->AddView(password_field_);
+  username_field_ = AddFirstTextfieldRow(
+      layout, l10n_util::GetStringUTF16(IDS_LOGIN_DIALOG_USERNAME_FIELD),
+      kColumnSetId);
+  password_field_ = AddTextfieldRow(
+      layout, l10n_util::GetStringUTF16(IDS_LOGIN_DIALOG_PASSWORD_FIELD),
+      kColumnSetId);
+  password_field_->SetTextInputType(ui::TEXT_INPUT_TYPE_PASSWORD);
 
   if (provider->UseExtraDialogPadding()) {
-    layout->AddPaddingRow(0, provider->GetDistanceMetric(
-                                 views::DISTANCE_UNRELATED_CONTROL_VERTICAL));
+    layout->AddPaddingRow(kFixed,
+                          provider->GetDistanceMetric(
+                              views::DISTANCE_UNRELATED_CONTROL_VERTICAL));
   }
 
   if (login_model_data) {
