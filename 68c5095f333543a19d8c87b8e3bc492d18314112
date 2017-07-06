@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "602a436f_59599ec8",
+        "filename": "net/base/data_url.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-06T04:40:33Z",
+      "side": 1,
+      "message": "Include StringPiece header.",
+      "range": {
+        "startLine": 12,
+        "startChar": 26,
+        "endLine": 12,
+        "endChar": 0
+      },
+      "revId": "68c5095f333543a19d8c87b8e3bc492d18314112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d6d8b5a_7d84b292",
+        "filename": "net/base/data_url.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-06T04:40:33Z",
+      "side": 1,
+      "message": "Hrm...Guess there\u0027s no way to make this a const_iterator, without writing out the whole thing?",
+      "range": {
+        "startLine": 46,
+        "startChar": 24,
+        "endLine": 46,
+        "endChar": 29
+      },
+      "revId": "68c5095f333543a19d8c87b8e3bc492d18314112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
