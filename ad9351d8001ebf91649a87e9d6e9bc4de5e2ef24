@@ -141,6 +141,24 @@
       "revId": "ad9351d8001ebf91649a87e9d6e9bc4de5e2ef24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc239e40_54fb9f5e",
+        "filename": "components/ntp_snippets/content_suggestions_metrics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-06T07:40:37Z",
+      "side": 1,
+      "message": "Done.\n\n// |is_category_visible| contains true iff the corresponding category can be\n// seen by the user on this page (even if it is empty). It does not depend on\n// whether the user actually saw the category.",
+      "parentUuid": "5b62d9ac_12de4660",
+      "revId": "ad9351d8001ebf91649a87e9d6e9bc4de5e2ef24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
