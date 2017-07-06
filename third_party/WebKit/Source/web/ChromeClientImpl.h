@@ -183,6 +183,9 @@ class WEB_EXPORT ChromeClientImpl final : public ChromeClient {
   void ClosePagePopup(PagePopup*) override;
   DOMWindow* PagePopupWindowForTesting() const override;
 
+  void SetBrowserControlsState(float, bool) override;
+  void SetBrowserControlsShownRatio(float) override;
+
   bool ShouldOpenModalDialogDuringPageDismissal(
       LocalFrame&,
       DialogType,
