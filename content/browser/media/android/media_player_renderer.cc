@@ -12,7 +12,6 @@
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/render_process_host.h"
-#include "content/public/browser/storage_partition.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/content_client.h"
 #include "media/base/android/media_service_throttler.h"
@@ -171,12 +170,8 @@ media::MediaResourceGetter* MediaPlayerRenderer::GetMediaResourceGetter() {
   if (!media_resource_getter_.get()) {
     RenderProcessHost* host = render_frame_host_->GetProcess();
     BrowserContext* context = host->GetBrowserContext();
-    StoragePartition* partition = host->GetStoragePartition();
-    storage::FileSystemContext* file_system_context =
-        partition ? partition->GetFileSystemContext() : nullptr;
-    media_resource_getter_.reset(
-        new MediaResourceGetterImpl(context, file_system_context, host->GetID(),
-                                    render_frame_host_->GetRoutingID()));
+    media_resource_getter_.reset(new MediaResourceGetterImpl(
+        context, host->GetID(), render_frame_host_->GetRoutingID()));
   }
   return media_resource_getter_.get();
 }

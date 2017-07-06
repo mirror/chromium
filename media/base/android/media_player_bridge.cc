@@ -93,10 +93,7 @@ void MediaPlayerBridge::Initialize() {
   media::MediaResourceGetter* resource_getter =
       manager()->GetMediaResourceGetter();
   if (url_.SchemeIsFileSystem() || url_.SchemeIsBlob()) {
-    resource_getter->GetPlatformPathFromURL(
-        url_,
-        base::Bind(&MediaPlayerBridge::ExtractMediaMetadata,
-                   weak_factory_.GetWeakPtr()));
+    NOTREACHED();
     return;
   }
 
@@ -146,10 +143,7 @@ void MediaPlayerBridge::Prepare() {
   DCHECK(j_media_player_bridge_.is_null());
   CreateJavaMediaPlayerBridge();
   if (url_.SchemeIsFileSystem() || url_.SchemeIsBlob()) {
-    manager()->GetMediaResourceGetter()->GetPlatformPathFromURL(
-        url_,
-        base::Bind(&MediaPlayerBridge::SetDataSource,
-                   weak_factory_.GetWeakPtr()));
+    NOTREACHED();
     return;
   }
 
