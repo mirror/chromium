@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ac116704_7c79aeba",
+        "filename": "chrome/browser/memory/memory_kills_monitor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002188
+      },
+      "writtenOn": "2017-07-06T21:15:32Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "b1bd4837_1779ac34",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 62,
+        "endChar": 27
+      },
+      "revId": "096664136705df8d01be8f2f3daa1c0d8e74f631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "42d7d405_186759dc",
         "filename": "chrome/browser/memory/memory_kills_monitor.cc",
         "patchSetId": 1
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "fa72f2f3_8dda78ac",
+        "filename": "chrome/browser/memory/memory_kills_monitor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002188
+      },
+      "writtenOn": "2017-07-06T21:15:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42d7d405_186759dc",
+      "revId": "096664136705df8d01be8f2f3daa1c0d8e74f631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3c7ae9e_cef19b2b",
         "filename": "chrome/browser/memory/memory_kills_monitor.cc",
         "patchSetId": 1
@@ -53,6 +95,24 @@
       "writtenOn": "2017-07-05T04:29:31Z",
       "side": 1,
       "message": "return; missing unless you\u0027re okay with SEGV.",
+      "revId": "096664136705df8d01be8f2f3daa1c0d8e74f631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14a8f337_ebe9aa08",
+        "filename": "chrome/browser/memory/memory_kills_monitor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1002188
+      },
+      "writtenOn": "2017-07-06T21:15:32Z",
+      "side": 1,
+      "message": "thanks.",
+      "parentUuid": "e3c7ae9e_cef19b2b",
       "revId": "096664136705df8d01be8f2f3daa1c0d8e74f631",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "9f1b9945_47877b9d",
+        "filename": "chrome/browser/memory/memory_kills_monitor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1002188
+      },
+      "writtenOn": "2017-07-06T21:15:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0608f1d8_76e17239",
+      "range": {
+        "startLine": 139,
+        "startChar": 34,
+        "endLine": 139,
+        "endChar": 35
+      },
+      "revId": "096664136705df8d01be8f2f3daa1c0d8e74f631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "443f942d_b122ce53",
         "filename": "chrome/browser/memory/memory_kills_monitor.cc",
         "patchSetId": 1
@@ -93,6 +177,24 @@
       "writtenOn": "2017-06-25T15:59:29Z",
       "side": 1,
       "message": "nit: Now this can be DCHECK(!g_instance); ?",
+      "revId": "096664136705df8d01be8f2f3daa1c0d8e74f631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a906e03_19224768",
+        "filename": "chrome/browser/memory/memory_kills_monitor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1002188
+      },
+      "writtenOn": "2017-07-06T21:15:32Z",
+      "side": 1,
+      "message": "changed to LazyInstance so removed the whole thing.",
+      "parentUuid": "443f942d_b122ce53",
       "revId": "096664136705df8d01be8f2f3daa1c0d8e74f631",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "574ceb1b_5a6e119f",
+        "filename": "chrome/browser/memory/memory_kills_monitor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002188
+      },
+      "writtenOn": "2017-07-06T21:15:32Z",
+      "side": 1,
+      "message": "To be honest I\u0027m not sure, gab@ wrote the code I think.\nI\u0027ve changed it to what Hidehiko suggested.",
+      "parentUuid": "a4f5d26a_3c55d987",
+      "range": {
+        "startLine": 145,
+        "startChar": 9,
+        "endLine": 145,
+        "endChar": 17
+      },
+      "revId": "096664136705df8d01be8f2f3daa1c0d8e74f631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2e2ad8ae_6a239673",
         "filename": "chrome/browser/memory/memory_kills_monitor.cc",
         "patchSetId": 1
@@ -136,6 +262,24 @@
       "revId": "096664136705df8d01be8f2f3daa1c0d8e74f631",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b07aafb8_be4bed1d",
+        "filename": "chrome/browser/memory/memory_kills_monitor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1002188
+      },
+      "writtenOn": "2017-07-06T21:15:32Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "2e2ad8ae_6a239673",
+      "revId": "096664136705df8d01be8f2f3daa1c0d8e74f631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -156,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "4c8be879_bd8687b5",
+        "filename": "chrome/browser/memory/memory_kills_monitor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1002188
+      },
+      "writtenOn": "2017-07-06T21:15:32Z",
+      "side": 1,
+      "message": "Removed. But could you elaborate? How did it passed in the past?",
+      "parentUuid": "6f30aaf6_97cd6ab5",
+      "revId": "096664136705df8d01be8f2f3daa1c0d8e74f631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7120cea_b30a27a8",
         "filename": "chrome/browser/memory/memory_kills_monitor.cc",
         "patchSetId": 1
@@ -170,6 +332,24 @@
       "revId": "096664136705df8d01be8f2f3daa1c0d8e74f631",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26f9ebfe_889e77b6",
+        "filename": "chrome/browser/memory/memory_kills_monitor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002188
+      },
+      "writtenOn": "2017-07-06T21:15:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7120cea_b30a27a8",
+      "revId": "096664136705df8d01be8f2f3daa1c0d8e74f631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -190,6 +370,24 @@
     },
     {
       "key": {
+        "uuid": "9e260ea5_700d4bc8",
+        "filename": "chrome/browser/memory/memory_kills_monitor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1002188
+      },
+      "writtenOn": "2017-07-06T21:15:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "362feeec_88e98df2",
+      "revId": "096664136705df8d01be8f2f3daa1c0d8e74f631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa167aad_f930493a",
         "filename": "chrome/browser/memory/memory_kills_monitor.cc",
         "patchSetId": 1
@@ -201,6 +399,24 @@
       "writtenOn": "2017-07-05T04:29:31Z",
       "side": 1,
       "message": "As hidehiko@ pointed out, this seems to have a race. Can you talk to the kernel team to come up with a better interface between the kernel and Chrome? Please add a TODO and file a bug if you agree.",
+      "revId": "096664136705df8d01be8f2f3daa1c0d8e74f631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf67cdb6_f2673b3b",
+        "filename": "chrome/browser/memory/memory_kills_monitor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1002188
+      },
+      "writtenOn": "2017-07-06T21:15:32Z",
+      "side": 1,
+      "message": "I think it\u0027s acceptable in the case? The point is that we always need a \"starting point\" is we don\u0027t record OOM kills from the system boot. We choose to start monitoring from login in the CL, and I think there\u0027s no serious difference between start recording from when users enter password and hit enter, or when several milliseconds after it.",
+      "parentUuid": "aa167aad_f930493a",
       "revId": "096664136705df8d01be8f2f3daa1c0d8e74f631",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -224,6 +440,24 @@
     },
     {
       "key": {
+        "uuid": "e51742e6_8736f627",
+        "filename": "chrome/browser/memory/memory_kills_monitor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1002188
+      },
+      "writtenOn": "2017-07-06T21:15:32Z",
+      "side": 1,
+      "message": "fgets() ensures we don\u0027t overflow the buffer. TryMathOomKillLine() may fail to match the complete line if it happens. \nDo you want me to switch to ifstream and std::getline() is really care about the case ?",
+      "parentUuid": "c0af8f30_c51130f5",
+      "revId": "096664136705df8d01be8f2f3daa1c0d8e74f631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4aa0a662_b6564fac",
         "filename": "chrome/browser/memory/memory_kills_monitor.cc",
         "patchSetId": 1
@@ -235,6 +469,24 @@
       "writtenOn": "2017-07-05T04:29:31Z",
       "side": 1,
       "message": "What happens if the browser process for user session crashes and restarts? Is StartMonitoring() called again maybe??",
+      "revId": "096664136705df8d01be8f2f3daa1c0d8e74f631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02f0a703_66eb439e",
+        "filename": "chrome/browser/memory/memory_kills_monitor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1002188
+      },
+      "writtenOn": "2017-07-06T21:15:32Z",
+      "side": 1,
+      "message": "If browser process is restarted, shouldn\u0027t it be a new process so totally unrelated to the old process? \n\nI do observed that sometimes LoggedInStateChanged is called multiple times (when I run autotest for it), like:\n\n[25225:25225:0621/014411.860149:VERBOSE1:memory_kills_monitor.cc(141)] MemoryKillsMonitor:: Initializing 25225\n[25225:25225:0621/014414.361732:VERBOSE1:memory_kills_monitor.cc(163)] LoggedInStateChanged\n[25225:25225:0621/014414.361772:VERBOSE1:memory_kills_monitor.cc(168)] User logged in\n[25225:25225:0621/014414.361783:VERBOSE1:memory_kills_monitor.cc(175)] MemoryKillsMonitor: Start monitoring.25225\n[25225:25419:0621/014414.362363:VERBOSE1:memory_kills_monitor.cc(254)] MemoryKillsMonitor started 25419\n[25225:25225:0621/014415.464665:VERBOSE1:memory_kills_monitor.cc(163)] LoggedInStateChanged\n[25225:25225:0621/014415.464713:VERBOSE1:memory_kills_monitor.cc(168)] User logged in\n[25225:25225:0621/014415.464724:VERBOSE1:memory_kills_monitor.cc(175)] MemoryKillsMonitor: Start monitoring.25225\n[25225:25225:0621/014415.464733:WARNING:memory_kills_monitor.cc(180)] Monitoring has been started\n\nSo I use the member variable monitoring_started_ to avoid re-creation of the listening thread.",
+      "parentUuid": "4aa0a662_b6564fac",
       "revId": "096664136705df8d01be8f2f3daa1c0d8e74f631",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -258,6 +510,24 @@
     },
     {
       "key": {
+        "uuid": "035c3488_63caa59c",
+        "filename": "chrome/browser/memory/memory_kills_monitor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1002188
+      },
+      "writtenOn": "2017-07-06T21:15:32Z",
+      "side": 1,
+      "message": "Yes the naming is not so right. The two metrics are introduced when ARC++ integration and somehow named so as requested.\nNow I\u0027d like to record low memory kill and OOM kill in the same time period (from log-in to log-out) for meaningful comparison.",
+      "parentUuid": "c9fad0c9_02724335",
+      "revId": "096664136705df8d01be8f2f3daa1c0d8e74f631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b1eb3627_e87968c8",
         "filename": "chrome/browser/memory/memory_kills_monitor.cc",
         "patchSetId": 1
@@ -269,6 +539,24 @@
       "writtenOn": "2017-06-25T15:59:29Z",
       "side": 1,
       "message": "Clarification: there will be a small timing gap, between login timing and fseek in Run(), and events in that period will be discarded.\nIs it expected behavior? If so, could you add comment explicitly?",
+      "revId": "096664136705df8d01be8f2f3daa1c0d8e74f631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93f0bd12_26ac62ee",
+        "filename": "chrome/browser/memory/memory_kills_monitor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1002188
+      },
+      "writtenOn": "2017-07-06T21:15:32Z",
+      "side": 1,
+      "message": "Added in the fseek() section. I think it\u0027s acceptable.",
+      "parentUuid": "b1eb3627_e87968c8",
       "revId": "096664136705df8d01be8f2f3daa1c0d8e74f631",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -315,6 +603,48 @@
     },
     {
       "key": {
+        "uuid": "897e17d5_ec5c8f18",
+        "filename": "chrome/browser/memory/memory_kills_monitor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1002188
+      },
+      "writtenOn": "2017-07-06T21:15:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b17f344e_ed97d857",
+      "revId": "096664136705df8d01be8f2f3daa1c0d8e74f631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a4bd9dc8_23652c82",
+        "filename": "chrome/browser/memory/memory_kills_monitor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1002188
+      },
+      "writtenOn": "2017-07-06T21:15:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82397613_09719439",
+      "range": {
+        "startLine": 258,
+        "startChar": 9,
+        "endLine": 258,
+        "endChar": 19
+      },
+      "revId": "096664136705df8d01be8f2f3daa1c0d8e74f631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c37c968_abd0a169",
         "filename": "chrome/browser/memory/memory_kills_monitor.h",
         "patchSetId": 1
@@ -332,6 +662,24 @@
     },
     {
       "key": {
+        "uuid": "356a56b8_f672a1f9",
+        "filename": "chrome/browser/memory/memory_kills_monitor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002188
+      },
+      "writtenOn": "2017-07-06T21:15:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c37c968_abd0a169",
+      "revId": "096664136705df8d01be8f2f3daa1c0d8e74f631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a71d375_39bfbc3e",
         "filename": "chrome/browser/memory/memory_kills_monitor.h",
         "patchSetId": 1
@@ -346,6 +694,24 @@
       "revId": "096664136705df8d01be8f2f3daa1c0d8e74f631",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a2ec9cc_98fe17a5",
+        "filename": "chrome/browser/memory/memory_kills_monitor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002188
+      },
+      "writtenOn": "2017-07-06T21:15:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a71d375_39bfbc3e",
+      "revId": "096664136705df8d01be8f2f3daa1c0d8e74f631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -384,6 +750,24 @@
     },
     {
       "key": {
+        "uuid": "3a05c8f3_b9f0370b",
+        "filename": "chrome/browser/memory/memory_kills_monitor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002188
+      },
+      "writtenOn": "2017-07-06T21:15:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc43eaed_27593e1c",
+      "revId": "096664136705df8d01be8f2f3daa1c0d8e74f631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe20eddd_ab2cb389",
         "filename": "chrome/browser/memory/memory_kills_monitor.h",
         "patchSetId": 1
@@ -401,6 +785,24 @@
     },
     {
       "key": {
+        "uuid": "54a47278_f4345ba5",
+        "filename": "chrome/browser/memory/memory_kills_monitor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002188
+      },
+      "writtenOn": "2017-07-06T21:15:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe20eddd_ab2cb389",
+      "revId": "096664136705df8d01be8f2f3daa1c0d8e74f631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28d095d0_8154dae5",
         "filename": "chrome/browser/memory/memory_kills_monitor.h",
         "patchSetId": 1
@@ -415,6 +817,24 @@
       "revId": "096664136705df8d01be8f2f3daa1c0d8e74f631",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82696494_3734e4b5",
+        "filename": "chrome/browser/memory/memory_kills_monitor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002188
+      },
+      "writtenOn": "2017-07-06T21:15:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28d095d0_8154dae5",
+      "revId": "096664136705df8d01be8f2f3daa1c0d8e74f631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
