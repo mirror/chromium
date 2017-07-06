@@ -26,7 +26,6 @@
 #include "cc/raster/task_graph_runner.h"
 #include "cc/scheduler/begin_frame_source.h"
 #include "cc/scheduler/delay_based_time_source.h"
-#include "cc/surfaces/direct_layer_tree_frame_sink.h"
 #include "cc/surfaces/display.h"
 #include "cc/surfaces/display_scheduler.h"
 #include "cc/surfaces/surface_manager.h"
@@ -34,6 +33,7 @@
 #include "components/viz/host/host_frame_sink_manager.h"
 #include "components/viz/service/display_embedder/compositor_overlay_candidate_validator.h"
 #include "components/viz/service/display_embedder/server_shared_bitmap_manager.h"
+#include "components/viz/service/frame_sinks/direct_layer_tree_frame_sink.h"
 #include "content/browser/browser_main_loop.h"
 #include "content/browser/compositor/browser_compositor_output_surface.h"
 #include "content/browser/compositor/gpu_browser_compositor_output_surface.h"
@@ -620,12 +620,12 @@ void GpuProcessTransportFactory::EstablishedGpuChannel(
   // same ContextProvider as the Display's output surface.
   auto layer_tree_frame_sink =
       vulkan_context_provider
-          ? base::MakeUnique<cc::DirectLayerTreeFrameSink>(
+          ? base::MakeUnique<viz::DirectLayerTreeFrameSink>(
                 compositor->frame_sink_id(), GetSurfaceManager(),
                 data->display.get(),
                 static_cast<scoped_refptr<cc::VulkanContextProvider>>(
                     vulkan_context_provider))
-          : base::MakeUnique<cc::DirectLayerTreeFrameSink>(
+          : base::MakeUnique<viz::DirectLayerTreeFrameSink>(
                 compositor->frame_sink_id(), GetSurfaceManager(),
                 data->display.get(), context_provider,
                 shared_worker_context_provider_, GetGpuMemoryBufferManager(),
