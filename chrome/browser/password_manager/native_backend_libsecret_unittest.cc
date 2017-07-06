@@ -274,7 +274,8 @@ class NativeBackendLibsecretTest : public testing::Test {
 
   NativeBackendLibsecretTest()
       : scoped_task_environment_(
-            base::test::ScopedTaskEnvironment::MainThreadType::UI) {}
+            base::test::ScopedTaskEnvironment::MainThreadType::UI),
+        task_runner_(scoped_task_environment_.GetMainThreadTaskRunner()) {}
 
   void SetUp() override {
     ASSERT_FALSE(global_mock_libsecret_items);
@@ -596,6 +597,7 @@ class NativeBackendLibsecretTest : public testing::Test {
   }
 
   base::test::ScopedTaskEnvironment scoped_task_environment_;
+  scoped_refptr<base::SequencedTaskRunner> task_runner_;
 
   // Provide some test forms to avoid having to set them up in each test.
   PasswordForm form_google_;
