@@ -56,7 +56,9 @@ class ChromePasswordManagerClient
   bool OnCredentialManagerUsed() override;
   bool PromptUserToSaveOrUpdatePassword(
       std::unique_ptr<password_manager::PasswordFormManager> form_to_save,
-      bool update_password) override;
+      bool update_password,
+      password_manager::PasswordFormMetricsRecorder::SaveBubbleTrigger trigger)
+      override;
   bool PromptUserToChooseCredentials(
       std::vector<std::unique_ptr<autofill::PasswordForm>> local_forms,
       const GURL& origin,

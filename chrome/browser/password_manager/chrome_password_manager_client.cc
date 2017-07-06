@@ -271,11 +271,22 @@ bool ChromePasswordManagerClient::OnCredentialManagerUsed() {
 
 bool ChromePasswordManagerClient::PromptUserToSaveOrUpdatePassword(
     std::unique_ptr<password_manager::PasswordFormManager> form_to_save,
-    bool update_password) {
+    bool update_password,
+    password_manager::PasswordFormMetricsRecorder::SaveBubbleTrigger trigger) {
   // Save password infobar and the password bubble prompts in case of
   // "webby" URLs and do not prompt in case of "non-webby" URLS (e.g. file://).
   if (!CanShowBubbleOnURL(web_contents()->GetLastCommittedURL()))
     return false;
+
+#if defined(OS_ANDROID)
+  if (form_to_save->IsBlacklisted())
+    return false;
+#endif  // defined(OS_ANDROID)
+
+  scoped_refptr<password_manager::PasswordFormMetricsRecorder>
+      metrics_recorder = form_to_save->metrics_recorder();
+  if (metrics_recorder)
+    metrics_recorder->RecordSavingPrompt(trigger, update_password);
 
 #if !defined(OS_ANDROID)
   PasswordsClientUIDelegate* manage_passwords_ui_controller =
@@ -288,16 +299,13 @@ bool ChromePasswordManagerClient::PromptUserToSaveOrUpdatePassword(
         std::move(form_to_save));
   }
 #else
-  if (form_to_save->IsBlacklisted())
-    return false;
-
   if (update_password) {
     UpdatePasswordInfoBarDelegate::Create(web_contents(),
                                           std::move(form_to_save));
-    return true;
+  } else {
+    SavePasswordInfoBarDelegate::Create(web_contents(),
+                                        std::move(form_to_save));
   }
-  SavePasswordInfoBarDelegate::Create(web_contents(),
-                                      std::move(form_to_save));
 #endif  // !defined(OS_ANDROID)
   return true;
 }
@@ -453,7 +461,7 @@ void ChromePasswordManagerClient::CheckProtectedPasswordEntry(
 #endif
 
 ukm::UkmRecorder* ChromePasswordManagerClient::GetUkmRecorder() {
-  return g_browser_process->ukm_recorder();
+  return ukm::UkmRecorder::Get();
 }
 
 ukm::SourceId ChromePasswordManagerClient::GetUkmSourceId() {

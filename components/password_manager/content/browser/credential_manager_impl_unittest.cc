@@ -82,7 +82,8 @@ class MockPasswordManagerClient : public StubPasswordManagerClient {
 
   bool PromptUserToSaveOrUpdatePassword(
       std::unique_ptr<PasswordFormManager> manager,
-      bool update_password) override {
+      bool update_password,
+      PasswordFormMetricsRecorder::SaveBubbleTrigger trigger) override {
     manager_.swap(manager);
     PromptUserToSavePasswordPtr(manager_.get());
     return true;

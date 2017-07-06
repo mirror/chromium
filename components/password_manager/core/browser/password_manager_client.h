@@ -11,6 +11,7 @@
 #include "base/macros.h"
 #include "components/autofill/core/common/password_form.h"
 #include "components/password_manager/core/browser/credentials_filter.h"
+#include "components/password_manager/core/browser/password_form_metrics_recorder.h"
 #include "components/password_manager/core/browser/password_store.h"
 #include "components/ukm/public/ukm_recorder.h"
 
@@ -94,7 +95,8 @@ class PasswordManagerClient {
   // that was overidden.
   virtual bool PromptUserToSaveOrUpdatePassword(
       std::unique_ptr<PasswordFormManager> form_to_save,
-      bool update_password) = 0;
+      bool update_password,
+      PasswordFormMetricsRecorder::SaveBubbleTrigger trigger) = 0;
 
   // Informs the embedder of a password forms that the user should choose from.
   // Returns true if the prompt is indeed displayed. If the prompt is not
