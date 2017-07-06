@@ -6,6 +6,7 @@
 
 #include <vector>
 
+#include "base/feature_list.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
@@ -19,8 +20,10 @@
 #include "components/subresource_filter/core/common/memory_mapped_ruleset.h"
 #include "components/subresource_filter/core/common/scoped_timers.h"
 #include "components/subresource_filter/core/common/time_measurements.h"
+#include "content/public/common/content_features.h"
 #include "content/public/renderer/render_frame.h"
 #include "ipc/ipc_message.h"
+#include "third_party/WebKit/public/platform/WebWorkerFetchContext.h"
 #include "third_party/WebKit/public/web/WebDataSource.h"
 #include "third_party/WebKit/public/web/WebDocument.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
@@ -32,6 +35,7 @@ SubresourceFilterAgent::SubresourceFilterAgent(
     UnverifiedRulesetDealer* ruleset_dealer)
     : content::RenderFrameObserver(render_frame),
       ruleset_dealer_(ruleset_dealer) {
+  LOG(ERROR) << "SubresourceFilterAgent::SubresourceFilterAgent";
   DCHECK(ruleset_dealer);
 }
 
@@ -43,6 +47,7 @@ GURL SubresourceFilterAgent::GetDocumentURL() {
 
 void SubresourceFilterAgent::SetSubresourceFilterForCommittedLoad(
     std::unique_ptr<blink::WebDocumentSubresourceFilter> filter) {
+  LOG(ERROR) << "SubresourceFilterAgent::SetSubresourceFilterForCommittedLoad";
   blink::WebLocalFrame* web_frame = render_frame()->GetWebFrame();
   web_frame->DataSource()->SetSubresourceFilter(filter.release());
 }
@@ -136,6 +141,7 @@ void SubresourceFilterAgent::DidCommitProvisionalLoad(
     bool is_same_document_navigation) {
   if (is_same_document_navigation)
     return;
+  LOG(ERROR) << "SubresourceFilterAgent::DidCommitProvisionalLoad";
 
   filter_for_last_committed_load_.reset();
 
@@ -144,6 +150,10 @@ void SubresourceFilterAgent::DidCommitProvisionalLoad(
   const GURL& url = GetDocumentURL();
   if (url.SchemeIsHTTPOrHTTPS() || url.SchemeIsFile()) {
     RecordHistogramsOnLoadCommitted();
+    LOG(ERROR) << "  activation_state_for_next_commit_.activation_level: "
+               << activation_state_for_next_commit_.activation_level;
+    LOG(ERROR) << "  ruleset_dealer_->IsRulesetFileAvailable(): "
+               << ruleset_dealer_->IsRulesetFileAvailable();
     if (activation_state_for_next_commit_.activation_level !=
             ActivationLevel::DISABLED &&
         ruleset_dealer_->IsRulesetFileAvailable()) {
@@ -157,6 +167,7 @@ void SubresourceFilterAgent::DidCommitProvisionalLoad(
       // resolved.
       CHECK(ruleset);
       CHECK(ruleset->data());
+      LOG(ERROR) << "ruleset->length() " << ruleset->length();
       auto filter = base::MakeUnique<WebDocumentSubresourceFilterImpl>(
           url::Origin(url), activation_state_for_next_commit_,
           std::move(ruleset), std::move(first_disallowed_load_callback));
@@ -189,6 +200,24 @@ bool SubresourceFilterAgent::OnMessageReceived(const IPC::Message& message) {
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
   return handled;
+}
+
+void SubresourceFilterAgent::WillCreateWorkerFetchContext(
+    blink::WebWorkerFetchContext* worker_fetch_context) {
+  DCHECK(base::FeatureList::IsEnabled(features::kOffMainThreadFetch));
+  LOG(ERROR) << "SubresourceFilterAgent::WillCreateWorkerFetchContext";
+  if (!filter_for_last_committed_load_)
+    return;
+  if (!ruleset_dealer_->IsRulesetFileAvailable())
+    return;
+  base::File ruleset_file = ruleset_dealer_->DuplicateRulesetFile();
+  if (!ruleset_file.IsValid())
+    return;
+  worker_fetch_context->SetSubresourceFilterInfo(
+      base::MakeUnique<WebSubresourceFilterInfoImpl>(
+          url::Origin(GetDocumentURL()),
+          filter_for_last_committed_load_->filter().activation_state(),
+          std::move(ruleset_file)));
 }
 
 }  // namespace subresource_filter

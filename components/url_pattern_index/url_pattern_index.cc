@@ -610,6 +610,52 @@ const flat::UrlRule* FindMatchInFlatUrlPatternIndex(
 UrlPatternIndexMatcher::UrlPatternIndexMatcher(
     const flat::UrlPatternIndex* flat_index)
     : flat_index_(flat_index) {
+  LOG(ERROR) << "UrlPatternIndexMatcher::UrlPatternIndexMatcher";
+  LOG(ERROR) << flat_index->ngram_index()->size();
+  for (uint32_t i = 0; i < std::min(10u, flat_index->ngram_index()->size());
+       ++i) {
+    const auto* rules = flat_index->ngram_index()->Get(i);
+    if (!rules->rule_list())
+      continue;
+    LOG(ERROR) << " " << i << " " << rules->ngram() << "  "
+               << rules->rule_list();
+    if (rules->rule_list()) {
+      for (uint32_t j = 0; j < std::min(10u, rules->rule_list()->size()); ++j) {
+        const auto* rule = rules->rule_list()->Get(j);
+        LOG(ERROR) << "  [" << j << "/" << rules->rule_list()->size() << "]";
+        LOG(ERROR) << "   options: " << static_cast<int>(rule->options());
+        LOG(ERROR) << "   element_types: " << rule->element_types();
+        LOG(ERROR) << "   activation_types: "
+                   << static_cast<int>(rule->activation_types());
+        LOG(ERROR) << "   url_pattern_type: " << rule->url_pattern_type();
+        LOG(ERROR) << "   anchor_left: "
+                   << static_cast<int>(rule->anchor_left());
+        LOG(ERROR) << "   anchor_right: "
+                   << static_cast<int>(rule->anchor_right());
+        if (rule->domains_included()) {
+          LOG(ERROR) << "   domains_included size: "
+                     << rule->domains_included()->size();
+          for (uint32_t k = 0;
+               k < std::min(10u, rule->domains_included()->size()); ++k) {
+            const auto* domain = rule->domains_included()->Get(k);
+            LOG(ERROR) << "    " << k << " " << domain->str();
+          }
+        }
+        if (rule->domains_excluded()) {
+          LOG(ERROR) << "   domains_excluded size: "
+                     << rule->domains_included()->size();
+          for (uint32_t k = 0;
+               k < std::min(10u, rule->domains_excluded()->size()); ++k) {
+            const auto* domain = rule->domains_excluded()->Get(k);
+            LOG(ERROR) << "    " << k << " " << domain->str();
+          }
+        }
+        if (rule->url_pattern()) {
+          LOG(ERROR) << "   url_pattern: " << rule->url_pattern()->str();
+        }
+      }
+    }
+  }
   DCHECK(!flat_index || flat_index->n() == kNGramSize);
 }
 
