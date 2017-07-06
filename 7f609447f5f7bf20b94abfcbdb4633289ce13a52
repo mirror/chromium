@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8a769989_6792b2e6",
+        "filename": "components/password_manager/core/browser/form_fetcher_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-06T14:04:50Z",
+      "side": 1,
+      "message": "Unfortunately not, the upcast from FormFetcherImpl to FormFetcher prevents that. Some compilers support it, but some don\u0027t (that\u0027s not related to just Xcode, hence I removed the comment below). I hear C++14 fixes this, but have not studied that in detail.",
+      "parentUuid": "32b2e865_20f61c6f",
+      "range": {
+        "startLine": 280,
+        "startChar": 0,
+        "endLine": 280,
+        "endChar": 29
+      },
+      "revId": "7f609447f5f7bf20b94abfcbdb4633289ce13a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e55d1e68_260dbc67",
         "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "7f609447f5f7bf20b94abfcbdb4633289ce13a52",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37933bd1_30145b22",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-06T14:04:50Z",
+      "side": 1,
+      "message": "I did not think about that, but it makes sense. I cannot imagine where we would not want FakeFormFetcher to clone itself. Fixed.",
+      "parentUuid": "e55d1e68_260dbc67",
+      "range": {
+        "startLine": 123,
+        "startChar": 31,
+        "endLine": 123,
+        "endChar": 36
+      },
+      "revId": "7f609447f5f7bf20b94abfcbdb4633289ce13a52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
