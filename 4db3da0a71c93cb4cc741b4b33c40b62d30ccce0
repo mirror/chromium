@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9f0c4ee5_5c77ad93",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-07-06T18:02:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16dff74a_3b42adbc",
+      "range": {
+        "startLine": 521,
+        "startChar": 33,
+        "endLine": 521,
+        "endChar": 58
+      },
+      "revId": "4db3da0a71c93cb4cc741b4b33c40b62d30ccce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "feafb5c2_304695a9",
         "filename": "content/browser/loader/resource_scheduler.cc",
         "patchSetId": 34
@@ -45,6 +69,30 @@
       "revId": "4db3da0a71c93cb4cc741b4b33c40b62d30ccce0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b60cfe4_6421805d",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 1090,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-07-06T18:02:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "feafb5c2_304695a9",
+      "range": {
+        "startLine": 1090,
+        "startChar": 57,
+        "endLine": 1090,
+        "endChar": 67
+      },
+      "revId": "4db3da0a71c93cb4cc741b4b33c40b62d30ccce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ee7467ea_1f332b73",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 1106,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-07-06T18:02:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d21d892_dcfc05ec",
+      "range": {
+        "startLine": 1106,
+        "startChar": 39,
+        "endLine": 1106,
+        "endChar": 75
+      },
+      "revId": "4db3da0a71c93cb4cc741b4b33c40b62d30ccce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b109e1e1_471f2aa4",
         "filename": "content/browser/loader/resource_scheduler_unittest.cc",
         "patchSetId": 34
@@ -82,6 +154,24 @@
       "writtenOn": "2017-07-06T16:35:56Z",
       "side": 1,
       "message": "Should have a test where max_delayable_requests_overridden_count_ is exceeded (Basically it starts out high, with a bunch of started delayable requests, then there\u0027s a new navigation without cancelling the old requests, and it results in a lower request count (The pending requests could be prefetches, \u003ca pings\u003e, or downloads or something [Though downloads probably would have a higher priority], or we could just be seeing the navigation before the cancellations).\n\nNo new delayable requests should be started until the the requests complete and we go below the limit.\n\nAlso, if we\u0027re at the limit, and there\u0027s a navigation, and no new requests are made, sane things should happen when the old requests complete (I\u0027m not so concerned about the temporarily increased limit, though it is a little weird.  It may be more natural just to calculate the new limit on creation and on NavigationStart, instead of on first request we see).\n\nAlso, if we\u0027re at the limit, and there\u0027s a navigation, and new requests are made, sane things should happen.",
+      "revId": "4db3da0a71c93cb4cc741b4b33c40b62d30ccce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ace0114_72fa46db",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 1030,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-07-06T18:02:38Z",
+      "side": 1,
+      "message": "The problem with doing it on the navigate event instead of the first request is that we do not have access to the network quality estimator outside of a URLRequest. There are two alternatives: One is to plumb the NQE down to the resource scheduler (Not sure how to do it and not sure if it is worth the effort. Need to plumb it from some place which has access to the io thread globals). The second hack is to cache the NQE after the first request. This is much easier, but seems too hacky to me.",
+      "parentUuid": "b109e1e1_471f2aa4",
       "revId": "4db3da0a71c93cb4cc741b4b33c40b62d30ccce0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
