@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c61e43e8_765f6af1",
+        "filename": "extensions/browser/api/bluetooth_low_energy/bluetooth_low_energy_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-07-06T18:21:09Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6b5a07be_34e02941",
+      "range": {
+        "startLine": 571,
+        "startChar": 5,
+        "endLine": 573,
+        "endChar": 21
+      },
+      "revId": "7d2301e165597b91de5dd02cc0f282724aee893a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a26a5e1c_c95e2bcb",
         "filename": "extensions/browser/api/bluetooth_low_energy/bluetooth_low_energy_api.cc",
         "patchSetId": 1
