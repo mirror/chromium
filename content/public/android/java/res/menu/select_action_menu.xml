@@ -74,4 +74,15 @@
         android:id="@+id/select_action_menu_text_processing_menus"
         android:orderInCategory="9">
     </group>
+    <group
+        android:id="@+id/select_action_menu_autofill_menus"
+        android:orderInCategory="10">
+        <item
+            android:id="@android:id/autofill"
+            android:title=""
+            android:showAsAction="ifRoom|withText"
+            android:orderInCategory="11"
+	    android:visible="false"
+            />
+    </group>
 </menu>

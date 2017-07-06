@@ -28,13 +28,16 @@ public class FloatingPastePopupMenu implements PastePopupMenu {
 
     private ActionMode mActionMode;
     private Rect mSelectionRect;
+    private ActionMode.Callback mExternalCallback;
 
-    public FloatingPastePopupMenu(Context context, View parent, PastePopupMenuDelegate delegate) {
+    public FloatingPastePopupMenu(Context context, View parent, PastePopupMenuDelegate delegate,
+            ActionMode.Callback externalCallback) {
         assert Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
 
         mParent = parent;
         mDelegate = delegate;
         mContext = context;
+        mExternalCallback = externalCallback;
     }
 
     @Override
@@ -74,6 +77,7 @@ public class FloatingPastePopupMenu implements PastePopupMenu {
         @Override
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
             createPasteMenu(mode, menu);
+            if (mExternalCallback != null) mExternalCallback.onCreateActionMode(mode, menu);
             return true;
         }
 
@@ -102,7 +106,11 @@ public class FloatingPastePopupMenu implements PastePopupMenu {
 
         @Override
         public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-            return false;
+            boolean ret = false;
+            if (mExternalCallback != null) {
+                ret = mExternalCallback.onPrepareActionMode(mode, menu);
+            }
+            return ret;
         }
 
         @Override
@@ -111,14 +119,14 @@ public class FloatingPastePopupMenu implements PastePopupMenu {
             if (id == R.id.select_action_menu_paste) {
                 mDelegate.paste();
                 mode.finish();
-            }
-            if (id == R.id.select_action_menu_paste_as_plain_text) {
+            } else if (id == R.id.select_action_menu_paste_as_plain_text) {
                 mDelegate.pasteAsPlainText();
                 mode.finish();
-            }
-            if (id == R.id.select_action_menu_select_all) {
+            } else if (id == R.id.select_action_menu_select_all) {
                 mDelegate.selectAll();
                 mode.finish();
+            } else if (mExternalCallback != null) {
+                mExternalCallback.onActionItemClicked(mode, item);
             }
             return true;
         }
