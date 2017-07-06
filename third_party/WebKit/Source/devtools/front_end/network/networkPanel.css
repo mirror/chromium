@@ -120,10 +120,6 @@
     flex: none !important;
 }
 
-.network-film-strip-placeholder {
-    flex: none;
-}
-
 .network-blocked-urls {
     border-top: 1px solid #dadada;
     flex: 104px 0 0;
