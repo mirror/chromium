@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a50244a_78e84f26",
+        "filename": "chromeos/dbus/dbus_method_call_status.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-06T09:31:20Z",
+      "side": 1,
+      "message": "Now only this callback is OnceCallback while the others are still Callback, and it\u0027s a bit confusing.\nCould you add a TODO to make it clear that all other callbacks are going to be OnceCallback?",
+      "revId": "f0571c3a8df8587638259e8e18e3a41f0ec22b07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
