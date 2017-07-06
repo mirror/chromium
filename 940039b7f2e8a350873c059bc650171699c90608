@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d9d85a8b_1c7c27be",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-07-06T13:32:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0deb22ba_83a2e539",
+      "range": {
+        "startLine": 192,
+        "startChar": 2,
+        "endLine": 192,
+        "endChar": 62
+      },
+      "revId": "940039b7f2e8a350873c059bc650171699c90608",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49c0f7cb_4b95893e",
         "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "940039b7f2e8a350873c059bc650171699c90608",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5befea2_ad60f809",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-07-06T13:32:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49c0f7cb_4b95893e",
+      "range": {
+        "startLine": 222,
+        "startChar": 8,
+        "endLine": 222,
+        "endChar": 16
+      },
+      "revId": "940039b7f2e8a350873c059bc650171699c90608",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "dc8cfb4a_41ffbb96",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-07-06T13:32:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80de6d78_ec3ee132",
+      "range": {
+        "startLine": 226,
+        "startChar": 4,
+        "endLine": 226,
+        "endChar": 42
+      },
+      "revId": "940039b7f2e8a350873c059bc650171699c90608",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e00d5c0_26f80f1b",
         "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
         "patchSetId": 7
@@ -91,6 +163,30 @@
       "revId": "940039b7f2e8a350873c059bc650171699c90608",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ca06a9a_60a2e24d",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-07-06T13:32:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e00d5c0_26f80f1b",
+      "range": {
+        "startLine": 249,
+        "startChar": 3,
+        "endLine": 252,
+        "endChar": 5
+      },
+      "revId": "940039b7f2e8a350873c059bc650171699c90608",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "dae1dc25_c3211e82",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-07-06T13:32:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3655f32c_ec7585b5",
+      "range": {
+        "startLine": 261,
+        "startChar": 33,
+        "endLine": 262,
+        "endChar": 40
+      },
+      "revId": "940039b7f2e8a350873c059bc650171699c90608",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7753067e_776156b8",
         "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
         "patchSetId": 7
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "8c6b94ea_99fc04ac",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-07-06T13:32:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7753067e_776156b8",
+      "range": {
+        "startLine": 286,
+        "startChar": 2,
+        "endLine": 286,
+        "endChar": 23
+      },
+      "revId": "940039b7f2e8a350873c059bc650171699c90608",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4bc6a83_ce0aecdd",
         "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
         "patchSetId": 7
@@ -151,6 +295,30 @@
       "writtenOn": "2017-07-05T11:37:33Z",
       "side": 1,
       "message": "I think the c++11 way to do this is just:\nreturn std::tie(client, type) \u003c std::tie(other.client, other.type)",
+      "range": {
+        "startLine": 502,
+        "startChar": 0,
+        "endLine": 504,
+        "endChar": 31
+      },
+      "revId": "940039b7f2e8a350873c059bc650171699c90608",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d14ca7bd_11a54e8e",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-07-06T13:32:52Z",
+      "side": 1,
+      "message": "That is awesome! :) TIL",
+      "parentUuid": "c4bc6a83_ce0aecdd",
       "range": {
         "startLine": 502,
         "startChar": 0,
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "ff101a81_55e799de",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-07-06T13:32:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29bc0f2e_73c4fb73",
+      "range": {
+        "startLine": 80,
+        "startChar": 7,
+        "endLine": 80,
+        "endChar": 22
+      },
+      "revId": "940039b7f2e8a350873c059bc650171699c90608",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eacc4c7c_5bf0a0c0",
         "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.h",
         "patchSetId": 7
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "66519954_5c7d3f1a",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-07-06T13:32:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eacc4c7c_5bf0a0c0",
+      "range": {
+        "startLine": 95,
+        "startChar": 6,
+        "endLine": 96,
+        "endChar": 80
+      },
+      "revId": "940039b7f2e8a350873c059bc650171699c90608",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23f5ede6_e8b3e092",
         "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.h",
         "patchSetId": 7
@@ -226,6 +442,24 @@
     },
     {
       "key": {
+        "uuid": "54ef55b5_8272bb7e",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-07-06T13:32:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23f5ede6_e8b3e092",
+      "revId": "940039b7f2e8a350873c059bc650171699c90608",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be470f3d_8a5ae532",
         "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl_unittest.cc",
         "patchSetId": 7
@@ -237,6 +471,30 @@
       "writtenOn": "2017-07-05T11:37:33Z",
       "side": 1,
       "message": "nit, just using base::trace_event::....",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 73
+      },
+      "revId": "940039b7f2e8a350873c059bc650171699c90608",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d539a7f_cee28cc8",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-07-06T13:32:52Z",
+      "side": 1,
+      "message": "I get this error: using declaration cannot refer to class member :(",
+      "parentUuid": "be470f3d_8a5ae532",
       "range": {
         "startLine": 37,
         "startChar": 0,
