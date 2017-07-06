@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "14980b3f_0616e938",
+        "filename": "content/browser/service_worker/embedded_worker_instance.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-06T14:11:37Z",
+      "side": 1,
+      "message": "Hm, we probably shouldn\u0027t std::move(instance_-\u003econtext_). So I just made these const WeakPtr\u0026\u0027s... let me know I\u0027m misunderstanding something.",
+      "parentUuid": "4034a544_899e593d",
+      "revId": "fb029d625d400680d3d23602551f217408885949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2830226b_fa98ab91",
         "filename": "content/browser/service_worker/embedded_worker_instance.cc",
         "patchSetId": 1
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "98c6c4a7_24fe17a7",
+        "filename": "content/browser/service_worker/embedded_worker_instance.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-06T14:11:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f0678403_2e2ebf3c",
+      "revId": "fb029d625d400680d3d23602551f217408885949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64e3332e_b49deacd",
         "filename": "content/browser/service_worker/service_worker_process_manager.cc",
         "patchSetId": 1
@@ -95,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "1a712673_700d8f10",
+        "filename": "content/browser/service_worker/service_worker_process_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-06T14:11:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64e3332e_b49deacd",
+      "range": {
+        "startLine": 164,
+        "startChar": 25,
+        "endLine": 164,
+        "endChar": 27
+      },
+      "revId": "fb029d625d400680d3d23602551f217408885949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "738cbae6_1a5c67a4",
         "filename": "content/browser/service_worker/service_worker_process_manager.cc",
         "patchSetId": 1
@@ -106,6 +166,30 @@
       "writtenOn": "2017-07-06T09:20:06Z",
       "side": 1,
       "message": "Can I ask you why |data_saver_enabled| is read in ServiceWorkerProcessManager? Is it because of some historical reasons?",
+      "range": {
+        "startLine": 169,
+        "startChar": 2,
+        "endLine": 169,
+        "endChar": 39
+      },
+      "revId": "fb029d625d400680d3d23602551f217408885949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0615b91c_0a71e3f4",
+        "filename": "content/browser/service_worker/service_worker_process_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-06T14:11:37Z",
+      "side": 1,
+      "message": "Ah, great point. I think it\u0027s because AllocateWorkerProcess() is the only place we could have access to browser_context_ during worker startup. Now that this method is called directly on the UI thread, we could additionally get browser_context_ during SetupOnUIThread(). I\u0027ll clean it up in a next patch.",
+      "parentUuid": "738cbae6_1a5c67a4",
       "range": {
         "startLine": 169,
         "startChar": 2,
@@ -135,6 +219,24 @@
     },
     {
       "key": {
+        "uuid": "c5a5b754_a418dadb",
+        "filename": "content/browser/service_worker/service_worker_process_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-06T14:11:37Z",
+      "side": 1,
+      "message": "Done. Kinda makes me wonder why all classes don\u0027t just keep one WeakPtr to return instead of using weak_factory_.GetWeakPtr() each time.",
+      "parentUuid": "6d4b86b9_94e0727e",
+      "revId": "fb029d625d400680d3d23602551f217408885949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c57561c7_0c0ba11b",
         "filename": "content/browser/service_worker/service_worker_process_manager_unittest.cc",
         "patchSetId": 1
@@ -155,6 +257,30 @@
       "revId": "fb029d625d400680d3d23602551f217408885949",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73a3fcaa_a03a8f6c",
+        "filename": "content/browser/service_worker/service_worker_process_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-06T14:11:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c57561c7_0c0ba11b",
+      "range": {
+        "startLine": 55,
+        "startChar": 2,
+        "endLine": 55,
+        "endChar": 49
+      },
+      "revId": "fb029d625d400680d3d23602551f217408885949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
