@@ -296,8 +296,10 @@ class AutofillManager : public AutofillHandler,
       std::unique_ptr<base::DictionaryValue> legal_message) override;
 
   // payments::FullCardRequest::ResultDelegate:
-  void OnFullCardRequestSucceeded(const CreditCard& card,
-                                  const base::string16& cvc) override;
+  void OnFullCardRequestSucceeded(
+      const CreditCard& card,
+      const base::string16& cvc,
+      const base::TimeTicks& form_parsed_timestamp) override;
   void OnFullCardRequestFailed() override;
 
   // payments::FullCardRequest::UIDelegate:

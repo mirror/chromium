@@ -87,8 +87,8 @@ void FullCardRequest::OnUnmaskResponse(const UnmaskResponse& response) {
 
   if (!should_unmask_card_) {
     if (result_delegate_)
-      result_delegate_->OnFullCardRequestSucceeded(request_->card,
-                                                   response.cvc);
+      result_delegate_->OnFullCardRequestSucceeded(request_->card, response.cvc,
+                                                   form_parsed_timestamp_);
     if (ui_delegate_)
       ui_delegate_->OnUnmaskVerificationResult(AutofillClient::SUCCESS);
     Reset();
@@ -152,7 +152,8 @@ void FullCardRequest::OnDidGetRealPan(AutofillClient::PaymentsRpcResult result,
 
       if (result_delegate_)
         result_delegate_->OnFullCardRequestSucceeded(
-            request_->card, request_->user_response.cvc);
+            request_->card, request_->user_response.cvc,
+            form_parsed_timestamp_);
       Reset();
       break;
     }

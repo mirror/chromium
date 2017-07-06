@@ -136,6 +136,6 @@ TEST_F(PaymentRequestFullCardRequesterTest, FullCardRequestSucceeded) {
   FullCardRequester full_card_requester(consumer_mock, nil,
                                         chrome_browser_state_.get());
 
-  full_card_requester.OnFullCardRequestSucceeded(credit_card_,
-                                                 base::ASCIIToUTF16("123"));
+  full_card_requester.OnFullCardRequestSucceeded(
+      credit_card_, base::ASCIIToUTF16("123"), base::TimeTicks());
 }
