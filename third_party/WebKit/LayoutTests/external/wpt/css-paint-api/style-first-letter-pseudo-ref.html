@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<style>
+</style>
+<style>
+.green {
+    color: rgb(0, 255, 0);
+    position: relative;
+    left:-4px;
+    display: inline-block;
+    line-height: 1px;
+}
+.red {
+    color: rgb(255, 0, 0);
+    line-height: 2px;
+}
+canvas{
+    position: absolute;
+    z-index: -1;
+}
+</style>
+<body>
+<div style="position: relative; top:-9px"><canvas width="9px" height="19px"></canvas>
+    <span class="red">F</span>
+    <span class="green">oo</span>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var canvas = document.querySelector('canvas');
+    var context = canvas.getContext("2d");
+    context.strokeStyle = 'green';
+    context.lineWidth = 4;
+    context.strokeRect(0, 0, 9, 19);
+});
+</script>
+</body>
+</html>
