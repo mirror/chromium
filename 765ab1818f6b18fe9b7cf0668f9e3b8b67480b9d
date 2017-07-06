@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48e6567e_ab44448c",
+        "filename": "build/android/pylib/local/device/local_device_instrumentation_test_run.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-07-06T17:10:41Z",
+      "side": 1,
+      "message": "Steps can be run in parallel if concurrent_adb is set. If this has an ordering constraint w/ shared preferences, the two should be handled in a single step.",
+      "revId": "765ab1818f6b18fe9b7cf0668f9e3b8b67480b9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5770440_523fe4bb",
+        "filename": "build/android/pylib/local/device/local_device_instrumentation_test_run.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-07-06T17:10:41Z",
+      "side": 1,
+      "message": "rather than (None, None, None), use (*sys.exc_info()). TearDown can be called w/ an active exception.",
+      "revId": "765ab1818f6b18fe9b7cf0668f9e3b8b67480b9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef38434e_4396e005",
+        "filename": "build/android/test_runner.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-07-06T17:10:41Z",
+      "side": 1,
+      "message": "nit: maybe a namedtuple?",
+      "revId": "765ab1818f6b18fe9b7cf0668f9e3b8b67480b9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
