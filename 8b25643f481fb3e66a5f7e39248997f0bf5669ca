@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "590f6a0d_b86458b7",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 37761,
+      "author": {
+        "id": 1211634
+      },
+      "writtenOn": "2017-07-06T22:03:01Z",
+      "side": 1,
+      "message": "It is still recorded. I don\u0027t think I can obsolete it until I\u0027m confident in the new histograms.",
+      "parentUuid": "8ed5efeb_f2de06b8",
+      "revId": "8b25643f481fb3e66a5f7e39248997f0bf5669ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f601ad6_68de6f67",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 9
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-06T21:58:40Z",
       "side": 1,
       "message": "You shouldn\u0027t need to add these if they aren\u0027t recorded.",
+      "revId": "8b25643f481fb3e66a5f7e39248997f0bf5669ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d37faa13_7432c99f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 93098,
+      "author": {
+        "id": 1211634
+      },
+      "writtenOn": "2017-07-06T22:03:01Z",
+      "side": 1,
+      "message": "Most of these are recorded. The non-v2 version of the metrics will keep reporting as long as m60 is alive somewhere.",
+      "parentUuid": "2f601ad6_68de6f67",
       "revId": "8b25643f481fb3e66a5f7e39248997f0bf5669ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
