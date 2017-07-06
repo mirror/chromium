@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4022184b_4fdc5069",
+        "filename": "ui/webui/resources/cr_elements/cr_expand_button/cr_expand_button.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-06T01:35:08Z",
+      "side": 1,
+      "message": "Does this seamlessly work without having to update the client code? Even if so, I think it is safer to move the content -\u003e slot migration to a separate CL, and keep this CL limited to the paper-icon-button to *-light migration.",
+      "revId": "edbd6db87d25ccf9286e98584c449adbbd233f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28270a55_524c967b",
+        "filename": "ui/webui/resources/cr_elements/cr_expand_button/cr_expand_button.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-06T01:35:08Z",
+      "side": 1,
+      "message": "It is not apparent why this is needed. The |expanded| variable is already set to false at line 18. Is it expected to reset it every time the element is removed and re-attached to the DOM?",
+      "revId": "edbd6db87d25ccf9286e98584c449adbbd233f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6a73c2d_1f5275a4",
+        "filename": "ui/webui/resources/cr_elements/shared_vars_css.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-06T01:35:08Z",
+      "side": 1,
+      "message": "Nit (optional): Based on the comment above, should this be expressed as follows?\n--cr-icon-ripple-size: calc(20px + (8px * 2));\n\nThat could would make the code more explicit and the comment redundant.",
+      "revId": "edbd6db87d25ccf9286e98584c449adbbd233f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
