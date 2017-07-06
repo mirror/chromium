@@ -196,6 +196,24 @@
     },
     {
       "key": {
+        "uuid": "8174d5ba_049e9849",
+        "filename": "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-06T14:30:03Z",
+      "side": 1,
+      "message": "I added an ExpectEntry() method. The signature is slightly different, both to ease implementation and to improve test readability. See what you think, thanks!",
+      "parentUuid": "ba9fb0dd_78739709",
+      "revId": "5f897a13751bedb3270bd6d6c238138c93c61227",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "effe1a6d_19bb8055",
         "filename": "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.h",
         "patchSetId": 4
