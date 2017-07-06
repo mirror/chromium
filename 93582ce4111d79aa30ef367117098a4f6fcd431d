@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bc18ea89_d6044bbf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/PictureInPictureController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-07-06T13:27:14Z",
+      "side": 1,
+      "message": "windowHeight and windowWidth update as the phone rotates so everything should still work.",
+      "parentUuid": "04d62372_5508130e",
+      "revId": "93582ce4111d79aa30ef367117098a4f6fcd431d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a9415972_b3f57cbe",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/PictureInPictureController.java",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-05T14:56:49Z",
       "side": 1,
       "message": "Maybe add an assert?",
+      "revId": "93582ce4111d79aa30ef367117098a4f6fcd431d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5174b180_8d2a515f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/PictureInPictureController.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-07-06T13:27:14Z",
+      "side": 1,
+      "message": "This comment is more about simplifying things for the reader, I\u0027ll make that a bit clearer though.",
+      "parentUuid": "a9415972_b3f57cbe",
       "revId": "93582ce4111d79aa30ef367117098a4f6fcd431d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a9b84b4e_aa42cc78",
+        "filename": "content/browser/web_contents/web_contents_android.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-07-06T13:27:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a0753e2_8c991f10",
+      "revId": "93582ce4111d79aa30ef367117098a4f6fcd431d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7f77f08_929d278d",
         "filename": "content/browser/web_contents/web_contents_impl.cc",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "93582ce4111d79aa30ef367117098a4f6fcd431d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10870b02_4e6dd0ea",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 5663,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-07-06T13:27:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7f77f08_929d278d",
+      "revId": "93582ce4111d79aa30ef367117098a4f6fcd431d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "dafd3f48_55bc5652",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 5665,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-07-06T13:27:14Z",
+      "side": 1,
+      "message": "Make optional requires an r-value reference (gfx::Size\u0026\u0026), I don\u0027t think we want to move from the gfx::Size stored in cached_video_sizes_.\n\nBesides, base::Optional\u003cgfx::Size\u003e(blah) is shorter than base::make_optional\u003cgfx::Size\u003e(blah).",
+      "parentUuid": "add9b56c_e5bf9952",
+      "revId": "93582ce4111d79aa30ef367117098a4f6fcd431d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ba55a5b9_71f8343f",
         "filename": "content/browser/web_contents/web_contents_impl.cc",
         "patchSetId": 6
@@ -101,6 +191,24 @@
       "revId": "93582ce4111d79aa30ef367117098a4f6fcd431d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "424778c3_6556b272",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 5666,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-07-06T13:27:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba55a5b9_71f8343f",
+      "revId": "93582ce4111d79aa30ef367117098a4f6fcd431d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
