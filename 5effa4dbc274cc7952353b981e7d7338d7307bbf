@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b955487f_d52e0092",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-07-06T21:21:06Z",
+      "side": 1,
+      "message": "I would think you\u0027d have to wrap this call with a allowThreadDiskWrites, like we do here:\nhttps://cs.chromium.org/search/?q\u003df:/android_webview/+%5CbStrictMode%5C.allowThreadDiskWrites%5C(%5C);\nAnyone else know why this doesn\u0027t break on the trybots?",
+      "revId": "5effa4dbc274cc7952353b981e7d7338d7307bbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
