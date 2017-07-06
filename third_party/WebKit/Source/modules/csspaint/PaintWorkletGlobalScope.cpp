@@ -200,6 +200,8 @@ void PaintWorkletGlobalScope::registerPaint(const String& name,
   paint_definitions_.Set(
       name, TraceWrapperMember<CSSPaintDefinition>(this, definition));
   pending_generator_registry_->SetDefinition(name, definition);
+
+  // Follow the spec to add some more steps for document paint definition
 }
 
 CSSPaintDefinition* PaintWorkletGlobalScope::FindDefinition(

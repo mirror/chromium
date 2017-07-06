@@ -27,6 +27,7 @@ class MODULES_EXPORT PaintWorklet final : public Worklet {
 
   CSSPaintDefinition* FindDefinition(const String& name);
   void AddPendingGenerator(const String& name, CSSPaintImageGeneratorImpl*);
+  PassRefPtr<Image> Paint();
 
   DECLARE_VIRTUAL_TRACE();
 
