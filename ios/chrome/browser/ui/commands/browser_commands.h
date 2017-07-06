@@ -18,6 +18,12 @@
 // Navigates forwards in the current tab's history.
 - (void)goForward;
 
+// Stop loading the current web page.
+- (void)stopLoading;
+
+// Reload the current web page
+- (void)reload;
+
 @end
 
 #endif  // IOS_CHROME_BROWSER_UI_COMMANDS_BROWSER_COMMANDS_H_
