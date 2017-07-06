@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a1a28891_7160717d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-06T17:58:39Z",
+      "side": 1,
+      "message": "Most of the rootScroller tests are unit tests. However, for the background patch, I really do want to ensure that the pixel result is accurate so I think an integration test in this case is appropriate. These would eventually be upstreamed to WPT.\n\nThe lack of browser controls manipulation in layout tests has actually long been a thorn since Browser Control behavior is speared between Blink and CC so unit testing many bugs/scenarios is difficult from just one side of the divide.",
+      "parentUuid": "78139a7c_ab68d9a1",
+      "revId": "b4f1d8a74446e7f02fac7d978796db162c6f801f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c52ad147_ee512433",
         "filename": "third_party/WebKit/Source/core/page/ChromeClient.h",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "b4f1d8a74446e7f02fac7d978796db162c6f801f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e35ac0a_f85a231d",
+        "filename": "third_party/WebKit/Source/core/page/ChromeClient.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-06T17:58:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c52ad147_ee512433",
+      "revId": "b4f1d8a74446e7f02fac7d978796db162c6f801f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a5344f0a_4c013c29",
+        "filename": "third_party/WebKit/Source/core/testing/Internals.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-06T17:58:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e72d3d8_8cc6c44d",
+      "revId": "b4f1d8a74446e7f02fac7d978796db162c6f801f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f74194b6_35a2e8e1",
         "filename": "third_party/WebKit/Source/web/ChromeClientImpl.h",
         "patchSetId": 9
@@ -67,6 +121,24 @@
       "revId": "b4f1d8a74446e7f02fac7d978796db162c6f801f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a611dfef_c0846732",
+        "filename": "third_party/WebKit/Source/web/ChromeClientImpl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-06T17:58:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f74194b6_35a2e8e1",
+      "revId": "b4f1d8a74446e7f02fac7d978796db162c6f801f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
