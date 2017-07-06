@@ -22,6 +22,30 @@
       "revId": "64686506f3d73ce6ab9484a8b1e0323a287cd096",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8539e487_613513d0",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBRequest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-06T00:19:35Z",
+      "side": 1,
+      "message": "I think using std::atomic is fine.\n\nAt the moment Blink is using platform/wtf/Atomics.h. You could use AtomicIncrement if you want to follow the current convention but it will be replaced with std::atomic in the future.",
+      "parentUuid": "3b99a6ae_58746678",
+      "range": {
+        "startLine": 90,
+        "startChar": 14,
+        "endLine": 90,
+        "endChar": 27
+      },
+      "revId": "64686506f3d73ce6ab9484a8b1e0323a287cd096",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
