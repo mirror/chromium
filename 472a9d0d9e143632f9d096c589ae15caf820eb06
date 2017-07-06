@@ -46,6 +46,30 @@
       "revId": "472a9d0d9e143632f9d096c589ae15caf820eb06",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a69086d_90d41735",
+        "filename": "base/numerics/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002378
+      },
+      "writtenOn": "2017-07-06T17:58:12Z",
+      "side": 0,
+      "message": "Gerrit confuses me.",
+      "parentUuid": "0837924e_7c857714",
+      "range": {
+        "startLine": 31,
+        "startChar": 28,
+        "endLine": 31,
+        "endChar": 29
+      },
+      "revId": "472a9d0d9e143632f9d096c589ae15caf820eb06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
