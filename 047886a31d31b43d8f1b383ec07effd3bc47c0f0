@@ -81,6 +81,30 @@
       "revId": "047886a31d31b43d8f1b383ec07effd3bc47c0f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ccd24d6_646e105f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-06T15:40:22Z",
+      "side": 1,
+      "message": "How about something like\n\n\"Resize the thumbnail. If the provided bitmap is not cached or used anywhere else (that\u0027s the case for the ones returned by SuggestionsSource for ARTICLE suggestions but not for the ones returned by ThumbnailProvicer for DOWNLOADS for example), recycle the input image in the process.\"",
+      "parentUuid": "543410ef_2e70657f",
+      "range": {
+        "startLine": 351,
+        "startChar": 28,
+        "endLine": 351,
+        "endChar": 32
+      },
+      "revId": "047886a31d31b43d8f1b383ec07effd3bc47c0f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
