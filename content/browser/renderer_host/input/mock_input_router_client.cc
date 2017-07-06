@@ -55,6 +55,10 @@ void MockInputRouterClient::DidOverscroll(
   overscroll_ = params;
 }
 
+void MockInputRouterClient::OnSetTouchAction(cc::TouchAction touch_action) {
+  touch_action_ = touch_action;
+}
+
 void MockInputRouterClient::DidStopFlinging() {
 }
 
@@ -76,6 +80,12 @@ ui::DidOverscrollParams MockInputRouterClient::GetAndResetOverscroll() {
   ui::DidOverscrollParams overscroll;
   std::swap(overscroll_, overscroll);
   return overscroll;
+}
+
+cc::TouchAction MockInputRouterClient::GetAndResetTouchAction() {
+  cc::TouchAction touch_action;
+  std::swap(touch_action_, touch_action);
+  return touch_action;
 }
 
 }  // namespace content

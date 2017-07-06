@@ -214,7 +214,7 @@ void InputHandlerManager::HandleInputEvent(
                  "result", "NoInputHandlerFound");
     // Oops, we no longer have an interested input handler..
     callback.Run(INPUT_EVENT_ACK_STATE_NOT_CONSUMED, std::move(input_event),
-                 latency_info, nullptr);
+                 latency_info, nullptr, cc::kNoTouchAction);
     return;
   }
 
@@ -238,7 +238,8 @@ void InputHandlerManager::DidHandleInputEventAndOverscroll(
     InputHandlerProxy::EventDisposition event_disposition,
     ui::WebScopedInputEvent input_event,
     const ui::LatencyInfo& latency_info,
-    std::unique_ptr<ui::DidOverscrollParams> overscroll_params) {
+    std::unique_ptr<ui::DidOverscrollParams> overscroll_params,
+    cc::TouchAction touch_action) {
   InputEventAckState input_event_ack_state =
       InputEventDispositionToAck(event_disposition);
   switch (input_event_ack_state) {
@@ -257,7 +258,7 @@ void InputHandlerManager::DidHandleInputEventAndOverscroll(
       break;
   }
   callback.Run(input_event_ack_state, std::move(input_event), latency_info,
-               std::move(overscroll_params));
+               std::move(overscroll_params), touch_action);
 }
 
 void InputHandlerManager::DidOverscroll(int routing_id,

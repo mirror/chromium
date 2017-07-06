@@ -75,7 +75,8 @@ class InputHandlerProxy
       base::OnceCallback<void(EventDisposition,
                               WebScopedInputEvent WebInputEvent,
                               const LatencyInfo&,
-                              std::unique_ptr<ui::DidOverscrollParams>)>;
+                              std::unique_ptr<ui::DidOverscrollParams>,
+                              cc::TouchAction)>;
   void HandleInputEventWithLatencyInfo(WebScopedInputEvent event,
                                        const LatencyInfo& latency_info,
                                        EventDispositionCallback callback);

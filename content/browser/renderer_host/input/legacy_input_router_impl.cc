@@ -457,6 +457,10 @@ void LegacyInputRouterImpl::OnInputEventAck(const InputEventAck& ack) {
            ack.type == WebInputEvent::kGestureScrollUpdate);
     OnDidOverscroll(*ack.overscroll);
   }
+  if (ack.touch_action != cc::kNoTouchAction) {
+    DCHECK(ack.type == WebInputEvent::kTouchStart);
+    OnSetTouchAction(ack.touch_action);
+  }
 
   ProcessInputEventAck(ack.type, ack.state, ack.latency,
                        ack.unique_touch_event_id, RENDERER);
@@ -506,6 +510,7 @@ void LegacyInputRouterImpl::OnSetTouchAction(cc::TouchAction touch_action) {
                touch_action);
 
   touch_action_filter_.OnSetTouchAction(touch_action);
+  client_->OnSetTouchAction(touch_action);
 
   // kTouchActionNone should disable the touch ack timeout.
   UpdateTouchAckTimeoutEnabled();

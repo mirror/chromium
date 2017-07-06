@@ -90,17 +90,17 @@ class InputEventRecorder : public content::InputHandlerManager {
     records_.push_back(Record(event.get()));
     if (handle_events_) {
       callback.Run(INPUT_EVENT_ACK_STATE_CONSUMED, std::move(event),
-                   latency_info, nullptr);
+                   latency_info, nullptr, cc::kNoTouchAction);
     } else if (send_to_widget_) {
       if (passive_)
         callback.Run(INPUT_EVENT_ACK_STATE_SET_NON_BLOCKING, std::move(event),
-                     latency_info, nullptr);
+                     latency_info, nullptr, cc::kNoTouchAction);
       else
         callback.Run(INPUT_EVENT_ACK_STATE_NOT_CONSUMED, std::move(event),
-                     latency_info, nullptr);
+                     latency_info, nullptr, cc::kNoTouchAction);
     } else {
       callback.Run(INPUT_EVENT_ACK_STATE_NO_CONSUMER_EXISTS, std::move(event),
-                   latency_info, nullptr);
+                   latency_info, nullptr, cc::kNoTouchAction);
     }
   }
 
@@ -264,7 +264,7 @@ class InputEventFilterTest : public testing::Test,
                         HandledEventCallback callback) override {
     message_recorder_.AppendEvent(event);
     std::move(callback).Run(INPUT_EVENT_ACK_STATE_NOT_CONSUMED, latency,
-                            nullptr);
+                            nullptr, cc::kNoTouchAction);
   }
 
   void SetNeedsMainFrame() override { event_recorder_->NeedsMainFrame(); }

@@ -128,15 +128,20 @@ class QueuedWebInputEvent : public ScopedWebInputEventWithLatencyInfo,
   void HandledEvent(MainThreadEventQueue* queue,
                     InputEventAckState ack_result,
                     const ui::LatencyInfo& latency_info,
-                    std::unique_ptr<ui::DidOverscrollParams> overscroll) {
+                    std::unique_ptr<ui::DidOverscrollParams> overscroll,
+                    cc::TouchAction touch_action) {
     if (callback_) {
-      std::move(callback_).Run(ack_result, latency_info, std::move(overscroll));
+      std::move(callback_).Run(ack_result, latency_info, std::move(overscroll),
+                               touch_action);
     } else {
       DCHECK(!overscroll) << "Unexpected overscroll for un-acked event";
+      DCHECK(touch_action == cc::kNoTouchAction)
+          << "Unexpected touch action for un-acked event";
     }
 
     for (auto&& callback : blocking_coalesced_callbacks_)
-      std::move(callback).Run(ack_result, latency_info, nullptr);
+      std::move(callback).Run(ack_result, latency_info, nullptr,
+                              cc::kNoTouchAction);
 
     size_t num_events_handled = 1 + blocking_coalesced_callbacks_.size();
     if (queue->renderer_scheduler_) {
@@ -352,7 +357,7 @@ void MainThreadEventQueue::HandleEvent(
   QueueEvent(std::move(queued_event));
 
   if (callback)
-    std::move(callback).Run(ack_result, latency, nullptr);
+    std::move(callback).Run(ack_result, latency, nullptr, cc::kNoTouchAction);
 }
 
 void MainThreadEventQueue::QueueClosure(base::OnceClosure closure) {

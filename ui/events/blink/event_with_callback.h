@@ -44,7 +44,8 @@ class EventWithCallback {
 
   void RunCallbacks(InputHandlerProxy::EventDisposition,
                     const LatencyInfo& latency,
-                    std::unique_ptr<DidOverscrollParams>);
+                    std::unique_ptr<DidOverscrollParams>,
+                    cc::TouchAction);
 
   const blink::WebInputEvent& event() const { return *event_; }
   const LatencyInfo latency_info() const { return latency_; }

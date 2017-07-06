@@ -838,9 +838,11 @@ void RenderWidget::SendInputEventAck(
     uint32_t touch_event_id,
     InputEventAckState ack_state,
     const ui::LatencyInfo& latency_info,
-    std::unique_ptr<ui::DidOverscrollParams> overscroll_params) {
+    std::unique_ptr<ui::DidOverscrollParams> overscroll_params,
+    cc::TouchAction touch_action) {
   InputEventAck ack(InputEventAckSource::MAIN_THREAD, type, ack_state,
-                    latency_info, std::move(overscroll_params), touch_event_id);
+                    latency_info, std::move(overscroll_params), touch_action,
+                    touch_event_id);
   Send(new InputHostMsg_HandleInputEvent_ACK(routing_id_, ack));
 }
 
@@ -1064,6 +1066,10 @@ void RenderWidget::ClearEditCommands() {
 
 void RenderWidget::OnDidOverscroll(const ui::DidOverscrollParams& params) {
   Send(new InputHostMsg_DidOverscroll(routing_id_, params));
+}
+
+void RenderWidget::OnSetTouchAction(cc::TouchAction touch_action) {
+  Send(new InputHostMsg_SetTouchAction(routing_id_, touch_action));
 }
 
 void RenderWidget::SetInputHandler(RenderWidgetInputHandler* input_handler) {
@@ -2291,7 +2297,7 @@ void RenderWidget::SetTouchAction(cc::TouchAction touch_action) {
   if (input_handler_->handling_event_type() != WebInputEvent::kTouchStart)
     return;
 
-  Send(new InputHostMsg_SetTouchAction(routing_id_, touch_action));
+  input_handler_->TouchActionFromBlink(touch_action);
 }
 
 void RenderWidget::RegisterRenderFrameProxy(RenderFrameProxy* proxy) {

@@ -71,7 +71,8 @@ void EventWithCallback::CoalesceWith(EventWithCallback* other,
 void EventWithCallback::RunCallbacks(
     InputHandlerProxy::EventDisposition disposition,
     const LatencyInfo& latency,
-    std::unique_ptr<DidOverscrollParams> did_overscroll_params) {
+    std::unique_ptr<DidOverscrollParams> did_overscroll_params,
+    cc::TouchAction touch_action) {
   for (auto& original_event : original_events_) {
     std::unique_ptr<DidOverscrollParams> did_overscroll_params_copy;
     if (did_overscroll_params) {
@@ -80,7 +81,7 @@ void EventWithCallback::RunCallbacks(
     }
     std::move(original_event.callback_)
         .Run(disposition, std::move(original_event.event_), latency,
-             std::move(did_overscroll_params));
+             std::move(did_overscroll_params), touch_action);
   }
 }
 

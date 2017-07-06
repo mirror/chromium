@@ -430,6 +430,8 @@ class LegacyInputRouterImplTest : public testing::Test {
 
   void OverscrollDispatch();
 
+  void TouchActionDispatch();
+
   InputRouter::Config config_;
   std::unique_ptr<MockRenderProcessHost> process_;
   std::unique_ptr<MockInputRouterClient> client_;
@@ -2048,6 +2050,28 @@ TEST_F(LegacyInputRouterImplWheelScrollLatchingDisabledTest,
 }
 TEST_F(LegacyInputRouterImplAsyncWheelEventEnabledTest, OverscrollDispatch) {
   OverscrollDispatch();
+}
+
+// Test proper routing of touch action notifications received either from event
+// acks or from |SetTouchAction| IPC messages.
+TEST_F(LegacyInputRouterImplTest, TouchActionDispatch) {
+  const cc::TouchAction touch_action = cc::kTouchActionPanY;
+  PressTouchPoint(1, 1);
+  SendTouchEvent();
+
+  input_router_->OnMessageReceived(
+      InputHostMsg_SetTouchAction(0, touch_action));
+  cc::TouchAction client_touch_action = client_->GetAndResetTouchAction();
+  EXPECT_EQ(touch_action, client_touch_action);
+
+  SendTouchEvent();
+  InputEventAck ack(InputEventAckSource::MAIN_THREAD,
+                    WebInputEvent::kTouchStart, INPUT_EVENT_ACK_STATE_CONSUMED);
+  ack.touch_action = cc::kTouchActionPanY;
+  input_router_->OnMessageReceived(InputHostMsg_HandleInputEvent_ACK(0, ack));
+
+  client_touch_action = client_->GetAndResetTouchAction();
+  EXPECT_EQ(touch_action, client_touch_action);
 }
 
 // Tests that touch event stream validation passes when events are filtered

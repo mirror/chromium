@@ -410,7 +410,8 @@ void InputHandlerProxy::DispatchSingleInputEvent(
 
   // Will run callback for every original events.
   event_with_callback->RunCallbacks(disposition, monitored_latency_info,
-                                    std::move(current_overscroll_params_));
+                                    std::move(current_overscroll_params_),
+                                    cc::kNoTouchAction);
 }
 
 void InputHandlerProxy::DispatchQueuedInputEvents() {

@@ -244,7 +244,8 @@ void InputEventFilter::DidForwardToHandlerAndOverscroll(
     InputEventAckState ack_state,
     ui::WebScopedInputEvent event,
     const ui::LatencyInfo& latency_info,
-    std::unique_ptr<DidOverscrollParams> overscroll_params) {
+    std::unique_ptr<DidOverscrollParams> overscroll_params,
+    cc::TouchAction touch_action) {
   bool send_ack = dispatch_type == DISPATCH_TYPE_BLOCKING;
   uint32_t unique_touch_event_id =
       ui::WebInputEventTraits::GetUniqueTouchEventId(*event);
@@ -268,7 +269,7 @@ void InputEventFilter::DidForwardToHandlerAndOverscroll(
   }
   if (callback) {
     std::move(callback).Run(ack_state, latency_info,
-                            std::move(overscroll_params));
+                            std::move(overscroll_params), touch_action);
   }
 }
 
@@ -278,13 +279,15 @@ void InputEventFilter::SendInputEventAck(
     int unique_touch_event_id,
     InputEventAckState ack_state,
     const ui::LatencyInfo& latency_info,
-    std::unique_ptr<ui::DidOverscrollParams> overscroll_params) {
+    std::unique_ptr<ui::DidOverscrollParams> overscroll_params,
+    cc::TouchAction touch_action) {
   bool main_thread = main_task_runner_->BelongsToCurrentThread();
 
   InputEventAck ack(main_thread ? InputEventAckSource::MAIN_THREAD
                                 : InputEventAckSource::COMPOSITOR_THREAD,
                     event_type, ack_state, latency_info,
-                    std::move(overscroll_params), unique_touch_event_id);
+                    std::move(overscroll_params), touch_action,
+                    unique_touch_event_id);
   SendMessage(std::unique_ptr<IPC::Message>(
       new InputHostMsg_HandleInputEvent_ACK(routing_id, ack)));
 }

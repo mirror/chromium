@@ -31,6 +31,7 @@ class MockInputRouterClient : public InputRouterClient {
   void DecrementInFlightEventCount(InputEventAckSource ack_source) override;
   void OnHasTouchEventHandlers(bool has_handlers) override;
   void DidOverscroll(const ui::DidOverscrollParams& params) override;
+  void OnSetTouchAction(cc::TouchAction touch_action) override;
   void DidStopFlinging() override;
   void ForwardGestureEventWithLatencyInfo(
       const blink::WebGestureEvent& gesture_event,
@@ -38,6 +39,7 @@ class MockInputRouterClient : public InputRouterClient {
 
   bool GetAndResetFilterEventCalled();
   ui::DidOverscrollParams GetAndResetOverscroll();
+  cc::TouchAction GetAndResetTouchAction();
 
   void set_input_router(InputRouter* input_router) {
     input_router_ = input_router;
@@ -68,6 +70,7 @@ class MockInputRouterClient : public InputRouterClient {
   std::unique_ptr<InputEvent> last_filter_event_;
 
   ui::DidOverscrollParams overscroll_;
+  cc::TouchAction touch_action_;
 };
 
 }  // namespace content
