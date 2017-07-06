@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be9f049a_2261b0b0",
+        "filename": "chrome/browser/android/chrome_jni_registrar.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-07-06T14:16:19Z",
+      "side": 0,
+      "message": "the changes here seem a little arbitrary. why is this chrome one removed? Cause it was in the commented section for \"components\"? Similarly why were some of the components below not removed (like feature_engagement_tracker)?",
+      "range": {
+        "startLine": 13,
+        "startChar": 33,
+        "endLine": 13,
+        "endChar": 40
+      },
+      "revId": "5bf60281e3ba01737805ba8b505aa0731cce8ea8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
