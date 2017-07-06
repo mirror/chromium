@@ -50,6 +50,7 @@
 #include "content/public/test/mock_download_item.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "content/public/test/test_utils.h"
+#include "content/test/test_web_contents.h"
 #include "net/base/url_util.h"
 #include "net/cert/x509_certificate.h"
 #include "net/http/http_status_code.h"
@@ -97,6 +98,24 @@ class MockSafeBrowsingDatabaseManager : public TestSafeBrowsingDatabaseManager {
  private:
   virtual ~MockSafeBrowsingDatabaseManager() {}
   DISALLOW_COPY_AND_ASSIGN(MockSafeBrowsingDatabaseManager);
+};
+
+class FakeWebContents : public content::TestWebContents {
+ public:
+  explicit FakeWebContents(content::BrowserContext* browser_context)
+      : content::TestWebContents(browser_context),
+        last_committed_url_("http://example.com") {
+    Init(WebContents::CreateParams(browser_context, nullptr));
+  }
+
+  ~FakeWebContents() override {}
+
+  const GURL& GetLastCommittedURL() const override {
+    return last_committed_url_;
+  }
+
+ private:
+  GURL last_committed_url_;
 };
 
 class FakeSafeBrowsingService : public SafeBrowsingService,
@@ -2384,6 +2403,33 @@ TEST_F(DownloadProtectionServiceTest, PPAPIDownloadRequest_Payload) {
   EXPECT_EQ(".txt", request.alternate_extensions(0));
   EXPECT_EQ(".abc", request.alternate_extensions(1));
   EXPECT_EQ(".sdF", request.alternate_extensions(2));
+}
+
+TEST_F(DownloadProtectionServiceTest,
+       VerifyReferrerChainWithEmptyNavigationHistory) {
+  // Setup a web_contents
+  std::unique_ptr<FakeWebContents> web_contents =
+      base::MakeUnique<FakeWebContents>(profile_.get());
+
+  NiceMockDownloadItem item;
+  PrepareBasicDownloadItem(
+      &item, {"http://referrer.com", "http://www.evil.com/a.exe"},  // url_chain
+      "http://example.com/",                                        // referrer
+      FILE_PATH_LITERAL("a.tmp"),                                   // tmp_path
+      FILE_PATH_LITERAL("a.exe"));  // final_path
+  ON_CALL(item, GetWebContents()).WillByDefault(Return(web_contents.get()));
+
+  std::unique_ptr<ReferrerChain> referrer_chain =
+      download_service_->IdentifyReferrerChain(&item);
+
+  ASSERT_EQ(1, referrer_chain->size());
+  EXPECT_EQ(item.GetUrlChain().back(), referrer_chain->Get(0).url());
+  EXPECT_EQ(web_contents->GetLastCommittedURL().spec(),
+            referrer_chain->Get(0).referrer_url());
+  EXPECT_EQ(ReferrerChainEntry::EVENT_URL, referrer_chain->Get(0).type());
+  EXPECT_EQ(static_cast<int>(item.GetUrlChain().size()),
+            referrer_chain->Get(0).server_redirect_chain_size());
+  EXPECT_EQ(false, referrer_chain->Get(0).is_retargeting());
 }
 
 // ------------ class DownloadProtectionServiceFlagTest ----------------
