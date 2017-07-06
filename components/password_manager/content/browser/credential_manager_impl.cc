@@ -86,6 +86,11 @@ void CredentialManagerImpl::Store(const CredentialInfo& credential,
   form_manager_ = base::MakeUnique<CredentialManagerPasswordFormManager>(
       client_, GetDriver(), *observed_form, std::move(form), this, nullptr,
       std::move(form_fetcher));
+  form_manager_->SetMetricsRecorder(
+      base::MakeRefCounted<PasswordFormMetricsRecorder>(
+          client_->IsMainFrameSecure(),
+          PasswordFormMetricsRecorder::CreateUkmEntryBuilder(
+              client_->GetUkmRecorder(), client_->GetUkmSourceId())));
 }
 
 void CredentialManagerImpl::OnProvisionalSaveComplete() {
