@@ -845,11 +845,14 @@ public class ToolbarPhone extends ToolbarLayout
             return;
         }
 
+        int toolbarButtonVisibility = mUrlExpansionPercent == 1f ? INVISIBLE : VISIBLE;
+
         // Ensure the buttons are invisible after focusing the omnibox to prevent them from
         // accepting click events.
-        int toolbarButtonVisibility =
-                mUrlExpansionPercent == 1f || shouldHideToolbarButtons() ? INVISIBLE : VISIBLE;
-        mToolbarButtonsContainer.setVisibility(toolbarButtonVisibility);
+        if (!shouldHideToolbarButtons()) {
+            mToolbarButtonsContainer.setVisibility(toolbarButtonVisibility);
+        }
+
         if (mHomeButton.getVisibility() != GONE) {
             mHomeButton.setVisibility(toolbarButtonVisibility);
         }
