@@ -7,7 +7,6 @@
 #include <utility>
 
 #include "base/run_loop.h"
-#include "extensions/common/test_util.h"
 
 namespace media_router {
 namespace {
@@ -67,7 +66,8 @@ MediaRouterMojoTest::~MediaRouterMojoTest() {}
 void MediaRouterMojoTest::ConnectProviderManagerService() {
   // Bind the |media_route_provider| interface to |media_route_provider_|.
   auto request = mojo::MakeRequest(&media_router_proxy_);
-  mock_media_router_->BindToMojoRequest(std::move(request), *extension_);
+  mock_media_router_->BindToMojoRequest(std::move(request),
+                                        base::OnceClosure());
 
   // Bind the Mojo MediaRouter interface used by |mock_media_router_| to
   // |mock_media_route_provider_service_|.
@@ -85,7 +85,6 @@ void MediaRouterMojoTest::SetUp() {
   mock_media_router_.reset(new MediaRouterMojoImpl(&profile_));
   mock_media_router_->Initialize();
   mock_media_router_->set_instance_id_for_test(kInstanceId);
-  extension_ = extensions::test_util::CreateEmptyExtension();
   ConnectProviderManagerService();
   base::RunLoop().RunUntilIdle();
 }

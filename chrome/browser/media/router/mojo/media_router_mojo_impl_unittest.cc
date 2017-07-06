@@ -1439,13 +1439,13 @@ class MediaRouterMojoExtensionTest : public ::testing::Test {
         &mock_media_route_provider_,
         mojo::MakeRequest(&media_route_provider_proxy_));
     media_router_->BindToMojoRequest(mojo::MakeRequest(&media_router_proxy_),
-                                     *extension_);
+                                     base::OnceClosure());
   }
 
   void ResetMediaRouteProvider() {
     binding_.reset();
     media_router_->BindToMojoRequest(mojo::MakeRequest(&media_router_proxy_),
-                                     *extension_);
+                                     base::OnceClosure());
   }
 
   void RegisterMediaRouteProvider() {
