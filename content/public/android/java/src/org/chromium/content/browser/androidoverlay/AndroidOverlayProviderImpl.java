@@ -30,6 +30,9 @@ public class AndroidOverlayProviderImpl implements AndroidOverlayProvider {
     // Maximum number of concurrent overlays that we allow.
     private static final int MAX_OVERLAYS = 1;
 
+    // Handle to the AndroidOverlayProviderImpl singleton.
+    private long mNativeHandle = 0;
+
     // We maintain a thread with a Looper for the AndroidOverlays to use, since Dialog requires one.
     // We don't want this to be the native thread that's used to create them (the browser UI thread)
     // since we don't want to block that waiting for sync callbacks from Android, such as
@@ -48,6 +51,15 @@ public class AndroidOverlayProviderImpl implements AndroidOverlayProvider {
         }
     };
 
+    private long getNativeHandle() {
+        if (mNativeHandle == 0) {
+            mNativeHandle = nativeGetNativeInstance();
+            assert mNativeHandle != 0;
+        }
+
+        return mNativeHandle;
+    }
+
     /**
      * Create an overlay matching |config| for |client|, and bind it to |request|.  Remember that
      * potentially many providers are created.
@@ -57,8 +69,12 @@ public class AndroidOverlayProviderImpl implements AndroidOverlayProvider {
             AndroidOverlayConfig config) {
         ThreadUtils.assertOnUiThread();
 
+        boolean validFrame = nativeIsFrameValidAndVisible(
+                getNativeHandle(), config.routingToken.high, config.routingToken.low);
+
         // Limit the number of concurrent surfaces.
-        if (mNumOverlays >= MAX_OVERLAYS) {
+        // Also drop requests for dead frames, pending frames and hidden WebContents.
+        if (mNumOverlays >= MAX_OVERLAYS || !validFrame) {
             client.onDestroyed();
             return;
         }
@@ -124,4 +140,19 @@ public class AndroidOverlayProviderImpl implements AndroidOverlayProvider {
             return sImpl;
         }
     }
+
+    /**
+     * Gets the native singleton instance.
+     */
+    private native long nativeGetNativeInstance();
+
+    /**
+     * Returns whether the RenderFrameHostImpl identified by the
+     * OverlayRoutingToken is valid for Overlay purposes.
+     * We define "valid" as an alive, current frame whose WebContents is shown.
+     * E.g, it is valid if the creation of an AndroidOverlay in this frame would
+     * lead to an immediate and constructive use of the overlay.
+     */
+    private native boolean nativeIsFrameValidAndVisible(
+            long nativeAndroidOverlayProviderImpl, long tokenHigh, long tokenLow);
 }

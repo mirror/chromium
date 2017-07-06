@@ -15,9 +15,20 @@ namespace content {
 // Native counterpart to AndroidOverlayProviderImpl java class.
 class AndroidOverlayProviderImpl : public AndroidOverlayProvider {
  public:
+  // Registers the JNI methods for AndroidOverlayProviderImpl.
+  static bool RegisterAndroidOverlayProviderImpl(JNIEnv* env);
+
   AndroidOverlayProviderImpl();
 
   bool AreOverlaysSupported() const override;
+
+  // Returns true if the RenderFrameHost associated with the OverlayRoutingToken
+  // is visible on screen. We make sure that the frame is alive, current, and
+  // in a non hidden WebContent.
+  bool IsFrameValidAndVisible(JNIEnv* env,
+                              const base::android::JavaParamRef<jobject>& obj,
+                              jlong token_high,
+                              jlong token_low);
 
  private:
   ~AndroidOverlayProviderImpl() override;
