@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "a7c6b6cd_20c16abb",
+        "filename": "build/android/gyp/package_resources.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002029
+      },
+      "writtenOn": "2017-07-06T13:03:37Z",
+      "side": 1,
+      "message": "one piece of ahead warning: starting with the next release (libwebp 6.1), \u0027-m 6 -q 100 -lossless\u0027 will trigger a \u0027cruncher\u0027 mode for lossless compression. This mode tries a lot more combinations of compression tools, gets a better size reduction ... but is much slower (5x - 10x).\n\nIf the incoming slow down is not fine with you, you may simply use \u0027-q 99\u0027 instead of \u0027-q 100\u0027.",
+      "range": {
+        "startLine": 94,
+        "startChar": 23,
+        "endLine": 94,
+        "endChar": 24
+      },
+      "revId": "3b12ed3e37b1a202516d12eb1cc09465a159eb56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "37ecb739_52c35c8b",
         "filename": "build/android/gyp/package_resources.py",
         "patchSetId": 5
