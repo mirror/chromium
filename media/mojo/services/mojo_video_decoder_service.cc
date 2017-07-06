@@ -51,7 +51,7 @@ void MojoVideoDecoderService::Construct(
       new MojoDecoderBufferReader(std::move(decoder_buffer_pipe)));
 }
 
-void MojoVideoDecoderService::Initialize(mojom::VideoDecoderConfigPtr config,
+void MojoVideoDecoderService::Initialize(const VideoDecoderConfig& config,
                                          bool low_delay,
                                          const InitializeCallback& callback) {
   DVLOG(1) << __func__;
@@ -62,7 +62,7 @@ void MojoVideoDecoderService::Initialize(mojom::VideoDecoderConfigPtr config,
   }
 
   decoder_->Initialize(
-      config.To<VideoDecoderConfig>(), low_delay, nullptr,
+      config, low_delay, nullptr,
       base::Bind(&MojoVideoDecoderService::OnDecoderInitialized, weak_this_,
                  callback),
       base::Bind(&MojoVideoDecoderService::OnDecoderOutput, weak_this_,

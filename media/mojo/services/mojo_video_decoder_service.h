@@ -38,7 +38,7 @@ class MojoVideoDecoderService : public mojom::VideoDecoder {
   void Construct(mojom::VideoDecoderClientAssociatedPtrInfo client,
                  mojo::ScopedDataPipeConsumerHandle decoder_buffer_pipe,
                  mojom::CommandBufferIdPtr command_buffer_id) final;
-  void Initialize(mojom::VideoDecoderConfigPtr config,
+  void Initialize(const VideoDecoderConfig& config,
                   bool low_delay,
                   const InitializeCallback& callback) final;
   void Decode(mojom::DecoderBufferPtr buffer,
