@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "220382c7_cdf03cef",
+        "filename": "content/browser/gpu/gpu_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-06T05:54:15Z",
+      "side": 1,
+      "message": "if (host)\n  host-\u003egpu_service()-\u003eCreateJpegDecodeAccelerator(std::move(request));",
+      "range": {
+        "startLine": 112,
+        "startChar": 2,
+        "endLine": 114,
+        "endChar": 71
+      },
+      "revId": "11944f290af87145ceaf80fb946a54923ed000ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c322c202_ae8c52fb",
+        "filename": "services/ui/public/cpp/gpu/gpu.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-06T05:54:15Z",
+      "side": 1,
+      "message": "|connector_| is gone in the latest gpu.cc; call \n  factory_.Run();\ninstead\n\nAlso I\u0027m not sure if we should bind |gpu_| it would \npotentially change l.107: |gpu_| also marks that we\u0027re \nbetween EstablishGpuChannel{Sync}() and \nOnEstablishedGpuChannel().\n\n(I have the same situation in https://crrev.com//c/558833).",
+      "range": {
+        "startLine": 89,
+        "startChar": 4,
+        "endLine": 89,
+        "endChar": 14
+      },
+      "revId": "11944f290af87145ceaf80fb946a54923ed000ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1f1b0ef_e1141c83",
+        "filename": "services/ui/public/interfaces/gpu.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-06T05:54:15Z",
+      "side": 1,
+      "message": "In .mojom files, call this like the object, e.g.: |jda| \n(|request| is only applicable to the C++ bindings).",
+      "range": {
+        "startLine": 33,
+        "startChar": 68,
+        "endLine": 33,
+        "endChar": 75
+      },
+      "revId": "11944f290af87145ceaf80fb946a54923ed000ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
