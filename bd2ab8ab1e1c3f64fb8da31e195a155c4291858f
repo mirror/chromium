@@ -34,6 +34,24 @@
       "revId": "bd2ab8ab1e1c3f64fb8da31e195a155c4291858f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "205dcb7f_ad3ede0d",
+        "filename": "third_party/WebKit/Source/platform/wtf/README.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1122985
+      },
+      "writtenOn": "2017-07-06T19:10:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce2da40e_028e3c05",
+      "revId": "bd2ab8ab1e1c3f64fb8da31e195a155c4291858f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
