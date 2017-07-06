@@ -3531,6 +3531,7 @@ class BrowserBookmarkModelBridge : public bookmarks::BookmarkModelObserver {
              bridge:bridge
         sourceFrame:[sourceView convertRect:[sourceView bounds] toView:view]
          parentView:view];
+  _pageInfoController.dispatcher = self.dispatcher;
   bridge->set_controller(_pageInfoController);
 }
 
@@ -3968,9 +3969,7 @@ class BrowserBookmarkModelBridge : public bookmarks::BookmarkModelObserver {
 - (IBAction)locationBarBeganEdit:(id)sender {
   // On handsets, if a page is currently loading it should be stopped.
   if (!IsIPadIdiom() && _toolbarModelIOS->IsLoading()) {
-    GenericChromeCommand* command =
-        [[GenericChromeCommand alloc] initWithTag:IDC_STOP];
-    [self chromeExecuteCommand:command];
+    [self.dispatcher stopLoading];
     _locationBarEditCancelledLoad = YES;
   }
 }
@@ -4027,6 +4026,20 @@ class BrowserBookmarkModelBridge : public bookmarks::BookmarkModelObserver {
 
 - (void)goForward {
   [[_model currentTab] goForward];
+}
+
+- (void)stopLoading {
+  [_model currentTab].webState->Stop();
+}
+
+- (void)reload {
+  web::WebState* webState = [_model currentTab].webState;
+  if (webState) {
+    // |check_for_repost| is true because the reload is explicitly initiated
+    // by the user.
+    webState->GetNavigationManager()->Reload(web::ReloadType::NORMAL,
+                                             true /* check_for_repost */);
+  }
 }
 
 #pragma mark - Command Handling
@@ -4103,12 +4116,8 @@ class BrowserBookmarkModelBridge : public bookmarks::BookmarkModelObserver {
       }
       break;
     case IDC_RELOAD: {
-      web::WebState* webState = [_model currentTab].webState;
-      if (webState)
-        // |check_for_repost| is true because the reload is explicitly initiated
-        // by the user.
-        webState->GetNavigationManager()->Reload(web::ReloadType::NORMAL,
-                                                 true /* check_for_repost */);
+      // Route to dispatcher until downstream code is migrated.
+      [self.dispatcher reload];
       break;
     }
     case IDC_SHARE_PAGE:
@@ -4152,9 +4161,6 @@ class BrowserBookmarkModelBridge : public bookmarks::BookmarkModelObserver {
       }
       break;
     }
-    case IDC_STOP:
-      [_model currentTab].webState->Stop();
-      break;
 #if !defined(NDEBUG)
     case IDC_VIEW_SOURCE:
       [self viewSource];
