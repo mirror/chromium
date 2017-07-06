@@ -32,6 +32,7 @@
 
 #include <memory>
 
+#include "build/build_config.h"
 #include "core/animation/CompositorMutatorImpl.h"
 #include "core/dom/UserGestureIndicator.h"
 #include "core/editing/CompositionUnderlineVectorBuilder.h"
@@ -845,7 +846,7 @@ void WebFrameWidgetImpl::HandleMouseDown(LocalFrame& main_frame,
 
   // Dispatch the contextmenu event regardless of if the click was swallowed.
   if (!GetPage()->GetSettings().GetShowContextMenuOnMouseUp()) {
-#if OS(MACOSX)
+#if defined(OS_MACOSX)
     if (event.button == WebMouseEvent::Button::kRight ||
         (event.button == WebMouseEvent::Button::kLeft &&
          event.GetModifiers() & WebMouseEvent::kControlKey))
@@ -989,9 +990,9 @@ WebInputEventResult WebFrameWidgetImpl::HandleKeyEvent(
     return result;
   }
 
-#if !OS(MACOSX)
+#if !defined(OS_MACOSX)
   const WebInputEvent::Type kContextMenuKeyTriggeringEventType =
-#if OS(WIN)
+#if defined(OS_WIN)
       WebInputEvent::kKeyUp;
 #else
       WebInputEvent::kRawKeyDown;
@@ -1011,7 +1012,7 @@ WebInputEventResult WebFrameWidgetImpl::HandleKeyEvent(
     View()->SendContextMenuEvent(event);
     return WebInputEventResult::kHandledSystem;
   }
-#endif  // !OS(MACOSX)
+#endif  // !defined(OS_MACOSX)
 
   return WebInputEventResult::kNotHandled;
 }
