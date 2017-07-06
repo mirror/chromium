@@ -16,6 +16,24 @@
       "revId": "dea44e35ba3d52efeb30dc8abc11905f87c4ed85",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8aa2d7e_76521050",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/clearStorageView.css",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1222287
+      },
+      "writtenOn": "2017-07-06T19:30:44Z",
+      "side": 1,
+      "message": "You\u0027re right, I poked around the css more and it looks like the overlapping is affected by report-row\u0027s width setting. Changed!",
+      "parentUuid": "278de454_41a859b6",
+      "revId": "dea44e35ba3d52efeb30dc8abc11905f87c4ed85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
