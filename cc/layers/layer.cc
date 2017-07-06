@@ -793,8 +793,8 @@ void Layer::SetScrollOffsetFromImplSide(
 void Layer::UpdateScrollOffset(const gfx::ScrollOffset& scroll_offset) {
   DCHECK(scrollable());
   if (scroll_tree_index() == ScrollTree::kInvalidNodeId) {
-    // Ensure the property trees just have not been built yet but are marked for
-    // being built which will set the correct scroll offset values.
+    // If a scroll node does not yet exist, ensure the property trees are marked
+    // for rebuilding which will update the TransformNode scroll offset.
     DCHECK(layer_tree_host_->property_trees()->needs_rebuild);
     return;
   }
