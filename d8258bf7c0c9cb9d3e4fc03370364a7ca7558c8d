@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c41536c2_a4af5cf6",
+        "filename": "components/cronet/ios/cronet_environment.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-06T13:01:55Z",
+      "side": 1,
+      "message": "nit: Remove.",
+      "revId": "d8258bf7c0c9cb9d3e4fc03370364a7ca7558c8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4f6a1ff_ac77d72f",
+        "filename": "ios/web/public/global_state/ios_global_state.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-06T13:01:55Z",
+      "side": 1,
+      "message": "See my comment in WebMainRunnerImpl. This may lead to random crashes at shutdown.",
+      "revId": "d8258bf7c0c9cb9d3e4fc03370364a7ca7558c8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

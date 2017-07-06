@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb80c007_50e65cbd",
+        "filename": "ios/web/app/web_main_runner.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-06T13:01:55Z",
+      "side": 0,
+      "message": "This change when the AtExitManager destructor will be called and thus when the registered callbacks will be called.\n\nThe destructor of AtExitManager used to be called before the WebMainRunnerImpl was destroyed, and at that point all \"static\" global were still valid. After this CL, the destructor will be called as part of destroying all \"static\" global which happens in an undeterminate order (reverse order of construction, but the construction order itself is undeterminate).\n\nThis mean that some of the callback may be called after the objects they use have been destroyed.\n\nI think we should instead add a ios_global_state::DestroyAtExitManager() method that will allow to control when the AtExitManager is destroyed and thus when the callbacks are invoked. This will require changing how the AtExitManager object is constructed.",
+      "range": {
+        "startLine": 101,
+        "startChar": 4,
+        "endLine": 101,
+        "endChar": 17
+      },
+      "revId": "c2a1ee3e10d849a30319619617f8ee3fbcbf7f59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
