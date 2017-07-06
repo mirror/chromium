@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3cd86f16_8a02be31",
+        "filename": "components/password_manager/core/browser/form_saver_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-07-06T09:18:44Z",
+      "side": 1,
+      "message": "Shall we also clone |bet_matches_|, |pending_|?",
+      "range": {
+        "startLine": 98,
+        "startChar": 48,
+        "endLine": 98,
+        "endChar": 54
+      },
+      "revId": "0c849501897e076020cc0aa6eda9707d22fa4201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
