@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e968e8c2_b43c74b7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-07-06T14:49:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "824aeb5f_3ab966ff",
+      "range": {
+        "startLine": 11,
+        "startChar": 13,
+        "endLine": 11,
+        "endChar": 22
+      },
+      "revId": "e66e8c51f4359b64679686d096188bc7680f6069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1072f59_31b09897",
         "filename": "ios/web/browser_state.mm",
         "patchSetId": 5
@@ -59,6 +83,24 @@
       "writtenOn": "2017-07-06T12:42:43Z",
       "side": 1,
       "message": "std::map::erase has an overload that takes a \"const key_type\u0026\" parameter and erase the value associated with this key, so those three lines change be changed to:\n\n  g_user_id_to_browser_state.Get().erase(holder-\u003euser_id());\n\nBTW, I think you should DCHECK that the stored value match browser_state:\n\n  DCHECK_EQ(browser_state, g_user_id_to_browser_state.Get()[holder-\u003euser_id()]);",
+      "revId": "e66e8c51f4359b64679686d096188bc7680f6069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5727c7e_21fdd785",
+        "filename": "ios/web/browser_state.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-07-06T14:49:05Z",
+      "side": 1,
+      "message": "Hmm, it\u0027s strange that there\u0027s an \"if\" at line 77. Ken, are there legitimate cases (at least in //content) where there would be ServiceUserIdHolder associated with this BrowserState but it wouldn\u0027t have an entry in g_user_id_to_browser_state?",
+      "parentUuid": "37ec6096_a0bb0d1c",
       "revId": "e66e8c51f4359b64679686d096188bc7680f6069",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -108,6 +150,30 @@
       "revId": "e66e8c51f4359b64679686d096188bc7680f6069",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ca7d486_0b36d1c0",
+        "filename": "ios/web/browser_state.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-07-06T14:49:05Z",
+      "side": 1,
+      "message": "This makes sense to me, and I\u0027ll look at it in a followup. Unfortunately, it won\u0027t work for web::TestBrowserState, which is used as a naked variable all over the place.",
+      "parentUuid": "7dea98b7_4ab9c2d9",
+      "range": {
+        "startLine": 243,
+        "startChar": 18,
+        "endLine": 243,
+        "endChar": 36
+      },
+      "revId": "e66e8c51f4359b64679686d096188bc7680f6069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
