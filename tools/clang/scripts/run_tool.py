@@ -56,46 +56,11 @@ import re
 import subprocess
 import sys
 
-
 script_dir = os.path.dirname(os.path.realpath(__file__))
 tool_dir = os.path.abspath(os.path.join(script_dir, '../pylib'))
 sys.path.insert(0, tool_dir)
 
 from clang import compile_db
-
-
-def _PruneGitFiles(git_files, paths):
-  """Prunes the list of files from git to include only those that are either in
-  |paths| or start with one item in |paths|.
-
-  Args:
-    git_files: List of all repository files.
-    paths: Prefix filter for the returned paths. May contain multiple entries.
-
-  Returns:
-    Pruned list of files.
-  """
-  pruned_list = []
-  paths = [os.path.realpath(p) for p in sorted(paths)]
-  git_index = 0
-  for path in paths:
-    least = git_index
-    most = len(git_files) - 1
-    while least <= most:
-      middle = (least + most ) / 2
-      if git_files[middle] == path:
-        least = middle
-        break
-      elif git_files[middle] > path:
-        most = middle - 1
-      else:
-        least = middle + 1
-    while git_files[least].startswith(path):
-      pruned_list.append(git_files[least])
-      least += 1
-    git_index = least
-
-  return pruned_list
 
 
 def _GetFilesFromGit(paths=None):
@@ -110,12 +75,11 @@ def _GetFilesFromGit(paths=None):
   else:
     args.append('git')
   args.append('ls-files')
+  if paths:
+    args.extend(paths)
   command = subprocess.Popen(args, stdout=subprocess.PIPE)
   output, _ = command.communicate()
-  git_files = [os.path.realpath(p) for p in output.splitlines()]
-  if paths:
-    git_files = _PruneGitFiles(git_files, paths)
-  return git_files
+  return [os.path.realpath(p) for p in output.splitlines()]
 
 
 def _GetFilesFromCompileDB(build_directory):
@@ -249,6 +213,12 @@ def main():
       nargs='*',
       help='optional paths to filter what files the tool is run on')
   parser.add_argument(
+      '--no-git',
+      action='store_true',
+      help='optional argument telling that only files specified in '
+           '|path_filter| should be used and git should not be called to fetch '
+           'files list.')
+  parser.add_argument(
       '--tool-args', nargs='*',
       help='optional arguments passed to the tool')
   args = parser.parse_args(argv)
@@ -266,6 +236,8 @@ def main():
 
   if args.all:
     source_filenames = set(_GetFilesFromCompileDB(args.p))
+  elif args.no_git:
+    source_filenames = args.path_filter
   else:
     git_filenames = set(_GetFilesFromGit(args.path_filter))
     # Filter out files that aren't C/C++/Obj-C/Obj-C++.
