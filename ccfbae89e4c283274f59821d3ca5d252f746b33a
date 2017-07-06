@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f753cc8_a6de9b5f",
+        "filename": "codereview.settings",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-07-06T18:08:55Z",
+      "side": 1,
+      "message": "Are CODE_REVIEW_SERVER and TRY_ON_UPLOAD actually used once we stop using Rietveld?",
+      "revId": "ccfbae89e4c283274f59821d3ca5d252f746b33a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
