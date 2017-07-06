@@ -97,6 +97,8 @@ extern const char kClickBasedCategoryRankerLastDecayTime[];
 // The pref name for the subscription token used when subscription for
 // breaking news push updates.
 extern const char kBreakingNewsSubscriptionDataToken[];
+// The pref name for whether the subscription is authenticated or not.
+extern const char kBreakingNewsSubscriptionDataIsAuthenticated[];
 //////////////////////// End of breaking news subscription-related prefs.
 
 // The pref name for the subscription token received from the gcm server. As

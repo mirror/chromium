@@ -391,16 +391,20 @@ void RegisterForeignSessionsProviderIfEnabled(
 
 void SubscribeForGCMPushUpdates(PrefService* pref_service,
                                 ContentSuggestionsService* service,
-                                Profile* profile) {
+                                Profile* profile,
+                                SigninManagerBase* signin_manager) {
   gcm::GCMDriver* gcm_driver =
       gcm::GCMProfileServiceFactory::GetForProfile(profile)->driver();
+
+  OAuth2TokenService* token_service =
+      ProfileOAuth2TokenServiceFactory::GetForProfile(profile);
 
   scoped_refptr<net::URLRequestContextGetter> request_context =
       content::BrowserContext::GetDefaultStoragePartition(profile)
           ->GetURLRequestContext();
 
   auto subscription_manager = base::MakeUnique<SubscriptionManager>(
-      request_context, pref_service,
+      request_context, pref_service, signin_manager, token_service,
       GetPushUpdatesSubscriptionEndpoint(chrome::GetChannel()),
       GetPushUpdatesUnsubscriptionEndpoint(chrome::GetChannel()));
 
@@ -535,7 +539,7 @@ KeyedService* ContentSuggestionsServiceFactory::BuildServiceInstanceFor(
 #endif
 
   if (base::FeatureList::IsEnabled(ntp_snippets::kBreakingNewsPushFeature)) {
-    SubscribeForGCMPushUpdates(pref_service, service, profile);
+    SubscribeForGCMPushUpdates(pref_service, service, profile, signin_manager);
   }
   return service;
 

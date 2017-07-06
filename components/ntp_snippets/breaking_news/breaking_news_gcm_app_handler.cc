@@ -75,6 +75,8 @@ void BreakingNewsGCMAppHandler::Subscribe() {
   if (!token.empty()) {
     if (!subscription_manager_->IsSubscribed()) {
       subscription_manager_->Subscribe(token);
+    } else if (subscription_manager_->NeedsResubscribe()) {
+      subscription_manager_->Resubscribe(token, token);
     }
     return;
   }

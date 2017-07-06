@@ -3,13 +3,18 @@
 // found in the LICENSE file.
 
 #include "components/ntp_snippets/breaking_news/subscription_manager.h"
+
 #include "base/bind.h"
+#include "base/memory/ptr_util.h"
 #include "base/metrics/field_trial_params.h"
+#include "base/strings/stringprintf.h"
 #include "components/ntp_snippets/breaking_news/subscription_json_request.h"
 #include "components/ntp_snippets/features.h"
 #include "components/ntp_snippets/ntp_snippets_constants.h"
 #include "components/ntp_snippets/pref_names.h"
 #include "components/prefs/pref_service.h"
+#include "components/signin/core/browser/access_token_fetcher.h"
+#include "components/signin/core/browser/signin_manager_base.h"
 
 namespace ntp_snippets {
 
@@ -22,15 +27,24 @@ const char kPushSubscriptionBackendParam[] = "push_subscription_backend";
 
 // Variation parameter for chrome-push-unsubscription backend.
 const char kPushUnsubscriptionBackendParam[] = "push_unsubscription_backend";
+
+const char kContentSuggestionsApiScope[] =
+    "https://www.googleapis.com/auth/chrome-content-suggestions";
+
+const char kAuthorizationRequestHeaderFormat[] = "Bearer %s";
 }
 
 SubscriptionManager::SubscriptionManager(
     scoped_refptr<net::URLRequestContextGetter> url_request_context_getter,
     PrefService* pref_service,
+    SigninManagerBase* signin_manager,
+    OAuth2TokenService* token_service,
     const GURL& subscribe_url,
     const GURL& unsubscribe_url)
     : url_request_context_getter_(std::move(url_request_context_getter)),
       pref_service_(pref_service),
+      signin_manager_(signin_manager),
+      token_service_(token_service),
       subscribe_url_(subscribe_url),
       unsubscribe_url_(unsubscribe_url) {}
 
@@ -39,24 +53,70 @@ SubscriptionManager::~SubscriptionManager() = default;
 void SubscriptionManager::Subscribe(const std::string& token) {
   DCHECK(!subscription_request_);
   subscription_token_ = token;
+  if (signin_manager_->IsAuthenticated() || signin_manager_->AuthInProgress()) {
+    StartOAuthTokenRequest();
+  } else {
+    SubscribeInternal(false, std::string{});
+  }
+}
+
+void SubscriptionManager::SubscribeInternal(
+    bool is_auth,
+    const std::string& oauth_access_token) {
   SubscriptionJsonRequest::Builder builder;
-  builder.SetToken(token)
+  builder.SetToken(subscription_token_)
       .SetUrlRequestContextGetter(url_request_context_getter_)
       .SetUrl(subscribe_url_);
+  if (is_auth) {
+    builder.SetAuthentication(
+        signin_manager_->GetAuthenticatedAccountId(),
+        base::StringPrintf(kAuthorizationRequestHeaderFormat,
+                           oauth_access_token.c_str()));
+  }
 
   subscription_request_ = builder.Build();
   subscription_request_->Start(base::BindOnce(
-      &SubscriptionManager::DidSubscribe, base::Unretained(this)));
+      &SubscriptionManager::DidSubscribe, base::Unretained(this), is_auth));
+}
+
+void SubscriptionManager::StartOAuthTokenRequest() {
+  // If there is already an ongoing token request, just wait for that.
+  if (oauth_token_fetcher_) {
+    return;
+  }
+
+  // TODO(mamir): check if this scope is correct.
+  OAuth2TokenService::ScopeSet scopes{kContentSuggestionsApiScope};
+  oauth_token_fetcher_ = base::MakeUnique<AccessTokenFetcher>(
+      "ntp_snippets", signin_manager_, token_service_, scopes,
+      base::BindOnce(&SubscriptionManager::AccessTokenFetchFinished,
+                     base::Unretained(this)));
+}
+
+void SubscriptionManager::AccessTokenFetchFinished(
+    const GoogleServiceAuthError& error,
+    const std::string& access_token) {
+  oauth_token_fetcher_.reset();
+
+  if (error.state() != GoogleServiceAuthError::NONE) {
+    // TODO(mamir): does it make sense to subscribe unauthenticated?
+    SubscribeInternal(false, std::string{});
+    return;
+  }
+  DCHECK(!access_token.empty());
+  SubscribeInternal(true, access_token);
 }
 
 bool SubscriptionManager::CanSubscribeNow() {
-  if (subscription_request_) {
+  if (subscription_request_ || oauth_token_fetcher_ ||
+      resubscription_in_progress_) {
     return false;
   }
   return true;
 }
 
-void SubscriptionManager::DidSubscribe(const ntp_snippets::Status& status) {
+void SubscriptionManager::DidSubscribe(bool is_auth,
+                                       const ntp_snippets::Status& status) {
   subscription_request_.reset();
 
   switch (status.code) {
@@ -68,15 +128,24 @@ void SubscriptionManager::DidSubscribe(const ntp_snippets::Status& status) {
       pref_service_->SetString(
           ntp_snippets::prefs::kBreakingNewsSubscriptionDataToken,
           subscription_token_);
+      pref_service_->SetBoolean(
+          ntp_snippets::prefs::kBreakingNewsSubscriptionDataIsAuthenticated,
+          is_auth);
+
       break;
     default:
       // TODO(mamir): handle failure.
       break;
   }
+
+  if (resubscription_in_progress_) {
+    resubscription_in_progress_ = false;
+  }
 }
 
 bool SubscriptionManager::CanUnsubscribeNow() {
-  if (unsubscription_request_) {
+  if (unsubscription_request_ || oauth_token_fetcher_ ||
+      resubscription_in_progress_) {
     return false;
   }
   return true;
@@ -101,6 +170,22 @@ bool SubscriptionManager::IsSubscribed() {
   return !subscription_token_.empty();
 }
 
+bool SubscriptionManager::NeedsResubscribe() {
+  // Check if authentication state changed after subscription.
+  bool is_auth_subscribe = pref_service_->GetBoolean(
+      ntp_snippets::prefs::kBreakingNewsSubscriptionDataIsAuthenticated);
+  bool is_authenticated =
+      signin_manager_->IsAuthenticated() || signin_manager_->AuthInProgress();
+  return is_auth_subscribe != is_authenticated;
+}
+
+void SubscriptionManager::Resubscribe(const std::string& old_token,
+                                      const std::string& new_token) {
+  resubscription_in_progress_ = true;
+  subscription_token_ = new_token;
+  Unsubscribe(old_token);
+}
+
 void SubscriptionManager::DidUnsubscribe(const ntp_snippets::Status& status) {
   unsubscription_request_.reset();
 
@@ -115,11 +200,16 @@ void SubscriptionManager::DidUnsubscribe(const ntp_snippets::Status& status) {
       // TODO(mamir): handle failure.
       break;
   }
+  if (resubscription_in_progress_ && CanSubscribeNow()) {
+    Subscribe(subscription_token_);
+  }
 }
 
 void SubscriptionManager::RegisterProfilePrefs(PrefRegistrySimple* registry) {
   registry->RegisterStringPref(prefs::kBreakingNewsSubscriptionDataToken,
                                std::string());
+  registry->RegisterBooleanPref(
+      prefs::kBreakingNewsSubscriptionDataIsAuthenticated, false);
 }
 
 GURL GetPushUpdatesSubscriptionEndpoint(version_info::Channel channel) {

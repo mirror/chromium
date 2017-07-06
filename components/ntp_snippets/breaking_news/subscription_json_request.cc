@@ -106,6 +106,15 @@ SubscriptionJsonRequest::Builder::SetUrlRequestContextGetter(
   return *this;
 }
 
+SubscriptionJsonRequest::Builder&
+SubscriptionJsonRequest::Builder::SetAuthentication(
+    const std::string& account_id,
+    const std::string& auth_header) {
+  obfuscated_gaia_id_ = account_id;
+  auth_header_ = auth_header;
+  return *this;
+}
+
 std::string SubscriptionJsonRequest::Builder::BuildHeaders() const {
   HttpRequestHeaders headers;
   headers.SetHeader("Content-Type", "application/json; charset=UTF-8");

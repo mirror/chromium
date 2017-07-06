@@ -11,7 +11,10 @@
 #include "net/url_request/url_request_context_getter.h"
 #include "url/gurl.h"
 
+class AccessTokenFetcher;
+class OAuth2TokenService;
 class PrefRegistrySimple;
+class SigninManagerBase;
 
 namespace ntp_snippets {
 
@@ -33,6 +36,8 @@ class SubscriptionManager {
   SubscriptionManager(
       scoped_refptr<net::URLRequestContextGetter> url_request_context_getter,
       PrefService* pref_service,
+      SigninManagerBase* signin_manager,
+      OAuth2TokenService* token_service,
       const GURL& subscribe_url,
       const GURL& unsubscribe_url);
 
@@ -44,26 +49,44 @@ class SubscriptionManager {
   bool CanUnsubscribeNow();
   bool IsSubscribed();
 
+  // old_token and new_token are equal unless the resubscription is triggered by
+  // a change in the token.
+  void Resubscribe(const std::string& old_token, const std::string& new_token);
+
+  // Checks if some data that has been used when subscribing has changed. For
+  // example, the user has signed in.
+  bool NeedsResubscribe();
+
   static void RegisterProfilePrefs(PrefRegistrySimple* registry);
 
  private:
   std::string subscription_token_;
   std::string unsubscription_token_;
+  bool resubscription_in_progress_ = false;
 
   // Holds the URL request context.
   scoped_refptr<net::URLRequestContextGetter> url_request_context_getter_;
 
   std::unique_ptr<internal::SubscriptionJsonRequest> subscription_request_;
   std::unique_ptr<internal::SubscriptionJsonRequest> unsubscription_request_;
+  std::unique_ptr<AccessTokenFetcher> oauth_token_fetcher_;
 
   PrefService* pref_service_;
+
+  // Authentication for signed-in users.
+  SigninManagerBase* signin_manager_;
+  OAuth2TokenService* token_service_;
 
   // API endpoint for subscribing and unsubscribing.
   const GURL subscribe_url_;
   const GURL unsubscribe_url_;
 
-  void DidSubscribe(const ntp_snippets::Status& status);
+  void DidSubscribe(bool is_auth, const ntp_snippets::Status& status);
   void DidUnsubscribe(const ntp_snippets::Status& status);
+  void SubscribeInternal(bool is_auth, const std::string& oauth_access_token);
+  void StartOAuthTokenRequest();
+  void AccessTokenFetchFinished(const GoogleServiceAuthError& error,
+                                const std::string& access_token);
 
   DISALLOW_COPY_AND_ASSIGN(SubscriptionManager);
 };
