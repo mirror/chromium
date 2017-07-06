@@ -111,7 +111,7 @@ void ResourceLoadScheduler::OnThrottlingStateChanged(
       SetOutstandingLimitAndMaybeRun(kOutstandingThrottledLimit);
       break;
     case WebFrameScheduler::ThrottlingState::kNotThrottled:
-      SetOutstandingLimitAndMaybeRun(kOutstandingUnlimited);
+      SetOutstandingLimitAndMaybeRun(kOutstandingThrottledLimit);
       break;
   }
 }
