@@ -24,6 +24,7 @@ import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.appmenu.AppMenuButtonHelper;
 import org.chromium.chrome.browser.device.DeviceClassManager;
+import org.chromium.chrome.browser.omnibox.LocationBarLayout;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.util.ColorUtils;
 import org.chromium.chrome.browser.util.FeatureUtilities;
@@ -181,6 +182,11 @@ public class BottomToolbarPhone extends ToolbarPhone {
                 getResources().getDimensionPixelOffset(R.dimen.bottom_location_bar_vertical_margin);
         mUseToolbarHandle = true;
         mToolbarButtonVisibilityPercent = 1.f;
+    }
+
+    @Override
+    public LocationBarLayout getLocationBar() {
+        return mLocationBar;
     }
 
     /**
