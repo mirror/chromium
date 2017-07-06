@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb1e2455_7c3bea00",
+        "filename": "chrome/browser/ui/views/harmony/chrome_layout_provider.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-07-06T18:12:28Z",
+      "side": 1,
+      "message": "I\u0027ve been using just \"dialog\" for \"web-modal,\" since I\u0027m trying to collapse most of the layout distinctions anyway. Since this one is going away in Harmony it\u0027s probably fine.",
+      "range": {
+        "startLine": 42,
+        "startChar": 11,
+        "endLine": 42,
+        "endChar": 20
+      },
+      "revId": "9caabc1d81a6c8a046cfdd44df5d05c1798ff7dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f74e2931_a37cbee7",
+        "filename": "chrome/browser/ui/views/harmony/chrome_layout_provider.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-07-06T18:12:28Z",
+      "side": 1,
+      "message": "To me this sounds like it\u0027s the explanation text on the dialog, not the input label. Maybe say \"Minimum width of the Label labeling a Textfield.\"?",
+      "range": {
+        "startLine": 43,
+        "startChar": 30,
+        "endLine": 43,
+        "endChar": 68
+      },
+      "revId": "9caabc1d81a6c8a046cfdd44df5d05c1798ff7dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d13ae20_9940b6b5",
+        "filename": "chrome/browser/ui/views/harmony/chrome_layout_provider.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-07-06T18:12:28Z",
+      "side": 1,
+      "message": "Remove \"WEB_MODAL,\" this metric should be general to all input fields/input labels.",
+      "range": {
+        "startLine": 44,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 47
+      },
+      "revId": "9caabc1d81a6c8a046cfdd44df5d05c1798ff7dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ba62aa8_1877135a",
+        "filename": "chrome/browser/ui/views/harmony/textfield_layout.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-07-06T18:12:28Z",
+      "side": 1,
+      "message": "You called the left/right margins the \"indent\" in the new metric, put the same language here too.",
+      "range": {
+        "startLine": 17,
+        "startChar": 45,
+        "endLine": 17,
+        "endChar": 52
+      },
+      "revId": "9caabc1d81a6c8a046cfdd44df5d05c1798ff7dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed0fdda6_bbef6383",
+        "filename": "chrome/browser/ui/views/login_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-07-06T18:12:28Z",
+      "side": 1,
+      "message": "Ah okay, I see. I think it\u0027s clearer to just use two ColumnSets, like the old code did. Though thankfully it won\u0027t be as verbose now that you\u0027ve added the textfield layout helper.",
+      "range": {
+        "startLine": 23,
+        "startChar": 5,
+        "endLine": 23,
+        "endChar": 19
+      },
+      "revId": "9caabc1d81a6c8a046cfdd44df5d05c1798ff7dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
