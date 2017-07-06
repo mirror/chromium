@@ -239,19 +239,8 @@ void SchedulerWorkerPoolImpl::Start(const SchedulerWorkerPoolParams& params) {
   backward_compatibility_ = params.backward_compatibility();
 
   // The initial number of workers is |num_wake_ups_before_start_|, plus
-  // one if the standby thread policy is ONE (in order to start with one alive
-  // idle worker). The initial number of workers is at least one (even if
-  // the LAZY StandbyThreadPolicy is in effect and there have been no
-  // wake ups before Start was called).
-  // TODO(jeffreyhe): Remove that comment about initial workers having to be
-  // at least one when StandbyThreadPolicy is removed.
-  const int num_initial_workers =
-      std::max(num_wake_ups_before_start_ +
-                   (params.standby_thread_policy() ==
-                            SchedulerWorkerPoolParams::StandbyThreadPolicy::ONE
-                        ? 1
-                        : 0),
-               1);
+  // one to try to keep one at least one standby thread at all times.
+  const int num_initial_workers = num_wake_ups_before_start_ + 1;
   workers_.reserve(num_initial_workers);
 
   for (int index = 0; index < num_initial_workers; ++index) {
