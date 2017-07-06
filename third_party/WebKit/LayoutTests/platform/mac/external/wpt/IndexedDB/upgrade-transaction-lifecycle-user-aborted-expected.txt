@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+FAIL synchronously after abort() is called assert_equals: Expected success event, but got error event instead expected "success" but got "error"
+FAIL in a promise microtask after abort() is called, before the transaction abort event is fired assert_equals: Expected success event, but got error event instead expected "success" but got "error"
+FAIL in the abort event handler for a transaction aborted due to an abort() call assert_equals: Expected success event, but got error event instead expected "success" but got "error"
+FAIL in a setTimeout(0) callback after the abort event is fired for a transaction aborted due to an abort() call assert_equals: Expected success event, but got error event instead expected "success" but got "error"
+Harness: the test ran to completion.
+

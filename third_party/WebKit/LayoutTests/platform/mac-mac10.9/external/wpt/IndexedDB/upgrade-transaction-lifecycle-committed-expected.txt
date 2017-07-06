@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+FAIL in the complete event handler for a committed transaction assert_equals: Expected success event, but got error event instead expected "success" but got "error"
+FAIL in a setTimeout(0) callback after the complete event is fired for a committed transaction assert_equals: Expected success event, but got error event instead expected "success" but got "error"
+Harness: the test ran to completion.
+

@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+FAIL IDBCursor asyncness - advance assert_unreached: open should succeed Reached unreachable code
+FAIL IDBCursor asyncness - continue assert_unreached: open should succeed Reached unreachable code
+FAIL IDBCursor asyncness - fresh advance still async assert_unreached: open should succeed Reached unreachable code
+FAIL IDBCursor asyncness - fresh continue still async assert_unreached: open should succeed Reached unreachable code
+Harness: the test ran to completion.
+

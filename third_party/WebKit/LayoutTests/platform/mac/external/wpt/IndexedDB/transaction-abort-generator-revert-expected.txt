@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+FAIL The current number of a key generator is reverted when a versionchange transaction aborts assert_equals: Expected success event, but got error event instead expected "success" but got "error"
+FAIL The current number of a key generator is reverted when a readwrite transaction aborts assert_equals: Expected success event, but got error event instead expected "success" but got "error"
+Harness: the test ran to completion.
+

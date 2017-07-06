@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+FAIL IDBDatabase.deleteObjectStore() - the object store is not reused assert_unreached: unexpected db.abort Reached unreachable code
+Harness: the test ran to completion.
+

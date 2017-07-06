@@ -1,0 +1,11 @@
+This is a testharness.js-based test.
+PASS IDBTransaction.objectStoreNames - during upgrade transaction 
+PASS IDBTransaction.objectStoreNames - value after close 
+PASS IDBTransaction.objectStoreNames - transaction scope 
+FAIL IDBTransaction.objectStoreNames - value after commit assert_unreached: transaction should complete Reached unreachable code
+PASS IDBTransaction.objectStoreNames - value after abort 
+PASS IDBTransaction.objectStoreNames - sorting 
+PASS IDBTransaction.objectStoreNames - no duplicates 
+PASS IDBTransaction.objectStoreNames - unusual names 
+Harness: the test ran to completion.
+

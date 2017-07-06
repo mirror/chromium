@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+FAIL IDBObjectStore.openCursor() - invalid - pass something other than number assert_unreached: open should succeed Reached unreachable code
+Harness: the test ran to completion.
+
