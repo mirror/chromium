@@ -117,6 +117,29 @@
     },
     {
       "key": {
+        "uuid": "6cf00e20_6b4f6326",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 45163,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-06T13:11:34Z",
+      "side": 1,
+      "message": "I guess this comment must be the same as in affected histograms.",
+      "range": {
+        "startLine": 45163,
+        "startChar": 3,
+        "endLine": 45163,
+        "endChar": 73
+      },
+      "revId": "76b3b28b78dfa88993bc8cd46607076e634ad5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c0161f49_8bb205cb",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 4
