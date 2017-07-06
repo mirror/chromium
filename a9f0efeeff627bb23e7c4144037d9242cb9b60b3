@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "07717553_68891664",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-06T19:30:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8ceb2357_d986ebbd",
+      "range": {
+        "startLine": 120,
+        "startChar": 8,
+        "endLine": 120,
+        "endChar": 17
+      },
+      "revId": "a9f0efeeff627bb23e7c4144037d9242cb9b60b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8fed78a3_e99aace1",
         "filename": "ash/shelf/app_list_button.cc",
         "patchSetId": 4
@@ -425,6 +449,30 @@
     },
     {
       "key": {
+        "uuid": "2a9c91ba_31a01a3b",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-06T19:30:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "02c296b8_c697e2c4",
+      "range": {
+        "startLine": 426,
+        "startChar": 29,
+        "endLine": 426,
+        "endChar": 30
+      },
+      "revId": "a9f0efeeff627bb23e7c4144037d9242cb9b60b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d6af0ba_48d1c4a2",
         "filename": "ash/shelf/app_list_button.cc",
         "patchSetId": 4
@@ -460,6 +508,30 @@
       "side": 1,
       "message": "Is there a better way to mimic presses on F1 than using EventSink?",
       "parentUuid": "1d6af0ba_48d1c4a2",
+      "range": {
+        "startLine": 444,
+        "startChar": 0,
+        "endLine": 444,
+        "endChar": 46
+      },
+      "revId": "a9f0efeeff627bb23e7c4144037d9242cb9b60b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39bdefa2_049fe335",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-06T19:30:35Z",
+      "side": 1,
+      "message": "I would hope that there is some more straightforward way to send a programmatically generated ui::Event to the current active window, but I\u0027m not sure offhand what\u0027s the best way to do that. I\u0027d look into ui/keyboard/keyboard_util.h\u0027s keyboard::SendKeyEvent, aura::EventInjector, or calling SendEventToSink() on the appropriate WindowTreeHost (like AutoclickControllerImpl::DoAutoclick). You should probably ping the authors of any of the above code (or ui/keyboard/OWNERS or ui/events/OWNERS); Sadrul may have some advice, and he\u0027s already CC\u0027ed.",
+      "parentUuid": "28e7a51a_bf7d06e5",
       "range": {
         "startLine": 444,
         "startChar": 0,
