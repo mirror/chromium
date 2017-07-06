@@ -249,14 +249,20 @@ Network.NetworkPanel = class extends UI.Panel {
     this._networkLogView.addFilmStripFrames(timestamps);
   }
 
-  _onNetworkLogReset() {
+  /**
+   * @param {!Common.Event} event
+   */
+  _onNetworkLogReset(event) {
+    var fromNavigation = /** @type {boolean} */ (event.data);
     Network.BlockedURLsPane.reset();
     if (!this._preserveLogSetting.get()) {
       this._calculator.reset();
       this._overviewPane.reset();
     }
-    if (this._filmStripView)
+    if (this._filmStripView && !fromNavigation) {
+      this._filmStripRecorder.stopRecording(null);
       this._resetFilmStripView();
+    }
   }
 
   /**
@@ -648,7 +654,8 @@ Network.NetworkPanel.FilmStripRecorder = class {
       return;
     this._tracingModel.tracingComplete();
     this._tracingManager = null;
-    this._callback(new SDK.FilmStripModel(this._tracingModel, this._timeCalculator.minimumBoundary() * 1000));
+    if (this._callback)
+      this._callback(new SDK.FilmStripModel(this._tracingModel, this._timeCalculator.minimumBoundary() * 1000));
     this._callback = null;
     if (this._resourceTreeModel)
       this._resourceTreeModel.resumeReload();
@@ -691,7 +698,7 @@ Network.NetworkPanel.FilmStripRecorder = class {
   }
 
   /**
-   * @param {function(?SDK.FilmStripModel)} callback
+   * @param {?function(?SDK.FilmStripModel)} callback
    */
   stopRecording(callback) {
     if (!this._tracingManager)

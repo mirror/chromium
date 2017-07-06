@@ -291,7 +291,7 @@ NetworkLog.NetworkLog = class extends Common.Object {
     var oldRequestsSet = this._requestsSet;
     this._requests = [];
     this._requestsSet = new Set();
-    this.dispatchEventToListeners(NetworkLog.NetworkLog.Events.Reset);
+    this.dispatchEventToListeners(NetworkLog.NetworkLog.Events.Reset, /* fromNavigation */ true);
 
     // Preserve requests from the new session.
     var currentPageLoad = null;
@@ -392,7 +392,7 @@ NetworkLog.NetworkLog = class extends Common.Object {
         this._pageLoadForManager.delete(manager);
     }
 
-    this.dispatchEventToListeners(NetworkLog.NetworkLog.Events.Reset);
+    this.dispatchEventToListeners(NetworkLog.NetworkLog.Events.Reset, /* fromNavigation */ false);
   }
 };
 
