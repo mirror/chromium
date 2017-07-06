@@ -350,6 +350,30 @@
       "revId": "e98286315b695f4873152a0ca70b98739a8e3c4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8cb9935_716d87e2",
+        "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-06T14:41:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7458f7c_d6a01629",
+      "range": {
+        "startLine": 387,
+        "startChar": 2,
+        "endLine": 387,
+        "endChar": 7
+      },
+      "revId": "e98286315b695f4873152a0ca70b98739a8e3c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
