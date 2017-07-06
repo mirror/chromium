@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86d8975b_43b17828",
+        "filename": "chromeos/cryptohome/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-06T05:51:11Z",
+      "side": 1,
+      "message": "nit: Unneeded blank line.",
+      "revId": "c1bfcbda0453fa7ee87e1900c3b66f3fb0a413de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
