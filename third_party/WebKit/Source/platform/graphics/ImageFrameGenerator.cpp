@@ -95,21 +95,6 @@ class ExternalMemoryAllocator final : public SkBitmap::Allocator {
   size_t row_bytes_;
 };
 
-static bool UpdateYUVComponentSizes(ImageDecoder* decoder,
-                                    SkISize component_sizes[3],
-                                    size_t component_width_bytes[3]) {
-  if (!decoder->CanDecodeToYUV())
-    return false;
-
-  for (int yuv_index = 0; yuv_index < 3; ++yuv_index) {
-    IntSize size = decoder->DecodedYUVSize(yuv_index);
-    component_sizes[yuv_index].set(size.Width(), size.Height());
-    component_width_bytes[yuv_index] = decoder->DecodedYUVWidthBytes(yuv_index);
-  }
-
-  return true;
-}
-
 ImageFrameGenerator::ImageFrameGenerator(const SkISize& full_size,
                                          bool is_multi_frame,
                                          const ColorBehavior& color_behavior)
@@ -166,9 +151,8 @@ bool ImageFrameGenerator::DecodeAndScale(
 
 bool ImageFrameGenerator::DecodeToYUV(SegmentReader* data,
                                       size_t index,
-                                      const SkISize component_sizes[3],
-                                      void* planes[3],
-                                      const size_t row_bytes[3]) {
+                                      const SkYUVSizeInfo& sizeInfo,
+                                      void* planes[3]) {
   // TODO (scroggo): The only interesting thing this uses from the
   // ImageFrameGenerator is m_decodeFailed. Move this into
   // DecodingImageGenerator, which is the only class that calls it.
@@ -178,24 +162,15 @@ bool ImageFrameGenerator::DecodeToYUV(SegmentReader* data,
   TRACE_EVENT1("blink", "ImageFrameGenerator::decodeToYUV", "frame index",
                static_cast<int>(index));
 
-  if (!planes || !planes[0] || !planes[1] || !planes[2] || !row_bytes ||
-      !row_bytes[0] || !row_bytes[1] || !row_bytes[2]) {
-    return false;
-  }
-
   std::unique_ptr<ImageDecoder> decoder = ImageDecoder::Create(
       data, true, ImageDecoder::kAlphaPremultiplied, decoder_color_behavior_);
   // getYUVComponentSizes was already called and was successful, so
   // ImageDecoder::create must succeed.
   DCHECK(decoder);
 
-  std::unique_ptr<ImagePlanes> image_planes =
-      WTF::MakeUnique<ImagePlanes>(planes, row_bytes);
-  decoder->SetImagePlanes(std::move(image_planes));
-
   DCHECK(decoder->CanDecodeToYUV());
 
-  if (decoder->DecodeToYUV()) {
+  if (decoder->DecodeToYUV(sizeInfo, planes)) {
     SetHasAlpha(0, false);  // YUV is always opaque
     return true;
   }
@@ -378,7 +353,8 @@ bool ImageFrameGenerator::HasAlpha(size_t index) {
 }
 
 bool ImageFrameGenerator::GetYUVComponentSizes(SegmentReader* data,
-                                               SkYUVSizeInfo* size_info) {
+                                               SkYUVSizeInfo* size_info,
+                                               SkYUVColorSpace* color_space) {
   TRACE_EVENT2("blink", "ImageFrameGenerator::getYUVComponentSizes", "width",
                full_size_.width(), "height", full_size_.height());
 
@@ -390,14 +366,7 @@ bool ImageFrameGenerator::GetYUVComponentSizes(SegmentReader* data,
   if (!decoder)
     return false;
 
-  // Setting a dummy ImagePlanes object signals to the decoder that we want to
-  // do YUV decoding.
-  std::unique_ptr<ImagePlanes> dummy_image_planes =
-      WTF::WrapUnique(new ImagePlanes);
-  decoder->SetImagePlanes(std::move(dummy_image_planes));
-
-  return UpdateYUVComponentSizes(decoder.get(), size_info->fSizes,
-                                 size_info->fWidthBytes);
+  return decoder->onQueryYUV8(size_info, color_space);
 }
 
 }  // namespace blink

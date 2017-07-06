@@ -26,12 +26,12 @@
 #ifndef JPEGImageDecoder_h
 #define JPEGImageDecoder_h
 
-#include "platform/image-decoders/ImageDecoder.h"
 #include <memory>
+#include "platform/image-decoders/ImageDecoder.h"
+#include "third_party/skia/include/codec/SkCodec.h"
 
 namespace blink {
 
-class JPEGImageReader;
 
 class PLATFORM_EXPORT JPEGImageDecoder final : public ImageDecoder {
   WTF_MAKE_NONCOPYABLE(JPEGImageDecoder);
@@ -45,12 +45,10 @@ class PLATFORM_EXPORT JPEGImageDecoder final : public ImageDecoder {
   void OnSetData(SegmentReader* data) override;
   IntSize DecodedSize() const override { return decoded_size_; }
   bool SetSize(unsigned width, unsigned height) override;
-  IntSize DecodedYUVSize(int component) const override;
-  size_t DecodedYUVWidthBytes(int component) const override;
+  bool onQueryYUV8(SkYUVSizeInfo*, SkYUVColorSpace*) const override;
   bool CanDecodeToYUV() override;
-  bool DecodeToYUV() override;
-  void SetImagePlanes(std::unique_ptr<ImagePlanes>) override;
-  bool HasImagePlanes() const { return image_planes_.get(); }
+  bool DecodeToYUV(const SkYUVSizeInfo&, void* planes[3]) override;
+  bool frameIsCompleteAtIndex(size_t) const;
 
   bool OutputScanlines();
   unsigned DesiredScaleNumerator() const;
@@ -71,8 +69,7 @@ class PLATFORM_EXPORT JPEGImageDecoder final : public ImageDecoder {
   // data coming, sets the "decode failure" flag.
   void Decode(bool only_size);
 
-  std::unique_ptr<JPEGImageReader> reader_;
-  std::unique_ptr<ImagePlanes> image_planes_;
+  std::unique_ptr<SkCodec> codec_;
   IntSize decoded_size_;
 };
 
