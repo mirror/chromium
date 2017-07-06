@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "4ca7ce5e_6cc3aa79",
+        "filename": "content/browser/service_worker/embedded_worker_instance.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-06T09:33:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "408723a6_01529911",
+      "revId": "0bf68cc35cc929e7e4de64d08feb9dbde48d2ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6e2072e_cca3307d",
         "filename": "content/browser/service_worker/embedded_worker_instance.h",
         "patchSetId": 3
@@ -50,6 +68,24 @@
       "revId": "0bf68cc35cc929e7e4de64d08feb9dbde48d2ec2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc7ba39c_d701e93c",
+        "filename": "content/browser/service_worker/embedded_worker_instance.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-06T09:33:44Z",
+      "side": 1,
+      "message": "I think this is also part of the TODO because we can pass it around if we can have it as a member of EmbeddedWorkerStartParams.",
+      "parentUuid": "a6e2072e_cca3307d",
+      "revId": "0bf68cc35cc929e7e4de64d08feb9dbde48d2ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "4e5ca032_b2aa3d19",
+        "filename": "content/browser/service_worker/embedded_worker_instance_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-06T09:33:44Z",
+      "side": 1,
+      "message": "Oops, I\u0027ve forgot to remove. Done.",
+      "parentUuid": "08edcab5_e8be2eb3",
+      "revId": "0bf68cc35cc929e7e4de64d08feb9dbde48d2ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ddea5cd8_d8c687d8",
         "filename": "content/browser/service_worker/embedded_worker_instance_unittest.cc",
         "patchSetId": 3
@@ -84,6 +138,24 @@
       "revId": "0bf68cc35cc929e7e4de64d08feb9dbde48d2ec2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c70c54af_7fb0d2d6",
+        "filename": "content/browser/service_worker/embedded_worker_instance_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-06T09:33:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ddea5cd8_d8c687d8",
+      "revId": "0bf68cc35cc929e7e4de64d08feb9dbde48d2ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "6b94838e_8ec9a523",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-06T09:33:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "989298ec_a141e21d",
+      "revId": "0bf68cc35cc929e7e4de64d08feb9dbde48d2ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9d2f574_e0d55ce3",
         "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
         "patchSetId": 3
@@ -118,6 +208,24 @@
       "revId": "0bf68cc35cc929e7e4de64d08feb9dbde48d2ec2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9631e309_940acd4a",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-06T09:33:44Z",
+      "side": 1,
+      "message": "It\u0027s just inherited from https://crrev.com/c/538477 . Removed.",
+      "parentUuid": "f9d2f574_e0d55ce3",
+      "revId": "0bf68cc35cc929e7e4de64d08feb9dbde48d2ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "85694309_7ed29855",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-06T09:33:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23827922_a7ea996c",
+      "revId": "0bf68cc35cc929e7e4de64d08feb9dbde48d2ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "063b9e8e_21b9a5e6",
         "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
         "patchSetId": 3
@@ -152,6 +278,24 @@
       "revId": "0bf68cc35cc929e7e4de64d08feb9dbde48d2ec2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69c0fea5_c07e203f",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-06T09:33:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "063b9e8e_21b9a5e6",
+      "revId": "0bf68cc35cc929e7e4de64d08feb9dbde48d2ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -172,6 +316,24 @@
     },
     {
       "key": {
+        "uuid": "7714262f_228b07c9",
+        "filename": "content/common/service_worker/service_worker_installed_scripts_manager.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-06T09:33:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1c3bda5_0dfef474",
+      "revId": "0bf68cc35cc929e7e4de64d08feb9dbde48d2ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31945a44_df556517",
         "filename": "content/common/service_worker/service_worker_installed_scripts_manager.mojom",
         "patchSetId": 3
@@ -186,6 +348,24 @@
       "revId": "0bf68cc35cc929e7e4de64d08feb9dbde48d2ec2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "064fdbac_b51264e9",
+        "filename": "content/common/service_worker/service_worker_installed_scripts_manager.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-06T09:33:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31945a44_df556517",
+      "revId": "0bf68cc35cc929e7e4de64d08feb9dbde48d2ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -206,6 +386,24 @@
     },
     {
       "key": {
+        "uuid": "472719af_01688fa8",
+        "filename": "content/common/service_worker/service_worker_installed_scripts_manager.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-06T09:33:44Z",
+      "side": 1,
+      "message": "Thanks!\nMoved the arguments to a struct and added comments on each parameters.",
+      "parentUuid": "dd717ac7_d345d2d5",
+      "revId": "0bf68cc35cc929e7e4de64d08feb9dbde48d2ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69e0ff47_ddfa43ce",
         "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
         "patchSetId": 3
@@ -220,6 +418,24 @@
       "revId": "0bf68cc35cc929e7e4de64d08feb9dbde48d2ec2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce918b38_56f9ba21",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-06T09:33:44Z",
+      "side": 1,
+      "message": "DCHECK_CURRENTLY_ON seems available only on the browser process. Left the comment as is.",
+      "parentUuid": "69e0ff47_ddfa43ce",
+      "revId": "0bf68cc35cc929e7e4de64d08feb9dbde48d2ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -240,6 +456,24 @@
     },
     {
       "key": {
+        "uuid": "3e155047_69f6e352",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-06T09:33:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e48062a0_f975da90",
+      "revId": "0bf68cc35cc929e7e4de64d08feb9dbde48d2ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d7c97b5_ed74fae0",
         "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
         "patchSetId": 3
@@ -257,6 +491,24 @@
     },
     {
       "key": {
+        "uuid": "a217b8e4_083f563b",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-06T09:33:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d7c97b5_ed74fae0",
+      "revId": "0bf68cc35cc929e7e4de64d08feb9dbde48d2ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1c6d297_695f97e0",
         "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
         "patchSetId": 3
@@ -271,6 +523,24 @@
       "revId": "0bf68cc35cc929e7e4de64d08feb9dbde48d2ec2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e592ab0_f09003c8",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-06T09:33:44Z",
+      "side": 1,
+      "message": "It seems available only on the browser process..",
+      "parentUuid": "a1c6d297_695f97e0",
+      "revId": "0bf68cc35cc929e7e4de64d08feb9dbde48d2ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -321,6 +591,30 @@
     },
     {
       "key": {
+        "uuid": "75c78605_46b138eb",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-06T09:33:44Z",
+      "side": 1,
+      "message": "I was confused around the design.. WaitableEvent seems no longer necessary here. \nInstead, I\u0027m planning to add a container class inheriting ThreadSafeRefCounted, which is accessible from WebSWInstalledScritpsManagerImpl (worker thread) and from Internal (IO thread).",
+      "parentUuid": "fd4faebb_d14b2a31",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 50
+      },
+      "revId": "0bf68cc35cc929e7e4de64d08feb9dbde48d2ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24c6bfc8_2cec35d3",
         "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
         "patchSetId": 3
@@ -341,6 +635,30 @@
       "revId": "0bf68cc35cc929e7e4de64d08feb9dbde48d2ec2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1972f5fe_741ff47e",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-06T09:33:44Z",
+      "side": 1,
+      "message": "Removed, thanks.",
+      "parentUuid": "24c6bfc8_2cec35d3",
+      "range": {
+        "startLine": 54,
+        "startChar": 8,
+        "endLine": 54,
+        "endChar": 12
+      },
+      "revId": "0bf68cc35cc929e7e4de64d08feb9dbde48d2ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
