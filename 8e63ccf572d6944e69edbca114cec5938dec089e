@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c750dbe_79c43c73",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-06T16:52:00Z",
+      "side": 1,
+      "message": "true  /* load only */\n\nI have a slight preference to use true for the option doing more. (show_on_load, for example)",
+      "range": {
+        "startLine": 583,
+        "startChar": 60,
+        "endLine": 583,
+        "endChar": 61
+      },
+      "revId": "8e63ccf572d6944e69edbca114cec5938dec089e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ac52c59_304ac166",
+        "filename": "ui/keyboard/keyboard_controller.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-06T16:52:00Z",
+      "side": 1,
+      "message": "It\u0027s probably better to move this private and make KeyboardLayoutManager a friend class.",
+      "revId": "8e63ccf572d6944e69edbca114cec5938dec089e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
