@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "573c9217_e1ddb170",
+        "filename": "ios/web/public/global_state/ios_global_state.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-06T16:45:40Z",
+      "side": 1,
+      "message": "Have this function return a std::unique_ptr.",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 31
+      },
+      "revId": "c2a1ee3e10d849a30319619617f8ee3fbcbf7f59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67d06920_bb446a42",
+        "filename": "ios/web/public/global_state/ios_global_state.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-06T16:45:40Z",
+      "side": 1,
+      "message": "Update browser_main_loop.cc to point to here\n\nhttps://cs.chromium.org/chromium/src/content/browser/browser_main_loop.cc?rcl\u003d23a7f980274aea7d7feb7305e1ed210e30f02103\u0026l\u003d409\n\n(Looks like the cc should have been mm)",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 69
+      },
+      "revId": "c2a1ee3e10d849a30319619617f8ee3fbcbf7f59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee42fa66_ef040279",
+        "filename": "ios/web/public/global_state/ios_global_state.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-06T16:45:40Z",
+      "side": 1,
+      "message": "We expect the task scheduler to be started synchronously in the startup path. This way any callers after Create() should be able to call post_task.h APIs without crashing.\n\nPutting this in GCD/libdispatch would prevent that guarantee, won\u0027t it?",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 15
+      },
+      "revId": "c2a1ee3e10d849a30319619617f8ee3fbcbf7f59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
