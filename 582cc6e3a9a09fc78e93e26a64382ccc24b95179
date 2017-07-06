@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c1970f45_70fe7bfa",
+        "filename": "chrome/browser/autocomplete/chrome_autocomplete_provider_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-07-06T01:51:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5dbf604_aa20375c",
+      "range": {
+        "startLine": 68,
+        "startChar": 13,
+        "endLine": 68,
+        "endChar": 14
+      },
+      "revId": "582cc6e3a9a09fc78e93e26a64382ccc24b95179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e64929d_02c7dafd",
         "filename": "components/omnibox/browser/autocomplete_controller.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-05T19:28:29Z",
       "side": 1,
       "message": "This description doesn\u0027t seem right.  You don\u0027t check that the default match is a query.",
+      "range": {
+        "startLine": 345,
+        "startChar": 25,
+        "endLine": 345,
+        "endChar": 26
+      },
+      "revId": "582cc6e3a9a09fc78e93e26a64382ccc24b95179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33b1146b_90cbe7f7",
+        "filename": "components/omnibox/browser/autocomplete_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-07-06T01:51:36Z",
+      "side": 1,
+      "message": "Rewrote this whole comment. Please give it another look.",
+      "parentUuid": "9e64929d_02c7dafd",
       "range": {
         "startLine": 345,
         "startChar": 25,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "553ce694_6060251a",
+        "filename": "components/omnibox/browser/autocomplete_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-07-06T01:51:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd874c19_1fabfc02",
+      "range": {
+        "startLine": 348,
+        "startChar": 6,
+        "endLine": 348,
+        "endChar": 11
+      },
+      "revId": "582cc6e3a9a09fc78e93e26a64382ccc24b95179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57a6ba0d_c0455c1c",
         "filename": "components/omnibox/browser/autocomplete_controller.cc",
         "patchSetId": 1
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "c2461286_4a595f5e",
+        "filename": "components/omnibox/browser/autocomplete_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-07-06T01:51:36Z",
+      "side": 1,
+      "message": "Yes, I think we can assume a default match here but a check anyway seemed prudent. Added a comment to this effect.",
+      "parentUuid": "57a6ba0d_c0455c1c",
+      "range": {
+        "startLine": 349,
+        "startChar": 41,
+        "endLine": 349,
+        "endChar": 44
+      },
+      "revId": "582cc6e3a9a09fc78e93e26a64382ccc24b95179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ae0a8739_91848f97",
         "filename": "components/omnibox/browser/autocomplete_provider_client.h",
         "patchSetId": 1
@@ -105,6 +201,30 @@
       "writtenOn": "2017-07-05T19:28:29Z",
       "side": 1,
       "message": "nit: somehow this seems better placed near PrefetchImage(), before OnAutocompleteControllerResultReady().",
+      "range": {
+        "startLine": 127,
+        "startChar": 13,
+        "endLine": 127,
+        "endChar": 17
+      },
+      "revId": "582cc6e3a9a09fc78e93e26a64382ccc24b95179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56f6d6b3_fd259d95",
+        "filename": "components/omnibox/browser/autocomplete_provider_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-07-06T01:51:36Z",
+      "side": 1,
+      "message": "Yeah, that makes more sense. Done.",
+      "parentUuid": "ae0a8739_91848f97",
       "range": {
         "startLine": 127,
         "startChar": 13,
@@ -188,6 +308,30 @@
     },
     {
       "key": {
+        "uuid": "f3d238ab_1c735341",
+        "filename": "components/omnibox/browser/autocomplete_provider_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-07-06T01:51:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1d978eea_227eb386",
+      "range": {
+        "startLine": 130,
+        "startChar": 15,
+        "endLine": 130,
+        "endChar": 22
+      },
+      "revId": "582cc6e3a9a09fc78e93e26a64382ccc24b95179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84818b77_6c106874",
         "filename": "components/omnibox/browser/autocomplete_provider_client.h",
         "patchSetId": 1
@@ -199,6 +343,30 @@
       "writtenOn": "2017-07-05T19:28:29Z",
       "side": 1,
       "message": "If this is just for *search* service workers, please use search in the GURL name.",
+      "range": {
+        "startLine": 131,
+        "startChar": 45,
+        "endLine": 131,
+        "endChar": 46
+      },
+      "revId": "582cc6e3a9a09fc78e93e26a64382ccc24b95179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "521da7df_af0fb66a",
+        "filename": "components/omnibox/browser/autocomplete_provider_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-07-06T01:51:36Z",
+      "side": 1,
+      "message": "We\u0027re only doing it for search service workers now but since this could potentially be generalized to other navigations I removed \"Search\" from the method name and the comment.",
+      "parentUuid": "84818b77_6c106874",
       "range": {
         "startLine": 131,
         "startChar": 45,
