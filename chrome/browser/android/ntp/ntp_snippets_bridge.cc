@@ -123,7 +123,7 @@ static jlong Init(JNIEnv* env,
 }
 
 // Initiates a background fetch for remote suggestions.
-static void RemoteSuggestionsSchedulerOnFetchDue(
+static void RemoteSuggestionsSchedulerOnPersistentSchedulerWakeUp(
     JNIEnv* env,
     const JavaParamRef<jclass>& caller) {
   ntp_snippets::RemoteSuggestionsScheduler* scheduler =
@@ -137,7 +137,7 @@ static void RemoteSuggestionsSchedulerOnFetchDue(
 
 // Reschedules the fetching of snippets. If tasks are already scheduled, they
 // will be rescheduled anyway, so all running intervals will be reset.
-static void RemoteSuggestionsSchedulerRescheduleFetching(
+static void RemoteSuggestionsSchedulerOnBrowserUpgraded(
     JNIEnv* env,
     const JavaParamRef<jclass>& caller) {
   ntp_snippets::RemoteSuggestionsScheduler* scheduler =
@@ -148,7 +148,7 @@ static void RemoteSuggestionsSchedulerRescheduleFetching(
     return;
   }
 
-  scheduler->RescheduleFetching();
+  scheduler->OnBrowserUpgraded();
 }
 
 static void SetRemoteSuggestionsEnabled(JNIEnv* env,
