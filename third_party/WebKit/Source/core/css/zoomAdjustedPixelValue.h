@@ -16,5 +16,15 @@ inline CSSPrimitiveValue* ZoomAdjustedPixelValue(double value,
   return CSSPrimitiveValue::Create(AdjustFloatForAbsoluteZoom(value, style),
                                    CSSPrimitiveValue::UnitType::kPixels);
 }
+
+inline CSSPrimitiveValue* ZoomAdjustedPixelValueWithRounding(
+    double value,
+    const ComputedStyle& style) {
+  const double px_value = AdjustFloatForAbsoluteZoom(value, style);
+
+  return CSSPrimitiveValue::Create(
+      px_value > 0.0 && px_value < 1 ? 1.0 : px_value,
+      CSSPrimitiveValue::UnitType::kPixels);
+}
 }
 #endif  // zoomAdjustedPixelValue_h
