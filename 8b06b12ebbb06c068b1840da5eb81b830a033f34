@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "20cb4434_0dcb1365",
+        "filename": "media/filters/gpu_video_decoder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-07-06T08:20:03Z",
+      "side": 1,
+      "message": "I might be missing something, but I think this is only the content length when we first create the SHMBuffer? Then we keep the SHMBuffer on available_shm_segments_ and reuse if the size of it is at least big enough to keep the new content, but the content size may not be equal to SHMBuffer.size anymore? And the size stays the same as what we allocated originally for that SharedMemory instead?",
+      "parentUuid": "27b4a9b1_ac30493d",
+      "revId": "8b06b12ebbb06c068b1840da5eb81b830a033f34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "816a3993_173628a1",
         "filename": "media/filters/gpu_video_decoder.h",
         "patchSetId": 1
@@ -69,6 +87,24 @@
       "revId": "8b06b12ebbb06c068b1840da5eb81b830a033f34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5ec49d3_a70104f9",
+        "filename": "media/filters/gpu_video_decoder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-07-06T08:20:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d38ffd9f_3eb5b941",
+      "revId": "8b06b12ebbb06c068b1840da5eb81b830a033f34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
