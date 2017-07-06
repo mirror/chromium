@@ -290,8 +290,9 @@ void AppListItemView::PaintButtonContents(gfx::Canvas* canvas) {
       flags.setColor(kGridSelectedColor);
       flags.setStyle(cc::PaintFlags::kFill_Style);
       canvas->DrawRoundRect(gfx::RectF(rect), kGridSelectedCornerRadius, flags);
-    } else {
-      canvas->FillRect(GetContentsBounds(), kSelectedColor);
+      //} else {
+      // canvas->FillRect(GetContentsBounds(), kSelectedColor);
+      canvas->FillRect(GetContentsBounds(), kGridSelectedColor);
     }
   }
 
