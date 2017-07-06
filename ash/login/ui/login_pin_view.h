@@ -22,11 +22,11 @@ namespace ash {
 //   |       |  | A B C |  | D E F |
 //    -------    -------    -------
 //    _______    _______    _______
-//   |   1   |  |   2   |  |   3   |
+//   |   4   |  |   5   |  |   6   |
 //   | G H I |  | J K L |  | M N O |
 //    -------    -------    -------
 //    _______    _______    _______
-//   |   1   |  |   2   |  |   3   |
+//   |   7   |  |   8   |  |   9   |
 //   |P Q R S|  | T U V |  |W X Y Z|
 //    -------    -------    -------
 //               _______    _______
@@ -40,6 +40,10 @@ class ASH_EXPORT LoginPinView : public views::View {
   static const int kButtonSeparatorSizeDp;
   // Size of each button.
   static const int kButtonSizeDp;
+  // Top spacing in the button.
+  static const int kButtonTopSpacingDp;
+  // An alpha value for button's sub label. In specs this is listed as 34%.
+  static const SkAlpha kButtonSubLabelAlpha;
 
   class ASH_EXPORT TestApi {
    public:
