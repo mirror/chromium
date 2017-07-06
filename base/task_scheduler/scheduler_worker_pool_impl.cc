@@ -227,60 +227,48 @@ SchedulerWorkerPoolImpl::SchedulerWorkerPoolImpl(
 void SchedulerWorkerPoolImpl::Start(const SchedulerWorkerPoolParams& params) {
   suggested_reclaim_time_ = params.suggested_reclaim_time();
 
-  {
-    AutoSchedulerLock idle_workers_stack_auto_lock(idle_workers_stack_lock_);
-    AutoSchedulerLock workers_auto_lock(workers_lock_);
+  AutoSchedulerLock idle_workers_stack_auto_lock(idle_workers_stack_lock_);
+  AutoSchedulerLock workers_auto_lock(workers_lock_);
 
 #if DCHECK_IS_ON()
-    DCHECK(!workers_created_.IsSet());
+  DCHECK(!workers_created_.IsSet());
 #endif
 
-    DCHECK(workers_.empty());
-    workers_.resize(params.max_threads());
+  DCHECK(workers_.empty());
+  worker_capacity_ = params.max_threads();
 
-    // The number of workers created alive is |num_wake_ups_before_start_|, plus
-    // one if the standby thread policy is ONE (in order to start with one alive
-    // idle worker).
-    const int num_alive_workers =
-        num_wake_ups_before_start_ +
-        (params.standby_thread_policy() ==
-                 SchedulerWorkerPoolParams::StandbyThreadPolicy::ONE
-             ? 1
-             : 0);
+  backward_compatibility_ = params.backward_compatibility();
 
-    for (int index = 0; index < params.max_threads(); ++index) {
-      workers_[index] = make_scoped_refptr(new SchedulerWorker(
-          priority_hint_, MakeUnique<SchedulerWorkerDelegateImpl>(this),
-          task_tracker_, &workers_lock_, params.backward_compatibility(),
-          index < num_alive_workers ? SchedulerWorker::InitialState::ALIVE
-                                    : SchedulerWorker::InitialState::DETACHED));
+  // The initial number of workers is |num_wake_ups_before_start_|, plus
+  // one if the standby thread policy is ONE (in order to start with one alive
+  // idle worker). The initial number of workers is at least one (even if
+  // the LAZY StandbyThreadPolicy is in effect and there have been no
+  // wake ups before Start was called).
+  // TODO(jeffreyhe): Remove that comment about initial workers having to be
+  // at least one when StandbyThreadPolicy is removed.
+  const int num_initial_workers =
+      std::max(num_wake_ups_before_start_ +
+                   (params.standby_thread_policy() ==
+                            SchedulerWorkerPoolParams::StandbyThreadPolicy::ONE
+                        ? 1
+                        : 0),
+               1);
+  workers_.reserve(num_initial_workers);
 
-      // Put workers that won't be woken up at the end of this method on the
-      // idle stack.
-      if (index >= num_wake_ups_before_start_)
-        idle_workers_stack_.Push(workers_[index].get());
-    }
+  for (int index = 0; index < num_initial_workers; ++index) {
+    scoped_refptr<SchedulerWorker> worker = AddNewWorker();
+
+    // Wake up one worker for each wake up that occurred before Start(). Place
+    // all the other workers on the idle stack.
+    if (index < num_wake_ups_before_start_)
+      workers_.back()->WakeUp();
+    else
+      idle_workers_stack_.Push(worker.get());
+  }
 
 #if DCHECK_IS_ON()
-    workers_created_.Set();
+  workers_created_.Set();
 #endif
-
-    // Start all workers. CHECK that the first worker can be started (assume
-    // that failure means that threads can't be created on this machine). Note
-    // that the workers must be started before the idle_workers_stack_lock_ is
-    // released, otherwise WakeUpOneWorker() could WakeUp() a worker before it's
-    // started (after the lock's released, but before it's started).
-    for (size_t index = 0; index < workers_.size(); ++index) {
-      const bool start_success = workers_[index]->Start();
-      CHECK(start_success || index > 0);
-    }
-  }
-
-  // Wake up one worker for each wake up that occurred before Start().
-  for (size_t index = 0; index < workers_.size(); ++index) {
-    if (static_cast<int>(index) < num_wake_ups_before_start_)
-      workers_[index]->WakeUp();
-  }
 }
 
 SchedulerWorkerPoolImpl::~SchedulerWorkerPoolImpl() {
@@ -365,11 +353,10 @@ void SchedulerWorkerPoolImpl::GetHistograms(
 }
 
 int SchedulerWorkerPoolImpl::GetMaxConcurrentTasksDeprecated() const {
-  AutoSchedulerLock lock(workers_lock_);
 #if DCHECK_IS_ON()
   DCHECK(workers_created_.IsSet());
 #endif
-  return workers_.size();
+  return worker_capacity_;
 }
 
 void SchedulerWorkerPoolImpl::WaitForAllWorkersIdleForTesting() {
@@ -457,7 +444,6 @@ void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::OnMainEntry(
   {
 #if DCHECK_IS_ON()
     AutoSchedulerLock lock(outer_->workers_lock_);
-    DCHECK(outer_->workers_created_.IsSet());
 #endif
     DCHECK(ContainsWorker(outer_->workers_, worker));
   }
@@ -591,10 +577,17 @@ void SchedulerWorkerPoolImpl::WakeUpOneWorker() {
     DCHECK_EQ(workers_.empty(), !workers_created_.IsSet());
 #endif
 
-    if (workers_.empty())
+    if (workers_.empty()) {
       ++num_wake_ups_before_start_;
-    else
-      worker = idle_workers_stack_.Pop();
+
+    } else {
+      // Add a new worker if we're below capacity and there are no idle workers.
+      if (idle_workers_stack_.IsEmpty() && workers_.size() < worker_capacity_) {
+        worker = AddNewWorker().get();
+      } else {
+        worker = idle_workers_stack_.Pop();
+      }
+    }
   }
 
   if (worker)
@@ -633,6 +626,24 @@ void SchedulerWorkerPoolImpl::RemoveFromIdleWorkersStack(
 
 bool SchedulerWorkerPoolImpl::CanWorkerDetachForTesting() {
   return !worker_detachment_disallowed_.IsSet();
+}
+
+scoped_refptr<SchedulerWorker> SchedulerWorkerPoolImpl::AddNewWorker() {
+  workers_lock_.AssertAcquired();
+
+  // SchedulerWorker needs |workers_lock_| as a predecessor for its thread lock
+  // because in WakeUpOneWorker, |workers_lock_| is first acquired and then
+  // the thread lock is acquired when WakeUp is called on the worker.
+  workers_.push_back(MakeRefCounted<SchedulerWorker>(
+      priority_hint_, MakeUnique<SchedulerWorkerDelegateImpl>(this),
+      task_tracker_, &workers_lock_, backward_compatibility_,
+      SchedulerWorker::InitialState::ALIVE));
+
+  // Start the worker. CHECK that the worker can be started (failure means
+  // that the thread for the worker was not able to be created).
+  CHECK(workers_.back()->Start());
+
+  return workers_.back();
 }
 
 }  // namespace internal

@@ -132,6 +132,12 @@ class BASE_EXPORT SchedulerWorkerPoolImpl : public SchedulerWorkerPool {
   // Returns true if worker thread detachment is permitted.
   bool CanWorkerDetachForTesting();
 
+  // Adds and starts a new SchedulerWorker based on SchedulerWorkerPoolParams
+  // that are passed into Start(). Returns the newly added worker. This cannot
+  // be called before Start(). This function should only be called under the
+  // protection of |workers_lock_|.
+  scoped_refptr<SchedulerWorker> AddNewWorker();
+
   const std::string name_;
   const ThreadPriority priority_hint_;
 
@@ -158,6 +164,8 @@ class BASE_EXPORT SchedulerWorkerPoolImpl : public SchedulerWorkerPool {
   // |idle_workers_stack_| usually occur whenever |workers_| is accessed.
   mutable SchedulerLock workers_lock_;
 
+  SchedulerBackwardCompatibility backward_compatibility_;
+
   // Stack of idle workers. Initially, all workers are on this stack. A worker
   // is removed from the stack before its WakeUp() function is called and when
   // it receives work from GetWork() (a worker calls GetWork() when its sleep
@@ -178,7 +186,7 @@ class BASE_EXPORT SchedulerWorkerPoolImpl : public SchedulerWorkerPool {
   AtomicFlag worker_detachment_disallowed_;
 
 #if DCHECK_IS_ON()
-  // Set when all workers have been created.
+  // Set after all the initial workers have been created.
   AtomicFlag workers_created_;
 #endif
 
@@ -196,6 +204,10 @@ class BASE_EXPORT SchedulerWorkerPoolImpl : public SchedulerWorkerPool {
 
   TaskTracker* const task_tracker_;
   DelayedTaskManager* const delayed_task_manager_;
+
+  // Workers can be added as needed up until there are |worker_capacity_|
+  // workers.
+  size_t worker_capacity_;
 
   DISALLOW_COPY_AND_ASSIGN(SchedulerWorkerPoolImpl);
 };
