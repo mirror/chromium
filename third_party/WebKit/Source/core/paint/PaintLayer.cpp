@@ -1285,6 +1285,9 @@ void PaintLayer::AddChild(PaintLayer* child, PaintLayer* before_child) {
 
   child->parent_ = this;
 
+  if (LocalFrameView* frame_view = child->GetLayoutObject().GetFrameView())
+    frame_view->SetNeedsLayout();
+
   // The ancestor overflow layer is calculated during compositing inputs update
   // and should not be set yet.
   CHECK(!child->AncestorOverflowLayer());

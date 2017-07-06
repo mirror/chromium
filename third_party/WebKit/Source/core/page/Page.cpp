@@ -230,12 +230,7 @@ const OverscrollController& Page::GetOverscrollController() const {
 }
 
 ClientRectList* Page::NonFastScrollableRects(const LocalFrame* frame) {
-  DisableCompositingQueryAsserts disabler;
-  if (ScrollingCoordinator* scrolling_coordinator =
-          this->GetScrollingCoordinator()) {
-    // Hits in compositing/iframes/iframe-composited-scrolling.html
-    scrolling_coordinator->UpdateAfterCompositingChangeIfNeeded();
-  }
+  frame->View()->UpdateAllLifecyclePhasesExceptPaint();
 
   GraphicsLayer* layer =
       frame->View()->LayoutViewportScrollableArea()->LayerForScrolling();

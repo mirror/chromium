@@ -29,7 +29,7 @@
 namespace blink {
 
 SVGDocumentExtensions::SVGDocumentExtensions(Document* document)
-    : document_(document) {}
+    : document_(document), animations_started_(false) {}
 
 SVGDocumentExtensions::~SVGDocumentExtensions() {}
 
@@ -54,6 +54,8 @@ void SVGDocumentExtensions::ServiceOnAnimationFrame(Document& document) {
 }
 
 void SVGDocumentExtensions::ServiceAnimations() {
+  StartAnimations();
+
   if (RuntimeEnabledFeatures::SMILEnabled()) {
     HeapVector<Member<SVGSVGElement>> time_containers;
     CopyToVector(time_containers_, time_containers);
@@ -75,6 +77,9 @@ void SVGDocumentExtensions::ServiceAnimations() {
 }
 
 void SVGDocumentExtensions::StartAnimations() {
+  if (animations_started_)
+    return;
+
   // FIXME: Eventually every "Time Container" will need a way to latch on to
   // some global timer starting animations for a document will do this
   // "latching"
@@ -88,6 +93,7 @@ void SVGDocumentExtensions::StartAnimations() {
     if (!time_container->IsStarted())
       time_container->Start();
   }
+  animations_started_ = true;
 }
 
 void SVGDocumentExtensions::PauseAnimations() {

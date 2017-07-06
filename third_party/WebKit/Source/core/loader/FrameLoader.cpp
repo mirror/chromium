@@ -476,6 +476,16 @@ void FrameLoader::DidFinishNavigation() {
     progress_tracker_->ProgressCompleted();
     // Retry restoring scroll offset since finishing loading disables content
     // size clamping.
+
+    HistoryItem* history_item = document_loader_->GetHistoryItem();
+    bool should_restore_scroll =
+        history_item &&
+        history_item->ScrollRestorationType() != kScrollRestorationManual;
+    if (should_restore_scroll) {
+      if (LocalFrameView* view = frame_->View())
+        view->UpdateLifecycleToLayoutClean();
+    }
+
     RestoreScrollPositionAndViewState();
     if (document_loader_)
       document_loader_->SetLoadType(kFrameLoadTypeStandard);
