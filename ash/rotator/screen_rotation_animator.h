@@ -113,6 +113,12 @@ class ASH_EXPORT ScreenRotationAnimator {
                    display::Display::Rotation new_rotation,
                    display::Display::RotationSource source);
 
+  void AddOldLayer();
+
+  void RotateBackFirstCopy(display::Display::Rotation old_rotation,
+                           display::Display::Rotation new_rotation,
+                           display::Display display);
+
   // This is an asynchronous call to request copy output of root layer.
   void RequestCopyScreenRotationContainerLayer(
       std::unique_ptr<cc::CopyOutputRequest> copy_output_request);

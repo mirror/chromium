@@ -36,6 +36,8 @@
 #include "ui/gfx/transform_util.h"
 #include "ui/wm/core/window_util.h"
 
+#include "base/threading/thread_task_runner_handle.h"
+
 namespace ash {
 
 namespace {
@@ -226,9 +228,27 @@ void ScreenRotationAnimator::SetRotation(
   compositor->set_allow_locks_to_extend_timeout(false);
   const display::Display display =
       Shell::Get()->display_manager()->GetDisplayForId(display_id);
+  //  old_layer_tree_owner_->root()->SetTransform(
+  //      CreateScreenRotationOldLayerTransformForDisplay(old_rotation,
+  //                                                      new_rotation,
+  //                                                      display));
+  //  RotateBackFirstCopy(old_rotation, new_rotation, display);
+  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      FROM_HERE,
+      base::Bind(&ScreenRotationAnimator::RotateBackFirstCopy,
+                 weak_factory_.GetWeakPtr(), old_rotation, new_rotation,
+                 display),
+      base::TimeDelta::FromSeconds(2));
+}
+
+void ScreenRotationAnimator::RotateBackFirstCopy(
+    display::Display::Rotation old_rotation,
+    display::Display::Rotation new_rotation,
+    display::Display display) {
   old_layer_tree_owner_->root()->SetTransform(
       CreateScreenRotationOldLayerTransformForDisplay(old_rotation,
                                                       new_rotation, display));
+  root_window_->layer()->GetCompositor()->ScheduleFullRedraw();
 }
 
 void ScreenRotationAnimator::RequestCopyScreenRotationContainerLayer(
@@ -259,6 +279,11 @@ ScreenRotationAnimator::CreateAfterCopyCallbackAfterRotation(
                     base::Passed(&rotation_request));
 }
 
+void ScreenRotationAnimator::AddOldLayer() {
+  AddLayerAtTopOfWindowLayers(root_window_, old_layer_tree_owner_->root());
+  root_window_->layer()->GetCompositor()->ScheduleFullRedraw();
+}
+
 void ScreenRotationAnimator::OnScreenRotationContainerLayerCopiedBeforeRotation(
     std::unique_ptr<ScreenRotationRequest> rotation_request,
     std::unique_ptr<cc::CopyOutputResult> result) {
@@ -284,13 +309,36 @@ void ScreenRotationAnimator::OnScreenRotationContainerLayerCopiedBeforeRotation(
   }
 
   old_layer_tree_owner_ = CopyLayerTree(std::move(result));
-  AddLayerAtTopOfWindowLayers(root_window_, old_layer_tree_owner_->root());
-  SetRotation(rotation_request->display_id, rotation_request->old_rotation,
-              rotation_request->new_rotation, rotation_request->source);
+  //  AddLayerAtTopOfWindowLayers(root_window_, old_layer_tree_owner_->root());
+  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      FROM_HERE,
+      base::Bind(&ScreenRotationAnimator::AddOldLayer,
+                 weak_factory_.GetWeakPtr()),
+      base::TimeDelta::FromSeconds(2));
+
+  //  SetRotation(rotation_request->display_id, rotation_request->old_rotation,
+  //              rotation_request->new_rotation, rotation_request->source);
+
+  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      FROM_HERE,
+      base::Bind(&ScreenRotationAnimator::SetRotation,
+                 weak_factory_.GetWeakPtr(), rotation_request->display_id,
+                 rotation_request->old_rotation, rotation_request->new_rotation,
+                 rotation_request->source),
+      base::TimeDelta::FromSeconds(4));
+
   std::unique_ptr<cc::CopyOutputRequest> copy_output_request =
       cc::CopyOutputRequest::CreateRequest(
           CreateAfterCopyCallbackAfterRotation(std::move(rotation_request)));
-  RequestCopyScreenRotationContainerLayer(std::move(copy_output_request));
+  //  RequestCopyScreenRotationContainerLayer(std::move(copy_output_request));
+
+  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      FROM_HERE,
+      base::Bind(
+          &ScreenRotationAnimator::RequestCopyScreenRotationContainerLayer,
+          weak_factory_.GetWeakPtr(),
+          base::Passed(std::move(copy_output_request))),
+      base::TimeDelta::FromSeconds(8));
 }
 
 void ScreenRotationAnimator::OnScreenRotationContainerLayerCopiedAfterRotation(
