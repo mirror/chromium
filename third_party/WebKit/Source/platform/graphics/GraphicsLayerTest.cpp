@@ -174,6 +174,10 @@ class FakeScrollableArea : public GarbageCollectedFinalized<FakeScrollableArea>,
   int ScrollSize(ScrollbarOrientation) const override { return 100; }
   bool IsScrollCornerVisible() const override { return false; }
   IntRect ScrollCornerRect() const override { return IntRect(); }
+  IntRect VisibleContentRect(
+      IncludeScrollbarsInRect = kExcludeScrollbars) const override {
+    return IntRect(0, 0, 10, 10);
+  }
   int VisibleWidth() const override { return 10; }
   int VisibleHeight() const override { return 10; }
   IntSize ContentsSize() const override { return IntSize(100, 100); }
