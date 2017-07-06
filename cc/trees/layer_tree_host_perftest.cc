@@ -23,8 +23,8 @@
 #include "cc/test/layer_tree_json_parser.h"
 #include "cc/test/layer_tree_test.h"
 #include "cc/test/paths.h"
-#include "cc/test/test_layer_tree_frame_sink.h"
 #include "cc/trees/layer_tree_impl.h"
+#include "components/viz/test/test_layer_tree_frame_sink.h"
 #include "testing/perf/perf_test.h"
 
 namespace cc {
@@ -138,7 +138,7 @@ class LayerTreeHostPerfTestJsonReader : public LayerTreeHostPerfTest {
 
   void ReadTestFile(const std::string& name) {
     base::FilePath test_data_dir;
-    ASSERT_TRUE(PathService::Get(CCPaths::DIR_TEST_DATA, &test_data_dir));
+    ASSERT_TRUE(PathService::Get(viz::Paths::DIR_TEST_DATA, &test_data_dir));
     base::FilePath json_file = test_data_dir.AppendASCII(name + ".json");
     ASSERT_TRUE(base::ReadFileToString(json_file, &json_));
   }
