@@ -139,6 +139,24 @@
       "revId": "4644ebb8ceb06ea38200b311da94b42e2081e3ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a74fe4c9_789c3fbb",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_wifi_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-07-06T22:00:55Z",
+      "side": 1,
+      "message": "Huh - nevermind, then!",
+      "parentUuid": "b30fdbeb_6c81ca64",
+      "revId": "4644ebb8ceb06ea38200b311da94b42e2081e3ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
