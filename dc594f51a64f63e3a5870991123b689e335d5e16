@@ -16,6 +16,24 @@
       "revId": "dc594f51a64f63e3a5870991123b689e335d5e16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18fb6df5_18d688aa",
+        "filename": "third_party/WebKit/Source/core/frame/UseCounter.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-07-06T13:48:54Z",
+      "side": 1,
+      "message": "Good point. Thanks for pointing that out!",
+      "parentUuid": "4541436f_77b5c5fb",
+      "revId": "dc594f51a64f63e3a5870991123b689e335d5e16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
