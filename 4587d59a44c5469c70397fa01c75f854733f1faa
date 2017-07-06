@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7e5388f2_5c0b806d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/IntentHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-06T17:12:35Z",
+      "side": 1,
+      "message": "I put the extra here because I think it is generally useful for passing whether we are currently in incognito mode. If I add it to HistoryActivity, I worry that if some other activity needs it in the future (e.g. downloads or bookmarks), other developers won\u0027t know to look in HistoryActivity for the extra.\n\nThat said, I don\u0027t feel strongly about this so I can move it if you\u0027d like.",
+      "parentUuid": "a02e155f_d6413229",
+      "range": {
+        "startLine": 164,
+        "startChar": 37,
+        "endLine": 164,
+        "endChar": 46
+      },
+      "revId": "4587d59a44c5469c70397fa01c75f854733f1faa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f20dcbab_9190d80d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/BrowsingHistoryBridge.java",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "4587d59a44c5469c70397fa01c75f854733f1faa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59437f4b_228d62ba",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/BrowsingHistoryBridge.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-06T17:12:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f20dcbab_9190d80d",
+      "revId": "4587d59a44c5469c70397fa01c75f854733f1faa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
