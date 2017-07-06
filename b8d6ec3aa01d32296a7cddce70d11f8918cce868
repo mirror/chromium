@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3060f1f3_65e563fb",
+        "filename": "components/policy/tools/syntax_check_policy_template_json.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-07-06T17:05:49Z",
+      "side": 1,
+      "message": "Is this really the correct indentation style?",
+      "range": {
+        "startLine": 278,
+        "startChar": 12,
+        "endLine": 278,
+        "endChar": 18
+      },
+      "revId": "b8d6ec3aa01d32296a7cddce70d11f8918cce868",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "405a57a9_ca1c2821",
+        "filename": "components/policy/tools/syntax_check_policy_template_json.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-07-06T17:05:49Z",
+      "side": 1,
+      "message": "nit: shouldn\u0027t exist",
+      "range": {
+        "startLine": 284,
+        "startChar": 74,
+        "endLine": 284,
+        "endChar": 79
+      },
+      "revId": "b8d6ec3aa01d32296a7cddce70d11f8918cce868",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e897be6_c3f59fcf",
+        "filename": "components/policy/tools/syntax_check_policy_template_json.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-07-06T17:05:49Z",
+      "side": 1,
+      "message": "not sure this indentation style is correct - think it should be indented two more spaces.",
+      "range": {
+        "startLine": 286,
+        "startChar": 8,
+        "endLine": 286,
+        "endChar": 16
+      },
+      "revId": "b8d6ec3aa01d32296a7cddce70d11f8918cce868",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc792769_938da939",
+        "filename": "components/policy/tools/syntax_check_policy_template_json.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-07-06T17:05:49Z",
+      "side": 1,
+      "message": "Let\u0027s change this to \"per_profile attribute should not be set for policies with device_only\u003dTrue\".",
+      "range": {
+        "startLine": 287,
+        "startChar": 21,
+        "endLine": 287,
+        "endChar": 28
+      },
+      "revId": "b8d6ec3aa01d32296a7cddce70d11f8918cce868",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
