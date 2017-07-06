@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01125972_7b385ab7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-06T20:55:46Z",
+      "side": 1,
+      "message": "network_interfaces_getifaddrs",
+      "range": {
+        "startLine": 11,
+        "startChar": 18,
+        "endLine": 11,
+        "endChar": 46
+      },
+      "revId": "e5d4dfa1b3b35843b8707363c3fc37fc375a04ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71aeda76_a2490f0d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-06T20:55:46Z",
+      "side": 1,
+      "message": "cleaned up",
+      "range": {
+        "startLine": 12,
+        "startChar": 19,
+        "endLine": 12,
+        "endChar": 28
+      },
+      "revId": "e5d4dfa1b3b35843b8707363c3fc37fc375a04ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49a2721a_62cfbb9c",
+        "filename": "net/base/network_interfaces_getifaddrs.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-06T20:55:46Z",
+      "side": 1,
+      "message": "Can you add some header documentation for what this file is about? Can do something similar to network_interfaces_posix.h\n\nAFAICT these are only exposed for use in unit-tests. The matching .cc file however implements the function defined in network_interfaces.h.",
+      "revId": "e5d4dfa1b3b35843b8707363c3fc37fc375a04ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcb296e1_4b54eb4b",
+        "filename": "net/base/network_interfaces_getifaddrs.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-06T20:55:46Z",
+      "side": 1,
+      "message": "consider NET_EXPORT_PRIVATE for these two.",
+      "range": {
+        "startLine": 17,
+        "startChar": 6,
+        "endLine": 17,
+        "endChar": 16
+      },
+      "revId": "e5d4dfa1b3b35843b8707363c3fc37fc375a04ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0240bd9e_bb8313ee",
+        "filename": "net/base/network_interfaces_getifaddrs.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-06T20:55:46Z",
+      "side": 1,
+      "message": "Can you add some documentation?",
+      "revId": "e5d4dfa1b3b35843b8707363c3fc37fc375a04ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
