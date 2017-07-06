@@ -1301,7 +1301,7 @@ static ScrollOffset expectedMaxFrameViewScrollOffset(
 
 TEST_P(VisualViewportTest, TestBrowserControlsAdjustment) {
   InitializeWithAndroidSettings();
-  WebViewImpl()->ResizeWithBrowserControls(IntSize(500, 450), 20, false);
+  WebViewImpl()->ResizeWithBrowserControls(IntSize(500, 450), 20, 0, false);
 
   RegisterMockedHttpURLLoad("content-width-1000.html");
   NavigateTo(base_url_ + "content-width-1000.html");
@@ -1351,7 +1351,7 @@ TEST_P(VisualViewportTest, TestBrowserControlsAdjustment) {
 
 TEST_P(VisualViewportTest, TestBrowserControlsAdjustmentWithScale) {
   InitializeWithAndroidSettings();
-  WebViewImpl()->ResizeWithBrowserControls(IntSize(500, 450), 20, false);
+  WebViewImpl()->ResizeWithBrowserControls(IntSize(500, 450), 20, 0, false);
 
   RegisterMockedHttpURLLoad("content-width-1000.html");
   NavigateTo(base_url_ + "content-width-1000.html");
@@ -1433,7 +1433,8 @@ TEST_P(VisualViewportTest, TestBrowserControlsAdjustmentAndResize) {
 
   // Initialize with browser controls showing and shrinking the Blink size.
   WebViewImpl()->ResizeWithBrowserControls(
-      WebSize(500, visual_viewport_height - browser_controls_height), 20, true);
+      WebSize(500, visual_viewport_height - browser_controls_height), 20, 0,
+      true);
   WebViewImpl()->GetBrowserControls().SetShownRatio(1);
 
   RegisterMockedHttpURLLoad("content-width-1000.html");
@@ -1478,7 +1479,7 @@ TEST_P(VisualViewportTest, TestBrowserControlsAdjustmentAndResize) {
   // total offset (i.e. what the user sees) doesn't change because of clamping
   // the offsets to valid values.
   WebViewImpl()->ResizeWithBrowserControls(WebSize(500, visual_viewport_height),
-                                           20, false);
+                                           20, 0, false);
 
   EXPECT_SIZE_EQ(IntSize(500, visual_viewport_height), visual_viewport.Size());
   EXPECT_SIZE_EQ(IntSize(250, visual_viewport_height / page_scale),
@@ -1506,7 +1507,7 @@ TEST_P(VisualViewportTest, TestBrowserControlsShrinkAdjustmentAndResize) {
 
   // Initialize with browser controls hidden and not shrinking the Blink size.
   WebViewImpl()->ResizeWithBrowserControls(IntSize(500, visual_viewport_height),
-                                           20, false);
+                                           20, 0, false);
   WebViewImpl()->GetBrowserControls().SetShownRatio(0);
 
   RegisterMockedHttpURLLoad("content-width-1000.html");
@@ -1552,7 +1553,8 @@ TEST_P(VisualViewportTest, TestBrowserControlsShrinkAdjustmentAndResize) {
   // total offset (i.e. what the user sees) doesn't change because of clamping
   // the offsets to valid values.
   WebViewImpl()->ResizeWithBrowserControls(
-      WebSize(500, visual_viewport_height - browser_controls_height), 20, true);
+      WebSize(500, visual_viewport_height - browser_controls_height), 20, 0,
+      true);
 
   EXPECT_SIZE_EQ(IntSize(500, visual_viewport_height - browser_controls_height),
                  visual_viewport.Size());
@@ -1573,10 +1575,11 @@ TEST_P(VisualViewportTest, TestBrowserControlsShrinkAdjustmentAndResize) {
 // the main frame's scroll offset. crbug.com/428193.
 TEST_P(VisualViewportTest, TestTopControlHidingResizeDoesntClampMainFrame) {
   InitializeWithAndroidSettings();
-  WebViewImpl()->ResizeWithBrowserControls(WebViewImpl()->Size(), 500, false);
+  WebViewImpl()->ResizeWithBrowserControls(WebViewImpl()->Size(), 500, 0,
+                                           false);
   WebViewImpl()->ApplyViewportDeltas(WebFloatSize(), WebFloatSize(),
                                      WebFloatSize(), 1, 1);
-  WebViewImpl()->ResizeWithBrowserControls(WebSize(1000, 1000), 500, true);
+  WebViewImpl()->ResizeWithBrowserControls(WebSize(1000, 1000), 500, 0, true);
 
   RegisterMockedHttpURLLoad("content-width-1000.html");
   NavigateTo(base_url_ + "content-width-1000.html");
@@ -1594,7 +1597,7 @@ TEST_P(VisualViewportTest, TestTopControlHidingResizeDoesntClampMainFrame) {
       frame_view.LayoutViewportScrollableArea()->GetScrollOffset().Height());
 
   // Now send the resize, make sure the scroll offset doesn't change.
-  WebViewImpl()->ResizeWithBrowserControls(WebSize(1000, 1500), 500, false);
+  WebViewImpl()->ResizeWithBrowserControls(WebSize(1000, 1500), 500, 0, false);
   EXPECT_EQ(
       500,
       frame_view.LayoutViewportScrollableArea()->GetScrollOffset().Height());
@@ -2133,7 +2136,7 @@ TEST_P(VisualViewportTest, ResizeCompositedAndFixedBackground) {
   int smallest_height = page_height - browser_controls_height;
 
   web_view_impl->ResizeWithBrowserControls(WebSize(page_width, page_height),
-                                           browser_controls_height, false);
+                                           browser_controls_height, 0, false);
 
   RegisterMockedHttpURLLoad("http://example.com/foo.png", "white-1x1.png");
   WebURL base_url = URLTestHelpers::ToKURL("http://example.com/");
@@ -2167,7 +2170,7 @@ TEST_P(VisualViewportTest, ResizeCompositedAndFixedBackground) {
   ASSERT_EQ(smallest_height, document->View()->GetLayoutSize().Height());
 
   web_view_impl->ResizeWithBrowserControls(WebSize(page_width, smallest_height),
-                                           browser_controls_height, true);
+                                           browser_controls_height, 0, true);
 
   // The layout size should not have changed.
   ASSERT_EQ(page_width, document->View()->GetLayoutSize().Width());
@@ -2179,7 +2182,7 @@ TEST_P(VisualViewportTest, ResizeCompositedAndFixedBackground) {
             compositor->FixedRootBackgroundLayer()->Size().Height());
 
   web_view_impl->ResizeWithBrowserControls(WebSize(page_width, page_height),
-                                           browser_controls_height, true);
+                                           browser_controls_height, 0, true);
 
   // The background layer's size should change again.
   EXPECT_EQ(page_width, compositor->FixedRootBackgroundLayer()->Size().Width());
@@ -2209,7 +2212,7 @@ TEST_P(VisualViewportTest, ResizeNonCompositedAndFixedBackground) {
   int smallest_height = page_height - browser_controls_height;
 
   web_view_impl->ResizeWithBrowserControls(WebSize(page_width, page_height),
-                                           browser_controls_height, false);
+                                           browser_controls_height, 0, false);
 
   RegisterMockedHttpURLLoad("http://example.com/foo.png", "white-1x1.png");
   WebURL base_url = URLTestHelpers::ToKURL("http://example.com/");
@@ -2239,7 +2242,7 @@ TEST_P(VisualViewportTest, ResizeNonCompositedAndFixedBackground) {
 
   document->View()->SetTracksPaintInvalidations(true);
   web_view_impl->ResizeWithBrowserControls(WebSize(page_width, smallest_height),
-                                           browser_controls_height, true);
+                                           browser_controls_height, 0, true);
 
   // The layout size should not have changed.
   ASSERT_EQ(page_width, document->View()->GetLayoutSize().Width());
@@ -2277,7 +2280,7 @@ TEST_P(VisualViewportTest, ResizeNonCompositedAndFixedBackground) {
 
   document->View()->SetTracksPaintInvalidations(true);
   web_view_impl->ResizeWithBrowserControls(WebSize(page_width, page_height),
-                                           browser_controls_height, true);
+                                           browser_controls_height, 0, true);
 
   invalidation_tracking = document->GetLayoutView()
                               ->Layer()
@@ -2308,7 +2311,7 @@ TEST_P(VisualViewportTest, ResizeNonFixedBackgroundNoLayoutOrInvalidation) {
   int smallest_height = page_height - browser_controls_height;
 
   web_view_impl->ResizeWithBrowserControls(WebSize(page_width, page_height),
-                                           browser_controls_height, false);
+                                           browser_controls_height, 0, false);
 
   RegisterMockedHttpURLLoad("http://example.com/foo.png", "white-1x1.png");
   WebURL base_url = URLTestHelpers::ToKURL("http://example.com/");
@@ -2347,7 +2350,7 @@ TEST_P(VisualViewportTest, ResizeNonFixedBackgroundNoLayoutOrInvalidation) {
   // Do a real resize to check for invalidations.
   document->View()->SetTracksPaintInvalidations(true);
   web_view_impl->ResizeWithBrowserControls(WebSize(page_width, smallest_height),
-                                           browser_controls_height, true);
+                                           browser_controls_height, 0, true);
 
   // The layout size should not have changed.
   ASSERT_EQ(page_width, document->View()->GetLayoutSize().Width());
@@ -2383,7 +2386,7 @@ TEST_P(VisualViewportTest, InvalidateLayoutViewWhenDocumentSmallerThanView) {
   int largest_height = page_height + browser_controls_height;
 
   web_view_impl->ResizeWithBrowserControls(WebSize(page_width, page_height),
-                                           browser_controls_height, true);
+                                           browser_controls_height, 0, true);
 
   FrameTestHelpers::LoadFrame(web_view_impl->MainFrameImpl(), "about:blank");
   web_view_impl->UpdateAllLifecyclePhases();
@@ -2394,7 +2397,7 @@ TEST_P(VisualViewportTest, InvalidateLayoutViewWhenDocumentSmallerThanView) {
   // Do a resize to check for invalidations.
   document->View()->SetTracksPaintInvalidations(true);
   web_view_impl->ResizeWithBrowserControls(WebSize(page_width, largest_height),
-                                           browser_controls_height, false);
+                                           browser_controls_height, 0, false);
 
   // The layout size should not have changed.
   ASSERT_EQ(page_width, document->View()->GetLayoutSize().Width());
@@ -2422,7 +2425,7 @@ TEST_P(VisualViewportTest, InvalidateLayoutViewWhenDocumentSmallerThanView) {
 // it doesn't crash.
 TEST_P(VisualViewportTest, AutoResizeNoHeightUsesMinimumHeight) {
   InitializeWithDesktopSettings();
-  WebViewImpl()->ResizeWithBrowserControls(WebSize(0, 0), 0, false);
+  WebViewImpl()->ResizeWithBrowserControls(WebSize(0, 0), 0, 0, false);
   WebViewImpl()->EnableAutoResizeMode(WebSize(25, 25), WebSize(100, 100));
   WebURL base_url = URLTestHelpers::ToKURL("http://example.com/");
   FrameTestHelpers::LoadHTMLString(WebViewImpl()->MainFrameImpl(),
