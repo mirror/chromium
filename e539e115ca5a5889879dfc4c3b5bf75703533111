@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a8d519f_61999a1a",
+        "filename": "build/config/crypto.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-06T23:16:49Z",
+      "side": 1,
+      "message": "It would be better to leave this as false, and instead set use_byte_certs \u003d true\n\ndefined here:\n\nhttps://cs.chromium.org/chromium/src/net/BUILD.gn?rcl\u003d85a42e6b28440f103afb6b90bd24081aba2e9dbe\u0026l\u003d45\n\nSince you aren\u0027t actually using OpenSSL for cert verification here (using builtin verifier instead, which is an in progress Chrome thing).\n\nThis will mean you have some more work to do for the test certs store.",
+      "range": {
+        "startLine": 19,
+        "startChar": 45,
+        "endLine": 19,
+        "endChar": 55
+      },
+      "revId": "e539e115ca5a5889879dfc4c3b5bf75703533111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00e6c460_00c60e04",
+        "filename": "net/cert/cert_verify_proc.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-06T23:16:49Z",
+      "side": 1,
+      "message": "Note that we haven\u0027t deployed this verifier in Chrome, and it is still in progress (i.e. EV and revocation checks are not implemented).",
+      "range": {
+        "startLine": 517,
+        "startChar": 9,
+        "endLine": 517,
+        "endChar": 36
+      },
+      "revId": "e539e115ca5a5889879dfc4c3b5bf75703533111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1915f8f_4b3d3b31",
+        "filename": "net/features.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-06T23:16:49Z",
+      "side": 1,
+      "message": "is this pattern being used elsewhere? Seems ambiguous with a username. Can we use a bug number instead?",
+      "range": {
+        "startLine": 23,
+        "startChar": 9,
+        "endLine": 23,
+        "endChar": 16
+      },
+      "revId": "e539e115ca5a5889879dfc4c3b5bf75703533111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
