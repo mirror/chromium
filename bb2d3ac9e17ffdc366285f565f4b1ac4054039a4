@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "671eaa73_06852144",
+        "filename": "media/mojo/interfaces/audio_decoder_config.typemap",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-06T23:39:40Z",
+      "side": 1,
+      "message": "I was OK with the other general comments, I was just referring to the specific mention of types on line 8. \u003d)\n\nBut it\u0027s OK either way to me, it\u0027s probably not worth the additional CL churn.",
+      "parentUuid": "2f2bacba_e564a146",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 77
+      },
+      "revId": "bb2d3ac9e17ffdc366285f565f4b1ac4054039a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "444a0ae5_c7ce4409",
         "filename": "media/mojo/interfaces/audio_decoder_config_struct_traits.cc",
         "patchSetId": 5
