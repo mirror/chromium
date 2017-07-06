@@ -165,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "331176ef_604a1d4b",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-06T23:46:26Z",
+      "side": 1,
+      "message": "I just thought it was interesting that your citation was contradicting your advice!  ...And, more importantly, what I would like to do, which is of course the gold standard for everything.  :P",
+      "parentUuid": "dfb33306_419325a0",
+      "range": {
+        "startLine": 56,
+        "startChar": 44,
+        "endLine": 56,
+        "endChar": 54
+      },
+      "revId": "f6909e70dd51ad1548f277617cd07f2b093c4a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "da74ca2c_27e85339",
         "filename": "chrome/browser/ui/views/tabs/new_tab_button.h",
         "patchSetId": 8
