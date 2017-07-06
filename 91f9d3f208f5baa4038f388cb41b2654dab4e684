@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ebc7ed4e_9ce4c739",
+        "filename": "content/browser/browser_plugin/browser_plugin_guest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-07-06T14:00:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2188cbb_efa33cdc",
+      "range": {
+        "startLine": 72,
+        "startChar": 18,
+        "endLine": 72,
+        "endChar": 27
+      },
+      "revId": "91f9d3f208f5baa4038f388cb41b2654dab4e684",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26d410c3_3183aa46",
         "filename": "content/browser/browser_plugin/browser_plugin_guest.cc",
         "patchSetId": 11
@@ -45,6 +69,30 @@
       "revId": "91f9d3f208f5baa4038f388cb41b2654dab4e684",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f472e9b9_388c9141",
+        "filename": "content/browser/browser_plugin/browser_plugin_guest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 933,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-07-06T14:00:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "26d410c3_3183aa46",
+      "range": {
+        "startLine": 927,
+        "startChar": 0,
+        "endLine": 933,
+        "endChar": 75
+      },
+      "revId": "91f9d3f208f5baa4038f388cb41b2654dab4e684",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0c0809d6_0cdc7267",
+        "filename": "content/browser/renderer_host/input/legacy_ipc_widget_input_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-07-06T14:00:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96701924_5ca119f7",
+      "range": {
+        "startLine": 22,
+        "startChar": 15,
+        "endLine": 22,
+        "endChar": 24
+      },
+      "revId": "91f9d3f208f5baa4038f388cb41b2654dab4e684",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "868b2fdc_07fd1d2f",
         "filename": "content/browser/renderer_host/input/legacy_ipc_widget_input_handler.cc",
         "patchSetId": 11
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "843b67c0_61492f12",
+        "filename": "content/browser/renderer_host/input/legacy_ipc_widget_input_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-07-06T14:00:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "868b2fdc_07fd1d2f",
+      "range": {
+        "startLine": 103,
+        "startChar": 2,
+        "endLine": 103,
+        "endChar": 14
+      },
+      "revId": "91f9d3f208f5baa4038f388cb41b2654dab4e684",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae786bc2_e76bf46f",
         "filename": "content/browser/renderer_host/render_widget_host_delegate.h",
         "patchSetId": 11
@@ -105,6 +201,30 @@
       "writtenOn": "2017-06-28T20:53:03Z",
       "side": 1,
       "message": "I guess I forgot to ask this in an earlier PS, but why do these belong on RWHD?",
+      "range": {
+        "startLine": 129,
+        "startChar": 0,
+        "endLine": 131,
+        "endChar": 55
+      },
+      "revId": "91f9d3f208f5baa4038f388cb41b2654dab4e684",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26d5851e_a2234bb2",
+        "filename": "content/browser/renderer_host/render_widget_host_delegate.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-07-06T14:00:41Z",
+      "side": 1,
+      "message": "Because they look up the focused frame that way. This is the same behavior as Cut/Copy/Paste/SelectAll.",
+      "parentUuid": "ae786bc2_e76bf46f",
       "range": {
         "startLine": 129,
         "startChar": 0,
