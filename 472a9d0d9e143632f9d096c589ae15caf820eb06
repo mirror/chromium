@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9439676f_992ecfa1",
+        "filename": "base/numerics/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-06T17:48:57Z",
+      "side": 0,
+      "message": "I feel like we should just fix gitiles... I noticed this as well awhile back, and finally got around to filing a bug for this: https://bugs.chromium.org/p/gerrit/issues/detail?id\u003d6662",
+      "range": {
+        "startLine": 31,
+        "startChar": 28,
+        "endLine": 31,
+        "endChar": 29
+      },
+      "revId": "472a9d0d9e143632f9d096c589ae15caf820eb06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
