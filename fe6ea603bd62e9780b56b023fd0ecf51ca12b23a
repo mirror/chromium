@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13e5e157_05684b43",
+        "filename": "build/toolchain/mac/compile_xcassets.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-07-06T16:44:18Z",
+      "side": 1,
+      "message": "another option would be to keep this option, and just not pass -c when calling actool.  where do we do that?",
+      "range": {
+        "startLine": 159,
+        "startChar": 60,
+        "endLine": 159,
+        "endChar": 65
+      },
+      "revId": "fe6ea603bd62e9780b56b023fd0ecf51ca12b23a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
