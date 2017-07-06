@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dcda8d26_2a309aa4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-06T23:05:53Z",
+      "side": 1,
+      "message": "nit: Add a slash on the for consistency?",
+      "range": {
+        "startLine": 12,
+        "startChar": 51,
+        "endLine": 12,
+        "endChar": 57
+      },
+      "revId": "08ebe991f29e50d1e0ea2c601714790d44430ebf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe08728a_84d798f9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-06T23:05:53Z",
+      "side": 1,
+      "message": "... from chrome/ to components/variations/, which can be shared with WebView.",
+      "revId": "08ebe991f29e50d1e0ea2c601714790d44430ebf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
