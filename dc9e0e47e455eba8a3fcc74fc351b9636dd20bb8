@@ -1,0 +1,383 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17a0837c_1dfc9539",
+        "filename": "ui/views/controls/base_focus_ring.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-06T22:25:15Z",
+      "side": 1,
+      "message": "Remove this if it\u0027s not needed.",
+      "range": {
+        "startLine": 7,
+        "startChar": 13,
+        "endLine": 7,
+        "endChar": 16
+      },
+      "revId": "dc9e0e47e455eba8a3fcc74fc351b9636dd20bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be03bafd_136a0a9f",
+        "filename": "ui/views/controls/base_focus_ring.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-06T22:25:15Z",
+      "side": 1,
+      "message": "Instead of overriding this, just call set_can_process_events_within_subtree(false) in the ctor.",
+      "range": {
+        "startLine": 11,
+        "startChar": 20,
+        "endLine": 11,
+        "endChar": 49
+      },
+      "revId": "dc9e0e47e455eba8a3fcc74fc351b9636dd20bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae228471_b84aec8a",
+        "filename": "ui/views/controls/base_focus_ring.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-06T22:25:15Z",
+      "side": 1,
+      "message": "Remove this if it\u0027s not needed.",
+      "range": {
+        "startLine": 8,
+        "startChar": 14,
+        "endLine": 8,
+        "endChar": 15
+      },
+      "revId": "dc9e0e47e455eba8a3fcc74fc351b9636dd20bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6beb025a_372e89ef",
+        "filename": "ui/views/controls/base_focus_ring.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-06T22:25:15Z",
+      "side": 1,
+      "message": "nit: explain what a focus ring is in this comment, I thought this CL was about the Tab key\u0027s View focus order/cycle until I dug into the specifics.",
+      "range": {
+        "startLine": 14,
+        "startChar": 8,
+        "endLine": 14,
+        "endChar": 18
+      },
+      "revId": "dc9e0e47e455eba8a3fcc74fc351b9636dd20bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae1ac737_09de5f3d",
+        "filename": "ui/views/controls/button/checkbox.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-06T22:25:15Z",
+      "side": 1,
+      "message": "Remove this if it\u0027s not needed.",
+      "range": {
+        "startLine": 18,
+        "startChar": 19,
+        "endLine": 18,
+        "endChar": 28
+      },
+      "revId": "dc9e0e47e455eba8a3fcc74fc351b9636dd20bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebbe91cc_72c8b5be",
+        "filename": "ui/views/controls/button/checkbox.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-06T22:25:15Z",
+      "side": 1,
+      "message": "nit: match the definition and declaration ordering.",
+      "range": {
+        "startLine": 209,
+        "startChar": 15,
+        "endLine": 209,
+        "endChar": 29
+      },
+      "revId": "dc9e0e47e455eba8a3fcc74fc351b9636dd20bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e9e0f59_81fb8350",
+        "filename": "ui/views/controls/button/checkbox.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-06T22:25:15Z",
+      "side": 1,
+      "message": "Why not just install the focus ring when the Checkbox is constructed (or added to a view heirarchy, or made visible, or directly in the first focus call?) I would avoid Install/Uninstall if possible.",
+      "range": {
+        "startLine": 239,
+        "startChar": 5,
+        "endLine": 239,
+        "endChar": 13
+      },
+      "revId": "dc9e0e47e455eba8a3fcc74fc351b9636dd20bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccc0152a_5a0bb9bf",
+        "filename": "ui/views/controls/button/checkbox.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-06T22:25:15Z",
+      "side": 1,
+      "message": "Avoid |ring_ref| and |ring|, it\u0027s more straightforward to cite |check_box-\u003efocus_ring_| directly instead of two intermediaries:\n\n  if (!check_box-\u003efocus_ring_) {\n    check_box-\u003efocus_ring_ \u003d new IconFocusRing(check_box);\n    check_box-\u003eAddChildView(check_box-\u003efocus_ring_);\n  }\n  check_box-\u003efocus_ring_-\u003eSetVisible(true);\n  check_box-\u003efocus_ring_-\u003eLayout();\n  check_box-\u003efocus_ring_-\u003eSchedulePaint();\n\nOr if you really prefer having |ring|, this is an okay compromise:\n\n  View* ring \u003d check_box-\u003efocus_ring_;\n  if (!ring) {\n    ring \u003d new IconFocusRing(check_box);\n    check_box-\u003efocus_ring_ \u003d ring;\n    check_box-\u003eAddChildView(ring);\n  }\n  ring-\u003eSetVisible(true);\n  ring-\u003eLayout();\n  ring-\u003eSchedulePaint();",
+      "range": {
+        "startLine": 240,
+        "startChar": 2,
+        "endLine": 240,
+        "endChar": 15
+      },
+      "revId": "dc9e0e47e455eba8a3fcc74fc351b9636dd20bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d8b31cf_07fbf52b",
+        "filename": "ui/views/controls/button/checkbox.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-06T22:25:15Z",
+      "side": 1,
+      "message": "This assignment is not necessary, the ctor does this already.",
+      "range": {
+        "startLine": 245,
+        "startChar": 10,
+        "endLine": 245,
+        "endChar": 20
+      },
+      "revId": "dc9e0e47e455eba8a3fcc74fc351b9636dd20bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77b465e3_dd7689aa",
+        "filename": "ui/views/controls/button/checkbox.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-06T22:25:15Z",
+      "side": 1,
+      "message": "Uninstall seems like a misnomer for the actual functionality.",
+      "range": {
+        "startLine": 254,
+        "startChar": 15,
+        "endLine": 254,
+        "endChar": 28
+      },
+      "revId": "dc9e0e47e455eba8a3fcc74fc351b9636dd20bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9fb649e_588df8ec",
+        "filename": "ui/views/controls/button/checkbox.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-06T22:25:15Z",
+      "side": 1,
+      "message": "Avoid |ring|",
+      "range": {
+        "startLine": 255,
+        "startChar": 17,
+        "endLine": 255,
+        "endChar": 21
+      },
+      "revId": "dc9e0e47e455eba8a3fcc74fc351b9636dd20bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e3caacb_395e9e3e",
+        "filename": "ui/views/controls/button/checkbox.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-06T22:25:15Z",
+      "side": 1,
+      "message": "This seems like a roundabout way of Checkbox simply owning and managing a subview that paints to a separate layer... I would suggest avoiding the whole FocusRing abstraction and delegation altogether, but since that\u0027s pre-existing (and may have some merits as a formalized concept), why do we need the BaseFocusRing base class? Can we just use FocusRing? Really, it seems like the Checkbox and RadioButton functions taking a |BaseFocusRing*| param would work just fine if they used |View| instead of |BaseFocusRing| or |FocusRing|.",
+      "revId": "dc9e0e47e455eba8a3fcc74fc351b9636dd20bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "606efab2_22445e8d",
+        "filename": "ui/views/controls/button/checkbox.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-06T22:25:15Z",
+      "side": 1,
+      "message": "nit: \u0027RadioButton\u0027; and remove \u0027descendant\u0027, which can be readily implied.",
+      "range": {
+        "startLine": 62,
+        "startChar": 58,
+        "endLine": 62,
+        "endChar": 69
+      },
+      "revId": "dc9e0e47e455eba8a3fcc74fc351b9636dd20bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcac0a0c_0c41cb15",
+        "filename": "ui/views/controls/button/checkbox.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-06T22:25:15Z",
+      "side": 1,
+      "message": "nit: add a class comment, ie. explain that this paints a focus ring around the checkbox\u0027s icon (it doesn\u0027t paint an icon *as* the focus ring)",
+      "revId": "dc9e0e47e455eba8a3fcc74fc351b9636dd20bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45e6f7e3_48fb43f4",
+        "filename": "ui/views/controls/button/checkbox.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-06T22:25:15Z",
+      "side": 1,
+      "message": "nit: |checkbox| without an underscore here and elsewhere (to match \u0027Checkbox\u0027, not \u0027CheckBox\u0027)",
+      "range": {
+        "startLine": 74,
+        "startChar": 28,
+        "endLine": 74,
+        "endChar": 37
+      },
+      "revId": "dc9e0e47e455eba8a3fcc74fc351b9636dd20bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92b5746f_06d30c1c",
+        "filename": "ui/views/controls/button/checkbox.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-06T22:25:15Z",
+      "side": 1,
+      "message": "nit: use \u0027explicit\u0027 for ctors with one param",
+      "range": {
+        "startLine": 74,
+        "startChar": 18,
+        "endLine": 74,
+        "endChar": 26
+      },
+      "revId": "dc9e0e47e455eba8a3fcc74fc351b9636dd20bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "407b5027_2b76a694",
+        "filename": "ui/views/controls/focus_ring.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-06T22:25:15Z",
+      "side": 1,
+      "message": "Maybe all that Checkbox and RadioButton need are a FocusRing subclass that just overrides Layout using the bounds of the check/radio icon, and maybe override OnPaint to do a circle instead of a round-rect, or a round rect with a different corner radius.",
+      "range": {
+        "startLine": 66,
+        "startChar": 16,
+        "endLine": 66,
+        "endChar": 23
+      },
+      "revId": "dc9e0e47e455eba8a3fcc74fc351b9636dd20bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
