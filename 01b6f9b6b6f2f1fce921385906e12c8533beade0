@@ -22,6 +22,30 @@
       "revId": "01b6f9b6b6f2f1fce921385906e12c8533beade0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2a4678e_b2cb2bc0",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_header_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-06T08:45:10Z",
+      "side": 1,
+      "message": "Hopefully, yes :)",
+      "parentUuid": "b005856f_fc5bd34e",
+      "range": {
+        "startLine": 258,
+        "startChar": 0,
+        "endLine": 259,
+        "endChar": 11
+      },
+      "revId": "01b6f9b6b6f2f1fce921385906e12c8533beade0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
