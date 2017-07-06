@@ -13,8 +13,8 @@
 #include "base/macros.h"
 #include "base/run_loop.h"
 #include "base/strings/stringprintf.h"
+#include "base/task_scheduler/task_scheduler.h"
 #include "base/threading/sequenced_worker_pool.h"
-#include "content/public/browser/browser_thread.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -58,7 +58,7 @@ class FileFlusherTest : public testing::Test {
   }
 
   void TearDown() override {
-    content::BrowserThread::GetBlockingPool()->FlushForTesting();
+    base::TaskScheduler::GetInstance()->FlushForTesting();
     base::RunLoop().RunUntilIdle();
   }
 
