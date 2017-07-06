@@ -37,6 +37,17 @@ public class ChildConnectionAllocator {
                 ChildConnectionAllocator allocator, ChildProcessConnection connection);
     }
 
+    /** Convenience adapter for client interested in implementing only one method. */
+    public static class ListenerAdapter implements Listener {
+        @Override
+        public void onConnectionAllocated(
+                ChildConnectionAllocator allocator, ChildProcessConnection connection) {}
+
+        @Override
+        public void onConnectionFreed(
+                ChildConnectionAllocator allocator, ChildProcessConnection connection) {}
+    }
+
     /** Factory interface. Used by tests to specialize created connections. */
     @VisibleForTesting
     protected interface ConnectionFactory {
@@ -103,8 +114,7 @@ public class ChildConnectionAllocator {
 
         // Check that the service exists.
         try {
-            // PackageManager#getServiceInfo() throws an exception if the service does not
-            // exist.
+            // PackageManager#getServiceInfo() throws an exception if the service does not exist.
             packageManager.getServiceInfo(
                     new ComponentName(packageName, serviceClassName + "0"), 0);
         } catch (PackageManager.NameNotFoundException e) {
