@@ -84,10 +84,8 @@
 #if defined(OS_ANDROID)
 #include "chrome/browser/android/webapps/webapp_registry.h"
 #include "chrome/browser/offline_pages/offline_page_model_factory.h"
-#include "chrome/browser/precache/precache_manager_factory.h"
 #include "components/offline_pages/core/offline_page_feature.h"
 #include "components/offline_pages/core/offline_page_model.h"
-#include "components/precache/content/precache_manager.h"
 #endif
 
 #if BUILDFLAG(ENABLE_EXTENSIONS)
@@ -334,7 +332,6 @@ ChromeBrowsingDataRemoverDelegate::ChromeBrowsingDataRemoverDelegate(
       clear_http_auth_cache_(sub_task_forward_callback_),
       clear_platform_keys_(sub_task_forward_callback_),
 #if defined(OS_ANDROID)
-      clear_precache_history_(sub_task_forward_callback_),
       clear_offline_page_data_(sub_task_forward_callback_),
 #endif
 #if BUILDFLAG(ENABLE_WEBRTC)
@@ -613,19 +610,6 @@ void ChromeBrowsingDataRemoverDelegate::RemoveEmbedderData(
 #endif
 
 #if defined(OS_ANDROID)
-    precache::PrecacheManager* precache_manager =
-        precache::PrecacheManagerFactory::GetForBrowserContext(profile_);
-    // |precache_manager| could be nullptr if the profile is off the record.
-    if (!precache_manager) {
-      clear_precache_history_.Start();
-      precache_manager->ClearHistory();
-      // The above calls are done on the UI thread but do their work on the DB
-      // thread. So wait for it.
-      BrowserThread::PostTaskAndReply(
-          BrowserThread::DB, FROM_HERE, base::Bind(&base::DoNothing),
-          clear_precache_history_.GetCompletionCallback());
-    }
-
     // Clear the history information (last launch time and origin URL) of any
     // registered webapps.
     webapp_registry_->ClearWebappHistoryForUrls(filter);
@@ -1098,7 +1082,6 @@ bool ChromeBrowsingDataRemoverDelegate::AllDone() {
          !clear_http_auth_cache_.is_pending() &&
          !clear_platform_keys_.is_pending() &&
 #if defined(OS_ANDROID)
-         !clear_precache_history_.is_pending() &&
          !clear_offline_page_data_.is_pending() &&
 #endif
 #if BUILDFLAG(ENABLE_WEBRTC)

@@ -21,7 +21,6 @@ import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.base.test.util.Feature;
 import org.chromium.base.test.util.RetryOnFailure;
 import org.chromium.chrome.browser.ntp.snippets.SnippetsLauncher;
-import org.chromium.chrome.browser.precache.PrecacheController;
 import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
 
 /**
@@ -38,8 +37,6 @@ public class ChromeBackgroundServiceTest {
         private boolean mDidLaunchBrowser = false;
         private boolean mDidFetchSnippets = false;
         private boolean mDidRescheduleFetching = false;
-        private boolean mHasPrecacheInstance = true;
-        private boolean mPrecachingStarted = false;
 
         @Override
         protected void launchBrowser(Context context, String tag) {
@@ -57,22 +54,7 @@ public class ChromeBackgroundServiceTest {
         }
 
         @Override
-        protected boolean hasPrecacheInstance() {
-            return mHasPrecacheInstance;
-        }
-
-        @Override
-        protected void precache(Context context, String tag) {
-            if (!mHasPrecacheInstance) {
-                mPrecachingStarted = true;
-            }
-        }
-
-        @Override
         protected void rescheduleBackgroundSyncTasksOnUpgrade() {}
-
-        @Override
-        protected void reschedulePrecacheTasksOnUpgrade() {}
 
         @Override
         protected void rescheduleOfflinePages() {}
@@ -81,24 +63,17 @@ public class ChromeBackgroundServiceTest {
         // to onRunTask, it will be enqueued after any possible call to launchBrowser, and we
         // can reliably check whether launchBrowser was called.
         protected void checkExpectations(final boolean expectedLaunchBrowser,
-                final boolean expectedPrecacheStarted, final boolean expectedFetchSnippets,
-                final boolean expectedRescheduleFetching) {
+                final boolean expectedFetchSnippets, final boolean expectedRescheduleFetching) {
             ThreadUtils.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     Assert.assertEquals("StartedService", expectedLaunchBrowser, mDidLaunchBrowser);
-                    Assert.assertEquals(
-                            "StartedPrecache", expectedPrecacheStarted, mPrecachingStarted);
                     Assert.assertEquals(
                             "FetchedSnippets", expectedFetchSnippets, mDidFetchSnippets);
                     Assert.assertEquals("RescheduledFetching", expectedRescheduleFetching,
                             mDidRescheduleFetching);
                 }
             });
-        }
-
-        protected void deletePrecacheInstance() {
-            mHasPrecacheInstance = false;
         }
     }
 
@@ -126,10 +101,10 @@ public class ChromeBackgroundServiceTest {
         mSnippetsLauncher = null;
     }
 
-    private void startOnRunTaskAndVerify(String taskTag, boolean shouldStart,
-            boolean shouldPrecache, boolean shouldFetchSnippets) {
+    private void startOnRunTaskAndVerify(
+            String taskTag, boolean shouldStart, boolean shouldFetchSnippets) {
         mTaskService.onRunTask(new TaskParams(taskTag));
-        mTaskService.checkExpectations(shouldStart, shouldPrecache, shouldFetchSnippets, false);
+        mTaskService.checkExpectations(shouldStart, shouldFetchSnippets, false);
     }
 
     @Test
@@ -177,24 +152,9 @@ public class ChromeBackgroundServiceTest {
         startOnRunTaskAndVerify(SnippetsLauncher.TASK_TAG_FALLBACK, true, false, true);
     }
 
-    @Test
-    @SmallTest
-    @Feature({"Precache"})
-    public void testPrecacheNoLaunchBrowserWhenInstanceExists() {
-        startOnRunTaskAndVerify(PrecacheController.PERIODIC_TASK_TAG, false, false, false);
-    }
-
-    @Test
-    @SmallTest
-    @Feature({"Precache"})
-    public void testPrecacheLaunchBrowserWhenInstanceDoesNotExist() {
-        mTaskService.deletePrecacheInstance();
-        startOnRunTaskAndVerify(PrecacheController.PERIODIC_TASK_TAG, true, true, false);
-    }
-
     private void startOnInitializeTasksAndVerify(boolean shouldStart, boolean shouldReschedule) {
         mTaskService.onInitializeTasks();
-        mTaskService.checkExpectations(shouldStart, false, false, shouldReschedule);
+        mTaskService.checkExpectations(shouldStart, false, shouldReschedule);
     }
 
     @Test
