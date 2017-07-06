@@ -34,6 +34,24 @@
       "revId": "e86bf2f4c3d85448e8200d2c2683f6e9ab05f1c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98136d6c_a8e9b414",
+        "filename": "services/ui/public/cpp/gpu/gpu.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-07-06T21:18:55Z",
+      "side": 1,
+      "message": "I guess the point is that if we first create a VEA then create a GPU channel, wouldn\u0027t we want to reuse the same Gpu interface as opposed to recreating one? I assume there\u0027s a non-trivial cost to creating a new one of these.",
+      "parentUuid": "9cff9338_8fea2f8c",
+      "revId": "e86bf2f4c3d85448e8200d2c2683f6e9ab05f1c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
