@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f48ae88d_b378500d",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-07-06T09:01:39Z",
+      "side": 1,
+      "message": "This is not in alphabetical order, and is now under an unrelated comment about webrtc. \n\nThis should probably move to line 532…",
+      "range": {
+        "startLine": 613,
+        "startChar": 0,
+        "endLine": 613,
+        "endChar": 49
+      },
+      "revId": "9524ecb74c64f02b46fc5d82c964704eba535a3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c24e097_5fd8fc5d",
+        "filename": "chrome/browser/prefs/browser_prefs.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-07-06T09:01:39Z",
+      "side": 1,
+      "message": "Why the new include here?",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 47
+      },
+      "revId": "9524ecb74c64f02b46fc5d82c964704eba535a3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e41ebfdc_57c3ffc3",
+        "filename": "components/language/OWNERS",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-07-06T09:01:39Z",
+      "side": 1,
+      "message": "Please add a team and a component as well. \nhttp://docs/document/d/1jty6UsFMW9-SYgpQC-ztEc3lltziOQBBArMkROCSTh0/edit#heading\u003dh.xgjl2srtytjt\n\nnapper@ is not a chromium committer, as such he is not (yet) suitable as a owner. Please select only chromium committers as owners, and preferably have a backup as well.",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 6
+      },
+      "revId": "9524ecb74c64f02b46fc5d82c964704eba535a3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5e98aa7_b399e3e7",
+        "filename": "components/language/core/browser/url_language_histogram_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-07-06T09:01:39Z",
+      "side": 1,
+      "message": "you bumped the copyright date on the implementation but not on the tests. I don\u0027t thing you need to touch either…",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "9524ecb74c64f02b46fc5d82c964704eba535a3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50f761b8_e5a98443",
+        "filename": "ios/chrome/browser/language/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-07-06T09:01:39Z",
+      "side": 1,
+      "message": "This test suite needs to be added to the proper executable to be run.\n\nPlease add this target to the ios_chrome_unittests entry in ios/chrome/test/BUILD.gn",
+      "range": {
+        "startLine": 22,
+        "startChar": 12,
+        "endLine": 22,
+        "endChar": 22
+      },
+      "revId": "9524ecb74c64f02b46fc5d82c964704eba535a3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
