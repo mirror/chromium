@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef PaymentRequestRespondWithObserver_h
-#define PaymentRequestRespondWithObserver_h
+#ifndef CanMakePaymentRespondWithObserver_h
+#define CanMakePaymentRespondWithObserver_h
 
 #include "modules/ModulesExport.h"
 #include "modules/serviceworkers/RespondWithObserver.h"
@@ -15,14 +15,14 @@ class ExecutionContext;
 class ScriptValue;
 class WaitUntilObserver;
 
-// This class observes the service worker's handling of a PaymentRequestEvent
+// This class observes the service worker's handling of a CanMakePaymentEvent
 // and notifies the client.
-class MODULES_EXPORT PaymentRequestRespondWithObserver final
+class MODULES_EXPORT CanMakePaymentRespondWithObserver final
     : public RespondWithObserver {
  public:
-  ~PaymentRequestRespondWithObserver() override = default;
+  ~CanMakePaymentRespondWithObserver() override = default;
 
-  static PaymentRequestRespondWithObserver* Create(ExecutionContext*,
+  static CanMakePaymentRespondWithObserver* Create(ExecutionContext*,
                                                    int event_id,
                                                    WaitUntilObserver*);
 
@@ -33,11 +33,11 @@ class MODULES_EXPORT PaymentRequestRespondWithObserver final
   DECLARE_VIRTUAL_TRACE();
 
  private:
-  PaymentRequestRespondWithObserver(ExecutionContext*,
+  CanMakePaymentRespondWithObserver(ExecutionContext*,
                                     int event_id,
                                     WaitUntilObserver*);
 };
 
 }  // namespace blink
 
-#endif  // PaymentRequestRespondWithObserver_h
+#endif  // CanMakePaymentRespondWithObserver_h

@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "modules/payments/PaymentRequestRespondWithObserver.h"
+#include "modules/payments/CanMakePaymentRespondWithObserver.h"
 
 #include <v8.h>
 #include "bindings/core/v8/ScriptValue.h"
@@ -17,65 +17,52 @@
 
 namespace blink {
 
-PaymentRequestRespondWithObserver* PaymentRequestRespondWithObserver::Create(
+CanMakePaymentRespondWithObserver* CanMakePaymentRespondWithObserver::Create(
     ExecutionContext* context,
     int event_id,
     WaitUntilObserver* observer) {
-  return new PaymentRequestRespondWithObserver(context, event_id, observer);
+  return new CanMakePaymentRespondWithObserver(context, event_id, observer);
 }
 
-void PaymentRequestRespondWithObserver::OnResponseRejected(
+void CanMakePaymentRespondWithObserver::OnResponseRejected(
     WebServiceWorkerResponseError error) {
   ReportResponseError(GetExecutionContext(), error);
 
-  WebPaymentAppResponse web_data;
   ServiceWorkerGlobalScopeClient::From(GetExecutionContext())
-      ->RespondToPaymentRequestEvent(event_id_, web_data, event_dispatch_time_);
+      ->RespondToCanMakePaymentEvent(event_id_, false, event_dispatch_time_);
 }
 
-void PaymentRequestRespondWithObserver::OnResponseFulfilled(
+void CanMakePaymentRespondWithObserver::OnResponseFulfilled(
     const ScriptValue& value) {
   DCHECK(GetExecutionContext());
   ExceptionState exception_state(value.GetIsolate(),
                                  ExceptionState::kUnknownContext,
                                  "PaymentRequestEvent", "respondWith");
-  PaymentAppResponse response = ScriptValue::To<PaymentAppResponse>(
-      ToIsolate(GetExecutionContext()), value, exception_state);
+  bool response = ToBoolean(ToIsolate(GetExecutionContext()), value.V8Value(),
+                            exception_state);
   if (exception_state.HadException()) {
     exception_state.ClearException();
     OnResponseRejected(kWebServiceWorkerResponseErrorNoV8Instance);
     return;
   }
 
-  WebPaymentAppResponse web_data;
-  web_data.method_name = response.methodName();
-
-  v8::Local<v8::String> details_value;
-  if (!v8::JSON::Stringify(response.details().GetContext(),
-                           response.details().V8Value().As<v8::Object>())
-           .ToLocal(&details_value)) {
-    OnResponseRejected(kWebServiceWorkerResponseErrorUnknown);
-    return;
-  }
-  web_data.stringified_details = ToCoreString(details_value);
   ServiceWorkerGlobalScopeClient::From(GetExecutionContext())
-      ->RespondToPaymentRequestEvent(event_id_, web_data, event_dispatch_time_);
+      ->RespondToCanMakePaymentEvent(event_id_, response, event_dispatch_time_);
 }
 
-void PaymentRequestRespondWithObserver::OnNoResponse() {
+void CanMakePaymentRespondWithObserver::OnNoResponse() {
   DCHECK(GetExecutionContext());
   ServiceWorkerGlobalScopeClient::From(GetExecutionContext())
-      ->RespondToPaymentRequestEvent(event_id_, WebPaymentAppResponse(),
-                                     event_dispatch_time_);
+      ->RespondToCanMakePaymentEvent(event_id_, false, event_dispatch_time_);
 }
 
-PaymentRequestRespondWithObserver::PaymentRequestRespondWithObserver(
+CanMakePaymentRespondWithObserver::CanMakePaymentRespondWithObserver(
     ExecutionContext* context,
     int event_id,
     WaitUntilObserver* observer)
     : RespondWithObserver(context, event_id, observer) {}
 
-DEFINE_TRACE(PaymentRequestRespondWithObserver) {
+DEFINE_TRACE(CanMakePaymentRespondWithObserver) {
   RespondWithObserver::Trace(visitor);
 }
 
