@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "68d2f64b_2f11964e",
+        "filename": "content/browser/media/android/media_resource_getter_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-07-06T17:57:50Z",
+      "side": 1,
+      "message": "I see, android_protocol_handler.cc handles the url interception. Function removed.",
+      "parentUuid": "7ebcc885_491962d5",
+      "revId": "ebd7160ac66a8daa096f8a01092ea4f3d2bd2e59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d8667fef_2cf9a667",
         "filename": "content/browser/media/android/media_resource_getter_impl.cc",
         "patchSetId": 1
