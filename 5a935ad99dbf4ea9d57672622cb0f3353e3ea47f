@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "197edc57_dad5dcf8",
+        "filename": "chrome/browser/predictors/loading_predictor.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-07-06T15:50:27Z",
+      "side": 1,
+      "message": "Is it possible to have concurrent prefetch and preconnect?",
+      "revId": "5a935ad99dbf4ea9d57672622cb0f3353e3ea47f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "446c01b4_5b5fe90a",
+        "filename": "chrome/browser/predictors/loading_predictor.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-07-06T15:50:27Z",
+      "side": 1,
+      "message": "Shouldn\u0027t you check\nif (!preconnect_manager_)\n\nhere first? In case Shutdown() has been called in the meantime (should never happen though).",
+      "revId": "5a935ad99dbf4ea9d57672622cb0f3353e3ea47f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54f0e3a7_d7f20415",
+        "filename": "chrome/browser/predictors/loading_predictor.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-07-06T15:50:27Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "5a935ad99dbf4ea9d57672622cb0f3353e3ea47f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5920c7cf_42d4488b",
+        "filename": "chrome/browser/predictors/preconnect_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-07-06T15:50:27Z",
+      "side": 1,
+      "message": "I looked at how much we save by moving a WeakPtr.\nNow I like WeakPtr even less.",
+      "revId": "5a935ad99dbf4ea9d57672622cb0f3353e3ea47f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86e90a73_34beaaa0",
+        "filename": "chrome/browser/predictors/preconnect_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-07-06T15:50:27Z",
+      "side": 1,
+      "message": "nit: the constructor",
+      "range": {
+        "startLine": 26,
+        "startChar": 38,
+        "endLine": 26,
+        "endChar": 39
+      },
+      "revId": "5a935ad99dbf4ea9d57672622cb0f3353e3ea47f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30fccd5a_17910d80",
+        "filename": "chrome/browser/predictors/preconnect_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-07-06T15:50:27Z",
+      "side": 1,
+      "message": "nit: also say that it\u0027s called on the UI thread?",
+      "range": {
+        "startLine": 37,
+        "startChar": 4,
+        "endLine": 37,
+        "endChar": 11
+      },
+      "revId": "5a935ad99dbf4ea9d57672622cb0f3353e3ea47f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
