@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3e4bbfc_d112ea81",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-07-06T23:29:31Z",
+      "side": 1,
+      "message": "Saying that TQM owns something that we have a unique ptr to doesn\u0027t really make sense. Could you clarify this comment?",
+      "range": {
+        "startLine": 233,
+        "startChar": 22,
+        "endLine": 233,
+        "endChar": 27
+      },
+      "revId": "1c54238cec53ba42682d5eb93df916924ea7eafd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac928598_28bb6fcb",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_impl.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-07-06T23:29:31Z",
+      "side": 1,
+      "message": "nit: I\u0027d still prefer removing the optional since this is kind of like wrapping a (nullable) pointer in an optional...",
+      "range": {
+        "startLine": 168,
+        "startChar": 12,
+        "endLine": 168,
+        "endChar": 20
+      },
+      "revId": "1c54238cec53ba42682d5eb93df916924ea7eafd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4a72058_bc1fa658",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_scheduler_helper.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-07-06T23:29:31Z",
+      "side": 1,
+      "message": "We should never call virtual functions from constructors because the subclass isn\u0027t fully constructed yet at this point. Could we find another way to do this?",
+      "range": {
+        "startLine": 20,
+        "startChar": 2,
+        "endLine": 20,
+        "endChar": 19
+      },
+      "revId": "1c54238cec53ba42682d5eb93df916924ea7eafd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
