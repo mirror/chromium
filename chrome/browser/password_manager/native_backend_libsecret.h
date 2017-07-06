@@ -11,6 +11,8 @@
 
 #include "base/compiler_specific.h"
 #include "base/macros.h"
+#include "base/memory/ref_counted.h"
+#include "base/sequenced_task_runner.h"
 #include "base/time/time.h"
 #include "chrome/browser/password_manager/password_store_factory.h"
 #include "chrome/browser/password_manager/password_store_x.h"
@@ -23,7 +25,10 @@ struct PasswordForm;
 
 class NativeBackendLibsecret : public PasswordStoreX::NativeBackend {
  public:
-  explicit NativeBackendLibsecret(LocalProfileId id);
+  NativeBackendLibsecret(
+      scoped_refptr<base::SequencedTaskRunner> main_task_runner,
+      scoped_refptr<base::SequencedTaskRunner> background_task_runner,
+      LocalProfileId id);
 
   ~NativeBackendLibsecret() override;
 
@@ -106,6 +111,9 @@ class NativeBackendLibsecret : public PasswordStoreX::NativeBackend {
   std::vector<std::unique_ptr<autofill::PasswordForm>> ConvertFormList(
       GList* found,
       const password_manager::PasswordStore::FormDigest* lookup_form);
+
+  scoped_refptr<base::SequencedTaskRunner> main_task_runner_;
+  scoped_refptr<base::SequencedTaskRunner> background_task_runner_;
 
   // The app string, possibly based on the local profile id.
   std::string app_string_;

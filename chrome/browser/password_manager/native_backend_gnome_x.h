@@ -11,6 +11,8 @@
 
 #include "base/compiler_specific.h"
 #include "base/macros.h"
+#include "base/memory/ref_counted.h"
+#include "base/sequenced_task_runner.h"
 #include "base/time/time.h"
 #include "chrome/browser/password_manager/password_store_factory.h"
 #include "chrome/browser/password_manager/password_store_x.h"
@@ -25,7 +27,10 @@ struct PasswordForm;
 class NativeBackendGnome : public PasswordStoreX::NativeBackend,
                            public GnomeKeyringLoader {
  public:
-  explicit NativeBackendGnome(LocalProfileId id);
+  NativeBackendGnome(
+      scoped_refptr<base::SequencedTaskRunner> main_task_runner,
+      scoped_refptr<base::SequencedTaskRunner> background_task_runner,
+      LocalProfileId id);
 
   ~NativeBackendGnome() override;
 
@@ -92,6 +97,9 @@ class NativeBackendGnome : public PasswordStoreX::NativeBackend,
 
   // The app string, possibly based on the local profile id.
   std::string app_string_;
+
+  scoped_refptr<base::SequencedTaskRunner> main_task_runner_;
+  scoped_refptr<base::SequencedTaskRunner> background_task_runner_;
 
   DISALLOW_COPY_AND_ASSIGN(NativeBackendGnome);
 };

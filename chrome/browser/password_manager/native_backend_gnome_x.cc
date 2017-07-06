@@ -24,12 +24,10 @@
 #include "components/password_manager/core/browser/password_manager_metrics_util.h"
 #include "components/password_manager/core/browser/password_manager_util.h"
 #include "components/password_manager/core/browser/psl_matching_helper.h"
-#include "content/public/browser/browser_thread.h"
 
 using autofill::PasswordForm;
 using base::UTF8ToUTF16;
 using base::UTF16ToUTF8;
-using content::BrowserThread;
 using namespace password_manager::metrics_util;
 using password_manager::MatchResult;
 using password_manager::PasswordStore;
@@ -218,8 +216,11 @@ const GnomeKeyringPasswordSchema kGnomeSchema = {
 // be used in parallel.
 class GKRMethod : public GnomeKeyringLoader {
  public:
-  GKRMethod()
-      : event_(base::WaitableEvent::ResetPolicy::AUTOMATIC,
+  GKRMethod(scoped_refptr<base::SequencedTaskRunner> main_task_runner,
+            scoped_refptr<base::SequencedTaskRunner> background_task_runner)
+      : main_task_runner_(std::move(main_task_runner)),
+        background_task_runner_(std::move(background_task_runner)),
+        event_(base::WaitableEvent::ResetPolicy::AUTOMATIC,
                base::WaitableEvent::InitialState::NOT_SIGNALED),
         result_(GNOME_KEYRING_RESULT_CANCELLED) {}
 
@@ -272,6 +273,8 @@ class GKRMethod : public GnomeKeyringLoader {
   static void OnOperationGetList(GnomeKeyringResult result, GList* list,
                                  gpointer data);
 
+  scoped_refptr<base::SequencedTaskRunner> main_task_runner_;
+  scoped_refptr<base::SequencedTaskRunner> background_task_runner_;
   base::WaitableEvent event_;
   GnomeKeyringResult result_;
   std::vector<std::unique_ptr<PasswordForm>> forms_;
@@ -286,7 +289,7 @@ class GKRMethod : public GnomeKeyringLoader {
 };
 
 void GKRMethod::AddLogin(const PasswordForm& form, const char* app_string) {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  DCHECK(main_task_runner_->RunsTasksInCurrentSequence());
   int64_t date_created = form.date_created.ToInternalValue();
   // If we are asked to save a password with 0 date, use the current time.
   // We don't want to actually save passwords as though on January 1, 1601.
@@ -334,7 +337,7 @@ void GKRMethod::AddLogin(const PasswordForm& form, const char* app_string) {
 
 void GKRMethod::LoginSearch(const PasswordForm& form,
                                const char* app_string) {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  DCHECK(main_task_runner_->RunsTasksInCurrentSequence());
   lookup_form_.reset(nullptr);
   // Search GNOME Keyring for matching passwords to update.
   ScopedAttributeList attrs(gnome_keyring_attribute_list_new_ptr());
@@ -351,7 +354,7 @@ void GKRMethod::LoginSearch(const PasswordForm& form,
 }
 
 void GKRMethod::RemoveLogin(const PasswordForm& form, const char* app_string) {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  DCHECK(main_task_runner_->RunsTasksInCurrentSequence());
   // We find forms using the same fields as LoginDatabase::RemoveLogin().
   gnome_keyring_delete_password_ptr(
       &kGnomeSchema,
@@ -369,7 +372,7 @@ void GKRMethod::RemoveLogin(const PasswordForm& form, const char* app_string) {
 
 void GKRMethod::GetLogins(const PasswordStore::FormDigest& form,
                           const char* app_string) {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  DCHECK(main_task_runner_->RunsTasksInCurrentSequence());
   lookup_form_.reset(new PasswordStore::FormDigest(form));
   // Search GNOME Keyring for matching passwords.
   ScopedAttributeList attrs(gnome_keyring_attribute_list_new_ptr());
@@ -389,7 +392,7 @@ void GKRMethod::GetLogins(const PasswordStore::FormDigest& form,
 
 void GKRMethod::GetLoginsList(uint32_t blacklisted_by_user,
                               const char* app_string) {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  DCHECK(main_task_runner_->RunsTasksInCurrentSequence());
   lookup_form_.reset(nullptr);
   // Search GNOME Keyring for matching passwords.
   ScopedAttributeList attrs(gnome_keyring_attribute_list_new_ptr());
@@ -402,7 +405,7 @@ void GKRMethod::GetLoginsList(uint32_t blacklisted_by_user,
 }
 
 void GKRMethod::GetAllLogins(const char* app_string) {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  DCHECK(main_task_runner_->RunsTasksInCurrentSequence());
   lookup_form_.reset(nullptr);
   // We need to search for something, otherwise we get no results - so
   // we search for the fixed application string.
@@ -415,14 +418,14 @@ void GKRMethod::GetAllLogins(const char* app_string) {
 }
 
 GnomeKeyringResult GKRMethod::WaitResult() {
-  DCHECK_CURRENTLY_ON(BrowserThread::DB);
+  DCHECK(background_task_runner_->RunsTasksInCurrentSequence());
   event_.Wait();
   return result_;
 }
 
 GnomeKeyringResult GKRMethod::WaitResult(
     std::vector<std::unique_ptr<PasswordForm>>* forms) {
-  DCHECK_CURRENTLY_ON(BrowserThread::DB);
+  DCHECK(background_task_runner_->RunsTasksInCurrentSequence());
   event_.Wait();
   *forms = std::move(forms_);
   return result_;
@@ -480,9 +483,13 @@ std::string GetProfileSpecificAppString(LocalProfileId profile_id) {
 
 }  // namespace
 
-NativeBackendGnome::NativeBackendGnome(LocalProfileId id)
-    : app_string_(GetProfileSpecificAppString(id)) {
-}
+NativeBackendGnome::NativeBackendGnome(
+    scoped_refptr<base::SequencedTaskRunner> main_task_runner,
+    scoped_refptr<base::SequencedTaskRunner> background_task_runner,
+    LocalProfileId id)
+    : app_string_(GetProfileSpecificAppString(id)),
+      main_task_runner_(std::move(main_task_runner)),
+      background_task_runner_(std::move(background_task_runner)) {}
 
 NativeBackendGnome::~NativeBackendGnome() {
 }
@@ -492,12 +499,11 @@ bool NativeBackendGnome::Init() {
 }
 
 bool NativeBackendGnome::RawAddLogin(const PasswordForm& form) {
-  DCHECK_CURRENTLY_ON(BrowserThread::DB);
-  GKRMethod method;
-  BrowserThread::PostTask(
-      BrowserThread::UI, FROM_HERE,
-      base::BindOnce(&GKRMethod::AddLogin, base::Unretained(&method), form,
-                     app_string_.c_str()));
+  DCHECK(background_task_runner_->RunsTasksInCurrentSequence());
+  GKRMethod method(main_task_runner_, background_task_runner_);
+  main_task_runner_->PostTask(
+      FROM_HERE, base::BindOnce(&GKRMethod::AddLogin, base::Unretained(&method),
+                                form, app_string_.c_str()));
   GnomeKeyringResult result = method.WaitResult();
   if (result != GNOME_KEYRING_RESULT_OK) {
     LOG(ERROR) << "Keyring save failed: "
@@ -514,10 +520,10 @@ password_manager::PasswordStoreChangeList NativeBackendGnome::AddLogin(
   // element, and signon_realm first, remove that, and then add the new entry.
   // We'd add the new one first, and then delete the original, but then the
   // delete might actually delete the newly-added entry!
-  DCHECK_CURRENTLY_ON(BrowserThread::DB);
-  GKRMethod method;
-  BrowserThread::PostTask(
-      BrowserThread::UI, FROM_HERE,
+  DCHECK(background_task_runner_->RunsTasksInCurrentSequence());
+  GKRMethod method(main_task_runner_, background_task_runner_);
+  main_task_runner_->PostTask(
+      FROM_HERE,
       base::BindOnce(&GKRMethod::LoginSearch, base::Unretained(&method), form,
                      app_string_.c_str()));
   std::vector<std::unique_ptr<PasswordForm>> forms;
@@ -558,11 +564,11 @@ bool NativeBackendGnome::UpdateLogin(
   // differ in any of the mutable fields, then we remove the original, and
   // then add the new entry. We'd add the new one first, and then delete the
   // original, but then the delete might actually delete the newly-added entry!
-  DCHECK_CURRENTLY_ON(BrowserThread::DB);
+  DCHECK(background_task_runner_->RunsTasksInCurrentSequence());
   DCHECK(changes);
-  GKRMethod method;
-  BrowserThread::PostTask(
-      BrowserThread::UI, FROM_HERE,
+  GKRMethod method(main_task_runner_, background_task_runner_);
+  main_task_runner_->PostTask(
+      FROM_HERE,
       base::BindOnce(&GKRMethod::LoginSearch, base::Unretained(&method), form,
                      app_string_.c_str()));
   std::vector<std::unique_ptr<PasswordForm>> forms;
@@ -598,11 +604,11 @@ bool NativeBackendGnome::UpdateLogin(
 bool NativeBackendGnome::RemoveLogin(
     const PasswordForm& form,
     password_manager::PasswordStoreChangeList* changes) {
-  DCHECK_CURRENTLY_ON(BrowserThread::DB);
+  DCHECK(background_task_runner_->RunsTasksInCurrentSequence());
   DCHECK(changes);
-  GKRMethod method;
-  BrowserThread::PostTask(
-      BrowserThread::UI, FROM_HERE,
+  GKRMethod method(main_task_runner_, background_task_runner_);
+  main_task_runner_->PostTask(
+      FROM_HERE,
       base::BindOnce(&GKRMethod::RemoveLogin, base::Unretained(&method), form,
                      app_string_.c_str()));
   GnomeKeyringResult result = method.WaitResult();
@@ -655,10 +661,10 @@ bool NativeBackendGnome::DisableAutoSignInForOrigins(
 bool NativeBackendGnome::GetLogins(
     const PasswordStore::FormDigest& form,
     std::vector<std::unique_ptr<PasswordForm>>* forms) {
-  DCHECK_CURRENTLY_ON(BrowserThread::DB);
-  GKRMethod method;
-  BrowserThread::PostTask(
-      BrowserThread::UI, FROM_HERE,
+  DCHECK(background_task_runner_->RunsTasksInCurrentSequence());
+  GKRMethod method(main_task_runner_, background_task_runner_);
+  main_task_runner_->PostTask(
+      FROM_HERE,
       base::BindOnce(&GKRMethod::GetLogins, base::Unretained(&method), form,
                      app_string_.c_str()));
   GnomeKeyringResult result = method.WaitResult(forms);
@@ -685,13 +691,13 @@ bool NativeBackendGnome::GetBlacklistLogins(
 bool NativeBackendGnome::GetLoginsList(
     bool autofillable,
     std::vector<std::unique_ptr<PasswordForm>>* forms) {
-  DCHECK_CURRENTLY_ON(BrowserThread::DB);
+  DCHECK(background_task_runner_->RunsTasksInCurrentSequence());
 
   uint32_t blacklisted_by_user = !autofillable;
 
-  GKRMethod method;
-  BrowserThread::PostTask(
-      BrowserThread::UI, FROM_HERE,
+  GKRMethod method(main_task_runner_, background_task_runner_);
+  main_task_runner_->PostTask(
+      FROM_HERE,
       base::BindOnce(&GKRMethod::GetLoginsList, base::Unretained(&method),
                      blacklisted_by_user, app_string_.c_str()));
   GnomeKeyringResult result = method.WaitResult(forms);
@@ -724,9 +730,10 @@ bool NativeBackendGnome::GetLoginsList(
 
 bool NativeBackendGnome::GetAllLogins(
     std::vector<std::unique_ptr<PasswordForm>>* forms) {
-  GKRMethod method;
-  BrowserThread::PostTask(
-      BrowserThread::UI, FROM_HERE,
+  DCHECK(background_task_runner_->RunsTasksInCurrentSequence());
+  GKRMethod method(main_task_runner_, background_task_runner_);
+  main_task_runner_->PostTask(
+      FROM_HERE,
       base::BindOnce(&GKRMethod::GetAllLogins, base::Unretained(&method),
                      app_string_.c_str()));
   GnomeKeyringResult result = method.WaitResult(forms);
@@ -745,7 +752,7 @@ bool NativeBackendGnome::GetLoginsBetween(
     base::Time get_end,
     TimestampToCompare date_to_compare,
     std::vector<std::unique_ptr<PasswordForm>>* forms) {
-  DCHECK_CURRENTLY_ON(BrowserThread::DB);
+  DCHECK(background_task_runner_->RunsTasksInCurrentSequence());
   forms->clear();
   // We could walk the list and add items as we find them, but it is much
   // easier to build the list and then filter the results.
@@ -771,7 +778,7 @@ bool NativeBackendGnome::RemoveLoginsBetween(
     base::Time get_end,
     TimestampToCompare date_to_compare,
     password_manager::PasswordStoreChangeList* changes) {
-  DCHECK_CURRENTLY_ON(BrowserThread::DB);
+  DCHECK(background_task_runner_->RunsTasksInCurrentSequence());
   DCHECK(changes);
   changes->clear();
   // We could walk the list and delete items as we find them, but it is much

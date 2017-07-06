@@ -274,7 +274,8 @@ class NativeBackendLibsecretTest : public testing::Test {
 
   NativeBackendLibsecretTest()
       : scoped_task_environment_(
-            base::test::ScopedTaskEnvironment::MainThreadType::UI) {}
+            base::test::ScopedTaskEnvironment::MainThreadType::UI),
+        task_runner_(scoped_task_environment_.GetMainThreadTaskRunner()) {}
 
   void SetUp() override {
     ASSERT_FALSE(global_mock_libsecret_items);
@@ -421,7 +422,7 @@ class NativeBackendLibsecretTest : public testing::Test {
                                    const GURL& url,
                                    const PasswordForm::Scheme& scheme,
                                    PasswordForm* result) {
-    NativeBackendLibsecret backend(321);
+    NativeBackendLibsecret backend(task_runner_, task_runner_, 321);
 
     VerifiedAdd(&backend, credentials);
 
@@ -456,7 +457,7 @@ class NativeBackendLibsecretTest : public testing::Test {
   // m.facebook.com password should not get updated. Depending on the argument,
   // the credential update is done via UpdateLogin or AddLogin.
   void CheckPSLUpdate(UpdateType update_type) {
-    NativeBackendLibsecret backend(321);
+    NativeBackendLibsecret backend(task_runner_, task_runner_, 321);
 
     VerifiedAdd(&backend, form_facebook_);
 
@@ -545,7 +546,7 @@ class NativeBackendLibsecretTest : public testing::Test {
   }
 
   void CheckRemoveLoginsBetween(RemoveBetweenMethod date_to_test) {
-    NativeBackendLibsecret backend(42);
+    NativeBackendLibsecret backend(task_runner_, task_runner_, 42);
 
     base::Time now = base::Time::Now();
     base::Time next_day = now + base::TimeDelta::FromDays(1);
@@ -596,6 +597,7 @@ class NativeBackendLibsecretTest : public testing::Test {
   }
 
   base::test::ScopedTaskEnvironment scoped_task_environment_;
+  scoped_refptr<base::SequencedTaskRunner> task_runner_;
 
   // Provide some test forms to avoid having to set them up in each test.
   PasswordForm form_google_;
@@ -607,7 +609,7 @@ class NativeBackendLibsecretTest : public testing::Test {
 };
 
 TEST_F(NativeBackendLibsecretTest, BasicAddLogin) {
-  NativeBackendLibsecret backend(42);
+  NativeBackendLibsecret backend(task_runner_, task_runner_, 42);
 
   VerifiedAdd(&backend, form_google_);
 
@@ -618,7 +620,7 @@ TEST_F(NativeBackendLibsecretTest, BasicAddLogin) {
 }
 
 TEST_F(NativeBackendLibsecretTest, BasicListLogins) {
-  NativeBackendLibsecret backend(42);
+  NativeBackendLibsecret backend(task_runner_, task_runner_, 42);
 
   VerifiedAdd(&backend, form_google_);
 
@@ -635,7 +637,7 @@ TEST_F(NativeBackendLibsecretTest, BasicListLogins) {
 }
 
 TEST_F(NativeBackendLibsecretTest, GetAllLogins) {
-  NativeBackendLibsecret backend(42);
+  NativeBackendLibsecret backend(task_runner_, task_runner_, 42);
 
   VerifiedAdd(&backend, form_google_);
   VerifiedAdd(&backend, form_facebook_);
@@ -737,7 +739,7 @@ TEST_F(NativeBackendLibsecretTest,
 }
 
 TEST_F(NativeBackendLibsecretTest, BasicUpdateLogin) {
-  NativeBackendLibsecret backend(42);
+  NativeBackendLibsecret backend(task_runner_, task_runner_, 42);
 
   VerifiedAdd(&backend, form_google_);
 
@@ -761,7 +763,7 @@ TEST_F(NativeBackendLibsecretTest, BasicUpdateLogin) {
 }
 
 TEST_F(NativeBackendLibsecretTest, BasicRemoveLogin) {
-  NativeBackendLibsecret backend(42);
+  NativeBackendLibsecret backend(task_runner_, task_runner_, 42);
 
   VerifiedAdd(&backend, form_google_);
 
@@ -777,7 +779,7 @@ TEST_F(NativeBackendLibsecretTest, BasicRemoveLogin) {
 
 // Verify fix for http://crbug.com/408783.
 TEST_F(NativeBackendLibsecretTest, RemoveLoginActionMismatch) {
-  NativeBackendLibsecret backend(42);
+  NativeBackendLibsecret backend(task_runner_, task_runner_, 42);
 
   VerifiedAdd(&backend, form_google_);
 
@@ -794,7 +796,7 @@ TEST_F(NativeBackendLibsecretTest, RemoveLoginActionMismatch) {
 }
 
 TEST_F(NativeBackendLibsecretTest, RemoveNonexistentLogin) {
-  NativeBackendLibsecret backend(42);
+  NativeBackendLibsecret backend(task_runner_, task_runner_, 42);
 
   // First add an unrelated login.
   VerifiedAdd(&backend, form_google_);
@@ -824,7 +826,7 @@ TEST_F(NativeBackendLibsecretTest, RemoveNonexistentLogin) {
 }
 
 TEST_F(NativeBackendLibsecretTest, UpdateNonexistentLogin) {
-  NativeBackendLibsecret backend(42);
+  NativeBackendLibsecret backend(task_runner_, task_runner_, 42);
 
   // First add an unrelated login.
   VerifiedAdd(&backend, form_google_);
@@ -847,7 +849,7 @@ TEST_F(NativeBackendLibsecretTest, UpdateNonexistentLogin) {
 }
 
 TEST_F(NativeBackendLibsecretTest, UpdateSameLogin) {
-  NativeBackendLibsecret backend(42);
+  NativeBackendLibsecret backend(task_runner_, task_runner_, 42);
 
   VerifiedAdd(&backend, form_google_);
 
@@ -870,7 +872,7 @@ TEST_F(NativeBackendLibsecretTest, UpdateSameLogin) {
 }
 
 TEST_F(NativeBackendLibsecretTest, AddDuplicateLogin) {
-  NativeBackendLibsecret backend(42);
+  NativeBackendLibsecret backend(task_runner_, task_runner_, 42);
 
   VerifiedAdd(&backend, form_google_);
 
@@ -892,7 +894,7 @@ TEST_F(NativeBackendLibsecretTest, AddDuplicateLogin) {
 }
 
 TEST_F(NativeBackendLibsecretTest, AndroidCredentials) {
-  NativeBackendLibsecret backend(42);
+  NativeBackendLibsecret backend(task_runner_, task_runner_, 42);
   backend.Init();
 
   PasswordForm observed_android_form;
@@ -922,7 +924,7 @@ TEST_F(NativeBackendLibsecretTest, RemoveLoginsSyncedBetween) {
 }
 
 TEST_F(NativeBackendLibsecretTest, DisableAutoSignInForOrigins) {
-  NativeBackendLibsecret backend(42);
+  NativeBackendLibsecret backend(task_runner_, task_runner_, 42);
   backend.Init();
   form_google_.skip_zero_click = false;
   form_facebook_.skip_zero_click = false;
@@ -961,7 +963,7 @@ TEST_F(NativeBackendLibsecretTest, DisableAutoSignInForOrigins) {
 
 TEST_F(NativeBackendLibsecretTest, SomeKeyringAttributesAreMissing) {
   // Absent attributes should be filled with default values.
-  NativeBackendLibsecret backend(42);
+  NativeBackendLibsecret backend(task_runner_, task_runner_, 42);
 
   VerifiedAdd(&backend, form_google_);
 
@@ -980,7 +982,7 @@ TEST_F(NativeBackendLibsecretTest, SomeKeyringAttributesAreMissing) {
 }
 
 TEST_F(NativeBackendLibsecretTest, ReadDuplicateForms) {
-  NativeBackendLibsecret backend(42);
+  NativeBackendLibsecret backend(task_runner_, task_runner_, 42);
 
   // Add 2 slightly different password forms.
   const char unique_string[] = "unique_unique_string";

@@ -216,7 +216,8 @@ PasswordStoreFactory::BuildServiceInstanceFor(
         selected_backend == os_crypt::SelectedLinuxBackend::KWALLET
             ? base::nix::DESKTOP_ENVIRONMENT_KDE4
             : base::nix::DESKTOP_ENVIRONMENT_KDE5;
-    backend.reset(new NativeBackendKWallet(id, used_desktop_env));
+    backend.reset(new NativeBackendKWallet(main_thread_runner, db_thread_runner,
+                                           id, used_desktop_env));
     if (backend->Init()) {
       VLOG(1) << "Using KWallet for password storage.";
       used_backend = KWALLET;
@@ -232,7 +233,8 @@ PasswordStoreFactory::BuildServiceInstanceFor(
     if (selected_backend == os_crypt::SelectedLinuxBackend::GNOME_ANY ||
         selected_backend == os_crypt::SelectedLinuxBackend::GNOME_LIBSECRET) {
       VLOG(1) << "Trying libsecret for password storage.";
-      backend.reset(new NativeBackendLibsecret(id));
+      backend.reset(
+          new NativeBackendLibsecret(main_thread_runner, db_thread_runner, id));
       if (backend->Init()) {
         VLOG(1) << "Using libsecret keyring for password storage.";
         used_backend = LIBSECRET;
@@ -246,7 +248,8 @@ PasswordStoreFactory::BuildServiceInstanceFor(
         (selected_backend == os_crypt::SelectedLinuxBackend::GNOME_ANY ||
          selected_backend == os_crypt::SelectedLinuxBackend::GNOME_KEYRING)) {
       VLOG(1) << "Trying GNOME keyring for password storage.";
-      backend.reset(new NativeBackendGnome(id));
+      backend.reset(
+          new NativeBackendGnome(main_thread_runner, db_thread_runner, id));
       if (backend->Init()) {
         VLOG(1) << "Using GNOME keyring for password storage.";
         used_backend = GNOME_KEYRING;

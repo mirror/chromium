@@ -13,6 +13,7 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/nix/xdg_util.h"
+#include "base/sequenced_task_runner.h"
 #include "base/time/time.h"
 #include "chrome/browser/password_manager/password_store_factory.h"
 #include "chrome/browser/password_manager/password_store_x.h"
@@ -31,8 +32,11 @@ class WaitableEvent;
 // NativeBackend implementation using KWallet.
 class NativeBackendKWallet : public PasswordStoreX::NativeBackend {
  public:
-  NativeBackendKWallet(LocalProfileId id,
-                       base::nix::DesktopEnvironment desktop_env);
+  NativeBackendKWallet(
+      scoped_refptr<base::SequencedTaskRunner> main_task_runner,
+      scoped_refptr<base::SequencedTaskRunner> background_task_runner,
+      LocalProfileId id,
+      base::nix::DesktopEnvironment desktop_env);
 
   ~NativeBackendKWallet() override;
 
@@ -139,6 +143,9 @@ class NativeBackendKWallet : public PasswordStoreX::NativeBackend {
 
   // Generates a profile-specific folder name based on profile_id_.
   std::string GetProfileSpecificFolderName() const;
+
+  scoped_refptr<base::SequencedTaskRunner> main_task_runner_;
+  scoped_refptr<base::SequencedTaskRunner> background_task_runner_;
 
   // The local profile id, used to generate the folder name.
   const LocalProfileId profile_id_;

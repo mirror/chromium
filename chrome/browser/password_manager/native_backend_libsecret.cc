@@ -164,8 +164,13 @@ std::string GetProfileSpecificAppString(LocalProfileId id) {
 
 }  // namespace
 
-NativeBackendLibsecret::NativeBackendLibsecret(LocalProfileId id)
-    : app_string_(GetProfileSpecificAppString(id)),
+NativeBackendLibsecret::NativeBackendLibsecret(
+    scoped_refptr<base::SequencedTaskRunner> main_task_runner,
+    scoped_refptr<base::SequencedTaskRunner> background_task_runner,
+    LocalProfileId id)
+    : main_task_runner_(std::move(main_task_runner)),
+      background_task_runner_(std::move(background_task_runner)),
+      app_string_(GetProfileSpecificAppString(id)),
       ensured_keyring_unlocked_(false) {}
 
 NativeBackendLibsecret::~NativeBackendLibsecret() {
