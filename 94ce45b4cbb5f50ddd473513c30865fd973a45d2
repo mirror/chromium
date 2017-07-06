@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9d92eb8_960a5115",
+        "filename": "chrome/browser/ui/browser_command_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-06T08:26:06Z",
+      "side": 1,
+      "message": "You\u0027ve put these #includes inside #ifdef guards, but the use of their symbols is not in #ifdef guards.\n\n\"No guards\" looks more correct to me.",
+      "revId": "94ce45b4cbb5f50ddd473513c30865fd973a45d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2536aa7d_05c3d52c",
+        "filename": "chrome/browser/ui/browser_command_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-06T08:26:06Z",
+      "side": 1,
+      "message": "Nit: Not really for this CL but... \"new_tab_feature_engagement_tracker::NewTabFeatureEngagementTrackerFactory\" is very long and redundant, and leads to a lot of wrapping all over.\n\nDo we really need a namespace for this feature?  Very little in Chromium code is namespaced.  Namespaces are mostly used in Chromium code where we have potential naming conflicts, e.g. where we need to introduce reasonably generic names into the otherwise-global scope.\n\nIf we do need a namespace, then do we need to repeat anything from the namespace name in the names of contained classes? \"new_tab_feature_engagement_tracker::Factory\" is at least as clear as the longer name IMO, if not clearer (due to the lack of redundancy).\n\nI would think about how to improve the scoping/naming here as a separate CL.",
+      "revId": "94ce45b4cbb5f50ddd473513c30865fd973a45d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4b0a5e4_7d52f207",
+        "filename": "chrome/browser/ui/browser_command_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-06T08:26:06Z",
+      "side": 1,
+      "message": "I didn\u0027t think through which cases get here and which don\u0027t.  Have you gone through each possible way to make a new tab (tabstrip context menu, window frame context menu, app menu, new tab button, ctrl-t, programmatic creation by extensions) and ensured that you record in all the cases you do want and none of the cases you don\u0027t?",
+      "revId": "94ce45b4cbb5f50ddd473513c30865fd973a45d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e8e286a_e8e6c7ad",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_client.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-06T08:26:06Z",
+      "side": 1,
+      "message": "I still don\u0027t understand this comment.\n\nI read your design doc.  I didn\u0027t see a mention of this concept.\n\nI looked for mentions of \"omnibox\" in the other CL you linked.  I didn\u0027t see any explanation of this.\n\nI\u0027m going to take a wild guess that what you\u0027re really trying to do is distinguish between cases of \"intentional omnibox use\" and \"the user happened to type in the omnibox because it was focused by default on the NTP\" or similar.  If that\u0027s the case, you don\u0027t want to look at the old URL, since it will make you think any omnibox usage from NTP is \"unintentional\", even if, say, the user clicks somewhere on the page and then focuses the omnibox manually and types in it.\n\nWhat you likely want instead is the current_page_classification from the log, which can tell you things like how the user started the current omnibox interaction.  You might want to consult with mpearson@ about whether this gives you the granularity you need and how to measure whatever it is you want to measure.\n\nOne way to ensure your comments are super-clear, which helps reviewers like me understand what you\u0027re trying to do and how to advise you, is to read your own explanation and attempt to repeatedly ask \"why?\" in response to parts of it, until you\u0027re sure it explains root causes or else refers readers to where they are explained.  For example, \"The NTP is expected to be clobbered\" -- why?  For more on this technique, see https://en.wikipedia.org/wiki/5_Whys .",
+      "revId": "94ce45b4cbb5f50ddd473513c30865fd973a45d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d990e2a_dcf12a39",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1354,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-06T08:26:06Z",
+      "side": 1,
+      "message": "Nit: Still not totally sure why you reordered these checks from the original code.  I was going to say it can\u0027t have any functional effect, but it actually will, if someone could set their home page to about:blank or the NTP, which I suspect they can (and, in fact, is probably common).  In these cases, we\u0027ll now report those as \"home page\".\n\nIt\u0027s not obvious what is the right thing to report here, since it\u0027s impossible to distinguish such cases based on URL alone.  But I would think the old behavior, of prioritizing NTP/BLANK over HOME_PAGE, is probably correct.\n\nWe might conceivably want a unittest covering that, if we actually care.",
+      "revId": "94ce45b4cbb5f50ddd473513c30865fd973a45d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
