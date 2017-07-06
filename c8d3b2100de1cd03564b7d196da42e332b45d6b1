@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "83c398a0_a04bde24",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1798,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-07-06T23:40:36Z",
+      "side": 1,
+      "message": "I tried to put every ScrollableArea::ScrollIntoView() into sequencer. However, there are several cases where we directly call ScrollableArea::ScrollIntoView() without calling it from LayoutObject::ScrollRectToVisible(). e.g. RootFrameViewportTest::ScrollIntoView() and HTMLSelectElement::ScrollToOptionAfterLayout(). In these cases, RunQueuedAnimations() won\u0027t be called, and I feel like sequencing them doesn\u0027t really make sense. So I think we should somehow distinguish those ScrollableArea::ScrollIntoView() called from LayoutObject and those called from elsewhere. I\u0027m keeping the use of kSequencedScroll for this patch. Or maybe we can add a parameter to ScrollIntoView()?",
+      "parentUuid": "aaf9fec8_26f40a57",
+      "range": {
+        "startLine": 1798,
+        "startChar": 26,
+        "endLine": 1798,
+        "endChar": 48
+      },
+      "revId": "c8d3b2100de1cd03564b7d196da42e332b45d6b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c060a572_51caef83",
         "filename": "third_party/WebKit/Source/platform/scroll/ProgrammaticScrollAnimator.cpp",
         "patchSetId": 3

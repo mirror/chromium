@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3a508de_13de8d93",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 4718,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-07-06T23:40:36Z",
+      "side": 1,
+      "message": "In LayoutBox, we calculate the next rect_to_scroll under the assumption that LocalFrameView has already been scrolled. However, it\u0027s not the case if we sequence the scroll first. In this situation, we move the rect to pretend that the frameview has been scrolled.",
+      "range": {
+        "startLine": 4718,
+        "startChar": 17,
+        "endLine": 4718,
+        "endChar": 21
+      },
+      "revId": "ee0005269e04960c744ed028cfb8833322ece093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21b07f9c_56f47f04",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 4719,
+      "author": {
+        "id": 1164963
+      },
+      "writtenOn": "2017-07-06T23:40:36Z",
+      "side": 1,
+      "message": "A layout test failed with a image diff and I located a 0.5 diff from this value. So I added a Round here.",
+      "range": {
+        "startLine": 4719,
+        "startChar": 29,
+        "endLine": 4719,
+        "endChar": 44
+      },
+      "revId": "ee0005269e04960c744ed028cfb8833322ece093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
