@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05f01075_2932b30b",
+        "filename": "chrome/browser/android/history/browsing_history_bridge.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-07-06T18:36:08Z",
+      "side": 1,
+      "message": "is_incognito",
+      "range": {
+        "startLine": 27,
+        "startChar": 38,
+        "endLine": 27,
+        "endChar": 49
+      },
+      "revId": "74499f043b8a6588b940da49c95a02c359be83f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
