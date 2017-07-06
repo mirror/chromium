@@ -28,27 +28,27 @@ function axElementById(id) {
 
 test(function(t) {
     var ax = axElementById("treeitem1");
-    assert_equals(ax.isEnabled, true);
+    assert_equals(ax.controlMode, "none");
 }, "Tree item enabled");
 
 test(function(t) {
     var ax = axElementById("option1");
-    assert_equals(ax.isEnabled, true);
+    assert_equals(ax.controlMode, "none");
 }, "Option enabled");
 
 test(function(t) {
     var ax = axElementById("tab1");
-    assert_equals(ax.isEnabled, true);
+    assert_equals(ax.controlMode, "none");
 }, "Tab enabled");
 
 test(function(t) {
     var ax = axElementById("gridcell1");
-    assert_equals(ax.isEnabled, true);
+    assert_equals(ax.controlMode, "none");
 }, "Grid cell enabled");
 
 test(function(t) {
     var ax = axElementById("checkbox1");
-    assert_equals(ax.isEnabled, true);
+    assert_equals(ax.controlMode, "none");
 }, "Check boxs enabled");
 
 test(function(t) {

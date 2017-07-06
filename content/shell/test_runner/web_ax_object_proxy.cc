@@ -591,7 +591,6 @@ gin::ObjectTemplateBuilder WebAXObjectProxy::GetObjectTemplateBuilder(
                    &WebAXObjectProxy::SelectionEndLineNumber)
       .SetProperty("isAtomic", &WebAXObjectProxy::IsAtomic)
       .SetProperty("isBusy", &WebAXObjectProxy::IsBusy)
-      .SetProperty("isEnabled", &WebAXObjectProxy::IsEnabled)
       .SetProperty("isRequired", &WebAXObjectProxy::IsRequired)
       .SetProperty("isEditable", &WebAXObjectProxy::IsEditable)
       .SetProperty("isRichlyEditable", &WebAXObjectProxy::IsRichlyEditable)
@@ -612,6 +611,7 @@ gin::ObjectTemplateBuilder WebAXObjectProxy::GetObjectTemplateBuilder(
       .SetProperty("hasPopup", &WebAXObjectProxy::HasPopup)
       .SetProperty("isValid", &WebAXObjectProxy::IsValid)
       .SetProperty("isReadOnly", &WebAXObjectProxy::IsReadOnly)
+      .SetProperty("controlMode", &WebAXObjectProxy::ControlMode)
       .SetProperty("backgroundColor", &WebAXObjectProxy::BackgroundColor)
       .SetProperty("color", &WebAXObjectProxy::Color)
       .SetProperty("colorValue", &WebAXObjectProxy::ColorValue)
@@ -976,9 +976,16 @@ bool WebAXObjectProxy::IsBusy() {
   return accessibility_object_.LiveRegionBusy();
 }
 
-bool WebAXObjectProxy::IsEnabled() {
+std::string WebAXObjectProxy::ControlMode() {
   accessibility_object_.UpdateLayoutAndCheckValidity();
-  return accessibility_object_.IsEnabled();
+  switch (accessibility_object_.ControlMode()) {
+    case blink::kWebAXControlModeReadOnly:
+      return "readOnly";
+    case blink::kWebAXControlModeDisabled:
+      return "disabled";
+    default:
+      return "none";
+  }
 }
 
 bool WebAXObjectProxy::IsRequired() {
@@ -1082,7 +1089,8 @@ bool WebAXObjectProxy::IsValid() {
 
 bool WebAXObjectProxy::IsReadOnly() {
   accessibility_object_.UpdateLayoutAndCheckValidity();
-  return accessibility_object_.IsReadOnly();
+  return accessibility_object_.ControlMode() ==
+         blink::kWebAXControlModeReadOnly;
 }
 
 unsigned int WebAXObjectProxy::BackgroundColor() {
@@ -1550,7 +1558,9 @@ void WebAXObjectProxy::Press() {
 
 bool WebAXObjectProxy::SetValue(const std::string& value) {
   accessibility_object_.UpdateLayoutAndCheckValidity();
-  if (!accessibility_object_.CanSetValueAttribute())
+  if (accessibility_object_.ControlMode() == blink::kWebAXControlModeDisabled ||
+      accessibility_object_.ControlMode() == blink::kWebAXControlModeReadOnly ||
+      accessibility_object_.StringValue().IsEmpty())
     return false;
 
   accessibility_object_.SetValue(blink::WebString::FromUTF8(value));

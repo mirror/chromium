@@ -733,6 +733,16 @@ AutomationInternalCustomBindings::AutomationInternalCustomBindings(
       result.Set(v8::String::NewFromUtf8(isolate, checked_str.c_str()));
     }
   });
+  RouteNodeIDFunction("GetControlMode", [](v8::Isolate* isolate,
+                                           v8::ReturnValue<v8::Value> result,
+                                           TreeCache* cache, ui::AXNode* node) {
+    const ui::AXControlMode control_mode = static_cast<ui::AXControlMode>(
+        node->data().GetIntAttribute(ui::AX_ATTR_CONTROL_MODE));
+    if (control_mode) {
+      const std::string control_mode_str = ui::ToString(control_mode);
+      result.Set(v8::String::NewFromUtf8(isolate, control_mode_str.c_str()));
+    }
+  });
 }
 
 AutomationInternalCustomBindings::~AutomationInternalCustomBindings() {}
@@ -804,6 +814,10 @@ void AutomationInternalCustomBindings::GetSchemaAdditions(
   for (int i = ui::AX_NAME_FROM_NONE; i <= ui::AX_NAME_FROM_LAST; ++i)
     name_from_type.Set(i, ui::ToString(static_cast<ui::AXNameFrom>(i)));
 
+  gin::DataObjectBuilder control_mode(isolate);
+  for (int i = ui::AX_CONTROL_MODE_NONE; i <= ui::AX_CONTROL_MODE_LAST; ++i)
+    control_mode.Set(i, ui::ToString(static_cast<ui::AXControlMode>(i)));
+
   gin::DataObjectBuilder description_from_type(isolate);
   for (int i = ui::AX_DESCRIPTION_FROM_NONE; i <= ui::AX_DESCRIPTION_FROM_LAST;
        ++i) {
@@ -814,6 +828,7 @@ void AutomationInternalCustomBindings::GetSchemaAdditions(
   args.GetReturnValue().Set(
       gin::DataObjectBuilder(isolate)
           .Set("NameFromType", name_from_type.Build())
+          .Set("ControlMode", control_mode.Build())
           .Set("DescriptionFromType", description_from_type.Build())
           .Build());
 }

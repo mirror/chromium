@@ -84,6 +84,8 @@ def CheckEnumsMatch(input_api, output_api):
                     output_api)
   CheckMatchingEnum(ax_enums, 'AXNameFrom', automation_enums, 'NameFromType',
                     errs, output_api)
+  CheckMatchingEnum(ax_enums, 'AXControlMode', automation_enums, 'ControlMode',
+                    errs, output_api)
   return errs
 
 def CheckChangeOnUpload(input_api, output_api):

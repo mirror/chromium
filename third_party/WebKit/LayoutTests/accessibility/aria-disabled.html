@@ -27,34 +27,34 @@
     if (window.accessibilityController) {
 
           var textField = accessibilityController.accessibleElementById("text1");
-          shouldBe("textField.isEnabled", "false");
+          shouldBeEqualToString("textField.controlMode", "disabled");
 
           textField = accessibilityController.accessibleElementById("text2");
-          shouldBe("textField.isEnabled", "true");
+          shouldBeEqualToString("textField.controlMode", "none");
 
           var group = accessibilityController.accessibleElementById("group1");
-          shouldBe("group.isEnabled", "false");
+          shouldBeEqualToString("group.controlMode", "disabled");
 
           var link = accessibilityController.accessibleElementById("link1");
-          shouldBe("link.isEnabled", "false");
+          shouldBeEqualToString("link.controlMode", "disabled");
 
           var button = accessibilityController.accessibleElementById("button1");
-          shouldBe("button.isEnabled", "true");
+          shouldBeEqualToString("button.controlMode", "none");
 
           var treeitem = accessibilityController.accessibleElementById("treeitem1");
-          shouldBe("treeitem.isEnabled", "false");
+          shouldBeEqualToString("treeitem.controlMode", "disabled");
 
           var option = accessibilityController.accessibleElementById("option1");
-          shouldBe("option.isEnabled", "false");
+          shouldBeEqualToString("option.controlMode", "disabled");
 
           var tab = accessibilityController.accessibleElementById("tab1");
-          shouldBe("tab.isEnabled", "false");
+          shouldBeEqualToString("tab.controlMode", "disabled");
 
           var gridcell = accessibilityController.accessibleElementById("gridcell1");
-          shouldBe("gridcell.isEnabled", "false");
+          shouldBeEqualToString("gridcell.controlMode", "disabled");
 
           var checkbox = accessibilityController.accessibleElementById("checkbox1");
-          shouldBe("checkbox.isEnabled", "false");
+          shouldBeEqualToString("checkbox.controlMode", "disabled");
 
       }
 </script>

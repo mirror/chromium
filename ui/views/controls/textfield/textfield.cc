@@ -915,7 +915,8 @@ void Textfield::GetAccessibleNodeData(ui::AXNodeData* node_data) {
                                ui::AX_DEFAULT_ACTION_VERB_ACTIVATE);
   }
   if (read_only())
-    node_data->AddState(ui::AX_STATE_READ_ONLY);
+    node_data->AddIntAttribute(ui::AX_ATTR_CONTROL_MODE,
+                               ui::AX_CONTROL_MODE_READ_ONLY);
   else
     node_data->AddState(ui::AX_STATE_EDITABLE);
   if (text_input_type_ == ui::TEXT_INPUT_TYPE_PASSWORD) {

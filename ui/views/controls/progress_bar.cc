@@ -55,7 +55,8 @@ ProgressBar::~ProgressBar() {
 
 void ProgressBar::GetAccessibleNodeData(ui::AXNodeData* node_data) {
   node_data->role = ui::AX_ROLE_PROGRESS_INDICATOR;
-  node_data->AddState(ui::AX_STATE_READ_ONLY);
+  node_data->AddIntAttribute(ui::AX_ATTR_CONTROL_MODE,
+                             ui::AX_CONTROL_MODE_READ_ONLY);
 }
 
 gfx::Size ProgressBar::CalculatePreferredSize() const {

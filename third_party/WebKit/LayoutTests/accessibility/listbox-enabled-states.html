@@ -28,12 +28,12 @@
         document.getElementById("selectElement").focus();
 
         var axSelectElement = accessibilityController.focusedElement;
-        shouldBeTrue('axSelectElement.isEnabled');
-        shouldBeTrue('axSelectElement.childAtIndex(0).isEnabled');
-        shouldBeTrue('axSelectElement.childAtIndex(1).isEnabled');
-        shouldBeFalse('axSelectElement.childAtIndex(2).isEnabled');
-        shouldBeFalse('axSelectElement.childAtIndex(3).isEnabled');
-        shouldBeTrue('axSelectElement.childAtIndex(4).isEnabled');
+        shouldBeEqualToString('axSelectElement.controlMode', 'none');
+        shouldBeEqualToString('axSelectElement.childAtIndex(0).controlMode', 'none');
+        shouldBeEqualToString('axSelectElement.childAtIndex(1).controlMode', 'none');
+        shouldBeEqualToString('axSelectElement.childAtIndex(2).controlMode', 'disabled');
+        shouldBeEqualToString('axSelectElement.childAtIndex(3).controlMode', 'disabled');
+        shouldBeEqualToString('axSelectElement.childAtIndex(4).controlMode', 'none');
     }
 </script>
 
