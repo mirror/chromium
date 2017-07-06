@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e984ed72_e25851c4",
+        "filename": "third_party/WebKit/Source/core/dom/MessagePort.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-07-06T19:55:29Z",
+      "side": 1,
+      "message": "I note that the spec https://html.spec.whatwg.org/multipage/web-messaging.html#message-ports has:\n\noptional sequence\u003cobject\u003e transfer \u003d []\n\nIt looks like we compile the same with `\u003d []` added - should we toss that in just to be closer to the published IDL? (Same in other occurrences)",
+      "range": {
+        "startLine": 35,
+        "startChar": 74,
+        "endLine": 35,
+        "endChar": 108
+      },
+      "revId": "32156a20b3ade60a4f73ba08e7442dfe89064690",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f17dc0d0_bb9c2f98",
+        "filename": "third_party/WebKit/Source/core/workers/Worker.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-07-06T19:55:29Z",
+      "side": 1,
+      "message": "Can you make this change (and same in other occurrences) while you\u0027re here, since it doesn\u0027t seem to change the generated code?",
+      "range": {
+        "startLine": 40,
+        "startChar": 4,
+        "endLine": 40,
+        "endChar": 65
+      },
+      "revId": "32156a20b3ade60a4f73ba08e7442dfe89064690",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
