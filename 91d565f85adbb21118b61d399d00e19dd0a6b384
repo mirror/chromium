@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "d705ec64_3b471cb6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-07-06T01:30:55Z",
+      "side": 1,
+      "message": "Add alias length for \u003clength\u003e type",
+      "revId": "91d565f85adbb21118b61d399d00e19dd0a6b384",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1731cd27_d0504d4a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-07-06T01:30:55Z",
+      "side": 1,
+      "message": "Also add what the default parameters we fill in are. \nThe include file path\nThe type name, \netc.",
+      "revId": "91d565f85adbb21118b61d399d00e19dd0a6b384",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7e0891b5_a7b87337",
         "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
         "patchSetId": 1
@@ -13,6 +47,24 @@
       "writtenOn": "2017-07-05T23:30:48Z",
       "side": 1,
       "message": "I would make this \u0027\u003clength\u003e\u0027 to fit the CSS specification: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Types",
+      "revId": "91d565f85adbb21118b61d399d00e19dd0a6b384",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "511857ad_1653a0d6",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-07-06T01:30:55Z",
+      "side": 1,
+      "message": "Yes please.",
+      "parentUuid": "7e0891b5_a7b87337",
       "revId": "91d565f85adbb21118b61d399d00e19dd0a6b384",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -36,6 +88,24 @@
     },
     {
       "key": {
+        "uuid": "6e051a60_beff09e6",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-07-06T01:30:55Z",
+      "side": 1,
+      "message": "Agree with shend@ here.",
+      "parentUuid": "7520cb2e_cf6c625a",
+      "revId": "91d565f85adbb21118b61d399d00e19dd0a6b384",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "48b57b9d_90bad028",
         "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
         "patchSetId": 1
@@ -47,6 +117,24 @@
       "writtenOn": "2017-07-05T23:30:48Z",
       "side": 1,
       "message": "Maybe specify what defaults \u003clength\u003e uses? e.g.\n\n\"This is equivalent to setting:\n - field_template to \u0027external\u0027\n - type_name to \u0027Length\u0027\n etc. etc.\"",
+      "revId": "91d565f85adbb21118b61d399d00e19dd0a6b384",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88147caa_d76e4250",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-07-06T01:30:55Z",
+      "side": 1,
+      "message": "Yes please.",
+      "parentUuid": "48b57b9d_90bad028",
       "revId": "91d565f85adbb21118b61d399d00e19dd0a6b384",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
