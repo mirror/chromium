@@ -995,7 +995,6 @@ int ChromeMainDelegate::RunProcess(
       return kMainFunctions[i].function(main_function_params);
   }
 #endif
-
   return -1;
 }
 
@@ -1196,6 +1195,11 @@ bool ChromeMainDelegate::ShouldTerminateServiceManagerOnInstanceQuit(
 void ChromeMainDelegate::OnServiceManagerInitialized(
     const base::Closure& quit_closure,
     service_manager::BackgroundServiceManager* service_manager) {
+  const base::CommandLine& command_line =
+      *base::CommandLine::ForCurrentProcess();
+  std::string process_type =
+      command_line.GetSwitchValueASCII(switches::kProcessType);
+
 #if defined(OS_POSIX)
   // Quit the main process in response to shutdown signals (like SIGTERM).
   // These signals are used by Linux distributions to request clean shutdown.

@@ -89,6 +89,7 @@
 #include "chrome/browser/profiles/profile_attributes_storage.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/profiles/profiles_state.h"
+#include "chrome/browser/profiling_host/profiling_process_host.h"
 #include "chrome/browser/resource_coordinator/tab_manager.h"
 #include "chrome/browser/sessions/chrome_serialized_navigation_driver.h"
 #include "chrome/browser/shell_integration.h"
@@ -1239,6 +1240,14 @@ int ChromeBrowserMainParts::PreCreateThreadsImpl() {
 
 void ChromeBrowserMainParts::ServiceManagerConnectionStarted(
     content::ServiceManagerConnection* connection) {
+  {
+    const base::CommandLine& my_command_line =
+        *base::CommandLine::ForCurrentProcess();
+    if (my_command_line.HasSwitch(switches::kMemlog) &&
+        my_command_line.GetSwitchValueASCII(switches::kProcessType).empty()) {
+      profiling::ProfilingProcessHost::Get()->ConnectControlChannel();
+    }
+  }
   for (size_t i = 0; i < chrome_extra_parts_.size(); ++i)
     chrome_extra_parts_[i]->ServiceManagerConnectionStarted(connection);
 }

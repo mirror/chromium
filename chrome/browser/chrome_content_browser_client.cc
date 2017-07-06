@@ -943,6 +943,7 @@ void ChromeContentBrowserClient::SetApplicationLocale(
 content::BrowserMainParts* ChromeContentBrowserClient::CreateBrowserMainParts(
     const content::MainFunctionParams& parameters) {
   ChromeBrowserMainParts* main_parts;
+
   // Construct the Main browser parts based on the OS type.
 #if defined(OS_WIN)
   main_parts = new ChromeBrowserMainPartsWin(parameters);
@@ -1641,8 +1642,13 @@ void ChromeContentBrowserClient::AppendExtraCommandLineSwitches(
   };
   command_line->CopySwitchesFrom(browser_command_line, kCommonSwitchNames,
                                  arraysize(kCommonSwitchNames));
+
 #if BUILDFLAG(ENABLE_OOP_HEAP_PROFILING)
-  profiling::ProfilingProcessHost::AddSwitchesToChildCmdLine(command_line);
+  if (process_type != switches::kZygoteProcess &&
+      process_type != switches::kUtilityProcess) {
+    profiling::ProfilingProcessHost::AddSwitchesToChildCmdLine(
+        command_line, child_process_id);
+  }
 #endif
 
   static const char* const kDinosaurEasterEggSwitches[] = {
@@ -2784,6 +2790,13 @@ void ChromeContentBrowserClient::GetAdditionalMappedFilesForChildProcess(
     const base::CommandLine& command_line,
     int child_process_id,
     FileDescriptorInfo* mappings) {
+  std::string process_type =
+      command_line.GetSwitchValueASCII(switches::kProcessType);
+  if (process_type != switches::kZygoteProcess &&
+      process_type != switches::kUtilityProcess) {
+    profiling::ProfilingProcessHost::GetAdditionalMappedFilesForChildProcess(
+        command_line, child_process_id, mappings);
+  }
 #if defined(OS_ANDROID)
   base::MemoryMappedFile::Region region;
   int fd = ui::GetMainAndroidPackFd(&region);

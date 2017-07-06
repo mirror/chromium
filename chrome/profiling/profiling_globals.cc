@@ -32,10 +32,6 @@ base::TaskRunner* ProfilingGlobals::GetIORunner() {
   return io_thread_.task_runner().get();
 }
 
-MemlogConnectionManager* ProfilingGlobals::GetMemlogConnectionManager() {
-  return &memlog_connection_manager_;
-}
-
 BacktraceStorage* ProfilingGlobals::GetBacktraceStorage() {
   return &backtrace_storage_;
 }

@@ -5,23 +5,45 @@
 #include "chrome/common/profiling/memlog_sender.h"
 
 #include "base/command_line.h"
-#include "base/strings/utf_string_conversions.h"
+#include "base/files/file.h"
+#include "base/posix/global_descriptors.h"
+#include "base/process/process.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/profiling/memlog_allocator_shim.h"
 #include "chrome/common/profiling/memlog_sender_pipe.h"
 #include "chrome/common/profiling/memlog_stream.h"
+#include "mojo/edk/embedder/platform_channel_pair.h"
+
+#include "content/public/common/content_descriptors.h"
+
+enum {
+  kProfilingDataPipe = kContentIPCDescriptorMax + 113,
+};
 
 namespace profiling {
 
 void InitMemlogSenderIfNecessary(const base::CommandLine& cmdline) {
   std::string pipe_id = cmdline.GetSwitchValueASCII(switches::kMemlogPipe);
-  if (!pipe_id.empty())
-    StartMemlogSender(pipe_id);
+  LOG(ERROR) << "sender: I'm starting: " << base::Process::Current().Pid();
+  if (!pipe_id.empty()) {
+    base::ScopedFD fd(
+        base::GlobalDescriptors::GetInstance()->MaybeGet(kProfilingDataPipe));
+    CHECK(fd.is_valid());
+    /*
+base::ScopedPlatformHandle pipe(
+    mojo::edk::PlatformChannelPair::
+        PassClientHandleFromParentProcessFromString(pipe_id)
+            .release()
+            .handle);
+            */
+    base::ScopedPlatformHandle pipe(fd.release());
+    StartMemlogSender(std::move(pipe));
+  }
 }
 
-void StartMemlogSender(const std::string& pipe_id) {
-  static MemlogSenderPipe pipe(base::UTF8ToUTF16(pipe_id));
-  pipe.Connect();
+void StartMemlogSender(base::ScopedPlatformHandle data_pipe) {
+  // TODO(ajwong): DCHECK if this is called twice.
+  static MemlogSenderPipe pipe(std::move(data_pipe));
 
   StreamHeader header;
   header.signature = kStreamSignature;

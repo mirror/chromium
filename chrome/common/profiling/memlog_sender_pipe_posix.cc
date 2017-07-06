@@ -7,25 +7,23 @@
 #include <unistd.h>
 
 #include "base/logging.h"
-#include "base/posix/eintr_wrapper.h"
+#include "base/posix/unix_domain_socket_linux.h"
+#include "base/strings/string_number_conversions.h"
 #include "chrome/common/profiling/memlog_stream.h"
 
 namespace profiling {
 
-MemlogSenderPipe::MemlogSenderPipe(const std::string& pipe_id)
-    : pipe_id_(pipe_id), fd_(-1) {}
+MemlogSenderPipe::MemlogSenderPipe(base::ScopedPlatformHandle handle) {
+  fd_ = handle.Take();
 
-MemlogSenderPipe::~MemlogSenderPipe() {
-  if (fd_ != -1)
-    IGNORE_EINTR(::close(fd_));
+  static std::vector<int> dummy_instance;
+  dummy_for_send_ = &dummy_instance;
 }
 
-bool MemlogSenderPipe::Connect() {
-  return false;
-}
+MemlogSenderPipe::~MemlogSenderPipe() {}
 
 bool MemlogSenderPipe::Send(const void* data, size_t sz) {
-  return false;
+  return base::UnixDomainSocket::SendMsg(fd_.get(), data, sz, *dummy_for_send_);
 }
 
 }  // namespace profiling

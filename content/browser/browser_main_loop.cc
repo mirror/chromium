@@ -1687,6 +1687,7 @@ void BrowserMainLoop::InitializeMojo() {
   mojo_ipc_support_.reset(new mojo::edk::ScopedIPCSupport(
       BrowserThread::GetTaskRunnerForThread(BrowserThread::IO),
       mojo::edk::ScopedIPCSupport::ShutdownPolicy::FAST));
+  LOG(ERROR) << "IPC SUPPORT HERE";
 
   service_manager_context_.reset(new ServiceManagerContext);
 #if defined(OS_MACOSX)

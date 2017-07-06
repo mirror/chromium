@@ -5,12 +5,28 @@
 #ifndef CHROME_BROWSER_PROFILING_HOST_PROFILING_PROCESS_HOST_H_
 #define CHROME_BROWSER_PROFILING_HOST_PROFILING_PROCESS_HOST_H_
 
+#include "base/files/scoped_platform_handle.h"
 #include "base/macros.h"
 #include "base/process/process.h"
+#include "chrome/profiling/memlog.mojom.h"
+#include "mojo/edk/embedder/platform_channel_pair.h"
+#include "mojo/edk/embedder/scoped_platform_handle.h"
 
 namespace base {
 class CommandLine;
-}
+}  // namespace base
+
+namespace mojo {
+namespace edk {
+class PlatformChannelPair;
+}  // namespace edk
+}  // namespace mojo
+
+#if defined(OS_POSIX) && !defined(OS_MACOSX)
+namespace content {
+class FileDescriptorInfo;
+}  // namespace content
+#endif  // defined(OS_POSIX) && !defined(OS_MACOSX)
 
 namespace profiling {
 
@@ -40,7 +56,20 @@ class ProfilingProcessHost {
   // Appends necessary switches to a command line for a child process so it can
   // be profiled. These switches will cause the child process to start in the
   // same mode (either profiling or not) as the browser process.
-  static void AddSwitchesToChildCmdLine(base::CommandLine* child_cmd_line);
+  static void AddSwitchesToChildCmdLine(base::CommandLine* child_cmd_line,
+                                        int child_process_id);
+
+#if defined(OS_POSIX) && !defined(OS_MACOSX)
+  static void GetAdditionalMappedFilesForChildProcess(
+      const base::CommandLine& command_line,
+      int child_process_id,
+      content::FileDescriptorInfo* mappings);
+#endif  // defined(OS_POSIX) && !defined(OS_MACOSX)
+
+  // Connects the control channel to the profiling process.
+  void ConnectControlChannel();
+
+  void EnsureMemlogExistOnIO();
 
  private:
   ProfilingProcessHost();
@@ -48,9 +77,15 @@ class ProfilingProcessHost {
 
   void Launch();
 
+  void BindOnIO(mojo::ScopedMessagePipeHandle control_pipe);
+  void AddNewSenderOnIO(mojo::edk::ScopedPlatformHandle handle,
+                        int child_process_id);
+
   // Use process_.IsValid() to determine if the child process has been launched.
   base::Process process_;
   std::string pipe_id_;
+  mojom::MemlogPtr memlog_;
+  std::unique_ptr<mojo::edk::PlatformChannelPair> control_channel_;
 
   DISALLOW_COPY_AND_ASSIGN(ProfilingProcessHost);
 };

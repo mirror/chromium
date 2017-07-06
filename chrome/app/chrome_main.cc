@@ -114,15 +114,19 @@ int ChromeMain(int argc, const char** argv) {
   // The profiling server is only compiled into the browser process. On Windows,
   // non-component builds, browser code is only used for
   // CHROME_MULTIPLE_DLL_BROWSER.
-  if (command_line->HasSwitch(switches::kMemlog))
+  if (command_line->HasSwitch(switches::kMemlog)) {
+    LOG(ERROR) << "PPH Started";
     profiling::ProfilingProcessHost::EnsureStarted();
+  }
 #endif
   // The profiling process. This is a child process type implemented at the
   // Chrome layer rather than the content layer (like the other child procs.).
   if (command_line->GetSwitchValueASCII(switches::kProcessType) ==
-      switches::kProfiling)
+      switches::kProfiling) {
     return profiling::ProfilingMain(*command_line);
-  profiling::InitMemlogSenderIfNecessary(*command_line);
+  } else {
+    profiling::InitMemlogSenderIfNecessary(*command_line);
+  }
 #endif  // ENABLE_OOP_HEAP_PROFILING
 
 #if defined(OS_CHROMEOS) && BUILDFLAG(ENABLE_PACKAGE_MASH_SERVICES)

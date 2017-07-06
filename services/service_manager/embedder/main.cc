@@ -234,6 +234,7 @@ void OnInstanceQuit(MainDelegate* delegate,
 int RunServiceManager(MainDelegate* delegate) {
   NonEmbedderProcessInit();
 
+  LOG(ERROR) << "Service Manager start";
   base::MessageLoop message_loop(base::MessageLoop::TYPE_UI);
 
   base::SequencedWorkerPool::EnableWithRedirectionToTaskSchedulerForProcess();
@@ -241,6 +242,7 @@ int RunServiceManager(MainDelegate* delegate) {
   base::Thread ipc_thread("IPC thread");
   ipc_thread.StartWithOptions(
       base::Thread::Options(base::MessageLoop::TYPE_IO, 0));
+  LOG(ERROR) << "Fun fun";
   mojo::edk::ScopedIPCSupport ipc_support(
       ipc_thread.task_runner(),
       mojo::edk::ScopedIPCSupport::ShutdownPolicy::FAST);

@@ -5,12 +5,14 @@
 #include "chrome/profiling/memlog_connection_manager.h"
 
 #include "base/bind.h"
+#include "base/files/scoped_file.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/threading/thread.h"
 #include "chrome/profiling/allocation_tracker.h"
 #include "chrome/profiling/memlog_stream_parser.h"
 #include "chrome/profiling/profiling_globals.h"
+#include "mojo/public/cpp/system/platform_handle.h"
 
 namespace profiling {
 
@@ -31,7 +33,12 @@ struct MemlogConnectionManager::Connection {
   AllocationTracker tracker;
 };
 
-MemlogConnectionManager::MemlogConnectionManager() {}
+MemlogConnectionManager::MemlogConnectionManager(mojom::MemlogRequest request)
+    : binding_(this) {
+  ProfilingGlobals::Get()->GetIORunner()->PostTask(
+      FROM_HERE, base::BindOnce(&MemlogConnectionManager::BindOnIO,
+                                base::Unretained(this), std::move(request)));
+}
 
 MemlogConnectionManager::~MemlogConnectionManager() {
   // Clear the callback since the server is refcounted and may outlive us.
@@ -39,12 +46,44 @@ MemlogConnectionManager::~MemlogConnectionManager() {
       base::RepeatingCallback<void(scoped_refptr<MemlogReceiverPipe>)>());
 }
 
-void MemlogConnectionManager::StartConnections(const std::string& pipe_id) {
+void MemlogConnectionManager::StartConnections(
+    const std::string& initial_pipe_id) {
   server_ = new MemlogReceiverPipeServer(
-      ProfilingGlobals::Get()->GetIORunner(), pipe_id,
+      ProfilingGlobals::Get()->GetIORunner(), initial_pipe_id,
       base::BindRepeating(&MemlogConnectionManager::OnNewConnection,
                           base::Unretained(this)));
   server_->Start();
+}
+
+void MemlogConnectionManager::AddNewSender(mojo::ScopedHandle sender_pipe,
+                                           int32_t sender_pid) {
+  base::PlatformFile sender_file;
+  MojoResult result =
+      mojo::UnwrapPlatformFile(std::move(sender_pipe), &sender_file);
+  CHECK_EQ(result, MOJO_RESULT_OK);
+  scoped_refptr<MemlogReceiverPipe> new_pipe =
+      new MemlogReceiverPipe(base::ScopedPlatformHandle(sender_file));
+
+  LOG(ERROR) << "Profiling: New sender: " << sender_pid;
+  // Task to post to clean up the connection. Don't need to retain |this| since
+  // it wil be called by objects owned by the MemlogConnectionManager.
+  AllocationTracker::CompleteCallback complete_cb =
+      base::BindOnce(&MemlogConnectionManager::OnConnectionCompleteThunk,
+                     base::Unretained(this),
+                     base::MessageLoop::current()->task_runner(), sender_pid);
+
+  std::unique_ptr<Connection> connection = base::MakeUnique<Connection>(
+      std::move(complete_cb), sender_pid, new_pipe);
+  connection->thread.Start();
+
+  connection->parser = new MemlogStreamParser(&connection->tracker);
+  new_pipe->SetReceiver(connection->thread.task_runner(), connection->parser);
+
+  connections_[sender_pid] = std::move(connection);
+}
+
+void MemlogConnectionManager::BindOnIO(mojom::MemlogRequest request) {
+  binding_.Bind(std::move(request));
 }
 
 void MemlogConnectionManager::OnNewConnection(

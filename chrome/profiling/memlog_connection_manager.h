@@ -11,7 +11,9 @@
 #include "base/macros.h"
 #include "build/build_config.h"
 #include "chrome/profiling/backtrace_storage.h"
+#include "chrome/profiling/memlog.mojom.h"
 #include "chrome/profiling/memlog_receiver_pipe_server.h"
+#include "mojo/public/cpp/bindings/binding.h"
 
 namespace base {
 class SingleThreadTaskRunner;
@@ -21,16 +23,24 @@ namespace profiling {
 
 // Manages all connections and logging for each process. Pipes are supplied by
 // the pipe server and this class will connect them to a parser and logger.
-class MemlogConnectionManager {
+//
+// TODO(ajwong): Rename to MemlogImpl
+class MemlogConnectionManager : public mojom::Memlog {
  public:
-  MemlogConnectionManager();
-  ~MemlogConnectionManager();
+  explicit MemlogConnectionManager(mojom::MemlogRequest request);
+  ~MemlogConnectionManager() override;
 
-  // Starts listening for connections.
-  void StartConnections(const std::string& pipe_id);
+  // Connects to initial pipe for trace events from spawning process. Also
+  // starts mojo service to listen for new pipes.
+  void StartConnections(const std::string& initial_pipe_id);
+
+  void AddNewSender(mojo::ScopedHandle sender_pipe,
+                    int32_t sender_pid) override;
 
  private:
   struct Connection;
+
+  void BindOnIO(mojom::MemlogRequest request);
 
   // Called by the pipe server when a new pipe is created.
   void OnNewConnection(scoped_refptr<MemlogReceiverPipe> new_pipe);
@@ -46,6 +56,7 @@ class MemlogConnectionManager {
       int process_id);
 
   scoped_refptr<MemlogReceiverPipeServer> server_;
+  mojo::Binding<mojom::Memlog> binding_;
 
   // Maps process ID to the connection information for it.
   base::flat_map<int, std::unique_ptr<Connection>> connections_;
