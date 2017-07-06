@@ -25,6 +25,7 @@
 
 #include "platform/Language.h"
 
+#include "platform/text/PlatformLocale.h"
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/Platform.h"
 
@@ -58,6 +59,7 @@ void OverrideUserPreferredLanguages(const Vector<AtomicString>& override) {
   canonicalized.ReserveCapacity(override.size());
   for (const auto& lang : override)
     canonicalized.push_back(CanonicalizeLanguageIdentifier(lang));
+  Locale::ResetDefautlLocale();
 }
 
 AtomicString DefaultLanguage() {
