@@ -522,7 +522,7 @@ class CONTENT_EXPORT WebContentsImpl
   RenderFrameHost* GetGuestByInstanceID(
       RenderFrameHost* render_frame_host,
       int browser_plugin_instance_id) override;
-  device::GeolocationServiceContext* GetGeolocationServiceContext() override;
+  device::GeolocationContext* GetGeolocationContext() override;
   device::mojom::WakeLockContext* GetWakeLockContext() override;
   device::mojom::WakeLock* GetRendererWakeLock() override;
 #if defined(OS_ANDROID)
@@ -1564,8 +1564,7 @@ class CONTENT_EXPORT WebContentsImpl
   // Whether the last JavaScript dialog shown was suppressed. Used for testing.
   bool last_dialog_suppressed_;
 
-  std::unique_ptr<device::GeolocationServiceContext>
-      geolocation_service_context_;
+  std::unique_ptr<device::GeolocationContext> geolocation_context_;
 
   std::unique_ptr<WakeLockContextHost> wake_lock_context_host_;
 
