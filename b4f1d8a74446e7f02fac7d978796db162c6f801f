@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78139a7c_ab68d9a1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-07-06T16:12:47Z",
+      "side": 1,
+      "message": "In general we\u0027re moving away from layout tests (when not web platform tests that are shareable with other browsers) and towards unit tests. It makes sense to have some integration tests in the form of layout tests but I think it would be best to have the majority of tests be unit tests. If the tests were written as unittests instead of layouttests, would the new internals methods be needed?",
+      "revId": "b4f1d8a74446e7f02fac7d978796db162c6f801f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c52ad147_ee512433",
+        "filename": "third_party/WebKit/Source/core/page/ChromeClient.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-07-06T16:12:47Z",
+      "side": 1,
+      "message": "Nit: please include the names here (float height, bool shrinks_layout).",
+      "revId": "b4f1d8a74446e7f02fac7d978796db162c6f801f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e72d3d8_8cc6c44d",
+        "filename": "third_party/WebKit/Source/core/testing/Internals.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-07-06T16:12:47Z",
+      "side": 1,
+      "message": "Nit: I\u0027m still getting used to the new code style but I think this should be shrinks_layout.",
+      "revId": "b4f1d8a74446e7f02fac7d978796db162c6f801f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f74194b6_35a2e8e1",
+        "filename": "third_party/WebKit/Source/web/ChromeClientImpl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-07-06T16:12:47Z",
+      "side": 1,
+      "message": "Nit: please include the names here (float height, bool shrinks_layout).",
+      "revId": "b4f1d8a74446e7f02fac7d978796db162c6f801f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
