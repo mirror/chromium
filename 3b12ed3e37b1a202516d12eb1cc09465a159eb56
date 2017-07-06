@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02b94bec_dcbeaf74",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-06T03:31:51Z",
+      "side": 1,
+      "message": "I tweaked this to not say \"gn arg\", as those are generally how you refer to the global args (within declare_args() blocks).",
+      "revId": "3b12ed3e37b1a202516d12eb1cc09465a159eb56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37ecb739_52c35c8b",
+        "filename": "build/android/gyp/package_resources.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-06T03:31:51Z",
+      "side": 1,
+      "message": "nit: root \u003d os.path.splitext(png_path)[0]",
+      "range": {
+        "startLine": 352,
+        "startChar": 10,
+        "endLine": 352,
+        "endChar": 12
+      },
+      "revId": "3b12ed3e37b1a202516d12eb1cc09465a159eb56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd5bbcdb_2b790d60",
+        "filename": "build/config/android/internal_rules.gni",
+        "patchSetId": 5
+      },
+      "lineNbr": 1719,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-06T03:31:51Z",
+      "side": 1,
+      "message": "nit: add root_build_dir as 2nd arge to rebase_path",
+      "range": {
+        "startLine": 1719,
+        "startChar": 12,
+        "endLine": 1719,
+        "endChar": 23
+      },
+      "revId": "3b12ed3e37b1a202516d12eb1cc09465a159eb56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
