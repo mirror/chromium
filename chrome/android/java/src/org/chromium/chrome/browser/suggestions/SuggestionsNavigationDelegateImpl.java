@@ -7,6 +7,7 @@ package org.chromium.chrome.browser.suggestions;
 import android.support.annotation.Nullable;
 
 import org.chromium.base.metrics.RecordUserAction;
+import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.NativePageHost;
 import org.chromium.chrome.browser.UrlConstants;
@@ -31,6 +32,7 @@ import org.chromium.content_public.browser.LoadUrlParams;
 import org.chromium.content_public.common.Referrer;
 import org.chromium.ui.base.PageTransition;
 import org.chromium.ui.mojom.WindowOpenDisposition;
+import org.chromium.ui.widget.Toast;
 
 /**
  * {@link SuggestionsUiDelegate} implementation.
@@ -184,8 +186,17 @@ public class SuggestionsNavigationDelegateImpl implements SuggestionsNavigationD
     }
 
     private Tab openUrlInNewTab(LoadUrlParams loadUrlParams) {
-        return mTabModelSelector.openNewTab(loadUrlParams, TabLaunchType.FROM_LONGPRESS_BACKGROUND,
-                mHost.getActiveTab(), /* incognito = */ false);
+        Tab tab = mTabModelSelector.openNewTab(loadUrlParams,
+                TabLaunchType.FROM_LONGPRESS_BACKGROUND, mHost.getActiveTab(),
+                /* incognito = */ false);
+
+        // If the bottom sheet NTP UI is showing, a toast is not necessary because the bottom sheet
+        // will be closed when the overview is hidden due to the new tab creation above.
+        if (mActivity.getBottomSheet() != null && !mActivity.getBottomSheet().isShowingNewTab()) {
+            Toast.makeText(mActivity, R.string.open_in_new_tab_toast, Toast.LENGTH_SHORT).show();
+        }
+
+        return tab;
     }
 
     private void saveUrlForOffline(String url) {
