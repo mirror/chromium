@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40d708c3_4334612a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-07-06T14:14:46Z",
+      "side": 1,
+      "message": "nit: Please update the description to reflect the new behavior.\n\nWe no longer force layout after each popstate but only when necessary.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 5
+      },
+      "revId": "6627e5174e4ed37d08ef2436e03610ec82725734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b5d60e0_2f1f49a5",
+        "filename": "third_party/WebKit/LayoutTests/fast/history/scroll-restoration/scroll-restoration-same-doc.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-07-06T14:14:46Z",
+      "side": 1,
+      "message": "nit: extra space.",
+      "range": {
+        "startLine": 21,
+        "startChar": 27,
+        "endLine": 21,
+        "endChar": 28
+      },
+      "revId": "6627e5174e4ed37d08ef2436e03610ec82725734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f987719a_1bdb1d48",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1098,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-07-06T14:14:46Z",
+      "side": 1,
+      "message": "nit: Thanks for adding the \u0027period\u0027! Can we also add it to all above for consistency\nand correctness.",
+      "range": {
+        "startLine": 1098,
+        "startChar": 61,
+        "endLine": 1098,
+        "endChar": 62
+      },
+      "revId": "6627e5174e4ed37d08ef2436e03610ec82725734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c79411eb_09c55c7f",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1111,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-07-06T14:14:46Z",
+      "side": 1,
+      "message": "I think you want to have ||  history_load_type \u003d\u003d kHistorySameDocumentLoad here as well.\n\nEven better to make it more readable:\nbool should_force_clamping \u003d  !frame-\u003eIsLoading() || history_load_type \u003d\u003d kHistorySameDocumentLoad\n\nand use that in this expression.",
+      "range": {
+        "startLine": 1111,
+        "startChar": 60,
+        "endLine": 1111,
+        "endChar": 62
+      },
+      "revId": "6627e5174e4ed37d08ef2436e03610ec82725734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
