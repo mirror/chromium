@@ -1,0 +1,475 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bbc72810_f54c3a7e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadManagerUi.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-06T17:45:59Z",
+      "side": 1,
+      "message": "... is close to info header...?",
+      "range": {
+        "startLine": 209,
+        "startChar": 78,
+        "endLine": 209,
+        "endChar": 83
+      },
+      "revId": "e5306632081e04b98f103635d703c5a11a376be7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "296a135e_0fc2749e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-06T17:45:59Z",
+      "side": 1,
+      "message": "Is this needed because the privacy disclaimers and CBD button are both in the same LinearLayout in history_header.xml?\n\nI think that at this point, since the privacy disclaimers and CBD button won\u0027t be displayed in the same adapter item, we should use two XML layouts that are inflated separately.",
+      "range": {
+        "startLine": 245,
+        "startChar": 0,
+        "endLine": 245,
+        "endChar": 77
+      },
+      "revId": "e5306632081e04b98f103635d703c5a11a376be7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1efc6e3b_d1c85cbe",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-06T17:45:59Z",
+      "side": 1,
+      "message": "LinearLayout\u0027s are used to display either vertical or horizontal groups of items. FrameLayout seems more appropriate since there should only ever be one child view attached to this container ViewGroup.",
+      "range": {
+        "startLine": 318,
+        "startChar": 26,
+        "endLine": 318,
+        "endChar": 38
+      },
+      "revId": "e5306632081e04b98f103635d703c5a11a376be7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edf89201_caeecdb3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-06T17:45:59Z",
+      "side": 1,
+      "message": "Same comment as DownloadManagerUi.",
+      "revId": "e5306632081e04b98f103635d703c5a11a376be7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "522bebcf_33bf94f5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-06T17:45:59Z",
+      "side": 1,
+      "message": "nit: this should be indented to line up with \"True if..\"\n\nWhile I think that the browsing history service won\u0027t find \"other forms of browsing history\" if the user isn\u0027t signed in, the documentation is rather vague and at some point we may add some privacy text in incognito (crbug.com/738627), so I would prefer to keep a method in the HistoryAdapter that both the adapter and this class can rely on to determine if there are any privacy disclaimers to display.",
+      "range": {
+        "startLine": 416,
+        "startChar": 48,
+        "endLine": 416,
+        "endChar": 54
+      },
+      "revId": "e5306632081e04b98f103635d703c5a11a376be7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8068c8fc_1755a3d1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryManagerToolbar.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-06T17:45:59Z",
+      "side": 1,
+      "message": "Isn\u0027t this covered in HistoryManager#shouldShowInfoButton()?",
+      "range": {
+        "startLine": 82,
+        "startChar": 63,
+        "endLine": 82,
+        "endChar": 71
+      },
+      "revId": "e5306632081e04b98f103635d703c5a11a376be7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b67d5314_f43ac2fe",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/DateDividedAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-06T17:45:59Z",
+      "side": 1,
+      "message": "nit: s/{@link Adapter}/this adapter ?",
+      "range": {
+        "startLine": 109,
+        "startChar": 54,
+        "endLine": 109,
+        "endChar": 58
+      },
+      "revId": "e5306632081e04b98f103635d703c5a11a376be7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d044e37_dbb72de5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/DateDividedAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-06T17:45:59Z",
+      "side": 1,
+      "message": "nit: @return The View associated with this HeaderItem.",
+      "range": {
+        "startLine": 132,
+        "startChar": 28,
+        "endLine": 132,
+        "endChar": 34
+      },
+      "revId": "e5306632081e04b98f103635d703c5a11a376be7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cae8621b_29152479",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/DateDividedAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-06T17:45:59Z",
+      "side": 1,
+      "message": "nit: I think the getters and setters for visibility should be:\n\npublic void setVisibility(boolean isVisible);\npublic boolean isVisible();",
+      "range": {
+        "startLine": 142,
+        "startChar": 20,
+        "endLine": 142,
+        "endChar": 27
+      },
+      "revId": "e5306632081e04b98f103635d703c5a11a376be7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63e16d01_06e33e6b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/DateDividedAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-06T17:45:59Z",
+      "side": 1,
+      "message": "It\u0027s possible that HistoryAdapter will have 0 items in the header group if the privacy disclaimers are hidden and the CBD button is hidden, right? If so, shouldn\u0027t this return 0?\n\nYou can manually test this by hardcoding PrefServiceBridge.getInstance().canDeleteBrowsingHistory() to return false. It would also be great to add an instrumentation test for this.",
+      "range": {
+        "startLine": 274,
+        "startChar": 0,
+        "endLine": 274,
+        "endChar": 73
+      },
+      "revId": "e5306632081e04b98f103635d703c5a11a376be7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68aa0dd4_12629466",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/DateDividedAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-06T17:45:59Z",
+      "side": 1,
+      "message": "This comment needs to be updated.",
+      "range": {
+        "startLine": 282,
+        "startChar": 42,
+        "endLine": 282,
+        "endChar": 48
+      },
+      "revId": "e5306632081e04b98f103635d703c5a11a376be7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd666fab_18055138",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/DateDividedAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-06T17:45:59Z",
+      "side": 1,
+      "message": "nit: Add a period to the end of this sentence.",
+      "range": {
+        "startLine": 415,
+        "startChar": 0,
+        "endLine": 415,
+        "endChar": 74
+      },
+      "revId": "e5306632081e04b98f103635d703c5a11a376be7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "792d10b8_29cfc195",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/DateDividedAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-06T17:45:59Z",
+      "side": 1,
+      "message": "Can the second param be HeaderItem, which would place the responsibility for casting on this class instead of the sub-class?",
+      "range": {
+        "startLine": 418,
+        "startChar": 70,
+        "endLine": 418,
+        "endChar": 79
+      },
+      "revId": "e5306632081e04b98f103635d703c5a11a376be7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0813cb8_aff0feb8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/DateDividedAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-06T17:45:59Z",
+      "side": 1,
+      "message": "nit: \"Adds a header as the first group in this adapter...\" Then describe what happens when headerItems is null and when headerItems not null.",
+      "range": {
+        "startLine": 478,
+        "startChar": 29,
+        "endLine": 478,
+        "endChar": 31
+      },
+      "revId": "e5306632081e04b98f103635d703c5a11a376be7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f8e1986_1e17e5cd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/DateDividedAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-06T17:45:59Z",
+      "side": 1,
+      "message": "Let\u0027s add the @Nullable annotation here.",
+      "range": {
+        "startLine": 482,
+        "startChar": 27,
+        "endLine": 482,
+        "endChar": 31
+      },
+      "revId": "e5306632081e04b98f103635d703c5a11a376be7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7027ee95_59888223",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/DateDividedAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-06T17:45:59Z",
+      "side": 1,
+      "message": "If neither of the items in headerItems are visible, should we skip adding the header group?",
+      "range": {
+        "startLine": 497,
+        "startChar": 12,
+        "endLine": 497,
+        "endChar": 27
+      },
+      "revId": "e5306632081e04b98f103635d703c5a11a376be7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ac89ec2_aade8c85",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/DateDividedAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-06T17:45:59Z",
+      "side": 1,
+      "message": "Is there something we can check here besides pair.second !\u003d null e.g. (pair.second !\u003d null \u0026\u0026 pair.second instanceof HeaderItem)?",
+      "revId": "e5306632081e04b98f103635d703c5a11a376be7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecb45bfe_86d92e85",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/DateDividedAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 691,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-06T17:45:59Z",
+      "side": 1,
+      "message": "nit: \"Remove header if there are no items left.\"\n\nThis behavior may actually change in the future (there is discussion about keeping the space display always visible in crbug.com/728190, so my preference is to remove this for now.",
+      "range": {
+        "startLine": 691,
+        "startChar": 45,
+        "endLine": 691,
+        "endChar": 49
+      },
+      "revId": "e5306632081e04b98f103635d703c5a11a376be7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9de76f56_6040cfe9",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/history/HistoryActivityTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-06T17:45:59Z",
+      "side": 1,
+      "message": "The size will be 1 for the CBD button, right? If so, let\u0027s assert that rather than just \u003c 2.",
+      "range": {
+        "startLine": 448,
+        "startChar": 27,
+        "endLine": 448,
+        "endChar": 49
+      },
+      "revId": "e5306632081e04b98f103635d703c5a11a376be7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4af9d406_a56b92ec",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/history/HistoryActivityTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-06T17:45:59Z",
+      "side": 1,
+      "message": "\u003d\u003d 1 here too?\n\nAlso, could we expose HistoryManager#mHeaderItems and add checks to ensure the correct items are header items are visible?",
+      "range": {
+        "startLine": 476,
+        "startChar": 27,
+        "endLine": 476,
+        "endChar": 49
+      },
+      "revId": "e5306632081e04b98f103635d703c5a11a376be7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cced62e_cfa5262f",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/history/HistoryActivityTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-06T17:45:59Z",
+      "side": 1,
+      "message": "I think we should split this into a separate test and check that the info button and headers are both not visible.",
+      "range": {
+        "startLine": 483,
+        "startChar": 0,
+        "endLine": 483,
+        "endChar": 82
+      },
+      "revId": "e5306632081e04b98f103635d703c5a11a376be7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
