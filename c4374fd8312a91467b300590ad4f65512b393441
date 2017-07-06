@@ -34,6 +34,24 @@
       "revId": "c4374fd8312a91467b300590ad4f65512b393441",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbb583fe_95ef5084",
+        "filename": "chrome/browser/resources/settings/settings_ui/settings_ui.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-07-06T10:58:57Z",
+      "side": 1,
+      "message": "This is the spec for updating the IntersectionObserver: https://wicg.github.io/IntersectionObserver/#update-intersection-observations-algo\n\nAn entry is queued when the thresholdIndex changes as it would when it goes from intersecting to non-intersecting, the queued elements are delivered when the queued task is delivered (https://wicg.github.io/IntersectionObserver/#queue-intersection-observer-task). AFAICT the spec does not require that there be only one entry per element; it just happens to be that way most of the time because the UnthrottledTaskRunner and Compositor task runner have the same priority.\n\nWith my change https://chromium-review.googlesource.com/c/559345 this will not be true. It\u0027s important to note that it was not guaranteed before as there are several UseCases where the compositor\u0027s priority was bumped. E.g. https://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc?sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d1091\n\nSo I think this change is the right change and should stand. However I clearly need to look through the code for other cases of IntersectionObservers that are assuming that entries.length \u003c\u003d targets.length.",
+      "parentUuid": "52faeae9_ebcee3e7",
+      "revId": "c4374fd8312a91467b300590ad4f65512b393441",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
