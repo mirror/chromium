@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6dd35d3_904765d8",
+        "filename": "third_party/WebKit/Source/platform/audio/FFTFrameStub.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-06T09:16:49Z",
+      "side": 0,
+      "message": "We shouldn\u0027t remove this for USE() macro.",
+      "revId": "bdf4642db91687af930bd9c58dfee693350117fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
