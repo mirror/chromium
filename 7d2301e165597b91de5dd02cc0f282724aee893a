@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b5a07be_34e02941",
+        "filename": "extensions/browser/api/bluetooth_low_energy/bluetooth_low_energy_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-06T04:39:54Z",
+      "side": 1,
+      "message": "https://bugs.chromium.org/p/chromium/issues/detail?id\u003d368368 (which was filed for this issue) is marked fixed, so you might be able to switch these to GetCharacteristics::Result::Create and remove extensions/browser/api/bluetooth_low_energy/utils.h (though, I\u0027d leave that for a followup cl).",
+      "range": {
+        "startLine": 571,
+        "startChar": 5,
+        "endLine": 573,
+        "endChar": 21
+      },
+      "revId": "7d2301e165597b91de5dd02cc0f282724aee893a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a26a5e1c_c95e2bcb",
+        "filename": "extensions/browser/api/bluetooth_low_energy/bluetooth_low_energy_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1100,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-06T04:39:54Z",
+      "side": 1,
+      "message": "This is missing Respond(NoArguments()); without it the extension function will hang",
+      "revId": "7d2301e165597b91de5dd02cc0f282724aee893a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
