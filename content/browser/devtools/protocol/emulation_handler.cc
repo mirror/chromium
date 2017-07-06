@@ -143,7 +143,7 @@ Response EmulationHandler::SetDeviceMetricsOverride(
     int height,
     double device_scale_factor,
     bool mobile,
-    bool fit_window,
+    Maybe<bool> fit_window,
     Maybe<double> scale,
     Maybe<double> offset_x,
     Maybe<double> offset_y,
@@ -214,7 +214,7 @@ Response EmulationHandler::SetDeviceMetricsOverride(
       blink::WebPoint(position_x.fromMaybe(0), position_y.fromMaybe(0));
   params.device_scale_factor = device_scale_factor;
   params.view_size = blink::WebSize(width, height);
-  params.fit_to_view = fit_window;
+  params.fit_to_view = fit_window.fromMaybe(false);
   params.scale = scale.fromMaybe(1);
   params.screen_orientation_type = orientationType;
   params.screen_orientation_angle = orientationAngle;

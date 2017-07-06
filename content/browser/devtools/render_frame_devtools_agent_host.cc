@@ -490,12 +490,16 @@ void RenderFrameDevToolsAgentHost::AttachSession(DevToolsSession* session) {
     session->SetRenderFrameHost(frame_host_);
   else
     session->SetRenderFrameHost(handlers_frame_host_);
+
+  protocol::EmulationHandler* emulation_handler =
+      new protocol::EmulationHandler();
   if (frame_tree_node_ && !frame_tree_node_->parent()) {
-    session->AddHandler(base::WrapUnique(new protocol::PageHandler()));
+    session->AddHandler(
+        base::WrapUnique(new protocol::PageHandler(emulation_handler)));
     session->AddHandler(base::WrapUnique(new protocol::SecurityHandler()));
   }
   session->AddHandler(base::WrapUnique(new protocol::DOMHandler()));
-  session->AddHandler(base::WrapUnique(new protocol::EmulationHandler()));
+  session->AddHandler(base::WrapUnique(emulation_handler));
   session->AddHandler(base::WrapUnique(new protocol::InputHandler()));
   session->AddHandler(base::WrapUnique(new protocol::InspectorHandler()));
   session->AddHandler(base::WrapUnique(new protocol::IOHandler(

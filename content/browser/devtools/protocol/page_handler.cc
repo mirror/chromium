@@ -22,6 +22,7 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "content/browser/devtools/devtools_session.h"
 #include "content/browser/devtools/page_navigation_throttle.h"
+#include "content/browser/devtools/protocol/emulation_handler.h"
 #include "content/browser/renderer_host/render_widget_host_impl.h"
 #include "content/browser/renderer_host/render_widget_host_view_base.h"
 #include "content/browser/web_contents/web_contents_impl.h"
@@ -93,7 +94,7 @@ std::string EncodeSkBitmap(const SkBitmap& image,
 
 }  // namespace
 
-PageHandler::PageHandler()
+PageHandler::PageHandler(EmulationHandler* emulation_handler)
     : DevToolsDomainHandler(Page::Metainfo::domainName),
       enabled_(false),
       screencast_enabled_(false),
@@ -109,7 +110,10 @@ PageHandler::PageHandler()
       navigation_throttle_enabled_(false),
       next_navigation_id_(0),
       host_(nullptr),
-      weak_factory_(this) {}
+      emulation_handler_(emulation_handler),
+      weak_factory_(this) {
+  DCHECK(emulation_handler_);
+}
 
 PageHandler::~PageHandler() {
 }
