@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "824aeb5f_3ab966ff",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-06T12:42:43Z",
+      "side": 1,
+      "message": "insntance → instance",
+      "range": {
+        "startLine": 11,
+        "startChar": 13,
+        "endLine": 11,
+        "endChar": 22
+      },
+      "revId": "e66e8c51f4359b64679686d096188bc7680f6069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d1072f59_31b09897",
         "filename": "ios/web/browser_state.mm",
         "patchSetId": 5
@@ -25,6 +48,23 @@
     },
     {
       "key": {
+        "uuid": "37ec6096_a0bb0d1c",
+        "filename": "ios/web/browser_state.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-06T12:42:43Z",
+      "side": 1,
+      "message": "std::map::erase has an overload that takes a \"const key_type\u0026\" parameter and erase the value associated with this key, so those three lines change be changed to:\n\n  g_user_id_to_browser_state.Get().erase(holder-\u003euser_id());\n\nBTW, I think you should DCHECK that the stored value match browser_state:\n\n  DCHECK_EQ(browser_state, g_user_id_to_browser_state.Get()[holder-\u003euser_id()]);",
+      "revId": "e66e8c51f4359b64679686d096188bc7680f6069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "82e7d724_db274ccb",
         "filename": "ios/web/browser_state.mm",
         "patchSetId": 5
@@ -41,6 +81,29 @@
         "startChar": 6,
         "endLine": 85,
         "endChar": 48
+      },
+      "revId": "e66e8c51f4359b64679686d096188bc7680f6069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dea98b7_4ab9c2d9",
+        "filename": "ios/web/browser_state.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-06T12:42:43Z",
+      "side": 1,
+      "message": "followup:\n\nThis is a virtual method and BrowserState::Initialize is called from BrowserState subclasses\u0027 constructor. It means that if any of those classes is subclassed, then the wrong version of the virtual method will be called.\n\nAs all BrowserState subclasses should not be instantiated directly but are constructed by helper objects (see [1]), we can make this safer by adding the call to BrowserState::Initialize after constructing the objects.\n\nThis will make the code slightly diverges from src/chrome/ but I prefer that pattern.\n\n[1]:\n  - TestChromeBrowser constructor is called from:\n    - TestChromeBrowserState::Builder::Build\n    - TestChromeBrowserState::GetOffTheRecordChromeBrowserState\n  - ChromeBrowserStateImpl constructor is called from:\n    - ChromeBrowserStateManagerImpl::GetBrowserState\n  - OffTheRecordChromeBrowserState constructor is called from:\n    - ChromeBrowserStateImpl::GetOffTheRecordChromeBrowserState",
+      "range": {
+        "startLine": 243,
+        "startChar": 18,
+        "endLine": 243,
+        "endChar": 36
       },
       "revId": "e66e8c51f4359b64679686d096188bc7680f6069",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
