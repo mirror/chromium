@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a02e155f_d6413229",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/IntentHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-07-06T14:36:42Z",
+      "side": 1,
+      "message": "i\u0027m wondering if this is the best place for this. Given that this is an extra for the history page, I think it may be better to add directly to HistoryActivity?",
+      "range": {
+        "startLine": 164,
+        "startChar": 37,
+        "endLine": 164,
+        "endChar": 46
+      },
+      "revId": "4587d59a44c5469c70397fa01c75f854733f1faa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f20dcbab_9190d80d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/BrowsingHistoryBridge.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-07-06T14:36:42Z",
+      "side": 1,
+      "message": "I think it\u0027s better to just pass the boolean down to native and get the profile there. Here you\u0027re plumbing through profile which goes to native to get the default profile, only to convert it back once you\u0027re on the native side.",
+      "revId": "4587d59a44c5469c70397fa01c75f854733f1faa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
