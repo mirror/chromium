@@ -209,6 +209,7 @@ class BASE_EXPORT TaskScheduler {
   // each process n/GetMaxConcurrentTasksWithTraitsDeprecated() items.
   //
   // TODO(fdoray): Remove this method. https://crbug.com/687264
+
   virtual int GetMaxConcurrentTasksWithTraitsDeprecated(
       const TaskTraits& traits) const = 0;
 };
