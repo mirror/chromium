@@ -178,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "ba9fb0dd_78739709",
+        "filename": "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-06T00:42:26Z",
+      "side": 1,
+      "message": "You\u0027re absolutely right - I had been focusing on the case where there was just one entry per source, since that\u0027s how PageLoad works, but it should be allowed to retain the individual entries as well. I\u0027ll make changes to support this case, as it\u0027s important for your case and any other similar cases. Thanks!",
+      "parentUuid": "d250243b_a3a55d4e",
+      "revId": "5f897a13751bedb3270bd6d6c238138c93c61227",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "effe1a6d_19bb8055",
         "filename": "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.h",
         "patchSetId": 4
