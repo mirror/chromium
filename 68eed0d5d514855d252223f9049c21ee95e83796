@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48f8fa7a_2b5eead3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeBackgroundService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-06T12:42:09Z",
+      "side": 1,
+      "message": "This feels very odd.",
+      "range": {
+        "startLine": 101,
+        "startChar": 4,
+        "endLine": 103,
+        "endChar": 5
+      },
+      "revId": "68eed0d5d514855d252223f9049c21ee95e83796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2418e503_b2a53a3d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeBackgroundService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-06T12:42:09Z",
+      "side": 1,
+      "message": "I am not sure whether this rename is useful. Previously there was some contract that \"reschedule\" must happen, now there is none. And \"rescheduleSnippetsTasksOnUpgrade\" feels odd because reschedule is implicit now.",
+      "range": {
+        "startLine": 166,
+        "startChar": 12,
+        "endLine": 166,
+        "endChar": 32
+      },
+      "revId": "68eed0d5d514855d252223f9049c21ee95e83796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f31c1090_38ffd1a4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetsBridge.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-06T12:42:09Z",
+      "side": 1,
+      "message": "I am not sure whether this is needed. Just by looking at the native function I can see that it notifies the scheduler.",
+      "range": {
+        "startLine": 69,
+        "startChar": 23,
+        "endLine": 69,
+        "endChar": 52
+      },
+      "revId": "68eed0d5d514855d252223f9049c21ee95e83796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ec70341_a683e82a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetsBridge.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-06T12:42:09Z",
+      "side": 1,
+      "message": "not needed. Same below.",
+      "range": {
+        "startLine": 69,
+        "startChar": 16,
+        "endLine": 69,
+        "endChar": 18
+      },
+      "revId": "68eed0d5d514855d252223f9049c21ee95e83796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "102092c0_22b94842",
+        "filename": "chrome/browser/android/ntp/ntp_snippets_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-06T12:42:09Z",
+      "side": 1,
+      "message": "This is an implementation detail of |scheduler-\u003eOnBrowserUpgraded()|.",
+      "range": {
+        "startLine": 138,
+        "startChar": 0,
+        "endLine": 139,
+        "endChar": 70
+      },
+      "revId": "68eed0d5d514855d252223f9049c21ee95e83796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb1398f5_506dda79",
+        "filename": "components/ntp_snippets/remote/persistent_scheduler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-06T12:42:09Z",
+      "side": 1,
+      "message": "This is somewhat confusing. RemoteSuggestionsScheduler::OnBrowserUpgraded can do whatever it likes, because the name does not limit it at all. This class is required to call that method when it\u0027s schedule is corrupted. \n\nI would definitely prefer the name with \"Refetch\" and asking this class to explicitly refetch. In other words, instead of passing the browser upgraded notification all the way down to the fetcher, someone has to react to it explicitly (e.g. by calling \"RemoteSuggestionsScheduler::Refetch...\").",
+      "range": {
+        "startLine": 21,
+        "startChar": 22,
+        "endLine": 21,
+        "endChar": 28
+      },
+      "revId": "68eed0d5d514855d252223f9049c21ee95e83796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "429cceb3_e85cbaca",
+        "filename": "components/ntp_snippets/remote/persistent_scheduler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-06T12:42:09Z",
+      "side": 1,
+      "message": "This feels odd. How is this possible?",
+      "range": {
+        "startLine": 23,
+        "startChar": 7,
+        "endLine": 23,
+        "endChar": 41
+      },
+      "revId": "68eed0d5d514855d252223f9049c21ee95e83796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aadfc1b8_701b0de7",
+        "filename": "components/ntp_snippets/remote/persistent_scheduler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-06T12:42:09Z",
+      "side": 1,
+      "message": "Implementation details, prone to become obsolete quickly :)",
+      "range": {
+        "startLine": 24,
+        "startChar": 3,
+        "endLine": 24,
+        "endChar": 35
+      },
+      "revId": "68eed0d5d514855d252223f9049c21ee95e83796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2176c556_4fdfa38f",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-06T12:42:09Z",
+      "side": 1,
+      "message": "This does not add any value.",
+      "range": {
+        "startLine": 66,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 47
+      },
+      "revId": "68eed0d5d514855d252223f9049c21ee95e83796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

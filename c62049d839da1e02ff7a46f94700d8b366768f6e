@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "bf7608d4_b5c6a97f",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2306,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-06T12:42:09Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f13b8c6c_33a34256",
+      "range": {
+        "startLine": 2306,
+        "startChar": 24,
+        "endLine": 2306,
+        "endChar": 50
+      },
+      "revId": "c62049d839da1e02ff7a46f94700d8b366768f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a59365c_623b8023",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 1
@@ -130,6 +154,30 @@
       "writtenOn": "2017-07-06T09:54:18Z",
       "side": 1,
       "message": "These changes are only to allow submitting (git cl format). I hope this will be fixed by some other CL, in the mean-time.",
+      "range": {
+        "startLine": 1074,
+        "startChar": 4,
+        "endLine": 1075,
+        "endChar": 24
+      },
+      "revId": "c62049d839da1e02ff7a46f94700d8b366768f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e57aaaaf_937bdc7a",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1075,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-06T12:42:09Z",
+      "side": 1,
+      "message": "ACK. I know this feeling :)",
+      "parentUuid": "8a59365c_623b8023",
       "range": {
         "startLine": 1074,
         "startChar": 4,
