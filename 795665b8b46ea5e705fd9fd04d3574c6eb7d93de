@@ -22,6 +22,30 @@
       "revId": "795665b8b46ea5e705fd9fd04d3574c6eb7d93de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb6cfa89_b96f2800",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-07-06T15:09:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "793d6864_27044b39",
+      "range": {
+        "startLine": 136,
+        "startChar": 26,
+        "endLine": 136,
+        "endChar": 31
+      },
+      "revId": "795665b8b46ea5e705fd9fd04d3574c6eb7d93de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
