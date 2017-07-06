@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "b93b164b_28d51c2a",
+        "filename": "build/android/gyp/package_resources.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002029
+      },
+      "writtenOn": "2017-07-06T13:51:32Z",
+      "side": 1,
+      "message": "sgtm, if the slow down is acceptable and size should be reduced at all cost!",
+      "parentUuid": "9d94c703_16903cf7",
+      "range": {
+        "startLine": 94,
+        "startChar": 23,
+        "endLine": 94,
+        "endChar": 24
+      },
+      "revId": "3b12ed3e37b1a202516d12eb1cc09465a159eb56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37ecb739_52c35c8b",
         "filename": "build/android/gyp/package_resources.py",
         "patchSetId": 5
