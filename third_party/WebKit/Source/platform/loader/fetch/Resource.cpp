@@ -864,33 +864,22 @@ bool Resource::CanReuse(const FetchParameters& params) const {
   // securityOrigin has more complicated checks which callers are responsible
   // for.
 
-  // TODO(yhirano): Clean up this condition. This is generated to keep the old
-  // behavior across refactoring.
-  //
   // TODO(tyoshino): Consider returning false when the credentials mode
   // differs.
 
-  bool new_is_with_fetcher_cors_suppressed =
-      new_options.cors_handling_by_resource_fetcher ==
-      kDisableCORSHandlingByResourceFetcher;
-  bool existing_was_with_fetcher_cors_suppressed =
-      options_.cors_handling_by_resource_fetcher ==
-      kDisableCORSHandlingByResourceFetcher;
+  const auto new_mode = new_request.GetFetchRequestMode();
+  const auto existing_mode = resource_request_.GetFetchRequestMode();
 
-  auto new_mode = new_request.GetFetchRequestMode();
-  auto existing_mode = resource_request_.GetFetchRequestMode();
-
-  if (new_is_with_fetcher_cors_suppressed) {
-    if (existing_was_with_fetcher_cors_suppressed)
-      return true;
-
-    return existing_mode != WebURLRequest::kFetchRequestModeCORS;
+  // We have two separate CORS handling logics in DocumentThreadableLoader
+  // and ResourceFetcher and we cannot share resources if they are handled
+  // in different places.
+  if (new_mode == WebURLRequest::kFetchRequestModeCORS &&
+      existing_mode == WebURLRequest::kFetchRequestModeCORS) {
+    return new_options.cors_handling_by_resource_fetcher ==
+           options_.cors_handling_by_resource_fetcher;
   }
 
-  if (existing_was_with_fetcher_cors_suppressed)
-    return new_mode != WebURLRequest::kFetchRequestModeCORS;
-
-  return existing_mode == new_mode;
+  return new_mode == existing_mode;
 }
 
 void Resource::Prune() {
