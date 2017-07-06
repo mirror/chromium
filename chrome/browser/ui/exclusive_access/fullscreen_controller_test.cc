@@ -22,6 +22,11 @@ using content::WebContents;
 const char FullscreenControllerTest::kFullscreenMouseLockHTML[] =
     "/fullscreen_mouselock/fullscreen_mouselock.html";
 
+FullscreenControllerTest::FullscreenControllerTest()
+    : weak_ptr_factory_(this) {}
+
+FullscreenControllerTest::~FullscreenControllerTest() {}
+
 void FullscreenControllerTest::RequestToLockMouse(
     bool user_gesture,
     bool last_unlocked_by_target) {
@@ -29,8 +34,13 @@ void FullscreenControllerTest::RequestToLockMouse(
   MouseLockController* mouse_lock_controller =
       GetExclusiveAccessManager()->mouse_lock_controller();
   mouse_lock_controller->set_fake_mouse_lock_for_test(true);
-  browser()->RequestToLockMouse(tab, user_gesture,
-      last_unlocked_by_target);
+  // TODO(chongz): Add |bubble_first_hide_callback| to
+  // |browser()->RequestToLockMouse()| and use it instead.
+  mouse_lock_controller->RequestToLockMouse(
+      tab, user_gesture, last_unlocked_by_target,
+      base::BindOnce(
+          &FullscreenControllerTest::DidMouseLockExclusiveAccessBubbleHide,
+          weak_ptr_factory_.GetWeakPtr()));
   mouse_lock_controller->set_fake_mouse_lock_for_test(false);
 }
 
@@ -94,4 +104,9 @@ void FullscreenControllerTest::EnterActiveTabFullscreen() {
   FullscreenNotificationObserver fullscreen_observer;
   browser()->EnterFullscreenModeForTab(tab, GURL());
   fullscreen_observer.Wait();
+}
+
+void FullscreenControllerTest::DidMouseLockExclusiveAccessBubbleHide(
+    ExclusiveAccessBubbleHideReason reason) {
+  mouse_lock_bubble_hide_reason_recorder_.push_back(reason);
 }
