@@ -412,6 +412,24 @@
     },
     {
       "key": {
+        "uuid": "1b3b76e1_c550efb2",
+        "filename": "chrome/browser/conflicts/ime_enumerator_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-07-06T15:48:34Z",
+      "side": 1,
+      "message": "No response yet, but I\u0027m gonna go ahead and don\u0027t check both registry views for now, and change it if needed.",
+      "parentUuid": "8b91cb79_14d0b7c5",
+      "revId": "8a9bff19c0040c6230ad971f7e4cba3d4b308acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5dcf695f_68eb2618",
         "filename": "chrome/browser/conflicts/ime_enumerator_win.cc",
         "patchSetId": 1
@@ -491,6 +509,24 @@
       "revId": "8a9bff19c0040c6230ad971f7e4cba3d4b308acc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "032895e5_ebd66886",
+        "filename": "chrome/browser/conflicts/ime_enumerator_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-07-06T15:48:34Z",
+      "side": 1,
+      "message": "I have no definitive proof but I believe they are all in-proc.",
+      "parentUuid": "4c9f71bf_21805336",
+      "revId": "8a9bff19c0040c6230ad971f7e4cba3d4b308acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
