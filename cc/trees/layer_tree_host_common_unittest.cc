@@ -8669,8 +8669,8 @@ TEST_F(LayerTreeHostCommonTest, UpdateScrollChildPosition) {
   scroll_child->SetPosition(gfx::PointF(0, -10.f));
   scroll_parent->SetElementId(
       LayerIdToElementIdForTesting(scroll_parent->id()));
-  scroll_parent->SetCurrentScrollOffset(gfx::ScrollOffset(0.f, 10.f));
   root->layer_tree_impl()->property_trees()->needs_rebuild = true;
+  scroll_parent->SetCurrentScrollOffset(gfx::ScrollOffset(0.f, 10.f));
   ExecuteCalculateDrawProperties(root);
   EXPECT_EQ(gfx::Rect(0, 5, 25, 25), scroll_child->visible_layer_rect());
 }

@@ -4764,6 +4764,7 @@ TEST_F(LayerTreeHostImplBrowserControlsTest,
   child->test_properties()->is_container_for_fixed_position_layers = true;
 
   // scroll child to limit
+  host_impl_->active_tree()->property_trees()->needs_rebuild = true;
   SetScrollOffsetDelta(child.get(), gfx::Vector2dF(0, 100.f));
   outer_viewport_scroll_layer->test_properties()->AddChild(std::move(child));
   host_impl_->active_tree()->BuildPropertyTreesForTesting();
