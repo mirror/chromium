@@ -27,6 +27,10 @@
     <equals arg1="${EMMA_INSTRUMENT}" arg2="1"/>
   </condition>
 
+  <condition property="trace.enabled" value="true" else="false">
+    <equals arg1="${TRACE_INSTRUMENT}" arg2="1"/>
+  </condition>
+
   <!-- jar file from where the tasks are loaded -->
   <path id="android.antlibs">
     <pathelement path="${sdk.dir}/tools/lib/ant-tasks.jar" />
