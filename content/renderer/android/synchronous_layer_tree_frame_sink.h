@@ -18,8 +18,8 @@
 #include "cc/output/compositor_frame.h"
 #include "cc/output/layer_tree_frame_sink.h"
 #include "cc/output/managed_memory_policy.h"
-#include "cc/surfaces/compositor_frame_sink_support_client.h"
-#include "cc/surfaces/display_client.h"
+#include "components/viz/service/display/display_client.h"
+#include "components/viz/service/frame_sinks/compositor_frame_sink_support_client.h"
 #include "ipc/ipc_message.h"
 #include "ui/gfx/transform.h"
 
@@ -65,7 +65,7 @@ class SynchronousLayerTreeFrameSinkClient {
 // to a fixed thread when BindToClient is called.
 class SynchronousLayerTreeFrameSink
     : NON_EXPORTED_BASE(public cc::LayerTreeFrameSink),
-      public cc::CompositorFrameSinkSupportClient {
+      public viz::CompositorFrameSinkSupportClient {
  public:
   SynchronousLayerTreeFrameSink(
       scoped_refptr<cc::ContextProvider> context_provider,
@@ -161,9 +161,9 @@ class SynchronousLayerTreeFrameSink
   gfx::Size display_size_;
   float device_scale_factor_ = 0;
   // Uses surface_manager_.
-  std::unique_ptr<cc::CompositorFrameSinkSupport> root_support_;
+  std::unique_ptr<viz::CompositorFrameSinkSupport> root_support_;
   // Uses surface_manager_.
-  std::unique_ptr<cc::CompositorFrameSinkSupport> child_support_;
+  std::unique_ptr<viz::CompositorFrameSinkSupport> child_support_;
   StubDisplayClient display_client_;
   // Uses surface_manager_.
   std::unique_ptr<cc::Display> display_;

@@ -5,7 +5,6 @@
 #include "cc/surfaces/surface.h"
 #include "base/memory/ptr_util.h"
 #include "cc/output/copy_output_result.h"
-#include "cc/surfaces/compositor_frame_sink_support.h"
 #include "cc/surfaces/local_surface_id_allocator.h"
 #include "cc/surfaces/surface_dependency_tracker.h"
 #include "cc/surfaces/surface_manager.h"
@@ -13,6 +12,7 @@
 #include "cc/test/compositor_frame_helpers.h"
 #include "cc/test/fake_external_begin_frame_source.h"
 #include "cc/test/scheduler_test_common.h"
+#include "components/viz/service/frame_sinks/compositor_frame_sink_support.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/gfx/geometry/size.h"
 
@@ -26,10 +26,9 @@ constexpr bool kNeedsSyncPoints = true;
 
 TEST(SurfaceTest, SurfaceLifetime) {
   SurfaceManager manager;
-  std::unique_ptr<CompositorFrameSinkSupport> support =
-      CompositorFrameSinkSupport::Create(
-          nullptr, &manager, kArbitraryFrameSinkId, kIsRoot,
-          kHandlesFrameSinkIdInvalidation, kNeedsSyncPoints);
+  auto support = viz::CompositorFrameSinkSupport::Create(
+      nullptr, &manager, kArbitraryFrameSinkId, kIsRoot,
+      kHandlesFrameSinkIdInvalidation, kNeedsSyncPoints);
 
   LocalSurfaceId local_surface_id(6, base::UnguessableToken::Create());
   SurfaceId surface_id(kArbitraryFrameSinkId, local_surface_id);
@@ -58,10 +57,9 @@ void TestCopyResultCallback(bool* called,
 // aggregated on the next frame.
 TEST(SurfaceTest, CopyRequestLifetime) {
   SurfaceManager manager;
-  std::unique_ptr<CompositorFrameSinkSupport> support =
-      CompositorFrameSinkSupport::Create(
-          nullptr, &manager, kArbitraryFrameSinkId, kIsRoot,
-          kHandlesFrameSinkIdInvalidation, kNeedsSyncPoints);
+  auto support = viz::CompositorFrameSinkSupport::Create(
+      nullptr, &manager, kArbitraryFrameSinkId, kIsRoot,
+      kHandlesFrameSinkIdInvalidation, kNeedsSyncPoints);
 
   LocalSurfaceId local_surface_id(6, base::UnguessableToken::Create());
   SurfaceId surface_id(kArbitraryFrameSinkId, local_surface_id);
