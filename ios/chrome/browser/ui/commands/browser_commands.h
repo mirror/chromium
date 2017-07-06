@@ -12,6 +12,12 @@
 // Close the current tab.
 - (void)closeCurrentTab;
 
+// Navigate backwards in the current tab's history.
+- (void)goBack;
+
+// Navigate forwards in the current tab's history.
+- (void)goForward;
+
 @end
 
 #endif  // IOS_CHROME_BROWSER_UI_COMMANDS_BROWSER_COMMANDS_H_

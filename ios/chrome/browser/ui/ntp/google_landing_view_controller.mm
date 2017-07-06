@@ -1225,9 +1225,9 @@ const CGFloat kShiftTilesDownAnimationDuration = 0.2;
           [[GenericChromeCommand alloc] initWithTag:IDC_NEW_TAB];
       [[self view] chromeExecuteCommand:command];
     } break;
-    case OverscrollAction::CLOSE_TAB:
+    case OverscrollAction::CLOSE_TAB: {
       [self.dispatcher closeCurrentTab];
-      break;
+    } break;
     case OverscrollAction::REFRESH:
       [self reload];
       break;

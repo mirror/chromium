@@ -7,9 +7,10 @@
 
 #import "ios/chrome/browser/ui/toolbar/toolbar_controller.h"
 
+@protocol BrowserCommands;
 @protocol GoogleLandingDataSource;
-@protocol UrlLoader;
 @protocol OmniboxFocuser;
+@protocol UrlLoader;
 @protocol WebToolbarDelegate;
 
 // New tab page specific toolbar. The background view is hidden and the
@@ -22,8 +23,9 @@
 // ToolbarControllerStyleLightMode.
 - (instancetype)init;
 
-@property(nonatomic, weak) id<UrlLoader, OmniboxFocuser, WebToolbarDelegate>
-    dispatcher;
+@property(nonatomic, weak)
+    id<BrowserCommands, OmniboxFocuser, UrlLoader, WebToolbarDelegate>
+        dispatcher;
 
 // |YES| if the toolbar can show the forward arrow.
 - (void)setCanGoForward:(BOOL)canGoForward;
