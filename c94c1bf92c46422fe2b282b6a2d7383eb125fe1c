@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92ea19bd_847034e2",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1443,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-06T14:40:23Z",
+      "side": 1,
+      "message": "#include \"base/strings/string16.h\"",
+      "revId": "c94c1bf92c46422fe2b282b6a2d7383eb125fe1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f8f9ae7_952b5336",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1469,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-06T14:40:23Z",
+      "side": 1,
+      "message": "looks like you added an extra \".html\" here",
+      "revId": "c94c1bf92c46422fe2b282b6a2d7383eb125fe1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aad7b42f_510811bf",
+        "filename": "chrome/test/data/subresource_filter/worker_fetch.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-06T14:40:23Z",
+      "side": 1,
+      "message": "Do you mind using more descriptive titles? Maybe \"FetchSucceeded\" or \"FetchFailed\". It\u0027s not immediately clear to me what NG stands for (no good?).",
+      "revId": "c94c1bf92c46422fe2b282b6a2d7383eb125fe1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d5d8c90_5415222d",
+        "filename": "third_party/WebKit/Source/core/loader/SubresourceFilter.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-06T14:40:23Z",
+      "side": 1,
+      "message": "DCHECK(execution_context_-\u003eIsDocument())",
+      "revId": "c94c1bf92c46422fe2b282b6a2d7383eb125fe1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0e7d344_affbe853",
+        "filename": "third_party/WebKit/Source/core/loader/SubresourceFilter.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-06T14:40:23Z",
+      "side": 1,
+      "message": "s/document_loader_-\u003eGetFrame()/execution_context_/",
+      "revId": "c94c1bf92c46422fe2b282b6a2d7383eb125fe1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34e037fd_9002bf56",
+        "filename": "third_party/WebKit/Source/core/loader/SubresourceFilter.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-06T14:40:23Z",
+      "side": 1,
+      "message": "optional:\n// TODO(csharrison): Consider posting a task to the main thread from worker thread, or adding support for DidObserveLoadingBehavior to ExecutionContext.\nif (execution_context_-\u003eIsDocument()) {\n  if (DocumentLoader* loader \u003d ToDocument(execution_context_)-\u003eLoader()) \n    loader-\u003eDidObserveLoadingBehavior(...);\n}",
+      "revId": "c94c1bf92c46422fe2b282b6a2d7383eb125fe1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb383d2e_63a7c1dc",
+        "filename": "third_party/WebKit/Source/core/loader/SubresourceFilter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-06T14:40:23Z",
+      "side": 1,
+      "message": "optional: Have a single Create() which just takes an execution context, and a single constructor.",
+      "revId": "c94c1bf92c46422fe2b282b6a2d7383eb125fe1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e473587a_92ed73bc",
+        "filename": "third_party/WebKit/Source/core/loader/SubresourceFilter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-06T14:40:23Z",
+      "side": 1,
+      "message": "Ah, my initial idea was to replace the document loader member with ExecutionContext too. Can we remove this member and convert uses to use execution_context_? I think I\u0027ve noted all of them in the cpp.\n\nAlso, I don\u0027t mean to force you to do this refactor in this CL, so take all these document_loader_/execution_context_ suggestions as optional. I can always do them in a follow up too.",
+      "revId": "c94c1bf92c46422fe2b282b6a2d7383eb125fe1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b899d870_9999e318",
+        "filename": "third_party/WebKit/Source/core/loader/SubresourceFilter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-06T14:40:23Z",
+      "side": 1,
+      "message": "Can you document when this is null?",
+      "revId": "c94c1bf92c46422fe2b282b6a2d7383eb125fe1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
