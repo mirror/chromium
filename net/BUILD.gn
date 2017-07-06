@@ -140,8 +140,6 @@ component("net") {
     "base/net_string_util.h",
     "base/network_interfaces.cc",
     "base/network_interfaces.h",
-    "base/network_interfaces_posix.cc",
-    "base/network_interfaces_posix.h",
     "base/parse_number.cc",
     "base/parse_number.h",
     "base/port_util.cc",
@@ -467,8 +465,8 @@ component("net") {
       "base/network_delegate_impl.h",
       "base/network_interfaces_linux.cc",
       "base/network_interfaces_linux.h",
-      "base/network_interfaces_mac.cc",
-      "base/network_interfaces_mac.h",
+      "base/network_interfaces_posix.cc",
+      "base/network_interfaces_posix.h",
       "base/network_interfaces_win.cc",
       "base/network_interfaces_win.h",
       "base/network_throttle_manager.h",
@@ -1808,6 +1806,10 @@ component("net") {
         "http/http_auth_gssapi_posix.cc",
         "http/http_auth_gssapi_posix.h",
       ]
+    }
+
+    if (is_nacl) {
+      sources += [ "base/network_interfaces_nacl.cc" ]
     }
 
     if (use_gio) {
