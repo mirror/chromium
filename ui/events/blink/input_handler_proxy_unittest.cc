@@ -584,13 +584,15 @@ class InputHandlerProxyEventQueueTest : public testing::TestWithParam<bool> {
                                           int x = 0,
                                           int y = 0) {
     LatencyInfo latency;
+    cc::TouchAction touch_action;
     input_handler_proxy_->HandleInputEventWithLatencyInfo(
         CreateGestureScrollFlingPinch(type, source_device, delta_y_or_scale, x,
                                       y),
         latency,
         base::Bind(
             &InputHandlerProxyEventQueueTest::DidHandleInputEventAndOverscroll,
-            weak_ptr_factory_.GetWeakPtr()));
+            weak_ptr_factory_.GetWeakPtr()),
+        &touch_action);
   }
 
   void DidHandleInputEventAndOverscroll(

@@ -203,7 +203,8 @@ void InputHandlerManager::HandleInputEvent(
     int routing_id,
     ui::WebScopedInputEvent input_event,
     const ui::LatencyInfo& latency_info,
-    const InputEventAckStateCallback& callback) {
+    const InputEventAckStateCallback& callback,
+    cc::TouchAction* touch_action) {
   DCHECK(task_runner_->BelongsToCurrentThread());
   TRACE_EVENT1("input,benchmark,rail", "InputHandlerManager::HandleInputEvent",
                "type", WebInputEvent::GetName(input_event->GetType()));
@@ -224,7 +225,8 @@ void InputHandlerManager::HandleInputEvent(
   proxy->HandleInputEventWithLatencyInfo(
       std::move(input_event), latency_info,
       base::BindOnce(&InputHandlerManager::DidHandleInputEventAndOverscroll,
-                     weak_ptr_factory_.GetWeakPtr(), callback));
+                     weak_ptr_factory_.GetWeakPtr(), callback),
+      touch_action);
 }
 
 void InputHandlerManager::QueueClosureForMainThreadEventQueue(

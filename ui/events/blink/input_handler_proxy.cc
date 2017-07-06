@@ -300,7 +300,8 @@ void InputHandlerProxy::WillShutdown() {
 void InputHandlerProxy::HandleInputEventWithLatencyInfo(
     WebScopedInputEvent event,
     const LatencyInfo& latency_info,
-    EventDispositionCallback callback) {
+    EventDispositionCallback callback,
+    cc::TouchAction* touch_action) {
   DCHECK(input_handler_);
 
   if (uma_latency_reporting_enabled_)
@@ -322,6 +323,7 @@ void InputHandlerProxy::HandleInputEventWithLatencyInfo(
       !IsGestureScrollOrFlingOrPinch(event_with_callback->event().GetType())) {
     DispatchSingleInputEvent(std::move(event_with_callback),
                              tick_clock_->NowTicks());
+    touch_action = white_listed_touch_action_;
     return;
   }
 
@@ -342,6 +344,7 @@ void InputHandlerProxy::HandleInputEventWithLatencyInfo(
       compositor_event_queue_->Queue(std::move(event_with_callback),
                                      tick_clock_->NowTicks());
       DispatchQueuedInputEvents();
+      touch_action = white_listed_touch_action_;
       return;
     }
 
@@ -357,6 +360,7 @@ void InputHandlerProxy::HandleInputEventWithLatencyInfo(
   // handled by the compositor or not.
   DispatchSingleInputEvent(std::move(event_with_callback),
                            tick_clock_->NowTicks());
+  touch_action = white_listed_touch_action_;
 }
 
 void InputHandlerProxy::DispatchSingleInputEvent(
@@ -1169,7 +1173,7 @@ InputHandlerProxy::EventDisposition InputHandlerProxy::HandleTouchStart(
   cc::TouchAction white_listed_touch_action = cc::kTouchActionAuto;
   EventDisposition result = HitTestTouchEvent(
       touch_event, &is_touching_scrolling_layer, &white_listed_touch_action);
-  // TODO(hayleyferr) : Send |white_listed_touch_action| to browser.
+  white_listed_touch_action_ = &white_listed_touch_action;
 
   // If |result| is still DROP_EVENT look at the touch end handler as
   // we may not want to discard the entire touch sequence. Note this

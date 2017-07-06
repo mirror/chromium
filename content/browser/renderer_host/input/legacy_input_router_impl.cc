@@ -254,6 +254,8 @@ bool LegacyInputRouterImpl::OnMessageReceived(const IPC::Message& message) {
     IPC_MESSAGE_HANDLER(ViewHostMsg_HasTouchEventHandlers,
                         OnHasTouchEventHandlers)
     IPC_MESSAGE_HANDLER(InputHostMsg_SetTouchAction, OnSetTouchAction)
+    IPC_MESSAGE_HANDLER(InputHostMsg_SetWhiteListedTouchAction,
+                        OnSetWhiteListedTouchAction)
     IPC_MESSAGE_HANDLER(InputHostMsg_DidStopFlinging, OnDidStopFlinging)
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
@@ -509,6 +511,15 @@ void LegacyInputRouterImpl::OnSetTouchAction(cc::TouchAction touch_action) {
 
   // kTouchActionNone should disable the touch ack timeout.
   UpdateTouchAckTimeoutEnabled();
+}
+
+void LegacyInputRouterImpl::OnSetWhiteListedTouchAction(
+    cc::TouchAction white_listed_touch_action) {
+  // Synthetic touchstart events should get filtered out in InputHandlerProxy.
+  TRACE_EVENT1("input", "LegacyInputRouterImpl::OnSetWhiteListedTouchAction",
+               "white_listed_touch_action", white_listed_touch_action);
+
+  touch_action_filter_.OnSetWhiteListedTouchAction(white_listed_touch_action);
 }
 
 void LegacyInputRouterImpl::OnDidStopFlinging() {

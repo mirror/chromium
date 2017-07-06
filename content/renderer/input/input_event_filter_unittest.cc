@@ -81,11 +81,12 @@ class InputEventRecorder : public content::InputHandlerManager {
     records_.clear();
   }
 
-  void HandleInputEvent(int routing_id,
-                        ui::WebScopedInputEvent event,
-                        const ui::LatencyInfo& latency_info,
-                        const InputHandlerManager::InputEventAckStateCallback&
-                            callback) override {
+  void HandleInputEvent(
+      int routing_id,
+      ui::WebScopedInputEvent event,
+      const ui::LatencyInfo& latency_info,
+      const InputHandlerManager::InputEventAckStateCallback& callback,
+      cc::TouchAction* touch_action) override {
     DCHECK_EQ(kTestRoutingID, routing_id);
     records_.push_back(Record(event.get()));
     if (handle_events_) {
