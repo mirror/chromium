@@ -199,8 +199,9 @@ class ServiceWorkerDispatcherHostTest : public testing::Test {
   void SendSetHostedVersionId(int provider_id,
                               int64_t version_id,
                               int embedded_worker_id) {
-    dispatcher_host_->OnSetHostedVersionId(provider_id, version_id,
-                                           embedded_worker_id);
+    dispatcher_host_->OnSetHostedVersionId(
+        provider_id, version_id, embedded_worker_id,
+        mojom::URLLoaderFactoryAssociatedRequest());
   }
 
   void SendProviderCreated(ServiceWorkerProviderType type,
