@@ -7,6 +7,7 @@
 #include "android_webview/browser/aw_browser_context.h"
 #include "android_webview/browser/aw_browser_terminator.h"
 #include "android_webview/browser/aw_content_browser_client.h"
+#include "android_webview/browser/aw_metrics_service_client.h"
 #include "android_webview/browser/aw_result_codes.h"
 #include "android_webview/browser/aw_safe_browsing_config_helper.h"
 #include "android_webview/browser/deferred_gpu_command_service.h"
@@ -149,6 +150,8 @@ int AwBrowserMainParts::PreCreateThreads() {
     breakpad::CrashDumpObserver::GetInstance()->RegisterClient(
         base::MakeUnique<AwBrowserTerminator>());
   }
+
+  AwMetricsServiceClient::GetOrCreateGUID();
 
   return content::RESULT_CODE_NORMAL_EXIT;
 }
