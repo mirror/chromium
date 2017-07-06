@@ -34,6 +34,24 @@
       "revId": "59bb3410f26e71167ed15296ced0e1cdfd4eeece",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf46555a_0aeb8b16",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 1732,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-07-06T00:56:21Z",
+      "side": 1,
+      "message": "Thanks for the feedback and pointer. I agree in general that this data dependency should be added more precisely. It\u0027s not clear to me whether all of the other dependencies of browser_tests which put files into out/[config]/test_data already record these runtime dependencies correctly. If not then for example src/ppapi/native_client/nacl_test_data.gni will need to be updated as well, as well as possibly the mac_safe_browsing_test_data target and others.\n\nReviewers: what do you think? Can we make this change to get the bot green, and follow up to compute this dependency precisely? It should be possible to enumerate all of the subdirectories of test_data that should be included in the isolate.",
+      "parentUuid": "8d432de5_193b6428",
+      "revId": "59bb3410f26e71167ed15296ced0e1cdfd4eeece",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
