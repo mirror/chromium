@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "2a60f86a_3b7116b7",
+        "filename": "chrome/browser/chromeos/arc/arc_service_launcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-06T04:06:56Z",
+      "side": 1,
+      "message": "nit: can you update the TODO comment too?\n\n $ git grep -B1 OnPrimaryUserProfilePrepared chrome/browser/chromeos/arc/arc_session_manager.cc\n chrome/browser/chromeos/arc/arc_session_manager.cc-      // TODO(yusukes): Once Shutdown() in\n chrome/browser/chromeos/arc/arc_session_manager.cc:      // ArcServiceLauncher::OnPrimaryUserProfilePrepared() is removed, always",
+      "revId": "c79fcd9c89073d9851b999d375e18599982f3991",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60c2bb09_44cf43e5",
+        "filename": "chrome/browser/chromeos/arc/arc_service_launcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-06T04:06:56Z",
+      "side": 1,
+      "message": "L179-183 is not part of the TODO right? If so, please add an empty line between L178 and 179.",
+      "revId": "c79fcd9c89073d9851b999d375e18599982f3991",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "55f0816d_7794ec7e",
         "filename": "chrome/browser/chromeos/arc/arc_service_launcher.cc",
         "patchSetId": 2
