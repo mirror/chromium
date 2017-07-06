@@ -6,6 +6,7 @@
 #define CHROME_BROWSER_UI_EXCLUSIVE_ACCESS_MOUSE_LOCK_CONTROLLER_H_
 
 #include "base/macros.h"
+#include "chrome/browser/ui/exclusive_access/exclusive_access_bubble_hide_callback.h"
 #include "chrome/browser/ui/exclusive_access/exclusive_access_controller_base.h"
 #include "components/content_settings/core/common/content_settings.h"
 
@@ -25,9 +26,11 @@ class MouseLockController : public ExclusiveAccessControllerBase {
   // content::MouseLockDispatcher::LockMouse.
   bool IsMouseLockedSilently() const;
 
-  void RequestToLockMouse(content::WebContents* web_contents,
-                          bool user_gesture,
-                          bool last_unlocked_by_target);
+  void RequestToLockMouse(
+      content::WebContents* web_contents,
+      bool user_gesture,
+      bool last_unlocked_by_target,
+      ExclusiveAccessBubbleHideCallback bubble_first_hide_callback);
 
   // Override from ExclusiveAccessControllerBase
   bool HandleUserPressedEscape() override;

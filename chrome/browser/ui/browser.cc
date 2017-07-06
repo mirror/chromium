@@ -1859,8 +1859,10 @@ void Browser::FindReply(WebContents* web_contents,
 void Browser::RequestToLockMouse(WebContents* web_contents,
                                  bool user_gesture,
                                  bool last_unlocked_by_target) {
+  // TODO(chongz): Hook up silent mouse lock with the callback.
   exclusive_access_manager_->mouse_lock_controller()->RequestToLockMouse(
-      web_contents, user_gesture, last_unlocked_by_target);
+      web_contents, user_gesture, last_unlocked_by_target,
+      ExclusiveAccessBubbleHideCallback());
 }
 
 void Browser::LostMouseLock() {
