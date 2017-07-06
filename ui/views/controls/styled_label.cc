@@ -54,10 +54,11 @@ std::unique_ptr<Label> CreateLabelRange(
     // inset. So an individual range can't deviate from that.
     if (Link::GetDefaultFocusStyle() == Link::FocusStyle::UNDERLINE) {
       // Nothing should (and nothing does) request underlines for links with MD.
-      DCHECK_EQ(0, style_info.font_style & gfx::Font::UNDERLINE);
+      DCHECK_EQ(0, style_info.text_style & gfx::TextStyle::UNDERLINE);
       link->SetUnderline(false);  // Override what Link::Init() does.
     } else {
-      link->SetUnderline((style_info.font_style & gfx::Font::UNDERLINE) != 0);
+      link->SetUnderline((style_info.text_style & gfx::TextStyle::UNDERLINE) !=
+                         0);
     }
 
     result.reset(link);
@@ -71,9 +72,9 @@ std::unique_ptr<Label> CreateLabelRange(
 
   if (!style_info.tooltip.empty())
     result->SetTooltipText(style_info.tooltip);
-  if (style_info.font_style != gfx::Font::NORMAL ||
+  if (style_info.text_style != gfx::TextStyle::NORMAL ||
       style_info.weight != gfx::Font::Weight::NORMAL) {
-    result->SetFontList(result->font_list().Derive(0, style_info.font_style,
+    result->SetFontList(result->font_list().Derive(0, style_info.text_style,
                                                    style_info.weight));
   }
 
@@ -85,7 +86,7 @@ std::unique_ptr<Label> CreateLabelRange(
 // StyledLabel::RangeStyleInfo ------------------------------------------------
 
 StyledLabel::RangeStyleInfo::RangeStyleInfo()
-    : font_style(gfx::Font::NORMAL),
+    : text_style(gfx::TextStyle::NORMAL),
       weight(gfx::Font::Weight::NORMAL),
       color(SK_ColorTRANSPARENT),
       disable_line_wrapping(false),
@@ -304,7 +305,7 @@ gfx::Size StyledLabel::CalculateAndDoLayout(int width, bool dry_run) {
     // should be used when eliding text.
     if (position >= range.start()) {
       text_font_list =
-          text_font_list.Derive(0, current_range->style_info.font_style,
+          text_font_list.Derive(0, current_range->style_info.text_style,
                                 current_range->style_info.weight);
     }
     gfx::ElideRectangleText(remaining_string,

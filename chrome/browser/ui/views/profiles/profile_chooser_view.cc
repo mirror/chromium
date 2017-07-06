@@ -1141,7 +1141,7 @@ views::View* ProfileChooserView::CreateCurrentProfileView(
   current_profile_name->SetAutoColorReadabilityEnabled(false);
   current_profile_name->SetFontList(
       ui::ResourceBundle::GetSharedInstance().GetFontListWithDelta(
-          1, gfx::Font::FontStyle::NORMAL, gfx::Font::Weight::MEDIUM));
+          1, gfx::TextStyle::NORMAL, gfx::Font::Weight::MEDIUM));
   current_profile_name->SetHorizontalAlignment(gfx::ALIGN_LEFT);
 
   // The grid layout contains one row if not signed in or account consistency is

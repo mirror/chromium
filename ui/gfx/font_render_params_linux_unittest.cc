@@ -12,6 +12,7 @@
 #include "ui/gfx/font.h"
 #include "ui/gfx/linux_font_delegate.h"
 #include "ui/gfx/test/fontconfig_util_linux.h"
+#include "ui/gfx/text_constants.h"
 
 namespace gfx {
 
@@ -186,7 +187,7 @@ TEST_F(FontRenderParamsTest, Style) {
           kFontconfigMatchFooter + kFontconfigFileFooter));
 
   FontRenderParamsQuery query;
-  query.style = Font::NORMAL;
+  query.style = TextStyle::NORMAL;
   FontRenderParams params = GetFontRenderParams(query, NULL);
   EXPECT_EQ(FontRenderParams::HINTING_SLIGHT, params.hinting);
   EXPECT_EQ(FontRenderParams::SUBPIXEL_RENDERING_RGB,
@@ -199,14 +200,14 @@ TEST_F(FontRenderParamsTest, Style) {
             params.subpixel_rendering);
 
   query.weight = Font::Weight::NORMAL;
-  query.style = Font::ITALIC;
+  query.style = TextStyle::ITALIC;
   params = GetFontRenderParams(query, NULL);
   EXPECT_EQ(FontRenderParams::HINTING_NONE, params.hinting);
   EXPECT_EQ(FontRenderParams::SUBPIXEL_RENDERING_RGB,
             params.subpixel_rendering);
 
   query.weight = Font::Weight::BOLD;
-  query.style = Font::ITALIC;
+  query.style = TextStyle::ITALIC;
   params = GetFontRenderParams(query, NULL);
   EXPECT_EQ(FontRenderParams::HINTING_NONE, params.hinting);
   EXPECT_EQ(FontRenderParams::SUBPIXEL_RENDERING_NONE,

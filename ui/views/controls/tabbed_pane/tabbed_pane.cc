@@ -161,17 +161,17 @@ void Tab::OnStateChanged() {
     case TAB_INACTIVE:
       title_->SetEnabledColor(kTabTitleColor_Inactive);
       title_->SetFontList(rb.GetFontListWithDelta(
-          ui::kLabelFontSizeDelta, gfx::Font::NORMAL, kInactiveWeight));
+          ui::kLabelFontSizeDelta, gfx::TextStyle::NORMAL, kInactiveWeight));
       break;
     case TAB_ACTIVE:
       title_->SetEnabledColor(kTabTitleColor_Active);
       title_->SetFontList(rb.GetFontListWithDelta(
-          ui::kLabelFontSizeDelta, gfx::Font::NORMAL, kActiveWeight));
+          ui::kLabelFontSizeDelta, gfx::TextStyle::NORMAL, kActiveWeight));
       break;
     case TAB_HOVERED:
       title_->SetEnabledColor(kTabTitleColor_Hovered);
       title_->SetFontList(rb.GetFontListWithDelta(
-          ui::kLabelFontSizeDelta, gfx::Font::NORMAL, kHoverWeight));
+          ui::kLabelFontSizeDelta, gfx::TextStyle::NORMAL, kHoverWeight));
       break;
   }
 }
@@ -293,8 +293,8 @@ void MdTab::OnStateChanged() {
 #endif
 
   ui::ResourceBundle& rb = ui::ResourceBundle::GetSharedInstance();
-  title()->SetFontList(rb.GetFontListWithDelta(ui::kLabelFontSizeDelta,
-                                               gfx::Font::NORMAL, font_weight));
+  title()->SetFontList(rb.GetFontListWithDelta(
+      ui::kLabelFontSizeDelta, gfx::TextStyle::NORMAL, font_weight));
 }
 
 gfx::Size MdTab::CalculatePreferredSize() const {

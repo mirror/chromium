@@ -23,6 +23,7 @@
 #include "ui/gfx/font.h"
 #include "ui/gfx/linux_font_delegate.h"
 #include "ui/gfx/switches.h"
+#include "ui/gfx/text_constants.h"
 
 namespace gfx {
 
@@ -148,8 +149,9 @@ bool QueryFontconfig(const FontRenderParamsQuery& query,
   if (query.point_size > 0)
     FcPatternAddInteger(query_pattern.get(), FC_SIZE, query.point_size);
   if (query.style >= 0) {
-    FcPatternAddInteger(query_pattern.get(), FC_SLANT,
-        (query.style & Font::ITALIC) ? FC_SLANT_ITALIC : FC_SLANT_ROMAN);
+    FcPatternAddInteger(
+        query_pattern.get(), FC_SLANT,
+        (query.style & TextStyle::ITALIC) ? FC_SLANT_ITALIC : FC_SLANT_ROMAN);
   }
   if (query.weight != Font::Weight::INVALID) {
     FcPatternAddInteger(query_pattern.get(), FC_WEIGHT,

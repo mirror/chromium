@@ -56,7 +56,7 @@ views::Label* CreateShortcutLabel(
   // TODO(tapted): Get this FontList from views::style.
   if (orientation == ui::CandidateWindow::VERTICAL) {
     shortcut_label->SetFontList(shortcut_label->font_list().Derive(
-        kFontSizeDelta, gfx::Font::NORMAL, gfx::Font::Weight::BOLD));
+        kFontSizeDelta, gfx::TextStyle::NORMAL, gfx::Font::Weight::BOLD));
   } else {
     shortcut_label->SetFontList(
         shortcut_label->font_list().DeriveWithSizeDelta(kFontSizeDelta));

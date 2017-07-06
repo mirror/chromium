@@ -356,7 +356,7 @@ TEST_F(MenuControllerTest, LabelFontList) {
   Delegate delegate;
   const gfx::FontList& bold =
       ResourceBundle::GetSharedInstance().GetFontListWithDelta(
-          0, gfx::Font::NORMAL, gfx::Font::Weight::BOLD);
+          0, gfx::TextStyle::NORMAL, gfx::Font::Weight::BOLD);
   FontListMenuModel model(&delegate, &bold, 0);
   model.AddItem(1, ASCIIToUTF16("one"));
   model.AddItem(2, ASCIIToUTF16("two"));
