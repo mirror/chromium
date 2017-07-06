@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7dfc99d_468ccac4",
+        "filename": "ui/events/win/system_event_state_lookup.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-07-06T19:50:14Z",
+      "side": 1,
+      "message": "This is kind of odd from the outside view I wouldn\u0027t expect that sending a mouse event would reset the key state.\n\nBut if you look at the impl then the OnInputEvent is only set for keyboard events. So do we ever get into this case?",
+      "range": {
+        "startLine": 26,
+        "startChar": 7,
+        "endLine": 26,
+        "endChar": 16
+      },
+      "revId": "81426201ae57b2e1e7a8247518dcec4685547dc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83ecc21b_951fb20b",
+        "filename": "ui/events/win/system_event_state_lookup.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-07-06T19:50:14Z",
+      "side": 1,
+      "message": "I find this comment confusing. We are disallowing the left control modifier because Ctrl was pressed before AltGr was down.\n\nie. LCtrl, AltGr sequence cancels out the original Ctrl.\nbut AltGr, LCtrl sequence allows the ctrl.\n\nRight?",
+      "revId": "81426201ae57b2e1e7a8247518dcec4685547dc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "462831df_9fcbaa97",
+        "filename": "ui/events/win/system_event_state_lookup.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-07-06T19:50:14Z",
+      "side": 1,
+      "message": "Should there be a failsafe here...\n!PlatformKeyMap::UsesAltGraph() ?",
+      "range": {
+        "startLine": 69,
+        "startChar": 6,
+        "endLine": 69,
+        "endChar": 26
+      },
+      "revId": "81426201ae57b2e1e7a8247518dcec4685547dc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d784735_cafa0cbf",
+        "filename": "ui/events/win/system_event_state_lookup.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-07-06T19:50:14Z",
+      "side": 1,
+      "message": "This probably deserves a comment why checking VK_LCONTROL is not needed here?",
+      "range": {
+        "startLine": 84,
+        "startChar": 38,
+        "endLine": 84,
+        "endChar": 44
+      },
+      "revId": "81426201ae57b2e1e7a8247518dcec4685547dc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
