@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c72cea09_a1f84a08",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 718,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-06T10:32:21Z",
+      "side": 1,
+      "message": "Can you factor this (and the calls in app_delegate) into a separate file in app/startup so it\u0027s easier to move around?",
+      "range": {
+        "startLine": 718,
+        "startChar": 18,
+        "endLine": 718,
+        "endChar": 43
+      },
+      "revId": "b8080052e299a7055ccdf4467f4c51e14741b424",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
