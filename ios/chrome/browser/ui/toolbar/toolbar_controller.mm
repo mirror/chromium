@@ -249,6 +249,7 @@ const LayoutOffset kButtonFadeOutXOffset = 10;
 @synthesize shadowView = shadowView_;
 @synthesize toolsPopupController = toolsPopupController_;
 @synthesize style = style_;
+@synthesize dispatcher = dispatcher_;
 
 - (void)setReadingListModel:(ReadingListModel*)readingListModel {
   readingListModel_ = readingListModel;
@@ -558,9 +559,12 @@ const LayoutOffset kButtonFadeOutXOffset = 10;
   [button addTarget:self
                 action:@selector(recordUserMetrics:)
       forControlEvents:UIControlEventTouchUpInside];
-  [button addTarget:button
-                action:@selector(chromeExecuteCommand:)
-      forControlEvents:UIControlEventTouchUpInside];
+  // Only register buttons with defined tags for -chromeExecuteCommand:
+  if (button.tag) {
+    [button addTarget:button
+                  action:@selector(chromeExecuteCommand:)
+        forControlEvents:UIControlEventTouchUpInside];
+  }
 }
 
 - (CGRect)shareButtonAnchorRect {
