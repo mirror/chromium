@@ -186,8 +186,9 @@ base::TimeDelta GetDesiredFetchingInterval(
   return base::TimeDelta::FromSecondsD(value_hours * 3600.0);
 }
 
-void ReportTimeUntilFirstSoftTrigger(UserClassifier::UserClass user_class,
-                                     base::TimeDelta time_until_first_trigger) {
+void ReportTimeUntilFirstShownTrigger(
+    UserClassifier::UserClass user_class,
+    base::TimeDelta time_until_first_trigger) {
   switch (user_class) {
     case UserClassifier::UserClass::RARE_NTP_USER:
       UMA_HISTOGRAM_CUSTOM_TIMES(
@@ -207,6 +208,37 @@ void ReportTimeUntilFirstSoftTrigger(UserClassifier::UserClass user_class,
     case UserClassifier::UserClass::ACTIVE_SUGGESTIONS_CONSUMER:
       UMA_HISTOGRAM_CUSTOM_TIMES(
           "NewTabPage.ContentSuggestions.TimeUntilFirstSoftTrigger."
+          "ActiveSuggestionsConsumer",
+          time_until_first_trigger, base::TimeDelta::FromSeconds(1),
+          base::TimeDelta::FromDays(7),
+          /*bucket_count=*/50);
+      break;
+  }
+}
+
+void ReportTimeUntilFirstStartupTrigger(
+    UserClassifier::UserClass user_class,
+    base::TimeDelta time_until_first_trigger) {
+  switch (user_class) {
+    case UserClassifier::UserClass::RARE_NTP_USER:
+      UMA_HISTOGRAM_CUSTOM_TIMES(
+          "NewTabPage.ContentSuggestions.TimeUntilFirstStartupTrigger."
+          "RareNTPUser",
+          time_until_first_trigger, base::TimeDelta::FromSeconds(1),
+          base::TimeDelta::FromDays(7),
+          /*bucket_count=*/50);
+      break;
+    case UserClassifier::UserClass::ACTIVE_NTP_USER:
+      UMA_HISTOGRAM_CUSTOM_TIMES(
+          "NewTabPage.ContentSuggestions.TimeUntilFirstStartupTrigger."
+          "ActiveNTPUser",
+          time_until_first_trigger, base::TimeDelta::FromSeconds(1),
+          base::TimeDelta::FromDays(7),
+          /*bucket_count=*/50);
+      break;
+    case UserClassifier::UserClass::ACTIVE_SUGGESTIONS_CONSUMER:
+      UMA_HISTOGRAM_CUSTOM_TIMES(
+          "NewTabPage.ContentSuggestions.TimeUntilFirstStartupTrigger."
           "ActiveSuggestionsConsumer",
           time_until_first_trigger, base::TimeDelta::FromSeconds(1),
           base::TimeDelta::FromDays(7),
@@ -413,7 +445,8 @@ RemoteSuggestionsSchedulerImpl::RemoteSuggestionsSchedulerImpl(
           profile_prefs,
           RequestThrottler::RequestType::
               CONTENT_SUGGESTION_FETCHER_ACTIVE_SUGGESTIONS_CONSUMER),
-      time_until_first_trigger_reported_(false),
+      time_until_first_shown_trigger_reported_(false),
+      time_until_first_startup_trigger_reported_(false),
       eula_state_(base::MakeUnique<EulaState>(local_state_prefs, this)),
       profile_prefs_(profile_prefs),
       clock_(std::move(clock)),
@@ -622,17 +655,25 @@ void RemoteSuggestionsSchedulerImpl::RefetchInTheBackgroundIfAppropriate(
     return;
   }
 
-  bool is_soft = trigger != TriggerType::PERSISTENT_SCHEDULER_WAKE_UP;
   const base::Time last_fetch_attempt_time = base::Time::FromInternalValue(
       profile_prefs_->GetInt64(prefs::kSnippetLastFetchAttempt));
 
-  if (is_soft && !time_until_first_trigger_reported_) {
-    time_until_first_trigger_reported_ = true;
-    ReportTimeUntilFirstSoftTrigger(user_classifier_->GetUserClass(),
-                                    clock_->Now() - last_fetch_attempt_time);
+  if (trigger == TriggerType::SURFACE_OPENED &&
+      !time_until_first_shown_trigger_reported_) {
+    time_until_first_shown_trigger_reported_ = true;
+    ReportTimeUntilFirstShownTrigger(user_classifier_->GetUserClass(),
+                                     clock_->Now() - last_fetch_attempt_time);
   }
 
-  if (is_soft &&
+  if ((trigger == TriggerType::BROWSER_FOREGROUNDED ||
+       trigger == TriggerType::BROWSER_COLD_START) &&
+      !time_until_first_startup_trigger_reported_) {
+    time_until_first_startup_trigger_reported_ = true;
+    ReportTimeUntilFirstStartupTrigger(user_classifier_->GetUserClass(),
+                                       clock_->Now() - last_fetch_attempt_time);
+  }
+
+  if (trigger != TriggerType::PERSISTENT_SCHEDULER_WAKE_UP &&
       !ShouldRefetchInTheBackgroundNow(last_fetch_attempt_time, trigger)) {
     return;
   }
