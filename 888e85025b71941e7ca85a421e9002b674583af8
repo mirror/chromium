@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7653cdee_cf87b552",
+        "filename": "chrome/browser/ui/views/harmony/harmony_layout_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-06T17:02:56Z",
+      "side": 1,
+      "message": "Maybe comment on why this is ignoring the left inset?",
+      "revId": "888e85025b71941e7ca85a421e9002b674583af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9355b832_d807ce51",
+        "filename": "ui/views/layout/layout_provider.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-06T17:02:56Z",
+      "side": 1,
+      "message": "It might be nice to keep these (and switch statements) in ABC order.",
+      "range": {
+        "startLine": 39,
+        "startChar": 2,
+        "endLine": 39,
+        "endChar": 30
+      },
+      "revId": "888e85025b71941e7ca85a421e9002b674583af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
