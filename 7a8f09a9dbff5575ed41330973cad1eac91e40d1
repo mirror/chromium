@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ecb784b8_e170e5f7",
+        "filename": "net/base/network_interfaces_getifaddrs.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-06T19:36:19Z",
+      "side": 1,
+      "message": "std::string name \u003d",
+      "range": {
+        "startLine": 147,
+        "startChar": 15,
+        "endLine": 147,
+        "endChar": 21
+      },
+      "revId": "7a8f09a9dbff5575ed41330973cad1eac91e40d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
