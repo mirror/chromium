@@ -39,14 +39,13 @@ bool DataURL::Parse(const GURL& url, std::string* mime_type,
   if (comma == end)
     return false;
 
-  std::vector<std::string> meta_data =
-      base::SplitString(base::StringPiece(after_colon, comma), ";",
-                        base::TRIM_WHITESPACE, base::SPLIT_WANT_ALL);
+  std::vector<base::StringPiece> meta_data =
+      base::SplitStringPiece(base::StringPiece(after_colon, comma), ";",
+                             base::TRIM_WHITESPACE, base::SPLIT_WANT_ALL);
 
-  std::vector<std::string>::iterator iter = meta_data.begin();
+  auto iter = meta_data.begin();
   if (iter != meta_data.end()) {
-    mime_type->swap(*iter);
-    *mime_type = base::ToLowerASCII(*mime_type);
+    *mime_type = base::ToLowerASCII(*iter);
     ++iter;
   }
 
@@ -59,8 +58,9 @@ bool DataURL::Parse(const GURL& url, std::string* mime_type,
     if (!base64_encoded && *iter == kBase64Tag) {
       base64_encoded = true;
     } else if (charset->empty() &&
-               iter->compare(0, kCharsetTagLength, kCharsetTag) == 0) {
-      charset->assign(iter->substr(kCharsetTagLength));
+               base::StartsWith(*iter, kCharsetTag,
+                                base::CompareCase::SENSITIVE)) {
+      *charset = std::string(iter->substr(kCharsetTagLength));
       // The grammar for charset is not specially defined in RFC2045 and
       // RFC2397. It just needs to be a token.
       if (!HttpUtil::IsToken(*charset))
