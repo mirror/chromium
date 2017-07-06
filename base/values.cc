@@ -244,6 +244,58 @@ const Value::ListStorage& Value::GetList() const {
   return *list_;
 }
 
+detail::dict_iterator Value::FindKey(const std::string& key) {
+  CHECK(is_dict());
+  return detail::dict_iterator(dict_->find(key));
+}
+
+detail::const_dict_iterator Value::FindKey(const std::string& key) const {
+  CHECK(is_dict());
+  return detail::const_dict_iterator(dict_->find(key));
+}
+
+detail::dict_iterator Value::FindKeyOfType(const std::string& key, Type type) {
+  CHECK(is_dict());
+  auto iter = dict_->find(key);
+  return detail::dict_iterator(
+      (iter != dict_->end() && iter->second->IsType(type)) ? iter
+                                                           : dict_->end());
+}
+
+detail::const_dict_iterator Value::FindKeyOfType(const std::string& key,
+                                                 Type type) const {
+  CHECK(is_dict());
+  auto iter = dict_->find(key);
+  return detail::const_dict_iterator(
+      (iter != dict_->end() && iter->second->IsType(type)) ? iter
+                                                           : dict_->end());
+}
+
+detail::dict_iterator Value::SetKey(const std::string& key, Value value) {
+  CHECK(is_dict());
+  auto iter = dict_->find(key);
+  if (iter != dict_->end()) {
+    *iter->second = std::move(value);
+    return detail::dict_iterator(iter);
+  }
+
+  return detail::dict_iterator(
+      dict_->emplace(key, MakeUnique<Value>(std::move(value))).first);
+}
+
+detail::dict_iterator Value::SetKey(std::string&& key, Value value) {
+  CHECK(is_dict());
+  auto iter = dict_->find(key);
+  if (iter != dict_->end()) {
+    *iter->second = std::move(value);
+    return detail::dict_iterator(iter);
+  }
+
+  return detail::dict_iterator(
+      dict_->emplace(std::move(key), MakeUnique<Value>(std::move(value)))
+          .first);
+}
+
 bool Value::GetAsBoolean(bool* out_value) const {
   if (out_value && is_bool()) {
     *out_value = bool_value_;

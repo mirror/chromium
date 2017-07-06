@@ -34,6 +34,7 @@
 #include "base/memory/manual_constructor.h"
 #include "base/strings/string16.h"
 #include "base/strings/string_piece.h"
+#include "base/value_iterators.h"
 
 namespace base {
 
@@ -136,6 +137,38 @@ class BASE_EXPORT Value {
 
   ListStorage& GetList();
   const ListStorage& GetList() const;
+
+  // TODO(crbug.com/646113): Replace this with FindKey(StringPiece) when
+  // base::less is available.
+  detail::dict_iterator FindKey(const std::string& key);
+
+  // TODO(crbug.com/646113): Replace this with FindKey(StringPiece) when
+  // base::less is available.
+  detail::const_dict_iterator FindKey(const std::string& key) const;
+
+  // TODO(crbug.com/646113): Replace this with FindKeyOfType(StringPiece, Type)
+  // when base::less is available.
+  detail::dict_iterator FindKeyOfType(const std::string& key, Type type);
+
+  // TODO(crbug.com/646113): Replace this with FindKeyOfType(StringPiece, Type)
+  // when base::less is available.
+  detail::const_dict_iterator FindKeyOfType(const std::string& key,
+                                            Type type) const;
+
+  // TODO(crbug.com/646113): Replace this with SetKey(StringPiece, Type)
+  // when base::less is available.
+  detail::dict_iterator SetKey(const std::string& key, Value value);
+  detail::dict_iterator SetKey(std::string&& key, Value value);
+
+  detail::dict_iterator_proxy items() {
+    CHECK(is_dict());
+    return detail::dict_iterator_proxy(&*dict_);
+  }
+
+  detail::const_dict_iterator_proxy items() const {
+    CHECK(is_dict());
+    return detail::const_dict_iterator_proxy(&*dict_);
+  }
 
   // These methods allow the convenient retrieval of the contents of the Value.
   // If the current object can be converted into the given type, the value is
