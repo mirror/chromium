@@ -193,6 +193,24 @@
       "revId": "4db3da0a71c93cb4cc741b4b33c40b62d30ccce0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7898ee8a_184d193c",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 1030,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-07-06T22:35:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04c74ac0_a5729330",
+      "revId": "4db3da0a71c93cb4cc741b4b33c40b62d30ccce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
