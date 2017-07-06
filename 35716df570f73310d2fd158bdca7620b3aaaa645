@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ac9b228_3a84f410",
+        "filename": "components/subresource_filter/content/renderer/web_document_subresource_filter_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-06T12:59:20Z",
+      "side": 1,
+      "message": "I think you can std::move(document_origin) here to prevent a copy.",
+      "revId": "35716df570f73310d2fd158bdca7620b3aaaa645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3e1a27c_82995db4",
+        "filename": "components/subresource_filter/content/renderer/web_document_subresource_filter_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-06T12:59:20Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "35716df570f73310d2fd158bdca7620b3aaaa645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e94dacb7_9e3d05b6",
+        "filename": "components/subresource_filter/content/renderer/web_document_subresource_filter_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-06T12:59:20Z",
+      "side": 1,
+      "message": "can we use base::MakeRefCounted",
+      "revId": "35716df570f73310d2fd158bdca7620b3aaaa645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6ead458_a998c23c",
+        "filename": "components/subresource_filter/content/renderer/web_document_subresource_filter_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-06T12:59:20Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN",
+      "revId": "35716df570f73310d2fd158bdca7620b3aaaa645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41d226fc_f1c57f2a",
+        "filename": "content/renderer/service_worker/worker_fetch_context_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-06T12:59:20Z",
+      "side": 1,
+      "message": "Optional: I think this can be simplified to:\nstd::move(subresource_filter_builder_)-\u003eBuild()\n\nWhich is a fairly common pattern with e.g. OnceCallbacks.",
+      "revId": "35716df570f73310d2fd158bdca7620b3aaaa645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5c74e55_83e041be",
+        "filename": "third_party/WebKit/Source/core/loader/SubresourceFilter.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-06T12:59:20Z",
+      "side": 1,
+      "message": "nit: I wonder if we should just add a LogToConsole method that does this dispatch for us, and moves the \"document \u003d ...\" initialization out.",
+      "revId": "35716df570f73310d2fd158bdca7620b3aaaa645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f624540a_45abdd40",
+        "filename": "third_party/WebKit/Source/core/loader/SubresourceFilter.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-06T12:59:20Z",
+      "side": 1,
+      "message": "Add a TODO(csharrison) to consider posting a task to the main thread to issue this call.",
+      "revId": "35716df570f73310d2fd158bdca7620b3aaaa645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3344c04_93293925",
+        "filename": "third_party/WebKit/Source/core/loader/SubresourceFilter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-06T12:59:20Z",
+      "side": 1,
+      "message": "This is making me feel like what we really want is a single ExecutionContext member, but that\u0027s a refactor for another day.",
+      "revId": "35716df570f73310d2fd158bdca7620b3aaaa645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "927d437f_9ee17ab3",
+        "filename": "third_party/WebKit/public/platform/WebDocumentSubresourceFilter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-06T12:59:20Z",
+      "side": 1,
+      "message": "Can you document this class (why it\u0027s needed)",
+      "revId": "35716df570f73310d2fd158bdca7620b3aaaa645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ba39ce7_c86c1d88",
+        "filename": "third_party/WebKit/public/platform/WebWorkerFetchContext.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-06T12:59:20Z",
+      "side": 1,
+      "message": "Document that this should only be called once (i.e. it destroys the builder).",
+      "revId": "35716df570f73310d2fd158bdca7620b3aaaa645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
