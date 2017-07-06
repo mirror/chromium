@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a0faf0d0_23a6c91e",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 17977,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-06T08:15:02Z",
+      "side": 1,
+      "message": "Ah, you are right. I rephrased the buckets. By 404, I actually meant any network error (with 404 being the most notable example).",
+      "parentUuid": "16e9f411_f9e80d66",
+      "range": {
+        "startLine": 17977,
+        "startChar": 2,
+        "endLine": 17977,
+        "endChar": 6
+      },
+      "revId": "2d2443d9881955aa30a03ea094959491d2792657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03e48c86_7543e72d",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "32e3210e_3192da7a",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 46106,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-06T08:15:02Z",
+      "side": 1,
+      "message": "Yes, both Android and iOS.",
+      "parentUuid": "03e48c86_7543e72d",
+      "range": {
+        "startLine": 46106,
+        "startChar": 4,
+        "endLine": 46106,
+        "endChar": 10
+      },
+      "revId": "2d2443d9881955aa30a03ea094959491d2792657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6eff6909_79509cc9",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 4
@@ -68,6 +116,30 @@
       "revId": "2d2443d9881955aa30a03ea094959491d2792657",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e0bb3bc_759a156f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 46108,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-06T08:15:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6eff6909_79509cc9",
+      "range": {
+        "startLine": 46108,
+        "startChar": 31,
+        "endLine": 46108,
+        "endChar": 36
+      },
+      "revId": "2d2443d9881955aa30a03ea094959491d2792657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
