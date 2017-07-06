@@ -25,6 +25,52 @@
     },
     {
       "key": {
+        "uuid": "0ad653bc_4f272477",
+        "filename": "chrome/common/profiling/memlog_sender.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-07-06T20:14:23Z",
+      "side": 1,
+      "message": "Hmm, shouldn\u0027t this be MemlogSenderPipe* pipe \u003d new ...? I think static objects with ctors are banned.",
+      "range": {
+        "startLine": 22,
+        "startChar": 9,
+        "endLine": 22,
+        "endChar": 25
+      },
+      "revId": "62a69e8146c229c489cd51fa2421e8a707b899db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2700033_5160c2c8",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_posix.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-07-06T20:14:23Z",
+      "side": 1,
+      "message": "If there can be several MemlogSenderPipes, then this is potentially not thread safe. If there can be just one, then just include it in the class by value?",
+      "range": {
+        "startLine": 21,
+        "startChar": 2,
+        "endLine": 21,
+        "endChar": 8
+      },
+      "revId": "62a69e8146c229c489cd51fa2421e8a707b899db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "16a3b840_fe9af27a",
         "filename": "chrome/common/profiling/memlog_sender_pipe_posix.h",
         "patchSetId": 8
@@ -41,6 +87,75 @@
         "startChar": 20,
         "endLine": 29,
         "endChar": 35
+      },
+      "revId": "62a69e8146c229c489cd51fa2421e8a707b899db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c668cf7_ef77ec49",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-07-06T20:14:23Z",
+      "side": 1,
+      "message": "Header declares ctor with base::string - is it synonymous to string16 on Windows?",
+      "range": {
+        "startLine": 13,
+        "startChar": 57,
+        "endLine": 13,
+        "endChar": 64
+      },
+      "revId": "62a69e8146c229c489cd51fa2421e8a707b899db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbe265cd_ef55bfab",
+        "filename": "chrome/profiling/memlog_receiver_pipe_server_posix.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-07-06T20:14:23Z",
+      "side": 1,
+      "message": "Where raw_fd is removed from pipes_?",
+      "range": {
+        "startLine": 49,
+        "startChar": 9,
+        "endLine": 49,
+        "endChar": 15
+      },
+      "revId": "62a69e8146c229c489cd51fa2421e8a707b899db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f351cf0e_6e8c15b7",
+        "filename": "chrome/profiling/memlog_receiver_pipe_server_posix.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-07-06T20:14:23Z",
+      "side": 1,
+      "message": "This should be just auto it (it\u0027s binding a const\u0026 to a temporary now).",
+      "range": {
+        "startLine": 57,
+        "startChar": 26,
+        "endLine": 57,
+        "endChar": 30
       },
       "revId": "62a69e8146c229c489cd51fa2421e8a707b899db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
