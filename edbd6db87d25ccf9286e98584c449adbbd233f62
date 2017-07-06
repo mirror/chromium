@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bd0fdce8_a5f31a63",
+        "filename": "ui/webui/resources/cr_elements/cr_expand_button/cr_expand_button.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-06T19:39:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4022184b_4fdc5069",
+      "revId": "edbd6db87d25ccf9286e98584c449adbbd233f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28270a55_524c967b",
         "filename": "ui/webui/resources/cr_elements/cr_expand_button/cr_expand_button.js",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "5a8caac9_a07e8770",
+        "filename": "ui/webui/resources/cr_elements/cr_expand_button/cr_expand_button.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-06T19:39:59Z",
+      "side": 1,
+      "message": "You\u0027re right, it\u0027s not needed.\n\nDone",
+      "parentUuid": "28270a55_524c967b",
+      "revId": "edbd6db87d25ccf9286e98584c449adbbd233f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6a73c2d_1f5275a4",
         "filename": "ui/webui/resources/cr_elements/shared_vars_css.html",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-06T01:35:08Z",
       "side": 1,
       "message": "Nit (optional): Based on the comment above, should this be expressed as follows?\n--cr-icon-ripple-size: calc(20px + (8px * 2));\n\nThat could would make the code more explicit and the comment redundant.",
+      "revId": "edbd6db87d25ccf9286e98584c449adbbd233f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7056eb25_f5070f29",
+        "filename": "ui/webui/resources/cr_elements/shared_vars_css.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-06T19:39:59Z",
+      "side": 1,
+      "message": "I\u0027d do that in C++ or something that I was sure was processed at build-time. If it\u0027s executed at run-time, I\u0027d prefer the result and the comment. Do you know whether the calc would happen at run-time or build-time?",
+      "parentUuid": "a6a73c2d_1f5275a4",
       "revId": "edbd6db87d25ccf9286e98584c449adbbd233f62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
