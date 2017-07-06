@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f9cf7d6_d3c08ac6",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 1405,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-07-06T21:02:58Z",
+      "side": 1,
+      "message": "nit: s/PLZ Navigate/PlzNavigate/",
+      "range": {
+        "startLine": 1405,
+        "startChar": 66,
+        "endLine": 1405,
+        "endChar": 74
+      },
+      "revId": "15a99591a98a62a22ce186419e74b5c60ae309af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
