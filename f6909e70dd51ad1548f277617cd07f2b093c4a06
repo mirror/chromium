@@ -1,0 +1,487 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35487290_fa0caf65",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-06T22:13:35Z",
+      "side": 1,
+      "message": "Make this one-liner more descriptive of this change (while still conforming to a single line)",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 16
+      },
+      "revId": "f6909e70dd51ad1548f277617cd07f2b093c4a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9aee3245_86bdb471",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-06T22:13:35Z",
+      "side": 1,
+      "message": "Is there a correspondence between |showing_promo_| and |promo_|? (At face value it appears there is.)\n\nIf that\u0027s the case, you can have all users of |showing_promo_| just check for |promo_|.",
+      "range": {
+        "startLine": 72,
+        "startChar": 2,
+        "endLine": 73,
+        "endChar": 69
+      },
+      "revId": "f6909e70dd51ad1548f277617cd07f2b093c4a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e6815af_81b5449a",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-06T22:13:35Z",
+      "side": 1,
+      "message": "Creation and destruction for these methods is an implementation detail. \"Shows the New Tab Promo\" and something similar to OnPromoClosed should be sufficient.",
+      "range": {
+        "startLine": 38,
+        "startChar": 5,
+        "endLine": 38,
+        "endChar": 17
+      },
+      "revId": "f6909e70dd51ad1548f277617cd07f2b093c4a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd4e7e96_1664d9e9",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-06T22:13:35Z",
+      "side": 1,
+      "message": "Add \":\"",
+      "range": {
+        "startLine": 55,
+        "startChar": 9,
+        "endLine": 55,
+        "endChar": 10
+      },
+      "revId": "f6909e70dd51ad1548f277617cd07f2b093c4a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c442d8d6_b5d06131",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-06T22:13:35Z",
+      "side": 1,
+      "message": "Fitts\u0027s Law\n\nhttps://en.wikipedia.org/wiki/Fitts%27s_law\nhttps://en.oxforddictionaries.com/punctuation/apostrophe\n  Personal names that end in -s",
+      "range": {
+        "startLine": 56,
+        "startChar": 44,
+        "endLine": 56,
+        "endChar": 54
+      },
+      "revId": "f6909e70dd51ad1548f277617cd07f2b093c4a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da74ca2c_27e85339",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-06T22:13:35Z",
+      "side": 1,
+      "message": "s/promo_/new_tab_promo_/",
+      "range": {
+        "startLine": 86,
+        "startChar": 31,
+        "endLine": 86,
+        "endChar": 37
+      },
+      "revId": "f6909e70dd51ad1548f277617cd07f2b093c4a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14e86123_2f8a511a",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-06T22:13:35Z",
+      "side": 1,
+      "message": "How were these constants calculated? Add a comment for this.",
+      "range": {
+        "startLine": 24,
+        "startChar": 4,
+        "endLine": 24,
+        "endChar": 36
+      },
+      "revId": "f6909e70dd51ad1548f277617cd07f2b093c4a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86418cb2_690e2529",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-06T22:13:35Z",
+      "side": 1,
+      "message": "This can be removed. C++ will call the default parent constructor here since it\u0027s available.",
+      "range": {
+        "startLine": 34,
+        "startChar": 6,
+        "endLine": 34,
+        "endChar": 33
+      },
+      "revId": "f6909e70dd51ad1548f277617cd07f2b093c4a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adf8b7fb_f8e67a38",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-06T22:13:35Z",
+      "side": 1,
+      "message": "Is this line supposed to be commented?",
+      "range": {
+        "startLine": 44,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 55
+      },
+      "revId": "f6909e70dd51ad1548f277617cd07f2b093c4a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9db6e4bd_14661203",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-06T22:13:35Z",
+      "side": 1,
+      "message": "Use \"\u003d default\" instead of {}",
+      "range": {
+        "startLine": 51,
+        "startChar": 27,
+        "endLine": 51,
+        "endChar": 30
+      },
+      "revId": "f6909e70dd51ad1548f277617cd07f2b093c4a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5118023b_a4cb6656",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-06T22:13:35Z",
+      "side": 1,
+      "message": "Remove. This is implicit in this class.",
+      "range": {
+        "startLine": 80,
+        "startChar": 2,
+        "endLine": 80,
+        "endChar": 15
+      },
+      "revId": "f6909e70dd51ad1548f277617cd07f2b093c4a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a948f775_edbd305d",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-06T22:13:35Z",
+      "side": 1,
+      "message": "Instead of using auto_close_duration_ to pass along the TimeDelta, have StartAutoCloseTimer() accept a TimeDelta argument. This allows you to remove auto_close_duration_ and it makes the data dependency for StartAutoCloseTimer() clear.",
+      "range": {
+        "startLine": 93,
+        "startChar": 18,
+        "endLine": 93,
+        "endChar": 39
+      },
+      "revId": "f6909e70dd51ad1548f277617cd07f2b093c4a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94e120bd_2b173cd6",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-06T22:13:35Z",
+      "side": 1,
+      "message": "Forward declare gfx::Rect, ui::MouseEvent, and views::Widget.",
+      "range": {
+        "startLine": 19,
+        "startChar": 53,
+        "endLine": 19,
+        "endChar": 62
+      },
+      "revId": "f6909e70dd51ad1548f277617cd07f2b093c4a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06cb141b_3efbb975",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-06T22:13:35Z",
+      "side": 1,
+      "message": "s/bubble/New Tab Promo/",
+      "range": {
+        "startLine": 31,
+        "startChar": 16,
+        "endLine": 31,
+        "endChar": 22
+      },
+      "revId": "f6909e70dd51ad1548f277617cd07f2b093c4a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "586e1372_8a742add",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-06T22:13:35Z",
+      "side": 1,
+      "message": "Include \"base/timer/timer.h\"",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 20
+      },
+      "revId": "f6909e70dd51ad1548f277617cd07f2b093c4a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5462f7de_c2a40861",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-06T22:13:35Z",
+      "side": 1,
+      "message": "Include \"base/time/time.h\"",
+      "range": {
+        "startLine": 41,
+        "startChar": 2,
+        "endLine": 41,
+        "endChar": 17
+      },
+      "revId": "f6909e70dd51ad1548f277617cd07f2b093c4a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0e7d8ae_12942793",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-06T22:13:35Z",
+      "side": 1,
+      "message": "Alternatively...\n// Anchor and owner of the NewTabPromo.",
+      "range": {
+        "startLine": 43,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 17
+      },
+      "revId": "f6909e70dd51ad1548f277617cd07f2b093c4a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cda6765_63d77e39",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-06T22:13:35Z",
+      "side": 1,
+      "message": "Include \"base/macros.h\"",
+      "range": {
+        "startLine": 47,
+        "startChar": 2,
+        "endLine": 47,
+        "endChar": 40
+      },
+      "revId": "f6909e70dd51ad1548f277617cd07f2b093c4a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5e917c1_b98ca9fa",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo_dialog_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-06T22:13:35Z",
+      "side": 1,
+      "message": "\u003d default",
+      "range": {
+        "startLine": 13,
+        "startChar": 25,
+        "endLine": 13,
+        "endChar": 28
+      },
+      "revId": "f6909e70dd51ad1548f277617cd07f2b093c4a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9105f1b4_c32594a3",
+        "filename": "chrome/browser/ui/views/tabs/tab_strip.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-06T22:13:35Z",
+      "side": 1,
+      "message": "Should this file be reverted?",
+      "range": {
+        "startLine": 233,
+        "startChar": 0,
+        "endLine": 233,
+        "endChar": 78
+      },
+      "revId": "f6909e70dd51ad1548f277617cd07f2b093c4a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "365c0941_6deccd98",
+        "filename": "chrome/browser/ui/views/tabs/tab_strip.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-06T22:13:35Z",
+      "side": 1,
+      "message": "newtab_button() since the variable is |newtab_button_|",
+      "range": {
+        "startLine": 145,
+        "startChar": 16,
+        "endLine": 145,
+        "endChar": 30
+      },
+      "revId": "f6909e70dd51ad1548f277617cd07f2b093c4a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

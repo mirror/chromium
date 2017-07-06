@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "97993ac7_d47eb3c2",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-06T22:13:35Z",
+      "side": 1,
+      "message": "This line can be removed as the default constructor will automatically initialize this as part of NewTabButton\u0027s construction.",
+      "parentUuid": "0a17993c_a0d19fb0",
+      "revId": "ec9322a438d0a90bff35a182210da4b52967907c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b68b60de_ec2be649",
         "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
         "patchSetId": 7
