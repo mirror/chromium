@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "03de8312_daf0eac1",
+        "filename": "chrome/browser/web_applications/web_app.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-06T04:46:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40ee9645_1e2f89fe",
+      "revId": "dff6924da8a9f69675c64240894f2d8870001748",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b88fd5c_022b4d50",
         "filename": "chrome/browser/web_applications/web_app.h",
         "patchSetId": 11
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-06T03:16:52Z",
       "side": 1,
       "message": "Nice set of abstractions.",
+      "revId": "dff6924da8a9f69675c64240894f2d8870001748",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "df3993a9_15e00f25",
+        "filename": "chrome/browser/web_applications/web_app.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-06T04:46:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0b88fd5c_022b4d50",
       "revId": "dff6924da8a9f69675c64240894f2d8870001748",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
