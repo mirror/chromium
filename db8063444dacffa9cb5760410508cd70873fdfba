@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0144721c_d37e2c5b",
+        "filename": "chrome/browser/safe_browsing/download_protection_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1998,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-06T20:28:37Z",
+      "side": 1,
+      "message": "I think the code itself is clear enough that the comment isn\u0027t adding value.",
+      "range": {
+        "startLine": 1998,
+        "startChar": 15,
+        "endLine": 1998,
+        "endChar": 25
+      },
+      "revId": "db8063444dacffa9cb5760410508cd70873fdfba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "517eecb4_bce69268",
+        "filename": "chrome/browser/safe_browsing/download_protection_service_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2432,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-06T20:28:37Z",
+      "side": 1,
+      "message": "EXPECT_FALSE",
+      "range": {
+        "startLine": 2432,
+        "startChar": 2,
+        "endLine": 2432,
+        "endChar": 11
+      },
+      "revId": "db8063444dacffa9cb5760410508cd70873fdfba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
