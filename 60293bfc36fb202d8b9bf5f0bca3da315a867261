@@ -16,6 +16,24 @@
       "revId": "60293bfc36fb202d8b9bf5f0bca3da315a867261",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c15fc6e9_b039f186",
+        "filename": "third_party/WebKit/Source/core/html/imports/HTMLImportChild.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-07-06T04:49:12Z",
+      "side": 1,
+      "message": "Understood, but this is for consistency throughout this directory.",
+      "parentUuid": "a40912ad_18469d95",
+      "revId": "60293bfc36fb202d8b9bf5f0bca3da315a867261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
