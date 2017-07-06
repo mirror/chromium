@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "bb580a57_c4c805ea",
+        "filename": "chrome/browser/resources/settings/site_settings/constants.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-06T02:53:22Z",
+      "side": 1,
+      "message": "Whoops, if that\u0027s the case, sorry for increasing the churn. In future it\u0027s fine if you say no because you\u0027re going to change it back later (probably saves time merging/rebasing). I also meant to change it to a capital C, but if there\u0027s a reason for the small c I\u0027ll defer to you on that :)",
+      "parentUuid": "ba05a57b_9ae81d46",
+      "revId": "97ac08334b4ce15a98ce5c1dd9446f31d7b6fd7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "14ded819_3c736ee0",
         "filename": "chrome/browser/resources/settings/site_settings/constants.js",
         "patchSetId": 1
