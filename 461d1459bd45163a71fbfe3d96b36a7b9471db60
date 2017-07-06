@@ -34,6 +34,24 @@
       "revId": "461d1459bd45163a71fbfe3d96b36a7b9471db60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "575c81c5_28f70e17",
+        "filename": "chrome/browser/ui/views/payments/modifiers_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2017-07-06T19:51:51Z",
+      "side": 1,
+      "message": "Yeah, data in modifiers is still experimental and it\u0027s used for filtering. The default is to leave them empty though, which makes is so that the behavior is correct as implemented with and without the flag.\n\nThis switch allowed me to write more detailed tests with future-proof coverage.",
+      "parentUuid": "45e6a5e7_5c391766",
+      "revId": "461d1459bd45163a71fbfe3d96b36a7b9471db60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
