@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6be702a1_9f7fc597",
+        "filename": "chrome/browser/safe_browsing/download_protection_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-06T21:09:44Z",
+      "side": 1,
+      "message": "Sure, const DownloadItem\u0026 makes more sense. \nDone.",
+      "parentUuid": "18d3f6d8_e527e886",
+      "range": {
+        "startLine": 160,
+        "startChar": 41,
+        "endLine": 160,
+        "endChar": 53
+      },
+      "revId": "db8063444dacffa9cb5760410508cd70873fdfba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0144721c_d37e2c5b",
         "filename": "chrome/browser/safe_browsing/download_protection_service.cc",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f78ac6b9_61414583",
+        "filename": "chrome/browser/safe_browsing/download_protection_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1998,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-06T21:09:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0144721c_d37e2c5b",
+      "range": {
+        "startLine": 1998,
+        "startChar": 15,
+        "endLine": 1998,
+        "endChar": 25
+      },
+      "revId": "db8063444dacffa9cb5760410508cd70873fdfba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "517eecb4_bce69268",
         "filename": "chrome/browser/safe_browsing/download_protection_service_unittest.cc",
         "patchSetId": 4
@@ -68,6 +116,30 @@
       "revId": "db8063444dacffa9cb5760410508cd70873fdfba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31ffcee4_e75abeac",
+        "filename": "chrome/browser/safe_browsing/download_protection_service_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2432,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-06T21:09:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "517eecb4_bce69268",
+      "range": {
+        "startLine": 2432,
+        "startChar": 2,
+        "endLine": 2432,
+        "endChar": 11
+      },
+      "revId": "db8063444dacffa9cb5760410508cd70873fdfba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
