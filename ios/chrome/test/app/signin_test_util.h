@@ -25,6 +25,9 @@ void TearDownMockAccountReconcilor();
 // the accounts were correctly removed from the keychain.
 bool SignOutAndClearAccounts();
 
+// Reset Sign-in promo impression preferences for bookmarks and settings view.
+void ResetSigninPromoImpressionPreferences();
+
 }  // namespace chrome_test_util
 
 #endif  // IOS_CHROME_TEST_APP_SIGNIN_TEST_UTIL_H_
