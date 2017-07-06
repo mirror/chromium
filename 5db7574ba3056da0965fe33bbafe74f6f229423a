@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c46ab5e_685cdff7",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 961,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-06T10:56:05Z",
+      "side": 1,
+      "message": "Nit: remove empty line.",
+      "revId": "5db7574ba3056da0965fe33bbafe74f6f229423a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d57fbdc9_8be938a9",
+        "filename": "ios/chrome/browser/ui/ntp/google_landing_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1228,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-06T10:56:05Z",
+      "side": 1,
+      "message": "Optional nit: remove the braces.",
+      "range": {
+        "startLine": 1228,
+        "startChar": 38,
+        "endLine": 1228,
+        "endChar": 39
+      },
+      "revId": "5db7574ba3056da0965fe33bbafe74f6f229423a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
