@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "479c193f_382adbf5",
+        "filename": "ui/events/blink/input_handler_proxy.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1172,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-07-06T20:46:55Z",
+      "side": 1,
+      "message": "Is there a reason why you aren\u0027t doing it in the first touch move as well?",
+      "range": {
+        "startLine": 1172,
+        "startChar": 11,
+        "endLine": 1172,
+        "endChar": 36
+      },
+      "revId": "c32cca50cf87e119fc4100f916fa245daf3ee135",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
