@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bfebe807_b2ea5885",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-07-06T03:38:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0869f8f2_9e8c3241",
+      "revId": "b16a98d95f134685a3471dee245e41c723651528",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97e143f9_d3102fc1",
         "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-06T01:55:31Z",
       "side": 1,
       "message": "Won\u0027t need this comment if default_value always need to be specified anyway.",
+      "revId": "b16a98d95f134685a3471dee245e41c723651528",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f26d99b6_35e7b8d0",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-07-06T03:38:42Z",
+      "side": 1,
+      "message": "yeah, nainar told me to add so I add. It should be a reminder, I think. In thousand lines of code 1 or 2 redundant comment can only make it clearer wherever you are reading the code.",
+      "parentUuid": "97e143f9_d3102fc1",
       "revId": "b16a98d95f134685a3471dee245e41c723651528",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
