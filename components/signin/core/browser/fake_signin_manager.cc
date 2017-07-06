@@ -21,6 +21,13 @@ void FakeSigninManagerBase::SignIn(const std::string& account_id) {
   SetAuthenticatedAccountId(account_id);
 }
 
+void FakeSigninManagerBase::FireGoogleSigninSucceeded() {
+  for (auto& observer : observer_list_) {
+    observer.GoogleSigninSucceeded(GetAuthenticatedAccountId(),
+                                   GetAuthenticatedAccountInfo().email);
+  }
+}
+
 #if !defined(OS_CHROMEOS)
 
 FakeSigninManager::FakeSigninManager(
