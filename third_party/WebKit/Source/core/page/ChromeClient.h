@@ -283,6 +283,8 @@ class CORE_EXPORT ChromeClient : public PlatformChromeClient {
   virtual void ClosePagePopup(PagePopup*) = 0;
   virtual DOMWindow* PagePopupWindowForTesting() const = 0;
 
+  virtual void SetBrowserControlsState(float, bool){};
+
   virtual String AcceptLanguages() = 0;
 
   enum DialogType {
