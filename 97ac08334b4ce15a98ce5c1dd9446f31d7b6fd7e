@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "c990029e_210168c1",
+        "filename": "chrome/browser/resources/settings/site_settings/constants.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-06T19:07:05Z",
+      "side": 1,
+      "message": "NP, it\u0027s an easy change :)\n\nDone",
+      "parentUuid": "bb580a57_c4c805ea",
+      "revId": "97ac08334b4ce15a98ce5c1dd9446f31d7b6fd7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14ded819_3c736ee0",
         "filename": "chrome/browser/resources/settings/site_settings/constants.js",
         "patchSetId": 1
