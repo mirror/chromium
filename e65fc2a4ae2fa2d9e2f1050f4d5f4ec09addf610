@@ -22,6 +22,30 @@
       "revId": "e65fc2a4ae2fa2d9e2f1050f4d5f4ec09addf610",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0682128d_7440021b",
+        "filename": "chrome/browser/media/cast_transport_host_filter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-07-06T07:02:48Z",
+      "side": 1,
+      "message": "Yuri, see my comment on PS1: I found that approach more cryptic in this case than just having the explicit bool.",
+      "parentUuid": "613dbb90_d473e551",
+      "range": {
+        "startLine": 110,
+        "startChar": 7,
+        "endLine": 110,
+        "endChar": 40
+      },
+      "revId": "e65fc2a4ae2fa2d9e2f1050f4d5f4ec09addf610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
