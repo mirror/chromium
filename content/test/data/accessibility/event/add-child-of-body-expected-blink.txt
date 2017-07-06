@@ -1,0 +1,2 @@
+IA2_EVENT_TEXT_INSERTED on role=ROLE_SYSTEM_DOCUMENT value="http://127.0.0.1:50005/accessibility/event/add-child-of-body.html" FOCUSED,FOCUSABLE new_text={'<obj>' start=1 end=2}
+EVENT_OBJECT_SHOW on role=DIV
