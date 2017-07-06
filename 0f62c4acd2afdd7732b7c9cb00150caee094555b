@@ -69,6 +69,30 @@
       "revId": "0f62c4acd2afdd7732b7c9cb00150caee094555b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc0c9699_fd1a9de7",
+        "filename": "base/task_scheduler/scheduler_single_thread_task_runner_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-06T00:24:29Z",
+      "side": 1,
+      "message": "This is still temporary stack state. \n\nInstead of a call to ReleaseSharedSchedulerWorkers, you\u0027d instead do this in JoinForTesting\n\nstd::vector\u003c...\u003e shared_single_thread_task_runners \u003d std::move(shared_scheduler_workers_)\nstd::vector\u003c...\u003e shared_com_single_thread_task_runners \u003d std::move(shared_com_scheduler_workers_);\n\nAnd that would be it. The workers remain registered, Join\u0027s all work, and the workers are all released at the end of JoinForTesting().",
+      "parentUuid": "f9780e9c_725a807d",
+      "range": {
+        "startLine": 581,
+        "startChar": 2,
+        "endLine": 592,
+        "endChar": 5
+      },
+      "revId": "0f62c4acd2afdd7732b7c9cb00150caee094555b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
