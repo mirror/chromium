@@ -2,17 +2,16 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "cc/surfaces/direct_layer_tree_frame_sink.h"
+#include "components/viz/service/frame_sinks/direct_layer_tree_frame_sink.h"
 
 #include <memory>
 
 #include "base/memory/ptr_util.h"
+#include "base/message_loop/message_loop.h"
 #include "cc/output/renderer_settings.h"
 #include "cc/output/texture_mailbox_deleter.h"
 #include "cc/scheduler/begin_frame_source.h"
 #include "cc/scheduler/delay_based_time_source.h"
-#include "cc/surfaces/display.h"
-#include "cc/surfaces/display_scheduler.h"
 #include "cc/surfaces/frame_sink_id.h"
 #include "cc/surfaces/local_surface_id_allocator.h"
 #include "cc/surfaces/surface_manager.h"
@@ -24,12 +23,14 @@
 #include "cc/test/test_context_provider.h"
 #include "cc/test/test_gpu_memory_buffer_manager.h"
 #include "cc/test/test_shared_bitmap_manager.h"
+#include "components/viz/service/display/display.h"
+#include "components/viz/service/display/display_scheduler.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
-namespace cc {
+namespace viz {
 namespace {
 
-static constexpr FrameSinkId kArbitraryFrameSinkId(1, 1);
+static constexpr cc::FrameSinkId kArbitraryFrameSinkId(1, 1);
 
 class TestDirectLayerTreeFrameSink : public DirectLayerTreeFrameSink {
  public:
@@ -42,32 +43,31 @@ class DirectLayerTreeFrameSinkTest : public testing::Test {
  public:
   DirectLayerTreeFrameSinkTest()
       : now_src_(new base::SimpleTestTickClock()),
-        task_runner_(new OrderedSimpleTaskRunner(now_src_.get(), true)),
+        task_runner_(new cc::OrderedSimpleTaskRunner(now_src_.get(), true)),
         display_size_(1920, 1080),
         display_rect_(display_size_),
-        context_provider_(TestContextProvider::Create()) {
+        context_provider_(cc::TestContextProvider::Create()) {
     surface_manager_.RegisterFrameSinkId(kArbitraryFrameSinkId);
 
-    std::unique_ptr<FakeOutputSurface> display_output_surface =
-        FakeOutputSurface::Create3d();
+    auto display_output_surface = cc::FakeOutputSurface::Create3d();
     display_output_surface_ = display_output_surface.get();
 
-    begin_frame_source_.reset(new BackToBackBeginFrameSource(
-        base::MakeUnique<DelayBasedTimeSource>(task_runner_.get())));
+    begin_frame_source_ = base::MakeUnique<cc::BackToBackBeginFrameSource>(
+        base::MakeUnique<cc::DelayBasedTimeSource>(task_runner_.get()));
 
     int max_frames_pending = 2;
     std::unique_ptr<DisplayScheduler> scheduler(new DisplayScheduler(
         begin_frame_source_.get(), task_runner_.get(), max_frames_pending));
 
     display_.reset(new Display(
-        &bitmap_manager_, &gpu_memory_buffer_manager_, RendererSettings(),
+        &bitmap_manager_, &gpu_memory_buffer_manager_, cc::RendererSettings(),
         kArbitraryFrameSinkId, std::move(display_output_surface),
         std::move(scheduler),
-        base::MakeUnique<TextureMailboxDeleter>(task_runner_.get())));
-    layer_tree_frame_sink_.reset(new TestDirectLayerTreeFrameSink(
+        base::MakeUnique<cc::TextureMailboxDeleter>(task_runner_.get())));
+    layer_tree_frame_sink_ = base::MakeUnique<TestDirectLayerTreeFrameSink>(
         kArbitraryFrameSinkId, &surface_manager_, display_.get(),
         context_provider_, nullptr, &gpu_memory_buffer_manager_,
-        &bitmap_manager_));
+        &bitmap_manager_);
 
     layer_tree_frame_sink_->BindToClient(&layer_tree_frame_sink_client_);
     display_->Resize(display_size_);
@@ -82,11 +82,11 @@ class DirectLayerTreeFrameSinkTest : public testing::Test {
   }
 
   void SwapBuffersWithDamage(const gfx::Rect& damage_rect) {
-    std::unique_ptr<RenderPass> render_pass(RenderPass::Create());
+    auto render_pass = cc::RenderPass::Create();
     render_pass->SetNew(1, display_rect_, damage_rect, gfx::Transform());
 
-    CompositorFrame frame = test::MakeEmptyCompositorFrame();
-    frame.metadata.begin_frame_ack = BeginFrameAck(0, 1, 1, true);
+    cc::CompositorFrame frame = cc::test::MakeEmptyCompositorFrame();
+    frame.metadata.begin_frame_ack = cc::BeginFrameAck(0, 1, 1, true);
     frame.render_pass_list.push_back(std::move(render_pass));
 
     layer_tree_frame_sink_->SubmitCompositorFrame(std::move(frame));
@@ -102,20 +102,22 @@ class DirectLayerTreeFrameSinkTest : public testing::Test {
   }
 
  protected:
+  base::MessageLoop message_loop_;
+
   std::unique_ptr<base::SimpleTestTickClock> now_src_;
-  scoped_refptr<OrderedSimpleTaskRunner> task_runner_;
+  scoped_refptr<cc::OrderedSimpleTaskRunner> task_runner_;
 
   const gfx::Size display_size_;
   const gfx::Rect display_rect_;
-  SurfaceManager surface_manager_;
-  TestSharedBitmapManager bitmap_manager_;
-  TestGpuMemoryBufferManager gpu_memory_buffer_manager_;
+  cc::SurfaceManager surface_manager_;
+  cc::TestSharedBitmapManager bitmap_manager_;
+  cc::TestGpuMemoryBufferManager gpu_memory_buffer_manager_;
 
-  scoped_refptr<TestContextProvider> context_provider_;
-  FakeOutputSurface* display_output_surface_ = nullptr;
-  std::unique_ptr<BackToBackBeginFrameSource> begin_frame_source_;
+  scoped_refptr<cc::TestContextProvider> context_provider_;
+  cc::FakeOutputSurface* display_output_surface_ = nullptr;
+  std::unique_ptr<cc::BackToBackBeginFrameSource> begin_frame_source_;
   std::unique_ptr<Display> display_;
-  FakeLayerTreeFrameSinkClient layer_tree_frame_sink_client_;
+  cc::FakeLayerTreeFrameSinkClient layer_tree_frame_sink_client_;
   std::unique_ptr<TestDirectLayerTreeFrameSink> layer_tree_frame_sink_;
 };
 
@@ -149,4 +151,4 @@ TEST_F(DirectLayerTreeFrameSinkTest, SuspendedDoesNotTriggerSwapBuffers) {
 }
 
 }  // namespace
-}  // namespace cc
+}  // namespace viz

@@ -9,11 +9,11 @@
 #include <vector>
 
 #include "base/memory/ref_counted.h"
-#include "cc/surfaces/compositor_frame_sink_support_client.h"
-#include "cc/surfaces/display_client.h"
 #include "cc/surfaces/frame_sink_id.h"
 #include "cc/surfaces/frame_sink_id_allocator.h"
 #include "cc/surfaces/surface_id.h"
+#include "components/viz/service/display/display_client.h"
+#include "components/viz/service/frame_sinks/compositor_frame_sink_support_client.h"
 
 namespace cc {
 class BeginFrameSource;
@@ -35,7 +35,7 @@ class ParentOutputSurface;
 
 class SurfacesInstance : public base::RefCounted<SurfacesInstance>,
                          public cc::DisplayClient,
-                         public cc::CompositorFrameSinkSupportClient {
+                         public viz::CompositorFrameSinkSupportClient {
  public:
   static scoped_refptr<SurfacesInstance> GetOrCreateInstance();
 
@@ -64,7 +64,7 @@ class SurfacesInstance : public base::RefCounted<SurfacesInstance>,
       const cc::RenderPassList& render_passes) override {}
   void DisplayDidDrawAndSwap() override {}
 
-  // cc::CompositorFrameSinkSupportClient implementation.
+  // viz::CompositorFrameSinkSupportClient implementation.
   void DidReceiveCompositorFrameAck(
       const std::vector<cc::ReturnedResource>& resources) override;
   void OnBeginFrame(const cc::BeginFrameArgs& args) override;
@@ -83,7 +83,7 @@ class SurfacesInstance : public base::RefCounted<SurfacesInstance>,
   std::unique_ptr<cc::BeginFrameSource> begin_frame_source_;
   std::unique_ptr<cc::Display> display_;
   std::unique_ptr<cc::LocalSurfaceIdAllocator> local_surface_id_allocator_;
-  std::unique_ptr<cc::CompositorFrameSinkSupport> support_;
+  std::unique_ptr<viz::CompositorFrameSinkSupport> support_;
 
   cc::LocalSurfaceId root_id_;
   std::vector<cc::SurfaceId> child_ids_;
