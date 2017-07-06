@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f426028b_0744e8f8",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_base_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-06T07:51:55Z",
+      "side": 1,
+      "message": "Where does this value come from?  It seems random, and after doing so much Harmony work I have a deep suspicion of all local layout constants :)",
+      "revId": "88ba50a61da1236d99f9b0a62de0d081e9e5d487",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de4c14a7_0259eabc",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_base_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-06T07:51:55Z",
+      "side": 1,
+      "message": "Nit: No need for \"this-\u003e\"\n\nCan we just do SetSize(bounds.size())?  It seems like we never change the position.",
+      "revId": "88ba50a61da1236d99f9b0a62de0d081e9e5d487",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e353ed7_bc5707da",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_base_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-06T07:51:55Z",
+      "side": 1,
+      "message": "Nit: Why add this temp?  Could just adjust |bounds| below.",
+      "revId": "88ba50a61da1236d99f9b0a62de0d081e9e5d487",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb67db51_8f5eadf6",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_base_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-06T07:51:55Z",
+      "side": 1,
+      "message": "Nit: what -\u003e what\u0027s",
+      "revId": "88ba50a61da1236d99f9b0a62de0d081e9e5d487",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaf25404_e388e4e8",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_base_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-06T07:51:55Z",
+      "side": 1,
+      "message": "I didn\u0027t see this clamp in the old code.  Did too-tall popups extend off the screen bottom in addition to having no scrollbar?",
+      "revId": "88ba50a61da1236d99f9b0a62de0d081e9e5d487",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61903e3f_8ab12491",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_base_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-06T07:51:55Z",
+      "side": 1,
+      "message": "Nit: Can this constant now be made local to this file (really, this function)?\n\nSimpler:\n\n  widget_bounds.Inset(-kPopupBorderThickness, -kPopupBorderThickness);",
+      "revId": "88ba50a61da1236d99f9b0a62de0d081e9e5d487",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45c19f90_c7799538",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_base_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-06T07:51:55Z",
+      "side": 1,
+      "message": "Nit: |scroll_view_|?",
+      "revId": "88ba50a61da1236d99f9b0a62de0d081e9e5d487",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42e6c999_43acfcd6",
+        "filename": "chrome/browser/ui/views/autofill/password_generation_popup_view_views.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-06T07:51:55Z",
+      "side": 1,
+      "message": "Nit: Omit 0, 0",
+      "revId": "88ba50a61da1236d99f9b0a62de0d081e9e5d487",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
