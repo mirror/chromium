@@ -22,6 +22,47 @@
       "revId": "d513c94ccbc20cffd59285e85e05855c3a19a362",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52f39b48_cfe2c67e",
+        "filename": "ui/ozone/platform/drm/gpu/drm_thread.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-06T20:02:56Z",
+      "side": 1,
+      "message": "It\u0027s a good idea to expect gfx::BufferUsage::SCANOUT_* modes to require texturing support too for cases where the compositor need to fallback to using the GPU. However, with the current state of chrome it happens that chrome will never use a buffer created with this usage for texturing as only the buffer queue in chrome uses this mode. However, it would be nice to not make this assumption. Note that in the SCANOUT_CPU_READ_WRITE case below we can\u0027t assume that it will only be used for scanout.",
+      "parentUuid": "09d7591c_e9927d52",
+      "range": {
+        "startLine": 123,
+        "startChar": 35,
+        "endLine": 123,
+        "endChar": 55
+      },
+      "revId": "d513c94ccbc20cffd59285e85e05855c3a19a362",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffc72d4a_3da8f711",
+        "filename": "ui/ozone/platform/drm/gpu/drm_thread.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-06T20:02:56Z",
+      "side": 1,
+      "message": "This needs to include GBM_BO_USE_TEXTURING as it\u0027s used by the laser pointer and we must be able to fallback to texturing when HW overly can\u0027t be used.\n\nFYI, a buffer that is ideal for scanout and CPU access is preferred over a buffer that is ideal for texturing.",
+      "revId": "d513c94ccbc20cffd59285e85e05855c3a19a362",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
