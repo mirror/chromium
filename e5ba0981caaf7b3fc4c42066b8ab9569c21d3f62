@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b21ec41_f45557e5",
+        "filename": "base/value_iterators.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-06T17:09:57Z",
+      "side": 1,
+      "message": "There is *a lot* of boiler plate in this file, but I tried to hide it from callers as much as possible. Ideally callers just use |(for auto\u0026 val : value.items())| and don\u0027t worry about the gory details of how this is actually done.",
+      "revId": "e5ba0981caaf7b3fc4c42066b8ab9569c21d3f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21c62da4_9b5c064c",
+        "filename": "base/values_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-06T17:09:57Z",
+      "side": 1,
+      "message": "The call to |get()| here is necessary due to the underlying std::reference_wrappers. Sometimes you can get away without calling it, since it provides operator\u0026 (http://en.cppreference.com/w/cpp/utility/functional/reference_wrapper/get), but here it is necessary.",
+      "range": {
+        "startLine": 392,
+        "startChar": 29,
+        "endLine": 392,
+        "endChar": 35
+      },
+      "revId": "e5ba0981caaf7b3fc4c42066b8ab9569c21d3f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
