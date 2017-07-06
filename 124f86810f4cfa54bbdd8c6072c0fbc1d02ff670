@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bedeaed8_365cae03",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileView.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-06T16:48:10Z",
+      "side": 1,
+      "message": "I had help from a trybot ... C++ bias, I guess.",
+      "parentUuid": "32345539_d25f4dd8",
+      "range": {
+        "startLine": 113,
+        "startChar": 72,
+        "endLine": 113,
+        "endChar": 0
+      },
+      "revId": "124f86810f4cfa54bbdd8c6072c0fbc1d02ff670",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06945cc6_0b652eb2",
         "filename": "components/ntp_tiles/most_visited_sites.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "124f86810f4cfa54bbdd8c6072c0fbc1d02ff670",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b3d356a_3c165ddb",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-06T16:48:10Z",
+      "side": 1,
+      "message": "Added. The thought is right but usually, we have 8 different popular sites. Not sure whether two can ever have the same host.",
+      "parentUuid": "06945cc6_0b652eb2",
+      "range": {
+        "startLine": 415,
+        "startChar": 50,
+        "endLine": 415,
+        "endChar": 0
+      },
+      "revId": "124f86810f4cfa54bbdd8c6072c0fbc1d02ff670",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f3f0d766_1efe4540",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-06T16:48:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d895ce50_90bc64b2",
+      "range": {
+        "startLine": 430,
+        "startChar": 26,
+        "endLine": 430,
+        "endChar": 33
+      },
+      "revId": "124f86810f4cfa54bbdd8c6072c0fbc1d02ff670",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21aa0225_44a48466",
         "filename": "components/ntp_tiles/most_visited_sites.h",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "124f86810f4cfa54bbdd8c6072c0fbc1d02ff670",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba64a47d_88fbfeee",
+        "filename": "components/ntp_tiles/most_visited_sites.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-06T16:48:10Z",
+      "side": 1,
+      "message": "Can and should. Done.",
+      "parentUuid": "21aa0225_44a48466",
+      "range": {
+        "startLine": 224,
+        "startChar": 61,
+        "endLine": 224,
+        "endChar": 0
+      },
+      "revId": "124f86810f4cfa54bbdd8c6072c0fbc1d02ff670",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

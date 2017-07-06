@@ -422,6 +422,30 @@
       "revId": "29321c83bfb8234962fbc34e64f45a83ba175b7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb3bfaa7_8b3b511e",
+        "filename": "components/ntp_tiles/most_visited_sites.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-06T16:48:10Z",
+      "side": 1,
+      "message": "Oh. That might actually be true.",
+      "parentUuid": "618f7772_4527227b",
+      "range": {
+        "startLine": 104,
+        "startChar": 77,
+        "endLine": 104,
+        "endChar": 0
+      },
+      "revId": "29321c83bfb8234962fbc34e64f45a83ba175b7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
