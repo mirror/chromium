@@ -31,7 +31,7 @@ class SubscriptionJsonRequest : public net::URLFetcherDelegate {
   using CompletedCallback =
       base::OnceCallback<void(const ntp_snippets::Status& status)>;
 
-  // Builds non-authenticated SubscriptionJsonRequests.
+  // Builds non-authenticated and authenticated SubscriptionJsonRequests.
   class Builder {
    public:
     Builder();
@@ -45,6 +45,8 @@ class SubscriptionJsonRequest : public net::URLFetcherDelegate {
     Builder& SetUrl(const GURL& url);
     Builder& SetUrlRequestContextGetter(
         const scoped_refptr<net::URLRequestContextGetter>& context_getter);
+    Builder& SetAuthentication(const std::string& account_id,
+                               const std::string& auth_header);
 
    private:
     std::string BuildHeaders() const;
@@ -54,12 +56,14 @@ class SubscriptionJsonRequest : public net::URLFetcherDelegate {
         const std::string& headers,
         const std::string& body) const;
 
-    // GCM subscribtion token obtain from GCM driver (instanceID::getToken())
+    // GCM subscription token obtain from GCM driver (instanceID::getToken())
     std::string token_;
     // TODO(mamir): Additional fields to be added: country, language
 
     GURL url_;
     scoped_refptr<net::URLRequestContextGetter> url_request_context_getter_;
+    std::string obfuscated_gaia_id_;
+    std::string auth_header_;
   };
 
   ~SubscriptionJsonRequest() override;
