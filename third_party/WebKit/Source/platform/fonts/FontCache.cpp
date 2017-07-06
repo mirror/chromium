@@ -388,11 +388,8 @@ void FontCache::Purge(PurgeSeverity purge_severity) {
 
 void FontCache::AddClient(FontCacheClient* client) {
   CHECK(client);
-  if (!font_cache_clients_) {
-    font_cache_clients_ = new HeapHashSet<WeakMember<FontCacheClient>>();
-  }
-  DCHECK(!font_cache_clients_->Contains(client));
-  font_cache_clients_->insert(client);
+  DCHECK(!font_cache_clients_.Contains(client));
+  font_cache_clients_.insert(client);
 }
 
 unsigned short FontCache::Generation() {
@@ -403,7 +400,9 @@ void FontCache::Invalidate() {
   font_platform_data_cache_.clear();
   generation_++;
 
-  for (const auto& client : *font_cache_clients_)
+  HeapVector<Member<FontCacheClient>> clients;
+  CopyToVector(font_cache_clients_, clients);
+  for (FontCacheClient* client : clients)
     client->FontCacheInvalidated();
 
   Purge(kForcePurge);

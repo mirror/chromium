@@ -314,7 +314,7 @@ class PLATFORM_EXPORT FontCache {
 
   unsigned short generation_ = 0;
   bool platform_init_ = false;
-  Persistent<HeapHashSet<WeakMember<FontCacheClient>>> font_cache_clients_;
+  PersistentHeapHashSet<WeakMember<FontCacheClient>> font_cache_clients_;
   FontPlatformDataCache font_platform_data_cache_;
   FallbackListShaperCache fallback_list_shaper_cache_;
   FontDataCache font_data_cache_;
