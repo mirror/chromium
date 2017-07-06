@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "840a175e_f8c00be0",
+        "filename": "content/browser/renderer_host/input/gesture_event_queue.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-07-06T13:19:10Z",
+      "side": 1,
+      "message": "Did we figure out why they are arriving out of order? Is the driver producing them incorrectly?",
+      "range": {
+        "startLine": 90,
+        "startChar": 14,
+        "endLine": 90,
+        "endChar": 32
+      },
+      "revId": "df27eb1ca121e4e326223f14ddf4caf8eaca34e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
