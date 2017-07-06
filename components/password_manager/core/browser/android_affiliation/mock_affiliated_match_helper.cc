@@ -32,9 +32,9 @@ void MockAffiliatedMatchHelper::ExpectCallToGetAffiliatedWebRealms(
       .WillOnce(testing::Return(results_to_return));
 }
 
-void MockAffiliatedMatchHelper::ExpectCallToInjectAffiliatedWebRealms(
-    const std::vector<std::string>& results_to_inject) {
-  EXPECT_CALL(*this, OnInjectAffiliatedWebRealmsCalled())
+void MockAffiliatedMatchHelper::ExpectCallToInjectAffiliationInformation(
+    const std::vector<AffiliationInformation>& results_to_inject) {
+  EXPECT_CALL(*this, OnInjectAffiliationInformationCalled())
       .WillOnce(testing::Return(results_to_inject));
 }
 
@@ -54,14 +54,17 @@ void MockAffiliatedMatchHelper::GetAffiliatedWebRealms(
   result_callback.Run(affiliated_web_realms);
 }
 
-void MockAffiliatedMatchHelper::InjectAffiliatedWebRealms(
+void MockAffiliatedMatchHelper::InjectAffiliationInformation(
     std::vector<std::unique_ptr<autofill::PasswordForm>> forms,
     const PasswordFormsCallback& result_callback) {
-  std::vector<std::string> affiliated_web_realms =
-      OnInjectAffiliatedWebRealmsCalled();
-  DCHECK_EQ(affiliated_web_realms.size(), forms.size());
-  for (size_t i = 0; i < forms.size(); ++i)
-    forms[i]->affiliated_web_realm = affiliated_web_realms[i];
+  const std::vector<AffiliationInformation>& information =
+      OnInjectAffiliationInformationCalled();
+  DCHECK_EQ(information.size(), forms.size());
+  for (size_t i = 0; i < forms.size(); ++i) {
+    forms[i]->affiliated_web_realm = information[i].affiliated_web_realm;
+    forms[i]->affiliated_play_name = information[i].affiliated_play_name;
+    forms[i]->affiliated_icon_url = information[i].affiliated_icon_url;
+  }
   result_callback.Run(std::move(forms));
 }
 

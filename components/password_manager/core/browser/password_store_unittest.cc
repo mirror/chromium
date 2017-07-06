@@ -79,6 +79,10 @@ constexpr const char kTestAndroidRealm3[] =
     "android://hash@com.example.three.android/";
 constexpr const char kTestUnrelatedAndroidRealm[] =
     "android://hash@com.notexample.android/";
+constexpr const char kTestAndroidPlayName1[] = "Example Android App 1";
+constexpr const char kTestAndroidIconURL1[] = "https://example.com/icon_1.png";
+constexpr const char kTestAndroidPlayName2[] = "Example Android App 2";
+constexpr const char kTestAndroidIconURL2[] = "https://example.com/icon_2.png";
 
 class MockPasswordStoreConsumer : public PasswordStoreConsumer {
  public:
@@ -813,7 +817,7 @@ TEST_F(PasswordStoreTest, MAYBE_UpdatePasswordsStoredForAffiliatedWebsites) {
   }
 }
 
-TEST_F(PasswordStoreTest, GetLoginsWithAffiliatedRealms) {
+TEST_F(PasswordStoreTest, GetLoginsWithAffiliationInformation) {
   /* clang-format off */
   static const PasswordFormData kTestCredentials[] = {
       {PasswordForm::SCHEME_HTML,
@@ -864,25 +868,31 @@ TEST_F(PasswordStoreTest, GetLoginsWithAffiliatedRealms) {
     MockAffiliatedMatchHelper* mock_helper = new MockAffiliatedMatchHelper;
     store->SetAffiliatedMatchHelper(base::WrapUnique(mock_helper));
 
-    std::vector<std::string> affiliated_web_realms;
-    affiliated_web_realms.push_back(kTestWebRealm1);
-    affiliated_web_realms.push_back(kTestWebRealm2);
-    affiliated_web_realms.push_back(std::string());
-    mock_helper->ExpectCallToInjectAffiliatedWebRealms(affiliated_web_realms);
-    for (size_t i = 0; i < expected_results.size(); ++i)
-      expected_results[i]->affiliated_web_realm = affiliated_web_realms[i];
+    std::vector<MockAffiliatedMatchHelper::AffiliationInformation> info(3);
+    info[0].affiliated_web_realm = kTestWebRealm1;
+    info[0].affiliated_play_name = kTestAndroidPlayName1;
+    info[0].affiliated_icon_url = GURL(kTestAndroidIconURL1);
+    info[1].affiliated_web_realm = kTestWebRealm2;
+    info[1].affiliated_play_name = kTestAndroidPlayName2;
+    info[1].affiliated_icon_url = GURL(kTestAndroidIconURL2);
+    mock_helper->ExpectCallToInjectAffiliationInformation(info);
+    for (size_t i = 0; i < expected_results.size(); ++i) {
+      expected_results[i]->affiliated_web_realm = info[i].affiliated_web_realm;
+      expected_results[i]->affiliated_play_name = info[i].affiliated_play_name;
+      expected_results[i]->affiliated_icon_url = info[i].affiliated_icon_url;
+    }
 
     EXPECT_CALL(mock_consumer,
                 OnGetPasswordStoreResultsConstRef(
                     UnorderedPasswordFormElementsAre(&expected_results)));
     if (blacklisted)
-      store->GetBlacklistLoginsWithAffiliatedRealms(&mock_consumer);
+      store->GetBlacklistLoginsWithAffiliationInformation(&mock_consumer);
     else
-      store->GetAutofillableLoginsWithAffiliatedRealms(&mock_consumer);
+      store->GetAutofillableLoginsWithAffiliationInformation(&mock_consumer);
 
-    // Since GetAutofillableLoginsWithAffiliatedRealms schedules a request for
-    // affiliated realms to UI thread, don't shutdown UI thread until there are
-    // no tasks in the UI queue.
+    // Since GetAutofillableLoginsWithAffiliationInformation schedules a request
+    // for affiliation information to UI thread, don't shutdown UI thread
+    // until there are no tasks in the UI queue.
     base::RunLoop().RunUntilIdle();
     store->ShutdownOnUIThread();
     base::RunLoop().RunUntilIdle();

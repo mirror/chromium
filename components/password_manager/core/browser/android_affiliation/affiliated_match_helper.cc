@@ -85,7 +85,7 @@ void AffiliatedMatchHelper::GetAffiliatedWebRealms(
   }
 }
 
-void AffiliatedMatchHelper::InjectAffiliatedWebRealms(
+void AffiliatedMatchHelper::InjectAffiliationInformation(
     std::vector<std::unique_ptr<autofill::PasswordForm>> forms,
     const PasswordFormsCallback& result_callback) {
   std::vector<autofill::PasswordForm*> android_credentials;
@@ -101,24 +101,36 @@ void AffiliatedMatchHelper::InjectAffiliatedWebRealms(
     affiliation_service_->GetAffiliations(
         FacetURI::FromPotentiallyInvalidSpec(form->signon_realm),
         AffiliationService::StrategyOnCacheMiss::FAIL,
-        base::Bind(&AffiliatedMatchHelper::CompleteInjectAffiliatedWebRealm,
+        base::Bind(&AffiliatedMatchHelper::CompleteInjectAffiliationInformation,
                    weak_ptr_factory_.GetWeakPtr(), base::Unretained(form),
                    barrier_closure));
   }
 }
 
-void AffiliatedMatchHelper::CompleteInjectAffiliatedWebRealm(
+void AffiliatedMatchHelper::CompleteInjectAffiliationInformation(
     autofill::PasswordForm* form,
     base::Closure barrier_closure,
     const AffiliatedFacets& results,
     bool success) {
-  // If there is a number of realms, choose the first in the list.
   if (success) {
+    const FacetURI facet_uri(
+        FacetURI::FromPotentiallyInvalidSpec(form->signon_realm));
+    DCHECK(facet_uri.IsValidAndroidFacetURI());
+
+    // Inject both branding info (i.e. the Play Store name and icon URL) as well
+    // as the affiliated web realm into the form.
+    // This will always choose the first available web realm for injection, even
+    // if multiple are available.
+    bool injected_web_realm = false;
     for (const Facet& affiliated_facet : results) {
-      if (affiliated_facet.uri.IsValidWebFacetURI()) {
+      if (affiliated_facet.uri == facet_uri) {
+        form->affiliated_play_name = affiliated_facet.branding_info.name;
+        form->affiliated_icon_url = affiliated_facet.branding_info.icon_url;
+      } else if (!injected_web_realm &&
+                 affiliated_facet.uri.IsValidWebFacetURI()) {
         form->affiliated_web_realm =
             affiliated_facet.uri.canonical_spec() + "/";
-        break;
+        injected_web_realm = true;
       }
     }
   }

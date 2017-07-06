@@ -138,6 +138,18 @@ struct PasswordForm {
   // If there was no call of InjectAffiliatedWebRealms, the string is empty.
   std::string affiliated_web_realm;
 
+  // The Play Store name of the Android application, if the form is an
+  // Android credential. Otherwise, the string is empty.
+  // The field is filled out in PasswordStore's InjectAffiliationInformation.
+  // If there was no call of InjectAffiliationInformation, the string is empty.
+  std::string affiliated_play_name;
+
+  // The Play Store icon URL of the Android application, if the form is an
+  // Android credential. Otherwise, the string is empty.
+  // The field is filled out in PasswordStore's InjectAffiliationInformation.
+  // If there was no call of InjectAffiliationInformation, the URL is empty.
+  GURL affiliated_icon_url;
+
   // The name of the submit button used. Optional; only used in scoring
   // of PasswordForm results from the database to make matches as tight as
   // possible.

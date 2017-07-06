@@ -80,12 +80,12 @@ class AffiliatedMatchHelper : public PasswordStore::Observer,
       const PasswordStore::FormDigest& android_form,
       const AffiliatedRealmsCallback& result_callback);
 
-  // Retrieves realms of web sites affiliated with the Android credentials in
-  // |forms|, sets |affiliated_web_realm| of forms, and invokes
-  // |result_callback|.
+  // Retrieves affiliation information about the Android credentials in |forms|,
+  // sets |affiliated_web_realm|, |affiliated_play_name| and
+  // |affiliated_icon_url| of forms, and invokes |result_callback|.
   // NOTE: This will not issue an on-demand network request. If a request to
   // cache fails, no web realm will be injected into corresponding form.
-  virtual void InjectAffiliatedWebRealms(
+  virtual void InjectAffiliationInformation(
       std::vector<std::unique_ptr<autofill::PasswordForm>> forms,
       const PasswordFormsCallback& result_callback);
 
@@ -128,11 +128,12 @@ class AffiliatedMatchHelper : public PasswordStore::Observer,
 
   // Called back by AffiliationService to supply the list of facets affiliated
   // with the Android credential in |form|. Sets |form->affiliated_web_realm|,
-  // if |success| is true and |results| is non-empty. Invokes |barrier_closure|.
-  void CompleteInjectAffiliatedWebRealm(autofill::PasswordForm* form,
-                                        base::Closure barrier_closure,
-                                        const AffiliatedFacets& results,
-                                        bool success);
+  // |form->affiliated_play_name| and |form->affiliated_icon_url| if |success|
+  // is true and |results| is non-empty. Invokes |barrier_closure|.
+  void CompleteInjectAffiliationInformation(autofill::PasswordForm* form,
+                                            base::Closure barrier_closure,
+                                            const AffiliatedFacets& results,
+                                            bool success);
 
   // PasswordStore::Observer:
   void OnLoginsChanged(const PasswordStoreChangeList& changes) override;
