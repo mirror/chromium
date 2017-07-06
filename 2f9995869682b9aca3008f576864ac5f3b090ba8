@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c922d10_fa8e8456",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-06T20:14:44Z",
+      "side": 1,
+      "message": "looks like we can now remove these constants, after migrating to the getter functions.",
+      "revId": "2f9995869682b9aca3008f576864ac5f3b090ba8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e83c3d76_be469638",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-06T20:14:44Z",
+      "side": 1,
+      "message": "unique_ptr\u0027s constructor will automatically set the value to nullptr, so you don\u0027t need to assign nullptr here.",
+      "revId": "2f9995869682b9aca3008f576864ac5f3b090ba8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
