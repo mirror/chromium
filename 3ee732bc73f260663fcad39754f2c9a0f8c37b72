@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34d00a6d_8bf05b00",
+        "filename": "base/task_scheduler/task_tracker_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-07-06T01:08:22Z",
+      "side": 1,
+      "message": "These small changes are because SimpleThread uses a WaitableEvent internally, and the load tests could hit FD exhaustion if they don\u0027t clean up the unused objects.",
+      "revId": "3ee732bc73f260663fcad39754f2c9a0f8c37b72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
