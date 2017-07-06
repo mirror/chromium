@@ -697,6 +697,32 @@ IN_PROC_BROWSER_TEST_F(SubresourceFilterBrowserTest,
 }
 
 IN_PROC_BROWSER_TEST_F(SubresourceFilterBrowserTest,
+                       InjectedIframe_HasActivation) {
+  const GURL url(GetTestUrl("subresource_filter/frame_injection.html"));
+  ConfigureAsPhishingURL(url);
+
+  const GURL image_url = GetTestUrl("google/logo.gif");
+  ASSERT_NO_FATAL_FAILURE(SetRulesetToDisallowURLsWithPathSuffix(".gif"));
+
+  ui_test_utils::NavigateToURL(browser(), url);
+
+  bool image_errored = false;
+  EXPECT_TRUE(content::ExecuteScriptAndExtractBool(
+      web_contents(),
+      base::StringPrintf("injectImageIntoEmptyFrame('%s')",
+                         image_url.spec().c_str()),
+      &image_errored));
+  EXPECT_TRUE(image_errored);
+
+  image_errored = false;
+  EXPECT_TRUE(content::ExecuteScriptAndExtractBool(
+      web_contents(),
+      base::StringPrintf("injectImageIntoJavascriptFrame('%s')",
+                         image_url.spec().c_str()),
+      &image_errored));
+}
+
+IN_PROC_BROWSER_TEST_F(SubresourceFilterBrowserTest,
                        HistoryNavigationActivation) {
   content::ConsoleObserverDelegate console_observer(web_contents(),
                                                     kActivationConsoleMessage);
@@ -921,34 +947,6 @@ IN_PROC_BROWSER_TEST_F(SubresourceFilterBrowserTest,
                                         receiver.GetCallback());
   receiver.WaitForActivationDecision();
   receiver.ExpectReceivedOnce(ActivationState(ActivationLevel::DISABLED));
-}
-
-// Schemes 'about:' and 'chrome-native:' are loaded synchronously as empty
-// documents in Blink, so there is no chance (or need) to send an activation
-// IPC message. Make sure that histograms are not polluted with these loads.
-IN_PROC_BROWSER_TEST_F(SubresourceFilterBrowserTest, NoActivationOnAboutBlank) {
-  GURL url(GetTestUrl("subresource_filter/frame_set_sync_loads.html"));
-  ASSERT_NO_FATAL_FAILURE(
-      SetRulesetToDisallowURLsWithPathSuffix("included_script.js"));
-  ConfigureAsPhishingURL(url);
-
-  base::HistogramTester histogram_tester;
-  ui_test_utils::NavigateToURL(browser(), url);
-
-  content::RenderFrameHost* frame = FindFrameByName("initially_blank");
-  ASSERT_TRUE(frame);
-  EXPECT_FALSE(WasParsedScriptElementLoaded(frame));
-
-  // Support both pre-/post-PersistentHistograms worlds. The latter is enabled
-  // through field trials, so the former is still used on offical builders.
-  content::FetchHistogramsFromChildProcesses();
-  SubprocessMetricsProvider::MergeHistogramDeltasForTesting();
-
-  // The only frames where filtering was (even considered to be) activated
-  // should be the main frame, and the child that was navigated to an HTTP URL.
-  histogram_tester.ExpectUniqueSample(
-      kDocumentLoadActivationLevel,
-      static_cast<base::Histogram::Sample>(ActivationLevel::ENABLED), 2);
 }
 
 IN_PROC_BROWSER_TEST_F(SubresourceFilterBrowserTest, PageLoadMetrics) {
