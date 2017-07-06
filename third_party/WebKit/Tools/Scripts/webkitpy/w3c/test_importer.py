@@ -14,17 +14,17 @@ If this script is given the argument --auto-update, it will also:
 import argparse
 import logging
 
-from webkitpy.common.net.git_cl import GitCL, TryJobStatus
 from webkitpy.common.net.buildbot import current_build_link
+from webkitpy.common.net.git_cl import GitCL, TryJobStatus
 from webkitpy.common.path_finder import PathFinder
 from webkitpy.layout_tests.models.test_expectations import TestExpectations, TestExpectationParser
 from webkitpy.layout_tests.port.base import Port
 from webkitpy.w3c.common import WPT_REPO_URL, WPT_DEST_NAME, read_credentials, exportable_commits_over_last_n_commits
 from webkitpy.w3c.directory_owners_extractor import DirectoryOwnersExtractor
 from webkitpy.w3c.local_wpt import LocalWPT
-from webkitpy.w3c.wpt_github import WPTGitHub
 from webkitpy.w3c.test_copier import TestCopier
 from webkitpy.w3c.wpt_expectations_updater import WPTExpectationsUpdater
+from webkitpy.w3c.wpt_github import WPTGitHub
 from webkitpy.w3c.wpt_manifest import WPTManifest
 
 # Settings for how often to check try job results and how long to wait.
