@@ -46,6 +46,30 @@
       "revId": "e65fc2a4ae2fa2d9e2f1050f4d5f4ec09addf610",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59d81740_8e888452",
+        "filename": "chrome/browser/media/cast_transport_host_filter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-06T20:07:36Z",
+      "side": 1,
+      "message": "Hmm...I wouldn\u0027t describe the solution in PS1 as \u0027cryptic\u0027. IMHO, it was actually much cleaner. :) Perhaps changing the method name to SetFakeWakeLockForTesting() would make it feel less cryptic (which is standard Chromium style for these types of things)? If still not clear, you could just add a simple header file comment like, \"Called by unit tests to set up a no-op WakeLock.\"\n\nI see there was a discussion about how we couldn\u0027t use TestServiceManagerContext. But, it looks like SetFakeWakeLock() didn\u0027t need that? (It just created a Mojo interface request which would act as a \"no-op mock\" when used during testing.)\n\nI don\u0027t like the \"extra bool\" solution because it\u0027s extra code bloat and extra memory/CPU runtime cost that can\u0027t be optimized out of a release build; and, there is this other just-as-simple solution that can. While the cost of the bool solution is super-small, it contributes to the \"death by 1,000 cuts\" problem we\u0027ve been having throughout the Chromium project.",
+      "parentUuid": "0682128d_7440021b",
+      "range": {
+        "startLine": 110,
+        "startChar": 7,
+        "endLine": 110,
+        "endChar": 40
+      },
+      "revId": "e65fc2a4ae2fa2d9e2f1050f4d5f4ec09addf610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
