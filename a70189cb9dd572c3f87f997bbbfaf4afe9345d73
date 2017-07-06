@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fefc7496_1ddb5483",
+        "filename": "content/utility/utility_thread_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-07-06T11:14:01Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "ccd8ee6c_9c7914b0",
+      "revId": "a70189cb9dd572c3f87f997bbbfaf4afe9345d73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec10bfe6_2b683a1b",
         "filename": "content/utility/utility_thread_impl.h",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "a70189cb9dd572c3f87f997bbbfaf4afe9345d73",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8075acd8_2b22e27b",
+        "filename": "content/utility/utility_thread_impl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-07-06T11:14:01Z",
+      "side": 1,
+      "message": "Removed the foo:: prefix from all of them.",
+      "parentUuid": "ec10bfe6_2b683a1b",
+      "revId": "a70189cb9dd572c3f87f997bbbfaf4afe9345d73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
