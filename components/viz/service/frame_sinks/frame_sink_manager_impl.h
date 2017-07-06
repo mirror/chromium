@@ -100,7 +100,7 @@ class VIZ_SERVICE_EXPORT FrameSinkManagerImpl
 
   std::unique_ptr<cc::SurfaceDependencyTracker> dependency_tracker_;
 
-  // Provides a cc::Display for CreateRootCompositorFrameSink().
+  // Provides a Display for CreateRootCompositorFrameSink().
   DisplayProvider* const display_provider_;
 
   std::unordered_map<cc::FrameSinkId,

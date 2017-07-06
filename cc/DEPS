@@ -35,4 +35,13 @@ specific_include_rules = {
     "+gpu/command_buffer/common",
     "+gpu/ipc",
   ],
+  ".*_unittest.*\.cc": [
+    "+components/viz/test",
+  ],
+  ".*_pixeltest.*\.cc": [
+    "+components/viz/test",
+  ],
+  ".*_perftest.*\.cc": [
+    "+components/viz/test",
+  ],
 }
