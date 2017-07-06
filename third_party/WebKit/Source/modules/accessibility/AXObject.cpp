@@ -520,7 +520,12 @@ AccessibilityCheckedState AXObject::CheckedState() const {
     if (!node)
       return kCheckedStateUndefined;
 
-    if (IsNativeInputInMixedState(node))
+    // Expose native checkbox mixed state as accessibility mixed state. However,
+    // do not expose native radio mixed state as accessibility mixed state.
+    // This would confuse the JAWS screen reader, which reports a mixed radio as
+    // both checked and partially checked, but a native mixed native radio
+    // button sinply means no radio buttons have been checked in the group yet.
+    if (role == kCheckBoxRole && IsNativeInputInMixedState(node))
       return kCheckedStateMixed;
 
     if (isHTMLInputElement(*node) &&
