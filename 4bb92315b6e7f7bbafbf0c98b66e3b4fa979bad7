@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b63609c4_ea38e1e9",
+        "filename": "ui/views/controls/menu/menu_controller_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2017-07-06T14:29:49Z",
+      "side": 1,
+      "message": "We typically reserve these test class helper methods for accessing private apis. Or when something is done a lot throughout the test.\n\nView::OnMousePressed is public, so we can just do this in the test.",
+      "range": {
+        "startLine": 449,
+        "startChar": 27,
+        "endLine": 449,
+        "endChar": 32
+      },
+      "revId": "4bb92315b6e7f7bbafbf0c98b66e3b4fa979bad7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2ba4ade_ae8a6e4a",
+        "filename": "ui/views/controls/menu/menu_controller_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1449,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2017-07-06T14:29:49Z",
+      "side": 1,
+      "message": "EXPECT_TRUE and EXPECT_FALSE are prefered options for boolean checks",
+      "range": {
+        "startLine": 1449,
+        "startChar": 2,
+        "endLine": 1449,
+        "endChar": 11
+      },
+      "revId": "4bb92315b6e7f7bbafbf0c98b66e3b4fa979bad7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc553d84_ba0d8b5f",
+        "filename": "ui/views/view.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 1296,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2017-07-06T14:29:49Z",
+      "side": 1,
+      "message": "I do not believe that this is necessary for the test as it is currently written",
+      "range": {
+        "startLine": 1296,
+        "startChar": 21,
+        "endLine": 1296,
+        "endChar": 39
+      },
+      "revId": "4bb92315b6e7f7bbafbf0c98b66e3b4fa979bad7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
