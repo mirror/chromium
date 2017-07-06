@@ -22,6 +22,30 @@
       "revId": "46057762eb36284cc60dfdf906b177a58177fba0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fd45299_f314caaa",
+        "filename": "chrome/installer/zucchini/typed_value.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-06T00:41:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bdc014d7_6f8f5892",
+      "range": {
+        "startLine": 15,
+        "startChar": 3,
+        "endLine": 15,
+        "endChar": 6
+      },
+      "revId": "46057762eb36284cc60dfdf906b177a58177fba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
