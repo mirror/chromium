@@ -22,6 +22,30 @@
       "revId": "3e8047dfdb365ced762ab524b9082346e29ef4fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1521386_ade6a73a",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBRequest.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-07-06T02:13:52Z",
+      "side": 0,
+      "message": "Done.\n\nThanks for catching this! I didn\u0027t mean to delete the DCHECK, I meant to update it to account for the rename. Really grateful for the catch.",
+      "parentUuid": "06dea878_9d9099c5",
+      "range": {
+        "startLine": 256,
+        "startChar": 0,
+        "endLine": 256,
+        "endChar": 33
+      },
+      "revId": "3e8047dfdb365ced762ab524b9082346e29ef4fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -46,6 +46,30 @@
       "revId": "64686506f3d73ce6ab9484a8b1e0323a287cd096",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "513031e9_d482caec",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBRequest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-07-06T02:13:52Z",
+      "side": 1,
+      "message": "Done.\n\nI switched to std::atomic\u003csize_t\u003e. Thank you very much for the advice!",
+      "parentUuid": "8539e487_613513d0",
+      "range": {
+        "startLine": 90,
+        "startChar": 14,
+        "endLine": 90,
+        "endChar": 27
+      },
+      "revId": "64686506f3d73ce6ab9484a8b1e0323a287cd096",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
