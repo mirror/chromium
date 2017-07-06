@@ -94,6 +94,30 @@
     },
     {
       "key": {
+        "uuid": "9ec85128_5ddfb3bd",
+        "filename": "media/mojo/interfaces/audio_decoder_config_struct_traits.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-06T16:07:54Z",
+      "side": 1,
+      "message": "Do you mean (1) for this particular case, i.e., adding this particular header to the public_headers section of typemap config; or (2) as a general solution, i.e., unifying tratis_headers and public_headers sections of typemap config?\n\nI am fine with (1) if that makes things easier.\n\nHowever, IMO (2) may not make a lot of sense. Assuming Bar type is typemapped and it is used in foo.mojom, bar_struct_traits.h may be useful when users writing struct traits involving foo.mojom. For the majority of use cases, users don\u0027t need it. Besides, we have also seen examples where this caused circular includes: foo.mojom.h -\u003e bar_struct_traits.h -\u003e qux.h -\u003e foo.mojom.h.",
+      "parentUuid": "b5d90831_82ff247d",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 66
+      },
+      "revId": "bb2d3ac9e17ffdc366285f565f4b1ac4054039a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "474b5d84_01f9427b",
         "filename": "media/mojo/interfaces/audio_decoder_config_struct_traits.h",
         "patchSetId": 5
