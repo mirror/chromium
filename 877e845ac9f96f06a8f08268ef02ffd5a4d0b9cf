@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c527d45_43ed5e06",
+        "filename": "components/password_manager/core/browser/password_store.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-06T11:38:16Z",
+      "side": 0,
+      "message": "This seems to be dead code that was not used anywhere. That\u0027s why I went ahead and deleted it.",
+      "range": {
+        "startLine": 526,
+        "startChar": 7,
+        "endLine": 526,
+        "endChar": 39
+      },
+      "revId": "877e845ac9f96f06a8f08268ef02ffd5a4d0b9cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
