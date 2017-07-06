@@ -4097,6 +4097,10 @@ void WebViewImpl::ForceNextDrawingBufferCreationToFail() {
 }
 
 CompositorMutatorImpl& WebViewImpl::Mutator() {
+  return *CompositorMutator();
+}
+
+CompositorMutatorImpl* WebViewImpl::CompositorMutator() {
   if (!mutator_) {
     std::unique_ptr<CompositorMutatorClient> mutator_client =
         CompositorMutatorImpl::CreateClient();
@@ -4104,15 +4108,7 @@ CompositorMutatorImpl& WebViewImpl::Mutator() {
     layer_tree_view_->SetMutatorClient(std::move(mutator_client));
   }
 
-  return *mutator_;
-}
-
-CompositorWorkerProxyClient* WebViewImpl::CreateCompositorWorkerProxyClient() {
-  return new CompositorWorkerProxyClientImpl(&Mutator());
-}
-
-AnimationWorkletProxyClient* WebViewImpl::CreateAnimationWorkletProxyClient() {
-  return new AnimationWorkletProxyClientImpl(&Mutator());
+  return mutator_;
 }
 
 void WebViewImpl::UpdatePageOverlays() {

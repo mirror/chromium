@@ -484,6 +484,10 @@ void WebFrameWidgetImpl::ScheduleAnimation() {
 }
 
 CompositorMutatorImpl& WebFrameWidgetImpl::Mutator() {
+  return *CompositorMutator();
+}
+
+CompositorMutatorImpl* WebFrameWidgetImpl::CompositorMutator() {
   if (!mutator_) {
     std::unique_ptr<CompositorMutatorClient> mutator_client =
         CompositorMutatorImpl::CreateClient();
@@ -491,17 +495,7 @@ CompositorMutatorImpl& WebFrameWidgetImpl::Mutator() {
     layer_tree_view_->SetMutatorClient(std::move(mutator_client));
   }
 
-  return *mutator_;
-}
-
-CompositorWorkerProxyClient*
-WebFrameWidgetImpl::CreateCompositorWorkerProxyClient() {
-  return new CompositorWorkerProxyClientImpl(&Mutator());
-}
-
-AnimationWorkletProxyClient*
-WebFrameWidgetImpl::CreateAnimationWorkletProxyClient() {
-  return new AnimationWorkletProxyClientImpl(&Mutator());
+  return mutator_;
 }
 
 void WebFrameWidgetImpl::ApplyViewportDeltas(
