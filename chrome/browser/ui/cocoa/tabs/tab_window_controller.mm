@@ -20,9 +20,7 @@
 - (void)setUseOverlay:(BOOL)useOverlay;
 
 // The tab strip background view should always be inserted as the back-most
-// subview of the root view. It cannot be a subview of the contentView, as that
-// would cause it to become layer backed, which would cause it to draw on top
-// of non-layer backed content like the window controls.
+// subview of the contentView.
 - (void)insertTabStripBackgroundViewIntoWindow:(NSWindow*)window
                                       titleBar:(BOOL)hasTitleBar;
 
@@ -422,16 +420,15 @@
 - (void)insertTabStripBackgroundViewIntoWindow:(NSWindow*)window
                                       titleBar:(BOOL)hasTitleBar {
   DCHECK(tabStripBackgroundView_);
-  NSView* rootView = [[window contentView] superview];
 
   // In Material Design on 10.10 and higher, the top portion of the window is
   // blurred using an NSVisualEffectView.
   Class nsVisualEffectViewClass = NSClassFromString(@"NSVisualEffectView");
   if (!nsVisualEffectViewClass) {
     DCHECK(!chrome::ShouldUseFullSizeContentView());
-    [rootView addSubview:tabStripBackgroundView_
-              positioned:NSWindowBelow
-              relativeTo:nil];
+    [[window contentView] addSubview:tabStripBackgroundView_
+                          positioned:NSWindowBelow
+                          relativeTo:nil];
     return;
   }
 
@@ -471,14 +468,9 @@
   [visualEffectView_ setState:NSVisualEffectStateFollowsWindowActiveState];
 
   [visualEffectWrapperView addSubview:visualEffectView_];
-
-  if (chrome::ShouldUseFullSizeContentView()) {
-    [[window contentView] addSubview:visualEffectWrapperView];
-  } else {
-    [rootView addSubview:visualEffectWrapperView
-              positioned:NSWindowBelow
-              relativeTo:nil];
-  }
+  [[window contentView] addSubview:visualEffectWrapperView
+                        positioned:NSWindowBelow
+                        relativeTo:nil];
 
   // Make the |tabStripBackgroundView_| a child of the NSVisualEffectView.
   [tabStripBackgroundView_ setFrame:[visualEffectView_ bounds]];
