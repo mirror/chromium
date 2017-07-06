@@ -3,6 +3,7 @@ include_rules = [
 
   "+components/discardable_memory/common",
   "+components/payments",
+  "+components/ukm",
   "+device/base/synchronization",
   "+services/resource_coordinator/public/interfaces",
   "+services/service_manager/public/cpp",
