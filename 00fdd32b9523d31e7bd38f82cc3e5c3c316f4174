@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "233ad2f2_eed5d8f1",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-07-06T18:11:14Z",
+      "side": 1,
+      "message": "Take the underscore off the name",
+      "range": {
+        "startLine": 44,
+        "startChar": 51,
+        "endLine": 44,
+        "endChar": 77
+      },
+      "revId": "00fdd32b9523d31e7bd38f82cc3e5c3c316f4174",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29424601_7bed335d",
+        "filename": "ui/events/blink/input_handler_proxy.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-07-06T18:11:14Z",
+      "side": 1,
+      "message": "This is really odd stashing a ptr from the stack in this object.\n\nI think you probably want to adjust the callback interfaces instead of passing a ptr around.",
+      "revId": "00fdd32b9523d31e7bd38f82cc3e5c3c316f4174",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
