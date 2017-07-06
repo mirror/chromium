@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09d7591c_e9927d52",
+        "filename": "ui/ozone/platform/drm/gpu/drm_thread.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1149774
+      },
+      "writtenOn": "2017-07-06T19:21:28Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be GBM_BO_USE_SCANOUT | GBM_BO_USE_TEXTURING (i.e, Chrome wants to scanout, but will fallback to GL compositing)?  Genuine question, don\u0027t really know.",
+      "range": {
+        "startLine": 123,
+        "startChar": 35,
+        "endLine": 123,
+        "endChar": 55
+      },
+      "revId": "d513c94ccbc20cffd59285e85e05855c3a19a362",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
