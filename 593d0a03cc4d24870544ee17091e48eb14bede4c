@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a27fa19_05df4853",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-07-06T14:33:05Z",
+      "side": 1,
+      "message": "Do we have another VSyncEstimator? I am not sure I understand why do you want to call it RealVSyncEstimator?",
+      "revId": "593d0a03cc4d24870544ee17091e48eb14bede4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1c45439_0d33e72e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-07-06T14:33:05Z",
+      "side": 1,
+      "message": "Nit: do you need NANOS_PER_MILLISECOND? It looks like you can directly define NANOS_PER_SECOND as 1000000000",
+      "revId": "593d0a03cc4d24870544ee17091e48eb14bede4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8feb5149_a37faf73",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-07-06T14:33:05Z",
+      "side": 1,
+      "message": "Why do you want to postFrameCallback again?",
+      "revId": "593d0a03cc4d24870544ee17091e48eb14bede4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c9dd65e_ce7f5f45",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-07-06T14:33:05Z",
+      "side": 1,
+      "message": "Use a const to replace 5 here.",
+      "revId": "593d0a03cc4d24870544ee17091e48eb14bede4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "582af941_5183df18",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-07-06T14:33:05Z",
+      "side": 1,
+      "message": "It is a good practice to handle assert failure. Do we observe this assert failure in practice at all? If so, we probably should figure out why and try to fix it. If it is not fixable by us, then perhaps use log instead of assert and document why.",
+      "revId": "593d0a03cc4d24870544ee17091e48eb14bede4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f4491eb_ea5f0be1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-07-06T14:33:05Z",
+      "side": 1,
+      "message": "Do we want to reset mVSyncTimebaseNanos here?",
+      "revId": "593d0a03cc4d24870544ee17091e48eb14bede4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
