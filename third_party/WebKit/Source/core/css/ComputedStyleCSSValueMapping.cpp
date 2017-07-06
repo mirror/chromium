@@ -2304,13 +2304,15 @@ const CSSValue* ComputedStyleCSSValueMapping::Get(
     case CSSPropertyBorderLeftStyle:
       return CSSIdentifierValue::Create(style.BorderLeftStyle());
     case CSSPropertyBorderTopWidth:
-      return ZoomAdjustedPixelValue(style.BorderTopWidth(), style);
+      return ZoomAdjustedPixelValueWithRounding(style.BorderTopWidth(), style);
     case CSSPropertyBorderRightWidth:
-      return ZoomAdjustedPixelValue(style.BorderRightWidth(), style);
+      return ZoomAdjustedPixelValueWithRounding(style.BorderRightWidth(),
+                                                style);
     case CSSPropertyBorderBottomWidth:
-      return ZoomAdjustedPixelValue(style.BorderBottomWidth(), style);
+      return ZoomAdjustedPixelValueWithRounding(style.BorderBottomWidth(),
+                                                style);
     case CSSPropertyBorderLeftWidth:
-      return ZoomAdjustedPixelValue(style.BorderLeftWidth(), style);
+      return ZoomAdjustedPixelValueWithRounding(style.BorderLeftWidth(), style);
     case CSSPropertyBottom:
       return ValueForPositionOffset(style, CSSPropertyBottom, layout_object);
     case CSSPropertyWebkitBoxAlign:
