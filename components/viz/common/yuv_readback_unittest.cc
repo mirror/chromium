@@ -6,7 +6,6 @@
 #include "base/memory/ref_counted_memory.h"
 #include "base/run_loop.h"
 #include "base/strings/stringprintf.h"
-#include "base/test/scoped_task_environment.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/trace_event/trace_event.h"
 #include "components/viz/common/gl_helper.h"
@@ -470,7 +469,6 @@ class YUVReadbackTest : public testing::Test {
     gl_->DeleteTextures(1, &src_texture);
   }
 
-  base::test::ScopedTaskEnvironment scoped_task_environment_;
   std::unique_ptr<gpu::GLInProcessContext> context_;
   gpu::gles2::GLES2Interface* gl_;
   std::unique_ptr<GLHelper> helper_;
