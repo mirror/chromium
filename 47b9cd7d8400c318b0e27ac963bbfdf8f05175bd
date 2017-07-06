@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "18d25861_37812c1d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-07-06T23:33:31Z",
+      "side": 1,
+      "message": "Indeed, I was confused. Nevermind.",
+      "parentUuid": "b20f29f6_a6442469",
+      "range": {
+        "startLine": 508,
+        "startChar": 23,
+        "endLine": 508,
+        "endChar": 30
+      },
+      "revId": "47b9cd7d8400c318b0e27ac963bbfdf8f05175bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91348499_059a2b36",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
         "patchSetId": 4
