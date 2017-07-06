@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c4bba7fc_6dfc815f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeBackgroundService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-06T12:15:25Z",
+      "side": 1,
+      "message": "I\u0027ve thought about it: I think it is perfect as it is now. \n\nThis class embodies the persistent scheduler. For this class, the task is to fetch the snippets; it generates an event that for the rest of the world is \"persistentSchedulerWakeUp\".",
+      "parentUuid": "8bc35814_41a836f8",
+      "range": {
+        "startLine": 101,
+        "startChar": 19,
+        "endLine": 101,
+        "endChar": 32
+      },
+      "revId": "c62049d839da1e02ff7a46f94700d8b366768f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b7fb796a_8b5a5e96",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetsBridge.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "c62049d839da1e02ff7a46f94700d8b366768f6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "707b25ff_ad62a3fd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetsBridge.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-06T12:15:25Z",
+      "side": 1,
+      "message": "Done. Thanks for catching it!",
+      "parentUuid": "b7fb796a_8b5a5e96",
+      "range": {
+        "startLine": 76,
+        "startChar": 15,
+        "endLine": 76,
+        "endChar": 21
+      },
+      "revId": "c62049d839da1e02ff7a46f94700d8b366768f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
