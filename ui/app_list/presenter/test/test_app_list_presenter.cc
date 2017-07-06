@@ -34,5 +34,9 @@ void TestAppListPresenter::StartVoiceInteractionSession() {
   voice_session_count_++;
 }
 
+void TestAppListPresenter::UpdateBoundsOnYPosition(int new_y_position) {
+  set_bounds_count_++;
+}
+
 }  // namespace test
 }  // namespace app_list
