@@ -40,6 +40,7 @@ void EmbeddedWorkerInstanceClientImpl::Create(
   EmbeddedWorkerInstanceClientImpl* client =
       new EmbeddedWorkerInstanceClientImpl(std::move(request));
   client->blink_initialized_time_ = blink_initialized_time;
+  LOG(ERROR) << "EmbeddedWorkerInstanceClientImpl::Create";
 }
 
 void EmbeddedWorkerInstanceClientImpl::WorkerContextDestroyed() {
@@ -59,6 +60,7 @@ void EmbeddedWorkerInstanceClientImpl::StartWorker(
   TRACE_EVENT0("ServiceWorker",
                "EmbeddedWorkerInstanceClientImpl::StartWorker");
 
+  LOG(ERROR) << "EmbeddedWorkerInstanceClientImpl::StartWorker";
   auto client = base::MakeUnique<ServiceWorkerContextClient>(
       params.embedded_worker_id, params.service_worker_version_id, params.scope,
       params.script_url, std::move(dispatcher_request),

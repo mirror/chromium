@@ -110,6 +110,7 @@ void ServiceWorkerProcessManager::AddProcessReferenceToPattern(
     return;
   }
 
+  LOG(ERROR) << "AddProcessReference: " << pattern << ", " << process_id;
   ProcessRefMap& process_refs = pattern_processes_[pattern];
   ++process_refs[process_id];
 }
@@ -128,6 +129,7 @@ void ServiceWorkerProcessManager::RemoveProcessReferenceFromPattern(
     return;
   }
 
+  LOG(ERROR) << "RemoveProcessReference: " << pattern << ", " << process_id;
   PatternProcessRefMap::iterator it = pattern_processes_.find(pattern);
   if (it == pattern_processes_.end()) {
     NOTREACHED() << "process references not found for pattern: " << pattern;
@@ -208,6 +210,7 @@ void ServiceWorkerProcessManager::AllocateWorkerProcess(
       RenderProcessHost::FromID(process_id)->IncrementServiceWorkerRefCount();
       instance_info_.insert(
           std::make_pair(embedded_worker_id, ProcessInfo(process_id)));
+      LOG(ERROR) << "ProcessManager foudn existing process. " << process_id;
       BrowserThread::PostTask(
           BrowserThread::IO, FROM_HERE,
           base::Bind(callback, SERVICE_WORKER_OK, process_id,
@@ -252,6 +255,7 @@ void ServiceWorkerProcessManager::AllocateWorkerProcess(
       std::make_pair(embedded_worker_id, ProcessInfo(site_instance)));
 
   rph->IncrementServiceWorkerRefCount();
+  LOG(ERROR) << "ProcessManager used siteinstance to get a process. " << rph->GetID();
   BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
                           base::Bind(callback, SERVICE_WORKER_OK, rph->GetID(),
                                      true /* is_new_process */, settings));
@@ -267,6 +271,8 @@ void ServiceWorkerProcessManager::ReleaseWorkerProcess(int embedded_worker_id) {
                    embedded_worker_id));
     return;
   }
+
+  LOG(ERROR) << "ReleaseWorkerProcess called " << embedded_worker_id;
 
   if (process_id_for_test_ != ChildProcessHost::kInvalidUniqueID) {
     // Unittests don't increment or decrement the worker refcount of a
@@ -285,8 +291,10 @@ void ServiceWorkerProcessManager::ReleaseWorkerProcess(int embedded_worker_id) {
   // ReleaseWorkerProcess could be called for a nonexistent worker id, for
   // example, when request to start a worker is aborted on the IO thread during
   // process allocation that is failed on the UI thread.
-  if (info == instance_info_.end())
+  if (info == instance_info_.end()) {
+    LOG(ERROR) << "ReleaseWorkerProcess: no proc for worker found";
     return;
+  }
 
   RenderProcessHost* rph = NULL;
   if (info->second.site_instance.get()) {
@@ -300,6 +308,7 @@ void ServiceWorkerProcessManager::ReleaseWorkerProcess(int embedded_worker_id) {
         << "Process " << info->second.process_id
         << " was destroyed unexpectedly. Did we actually hold a reference?";
   }
+  LOG(ERROR) << "ReleaseWorkerProcess: decr ref count";
   rph->DecrementServiceWorkerRefCount();
   instance_info_.erase(info);
 }

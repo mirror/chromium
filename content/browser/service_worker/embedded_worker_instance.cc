@@ -94,8 +94,11 @@ void SetupOnUI(
               service_worker_context, service_worker_context_weak,
               service_worker_version_id, url, scope),
           is_installed);
-  if (request.is_pending())
+  LOG(ERROR) << "will bind interface";
+  if (request.is_pending()) {
+    LOG(ERROR) << "bind interface to " << rph;
     BindInterface(rph, std::move(request));
+  }
   std::unique_ptr<EmbeddedWorkerInstance::DevToolsProxy> devtools_proxy =
       base::MakeUnique<EmbeddedWorkerInstance::DevToolsProxy>(
           process_id, worker_devtools_agent_route_id);
@@ -108,7 +111,12 @@ void CallDetach(EmbeddedWorkerInstance* instance) {
   // This could be called on the UI thread if |client_| still be valid when the
   // message loop on the UI thread gets destructed.
   // TODO(shimazu): Remove this after https://crbug.com/604762 is fixed
+  LOG(ERROR) << "CallDetach =====================";
+  base::debug::StackTrace st;
+  st.Print();
+  LOG(ERROR) << "================================";
   if (!BrowserThread::CurrentlyOn(BrowserThread::IO)) {
+    LOG(ERROR) << "!!!!!!!!!!!!Not on the IO thread!!!!!!!!!!!1";
     DCHECK(ServiceWorkerUtils::IsMojoForServiceWorkerEnabled());
     return;
   }
@@ -208,8 +216,10 @@ class EmbeddedWorkerInstance::WorkerProcessHandle {
   }
 
   ~WorkerProcessHandle() {
-    if (context_)
+    if (context_) {
+      LOG(ERROR) << "ReleaseWorkerProcess: ewid=" << embedded_worker_id_ << " proc_id=" << process_id_;
       context_->process_manager()->ReleaseWorkerProcess(embedded_worker_id_);
+    }
   }
 
   int process_id() const { return process_id_; }
@@ -344,6 +354,8 @@ class EmbeddedWorkerInstance::StartTask {
       return;
     }
 
+    LOG(ERROR) << "Got process: " << process_id;
+
     TRACE_EVENT_NESTABLE_ASYNC_END1("ServiceWorker", "ALLOCATING_PROCESS",
                                     instance_, "Is New Process",
                                     is_new_process);
@@ -361,6 +373,7 @@ class EmbeddedWorkerInstance::StartTask {
 
     // Notify the instance that a process is allocated.
     state_ = ProcessAllocationState::ALLOCATED;
+    LOG(ERROR) << "Making proc handle";
     instance_->OnProcessAllocated(
         base::MakeUnique<WorkerProcessHandle>(instance_->context_,
                                               instance_->embedded_worker_id(),
@@ -377,14 +390,17 @@ class EmbeddedWorkerInstance::StartTask {
     const int64_t service_worker_version_id = params->service_worker_version_id;
     const GURL& scope = params->scope;
     GURL script_url(params->script_url);
-    BrowserThread::PostTask(
+    // BrowserThread::PostTask(
+    BrowserThread::PostDelayedTask(
         BrowserThread::UI, FROM_HERE,
         base::Bind(&SetupOnUI, process_id, instance_->context_.get(),
                    instance_->context_, service_worker_version_id, script_url,
                    scope, is_installed_, base::Passed(&request_),
                    base::Bind(&StartTask::OnSetupOnUICompleted,
                               weak_factory_.GetWeakPtr(), base::Passed(&params),
-                              is_new_process)));
+                              is_new_process))
+        // );
+        , base::TimeDelta::FromMillisecondsD(10));
   }
 
   void OnSetupOnUICompleted(
@@ -404,6 +420,8 @@ class EmbeddedWorkerInstance::StartTask {
 
     ServiceWorkerStatusCode status =
         instance_->SendStartWorker(std::move(params));
+    LOG(ERROR) << "SendStartWorker: returned "
+               << ServiceWorkerStatusToString(status);
     if (status != SERVICE_WORKER_OK) {
       StatusCallback callback = start_callback_;
       start_callback_.Reset();
@@ -451,6 +469,7 @@ void EmbeddedWorkerInstance::Start(
     std::unique_ptr<EmbeddedWorkerStartParams> params,
     mojom::ServiceWorkerEventDispatcherRequest dispatcher_request,
     const StatusCallback& callback) {
+  LOG(ERROR) << "EmbeddedWorkerInstance::Start";
   restart_count_++;
   if (!context_) {
     callback.Run(SERVICE_WORKER_ERROR_ABORT);
@@ -476,6 +495,7 @@ void EmbeddedWorkerInstance::Start(
 
   mojom::EmbeddedWorkerInstanceClientRequest request =
       mojo::MakeRequest(&client_);
+  LOG(ERROR) << "set connection error to CallDetach";
   client_.set_connection_error_handler(
       base::Bind(&CallDetach, base::Unretained(this)));
 
@@ -605,6 +625,7 @@ ServiceWorkerStatusCode EmbeddedWorkerInstance::SendStartWorker(
   instance_host_binding_.Bind(mojo::MakeRequest(&host_ptr_info));
 
   inflight_start_task_->set_start_worker_sent_time(base::TimeTicks::Now());
+  LOG(ERROR) << "client is boudn? " << client_.is_bound();
   client_->StartWorker(*params, std::move(pending_dispatcher_request_),
                        std::move(host_ptr_info));
   registry_->BindWorkerToProcess(process_id(), embedded_worker_id());
@@ -700,6 +721,7 @@ void EmbeddedWorkerInstance::OnScriptLoaded() {
 }
 
 void EmbeddedWorkerInstance::OnURLJobCreatedForMainScript() {
+  LOG(ERROR) << "url job created";
   TRACE_EVENT_NESTABLE_ASYNC_END0("ServiceWorker", "SENT_START_WORKER", this);
   TRACE_EVENT_NESTABLE_ASYNC_BEGIN0("ServiceWorker", "SCRIPT_LOADING", this);
   if (!inflight_start_task_)
@@ -832,6 +854,7 @@ void EmbeddedWorkerInstance::OnStopped() {
 }
 
 void EmbeddedWorkerInstance::OnDetached() {
+  LOG(ERROR) << "EmbeddedWorkerInstance::OnDetached";
   EmbeddedWorkerStatus old_status = status_;
   ReleaseProcess();
   for (auto& observer : listener_list_)

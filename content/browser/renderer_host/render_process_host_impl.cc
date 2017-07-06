@@ -1147,6 +1147,7 @@ void RenderProcessHostImpl::RegisterRendererMainThreadFactory(
 }
 
 RenderProcessHostImpl::~RenderProcessHostImpl() {
+  LOG(ERROR) << "******************** RPHI dtor ********************";
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 #ifndef NDEBUG
   DCHECK(is_self_deleted_)
@@ -1181,6 +1182,7 @@ bool RenderProcessHostImpl::Init() {
   if (HasConnection())
     return true;
 
+  LOG(ERROR) << this << ": Init";
   is_dead_ = false;
 
   base::CommandLine::StringType renderer_prefix;
@@ -1312,6 +1314,9 @@ bool RenderProcessHostImpl::Init() {
 }
 
 void RenderProcessHostImpl::EnableSendQueue() {
+  LOG(ERROR) << "EnableSendQueue called";
+  base::debug::StackTrace st;
+  st.Print();
   if (!channel_)
     InitializeChannelProxy();
 }
@@ -1346,6 +1351,7 @@ void RenderProcessHostImpl::InitializeChannelProxy() {
       mojom::kRendererServiceName,
       BrowserContext::GetServiceUserIdFor(GetBrowserContext()),
       base::StringPrintf("%d_%d", id_, instance_id_++));
+  LOG(ERROR) << "***************** INSTANCE ID = " << instance_id_ << "************";
   child_connection_.reset(new ChildConnection(child_identity,
                                               broker_client_invitation_.get(),
                                               connector, io_task_runner));
@@ -1866,6 +1872,7 @@ void RenderProcessHostImpl::IncrementServiceWorkerRefCount() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   DCHECK(!is_worker_ref_count_disabled_);
   ++service_worker_ref_count_;
+  LOG(ERROR) << this << ": incr refcount: " << service_worker_ref_count_;
 }
 
 void RenderProcessHostImpl::DecrementServiceWorkerRefCount() {
@@ -1873,6 +1880,7 @@ void RenderProcessHostImpl::DecrementServiceWorkerRefCount() {
   DCHECK(!is_worker_ref_count_disabled_);
   DCHECK_GT(GetWorkerRefCount(), 0U);
   --service_worker_ref_count_;
+  LOG(ERROR) << this << ": decr refcount: " << service_worker_ref_count_;
   if (GetWorkerRefCount() == 0)
     Cleanup();
 }
@@ -2728,6 +2736,8 @@ bool RenderProcessHostImpl::IgnoreInputEvents() const {
 
 void RenderProcessHostImpl::Cleanup() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  LOG(ERROR) << this << ": Cleanup";
+
   // Keep the one renderer thread around forever in single process mode.
   if (run_renderer_in_process())
     return;
@@ -2738,6 +2748,7 @@ void RenderProcessHostImpl::Cleanup() {
   // and guarantee that the RenderProcessHostDestroyed observer callback is
   // always the last callback fired.
   if (within_process_died_observer_) {
+    LOG(ERROR) <<this << ": died observ";
     delayed_cleanup_needed_ = true;
     return;
   }
@@ -2750,8 +2761,10 @@ void RenderProcessHostImpl::Cleanup() {
   }
 
   // Until there are no other owners of this object, we can't delete ourselves.
-  if (!listeners_.IsEmpty() || GetWorkerRefCount() != 0)
+  if (!listeners_.IsEmpty() || GetWorkerRefCount() != 0) {
+    LOG(ERROR) <<this << ": can't cleanup: " << listeners_.size() << " or " << GetWorkerRefCount();
     return;
+  }
 
 #if BUILDFLAG(ENABLE_WEBRTC)
   if (is_initialized_)
@@ -2817,6 +2830,7 @@ void RenderProcessHostImpl::Cleanup() {
 
   // Remove ourself from the list of renderer processes so that we can't be
   // reused in between now and when the Delete task runs.
+  LOG(ERROR) << this << ": unreg host";
   UnregisterHost(GetID());
 
   instance_weak_factory_.reset(
@@ -3348,6 +3362,10 @@ void RenderProcessHostImpl::ProcessDied(bool already_dead,
   // The OnChannelError notification can fire multiple times due to nested sync
   // calls to a renderer. If we don't have a valid channel here it means we
   // already handled the error.
+  LOG(ERROR) << this << ": process died ===================";
+  base::debug::StackTrace st;
+  LOG(ERROR) << "############ " << st.ToString();
+  LOG(ERROR) << "=============================================";
 
   // It should not be possible for us to be called re-entrantly.
   DCHECK(!within_process_died_observer_);

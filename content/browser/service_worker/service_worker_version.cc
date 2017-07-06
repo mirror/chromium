@@ -186,6 +186,7 @@ void OnEventDispatcherConnectionError(
     base::WeakPtr<EmbeddedWorkerInstance> embedded_worker) {
   if (!embedded_worker)
     return;
+  // LOG(ERROR) << "OnEventDispatcherConnectionError";
 
   switch (embedded_worker->status()) {
     case EmbeddedWorkerStatus::STARTING:
@@ -1804,6 +1805,7 @@ void ServiceWorkerVersion::OnStoppedInternal(EmbeddedWorkerStatus old_status) {
     // allocation failure) and restart is likely to fail again.
     should_restart = false;
   }
+  LOG(ERROR) << "Stopped. restart? " << should_restart;
 
   if (!stop_time_.is_null()) {
     TRACE_EVENT_ASYNC_END1("ServiceWorker", "ServiceWorkerVersion::StopWorker",
@@ -1850,6 +1852,7 @@ void ServiceWorkerVersion::OnStoppedInternal(EmbeddedWorkerStatus old_status) {
 }
 
 void ServiceWorkerVersion::FinishStartWorker(ServiceWorkerStatusCode status) {
+  LOG(ERROR) << "FinishStartWorker: " << ServiceWorkerStatusToString(status);
   RunCallbacks(this, &start_callbacks_, status);
 }
 

@@ -212,8 +212,9 @@ ServiceWorkerProviderHost::~ServiceWorkerProviderHost() {
 
   RemoveAllMatchingRegistrations();
 
-  for (const GURL& pattern : associated_patterns_)
+  for (const GURL& pattern : associated_patterns_) {
     DecreaseProcessReference(pattern);
+  }
 }
 
 int ServiceWorkerProviderHost::frame_id() const {
@@ -790,6 +791,12 @@ void ServiceWorkerProviderHost::IncreaseProcessReference(
 void ServiceWorkerProviderHost::DecreaseProcessReference(
     const GURL& pattern) {
   if (context_ && context_->process_manager()) {
+    LOG(ERROR) << "+=========================================";
+    LOG(ERROR) << "SWPRoviderHost::DecreaseProcessref: " << pattern << ", " << render_process_id_;
+    LOG(ERROR) << "ServiceWOrkerProviderHost: for client? " << IsProviderForClient();
+    // base::debug::StackTrace st;
+    // st.Print();
+    LOG(ERROR) << "+=========================================";
     context_->process_manager()->RemoveProcessReferenceFromPattern(
         pattern, render_process_id_);
   }
