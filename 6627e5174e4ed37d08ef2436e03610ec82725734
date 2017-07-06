@@ -163,6 +163,30 @@
       "revId": "6627e5174e4ed37d08ef2436e03610ec82725734",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4d2c6d28_95278bbb",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1111,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-07-06T16:57:55Z",
+      "side": 1,
+      "message": "On second thought, this may not have been a great idea.\n\nIn particular, it is not really related to the bug you are fixing and it will changes\nthe restoration behavior for some apps unexpectedly. I argue the change in behavior is\nbetter (i.e., scroll to the bottom of the new page instead of remaining at previous \nscroll position or 0). But given its nature it may be best to be done in its own CL.\n\nIn any case, I will leave it up to you to decide as I see you have already made the change.",
+      "parentUuid": "23c67425_1990dae9",
+      "range": {
+        "startLine": 1111,
+        "startChar": 60,
+        "endLine": 1111,
+        "endChar": 62
+      },
+      "revId": "6627e5174e4ed37d08ef2436e03610ec82725734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
