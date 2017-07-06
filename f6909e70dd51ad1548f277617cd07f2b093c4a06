@@ -141,6 +141,30 @@
     },
     {
       "key": {
+        "uuid": "dfb33306_419325a0",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-06T23:43:56Z",
+      "side": 1,
+      "message": "For mildly controversial style comments, I\u0027m all about the citations. :-D",
+      "parentUuid": "37f05992_c9f6c50a",
+      "range": {
+        "startLine": 56,
+        "startChar": 44,
+        "endLine": 56,
+        "endChar": 54
+      },
+      "revId": "f6909e70dd51ad1548f277617cd07f2b093c4a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "da74ca2c_27e85339",
         "filename": "chrome/browser/ui/views/tabs/new_tab_button.h",
         "patchSetId": 8
