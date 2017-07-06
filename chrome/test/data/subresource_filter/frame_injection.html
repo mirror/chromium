@@ -1,0 +1,17 @@
+<iframe></iframe>
+<script>
+function injectImage(imageSrc) {
+  var subframe = document.getElementsByTagName('iframe')[0];
+  console.log(imageSrc);
+  var image = new Image();
+  image.src = imageSrc;
+  image.onload = () => { window.domAutomationController.send(false); }
+  image.onerror = () => { window.domAutomationController.send(true); }
+  subframe.contentDocument.body.appendChild(image);
+}
+
+function navigateIframe(src) {
+  var subframe = document.getElementsByTagName('iframe')[0];
+  subframe.contentWindow.location = src;
+}
+</script>
