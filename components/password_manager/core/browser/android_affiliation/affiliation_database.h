@@ -6,10 +6,12 @@
 #define COMPONENTS_PASSWORD_MANAGER_CORE_BROWSER_ANDROID_AFFILIATION_AFFILIATION_DATABASE_H_
 
 #include <memory>
+#include <vector>
 
 #include "base/macros.h"
 #include "base/time/time.h"
 #include "components/password_manager/core/browser/android_affiliation/affiliation_utils.h"
+#include "components/password_manager/core/browser/sql_table_builder.h"
 
 namespace base {
 class FilePath;
@@ -76,14 +78,34 @@ class AffiliationDatabase {
   static void Delete(const base::FilePath& path);
 
  private:
-  // Creates any tables and indices that do not already exist in the database.
-  bool CreateTablesAndIndicesIfNeeded();
+  // Initializes the table builders and defines the structure of the tables.
+  void InitializeTableBuilders();
+
+  // Creates the tables in the database. Returns |false| on error, |true| on
+  // success.
+  bool CreateTables();
+
+  // Migrates an existing database from an earlier version. Returns |false| on
+  // error, |true| on success.
+  bool MigrateTablesFrom(unsigned version);
 
   // Called when SQLite encounters an error.
   void SQLErrorCallback(int error_number, sql::Statement* statement);
 
   // The SQL connection to the database.
   std::unique_ptr<sql::Connection> sql_connection_;
+
+  // The name for the equivalence class table.
+  static constexpr char kEqClassesTableName[] = "eq_classes";
+
+  // The name for the equivalence class members table.
+  static constexpr char kEqClassMembersTableName[] = "eq_class_members";
+
+  // The builder for the equivalence class table.
+  SQLTableBuilder eq_classes_builder_{kEqClassesTableName};
+
+  // The builder for the equivalence class members table.
+  SQLTableBuilder eq_class_members_builder_{kEqClassMembersTableName};
 
   DISALLOW_COPY_AND_ASSIGN(AffiliationDatabase);
 };

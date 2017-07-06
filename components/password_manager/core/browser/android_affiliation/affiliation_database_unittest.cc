@@ -14,6 +14,7 @@
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/sqlite/sqlite3.h"
+#include "url/gurl.h"
 
 namespace password_manager {
 
@@ -27,6 +28,8 @@ const char kTestFacetURI5[] = "https://epsilon.example.com";
 const char kTestFacetURI6[] = "https://zeta.example.com";
 
 const char kTestAndroidFacetURI[] = "android://hash@com.example.android";
+const char kTestAndroidPlayName[] = "Test Android App";
+const char kTestAndroidIconURL[] = "https://example.com/icon.png";
 
 const int64_t kTestTimeUs1 = 1000000;
 const int64_t kTestTimeUs2 = 2000000;
@@ -65,7 +68,8 @@ AffiliatedFacetsWithUpdateTime TestEquivalenceClass3() {
   AffiliatedFacetsWithUpdateTime affiliation;
   affiliation.last_update_time = base::Time::FromInternalValue(kTestTimeUs3);
   affiliation.facets = {
-      {FacetURI::FromCanonicalSpec(kTestAndroidFacetURI)},
+      {FacetURI::FromCanonicalSpec(kTestAndroidFacetURI),
+       FacetBrandingInfo{kTestAndroidPlayName, GURL(kTestAndroidIconURL)}},
   };
   return affiliation;
 }
