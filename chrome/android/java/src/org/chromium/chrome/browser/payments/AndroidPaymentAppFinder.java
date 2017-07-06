@@ -182,6 +182,8 @@ public class AndroidPaymentAppFinder implements ManifestVerifyCallback {
             // manifest file needs to be parsed. The startup can take up to 2 seconds.
             if (!mParser.isUtilityProcessRunning()) mParser.startUtilityProcess();
 
+            if (!mDownloader.isInitialized()) mDownloader.initialize(mWebContents);
+
             mManifestVerifiers.add(
                     new PaymentManifestVerifier(uriMethodName, supportedApps, mWebDataService,
                             mDownloader, mParser, mPackageManagerDelegate, this /* callback */));
@@ -307,6 +309,7 @@ public class AndroidPaymentAppFinder implements ManifestVerifyCallback {
         assert mPendingApps.isEmpty();
         mWebDataService.destroy();
         if (mParser.isUtilityProcessRunning()) mParser.stopUtilityProcess();
+        if (mDownloader.isInitialized()) mDownloader.destroy();
     }
 
     /**
