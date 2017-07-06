@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "978415af_35c7f82c",
+        "filename": "base/synchronization/waitable_event_perftest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-06T15:11:17Z",
+      "side": 1,
+      "message": "nit: StopOnMainThread?",
+      "revId": "35379e1a9b503b273d77e6e19f71087fc5808649",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4eb1ead1_5590f59c",
+        "filename": "base/synchronization/waitable_event_perftest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-06T15:11:17Z",
+      "side": 1,
+      "message": "Does this improve at all if you eg\nthrow out the first N samples (warm up runs) ?\nthrow out the top and bottom M samples (outliers) ?",
+      "revId": "35379e1a9b503b273d77e6e19f71087fc5808649",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9208c066_e88cc486",
+        "filename": "base/synchronization/waitable_event_perftest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-06T15:11:17Z",
+      "side": 1,
+      "message": "Should we dcheck or something afterward that we didn\u0027t go over and cause mallocs to happen?",
+      "revId": "35379e1a9b503b273d77e6e19f71087fc5808649",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
