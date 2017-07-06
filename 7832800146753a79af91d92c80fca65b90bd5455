@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42064a0b_5af39ace",
+        "filename": "components/exo/surface.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-06T20:22:35Z",
+      "side": 0,
+      "message": "why remove this part of the comment?",
+      "revId": "7832800146753a79af91d92c80fca65b90bd5455",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

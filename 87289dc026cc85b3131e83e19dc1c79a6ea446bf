@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ed835cb_dd1c3710",
+        "filename": "components/exo/sub_surface.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-06T20:22:35Z",
+      "side": 1,
+      "message": "nit: TODO(name) and add bug number",
+      "revId": "87289dc026cc85b3131e83e19dc1c79a6ea446bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "77ab7e51_4eb27d2a",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-06T20:22:35Z",
+      "side": 1,
+      "message": "instead of if/else here, can you handle the sub_surfaces_reordered_ specific stuff first in if-only statement and then do the common code below? think that would make it a bit easier to read.",
+      "revId": "87289dc026cc85b3131e83e19dc1c79a6ea446bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a95cdbf0_ef461171",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 712,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-06T20:22:35Z",
+      "side": 1,
+      "message": "nit: use \"true /* premultiplied_alpha */\" unless used at multiple locations. then \"const bool kPremultipliedAlpha\"..",
+      "revId": "87289dc026cc85b3131e83e19dc1c79a6ea446bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "36a9b8b5_ccad9de0",
+        "filename": "components/exo/surface.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-06T20:22:35Z",
+      "side": 1,
+      "message": "s/commit_if_necessary/needs_commit/ as I think needs_commit is already used for this",
+      "revId": "87289dc026cc85b3131e83e19dc1c79a6ea446bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c2cdf64b_28aa9a49",
+        "filename": "components/exo/surface.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-06T20:22:35Z",
+      "side": 1,
+      "message": "RecreateResource? You\u0027re call. \"Restore\" is fine if you prefer that.",
+      "revId": "87289dc026cc85b3131e83e19dc1c79a6ea446bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a33c53ee_5bdc30d6",
+        "filename": "components/exo/surface.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-06T20:22:35Z",
+      "side": 1,
+      "message": "Composite is a somewhat overloaded word. How about using a more explicit name here? AppendContentsToFrame?",
+      "revId": "87289dc026cc85b3131e83e19dc1c79a6ea446bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "93be2891_fa244a34",
+        "filename": "components/exo/surface.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-06T20:22:35Z",
+      "side": 1,
+      "message": "nit: output parameter last",
+      "revId": "87289dc026cc85b3131e83e19dc1c79a6ea446bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6f96bb29_b79a0d10",
+        "filename": "components/exo/surface.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-06T20:22:35Z",
+      "side": 1,
+      "message": "this is also used for position changes, which I would not refer to as reordering. how about sub_surfaces_changed_?",
+      "revId": "87289dc026cc85b3131e83e19dc1c79a6ea446bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9843ea85_b398b858",
+        "filename": "components/exo/surface_tree_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-06T20:22:35Z",
+      "side": 1,
+      "message": "nit: \"false /* full_damage */\" below instead",
+      "revId": "87289dc026cc85b3131e83e19dc1c79a6ea446bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c42baf69_3a22e259",
+        "filename": "components/exo/surface_tree_host.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-06T20:22:35Z",
+      "side": 1,
+      "message": "s/commit_if_necessary/needs_commit/ as I think we already use that name elsewhere",
+      "revId": "87289dc026cc85b3131e83e19dc1c79a6ea446bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
