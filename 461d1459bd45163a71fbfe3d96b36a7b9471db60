@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45e6a5e7_5c391766",
+        "filename": "chrome/browser/ui/views/payments/modifiers_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-06T19:47:59Z",
+      "side": 1,
+      "message": "Is this for modifiers? Shouldn\u0027t need for payment request itself.",
+      "revId": "461d1459bd45163a71fbfe3d96b36a7b9471db60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
