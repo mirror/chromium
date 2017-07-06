@@ -16,6 +16,24 @@
       "revId": "c4374fd8312a91467b300590ad4f65512b393441",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52faeae9_ebcee3e7",
+        "filename": "chrome/browser/resources/settings/settings_ui/settings_ui.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-07-06T08:28:57Z",
+      "side": 1,
+      "message": "Maybe you\u0027re right, I had assumed that entries would just contain multiple entries if there had been multiple intersection events since the last time a callback fired, but reading the spec more closely (https://github.com/WICG/IntersectionObserver/blob/gh-pages/explainer.md#proposed-api), it seems to be saying you get one entry per element.\n\nSo perhaps the mistake is actually in the IntersectionObserver which is not coalescing entries for the same element. I\u0027ll look into this and revert this change.",
+      "parentUuid": "541496bd_11c477e1",
+      "revId": "c4374fd8312a91467b300590ad4f65512b393441",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
