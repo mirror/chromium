@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "500579a2_f53526a3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-06T10:37:15Z",
+      "side": 1,
+      "message": "duplicated with line 135. (and the guard is flipped, should be in the else block if there.)",
+      "revId": "047886a31d31b43d8f1b383ec07effd3bc47c0f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53390f11_b0472546",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-06T10:37:15Z",
+      "side": 1,
+      "message": "you removed the bitmapOwned flag, so would you mind adding a little bit in here to hint towards implementation details of SuggestionsSource as justification for why we consider it owned for articles?",
+      "range": {
+        "startLine": 351,
+        "startChar": 28,
+        "endLine": 351,
+        "endChar": 32
+      },
+      "revId": "047886a31d31b43d8f1b383ec07effd3bc47c0f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
