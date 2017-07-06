@@ -259,11 +259,8 @@ base::string16 ElideUrl(const GURL& url,
   }
 
   const size_t kMaxNumberOfUrlPathElementsAllowed = 1024;
-  // TODO(mgiuca): If there is no path, this means the end of the domain gets
-  // elided, not the start (inconsistent). https://crbug.com/739636.
-  if (url_path_number_of_elements <= 1 ||
-      url_path_number_of_elements > kMaxNumberOfUrlPathElementsAllowed) {
-    // No path to elide, or too long of a path (could overflow in loop below)
+  if (url_path_number_of_elements > kMaxNumberOfUrlPathElementsAllowed) {
+    // Too long of a path (could overflow in loop below)
     // Just elide this as a text string.
     return gfx::ElideText(url_subdomain + url_domain + url_path_query_etc,
                           font_list, available_pixel_width, gfx::ELIDE_TAIL);
@@ -276,11 +273,13 @@ base::string16 ElideUrl(const GURL& url,
       gfx::GetStringWidthF(kEllipsisAndSlash, font_list);
 
   // Check with both subdomain and domain.
-  base::string16 elided_path = ElideComponentizedPath(
-      url_subdomain + url_domain, url_path_elements, url_filename, url_query,
-      font_list, available_pixel_width);
-  if (!elided_path.empty())
-    return elided_path;
+  if (url_path_number_of_elements > 0) {
+    base::string16 elided_path = ElideComponentizedPath(
+        url_subdomain + url_domain, url_path_elements, url_filename, url_query,
+        font_list, available_pixel_width);
+    if (!elided_path.empty())
+      return elided_path;
+  }
 
   // Check with only domain.
   // If a subdomain is present, add an ellipsis before domain.
@@ -294,12 +293,14 @@ base::string16 ElideUrl(const GURL& url,
     else
       url_elided_domain = url_domain;
 
-    elided_path = ElideComponentizedPath(url_elided_domain, url_path_elements,
-                                         url_filename, url_query, font_list,
-                                         available_pixel_width);
+    if (url_path_number_of_elements > 0) {
+      base::string16 elided_path = ElideComponentizedPath(
+          url_elided_domain, url_path_elements, url_filename, url_query,
+          font_list, available_pixel_width);
 
-    if (!elided_path.empty())
-      return elided_path;
+      if (!elided_path.empty())
+        return elided_path;
+    }
   }
 
   // Return elided domain/.../filename anyway.
