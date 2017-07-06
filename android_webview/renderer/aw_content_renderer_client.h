@@ -47,6 +47,7 @@ class AwContentRendererClient : public content::ContentRendererClient {
   void AddSupportedKeySystems(
       std::vector<std::unique_ptr<::media::KeySystemProperties>>* key_systems)
       override;
+  void SetRuntimeFeaturesDefaultsBeforeBlinkInitialization() override;
   std::unique_ptr<blink::WebSocketHandshakeThrottle>
   CreateWebSocketHandshakeThrottle() override;
 
