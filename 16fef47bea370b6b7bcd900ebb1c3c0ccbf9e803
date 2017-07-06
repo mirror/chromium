@@ -1,0 +1,378 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1773a88_6f0205bb",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 2001,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-06T18:18:06Z",
+      "side": 1,
+      "message": "Should this rather be \"$ref\": \"Network.Headers\"? Also, perhaps name it responseHeaders?",
+      "revId": "16fef47bea370b6b7bcd900ebb1c3c0ccbf9e803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cd14aa1_fdc33ffa",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 2002,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-06T18:18:06Z",
+      "side": 1,
+      "message": "Do we also need some indication of whether the content is encoded?",
+      "revId": "16fef47bea370b6b7bcd900ebb1c3c0ccbf9e803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ef0826a_879f8baa",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 2048,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-06T18:18:06Z",
+      "side": 1,
+      "message": "deleted??",
+      "revId": "16fef47bea370b6b7bcd900ebb1c3c0ccbf9e803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f95d41c_1d9287ae",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 2049,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-06T18:18:06Z",
+      "side": 1,
+      "message": "s/Url/URL/",
+      "revId": "16fef47bea370b6b7bcd900ebb1c3c0ccbf9e803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87498967_c9b597f7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/ResourceType.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-06T18:18:06Z",
+      "side": 1,
+      "message": "duplicate duplicate",
+      "revId": "16fef47bea370b6b7bcd900ebb1c3c0ccbf9e803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5d82f97_76828de5",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/ResourceType.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-06T18:18:06Z",
+      "side": 1,
+      "message": "Should we rather use just the main type of this? You won\u0027t ever be able to maintain the exhaustive and up-to-date list of image subtypes, but checking for just image/ would do the job as well.",
+      "revId": "16fef47bea370b6b7bcd900ebb1c3c0ccbf9e803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45ba56fe_5c87792f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/ResourceType.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-06T18:18:06Z",
+      "side": 1,
+      "message": "ditto for font/",
+      "revId": "16fef47bea370b6b7bcd900ebb1c3c0ccbf9e803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd902159_27745a6e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkerCacheViews.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-06T18:18:06Z",
+      "side": 1,
+      "message": "Common.UIString(...)",
+      "revId": "16fef47bea370b6b7bcd900ebb1c3c0ccbf9e803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f0cd0a4_b5e72b50",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkerCacheViews.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-06T18:18:06Z",
+      "side": 1,
+      "message": "I think this will also call show() as necessary.",
+      "revId": "16fef47bea370b6b7bcd900ebb1c3c0ccbf9e803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f69e591a_3847bedf",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkerCacheViews.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-06T18:18:06Z",
+      "side": 1,
+      "message": "Can we just do something like this instead:\nvar found \u003d this._recentlyPreviewedResponses.find(entry \u003d\u003e entry.url \u003d\u003d\u003d url)?",
+      "revId": "16fef47bea370b6b7bcd900ebb1c3c0ccbf9e803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c794ad8f_e1215bfe",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkerCacheViews.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-06T18:18:06Z",
+      "side": 1,
+      "message": "I think the word \u0027found\u0027 is a bit misleading here :-)",
+      "revId": "16fef47bea370b6b7bcd900ebb1c3c0ccbf9e803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d79e2b89_ad35e3e8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkerCacheViews.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-06T18:18:06Z",
+      "side": 1,
+      "message": "Let\u0027s extract the constant, then you can nuke comment :-)",
+      "revId": "16fef47bea370b6b7bcd900ebb1c3c0ccbf9e803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb7aac17_194d20b8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkerCacheViews.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-06T18:18:06Z",
+      "side": 1,
+      "message": "Common.UIString(...)",
+      "revId": "16fef47bea370b6b7bcd900ebb1c3c0ccbf9e803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60db25d2_ea0a9661",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkerCacheViews.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-06T18:18:06Z",
+      "side": 1,
+      "message": "So we only need headers for the mime type? Should we perhaps make it a part of the DataEntry struct so that we have it in advance?",
+      "revId": "16fef47bea370b6b7bcd900ebb1c3c0ccbf9e803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9e91f6b_82124f27",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkerCacheViews.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-06T18:18:06Z",
+      "side": 1,
+      "message": "I think encoding can not be reliably deduced from just the resource type.",
+      "revId": "16fef47bea370b6b7bcd900ebb1c3c0ccbf9e803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b5deb0d_7ac96398",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkerCacheViews.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-06T18:18:06Z",
+      "side": 1,
+      "message": "Common.UIString() as well",
+      "revId": "16fef47bea370b6b7bcd900ebb1c3c0ccbf9e803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c4ecedb_5fcdaf0f",
+        "filename": "third_party/WebKit/Source/modules/cachestorage/InspectorCacheStorageAgent.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-06T18:18:06Z",
+      "side": 1,
+      "message": "We don\u0027t do rvalue refs outside of constructors and assignment operators per style guide. Just passing unique_ptr\u003c\u003e by value would be as good here.",
+      "revId": "16fef47bea370b6b7bcd900ebb1c3c0ccbf9e803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca989ffe_9853227f",
+        "filename": "third_party/WebKit/Source/modules/cachestorage/InspectorCacheStorageAgent.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-06T18:18:06Z",
+      "side": 1,
+      "message": "as above.",
+      "revId": "16fef47bea370b6b7bcd900ebb1c3c0ccbf9e803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08b65828_61a8f362",
+        "filename": "third_party/WebKit/Source/modules/cachestorage/InspectorCacheStorageAgent.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-06T18:18:06Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "16fef47bea370b6b7bcd900ebb1c3c0ccbf9e803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05a2ea00_ec3284da",
+        "filename": "third_party/WebKit/Source/modules/cachestorage/InspectorCacheStorageAgent.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-06T18:18:06Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "16fef47bea370b6b7bcd900ebb1c3c0ccbf9e803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fee67f0_7e6b0afb",
+        "filename": "third_party/WebKit/Source/modules/cachestorage/InspectorCacheStorageAgent.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-06T18:18:06Z",
+      "side": 1,
+      "message": "Let\u0027s name classes different from functions/methods. CachedResponseRetriever or something?",
+      "revId": "16fef47bea370b6b7bcd900ebb1c3c0ccbf9e803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "710db4b5_52b98b12",
+        "filename": "third_party/WebKit/Source/modules/cachestorage/InspectorCacheStorageAgent.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-06T18:18:06Z",
+      "side": 1,
+      "message": "Let\u0027s not pollute global namespace of everyone who includes this -- move to CPP.",
+      "revId": "16fef47bea370b6b7bcd900ebb1c3c0ccbf9e803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
