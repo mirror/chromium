@@ -426,12 +426,16 @@ VideoFrameExternalResources VideoResourceUpdater::CreateForSoftwarePlanes(
                      plane_resource.resource_id());
       external_resources.type = VideoFrameExternalResources::SOFTWARE_RESOURCE;
     } else {
-      // VideoResourceUpdater shares a context with the compositor so
-      // a sync token is not required.
-      TextureMailbox mailbox(plane_resource.mailbox(), gpu::SyncToken(),
+      // Set the sync token otherwise resource is assumed to be synchronized.
+      SyncTokenClientImpl client(context_provider_->ContextGL(),
+                                 gpu::SyncToken());
+      gpu::SyncToken sync_token = video_frame->UpdateReleaseSyncToken(&client);
+
+      TextureMailbox mailbox(plane_resource.mailbox(), sync_token,
                              resource_provider_->GetResourceTextureTarget(
                                  plane_resource.resource_id()));
       mailbox.set_color_space(output_color_space);
+
       external_resources.mailboxes.push_back(mailbox);
       external_resources.release_callbacks.push_back(
           base::Bind(&RecycleResource, weak_ptr_factory_.GetWeakPtr(),
@@ -529,10 +533,17 @@ VideoFrameExternalResources VideoResourceUpdater::CreateForSoftwarePlanes(
                                          resource_size_pixels);
       plane_resource.SetUniqueId(video_frame->unique_id(), i);
     }
+  }
 
+  // Set the sync token otherwise resource is assumed to be synchronized.
+  SyncTokenClientImpl client(context_provider_->ContextGL(), gpu::SyncToken());
+  gpu::SyncToken sync_token = video_frame->UpdateReleaseSyncToken(&client);
+
+  for (size_t i = 0; i < plane_resources.size(); ++i) {
+    PlaneResource& plane_resource = *plane_resources[i];
     // VideoResourceUpdater shares a context with the compositor so a
     // sync token is not required.
-    TextureMailbox mailbox(plane_resource.mailbox(), gpu::SyncToken(),
+    TextureMailbox mailbox(plane_resource.mailbox(), sync_token,
                            resource_provider_->GetResourceTextureTarget(
                                plane_resource.resource_id()));
     mailbox.set_color_space(output_color_space);
@@ -605,11 +616,10 @@ void VideoResourceUpdater::CopyPlaneTexture(
   gl->DeleteTextures(1, &src_texture_id);
 
   // Done with the source video frame texture at this point.
-  video_frame->UpdateReleaseSyncToken(&client);
+  gpu::SyncToken sync_token = video_frame->UpdateReleaseSyncToken(&client);
 
-  // VideoResourceUpdater shares a context with the compositor so a
-  // sync token is not required.
-  TextureMailbox mailbox(resource->mailbox(), gpu::SyncToken(), GL_TEXTURE_2D,
+  // Set sync token otherwise resource is assumed to be synchronized.
+  TextureMailbox mailbox(resource->mailbox(), sync_token, GL_TEXTURE_2D,
                          video_frame->coded_size(), false, false);
   mailbox.set_color_space(resource_color_space);
   external_resources->mailboxes.push_back(mailbox);
