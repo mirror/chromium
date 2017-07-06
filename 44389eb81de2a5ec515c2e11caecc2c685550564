@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f1697a05_0604419c",
+        "filename": "remoting/host/it2me/it2me_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-07-06T23:32:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29df496f_6a797ba0",
+      "range": {
+        "startLine": 468,
+        "startChar": 2,
+        "endLine": 468,
+        "endChar": 20
+      },
+      "revId": "44389eb81de2a5ec515c2e11caecc2c685550564",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04069589_34dd1076",
         "filename": "remoting/host/linux/certificate_watcher.h",
         "patchSetId": 4
@@ -39,6 +63,24 @@
       "revId": "44389eb81de2a5ec515c2e11caecc2c685550564",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbafa3f6_176eb70a",
+        "filename": "remoting/host/linux/certificate_watcher.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-07-06T23:32:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04069589_34dd1076",
+      "revId": "44389eb81de2a5ec515c2e11caecc2c685550564",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0a106e65_7476853c",
+        "filename": "remoting/host/daemon_process.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-07-06T23:32:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e79fc51_16481a95",
+      "range": {
+        "startLine": 172,
+        "startChar": 6,
+        "endLine": 172,
+        "endChar": 19
+      },
+      "revId": "6f18901ea95b6c9ab282da118de029ef84fe217d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2d41a70_3edd144b",
         "filename": "remoting/host/host_status_monitor.cc",
         "patchSetId": 5
@@ -36,6 +60,24 @@
       "writtenOn": "2017-06-30T01:22:22Z",
       "side": 1,
       "message": "Do we need to explicitly provide these?",
+      "revId": "6f18901ea95b6c9ab282da118de029ef84fe217d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78fd2846_baf2d8af",
+        "filename": "remoting/host/host_status_monitor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-07-06T23:32:55Z",
+      "side": 1,
+      "message": "Yes, non-trivial classes require explicit out-of-line constructors. There is a clang plugin that enforces it.",
+      "parentUuid": "d2d41a70_3edd144b",
       "revId": "6f18901ea95b6c9ab282da118de029ef84fe217d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "97da84a8_d8d5e739",
+        "filename": "remoting/host/host_status_monitor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-07-06T23:32:55Z",
+      "side": 1,
+      "message": "There is base::ObserverListThreadSafe, which is ref-counted, but it calls observers asynchronously, which we don\u0027t want here. I don\u0027t think there is a generic ref-counting wrapper",
+      "parentUuid": "6b2026f4_6fa9657c",
+      "revId": "6f18901ea95b6c9ab282da118de029ef84fe217d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dbf99bb7_d69df310",
         "filename": "remoting/host/host_status_monitor.h",
         "patchSetId": 5
@@ -70,6 +130,24 @@
       "writtenOn": "2017-06-30T01:22:22Z",
       "side": 1,
       "message": "nit: Can we use \u003d default here?",
+      "revId": "6f18901ea95b6c9ab282da118de029ef84fe217d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1d761a1_be807b4e",
+        "filename": "remoting/host/host_status_monitor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-07-06T23:32:55Z",
+      "side": 1,
+      "message": "I think it will still need to be in the .cc file. Is there any reason to prefer \"Foo()\u003ddefault;\" over \"Foo() {}\"?",
+      "parentUuid": "dbf99bb7_d69df310",
       "revId": "6f18901ea95b6c9ab282da118de029ef84fe217d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "ed2c0e54_72460f3a",
+        "filename": "remoting/host/linux/certificate_watcher.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-07-06T23:32:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "134d52d4_fe5d3d00",
+      "range": {
+        "startLine": 71,
+        "startChar": 22,
+        "endLine": 71,
+        "endChar": 29
+      },
+      "revId": "6f18901ea95b6c9ab282da118de029ef84fe217d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca6fc503_ed96c325",
         "filename": "remoting/host/linux/certificate_watcher.h",
         "patchSetId": 5
@@ -116,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "a99c668f_aee7d1ae",
+        "filename": "remoting/host/linux/certificate_watcher.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-07-06T23:32:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca6fc503_ed96c325",
+      "revId": "6f18901ea95b6c9ab282da118de029ef84fe217d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "178019b5_01aa3cf7",
         "filename": "remoting/signaling/iq_sender.h",
         "patchSetId": 5
@@ -127,6 +247,30 @@
       "writtenOn": "2017-06-30T15:31:38Z",
       "side": 1,
       "message": "Not for this CL, but should this class use a ThreadChecker to enforce the restriction in the class documentation?",
+      "range": {
+        "startLine": 80,
+        "startChar": 5,
+        "endLine": 80,
+        "endChar": 62
+      },
+      "revId": "6f18901ea95b6c9ab282da118de029ef84fe217d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "587c7664_15ae193a",
+        "filename": "remoting/signaling/iq_sender.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-07-06T23:32:55Z",
+      "side": 1,
+      "message": "I\u0027ll leave it for a separate CL.",
+      "parentUuid": "178019b5_01aa3cf7",
       "range": {
         "startLine": 80,
         "startChar": 5,
