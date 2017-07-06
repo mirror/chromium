@@ -8,6 +8,7 @@
 #include "base/macros.h"
 #include "cc/base/base_export.h"
 #include "third_party/skia/include/core/SkRefCnt.h"
+#include "third_party/skia/include/effects/SkBlurImageFilter.h"
 #include "ui/gfx/geometry/vector2d_f.h"
 
 class GrContext;

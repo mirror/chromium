@@ -22,6 +22,9 @@ bool FilterOperation::operator==(const FilterOperation& other) const {
     return false;
   if (type_ == COLOR_MATRIX)
     return !memcmp(matrix_, other.matrix_, sizeof(matrix_));
+  if (type_ == BLUR) {
+    return amount_ == other.amount_ && blur_tile_mode_ == other.blur_tile_mode_;
+  }
   if (type_ == DROP_SHADOW) {
     return amount_ == other.amount_ &&
            drop_shadow_offset_ == other.drop_shadow_offset_ &&
@@ -49,6 +52,20 @@ FilterOperation::FilterOperation(FilterType type, float amount)
   DCHECK_NE(type_, DROP_SHADOW);
   DCHECK_NE(type_, COLOR_MATRIX);
   DCHECK_NE(type_, REFERENCE);
+  memset(matrix_, 0, sizeof(matrix_));
+}
+
+FilterOperation::FilterOperation(FilterType type,
+                                 float amount,
+                                 BlurTileMode tile_mode)
+    : type_(type),
+      amount_(amount),
+      outer_threshold_(0),
+      drop_shadow_offset_(0, 0),
+      drop_shadow_color_(0),
+      zoom_inset_(0),
+      blur_tile_mode_(tile_mode) {
+  DCHECK_EQ(type_, BLUR);
   memset(matrix_, 0, sizeof(matrix_));
 }
 
@@ -124,7 +141,8 @@ FilterOperation::FilterOperation(const FilterOperation& other)
       drop_shadow_color_(other.drop_shadow_color_),
       image_filter_(other.image_filter_),
       zoom_inset_(other.zoom_inset_),
-      region_(other.region_) {
+      region_(other.region_),
+      blur_tile_mode_(other.blur_tile_mode_) {
   memcpy(matrix_, other.matrix_, sizeof(matrix_));
 }
 

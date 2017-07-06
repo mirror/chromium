@@ -48,6 +48,14 @@ class CC_BASE_EXPORT FilterOperation {
     FILTER_TYPE_LAST = ALPHA_THRESHOLD
   };
 
+  enum BlurTileMode {
+    IGNORE = 0,
+    CLAMP,
+    REPEAT,
+    CLAMP_TO_BLACK,
+    BLUR_TILE_MODE_LAST = CLAMP_TO_BLACK
+  };
+
   FilterOperation();
 
   FilterOperation(const FilterOperation& other);
@@ -97,6 +105,11 @@ class CC_BASE_EXPORT FilterOperation {
     return region_;
   }
 
+  BlurTileMode blur_tile_mode() const {
+    DCHECK_EQ(type_, BLUR);
+    return blur_tile_mode_;
+  }
+
   static FilterOperation CreateGrayscaleFilter(float amount) {
     return FilterOperation(GRAYSCALE, amount);
   }
@@ -129,8 +142,10 @@ class CC_BASE_EXPORT FilterOperation {
     return FilterOperation(OPACITY, amount);
   }
 
-  static FilterOperation CreateBlurFilter(float amount) {
-    return FilterOperation(BLUR, amount);
+  static FilterOperation CreateBlurFilter(
+      float amount,
+      BlurTileMode tile_mode = CLAMP_TO_BLACK) {
+    return FilterOperation(BLUR, amount, tile_mode);
   }
 
   static FilterOperation CreateDropShadowFilter(const gfx::Point& offset,
@@ -241,6 +256,8 @@ class CC_BASE_EXPORT FilterOperation {
  private:
   FilterOperation(FilterType type, float amount);
 
+  FilterOperation(FilterType type, float amount, BlurTileMode tile_mode);
+
   FilterOperation(FilterType type,
                   const gfx::Point& offset,
                   float stdDeviation,
@@ -266,6 +283,7 @@ class CC_BASE_EXPORT FilterOperation {
   SkScalar matrix_[20];
   int zoom_inset_;
   SkRegion region_;
+  BlurTileMode blur_tile_mode_;
 };
 
 }  // namespace cc
