@@ -19,6 +19,92 @@
     },
     {
       "key": {
+        "uuid": "1ab3f422_96e06b55",
+        "filename": "base/value_iterators.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-06T18:08:55Z",
+      "side": 1,
+      "message": "Can we get away with not inlining these things and put them in a .cc file? I\u0027m worried about code bloat, and one benefit of the wrapper is it allows us to de-inline the bloaty map iterators for this case. Since this is commonly used and if you\u0027re using JSON you\u0027re not super performance critical, I think prioritizing code size over strict speed is the way to go.",
+      "revId": "e5ba0981caaf7b3fc4c42066b8ab9569c21d3f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edb1dd3c_6f5b7ba4",
+        "filename": "base/values.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-06T18:08:55Z",
+      "side": 1,
+      "message": "I\u0027d think we would want to keep the key types consistent (so StringPiece). I know we\u0027ve had some discussion about the best approach for this, but I think we should make a decision to change all of them or none of them.\n\nAlternatively, I was thinking of adding overrides with const char* as the key, that would be OK if we added those in parallel (since it avoids implicit char* -\u003e string conversion at the call site.",
+      "range": {
+        "startLine": 247,
+        "startChar": 48,
+        "endLine": 247,
+        "endChar": 54
+      },
+      "revId": "e5ba0981caaf7b3fc4c42066b8ab9569c21d3f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a97f3646_4f3c0027",
+        "filename": "base/values.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-06T18:08:55Z",
+      "side": 1,
+      "message": "For the dict_iterator and const_dict_iterator, I think it would be nice to provide a\n  using dict_iterator \u003d detail::dict_iterator;\nInside of Value. That way callers that want to assign to a named type can say\n  base::Value::dict_iterator\nwhich looks the way I would typically expect such things.\n\nThen you can just say \"dict_iterator\" in these places.",
+      "range": {
+        "startLine": 143,
+        "startChar": 10,
+        "endLine": 143,
+        "endChar": 23
+      },
+      "revId": "e5ba0981caaf7b3fc4c42066b8ab9569c21d3f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f44ec04_c846514e",
+        "filename": "base/values.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-06T18:08:55Z",
+      "side": 1,
+      "message": "Do we want to call this DictItems() to make clear this isn\u0027t for lists (and maybe allow us to add list iteration later?)",
+      "range": {
+        "startLine": 163,
+        "startChar": 10,
+        "endLine": 163,
+        "endChar": 29
+      },
+      "revId": "e5ba0981caaf7b3fc4c42066b8ab9569c21d3f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "21c62da4_9b5c064c",
         "filename": "base/values_unittest.cc",
         "patchSetId": 2
@@ -30,6 +116,30 @@
       "writtenOn": "2017-07-06T17:09:57Z",
       "side": 1,
       "message": "The call to |get()| here is necessary due to the underlying std::reference_wrappers. Sometimes you can get away without calling it, since it provides operator\u0026 (http://en.cppreference.com/w/cpp/utility/functional/reference_wrapper/get), but here it is necessary.",
+      "range": {
+        "startLine": 392,
+        "startChar": 29,
+        "endLine": 392,
+        "endChar": 35
+      },
+      "revId": "e5ba0981caaf7b3fc4c42066b8ab9569c21d3f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b89ee27_a83e893e",
+        "filename": "base/values_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-06T18:08:55Z",
+      "side": 1,
+      "message": "And I had never even heard of a std::reference_wrapper!",
+      "parentUuid": "21c62da4_9b5c064c",
       "range": {
         "startLine": 392,
         "startChar": 29,
