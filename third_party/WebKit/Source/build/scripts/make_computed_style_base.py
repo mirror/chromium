@@ -362,6 +362,13 @@ def _create_property_field(property_):
         type_name = property_['type_name']
         default_value = property_['default_value']
         size = None
+    elif property_['field_template'] == '<length>':
+        assert "default_value" in property_, "Must set default value for length type"
+        property_['field_template'] = 'external'
+        property_['type_name'] = type_name = 'Length'
+        default_value = property_['default_value']
+        property_['include_paths'] = ["platform/Length.h"]
+        size = None
     else:
         assert property_['field_template'] in ('monotonic_flag',)
         type_name = 'bool'
