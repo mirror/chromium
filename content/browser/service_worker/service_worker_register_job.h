@@ -72,8 +72,6 @@ class ServiceWorkerRegisterJob : public ServiceWorkerRegisterJobBase,
   bool Equals(ServiceWorkerRegisterJobBase* job) const override;
   RegistrationJobType GetType() const override;
 
-  void DoomInstallingWorker();
-
  private:
   enum Phase {
     INITIAL,
@@ -104,6 +102,13 @@ class ServiceWorkerRegisterJob : public ServiceWorkerRegisterJobBase,
   ServiceWorkerVersion* new_version();
 
   void SetPhase(Phase phase);
+
+  // The job timeout timer periodically calls OnJobTimeoutTimer, which stops the
+  // job if it is excessively pending to complete.
+  void StartJobTimeoutTimer();
+  void OnJobTimeoutTimer();
+
+  base::TimeDelta GetTickDuration() const;
 
   void StartImpl();
   void ContinueWithRegistration(
@@ -151,13 +156,24 @@ class ServiceWorkerRegisterJob : public ServiceWorkerRegisterJobBase,
   // The ServiceWorkerContextCore object should always outlive this.
   base::WeakPtr<ServiceWorkerContextCore> context_;
 
+  // The registration job timeout timer interval.
+  static constexpr base::TimeDelta kJobTimeoutTimerDelay =
+      base::TimeDelta::FromSeconds(30);
+  // Timeout for a new registration job to start.
+  static constexpr base::TimeDelta kStartNewJobTimeout =
+      base::TimeDelta::FromMinutes(30);
+
+  // Starts running in job StartImpl and continues until the job is completed.
+  base::RepeatingTimer job_timeout_timer_;
+  // Holds the time that the registration job started.
+  base::TimeTicks job_start_time_;
+
   RegistrationJobType job_type_;
   const GURL pattern_;
   GURL script_url_;
   std::vector<RegistrationCallback> callbacks_;
   Phase phase_;
   Internal internal_;
-  bool doom_installing_worker_;
   bool is_promise_resolved_;
   bool should_uninstall_on_failure_;
   bool force_bypass_cache_;

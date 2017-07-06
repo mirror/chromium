@@ -14,14 +14,6 @@
 
 namespace content {
 
-namespace {
-
-bool IsRegisterJob(const ServiceWorkerRegisterJobBase& job) {
-  return job.GetType() == ServiceWorkerRegisterJobBase::REGISTRATION_JOB;
-}
-
-}
-
 ServiceWorkerJobCoordinator::JobQueue::JobQueue() = default;
 
 ServiceWorkerJobCoordinator::JobQueue::JobQueue(JobQueue&&) = default;
@@ -34,11 +26,10 @@ ServiceWorkerJobCoordinator::JobQueue::~JobQueue() {
 ServiceWorkerRegisterJobBase* ServiceWorkerJobCoordinator::JobQueue::Push(
     std::unique_ptr<ServiceWorkerRegisterJobBase> job) {
   if (jobs_.empty()) {
+    job->Start();
     jobs_.push_back(std::move(job));
-    StartOneJob();
   } else if (!job->Equals(jobs_.back().get())) {
     jobs_.push_back(std::move(job));
-    DoomInstallingWorkerIfNeeded();
   }
   // Note we are releasing 'job' here in case neither of the two if() statements
   // above were true.
@@ -52,28 +43,7 @@ void ServiceWorkerJobCoordinator::JobQueue::Pop(
   DCHECK(job == jobs_.front().get());
   jobs_.pop_front();
   if (!jobs_.empty())
-    StartOneJob();
-}
-
-void ServiceWorkerJobCoordinator::JobQueue::DoomInstallingWorkerIfNeeded() {
-  DCHECK(!jobs_.empty());
-  if (!IsRegisterJob(*jobs_.front().get()))
-    return;
-  ServiceWorkerRegisterJob* job =
-      static_cast<ServiceWorkerRegisterJob*>(jobs_.front().get());
-  auto it = jobs_.begin();
-  for (++it; it != jobs_.end(); ++it) {
-    if (IsRegisterJob(**it)) {
-      job->DoomInstallingWorker();
-      return;
-    }
-  }
-}
-
-void ServiceWorkerJobCoordinator::JobQueue::StartOneJob() {
-  DCHECK(!jobs_.empty());
-  jobs_.front()->Start();
-  DoomInstallingWorkerIfNeeded();
+    jobs_.front()->Start();
 }
 
 void ServiceWorkerJobCoordinator::JobQueue::AbortAll() {

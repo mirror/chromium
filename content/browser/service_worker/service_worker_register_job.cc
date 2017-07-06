@@ -75,7 +75,6 @@ ServiceWorkerRegisterJob::ServiceWorkerRegisterJob(
       pattern_(pattern),
       script_url_(script_url),
       phase_(INITIAL),
-      doom_installing_worker_(false),
       is_promise_resolved_(false),
       should_uninstall_on_failure_(false),
       force_bypass_cache_(false),
@@ -92,7 +91,6 @@ ServiceWorkerRegisterJob::ServiceWorkerRegisterJob(
       job_type_(UPDATE_JOB),
       pattern_(registration->pattern()),
       phase_(INITIAL),
-      doom_installing_worker_(false),
       is_promise_resolved_(false),
       should_uninstall_on_failure_(false),
       force_bypass_cache_(force_bypass_cache),
@@ -142,6 +140,8 @@ void ServiceWorkerRegisterJob::StartImpl() {
         weak_factory_.GetWeakPtr());
   }
 
+  StartJobTimeoutTimer();
+
   scoped_refptr<ServiceWorkerRegistration> registration =
       context_->storage()->GetUninstallingRegistration(pattern_);
   if (registration.get())
@@ -171,12 +171,6 @@ bool ServiceWorkerRegisterJob::Equals(ServiceWorkerRegisterJobBase* job) const {
 
 RegistrationJobType ServiceWorkerRegisterJob::GetType() const {
   return job_type_;
-}
-
-void ServiceWorkerRegisterJob::DoomInstallingWorker() {
-  doom_installing_worker_ = true;
-  if (phase_ == INSTALL)
-    Complete(SERVICE_WORKER_ERROR_INSTALL_WORKER_FAILED, std::string());
 }
 
 ServiceWorkerRegisterJob::Internal::Internal() {}
@@ -234,6 +228,31 @@ void ServiceWorkerRegisterJob::SetPhase(Phase phase) {
       break;
   }
   phase_ = phase;
+}
+
+constexpr base::TimeDelta ServiceWorkerRegisterJob::kJobTimeoutTimerDelay;
+constexpr base::TimeDelta ServiceWorkerRegisterJob::kStartNewJobTimeout;
+
+void ServiceWorkerRegisterJob::StartJobTimeoutTimer() {
+  DCHECK(!job_timeout_timer_.IsRunning());
+
+  job_start_time_ = base::TimeTicks::Now();
+  job_timeout_timer_.Start(FROM_HERE, kJobTimeoutTimerDelay, this,
+                           &ServiceWorkerRegisterJob::OnJobTimeoutTimer);
+}
+
+void ServiceWorkerRegisterJob::OnJobTimeoutTimer() {
+  DCHECK(phase_ != COMPLETE) << phase_;
+
+  if (GetTickDuration() > kStartNewJobTimeout) {
+    Complete(SERVICE_WORKER_ERROR_FAILED, std::string());
+  }
+}
+
+base::TimeDelta ServiceWorkerRegisterJob::GetTickDuration() const {
+  if (job_start_time_.is_null())
+    return base::TimeDelta();
+  return base::TimeTicks::Now() - job_start_time_;
 }
 
 // This function corresponds to the steps in [[Register]] following
@@ -445,12 +464,6 @@ void ServiceWorkerRegisterJob::InstallAndContinue() {
                  weak_factory_.GetWeakPtr()),
       base::Bind(&ServiceWorkerRegisterJob::OnInstallFailed,
                  weak_factory_.GetWeakPtr()));
-
-  // A subsequent registration job may terminate our installing worker. It can
-  // only do so after we've started the worker and dispatched the install
-  // event, as those are atomic substeps in the [[Install]] algorithm.
-  if (doom_installing_worker_)
-    Complete(SERVICE_WORKER_ERROR_INSTALL_WORKER_FAILED);
 }
 
 void ServiceWorkerRegisterJob::DispatchInstallEvent() {
@@ -561,6 +574,8 @@ void ServiceWorkerRegisterJob::Complete(ServiceWorkerStatusCode status) {
 void ServiceWorkerRegisterJob::Complete(ServiceWorkerStatusCode status,
                                         const std::string& status_message) {
   CompleteInternal(status, status_message);
+  job_start_time_ = base::TimeTicks();
+  job_timeout_timer_.Stop();
   context_->job_coordinator()->FinishJob(pattern_, this);
 }
 
