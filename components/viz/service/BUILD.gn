@@ -23,6 +23,8 @@ component("service") {
     "display_embedder/server_shared_bitmap_manager.h",
     "display_embedder/shared_bitmap_allocation_notifier_impl.cc",
     "display_embedder/shared_bitmap_allocation_notifier_impl.h",
+    "frame_sinks/direct_layer_tree_frame_sink.cc",
+    "frame_sinks/direct_layer_tree_frame_sink.h",
     "frame_sinks/frame_eviction_manager.cc",
     "frame_sinks/frame_eviction_manager.h",
     "frame_sinks/frame_evictor.cc",
@@ -99,6 +101,7 @@ source_set("unit_tests") {
   sources = [
     "display_embedder/buffer_queue_unittest.cc",
     "display_embedder/server_shared_bitmap_manager_unittest.cc",
+    "frame_sinks/direct_layer_tree_frame_sink_unittest.cc",
   ]
 
   if (!use_aura && !is_mac) {
