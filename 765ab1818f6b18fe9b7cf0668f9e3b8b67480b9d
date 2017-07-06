@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7f577956_403148ef",
+        "filename": "build/android/pylib/local/device/local_device_instrumentation_test_run.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-07-06T17:23:22Z",
+      "side": 1,
+      "message": "Wouldn\u0027t running steps in parallel in this case potentially have issues? Even if we had the replace and shared preferences steps combined, the reboot from the replace step could cause issues if the device reboots in the middle of another step. Or does devil have checks in place to make sure parallel stuff is done before rebooting?\n\nIf not, maybe we could just have --replace-system-package set --enable-concurrent-adb to false?",
+      "parentUuid": "48e6567e_ab44448c",
+      "revId": "765ab1818f6b18fe9b7cf0668f9e3b8b67480b9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b5770440_523fe4bb",
         "filename": "build/android/pylib/local/device/local_device_instrumentation_test_run.py",
         "patchSetId": 4
