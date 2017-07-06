@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "051764ff_6b28aed1",
+        "filename": "third_party/WebKit/LayoutTests/media/encrypted-media/encrypted-media-getstatusforpolicy.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-06T23:12:59Z",
+      "side": 1,
+      "message": "Good point. Done.",
+      "parentUuid": "f876019e_5832953b",
+      "range": {
+        "startLine": 11,
+        "startChar": 12,
+        "endLine": 11,
+        "endChar": 22
+      },
+      "revId": "e123855a8ad703f1d33a3ea06794762b9c3081b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "143f7691_63ca6dfb",
         "filename": "third_party/WebKit/LayoutTests/media/encrypted-media/encrypted-media-getstatusforpolicy.html",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-06T22:29:23Z",
       "side": 1,
       "message": "How about a test for a incorrect MediaKeysPolicy (like {foo: \"bar\"})?",
+      "range": {
+        "startLine": 19,
+        "startChar": 37,
+        "endLine": 19,
+        "endChar": 52
+      },
+      "revId": "e123855a8ad703f1d33a3ea06794762b9c3081b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "256cadb1_d6359b6c",
+        "filename": "third_party/WebKit/LayoutTests/media/encrypted-media/encrypted-media-getstatusforpolicy.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-06T23:12:59Z",
+      "side": 1,
+      "message": "Added new tests for those.",
+      "parentUuid": "143f7691_63ca6dfb",
       "range": {
         "startLine": 19,
         "startChar": 37,
