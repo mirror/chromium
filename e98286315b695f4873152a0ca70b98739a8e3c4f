@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0fc882a_0b261db0",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 961,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-06T12:45:34Z",
+      "side": 1,
+      "message": "Nit: remove empty line, but this might have been fixed in the IDC_CLOSE_TAB CL?",
+      "revId": "e98286315b695f4873152a0ca70b98739a8e3c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9482cd71_0976a815",
+        "filename": "ios/chrome/browser/ui/commands/browser_commands.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-06T12:45:34Z",
+      "side": 1,
+      "message": "Nit: *Closes, *Navigates",
+      "revId": "e98286315b695f4873152a0ca70b98739a8e3c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96b7fc77_c31fc02e",
+        "filename": "ios/chrome/browser/ui/key_commands_provider.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-06T12:45:34Z",
+      "side": 1,
+      "message": "IIUC, you don\u0027t need the copy anymore in ARC.\nhttps://developer.apple.com/library/content/releasenotes/ObjectiveC/RN-TransitioningToARC/Introduction/Introduction.html Look for \"How do blocks work in ARC?\".",
+      "revId": "e98286315b695f4873152a0ca70b98739a8e3c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "029a9789_329b84a5",
+        "filename": "ios/chrome/browser/ui/ntp/google_landing_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1228,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-06T12:45:34Z",
+      "side": 1,
+      "message": "Optional nit from the other CL: can remove the braces.",
+      "revId": "e98286315b695f4873152a0ca70b98739a8e3c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49dcbe3f_4939dbc7",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-06T12:45:34Z",
+      "side": 1,
+      "message": "Nit: property comment.",
+      "revId": "e98286315b695f4873152a0ca70b98739a8e3c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "651d78a3_be754001",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-06T12:45:34Z",
+      "side": 1,
+      "message": "Tiny nit: missing period.",
+      "revId": "e98286315b695f4873152a0ca70b98739a8e3c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
