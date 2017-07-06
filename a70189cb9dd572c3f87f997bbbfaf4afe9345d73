@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ccd8ee6c_9c7914b0",
+        "filename": "content/utility/utility_thread_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-07-06T00:29:46Z",
+      "side": 1,
+      "message": "nit: this is redundant, no need for it since the code a few lines above just early returned if it wasn\u0027t the case",
+      "revId": "a70189cb9dd572c3f87f997bbbfaf4afe9345d73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec10bfe6_2b683a1b",
+        "filename": "content/utility/utility_thread_impl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-07-06T00:29:46Z",
+      "side": 1,
+      "message": "nit: here and in the other header, in general comments in src/foo don\u0027t use \"foo::\" to refer to other classes.",
+      "revId": "a70189cb9dd572c3f87f997bbbfaf4afe9345d73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
