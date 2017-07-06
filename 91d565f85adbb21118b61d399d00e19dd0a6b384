@@ -106,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "950da340_5412d4cc",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-07-06T01:38:10Z",
+      "side": 1,
+      "message": "ok so if it is not specify we should give an error.",
+      "parentUuid": "7520cb2e_cf6c625a",
+      "revId": "91d565f85adbb21118b61d399d00e19dd0a6b384",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "48b57b9d_90bad028",
         "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
         "patchSetId": 1
@@ -138,6 +156,24 @@
       "revId": "91d565f85adbb21118b61d399d00e19dd0a6b384",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbc74d28_a0360050",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-07-06T01:38:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "48b57b9d_90bad028",
+      "revId": "91d565f85adbb21118b61d399d00e19dd0a6b384",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
