@@ -255,7 +255,7 @@ void CoordinatorImpl::OnProcessMemoryDumpResponse(
       queued_memory_dump_requests_.front().responses.push_back(
           std::make_pair(pid, std::move(response)));
     } else {
-      VLOG(1) << "Couldn't find a PID for client \"" << client_identity.name()
+      NOTREACHED() << "Couldn't find a PID for client \"" << client_identity.name()
               << "." << client_identity.instance() << "\"";
     }
   }

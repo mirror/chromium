@@ -30,11 +30,15 @@ ProcessMap::ProcessMap(service_manager::Connector* connector) : binding_(this) {
 ProcessMap::~ProcessMap() {}
 
 void ProcessMap::OnInit(std::vector<RunningServiceInfoPtr> instances) {
-  for (RunningServiceInfoPtr& instance : instances)
+  LOG(ERROR) << "OnInit";
+  for (RunningServiceInfoPtr& instance : instances) {
     OnServiceCreated(std::move(instance));
+  }
+  LOG(ERROR) << "OnInit Done";
 }
 
 void ProcessMap::OnServiceCreated(RunningServiceInfoPtr instance) {
+  LOG(ERROR) << "OnServiceCreated " << instance->pid << " " << instance->identity.name() << "." << instance->identity.instance();
   if (instance->pid == base::kNullProcessId)
     return;
   const service_manager::Identity& identity = instance->identity;
@@ -44,19 +48,24 @@ void ProcessMap::OnServiceCreated(RunningServiceInfoPtr instance) {
 
 void ProcessMap::OnServiceStarted(const service_manager::Identity& identity,
                                   uint32_t pid) {
+  LOG(ERROR) << "OnServiceStarted " << pid << " " << identity.name() << "." << identity.instance();
   if (pid == base::kNullProcessId)
     return;
   instances_[identity] = pid;
 }
 
-void ProcessMap::OnServiceFailedToStart(const service_manager::Identity&) {}
+void ProcessMap::OnServiceFailedToStart(const service_manager::Identity& identity) {
+  LOG(ERROR) << "OnServiceFailedToStart" << identity.name() << "." << identity.instance();
+}
 
 void ProcessMap::OnServiceStopped(const service_manager::Identity& identity) {
+  LOG(ERROR) << "OnServiceStopped" << identity.name() << "." << identity.instance();
   instances_.erase(identity);
 }
 
 base::ProcessId ProcessMap::GetProcessId(
     const service_manager::Identity& identity) const {
+  LOG(ERROR) << "GetProcessId " << identity.name() << "." << identity.instance();
   auto it = instances_.find(identity);
   return it != instances_.end() ? it->second : base::kNullProcessId;
 }

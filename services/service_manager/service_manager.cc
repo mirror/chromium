@@ -188,6 +188,9 @@ class ServiceManager::Instance
     if (identity_.name() == service_manager::mojom::kServiceName ||
         identity_.name() == catalog::mojom::kServiceName) {
       pid_ = GetCurrentPid();
+      LOG(ERROR) << "ServiceManager a " << pid_ << " " << identity_.name() << "." << identity_.instance();
+    } else {
+      LOG(ERROR) << "ServiceManager b " << pid_ << " " << identity_.name() << "." << identity_.instance();
     }
     DCHECK_NE(mojom::kInvalidInstanceID, id_);
   }
@@ -612,6 +615,7 @@ class ServiceManager::Instance
     }
 #endif
     pid_ = pid;
+    LOG(ERROR) << "PIDAvailable " << pid_ << " " << identity_.name() << "." << identity_.instance();
   }
 
   void OnServiceLost(
@@ -1027,6 +1031,7 @@ void ServiceManager::NotifyServiceStarted(const Identity& identity,
                                           base::ProcessId pid) {
   listeners_.ForAllPtrs(
       [identity, pid](mojom::ServiceManagerListener* listener) {
+        LOG(ERROR) << "Sending OnServiceStarted " << pid << " " << identity.name() << "." << identity.instance();
         listener->OnServiceStarted(identity, pid);
       });
 }
@@ -1069,6 +1074,7 @@ ServiceManager::Instance* ServiceManager::CreateInstance(
 
   mojom::RunningServiceInfoPtr info = raw_instance->CreateRunningServiceInfo();
   listeners_.ForAllPtrs([&info](mojom::ServiceManagerListener* listener) {
+    LOG(ERROR) << "Sending OnServiceCreated " << info->pid << " " << info->identity.name() << "." << info->identity.instance();
     listener->OnServiceCreated(info.Clone());
   });
 
