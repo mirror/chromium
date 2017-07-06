@@ -25,8 +25,8 @@ enum DBusMethodCallStatus {
 };
 
 // A callback to handle responses of methods without results.
-typedef base::Callback<void(
-    DBusMethodCallStatus call_status)> VoidDBusMethodCallback;
+using VoidDBusMethodCallback =
+    base::OnceCallback<void(DBusMethodCallStatus call_status)>;
 
 // A callback to handle responses of methods returning a bool value.
 typedef base::Callback<void(DBusMethodCallStatus call_status,
