@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ff92699_a240f535",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-06T17:37:32Z",
+      "side": 1,
+      "message": "BTW, there are a few places in this header that still refer to the DB thread.",
+      "revId": "8b2b15d05722db60113f3385d83eacc00e359d27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
