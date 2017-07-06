@@ -34,6 +34,24 @@
       "revId": "8f420f36eda712e2d85c167233983dceebedd5b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bef981d_9618e346",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/RootScrollerController.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-07-06T21:57:44Z",
+      "side": 1,
+      "message": "I\u0027ve reverted the function name and params back to where it takes HTMLFrameOwnerElement as param which solves this.",
+      "parentUuid": "fa880b0c_8b3649b8",
+      "revId": "8f420f36eda712e2d85c167233983dceebedd5b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
