@@ -1564,14 +1564,8 @@ std::string AXPlatformNodeWin::StringOverrideForMSAARole() {
   return "";
 }
 
-bool AXPlatformNodeWin::ShouldNodeHaveReadonlyState(
+bool AXPlatformNodeWin::ShouldNodeHaveReadonlyStateByDefault(
     const AXNodeData& data) const {
-  if (data.GetBoolAttribute(ui::AX_ATTR_ARIA_READONLY))
-    return true;
-
-  if (!data.HasState(ui::AX_STATE_READ_ONLY))
-    return false;
-
   switch (data.role) {
     case ui::AX_ROLE_ARTICLE:
     case ui::AX_ROLE_BUSY_INDICATOR:
@@ -1602,11 +1596,6 @@ bool AXPlatformNodeWin::ShouldNodeHaveReadonlyState(
       // or editable by default
       // msaa_state |= STATE_SYSTEM_READONLY;
       break;
-
-    case ui::AX_ROLE_TEXT_FIELD:
-    case ui::AX_ROLE_SEARCH_BOX:
-      if (data.HasState(ui::AX_STATE_READ_ONLY))
-        return true;
 
     default:
       break;
@@ -1653,9 +1642,6 @@ int AXPlatformNodeWin::MSAAState() {
   if (data.HasState(ui::AX_STATE_DEFAULT))
     msaa_state |= STATE_SYSTEM_DEFAULT;
 
-  if (data.HasState(ui::AX_STATE_DISABLED))
-    msaa_state |= STATE_SYSTEM_UNAVAILABLE;
-
   // TODO(dougt) unhandled ux::AX_STATE_EDITABLE
 
   if (data.HasState(ui::AX_STATE_EXPANDED))
@@ -1698,11 +1684,6 @@ int AXPlatformNodeWin::MSAAState() {
   if (data.HasState(ui::AX_STATE_PROTECTED))
     msaa_state |= STATE_SYSTEM_PROTECTED;
 
-  // READONLY state is complex on windows.  We set STATE_SYSTEM_READONLY
-  // on *some* roles even if the node data isn't marked as AX_STATE_READ_ONLY.
-  if (ShouldNodeHaveReadonlyState(data))
-    msaa_state |= STATE_SYSTEM_READONLY;
-
   // TODO(dougt) unhandled ux::AX_STATE_REQUIRED
   // TODO(dougt) unhandled ux::AX_STATE_RICHLY_EDITABLE
 
@@ -1732,6 +1713,28 @@ int AXPlatformNodeWin::MSAAState() {
       msaa_state |= STATE_SYSTEM_MIXED;
       break;
     default:
+      break;
+  }
+
+  const auto control_mode =
+      static_cast<ui::AXControlMode>(GetIntAttribute(ui::AX_ATTR_CONTROL_MODE));
+  switch (control_mode) {
+    case ui::AX_CONTROL_MODE_DISABLED:
+      msaa_state |= STATE_SYSTEM_UNAVAILABLE;
+      break;
+    case ui::AX_CONTROL_MODE_READ_ONLY:
+      msaa_state |= STATE_SYSTEM_READONLY;
+      break;
+    case ui::AX_CONTROL_MODE_ENABLED:
+      break;
+    default:
+      // READONLY state is complex on windows.  We set STATE_SYSTEM_READONLY
+      // on *some* document structure roles such as paragraph, heading or list
+      // even if the node data isn't marked as read only, as long as the
+      // node is not editable.
+      if (!data.HasState(AX_STATE_RICHLY_EDITABLE) &&
+          ShouldNodeHaveReadonlyStateByDefault(data))
+        msaa_state |= STATE_SYSTEM_READONLY;
       break;
   }
 
