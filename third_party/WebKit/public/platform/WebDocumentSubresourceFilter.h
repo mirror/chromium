@@ -13,6 +13,11 @@ class WebURL;
 
 class WebDocumentSubresourceFilter {
  public:
+  class Builder {
+   public:
+    virtual ~Builder() {}
+    virtual std::unique_ptr<WebDocumentSubresourceFilter> Build() = 0;
+  };
   enum LoadPolicy { kAllow, kDisallow, kWouldDisallow };
 
   virtual ~WebDocumentSubresourceFilter() {}
