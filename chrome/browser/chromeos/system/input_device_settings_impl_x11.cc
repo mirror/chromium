@@ -84,11 +84,10 @@ void ExecuteScript(const std::vector<std::string>& argv) {
   // Control scripts can take long enough to cause SIGART during shutdown
   // (http://crbug.com/261426). Run the blocking pool task with
   // CONTINUE_ON_SHUTDOWN so it won't be joined when Chrome shuts down.
-  base::SequencedWorkerPool* pool = content::BrowserThread::GetBlockingPool();
-  scoped_refptr<base::TaskRunner> runner =
-      pool->GetTaskRunnerWithShutdownBehavior(
-          base::SequencedWorkerPool::CONTINUE_ON_SHUTDOWN);
-  runner->PostTask(FROM_HERE, base::Bind(&ExecuteScriptOnFileThread, argv));
+  base::PostTaskWithTraits(
+      FROM_HERE,
+      {base::MayBlock(), base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
+      FROM_HERE, base::BindOnce(&ExecuteScriptOnFileThread, argv));
 }
 
 void AddSensitivityArguments(const char* device_type,
@@ -138,12 +137,10 @@ void DeviceExists(const char* script,
   // (http://crbug.com/255546). Run the blocking pool task with
   // CONTINUE_ON_SHUTDOWN so it won't be joined when Chrome shuts down.
   scoped_refptr<RefCountedBool> exists(new RefCountedBool(false));
-  base::SequencedWorkerPool* pool = content::BrowserThread::GetBlockingPool();
-  scoped_refptr<base::TaskRunner> runner =
-      pool->GetTaskRunnerWithShutdownBehavior(
-          base::SequencedWorkerPool::CONTINUE_ON_SHUTDOWN);
-  runner->PostTaskAndReply(
-      FROM_HERE, base::Bind(&DeviceExistsBlockingPool, script, exists),
+  base::PostTaskWithTraitsAndReply(
+      FROM_HERE,
+      {base::MayBlock(), base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
+      base::BindOnce(&DeviceExistsBlockingPool, script, exists),
       base::BindOnce(&RunCallbackUIThread, exists, std::move(callback)));
 }
 
