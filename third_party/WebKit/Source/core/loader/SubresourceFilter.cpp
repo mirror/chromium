@@ -10,6 +10,7 @@
 #include "core/dom/TaskRunnerHelper.h"
 #include "core/frame/LocalFrame.h"
 #include "core/inspector/ConsoleMessage.h"
+#include "core/workers/WorkerOrWorkletGlobalScope.h"
 #include "platform/WebTaskRunner.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/wtf/text/StringBuilder.h"
@@ -39,10 +40,25 @@ SubresourceFilter* SubresourceFilter::Create(
   return new SubresourceFilter(loader, std::move(filter));
 }
 
+SubresourceFilter* SubresourceFilter::CreateForWorker(
+    WorkerOrWorkletGlobalScope* worker_global_scope,
+    std::unique_ptr<WebDocumentSubresourceFilter> filter) {
+  return new SubresourceFilter(worker_global_scope, std::move(filter));
+}
+
 SubresourceFilter::SubresourceFilter(
     DocumentLoader* document_loader,
     std::unique_ptr<WebDocumentSubresourceFilter> subresource_filter)
     : document_loader_(document_loader),
+      execution_context_(document_loader_->GetFrame()
+                             ? document_loader_->GetFrame()->GetDocument()
+                             : nullptr),
+      subresource_filter_(std::move(subresource_filter)) {}
+
+SubresourceFilter::SubresourceFilter(
+    WorkerOrWorkletGlobalScope* worker_global_scope,
+    std::unique_ptr<WebDocumentSubresourceFilter> subresource_filter)
+    : execution_context_(worker_global_scope),
       subresource_filter_(std::move(subresource_filter)) {}
 
 SubresourceFilter::~SubresourceFilter() {}
@@ -62,6 +78,9 @@ bool SubresourceFilter::AllowLoad(
 }
 
 bool SubresourceFilter::AllowWebSocketConnection(const KURL& url) {
+  // Currently WebSocket is handled via document on the main thread.
+  DCHECK(document_loader_);
+
   WebDocumentSubresourceFilter::LoadPolicy load_policy =
       subresource_filter_->GetLoadPolicyForWebSocketConnect(url);
 
@@ -81,9 +100,6 @@ bool SubresourceFilter::AllowWebSocketConnection(const KURL& url) {
 void SubresourceFilter::ReportLoad(
     const KURL& resource_url,
     WebDocumentSubresourceFilter::LoadPolicy load_policy) {
-  Document* document = document_loader_->GetFrame()
-                           ? document_loader_->GetFrame()->GetDocument()
-                           : nullptr;
   switch (load_policy) {
     case WebDocumentSubresourceFilter::kAllow:
       break;
@@ -95,17 +111,26 @@ void SubresourceFilter::ReportLoad(
       // document wide console message, so no need to log it here.
       // TODO: Consider logging this as a kInterventionMessageSource for showing
       // warning in Lighthouse.
-      if (document && subresource_filter_->ShouldLogToConsole()) {
-        document->AddConsoleMessage(ConsoleMessage::Create(
+      if (subresource_filter_->ShouldLogToConsole() && execution_context_) {
+        execution_context_->AddConsoleMessage(ConsoleMessage::Create(
             kOtherMessageSource, kErrorMessageLevel,
             GetErrorStringForDisallowedLoad(resource_url)));
       }
     // fall through
     case WebDocumentSubresourceFilter::kWouldDisallow:
-      document_loader_->DidObserveLoadingBehavior(
-          kWebLoadingBehaviorSubresourceFilterMatch);
+      // TODO(csharrison): Consider posting a task to the main thread from the
+      // worker thread.
+      if (document_loader_) {
+        document_loader_->DidObserveLoadingBehavior(
+            kWebLoadingBehaviorSubresourceFilterMatch);
+      }
       break;
   }
+}
+
+DEFINE_TRACE(SubresourceFilter) {
+  visitor->Trace(document_loader_);
+  visitor->Trace(execution_context_);
 }
 
 }  // namespace blink

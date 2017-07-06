@@ -19,6 +19,7 @@
 #include "base/strings/string_piece.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
+#include "base/strings/utf_string_conversions.h"
 #include "base/test/histogram_tester.h"
 #include "base/test/simple_test_clock.h"
 #include "chrome/browser/browser_process.h"
@@ -69,6 +70,7 @@
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/browser_side_navigation_policy.h"
+#include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/referrer.h"
 #include "content/public/test/browser_test_utils.h"
@@ -212,12 +214,13 @@ class SubresourceFilterBrowserTest : public InProcessBrowserTest {
 
  protected:
   void SetUpCommandLine(base::CommandLine* command_line) override {
-    command_line->AppendSwitchASCII(
-        switches::kEnableFeatures,
-        base::JoinString(
-            {kSafeBrowsingSubresourceFilter.name, "SafeBrowsingV4OnlyEnabled",
-             kSafeBrowsingSubresourceFilterExperimentalUI.name},
-            ","));
+    command_line->AppendSwitchASCII(switches::kEnableFeatures,
+                                    base::JoinString(RequiredFeatures(), ","));
+  }
+
+  std::vector<base::StringPiece> RequiredFeatures() const {
+    return {kSafeBrowsingSubresourceFilter.name, "SafeBrowsingV4OnlyEnabled",
+            kSafeBrowsingSubresourceFilterExperimentalUI.name};
   }
 
   void SetUp() override {
@@ -467,6 +470,41 @@ class SubresourceFilterWebSocketBrowserTest
 
  private:
   std::unique_ptr<net::SpawnedTestServer> websocket_test_server_;
+};
+
+enum OffMainThreadFetchPolicy {
+  ENABLED,
+  DISABLED,
+};
+
+class SubresourceFilterWorkerFetchBrowserTest
+    : public SubresourceFilterBrowserTest,
+      public ::testing::WithParamInterface<OffMainThreadFetchPolicy> {
+ public:
+  SubresourceFilterWorkerFetchBrowserTest() {}
+  ~SubresourceFilterWorkerFetchBrowserTest() override {}
+
+ protected:
+  void SetUpCommandLine(base::CommandLine* command_line) override {
+    std::vector<base::StringPiece> features =
+        SubresourceFilterBrowserTest::RequiredFeatures();
+    if (GetParam() == OffMainThreadFetchPolicy::ENABLED) {
+      features.push_back(features::kOffMainThreadFetch.name);
+    } else {
+      command_line->AppendSwitchASCII(switches::kDisableFeatures,
+                                      features::kOffMainThreadFetch.name);
+    }
+    command_line->AppendSwitchASCII(switches::kEnableFeatures,
+                                    base::JoinString(features, ","));
+  }
+
+  void ClearTitle() {
+    ASSERT_TRUE(content::ExecuteScript(web_contents()->GetMainFrame(),
+                                       "document.title = \"\";"));
+  }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(SubresourceFilterWorkerFetchBrowserTest);
 };
 
 // Tests -----------------------------------------------------------------------
@@ -1400,6 +1438,48 @@ INSTANTIATE_TEST_CASE_P(
     SubresourceFilterWebSocketBrowserTest,
     ::testing::Values(WebSocketCreationPolicy::IN_WORKER,
                       WebSocketCreationPolicy::IN_MAIN_FRAME));
+
+IN_PROC_BROWSER_TEST_P(SubresourceFilterWorkerFetchBrowserTest, WorkerFetch) {
+  const base::string16 ok_title = base::ASCIIToUTF16("OK");
+  const base::string16 ng_title = base::ASCIIToUTF16("NG");
+  GURL url(GetTestUrl("subresource_filter/worker_fetch.html"));
+  ConfigureAsPhishingURL(url);
+
+  ASSERT_NO_FATAL_FAILURE(SetRulesetToDisallowURLsWithPathSuffix(
+      "suffix-that-does-not-match-anything"));
+  {
+    content::TitleWatcher title_watcher(
+        browser()->tab_strip_model()->GetActiveWebContents(), ok_title);
+    title_watcher.AlsoWaitForTitle(ng_title);
+    ui_test_utils::NavigateToURL(browser(), url);
+    EXPECT_EQ(ok_title, title_watcher.WaitAndGetTitle());
+  }
+  ClearTitle();
+  ASSERT_NO_FATAL_FAILURE(
+      SetRulesetToDisallowURLsWithPathSuffix("worker_fetch_data.txt"));
+  {
+    content::TitleWatcher title_watcher(
+        browser()->tab_strip_model()->GetActiveWebContents(), ok_title);
+    title_watcher.AlsoWaitForTitle(ng_title);
+    ui_test_utils::NavigateToURL(browser(), url);
+    EXPECT_EQ(ng_title, title_watcher.WaitAndGetTitle());
+  }
+  ClearTitle();
+  // The main frame document should never be filtered.
+  SetRulesetToDisallowURLsWithPathSuffix("worker_fetch.html.html");
+  {
+    content::TitleWatcher title_watcher(
+        browser()->tab_strip_model()->GetActiveWebContents(), ok_title);
+    title_watcher.AlsoWaitForTitle(ng_title);
+    ui_test_utils::NavigateToURL(browser(), url);
+    EXPECT_EQ(ok_title, title_watcher.WaitAndGetTitle());
+  }
+}
+
+INSTANTIATE_TEST_CASE_P(/* no prefix */,
+                        SubresourceFilterWorkerFetchBrowserTest,
+                        ::testing::Values(OffMainThreadFetchPolicy::ENABLED,
+                                          OffMainThreadFetchPolicy::DISABLED));
 
 // Tests checking how histograms are recorded. ---------------------------------
 
