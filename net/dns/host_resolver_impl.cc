@@ -1172,6 +1172,20 @@ class HostResolverImpl::DnsTask : public base::SupportsWeakPtr<DnsTask> {
     DCHECK(transaction);
     base::TimeDelta duration = base::TimeTicks::Now() - start_time;
     if (net_error != OK) {
+      if (response && response->IsValid() &&
+          response->rcode() == dns_protocol::kRcodeNXDOMAIN) {
+        // Best effort attempt for TTL, this is just the last response processed
+        DnsResourceRecord record;
+        response->Parser().ReadRecord(&record);
+        if (record.type == dns_protocol::kTypeSOA) {
+          ++num_completed_transactions_;
+          if (num_completed_transactions_ == 1) {
+            ttl_ = base::TimeDelta::FromSeconds(record.ttl);
+          } else {
+            ttl_ = std::min(ttl_, base::TimeDelta::FromSeconds(record.ttl));
+          }
+        }
+      }
       DNS_HISTOGRAM("AsyncDNS.TransactionFailure", duration);
       OnFailure(net_error, DnsResponse::DNS_PARSE_OK);
       return;
@@ -1273,8 +1287,9 @@ class HostResolverImpl::DnsTask : public base::SupportsWeakPtr<DnsTask> {
     net_log_.EndEvent(
         NetLogEventType::HOST_RESOLVER_IMPL_DNS_TASK,
         base::Bind(&NetLogDnsTaskFailedCallback, net_error, result));
-    delegate_->OnDnsTaskComplete(task_start_time_, net_error, AddressList(),
-                                 base::TimeDelta());
+    delegate_->OnDnsTaskComplete(
+        task_start_time_, net_error, AddressList(),
+        num_completed_transactions_ > 0 ? ttl_ : base::TimeDelta());
   }
 
   void OnSuccess(const AddressList& addr_list) {
@@ -1295,8 +1310,11 @@ class HostResolverImpl::DnsTask : public base::SupportsWeakPtr<DnsTask> {
 
   unsigned num_completed_transactions_;
 
+ public:
   // These are updated as each transaction completes.
   base::TimeDelta ttl_;
+
+ private:
   // IPv6 addresses must appear first in the list.
   AddressList addr_list_;
 
@@ -1705,7 +1723,13 @@ class HostResolverImpl::Job : public PrioritizedDispatcher::Job,
       StartProcTask();
     } else {
       UmaAsyncDnsResolveStatus(RESOLVE_STATUS_FAIL);
-      CompleteRequestsWithError(net_error);
+      // If the ttl is max, we didn't get one from the record, so set it to 0
+      base::TimeDelta ttl =
+          dns_task->ttl_ < base::TimeDelta::FromSeconds(
+                               std::numeric_limits<uint32_t>::max())
+              ? dns_task->ttl_
+              : base::TimeDelta::FromSeconds(0);
+      CompleteRequests(HostCache::Entry(net_error, AddressList(), ttl), ttl);
     }
   }
 
