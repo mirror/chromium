@@ -16,6 +16,24 @@
       "revId": "8f420f36eda712e2d85c167233983dceebedd5b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa880b0c_8b3649b8",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/RootScrollerController.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-06T07:26:37Z",
+      "side": 1,
+      "message": "It really depends. I don\u0027t really know enough about root scroller and how it interacts with OOPIF today to say.\n\nOut of curiosity, why can\u0027t we just use FrameOwner() here?",
+      "parentUuid": "5cb26955_388bc46b",
+      "revId": "8f420f36eda712e2d85c167233983dceebedd5b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

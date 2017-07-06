@@ -52,6 +52,24 @@
       "revId": "1092ca3e6798b5ac37e72612fda1087a123b5401",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f8a894d_7cc061f9",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutEmbeddedContent.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-06T07:26:37Z",
+      "side": 0,
+      "message": "Removing this seems fine. It may have previously been the case that one of the implementations could do more interesting things in the past that would cause the frame to be blown away (probably plugins?)",
+      "parentUuid": "c1fba077_cb9ba3c6",
+      "revId": "1092ca3e6798b5ac37e72612fda1087a123b5401",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
