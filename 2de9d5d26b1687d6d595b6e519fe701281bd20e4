@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8521924_f06798fc",
+        "filename": "ios/chrome/browser/ui/settings/passwords_settings_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-06T12:03:22Z",
+      "side": 1,
+      "message": "TARGET_IPHONE_SIMULATOR is defined in TargetConditionals.h. Please add the corresponding include to follow include-what-you-use (especially since undefined macros are expanded to 0 in \"#if\" statement so this may disable the test on simulator too if the file is not included by any of the dependency on the current file).",
+      "revId": "2de9d5d26b1687d6d595b6e519fe701281bd20e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
