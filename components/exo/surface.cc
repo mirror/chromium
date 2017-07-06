@@ -784,16 +784,17 @@ void Surface::UpdateSurface(bool full_damage) {
   // CopyOutputRequests on the layer.
   gfx::Size contents_surface_size = layer_size;
 
-  gfx::PointF uv_top_left(0.f, 0.f);
-  gfx::PointF uv_bottom_right(1.f, 1.f);
+  gfx::RectF uv(0.f, 0.f, 1.f, 1.f);
   if (!state_.crop.IsEmpty()) {
-    uv_top_left = state_.crop.origin();
-
-    uv_top_left.Scale(1.f / scaled_buffer_size.width(),
-                      1.f / scaled_buffer_size.height());
-    uv_bottom_right = state_.crop.bottom_right();
-    uv_bottom_right.Scale(1.f / scaled_buffer_size.width(),
-                          1.f / scaled_buffer_size.height());
+    uv = state_.crop;
+    uv.Scale(1.f / scaled_buffer_size.width(),
+             1.f / scaled_buffer_size.height());
+    // Inset by half texel to avoid texture bleeding when a crop region is set
+    // and effective (cf. crbug.com/429640).
+    if (!state_.crop.origin().IsOrigin() ||
+        state_.crop.size() != scaled_buffer_size)
+      uv.Inset(.5f / scaled_buffer_size.width(),
+               .5f / scaled_buffer_size.height());
   }
 
   gfx::Rect damage_rect;
@@ -846,9 +847,10 @@ void Surface::UpdateSurface(bool full_damage) {
       }
 
       texture_quad->SetNew(quad_state, quad_rect, opaque_rect, quad_rect,
-                           current_resource_.id, true, uv_top_left,
-                           uv_bottom_right, SK_ColorTRANSPARENT, vertex_opacity,
-                           false, false, state_.only_visible_on_secure_output);
+                           current_resource_.id, true, uv.origin(),
+                           gfx::PointF(uv.right(), uv.bottom()),
+                           SK_ColorTRANSPARENT, vertex_opacity, false, false,
+                           state_.only_visible_on_secure_output);
       if (current_resource_.is_overlay_candidate)
         texture_quad->set_resource_size_in_pixels(current_resource_.size);
       frame.resource_list.push_back(current_resource_);
