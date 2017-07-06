@@ -68,7 +68,7 @@ void OnImeEnumerated(std::vector<base::FilePath>* imes,
 }  // namespace
 
 // Registers a few fake IMEs then see if the enumeration finds them.
-TEST_F(EnumerateInputMethodEditorsTest, EnumerateImes2) {
+TEST_F(EnumerateInputMethodEditorsTest, EnumerateImes) {
   // Use the current exe file as an arbitrary module that exists.
   base::FilePath file_exe;
   ASSERT_TRUE(base::PathService::Get(base::FILE_EXE, &file_exe));
