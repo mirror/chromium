@@ -22,6 +22,30 @@
       "revId": "d0b0da0169bfef70b30249c82b953c2a067e7b76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff4b4522_4b5b96f9",
+        "filename": "chrome/browser/thumbnails/simple_thumbnail_crop.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-06T13:42:08Z",
+      "side": 1,
+      "message": "Eh.. sure. thumbnail_utils it is.\nI\u0027ve also moved the enum ClipResult there, IMO that fits better than in thumbnailing_context.",
+      "parentUuid": "aa4f9d22_cb95dfd0",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 58
+      },
+      "revId": "d0b0da0169bfef70b30249c82b953c2a067e7b76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
