@@ -1461,9 +1461,6 @@ TEST_P(ResourceProviderTest, TransferSoftwareResources) {
     resource_ids_to_transfer.push_back(id2);
     resource_ids_to_transfer.push_back(id3);
 
-    child_resource_provider_->GenerateSyncTokenForResources(
-        resource_ids_to_transfer);
-
     std::vector<TransferableResource> list;
     child_resource_provider_->PrepareSendToParent(resource_ids_to_transfer,
                                                   &list);
@@ -1511,9 +1508,6 @@ TEST_P(ResourceProviderTest, TransferSoftwareResources) {
     ResourceProvider::ResourceIdArray resource_ids_to_transfer;
     resource_ids_to_transfer.push_back(id1);
     resource_ids_to_transfer.push_back(id2);
-
-    child_resource_provider_->GenerateSyncTokenForResources(
-        resource_ids_to_transfer);
 
     std::vector<TransferableResource> list;
     child_resource_provider_->PrepareSendToParent(resource_ids_to_transfer,
@@ -1581,9 +1575,6 @@ TEST_P(ResourceProviderTest, TransferSoftwareResources) {
     resource_ids_to_transfer.push_back(id1);
     resource_ids_to_transfer.push_back(id2);
     resource_ids_to_transfer.push_back(id3);
-
-    child_resource_provider_->GenerateSyncTokenForResources(
-        resource_ids_to_transfer);
 
     std::vector<TransferableResource> list;
     child_resource_provider_->PrepareSendToParent(resource_ids_to_transfer,
@@ -1710,9 +1701,6 @@ TEST_P(ResourceProviderTest, TransferInvalidSoftware) {
     ResourceProvider::ResourceIdArray resource_ids_to_transfer;
     resource_ids_to_transfer.push_back(id1);
 
-    child_resource_provider_->GenerateSyncTokenForResources(
-        resource_ids_to_transfer);
-
     std::vector<TransferableResource> list;
     child_resource_provider_->PrepareSendToParent(resource_ids_to_transfer,
                                                   &list);
@@ -1770,8 +1758,10 @@ TEST_P(ResourceProviderTest, DeleteExportedResources) {
     resource_ids_to_transfer.push_back(id1);
     resource_ids_to_transfer.push_back(id2);
 
-    child_resource_provider_->GenerateSyncTokenForResources(
-        resource_ids_to_transfer);
+    if (GetParam() == ResourceProvider::RESOURCE_TYPE_GL_TEXTURE) {
+      child_resource_provider_->GenerateSyncTokenForResources(
+          resource_ids_to_transfer);
+    }
 
     std::vector<TransferableResource> list;
     child_resource_provider_->PrepareSendToParent(resource_ids_to_transfer,
@@ -1807,8 +1797,10 @@ TEST_P(ResourceProviderTest, DeleteExportedResources) {
     resource_ids_to_transfer.push_back(mapped_id1);
     resource_ids_to_transfer.push_back(mapped_id2);
 
-    child_resource_provider_->GenerateSyncTokenForResources(
-        resource_ids_to_transfer);
+    if (GetParam() == ResourceProvider::RESOURCE_TYPE_GL_TEXTURE) {
+      child_resource_provider_->GenerateSyncTokenForResources(
+          resource_ids_to_transfer);
+    }
 
     std::vector<TransferableResource> list;
     resource_provider_->PrepareSendToParent(resource_ids_to_transfer, &list);
@@ -1876,8 +1868,10 @@ TEST_P(ResourceProviderTest, DestroyChildWithExportedResources) {
     resource_ids_to_transfer.push_back(id1);
     resource_ids_to_transfer.push_back(id2);
 
-    child_resource_provider_->GenerateSyncTokenForResources(
-        resource_ids_to_transfer);
+    if (GetParam() == ResourceProvider::RESOURCE_TYPE_GL_TEXTURE) {
+      child_resource_provider_->GenerateSyncTokenForResources(
+          resource_ids_to_transfer);
+    }
 
     std::vector<TransferableResource> list;
     child_resource_provider_->PrepareSendToParent(resource_ids_to_transfer,
@@ -1913,8 +1907,10 @@ TEST_P(ResourceProviderTest, DestroyChildWithExportedResources) {
     resource_ids_to_transfer.push_back(mapped_id1);
     resource_ids_to_transfer.push_back(mapped_id2);
 
-    child_resource_provider_->GenerateSyncTokenForResources(
-        resource_ids_to_transfer);
+    if (GetParam() == ResourceProvider::RESOURCE_TYPE_GL_TEXTURE) {
+      child_resource_provider_->GenerateSyncTokenForResources(
+          resource_ids_to_transfer);
+    }
 
     std::vector<TransferableResource> list;
     resource_provider_->PrepareSendToParent(resource_ids_to_transfer, &list);
@@ -1992,8 +1988,10 @@ TEST_P(ResourceProviderTest, DeleteTransferredResources) {
     ResourceProvider::ResourceIdArray resource_ids_to_transfer;
     resource_ids_to_transfer.push_back(id);
 
-    child_resource_provider_->GenerateSyncTokenForResources(
-        resource_ids_to_transfer);
+    if (GetParam() == ResourceProvider::RESOURCE_TYPE_GL_TEXTURE) {
+      child_resource_provider_->GenerateSyncTokenForResources(
+          resource_ids_to_transfer);
+    }
 
     std::vector<TransferableResource> list;
     child_resource_provider_->PrepareSendToParent(resource_ids_to_transfer,
@@ -2050,8 +2048,10 @@ TEST_P(ResourceProviderTest, UnuseTransferredResources) {
     ResourceProvider::ResourceIdArray resource_ids_to_transfer;
     resource_ids_to_transfer.push_back(id);
 
-    child_resource_provider_->GenerateSyncTokenForResources(
-        resource_ids_to_transfer);
+    if (GetParam() == ResourceProvider::RESOURCE_TYPE_GL_TEXTURE) {
+      child_resource_provider_->GenerateSyncTokenForResources(
+          resource_ids_to_transfer);
+    }
 
     std::vector<TransferableResource> list;
     child_resource_provider_->PrepareSendToParent(resource_ids_to_transfer,
@@ -3417,6 +3417,7 @@ TEST_P(ResourceProviderTest, TextureMailbox_PrepareSendToParent_NoSyncToken) {
   ResourceId id = resource_provider->CreateResourceFromTextureMailbox(
       mailbox, std::move(callback));
   EXPECT_NE(0u, id);
+  resource_provider->SetResourceSynchronized(id);
   Mock::VerifyAndClearExpectations(context);
 
   ResourceProvider::ResourceIdArray resource_ids_to_transfer{id};
