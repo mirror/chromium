@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "414392fe_9b94c50b",
+        "filename": "build/config/crypto.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-07-06T23:55:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a8d519f_61999a1a",
+      "range": {
+        "startLine": 19,
+        "startChar": 45,
+        "endLine": 19,
+        "endChar": 55
+      },
+      "revId": "e539e115ca5a5889879dfc4c3b5bf75703533111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "00e6c460_00c60e04",
         "filename": "net/cert/cert_verify_proc.cc",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "4263f360_2c0c802b",
+        "filename": "net/cert/cert_verify_proc.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-07-06T23:55:46Z",
+      "side": 1,
+      "message": "Yeah, I understand it. Is the plan to migrate to CreateCertVerifyProcBuiltin on all platforms eventually?\nAn alternative for now is to define a stub CertVerifyProcFuchsia which would just fail for all certs. Would you prefer that?",
+      "parentUuid": "00e6c460_00c60e04",
+      "range": {
+        "startLine": 517,
+        "startChar": 9,
+        "endLine": 517,
+        "endChar": 36
+      },
+      "revId": "e539e115ca5a5889879dfc4c3b5bf75703533111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b1915f8f_4b3d3b31",
         "filename": "net/features.gni",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2017-07-06T23:16:49Z",
       "side": 1,
       "message": "is this pattern being used elsewhere? Seems ambiguous with a username. Can we use a bug number instead?",
+      "range": {
+        "startLine": 23,
+        "startChar": 9,
+        "endLine": 23,
+        "endChar": 16
+      },
+      "revId": "e539e115ca5a5889879dfc4c3b5bf75703533111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c53c047a_712e1215",
+        "filename": "net/features.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-07-06T23:55:46Z",
+      "side": 1,
+      "message": "this pattern is used in other places, particularly in base. IMO it\u0027s better than bug numbers because it\u0027s easier to search it.",
+      "parentUuid": "b1915f8f_4b3d3b31",
       "range": {
         "startLine": 23,
         "startChar": 9,
