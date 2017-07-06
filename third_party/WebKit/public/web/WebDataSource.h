@@ -140,6 +140,8 @@ class BLINK_EXPORT WebDataSource {
   virtual void SetSourceLocation(const WebSourceLocation&) = 0;
   virtual void ResetSourceLocation() = 0;
 
+  virtual bool HasExecutionContext() = 0;
+
  protected:
   ~WebDataSource() {}
 };

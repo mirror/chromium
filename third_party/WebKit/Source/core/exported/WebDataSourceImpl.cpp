@@ -32,6 +32,7 @@
 
 #include <memory>
 #include "core/dom/Document.h"
+#include "core/frame/LocalFrame.h"
 #include "core/loader/SubresourceFilter.h"
 #include "platform/wtf/PtrUtil.h"
 #include "public/platform/WebDocumentSubresourceFilter.h"
@@ -183,6 +184,10 @@ void WebDataSourceImpl::SetSourceLocation(
 
 void WebDataSourceImpl::ResetSourceLocation() {
   DocumentLoader::SetSourceLocation(nullptr);
+}
+
+bool WebDataSourceImpl::HasExecutionContext() {
+  return GetFrame()->GetDocument();
 }
 
 DEFINE_TRACE(WebDataSourceImpl) {

@@ -3694,6 +3694,12 @@ void RenderFrameImpl::DidCommitProvisionalLoad(
     }
   }
 
+  {
+    CHECK(GetWebFrame());
+    CHECK(GetWebFrame()->DataSource());
+    CHECK(GetWebFrame()->DataSource()->HasExecutionContext());
+  }
+
   for (auto& observer : render_view_->observers_)
     observer.DidCommitProvisionalLoad(frame_, is_new_navigation);
   for (auto& observer : observers_) {
