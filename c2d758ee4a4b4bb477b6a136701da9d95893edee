@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0b09ff0_7d962e08",
+        "filename": "content/browser/renderer_host/render_view_host_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-07-06T22:51:05Z",
+      "side": 1,
+      "message": "nit: you may find yourself wanting to share stub implementations between tests, as you start adding interfaces.",
+      "revId": "c2d758ee4a4b4bb477b6a136701da9d95893edee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
