@@ -16,6 +16,24 @@
       "revId": "59bb3410f26e71167ed15296ced0e1cdfd4eeece",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d432de5_193b6428",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 1732,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-06T00:02:16Z",
+      "side": 1,
+      "message": "Basically see https://codereview.chromium.org/2966323002, where I am moving js2gtest data deps closer to the js2gtest target. I think this line could also be moved there (although this would not address the enable_nacl case).",
+      "parentUuid": "d3fe70b9_cbdefa27",
+      "revId": "59bb3410f26e71167ed15296ced0e1cdfd4eeece",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
