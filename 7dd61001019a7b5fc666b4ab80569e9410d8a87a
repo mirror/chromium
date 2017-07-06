@@ -16,6 +16,24 @@
       "revId": "7dd61001019a7b5fc666b4ab80569e9410d8a87a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb0d540e_06eaf3c1",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 3000,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-07-06T21:20:50Z",
+      "side": 1,
+      "message": "I\u0027ll change this in a followup if that\u0027s ok. (Trying to commit before any more merge\nconflicts arise.)",
+      "parentUuid": "9213353b_97ef1894",
+      "revId": "7dd61001019a7b5fc666b4ab80569e9410d8a87a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
