@@ -9,12 +9,18 @@
 
 #include <map>
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/timer/timer.h"
+#include "chromeos/cryptohome/cryptohome_parameters.h"
 #include "chromeos/dbus/cryptohome_client.h"
+
+namespace cryptohome {
+class KeyData;
+}  // namespace cryptohome
 
 namespace chromeos {
 
@@ -271,6 +277,9 @@ class CHROMEOS_EXPORT FakeCryptohomeClient : public CryptohomeClient {
   // associated data blob. Used to implement InstallAttributesSet and -Get.
   std::map<std::string, std::vector<uint8_t>> install_attrs_;
   bool locked_;
+
+  std::unordered_map<cryptohome::Identification, cryptohome::KeyData>
+      key_data_map_;
 
   DircryptoMigrationProgessHandler dircrypto_migration_progress_handler_;
   base::RepeatingTimer dircrypto_migration_progress_timer_;
