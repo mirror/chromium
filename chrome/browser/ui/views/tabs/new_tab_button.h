@@ -10,6 +10,8 @@
 #include "ui/views/controls/button/image_button.h"
 #include "ui/views/view.h"
 
+class NewTabPromo;
+
 ///////////////////////////////////////////////////////////////////////////////
 // NewTabButton
 //
@@ -33,6 +35,14 @@ class NewTabButton : public views::ImageButton,
   // button's visible region begins.
   static int GetTopOffset();
 
+  // Creates and shows the NewTabPromo. Triggered by the
+  // NewTabFeatureEngagementTracker.
+  void ShowPromo();
+
+  // Deletes the NewTabPromo after being notified by the NewTabPromo that it
+  // is no longer showing.
+  void OnPromoClosed();
+
  private:
 // views::ImageButton:
 #if defined(OS_WIN)
@@ -40,6 +50,12 @@ class NewTabButton : public views::ImageButton,
 #endif
   void OnGestureEvent(ui::GestureEvent* event) override;
   void PaintButtonContents(gfx::Canvas* canvas) override;
+
+  // Returns the gfx::Rect around the visible portion of the New Tab Button.
+  // Note This is different than the rect around the entire New Tab Button as it
+  // extends to the top of the tabstrip for Fitts' Law interaction in a
+  // maximized window. Used for anchoring the NewTabPromo.
+  gfx::Rect VisibleBounds();
 
   // views::MaskedTargeterDelegate:
   bool GetHitTestMask(gfx::Path* mask) const override;
@@ -63,6 +79,11 @@ class NewTabButton : public views::ImageButton,
 
   // Tab strip that contains this button.
   TabStrip* tab_strip_;
+
+  // True when the NewTabPromo is showing.
+  bool showing_promo_;
+
+  std::unique_ptr<NewTabPromo> promo_;
 
   // The offset used to paint the background image.
   gfx::Point background_offset_;

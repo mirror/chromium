@@ -6,6 +6,7 @@
 
 #include "chrome/browser/themes/theme_properties.h"
 #include "chrome/browser/ui/layout_constants.h"
+#include "chrome/browser/ui/views/tabs/new_tab_promo.h"
 #include "third_party/skia/include/core/SkColorFilter.h"
 #include "third_party/skia/include/effects/SkBlurMaskFilter.h"
 #include "third_party/skia/include/effects/SkLayerDrawLooper.h"
@@ -35,14 +36,17 @@ sk_sp<SkDrawLooper> CreateShadowDrawLooper(SkColor color) {
       kNormal_SkBlurStyle, 0.5, SkBlurMaskFilter::kHighQuality_BlurFlag));
   layer_paint->setColorFilter(
       SkColorFilter::MakeModeFilter(color, SkBlendMode::kSrcIn));
-
   return looper_builder.detach();
 }
 
 }  // namespace
 
 NewTabButton::NewTabButton(TabStrip* tab_strip, views::ButtonListener* listener)
-    : views::ImageButton(listener), tab_strip_(tab_strip), destroyed_(NULL) {
+    : views::ImageButton(listener),
+      tab_strip_(tab_strip),
+      promo_(nullptr),
+      showing_promo_(false),
+      destroyed_(NULL) {
   set_animate_on_state_change(true);
 #if defined(OS_LINUX) && !defined(OS_CHROMEOS)
   set_triggerable_event_flags(triggerable_event_flags() |
@@ -141,7 +145,11 @@ void NewTabButton::PaintButtonContents(gfx::Canvas* canvas) {
       CreateShadowDrawLooper(SkColorSetA(stroke_color, shadow_alpha)));
   const SkAlpha path_alpha =
       static_cast<SkAlpha>(std::round((pressed ? 0.875f : 0.609375f) * alpha));
-  flags.setColor(SkColorSetA(stroke_color, path_alpha));
+  const SkColor color =
+      showing_promo_ ? GetNativeTheme()->GetSystemColor(
+                           ui::NativeTheme::kColorId_ProminentButtonColor)
+                     : SkColorSetA(stroke_color, path_alpha);
+  flags.setColor(color);
   canvas->DrawPath(stroke, flags);
 }
 
@@ -233,7 +241,11 @@ void NewTabButton::PaintFill(bool pressed,
           x_scale * scale, scale, 0, 0, &flags);
       DCHECK(succeeded);
     } else {
-      flags.setColor(tp->GetColor(ThemeProperties::COLOR_BACKGROUND_TAB));
+      const SkColor color =
+          showing_promo_ ? GetNativeTheme()->GetSystemColor(
+                               ui::NativeTheme::kColorId_ProminentButtonColor)
+                         : tp->GetColor(ThemeProperties::COLOR_BACKGROUND_TAB);
+      flags.setColor(color);
     }
     const SkColor stroke_color = tab_strip_->GetToolbarTopSeparatorColor();
     const SkAlpha alpha =
@@ -261,3 +273,30 @@ void NewTabButton::PaintFill(bool pressed,
     canvas->DrawPath(fill, flags);
   }
 }
+
+//////////////////////////////////////////////////////////////////////////////
+// NewTabPromo
+
+void NewTabButton::ShowPromo() {
+  showing_promo_ = true;
+  promo_.reset(new NewTabPromo(this, NewTabButton::VisibleBounds()));
+  NewTabButton::SchedulePaint();
+}
+
+void NewTabButton::OnPromoClosed() {
+  showing_promo_ = false;
+  promo_.reset();
+  NewTabButton::SchedulePaint();
+}
+
+gfx::Rect NewTabButton::VisibleBounds() {
+  const float scale = GetWidget()->GetCompositor()->device_scale_factor();
+  SkPath border;
+  GetBorderPath(GetTopOffset() * scale, scale, false, &border);
+  auto rect = base::MakeUnique<gfx::Rect>(
+      gfx::ToEnclosingRect(gfx::SkRectToRectF(border.getBounds())));
+  ConvertRectToScreen(this, rect.get());
+  return *rect.get();
+}
+
+///////////////////////////////////////////////////////////////////////////////

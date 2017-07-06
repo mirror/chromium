@@ -230,8 +230,7 @@ const TabSizeInfo& GetTabSizeInfo() {
 
 }  // namespace
 
-
-///////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 // TabStrip::RemoveTabDelegate
 //
 // AnimationDelegate used when removing a tab. Does the necessary cleanup when
@@ -2356,6 +2355,7 @@ void TabStrip::ButtonPressed(views::Button* sender, const ui::Event& event) {
     }
 
     controller_->CreateNewTab();
+
     if (event.type() == ui::ET_GESTURE_TAP)
       TouchUMA::RecordGestureAction(TouchUMA::GESTURE_NEWTAB_TAP);
   }

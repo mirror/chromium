@@ -141,6 +141,9 @@ class TabStrip : public views::View,
   // Returns the Tab at |index|.
   Tab* tab_at(int index) const { return tabs_.view_at(index); }
 
+  // Returns the NewTabButton.
+  NewTabButton* new_tab_button() { return newtab_button_; }
+
   // Returns the index of the specified tab in the model coordinate system, or
   // -1 if tab is closing or not valid.
   int GetModelIndexOfTab(const Tab* tab) const;
