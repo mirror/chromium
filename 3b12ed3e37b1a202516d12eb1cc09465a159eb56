@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "31ea2f6d_9a9ac2d2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-07-06T13:41:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "02b94bec_dcbeaf74",
+      "revId": "3b12ed3e37b1a202516d12eb1cc09465a159eb56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c6b6cd_20c16abb",
         "filename": "build/android/gyp/package_resources.py",
         "patchSetId": 5
@@ -39,6 +57,30 @@
       "revId": "3b12ed3e37b1a202516d12eb1cc09465a159eb56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d94c703_16903cf7",
+        "filename": "build/android/gyp/package_resources.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-07-06T13:41:28Z",
+      "side": 1,
+      "message": "We were hoping that we could trigger the cruncher path, this was recommended since we want better size reduction even if it means slower build time, assuming decoding time is not negatively affected.\n\nThanks for the heads up! If it gets too slow for our buildbots then we will move back to -q 99.",
+      "parentUuid": "a7c6b6cd_20c16abb",
+      "range": {
+        "startLine": 94,
+        "startChar": 23,
+        "endLine": 94,
+        "endChar": 24
+      },
+      "revId": "3b12ed3e37b1a202516d12eb1cc09465a159eb56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "b76952a1_0c54d5f6",
+        "filename": "build/android/gyp/package_resources.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-07-06T13:41:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37ecb739_52c35c8b",
+      "range": {
+        "startLine": 352,
+        "startChar": 10,
+        "endLine": 352,
+        "endChar": 12
+      },
+      "revId": "3b12ed3e37b1a202516d12eb1cc09465a159eb56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd5bbcdb_2b790d60",
         "filename": "build/config/android/internal_rules.gni",
         "patchSetId": 5
@@ -85,6 +151,30 @@
       "revId": "3b12ed3e37b1a202516d12eb1cc09465a159eb56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d64cb87c_e87973a2",
+        "filename": "build/config/android/internal_rules.gni",
+        "patchSetId": 5
+      },
+      "lineNbr": 1719,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-07-06T13:41:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd5bbcdb_2b790d60",
+      "range": {
+        "startLine": 1719,
+        "startChar": 12,
+        "endLine": 1719,
+        "endChar": 23
+      },
+      "revId": "3b12ed3e37b1a202516d12eb1cc09465a159eb56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
