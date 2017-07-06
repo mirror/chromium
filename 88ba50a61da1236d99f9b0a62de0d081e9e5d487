@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "5021845b_ef201863",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_base_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-06T23:16:15Z",
+      "side": 1,
+      "message": "If we don\u0027t want to run over the border, 10 might not be enough (on Windows, you can customize your border thickness, and some themes like Win 7 Aero Basic use large default thicknesses like 8, so 10 or higher aren\u0027t unreasonable values).  And if we want spacing between this and the border we\u0027d probably want to use a standard views layout constant for that spacing instead of a one-off, e.g. DISTANCE_UNRELATED_CONTROL_VERTICAL.  (Although I might just go to the bottom of the window.)\n\nThis is my way of saying we should probably be programmatically computing this.  You should be able to get the window border thickness from the view that draws the frame (see e.g. OpaqueBrowserFrameViewLayout::FrameBorderThickness()).  You might not want to plumb all this in this patch (because getting at the value above will likely take a bit of doing), but if not, then I\u0027d consider it as a followup, and at the very least I\u0027d make it clear in this patch what you\u0027re trying to accomplish and how you\u0027ve picked the numbers you have.",
+      "parentUuid": "b6f48976_9ae67012",
+      "revId": "88ba50a61da1236d99f9b0a62de0d081e9e5d487",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de4c14a7_0259eabc",
         "filename": "chrome/browser/ui/views/autofill/autofill_popup_base_view.cc",
         "patchSetId": 2
