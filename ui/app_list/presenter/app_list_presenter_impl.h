@@ -57,6 +57,10 @@ class APP_LIST_PRESENTER_EXPORT AppListPresenterImpl
   // display (in which the |window| exists) the app list should be shown.
   void Show(int64_t display_id);
 
+  // Update the bounds of the app list according to |new_y_position|. Note
+  // |new_y_position| is in the coordinate space of the screen.
+  void UpdateBoundsOnYPosition(int64_t new_y_position);
+
   // Invoked to dismiss app list. This may leave the view open but hidden from
   // the user.
   void Dismiss();
