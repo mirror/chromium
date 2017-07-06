@@ -22,6 +22,30 @@
       "revId": "844b4f2ee0aa21cb055c92bf9a80104b01fd8024",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e44848c_e715639c",
+        "filename": "services/test/user_id/public/interfaces/user_id.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-07-06T09:34:18Z",
+      "side": 1,
+      "message": "Hey Tom,\n\nMy feeling is that this is overkill given that the interface is in //services/test to start with (so any consumer using it would have to #include \"services/test/...\"). Note that every interface in //services/test is for test-only purposes and hence the same logic would apply to all of them. Thoughts?",
+      "parentUuid": "b55729fa_b746cb04",
+      "range": {
+        "startLine": 9,
+        "startChar": 10,
+        "endLine": 9,
+        "endChar": 16
+      },
+      "revId": "844b4f2ee0aa21cb055c92bf9a80104b01fd8024",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
