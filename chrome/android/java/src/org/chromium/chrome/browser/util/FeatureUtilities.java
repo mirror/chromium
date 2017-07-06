@@ -23,7 +23,6 @@ import org.chromium.base.FieldTrialList;
 import org.chromium.base.Log;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.VisibleForTesting;
-import org.chromium.chrome.browser.ApplicationLifetime;
 import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.firstrun.FirstRunGlueImpl;
@@ -247,13 +246,7 @@ public class FeatureUtilities {
 
         boolean isChromeHomeEnabled = ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME);
         ChromePreferenceManager manager = ChromePreferenceManager.getInstance();
-        boolean valueChanged =
-                sChromeHomeEnabled != null && isChromeHomeEnabled != manager.isChromeHomeEnabled();
         manager.setChromeHomeEnabled(isChromeHomeEnabled);
-        sChromeHomeEnabled = isChromeHomeEnabled;
-
-        // If the cached value changed, restart chrome.
-        if (valueChanged) ApplicationLifetime.terminate(true);
     }
 
     /**
