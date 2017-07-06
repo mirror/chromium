@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0a17993c_a0d19fb0",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-07-06T17:48:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2b37144_a984c805",
+      "revId": "ec9322a438d0a90bff35a182210da4b52967907c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b68b60de_ec2be649",
         "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "ec9322a438d0a90bff35a182210da4b52967907c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81b97a05_ab812149",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-07-06T17:48:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b68b60de_ec2be649",
+      "revId": "ec9322a438d0a90bff35a182210da4b52967907c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "73844389_5213a0c6",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-07-06T17:48:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10a4d508_7dda288f",
+      "revId": "ec9322a438d0a90bff35a182210da4b52967907c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20e679bb_fe896a22",
         "filename": "chrome/browser/ui/views/tabs/tab_strip.cc",
         "patchSetId": 7
@@ -67,6 +121,24 @@
       "revId": "ec9322a438d0a90bff35a182210da4b52967907c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f6ad2e2_5e477c22",
+        "filename": "chrome/browser/ui/views/tabs/tab_strip.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-07-06T17:48:12Z",
+      "side": 1,
+      "message": "That was there before and I removed it by accident.",
+      "parentUuid": "20e679bb_fe896a22",
+      "revId": "ec9322a438d0a90bff35a182210da4b52967907c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
