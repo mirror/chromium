@@ -46,9 +46,11 @@ bool MouseLockController::IsMouseLockedSilently() const {
   return mouse_lock_state_ == MOUSELOCK_LOCKED_SILENTLY;
 }
 
-void MouseLockController::RequestToLockMouse(WebContents* web_contents,
-                                             bool user_gesture,
-                                             bool last_unlocked_by_target) {
+void MouseLockController::RequestToLockMouse(
+    WebContents* web_contents,
+    bool user_gesture,
+    bool last_unlocked_by_target,
+    ExclusiveAccessBubbleHideCallback bubble_first_hide_callback) {
   DCHECK(!IsMouseLocked());
   NotifyMouseLockChange();
 
@@ -61,6 +63,10 @@ void MouseLockController::RequestToLockMouse(WebContents* web_contents,
            ->fullscreen_controller()
            ->IsFullscreenForTabOrPending(web_contents)) {
     web_contents->GotResponseToLockMouseRequest(false);
+    if (bubble_first_hide_callback) {
+      std::move(bubble_first_hide_callback)
+          .Run(ExclusiveAccessBubbleHideReason::kUnshown);
+    }
     return;
   }
   SetTabWithExclusiveAccess(web_contents);
@@ -77,7 +83,8 @@ void MouseLockController::RequestToLockMouse(WebContents* web_contents,
     SetTabWithExclusiveAccess(nullptr);
     mouse_lock_state_ = MOUSELOCK_UNLOCKED;
   }
-  exclusive_access_manager()->UpdateExclusiveAccessExitBubbleContent();
+  exclusive_access_manager()->UpdateExclusiveAccessExitBubbleContent(
+      std::move(bubble_first_hide_callback));
 }
 
 void MouseLockController::ExitExclusiveAccessIfNecessary() {
