@@ -196,7 +196,7 @@ TEST(TreeNodeTest, TraverseNext) {
   EXPECT_EQ(order_index, sizeof(order) / sizeof(TestTree*));
 }
 
-TEST(TreeNodeTest, TraverseNextPostORder) {
+TEST(TreeNodeTest, TraverseNextPostOrder) {
   TrioWithGrandChild trio;
   trio.AppendChildren();
 
