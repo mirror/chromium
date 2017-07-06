@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59a35752_24f19be2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-07-06T19:02:50Z",
+      "side": 1,
+      "message": "Typo: THRESHHOLD",
+      "range": {
+        "startLine": 481,
+        "startChar": 36,
+        "endLine": 481,
+        "endChar": 58
+      },
+      "revId": "47b9cd7d8400c318b0e27ac963bbfdf8f05175bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3368d769_178ccca6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-07-06T19:02:50Z",
+      "side": 1,
+      "message": "This is a rather complicated method. Consider extracting some of the calculations into a separate helper function, possibly static? Then you could unit test the math separately. I think something like this would be clearer:\n\nbool needToSendUpdate \u003d RecalculateVsyncParams(...)\nif (needToSendUpdate) nativeUpdateVSyncInterval(...)",
+      "range": {
+        "startLine": 497,
+        "startChar": 31,
+        "endLine": 497,
+        "endChar": 32
+      },
+      "revId": "47b9cd7d8400c318b0e27ac963bbfdf8f05175bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df06bc40_421fc100",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-07-06T19:02:50Z",
+      "side": 1,
+      "message": "Should be CHECK (or DCHECK)? Haven\u0027t seen raw asserts in Chrome.",
+      "range": {
+        "startLine": 508,
+        "startChar": 23,
+        "endLine": 508,
+        "endChar": 30
+      },
+      "revId": "47b9cd7d8400c318b0e27ac963bbfdf8f05175bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91348499_059a2b36",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-07-06T19:02:50Z",
+      "side": 1,
+      "message": "See above. Maybe just add a LOG(ERROR) here or DCHECK/NOTREACHED?",
+      "range": {
+        "startLine": 518,
+        "startChar": 27,
+        "endLine": 518,
+        "endChar": 32
+      },
+      "revId": "47b9cd7d8400c318b0e27ac963bbfdf8f05175bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f20062a8_088fd400",
+        "filename": "chrome/browser/android/vr_shell/vr_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-07-06T19:02:50Z",
+      "side": 1,
+      "message": "Should this be in a separate CL? Doesn\u0027t seem obviously related to the VSync updates. Or is a diffbase confusing me?",
+      "range": {
+        "startLine": 152,
+        "startChar": 15,
+        "endLine": 152,
+        "endChar": 24
+      },
+      "revId": "47b9cd7d8400c318b0e27ac963bbfdf8f05175bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "837c6213_fc0e3283",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_delegate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-07-06T19:02:50Z",
+      "side": 1,
+      "message": "I think the more common idiom seems to be to use base::TimeTicks() + base::TimeDelta(...) for initializing, not sure if FromInternalValue is appropriate here even if it ends up doing the same thing.",
+      "range": {
+        "startLine": 119,
+        "startChar": 37,
+        "endLine": 119,
+        "endChar": 54
+      },
+      "revId": "47b9cd7d8400c318b0e27ac963bbfdf8f05175bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
