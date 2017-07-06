@@ -11,6 +11,7 @@
 #include <map>
 #include <memory>
 #include <set>
+#include <vector>
 
 #include "base/compiler_specific.h"
 #include "base/macros.h"
@@ -18,12 +19,28 @@
 #include "content/common/content_export.h"
 #include "net/base/priority_queue.h"
 #include "net/base/request_priority.h"
+#include "net/nqe/effective_connection_type.h"
+#include "net/nqe/network_quality_estimator.h"
 
 namespace net {
 class URLRequest;
 }
 
 namespace content {
+
+namespace {
+
+// A struct that stores a bandwidth delay product (BDP) and the maximum number
+// of delayable requests when the observed BDP is below (inclusive) the
+// specified BDP.
+struct MaxRequestsForBDPRange {
+  int64_t max_bdp_kbits;
+  size_t max_requests;
+};
+typedef std::vector<MaxRequestsForBDPRange> MaxRequestsForBDPRanges;
+
+}  // namespace
+
 class ResourceThrottle;
 
 // There is one ResourceScheduler. All renderer-initiated HTTP requests are
@@ -69,7 +86,10 @@ class CONTENT_EXPORT ResourceScheduler {
   // Signals from the UI thread, posted as tasks on the IO thread:
 
   // Called when a renderer is created.
-  void OnClientCreated(int child_id, int route_id);
+  void OnClientCreated(
+      int child_id,
+      int route_id,
+      const net::NetworkQualityEstimator* const network_quality_estimator);
 
   // Called when a renderer is destroyed.
   void OnClientDeleted(int child_id, int route_id);
@@ -142,6 +162,14 @@ class CONTENT_EXPORT ResourceScheduler {
   // start resource requests.
   bool yielding_scheduler_enabled_;
   int max_requests_before_yielding_;
+
+  // The BDP ranges for which the maximum delayable requests in flight must be
+  // overridden.
+  const MaxRequestsForBDPRanges max_requests_for_bdp_ranges_;
+
+  // The maximum ECT for which the maximum delayable requests in flight should
+  // be overridden.
+  const net::EffectiveConnectionType max_delayable_requests_threshold_;
 
   SEQUENCE_CHECKER(sequence_checker_);
 

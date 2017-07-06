@@ -41,6 +41,7 @@
 #include "ipc/ipc_message.h"
 #include "net/base/load_states.h"
 #include "net/base/request_priority.h"
+#include "net/nqe/network_quality_estimator.h"
 #include "third_party/WebKit/public/platform/WebMixedContentContextType.h"
 #include "url/gurl.h"
 
@@ -161,8 +162,10 @@ class CONTENT_EXPORT ResourceDispatcherHostImpl
   static const int kAvgBytesPerOutstandingRequest = 4400;
 
   // Called when a RenderViewHost is created.
-  void OnRenderViewHostCreated(int child_id,
-                               int route_id);
+  void OnRenderViewHostCreated(
+      int child_id,
+      int route_id,
+      const net::NetworkQualityEstimator* const network_quality_estimator);
 
   // Called when a RenderViewHost is deleted.
   void OnRenderViewHostDeleted(int child_id, int route_id);

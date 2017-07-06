@@ -79,6 +79,7 @@
 #include "content/public/common/url_utils.h"
 #include "media/base/media_switches.h"
 #include "net/base/url_util.h"
+#include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_getter.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 #include "ui/base/clipboard/clipboard.h"
@@ -232,7 +233,12 @@ RenderViewHostImpl::RenderViewHostImpl(
         BrowserThread::IO, FROM_HERE,
         base::Bind(&ResourceDispatcherHostImpl::OnRenderViewHostCreated,
                    base::Unretained(ResourceDispatcherHostImpl::Get()),
-                   GetProcess()->GetID(), GetRoutingID()));
+                   GetProcess()->GetID(), GetRoutingID(),
+                   GetProcess()
+                       ->GetStoragePartition()
+                       ->GetURLRequestContext()
+                       ->GetURLRequestContext()
+                       ->network_quality_estimator()));
   }
 
   close_timeout_.reset(new TimeoutMonitor(base::Bind(

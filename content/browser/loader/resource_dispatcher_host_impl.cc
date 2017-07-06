@@ -1767,9 +1767,11 @@ ResourceRequestInfoImpl* ResourceDispatcherHostImpl::CreateRequestInfo(
       false);          // initiated_in_secure_context
 }
 
-void ResourceDispatcherHostImpl::OnRenderViewHostCreated(int child_id,
-                                                         int route_id) {
-  scheduler_->OnClientCreated(child_id, route_id);
+void ResourceDispatcherHostImpl::OnRenderViewHostCreated(
+    int child_id,
+    int route_id,
+    const net::NetworkQualityEstimator* const network_quality_estimator) {
+  scheduler_->OnClientCreated(child_id, route_id, network_quality_estimator);
 }
 
 void ResourceDispatcherHostImpl::OnRenderViewHostDeleted(int child_id,
