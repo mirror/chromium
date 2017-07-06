@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a40912ad_18469d95",
+        "filename": "third_party/WebKit/Source/core/html/imports/HTMLImportChild.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-06T04:44:02Z",
+      "side": 1,
+      "message": "Because the class is already final, there are no differences between \u0027override\u0027 and \u0027final\u0027 for member functions. Google C++ style doesn\u0027t have a recommendation for such case.\n\nIMO we don\u0027t need to change this, however it\u0027s up to you.",
+      "revId": "60293bfc36fb202d8b9bf5f0bca3da315a867261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
