@@ -17,6 +17,7 @@
 namespace blink {
 
 class KURL;
+class WorkerOrWorkletGlobalScope;
 
 // Wrapper around a WebDocumentSubresourceFilter. This class will make it easier
 // to extend the subresource filter with optimizations only possible using blink
@@ -27,6 +28,9 @@ class CORE_EXPORT SubresourceFilter final
   static SubresourceFilter* Create(
       DocumentLoader*,
       std::unique_ptr<WebDocumentSubresourceFilter>);
+  static SubresourceFilter* CreateForWorker(
+      WorkerOrWorkletGlobalScope* worker_global_scope,
+      std::unique_ptr<WebDocumentSubresourceFilter>);
   ~SubresourceFilter();
 
   bool AllowLoad(const KURL& resource_url,
@@ -34,16 +38,20 @@ class CORE_EXPORT SubresourceFilter final
                  SecurityViolationReportingPolicy);
   bool AllowWebSocketConnection(const KURL&);
 
-  DEFINE_INLINE_TRACE() { visitor->Trace(document_loader_); }
+  DECLARE_VIRTUAL_TRACE();
 
  private:
   SubresourceFilter(DocumentLoader*,
+                    std::unique_ptr<WebDocumentSubresourceFilter>);
+  SubresourceFilter(WorkerOrWorkletGlobalScope*,
                     std::unique_ptr<WebDocumentSubresourceFilter>);
 
   void ReportLoad(const KURL& resource_url,
                   WebDocumentSubresourceFilter::LoadPolicy);
 
+  // This is null for Worker.
   Member<DocumentLoader> document_loader_;
+  Member<WorkerOrWorkletGlobalScope> worker_global_scope_;
   std::unique_ptr<WebDocumentSubresourceFilter> subresource_filter_;
 };
 
