@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "82c45111_d68af9d8",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-06T17:02:56Z",
+      "side": 1,
+      "message": "Sorry for the confusion. You are right. Moved.",
+      "parentUuid": "a634447e_2d1bf0e8",
+      "range": {
+        "startLine": 368,
+        "startChar": 69,
+        "endLine": 368,
+        "endChar": 0
+      },
+      "revId": "511cc005b26289c16752f54eb57b64c5a9a6679c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e423ec7_77f991b0",
         "filename": "components/ntp_tiles/most_visited_sites.cc",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "511cc005b26289c16752f54eb57b64c5a9a6679c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59e991d1_3a107687",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-06T17:02:56Z",
+      "side": 1,
+      "message": "Readded TODO.",
+      "parentUuid": "1e423ec7_77f991b0",
+      "range": {
+        "startLine": 417,
+        "startChar": 50,
+        "endLine": 417,
+        "endChar": 0
+      },
+      "revId": "511cc005b26289c16752f54eb57b64c5a9a6679c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
