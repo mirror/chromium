@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "293211c8_d74c1c15",
+        "filename": "build/android/pylib/local/device/local_device_instrumentation_test_run.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-07-06T18:12:47Z",
+      "side": 1,
+      "message": "Done, made test_runner error if both are used.",
+      "parentUuid": "dd738dad_35fe3836",
+      "revId": "765ab1818f6b18fe9b7cf0668f9e3b8b67480b9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5770440_523fe4bb",
         "filename": "build/android/pylib/local/device/local_device_instrumentation_test_run.py",
         "patchSetId": 4
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "c2ca8216_8d44f163",
+        "filename": "build/android/pylib/local/device/local_device_instrumentation_test_run.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-07-06T18:12:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5770440_523fe4bb",
+      "revId": "765ab1818f6b18fe9b7cf0668f9e3b8b67480b9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef38434e_4396e005",
         "filename": "build/android/test_runner.py",
         "patchSetId": 4
@@ -86,6 +122,24 @@
       "revId": "765ab1818f6b18fe9b7cf0668f9e3b8b67480b9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bb0c831_254c004e",
+        "filename": "build/android/test_runner.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-07-06T18:12:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef38434e_4396e005",
+      "revId": "765ab1818f6b18fe9b7cf0668f9e3b8b67480b9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
