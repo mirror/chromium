@@ -81,6 +81,10 @@ class StateController : public ash::mojom::TrayActionClient,
   void Initialize();
   void SetPrimaryProfile(Profile* profile);
 
+  // Shuts down the state controller, reseting all dependencies on profiles.
+  // Should be called on global instance before profile destruction starts.
+  void Shutdown();
+
   void AddObserver(StateObserver* observer);
   void RemoveObserver(StateObserver* observer);
 
