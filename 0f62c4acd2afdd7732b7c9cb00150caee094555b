@@ -45,6 +45,30 @@
       "revId": "0f62c4acd2afdd7732b7c9cb00150caee094555b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9780e9c_725a807d",
+        "filename": "base/task_scheduler/scheduler_single_thread_task_runner_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-06T00:20:35Z",
+      "side": 1,
+      "message": "I prefer temporary stack state to member state for this.",
+      "parentUuid": "60f7ebf7_2a71b8dc",
+      "range": {
+        "startLine": 581,
+        "startChar": 2,
+        "endLine": 592,
+        "endChar": 5
+      },
+      "revId": "0f62c4acd2afdd7732b7c9cb00150caee094555b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
