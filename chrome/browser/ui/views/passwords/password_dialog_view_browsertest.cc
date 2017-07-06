@@ -446,19 +446,39 @@ void PasswordDialogViewTest::ShowDialog(const std::string& name) {
   std::vector<std::unique_ptr<autofill::PasswordForm>> local_credentials;
   autofill::PasswordForm form;
   form.origin = origin;
-  form.display_name = base::ASCIIToUTF16("Peter");
+  form.display_name = base::ASCIIToUTF16("Peter Pan");
   form.username_value = base::ASCIIToUTF16("peter@pan.test");
   if (name == "PopupAutoSigninPrompt") {
     form.icon_url = GURL("broken url");
     local_credentials.push_back(base::MakeUnique<autofill::PasswordForm>(form));
     form.icon_url = GURL("https://google.com/icon.png");
-    form.display_name = base::ASCIIToUTF16("Peter Pan");
+    form.display_name = base::ASCIIToUTF16("Peter");
     form.federation_origin = url::Origin(GURL("https://google.com/federation"));
     local_credentials.push_back(base::MakeUnique<autofill::PasswordForm>(form));
     SetupChooseCredentials(std::move(local_credentials), origin);
     ASSERT_TRUE(controller()->current_account_chooser());
-  } else if (name == "PopupAccountChooserWithSingleCredentialClickSignIn") {
+  } else if (name.find_first_of("PopupAccountChooserWith") == 0) {
     local_credentials.push_back(base::MakeUnique<autofill::PasswordForm>(form));
+    if (name == "PopupAccountChooserWithMultipleCredentialClickSignIn") {
+      form.icon_url = GURL("https://google.com/icon.png");
+      form.display_name = base::ASCIIToUTF16("Tinkerbell");
+      form.username_value = base::ASCIIToUTF16("tinkerbell@pan.test");
+      form.federation_origin =
+          url::Origin(GURL("https://google.com/neverland"));
+      local_credentials.push_back(
+          base::MakeUnique<autofill::PasswordForm>(form));
+      form.display_name = base::ASCIIToUTF16("James Hook");
+      form.username_value = base::ASCIIToUTF16("james@pan.test");
+      form.federation_origin =
+          url::Origin(GURL("https://google.com/jollyroger"));
+      local_credentials.push_back(
+          base::MakeUnique<autofill::PasswordForm>(form));
+      form.display_name = base::ASCIIToUTF16("Wendy Darling");
+      form.username_value = base::ASCIIToUTF16("wendy@pan.test");
+      form.federation_origin = url::Origin(GURL("https://google.com/london"));
+      local_credentials.push_back(
+          base::MakeUnique<autofill::PasswordForm>(form));
+    }
     SetupChooseCredentials(std::move(local_credentials), origin);
   } else {
     ADD_FAILURE() << "Unknown dialog type";
@@ -474,6 +494,12 @@ IN_PROC_BROWSER_TEST_F(PasswordDialogViewTest,
 IN_PROC_BROWSER_TEST_F(
     PasswordDialogViewTest,
     InvokeDialog_PopupAccountChooserWithSingleCredentialClickSignIn) {
+  RunDialog();
+}
+
+IN_PROC_BROWSER_TEST_F(
+    PasswordDialogViewTest,
+    InvokeDialog_PopupAccountChooserWithMultipleCredentialClickSignIn) {
   RunDialog();
 }
 
