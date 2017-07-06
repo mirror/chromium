@@ -193,9 +193,9 @@ SchedulerWorkerPoolImpl::SchedulerWorkerPoolImpl(
     DelayedTaskManager* delayed_task_manager)
     : name_(name),
       priority_hint_(priority_hint),
-      idle_workers_stack_lock_(shared_priority_queue_.container_lock()),
+      workers_lock_(shared_priority_queue_.container_lock()),
       idle_workers_stack_cv_for_testing_(
-          idle_workers_stack_lock_.CreateConditionVariable()),
+          workers_lock_.CreateConditionVariable()),
       join_for_testing_returned_(WaitableEvent::ResetPolicy::MANUAL,
                                  WaitableEvent::InitialState::NOT_SIGNALED),
       // Mimics the UMA_HISTOGRAM_LONG_TIMES macro.
@@ -234,7 +234,7 @@ void SchedulerWorkerPoolImpl::Start(const SchedulerWorkerPoolParams& params) {
   suggested_reclaim_time_ = params.suggested_reclaim_time();
 
   {
-    AutoSchedulerLock auto_lock(idle_workers_stack_lock_);
+    AutoSchedulerLock workers_auto_lock(workers_lock_);
 
 #if DCHECK_IS_ON()
     DCHECK(!workers_created_.IsSet());
@@ -258,8 +258,7 @@ void SchedulerWorkerPoolImpl::Start(const SchedulerWorkerPoolParams& params) {
     for (int index = params.max_threads() - 1; index >= 0; --index) {
       workers_[index] = make_scoped_refptr(new SchedulerWorker(
           priority_hint_, MakeUnique<SchedulerWorkerDelegateImpl>(this, index),
-          task_tracker_, &idle_workers_stack_lock_,
-          params.backward_compatibility(),
+          task_tracker_, &workers_lock_, params.backward_compatibility(),
           index < num_alive_workers ? SchedulerWorker::InitialState::ALIVE
                                     : SchedulerWorker::InitialState::DETACHED));
 
@@ -275,7 +274,7 @@ void SchedulerWorkerPoolImpl::Start(const SchedulerWorkerPoolParams& params) {
 
     // Start all workers. CHECK that the first worker can be started (assume
     // that failure means that threads can't be created on this machine). Note
-    // that the workers must be started before the idle_workers_stack_lock_ is
+    // that the workers must be started before the |workers_lock_| is
     // released, otherwise WakeUpOneWorker() could WakeUp() a worker before it's
     // started (after the lock's released, but before it's started).
     for (size_t index = 0; index < workers_.size(); ++index) {
@@ -294,7 +293,10 @@ void SchedulerWorkerPoolImpl::Start(const SchedulerWorkerPoolParams& params) {
 SchedulerWorkerPoolImpl::~SchedulerWorkerPoolImpl() {
   // SchedulerWorkerPool should never be deleted in production unless its
   // initialization failed.
+#if DCHECK_IS_ON()
+  AutoSchedulerLock lock(workers_lock_);
   DCHECK(join_for_testing_returned_.IsSignaled() || workers_.empty());
+#endif
 }
 
 scoped_refptr<TaskRunner> SchedulerWorkerPoolImpl::CreateTaskRunnerWithTraits(
@@ -370,6 +372,7 @@ void SchedulerWorkerPoolImpl::GetHistograms(
 }
 
 int SchedulerWorkerPoolImpl::GetMaxConcurrentTasksDeprecated() const {
+  AutoSchedulerLock lock(workers_lock_);
 #if DCHECK_IS_ON()
   DCHECK(workers_created_.IsSet());
 #endif
@@ -380,7 +383,7 @@ void SchedulerWorkerPoolImpl::WaitForAllWorkersIdleForTesting() {
 #if DCHECK_IS_ON()
   DCHECK(workers_created_.IsSet());
 #endif
-  AutoSchedulerLock auto_lock(idle_workers_stack_lock_);
+  AutoSchedulerLock auto_lock(workers_lock_);
   while (idle_workers_stack_.Size() < workers_.size())
     idle_workers_stack_cv_for_testing_->Wait();
 }
@@ -391,8 +394,29 @@ void SchedulerWorkerPoolImpl::JoinForTesting() {
 #endif
   DCHECK(!CanWorkerDetachForTesting() || suggested_reclaim_time_.is_max())
       << "Workers can detach during join.";
-  for (const auto& worker : workers_)
+
+  decltype(workers_) workers_copy;
+  {
+    // The |workers_lock_| needs to be unlocked before JoinForTesting is called
+    // on individual workers because a worker may need to acquire the
+    // |workers_lock_| to actually exit.
+    AutoSchedulerLock auto_lock(workers_lock_);
+
+    // Copy the |workers_| vector. This is neccessary versus just moving
+    // |workers_| because a worker may need to read the |workers_| vector before
+    // it can exit.
+    // The |workers_| vector is currently expected not to change after
+    // JoinForTesting is called, so the copy is not expected to become stale.
+    workers_copy = workers_;
+  }
+
+  for (const auto& worker : workers_copy)
     worker->JoinForTesting();
+
+  // TODO(jeffreyhe): After detachment is removed, remove this DCHECK and
+  // create a flag to prevent changes to |workers_|. (re-purpose the existing
+  // flag for detachment)
+  DCHECK(workers_copy == workers_);
 
   DCHECK(!join_for_testing_returned_.IsSignaled());
   join_for_testing_returned_.Signal();
@@ -403,6 +427,7 @@ void SchedulerWorkerPoolImpl::DisallowWorkerDetachmentForTesting() {
 }
 
 size_t SchedulerWorkerPoolImpl::NumberOfAliveWorkersForTesting() {
+  AutoSchedulerLock lock(workers_lock_);
   size_t num_alive_workers = 0;
   for (const auto& worker : workers_) {
     if (worker->ThreadAliveForTesting())
@@ -423,10 +448,14 @@ SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::
 
 void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::OnMainEntry(
     SchedulerWorker* worker) {
+  {
 #if DCHECK_IS_ON()
-  DCHECK(outer_->workers_created_.IsSet());
-  DCHECK(ContainsWorker(outer_->workers_, worker));
+    AutoSchedulerLock lock(outer_->workers_lock_);
+    DCHECK(outer_->workers_created_.IsSet());
 #endif
+    DCHECK(ContainsWorker(outer_->workers_, worker));
+  }
+
   DCHECK_EQ(num_tasks_since_last_wait_, 0U);
 
   if (!last_detach_time_.is_null()) {
@@ -447,8 +476,12 @@ void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::OnMainEntry(
 scoped_refptr<Sequence>
 SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::GetWork(
     SchedulerWorker* worker) {
-  DCHECK(ContainsWorker(outer_->workers_, worker));
-
+#if DCHECK_IS_ON()
+  {
+    AutoSchedulerLock lock(outer_->workers_lock_);
+    DCHECK(ContainsWorker(outer_->workers_, worker));
+  }
+#endif
   // Record the TaskScheduler.NumTasksBetweenWaits histogram if the
   // SchedulerWorker waited on its WaitableEvent since the last GetWork().
   //
@@ -545,7 +578,7 @@ void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::OnDetach() {
 void SchedulerWorkerPoolImpl::WakeUpOneWorker() {
   SchedulerWorker* worker = nullptr;
   {
-    AutoSchedulerLock auto_lock(idle_workers_stack_lock_);
+    AutoSchedulerLock workers_auto_lock(workers_lock_);
 
 #if DCHECK_IS_ON()
     DCHECK_EQ(workers_.empty(), !workers_created_.IsSet());
@@ -565,7 +598,8 @@ void SchedulerWorkerPoolImpl::WakeUpOneWorker() {
 
 void SchedulerWorkerPoolImpl::AddToIdleWorkersStack(
     SchedulerWorker* worker) {
-  AutoSchedulerLock auto_lock(idle_workers_stack_lock_);
+  AutoSchedulerLock auto_lock(workers_lock_);
+
   // Detachment may cause multiple attempts to add because the delegate cannot
   // determine who woke it up. As a result, when it wakes up, it may conclude
   // there's no work to be done and attempt to add itself to the idle stack
@@ -580,13 +614,13 @@ void SchedulerWorkerPoolImpl::AddToIdleWorkersStack(
 }
 
 const SchedulerWorker* SchedulerWorkerPoolImpl::PeekAtIdleWorkersStack() const {
-  AutoSchedulerLock auto_lock(idle_workers_stack_lock_);
+  AutoSchedulerLock auto_lock(workers_lock_);
   return idle_workers_stack_.Peek();
 }
 
 void SchedulerWorkerPoolImpl::RemoveFromIdleWorkersStack(
     SchedulerWorker* worker) {
-  AutoSchedulerLock auto_lock(idle_workers_stack_lock_);
+  AutoSchedulerLock auto_lock(workers_lock_);
   idle_workers_stack_.Remove(worker);
 }
 
