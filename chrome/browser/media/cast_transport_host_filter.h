@@ -27,6 +27,9 @@ class CastTransportHostFilter : public content::BrowserMessageFilter {
  public:
   CastTransportHostFilter();
 
+  // Used by unit test only.
+  void ElideServiceManagerConnectionForTesting();
+
  private:
   ~CastTransportHostFilter() override;
 
@@ -102,6 +105,9 @@ class CastTransportHostFilter : public content::BrowserMessageFilter {
   // content. If any wake lock is held upon destruction, it's implicitly
   // canceled when this object is destroyed.
   device::mojom::WakeLockPtr wake_lock_;
+
+  // Set true in unittest where there is no ServiceManagerConnection available.
+  bool elide_service_manager_connection_{false};
 
   // This map records all active remoting senders. It uses the unique RTP
   // stream ID as the key.

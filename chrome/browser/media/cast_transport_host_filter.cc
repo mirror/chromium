@@ -399,29 +399,36 @@ void CastTransportHostFilter::OnCastRemotingSenderEvents(
 
 device::mojom::WakeLock* CastTransportHostFilter::GetWakeLock() {
   // Here is a lazy binding, and will not reconnect after connection error.
-  if (!wake_lock_) {
-    device::mojom::WakeLockRequest request = mojo::MakeRequest(&wake_lock_);
+  if (wake_lock_)
+    return wake_lock_.get();
 
-    // Service manager connection might be not initialized in some testing
-    // contexts.
-    if (content::ServiceManagerConnection::GetForProcess()) {
-      service_manager::mojom::ConnectorRequest connector_request;
-      auto connector = service_manager::Connector::Create(&connector_request);
+  device::mojom::WakeLockRequest request = mojo::MakeRequest(&wake_lock_);
 
-      content::BrowserThread::PostTask(
-          content::BrowserThread::UI, FROM_HERE,
-          base::BindOnce(&BindConnectorRequest, std::move(connector_request)));
+  // There is no ServiceManagerConnection in unittest. The |wake_lock_| is safe
+  // to use but has no effect.
+  if (elide_service_manager_connection_)
+    return wake_lock_.get();
 
-      device::mojom::WakeLockProviderPtr wake_lock_provider;
-      connector->BindInterface(device::mojom::kServiceName,
-                               mojo::MakeRequest(&wake_lock_provider));
-      wake_lock_provider->GetWakeLockWithoutContext(
-          device::mojom::WakeLockType::PreventAppSuspension,
-          device::mojom::WakeLockReason::ReasonOther,
-          "Cast is streaming content to a remote receiver", std::move(request));
-    }
-  }
+  DCHECK(content::ServiceManagerConnection::GetForProcess());
+
+  service_manager::mojom::ConnectorRequest connector_request;
+  auto connector = service_manager::Connector::Create(&connector_request);
+  content::BrowserThread::PostTask(
+      content::BrowserThread::UI, FROM_HERE,
+      base::BindOnce(&BindConnectorRequest, std::move(connector_request)));
+
+  device::mojom::WakeLockProviderPtr wake_lock_provider;
+  connector->BindInterface(device::mojom::kServiceName,
+                           mojo::MakeRequest(&wake_lock_provider));
+  wake_lock_provider->GetWakeLockWithoutContext(
+      device::mojom::WakeLockType::PreventAppSuspension,
+      device::mojom::WakeLockReason::ReasonOther,
+      "Cast is streaming content to a remote receiver", std::move(request));
   return wake_lock_.get();
+}
+
+void CastTransportHostFilter::ElideServiceManagerConnectionForTesting() {
+  elide_service_manager_connection_ = true;
 }
 
 }  // namespace cast
