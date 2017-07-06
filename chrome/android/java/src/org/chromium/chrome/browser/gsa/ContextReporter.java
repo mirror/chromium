@@ -51,8 +51,9 @@ public class ContextReporter {
     public static final int STATUS_RESULT_IS_NULL = 17;
     public static final int STATUS_RESULT_FAILED = 18;
     public static final int STATUS_SUCCESS_WITH_SELECTION = 19;
+    public static final int STATUS_DUP_ENTRY = 20;
     // This should always stay last and have the highest number.
-    private static final int STATUS_BOUNDARY = 20;
+    private static final int STATUS_BOUNDARY = 21;
 
     private final ChromeActivity mActivity;
     private final GSAContextReportDelegate mDelegate;
@@ -60,6 +61,8 @@ public class ContextReporter {
     private TabModelSelectorTabModelObserver mModelObserver;
     private ContextualSearchObserver mContextualSearchObserver;
     private boolean mLastContextWasTitleChange;
+    private String mLastURL;
+    private String mLastTitle;
     private final AtomicBoolean mContextInUse;
 
     /**
@@ -191,9 +194,17 @@ public class ContextReporter {
             Log.d(TAG, "Not reporting, repeated title update");
             return;
         }
+        if (currentTab.getUrl().equals(mLastURL) && currentTab.getTitle().equals(mLastTitle)
+                && displaySelection == null) {
+            reportStatus(STATUS_DUP_ENTRY);
+            Log.d(TAG, "Not reporting, repeated url and title");
+            return;
+        }
 
         reportUsageEndedIfNecessary();
 
+        mLastURL = currentTab.getUrl();
+        mLastTitle = currentTab.getTitle();
         mDelegate.reportContext(currentTab.getUrl(), currentTab.getTitle(), displaySelection);
         mLastContextWasTitleChange = isTitleChange;
         mContextInUse.set(true);
