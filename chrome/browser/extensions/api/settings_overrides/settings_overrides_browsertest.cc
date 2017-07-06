@@ -228,7 +228,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionBrowserTest, BeforeTemplateUrlServiceLoad) {
 
 #else
 IN_PROC_BROWSER_TEST_F(ExtensionBrowserTest, SettingsOverridesDisallowed) {
-  const extensions::Extension* extension =
+  scoped_refptr<const extensions::Extension> extension =
       LoadExtensionWithFlags(test_data_dir_.AppendASCII("settings_override"),
                              kFlagIgnoreManifestWarnings);
   ASSERT_TRUE(extension);

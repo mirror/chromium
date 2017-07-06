@@ -177,8 +177,8 @@ class MimeHandlerViewTest : public ExtensionApiTest,
     return manager;
   }
 
-  const extensions::Extension* LoadTestExtension() {
-    const extensions::Extension* extension =
+  scoped_refptr<const extensions::Extension> LoadTestExtension() {
+    scoped_refptr<const extensions::Extension> extension =
         LoadExtension(test_data_dir_.AppendASCII("mime_handler_view"));
     if (!extension)
       return nullptr;
@@ -193,7 +193,7 @@ class MimeHandlerViewTest : public ExtensionApiTest,
     GetGuestViewManager()->RegisterTestGuestViewType<MimeHandlerViewGuest>(
         base::Bind(&TestMimeHandlerViewGuest::Create));
 
-    const extensions::Extension* extension = LoadTestExtension();
+    scoped_refptr<const extensions::Extension> extension = LoadTestExtension();
     ASSERT_TRUE(extension);
 
     extensions::ResultCatcher catcher;

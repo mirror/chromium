@@ -166,7 +166,7 @@ class BrowserActionApiTest : public ExtensionApiTest {
 IN_PROC_BROWSER_TEST_F(BrowserActionApiTest, Basic) {
   ASSERT_TRUE(embedded_test_server()->Start());
   ASSERT_TRUE(RunExtensionTest("browser_action/basics")) << message_;
-  const Extension* extension = GetSingleLoadedExtension();
+  scoped_refptr<const Extension> extension = GetSingleLoadedExtension();
   ASSERT_TRUE(extension) << message_;
 
   // Test that there is a browser action in the toolbar.
@@ -189,14 +189,14 @@ IN_PROC_BROWSER_TEST_F(BrowserActionApiTest, Basic) {
   ui_test_utils::NavigateToURL(
       browser(), embedded_test_server()->GetURL("/extensions/test_file.txt"));
 
-  ExecuteExtensionAction(browser(), extension);
+  ExecuteExtensionAction(browser(), extension.get());
 
   ASSERT_TRUE(catcher.GetNextResult()) << catcher.message();
 }
 
 IN_PROC_BROWSER_TEST_F(BrowserActionApiTest, DynamicBrowserAction) {
   ASSERT_TRUE(RunExtensionTest("browser_action/no_icon")) << message_;
-  const Extension* extension = GetSingleLoadedExtension();
+  scoped_refptr<const Extension> extension = GetSingleLoadedExtension();
   ASSERT_TRUE(extension) << message_;
 
 #if defined (OS_MACOSX)
@@ -210,11 +210,8 @@ IN_PROC_BROWSER_TEST_F(BrowserActionApiTest, DynamicBrowserAction) {
 
   // We should not be creating icons asynchronously, so we don't need an
   // observer.
-  ExtensionActionIconFactory icon_factory(
-      profile(),
-      extension,
-      GetBrowserAction(*extension),
-      NULL);
+  ExtensionActionIconFactory icon_factory(profile(), extension.get(),
+                                          GetBrowserAction(*extension), NULL);
   // Test that there is a browser action in the toolbar.
   ASSERT_EQ(1, GetBrowserActionsBar()->NumberOfBrowserActions());
   EXPECT_TRUE(GetBrowserActionsBar()->HasIcon(0));
@@ -382,7 +379,7 @@ IN_PROC_BROWSER_TEST_F(BrowserActionApiTest, DynamicBrowserAction) {
 IN_PROC_BROWSER_TEST_F(BrowserActionApiTest, TabSpecificBrowserActionState) {
   ASSERT_TRUE(RunExtensionTest("browser_action/tab_specific_state")) <<
       message_;
-  const Extension* extension = GetSingleLoadedExtension();
+  scoped_refptr<const Extension> extension = GetSingleLoadedExtension();
   ASSERT_TRUE(extension) << message_;
 
   // Test that there is a browser action in the toolbar and that it has an icon.
@@ -414,7 +411,7 @@ IN_PROC_BROWSER_TEST_F(BrowserActionApiTest, DISABLED_BrowserActionPopup) {
   ASSERT_TRUE(
       LoadExtension(test_data_dir_.AppendASCII("browser_action/popup")));
   BrowserActionTestUtil* actions_bar = GetBrowserActionsBar();
-  const Extension* extension = GetSingleLoadedExtension();
+  scoped_refptr<const Extension> extension = GetSingleLoadedExtension();
   ASSERT_TRUE(extension) << message_;
 
   // The extension's popup's size grows by |growFactor| each click.
@@ -447,7 +444,7 @@ IN_PROC_BROWSER_TEST_F(BrowserActionApiTest, DISABLED_BrowserActionPopup) {
 // a popup.
 IN_PROC_BROWSER_TEST_F(BrowserActionApiTest, BrowserActionAddPopup) {
   ASSERT_TRUE(RunExtensionTest("browser_action/add_popup")) << message_;
-  const Extension* extension = GetSingleLoadedExtension();
+  scoped_refptr<const Extension> extension = GetSingleLoadedExtension();
   ASSERT_TRUE(extension) << message_;
 
   int tab_id = ExtensionTabUtil::GetTabId(
@@ -503,7 +500,7 @@ IN_PROC_BROWSER_TEST_F(BrowserActionApiTest, BrowserActionAddPopup) {
 IN_PROC_BROWSER_TEST_F(BrowserActionApiTest, BrowserActionRemovePopup) {
   // Load the extension, which has a browser action with a default popup.
   ASSERT_TRUE(RunExtensionTest("browser_action/remove_popup")) << message_;
-  const Extension* extension = GetSingleLoadedExtension();
+  scoped_refptr<const Extension> extension = GetSingleLoadedExtension();
   ASSERT_TRUE(extension) << message_;
 
   int tab_id = ExtensionTabUtil::GetTabId(
@@ -538,7 +535,7 @@ IN_PROC_BROWSER_TEST_F(BrowserActionApiTest, IncognitoBasic) {
   ASSERT_TRUE(embedded_test_server()->Start());
 
   ASSERT_TRUE(RunExtensionTest("browser_action/basics")) << message_;
-  const Extension* extension = GetSingleLoadedExtension();
+  scoped_refptr<const Extension> extension = GetSingleLoadedExtension();
   ASSERT_TRUE(extension) << message_;
 
   // Test that there is a browser action in the toolbar.
@@ -575,7 +572,7 @@ IN_PROC_BROWSER_TEST_F(BrowserActionApiTest, IncognitoBasic) {
 // extensions.
 IN_PROC_BROWSER_TEST_F(BrowserActionApiTest, IncognitoSplit) {
   ResultCatcher catcher;
-  const Extension* extension = LoadExtensionWithFlags(
+  scoped_refptr<const Extension> extension = LoadExtensionWithFlags(
       test_data_dir_.AppendASCII("browser_action/split_mode"),
       kFlagEnableIncognito);
   ASSERT_TRUE(extension) << message_;
@@ -591,12 +588,12 @@ IN_PROC_BROWSER_TEST_F(BrowserActionApiTest, IncognitoSplit) {
             BrowserActionTestUtil(incognito_browser).NumberOfBrowserActions());
 
   // A click in the regular profile should open a tab in the regular profile.
-  ExecuteExtensionAction(browser(), extension);
+  ExecuteExtensionAction(browser(), extension.get());
   ASSERT_TRUE(catcher.GetNextResult()) << catcher.message();
 
   // A click in the incognito profile should open a tab in the
   // incognito profile.
-  ExecuteExtensionAction(incognito_browser, extension);
+  ExecuteExtensionAction(incognito_browser, extension.get());
   ASSERT_TRUE(catcher.GetNextResult()) << catcher.message();
 }
 
@@ -605,7 +602,7 @@ IN_PROC_BROWSER_TEST_F(BrowserActionApiTest, IncognitoSplit) {
 IN_PROC_BROWSER_TEST_F(BrowserActionApiTest, DISABLED_CloseBackgroundPage) {
   ASSERT_TRUE(LoadExtension(
       test_data_dir_.AppendASCII("browser_action/close_background")));
-  const Extension* extension = GetSingleLoadedExtension();
+  scoped_refptr<const Extension> extension = GetSingleLoadedExtension();
 
   // There is a background page and a browser action with no badge text.
   extensions::ProcessManager* manager =
@@ -619,7 +616,7 @@ IN_PROC_BROWSER_TEST_F(BrowserActionApiTest, DISABLED_CloseBackgroundPage) {
       content::NotificationService::AllSources());
 
   // Click the browser action.
-  ExecuteExtensionAction(browser(), extension);
+  ExecuteExtensionAction(browser(), extension.get());
 
   // It can take a moment for the background page to actually get destroyed
   // so we wait for the notification before checking that it's really gone
@@ -632,7 +629,7 @@ IN_PROC_BROWSER_TEST_F(BrowserActionApiTest, DISABLED_CloseBackgroundPage) {
 IN_PROC_BROWSER_TEST_F(BrowserActionApiTest, BadgeBackgroundColor) {
   ASSERT_TRUE(embedded_test_server()->Start());
   ASSERT_TRUE(RunExtensionTest("browser_action/color")) << message_;
-  const Extension* extension = GetSingleLoadedExtension();
+  scoped_refptr<const Extension> extension = GetSingleLoadedExtension();
   ASSERT_TRUE(extension) << message_;
 
   // Test that there is a browser action in the toolbar.
@@ -680,7 +677,7 @@ IN_PROC_BROWSER_TEST_F(BrowserActionApiTest, BadgeBackgroundColor) {
 
 IN_PROC_BROWSER_TEST_F(BrowserActionApiTest, Getters) {
   ASSERT_TRUE(RunExtensionTest("browser_action/getters")) << message_;
-  const Extension* extension = GetSingleLoadedExtension();
+  scoped_refptr<const Extension> extension = GetSingleLoadedExtension();
   ASSERT_TRUE(extension) << message_;
 
   // Test that there is a browser action in the toolbar.
@@ -703,7 +700,7 @@ IN_PROC_BROWSER_TEST_F(BrowserActionApiTest, TestTriggerBrowserAction) {
   ASSERT_TRUE(embedded_test_server()->Start());
 
   ASSERT_TRUE(RunExtensionTest("trigger_actions/browser_action")) << message_;
-  const Extension* extension = GetSingleLoadedExtension();
+  scoped_refptr<const Extension> extension = GetSingleLoadedExtension();
   ASSERT_TRUE(extension) << message_;
 
   // Test that there is a browser action in the toolbar.
@@ -744,7 +741,7 @@ IN_PROC_BROWSER_TEST_F(BrowserActionApiTest, BrowserActionPopupWithIframe) {
   ASSERT_TRUE(LoadExtension(
       test_data_dir_.AppendASCII("browser_action/popup_with_iframe")));
   BrowserActionTestUtil* actions_bar = GetBrowserActionsBar();
-  const Extension* extension = GetSingleLoadedExtension();
+  scoped_refptr<const Extension> extension = GetSingleLoadedExtension();
   ASSERT_TRUE(extension) << message_;
 
   // Simulate a click on the browser action to open the popup.
@@ -945,8 +942,8 @@ class NavigatingExtensionPopupBrowserTest : public BrowserActionApiTest {
     }
   }
 
-  const Extension* popup_extension_;
-  const Extension* other_extension_;
+  scoped_refptr<const Extension> popup_extension_;
+  scoped_refptr<const Extension> other_extension_;
 };
 
 // Tests that an extension pop-up cannot be navigated to a web page.

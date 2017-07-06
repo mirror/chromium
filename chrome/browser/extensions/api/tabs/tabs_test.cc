@@ -2153,7 +2153,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionApiTest, TemporaryAddressSpoof) {
 // and BrowsingInstance as the opener - this is a regression test for
 // https://crbug.com/597750.
 IN_PROC_BROWSER_TEST_F(ExtensionApiTest, WindowsCreateVsSiteInstance) {
-  const extensions::Extension* extension =
+  scoped_refptr<const extensions::Extension> extension =
       LoadExtension(test_data_dir_.AppendASCII("../simple_with_file"));
   ASSERT_TRUE(extension);
 

@@ -183,7 +183,7 @@ class ExtensionApiTest : public ExtensionBrowserTest {
 
   // Test that exactly one extension loaded.  If so, return a pointer to
   // the extension.  If not, return NULL and set message_.
-  const extensions::Extension* GetSingleLoadedExtension();
+  scoped_refptr<const extensions::Extension> GetSingleLoadedExtension();
 
   // All extensions tested by ExtensionApiTest are in the "api_test" dir.
   void SetUpCommandLine(base::CommandLine* command_line) override;

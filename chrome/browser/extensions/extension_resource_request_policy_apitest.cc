@@ -234,7 +234,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionResourceRequestPolicyTest,
 IN_PROC_BROWSER_TEST_F(ExtensionResourceRequestPolicyTest,
                        LinkToWebAccessibleResources) {
   std::string result;
-  const extensions::Extension* extension = LoadExtension(
+  scoped_refptr<const extensions::Extension> extension = LoadExtension(
       test_data_dir_.AppendASCII("extension_resource_request_policy")
           .AppendASCII("web_accessible"));
   ASSERT_TRUE(extension);
@@ -362,12 +362,12 @@ IN_PROC_BROWSER_TEST_F(ExtensionResourceRequestPolicyTest,
       browser()->tab_strip_model()->GetActiveWebContents();
 
   // Any valid extension that happens to have a web accessible resource.
-  const extensions::Extension* patsy = LoadExtension(
+  scoped_refptr<const extensions::Extension> patsy = LoadExtension(
       test_data_dir_.AppendASCII("extension_resource_request_policy")
           .AppendASCII("some_accessible"));
 
   // An extension with a non-webaccessible resource.
-  const extensions::Extension* target = LoadExtension(
+  scoped_refptr<const extensions::Extension> target = LoadExtension(
       test_data_dir_.AppendASCII("extension_resource_request_policy")
           .AppendASCII("inaccessible"));
 

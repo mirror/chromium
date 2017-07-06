@@ -139,7 +139,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionWebUITest, CanEmbedExtensionOptions) {
   std::unique_ptr<ExtensionTestMessageListener> listener(
       new ExtensionTestMessageListener("ready", true));
 
-  const Extension* extension =
+  scoped_refptr<const Extension> extension =
       LoadExtension(test_data_dir_.AppendASCII("extension_options")
                         .AppendASCII("embed_self"));
   ASSERT_TRUE(extension);
@@ -156,9 +156,9 @@ IN_PROC_BROWSER_TEST_F(ExtensionWebUITest, ReceivesExtensionOptionsOnClose) {
   std::unique_ptr<ExtensionTestMessageListener> listener(
       new ExtensionTestMessageListener("ready", true));
 
-  const Extension* extension =
-      InstallExtension(test_data_dir_.AppendASCII("extension_options")
-          .AppendASCII("close_self"), 1);
+  scoped_refptr<const Extension> extension = InstallExtension(
+      test_data_dir_.AppendASCII("extension_options").AppendASCII("close_self"),
+      1);
   ASSERT_TRUE(extension);
 
   ASSERT_TRUE(
@@ -180,7 +180,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionWebUITest, EmbedDisabledExtension) {
 
   std::string extension_id;
   {
-    const Extension* extension =
+    scoped_refptr<const Extension> extension =
         LoadExtension(test_data_dir_.AppendASCII("extension_options")
                           .AppendASCII("embed_self"));
     ASSERT_TRUE(extension);

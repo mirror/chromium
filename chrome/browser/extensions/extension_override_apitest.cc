@@ -89,7 +89,8 @@ class ExtensionOverrideTest : public ExtensionApiTest {
 
 // Basic test for overriding the NTP.
 IN_PROC_BROWSER_TEST_F(ExtensionOverrideTest, OverrideNewTab) {
-  const Extension* extension = LoadExtension(data_dir().AppendASCII("newtab"));
+  scoped_refptr<const Extension> extension =
+      LoadExtension(data_dir().AppendASCII("newtab"));
   {
     // Navigate to the new tab page.  The overridden new tab page
     // will call chrome.test.sendMessage('controlled by first').
@@ -211,7 +212,8 @@ IN_PROC_BROWSER_TEST_F(ExtensionOverrideTest, MAYBE_OverrideNewTabIncognito) {
 IN_PROC_BROWSER_TEST_F(ExtensionOverrideTest,
                        SubframeNavigationInOverridenNTPDoesNotAffectFocus) {
   // Load an extension that overrides the new tab page.
-  const Extension* extension = LoadExtension(data_dir().AppendASCII("newtab"));
+  scoped_refptr<const Extension> extension =
+      LoadExtension(data_dir().AppendASCII("newtab"));
 
   // Navigate to the new tab page.  The overridden new tab page
   // will call chrome.test.sendMessage('controlled by first').
@@ -259,7 +261,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionOverrideTest, MAYBE_OverrideHistory) {
 
 // Regression test for http://crbug.com/41442.
 IN_PROC_BROWSER_TEST_F(ExtensionOverrideTest, ShouldNotCreateDuplicateEntries) {
-  const Extension* extension =
+  scoped_refptr<const Extension> extension =
       LoadExtension(test_data_dir_.AppendASCII("override/history"));
   ASSERT_TRUE(extension);
 
@@ -268,7 +270,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionOverrideTest, ShouldNotCreateDuplicateEntries) {
   for (size_t i = 0; i < 3; ++i) {
     ExtensionWebUI::RegisterOrActivateChromeURLOverrides(
         browser()->profile(),
-        URLOverrides::GetChromeURLOverrides(extension));
+        URLOverrides::GetChromeURLOverrides(extension.get()));
   }
 
   ASSERT_TRUE(CheckHistoryOverridesContainsNoDupes());

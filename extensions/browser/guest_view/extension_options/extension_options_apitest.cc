@@ -60,8 +60,10 @@ IN_PROC_BROWSER_TEST_P(ExtensionOptionsApiTest,
   base::FilePath dir = test_data_dir_.AppendASCII("extension_options")
                            .AppendASCII("embed_other");
 
-  const Extension* embedder = InstallExtension(dir.AppendASCII("embedder"), 1);
-  const Extension* embedded = InstallExtension(dir.AppendASCII("embedded"), 1);
+  scoped_refptr<const Extension> embedder =
+      InstallExtension(dir.AppendASCII("embedder"), 1);
+  scoped_refptr<const Extension> embedded =
+      InstallExtension(dir.AppendASCII("embedded"), 1);
 
   ASSERT_TRUE(embedder);
   ASSERT_TRUE(embedded);

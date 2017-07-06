@@ -40,7 +40,7 @@ IN_PROC_BROWSER_TEST_F(DeveloperPrivateApiTest, InspectAppWindowView) {
             .AppendASCII("minimal");
 
   // Load and launch a platform app.
-  const Extension* app = LoadAndLaunchApp(dir);
+  scoped_refptr<const Extension> app = LoadAndLaunchApp(dir);
 
   // Get the info about the app, including the inspectable views.
   scoped_refptr<UIThreadExtensionFunction> function(
@@ -87,13 +87,14 @@ IN_PROC_BROWSER_TEST_F(DeveloperPrivateApiTest, InspectEmbeddedOptionsPage) {
   base::FilePath dir;
   PathService::Get(chrome::DIR_TEST_DATA, &dir);
   // Load an extension that only has an embedded options_ui page.
-  const Extension* extension = LoadExtension(dir.AppendASCII("extensions")
-                                                 .AppendASCII("delayed_install")
-                                                 .AppendASCII("v1"));
+  scoped_refptr<const Extension> extension =
+      LoadExtension(dir.AppendASCII("extensions")
+                        .AppendASCII("delayed_install")
+                        .AppendASCII("v1"));
   ASSERT_TRUE(extension);
 
   // Open the embedded options page.
-  ASSERT_TRUE(ExtensionTabUtil::OpenOptionsPage(extension, browser()));
+  ASSERT_TRUE(ExtensionTabUtil::OpenOptionsPage(extension.get(), browser()));
   WaitForExtensionNotIdle(extension->id());
 
   // Get the info about the extension, including the inspectable views.

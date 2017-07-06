@@ -98,8 +98,9 @@ class InputMethodEngineBrowserTest
     EXPECT_EQ(3U, extension_imes.size());
   }
 
-  const extensions::Extension* LoadExtensionWithType(
-      const std::string& extension_name, TestType type) {
+  scoped_refptr<const extensions::Extension> LoadExtensionWithType(
+      const std::string& extension_name,
+      TestType type) {
     switch (type) {
       case kTestTypeNormal:
         return LoadExtension(test_data_dir_.AppendASCII(extension_name));
@@ -114,7 +115,7 @@ class InputMethodEngineBrowserTest
     return NULL;
   }
 
-  const extensions::Extension* extension_;
+  scoped_refptr<const extensions::Extension> extension_;
 };
 
 class KeyEventDoneCallback {

@@ -173,7 +173,7 @@ void ExtensionMessageBubbleBrowserTest::
 void ExtensionMessageBubbleBrowserTest::TestUninstallDangerousExtension() {
   // Load an extension that overrides the proxy setting.
   ExtensionTestMessageListener listener("registered", false);
-  const extensions::Extension* extension =
+  scoped_refptr<const extensions::Extension> extension =
       LoadExtension(test_data_dir_.AppendASCII("api_test")
                         .AppendASCII("proxy")
                         .AppendASCII("register"));
@@ -360,7 +360,7 @@ void ExtensionMessageBubbleBrowserTest::TestClickingLearnMoreButton() {
 
 void ExtensionMessageBubbleBrowserTest::TestClickingActionButton() {
   CheckBubbleIsNotPresent(browser(), false, false);
-  const extensions::Extension* extension =
+  scoped_refptr<const extensions::Extension> extension =
       LoadExtension(test_data_dir_.AppendASCII("good_unpacked"));
   extensions::ExtensionRegistry* registry =
       extensions::ExtensionRegistry::Get(profile());
@@ -380,7 +380,7 @@ void ExtensionMessageBubbleBrowserTest::TestClickingActionButton() {
 
 void ExtensionMessageBubbleBrowserTest::TestClickingDismissButton() {
   CheckBubbleIsNotPresent(browser(), false, false);
-  const extensions::Extension* extension =
+  scoped_refptr<const extensions::Extension> extension =
       LoadExtension(test_data_dir_.AppendASCII("good_unpacked"));
   extensions::ExtensionRegistry* registry =
       extensions::ExtensionRegistry::Get(profile());

@@ -76,8 +76,9 @@ class ExtensionCrashRecoveryTestBase : public ExtensionBrowserTest {
   }
 
   void CrashExtension(const std::string& extension_id) {
-    const Extension* extension = GetExtensionRegistry()->GetExtensionById(
-        extension_id, ExtensionRegistry::ENABLED);
+    scoped_refptr<const Extension> extension =
+        GetExtensionRegistry()->GetExtensionById(extension_id,
+                                                 ExtensionRegistry::ENABLED);
     ASSERT_TRUE(extension);
     extensions::ExtensionHost* extension_host = GetProcessManager()->
         GetBackgroundHostForExtension(extension_id);
@@ -94,8 +95,9 @@ class ExtensionCrashRecoveryTestBase : public ExtensionBrowserTest {
   }
 
   void CheckExtensionConsistency(const std::string& extension_id) {
-    const Extension* extension = GetExtensionRegistry()->GetExtensionById(
-        extension_id, ExtensionRegistry::ENABLED);
+    scoped_refptr<const Extension> extension =
+        GetExtensionRegistry()->GetExtensionById(extension_id,
+                                                 ExtensionRegistry::ENABLED);
     ASSERT_TRUE(extension);
     extensions::ExtensionHost* extension_host = GetProcessManager()->
         GetBackgroundHostForExtension(extension_id);
@@ -115,7 +117,7 @@ class ExtensionCrashRecoveryTestBase : public ExtensionBrowserTest {
 
   void LoadTestExtension() {
     ExtensionBrowserTest::SetUpInProcessBrowserTestFixture();
-    const Extension* extension = LoadExtension(
+    scoped_refptr<const Extension> extension = LoadExtension(
         test_data_dir_.AppendASCII("common").AppendASCII("background_page"));
     ASSERT_TRUE(extension);
     first_extension_id_ = extension->id();
@@ -123,7 +125,7 @@ class ExtensionCrashRecoveryTestBase : public ExtensionBrowserTest {
   }
 
   void LoadSecondExtension() {
-    const Extension* extension = LoadExtension(
+    scoped_refptr<const Extension> extension = LoadExtension(
         test_data_dir_.AppendASCII("install").AppendASCII("install"));
     ASSERT_TRUE(extension);
     second_extension_id_ = extension->id();

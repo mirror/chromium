@@ -574,7 +574,7 @@ void FileManagerBrowserTestBase::InstallExtension(const base::FilePath& path,
 
   // Launch the extension.
   const base::FilePath absolute_path = root_path.Append(path);
-  const extensions::Extension* const extension =
+  scoped_refptr<const extensions::Extension> const extension =
       LoadExtensionAsComponentWithManifest(absolute_path, manifest_name);
   ASSERT_TRUE(extension);
 }

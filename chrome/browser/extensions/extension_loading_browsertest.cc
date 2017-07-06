@@ -63,7 +63,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionLoadingTest,
   extension_dir.WriteFile(FILE_PATH_LITERAL("newtab.html"),
                           "<h1>Overridden New Tab Page</h1>");
 
-  const Extension* new_tab_extension =
+  scoped_refptr<const Extension> new_tab_extension =
       InstallExtension(extension_dir.Pack(), 1 /*new install*/);
   ASSERT_TRUE(new_tab_extension);
 
@@ -123,16 +123,16 @@ IN_PROC_BROWSER_TEST_F(ExtensionLoadingTest,
   extension_dir.WriteManifestWithSingleQuotes(manifest_contents);
   extension_dir.WriteFile(FILE_PATH_LITERAL("event.js"), "");
 
-  const Extension* extension =
+  scoped_refptr<const Extension> extension =
       InstallExtension(extension_dir.Pack(), 1 /*new install*/);
   ASSERT_TRUE(extension);
   std::string extension_id = extension->id();
 
   ProcessManager* process_manager = ProcessManager::Get(profile());
-  EXPECT_EQ(0, process_manager->GetLazyKeepaliveCount(extension));
+  EXPECT_EQ(0, process_manager->GetLazyKeepaliveCount(extension.get()));
 
-  devtools_util::InspectBackgroundPage(extension, profile());
-  EXPECT_EQ(1, process_manager->GetLazyKeepaliveCount(extension));
+  devtools_util::InspectBackgroundPage(extension.get(), profile());
+  EXPECT_EQ(1, process_manager->GetLazyKeepaliveCount(extension.get()));
 
   // Opening DevTools will cause the background page to load. Wait for it.
   WaitForExtensionViewsToLoad();
@@ -158,7 +158,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionLoadingTest,
       ->enabled_extensions().GetByID(extension_id);
 
   // Keepalive count should stabilize back to 1, because DevTools is still open.
-  EXPECT_EQ(1, process_manager->GetLazyKeepaliveCount(extension));
+  EXPECT_EQ(1, process_manager->GetLazyKeepaliveCount(extension.get()));
 }
 
 // Tests whether the extension runtime stays valid when an extension reloads
@@ -204,16 +204,18 @@ IN_PROC_BROWSER_TEST_F(ExtensionLoadingTest, RuntimeValidWhileDevToolsOpen) {
 
   inspect_dir.WriteManifestWithSingleQuotes(kTargetManifest);
   inspect_dir.WriteFile(FILE_PATH_LITERAL("background.js"), kTargetJs);
-  const Extension* devtools_ext = LoadExtension(devtools_dir.UnpackedPath());
+  scoped_refptr<const Extension> devtools_ext =
+      LoadExtension(devtools_dir.UnpackedPath());
   ASSERT_TRUE(devtools_ext);
 
-  const Extension* inspect_ext = LoadExtension(inspect_dir.UnpackedPath());
+  scoped_refptr<const Extension> inspect_ext =
+      LoadExtension(inspect_dir.UnpackedPath());
   ASSERT_TRUE(inspect_ext);
   const std::string inspect_ext_id = inspect_ext->id();
 
   // Open the devtools and wait until the devtools_page is ready.
   ExtensionTestMessageListener devtools_ready("devtools_page_ready", false);
-  devtools_util::InspectBackgroundPage(inspect_ext, profile());
+  devtools_util::InspectBackgroundPage(inspect_ext.get(), profile());
   ASSERT_TRUE(devtools_ready.WaitUntilSatisfied());
 
   // Reload the extension. The devtools window will stay open, but temporarily

@@ -257,7 +257,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionBrowserTest, WindowOpenExtension) {
 // Tests that if an extension page calls window.open to an invalid extension
 // URL, the browser doesn't crash.
 IN_PROC_BROWSER_TEST_F(ExtensionBrowserTest, WindowOpenInvalidExtension) {
-  const extensions::Extension* extension = LoadExtension(
+  scoped_refptr<const extensions::Extension> extension = LoadExtension(
       test_data_dir_.AppendASCII("uitest").AppendASCII("window_open"));
   ASSERT_TRUE(extension);
 
@@ -315,7 +315,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionBrowserTest, WindowOpenNoPrivileges) {
 IN_PROC_BROWSER_TEST_F(ExtensionBrowserTest,
                        WindowOpenInaccessibleResourceFromDataURL) {
   base::HistogramTester uma;
-  const extensions::Extension* extension = LoadExtension(
+  scoped_refptr<const extensions::Extension> extension = LoadExtension(
       test_data_dir_.AppendASCII("uitest").AppendASCII("window_open"));
   ASSERT_TRUE(extension);
 
@@ -354,7 +354,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionBrowserTest,
 IN_PROC_BROWSER_TEST_F(ExtensionBrowserTest,
                        NavigateToInaccessibleResourceFromChromeURL) {
   // Mint an extension URL which is not web-accessible.
-  const extensions::Extension* extension = LoadExtension(
+  scoped_refptr<const extensions::Extension> extension = LoadExtension(
       test_data_dir_.AppendASCII("uitest").AppendASCII("window_open"));
   ASSERT_TRUE(extension);
   GURL extension_url(extension->GetResourceURL("test.html"));

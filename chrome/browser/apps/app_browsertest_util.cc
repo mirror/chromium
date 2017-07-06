@@ -93,15 +93,15 @@ AppWindow* PlatformAppBrowserTest::GetFirstAppWindowForBrowser(
   return NULL;
 }
 
-const Extension* PlatformAppBrowserTest::LoadAndLaunchPlatformApp(
+scoped_refptr<const Extension> PlatformAppBrowserTest::LoadAndLaunchPlatformApp(
     const char* name,
     ExtensionTestMessageListener* listener) {
   DCHECK(listener);
-  const Extension* extension = LoadExtension(
+  scoped_refptr<const Extension> extension = LoadExtension(
       test_data_dir_.AppendASCII("platform_apps").AppendASCII(name));
   EXPECT_TRUE(extension);
 
-  LaunchPlatformApp(extension);
+  LaunchPlatformApp(extension.get());
 
   EXPECT_TRUE(listener->WaitUntilSatisfied()) << "'" << listener->message()
                                               << "' message was not receieved";
@@ -109,42 +109,42 @@ const Extension* PlatformAppBrowserTest::LoadAndLaunchPlatformApp(
   return extension;
 }
 
-const Extension* PlatformAppBrowserTest::LoadAndLaunchPlatformApp(
+scoped_refptr<const Extension> PlatformAppBrowserTest::LoadAndLaunchPlatformApp(
     const char* name,
     const std::string& message) {
   ExtensionTestMessageListener launched_listener(message, false);
-  const Extension* extension =
+  scoped_refptr<const Extension> extension =
       LoadAndLaunchPlatformApp(name, &launched_listener);
 
   return extension;
 }
 
-const Extension* PlatformAppBrowserTest::InstallPlatformApp(
+scoped_refptr<const Extension> PlatformAppBrowserTest::InstallPlatformApp(
     const char* name) {
-  const Extension* extension = InstallExtension(
+  scoped_refptr<const Extension> extension = InstallExtension(
       test_data_dir_.AppendASCII("platform_apps").AppendASCII(name), 1);
   EXPECT_TRUE(extension);
 
   return extension;
 }
 
-const Extension* PlatformAppBrowserTest::InstallHostedApp() {
-  const Extension* extension =
+scoped_refptr<const Extension> PlatformAppBrowserTest::InstallHostedApp() {
+  scoped_refptr<const Extension> extension =
       InstallExtension(test_data_dir_.AppendASCII("hosted_app"), 1);
   EXPECT_TRUE(extension);
 
   return extension;
 }
 
-const Extension* PlatformAppBrowserTest::InstallAndLaunchPlatformApp(
-    const char* name) {
+scoped_refptr<const Extension>
+PlatformAppBrowserTest::InstallAndLaunchPlatformApp(const char* name) {
   content::WindowedNotificationObserver app_loaded_observer(
       content::NOTIFICATION_LOAD_COMPLETED_MAIN_FRAME,
       content::NotificationService::AllSources());
 
-  const Extension* extension = InstallPlatformApp(name);
+  scoped_refptr<const Extension> extension = InstallPlatformApp(name);
 
-  LaunchPlatformApp(extension);
+  LaunchPlatformApp(extension.get());
 
   app_loaded_observer.Wait();
 
@@ -191,9 +191,9 @@ AppWindow* PlatformAppBrowserTest::GetFirstAppWindowForApp(
 }
 
 size_t PlatformAppBrowserTest::RunGetWindowsFunctionForExtension(
-    const Extension* extension) {
+    scoped_refptr<const Extension> extension) {
   scoped_refptr<WindowsGetAllFunction> function = new WindowsGetAllFunction();
-  function->set_extension(extension);
+  function->set_extension(std::move(extension));
   std::unique_ptr<base::ListValue> result(
       utils::ToList(utils::RunFunctionAndReturnSingleResult(function.get(),
                                                             "[]", browser())));
@@ -202,9 +202,9 @@ size_t PlatformAppBrowserTest::RunGetWindowsFunctionForExtension(
 
 bool PlatformAppBrowserTest::RunGetWindowFunctionForExtension(
     int window_id,
-    const Extension* extension) {
+    scoped_refptr<const Extension> extension) {
   scoped_refptr<WindowsGetFunction> function = new WindowsGetFunction();
-  function->set_extension(extension);
+  function->set_extension(std::move(extension));
   utils::RunFunction(
           function.get(),
           base::StringPrintf("[%u]", window_id),
@@ -272,7 +272,7 @@ AppWindow* PlatformAppBrowserTest::CreateTestAppWindow(
   ExtensionTestMessageListener loaded_listener("window_loaded", false);
 
   // Load and launch the test app.
-  const Extension* extension =
+  scoped_refptr<const Extension> extension =
       LoadAndLaunchPlatformApp(kAppWindowTestApp, &launched_listener);
   EXPECT_TRUE(extension);
   EXPECT_TRUE(launched_listener.WaitUntilSatisfied());

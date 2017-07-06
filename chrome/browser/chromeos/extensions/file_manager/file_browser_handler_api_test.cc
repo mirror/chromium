@@ -282,7 +282,7 @@ IN_PROC_BROWSER_TEST_F(FileBrowserHandlerExtensionTest, EndToEnd) {
   // Selected path should still not exist.
   ASSERT_FALSE(base::PathExists(selected_path));
 
-  const Extension* extension = LoadExtension(
+  scoped_refptr<const Extension> extension = LoadExtension(
       test_data_dir_.AppendASCII("file_browser/filehandler_create"));
   ASSERT_TRUE(extension) << message_;
 

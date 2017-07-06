@@ -195,16 +195,16 @@ class StreamsPrivateApiTest : public ExtensionApiTest {
   // The extension will notify success when it detects an event with the MIME
   // type 'application/msword' and notify fail when it detects an event with the
   // MIME type 'text/plain'.
-  const extensions::Extension* LoadTestExtension() {
+  scoped_refptr<const extensions::Extension> LoadTestExtension() {
     // The test extension id is set by the key value in the manifest.
     test_extension_id_ = "oickdpebdnfbgkcaoklfcdhjniefkcji";
 
-    const extensions::Extension* extension = LoadExtension(
+    scoped_refptr<const extensions::Extension> extension = LoadExtension(
         test_data_dir_.AppendASCII("streams_private/handle_mime_type"));
     if (!extension)
       return NULL;
 
-    MimeTypesHandler* handler = MimeTypesHandler::GetHandler(extension);
+    MimeTypesHandler* handler = MimeTypesHandler::GetHandler(extension.get());
     if (!handler) {
       message_ = "No mime type handlers defined.";
       return NULL;

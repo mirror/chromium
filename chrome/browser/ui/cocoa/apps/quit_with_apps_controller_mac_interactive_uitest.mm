@@ -48,7 +48,7 @@ class QuitWithAppsControllerInteractiveTest
                    : switches::kDisableMacViewsNativeAppWindows);
   }
 
-  const extensions::Extension* app_;
+  scoped_refptr<const extensions::Extension> app_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(QuitWithAppsControllerInteractiveTest);

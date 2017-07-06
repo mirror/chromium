@@ -232,7 +232,7 @@ IN_PROC_BROWSER_TEST_F(NaClExtensionTest, MainFrameIsRemote) {
         "web_accessible_resources": [ "subframe.html" ]
       }
       )");
-  const extensions::Extension* extension =
+  scoped_refptr<const extensions::Extension> extension =
       LoadExtension(ext_dir.UnpackedPath());
 
   // Navigate to a page with an iframe.

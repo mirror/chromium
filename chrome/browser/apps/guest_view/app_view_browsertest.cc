@@ -166,7 +166,7 @@ INSTANTIATE_TEST_CASE_P(AppViewTests, AppViewTest, testing::Bool());
 
 // Tests that <appview> is able to navigate to another installed app.
 IN_PROC_BROWSER_TEST_P(AppViewTest, TestAppViewWithUndefinedDataShouldSucceed) {
-  const extensions::Extension* skeleton_app =
+  scoped_refptr<const extensions::Extension> skeleton_app =
       InstallPlatformApp("app_view/shim/skeleton");
   TestHelper("testAppViewWithUndefinedDataShouldSucceed",
              "app_view/shim",
@@ -176,7 +176,7 @@ IN_PROC_BROWSER_TEST_P(AppViewTest, TestAppViewWithUndefinedDataShouldSucceed) {
 
 // Tests that <appview> correctly processes parameters passed on connect.
 IN_PROC_BROWSER_TEST_P(AppViewTest, TestAppViewRefusedDataShouldFail) {
-  const extensions::Extension* skeleton_app =
+  scoped_refptr<const extensions::Extension> skeleton_app =
       InstallPlatformApp("app_view/shim/skeleton");
   TestHelper("testAppViewRefusedDataShouldFail",
              "app_view/shim",
@@ -186,7 +186,7 @@ IN_PROC_BROWSER_TEST_P(AppViewTest, TestAppViewRefusedDataShouldFail) {
 
 // Tests that <appview> correctly processes parameters passed on connect.
 IN_PROC_BROWSER_TEST_P(AppViewTest, TestAppViewGoodDataShouldSucceed) {
-  const extensions::Extension* skeleton_app =
+  scoped_refptr<const extensions::Extension> skeleton_app =
       InstallPlatformApp("app_view/shim/skeleton");
   TestHelper("testAppViewGoodDataShouldSucceed",
              "app_view/shim",
@@ -196,7 +196,7 @@ IN_PROC_BROWSER_TEST_P(AppViewTest, TestAppViewGoodDataShouldSucceed) {
 
 // Tests that <appview> correctly handles multiple successive connects.
 IN_PROC_BROWSER_TEST_P(AppViewTest, TestAppViewMultipleConnects) {
-  const extensions::Extension* skeleton_app =
+  scoped_refptr<const extensions::Extension> skeleton_app =
       InstallPlatformApp("app_view/shim/skeleton");
   TestHelper("testAppViewMultipleConnects",
              "app_view/shim",
@@ -206,7 +206,7 @@ IN_PROC_BROWSER_TEST_P(AppViewTest, TestAppViewMultipleConnects) {
 
 // Tests that <appview> does not embed self (the app which owns appview).
 IN_PROC_BROWSER_TEST_P(AppViewTest, TestAppViewEmbedSelfShouldFail) {
-  const extensions::Extension* skeleton_app =
+  scoped_refptr<const extensions::Extension> skeleton_app =
       InstallPlatformApp("app_view/shim/skeleton");
   TestHelper("testAppViewEmbedSelfShouldFail",
              "app_view/shim",
@@ -215,7 +215,7 @@ IN_PROC_BROWSER_TEST_P(AppViewTest, TestAppViewEmbedSelfShouldFail) {
 }
 
 IN_PROC_BROWSER_TEST_P(AppViewTest, KillGuestWithInvalidInstanceID) {
-  const extensions::Extension* bad_app =
+  scoped_refptr<const extensions::Extension> bad_app =
       LoadAndLaunchPlatformApp("app_view/bad_app", "AppViewTest.LAUNCHED");
 
   content::RenderProcessHost* bad_app_render_process_host =
@@ -247,11 +247,11 @@ IN_PROC_BROWSER_TEST_P(AppViewTest, KillGuestWithInvalidInstanceID) {
 #endif
 IN_PROC_BROWSER_TEST_P(AppViewTest,
                        MAYBE_KillGuestCommunicatingWithWrongAppView) {
-  const extensions::Extension* host_app =
+  scoped_refptr<const extensions::Extension> host_app =
       LoadAndLaunchPlatformApp("app_view/host_app", "AppViewTest.LAUNCHED");
-  const extensions::Extension* guest_app =
+  scoped_refptr<const extensions::Extension> guest_app =
       InstallPlatformApp("app_view/guest_app");
-  const extensions::Extension* bad_app =
+  scoped_refptr<const extensions::Extension> bad_app =
       LoadAndLaunchPlatformApp("app_view/bad_app", "AppViewTest.LAUNCHED");
   // The host app attemps to embed the guest
   EXPECT_TRUE(content::ExecuteScript(
@@ -277,7 +277,7 @@ IN_PROC_BROWSER_TEST_P(AppViewTest,
                                        guest_instance_id);
   fake_embed_request_param->SetString(appview::kEmbedderID, host_app->id());
   extensions::AppRuntimeEventRouter::DispatchOnEmbedRequestedEvent(
-      browser()->profile(), std::move(fake_embed_request_param), bad_app);
+      browser()->profile(), std::move(fake_embed_request_param), bad_app.get());
   bad_app_obs.WaitUntilRenderProcessHostKilled();
   // Now ask the guest to continue embedding.
   ASSERT_TRUE(

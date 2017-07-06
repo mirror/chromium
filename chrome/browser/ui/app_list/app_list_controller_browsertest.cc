@@ -130,9 +130,8 @@ IN_PROC_BROWSER_TEST_F(AppListControllerSearchResultsBrowserTest,
   test_extension_path = test_extension_path.AppendASCII("extensions")
       .AppendASCII("platform_apps")
       .AppendASCII("minimal");
-  const extensions::Extension* extension =
-      InstallExtension(test_extension_path,
-                       1 /* expected_change: new install */);
+  scoped_refptr<const extensions::Extension> extension = InstallExtension(
+      test_extension_path, 1 /* expected_change: new install */);
   ASSERT_TRUE(extension);
 
   AppListService* service = AppListService::Get();

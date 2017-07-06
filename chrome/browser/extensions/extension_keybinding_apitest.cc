@@ -178,7 +178,7 @@ class CommandsApiTest : public ExtensionApiTest {
 IN_PROC_BROWSER_TEST_F(CommandsApiTest, Basic) {
   ASSERT_TRUE(embedded_test_server()->Start());
   ASSERT_TRUE(RunExtensionTest("keybinding/basics")) << message_;
-  const Extension* extension = GetSingleLoadedExtension();
+  scoped_refptr<const Extension> extension = GetSingleLoadedExtension();
   ASSERT_TRUE(extension) << message_;
 
   // Load this extension, which uses the same keybindings but sets the page
@@ -198,7 +198,7 @@ IN_PROC_BROWSER_TEST_F(CommandsApiTest, Basic) {
   WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
   ASSERT_TRUE(tab);
 
-  EXPECT_FALSE(IsGrantedForTab(extension, tab));
+  EXPECT_FALSE(IsGrantedForTab(extension.get(), tab));
 
   ExtensionTestMessageListener test_listener(false);  // Won't reply.
   // Activate the browser action shortcut (Ctrl+Shift+F).
@@ -206,7 +206,7 @@ IN_PROC_BROWSER_TEST_F(CommandsApiTest, Basic) {
       browser(), ui::VKEY_F, true, true, false, false));
   EXPECT_TRUE(test_listener.WaitUntilSatisfied());
   // activeTab should now be granted.
-  EXPECT_TRUE(IsGrantedForTab(extension, tab));
+  EXPECT_TRUE(IsGrantedForTab(extension.get(), tab));
   // Verify the command worked.
   EXPECT_EQ(std::string("basics browser action"), test_listener.message());
 
@@ -221,7 +221,7 @@ IN_PROC_BROWSER_TEST_F(CommandsApiTest, Basic) {
 IN_PROC_BROWSER_TEST_F(CommandsApiTest, PageAction) {
   ASSERT_TRUE(embedded_test_server()->Start());
   ASSERT_TRUE(RunExtensionTest("keybinding/page_action")) << message_;
-  const Extension* extension = GetSingleLoadedExtension();
+  scoped_refptr<const Extension> extension = GetSingleLoadedExtension();
   ASSERT_TRUE(extension) << message_;
 
   {
@@ -257,7 +257,7 @@ IN_PROC_BROWSER_TEST_F(CommandsApiTest, PageAction) {
 IN_PROC_BROWSER_TEST_F(CommandsApiTest, PageActionKeyUpdated) {
   ASSERT_TRUE(embedded_test_server()->Start());
   ASSERT_TRUE(RunExtensionTest("keybinding/page_action")) << message_;
-  const Extension* extension = GetSingleLoadedExtension();
+  scoped_refptr<const Extension> extension = GetSingleLoadedExtension();
   ASSERT_TRUE(extension) << message_;
 
   CommandService* command_service = CommandService::Get(browser()->profile());
@@ -395,7 +395,7 @@ IN_PROC_BROWSER_TEST_F(CommandsApiTest,
 
   // Check that the shortcut is removed.
   CommandService* command_service = CommandService::Get(browser()->profile());
-  const Extension* extension = GetSingleLoadedExtension();
+  scoped_refptr<const Extension> extension = GetSingleLoadedExtension();
   // Simulate the user setting a keybinding to Ctrl+D.
   command_service->UpdateKeybindingPrefs(
       extension->id(), manifest_values::kBrowserActionCommandEvent,
@@ -448,7 +448,7 @@ IN_PROC_BROWSER_TEST_F(CommandsApiTest,
   ASSERT_TRUE(RunExtensionTest("keybinding/overwrite_bookmark_shortcut"))
       << message_;
 
-  const Extension* extension = GetSingleLoadedExtension();
+  scoped_refptr<const Extension> extension = GetSingleLoadedExtension();
   CommandService* command_service = CommandService::Get(browser()->profile());
   CommandMap commands;
   // Verify the expected command is present.
@@ -515,7 +515,7 @@ IN_PROC_BROWSER_TEST_F(CommandsApiTest,
 
   CommandService* command_service = CommandService::Get(browser()->profile());
 
-  const Extension* extension = GetSingleLoadedExtension();
+  scoped_refptr<const Extension> extension = GetSingleLoadedExtension();
   // Simulate the user setting the keybinding to Ctrl+D.
   command_service->UpdateKeybindingPrefs(
       extension->id(), manifest_values::kBrowserActionCommandEvent,

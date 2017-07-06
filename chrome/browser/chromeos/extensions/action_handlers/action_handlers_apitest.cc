@@ -19,17 +19,17 @@ IN_PROC_BROWSER_TEST_F(ActionHandlersBrowserTest, LaunchAppWithNewNote) {
   ExtensionTestMessageListener loader("loaded", false);
   base::FilePath path =
       test_data_dir_.AppendASCII("action_handlers").AppendASCII("new_note");
-  const extensions::Extension* app = LoadExtension(path);
+  scoped_refptr<const extensions::Extension> app = LoadExtension(path);
   ASSERT_TRUE(app);
   EXPECT_TRUE(extensions::ActionHandlersInfo::HasActionHandler(
-      app, app_runtime::ACTION_TYPE_NEW_NOTE));
+      app.get(), app_runtime::ACTION_TYPE_NEW_NOTE));
   loader.WaitUntilSatisfied();
 
   // Fire a "new_note" action type, assert that app has received it.
   ExtensionTestMessageListener new_note("hasNewNote = true", false);
   auto action_data = base::MakeUnique<app_runtime::ActionData>();
   action_data->action_type = app_runtime::ActionType::ACTION_TYPE_NEW_NOTE;
-  apps::LaunchPlatformAppWithAction(profile(), app, std::move(action_data),
-                                    base::FilePath());
+  apps::LaunchPlatformAppWithAction(profile(), app.get(),
+                                    std::move(action_data), base::FilePath());
   new_note.WaitUntilSatisfied();
 }

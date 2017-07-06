@@ -156,7 +156,7 @@ class ChromeRenderProcessHostTest : public ExtensionBrowserTest {
     content::RenderProcessHost* rph2 = NULL;
     content::RenderProcessHost* rph3 = NULL;
 
-    const extensions::Extension* extension =
+    scoped_refptr<const extensions::Extension> extension =
         LoadExtension(test_data_dir_.AppendASCII("options_page"));
 
     // Change the first tab to be the omnibox page (TYPE_WEBUI).

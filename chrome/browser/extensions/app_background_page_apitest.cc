@@ -136,7 +136,7 @@ class AppBackgroundPageNaClTest : public AppBackgroundPageApiTest {
     extensions::ProcessManager::SetEventPageSuspendingTimeForTesting(1000);
   }
 
-  const Extension* extension() { return extension_; }
+  const Extension* extension() { return extension_.get(); }
 
  protected:
   void LaunchTestingApp() {
@@ -150,7 +150,7 @@ class AppBackgroundPageNaClTest : public AppBackgroundPageApiTest {
   }
 
  private:
-  const Extension* extension_;
+  scoped_refptr<const Extension> extension_;
 };
 
 }  // namespace
@@ -249,7 +249,7 @@ IN_PROC_BROWSER_TEST_F(AppBackgroundPageApiTest, ManifestBackgroundPage) {
   ASSERT_TRUE(WaitForBackgroundMode(true));
 
   // Verify that the background contents exist.
-  const Extension* extension = GetSingleLoadedExtension();
+  scoped_refptr<const Extension> extension = GetSingleLoadedExtension();
   BackgroundContents* background_contents =
       BackgroundContentsServiceFactory::GetForProfile(browser()->profile())
           ->GetAppBackgroundContents(ASCIIToUTF16(extension->id()));
@@ -306,7 +306,7 @@ IN_PROC_BROWSER_TEST_F(AppBackgroundPageApiTest, NoJsBackgroundPage) {
   ASSERT_TRUE(LoadExtension(app_dir));
 
   // There isn't a background page loaded initially.
-  const Extension* extension = GetSingleLoadedExtension();
+  scoped_refptr<const Extension> extension = GetSingleLoadedExtension();
   ASSERT_FALSE(
       BackgroundContentsServiceFactory::GetForProfile(browser()->profile())->
           GetAppBackgroundContents(ASCIIToUTF16(extension->id())));
@@ -360,7 +360,7 @@ IN_PROC_BROWSER_TEST_F(AppBackgroundPageApiTest, NoJsManifestBackgroundPage) {
   ASSERT_TRUE(LoadExtension(app_dir));
 
   // The background page should load.
-  const Extension* extension = GetSingleLoadedExtension();
+  scoped_refptr<const Extension> extension = GetSingleLoadedExtension();
   BackgroundContents* background_contents =
       BackgroundContentsServiceFactory::GetForProfile(browser()->profile())
           ->GetAppBackgroundContents(ASCIIToUTF16(extension->id()));
@@ -413,7 +413,7 @@ IN_PROC_BROWSER_TEST_F(AppBackgroundPageApiTest, OpenTwoBackgroundPages) {
   base::FilePath app_dir;
   ASSERT_TRUE(CreateApp(app_manifest, &app_dir));
   ASSERT_TRUE(LoadExtension(app_dir));
-  const Extension* extension = GetSingleLoadedExtension();
+  scoped_refptr<const Extension> extension = GetSingleLoadedExtension();
   ASSERT_TRUE(RunExtensionTest("app_background_page/two_pages")) << message_;
   UnloadExtension(extension->id());
 }
@@ -443,7 +443,7 @@ IN_PROC_BROWSER_TEST_F(AppBackgroundPageApiTest, OpenTwoPagesWithManifest) {
   base::FilePath app_dir;
   ASSERT_TRUE(CreateApp(app_manifest, &app_dir));
   ASSERT_TRUE(LoadExtension(app_dir));
-  const Extension* extension = GetSingleLoadedExtension();
+  scoped_refptr<const Extension> extension = GetSingleLoadedExtension();
   ASSERT_TRUE(RunExtensionTest("app_background_page/two_with_manifest")) <<
       message_;
   UnloadExtension(extension->id());
@@ -499,7 +499,7 @@ IN_PROC_BROWSER_TEST_F(AppBackgroundPageApiTest, OpenThenClose) {
   ASSERT_TRUE(CreateApp(app_manifest, &app_dir));
   ASSERT_TRUE(LoadExtension(app_dir));
   // There isn't a background page loaded initially.
-  const Extension* extension = GetSingleLoadedExtension();
+  scoped_refptr<const Extension> extension = GetSingleLoadedExtension();
   ASSERT_FALSE(
       BackgroundContentsServiceFactory::GetForProfile(browser()->profile())->
           GetAppBackgroundContents(ASCIIToUTF16(extension->id())));
@@ -568,7 +568,7 @@ IN_PROC_BROWSER_TEST_F(AppBackgroundPageApiTest, UnloadExtensionWhileHidden) {
   // the app was loaded.
   ASSERT_TRUE(WaitForBackgroundMode(true));
 
-  const Extension* extension = GetSingleLoadedExtension();
+  scoped_refptr<const Extension> extension = GetSingleLoadedExtension();
   ASSERT_TRUE(
       BackgroundContentsServiceFactory::GetForProfile(browser()->profile())->
           GetAppBackgroundContents(ASCIIToUTF16(extension->id())));

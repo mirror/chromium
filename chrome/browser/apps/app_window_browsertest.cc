@@ -224,12 +224,12 @@ IN_PROC_BROWSER_TEST_F(AppWindowAPITest,
       content::NOTIFICATION_LOAD_COMPLETED_MAIN_FRAME,
       content::NotificationService::AllSources());
 
-  const extensions::Extension* extension = LoadExtension(
+  scoped_refptr<const extensions::Extension> extension = LoadExtension(
       test_data_dir_.AppendASCII("platform_apps").AppendASCII("window_api"));
   EXPECT_TRUE(extension);
 
   OpenApplication(AppLaunchParams(
-      browser()->profile(), extension, extensions::LAUNCH_CONTAINER_NONE,
+      browser()->profile(), extension.get(), extensions::LAUNCH_CONTAINER_NONE,
       WindowOpenDisposition::NEW_WINDOW, extensions::SOURCE_TEST));
 
   ExtensionTestMessageListener geometry_listener("ListenGeometryChange", true);

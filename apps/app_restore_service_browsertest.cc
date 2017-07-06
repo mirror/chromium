@@ -35,8 +35,8 @@ IN_PROC_BROWSER_TEST_F(PlatformAppBrowserTest, RunningAppsAreRecorded) {
       extensions::NOTIFICATION_EXTENSION_HOST_DESTROYED,
       content::NotificationService::AllSources());
 
-  const Extension* extension = LoadExtension(
-      test_data_dir_.AppendASCII("platform_apps/restart_test"));
+  scoped_refptr<const Extension> extension =
+      LoadExtension(test_data_dir_.AppendASCII("platform_apps/restart_test"));
   ASSERT_TRUE(extension);
   ExtensionPrefs* extension_prefs = ExtensionPrefs::Get(browser()->profile());
 
@@ -62,7 +62,7 @@ IN_PROC_BROWSER_TEST_F(PlatformAppBrowserTest, RunningAppsAreRecorded) {
 // they have visible windows.
 IN_PROC_BROWSER_TEST_F(PlatformAppBrowserTest, ActiveAppsAreRecorded) {
   ExtensionTestMessageListener ready_listener("ready", true);
-  const Extension* extension =
+  scoped_refptr<const Extension> extension =
       LoadExtension(test_data_dir_.AppendASCII("platform_apps/active_test"));
   ASSERT_TRUE(extension);
   ExtensionPrefs* extension_prefs = ExtensionPrefs::Get(browser()->profile());
@@ -129,7 +129,7 @@ IN_PROC_BROWSER_TEST_F(PlatformAppBrowserTest, FileAccessIsSavedToPrefs) {
   FileSystemChooseEntryFunction::RegisterTempExternalFileSystemForTest(
       "temp", temp_directory.GetPath());
 
-  const Extension* extension = LoadAndLaunchPlatformApp(
+  scoped_refptr<const Extension> extension = LoadAndLaunchPlatformApp(
       "file_access_saved_to_prefs_test", "fileWritten");
   ASSERT_TRUE(extension);
 
@@ -173,7 +173,7 @@ IN_PROC_BROWSER_TEST_F(PlatformAppBrowserTest, MAYBE_FileAccessIsRestored) {
   ExtensionTestMessageListener access_ok_listener(
       "restartedFileAccessOK", false);
 
-  const Extension* extension =
+  scoped_refptr<const Extension> extension =
       LoadAndLaunchPlatformApp("file_access_restored_test", "fileWritten");
   ASSERT_TRUE(extension);
 

@@ -122,9 +122,10 @@ class FileSystemProviderApiTest : public ExtensionApiTest {
   // Loads a helper testing extension.
   void SetUpOnMainThread() override {
     ExtensionApiTest::SetUpOnMainThread();
-    const extensions::Extension* extension = LoadExtensionWithFlags(
-        test_data_dir_.AppendASCII("file_system_provider/test_util"),
-        kFlagEnableIncognito);
+    scoped_refptr<const extensions::Extension> extension =
+        LoadExtensionWithFlags(
+            test_data_dir_.AppendASCII("file_system_provider/test_util"),
+            kFlagEnableIncognito);
     ASSERT_TRUE(extension);
   }
 };

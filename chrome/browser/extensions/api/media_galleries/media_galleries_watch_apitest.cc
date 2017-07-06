@@ -72,7 +72,7 @@ const char kGalleryChangedEventReceived[] = "gallery_changed_event_received";
 class MediaGalleriesGalleryWatchApiTest : public ExtensionApiTest {
  public:
   MediaGalleriesGalleryWatchApiTest()
-      : extension_(NULL), background_host_(NULL) {}
+      : extension_(nullptr), background_host_(nullptr) {}
   ~MediaGalleriesGalleryWatchApiTest() override {}
 
  protected:
@@ -91,8 +91,8 @@ class MediaGalleriesGalleryWatchApiTest : public ExtensionApiTest {
     FetchMediaGalleriesList();
   }
   void TearDownOnMainThread() override {
-    extension_ = NULL;
-    background_host_ = NULL;
+    extension_ = nullptr;
+    background_host_ = nullptr;
     ensure_media_directories_exists_.reset();
     ExtensionApiTest::TearDownOnMainThread();
   }
@@ -179,7 +179,7 @@ class MediaGalleriesGalleryWatchApiTest : public ExtensionApiTest {
 
   base::ScopedTempDir test_gallery_;
 
-  const extensions::Extension* extension_;
+  scoped_refptr<const extensions::Extension> extension_;
 
   content::RenderViewHost* background_host_;
 

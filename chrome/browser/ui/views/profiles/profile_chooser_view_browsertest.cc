@@ -151,8 +151,8 @@ class ProfileChooserViewExtensionsTest : public ExtensionBrowserTest {
     extensions::ExtensionRegistry* registry =
         extensions::ExtensionRegistry::Get(signed_in);
     const size_t initial_num_extensions = registry->enabled_extensions().size();
-    const extensions::Extension* ext = LoadExtension(
-        test_data_dir_.AppendASCII("app"));
+    scoped_refptr<const extensions::Extension> ext =
+        LoadExtension(test_data_dir_.AppendASCII("app"));
     EXPECT_TRUE(ext);
     EXPECT_EQ(initial_num_extensions + 1,
               registry->enabled_extensions().size());

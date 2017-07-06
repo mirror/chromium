@@ -80,7 +80,7 @@ class AppApiTest : public ExtensionApiTest {
 
     ASSERT_TRUE(LoadExtension(
         test_data_dir_.AppendASCII(app_name)));
-    const Extension* extension = GetSingleLoadedExtension();
+    scoped_refptr<const Extension> extension = GetSingleLoadedExtension();
 
     // Open two tabs in the app, one outside it.
     GURL base_url = GetTestBaseURL(app_name);
@@ -434,7 +434,7 @@ IN_PROC_BROWSER_TEST_F(AppApiTest, NavigateIntoAppProcess) {
 
   // Load app and re-navigate to the page.
   LOG(INFO) << "Loading extension.";
-  const Extension* app =
+  scoped_refptr<const Extension> app =
       LoadExtension(test_data_dir_.AppendASCII("app_process"));
   LOG(INFO) << "Loading extension - done.";
   ASSERT_TRUE(app);
@@ -470,7 +470,7 @@ IN_PROC_BROWSER_TEST_F(AppApiTest, ReloadIntoAppProcess) {
 
   // Load app, disable it, and navigate to the page.
   LOG(INFO) << "Loading extension.";
-  const Extension* app =
+  scoped_refptr<const Extension> app =
       LoadExtension(test_data_dir_.AppendASCII("app_process"));
   LOG(INFO) << "Loading extension - done.";
   ASSERT_TRUE(app);
@@ -532,7 +532,7 @@ IN_PROC_BROWSER_TEST_F(AppApiTest, ReloadIntoAppProcessWithJavaScript) {
 
   // Load app, disable it, and navigate to the page.
   LOG(INFO) << "Loading extension.";
-  const Extension* app =
+  scoped_refptr<const Extension> app =
       LoadExtension(test_data_dir_.AppendASCII("app_process"));
   LOG(INFO) << "Loading extension - done.";
   ASSERT_TRUE(app);
@@ -591,7 +591,7 @@ IN_PROC_BROWSER_TEST_F(AppApiTest, OpenAppFromIframe) {
   GURL base_url = GetTestBaseURL("app_process");
 
   // Load app and start URL (not in the app).
-  const Extension* app =
+  scoped_refptr<const Extension> app =
       LoadExtension(test_data_dir_.AppendASCII("app_process"));
   ASSERT_TRUE(app);
 
@@ -622,7 +622,7 @@ IN_PROC_BROWSER_TEST_F(AppApiTest, OpenAppFromIframe) {
 #endif
 IN_PROC_BROWSER_TEST_F(BlockedAppApiTest, MAYBE_OpenAppFromIframe) {
   // Load app and start URL (not in the app).
-  const Extension* app =
+  scoped_refptr<const Extension> app =
       LoadExtension(test_data_dir_.AppendASCII("app_process"));
   ASSERT_TRUE(app);
 
@@ -647,7 +647,7 @@ IN_PROC_BROWSER_TEST_F(BlockedAppApiTest, MAYBE_OpenAppFromIframe) {
 // up with an app process. See http://crbug.com/99349 for more details.
 IN_PROC_BROWSER_TEST_F(AppApiTest, ServerRedirectToAppFromExtension) {
   LoadExtension(test_data_dir_.AppendASCII("app_process"));
-  const Extension* launcher =
+  scoped_refptr<const Extension> launcher =
       LoadExtension(test_data_dir_.AppendASCII("app_launcher"));
 
   // There should be two navigations by the time the app page is loaded.
@@ -680,7 +680,7 @@ IN_PROC_BROWSER_TEST_F(AppApiTest, ServerRedirectToAppFromExtension) {
 // up with an app process.
 IN_PROC_BROWSER_TEST_F(AppApiTest, ClientRedirectToAppFromExtension) {
   LoadExtension(test_data_dir_.AppendASCII("app_process"));
-  const Extension* launcher =
+  scoped_refptr<const Extension> launcher =
       LoadExtension(test_data_dir_.AppendASCII("app_launcher"));
 
   // There should be three navigations by the time the app page is loaded.
@@ -722,7 +722,7 @@ IN_PROC_BROWSER_TEST_F(AppApiTest, OpenWebPopupFromWebIframe) {
   GURL base_url = GetTestBaseURL("app_process");
 
   // Load app and start URL (in the app).
-  const Extension* app =
+  scoped_refptr<const Extension> app =
       LoadExtension(test_data_dir_.AppendASCII("app_process"));
   ASSERT_TRUE(app);
 
@@ -800,7 +800,7 @@ IN_PROC_BROWSER_TEST_F(AppApiTest, SameBrowsingInstanceAfterSwap) {
   GURL base_url = GetTestBaseURL("app_process");
 
   // Load app and start URL (in the app).
-  const Extension* app =
+  scoped_refptr<const Extension> app =
       LoadExtension(test_data_dir_.AppendASCII("app_process"));
   ASSERT_TRUE(app);
 

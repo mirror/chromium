@@ -103,7 +103,7 @@ IN_PROC_BROWSER_TEST_P(ExtensionViewTest,
 // Tests that verify that <extensionview> does not change extension ID if
 // someone tries to change it in JavaScript.
 IN_PROC_BROWSER_TEST_P(ExtensionViewTest, ShimExtensionAttribute) {
-  const extensions::Extension* skeleton_app =
+  scoped_refptr<const extensions::Extension> skeleton_app =
       InstallPlatformApp("extension_view/skeleton");
   TestHelper("testExtensionAttribute", "extension_view/extension_attribute",
              skeleton_app->id(), "");
@@ -112,7 +112,7 @@ IN_PROC_BROWSER_TEST_P(ExtensionViewTest, ShimExtensionAttribute) {
 // Tests that verify that <extensionview> does not change src if
 // someone tries to change it in JavaScript.
 IN_PROC_BROWSER_TEST_P(ExtensionViewTest, ShimSrcAttribute) {
-  const extensions::Extension* skeleton_app =
+  scoped_refptr<const extensions::Extension> skeleton_app =
       InstallPlatformApp("extension_view/skeleton");
   TestHelper("testSrcAttribute", "extension_view/src_attribute",
              skeleton_app->id(), "");
@@ -121,9 +121,9 @@ IN_PROC_BROWSER_TEST_P(ExtensionViewTest, ShimSrcAttribute) {
 // Tests that verify that <extensionview> can call the load function.
 // Flaky under MemorySanitizer: https://crbug.com/545656
 IN_PROC_BROWSER_TEST_P(ExtensionViewTest, DISABLED_LoadAPICall) {
-  const extensions::Extension* skeleton_app =
+  scoped_refptr<const extensions::Extension> skeleton_app =
       InstallPlatformApp("extension_view/skeleton");
-  const extensions::Extension* skeleton_app_two =
+  scoped_refptr<const extensions::Extension> skeleton_app_two =
       InstallPlatformApp("extension_view/skeleton_two");
   TestHelper("testLoadAPIFunction", "extension_view/load_api",
              skeleton_app->id(),
@@ -135,9 +135,9 @@ IN_PROC_BROWSER_TEST_P(ExtensionViewTest, DISABLED_LoadAPICall) {
 // Tests that verify that <extensionview> can queue up multiple calls to the
 // load function.
 IN_PROC_BROWSER_TEST_P(ExtensionViewTest, DISABLED_QueuedLoadAPICall) {
-  const extensions::Extension* skeleton_app =
+  scoped_refptr<const extensions::Extension> skeleton_app =
       InstallPlatformApp("extension_view/skeleton");
-  const extensions::Extension* skeleton_app_two =
+  scoped_refptr<const extensions::Extension> skeleton_app_two =
       InstallPlatformApp("extension_view/skeleton_two");
   TestHelper("testQueuedLoadAPIFunction", "extension_view/load_api",
              skeleton_app->id(),

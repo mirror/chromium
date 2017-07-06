@@ -119,9 +119,10 @@ class ServiceWorkerTest : public ExtensionApiTest {
   // will fail if there is an error.
   // If |error_or_null| is not null, nothing is assumed, and the error (which
   // may be empty) is written to it.
-  const Extension* StartTestFromBackgroundPage(const char* script_name,
-                                               std::string* error_or_null) {
-    const Extension* extension =
+  scoped_refptr<const Extension> StartTestFromBackgroundPage(
+      const char* script_name,
+      std::string* error_or_null) {
+    scoped_refptr<const Extension> extension =
         LoadExtension(test_data_dir_.AppendASCII("service_worker/background"));
     CHECK(extension);
     ExtensionHost* background_host =
@@ -357,9 +358,10 @@ IN_PROC_BROWSER_TEST_F(ServiceWorkerTest, UpdateWithoutSkipWaiting) {
   EXPECT_TRUE(extensions::ExtensionRegistry::Get(profile())
                   ->enabled_extensions()
                   .GetByID(kId));
-  const Extension* extension = extensions::ExtensionRegistry::Get(profile())
-                                   ->enabled_extensions()
-                                   .GetByID(kId);
+  scoped_refptr<const Extension> extension =
+      extensions::ExtensionRegistry::Get(profile())
+          ->enabled_extensions()
+          .GetByID(kId);
 
   ExtensionTestMessageListener listener1("Pong from version 1", false);
   listener1.set_failure_message("FAILURE");
@@ -372,7 +374,7 @@ IN_PROC_BROWSER_TEST_F(ServiceWorkerTest, UpdateWithoutSkipWaiting) {
   EXPECT_TRUE(extensions::ExtensionRegistry::Get(profile())
                   ->enabled_extensions()
                   .GetByID(kId));
-  const Extension* extension_after_update =
+  scoped_refptr<const Extension> extension_after_update =
       extensions::ExtensionRegistry::Get(profile())
           ->enabled_extensions()
           .GetByID(kId);
@@ -404,7 +406,7 @@ IN_PROC_BROWSER_TEST_F(ServiceWorkerTest, UpdateWithoutSkipWaiting) {
 }
 
 IN_PROC_BROWSER_TEST_F(ServiceWorkerTest, FetchArbitraryPaths) {
-  const Extension* extension =
+  scoped_refptr<const Extension> extension =
       StartTestFromBackgroundPage("fetch.js", kExpectSuccess);
 
   // Open some arbirary paths. Their contents should be what the service worker
@@ -426,7 +428,7 @@ IN_PROC_BROWSER_TEST_F(ServiceWorkerTest, FetchArbitraryPaths) {
 }
 
 IN_PROC_BROWSER_TEST_F(ServiceWorkerTest, SWServedBackgroundPageReceivesEvent) {
-  const Extension* extension =
+  scoped_refptr<const Extension> extension =
       StartTestFromBackgroundPage("replace_background.js", kExpectSuccess);
   ExtensionHost* background_page =
       process_manager()->GetBackgroundHostForExtension(extension->id());
@@ -435,11 +437,11 @@ IN_PROC_BROWSER_TEST_F(ServiceWorkerTest, SWServedBackgroundPageReceivesEvent) {
   // Close the background page and start it again so that the service worker
   // will start controlling pages.
   background_page->Close();
-  BackgroundPageWatcher(process_manager(), extension).WaitForClose();
+  BackgroundPageWatcher(process_manager(), extension.get()).WaitForClose();
   background_page = nullptr;
   process_manager()->WakeEventPage(extension->id(),
                                    base::Bind(&DoNothingWithBool));
-  BackgroundPageWatcher(process_manager(), extension).WaitForOpen();
+  BackgroundPageWatcher(process_manager(), extension.get()).WaitForOpen();
 
   // Since the SW is now controlling the extension, the SW serves the background
   // script. page.html sends a message to the background script and we verify
@@ -454,7 +456,7 @@ IN_PROC_BROWSER_TEST_F(ServiceWorkerTest, SWServedBackgroundPageReceivesEvent) {
 
 IN_PROC_BROWSER_TEST_F(ServiceWorkerTest,
                        LoadingBackgroundPageBypassesServiceWorker) {
-  const Extension* extension =
+  scoped_refptr<const Extension> extension =
       StartTestFromBackgroundPage("fetch.js", kExpectSuccess);
 
   std::string kExpectedInnerText = "background.html contents for testing.";
@@ -468,13 +470,13 @@ IN_PROC_BROWSER_TEST_F(ServiceWorkerTest,
 
   // Close the background page.
   background_page->Close();
-  BackgroundPageWatcher(process_manager(), extension).WaitForClose();
+  BackgroundPageWatcher(process_manager(), extension.get()).WaitForClose();
   background_page = nullptr;
 
   // Start it again.
   process_manager()->WakeEventPage(extension->id(),
                                    base::Bind(&DoNothingWithBool));
-  BackgroundPageWatcher(process_manager(), extension).WaitForOpen();
+  BackgroundPageWatcher(process_manager(), extension.get()).WaitForOpen();
 
   // Content should not have been affected by the fetch, which would otherwise
   // be "Caught fetch for...".
@@ -499,7 +501,7 @@ IN_PROC_BROWSER_TEST_F(ServiceWorkerTest,
 
 IN_PROC_BROWSER_TEST_F(ServiceWorkerTest,
                        ServiceWorkerPostsMessageToBackgroundClient) {
-  const Extension* extension = StartTestFromBackgroundPage(
+  scoped_refptr<const Extension> extension = StartTestFromBackgroundPage(
       "post_message_to_background_client.js", kExpectSuccess);
 
   // The service worker in this test simply posts a message to the background
@@ -519,7 +521,7 @@ IN_PROC_BROWSER_TEST_F(ServiceWorkerTest,
 
 IN_PROC_BROWSER_TEST_F(ServiceWorkerTest,
                        BackgroundPagePostsMessageToServiceWorker) {
-  const Extension* extension =
+  scoped_refptr<const Extension> extension =
       StartTestFromBackgroundPage("post_message_to_sw.js", kExpectSuccess);
 
   // The service worker in this test waits for a message, then echoes it back
@@ -542,7 +544,7 @@ IN_PROC_BROWSER_TEST_F(ServiceWorkerTest,
   std::string extension_id;
   GURL extension_url;
   {
-    const Extension* extension =
+    scoped_refptr<const Extension> extension =
         StartTestFromBackgroundPage("fetch.js", kExpectSuccess);
     extension_id = extension->id();
     extension_url = extension->url();
@@ -595,7 +597,7 @@ IN_PROC_BROWSER_TEST_F(ServiceWorkerTest,
 }
 
 IN_PROC_BROWSER_TEST_F(ServiceWorkerTest, BackgroundPageIsWokenIfAsleep) {
-  const Extension* extension =
+  scoped_refptr<const Extension> extension =
       StartTestFromBackgroundPage("wake_on_fetch.js", kExpectSuccess);
 
   // Navigate to special URLs that this test's service worker recognises, each
@@ -614,7 +616,7 @@ IN_PROC_BROWSER_TEST_F(ServiceWorkerTest, BackgroundPageIsWokenIfAsleep) {
       process_manager()->GetBackgroundHostForExtension(extension->id());
   ASSERT_TRUE(background_page);
   background_page->Close();
-  BackgroundPageWatcher(process_manager(), extension).WaitForClose();
+  BackgroundPageWatcher(process_manager(), extension.get()).WaitForClose();
 
   EXPECT_EQ("false", NavigateAndExtractInnerText(extension->GetResourceURL(
                          "background-client-is-awake")));
@@ -648,7 +650,7 @@ IN_PROC_BROWSER_TEST_F(ServiceWorkerTest, WebAccessibleResourcesFetch) {
 IN_PROC_BROWSER_TEST_F(ServiceWorkerTest, TabsCreate) {
   // Extensions APIs from SW are only enabled on trunk.
   ScopedCurrentChannel current_channel_override(version_info::Channel::UNKNOWN);
-  const Extension* extension = LoadExtensionWithFlags(
+  scoped_refptr<const Extension> extension = LoadExtensionWithFlags(
       test_data_dir_.AppendASCII("service_worker/tabs_create"), kFlagNone);
   ASSERT_TRUE(extension);
   ui_test_utils::NavigateToURL(browser(),
@@ -671,7 +673,7 @@ IN_PROC_BROWSER_TEST_F(ServiceWorkerTest, TabsCreate) {
 IN_PROC_BROWSER_TEST_F(ServiceWorkerTest, Events) {
   // Extensions APIs from SW are only enabled on trunk.
   ScopedCurrentChannel current_channel_override(version_info::Channel::UNKNOWN);
-  const Extension* extension = LoadExtensionWithFlags(
+  scoped_refptr<const Extension> extension = LoadExtensionWithFlags(
       test_data_dir_.AppendASCII("service_worker/events"), kFlagNone);
   ASSERT_TRUE(extension);
   ui_test_utils::NavigateToURL(browser(),
@@ -687,7 +689,7 @@ IN_PROC_BROWSER_TEST_F(ServiceWorkerTest, Events) {
 IN_PROC_BROWSER_TEST_F(ServiceWorkerTest, EventsToStoppedWorker) {
   // Extensions APIs from SW are only enabled on trunk.
   ScopedCurrentChannel current_channel_override(version_info::Channel::UNKNOWN);
-  const Extension* extension = LoadExtensionWithFlags(
+  scoped_refptr<const Extension> extension = LoadExtensionWithFlags(
       test_data_dir_.AppendASCII("service_worker/events_to_stopped_worker"),
       kFlagNone);
   ASSERT_TRUE(extension);
@@ -730,7 +732,7 @@ IN_PROC_BROWSER_TEST_F(ServiceWorkerTest, EventsToStoppedWorker) {
 IN_PROC_BROWSER_TEST_F(ServiceWorkerTest, MAYBE_WorkerRefCount) {
   // Extensions APIs from SW are only enabled on trunk.
   ScopedCurrentChannel current_channel_override(version_info::Channel::UNKNOWN);
-  const Extension* extension = LoadExtensionWithFlags(
+  scoped_refptr<const Extension> extension = LoadExtensionWithFlags(
       test_data_dir_.AppendASCII("service_worker/api_worker_ref_count"),
       kFlagNone);
   ASSERT_TRUE(extension);
@@ -792,7 +794,7 @@ IN_PROC_BROWSER_TEST_F(ServiceWorkerTest, MAYBE_WorkerRefCount) {
 // but is not present in the extension directory, the Service Worker can still
 // serve the resource file.
 IN_PROC_BROWSER_TEST_F(ServiceWorkerTest, WebAccessibleResourcesIframeSrc) {
-  const Extension* extension = LoadExtensionWithFlags(
+  scoped_refptr<const Extension> extension = LoadExtensionWithFlags(
       test_data_dir_.AppendASCII(
           "service_worker/web_accessible_resources/iframe_src"),
       kFlagNone);
@@ -856,7 +858,7 @@ IN_PROC_BROWSER_TEST_F(ServiceWorkerTest, WebAccessibleResourcesIframeSrc) {
 
 // Test is flaky. See https://crbug.com/737260
 IN_PROC_BROWSER_TEST_F(ServiceWorkerBackgroundSyncTest, DISABLED_Sync) {
-  const Extension* extension = LoadExtensionWithFlags(
+  scoped_refptr<const Extension> extension = LoadExtensionWithFlags(
       test_data_dir_.AppendASCII("service_worker/sync"), kFlagNone);
   ASSERT_TRUE(extension);
   ui_test_utils::NavigateToURL(browser(),
@@ -902,7 +904,7 @@ IN_PROC_BROWSER_TEST_F(ServiceWorkerTest,
 }
 
 IN_PROC_BROWSER_TEST_F(ServiceWorkerPushMessagingTest, OnPush) {
-  const Extension* extension = LoadExtensionWithFlags(
+  scoped_refptr<const Extension> extension = LoadExtensionWithFlags(
       test_data_dir_.AppendASCII("service_worker/push_messaging"), kFlagNone);
   ASSERT_TRUE(extension);
   GURL extension_url = extension->url();

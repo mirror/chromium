@@ -38,7 +38,7 @@ class AppShimMenuControllerUITest : public extensions::PlatformAppBrowserTest {
 
   void SetUpOnMainThread() override {
     PlatformAppBrowserTest::SetUpOnMainThread();
-    const Extension* extension =
+    scoped_refptr<const Extension> extension =
         LoadAndLaunchPlatformApp("minimal", "Launched");
 
     // First create an extra app window and an extra browser window. Only after
@@ -46,7 +46,7 @@ class AppShimMenuControllerUITest : public extensions::PlatformAppBrowserTest {
     // windows activate, because the test binary has a default activation policy
     // of "prohibited".
     app1_ = GetFirstAppWindow();
-    app2_ = CreateAppWindow(browser()->profile(), extension);
+    app2_ = CreateAppWindow(browser()->profile(), extension.get());
     browser1_ = browser()->window();
     browser2_ = (new Browser(Browser::CreateParams(profile(), true)))->window();
     browser2_->Show();

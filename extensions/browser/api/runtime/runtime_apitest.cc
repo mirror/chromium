@@ -151,7 +151,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionApiTest, DISABLED_ChromeRuntimeReload) {
   dir.WriteManifest(kManifest);
   dir.WriteFile(FILE_PATH_LITERAL("background.js"), "console.log('loaded');");
 
-  const Extension* extension = LoadExtension(dir.UnpackedPath());
+  scoped_refptr<const Extension> extension = LoadExtension(dir.UnpackedPath());
   ASSERT_TRUE(extension);
   const std::string extension_id = extension->id();
 
@@ -196,7 +196,7 @@ IN_PROC_BROWSER_TEST_F(RuntimeAPIUpdateTest,
     // Install version 1 of the extension.
     ResultCatcher catcher;
     const int expected_change = 1;
-    const Extension* extension_v1 =
+    scoped_refptr<const Extension> extension_v1 =
         InstallExtension(data[0].crx_path, expected_change);
     extension_id = extension_v1->id();
     ASSERT_TRUE(extension_v1);
@@ -208,7 +208,7 @@ IN_PROC_BROWSER_TEST_F(RuntimeAPIUpdateTest,
     // previousVersion = '1'.
     ResultCatcher catcher;
     const int expected_change = 1;
-    const Extension* extension_v2 =
+    scoped_refptr<const Extension> extension_v2 =
         UpdateExtension(extension_id, data[1].crx_path, expected_change);
     ASSERT_TRUE(extension_v2);
     EXPECT_TRUE(catcher.GetNextResult());

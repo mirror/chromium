@@ -1635,7 +1635,7 @@ IN_PROC_BROWSER_TEST_P(WebViewInteractiveTest, KeyboardFocusWindowCycle) {
   ASSERT_TRUE(ui_test_utils::SendKeyPressToWindowSync(
       GetPlatformAppWindow(), ui::VKEY_C, false, false, false, false));
 
-  const extensions::Extension* extension =
+  scoped_refptr<const extensions::Extension> extension =
       LoadAndLaunchPlatformApp("minimal", "Launched");
   extensions::AppWindow* window = GetFirstAppWindowForApp(extension->id());
   EXPECT_TRUE(content::ExecuteScript(

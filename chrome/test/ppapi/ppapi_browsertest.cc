@@ -1276,12 +1276,14 @@ class PackagedAppTest : public ExtensionBrowserTest {
                                      .AppendASCII(extension_dirname)
                                      .AppendASCII(toolchain_);
 
-    const extensions::Extension* extension = LoadExtension(app_dir);
+    scoped_refptr<const extensions::Extension> extension =
+        LoadExtension(app_dir);
     ASSERT_TRUE(extension);
 
-    AppLaunchParams params(
-        browser()->profile(), extension, extensions::LAUNCH_CONTAINER_NONE,
-        WindowOpenDisposition::NEW_WINDOW, extensions::SOURCE_TEST);
+    AppLaunchParams params(browser()->profile(), extension.get(),
+                           extensions::LAUNCH_CONTAINER_NONE,
+                           WindowOpenDisposition::NEW_WINDOW,
+                           extensions::SOURCE_TEST);
     params.command_line = *base::CommandLine::ForCurrentProcess();
     OpenApplication(params);
   }

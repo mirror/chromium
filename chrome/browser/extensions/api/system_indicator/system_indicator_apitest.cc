@@ -23,11 +23,12 @@ class SystemIndicatorApiTest : public ExtensionApiTest {
     extensions::ProcessManager::SetEventPageSuspendingTimeForTesting(1);
   }
 
-  const extensions::Extension* LoadExtensionAndWait(
+  scoped_refptr<const extensions::Extension> LoadExtensionAndWait(
       const std::string& test_name) {
     LazyBackgroundObserver page_complete;
     base::FilePath extdir = test_data_dir_.AppendASCII(test_name);
-    const extensions::Extension* extension = LoadExtension(extdir);
+    scoped_refptr<const extensions::Extension> extension =
+        LoadExtension(extdir);
     if (extension)
       page_complete.Wait();
     return extension;
@@ -53,7 +54,7 @@ IN_PROC_BROWSER_TEST_F(SystemIndicatorApiTest, DISABLED_SystemIndicator) {
   if (manager) {
     extensions::ResultCatcher catcher;
 
-    const extensions::Extension* extension =
+    scoped_refptr<const extensions::Extension> extension =
         LoadExtensionAndWait("system_indicator/unloaded");
     ASSERT_TRUE(extension) << message_;
 

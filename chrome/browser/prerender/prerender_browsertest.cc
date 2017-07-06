@@ -2781,12 +2781,12 @@ IN_PROC_BROWSER_TEST_F(PrerenderBrowserTestWithExtensions, TabsApi) {
 IN_PROC_BROWSER_TEST_F(PrerenderBrowserTestWithExtensions, StreamsTest) {
   ASSERT_TRUE(StartEmbeddedTestServer());
 
-  const extensions::Extension* extension = LoadExtension(
+  scoped_refptr<const extensions::Extension> extension = LoadExtension(
       test_data_dir_.AppendASCII("streams_private/handle_mime_type"));
   ASSERT_TRUE(extension);
   EXPECT_EQ(std::string(extension_misc::kMimeHandlerPrivateTestExtensionId),
             extension->id());
-  MimeTypesHandler* handler = MimeTypesHandler::GetHandler(extension);
+  MimeTypesHandler* handler = MimeTypesHandler::GetHandler(extension.get());
   ASSERT_TRUE(handler);
   EXPECT_TRUE(handler->CanHandleMIMEType("application/msword"));
 

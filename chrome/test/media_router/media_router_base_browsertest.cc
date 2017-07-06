@@ -66,7 +66,8 @@ void MediaRouterBaseBrowserTest::TearDownOnMainThread() {
 }
 
 void MediaRouterBaseBrowserTest::InstallAndEnableMRExtension() {
-  const extensions::Extension* extension = LoadExtension(extension_unpacked_);
+  scoped_refptr<const extensions::Extension> extension =
+      LoadExtension(extension_unpacked_);
   extension_id_ = extension->id();
 }
 

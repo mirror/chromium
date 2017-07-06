@@ -35,7 +35,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionApiTest, I18NUpdate) {
       test_data_dir_.AppendASCII("i18nUpdate").AppendASCII("_locales"),
       extension_dir.GetPath().AppendASCII("_locales"), true);
 
-  const extensions::Extension* extension =
+  scoped_refptr<const extensions::Extension> extension =
       LoadExtension(extension_dir.GetPath());
 
   extensions::ResultCatcher catcher;
