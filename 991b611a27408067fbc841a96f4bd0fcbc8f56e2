@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0e69399_6ee773af",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ApplicationPanelSidebar.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-06T20:08:53Z",
+      "side": 1,
+      "message": "If we want it to handle clicks, provide visual feedback and otherwise behave as a button, we typically make it a button. Pavel has made a good point, though -- we only want to refresh an active view, so why not make it a regular toolbar button.",
+      "revId": "991b611a27408067fbc841a96f4bd0fcbc8f56e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
