@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "83ff2591_4e1464ff",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintChunksToCcLayer.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-07-06T21:12:42Z",
+      "side": 1,
+      "message": "Ok. Please reword the comment to a TODO(trchen) to see why we need such a large\nrect rather than one that matches the size of the content.",
+      "parentUuid": "fec401c9_876db71d",
+      "revId": "09e9b162902d6ba5d28c1be1ec180c1f4bd85993",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f90f0bd_087d2ed9",
         "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintChunksToCcLayer.cpp",
         "patchSetId": 11
@@ -259,6 +277,24 @@
       "side": 1,
       "message": "Yes they are. :)",
       "parentUuid": "785c872f_fd984783",
+      "revId": "09e9b162902d6ba5d28c1be1ec180c1f4bd85993",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e25b150d_b0147d10",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintChunksToCcLayerTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-07-06T21:12:42Z",
+      "side": 1,
+      "message": "Ok, please comment to that effect in the non-test file and here.",
+      "parentUuid": "ec0ac9a5_b5d47a82",
       "revId": "09e9b162902d6ba5d28c1be1ec180c1f4bd85993",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

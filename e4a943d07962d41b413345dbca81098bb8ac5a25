@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b08ce884_fdf59a55",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintChunksToCcLayer.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-07-06T21:12:42Z",
+      "side": 1,
+      "message": "PairedType needs a comment explaining what it does.",
+      "revId": "e4a943d07962d41b413345dbca81098bb8ac5a25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
