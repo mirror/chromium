@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a32ffa7f_f0d8b6c7",
+        "filename": "chrome/browser/android/vr_shell/ui_input_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-06T14:38:48Z",
+      "side": 1,
+      "message": "Will keep it separate.",
+      "parentUuid": "2a22a81d_1f736386",
+      "revId": "6076819d44a89365f7dc8743c0205937143bbd44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4708c83_e40ae7d5",
         "filename": "chrome/browser/android/vr_shell/ui_input_manager.h",
         "patchSetId": 1
@@ -123,6 +141,24 @@
       "revId": "6076819d44a89365f7dc8743c0205937143bbd44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9520fc16_8b4b1c58",
+        "filename": "chrome/browser/android/vr_shell/ui_input_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-06T14:38:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee4c438b_814fd1b4",
+      "revId": "6076819d44a89365f7dc8743c0205937143bbd44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

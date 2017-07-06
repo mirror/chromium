@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "7fb34957_b099dad8",
+        "filename": "chrome/browser/android/vr_shell/ui_input_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-06T14:38:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd590d29_75ef91fe",
+      "revId": "1a5c497d20abb997dd6661ccd65c075c9ef9ea12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a06f7692_10bb252c",
         "filename": "chrome/browser/android/vr_shell/ui_input_manager.h",
         "patchSetId": 2
@@ -90,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "e7874def_f24dc449",
+        "filename": "chrome/browser/android/vr_shell/ui_input_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-06T14:38:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e896aab_0bce39e2",
+      "revId": "1a5c497d20abb997dd6661ccd65c075c9ef9ea12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cbc8fd3a_44162f0c",
         "filename": "chrome/browser/android/vr_shell/ui_input_manager.h",
         "patchSetId": 2
@@ -122,6 +158,24 @@
       "revId": "1a5c497d20abb997dd6661ccd65c075c9ef9ea12",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce44cdca_2e9d6c2c",
+        "filename": "chrome/browser/android/vr_shell/ui_input_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-06T14:38:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b5b80d8_a50eb2ed",
+      "revId": "1a5c497d20abb997dd6661ccd65c075c9ef9ea12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -169,6 +223,30 @@
       "revId": "1a5c497d20abb997dd6661ccd65c075c9ef9ea12",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17b69766_7a7b80fd",
+        "filename": "chrome/browser/android/vr_shell/ui_input_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-06T14:38:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a2785fe_310f3c6a",
+      "range": {
+        "startLine": 30,
+        "startChar": 15,
+        "endLine": 30,
+        "endChar": 33
+      },
+      "revId": "1a5c497d20abb997dd6661ccd65c075c9ef9ea12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -231,6 +309,30 @@
       "side": 1,
       "message": "Okay, so on a per-frame basis, the state can basically be \"up, down, down-then-up-again\"?  I won\u0027t nit-pick too much, but it sounds like \"state\" should still be down/up, and per-frame, there\u0027d be a separate piece of information called \"click happened\".  That would be true on any frame where an up happened, whether or not its in the same frame.  But I\u0027ll defer to you and Michael, as you\u0027ve got good handles on input.",
       "parentUuid": "dcdf6d73_ce71b928",
+      "range": {
+        "startLine": 39,
+        "startChar": 6,
+        "endLine": 39,
+        "endChar": 7
+      },
+      "revId": "1a5c497d20abb997dd6661ccd65c075c9ef9ea12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e7b3cc6_5a3e3bac",
+        "filename": "chrome/browser/android/vr_shell/ui_input_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-06T14:38:48Z",
+      "side": 1,
+      "message": "I see your point. However, with a second flag we would add a further degree of freedom that we don\u0027t need at the moment. The CLICK(ED) state is essentially a workaround to translate Cardboard triggers into UP and DOWN events. I plan on replacing the gestures with generic types in a future CL. So, the API will change. Let\u0027s reconsider then.",
+      "parentUuid": "ab45ecb5_13e8edd4",
       "range": {
         "startLine": 39,
         "startChar": 6,
@@ -338,6 +440,30 @@
     },
     {
       "key": {
+        "uuid": "9c409841_bfc8f6b3",
+        "filename": "chrome/browser/android/vr_shell/ui_input_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-06T14:38:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ee9e891_e8dfcc49",
+      "range": {
+        "startLine": 43,
+        "startChar": 44,
+        "endLine": 43,
+        "endChar": 57
+      },
+      "revId": "1a5c497d20abb997dd6661ccd65c075c9ef9ea12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89cb9755_635ef054",
         "filename": "chrome/browser/android/vr_shell/ui_input_manager.h",
         "patchSetId": 2
@@ -391,6 +517,24 @@
     },
     {
       "key": {
+        "uuid": "a44205cb_38991558",
+        "filename": "chrome/browser/android/vr_shell/ui_input_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-06T14:38:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "08b622a6_cd8151a5",
+      "revId": "1a5c497d20abb997dd6661ccd65c075c9ef9ea12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c50247c_5fa7b6c4",
         "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
         "patchSetId": 2
@@ -435,6 +579,30 @@
       "revId": "1a5c497d20abb997dd6661ccd65c075c9ef9ea12",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af167def_eeb6c78e",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-06T14:38:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "032be5ab_3335e755",
+      "range": {
+        "startLine": 607,
+        "startChar": 16,
+        "endLine": 607,
+        "endChar": 17
+      },
+      "revId": "1a5c497d20abb997dd6661ccd65c075c9ef9ea12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -557,6 +725,30 @@
     },
     {
       "key": {
+        "uuid": "466575f5_6f45661a",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-06T14:38:48Z",
+      "side": 1,
+      "message": "As discussed offline, the UiInputManager could go away if we switch UI frameworks but the web input event generation would still be necessary then. This is why it needs to be separate. Moved the fling/scroll to UiInputManager and, for now, use blink::WebGestureEvent to pass scroll/fling gestures to the UiInputManager. In a follow-up CL we should replace this with a generic gesture type.",
+      "parentUuid": "dd5f7a4a_59d085f1",
+      "range": {
+        "startLine": 612,
+        "startChar": 13,
+        "endLine": 612,
+        "endChar": 31
+      },
+      "revId": "1a5c497d20abb997dd6661ccd65c075c9ef9ea12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6cd2a67b_da33bcb6",
         "filename": "chrome/browser/android/vr_shell/vr_shell_gl.h",
         "patchSetId": 2
@@ -601,6 +793,30 @@
       "revId": "1a5c497d20abb997dd6661ccd65c075c9ef9ea12",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f172935a_dbde32d2",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-06T14:38:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2bf5c30_41699beb",
+      "range": {
+        "startLine": 280,
+        "startChar": 34,
+        "endLine": 280,
+        "endChar": 38
+      },
+      "revId": "1a5c497d20abb997dd6661ccd65c075c9ef9ea12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
