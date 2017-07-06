@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "87a84850_e2330419",
+        "filename": "cc/surfaces/display_scheduler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-07-06T12:40:12Z",
+      "side": 1,
+      "message": "Please add a virtual destructor.",
+      "range": {
+        "startLine": 38,
+        "startChar": 25,
+        "endLine": 38,
+        "endChar": 49
+      },
+      "revId": "55f6248dc41a2eeda4dbdd0de56a37e69316b757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "30fee002_92ac3bbb",
         "filename": "content/renderer/gpu/render_widget_compositor.h",
         "patchSetId": 3
@@ -18,6 +41,53 @@
         "startChar": 11,
         "endLine": 82,
         "endChar": 51
+      },
+      "revId": "55f6248dc41a2eeda4dbdd0de56a37e69316b757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8916ea2_87e3c465",
+        "filename": "content/renderer/gpu/render_widget_compositor.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-07-06T12:40:12Z",
+      "side": 1,
+      "message": "Does it even make sense to mix waiting and non-waiting LayerTreeHosts in the same setup? If we can make the choice per-render thread and it is simpler then it feels like we should just do that.",
+      "parentUuid": "30fee002_92ac3bbb",
+      "range": {
+        "startLine": 82,
+        "startChar": 11,
+        "endLine": 82,
+        "endChar": 51
+      },
+      "revId": "55f6248dc41a2eeda4dbdd0de56a37e69316b757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86c999d5_6911b0ad",
+        "filename": "ui/compositor/external_begin_frame_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-07-06T12:40:12Z",
+      "side": 1,
+      "message": "Ditto about virtual destructor.",
+      "range": {
+        "startLine": 15,
+        "startChar": 6,
+        "endLine": 15,
+        "endChar": 23
       },
       "revId": "55f6248dc41a2eeda4dbdd0de56a37e69316b757",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
