@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1072f59_31b09897",
+        "filename": "ios/web/browser_state.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-07-06T11:27:25Z",
+      "side": 1,
+      "message": "Ken, is the reasoning for this being stashed in a Data object that it means we don\u0027t have to worry about defining a sentinel value for the user_id_ field?",
+      "range": {
+        "startLine": 56,
+        "startChar": 6,
+        "endLine": 56,
+        "endChar": 25
+      },
+      "revId": "e66e8c51f4359b64679686d096188bc7680f6069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82e7d724_db274ccb",
+        "filename": "ios/web/browser_state.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-07-06T11:27:25Z",
+      "side": 1,
+      "message": "Ken, what\u0027s the reasoning beyond this being stashed in a Data object rather than BrowserContext just having a unique_ptr\u003cServiceManagerConnection\u003e?",
+      "range": {
+        "startLine": 85,
+        "startChar": 6,
+        "endLine": 85,
+        "endChar": 48
+      },
+      "revId": "e66e8c51f4359b64679686d096188bc7680f6069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
