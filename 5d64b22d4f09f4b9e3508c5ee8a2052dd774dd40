@@ -22,6 +22,30 @@
       "revId": "5d64b22d4f09f4b9e3508c5ee8a2052dd774dd40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6fa315e_11260eb5",
+        "filename": "third_party/WebKit/Source/core/loader/LinkLoader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-06T11:00:36Z",
+      "side": 1,
+      "message": "I think it doesn\u0027t matter because resource types are different. The prefetch request will never be matched with a preloaded resource.",
+      "parentUuid": "81bb8415_b1a2d152",
+      "range": {
+        "startLine": 490,
+        "startChar": 12,
+        "endLine": 490,
+        "endChar": 26
+      },
+      "revId": "5d64b22d4f09f4b9e3508c5ee8a2052dd774dd40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
