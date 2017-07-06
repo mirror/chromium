@@ -1,0 +1,176 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d1d4646_e9632aea",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-07-06T21:43:29Z",
+      "side": 1,
+      "message": "Can this go into anonymous namespace? You may have to make it a functor if so.",
+      "revId": "d74ea322425b290807067cde6219ea9a90dde1f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3064a59_615079ac",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-07-06T21:43:29Z",
+      "side": 1,
+      "message": "Can memcmp be used to make this shorter?",
+      "range": {
+        "startLine": 25,
+        "startChar": 66,
+        "endLine": 25,
+        "endChar": 0
+      },
+      "revId": "d74ea322425b290807067cde6219ea9a90dde1f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "051b65b6_3c346dc9",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-07-06T21:43:29Z",
+      "side": 1,
+      "message": "Does it work if you use sizeof(data) in place of 6?",
+      "range": {
+        "startLine": 53,
+        "startChar": 68,
+        "endLine": 53,
+        "endChar": 69
+      },
+      "revId": "d74ea322425b290807067cde6219ea9a90dde1f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07c3da97_27f95c3c",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-07-06T21:43:29Z",
+      "side": 1,
+      "message": "Maybe call this ScopedWlanClientHandle?",
+      "range": {
+        "startLine": 58,
+        "startChar": 6,
+        "endLine": 58,
+        "endChar": 22
+      },
+      "revId": "d74ea322425b290807067cde6219ea9a90dde1f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8834929a_b5f432db",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-07-06T21:43:29Z",
+      "side": 1,
+      "message": "nit: inline mac_entry-\u003esecond here.",
+      "range": {
+        "startLine": 164,
+        "startChar": 39,
+        "endLine": 164,
+        "endChar": 52
+      },
+      "revId": "d74ea322425b290807067cde6219ea9a90dde1f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33adc7d3_e8c48cca",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-07-06T21:43:29Z",
+      "side": 1,
+      "message": "typo in unforeseen",
+      "range": {
+        "startLine": 174,
+        "startChar": 15,
+        "endLine": 174,
+        "endChar": 24
+      },
+      "revId": "d74ea322425b290807067cde6219ea9a90dde1f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f63cec9_ffad4348",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-07-06T21:43:29Z",
+      "side": 1,
+      "message": "nit: seems a bit simpler if we combined the initial attempt into the for-loop? Then there won\u0027t be a need for initial_buf.",
+      "revId": "d74ea322425b290807067cde6219ea9a90dde1f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82703397_a1e53391",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-07-06T21:43:29Z",
+      "side": 1,
+      "message": "nit: This seems inconsistent with the shorthand of returning empty initializer value above. I don\u0027t feel strongly either way.",
+      "range": {
+        "startLine": 210,
+        "startChar": 47,
+        "endLine": 210,
+        "endChar": 0
+      },
+      "revId": "d74ea322425b290807067cde6219ea9a90dde1f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
