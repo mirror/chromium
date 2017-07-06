@@ -171,6 +171,7 @@ class TestURLLoaderThrottle : public URLLoaderThrottle {
   }
 
   void WillRedirectRequest(const net::RedirectInfo& redirect_info,
+                           const ResourceResponseHead& response_head,
                            bool* defer) override {
     will_redirect_request_called_++;
     if (will_redirect_request_callback_)

@@ -185,6 +185,7 @@ URLLoaderImpl::URLLoaderImpl(
 
   net::HttpRequestHeaders headers;
   headers.AddHeadersFromString(request.headers);
+
   url_request_->SetExtraRequestHeaders(headers);
 
   // Resolve elements from request_body and prepare upload data.
