@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36f6b003_9323cf4d",
+        "filename": "base/files/file_enumerator_posix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-06T19:20:32Z",
+      "side": 1,
+      "message": "Don\u0027t we want this around the |dotdot| local var?",
+      "revId": "b2da8dd78034b420d5cb111a1504e5391bd79dbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
