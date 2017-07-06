@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16dff74a_3b42adbc",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-06T16:35:56Z",
+      "side": 1,
+      "message": "It\u0027s not a lot of work, and may even be optimized out anyways, but let\u0027s stash the NQE pointer on the stack.",
+      "range": {
+        "startLine": 521,
+        "startChar": 33,
+        "endLine": 521,
+        "endChar": 58
+      },
+      "revId": "4db3da0a71c93cb4cc741b4b33c40b62d30ccce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "feafb5c2_304695a9",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 1090,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-06T16:35:56Z",
+      "side": 1,
+      "message": "triggered",
+      "range": {
+        "startLine": 1090,
+        "startChar": 57,
+        "endLine": 1090,
+        "endChar": 67
+      },
+      "revId": "4db3da0a71c93cb4cc741b4b33c40b62d30ccce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d21d892_dcfc05ec",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 1106,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-06T16:35:56Z",
+      "side": 1,
+      "message": "Matt Menke\n\u003e Do we need this bit?  Seems like if max_requests_for_bdp_ranges_ is empty, we can assume it\u0027s \u003e not enabled?\n\nDevdeep Ray\n\u003e I think this is a little more readable than the other option.\n\nMy feeling is that if variables can get in an inconsistent state, there\u0027s a non-zero chance of that happening during a refactor or when adding a features, so it\u0027s best to avoid variables that are completely redundant, from a correctness standpoint.\n\nIn this case, the values that are required to be consistent aren\u0027t even populated in the same method, which makes regressions just that much more likely.\n\nJust imagine that someone added an experiment with a different name which reuse max_requests_for_bdp_ranges (Maybe adding new fields or something).  There\u0027s a significant change that they\u0027d reuse GetMaxDelayableRequestsExperimentConfig, but fail to update |max_delayable_requests_override_enabled_|.  Since the difference isn\u0027t a matter of Chrome\u0027s correctness, but instead a matter of performance that would only show up on field trials (Field trials it would not be obvious are broken), there\u0027s a good chance no one would ever notice such a regression, and decide their field trial wasn\u0027t affecting performance at all.\n\nAnyhow, my last pushback on this, but from experience, this is just the sort of thing that breaks without anyone noticing, so I feel its best to give it as few ways as possible to break.",
+      "range": {
+        "startLine": 1106,
+        "startChar": 39,
+        "endLine": 1106,
+        "endChar": 75
+      },
+      "revId": "4db3da0a71c93cb4cc741b4b33c40b62d30ccce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b109e1e1_471f2aa4",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 1030,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-06T16:35:56Z",
+      "side": 1,
+      "message": "Should have a test where max_delayable_requests_overridden_count_ is exceeded (Basically it starts out high, with a bunch of started delayable requests, then there\u0027s a new navigation without cancelling the old requests, and it results in a lower request count (The pending requests could be prefetches, \u003ca pings\u003e, or downloads or something [Though downloads probably would have a higher priority], or we could just be seeing the navigation before the cancellations).\n\nNo new delayable requests should be started until the the requests complete and we go below the limit.\n\nAlso, if we\u0027re at the limit, and there\u0027s a navigation, and no new requests are made, sane things should happen when the old requests complete (I\u0027m not so concerned about the temporarily increased limit, though it is a little weird.  It may be more natural just to calculate the new limit on creation and on NavigationStart, instead of on first request we see).\n\nAlso, if we\u0027re at the limit, and there\u0027s a navigation, and new requests are made, sane things should happen.",
+      "revId": "4db3da0a71c93cb4cc741b4b33c40b62d30ccce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
