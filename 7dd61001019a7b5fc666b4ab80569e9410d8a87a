@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "580b333e_5f0e26a2",
+        "filename": "third_party/WebKit/Source/core/editing/FrameCaret.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-07-06T21:53:53Z",
+      "side": 1,
+      "message": "This one is ok, because pre-paint is the new name for the same\nlifecycle phase.",
+      "parentUuid": "4dd00e9e_7802e6c2",
+      "revId": "7dd61001019a7b5fc666b4ab80569e9410d8a87a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f32bb9be_2926f53f",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-06T21:34:47Z",
       "side": 1,
       "message": "Info: The condition previously didn\u0027t include local_frame_root.View()-\u003ecurrent_update_lifecycle_phases_target_state_ \u003d\u003d DocumentLifecycle::kInPrePaint\nIs the change intentional?",
+      "revId": "7dd61001019a7b5fc666b4ab80569e9410d8a87a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87980b16_fde2269e",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 2994,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-07-06T21:53:53Z",
+      "side": 1,
+      "message": "Yes - same reason as my previous comment, that pre-paint is the new paint invalidation.",
+      "parentUuid": "f32bb9be_2926f53f",
       "revId": "7dd61001019a7b5fc666b4ab80569e9410d8a87a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "7629eb0d_4b9b073d",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 3000,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-07-06T21:53:53Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "bb0d540e_06eaf3c1",
+      "revId": "7dd61001019a7b5fc666b4ab80569e9410d8a87a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d89fa5db_96c6d983",
         "filename": "third_party/WebKit/Source/core/layout/compositing/PaintLayerCompositor.cpp",
         "patchSetId": 8
@@ -82,6 +136,24 @@
       "writtenOn": "2017-07-06T21:34:47Z",
       "side": 1,
       "message": "Info: This condition previously didn\u0027t include Lifecycle().GetState() \u003d\u003d DocumentLifecycle::kCompositingClean. Is this change intentional?",
+      "revId": "7dd61001019a7b5fc666b4ab80569e9410d8a87a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cdb88a4_4cecd1b1",
+        "filename": "third_party/WebKit/Source/core/layout/compositing/PaintLayerCompositor.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 721,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-07-06T21:53:53Z",
+      "side": 1,
+      "message": "Changed this to kPrePaintClean",
+      "parentUuid": "d89fa5db_96c6d983",
       "revId": "7dd61001019a7b5fc666b4ab80569e9410d8a87a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
