@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "57f2875a_f0f900a7",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 961,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-06T14:08:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f0fc882a_0b261db0",
+      "revId": "e98286315b695f4873152a0ca70b98739a8e3c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9482cd71_0976a815",
         "filename": "ios/chrome/browser/ui/commands/browser_commands.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "e98286315b695f4873152a0ca70b98739a8e3c4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a385762e_3cc5ae68",
+        "filename": "ios/chrome/browser/ui/commands/browser_commands.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-06T14:08:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9482cd71_0976a815",
+      "revId": "e98286315b695f4873152a0ca70b98739a8e3c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -56,6 +92,30 @@
       "revId": "e98286315b695f4873152a0ca70b98739a8e3c4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c33a26cb_a979e41b",
+        "filename": "ios/chrome/browser/ui/commands/browser_commands.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-06T14:08:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37ea047f_87118148",
+      "range": {
+        "startLine": 15,
+        "startChar": 3,
+        "endLine": 15,
+        "endChar": 11
+      },
+      "revId": "e98286315b695f4873152a0ca70b98739a8e3c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +159,48 @@
     },
     {
       "key": {
+        "uuid": "9d270c21_38f37e7b",
+        "filename": "ios/chrome/browser/ui/key_commands_provider.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-06T14:08:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96b7fc77_c31fc02e",
+      "revId": "e98286315b695f4873152a0ca70b98739a8e3c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4f25d6a9_fc871141",
+        "filename": "ios/chrome/browser/ui/key_commands_provider.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-06T14:08:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e8f8df5_ce1c0b75",
+      "range": {
+        "startLine": 50,
+        "startChar": 6,
+        "endLine": 50,
+        "endChar": 10
+      },
+      "revId": "e98286315b695f4873152a0ca70b98739a8e3c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "029a9789_329b84a5",
         "filename": "ios/chrome/browser/ui/ntp/google_landing_view_controller.mm",
         "patchSetId": 2
@@ -113,6 +215,24 @@
       "revId": "e98286315b695f4873152a0ca70b98739a8e3c4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "688d6521_d5ec2dbc",
+        "filename": "ios/chrome/browser/ui/ntp/google_landing_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1228,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-06T14:08:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "029a9789_329b84a5",
+      "revId": "e98286315b695f4873152a0ca70b98739a8e3c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -133,6 +253,24 @@
     },
     {
       "key": {
+        "uuid": "91cd0168_e593b032",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-06T14:08:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49dcbe3f_4939dbc7",
+      "revId": "e98286315b695f4873152a0ca70b98739a8e3c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "651d78a3_be754001",
         "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
         "patchSetId": 2
@@ -150,6 +288,24 @@
     },
     {
       "key": {
+        "uuid": "da2b268d_ae6d66e5",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-06T14:08:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "651d78a3_be754001",
+      "revId": "e98286315b695f4873152a0ca70b98739a8e3c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e51fa439_5e68a26f",
         "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
         "patchSetId": 2
@@ -161,6 +317,30 @@
       "writtenOn": "2017-07-06T12:46:31Z",
       "side": 1,
       "message": "You are using property accessors from inside init.",
+      "range": {
+        "startLine": 387,
+        "startChar": 2,
+        "endLine": 387,
+        "endChar": 7
+      },
+      "revId": "e98286315b695f4873152a0ca70b98739a8e3c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7458f7c_d6a01629",
+        "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-06T14:08:11Z",
+      "side": 1,
+      "message": "Yep, moving it to the superclass init.",
+      "parentUuid": "e51fa439_5e68a26f",
       "range": {
         "startLine": 387,
         "startChar": 2,
