@@ -9,19 +9,16 @@
 
 namespace thumbnails {
 
-SimpleThumbnailCrop::SimpleThumbnailCrop(const gfx::Size& target_size)
-    : target_size_(target_size) {
-  DCHECK(!target_size.IsEmpty());
-}
-
-ClipResult SimpleThumbnailCrop::GetCanvasCopyInfo(const gfx::Size& source_size,
-                                                  ui::ScaleFactor scale_factor,
-                                                  gfx::Rect* clipping_rect,
-                                                  gfx::Size* copy_size) const {
+ClipResult GetCanvasCopyInfo(const gfx::Size& source_size,
+                             ui::ScaleFactor scale_factor,
+                             const gfx::Size& target_size,
+                             gfx::Rect* clipping_rect,
+                             gfx::Size* copy_size) {
   DCHECK(!source_size.IsEmpty());
+  DCHECK(!target_size.IsEmpty());
   ClipResult clip_result = thumbnails::CLIP_RESULT_NOT_CLIPPED;
-  *clipping_rect = GetClippingRect(source_size, target_size_, &clip_result);
-  *copy_size = GetCopySizeForThumbnail(scale_factor, target_size_);
+  *clipping_rect = GetClippingRect(source_size, target_size, &clip_result);
+  *copy_size = GetCopySizeForThumbnail(scale_factor, target_size);
   return clip_result;
 }
 
@@ -29,10 +26,8 @@ ClipResult SimpleThumbnailCrop::GetCanvasCopyInfo(const gfx::Size& source_size,
 // necessary to read back the web contents image data from GPU. As the cost is
 // roughly proportional to the number of the copied pixels, the size of the
 // copied pixels should be as small as possible.
-// static
-gfx::Size SimpleThumbnailCrop::GetCopySizeForThumbnail(
-    ui::ScaleFactor scale_factor,
-    const gfx::Size& thumbnail_size) {
+gfx::Size GetCopySizeForThumbnail(ui::ScaleFactor scale_factor,
+                                  const gfx::Size& thumbnail_size) {
   // The copy size returned is the pixel equivalent of |thumbnail_size|, which
   // is in DIPs.
   if (scale_factor == ui::SCALE_FACTOR_100P) {
@@ -44,9 +39,9 @@ gfx::Size SimpleThumbnailCrop::GetCopySizeForThumbnail(
   return gfx::ScaleToFlooredSize(thumbnail_size, scale);
 }
 
-gfx::Rect SimpleThumbnailCrop::GetClippingRect(const gfx::Size& source_size,
-                                               const gfx::Size& desired_size,
-                                               ClipResult* clip_result) {
+gfx::Rect GetClippingRect(const gfx::Size& source_size,
+                          const gfx::Size& desired_size,
+                          ClipResult* clip_result) {
   DCHECK(clip_result);
 
   float desired_aspect =
@@ -85,7 +80,5 @@ gfx::Rect SimpleThumbnailCrop::GetClippingRect(const gfx::Size& source_size,
   }
   return clipping_rect;
 }
-
-SimpleThumbnailCrop::~SimpleThumbnailCrop() = default;
 
 } // namespace thumbnails
