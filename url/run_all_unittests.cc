@@ -11,11 +11,14 @@
 #include "base/test/test_suite.h"
 #include "build/build_config.h"
 
+#include <iostream>
+
 #if !defined(OS_IOS)
 #include "mojo/edk/embedder/embedder.h"  // nogncheck
 #endif
 
 int main(int argc, char** argv) {
+  std::cout << "Reached Unit Test Entry Point!" << std::endl;
   base::TestSuite test_suite(argc, argv);
 
 #if !defined(OS_IOS)

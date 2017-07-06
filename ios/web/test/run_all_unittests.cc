@@ -7,7 +7,10 @@
 #include "ios/web/public/test/web_test_suite.h"
 #include "mojo/edk/embedder/embedder.h"
 
+#include <iostream>
+
 int main(int argc, char** argv) {
+  std::cout << "Reached Unit Test Entry Point!" << std::endl;
   web::WebTestSuite test_suite(argc, argv);
 
   mojo::edk::Init();
