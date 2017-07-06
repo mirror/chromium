@@ -62,9 +62,6 @@ class CC_SURFACES_EXPORT SurfaceManager {
   std::string SurfaceReferencesToString();
 #endif
 
-  void SetDependencyTracker(SurfaceDependencyTracker* dependency_tracker);
-  SurfaceDependencyTracker* dependency_tracker() { return dependency_tracker_; }
-
   void RequestSurfaceResolution(Surface* surface,
                                 SurfaceDependencyDeadline* deadline);
 
@@ -329,7 +326,7 @@ class CC_SURFACES_EXPORT SurfaceManager {
   std::unordered_map<FrameSinkId, std::vector<LocalSurfaceId>, FrameSinkIdHash>
       temporary_reference_ranges_;
 
-  SurfaceDependencyTracker* dependency_tracker_ = nullptr;
+  SurfaceDependencyTracker dependency_tracker_;
 
   base::WeakPtrFactory<SurfaceManager> weak_factory_;
 
