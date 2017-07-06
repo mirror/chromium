@@ -107,6 +107,9 @@ class MODULES_EXPORT ServiceWorkerGlobalScopeClient
                                              const WebServiceWorkerResponse&,
                                              WebServiceWorkerStreamHandle*,
                                              double event_dispatch_time);
+  void RespondToCanMakePaymentEvent(int event_id,
+                                    bool response,
+                                    double event_dispatch_time);
   void RespondToPaymentRequestEvent(int event_id,
                                     const WebPaymentAppResponse&,
                                     double event_dispatch_time);

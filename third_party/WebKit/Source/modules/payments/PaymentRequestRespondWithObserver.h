@@ -20,7 +20,7 @@ class WaitUntilObserver;
 class MODULES_EXPORT PaymentRequestRespondWithObserver final
     : public RespondWithObserver {
  public:
-  virtual ~PaymentRequestRespondWithObserver();
+  ~PaymentRequestRespondWithObserver() override = default;
 
   static PaymentRequestRespondWithObserver* Create(ExecutionContext*,
                                                    int event_id,
