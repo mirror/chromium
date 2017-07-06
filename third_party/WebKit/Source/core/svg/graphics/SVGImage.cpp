@@ -370,6 +370,27 @@ void SVGImage::DrawPatternForContainer(GraphicsContext& context,
   context.DrawRect(dst_rect, flags);
 }
 
+std::unique_ptr<PaintRecorder> SVGImage::PaintRecorderForContainer(
+    const KURL& url,
+    const IntSize& container_size,
+    const IntRect& draw_src_rect,
+    const IntRect& draw_dst_rect,
+    bool flip_y) {
+  if (!page_)
+    return nullptr;
+
+  const FloatRect container_rect((FloatPoint()), FloatSize(container_size));
+  std::unique_ptr<PaintRecorder> recorder = WTF::WrapUnique(new PaintRecorder);
+  PaintCanvas* canvas = recorder->beginRecording(draw_src_rect);
+  if (flip_y) {
+    canvas->translate(0, draw_src_rect.Height());
+    canvas->scale(1, -1);
+  }
+  DrawForContainer(canvas, PaintFlags(), container_rect.Size(), 1,
+                   draw_dst_rect, draw_src_rect, url);
+  return recorder;
+}
+
 sk_sp<SkImage> SVGImage::ImageForCurrentFrameForContainer(
     const KURL& url,
     const IntSize& container_size) {
