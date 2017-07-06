@@ -140,6 +140,29 @@
     },
     {
       "key": {
+        "uuid": "1fec8743_ebce6d97",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 97304,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-06T13:17:30Z",
+      "side": 1,
+      "message": "Also having \u003cobsolete\u003e here is somewhat uncommon. There are only 36 matches of \u003c/obsolete\u003e[^\u003c]*\u003c/affected\u003e vs 2366 of \u003c/obsolete\u003e[^\u003c]*\u003cowner\u003e, but OWNERS should know better.",
+      "range": {
+        "startLine": 97302,
+        "startChar": 2,
+        "endLine": 97304,
+        "endChar": 14
+      },
+      "revId": "76b3b28b78dfa88993bc8cd46607076e634ad5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c0161f49_8bb205cb",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 4
