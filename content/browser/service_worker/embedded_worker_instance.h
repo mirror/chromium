@@ -109,9 +109,12 @@ class CONTENT_EXPORT EmbeddedWorkerInstance
   // STOPPED status. |callback| is invoked after the worker script has been
   // started and evaluated, or when an error occurs.
   // |params| should be populated with service worker version info needed
-  // to start the worker.
+  // to start the worker. If the worker is already installed,
+  // |installed_scripts_info| holds information about its scripts; otherwise,
+  // it is empty.
   void Start(std::unique_ptr<EmbeddedWorkerStartParams> params,
              mojom::ServiceWorkerEventDispatcherRequest dispatcher_request,
+             mojom::ServiceWorkerInstalledScriptsInfoPtr installed_scripts_info,
              const StatusCallback& callback);
 
   // Stops the worker. It is invalid to call this when the worker is
@@ -294,6 +297,7 @@ class CONTENT_EXPORT EmbeddedWorkerInstance
   // TODO(shimazu): Remove this after EmbeddedWorkerStartParams is changed to
   // a mojo struct.
   mojom::ServiceWorkerEventDispatcherRequest pending_dispatcher_request_;
+  mojom::ServiceWorkerInstalledScriptsInfoPtr pending_installed_scripts_info_;
 
   // Whether devtools is attached or not.
   bool devtools_attached_;
