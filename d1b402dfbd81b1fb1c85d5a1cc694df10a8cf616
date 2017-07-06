@@ -1,0 +1,228 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c9f6b5a_280b06fc",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-06T03:24:47Z",
+      "side": 1,
+      "message": "nit: rather than pass install_all here (and launch_all below), it would be less duplication to apply the --all flag logic right in main, and just have these methods act upon the list of devices given to them.",
+      "range": {
+        "startLine": 27,
+        "startChar": 10,
+        "endLine": 27,
+        "endChar": 19
+      },
+      "revId": "d1b402dfbd81b1fb1c85d5a1cc694df10a8cf616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2087e39_73d57097",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-06T03:24:47Z",
+      "side": 1,
+      "message": "nit: you should add an early check that device_args_file is set if input_args is not empty, and error out early otherwise.",
+      "range": {
+        "startLine": 30,
+        "startChar": 4,
+        "endLine": 30,
+        "endChar": 14
+      },
+      "revId": "d1b402dfbd81b1fb1c85d5a1cc694df10a8cf616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe57e83c_d99bde2d",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-06T03:24:47Z",
+      "side": 1,
+      "message": "nit: Create this only when url is not None. Probably easiest to just move it into launch() below. Although it will caused it to be created for each device, the number of devices is always super small.",
+      "range": {
+        "startLine": 33,
+        "startChar": 2,
+        "endLine": 33,
+        "endChar": 15
+      },
+      "revId": "d1b402dfbd81b1fb1c85d5a1cc694df10a8cf616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26b1f3e8_6d521468",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-06T03:24:47Z",
+      "side": 1,
+      "message": "nit: rather than calling pMap a second time, you should call _UpdateFlags from within launch above. pMap creates one thread per device, and it\u0027s not really necessary to create 2 threads per device.",
+      "range": {
+        "startLine": 63,
+        "startChar": 14,
+        "endLine": 63,
+        "endChar": 18
+      },
+      "revId": "d1b402dfbd81b1fb1c85d5a1cc694df10a8cf616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da7c22ef_95994330",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-06T03:24:47Z",
+      "side": 1,
+      "message": "\"to action on all devices\" -\u003e \"to select all devices\"",
+      "range": {
+        "startLine": 68,
+        "startChar": 52,
+        "endLine": 68,
+        "endChar": 61
+      },
+      "revId": "d1b402dfbd81b1fb1c85d5a1cc694df10a8cf616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5cf71ab_ee355c9f",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-06T03:24:47Z",
+      "side": 1,
+      "message": "Suggestion: Flags to set in the flags file for the apk. Available only for android_apk targets that set \"command_line_flags_file\".",
+      "range": {
+        "startLine": 92,
+        "startChar": 42,
+        "endLine": 92,
+        "endChar": 65
+      },
+      "revId": "d1b402dfbd81b1fb1c85d5a1cc694df10a8cf616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "319395fa_1cc73d98",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-06T03:24:47Z",
+      "side": 1,
+      "message": "Just realized that this script should probably also handle incremental apks. Not sure what the best way to support this is though. Options:\n1. Create a separate wrapper script for both \"chrome_public_apk\" and \"chrome_public_apk_incremental\"\n2. Have \"chrome_public_apk install\" automatically install whichever is newer between the incremental and the non-incremental apks\n3. Have a separate command for incremental vs non. E.g. \"chrome_public_apk install-incremental\"\n4. Have a separate argument for incremental vs non. E.g. \"chrome_public_apk install --incremental\"\n\nI\u0027m thinking probably the most convenient would be a combination of 2 and 4. E.g. Auto-detect by default, but allow a --flag to override auto-detection.\n\nFor how to actually perform an incremental install, refer to:\nhttps://cs.chromium.org/chromium/src/build/android/pylib/local/device/local_device_test_run.py?type\u003dcs\u0026q\u003dinstaller.Install+file:%5C.py+file:pylib\u0026sq\u003dpackage:chromium\u0026l\u003d27\n\nEssentially, all you\u0027ll need is an addition --flag that provides the path to the install_chrome_public_apk_incremental script.",
+      "range": {
+        "startLine": 98,
+        "startChar": 26,
+        "endLine": 98,
+        "endChar": 42
+      },
+      "revId": "d1b402dfbd81b1fb1c85d5a1cc694df10a8cf616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56e2aa6b_1059d0d9",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-06T03:24:47Z",
+      "side": 1,
+      "message": "I\u0027d downplay that it can launch a Url, since the main feature is just that it can start the app. How about \u0027Launches the apk and optionally includes a URL in the intent.\u0027",
+      "range": {
+        "startLine": 110,
+        "startChar": 60,
+        "endLine": 110,
+        "endChar": 70
+      },
+      "revId": "d1b402dfbd81b1fb1c85d5a1cc694df10a8cf616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f1ca810_79ce8656",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-06T03:24:47Z",
+      "side": 1,
+      "message": "Another thing that would be great to add in here (wrapped around this command selection logic), is enabling device caches. Essentially copy the code from here:\n\nhttps://cs.corp.google.com/clankium/src/build/android/incremental_install/installer.py?l\u003d171",
+      "revId": "d1b402dfbd81b1fb1c85d5a1cc694df10a8cf616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aabaf82_59901379",
+        "filename": "build/android/gyp/create_apk_operations_script.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-06T03:24:47Z",
+      "side": 1,
+      "message": "Nit: there\u0027s no value in storing other_args as a list of tuples since it\u0027s just converted back to a flat list on the other side. Just store it as a flat list.",
+      "range": {
+        "startLine": 62,
+        "startChar": 2,
+        "endLine": 62,
+        "endChar": 12
+      },
+      "revId": "d1b402dfbd81b1fb1c85d5a1cc694df10a8cf616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
