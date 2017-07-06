@@ -8,6 +8,7 @@ source_set("global_state") {
   deps = [
     "//base",
     "//components/task_scheduler_util/browser",
+    "//net",
   ]
 
   sources = [
