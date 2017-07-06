@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "514e31d0_1d797867",
+        "filename": "components/language/DEPS",
+        "patchSetId": 5
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-07-06T08:10:10Z",
+      "side": 1,
+      "message": "It looks like you\u0027re right - removed.",
+      "parentUuid": "84978cbb_003400af",
+      "revId": "c5f9a5eb0fe4c5ae490bda147daad863a2069fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4f06e5c_bcf5d929",
         "filename": "components/language/OWNERS",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "c0e3d35c_2be27311",
+        "filename": "components/language/OWNERS",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-07-06T08:10:10Z",
+      "side": 1,
+      "message": "This is a temporary exception while napper@ works towards committers; you can see that napper@ has already been made owner of translate here:\nhttps://chromium-review.googlesource.com/c/541737/",
+      "parentUuid": "c4f06e5c_bcf5d929",
+      "revId": "c5f9a5eb0fe4c5ae490bda147daad863a2069fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d07a094b_1eb69b61",
         "filename": "components/language/core/browser/BUILD.gn",
         "patchSetId": 5
@@ -50,6 +86,24 @@
       "revId": "c5f9a5eb0fe4c5ae490bda147daad863a2069fa1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0503491e_2075fd57",
+        "filename": "components/language/core/browser/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-07-06T08:10:10Z",
+      "side": 1,
+      "message": "They aren\u0027t - removed.",
+      "parentUuid": "d07a094b_1eb69b61",
+      "revId": "c5f9a5eb0fe4c5ae490bda147daad863a2069fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "87d1732b_e080afb5",
+        "filename": "components/ntp_snippets/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-07-06T08:10:10Z",
+      "side": 1,
+      "message": "It turns out no - removed.",
+      "parentUuid": "f3136454_bb3617d6",
+      "range": {
+        "startLine": 136,
+        "startChar": 42,
+        "endLine": 136,
+        "endChar": 0
+      },
+      "revId": "c5f9a5eb0fe4c5ae490bda147daad863a2069fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91483841_accfc0e2",
         "filename": "components/ntp_snippets/DEPS",
         "patchSetId": 5
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "c521cc8b_ace43062",
+        "filename": "components/ntp_snippets/DEPS",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-07-06T08:10:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91483841_accfc0e2",
+      "range": {
+        "startLine": 16,
+        "startChar": 38,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "c5f9a5eb0fe4c5ae490bda147daad863a2069fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3bbb4752_0c1e6668",
         "filename": "components/ntp_snippets/remote/json_request.cc",
         "patchSetId": 5
@@ -119,6 +221,30 @@
       "revId": "c5f9a5eb0fe4c5ae490bda147daad863a2069fa1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b353887_23653bbf",
+        "filename": "components/ntp_snippets/remote/json_request.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-07-06T08:10:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3bbb4752_0c1e6668",
+      "range": {
+        "startLine": 44,
+        "startChar": 37,
+        "endLine": 44,
+        "endChar": 0
+      },
+      "revId": "c5f9a5eb0fe4c5ae490bda147daad863a2069fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
