@@ -177,6 +177,8 @@ base::string16 AccountChooserDialogView::GetDialogButtonLabel(
 }
 
 gfx::Size AccountChooserDialogView::CalculatePreferredSize() const {
+  if (ChromeLayoutProvider::Get()->IsHarmonyMode())
+    return views::DialogDelegateView::CalculatePreferredSize();
   return gfx::Size(kDesiredWidth, GetHeightForWidth(kDesiredWidth));
 }
 
