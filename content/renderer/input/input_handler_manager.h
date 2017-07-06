@@ -92,7 +92,8 @@ class CONTENT_EXPORT InputHandlerManager {
   virtual void HandleInputEvent(int routing_id,
                                 ui::WebScopedInputEvent input_event,
                                 const ui::LatencyInfo& latency_info,
-                                const InputEventAckStateCallback& callback);
+                                const InputEventAckStateCallback& callback,
+                                cc::TouchAction* touch_action);
 
   virtual void QueueClosureForMainThreadEventQueue(
       int routing_id,

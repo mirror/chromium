@@ -232,10 +232,16 @@ void InputEventFilter::ForwardToHandler(int associated_routing_id,
   if (!received_time.is_null())
     event->SetTimeStampSeconds(ui::EventTimeStampToSeconds(received_time));
 
+  cc::TouchAction touch_action = cc::kNoTouchAction;
   input_handler_manager_->HandleInputEvent(
       associated_routing_id, std::move(event), latency_info,
       base::Bind(&InputEventFilter::DidForwardToHandlerAndOverscroll, this,
-                 associated_routing_id, dispatch_type));
+                 associated_routing_id, dispatch_type),
+      &touch_action);
+  if (touch_action != cc::kNoTouchAction) {
+    SendMessage(base::MakeUnique<InputHostMsg_SetWhiteListedTouchAction>(
+        associated_routing_id, touch_action));
+  }
 };
 
 void InputEventFilter::DidForwardToHandlerAndOverscroll(
