@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4831b6d1_1d4a82b6",
+        "filename": "content/browser/indexed_db/indexed_db_dispatcher_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-06T06:48:35Z",
+      "side": 1,
+      "message": "Nit: #include \u003cutility\u003e",
+      "range": {
+        "startLine": 43,
+        "startChar": 4,
+        "endLine": 43,
+        "endChar": 13
+      },
+      "revId": "da551cc8209d4d7c1d1aab908ca909e121704585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80a7454c_7efdc899",
+        "filename": "content/browser/indexed_db/indexed_db_dispatcher_host_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-06T06:48:35Z",
+      "side": 1,
+      "message": "Nit: here and below, omit \"\" (it\u0027s usually slightly more efficient). That being said, it\u0027s not a huge difference.",
+      "range": {
+        "startLine": 468,
+        "startChar": 68,
+        "endLine": 468,
+        "endChar": 70
+      },
+      "revId": "da551cc8209d4d7c1d1aab908ca909e121704585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b595b5a_4641918b",
+        "filename": "content/browser/indexed_db/indexed_db_factory_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-06T06:48:35Z",
+      "side": 1,
+      "message": "Nit: base::string16 to avoid copying each element of the vector while iterating.",
+      "range": {
+        "startLine": 322,
+        "startChar": 7,
+        "endLine": 322,
+        "endChar": 21
+      },
+      "revId": "da551cc8209d4d7c1d1aab908ca909e121704585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15490766_00fe6d61",
+        "filename": "content/browser/indexed_db/indexed_db_factory_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-06T06:48:35Z",
+      "side": 1,
+      "message": "Nit: scoped_refptr\u003cIndexedDBDatabase\u003e\u0026 to avoid ref-count churn in the loop\n\n(this could be done for the map lookup on 304 as well... if it\u0027s guaranteed that nothing from line 306-327 could invalidate |backing_store|. I don\u0027t know the indexeddb code well enough to say if that\u0027s a good idea)",
+      "range": {
+        "startLine": 323,
+        "startChar": 4,
+        "endLine": 323,
+        "endChar": 36
+      },
+      "revId": "da551cc8209d4d7c1d1aab908ca909e121704585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
