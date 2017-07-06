@@ -15,6 +15,11 @@ static_library("zucchini_lib") {
     "disassembler.cc",
     "disassembler.h",
     "image_utils.h",
+    "patch_sink.cc",
+    "patch_sink.h",
+    "patch_source.cc",
+    "patch_source.h",
+    "patch_utils.h",
     "typed_value.h",
   ]
 
@@ -47,6 +52,8 @@ test("zucchini_unittests") {
     "buffer_sink_unittest.cc",
     "buffer_source_unittest.cc",
     "buffer_view_unittest.cc",
+    "patch_sink_unittest.cc",
+    "patch_source_unittest.cc",
     "typed_value_unittest.cc",
   ]
 

@@ -36,6 +36,9 @@ class TypedValue {
   friend bool operator!=(const TypedValue& a, const TypedValue& b) {
     return !(a == b);
   }
+  friend bool operator<(const TypedValue& a, const TypedValue& b) {
+    return a.value_ < b.value_;
+  }
 
  protected:
   T value_ = {};
