@@ -18,6 +18,7 @@ WebServiceWorkerInstalledScriptsManager::RawScriptData::RawScriptData(
 void WebServiceWorkerInstalledScriptsManager::RawScriptData::AddHeader(
     const WebString& key,
     const WebString& value) {
+  DCHECK(headers_);
   headers_->emplace_back(key, value);
 }
 

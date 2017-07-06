@@ -55,6 +55,10 @@ ServiceWorkerInstalledScriptsManager::GetScriptData(const KURL& script_url) {
       script_data.meta_data->Append(chunk.Data(), chunk.size());
   }
   script_data.headers.Adopt(raw_script_data->TakeHeaders());
+  for (const auto& entry : script_data.headers) {
+    LOG(ERROR) << "getscriptdata: (" << entry.key.Utf8().data() << ": "
+               << entry.value.Utf8().data() << ")";
+  }
   return Optional<ScriptData>(std::move(script_data));
 }
 

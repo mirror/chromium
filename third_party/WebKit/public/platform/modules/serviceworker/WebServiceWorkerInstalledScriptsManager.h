@@ -43,6 +43,7 @@ class WebServiceWorkerInstalledScriptsManager {
     const WebVector<BytesChunk>& MetaDataChunks() const { return meta_data_; }
     // The HTTP headers of the script.
     std::unique_ptr<CrossThreadHTTPHeaderMapData> TakeHeaders() {
+      DCHECK(headers_);
       return std::move(headers_);
     }
 
