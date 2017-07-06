@@ -4703,12 +4703,20 @@ LayoutRect LocalFrameView::ScrollIntoView(const LayoutRect& rect_in_content,
   LayoutRect view_rect(VisibleContentRect());
   LayoutRect expose_rect = ScrollAlignment::GetRectToExpose(
       view_rect, rect_in_content, align_x, align_y);
+  ScrollOffset old_scroll_offset = GetScrollOffset();
+  LayoutRect moved_rect = rect_in_content;
   if (expose_rect != view_rect) {
     ScrollOffset target_offset(expose_rect.X().ToFloat(),
                                expose_rect.Y().ToFloat());
-    if (is_smooth) {
-      DCHECK(scroll_type == kProgrammaticScroll);
-      GetSmoothScrollSequencer()->QueueAnimation(this, target_offset);
+
+    if (scroll_type == kProgrammaticScroll) {
+      ScrollBehavior behavior =
+          is_smooth ? kScrollBehaviorSmooth : kScrollBehaviorInstant;
+      GetSmoothScrollSequencer()->QueueAnimation(this, target_offset, behavior);
+      ScrollOffset scroll_offset_difference =
+          ClampScrollOffset(target_offset) - old_scroll_offset;
+      moved_rect.Move(-LayoutSize(scroll_offset_difference));
+      moved_rect.SetLocation(RoundedIntPoint(moved_rect.Location()));
     } else {
       SetScrollOffset(target_offset, scroll_type);
     }
@@ -4718,7 +4726,7 @@ LayoutRect LocalFrameView::ScrollIntoView(const LayoutRect& rect_in_content,
   // relative to the document.
   // TODO(szager): PaintLayerScrollableArea::ScrollIntoView clips the return
   // value to the visible content rect, but this does not.
-  return rect_in_content;
+  return moved_rect;
 }
 
 IntRect LocalFrameView::ScrollCornerRect() const {

@@ -927,7 +927,7 @@ void HTMLSelectElement::ScrollToOptionAfterLayout(
   scrollable_area.ScrollLocalRectIntoView(
       LayoutRect(LayoutPoint() + option_offset, option_box->Size()),
       ScrollAlignment::kAlignToEdgeIfNeeded,
-      ScrollAlignment::kAlignToEdgeIfNeeded, false);
+      ScrollAlignment::kAlignToEdgeIfNeeded, false, kProgrammaticScroll, false);
 }
 
 void HTMLSelectElement::OptionSelectionStateChanged(HTMLOptionElement* option,
