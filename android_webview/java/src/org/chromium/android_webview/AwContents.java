@@ -832,6 +832,10 @@ public class AwContents implements SmartClipProvider {
         contentViewCore.setActionModeCallback(
                 new AwActionModeCallback(mContext, this,
                         contentViewCore.getActionModeCallbackHelper()));
+        if (mAutofillProvider != null) {
+            contentViewCore.setNonSelectionActionModeCallback(
+                    new AutofillActionModeCallback(context, this));
+        }
         contentViewCore.addGestureStateListener(gestureStateListener);
     }
 
@@ -2356,6 +2360,14 @@ public class AwContents implements SmartClipProvider {
         if (mAutofillProvider != null) {
             mAutofillProvider.autofill(values);
         }
+    }
+
+    public boolean hasAutofillSession() {
+        return mAutofillProvider != null && mAutofillProvider.hasAutofillSession();
+    }
+
+    public void queryAutofillSuggestion() {
+        if (mAutofillProvider != null) mAutofillProvider.queryAutofillSuggestion();
     }
 
     public boolean isSelectActionModeAllowed(int actionModeItem) {
