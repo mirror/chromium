@@ -148,6 +148,9 @@ if (is_android) {
     # emma_coverage==true
     emma_filter = ""
 
+    # Instruments Java code with tracing (using ASM).
+    instrument_with_tracing = false
+
     # Disables process isolation when building _incremental targets.
     # Required for Android M+ due to SELinux policies (stronger sandboxing).
     disable_incremental_isolated_processes = false

@@ -565,6 +565,12 @@ template("test_runner_script") {
           rebase_path("$root_out_dir/coverage", root_build_dir),
         ]
       }
+      if (trace_output) {
+        test_runner_args += ]
+          "--trace-dir",
+          rebase_path("$root_out_dir/trace", root_build_dir),
+        ]
+      }
     } else if (_test_type == "junit") {
       assert(defined(invoker.test_suite))
       _device_test = false
@@ -1003,6 +1009,13 @@ if (enable_java_templates) {
         ]
         args += [ "--noverify" ]
       }
+      if (trace_output) {
+        args += [
+          "--classpath",
+          rebase_path("//third_party/android_tools/sdk/tools/lib/instrument_with_tracing.jar",
+                      root_build_dir),
+        ]
+      }
       if (defined(invoker.wrapper_script_args)) {
         args += [ "--" ] + invoker.wrapper_script_args
       }
@@ -1376,6 +1389,52 @@ if (enable_java_templates) {
           emma_filter,
         ]
       }
+    }
+  }
+
+  template("trace_instr") {
+    action(target_name) {
+      forward_variables_from(invoker,
+                             [
+                               "deps",
+                               "testonly",
+                             ])
+
+      _trace_results_file = "$target_out_dir/${target_name}.trace.json"
+      _source_dirs_listing_file = "$target_out_dir/${target_name}_sources.txt"
+      _trace_jar = "${android_sdk_root}/tools/lib/emma.jar"
+
+      script = "//build/android/gyp/trace_instr.py"
+      depfile = "${target_gen_dir}/${target_name}.d"
+      inputs = invoker.java_files + [
+                 _trace_jar,
+                 invoker.input_jar_path,
+               ]
+      outputs = [
+        _trace_results_file,
+        _source_dirs_listing_file,
+        invoker.output_jar_path,
+      ]
+      args = [
+        "instrument_jar",
+        "--input-path",
+        rebase_path(invoker.input_jar_path, root_build_dir),
+        "--output-path",
+        rebase_path(invoker.output_jar_path, root_build_dir),
+        "--depfile",
+        rebase_path(depfile, root_build_dir),
+        "--coverage-file",
+        rebase_path(_coverage_file, root_build_dir),
+        "--sources-list-file",
+        rebase_path(_source_dirs_listing_file, root_build_dir),
+        "--src-root",
+        rebase_path("//", root_build_dir),
+        "--emma-jar",
+        rebase_path(_emma_jar, root_build_dir),
+      ]
+      _rebased_java_sources_file =
+          rebase_path(invoker.java_sources_file, root_build_dir)
+      args += [ "--java-sources-file=$_rebased_java_sources_file" ]
     }
   }
 
@@ -2178,6 +2237,14 @@ if (enable_java_templates) {
           "$target_gen_dir/$target_name.process_prebuilt.jar"
     }
 
+    _trace_instrument = defined(invoker.trace_instrument) &&
+                        invoker.trace_instrument && invoker.java_files != []
+    if (_trace_instrument) {
+      _trace_instr_target_name = "${target_name}__trace_instr"
+      _process_prebuilt_jar_path =
+          "$target_gen_dir/$target_name.process_prebuilt.jar"
+    }
+
     _rebased_build_config = rebase_path(_build_config, root_build_dir)
     _rebased_jar_path = rebase_path(_javac_jar_path, root_build_dir)
 
@@ -2306,6 +2373,24 @@ if (enable_java_templates) {
       }
     }
 
+    if (_trace_instrument) {
+      trace_instr(_trace_instr_target_name) {
+        forward_variables_from(invoker,
+                               [
+                                 "deps",
+                                 "java_files",
+                                 "java_sources_file",
+                               ])
+        input_jar_path = _process_prebuilt_jar_path
+        output_jar_path = _final_jar_path
+
+        if (!defined(deps)) {
+          deps = []
+        }
+        deps += [ ":$_process_prebuilt_target_name" ]
+      }
+    }
+
     generate_interface_jar(_ijar_target_name) {
       # Always used the unfiltered .jar to create the interface jar so that
       # other targets will resolve filtered classes when depending on
@@ -2325,6 +2410,8 @@ if (enable_java_templates) {
       ]
       if (_emma_instrument) {
         public_deps += [ ":$_emma_instr_target_name" ]
+      } else if (trace_instrument) {
+        public_deps += [ ":$_trace_instr_target_name" ]
       } else {
         public_deps += [ ":$_process_prebuilt_target_name" ]
       }
@@ -2412,6 +2499,8 @@ if (enable_java_templates) {
     }
     assert(_emma_never_instrument || true)  # Mark as used
     _emma_instrument = emma_coverage && !_emma_never_instrument
+
+    _trace_instrument = trace_output
 
     if (_supports_android) {
       _dex_path = _base_path + ".dex.jar"
@@ -2525,6 +2614,7 @@ if (enable_java_templates) {
       supports_android = _supports_android
       requires_android = _requires_android
       emma_instrument = _emma_instrument
+      trace_instrument = _trace_instrument
       deps = _accumulated_deps
     }
     _accumulated_deps += [ ":$_compile_java_target" ]
