@@ -78,9 +78,15 @@ bool IOSChromePasswordManagerClient::PromptUserToChooseCredentials(
 
 bool IOSChromePasswordManagerClient::PromptUserToSaveOrUpdatePassword(
     std::unique_ptr<PasswordFormManager> form_to_save,
-    bool update_password) {
+    bool update_password,
+    password_manager::PasswordFormMetricsRecorder::SaveBubbleTrigger trigger) {
   if (form_to_save->IsBlacklisted())
     return false;
+
+  scoped_refptr<password_manager::PasswordFormMetricsRecorder>
+      metrics_recorder = form_to_save->metrics_recorder();
+  if (metrics_recorder)
+    metrics_recorder->RecordSavingPrompt(trigger, update_password);
 
   if (update_password) {
     [delegate_ showUpdatePasswordInfoBar:std::move(form_to_save)];

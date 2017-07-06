@@ -269,6 +269,10 @@ class PasswordFormManager : public FormFetcher::Consumer {
   // adds itself as a consumer of the new one.
   void GrabFetcher(std::unique_ptr<FormFetcher> fetcher);
 
+  const scoped_refptr<PasswordFormMetricsRecorder> metrics_recorder() {
+    return metrics_recorder_;
+  }
+
  protected:
   // FormFetcher::Consumer:
   void ProcessMatches(
