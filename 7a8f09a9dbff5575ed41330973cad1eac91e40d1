@@ -22,6 +22,30 @@
       "revId": "7a8f09a9dbff5575ed41330973cad1eac91e40d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2381b222_c41f4a34",
+        "filename": "net/base/network_interfaces_getifaddrs.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-07-06T19:40:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ecb784b8_e170e5f7",
+      "range": {
+        "startLine": 147,
+        "startChar": 15,
+        "endLine": 147,
+        "endChar": 21
+      },
+      "revId": "7a8f09a9dbff5575ed41330973cad1eac91e40d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
