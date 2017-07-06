@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4663eb2_a49b4977",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network_log/HAREntry.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-06T23:45:03Z",
+      "side": 1,
+      "message": "Can we do this when sharing the connection? It doesn\u0027t look equivalent in this case.",
+      "revId": "cd32e0328afb64bb55d05ebb481774a2d42f22ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95ba5e93_1af497f1",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network_log/HAREntry.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-06T23:45:03Z",
+      "side": 1,
+      "message": "Note that these are relative to startTime, not issueTime, so perhaps you need to add queuedTime to blockedFromTiming here.",
+      "revId": "cd32e0328afb64bb55d05ebb481774a2d42f22ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f428ad6d_9753dcf2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network_log/HAREntry.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-06T23:45:03Z",
+      "side": 1,
+      "message": "so you\u0027re comparing a time relative to startTime with a delta between issueTime and startTime -- I don\u0027t think it\u0027s fair.",
+      "revId": "cd32e0328afb64bb55d05ebb481774a2d42f22ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
