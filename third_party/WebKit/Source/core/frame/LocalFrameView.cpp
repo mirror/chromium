@@ -1292,60 +1292,64 @@ void LocalFrameView::UpdateLayout() {
   }  // Reset m_layoutSchedulingEnabled to its previous value.
   CheckDoesNotNeedLayout();
 
-  DocumentLifecycle::Scope lifecycle_scope(Lifecycle(),
-                                           DocumentLifecycle::kLayoutClean);
+  {
+    DocumentLifecycle::Scope lifecycle_scope(Lifecycle(),
+                                             DocumentLifecycle::kLayoutClean);
 
-  frame_timing_requests_dirty_ = true;
+    frame_timing_requests_dirty_ = true;
 
-  // FIXME: Could find the common ancestor layer of all dirty subtrees and mark
-  // from there. crbug.com/462719
-  GetLayoutViewItem().EnclosingLayer()->UpdateLayerPositionsAfterLayout();
+    // FIXME: Could find the common ancestor layer of all dirty subtrees and
+    // mark from there. crbug.com/462719
+    GetLayoutViewItem().EnclosingLayer()->UpdateLayerPositionsAfterLayout();
 
-  TRACE_EVENT_OBJECT_SNAPSHOT_WITH_ID(
-      TRACE_DISABLED_BY_DEFAULT("blink.debug.layout.trees"), "LayoutTree", this,
-      TracedLayoutObject::Create(*GetLayoutView(), true));
+    TRACE_EVENT_OBJECT_SNAPSHOT_WITH_ID(
+        TRACE_DISABLED_BY_DEFAULT("blink.debug.layout.trees"), "LayoutTree",
+        this, TracedLayoutObject::Create(*GetLayoutView(), true));
 
-  GetLayoutViewItem().Compositor()->DidLayout();
+    GetLayoutViewItem().Compositor()->DidLayout();
 
-  layout_count_++;
+    layout_count_++;
 
-  if (AXObjectCache* cache = document->AxObjectCache()) {
-    const KURL& url = document->Url();
-    if (url.IsValid() && !url.IsAboutBlankURL())
-      cache->HandleLayoutComplete(document);
-  }
-  UpdateDocumentAnnotatedRegions();
-  CheckDoesNotNeedLayout();
+    if (AXObjectCache* cache = document->AxObjectCache()) {
+      const KURL& url = document->Url();
+      if (url.IsValid() && !url.IsAboutBlankURL())
+        cache->HandleLayoutComplete(document);
+    }
+    UpdateDocumentAnnotatedRegions();
+    CheckDoesNotNeedLayout();
 
-  ScheduleOrPerformPostLayoutTasks();
-  CheckDoesNotNeedLayout();
+    ScheduleOrPerformPostLayoutTasks();
+    CheckDoesNotNeedLayout();
 
-  // FIXME: The notion of a single root for layout is no longer applicable.
-  // Remove or update this code. crbug.com/460596
-  TRACE_EVENT_END1("devtools.timeline", "Layout", "endData",
-                   InspectorLayoutEvent::EndData(root_for_this_layout));
-  probe::didChangeViewport(frame_.Get());
+    // FIXME: The notion of a single root for layout is no longer applicable.
+    // Remove or update this code. crbug.com/460596
+    TRACE_EVENT_END1("devtools.timeline", "Layout", "endData",
+                     InspectorLayoutEvent::EndData(root_for_this_layout));
+    probe::didChangeViewport(frame_.Get());
 
-  nested_layout_count_--;
-  if (nested_layout_count_)
-    return;
+    nested_layout_count_--;
+    if (nested_layout_count_)
+      return;
 
 #if DCHECK_IS_ON()
-  // Post-layout assert that nobody was re-marked as needing layout during
-  // layout.
-  GetLayoutView()->AssertSubtreeIsLaidOut();
+    // Post-layout assert that nobody was re-marked as needing layout during
+    // layout.
+    GetLayoutView()->AssertSubtreeIsLaidOut();
 #endif
 
-  if (frame_->IsMainFrame() &&
-      RuntimeEnabledFeatures::VisualViewportAPIEnabled()) {
-    // Scrollbars changing state can cause a visual viewport size change.
-    DoubleSize new_viewport_size(visual_viewport.VisibleWidthCSSPx(),
-                                 visual_viewport.VisibleHeightCSSPx());
-    if (new_viewport_size != viewport_size)
-      frame_->GetDocument()->EnqueueVisualViewportResizeEvent();
+    if (frame_->IsMainFrame() &&
+        RuntimeEnabledFeatures::VisualViewportAPIEnabled()) {
+      // Scrollbars changing state can cause a visual viewport size change.
+      DoubleSize new_viewport_size(visual_viewport.VisibleWidthCSSPx(),
+                                   visual_viewport.VisibleHeightCSSPx());
+      if (new_viewport_size != viewport_size)
+        frame_->GetDocument()->EnqueueVisualViewportResizeEvent();
+    }
+
+    GetFrame().GetDocument()->LayoutUpdated();
   }
 
-  GetFrame().GetDocument()->LayoutUpdated();
+  GetFrame().GetDocument()->GetRootScrollerController().DidUpdateLayout();
   CheckDoesNotNeedLayout();
 }
 
