@@ -127,6 +127,24 @@
     },
     {
       "key": {
+        "uuid": "5932fe8b_1e499031",
+        "filename": "ui/compositor/clip_recorder.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-07-06T17:22:26Z",
+      "side": 1,
+      "message": "I think building it and throwing it away is a short term state.  As far as I know, I think the longer term plan is: https://chromium-review.googlesource.com/c/552837/#message-dfba8fbd81b957a56a53f5385233c4a30d6ec55b\n\nIn other words that DIL/POB always end up getting used together and POB is just the op storage and DIL is the top level interface and main object that external paint code interacts with.",
+      "parentUuid": "7a5ba4db_5b78f82a",
+      "revId": "12ccfac98fad7e3d4006e8355014b93518ed4ad8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3761526a_0fcada1e",
         "filename": "ui/compositor/paint_cache.cc",
         "patchSetId": 12
