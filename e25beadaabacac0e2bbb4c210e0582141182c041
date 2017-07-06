@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de5ebeb8_70b2eb5a",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-06T04:55:13Z",
+      "side": 1,
+      "message": "I think 0 means \"unlimited\", which sounds different than is_enabled_ \u003d false.\n\nMaybe it\u0027s good to provide a FetchContext which has an EmptyFrameScheduler. Do you think it\u0027s good to add GetWebFrameScheduler to MockFetchContext?",
+      "revId": "e25beadaabacac0e2bbb4c210e0582141182c041",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
