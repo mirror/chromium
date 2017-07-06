@@ -564,8 +564,10 @@ void FrameLoader::LoadInSameDocument(
                                        ? std::move(state_object)
                                        : SerializedScriptValue::NullValue());
 
-  if (history_item)
-    RestoreScrollPositionAndViewStateForLoadType(frame_load_type);
+  if (history_item) {
+    RestoreScrollPositionAndViewStateForLoadType(frame_load_type,
+                                                 kHistorySameDocumentLoad);
+  }
 
   // We need to scroll to the fragment whether or not a hash change occurred,
   // since the user might have scrolled since the previous navigation.
@@ -1062,11 +1064,13 @@ bool FrameLoader::IsLoadingMainFrame() const {
 void FrameLoader::RestoreScrollPositionAndViewState() {
   if (!frame_->GetPage() || !GetDocumentLoader())
     return;
-  RestoreScrollPositionAndViewStateForLoadType(GetDocumentLoader()->LoadType());
+  RestoreScrollPositionAndViewStateForLoadType(GetDocumentLoader()->LoadType(),
+                                               kHistoryDifferentDocumentLoad);
 }
 
 void FrameLoader::RestoreScrollPositionAndViewStateForLoadType(
-    FrameLoadType load_type) {
+    FrameLoadType load_type,
+    HistoryLoadType history_load_type) {
   LocalFrameView* view = frame_->View();
   if (!view || !view->LayoutViewportScrollableArea() ||
       !state_machine_.CommittedFirstRealDocumentLoad() ||
@@ -1088,12 +1092,20 @@ void FrameLoader::RestoreScrollPositionAndViewStateForLoadType(
   // 2. not overriding user scroll (TODO(majidvp): also respect user scale)
   // 3. detecting clamping to avoid repeatedly popping the scroll position down
   //    as the page height increases
-  // 4. ignore clamp detection if we are not restoring scroll or after load
-  //    completes because that may be because the page will never reach its
-  //    previous height
+  // 4. forcing a layout if necessary to avoid clamping
+  // 5. ignore clamp detection if we are not restoring scroll or after load
+  //    complete, or for same doc history navigation, because that may be
+  //    because the page will never reach its previous height.
   bool can_restore_without_clamping =
       view->LayoutViewportScrollableArea()->ClampScrollOffset(
           history_item->GetScrollOffset()) == history_item->GetScrollOffset();
+
+  // Here |can_restore_without_clamping| is false, maybe need a layout to get
+  // correct content size.
+  if (!can_restore_without_clamping &&
+      history_load_type == kHistorySameDocumentLoad)
+    frame_->GetDocument()->UpdateStyleAndLayout();
+
   bool can_restore_without_annoying_user =
       !GetDocumentLoader()->GetInitialScrollState().was_scrolled_by_user &&
       (can_restore_without_clamping || !frame_->IsLoading() ||
