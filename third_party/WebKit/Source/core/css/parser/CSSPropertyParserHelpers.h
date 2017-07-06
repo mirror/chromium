@@ -120,6 +120,15 @@ void AddProperty(CSSPropertyID resolved_property,
                  IsImplicitProperty,
                  HeapVector<CSSProperty, 256>& properties);
 
+void CountKeywordOnlyPropertyUsage(CSSPropertyID,
+                                   const CSSParserContext&,
+                                   CSSValueID);
+
+const CSSValue* ParseLonghandViaAPI(CSSPropertyID unresolved_property,
+                                    CSSPropertyID current_shorthand,
+                                    const CSSParserContext&,
+                                    CSSParserTokenRange&);
+
 // Template implementations are at the bottom of the file for readability.
 
 template <typename... emptyBaseCase>
