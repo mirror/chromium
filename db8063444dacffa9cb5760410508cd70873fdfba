@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "18d3f6d8_e527e886",
+        "filename": "chrome/browser/safe_browsing/download_protection_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-07-06T20:38:20Z",
+      "side": 1,
+      "message": "nit: just checking, can item be const?",
+      "range": {
+        "startLine": 160,
+        "startChar": 41,
+        "endLine": 160,
+        "endChar": 53
+      },
+      "revId": "db8063444dacffa9cb5760410508cd70873fdfba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0144721c_d37e2c5b",
         "filename": "chrome/browser/safe_browsing/download_protection_service.cc",
         "patchSetId": 4
