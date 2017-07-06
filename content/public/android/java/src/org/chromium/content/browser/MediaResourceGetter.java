@@ -11,7 +11,6 @@ import android.media.MediaMetadataRetriever;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
-import android.os.ParcelFileDescriptor;
 import android.text.TextUtils;
 
 import org.chromium.base.ContextUtils;
@@ -117,19 +116,6 @@ class MediaResourceGetter {
             final String url, final String cookies, final String userAgent) {
         return new MediaResourceGetter().extract(
                 ContextUtils.getApplicationContext(), url, cookies, userAgent);
-    }
-
-    @CalledByNative
-    private static MediaMetadata extractMediaMetadataFromFd(int fd,
-            long offset,
-            long length) {
-        return new MediaResourceGetter().extract(fd, offset, length);
-    }
-
-    @VisibleForTesting
-    MediaMetadata extract(int fd, long offset, long length) {
-        configure(fd, offset, length);
-        return doExtractMetadata();
     }
 
     @VisibleForTesting
@@ -383,21 +369,6 @@ class MediaResourceGetter {
     @VisibleForTesting
     String getExternalStorageDirectory() {
         return PathUtils.getExternalStorageDirectory();
-    }
-
-    @VisibleForTesting
-    void configure(int fd, long offset, long length) {
-        ParcelFileDescriptor parcelFd = ParcelFileDescriptor.adoptFd(fd);
-        try {
-            mRetriever.setDataSource(parcelFd.getFileDescriptor(),
-                    offset, length);
-        } finally {
-            try {
-                parcelFd.close();
-            } catch (IOException e) {
-                Log.e(TAG, "Failed to close file descriptor: %s", e);
-            }
-        }
     }
 
     @VisibleForTesting

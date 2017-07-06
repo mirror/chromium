@@ -22,7 +22,6 @@
 #include "content/public/common/content_client.h"
 #include "content/public/common/url_constants.h"
 #include "jni/MediaResourceGetter_jni.h"
-#include "media/base/android/media_url_interceptor.h"
 #include "net/base/auth.h"
 #include "net/cookies/cookie_store.h"
 #include "net/http/http_auth.h"
@@ -127,22 +126,6 @@ static void GetMediaMetadata(
   ScopedJavaLocalRef<jobject> j_metadata =
       Java_MediaResourceGetter_extractMediaMetadata(env, j_url_string,
                                                     j_cookies, j_user_agent);
-
-  PostMediaMetadataCallbackTask(callback, env, j_metadata);
-}
-
-// Gets the metadata from a file descriptor. When finished, a task is posted to
-// the UI thread to run the callback function.
-static void GetMediaMetadataFromFd(
-    const int fd,
-    const int64_t offset,
-    const int64_t size,
-    const media::MediaResourceGetter::ExtractMediaMetadataCB& callback) {
-  JNIEnv* env = base::android::AttachCurrentThread();
-
-  ScopedJavaLocalRef<jobject> j_metadata =
-      Java_MediaResourceGetter_extractMediaMetadataFromFd(
-          env, fd, offset, size);
 
   PostMediaMetadataCallbackTask(callback, env, j_metadata);
 }
@@ -363,17 +346,6 @@ void MediaResourceGetterImpl::ExtractMediaMetadata(
   base::PostTaskWithTraits(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::USER_VISIBLE},
       base::BindOnce(&GetMediaMetadata, url, cookies, user_agent, callback));
-}
-
-void MediaResourceGetterImpl::ExtractMediaMetadata(
-    const int fd,
-    const int64_t offset,
-    const int64_t size,
-    const ExtractMediaMetadataCB& callback) {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  base::PostTaskWithTraits(
-      FROM_HERE, {base::MayBlock(), base::TaskPriority::USER_VISIBLE},
-      base::BindOnce(&GetMediaMetadataFromFd, fd, offset, size, callback));
 }
 
 }  // namespace content

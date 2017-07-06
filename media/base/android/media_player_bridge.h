@@ -36,8 +36,6 @@ class MediaPlayerManager;
 // the Android MediaPlayer instance.
 class MEDIA_EXPORT MediaPlayerBridge : public MediaPlayerAndroid {
  public:
-  static bool RegisterMediaPlayerBridge(JNIEnv* env);
-
   // Construct a MediaPlayerBridge object. This object needs to call |manager|'s
   // RequestMediaResources() before decoding the media stream. This allows
   // |manager| to track unused resources and free them when needed.
@@ -77,11 +75,6 @@ class MEDIA_EXPORT MediaPlayerBridge : public MediaPlayerAndroid {
   bool IsPlayerReady() override;
   GURL GetUrl() override;
   GURL GetFirstPartyForCookies() override;
-
-  void OnDidSetDataUriDataSource(
-      JNIEnv* env,
-      const base::android::JavaParamRef<jobject>& obj,
-      jboolean success);
 
  protected:
   void SetDuration(base::TimeDelta time);
@@ -142,13 +135,6 @@ class MEDIA_EXPORT MediaPlayerBridge : public MediaPlayerAndroid {
   void ExtractMediaMetadata(const std::string& url);
   void OnMediaMetadataExtracted(base::TimeDelta duration, int width, int height,
                                 bool success);
-
-  // Returns true if a MediaUrlInterceptor registered by the embedder has
-  // intercepted the url.
-  bool InterceptMediaUrl(const std::string& url,
-                         int* fd,
-                         int64_t* offset,
-                         int64_t* size);
 
   // Whether the player is prepared for playback.
   bool prepared_;

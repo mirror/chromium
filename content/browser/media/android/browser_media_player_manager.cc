@@ -27,7 +27,6 @@
 #include "content/public/common/content_client.h"
 #include "content/public/common/content_switches.h"
 #include "media/base/android/media_player_bridge.h"
-#include "media/base/android/media_url_interceptor.h"
 #include "media/base/media_content_type.h"
 
 #if !defined(USE_AURA)
@@ -47,7 +46,6 @@ const int kMediaPlayerThreshold = 1;
 const int kInvalidMediaPlayerId = -1;
 
 static BrowserMediaPlayerManager::Factory g_factory = NULL;
-static media::MediaUrlInterceptor* media_url_interceptor_ = NULL;
 
 // static
 void BrowserMediaPlayerManager::RegisterFactory(Factory factory) {
@@ -57,12 +55,6 @@ void BrowserMediaPlayerManager::RegisterFactory(Factory factory) {
   // so this will ensure that it does.
   if (g_factory == nullptr)
     g_factory = factory;
-}
-
-// static
-void BrowserMediaPlayerManager::RegisterMediaUrlInterceptor(
-    media::MediaUrlInterceptor* media_url_interceptor) {
-  media_url_interceptor_ = media_url_interceptor;
 }
 
 // static
@@ -274,11 +266,6 @@ BrowserMediaPlayerManager::GetMediaResourceGetter() {
         web_contents()->GetMainFrame()->GetRoutingID()));
   }
   return media_resource_getter_.get();
-}
-
-media::MediaUrlInterceptor*
-BrowserMediaPlayerManager::GetMediaUrlInterceptor() {
-  return media_url_interceptor_;
 }
 
 MediaPlayerAndroid* BrowserMediaPlayerManager::GetFullscreenPlayer() {

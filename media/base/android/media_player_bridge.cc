@@ -16,7 +16,6 @@
 #include "media/base/android/media_common_android.h"
 #include "media/base/android/media_player_manager.h"
 #include "media/base/android/media_resource_getter.h"
-#include "media/base/android/media_url_interceptor.h"
 #include "media/base/timestamp_constants.h"
 
 using base::android::ConvertUTF8ToJavaString;
@@ -163,72 +162,17 @@ void MediaPlayerBridge::SetDataSource(const std::string& url) {
   JNIEnv* env = base::android::AttachCurrentThread();
   CHECK(env);
 
-  int fd;
-  int64_t offset;
-  int64_t size;
-  if (InterceptMediaUrl(url, &fd, &offset, &size)) {
-    if (!Java_MediaPlayerBridge_setDataSourceFromFd(env, j_media_player_bridge_,
-                                                    fd, offset, size)) {
-      OnMediaError(MEDIA_ERROR_FORMAT);
-      return;
-    }
-  } else {
-    // Create a Java String for the URL.
-    ScopedJavaLocalRef<jstring> j_url_string =
-        ConvertUTF8ToJavaString(env, url);
+  // Create a Java String for the URL.
+  ScopedJavaLocalRef<jstring> j_url_string = ConvertUTF8ToJavaString(env, url);
 
-    const std::string data_uri_prefix("data:");
-    if (base::StartsWith(url, data_uri_prefix, base::CompareCase::SENSITIVE)) {
-      if (!Java_MediaPlayerBridge_setDataUriDataSource(
-              env, j_media_player_bridge_, j_url_string)) {
-        OnMediaError(MEDIA_ERROR_FORMAT);
-      }
-      return;
-    }
+  ScopedJavaLocalRef<jstring> j_cookies =
+      ConvertUTF8ToJavaString(env, cookies_);
+  ScopedJavaLocalRef<jstring> j_user_agent =
+      ConvertUTF8ToJavaString(env, user_agent_);
 
-    ScopedJavaLocalRef<jstring> j_cookies = ConvertUTF8ToJavaString(
-        env, cookies_);
-    ScopedJavaLocalRef<jstring> j_user_agent = ConvertUTF8ToJavaString(
-        env, user_agent_);
-
-    if (!Java_MediaPlayerBridge_setDataSource(env, j_media_player_bridge_,
-                                              j_url_string, j_cookies,
-                                              j_user_agent, hide_url_log_)) {
-      OnMediaError(MEDIA_ERROR_FORMAT);
-      return;
-    }
-  }
-
-  if (!Java_MediaPlayerBridge_prepareAsync(env, j_media_player_bridge_))
-    OnMediaError(MEDIA_ERROR_FORMAT);
-}
-
-bool MediaPlayerBridge::InterceptMediaUrl(const std::string& url,
-                                          int* fd,
-                                          int64_t* offset,
-                                          int64_t* size) {
-  // Sentinel value to check whether the output arguments have been set.
-  const int kUnsetValue = -1;
-
-  *fd = kUnsetValue;
-  *offset = kUnsetValue;
-  *size = kUnsetValue;
-  media::MediaUrlInterceptor* url_interceptor =
-      manager()->GetMediaUrlInterceptor();
-  if (url_interceptor && url_interceptor->Intercept(url, fd, offset, size)) {
-    DCHECK_NE(kUnsetValue, *fd);
-    DCHECK_NE(kUnsetValue, *offset);
-    DCHECK_NE(kUnsetValue, *size);
-    return true;
-  }
-  return false;
-}
-
-void MediaPlayerBridge::OnDidSetDataUriDataSource(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj,
-    jboolean success) {
-  if (!success) {
+  if (!Java_MediaPlayerBridge_setDataSource(env, j_media_player_bridge_,
+                                            j_url_string, j_cookies,
+                                            j_user_agent, hide_url_log_)) {
     OnMediaError(MEDIA_ERROR_FORMAT);
     return;
   }
@@ -264,20 +208,10 @@ void MediaPlayerBridge::ExtractMediaMetadata(const std::string& url) {
     return;
   }
 
-  int fd;
-  int64_t offset;
-  int64_t size;
-  if (InterceptMediaUrl(url, &fd, &offset, &size)) {
-    manager()->GetMediaResourceGetter()->ExtractMediaMetadata(
-        fd, offset, size,
-        base::Bind(&MediaPlayerBridge::OnMediaMetadataExtracted,
-                   weak_factory_.GetWeakPtr()));
-  } else {
-    manager()->GetMediaResourceGetter()->ExtractMediaMetadata(
-        url, cookies_, user_agent_,
-        base::Bind(&MediaPlayerBridge::OnMediaMetadataExtracted,
-                   weak_factory_.GetWeakPtr()));
-  }
+  manager()->GetMediaResourceGetter()->ExtractMediaMetadata(
+      url, cookies_, user_agent_,
+      base::Bind(&MediaPlayerBridge::OnMediaMetadataExtracted,
+                 weak_factory_.GetWeakPtr()));
 }
 
 void MediaPlayerBridge::OnMediaMetadataExtracted(
@@ -568,10 +502,6 @@ void MediaPlayerBridge::OnTimeUpdateTimerFired() {
   manager()->OnTimeUpdate(player_id(), current_timestamp,
                           base::TimeTicks::Now());
   last_time_update_timestamp_ = current_timestamp;
-}
-
-bool MediaPlayerBridge::RegisterMediaPlayerBridge(JNIEnv* env) {
-  return RegisterNativesImpl(env);
 }
 
 bool MediaPlayerBridge::CanPause() {

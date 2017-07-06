@@ -7,25 +7,15 @@ package org.chromium.media;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.TrackInfo;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
-import android.os.ParcelFileDescriptor;
 import android.text.TextUtils;
-import android.util.Base64;
-import android.util.Base64InputStream;
 import android.view.Surface;
 
 import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
-import org.chromium.base.StreamUtil;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -41,7 +31,6 @@ public class MediaPlayerBridge {
 
     // Local player to forward this to. We don't initialize it here since the subclass might not
     // want it.
-    private LoadDataUriTask mLoadDataUriTask;
     private MediaPlayer mPlayer;
     private long mNativeMediaPlayerBridge;
 
@@ -59,7 +48,6 @@ public class MediaPlayerBridge {
 
     @CalledByNative
     protected void destroy() {
-        cancelLoadDataUriTask();
         mNativeMediaPlayerBridge = 0;
     }
 
@@ -149,7 +137,6 @@ public class MediaPlayerBridge {
 
     @CalledByNative
     protected void release() {
-        cancelLoadDataUriTask();
         getLocalPlayer().release();
     }
 
@@ -192,100 +179,6 @@ public class MediaPlayerBridge {
             return true;
         } catch (Exception e) {
             return false;
-        }
-    }
-
-    @CalledByNative
-    protected boolean setDataSourceFromFd(int fd, long offset, long length) {
-        try {
-            ParcelFileDescriptor parcelFd = ParcelFileDescriptor.adoptFd(fd);
-            getLocalPlayer().setDataSource(parcelFd.getFileDescriptor(), offset, length);
-            parcelFd.close();
-            return true;
-        } catch (IOException e) {
-            Log.e(TAG, "Failed to set data source from file descriptor: " + e);
-            return false;
-        }
-    }
-
-    @CalledByNative
-    protected boolean setDataUriDataSource(final String url) {
-        cancelLoadDataUriTask();
-
-        if (!url.startsWith("data:")) return false;
-        int headerStop = url.indexOf(',');
-        if (headerStop == -1) return false;
-        String header = url.substring(0, headerStop);
-        final String data = url.substring(headerStop + 1);
-
-        String headerContent = header.substring(5);
-        String headerInfo[] = headerContent.split(";");
-        if (headerInfo.length != 2) return false;
-        if (!"base64".equals(headerInfo[1])) return false;
-
-        mLoadDataUriTask = new LoadDataUriTask(data);
-        mLoadDataUriTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        return true;
-    }
-
-    private class LoadDataUriTask extends AsyncTask<Void, Void, Boolean> {
-        private final String mData;
-        private File mTempFile;
-
-        public LoadDataUriTask(String data) {
-            mData = data;
-        }
-
-        @Override
-        protected Boolean doInBackground(Void... params) {
-            FileOutputStream fos = null;
-            try {
-                mTempFile = File.createTempFile("decoded", "mediadata");
-                fos = new FileOutputStream(mTempFile);
-                InputStream stream = new ByteArrayInputStream(mData.getBytes());
-                Base64InputStream decoder = new Base64InputStream(stream, Base64.DEFAULT);
-                byte[] buffer = new byte[1024];
-                int len;
-                while ((len = decoder.read(buffer)) != -1) {
-                    fos.write(buffer, 0, len);
-                }
-                decoder.close();
-                return true;
-            } catch (IOException e) {
-                return false;
-            } finally {
-                StreamUtil.closeQuietly(fos);
-            }
-        }
-
-        @Override
-        protected void onPostExecute(Boolean result) {
-            if (isCancelled()) {
-                deleteFile();
-                return;
-            }
-
-            if (result) {
-                try {
-                    getLocalPlayer().setDataSource(
-                            ContextUtils.getApplicationContext(), Uri.fromFile(mTempFile));
-                } catch (IOException e) {
-                    result = false;
-                }
-            }
-
-            deleteFile();
-            assert (mNativeMediaPlayerBridge != 0);
-            nativeOnDidSetDataUriDataSource(mNativeMediaPlayerBridge, result);
-        }
-
-        private void deleteFile() {
-            if (mTempFile == null) return;
-            if (!mTempFile.delete()) {
-                // File will be deleted when MediaPlayer releases its handler.
-                Log.e(TAG, "Failed to delete temporary file: " + mTempFile);
-                assert (false);
-            }
         }
     }
 
@@ -385,15 +278,5 @@ public class MediaPlayerBridge {
             Log.e(TAG, "Cannot find matching fields in Metadata class: " + e);
         }
         return new AllowedOperations(canPause, canSeekForward, canSeekBackward);
-    }
-
-    private native void nativeOnDidSetDataUriDataSource(long nativeMediaPlayerBridge,
-                                                        boolean success);
-
-    private void cancelLoadDataUriTask() {
-        if (mLoadDataUriTask != null) {
-            mLoadDataUriTask.cancel(true);
-            mLoadDataUriTask = null;
-        }
     }
 }

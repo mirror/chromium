@@ -24,12 +24,6 @@ constexpr int kUnusedAndIrrelevantPlayerId = 0;
 
 namespace content {
 
-namespace {
-
-media::MediaUrlInterceptor* g_media_url_interceptor = nullptr;
-
-}  // namespace
-
 MediaPlayerRenderer::MediaPlayerRenderer(RenderFrameHost* render_frame_host)
     : render_frame_host_(render_frame_host),
       has_error_(false),
@@ -181,10 +175,6 @@ media::MediaResourceGetter* MediaPlayerRenderer::GetMediaResourceGetter() {
   return media_resource_getter_.get();
 }
 
-media::MediaUrlInterceptor* MediaPlayerRenderer::GetMediaUrlInterceptor() {
-  return g_media_url_interceptor;
-}
-
 void MediaPlayerRenderer::OnTimeUpdate(int player_id,
                                        base::TimeDelta current_timestamp,
                                        base::TimeTicks current_time_ticks) {}
@@ -264,12 +254,6 @@ bool MediaPlayerRenderer::RequestPlay(int player_id,
 void MediaPlayerRenderer::OnDecoderResourcesReleased(int player_id) {
   // Since we are not using a pool of MediaPlayerAndroid instances, this
   // function is not relevant.
-}
-
-// static
-void MediaPlayerRenderer::RegisterMediaUrlInterceptor(
-    media::MediaUrlInterceptor* media_url_interceptor) {
-  g_media_url_interceptor = media_url_interceptor;
 }
 
 void MediaPlayerRenderer::CancelScopedSurfaceRequest() {

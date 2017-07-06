@@ -7,7 +7,6 @@
 #include <memory>
 
 #include "android_webview/browser/aw_content_browser_client.h"
-#include "android_webview/browser/aw_media_url_interceptor.h"
 #include "android_webview/browser/aw_safe_browsing_config_helper.h"
 #include "android_webview/browser/browser_view_renderer.h"
 #include "android_webview/browser/command_line_helper.h"
@@ -33,7 +32,6 @@
 #include "components/crash/content/app/breakpad_linux.h"
 #include "components/safe_browsing_db/android/safe_browsing_api_handler_bridge.h"
 #include "components/spellcheck/common/spellcheck_features.h"
-#include "content/public/browser/android/browser_media_player_manager_register.h"
 #include "content/public/browser/browser_main_runner.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/common/content_descriptor_keys.h"
@@ -112,7 +110,6 @@ bool AwMainDelegate::BasicStartupComplete(int* exit_code) {
   if (cl->GetSwitchValueASCII(switches::kProcessType).empty()) {
     // Browser process (no type specified).
 
-    content::RegisterMediaUrlInterceptor(new AwMediaUrlInterceptor());
     BrowserViewRenderer::CalculateTileMemoryPolicy();
     // WebView apps can override WebView#computeScroll to achieve custom
     // scroll/fling. As a result, fling animations may not be ticked,

@@ -16,7 +16,6 @@ namespace {
 class MockMediaPlayerManager : public MediaPlayerManager {
  public:
   MOCK_METHOD0(GetMediaResourceGetter, MediaResourceGetter*());
-  MOCK_METHOD0(GetMediaUrlInterceptor, MediaUrlInterceptor*());
   MOCK_METHOD3(OnTimeUpdate,
                void(int player_id,
                     base::TimeDelta current_timestamp,

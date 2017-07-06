@@ -17,7 +17,6 @@
 #include "ipc/ipc_message.h"
 #include "media/base/android/media_player_android.h"
 #include "media/base/android/media_player_manager.h"
-#include "media/base/android/media_url_interceptor.h"
 #include "ui/gfx/geometry/rect_f.h"
 #include "ui/gl/android/scoped_java_surface.h"
 #include "url/gurl.h"
@@ -43,10 +42,6 @@ class CONTENT_EXPORT BrowserMediaPlayerManager
   // Permits embedders to provide an extended version of the class.
   typedef BrowserMediaPlayerManager* (*Factory)(RenderFrameHost*);
   static void RegisterFactory(Factory factory);
-
-  // Permits embedders to handle custom urls.
-  static void RegisterMediaUrlInterceptor(
-      media::MediaUrlInterceptor* media_url_interceptor);
 
   // Returns a new instance using the registered factory.
   // Returns nullptr if no factory was registered.
@@ -86,7 +81,6 @@ class CONTENT_EXPORT BrowserMediaPlayerManager
   void OnVideoSizeChanged(int player_id, int width, int height) override;
 
   media::MediaResourceGetter* GetMediaResourceGetter() override;
-  media::MediaUrlInterceptor* GetMediaUrlInterceptor() override;
   media::MediaPlayerAndroid* GetFullscreenPlayer() override;
   media::MediaPlayerAndroid* GetPlayer(int player_id) override;
   bool RequestPlay(int player_id, base::TimeDelta duration,
