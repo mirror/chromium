@@ -251,9 +251,11 @@ PasswordFormManager::PasswordFormManager(
 PasswordFormManager::~PasswordFormManager() {
   form_fetcher_->RemoveConsumer(this);
 
-  metrics_recorder_->RecordHistogramsOnSuppressedAccounts(
-      observed_form_.origin.SchemeIsCryptographic(), *form_fetcher_,
-      pending_credentials_);
+  if (metrics_recorder_) {
+    metrics_recorder_->RecordHistogramsOnSuppressedAccounts(
+        observed_form_.origin.SchemeIsCryptographic(), *form_fetcher_,
+        pending_credentials_);
+  }
 }
 
 // static
@@ -443,7 +445,8 @@ void PasswordFormManager::Update(
 void PasswordFormManager::PresaveGeneratedPassword(
     const autofill::PasswordForm& form) {
   form_saver()->PresaveGeneratedPassword(form);
-  metrics_recorder_->SetHasGeneratedPassword(true);
+  if (metrics_recorder_)
+    metrics_recorder_->SetHasGeneratedPassword(true);
   if (has_generated_password_) {
     generated_password_changed_ = true;
   } else {
@@ -482,7 +485,8 @@ void PasswordFormManager::SetSubmittedForm(const autofill::PasswordForm& form) {
   } else {
     type = PasswordFormMetricsRecorder::kSubmittedFormTypeLogin;
   }
-  metrics_recorder_->SetSubmittedFormType(type);
+  if (metrics_recorder_)
+    metrics_recorder_->SetSubmittedFormType(type);
 }
 
 void PasswordFormManager::ScoreMatches(
@@ -620,12 +624,16 @@ void PasswordFormManager::ProcessFrameInternal(
                            preferred_match_->is_public_suffix_match ||
                            observed_form_.IsPossibleChangePasswordForm();
   if (wait_for_username) {
-    metrics_recorder_->SetManagerAction(
-        PasswordFormMetricsRecorder::kManagerActionNone);
+    if (metrics_recorder_) {
+      metrics_recorder_->SetManagerAction(
+          PasswordFormMetricsRecorder::kManagerActionNone);
+    }
   } else {
     has_autofilled_ = true;
-    metrics_recorder_->SetManagerAction(
-        PasswordFormMetricsRecorder::kManagerActionAutofilled);
+    if (metrics_recorder_) {
+      metrics_recorder_->SetManagerAction(
+          PasswordFormMetricsRecorder::kManagerActionAutofilled);
+    }
     base::RecordAction(base::UserMetricsAction("PasswordManager_Autofilled"));
   }
   if (ShouldShowInitialPasswordAccountSuggestions()) {
@@ -651,8 +659,10 @@ void PasswordFormManager::ProcessLoginPrompt() {
     return;
 
   has_autofilled_ = true;
-  metrics_recorder_->SetManagerAction(
-      PasswordFormMetricsRecorder::kManagerActionAutofilled);
+  if (metrics_recorder_) {
+    metrics_recorder_->SetManagerAction(
+        PasswordFormMetricsRecorder::kManagerActionAutofilled);
+  }
   password_manager_->AutofillHttpAuth(best_matches_, *preferred_match_);
 }
 
@@ -1224,19 +1234,23 @@ void PasswordFormManager::OnNoInteraction(bool is_update) {
 
 void PasswordFormManager::SetHasGeneratedPassword(bool generated_password) {
   has_generated_password_ = generated_password;
-  metrics_recorder_->SetHasGeneratedPassword(generated_password);
+  if (metrics_recorder_)
+    metrics_recorder_->SetHasGeneratedPassword(generated_password);
 }
 
 void PasswordFormManager::LogSubmitPassed() {
-  metrics_recorder_->LogSubmitPassed();
+  if (metrics_recorder_)
+    metrics_recorder_->LogSubmitPassed();
 }
 
 void PasswordFormManager::LogSubmitFailed() {
-  metrics_recorder_->LogSubmitFailed();
+  if (metrics_recorder_)
+    metrics_recorder_->LogSubmitFailed();
 }
 
 void PasswordFormManager::MarkGenerationAvailable() {
-  metrics_recorder_->MarkGenerationAvailable();
+  if (metrics_recorder_)
+    metrics_recorder_->MarkGenerationAvailable();
 }
 
 void PasswordFormManager::WipeStoreCopyIfOutdated() {
@@ -1340,7 +1354,8 @@ void PasswordFormManager::SendSignInVote(const FormData& form_data) {
 
 void PasswordFormManager::SetUserAction(UserAction user_action) {
   user_action_ = user_action;
-  metrics_recorder_->SetUserAction(user_action);
+  if (metrics_recorder_)
+    metrics_recorder_->SetUserAction(user_action);
 }
 
 base::Optional<PasswordForm> PasswordFormManager::UpdatePendingAndGetOldKey(
