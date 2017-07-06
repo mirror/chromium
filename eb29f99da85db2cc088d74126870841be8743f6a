@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb852b08_0ba15058",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-06T15:47:00Z",
+      "side": 1,
+      "message": "This section should specify where the notification was added, and then the reason why it was added there as opposed to chromeExecuteCommand.",
+      "revId": "eb29f99da85db2cc088d74126870841be8743f6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bec82bd9_c1dfdeb8",
+        "filename": "ios/chrome/browser/ui/settings/clear_browsing_data_collection_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-06T15:47:00Z",
+      "side": 1,
+      "message": "I think it makes sense to put this above the if statement to show the UI. Also, a comment would be good.",
+      "revId": "eb29f99da85db2cc088d74126870841be8743f6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
