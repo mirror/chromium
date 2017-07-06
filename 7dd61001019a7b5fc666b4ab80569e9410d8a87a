@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9213353b_97ef1894",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 3000,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-07-06T21:17:47Z",
+      "side": 1,
+      "message": "Nit: remove",
+      "revId": "7dd61001019a7b5fc666b4ab80569e9410d8a87a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
