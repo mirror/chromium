@@ -79,7 +79,7 @@ public class HistoryManagerToolbar extends SelectableListToolbar<HistoryItem> {
         super.onDataChanged(numItems);
         getMenu()
                 .findItem(R.id.info_menu_id)
-                .setVisible(mManager.shouldShowInfoButton() && !mIsSearching && numItems > 0);
+                .setVisible(mManager.shouldShowInfoButton() && numItems > 0);
     }
 
     /**

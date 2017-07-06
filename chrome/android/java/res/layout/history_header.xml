@@ -15,7 +15,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginTop="8dp"
-        android:visibility="gone"
         android:layout_marginBottom="16dp" >
 
         <org.chromium.ui.widget.TextViewWithClickableSpans
