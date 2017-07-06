@@ -5,13 +5,13 @@
 #include <stddef.h>
 
 #include "cc/output/compositor_frame.h"
-#include "cc/surfaces/compositor_frame_sink_support.h"
 #include "cc/surfaces/local_surface_id_allocator.h"
 #include "cc/surfaces/surface.h"
 #include "cc/surfaces/surface_hittest.h"
 #include "cc/surfaces/surface_manager.h"
 #include "cc/test/compositor_frame_helpers.h"
 #include "cc/test/surface_hittest_test_helpers.h"
+#include "components/viz/service/frame_sinks/compositor_frame_sink_support.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/gfx/geometry/size.h"
@@ -67,10 +67,9 @@ using namespace test;
 TEST(SurfaceHittestTest, Hittest_BadCompositorFrameDoesNotCrash) {
   SurfaceManager manager;
   FrameSinkId root_frame_sink_id(kArbitraryFrameSinkId);
-  std::unique_ptr<CompositorFrameSinkSupport> root_support =
-      CompositorFrameSinkSupport::Create(
-          nullptr, &manager, kArbitraryFrameSinkId, kIsRoot,
-          kHandlesFrameSinkIdInvalidation, kNeedsSyncPoints);
+  auto root_support = viz::CompositorFrameSinkSupport::Create(
+      nullptr, &manager, kArbitraryFrameSinkId, kIsRoot,
+      kHandlesFrameSinkIdInvalidation, kNeedsSyncPoints);
 
   // Creates a root surface.
   gfx::Rect root_rect(300, 300);
@@ -112,10 +111,9 @@ TEST(SurfaceHittestTest, Hittest_SingleSurface) {
 
   // Set up root FrameSink.
   FrameSinkId root_frame_sink_id(1, 1);
-  std::unique_ptr<CompositorFrameSinkSupport> root_support =
-      CompositorFrameSinkSupport::Create(
-          nullptr, &manager, root_frame_sink_id, kIsRoot,
-          kHandlesFrameSinkIdInvalidation, kNeedsSyncPoints);
+  auto root_support = viz::CompositorFrameSinkSupport::Create(
+      nullptr, &manager, root_frame_sink_id, kIsRoot,
+      kHandlesFrameSinkIdInvalidation, kNeedsSyncPoints);
 
   // Creates a root surface.
   gfx::Rect root_rect(300, 300);
@@ -147,17 +145,15 @@ TEST(SurfaceHittestTest, Hittest_ChildSurface) {
 
   // Set up root FrameSink.
   FrameSinkId root_frame_sink_id(1, 1);
-  std::unique_ptr<CompositorFrameSinkSupport> root_support =
-      CompositorFrameSinkSupport::Create(
-          nullptr, &manager, root_frame_sink_id, kIsRoot,
-          kHandlesFrameSinkIdInvalidation, kNeedsSyncPoints);
+  auto root_support = viz::CompositorFrameSinkSupport::Create(
+      nullptr, &manager, root_frame_sink_id, kIsRoot,
+      kHandlesFrameSinkIdInvalidation, kNeedsSyncPoints);
 
   // Set up child FrameSink.
   FrameSinkId child_frame_sink_id(2, 2);
-  std::unique_ptr<CompositorFrameSinkSupport> child_support =
-      CompositorFrameSinkSupport::Create(
-          nullptr, &manager, child_frame_sink_id, kIsChildRoot,
-          kHandlesFrameSinkIdInvalidation, kNeedsSyncPoints);
+  auto child_support = viz::CompositorFrameSinkSupport::Create(
+      nullptr, &manager, child_frame_sink_id, kIsChildRoot,
+      kHandlesFrameSinkIdInvalidation, kNeedsSyncPoints);
 
   // Creates a root surface.
   gfx::Rect root_rect(300, 300);
@@ -290,17 +286,15 @@ TEST(SurfaceHittestTest, Hittest_InvalidRenderPassDrawQuad) {
 
   // Set up root FrameSink.
   FrameSinkId root_frame_sink_id(1, 1);
-  std::unique_ptr<CompositorFrameSinkSupport> root_support =
-      CompositorFrameSinkSupport::Create(
-          nullptr, &manager, root_frame_sink_id, kIsRoot,
-          kHandlesFrameSinkIdInvalidation, kNeedsSyncPoints);
+  auto root_support = viz::CompositorFrameSinkSupport::Create(
+      nullptr, &manager, root_frame_sink_id, kIsRoot,
+      kHandlesFrameSinkIdInvalidation, kNeedsSyncPoints);
 
   // Set up child FrameSink.
   FrameSinkId child_frame_sink_id(2, 2);
-  std::unique_ptr<CompositorFrameSinkSupport> child_support =
-      CompositorFrameSinkSupport::Create(
-          nullptr, &manager, child_frame_sink_id, kIsChildRoot,
-          kHandlesFrameSinkIdInvalidation, kNeedsSyncPoints);
+  auto child_support = viz::CompositorFrameSinkSupport::Create(
+      nullptr, &manager, child_frame_sink_id, kIsChildRoot,
+      kHandlesFrameSinkIdInvalidation, kNeedsSyncPoints);
 
   // Creates a root surface.
   gfx::Rect root_rect(300, 300);
@@ -399,10 +393,9 @@ TEST(SurfaceHittestTest, Hittest_InvalidRenderPassDrawQuad) {
 TEST(SurfaceHittestTest, Hittest_RenderPassDrawQuad) {
   SurfaceManager manager;
   FrameSinkId root_frame_sink_id(kArbitraryFrameSinkId);
-  std::unique_ptr<CompositorFrameSinkSupport> support =
-      CompositorFrameSinkSupport::Create(
-          nullptr, &manager, root_frame_sink_id, kIsRoot,
-          kHandlesFrameSinkIdInvalidation, kNeedsSyncPoints);
+  auto support = viz::CompositorFrameSinkSupport::Create(
+      nullptr, &manager, root_frame_sink_id, kIsRoot,
+      kHandlesFrameSinkIdInvalidation, kNeedsSyncPoints);
 
   // Create a CompostiorFrame with two RenderPasses.
   gfx::Rect root_rect(300, 300);
@@ -504,17 +497,15 @@ TEST(SurfaceHittestTest, Hittest_SingleSurface_WithInsetsDelegate) {
 
   // Set up root FrameSink.
   FrameSinkId root_frame_sink_id(1, 1);
-  std::unique_ptr<CompositorFrameSinkSupport> root_support =
-      CompositorFrameSinkSupport::Create(
-          nullptr, &manager, root_frame_sink_id, kIsRoot,
-          kHandlesFrameSinkIdInvalidation, kNeedsSyncPoints);
+  auto root_support = viz::CompositorFrameSinkSupport::Create(
+      nullptr, &manager, root_frame_sink_id, kIsRoot,
+      kHandlesFrameSinkIdInvalidation, kNeedsSyncPoints);
 
   // Set up child FrameSink.
   FrameSinkId child_frame_sink_id(2, 2);
-  std::unique_ptr<CompositorFrameSinkSupport> child_support =
-      CompositorFrameSinkSupport::Create(
-          nullptr, &manager, child_frame_sink_id, kIsRoot,
-          kHandlesFrameSinkIdInvalidation, kNeedsSyncPoints);
+  auto child_support = viz::CompositorFrameSinkSupport::Create(
+      nullptr, &manager, child_frame_sink_id, kIsRoot,
+      kHandlesFrameSinkIdInvalidation, kNeedsSyncPoints);
 
   // Creates a root surface.
   gfx::Rect root_rect(300, 300);
