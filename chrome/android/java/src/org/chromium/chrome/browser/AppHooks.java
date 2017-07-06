@@ -26,6 +26,7 @@ import org.chromium.chrome.browser.historyreport.AppIndexingReporter;
 import org.chromium.chrome.browser.init.ProcessInitializationHandler;
 import org.chromium.chrome.browser.instantapps.InstantAppsHandler;
 import org.chromium.chrome.browser.locale.LocaleManager;
+import org.chromium.chrome.browser.media.VideoPersister;
 import org.chromium.chrome.browser.metrics.VariationsSession;
 import org.chromium.chrome.browser.multiwindow.MultiWindowUtils;
 import org.chromium.chrome.browser.net.qualityprovider.ExternalEstimateProviderAndroid;
@@ -245,6 +246,13 @@ public abstract class AppHooks {
      */
     public VariationsSession createVariationsSession() {
         return new VariationsSession();
+    }
+
+    /**
+     * @return An instance of VideoPersister to be installed as a singleton.
+     */
+    public VideoPersister createVideoPersister() {
+        return new VideoPersister();
     }
 
     /** Returns the singleton instance of GooglePlayWebApkInstallDelegate. */
