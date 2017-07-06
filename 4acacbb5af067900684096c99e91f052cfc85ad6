@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77500a8c_30eea56c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/scripting-1/the-script-element/load-event-3.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1197619
+      },
+      "writtenOn": "2017-07-06T19:05:23Z",
+      "side": 1,
+      "message": "You can use multiline strings instead of +s if you want. https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#Multi-line_strings",
+      "revId": "4acacbb5af067900684096c99e91f052cfc85ad6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0120417a_c3c75722",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/scripting-1/the-script-element/load-event.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1197619
+      },
+      "writtenOn": "2017-07-06T19:05:23Z",
+      "side": 1,
+      "message": "Maybe these files should be named something like finalizing-prepare-script, since they are about more than just load events now, but also e.g. error events and execution? I\u0027m not sure.",
+      "revId": "4acacbb5af067900684096c99e91f052cfc85ad6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc940367_3ce613d9",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/scripting-1/the-script-element/load-event.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1197619
+      },
+      "writtenOn": "2017-07-06T19:05:23Z",
+      "side": 1,
+      "message": "Since clauses and steps can be rearranged, I would phrase these along this pattern:\n\n- 200, classic, src, parser-inserted, no async\n- 200, classic, src, parser-inserted, no async\n- 200, classic, src, no async, no non-blocking\n\n... etc.\n\n(I guess you could omit classic if you made it clear e.g. in the \u003ctitle\u003e that this was only testing classic scripts. Maybe with a \u003c!-- comment --\u003e pointing to the module script counterparts.)",
+      "revId": "4acacbb5af067900684096c99e91f052cfc85ad6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3261cc6_71667486",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/scripting-1/the-script-element/load-event.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1197619
+      },
+      "writtenOn": "2017-07-06T19:05:23Z",
+      "side": 1,
+      "message": "Personally I find `() \u003d\u003e onLoad(test3_classic_load)` a bit clearer than using bind. Up to you though.",
+      "revId": "4acacbb5af067900684096c99e91f052cfc85ad6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "002a0cfc_ce7ad54e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/scripting-1/the-script-element/resources/load-event-helpers.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1197619
+      },
+      "writtenOn": "2017-07-06T19:05:23Z",
+      "side": 1,
+      "message": "A comment block explaining the usage of this file and its functions would be pretty helpful, I think.",
+      "revId": "4acacbb5af067900684096c99e91f052cfc85ad6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bf6967f_355ca1f0",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/scripting-1/the-script-element/resources/load-event-helpers.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1197619
+      },
+      "writtenOn": "2017-07-06T19:05:23Z",
+      "side": 1,
+      "message": "I would rephrase this comment (and the one below) to be something more like:\n\n\u003e Delay done() a little so that if ____ happens the assert_unreached is reached and fails the test.\n\nHowever I am now not sure what the ___ is so maybe I am misunderstanding.",
+      "revId": "4acacbb5af067900684096c99e91f052cfc85ad6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "585b4228_8faaf493",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/scripting-1/the-script-element/resources/load-event-helpers.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1197619
+      },
+      "writtenOn": "2017-07-06T19:05:23Z",
+      "side": 1,
+      "message": "This should use t.step_timeout instead of setTimeout (also below).",
+      "revId": "4acacbb5af067900684096c99e91f052cfc85ad6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
