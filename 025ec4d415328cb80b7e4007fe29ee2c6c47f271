@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1414779_22b7263d",
+        "filename": "ios/web/public/global_state/ios_global_state.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-06T16:46:47Z",
+      "side": 1,
+      "message": "nit: remove \"static\", move to anonymous namespace instead, and rename g_exit_manager.",
+      "revId": "025ec4d415328cb80b7e4007fe29ee2c6c47f271",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80a05817_ad102056",
+        "filename": "ios/web/public/global_state/ios_global_state.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-06T16:46:47Z",
+      "side": 1,
+      "message": "nit: calling delete on null is well defined, so you can remove the \"if\" here.",
+      "revId": "025ec4d415328cb80b7e4007fe29ee2c6c47f271",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
