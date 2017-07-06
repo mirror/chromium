@@ -258,6 +258,17 @@ class PasswordFormManager : public FormFetcher::Consumer {
 
   FormSaver* form_saver() { return form_saver_.get(); }
 
+  // Use this to create a new |metrics_recorder_| for this class.
+  // |metrics_recorder_| must not be set yet.
+  // TODO(crbug.com/739696): Remove this function and do it automatically once
+  // it is possible to destroy an empty recorder without uploading a protobuf.
+  void InitializeMetricsRecorderFromClient();
+
+  // Use this to set |metrics_recorder_| to the already existing |other| one.
+  // |metrics_recorder_| must not be set yet.
+  void InitializeMetricsRecorderWithInstance(
+      scoped_refptr<PasswordFormMetricsRecorder> other);
+
   // Clears references to matches derived from the associated FormFetcher data.
   // After calling this, the PasswordFormManager holds no references to objects
   // owned by the associated FormFetcher. This does not cause removing |this| as
@@ -550,7 +561,9 @@ class PasswordFormManager : public FormFetcher::Consumer {
   bool is_main_frame_secure_ = false;
 
   // Takes care of recording metrics and events for this PasswordFormManager.
-  const scoped_refptr<PasswordFormMetricsRecorder> metrics_recorder_;
+  // Make sure to call InitializeMetricsRecorderFromClient or
+  // InitializeMetricsRecorderWithInstance before using |*this|.
+  scoped_refptr<PasswordFormMetricsRecorder> metrics_recorder_;
 
   DISALLOW_COPY_AND_ASSIGN(PasswordFormManager);
 };
