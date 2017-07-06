@@ -7,12 +7,14 @@
 #include <algorithm>
 
 #include "base/bind.h"
+#include "base/feature_list.h"
 #include "base/metrics/histogram_macros.h"
 #include "content/browser/bad_message.h"
 #include "content/browser/blob_storage/chrome_blob_storage_context.h"
 #include "content/browser/child_process_security_policy_impl.h"
 #include "content/browser/fileapi/browser_file_system_helper.h"
 #include "content/common/fileapi/webblob_messages.h"
+#include "content/public/common/content_features.h"
 #include "ipc/ipc_platform_file.h"
 #include "storage/browser/blob/blob_data_handle.h"
 #include "storage/browser/blob/blob_entry.h"
@@ -355,7 +357,8 @@ void BlobDispatcherHost::SendFinalBlobStatus(const std::string& uuid,
 }
 
 bool BlobDispatcherHost::IsInUseInHost(const std::string& uuid) {
-  return base::ContainsKey(blobs_inuse_map_, uuid);
+  return base::FeatureList::IsEnabled(features::kMojoBlobs) ||
+         base::ContainsKey(blobs_inuse_map_, uuid);
 }
 
 bool BlobDispatcherHost::IsUrlRegisteredInHost(const GURL& blob_url) {

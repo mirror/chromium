@@ -81,6 +81,8 @@ class STORAGE_EXPORT BlobDataBuilder {
                           size_t offset,
                           size_t length);
 
+  char* GetFutureDataPointer(size_t index, size_t offset, size_t length);
+
   // Adds an item that is flagged for future data population. Use
   // 'PopulateFutureFile' to set the file path and expected modification time
   // of this file. Returns the index of the item (to be used in
