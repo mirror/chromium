@@ -101,6 +101,7 @@ class VIEWS_EXPORT DialogDelegate : public ui::DialogModel,
   // Overridden from WidgetDelegate:
   View* GetInitiallyFocusedView() override;
   DialogDelegate* AsDialogDelegate() override;
+  bool ShouldShowCloseButton() const override;
   ClientView* CreateClientView(Widget* widget) override;
   NonClientFrameView* CreateNonClientFrameView(Widget* widget) override;
 

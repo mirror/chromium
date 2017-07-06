@@ -45,6 +45,10 @@ int ChromeLayoutProvider::GetDistanceMetric(int metric) const {
       return 20;
     case DISTANCE_UNRELATED_CONTROL_VERTICAL_LARGE:
       return 30;
+    case DISTANCE_WEB_MODAL_INPUT_FIELD_HORIZONTAL_INDENT:
+      return 30;
+    case DISTANCE_WEB_MODAL_INPUT_LABEL_MINIMIUM_WIDTH:
+      return 0;
     default:
       return views::LayoutProvider::GetDistanceMetric(metric);
   }
