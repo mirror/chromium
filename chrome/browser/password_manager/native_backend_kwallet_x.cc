@@ -20,11 +20,11 @@
 #include "base/stl_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/synchronization/waitable_event.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_restrictions.h"
 #include "chrome/grit/chromium_strings.h"
 #include "components/autofill/core/common/password_form.h"
 #include "components/password_manager/core/browser/password_manager_util.h"
-#include "content/public/browser/browser_thread.h"
 #include "dbus/bus.h"
 #include "dbus/message.h"
 #include "dbus/object_path.h"
@@ -32,7 +32,6 @@
 #include "url/origin.h"
 
 using autofill::PasswordForm;
-using content::BrowserThread;
 
 namespace {
 
@@ -290,10 +289,14 @@ void UMALogDeserializationStatus(bool success) {
 
 }  // namespace
 
+// Using USER_VISIBLE priority, because the passwords obtained through tasks on
+// the background runner influence what the user sees.
 NativeBackendKWallet::NativeBackendKWallet(
     LocalProfileId id,
     base::nix::DesktopEnvironment desktop_env)
-    : profile_id_(id),
+    : background_task_runner_(base::CreateSequencedTaskRunnerWithTraits(
+          {base::MayBlock(), base::TaskPriority::USER_VISIBLE})),
+      profile_id_(id),
       kwallet_dbus_(desktop_env),
       app_name_(l10n_util::GetStringUTF8(IDS_PRODUCT_NAME)) {
   folder_name_ = GetProfileSpecificFolderName();
@@ -307,9 +310,9 @@ NativeBackendKWallet::~NativeBackendKWallet() {
   // scoped_refptr<dbus::Bus> goes out of scope. The NativeBackend will be
   // destroyed before that occurs, but that's OK.
   if (kwallet_dbus_.GetSessionBus()) {
-    BrowserThread::PostTask(BrowserThread::DB, FROM_HERE,
-                            base::BindOnce(&dbus::Bus::ShutdownAndBlock,
-                                           kwallet_dbus_.GetSessionBus()));
+    background_task_runner_->PostTask(
+        FROM_HERE, base::BindOnce(&dbus::Bus::ShutdownAndBlock,
+                                  kwallet_dbus_.GetSessionBus()));
   }
 }
 
@@ -327,8 +330,8 @@ bool NativeBackendKWallet::InitWithBus(scoped_refptr<dbus::Bus> optional_bus) {
                             base::WaitableEvent::InitialState::NOT_SIGNALED);
   // NativeBackendKWallet isn't reference counted, but we wait for InitWithBus
   // to finish, so we can safely use base::Unretained here.
-  BrowserThread::PostTask(
-      BrowserThread::DB, FROM_HERE,
+  background_task_runner_->PostTask(
+      FROM_HERE,
       base::BindOnce(&NativeBackendKWallet::InitOnDBThread,
                      base::Unretained(this), optional_bus, &event, &success));
 
@@ -341,7 +344,7 @@ bool NativeBackendKWallet::InitWithBus(scoped_refptr<dbus::Bus> optional_bus) {
 void NativeBackendKWallet::InitOnDBThread(scoped_refptr<dbus::Bus> optional_bus,
                                           base::WaitableEvent* event,
                                           bool* success) {
-  DCHECK_CURRENTLY_ON(BrowserThread::DB);
+  DCHECK(background_task_runner_->RunsTasksInCurrentSequence());
   DCHECK(!kwallet_dbus_.GetSessionBus());
   if (optional_bus.get()) {
     // The optional_bus parameter is given when this method is called in tests.
@@ -363,7 +366,7 @@ void NativeBackendKWallet::InitOnDBThread(scoped_refptr<dbus::Bus> optional_bus,
 }
 
 NativeBackendKWallet::InitResult NativeBackendKWallet::InitWallet() {
-  DCHECK_CURRENTLY_ON(BrowserThread::DB);
+  DCHECK(background_task_runner_->RunsTasksInCurrentSequence());
 
   // Check that KWallet is enabled.
   bool enabled = false;
@@ -552,6 +555,11 @@ bool NativeBackendKWallet::GetAllLogins(
   if (wallet_handle == kInvalidKWalletHandle)
     return false;
   return GetAllLoginsInternal(wallet_handle, forms);
+}
+
+scoped_refptr<base::SequencedTaskRunner>
+NativeBackendKWallet::GetBackgroundTaskRunner() {
+  return background_task_runner_;
 }
 
 bool NativeBackendKWallet::GetLoginsList(
@@ -800,7 +808,7 @@ NativeBackendKWallet::DeserializeValue(const std::string& signon_realm,
 }
 
 int NativeBackendKWallet::WalletHandle() {
-  DCHECK_CURRENTLY_ON(BrowserThread::DB);
+  DCHECK(background_task_runner_->RunsTasksInCurrentSequence());
 
   // Open the wallet.
   // TODO(mdm): Are we leaking these handles? Find out.
