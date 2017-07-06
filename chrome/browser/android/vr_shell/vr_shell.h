@@ -9,7 +9,6 @@
 
 #include <memory>
 
-#include "base/android/jni_weak_ref.h"
 #include "base/callback.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
@@ -68,7 +67,7 @@ class VrShell : public device::GvrDelegate,
                 public ChromeToolbarModelDelegate {
  public:
   VrShell(JNIEnv* env,
-          jobject obj,
+          const base::android::JavaParamRef<jobject>& obj,
           ui::WindowAndroid* window,
           bool for_web_vr,
           bool web_vr_autopresentation_expected,
@@ -76,11 +75,20 @@ class VrShell : public device::GvrDelegate,
           VrShellDelegate* delegate,
           gvr_context* gvr_api,
           bool reprojected_rendering);
-  void SwapContents(
+  void SwapContents(JNIEnv* env,
+                    const base::android::JavaParamRef<jobject>& obj,
+                    const base::android::JavaParamRef<jobject>& web_contents,
+                    const base::android::JavaParamRef<jobject>& view_delegate,
+                    jboolean is_actual_web_contents);
+  void RestoreViewDelegate(
       JNIEnv* env,
       const base::android::JavaParamRef<jobject>& obj,
       const base::android::JavaParamRef<jobject>& web_contents,
-      const base::android::JavaParamRef<jobject>& touch_event_synthesizer);
+      const base::android::JavaParamRef<jobject>& view_delegate);
+  base::android::ScopedJavaLocalRef<jobject> GetViewDelegate(
+      JNIEnv* env,
+      const base::android::JavaParamRef<jobject>& obj,
+      const base::android::JavaParamRef<jobject>& web_contents);
   void LoadUIContent(JNIEnv* env,
                      const base::android::JavaParamRef<jobject>& obj);
   void Destroy(JNIEnv* env, const base::android::JavaParamRef<jobject>& obj);

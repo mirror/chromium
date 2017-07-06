@@ -160,6 +160,12 @@ class UI_ANDROID_EXPORT ViewAndroid {
   // Return the location of the container view in physical pixels.
   gfx::Point GetLocationOfContainerViewOnScreen();
 
+  // Returns the Java delegate for this view. This is used to delegate work
+  // up to the embedding view (or the embedder that can deal with the
+  // implementation details).
+  const base::android::ScopedJavaLocalRef<jobject> GetViewAndroidDelegate()
+      const;
+
   float GetDipScale();
 
  protected:
@@ -207,12 +213,6 @@ class UI_ANDROID_EXPORT ViewAndroid {
   // Checks if there is any event forwarder in the node paths down to
   // each leaf of subtree.
   static bool SubtreeHasEventForwarder(ViewAndroid* view);
-
-  // Returns the Java delegate for this view. This is used to delegate work
-  // up to the embedding view (or the embedder that can deal with the
-  // implementation details).
-  const base::android::ScopedJavaLocalRef<jobject>
-      GetViewAndroidDelegate() const;
 
   std::list<ViewAndroid*> children_;
   scoped_refptr<cc::Layer> layer_;
