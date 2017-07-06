@@ -6,7 +6,10 @@
 #define CHROME_BROWSER_THUMBNAILS_SIMPLE_THUMBNAIL_CROP_H_
 
 #include "base/macros.h"
-#include "chrome/browser/thumbnails/thumbnailing_algorithm.h"
+#include "chrome/browser/thumbnails/thumbnailing_context.h"
+#include "ui/base/resource/scale_factor.h"
+#include "ui/gfx/geometry/rect.h"
+#include "ui/gfx/geometry/size.h"
 
 namespace thumbnails {
 
@@ -15,32 +18,27 @@ namespace thumbnails {
 // the choice of a cropping region is based on relation between source and
 // target sizes. The selected source region is then rescaled into the target
 // thumbnail image.
-class SimpleThumbnailCrop : public ThumbnailingAlgorithm {
- public:
-  explicit SimpleThumbnailCrop(const gfx::Size& target_size);
 
-  ClipResult GetCanvasCopyInfo(const gfx::Size& source_size,
-                               ui::ScaleFactor scale_factor,
-                               gfx::Rect* clipping_rect,
-                               gfx::Size* copy_size) const override;
+// Provides information necessary to crop-and-resize image data from a source
+// canvas of |source_size|. Auxiliary |scale_factor| helps compute the target
+// thumbnail size to be copied from the backing store, in pixels. Parameters
+// of the required copy operation are assigned to |clipping_rect| (cropping
+// rectangle for the source canvas) and |copy_size| (the size of the copied
+// bitmap in pixels). The return value indicates the type of clipping that
+// will be done.
+ClipResult GetCanvasCopyInfo(const gfx::Size& source_size,
+                             ui::ScaleFactor scale_factor,
+                             const gfx::Size& target_size,
+                             gfx::Rect* clipping_rect,
+                             gfx::Size* copy_size);
 
-  // Returns the size copied from the backing store. |thumbnail_size| is in
-  // DIP, returned size in pixels.
-  static gfx::Size GetCopySizeForThumbnail(ui::ScaleFactor scale_factor,
-                                           const gfx::Size& thumbnail_size);
-  static gfx::Rect GetClippingRect(const gfx::Size& source_size,
-                                   const gfx::Size& desired_size,
-                                   ClipResult* clip_result);
-
- protected:
-  ~SimpleThumbnailCrop() override;
-
- private:
-  // The target size of the captured thumbnails, in DIPs.
-  const gfx::Size target_size_;
-
-  DISALLOW_COPY_AND_ASSIGN(SimpleThumbnailCrop);
-};
+// Returns the size copied from the backing store. |thumbnail_size| is in
+// DIP, returned size in pixels.
+gfx::Size GetCopySizeForThumbnail(ui::ScaleFactor scale_factor,
+                                  const gfx::Size& thumbnail_size);
+gfx::Rect GetClippingRect(const gfx::Size& source_size,
+                          const gfx::Size& desired_size,
+                          ClipResult* clip_result);
 
 }  // namespace thumbnails
 
