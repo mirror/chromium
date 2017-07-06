@@ -8,14 +8,18 @@
 
 #include <utility>
 
+#include <crt_externs.h>
 #import "base/mac/bind_objc_block.h"
 #include "base/mac/foundation_util.h"
+#include "base/mac/mac_util.h"
 #include "base/mac/scoped_nsobject.h"
+#include "base/mac/scoped_objc_class_swizzler.h"
 #include "base/strings/sys_string_conversions.h"
 #include "base/threading/thread_task_runner_handle.h"
 #import "ui/base/cocoa/constrained_window/constrained_window_animation.h"
 #import "ui/base/cocoa/window_size_constants.h"
 #include "ui/gfx/font_list.h"
+#import "ui/gfx/image/image_skia_util_mac.h"
 #import "ui/gfx/mac/coordinate_conversion.h"
 #import "ui/gfx/mac/nswindow_frame_controls.h"
 #include "ui/native_theme/native_theme.h"
@@ -278,7 +282,6 @@ bool NativeWidgetMac::SetWindowTitle(const base::string16& title) {
 
 void NativeWidgetMac::SetWindowIcons(const gfx::ImageSkia& window_icon,
                                      const gfx::ImageSkia& app_icon) {
-  NOTIMPLEMENTED();
 }
 
 void NativeWidgetMac::InitModalType(ui::ModalType modal_type) {
@@ -794,6 +797,76 @@ gfx::NativeView NativeWidgetPrivate::GetGlobalCapture(
   [window_ close];
   [animation_ setDelegate:nil];
   [self release];
+}
+
+@end
+
+namespace {
+IMP g_original_menuNeedsUpdate_implementation = nullptr;
+}
+
+@interface WindowIconMenuDelegate : NSObject<NSMenuDelegate>
+@end
+
+@implementation WindowIconMenuDelegate
+
++ (void)load {
+  DLOG(INFO) << "load...";
+  // Swizzling should only happen in the browser process.
+  const char* const* const argv = *_NSGetArgv();
+  const int argc = *_NSGetArgc();
+  const char kType[] = "--type=";
+  for (int i = 1; i < argc; ++i) {
+    const char* arg = argv[i];
+    if (strncmp(arg, kType, strlen(kType)) == 0) {
+      return;
+    }
+  }
+
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    Class targetClass = NSClassFromString(@"_NSWindowMenuUpdater");
+    Class swizzleClass = [WindowIconMenuDelegate class];
+    SEL targetSelector = @selector(menuNeedsUpdate:);
+    DCHECK(targetClass);
+    if (!targetClass)
+      return;
+
+    CR_DEFINE_STATIC_LOCAL(base::mac::ScopedObjCClassSwizzler,
+                           windowMenuIconUpdater,
+                           (targetClass, swizzleClass, targetSelector));
+    g_original_menuNeedsUpdate_implementation =
+        windowMenuIconUpdater.GetOriginalImplementation();
+    DLOG(INFO) << "Swizzled: old: "
+               << g_original_menuNeedsUpdate_implementation;
+  });
+}
+
+// NSMenuDelegate implementation.
+
+- (void)menuNeedsUpdate:(NSMenu*)menu {
+  bool skip = ([menu propertiesToUpdate] & NSMenuPropertyItemImage) == 0;
+  g_original_menuNeedsUpdate_implementation(self, _cmd, menu);
+  if (skip)
+    return;
+
+  for (NSMenuItem* item : [menu itemArray]) {
+    NSLog(@"%@, tag=%ld, target=%@, action=%@", item, [item tag], [item target],
+          NSStringFromSelector([item action]));
+    if ([item tag] != 0 || [item action] != @selector(makeKeyAndOrderFront:))
+      continue;
+    if ([[item target] isKindOfClass:[NativeWidgetMacNSWindow class]]) {
+      views::Widget* widget =
+          views::Widget::GetWidgetForNativeWindow([item target]);
+      if (!widget)
+        continue;
+
+      DLOG(INFO) << "update!";
+      [item setImage:NSImageFromImageSkiaWithColorSpace(
+                         widget->widget_delegate()->GetWindowAppIcon(),
+                         base::mac::GetSRGBColorSpace())];
+    }
+  }
 }
 
 @end

@@ -1976,14 +1976,14 @@ void BrowserView::ViewHierarchyChanged(
   if (!initialized_ && details.is_add) {
     InitViews();
     initialized_ = true;
-    if (base::CommandLine::ForCurrentProcess()->HasSwitch(
-            switches::kEnableExperimentalFullscreenExitUI)) {
-      widget->GetNativeView()->AddPreTargetHandler(GetFullscreenControlHost());
-    }
+    //    if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+    //            switches::kEnableExperimentalFullscreenExitUI)) {
+    //      widget->GetNativeView()->AddPreTargetHandler(GetFullscreenControlHost());
+    //    }
   } else if (fullscreen_control_host_) {
-    auto* native_view = widget->GetNativeView();
-    if (native_view)
-      native_view->RemovePreTargetHandler(fullscreen_control_host_.get());
+    //    auto* native_view = widget->GetNativeView();
+    //    if (native_view)
+    //      native_view->RemovePreTargetHandler(fullscreen_control_host_.get());
   }
 }
 
