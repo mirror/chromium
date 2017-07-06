@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "7e029897_df21a06e",
+        "filename": "third_party/WebKit/LayoutTests/virtual/android/fast/rootscroller/browser-controls-background.html",
+        "patchSetId": 16
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-07-06T18:11:57Z",
+      "side": 1,
+      "message": "What are we trying to test here? Is it the painted output, or that #scroller is selected as a root scroller and gets a specific size?\n\nI think it\u0027s a good idea to have some integration tests in the form of layout tests for this feature to catch big mistakes. For individual tests though, I think unit tests will be simpler, faster, and catch more of what we\u0027re really trying to test. For example, this test has to use 0-sized custom scrollbars but a unit test can use real scrollbars and check whether they exist. Similarly, a unittest can check the exact size of #scroller whereas a layouttest may be masking overflow.\n\nI don\u0027t feel super strongly about this and I am okay with proceeding with these layout tests if you and David aren\u0027t sold.",
+      "parentUuid": "8dbc9d72_264609dd",
+      "revId": "424c4e4e0c9002276ea3be77571526ca569a8dc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "908116ce_0a5e5d73",
         "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
         "patchSetId": 16
