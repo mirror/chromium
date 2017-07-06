@@ -2,6 +2,142 @@
   "comments": [
     {
       "key": {
+        "uuid": "1c4bfe2d_eb99ba1d",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorLayerTreeAgent.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-06T22:22:07Z",
+      "side": 1,
+      "message": "nit: extract BuildObjectForRect(const WebRect\u0026 rect)",
+      "revId": "23c5ebce2c8b32e263fd90403ba301d3e829f5cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ef16d7f_f17360b4",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 4047,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-06T22:22:07Z",
+      "side": 1,
+      "message": "\"optional\": true?",
+      "revId": "23c5ebce2c8b32e263fd90403ba301d3e829f5cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7e606b1_6d0b878c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/layer_viewer/LayerDetailsView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-06T22:22:07Z",
+      "side": 1,
+      "message": "@return {string}",
+      "revId": "23c5ebce2c8b32e263fd90403ba301d3e829f5cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ba82761_80a33d63",
+        "filename": "third_party/WebKit/Source/devtools/front_end/layer_viewer/LayerDetailsView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-06T22:22:07Z",
+      "side": 1,
+      "message": "We typically do all id resolution when building the layer tree (i.e. in FooLayerTree.setLayers()), so that at this point you would have a reference to the layer object. This would imply that you extract a struct, e.g.\nSDK.StickyPositionConstraint, rather than pass protocol structure around, but I think it\u0027s a reasonable thing to do.",
+      "revId": "23c5ebce2c8b32e263fd90403ba301d3e829f5cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90c3aa04_11998450",
+        "filename": "third_party/WebKit/Source/devtools/front_end/layer_viewer/LayerDetailsView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-06T22:22:07Z",
+      "side": 1,
+      "message": "If a string can be less than 0, we\u0027ve got a problem somewhere else. Are we using \"-1\" as a null value? Let\u0027s make them optional instead.",
+      "revId": "23c5ebce2c8b32e263fd90403ba301d3e829f5cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3f8cb0a_91357174",
+        "filename": "third_party/WebKit/Source/devtools/front_end/layer_viewer/LayerDetailsView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-06T22:22:07Z",
+      "side": 1,
+      "message": "Note you can easily make those highlight upon hover + offer a context menu item to jump to layer (this can be done later, though).",
+      "revId": "23c5ebce2c8b32e263fd90403ba301d3e829f5cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d9bef27_7d92631d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/layer_viewer/LayerDetailsView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-06T22:22:07Z",
+      "side": 1,
+      "message": "nuke 1 empty line here.",
+      "revId": "23c5ebce2c8b32e263fd90403ba301d3e829f5cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a146a53b_c932c14c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/layer_viewer/LayerDetailsView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-06T22:22:07Z",
+      "side": 1,
+      "message": "Let\u0027s make the names more readable perhaps? I.e. Sticky Box, Containing Block, Nearest Later Shifting Sticky Box etc.\nAlso, I think it\u0027s not quite self-evident what 4 comma-separated numbers represent -- note we use the notation of \u0027%d × %d (at %d,%d)\u0027 below.",
+      "revId": "23c5ebce2c8b32e263fd90403ba301d3e829f5cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49add899_beda375d",
         "filename": "third_party/WebKit/Source/devtools/front_end/timeline_model/TracingLayerTree.js",
         "patchSetId": 1
@@ -13,6 +149,41 @@
       "writtenOn": "2017-06-29T13:57:11Z",
       "side": 1,
       "message": "pfeldman: I\u0027m unclear on this (are there docs anywhere?) but digging through the codebase implies that TracingLayerTree.js can only access data that was saved in LayerImpl::AsValueInto - is that correct?",
+      "revId": "23c5ebce2c8b32e263fd90403ba301d3e829f5cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc462550_4115237d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline_model/TracingLayerTree.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-06T22:22:07Z",
+      "side": 1,
+      "message": "Yep, this is mostly so. You can still populate it in TracingLayerTree.{setLayers, _innerSetLayers}(), so there\u0027s some flexibility in terms of whether the data are actually part of what LayerImpl::AsValueInfo() dumps or are elsewhere in the layer tree dump.",
+      "parentUuid": "49add899_beda375d",
+      "revId": "23c5ebce2c8b32e263fd90403ba301d3e829f5cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2aab0cd_a5e2b10f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline_model/TracingLayerTree.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-06T22:22:07Z",
+      "side": 1,
+      "message": "\u0027-1\u0027 doesn\u0027t look good. Let\u0027s rather make these optional?",
       "revId": "23c5ebce2c8b32e263fd90403ba301d3e829f5cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
