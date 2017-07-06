@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fda3a68a_0937cf34",
+        "filename": "build/toolchain/mac/compile_xcassets.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-06T16:18:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7cd6bb05_4bc02f67",
+      "revId": "97b05ddb253c1fba028b8acaa725650fc1e04865",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de11d5f0_6d246465",
         "filename": "build/toolchain/mac/compile_xcassets.py",
         "patchSetId": 2
@@ -39,6 +57,30 @@
       "revId": "97b05ddb253c1fba028b8acaa725650fc1e04865",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f039bd3b_61fbaf6b",
+        "filename": "build/toolchain/mac/compile_xcassets.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-06T16:18:00Z",
+      "side": 1,
+      "message": "I was unable to reproduce the spurious messages locally and I don\u0027t know how they mix with the XML output. Are they formatted as XML or put before/after/mixed? They seem to be on separate lines, so I decided to use a line oriented algorithm that should be more robust than removing random line in the middle of a XML document.",
+      "parentUuid": "de11d5f0_6d246465",
+      "range": {
+        "startLine": 11,
+        "startChar": 2,
+        "endLine": 11,
+        "endChar": 9
+      },
+      "revId": "97b05ddb253c1fba028b8acaa725650fc1e04865",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
