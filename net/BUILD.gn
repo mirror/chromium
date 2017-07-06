@@ -1937,6 +1937,13 @@ component("net") {
         "base/platform_mime_util_linux.cc",
       ]
     }
+
+    if (is_fuchsia) {
+      sources += [
+        "base/platform_mime_util_fuchsia.cc",
+        "cert/test_root_certs_fuchsia.cc",
+      ]
+    }
   } else {
     public_deps += [ "//native_client_sdk/src/libraries/nacl_io" ]
   }
