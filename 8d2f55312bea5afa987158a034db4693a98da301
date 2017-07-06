@@ -16,6 +16,24 @@
       "revId": "8d2f55312bea5afa987158a034db4693a98da301",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1b584a4_8b61d56e",
+        "filename": "base/trace_event/process_memory_dump.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-07-06T03:53:52Z",
+      "side": 1,
+      "message": "The overridable edges will be overridden by the strong edge in both cases of overridable edge created before and after the strong edge. We only consider the strong edge in final trace.\nIn this case we consider the last added edge just to allow multiple AddOwnershipEdge() calls.",
+      "parentUuid": "e815f58f_c61cb822",
+      "revId": "8d2f55312bea5afa987158a034db4693a98da301",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
