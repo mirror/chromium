@@ -23,6 +23,7 @@
 #include "base/time/time.h"
 #include "cc/base/ring_buffer.h"
 #include "content/public/browser/browser_thread.h"
+#include "services/resource_coordinator/public/interfaces/tracing/tracing.mojom.h"
 
 namespace content {
 
@@ -124,7 +125,10 @@ class ArcTracingReader {
 
 class ArcTracingAgentImpl : public ArcTracingAgent {
  public:
-  // base::trace_event::TracingAgent overrides:
+  // base::trace_event::TracingAgent.
+  // DEPRECATED: These will be deleted when tracing servicification is complete.
+  // At that point, we will get rid of base::trace_event::TracingAgent and
+  // tracing::mojom::Agent methods will be used, instead.
   std::string GetTracingAgentName() override { return kArcTracingAgentName; }
 
   std::string GetTraceEventLabel() override { return kArcTraceLabel; }
@@ -132,29 +136,8 @@ class ArcTracingAgentImpl : public ArcTracingAgent {
   void StartAgentTracing(const base::trace_event::TraceConfig& trace_config,
                          const StartAgentTracingCallback& callback) override {
     DCHECK_CURRENTLY_ON(BrowserThread::UI);
-
-    // delegate_ may be nullptr if ARC is not enabled on the system. In such
-    // case, simply do nothing.
-    bool success = (delegate_ != nullptr);
-
-    base::ScopedFD write_fd, read_fd;
-    success = success && CreateSocketPair(&read_fd, &write_fd);
-
-    if (!success) {
-      // Use PostTask as the convention of TracingAgent. The caller expects
-      // callback to be called after this function returns.
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
-          FROM_HERE, base::Bind(callback, GetTracingAgentName(), false));
-      return;
-    }
-
-    BrowserThread::PostTask(
-        BrowserThread::IO, FROM_HERE,
-        base::Bind(&ArcTracingReader::StartTracing, reader_.GetWeakPtr(),
-                   base::Passed(&read_fd)));
-
-    delegate_->StartTracing(trace_config, std::move(write_fd),
-                            base::Bind(callback, GetTracingAgentName()));
+    StartTracing(trace_config.ToString(),
+                 base::BindRepeating(callback, GetTracingAgentName()));
   }
 
   void StopAgentTracing(const StopAgentTracingCallback& callback) override {
@@ -216,6 +199,62 @@ class ArcTracingAgentImpl : public ArcTracingAgent {
     is_stopping_ = false;
   }
 
+  // tracing::mojom::Agent. Called by Mojo internals on the UI thread.
+  void StartTracing(const std::string& config,
+                    const Agent::StartTracingCallback& callback) override {
+    base::trace_event::TraceConfig trace_config(config);
+    // delegate_ may be nullptr if ARC is not enabled on the system. In such
+    // case, simply do nothing.
+    bool success = (delegate_ != nullptr);
+
+    base::ScopedFD write_fd, read_fd;
+    success = success && CreateSocketPair(&read_fd, &write_fd);
+
+    if (!success) {
+      // Use PostTask as the convention of TracingAgent. The caller expects
+      // callback to be called after this function returns.
+      base::ThreadTaskRunnerHandle::Get()->PostTask(
+          FROM_HERE, base::Bind(callback, false));
+      return;
+    }
+
+    BrowserThread::PostTask(
+        BrowserThread::IO, FROM_HERE,
+        base::Bind(&ArcTracingReader::StartTracing, reader_.GetWeakPtr(),
+                   base::Passed(&read_fd)));
+
+    delegate_->StartTracing(trace_config, std::move(write_fd), callback);
+  }
+
+  void StopAndFlush(tracing::mojom::RecorderPtr recorder) override {
+    recorder_ = std::move(recorder);
+    StopAgentTracing(base::BindRepeating(&ArcTracingAgentImpl::RecorderProxy,
+                                         base::Unretained(this)));
+  }
+
+  void RecorderProxy(const std::string& event_name,
+                     const std::string& events_label,
+                     const scoped_refptr<base::RefCountedString>& events) {
+    if (!events->data().empty())
+      recorder_->AddChunk(events->data());
+    recorder_.reset();
+  }
+
+  void RequestClockSyncMarker(
+      const std::string& sync_id,
+      const Agent::RequestClockSyncMarkerCallback& callback) override {
+    NOTREACHED();
+  }
+
+  void GetCategories(const Agent::GetCategoriesCallback& callback) override {
+    callback.Run("");
+  }
+
+  void RequestBufferStatus(
+      const Agent::RequestBufferStatusCallback& callback) override {
+    callback.Run(0, 0);
+  }
+
   Delegate* delegate_ = nullptr;  // Owned by ArcServiceLauncher.
   // We use |reader_.GetWeakPtr()| when binding callbacks with its functions.
   // Notes that the weak pointer returned by it can only be deferenced or
@@ -228,6 +267,7 @@ class ArcTracingAgentImpl : public ArcTracingAgent {
   bool is_stopping_ = false;
   // NOTE: Weak pointers must be invalidated before all other member variables
   // so it must be the last member.
+  tracing::mojom::RecorderPtr recorder_;
   base::WeakPtrFactory<ArcTracingAgentImpl> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(ArcTracingAgentImpl);
