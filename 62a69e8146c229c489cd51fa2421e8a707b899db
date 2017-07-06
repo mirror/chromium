@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4d5d907_f018af7f",
+        "filename": "chrome/app/chrome_main.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-06T19:33:45Z",
+      "side": 1,
+      "message": "If you want to check for the lack of a command line arg (a.k.a. browser process):\n  if (!command_line-\u003eHasSwitch(switches::kProcessType))",
+      "range": {
+        "startLine": 125,
+        "startChar": 66,
+        "endLine": 125,
+        "endChar": 67
+      },
+      "revId": "62a69e8146c229c489cd51fa2421e8a707b899db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16a3b840_fe9af27a",
+        "filename": "chrome/common/profiling/memlog_sender_pipe_posix.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-06T19:33:45Z",
+      "side": 1,
+      "message": "Can you initialize to null?\n  std::vector\u003cint\u003e* dummy_for_send_ \u003d nullptr;",
+      "range": {
+        "startLine": 29,
+        "startChar": 20,
+        "endLine": 29,
+        "endChar": 35
+      },
+      "revId": "62a69e8146c229c489cd51fa2421e8a707b899db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa63afd1_ca300c04",
+        "filename": "chrome/profiling/memlog_receiver_pipe_server_posix.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-06T19:33:45Z",
+      "side": 1,
+      "message": "I think this should be a base::flat_map. You can use a std::map if you hate that. We\u0027re generally discouraging unordered_maps everywhere unless you really need it.",
+      "revId": "62a69e8146c229c489cd51fa2421e8a707b899db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
