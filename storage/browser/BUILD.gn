@@ -291,6 +291,7 @@ source_set("unittests") {
     ":browser",
     ":test_support",
     "//base/test:test_support",
+    "//mojo/common",
     "//mojo/edk/system",
     "//net:test_support",
     "//sql:test_support",
