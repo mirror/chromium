@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aeeeab4a_518eed78",
+        "filename": "chrome/browser/ui/views/passwords/account_chooser_dialog_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-06T16:36:45Z",
+      "side": 1,
+      "message": "Was your comment about \"that could also be done here, but the dialog would be a little narrow\" intended to refer to if we just removed this override entirely so this applied pre-MD too?\n\nIf so, what makes it \"too narrow\" pre-MD but OK in MD?  The fact that there\u0027s no dialog width snapping pre-MD?  Does that mean that the preferred sizes of some of the child elements should actually be larger?",
+      "revId": "9346b1adcdb0f15f1a72dac99c890d3fd12f81cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2b68285_22538432",
+        "filename": "chrome/browser/ui/views/passwords/password_dialog_view_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-06T16:36:45Z",
+      "side": 1,
+      "message": "Nit: We typically use base::StartsWith() for this",
+      "revId": "9346b1adcdb0f15f1a72dac99c890d3fd12f81cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
