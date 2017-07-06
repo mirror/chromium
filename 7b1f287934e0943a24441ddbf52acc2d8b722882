@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c7e2d786_23e2e949",
+        "filename": "chrome/browser/image_decoder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-07-06T04:33:27Z",
+      "side": 1,
+      "message": "Done\n\nNothing prevents that. Since a refactoring tool can handle this pattern, I thought it makes the review easier to limit the scope of this CL.",
+      "parentUuid": "897363ec_4594e3ac",
+      "revId": "7b1f287934e0943a24441ddbf52acc2d8b722882",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "160d815e_a2dad75c",
         "filename": "services/data_decoder/public/cpp/decode_image.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "7b1f287934e0943a24441ddbf52acc2d8b722882",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9067072b_293ed283",
+        "filename": "services/data_decoder/public/cpp/decode_image.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-07-06T04:33:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "160d815e_a2dad75c",
+      "revId": "7b1f287934e0943a24441ddbf52acc2d8b722882",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
