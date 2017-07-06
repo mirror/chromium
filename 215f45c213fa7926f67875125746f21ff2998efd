@@ -22,6 +22,30 @@
       "revId": "215f45c213fa7926f67875125746f21ff2998efd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3de93f8_6e2f3384",
+        "filename": "base/message_loop/message_pump_fuchsia.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1131524
+      },
+      "writtenOn": "2017-07-06T22:29:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6f26950_ebe8063b",
+      "range": {
+        "startLine": 35,
+        "startChar": 24,
+        "endLine": 35,
+        "endChar": 25
+      },
+      "revId": "215f45c213fa7926f67875125746f21ff2998efd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
