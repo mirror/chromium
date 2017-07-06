@@ -6,18 +6,43 @@
 
 #include "base/memory/ptr_util.h"
 #include "base/stl_util.h"
+#include "mojo/public/cpp/bindings/strong_binding.h"
 
 namespace content {
 
+namespace {
+
+class Internal : public mojom::ServiceWorkerInstalledScriptsManager {
+ public:
+  // Called on the IO thread.
+  static void Create(
+      mojom::ServiceWorkerInstalledScriptsManagerRequest request) {
+    mojo::MakeStrongBinding(base::MakeUnique<Internal>(), std::move(request));
+  }
+
+  // Implements mojom::ServiceWorkerInstalledScriptsManager.
+  // Called on the IO thread.
+  void TransferInstalledScript(
+      mojom::ServiceWorkerScriptInfoPtr script_info) override {}
+};
+
+}  // namespace
+
 // static
 std::unique_ptr<blink::WebServiceWorkerInstalledScriptsManager>
-WebServiceWorkerInstalledScriptsManagerImpl::Create() {
-  // TODO(shimazu): Pass |installed_urls| from the browser.
-  std::vector<GURL> installed_urls;
-  // TODO(shimazu): Create and bind a mojom interface on the io thread.
-  return base::WrapUnique<WebServiceWorkerInstalledScriptsManagerImpl>(
-      new WebServiceWorkerInstalledScriptsManagerImpl(
-          std::move(installed_urls)));
+WebServiceWorkerInstalledScriptsManagerImpl::Create(
+    mojom::ServiceWorkerInstalledScriptsInfoPtr installed_scripts_info,
+    scoped_refptr<base::SingleThreadTaskRunner> io_task_runner) {
+  auto installed_scripts_manager =
+      base::WrapUnique<WebServiceWorkerInstalledScriptsManagerImpl>(
+          new WebServiceWorkerInstalledScriptsManagerImpl(
+              std::move(installed_scripts_info->installed_urls)));
+  // TODO(shimazu): Pass |this| as parent
+  io_task_runner->PostTask(
+      FROM_HERE,
+      base::BindOnce(&Internal::Create,
+                     std::move(installed_scripts_info->manager_request)));
+  return base::WrapUnique(installed_scripts_manager.release());
 }
 
 WebServiceWorkerInstalledScriptsManagerImpl::
