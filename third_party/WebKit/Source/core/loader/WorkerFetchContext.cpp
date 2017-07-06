@@ -111,7 +111,7 @@ Settings* WorkerFetchContext::GetSettings() const {
 }
 
 SubresourceFilter* WorkerFetchContext::GetSubresourceFilter() const {
-  // TODO(horo): Implement this.
+  // TODO(horo): Implement this. (https://crbug.com/739597)
   return nullptr;
 }
 
