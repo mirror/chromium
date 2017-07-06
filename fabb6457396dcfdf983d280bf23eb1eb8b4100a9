@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5dfb43fd_efa07df5",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ClearStorageView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1222287
+      },
+      "writtenOn": "2017-07-06T23:52:24Z",
+      "side": 1,
+      "message": "Both Cookies and Local_storage won\u0027t get returned by the usage request, so they don\u0027t really need colors. There\u0027s also another category \"Protocol.Storage.StorageType.Other\" for unknown storage types and \"Protocol.Storage.StorageType.File_systems\" for FileSystem.\n\nRegarding the colors, I found that some of them blend together if put right next to each other. This is a better set that I was going to put up (using gray for cookies, local, and other):\n\n[Protocol.Storage.StorageType.Appcache, \u0027rgba(231, 116, 116, 1)\u0027],        // red\n[Protocol.Storage.StorageType.Cache_storage, \u0027rgba(129, 185, 117, 1)\u0027],   // green\n[Protocol.Storage.StorageType.Cookies, \u0027rgba(222, 222, 222, 1)\u0027],         // gray\n[Protocol.Storage.StorageType.File_systems, \u0027rgba(137, 109, 216, 1)\u0027],    // purple\n[Protocol.Storage.StorageType.Indexeddb, \u0027rgba(113, 146, 241, 1)\u0027],       // blue\n[Protocol.Storage.StorageType.Local_storage, \u0027rgba(222, 222, 222, 1)\u0027],   // gray\n[Protocol.Storage.StorageType.Service_workers, \u0027rgba(250, 206, 93, 1)\u0027],  // yellow\n[Protocol.Storage.StorageType.Websql, \u0027rgba(255, 165, 45, 1)\u0027],           // orange\n[Protocol.Storage.StorageType.Other, \u0027rgba(222, 222, 222, 1)\u0027],           // gray",
+      "revId": "fabb6457396dcfdf983d280bf23eb1eb8b4100a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
