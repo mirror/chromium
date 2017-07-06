@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19555253_f401c492",
+        "filename": "media/base/android/media_player_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-07-06T21:19:53Z",
+      "side": 1,
+      "message": "On second thought I don\u0027t think we can drop file:// support per my comment on your other CL. We could still hit this on blacklisted devices, HLS, or in webview with non-Chrome media.",
+      "revId": "d1883a7aa13d285f8fdbe3349e1a3df30a4b0a4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
