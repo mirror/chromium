@@ -52,6 +52,24 @@
       "revId": "8d2f55312bea5afa987158a034db4693a98da301",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbdded4e_e8d55d03",
+        "filename": "base/trace_event/process_memory_dump.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-07-06T18:52:18Z",
+      "side": 1,
+      "message": "Behavior of AddOwnershipEdge():\n1. AddOwnershipEdge(A, B, 0);\n2. AddOwnershpiEdge(A, B, 2);\nWill result in A -\u003e(2) B.\n\n1. AddOwnershipEdge(A, B, 2);\n2. AddOwnershpiEdge(A, B, 0);\nWill result in A -\u003e(0) B.\n\nHere we just do not care if the dump providers want to create multiple edges, we just take the last created edge and not show error.\n\nBehavior of AddOverridableOwnershipEdge():\n1. AddOverridableOwnershipEdge(A, B, 0);\n2. AddOwnershpiEdge(A, B, 2);\nWill result in A -\u003e(2) B.\n\n1. AddOwnershipEdge(A, B, 2);\n2. AddOverridableOwnershipEdge(A, B, 0);\nWill result in A -\u003e(2) B.\n\nNotice that in overrdiable case, we always end up with importance 2. That is why the extra api is needed.",
+      "parentUuid": "7caca0fa_6652843d",
+      "revId": "8d2f55312bea5afa987158a034db4693a98da301",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
