@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4c23f61_88f3328a",
+        "filename": "chrome/browser/media/DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-06T09:35:31Z",
+      "side": 1,
+      "message": "You might want to make this a \"specific_include_rules\"",
+      "revId": "c5292406683fa6a4554ad940c5063e90d1b653c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f1206db_81643bf8",
+        "filename": "chrome/browser/media/media_engagement_contents_observer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-06T09:35:31Z",
+      "side": 1,
+      "message": "Better to have this in an anonymous namespace to avoid linking errors. Make the class `final` too.",
+      "revId": "c5292406683fa6a4554ad940c5063e90d1b653c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
