@@ -126,8 +126,7 @@ void AppListItemView::SetIcon(const gfx::ImageSkia& icon) {
   }
 
   gfx::ImageSkia resized(gfx::ImageSkiaOperations::CreateResizedImage(
-      icon,
-      skia::ImageOperations::RESIZE_BEST,
+      icon, skia::ImageOperations::RESIZE_BEST,
       gfx::Size(kGridIconDimension, kGridIconDimension)));
   shadow_animator_.SetOriginalImage(resized);
 }
@@ -318,8 +317,8 @@ bool AppListItemView::OnMousePressed(const ui::MouseEvent& event) {
   apps_grid_view_->InitiateDrag(this, AppsGridView::MOUSE, event);
 
   if (apps_grid_view_->IsDraggedView(this)) {
-    mouse_drag_timer_.Start(FROM_HERE,
-        base::TimeDelta::FromMilliseconds(kMouseDragUIDelayInMs),
+    mouse_drag_timer_.Start(
+        FROM_HERE, base::TimeDelta::FromMilliseconds(kMouseDragUIDelayInMs),
         this, &AppListItemView::OnMouseDragTimer);
   }
   return true;
@@ -412,8 +411,7 @@ bool AppListItemView::OnMouseDragged(const ui::MouseEvent& event) {
     apps_grid_view_->ClearAnySelectedView();
 
   // Shows dragging UI when it's confirmed without waiting for the timer.
-  if (ui_state_ != UI_STATE_DRAGGING &&
-      apps_grid_view_->dragging() &&
+  if (ui_state_ != UI_STATE_DRAGGING && apps_grid_view_->dragging() &&
       apps_grid_view_->IsDraggedView(this)) {
     mouse_drag_timer_.Stop();
     SetUIState(UI_STATE_DRAGGING);

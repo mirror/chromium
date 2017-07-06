@@ -97,7 +97,7 @@ class AppsGridViewTest : public views::ViewsTestBase {
     model_.reset(new AppListTestModel);
     model_->SetFoldersEnabled(true);
 
-    apps_grid_view_.reset(new AppsGridView(NULL));
+    apps_grid_view_.reset(new AppsGridView(nullptr));
     apps_grid_view_->SetLayout(kCols, kRows);
     apps_grid_view_->SetBoundsRect(
         gfx::Rect(apps_grid_view_->GetPreferredSize()));
