@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0563544_cf1bc384",
+        "filename": "chrome/browser/autocomplete/chrome_autocomplete_provider_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-06T22:42:04Z",
+      "side": 1,
+      "message": "nit: \"after\" -\u003e \", called after\"\n\n(to make it clear the function below doesn\u0027t have different behavior before and after, and only after does nothing)",
+      "range": {
+        "startLine": 66,
+        "startChar": 32,
+        "endLine": 66,
+        "endChar": 37
+      },
+      "revId": "90e7537212c2c13abb3bdafd5e655fe883935c5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8612d368_ea3d63c4",
+        "filename": "components/omnibox/browser/autocomplete_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-06T22:42:04Z",
+      "side": 1,
+      "message": "nit: omit \"we\"",
+      "range": {
+        "startLine": 346,
+        "startChar": 38,
+        "endLine": 346,
+        "endChar": 40
+      },
+      "revId": "90e7537212c2c13abb3bdafd5e655fe883935c5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69ed2786_171fb9d6",
+        "filename": "components/omnibox/browser/autocomplete_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-06T22:42:04Z",
+      "side": 1,
+      "message": "Add a LOG(INFO) or some form of debugging to verify my claim that, basically, we only assign an input to OmniboxInputType::QUERY when the user starts typing the beginning of a second word.\n\nAfter all, we\u0027re doing this because I _claim_ it\u0027s equivalent to that thing I did with logs analysis.  We should check my claim. :-)",
+      "range": {
+        "startLine": 355,
+        "startChar": 21,
+        "endLine": 355,
+        "endChar": 22
+      },
+      "revId": "90e7537212c2c13abb3bdafd5e655fe883935c5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40a71dc0_c2bc9c20",
+        "filename": "components/omnibox/browser/autocomplete_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-06T22:42:04Z",
+      "side": 1,
+      "message": "... started for this session\n(or for this omnibox interaction or something like that)",
+      "range": {
+        "startLine": 251,
+        "startChar": 63,
+        "endLine": 251,
+        "endChar": 64
+      },
+      "revId": "90e7537212c2c13abb3bdafd5e655fe883935c5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e29bdc30_45f0482e",
+        "filename": "components/omnibox/browser/omnibox_field_trial.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-06T22:42:04Z",
+      "side": 1,
+      "message": "This comment doesn\u0027t jib with the name.  If you want to start it for queries only, please\n- make the feature variable name include query\n- ditto with the feature string name\n- ditto with flags variables name\n- ditto with command line part of about_flags.cc\n(I think that\u0027s all.)\n\nThat way we can add a feature flag for high-confidence URL navigations later without a ton of confusion.",
+      "range": {
+        "startLine": 136,
+        "startChar": 3,
+        "endLine": 136,
+        "endChar": 8
+      },
+      "revId": "90e7537212c2c13abb3bdafd5e655fe883935c5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
