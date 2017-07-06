@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "caa3fbdf_23b88722",
+        "filename": "ios/web/browser_state.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-06T15:20:38Z",
+      "side": 1,
+      "message": "How about using |size_type erase (const key_type\u0026 k);|?",
+      "range": {
+        "startLine": 76,
+        "startChar": 14,
+        "endLine": 76,
+        "endChar": 40
+      },
+      "revId": "8163cceedf65d044947c000a95ade98bec9c5a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee1c2d68_d5649e57",
+        "filename": "ios/web/browser_state.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-06T15:20:38Z",
+      "side": 1,
+      "message": "base::MakeUnique?",
+      "range": {
+        "startLine": 231,
+        "startChar": 8,
+        "endLine": 231,
+        "endChar": 11
+      },
+      "revId": "8163cceedf65d044947c000a95ade98bec9c5a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d936a189_f932736f",
+        "filename": "ios/web/public/browser_state.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-06T15:20:38Z",
+      "side": 1,
+      "message": "Please document |path| in the comments.",
+      "range": {
+        "startLine": 70,
+        "startChar": 48,
+        "endLine": 70,
+        "endChar": 60
+      },
+      "revId": "8163cceedf65d044947c000a95ade98bec9c5a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d023149_c0f4dc52",
+        "filename": "ios/web/public/browser_state.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-06T15:20:38Z",
+      "side": 1,
+      "message": "What happens if this method is not called for created browser state? If it will CHECK on destruction then how about s/should/must?",
+      "range": {
+        "startLine": 70,
+        "startChar": 43,
+        "endLine": 70,
+        "endChar": 47
+      },
+      "revId": "8163cceedf65d044947c000a95ade98bec9c5a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7fd33ee_cb9846e9",
+        "filename": "ios/web/public/browser_state.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-06T15:20:38Z",
+      "side": 1,
+      "message": "Should this method be protected? As I can see, only subclasses are calling it.",
+      "range": {
+        "startLine": 71,
+        "startChar": 14,
+        "endLine": 71,
+        "endChar": 24
+      },
+      "revId": "8163cceedf65d044947c000a95ade98bec9c5a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee263fc7_e33bd56b",
+        "filename": "ios/web/shell/test/service_manager_egtest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-06T15:20:38Z",
+      "side": 1,
+      "message": "s/user_id/userID because this is Objective-C code. Could you please fix the style in the other method as well (sorry, I missed this when reviewed previous CL)",
+      "range": {
+        "startLine": 101,
+        "startChar": 28,
+        "endLine": 101,
+        "endChar": 35
+      },
+      "revId": "8163cceedf65d044947c000a95ade98bec9c5a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
