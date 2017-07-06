@@ -22,6 +22,76 @@
       "revId": "537f2d0bd214299dabe561df1550e6f6732027c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b0c42f6_341ee67d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 703,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-06T23:32:28Z",
+      "side": 1,
+      "message": "I like the clarity.",
+      "parentUuid": "26a25d5b_95edd45c",
+      "range": {
+        "startLine": 703,
+        "startChar": 19,
+        "endLine": 703,
+        "endChar": 37
+      },
+      "revId": "537f2d0bd214299dabe561df1550e6f6732027c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16567d96_750f490d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-06T23:32:28Z",
+      "side": 1,
+      "message": "nit: areSuggestionsScolled() or isSuggestionsListScrolled()\n\nSame for areSuggestionsShown() (or isSuggestionsListShown())",
+      "range": {
+        "startLine": 710,
+        "startChar": 19,
+        "endLine": 710,
+        "endChar": 40
+      },
+      "revId": "537f2d0bd214299dabe561df1550e6f6732027c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11a80262_dbc17db7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/BottomToolbarPhone.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-06T23:32:28Z",
+      "side": 1,
+      "message": "This does the same thing as ToolbarPhone#getLocationBar() -- are both needed?",
+      "range": {
+        "startLine": 188,
+        "startChar": 29,
+        "endLine": 188,
+        "endChar": 43
+      },
+      "revId": "537f2d0bd214299dabe561df1550e6f6732027c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
