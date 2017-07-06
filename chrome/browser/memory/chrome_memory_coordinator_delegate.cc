@@ -20,11 +20,13 @@ ChromeMemoryCoordinatorDelegate::ChromeMemoryCoordinatorDelegate() {}
 
 ChromeMemoryCoordinatorDelegate::~ChromeMemoryCoordinatorDelegate() {}
 
-void ChromeMemoryCoordinatorDelegate::DiscardTab() {
-#if !defined(OS_ANDROID)
-  if (g_browser_process->GetTabManager())
-    g_browser_process->GetTabManager()->DiscardTab();
-#endif
+void ChromeMemoryCoordinatorDelegate::DiscardTab(bool discard_is_urgent) {
+  if (g_browser_process->GetTabManager()) {
+    g_browser_process->GetTabManager()->DiscardTab(
+        discard_is_urgent
+            ? resource_coordinator::TabManager::kUrgentShutdown
+            : resource_coordinator::TabManager::kProactiveShutdown);
+  }
 }
 
 }  // namespace memory
