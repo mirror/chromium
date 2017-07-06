@@ -52,6 +52,24 @@
       "revId": "29c90b3ebc3d4b3e81cd6bbc71b0cc27eab98549",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b175b7f6_a301543f",
+        "filename": "content/public/browser/android/motion_event_synthesizer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-07-06T15:18:34Z",
+      "side": 1,
+      "message": "\u003e why not? what\u0027s wrong with WebContents-\u003eWebContentsViewAndroid-\u003eViewAndroid?\n\nOkay I didn\u0027t look hard enough; while VrShell takes over, it swaps in its own WindowAndroid to make it the parent of the WebContents\u0027s ViewAndroid tree. That will have WC\u0027s VA return the right dip scale from WA as expected. We don\u0027t need to pass VA - WebContents is enough.\n\nI still need to make sure it returns the right container view, for which I also need to swap in its ViewAndroidDelegate and later put the old one back. Will get back once it is done.",
+      "parentUuid": "cf14e21c_8089b99c",
+      "revId": "29c90b3ebc3d4b3e81cd6bbc71b0cc27eab98549",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
