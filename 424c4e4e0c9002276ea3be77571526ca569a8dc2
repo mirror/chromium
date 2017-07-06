@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c585a29b_b24c9edb",
+        "filename": "third_party/WebKit/LayoutTests/virtual/android/fast/rootscroller/browser-controls-background.html",
+        "patchSetId": 16
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-07-06T16:23:21Z",
+      "side": 1,
+      "message": "I think these tests would be better as unit tests because these caveats can just be enforced in the code. Another advantage for you is that unit tests run much faster :)",
+      "revId": "424c4e4e0c9002276ea3be77571526ca569a8dc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dc7a641_92726717",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 1352,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-07-06T16:23:21Z",
+      "side": 1,
+      "message": "Can this call a layout due to scrollbars (per the comment in PaintLayerScrollableArea::DidChangeGlobalRootScroller)? If so, I think the following check would fail. Can you add a test for this?",
+      "revId": "424c4e4e0c9002276ea3be77571526ca569a8dc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46023c2b_8c358d8a",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/RootScrollerController.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-07-06T16:23:21Z",
+      "side": 1,
+      "message": "Can you enforce this comment with a DCHECK of the lifecycle state in DidUpdateLayout?",
+      "revId": "424c4e4e0c9002276ea3be77571526ca569a8dc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
