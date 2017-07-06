@@ -22,6 +22,30 @@
       "revId": "4171e78459526eb122191bdd89c3724ec35fc5c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96beb5ab_802eaa5a",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2017-07-06T01:55:34Z",
+      "side": 1,
+      "message": "I\u0027m using format on save through my IDE.\n\nI just ran git cl format through the CLI and no changes occurred.",
+      "parentUuid": "65830ce1_5ddd529e",
+      "range": {
+        "startLine": 284,
+        "startChar": 23,
+        "endLine": 284,
+        "endChar": 24
+      },
+      "revId": "4171e78459526eb122191bdd89c3724ec35fc5c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
