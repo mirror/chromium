@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1075059f_c3e92044",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 762,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-07-06T12:56:03Z",
+      "side": 1,
+      "message": "Please add a comment saying by default is_enabled_refcount \u0026 voter_refcount are both equal to zero.",
+      "range": {
+        "startLine": 762,
+        "startChar": 10,
+        "endLine": 762,
+        "endChar": 26
+      },
+      "revId": "37fa9fc55a9074ab3fc9cc0119b4bc64b17e1bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc725e68_fe3ce03e",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 915,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-07-06T12:56:03Z",
+      "side": 1,
+      "message": "Nit: I think we can either loose this temporary, or add an if to not call EnableOrDisableWithSelector if there was no change.",
+      "range": {
+        "startLine": 915,
+        "startChar": 7,
+        "endLine": 915,
+        "endChar": 17
+      },
+      "revId": "37fa9fc55a9074ab3fc9cc0119b4bc64b17e1bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45a50a8a_b2a8751b",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-07-06T12:56:03Z",
+      "side": 1,
+      "message": "Please document what this does.",
+      "range": {
+        "startLine": 267,
+        "startChar": 7,
+        "endLine": 267,
+        "endChar": 29
+      },
+      "revId": "37fa9fc55a9074ab3fc9cc0119b4bc64b17e1bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c296173_8aa5b59d",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-07-06T12:56:03Z",
+      "side": 1,
+      "message": "nit: I think you can just do \n\nscoped_refptr\u003cTaskQueueType\u003e task_queue(new TaskQueueType(CreateTaskQueueImpl(spec), std::forward\u003cArgs\u003e(args)...)));",
+      "range": {
+        "startLine": 108,
+        "startChar": 8,
+        "endLine": 108,
+        "endChar": 26
+      },
+      "revId": "37fa9fc55a9074ab3fc9cc0119b4bc64b17e1bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e511509_6070e77a",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/main_thread_scheduler_helper.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-07-06T12:56:03Z",
+      "side": 1,
+      "message": "should this be const\u0026 here and elsewhere or do we intend to pass by value?",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 27
+      },
+      "revId": "37fa9fc55a9074ab3fc9cc0119b4bc64b17e1bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
