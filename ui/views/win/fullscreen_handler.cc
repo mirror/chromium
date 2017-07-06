@@ -87,9 +87,9 @@ void FullscreenHandler::SetFullscreenImpl(bool fullscreen) {
   }
 
   if (!task_bar_list_) {
-    HRESULT hr = ::CoCreateInstance(CLSID_TaskbarList, NULL,
-                                    CLSCTX_INPROC_SERVER,
-                                    IID_PPV_ARGS(&task_bar_list_));
+    HRESULT hr =
+        ::CoCreateInstance(CLSID_TaskbarList, NULL, CLSCTX_INPROC_SERVER,
+                           IID_PPV_ARGS(&task_bar_list_));
     CHECK(SUCCEEDED(hr));
   }
 

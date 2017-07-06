@@ -11,6 +11,8 @@ static_library("zucchini_lib") {
     "disassembler.cc",
     "disassembler.h",
     "image_utils.h",
+    "labeled_pool.cc",
+    "labeled_pool.h",
     "typed_value.h",
   ]
 
@@ -41,6 +43,7 @@ if (is_win) {
 test("zucchini_unittests") {
   sources = [
     "buffer_view_unittest.cc",
+    "labeled_pool_unittest.cc",
     "typed_value_unittest.cc",
   ]
 

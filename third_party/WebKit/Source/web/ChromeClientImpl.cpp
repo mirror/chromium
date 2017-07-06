@@ -804,8 +804,7 @@ void ChromeClientImpl::SetBrowserControlsState(float height,
   if (shrinks_layout)
     size.height -= height;
 
-  web_view_->ResizeWithBrowserControls(
-      size, height, shrinks_layout);
+  web_view_->ResizeWithBrowserControls(size, height, shrinks_layout);
 }
 
 bool ChromeClientImpl::ShouldOpenModalDialogDuringPageDismissal(

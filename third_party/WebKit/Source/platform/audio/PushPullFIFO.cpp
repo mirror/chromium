@@ -38,8 +38,7 @@ PushPullFIFO::~PushPullFIFO() {
   // (100 buckets of size 1) This is equivalent of
   // "Media.AudioRendererMissedDeadline" metric for WebAudio.
   DEFINE_STATIC_LOCAL(
-      LinearHistogram,
-      fifo_underflow_percentage_histogram,
+      LinearHistogram, fifo_underflow_percentage_histogram,
       ("WebAudio.PushPullFIFO.UnderflowPercentage", 1, 100, 101));
   fifo_underflow_percentage_histogram.Count(
       static_cast<int32_t>(100.0 * underflow_count_ / pull_count_));
