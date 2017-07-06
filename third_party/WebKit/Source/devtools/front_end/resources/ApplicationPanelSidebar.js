@@ -139,6 +139,7 @@ Resources.ApplicationPanelSidebar = class extends UI.VBox {
   _addRefreshSectionButton(treeElement, refresh) {
     var refreshIcon = UI.Icon.create('largeicon-refresh', 'sidebar-section-button');
     refreshIcon.addEventListener('click', refresh, false);
+    refreshIcon.title = Common.UIString('Refresh');
     treeElement.setTrailingIcons([refreshIcon]);
   }
 
