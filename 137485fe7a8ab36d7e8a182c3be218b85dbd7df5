@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0246df7c_25928e40",
+        "filename": "chrome/browser/page_load_metrics/metrics_web_contents_observer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-07-06T14:25:50Z",
+      "side": 1,
+      "message": "DCHECK(render_frame_host_or_null)\n\nAs with most dchecks in PLM, I\u0027m sure this will blow up on us :)",
+      "range": {
+        "startLine": 266,
+        "startChar": 4,
+        "endLine": 266,
+        "endChar": 10
+      },
+      "revId": "137485fe7a8ab36d7e8a182c3be218b85dbd7df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "905ed04c_ef405919",
+        "filename": "chrome/browser/page_load_metrics/metrics_web_contents_observer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-07-06T14:25:50Z",
+      "side": 1,
+      "message": "|render_frame_host_or_null|",
+      "range": {
+        "startLine": 99,
+        "startChar": 20,
+        "endLine": 99,
+        "endChar": 45
+      },
+      "revId": "137485fe7a8ab36d7e8a182c3be218b85dbd7df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0270b1ea_e9556af9",
+        "filename": "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-07-06T14:25:50Z",
+      "side": 1,
+      "message": "Do sub-frames have browser-side navigation?",
+      "range": {
+        "startLine": 105,
+        "startChar": 38,
+        "endLine": 105,
+        "endChar": 61
+      },
+      "revId": "137485fe7a8ab36d7e8a182c3be218b85dbd7df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
