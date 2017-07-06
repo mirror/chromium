@@ -4,9 +4,12 @@
 
 package org.chromium.components.autofill;
 
+import android.annotation.TargetApi;
+import android.os.Build;
 import android.util.SparseArray;
 import android.view.ViewGroup;
 import android.view.ViewStructure;
+import android.view.autofill.AutofillValue;
 
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
@@ -42,7 +45,8 @@ public abstract class AutofillProvider {
      * @param values the array of autofill values, the key is virtual id of form
      *            field.
      */
-    public abstract void autofill(final SparseArray<String> values);
+    @TargetApi(Build.VERSION_CODES.O)
+    public abstract void autofill(final SparseArray<AutofillValue> values);
 
     /**
      * Invoked when autofill service needs the form structure.
