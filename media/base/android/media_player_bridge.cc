@@ -85,6 +85,11 @@ MediaPlayerBridge::~MediaPlayerBridge() {
 
 void MediaPlayerBridge::Initialize() {
   cookies_.clear();
+  if (url_.SchemeIsBlob()) {
+    NOTREACHED();
+    return;
+  }
+
   if (url_.SchemeIsFile() || url_.SchemeIs("data")) {
     ExtractMediaMetadata(url_.spec());
     return;
@@ -92,11 +97,10 @@ void MediaPlayerBridge::Initialize() {
 
   media::MediaResourceGetter* resource_getter =
       manager()->GetMediaResourceGetter();
-  if (url_.SchemeIsFileSystem() || url_.SchemeIsBlob()) {
+  if (url_.SchemeIsFileSystem()) {
     resource_getter->GetPlatformPathFromURL(
-        url_,
-        base::Bind(&MediaPlayerBridge::ExtractMediaMetadata,
-                   weak_factory_.GetWeakPtr()));
+        url_, base::BindOnce(&MediaPlayerBridge::ExtractMediaMetadata,
+                             weak_factory_.GetWeakPtr()));
     return;
   }
 
@@ -145,11 +149,15 @@ void MediaPlayerBridge::SetVideoSurface(gl::ScopedJavaSurface surface) {
 void MediaPlayerBridge::Prepare() {
   DCHECK(j_media_player_bridge_.is_null());
   CreateJavaMediaPlayerBridge();
-  if (url_.SchemeIsFileSystem() || url_.SchemeIsBlob()) {
+  if (url_.SchemeIsBlob()) {
+    NOTREACHED();
+    return;
+  }
+
+  if (url_.SchemeIsFileSystem()) {
     manager()->GetMediaResourceGetter()->GetPlatformPathFromURL(
-        url_,
-        base::Bind(&MediaPlayerBridge::SetDataSource,
-                   weak_factory_.GetWeakPtr()));
+        url_, base::BindOnce(&MediaPlayerBridge::SetDataSource,
+                             weak_factory_.GetWeakPtr()));
     return;
   }
 
