@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9afb42fc_d1bab45e",
+        "filename": "media/mojo/common/media_type_converters_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-07-06T22:42:47Z",
+      "side": 1,
+      "message": "Ah, sorry - this was a TODO that didn\u0027t get done. Now removed, converted to encryption_scheme_struct_traits_unittest.cc",
+      "parentUuid": "ceb182d8_c9e21e8d",
+      "range": {
+        "startLine": 227,
+        "startChar": 0,
+        "endLine": 241,
+        "endChar": 4
+      },
+      "revId": "bb2d3ac9e17ffdc366285f565f4b1ac4054039a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9c4a2eed_d263bc88",
         "filename": "media/mojo/interfaces/audio_decoder_config.typemap",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "2f2bacba_e564a146",
+        "filename": "media/mojo/interfaces/audio_decoder_config.typemap",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-07-06T22:42:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c4a2eed_d263bc88",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 77
+      },
+      "revId": "bb2d3ac9e17ffdc366285f565f4b1ac4054039a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "444a0ae5_c7ce4409",
         "filename": "media/mojo/interfaces/audio_decoder_config_struct_traits.cc",
         "patchSetId": 5
@@ -59,6 +107,30 @@
       "writtenOn": "2017-07-06T07:52:29Z",
       "side": 1,
       "message": "If you\u0027re really interested in avoiding copies, I suspect it should be possible to read this as a mojo::ArrayDataView: https://cs.chromium.org/search/?q\u003dfile:struct_traits+ArrayDataView\u0026sq\u003dpackage:chromium\u0026type\u003dcs\n\nOf course, that means that Initialize() will have to understand how to initialize from a mojo::ArrayDataView or accept a std::vector by value (to move it).\n\n(I don\u0027t know how big extra_data typically is, so I\u0027m not sure if this is useful or not: just pointing it out)",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 40
+      },
+      "revId": "bb2d3ac9e17ffdc366285f565f4b1ac4054039a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1c90014_0c780ef1",
+        "filename": "media/mojo/interfaces/audio_decoder_config_struct_traits.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-07-06T22:42:47Z",
+      "side": 1,
+      "message": "extra_data is very often 0 and I\u0027ve never seen it exceed 50 bytes. Its another yak shave and we\u0027re already pretty in the weeds from my initial CL ;)",
+      "parentUuid": "444a0ae5_c7ce4409",
       "range": {
         "startLine": 26,
         "startChar": 2,
@@ -142,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "89c52370_89e3c003",
+        "filename": "media/mojo/interfaces/audio_decoder_config_struct_traits.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-07-06T22:42:47Z",
+      "side": 1,
+      "message": "Done (left as-is).",
+      "parentUuid": "a17ce2ce_7430c6ec",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 66
+      },
+      "revId": "bb2d3ac9e17ffdc366285f565f4b1ac4054039a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "474b5d84_01f9427b",
         "filename": "media/mojo/interfaces/audio_decoder_config_struct_traits.h",
         "patchSetId": 5
@@ -165,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "6a3cb7b7_924fb8ef",
+        "filename": "media/mojo/interfaces/audio_decoder_config_struct_traits.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-07-06T22:42:47Z",
+      "side": 1,
+      "message": "Done (also left as-is)",
+      "parentUuid": "474b5d84_01f9427b",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 58
+      },
+      "revId": "bb2d3ac9e17ffdc366285f565f4b1ac4054039a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4792b6af_8e3be6d6",
         "filename": "media/mojo/interfaces/video_decoder_config_struct_traits_unittest.cc",
         "patchSetId": 5
@@ -176,6 +296,30 @@
       "writtenOn": "2017-07-06T07:52:29Z",
       "side": 1,
       "message": "Nit: include \u003cutility\u003e",
+      "range": {
+        "startLine": 33,
+        "startChar": 52,
+        "endLine": 33,
+        "endChar": 61
+      },
+      "revId": "bb2d3ac9e17ffdc366285f565f4b1ac4054039a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbb0a14d_cd7a3d33",
+        "filename": "media/mojo/interfaces/video_decoder_config_struct_traits_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-07-06T22:42:47Z",
+      "side": 1,
+      "message": "Done. Here and in other unit tests",
+      "parentUuid": "4792b6af_8e3be6d6",
       "range": {
         "startLine": 33,
         "startChar": 52,
