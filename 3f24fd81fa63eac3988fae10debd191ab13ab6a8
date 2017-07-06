@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "39ee2da4_d07f0a90",
+        "filename": "third_party/WebKit/Source/modules/encryptedmedia/MediaKeys.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-06T18:20:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d44b348_1a81ba5c",
+      "revId": "3f24fd81fa63eac3988fae10debd191ab13ab6a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85653121_37d0a1bb",
         "filename": "third_party/WebKit/Source/modules/encryptedmedia/MediaKeys.cpp",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-05T15:12:35Z",
       "side": 1,
       "message": "This is handled in the next CL but minHDCPVersion() could be the empty string in which case, we could reject with a TypeError. Though, I think in general, we should use an enum as random strings are not the right approach. No need to delay this CL as we can modify it later.",
+      "revId": "3f24fd81fa63eac3988fae10debd191ab13ab6a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67661fb0_546d8ca6",
+        "filename": "third_party/WebKit/Source/modules/encryptedmedia/MediaKeys.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-06T18:20:55Z",
+      "side": 1,
+      "message": "Ack.\n\nFor TypeError, see my reply to jrummell in another CL, which is copied here:\n\nCurrently HDCP is the only policy that can be checked so it doesn\u0027t make sense to check for \"None\". However, in the future, when we have multiple policies, \"None\" can be used to indicate that \"HDCP\" policy is not specified. For example:\n{\n  minHdcpVersion: None\n  PolicyFooVersion: Foo1\n  PolicyBarVersion: Bar2\n}\n\nFor enum vs string, see our discussion in the email thread. Feel free to reply to that thread about how to handle it.",
+      "parentUuid": "85653121_37d0a1bb",
       "revId": "3f24fd81fa63eac3988fae10debd191ab13ab6a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
