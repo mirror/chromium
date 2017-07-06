@@ -24,6 +24,7 @@
         "components",
         "object_ui",
         "perf_ui",
+        "sources",
         "mobile_throttling"
     ],
     "scripts": [

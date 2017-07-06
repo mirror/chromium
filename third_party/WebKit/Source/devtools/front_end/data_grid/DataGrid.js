@@ -58,8 +58,7 @@ DataGrid.DataGrid = class extends Common.Object {
 
     // FIXME: Add a createCallback which is different from editCallback and has different
     // behavior when creating a new node.
-    if (editCallback)
-      this._dataTable.addEventListener('dblclick', this._ondblclick.bind(this), false);
+    this._dataTable.addEventListener('dblclick', this._ondblclick.bind(this), false);
     this._dataTable.addEventListener('mousedown', this._mouseDownInDataTable.bind(this));
     this._dataTable.addEventListener('click', this._clickInDataTable.bind(this), true);
 
@@ -293,6 +292,11 @@ DataGrid.DataGrid = class extends Common.Object {
    * @param {!Event} event
    */
   _ondblclick(event) {
+    if (!this._editCallback) {
+      this.dispatchEventToListeners(
+          DataGrid.DataGrid.Events.OpenedNode, this.dataGridNodeFromNode(/** @type {!Node} */ (event.target)));
+      return;
+    }
     if (this._editing || this._editingNode)
       return;
 
@@ -973,7 +977,6 @@ DataGrid.DataGrid = class extends Common.Object {
         gridNode.select();
     } else {
       gridNode.select();
-      this.dispatchEventToListeners(DataGrid.DataGrid.Events.OpenedNode, gridNode);
     }
   }
 
