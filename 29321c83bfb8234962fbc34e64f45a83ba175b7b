@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3bb70f15_ab93becf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-06T13:54:58Z",
+      "side": 1,
+      "message": "Gone.",
+      "parentUuid": "60089f3c_4398be10",
+      "range": {
+        "startLine": 115,
+        "startChar": 97,
+        "endLine": 115,
+        "endChar": 0
+      },
+      "revId": "29321c83bfb8234962fbc34e64f45a83ba175b7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d2255a3_0f4914da",
         "filename": "chrome/browser/android/ntp/most_visited_sites_bridge.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "29321c83bfb8234962fbc34e64f45a83ba175b7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1abcc889_475a96d9",
+        "filename": "chrome/browser/android/ntp/most_visited_sites_bridge.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-06T13:54:58Z",
+      "side": 1,
+      "message": "Thanks.",
+      "parentUuid": "3d2255a3_0f4914da",
+      "range": {
+        "startLine": 105,
+        "startChar": 74,
+        "endLine": 105,
+        "endChar": 0
+      },
+      "revId": "29321c83bfb8234962fbc34e64f45a83ba175b7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "3c8772aa_77434d41",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-06T13:54:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a79dace4_dfe0c14b",
+      "range": {
+        "startLine": 47,
+        "startChar": 53,
+        "endLine": 47,
+        "endChar": 0
+      },
+      "revId": "29321c83bfb8234962fbc34e64f45a83ba175b7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f784d827_c7046929",
         "filename": "components/ntp_tiles/most_visited_sites.cc",
         "patchSetId": 4
@@ -85,6 +157,24 @@
       "revId": "29321c83bfb8234962fbc34e64f45a83ba175b7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5b666ca_8e549fd2",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-06T13:54:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f784d827_c7046929",
+      "revId": "29321c83bfb8234962fbc34e64f45a83ba175b7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "89cd0060_a5e1478f",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-06T13:54:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94cb4c06_991d363a",
+      "range": {
+        "startLine": 389,
+        "startChar": 60,
+        "endLine": 389,
+        "endChar": 0
+      },
+      "revId": "29321c83bfb8234962fbc34e64f45a83ba175b7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "898461a8_8172ecc7",
         "filename": "components/ntp_tiles/most_visited_sites.cc",
         "patchSetId": 4
@@ -131,6 +245,30 @@
       "revId": "29321c83bfb8234962fbc34e64f45a83ba175b7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3c3300a_d84896a1",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-06T13:54:58Z",
+      "side": 1,
+      "message": "The UI doesn\u0027t update immediately if the event is fired but stores it until the page is hidden.\nAs this change affects only Chrome Home because there is a home button on the NTP, it is pretty unlikely that this will be noticeable at all --\u003e An enabled home page means that Chrome Home is always hidden on App launch which means the user has to really hurry up to see the URL instead of the Title. \n\nAlso, this solution will lose meaning as soon as Partners can provide titles in PartnerCustomization APKs.",
+      "parentUuid": "898461a8_8172ecc7",
+      "range": {
+        "startLine": 423,
+        "startChar": 74,
+        "endLine": 423,
+        "endChar": 0
+      },
+      "revId": "29321c83bfb8234962fbc34e64f45a83ba175b7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "fe9bd43c_1892e4b4",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-06T13:54:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f330260_e43e118a",
+      "range": {
+        "startLine": 424,
+        "startChar": 25,
+        "endLine": 424,
+        "endChar": 0
+      },
+      "revId": "29321c83bfb8234962fbc34e64f45a83ba175b7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58f089bb_a835771f",
         "filename": "components/ntp_tiles/most_visited_sites.cc",
         "patchSetId": 4
@@ -171,6 +333,24 @@
       "revId": "29321c83bfb8234962fbc34e64f45a83ba175b7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a9cd4ea_d9f0df88",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-06T13:54:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58f089bb_a835771f",
+      "revId": "29321c83bfb8234962fbc34e64f45a83ba175b7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -194,6 +374,30 @@
       "revId": "29321c83bfb8234962fbc34e64f45a83ba175b7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87d1a2a0_a9f514b1",
+        "filename": "components/ntp_tiles/most_visited_sites.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-06T13:54:58Z",
+      "side": 1,
+      "message": "Done.\n(Although someone was complaining about using \"using\" to often for Callbacks ... pretty unclear where the threshold is, tbh)",
+      "parentUuid": "61cfaf74_3cde01f8",
+      "range": {
+        "startLine": 104,
+        "startChar": 77,
+        "endLine": 104,
+        "endChar": 0
+      },
+      "revId": "29321c83bfb8234962fbc34e64f45a83ba175b7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
