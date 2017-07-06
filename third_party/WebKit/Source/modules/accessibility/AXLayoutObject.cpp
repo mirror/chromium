@@ -1747,10 +1747,10 @@ AXObject::AXRange AXLayoutObject::Selection() const {
   if (selection.IsNone())
     return AXRange();
 
-  VisiblePosition visible_start = selection.VisibleStart();
+  VisiblePosition visible_start = selection.VisibleBase();
   Position start = visible_start.ToParentAnchoredPosition();
   TextAffinity start_affinity = visible_start.Affinity();
-  VisiblePosition visible_end = selection.VisibleEnd();
+  VisiblePosition visible_end = selection.VisibleExtent();
   Position end = visible_end.ToParentAnchoredPosition();
   TextAffinity end_affinity = visible_end.Affinity();
 
@@ -1793,6 +1793,7 @@ AXObject::AXRange AXLayoutObject::Selection() const {
   int anchor_offset = anchor_object->IndexForVisiblePosition(visible_start);
   DCHECK_GE(anchor_offset, 0);
   int focus_offset = focus_object->IndexForVisiblePosition(visible_end);
+  LOG(ERROR) << "Anchor: " << anchor_offset << " focus: " << focus_offset;
   DCHECK_GE(focus_offset, 0);
   return AXRange(anchor_object, anchor_offset, start_affinity, focus_object,
                  focus_offset, end_affinity);
@@ -1863,8 +1864,17 @@ AXObject::AXRange AXLayoutObject::TextControlSelection() const {
   TextControlElement* text_control =
       ToLayoutTextControl(layout)->GetTextControlElement();
   DCHECK(text_control);
-  int start = text_control->selectionStart();
-  int end = text_control->selectionEnd();
+
+  int start;
+  int end;
+  // TODO: use a cleaner API that accesses the direction enum?
+  if (text_control->selectionDirection() == "backward") {
+    start = text_control->selectionEnd();
+    end = text_control->selectionStart();
+  } else {
+    start = text_control->selectionStart();
+    end = text_control->selectionEnd();
+  }
 
   return AXRange(ax_object, start, selection.VisibleStart().Affinity(),
                  ax_object, end, selection.VisibleEnd().Affinity());
