@@ -16,6 +16,24 @@
       "revId": "16d1d95de30cf92ccc5f14d26768d3ed18c43008",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82b66431_10126110",
+        "filename": "extensions/browser/updater/update_client_config.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-06T22:18:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4119327_a5575615",
+      "revId": "16d1d95de30cf92ccc5f14d26768d3ed18c43008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
