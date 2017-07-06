@@ -4365,6 +4365,7 @@ test("unit_tests") {
       "//components/safe_browsing:base_ping_manager_unittest",
       "//components/safe_browsing/renderer:websocket_sb_handshake_throttle_unittest",
       "//components/safe_browsing_db:v4_test_util",
+      "//content/test:test_support",
     ]
 
     if (is_mac) {
