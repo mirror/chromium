@@ -44,6 +44,9 @@ class TestGpuImpl : public mojom::Gpu {
   }
 
   // ui::mojom::Gpu overrides:
+  void Gpu::CreateVideoEncodeAccelerator(
+      media::mojom::VideoEncodeAcceleratorRequest vea_request) {}
+
   void EstablishGpuChannel(
       const EstablishGpuChannelCallback& callback) override {
     establish_channel_callback_ = callback;
