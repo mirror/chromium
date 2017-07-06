@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "f2cfed0a_875a95c4",
+        "filename": "third_party/WebKit/LayoutTests/FlagExpectations/enable-slimming-paint-v2",
+        "patchSetId": 11
+      },
+      "lineNbr": 1662,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-07-06T00:09:39Z",
+      "side": 1,
+      "message": "These are due to FP-errors in transform space conversion. For example if we have a linear transform tree like this:\nT0 \u003c-- T1 \u003c-- T2 (assume all matrices are flat)\nIf we want to get from space T1 to T2, previously we would have just pushed T2\u0027s local matrix, but with my O(1) GeometryMapper algorithm, T1.to_screen^-1 * T2.to_screen would be computed instead.\n\nSVGs are more susceptible (but not limited to) to this issue because they generate a lot non-composited transforms.\n\nI think this could be a problem because the error can multiply with deeply nested clips. I can avoid error accumulation by using SetMatrixOp instead of ConcatOp, but I think enne@ would prefer to avoid SetMatrixOp. I should double check with enne@.",
+      "parentUuid": "af921163_e2a9285a",
+      "revId": "09e9b162902d6ba5d28c1be1ec180c1f4bd85993",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5f1a505c_8075e0f2",
         "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositorTest.cpp",
         "patchSetId": 11
