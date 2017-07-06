@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7a57aa2_93069bc5",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_importer_unittest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-07-06T21:40:48Z",
+      "side": 1,
+      "message": "A test for when some bot has failed would also be good.",
+      "range": {
+        "startLine": 87,
+        "startChar": 8,
+        "endLine": 87,
+        "endChar": 41
+      },
+      "revId": "a03c2b4da152de09fa1fd9fa2340a74cbf8b87f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
