@@ -208,7 +208,6 @@ void TileItemView::UpdateBackgroundColor() {
   if (white_selected_color_enabled_) {
     SetBackground(nullptr);
     SchedulePaint();
-    return;
   }
 
   std::unique_ptr<views::Background> background;
