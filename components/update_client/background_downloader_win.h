@@ -87,8 +87,10 @@ class BackgroundDownloader : public CrxDownloader {
   void StartTimer();
   void OnTimer();
 
-  HRESULT QueueBitsJob(const GURL& url, IBackgroundCopyJob** job);
-  HRESULT CreateOrOpenJob(const GURL& url, IBackgroundCopyJob** job);
+  HRESULT QueueBitsJob(const GURL& url,
+                       base::win::ScopedComPtr<IBackgroundCopyJob>* job);
+  HRESULT CreateOrOpenJob(const GURL& url,
+                          base::win::ScopedComPtr<IBackgroundCopyJob>* job);
   HRESULT InitializeNewJob(
       const base::win::ScopedComPtr<IBackgroundCopyJob>& job,
       const GURL& url);
