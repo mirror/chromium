@@ -117,6 +117,30 @@
     },
     {
       "key": {
+        "uuid": "37f05992_c9f6c50a",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-06T23:37:04Z",
+      "side": 1,
+      "message": "...For which you don\u0027t add an extra apostrophe when you don\u0027t pronounce a second \u0027s\u0027 (which you don\u0027t in this case, which is why half the internet citations actually spell it \"Fitt\u0027s Law\").  So \"Fitts\u0027\" is correct.  (That said, I\u0027ve never seen this justification for what to do here before.  The usage guides I grew up with said to simply never put a second \u0027s\u0027 after an s\u0027, x\u0027, or z\u0027.)\n\nI mean, if you want to be all prescriptivist about mechanics in comments... :D",
+      "parentUuid": "c442d8d6_b5d06131",
+      "range": {
+        "startLine": 56,
+        "startChar": 44,
+        "endLine": 56,
+        "endChar": 54
+      },
+      "revId": "f6909e70dd51ad1548f277617cd07f2b093c4a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "da74ca2c_27e85339",
         "filename": "chrome/browser/ui/views/tabs/new_tab_button.h",
         "patchSetId": 8
