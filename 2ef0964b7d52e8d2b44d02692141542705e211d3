@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b45fe3f1_efa39fd2",
+        "filename": "chrome/browser/password_manager/chrome_password_manager_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-06T13:15:56Z",
+      "side": 1,
+      "message": "After changes to my CL you can now drop the null check.",
+      "range": {
+        "startLine": 288,
+        "startChar": 6,
+        "endLine": 288,
+        "endChar": 22
+      },
+      "revId": "2ef0964b7d52e8d2b44d02692141542705e211d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "820fefe5_97eece93",
+        "filename": "chrome/browser/password_manager/chrome_password_manager_client_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-06T13:15:56Z",
+      "side": 1,
+      "message": "chrome/browser is no longer compiled under iOS (this is what iOS unforking fixed), so you can drop that second part of the #if.",
+      "range": {
+        "startLine": 675,
+        "startChar": 25,
+        "endLine": 675,
+        "endChar": 44
+      },
+      "revId": "2ef0964b7d52e8d2b44d02692141542705e211d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffbcc1de_f6bffdfa",
+        "filename": "chrome/browser/password_manager/chrome_password_manager_client_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 703,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-06T13:15:56Z",
+      "side": 1,
+      "message": "After the changes I made, don\u0027t forget to call InitializeMetricsRecorderFromClient here.",
+      "revId": "2ef0964b7d52e8d2b44d02692141542705e211d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5323e105_454f4e0b",
+        "filename": "components/password_manager/core/browser/password_form_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-06T13:15:56Z",
+      "side": 1,
+      "message": "Did you mean to return a const scoped_refptr reference? In that case maybe just return the raw pointer, because it is equivalent (no refcount changed). Or you may want to return just a (non-const) scoped_refptr by value, to ensure the refcount gets increased. There are also valid reasons to return a const value, as you do now, to avoid assignment like ...metrics_recorder() \u003d something, but not sure if that\u0027s what you meant.\n\nhttps://www.chromium.org/developers/smart-pointer-guidelines does not seem to provide any preference, so up to you.",
+      "range": {
+        "startLine": 272,
+        "startChar": 2,
+        "endLine": 272,
+        "endChar": 7
+      },
+      "revId": "2ef0964b7d52e8d2b44d02692141542705e211d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e95fcfd_0ed6f828",
+        "filename": "ios/chrome/browser/passwords/ios_chrome_password_manager_client.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-06T13:15:56Z",
+      "side": 1,
+      "message": "Also flagging this null check for dropping.",
+      "range": {
+        "startLine": 88,
+        "startChar": 6,
+        "endLine": 88,
+        "endChar": 22
+      },
+      "revId": "2ef0964b7d52e8d2b44d02692141542705e211d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
