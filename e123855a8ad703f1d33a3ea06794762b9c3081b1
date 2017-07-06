@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f876019e_5832953b",
+        "filename": "third_party/WebKit/LayoutTests/media/encrypted-media/encrypted-media-getstatusforpolicy.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-07-06T22:29:23Z",
+      "side": 1,
+      "message": "Should this be a promise_test? That would eliminate lines 39-42 and require 25 to become \"return Promise.reject(\"Promise resolved unexpectedly\");\".",
+      "range": {
+        "startLine": 11,
+        "startChar": 12,
+        "endLine": 11,
+        "endChar": 22
+      },
+      "revId": "e123855a8ad703f1d33a3ea06794762b9c3081b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "143f7691_63ca6dfb",
+        "filename": "third_party/WebKit/LayoutTests/media/encrypted-media/encrypted-media-getstatusforpolicy.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-07-06T22:29:23Z",
+      "side": 1,
+      "message": "How about a test for a incorrect MediaKeysPolicy (like {foo: \"bar\"})?",
+      "range": {
+        "startLine": 19,
+        "startChar": 37,
+        "endLine": 19,
+        "endChar": 52
+      },
+      "revId": "e123855a8ad703f1d33a3ea06794762b9c3081b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
