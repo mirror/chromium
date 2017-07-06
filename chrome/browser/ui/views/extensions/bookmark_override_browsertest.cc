@@ -36,7 +36,8 @@ const char kBookmarkKeybinding[] = "Ctrl+D";
 IN_PROC_BROWSER_TEST_F(BookmarkOverrideTest, DISABLED_NonOverrideStarClick) {
   ASSERT_TRUE(embedded_test_server()->Start());
   ASSERT_TRUE(RunExtensionTest("keybinding/basics")) << message_;
-  const extensions::Extension* extension = GetSingleLoadedExtension();
+  scoped_refptr<const extensions::Extension> extension =
+      GetSingleLoadedExtension();
 
   extensions::CommandService* command_service =
       extensions::CommandService::Get(browser()->profile());
@@ -73,7 +74,8 @@ IN_PROC_BROWSER_TEST_F(BookmarkOverrideTest, DISABLED_NonOverrideStarClick) {
 IN_PROC_BROWSER_TEST_F(BookmarkOverrideTest, DISABLED_NonOverrideBookmarkPage) {
   ASSERT_TRUE(embedded_test_server()->Start());
   ASSERT_TRUE(RunExtensionTest("keybinding/basics")) << message_;
-  const extensions::Extension* extension = GetSingleLoadedExtension();
+  scoped_refptr<const extensions::Extension> extension =
+      GetSingleLoadedExtension();
 
   extensions::CommandService* command_service =
       extensions::CommandService::Get(browser()->profile());

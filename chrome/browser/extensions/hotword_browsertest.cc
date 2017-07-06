@@ -74,8 +74,8 @@ IN_PROC_BROWSER_TEST_F(HotwordBrowserTest, DISABLED_MessageSendResponseError) {
   const Extension* extension = extension_service()->GetExtensionById(
       kHotwordHelperExtensionId, false);
   ASSERT_TRUE(extension);
-  const Extension* test_extension = LoadExtension(
-      test_data_dir_.AppendASCII("hotword"));
+  scoped_refptr<const Extension> test_extension =
+      LoadExtension(test_data_dir_.AppendASCII("hotword"));
   ASSERT_TRUE(test_extension);
 
   ASSERT_TRUE(doneListener.WaitUntilSatisfied());

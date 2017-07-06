@@ -219,16 +219,17 @@ class PlatformAppWithFileBrowserTest: public PlatformAppBrowserTest {
     extensions::ResultCatcher catcher;
 
     base::FilePath extension_path = test_data_dir_.AppendASCII(extension_name);
-    const extensions::Extension* extension =
+    scoped_refptr<const extensions::Extension> extension =
         LoadExtensionWithFlags(extension_path, ExtensionBrowserTest::kFlagNone);
     if (!extension) {
       message_ = "Failed to load extension.";
       return false;
     }
 
-    AppLaunchParams params(
-        browser()->profile(), extension, extensions::LAUNCH_CONTAINER_NONE,
-        WindowOpenDisposition::NEW_WINDOW, extensions::SOURCE_TEST);
+    AppLaunchParams params(browser()->profile(), extension.get(),
+                           extensions::LAUNCH_CONTAINER_NONE,
+                           WindowOpenDisposition::NEW_WINDOW,
+                           extensions::SOURCE_TEST);
     params.command_line = command_line;
     params.current_directory = test_data_dir_;
     OpenApplication(params);
@@ -260,8 +261,9 @@ const char kTestFilePath[] = "platform_apps/launch_files/test.txt";
 // LauncherPlatformAppBrowserTest relies on this behaviour, but is only run for
 // ash, so we test that it works here.
 IN_PROC_BROWSER_TEST_F(PlatformAppBrowserTest, CreateAndCloseAppWindow) {
-  const Extension* extension = LoadAndLaunchPlatformApp("minimal", "Launched");
-  AppWindow* window = CreateAppWindow(browser()->profile(), extension);
+  scoped_refptr<const Extension> extension =
+      LoadAndLaunchPlatformApp("minimal", "Launched");
+  AppWindow* window = CreateAppWindow(browser()->profile(), extension.get());
   CloseAppWindow(window);
 }
 
@@ -515,8 +517,8 @@ IN_PROC_BROWSER_TEST_F(PlatformAppBrowserTest, Isolation) {
 IN_PROC_BROWSER_TEST_F(PlatformAppBrowserTest, MAYBE_ExtensionWindowingApis) {
   // Initially there should be just the one browser window visible to the
   // extensions API.
-  const Extension* extension = LoadExtension(
-      test_data_dir_.AppendASCII("common/background_page"));
+  scoped_refptr<const Extension> extension =
+      LoadExtension(test_data_dir_.AppendASCII("common/background_page"));
   ASSERT_EQ(1U, RunGetWindowsFunctionForExtension(extension));
 
   // And no app windows.
@@ -764,9 +766,10 @@ IN_PROC_BROWSER_TEST_F(PlatformAppBrowserTest, MAYBE_AppWindowRestoreState) {
 
 IN_PROC_BROWSER_TEST_F(PlatformAppBrowserTest,
                        AppWindowAdjustBoundsToBeVisibleOnScreen) {
-  const Extension* extension = LoadAndLaunchPlatformApp("minimal", "Launched");
+  scoped_refptr<const Extension> extension =
+      LoadAndLaunchPlatformApp("minimal", "Launched");
 
-  AppWindow* window = CreateAppWindow(browser()->profile(), extension);
+  AppWindow* window = CreateAppWindow(browser()->profile(), extension.get());
 
   // The screen bounds didn't change, the cached bounds didn't need to adjust.
   gfx::Rect cached_bounds(80, 100, 400, 400);
@@ -852,7 +855,8 @@ class PlatformAppDevToolsBrowserTest : public PlatformAppBrowserTest {
 void PlatformAppDevToolsBrowserTest::RunTestWithDevTools(
     const char* name, int test_flags) {
   using content::DevToolsAgentHost;
-  const Extension* extension = LoadAndLaunchPlatformApp(name, "Launched");
+  scoped_refptr<const Extension> extension =
+      LoadAndLaunchPlatformApp(name, "Launched");
   ASSERT_TRUE(extension);
   AppWindow* window = GetFirstAppWindow();
   ASSERT_TRUE(window);
@@ -872,7 +876,7 @@ void PlatformAppDevToolsBrowserTest::RunTestWithDevTools(
         content::NOTIFICATION_LOAD_COMPLETED_MAIN_FRAME,
         content::NotificationService::AllSources());
     OpenApplication(AppLaunchParams(
-        browser()->profile(), extension, LAUNCH_CONTAINER_NONE,
+        browser()->profile(), extension.get(), LAUNCH_CONTAINER_NONE,
         WindowOpenDisposition::NEW_WINDOW, extensions::SOURCE_TEST));
     app_loaded_observer.Wait();
     window = GetFirstAppWindow();
@@ -907,7 +911,7 @@ IN_PROC_BROWSER_TEST_F(PlatformAppDevToolsBrowserTest, ReOpenedWithURL) {
 
 IN_PROC_BROWSER_TEST_F(PlatformAppBrowserTest, MAYBE_ConstrainedWindowRequest) {
   PermissionsRequestFunction::SetIgnoreUserGestureForTests(true);
-  const Extension* extension =
+  scoped_refptr<const Extension> extension =
       LoadAndLaunchPlatformApp("optional_permission_request", "Launched");
   ASSERT_TRUE(extension) << "Failed to load extension.";
 
@@ -932,7 +936,7 @@ IN_PROC_BROWSER_TEST_F(PlatformAppBrowserTest, MAYBE_ConstrainedWindowRequest) {
 // relaunch it if it was running.
 IN_PROC_BROWSER_TEST_F(PlatformAppBrowserTest, ReloadRelaunches) {
   ExtensionTestMessageListener launched_listener("Launched", true);
-  const Extension* extension =
+  scoped_refptr<const Extension> extension =
       LoadAndLaunchPlatformApp("reload", &launched_listener);
   ASSERT_TRUE(extension);
   ASSERT_TRUE(GetFirstAppWindow());
@@ -948,10 +952,11 @@ IN_PROC_BROWSER_TEST_F(PlatformAppBrowserTest, ReloadRelaunches) {
 IN_PROC_BROWSER_TEST_F(PlatformAppBrowserTest,
                        ComponentReloadLoadsLazyBackgroundPage) {
   ExtensionTestMessageListener launched_listener("Launched", true);
-  const Extension* component_app = LoadExtensionAsComponentWithManifest(
-      test_data_dir_.AppendASCII("platform_apps")
-          .AppendASCII("component_reload"),
-      FILE_PATH_LITERAL("manifest.json"));
+  scoped_refptr<const Extension> component_app =
+      LoadExtensionAsComponentWithManifest(
+          test_data_dir_.AppendASCII("platform_apps")
+              .AppendASCII("component_reload"),
+          FILE_PATH_LITERAL("manifest.json"));
   ASSERT_TRUE(component_app);
   ASSERT_TRUE(launched_listener.WaitUntilSatisfied());
 
@@ -1011,7 +1016,7 @@ IN_PROC_BROWSER_TEST_F(PlatformAppBrowserTest,
       content::NOTIFICATION_LOAD_COMPLETED_MAIN_FRAME,
       content::NotificationService::AllSources());
 
-  const Extension* extension = LoadExtensionAsComponent(
+  scoped_refptr<const Extension> extension = LoadExtensionAsComponent(
       test_data_dir_.AppendASCII("platform_apps").AppendASCII("component"));
   ASSERT_TRUE(extension);
 
@@ -1020,7 +1025,7 @@ IN_PROC_BROWSER_TEST_F(PlatformAppBrowserTest,
 
   ExtensionTestMessageListener launched_listener("Launched", false);
   OpenApplication(AppLaunchParams(
-      browser()->profile(), extension, LAUNCH_CONTAINER_NONE,
+      browser()->profile(), extension.get(), LAUNCH_CONTAINER_NONE,
       WindowOpenDisposition::NEW_WINDOW, extensions::SOURCE_TEST));
 
   ASSERT_TRUE(launched_listener.WaitUntilSatisfied());
@@ -1037,13 +1042,13 @@ IN_PROC_BROWSER_TEST_F(PlatformAppBrowserTest,
   // previously installed properly) and then check this observer to make sure it
   // never saw the NOTIFICATION_EXTENSION_WILL_BE_INSTALLED_DEPRECATED event.
   CheckExtensionInstalledObserver should_not_install(browser()->profile());
-  const Extension* extension = LoadExtensionAsComponent(
+  scoped_refptr<const Extension> extension = LoadExtensionAsComponent(
       test_data_dir_.AppendASCII("platform_apps").AppendASCII("component"));
   ASSERT_TRUE(extension);
 
   ExtensionTestMessageListener launched_listener("Launched", false);
   OpenApplication(AppLaunchParams(
-      browser()->profile(), extension, LAUNCH_CONTAINER_NONE,
+      browser()->profile(), extension.get(), LAUNCH_CONTAINER_NONE,
       WindowOpenDisposition::NEW_WINDOW, extensions::SOURCE_TEST));
 
   ASSERT_TRUE(launched_listener.WaitUntilSatisfied());
@@ -1073,7 +1078,7 @@ IN_PROC_BROWSER_TEST_F(PlatformAppBrowserTest, ComponentAppBackgroundPage) {
       content::NOTIFICATION_LOAD_COMPLETED_MAIN_FRAME,
       content::NotificationService::AllSources());
 
-  const Extension* extension = LoadExtensionAsComponent(
+  scoped_refptr<const Extension> extension = LoadExtensionAsComponent(
       test_data_dir_.AppendASCII("platform_apps").AppendASCII("component"));
   ASSERT_TRUE(extension);
   app_loaded_observer.Wait();
@@ -1081,7 +1086,7 @@ IN_PROC_BROWSER_TEST_F(PlatformAppBrowserTest, ComponentAppBackgroundPage) {
 
   ExtensionTestMessageListener launched_listener("Launched", false);
   OpenApplication(AppLaunchParams(
-      browser()->profile(), extension, LAUNCH_CONTAINER_NONE,
+      browser()->profile(), extension.get(), LAUNCH_CONTAINER_NONE,
       WindowOpenDisposition::NEW_WINDOW, extensions::SOURCE_TEST));
 
   ASSERT_TRUE(launched_listener.WaitUntilSatisfied());
@@ -1097,7 +1102,7 @@ IN_PROC_BROWSER_TEST_F(PlatformAppBrowserTest,
       content::NOTIFICATION_LOAD_COMPLETED_MAIN_FRAME,
       content::NotificationService::AllSources());
 
-  const Extension* extension = LoadExtensionAsComponent(
+  scoped_refptr<const Extension> extension = LoadExtensionAsComponent(
       test_data_dir_.AppendASCII("platform_apps").AppendASCII("component"));
   ASSERT_TRUE(extension);
 
@@ -1106,7 +1111,7 @@ IN_PROC_BROWSER_TEST_F(PlatformAppBrowserTest,
   {
     ExtensionTestMessageListener launched_listener("Launched", false);
     OpenApplication(AppLaunchParams(
-        browser()->profile(), extension, LAUNCH_CONTAINER_NONE,
+        browser()->profile(), extension.get(), LAUNCH_CONTAINER_NONE,
         WindowOpenDisposition::NEW_WINDOW, extensions::SOURCE_TEST));
     ASSERT_TRUE(launched_listener.WaitUntilSatisfied());
   }
@@ -1223,8 +1228,9 @@ class PlatformAppIncognitoBrowserTest : public PlatformAppBrowserTest,
 
 IN_PROC_BROWSER_TEST_F(PlatformAppIncognitoBrowserTest, IncognitoComponentApp) {
   // Get the file manager app.
-  const Extension* file_manager = extension_service()->GetExtensionById(
-      "hhaomjibdihmijegdhdafkllkbggdgoj", false);
+  scoped_refptr<const Extension> file_manager =
+      extension_service()->GetExtensionById("hhaomjibdihmijegdhdafkllkbggdgoj",
+                                            false);
   ASSERT_TRUE(file_manager != NULL);
   Profile* incognito_profile = profile()->GetOffTheRecordProfile();
   ASSERT_TRUE(incognito_profile != NULL);
@@ -1311,8 +1317,8 @@ IN_PROC_BROWSER_TEST_F(RestartDeviceTest, Restart) {
   ASSERT_EQ(0, num_request_restart_calls());
 
   ExtensionTestMessageListener launched_listener("Launched", true);
-  const Extension* extension = LoadAndLaunchPlatformApp("restart_device",
-                                                        &launched_listener);
+  scoped_refptr<const Extension> extension =
+      LoadAndLaunchPlatformApp("restart_device", &launched_listener);
   ASSERT_TRUE(extension);
 
   launched_listener.Reply("restart");
@@ -1335,7 +1341,7 @@ IN_PROC_BROWSER_TEST_F(PlatformAppBrowserTest, ReinstallDataCleanup) {
   std::string extension_id;
 
   {
-    const Extension* extension =
+    scoped_refptr<const Extension> extension =
         LoadAndLaunchPlatformApp("reinstall_data_cleanup", "Launched");
     ASSERT_TRUE(extension);
     extension_id = extension->id();
@@ -1348,7 +1354,7 @@ IN_PROC_BROWSER_TEST_F(PlatformAppBrowserTest, ReinstallDataCleanup) {
   content::RunAllPendingInMessageLoop();
 
   {
-    const Extension* extension =
+    scoped_refptr<const Extension> extension =
         LoadAndLaunchPlatformApp("reinstall_data_cleanup", "Launched");
     ASSERT_TRUE(extension);
     ASSERT_EQ(extension_id, extension->id());
@@ -1359,7 +1365,8 @@ IN_PROC_BROWSER_TEST_F(PlatformAppBrowserTest, ReinstallDataCleanup) {
 }
 
 IN_PROC_BROWSER_TEST_F(PlatformAppBrowserTest, AppsIgnoreDefaultZoom) {
-  const Extension* extension = LoadAndLaunchPlatformApp("minimal", "Launched");
+  scoped_refptr<const Extension> extension =
+      LoadAndLaunchPlatformApp("minimal", "Launched");
 
   // Set the browser default zoom to something other than the default (which is
   // 0).
@@ -1369,7 +1376,7 @@ IN_PROC_BROWSER_TEST_F(PlatformAppBrowserTest, AppsIgnoreDefaultZoom) {
   // that would have been delivered to the app renderer and back for zoom have
   // made it through.
   ExtensionTestMessageListener launched_listener("Launched", false);
-  LaunchPlatformApp(extension);
+  LaunchPlatformApp(extension.get());
   launched_listener.WaitUntilSatisfied();
 
   // Now check that the app window's default zoom, and actual zoom level,

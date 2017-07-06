@@ -308,10 +308,10 @@ IN_PROC_BROWSER_TEST_F(BrowserActionsBarBrowserTest,
   // Load up two extensions that have browser action popups.
   base::FilePath data_dir =
       test_data_dir_.AppendASCII("api_test").AppendASCII("browser_action");
-  const extensions::Extension* first_extension =
+  scoped_refptr<const extensions::Extension> first_extension =
       LoadExtension(data_dir.AppendASCII("open_popup"));
   ASSERT_TRUE(first_extension);
-  const extensions::Extension* second_extension =
+  scoped_refptr<const extensions::Extension> second_extension =
       LoadExtension(data_dir.AppendASCII("remove_popup"));
   ASSERT_TRUE(second_extension);
 
@@ -382,10 +382,10 @@ IN_PROC_BROWSER_TEST_F(BrowserActionsBarBrowserTest,
   // Load up two extensions that have browser action popups.
   base::FilePath data_dir =
       test_data_dir_.AppendASCII("api_test").AppendASCII("browser_action");
-  const extensions::Extension* first_extension =
+  scoped_refptr<const extensions::Extension> first_extension =
       LoadExtension(data_dir.AppendASCII("open_popup"));
   ASSERT_TRUE(first_extension);
-  const extensions::Extension* second_extension =
+  scoped_refptr<const extensions::Extension> second_extension =
       LoadExtension(data_dir.AppendASCII("remove_popup"));
   ASSERT_TRUE(second_extension);
 
@@ -470,7 +470,7 @@ IN_PROC_BROWSER_TEST_F(BrowserActionsBarBrowserTest,
   // is overflowed.
   base::FilePath data_dir =
       test_data_dir_.AppendASCII("api_test").AppendASCII("browser_action");
-  const extensions::Extension* extension =
+  scoped_refptr<const extensions::Extension> extension =
       LoadExtension(data_dir.AppendASCII("open_popup"));
   ASSERT_TRUE(extension);
   toolbar_model()->SetVisibleIconCount(0);
@@ -503,9 +503,9 @@ IN_PROC_BROWSER_TEST_F(BrowserActionsBarBrowserTest,
 IN_PROC_BROWSER_TEST_F(BrowserActionsBarBrowserTest,
                        PageActionPopupsTest) {
   ExtensionTestMessageListener listener("ready", false);
-  const extensions::Extension* page_action_extension =
-      LoadExtension(test_data_dir_.AppendASCII("trigger_actions").
-                        AppendASCII("page_action_popup"));
+  scoped_refptr<const extensions::Extension> page_action_extension =
+      LoadExtension(test_data_dir_.AppendASCII("trigger_actions")
+                        .AppendASCII("page_action_popup"));
   ASSERT_TRUE(page_action_extension);
   listener.WaitUntilSatisfied();
   EXPECT_EQ(1, browser_actions_bar()->VisibleBrowserActions());
@@ -617,7 +617,7 @@ class BrowserActionsBarIncognitoTest : public BrowserActionsBarBrowserTest {
 // Regression test for crbug.com/663726.
 IN_PROC_BROWSER_TEST_F(BrowserActionsBarIncognitoTest, IncognitoMode) {
   EXPECT_TRUE(browser()->profile()->IsOffTheRecord());
-  const extensions::Extension* extension = LoadExtensionIncognito(
+  scoped_refptr<const extensions::Extension> extension = LoadExtensionIncognito(
       test_data_dir_.AppendASCII("api_test/browser_action_with_icon"));
   ASSERT_TRUE(extension);
   Browser* second_browser =

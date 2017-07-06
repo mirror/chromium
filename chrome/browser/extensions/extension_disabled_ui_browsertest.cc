@@ -83,9 +83,9 @@ class ExtensionDisabledGlobalErrorTest : public ExtensionBrowserTest {
   }
 
   // Install the initial version, which should happen just fine.
-  const Extension* InstallIncreasingPermissionExtensionV1() {
+  scoped_refptr<const Extension> InstallIncreasingPermissionExtensionV1() {
     size_t size_before = registry_->enabled_extensions().size();
-    const Extension* extension = InstallExtension(path_v1_, 1);
+    scoped_refptr<const Extension> extension = InstallExtension(path_v1_, 1);
     if (!extension)
       return NULL;
     if (registry_->enabled_extensions().size() != size_before + 1)
@@ -95,8 +95,8 @@ class ExtensionDisabledGlobalErrorTest : public ExtensionBrowserTest {
 
   // Upgrade to a version that wants more permissions. We should disable the
   // extension and prompt the user to reenable.
-  const Extension* UpdateIncreasingPermissionExtension(
-      const Extension* extension,
+  scoped_refptr<const Extension> UpdateIncreasingPermissionExtension(
+      scoped_refptr<const Extension> extension,
       const base::FilePath& crx_path,
       int expected_change) {
     size_t size_before = registry_->enabled_extensions().size();
@@ -113,8 +113,10 @@ class ExtensionDisabledGlobalErrorTest : public ExtensionBrowserTest {
 
   // Helper function to install an extension and upgrade it to a version
   // requiring additional permissions. Returns the new disabled Extension.
-  const Extension* InstallAndUpdateIncreasingPermissionsExtension() {
-    const Extension* extension = InstallIncreasingPermissionExtensionV1();
+  scoped_refptr<const Extension>
+  InstallAndUpdateIncreasingPermissionsExtension() {
+    scoped_refptr<const Extension> extension =
+        InstallIncreasingPermissionExtensionV1();
     extension = UpdateIncreasingPermissionExtension(extension, path_v2_, -1);
     return extension;
   }
@@ -131,14 +133,15 @@ class ExtensionDisabledGlobalErrorTest : public ExtensionBrowserTest {
 // Tests the process of updating an extension to one that requires higher
 // permissions, and accepting the permissions.
 IN_PROC_BROWSER_TEST_F(ExtensionDisabledGlobalErrorTest, AcceptPermissions) {
-  const Extension* extension = InstallAndUpdateIncreasingPermissionsExtension();
+  scoped_refptr<const Extension> extension =
+      InstallAndUpdateIncreasingPermissionsExtension();
   ASSERT_TRUE(extension);
   ASSERT_TRUE(GetExtensionDisabledGlobalError());
   const size_t size_before = registry_->enabled_extensions().size();
 
   ExtensionTestMessageListener listener("v2.onInstalled", false);
   listener.set_failure_message("FAILED");
-  service_->GrantPermissionsAndEnableExtension(extension);
+  service_->GrantPermissionsAndEnableExtension(extension.get());
   EXPECT_EQ(size_before + 1, registry_->enabled_extensions().size());
   EXPECT_EQ(0u, registry_->disabled_extensions().size());
   ASSERT_FALSE(GetExtensionDisabledGlobalError());
@@ -148,7 +151,8 @@ IN_PROC_BROWSER_TEST_F(ExtensionDisabledGlobalErrorTest, AcceptPermissions) {
 
 // Tests uninstalling an extension that was disabled due to higher permissions.
 IN_PROC_BROWSER_TEST_F(ExtensionDisabledGlobalErrorTest, Uninstall) {
-  const Extension* extension = InstallAndUpdateIncreasingPermissionsExtension();
+  scoped_refptr<const Extension> extension =
+      InstallAndUpdateIncreasingPermissionsExtension();
   ASSERT_TRUE(extension);
   ASSERT_TRUE(GetExtensionDisabledGlobalError());
   const size_t size_before = registry_->enabled_extensions().size();
@@ -163,7 +167,8 @@ IN_PROC_BROWSER_TEST_F(ExtensionDisabledGlobalErrorTest, Uninstall) {
 IN_PROC_BROWSER_TEST_F(ExtensionDisabledGlobalErrorTest, UninstallFromDialog) {
   extensions::ScopedTestDialogAutoConfirm auto_confirm(
       extensions::ScopedTestDialogAutoConfirm::ACCEPT);
-  const Extension* extension = InstallAndUpdateIncreasingPermissionsExtension();
+  scoped_refptr<const Extension> extension =
+      InstallAndUpdateIncreasingPermissionsExtension();
   ASSERT_TRUE(extension);
   std::string extension_id = extension->id();
   GlobalErrorWithStandardBubble* error =
@@ -184,7 +189,8 @@ IN_PROC_BROWSER_TEST_F(ExtensionDisabledGlobalErrorTest, UninstallFromDialog) {
 
 IN_PROC_BROWSER_TEST_F(ExtensionDisabledGlobalErrorTest,
                        UninstallWhilePromptBeingShown) {
-  const Extension* extension = InstallAndUpdateIncreasingPermissionsExtension();
+  scoped_refptr<const Extension> extension =
+      InstallAndUpdateIncreasingPermissionsExtension();
   ASSERT_TRUE(extension);
   ASSERT_TRUE(GetExtensionDisabledGlobalError());
 
@@ -208,7 +214,8 @@ IN_PROC_BROWSER_TEST_F(ExtensionDisabledGlobalErrorTest,
 
 // Tests that no error appears if the user disabled the extension.
 IN_PROC_BROWSER_TEST_F(ExtensionDisabledGlobalErrorTest, UserDisabled) {
-  const Extension* extension = InstallIncreasingPermissionExtensionV1();
+  scoped_refptr<const Extension> extension =
+      InstallIncreasingPermissionExtensionV1();
   DisableExtension(extension->id());
   extension = UpdateIncreasingPermissionExtension(extension, path_v2_, 0);
   ASSERT_FALSE(GetExtensionDisabledGlobalError());
@@ -219,7 +226,8 @@ IN_PROC_BROWSER_TEST_F(ExtensionDisabledGlobalErrorTest, UserDisabled) {
 IN_PROC_BROWSER_TEST_F(ExtensionDisabledGlobalErrorTest,
                        HigherPermissionsFromSync) {
   // Get sync data for extension v2 (disabled).
-  const Extension* extension = InstallAndUpdateIncreasingPermissionsExtension();
+  scoped_refptr<const Extension> extension =
+      InstallAndUpdateIncreasingPermissionsExtension();
   std::string extension_id = extension->id();
   ExtensionSyncService* sync_service = ExtensionSyncService::Get(profile());
   extensions::ExtensionSyncData sync_data =
@@ -316,7 +324,8 @@ IN_PROC_BROWSER_TEST_F(ExtensionDisabledGlobalErrorTest, RemoteInstall) {
   install_observer.WaitForExtensionWillBeInstalled();
   content::RunAllBlockingPoolTasksUntilIdle();
 
-  const Extension* extension = service_->GetExtensionById(extension_id, true);
+  scoped_refptr<const Extension> extension =
+      service_->GetExtensionById(extension_id, true);
   ASSERT_TRUE(extension);
   EXPECT_EQ("2", extension->VersionString());
   EXPECT_EQ(1u, registry_->disabled_extensions().size());

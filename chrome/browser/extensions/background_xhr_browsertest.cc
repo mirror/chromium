@@ -39,7 +39,7 @@ void InstallNullCertStoreFactoryOnIOThread(
 class BackgroundXhrTest : public ExtensionBrowserTest {
  protected:
   void RunTest(const std::string& path, const GURL& url) {
-    const extensions::Extension* extension =
+    scoped_refptr<const extensions::Extension> extension =
         LoadExtension(test_data_dir_.AppendASCII("background_xhr"));
     ASSERT_TRUE(extension);
 

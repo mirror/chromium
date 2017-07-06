@@ -85,7 +85,7 @@ IN_PROC_BROWSER_TEST_F(NativeBindingsApiTest, DeclarativeEvents) {
   // to be ready.
   ExtensionTestMessageListener listener("ready", false);
   ResultCatcher catcher;
-  const Extension* extension = LoadExtension(
+  scoped_refptr<const Extension> extension = LoadExtension(
       test_data_dir_.AppendASCII("native_bindings/declarative_content"));
   ASSERT_TRUE(catcher.GetNextResult()) << catcher.message();
   ASSERT_TRUE(extension);
@@ -111,7 +111,7 @@ IN_PROC_BROWSER_TEST_F(NativeBindingsApiTest, DeclarativeEvents) {
   // And the extension should be notified of the click.
   ExtensionTestMessageListener clicked_listener("clicked and removed", false);
   ExtensionActionAPI::Get(profile())->DispatchExtensionActionClicked(
-      *page_action, web_contents, extension);
+      *page_action, web_contents, extension.get());
   ASSERT_TRUE(clicked_listener.WaitUntilSatisfied());
 }
 
@@ -120,7 +120,7 @@ IN_PROC_BROWSER_TEST_F(NativeBindingsApiTest, LazyListeners) {
   ProcessManager::SetEventPageSuspendingTimeForTesting(1);
 
   LazyBackgroundObserver background_page_done;
-  const Extension* extension = LoadExtension(
+  scoped_refptr<const Extension> extension = LoadExtension(
       test_data_dir_.AppendASCII("native_bindings/lazy_listeners"));
   ASSERT_TRUE(extension);
   background_page_done.Wait();
@@ -150,7 +150,7 @@ IN_PROC_BROWSER_TEST_F(NativeBindingsApiTest, WebRequest) {
   ASSERT_TRUE(StartEmbeddedTestServer());
   // Load an extension and wait for it to be ready.
   ResultCatcher catcher;
-  const Extension* extension =
+  scoped_refptr<const Extension> extension =
       LoadExtension(test_data_dir_.AppendASCII("native_bindings/web_request"));
   ASSERT_TRUE(extension);
   ASSERT_TRUE(catcher.GetNextResult()) << catcher.message();
@@ -190,7 +190,7 @@ IN_PROC_BROWSER_TEST_F(NativeBindingsApiTest, ContextMenusTest) {
              onclick: () => { chrome.test.sendMessage('clicked'); },
            }, () => { chrome.test.sendMessage('registered'); });)");
 
-  const Extension* extension = nullptr;
+  scoped_refptr<const Extension> extension = nullptr;
   {
     ExtensionTestMessageListener listener("registered", false);
     extension = LoadExtension(test_dir.UnpackedPath());

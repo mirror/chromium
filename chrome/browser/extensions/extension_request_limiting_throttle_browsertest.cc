@@ -122,7 +122,7 @@ class ExtensionRequestLimitingThrottleBrowserTest
   }
 
  private:
-  const Extension* extension_;
+  scoped_refptr<const Extension> extension_;
 };
 
 class ExtensionRequestLimitingThrottleCommandLineBrowserTest

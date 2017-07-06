@@ -145,7 +145,7 @@ Profile* ExtensionBrowserTest::profile() {
 }
 
 // static
-const Extension* ExtensionBrowserTest::GetExtensionByPath(
+scoped_refptr<const Extension> ExtensionBrowserTest::GetExtensionByPath(
     const extensions::ExtensionSet& extensions,
     const base::FilePath& path) {
   base::ThreadRestrictions::ScopedAllowIO allow_io;
@@ -153,10 +153,10 @@ const Extension* ExtensionBrowserTest::GetExtensionByPath(
   EXPECT_TRUE(!extension_path.empty());
   for (const scoped_refptr<const Extension>& extension : extensions) {
     if (extension->path() == extension_path) {
-      return extension.get();
+      return extension;
     }
   }
-  return NULL;
+  return nullptr;
 }
 
 void ExtensionBrowserTest::SetUp() {
@@ -209,23 +209,25 @@ void ExtensionBrowserTest::TearDownOnMainThread() {
   extensions::SetExtensionProtocolTestHandler(nullptr);
 }
 
-const Extension* ExtensionBrowserTest::LoadExtension(
+scoped_refptr<const Extension> ExtensionBrowserTest::LoadExtension(
     const base::FilePath& path) {
   return LoadExtensionWithFlags(path, kFlagEnableFileAccess);
 }
 
-const Extension* ExtensionBrowserTest::LoadExtensionIncognito(
+scoped_refptr<const Extension> ExtensionBrowserTest::LoadExtensionIncognito(
     const base::FilePath& path) {
   return LoadExtensionWithFlags(path,
                                 kFlagEnableFileAccess | kFlagEnableIncognito);
 }
 
-const Extension* ExtensionBrowserTest::LoadExtensionWithFlags(
-    const base::FilePath& path, int flags) {
+scoped_refptr<const Extension> ExtensionBrowserTest::LoadExtensionWithFlags(
+    const base::FilePath& path,
+    int flags) {
   return LoadExtensionWithInstallParam(path, flags, std::string());
 }
 
-const Extension* ExtensionBrowserTest::LoadExtensionWithInstallParam(
+scoped_refptr<const Extension>
+ExtensionBrowserTest::LoadExtensionWithInstallParam(
     const base::FilePath& path,
     int flags,
     const std::string& install_param) {
@@ -240,10 +242,11 @@ const Extension* ExtensionBrowserTest::LoadExtensionWithInstallParam(
   scoped_refptr<const Extension> extension = loader.LoadExtension(path);
   if (extension)
     observer_->set_last_loaded_extension_id(extension->id());
-  return extension.get();
+  return extension;
 }
 
-const Extension* ExtensionBrowserTest::LoadExtensionAsComponentWithManifest(
+scoped_refptr<const Extension>
+ExtensionBrowserTest::LoadExtensionAsComponentWithManifest(
     const base::FilePath& path,
     const base::FilePath::CharType* manifest_relative_path) {
   ExtensionService* service = extensions::ExtensionSystem::Get(
@@ -253,7 +256,7 @@ const Extension* ExtensionBrowserTest::LoadExtensionAsComponentWithManifest(
   base::ThreadRestrictions::ScopedAllowIO allow_io;
   std::string manifest;
   if (!base::ReadFileToString(path.Append(manifest_relative_path), &manifest)) {
-    return NULL;
+    return nullptr;
   }
 
   service->component_loader()->set_ignore_whitelist_for_testing(true);
@@ -261,27 +264,27 @@ const Extension* ExtensionBrowserTest::LoadExtensionAsComponentWithManifest(
   const Extension* extension =
       registry->enabled_extensions().GetByID(extension_id);
   if (!extension)
-    return NULL;
+    return nullptr;
   observer_->set_last_loaded_extension_id(extension->id());
   return extension;
 }
 
-const Extension* ExtensionBrowserTest::LoadExtensionAsComponent(
+scoped_refptr<const Extension> ExtensionBrowserTest::LoadExtensionAsComponent(
     const base::FilePath& path) {
   return LoadExtensionAsComponentWithManifest(path,
                                               extensions::kManifestFilename);
 }
 
-const Extension* ExtensionBrowserTest::LoadAndLaunchApp(
+scoped_refptr<const Extension> ExtensionBrowserTest::LoadAndLaunchApp(
     const base::FilePath& path) {
-  const Extension* app = LoadExtension(path);
+  scoped_refptr<const Extension> app = LoadExtension(path);
   CHECK(app);
   content::WindowedNotificationObserver app_loaded_observer(
       content::NOTIFICATION_LOAD_COMPLETED_MAIN_FRAME,
       content::NotificationService::AllSources());
-  AppLaunchParams params(profile(), app, extensions::LAUNCH_CONTAINER_NONE,
-                         WindowOpenDisposition::NEW_WINDOW,
-                         extensions::SOURCE_TEST);
+  AppLaunchParams params(
+      profile(), app.get(), extensions::LAUNCH_CONTAINER_NONE,
+      WindowOpenDisposition::NEW_WINDOW, extensions::SOURCE_TEST);
   params.command_line = *base::CommandLine::ForCurrentProcess();
   OpenApplication(params);
   app_loaded_observer.Wait();
@@ -349,7 +352,7 @@ base::FilePath ExtensionBrowserTest::PackExtensionWithOptions(
   return crx_path;
 }
 
-const Extension* ExtensionBrowserTest::UpdateExtensionWaitForIdle(
+scoped_refptr<const Extension> ExtensionBrowserTest::UpdateExtensionWaitForIdle(
     const std::string& id,
     const base::FilePath& path,
     int expected_change) {
@@ -358,15 +361,15 @@ const Extension* ExtensionBrowserTest::UpdateExtensionWaitForIdle(
                                   browser(), Extension::NO_FLAGS, false, false);
 }
 
-const Extension* ExtensionBrowserTest::InstallExtensionFromWebstore(
-    const base::FilePath& path,
-    int expected_change) {
+scoped_refptr<const Extension>
+ExtensionBrowserTest::InstallExtensionFromWebstore(const base::FilePath& path,
+                                                   int expected_change) {
   return InstallOrUpdateExtension(
       std::string(), path, INSTALL_UI_TYPE_AUTO_CONFIRM, expected_change,
       Manifest::INTERNAL, browser(), Extension::FROM_WEBSTORE, true, false);
 }
 
-const Extension* ExtensionBrowserTest::InstallOrUpdateExtension(
+scoped_refptr<const Extension> ExtensionBrowserTest::InstallOrUpdateExtension(
     const std::string& id,
     const base::FilePath& path,
     InstallUIType ui_type,
@@ -376,7 +379,7 @@ const Extension* ExtensionBrowserTest::InstallOrUpdateExtension(
                                   Extension::NO_FLAGS, true, false);
 }
 
-const Extension* ExtensionBrowserTest::InstallOrUpdateExtension(
+scoped_refptr<const Extension> ExtensionBrowserTest::InstallOrUpdateExtension(
     const std::string& id,
     const base::FilePath& path,
     InstallUIType ui_type,
@@ -388,7 +391,7 @@ const Extension* ExtensionBrowserTest::InstallOrUpdateExtension(
                                   true, false);
 }
 
-const Extension* ExtensionBrowserTest::InstallOrUpdateExtension(
+scoped_refptr<const Extension> ExtensionBrowserTest::InstallOrUpdateExtension(
     const std::string& id,
     const base::FilePath& path,
     InstallUIType ui_type,
@@ -399,7 +402,7 @@ const Extension* ExtensionBrowserTest::InstallOrUpdateExtension(
                                   Extension::NO_FLAGS, true, false);
 }
 
-const Extension* ExtensionBrowserTest::InstallOrUpdateExtension(
+scoped_refptr<const Extension> ExtensionBrowserTest::InstallOrUpdateExtension(
     const std::string& id,
     const base::FilePath& path,
     InstallUIType ui_type,
@@ -491,7 +494,8 @@ const Extension* ExtensionBrowserTest::InstallOrUpdateExtension(
 void ExtensionBrowserTest::ReloadExtension(const std::string& extension_id) {
   extensions::ExtensionRegistry* registry =
       extensions::ExtensionRegistry::Get(profile());
-  const Extension* extension = registry->GetInstalledExtension(extension_id);
+  scoped_refptr<const Extension> extension =
+      registry->GetInstalledExtension(extension_id);
   ASSERT_TRUE(extension);
   extensions::TestExtensionRegistryObserver observer(registry, extension_id);
   extensions::ExtensionSystem::Get(profile())

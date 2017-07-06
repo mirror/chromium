@@ -519,7 +519,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionWebRequestApiTest, IncognitoSplitModeReload) {
   ExtensionTestMessageListener listener("done", false);
   ExtensionTestMessageListener listener_incognito("done_incognito", false);
 
-  const Extension* extension = LoadExtensionWithFlags(
+  scoped_refptr<const Extension> extension = LoadExtensionWithFlags(
       test_data_dir_.AppendASCII("webrequest_reload"), kFlagEnableIncognito);
   ASSERT_TRUE(extension);
   OpenURLOffTheRecord(browser()->profile(), GURL("about:blank"));
@@ -645,7 +645,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionWebRequestApiTest,
   // Load an extension that registers a listener for webRequest events, and
   // wait 'til it's initialized.
   ExtensionTestMessageListener listener("ready", false);
-  const Extension* extension =
+  scoped_refptr<const Extension> extension =
       LoadExtension(test_data_dir_.AppendASCII("webrequest_activetab"));
   ASSERT_TRUE(extension) << message_;
   EXPECT_TRUE(listener.WaitUntilSatisfied());
@@ -670,7 +670,8 @@ IN_PROC_BROWSER_TEST_F(ExtensionWebRequestApiTest,
 
   // The extension shouldn't have currently received any webRequest events,
   // since it doesn't have permission (and shouldn't receive any from an XHR).
-  EXPECT_EQ(0, GetWebRequestCountFromBackgroundPage(extension, profile()));
+  EXPECT_EQ(0,
+            GetWebRequestCountFromBackgroundPage(extension.get(), profile()));
 
   content::RenderFrameHost* main_frame = nullptr;
   content::RenderFrameHost* child_frame = nullptr;
@@ -692,38 +693,41 @@ IN_PROC_BROWSER_TEST_F(ExtensionWebRequestApiTest,
 
   PerformXhrInFrame(main_frame, kHost, port, kXhrPath);
   PerformXhrInFrame(child_frame, kChildHost, port, kXhrPath);
-  EXPECT_EQ(0, GetWebRequestCountFromBackgroundPage(extension, profile()));
-  EXPECT_EQ(BLOCKED_ACTION_WEB_REQUEST, runner->GetBlockedActions(extension));
+  EXPECT_EQ(0,
+            GetWebRequestCountFromBackgroundPage(extension.get(), profile()));
+  EXPECT_EQ(BLOCKED_ACTION_WEB_REQUEST,
+            runner->GetBlockedActions(extension.get()));
 
   // Grant activeTab permission, and perform another XHR. The extension should
   // receive the event.
   runner->set_default_bubble_close_action_for_testing(
       base::WrapUnique(new ToolbarActionsBarBubbleDelegate::CloseAction(
           ToolbarActionsBarBubbleDelegate::CLOSE_EXECUTE)));
-  runner->RunAction(extension, true);
+  runner->RunAction(extension.get(), true);
   base::RunLoop().RunUntilIdle();
   EXPECT_TRUE(content::WaitForLoadStop(web_contents));
   // The runner will have refreshed the page...
   get_main_and_child_frame(web_contents, &main_frame, &child_frame);
-  EXPECT_EQ(BLOCKED_ACTION_NONE, runner->GetBlockedActions(extension));
+  EXPECT_EQ(BLOCKED_ACTION_NONE, runner->GetBlockedActions(extension.get()));
 
-  int xhr_count = GetWebRequestCountFromBackgroundPage(extension, profile());
+  int xhr_count =
+      GetWebRequestCountFromBackgroundPage(extension.get(), profile());
   // ... which means that we should have a non-zero xhr count...
   EXPECT_GT(xhr_count, 0);
   // ... and the extension should receive future events.
   PerformXhrInFrame(main_frame, kHost, port, kXhrPath);
   ++xhr_count;
   EXPECT_EQ(xhr_count,
-            GetWebRequestCountFromBackgroundPage(extension, profile()));
+            GetWebRequestCountFromBackgroundPage(extension.get(), profile()));
 
   // However, activeTab only grants access to the main frame, not to child
   // frames. As such, trying to XHR in the child frame should still fail.
   PerformXhrInFrame(child_frame, kChildHost, port, kXhrPath);
   EXPECT_EQ(xhr_count,
-            GetWebRequestCountFromBackgroundPage(extension, profile()));
+            GetWebRequestCountFromBackgroundPage(extension.get(), profile()));
   // But since there's no way for the user to currently grant access to child
   // frames, this shouldn't show up as a blocked action.
-  EXPECT_EQ(BLOCKED_ACTION_NONE, runner->GetBlockedActions(extension));
+  EXPECT_EQ(BLOCKED_ACTION_NONE, runner->GetBlockedActions(extension.get()));
 
   // If we revoke the extension's tab permissions, it should no longer receive
   // webRequest events.
@@ -734,8 +738,9 @@ IN_PROC_BROWSER_TEST_F(ExtensionWebRequestApiTest,
   base::RunLoop().RunUntilIdle();
   PerformXhrInFrame(main_frame, kHost, port, kXhrPath);
   EXPECT_EQ(xhr_count,
-            GetWebRequestCountFromBackgroundPage(extension, profile()));
-  EXPECT_EQ(BLOCKED_ACTION_WEB_REQUEST, runner->GetBlockedActions(extension));
+            GetWebRequestCountFromBackgroundPage(extension.get(), profile()));
+  EXPECT_EQ(BLOCKED_ACTION_WEB_REQUEST,
+            runner->GetBlockedActions(extension.get()));
 }
 
 // Verify that requests to clientsX.google.com are protected properly.
@@ -749,7 +754,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionWebRequestApiTest,
   // Load an extension that registers a listener for webRequest events, and
   // wait 'til it's initialized.
   ExtensionTestMessageListener listener("ready", false);
-  const Extension* extension = LoadExtension(
+  scoped_refptr<const Extension> extension = LoadExtension(
       test_data_dir_.AppendASCII("webrequest_clients_google_com"));
   ASSERT_TRUE(extension) << message_;
   EXPECT_TRUE(listener.WaitUntilSatisfied());
@@ -766,7 +771,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionWebRequestApiTest,
   // Expected number of requests to clients1.google.com observed so far.
   int expected_requests_observed = 0;
   EXPECT_EQ(expected_requests_observed,
-            GetWebRequestCountFromBackgroundPage(extension, profile()));
+            GetWebRequestCountFromBackgroundPage(extension.get(), profile()));
 
   for (const auto& testcase : testcases) {
     SCOPED_TRACE(testcase.main_frame_url);
@@ -784,7 +789,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionWebRequestApiTest,
     ui_test_utils::NavigateToURL(&params);
 
     EXPECT_EQ(expected_requests_observed,
-              GetWebRequestCountFromBackgroundPage(extension, profile()));
+              GetWebRequestCountFromBackgroundPage(extension.get(), profile()));
 
     content::WebContents* web_contents =
         browser()->tab_strip_model()->GetActiveWebContents();
@@ -807,7 +812,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionWebRequestApiTest,
       ++expected_requests_observed;
 
     EXPECT_EQ(expected_requests_observed,
-              GetWebRequestCountFromBackgroundPage(extension, profile()));
+              GetWebRequestCountFromBackgroundPage(extension.get(), profile()));
   }
 
   // Perform request to https://client1.google.com from browser process.
@@ -843,7 +848,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionWebRequestApiTest,
 
   // This request should not be observed by the extension.
   EXPECT_EQ(expected_requests_observed,
-            GetWebRequestCountFromBackgroundPage(extension, profile()));
+            GetWebRequestCountFromBackgroundPage(extension.get(), profile()));
 }
 
 // Test that the webRequest events are dispatched for the WebSocket handshake
@@ -889,7 +894,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionWebRequestApiTest,
          chrome.test.sendMessage('ready');)");
 
   ASSERT_TRUE(StartEmbeddedTestServer());
-  const Extension* extension = nullptr;
+  scoped_refptr<const Extension> extension = nullptr;
   {
     ExtensionTestMessageListener listener("ready", false);
     extension = LoadExtension(test_dir.UnpackedPath());
@@ -1006,7 +1011,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionApiTestWithManagementPolicy,
       "/extensions/api_test/webrequest/policy_blocked/ref_remote_js.html");
 
   ExtensionTestMessageListener listener("ready", false);
-  const Extension* extension =
+  scoped_refptr<const Extension> extension =
       LoadExtension(test_data_dir_.AppendASCII("webrequest/policy_blocked"));
   ASSERT_TRUE(extension) << message_;
   EXPECT_TRUE(listener.WaitUntilSatisfied());
@@ -1018,7 +1023,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionApiTestWithManagementPolicy,
   // the extension's background page under this variable name.
   const std::string request_counter_name = "window.protectedOriginCount";
 
-  EXPECT_EQ(0, GetCountFromBackgroundPage(extension, profile(),
+  EXPECT_EQ(0, GetCountFromBackgroundPage(extension.get(), profile(),
                                           request_counter_name));
 
   // Wait until all remote Javascript files have been blocked / pulled down.
@@ -1033,7 +1038,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionApiTestWithManagementPolicy,
   EXPECT_TRUE(BrowsedTo(example2_com));
 
   // The request was seen by the extension.
-  EXPECT_EQ(1, GetCountFromBackgroundPage(extension, profile(),
+  EXPECT_EQ(1, GetCountFromBackgroundPage(extension.get(), profile(),
                                           request_counter_name));
 
   // Clear the list of domains the server has seen.
@@ -1059,7 +1064,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionApiTestWithManagementPolicy,
   EXPECT_TRUE(BrowsedTo(example2_com));
 
   // The request was hidden from the extension.
-  EXPECT_EQ(1, GetCountFromBackgroundPage(extension, profile(),
+  EXPECT_EQ(1, GetCountFromBackgroundPage(extension.get(), profile(),
                                           request_counter_name));
 }
 
@@ -1134,7 +1139,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionApiTestWithManagementPolicy,
   ASSERT_TRUE(StartEmbeddedTestServer());
 
   ExtensionTestMessageListener listener("ready", false);
-  const Extension* extension =
+  scoped_refptr<const Extension> extension =
       LoadExtension(test_data_dir_.AppendASCII("webrequest_activetab"));
   ASSERT_TRUE(extension) << message_;
   EXPECT_TRUE(listener.WaitUntilSatisfied());
@@ -1157,31 +1162,35 @@ IN_PROC_BROWSER_TEST_F(ExtensionApiTestWithManagementPolicy,
 
   // The extension shouldn't have currently received any webRequest events,
   // since it doesn't have permission (and shouldn't receive any from an XHR).
-  EXPECT_EQ(0, GetWebRequestCountFromBackgroundPage(extension, profile()));
+  EXPECT_EQ(0,
+            GetWebRequestCountFromBackgroundPage(extension.get(), profile()));
   PerformXhrInFrame(web_contents->GetMainFrame(), protected_domain, port,
                     kXhrPath);
-  EXPECT_EQ(0, GetWebRequestCountFromBackgroundPage(extension, profile()));
+  EXPECT_EQ(0,
+            GetWebRequestCountFromBackgroundPage(extension.get(), profile()));
 
   // Grant activeTab permission, and perform another XHR. The extension should
   // still be blocked due to ExtensionSettings policy on example.com.
   // Only records ACCESS_WITHHELD, not ACCESS_DENIED, this is why it matches
   // BLOCKED_ACTION_NONE.
-  EXPECT_EQ(BLOCKED_ACTION_NONE, runner->GetBlockedActions(extension));
+  EXPECT_EQ(BLOCKED_ACTION_NONE, runner->GetBlockedActions(extension.get()));
   runner->set_default_bubble_close_action_for_testing(
       base::WrapUnique(new ToolbarActionsBarBubbleDelegate::CloseAction(
           ToolbarActionsBarBubbleDelegate::CLOSE_EXECUTE)));
-  runner->RunAction(extension, true);
+  runner->RunAction(extension.get(), true);
   base::RunLoop().RunUntilIdle();
   EXPECT_TRUE(content::WaitForLoadStop(web_contents));
-  EXPECT_EQ(BLOCKED_ACTION_NONE, runner->GetBlockedActions(extension));
-  int xhr_count = GetWebRequestCountFromBackgroundPage(extension, profile());
+  EXPECT_EQ(BLOCKED_ACTION_NONE, runner->GetBlockedActions(extension.get()));
+  int xhr_count =
+      GetWebRequestCountFromBackgroundPage(extension.get(), profile());
   // ... which means that we should have a non-zero xhr count if the policy
   // didn't block the events.
   EXPECT_EQ(0, xhr_count);
   // And the extension should also block future events.
   PerformXhrInFrame(web_contents->GetMainFrame(), protected_domain, port,
                     kXhrPath);
-  EXPECT_EQ(0, GetWebRequestCountFromBackgroundPage(extension, profile()));
+  EXPECT_EQ(0,
+            GetWebRequestCountFromBackgroundPage(extension.get(), profile()));
 }
 
 }  // namespace extensions

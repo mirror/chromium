@@ -79,7 +79,8 @@ class ExtensionManagementApiTest : public ExtensionApiTest {
  protected:
   void LoadNamedExtension(const base::FilePath& path,
                           const std::string& name) {
-    const Extension* extension = LoadExtension(path.AppendASCII(name));
+    scoped_refptr<const Extension> extension =
+        LoadExtension(path.AppendASCII(name));
     ASSERT_TRUE(extension);
     extension_ids_[name] = extension->id();
   }
@@ -87,8 +88,8 @@ class ExtensionManagementApiTest : public ExtensionApiTest {
   void InstallNamedExtension(const base::FilePath& path,
                              const std::string& name,
                              Manifest::Location install_source) {
-    const Extension* extension = InstallExtension(path.AppendASCII(name), 1,
-                                                  install_source);
+    scoped_refptr<const Extension> extension =
+        InstallExtension(path.AppendASCII(name), 1, install_source);
     ASSERT_TRUE(extension);
     extension_ids_[name] = extension->id();
   }

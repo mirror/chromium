@@ -699,7 +699,7 @@ IN_PROC_BROWSER_TEST_F(WebNavigationApiTest, CrossProcessAbort) {
 
   // Load the extension manually, as its base URL is needed later on to
   // construct a same-site URL to delay.
-  const Extension* extension =
+  scoped_refptr<const Extension> extension =
       LoadExtension(test_data_dir_.AppendASCII("webnavigation")
                         .AppendASCII("crossProcessAbort"));
 

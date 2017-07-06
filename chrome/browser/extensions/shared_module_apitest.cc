@@ -40,7 +40,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionApiTest, SharedModuleWhitelist) {
 IN_PROC_BROWSER_TEST_F(ExtensionApiTest, SharedModuleInstallEvent) {
   ExtensionTestMessageListener listener1("ready", false);
 
-  const Extension* extension = LoadExtension(
+  scoped_refptr<const Extension> extension = LoadExtension(
       test_data_dir_.AppendASCII("shared_module").AppendASCII("shared"));
   ASSERT_TRUE(extension);
   ASSERT_TRUE(InstallExtension(
@@ -49,7 +49,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionApiTest, SharedModuleInstallEvent) {
 }
 
 IN_PROC_BROWSER_TEST_F(ExtensionApiTest, SharedModuleLocale) {
-  const Extension* extension = LoadExtension(
+  scoped_refptr<const Extension> extension = LoadExtension(
       test_data_dir_.AppendASCII("shared_module").AppendASCII("shared"));
   ASSERT_TRUE(extension);
 

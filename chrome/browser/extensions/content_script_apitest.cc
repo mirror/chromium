@@ -368,7 +368,7 @@ IN_PROC_BROWSER_TEST_P(ContentScriptApiTest, ContentScriptCSSLocalization) {
 IN_PROC_BROWSER_TEST_P(ContentScriptApiTest, ContentScriptExtensionAPIs) {
   ASSERT_TRUE(StartEmbeddedTestServer());
 
-  const extensions::Extension* extension = LoadExtension(
+  scoped_refptr<const extensions::Extension> extension = LoadExtension(
       test_data_dir_.AppendASCII("content_scripts/extension_api"));
 
   ResultCatcher catcher;
@@ -446,13 +446,13 @@ IN_PROC_BROWSER_TEST_P(ContentScriptApiTest, ContentScriptBlockingScript) {
   ext_dir1.WriteManifest(
       base::StringPrintf(kManifest, "ext1", "document_start"));
   ext_dir1.WriteFile(FILE_PATH_LITERAL("script.js"), kBlockingScript);
-  const Extension* ext1 = LoadExtension(ext_dir1.UnpackedPath());
+  scoped_refptr<const Extension> ext1 = LoadExtension(ext_dir1.UnpackedPath());
   ASSERT_TRUE(ext1);
 
   TestExtensionDir ext_dir2;
   ext_dir2.WriteManifest(base::StringPrintf(kManifest, "ext2", "document_end"));
   ext_dir2.WriteFile(FILE_PATH_LITERAL("script.js"), kNonBlockingScript);
-  const Extension* ext2 = LoadExtension(ext_dir2.UnpackedPath());
+  scoped_refptr<const Extension> ext2 = LoadExtension(ext_dir2.UnpackedPath());
   ASSERT_TRUE(ext2);
 
   content::WebContents* web_contents =
@@ -499,13 +499,13 @@ IN_PROC_BROWSER_TEST_P(ContentScriptApiTest,
   ext_dir1.WriteManifest(
       base::StringPrintf(kManifest, "ext1", "document_start"));
   ext_dir1.WriteFile(FILE_PATH_LITERAL("script.js"), kBlockingScript);
-  const Extension* ext1 = LoadExtension(ext_dir1.UnpackedPath());
+  scoped_refptr<const Extension> ext1 = LoadExtension(ext_dir1.UnpackedPath());
   ASSERT_TRUE(ext1);
 
   TestExtensionDir ext_dir2;
   ext_dir2.WriteManifest(base::StringPrintf(kManifest, "ext2", "document_end"));
   ext_dir2.WriteFile(FILE_PATH_LITERAL("script.js"), kNonBlockingScript);
-  const Extension* ext2 = LoadExtension(ext_dir2.UnpackedPath());
+  scoped_refptr<const Extension> ext2 = LoadExtension(ext_dir2.UnpackedPath());
   ASSERT_TRUE(ext2);
 
   content::WebContents* web_contents =
@@ -544,7 +544,7 @@ IN_PROC_BROWSER_TEST_P(ContentScriptApiTest,
   ext_dir1.WriteManifest(
       base::StringPrintf(kManifest, "ext1", "document_idle"));
   ext_dir1.WriteFile(FILE_PATH_LITERAL("script.js"), kBlockingScript);
-  const Extension* ext1 = LoadExtension(ext_dir1.UnpackedPath());
+  scoped_refptr<const Extension> ext1 = LoadExtension(ext_dir1.UnpackedPath());
   ASSERT_TRUE(ext1);
 
   content::WebContents* web_contents =
@@ -575,7 +575,7 @@ IN_PROC_BROWSER_TEST_P(ContentScriptApiTest,
   TestExtensionDir new_tab_override_dir;
   new_tab_override_dir.WriteManifest(kNewTabOverrideManifest);
   new_tab_override_dir.WriteFile(FILE_PATH_LITERAL("newtab.html"), kNewTabHtml);
-  const Extension* new_tab_override =
+  scoped_refptr<const Extension> new_tab_override =
       LoadExtension(new_tab_override_dir.UnpackedPath());
   ASSERT_TRUE(new_tab_override);
 
@@ -583,7 +583,8 @@ IN_PROC_BROWSER_TEST_P(ContentScriptApiTest,
   injector_dir.WriteManifest(
       base::StringPrintf(kManifest, "injector", "document_start"));
   injector_dir.WriteFile(FILE_PATH_LITERAL("script.js"), kNonBlockingScript);
-  const Extension* injector = LoadExtension(injector_dir.UnpackedPath());
+  scoped_refptr<const Extension> injector =
+      LoadExtension(injector_dir.UnpackedPath());
   ASSERT_TRUE(injector);
 
   ExtensionTestMessageListener listener("done", false);

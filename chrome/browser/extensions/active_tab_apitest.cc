@@ -31,7 +31,7 @@ namespace {
 IN_PROC_BROWSER_TEST_F(ExtensionApiTest, MAYBE_ActiveTab) {
   ASSERT_TRUE(StartEmbeddedTestServer());
 
-  const Extension* extension =
+  scoped_refptr<const Extension> extension =
       LoadExtension(test_data_dir_.AppendASCII("active_tab"));
   ASSERT_TRUE(extension);
 
@@ -51,7 +51,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionApiTest, MAYBE_ActiveTab) {
     ResultCatcher catcher;
     ExtensionActionRunner::GetForWebContents(
         browser()->tab_strip_model()->GetActiveWebContents())
-        ->RunAction(extension, false);
+        ->RunAction(extension.get(), false);
     EXPECT_TRUE(catcher.GetNextResult()) << message_;
   }
 
@@ -60,7 +60,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionApiTest, MAYBE_ActiveTab) {
     ResultCatcher catcher;
     ExtensionActionRunner::GetForWebContents(
         browser()->tab_strip_model()->GetActiveWebContents())
-        ->RunAction(extension, true);
+        ->RunAction(extension.get(), true);
     EXPECT_TRUE(catcher.GetNextResult()) << message_;
   }
 

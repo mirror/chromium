@@ -592,7 +592,7 @@ class DownloadExtensionTest : public ExtensionApiTest {
   }
 
   base::ScopedTempDir downloads_directory_;
-  const Extension* extension_;
+  scoped_refptr<const Extension> extension_;
   Browser* incognito_browser_;
   Browser* current_browser_;
   std::unique_ptr<DownloadsEventsListener> events_listener_;

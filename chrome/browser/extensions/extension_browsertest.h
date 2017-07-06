@@ -73,7 +73,7 @@ class ExtensionBrowserTest : virtual public InProcessBrowserTest {
   // Get the profile to use.
   virtual Profile* profile();
 
-  static const extensions::Extension* GetExtensionByPath(
+  static scoped_refptr<const extensions::Extension> GetExtensionByPath(
       const extensions::ExtensionSet& extensions,
       const base::FilePath& path);
 
@@ -83,20 +83,22 @@ class ExtensionBrowserTest : virtual public InProcessBrowserTest {
   void SetUpOnMainThread() override;
   void TearDownOnMainThread() override;
 
-  const extensions::Extension* LoadExtension(const base::FilePath& path);
+  scoped_refptr<const extensions::Extension> LoadExtension(
+      const base::FilePath& path);
 
   // Load extension and enable it in incognito mode.
-  const extensions::Extension* LoadExtensionIncognito(
+  scoped_refptr<const extensions::Extension> LoadExtensionIncognito(
       const base::FilePath& path);
 
   // Load extension from the |path| folder. |flags| is bit mask of values from
   // |Flags| enum.
-  const extensions::Extension* LoadExtensionWithFlags(
-      const base::FilePath& path, int flags);
+  scoped_refptr<const extensions::Extension> LoadExtensionWithFlags(
+      const base::FilePath& path,
+      int flags);
 
   // Same as above, but sets the installation parameter to the extension
   // preferences.
-  const extensions::Extension* LoadExtensionWithInstallParam(
+  scoped_refptr<const extensions::Extension> LoadExtensionWithInstallParam(
       const base::FilePath& path,
       int flags,
       const std::string& install_param);
@@ -104,18 +106,20 @@ class ExtensionBrowserTest : virtual public InProcessBrowserTest {
   // Loads unpacked extension from |path| with manifest |manifest_relative_path|
   // and imitates that it is a component extension.
   // |manifest_relative_path| is relative to |path|.
-  const extensions::Extension* LoadExtensionAsComponentWithManifest(
+  scoped_refptr<const extensions::Extension>
+  LoadExtensionAsComponentWithManifest(
       const base::FilePath& path,
       const base::FilePath::CharType* manifest_relative_path);
 
   // Loads unpacked extension from |path| and imitates that it is a component
   // extension. Equivalent to
   // LoadExtensionAsComponentWithManifest(path, extensions::kManifestFilename).
-  const extensions::Extension* LoadExtensionAsComponent(
+  scoped_refptr<const extensions::Extension> LoadExtensionAsComponent(
       const base::FilePath& path);
 
   // Loads and launches the app from |path|, and returns it.
-  const extensions::Extension* LoadAndLaunchApp(const base::FilePath& path);
+  scoped_refptr<const extensions::Extension> LoadAndLaunchApp(
+      const base::FilePath& path);
 
   // Pack the extension in |dir_path| into a crx file and return its path.
   // Return an empty FilePath if there were errors.
@@ -134,15 +138,16 @@ class ExtensionBrowserTest : virtual public InProcessBrowserTest {
   // disabled, if negative).
   // 1 means you expect a new install, 0 means you expect an upgrade, -1 means
   // you expect a failed upgrade.
-  const extensions::Extension* InstallExtension(const base::FilePath& path,
-                                                int expected_change) {
+  scoped_refptr<const extensions::Extension> InstallExtension(
+      const base::FilePath& path,
+      int expected_change) {
     return InstallOrUpdateExtension(
         std::string(), path, INSTALL_UI_TYPE_NONE, expected_change);
   }
 
   // Same as above, but an install source other than Manifest::INTERNAL can be
   // specified.
-  const extensions::Extension* InstallExtension(
+  scoped_refptr<const extensions::Extension> InstallExtension(
       const base::FilePath& path,
       int expected_change,
       extensions::Manifest::Location install_source) {
@@ -156,9 +161,9 @@ class ExtensionBrowserTest : virtual public InProcessBrowserTest {
   // Installs an extension and grants it the permissions it requests.
   // TODO(devlin): It seems like this is probably the desired outcome most of
   // the time - otherwise the extension installs in a disabled state.
-  const extensions::Extension* InstallExtensionWithPermissionsGranted(
-      const base::FilePath& file_path,
-      int expected_change) {
+  scoped_refptr<const extensions::Extension>
+  InstallExtensionWithPermissionsGranted(const base::FilePath& file_path,
+                                         int expected_change) {
     return InstallOrUpdateExtension(
         std::string(), file_path, INSTALL_UI_TYPE_NONE, expected_change,
         extensions::Manifest::INTERNAL, browser(),
@@ -166,32 +171,36 @@ class ExtensionBrowserTest : virtual public InProcessBrowserTest {
   }
 
   // Installs extension as if it came from the Chrome Webstore.
-  const extensions::Extension* InstallExtensionFromWebstore(
-      const base::FilePath& path, int expected_change);
+  scoped_refptr<const extensions::Extension> InstallExtensionFromWebstore(
+      const base::FilePath& path,
+      int expected_change);
 
   // Same as above but passes an id to CrxInstaller and does not allow a
   // privilege increase.
-  const extensions::Extension* UpdateExtension(const std::string& id,
-                                               const base::FilePath& path,
-                                               int expected_change) {
+  scoped_refptr<const extensions::Extension> UpdateExtension(
+      const std::string& id,
+      const base::FilePath& path,
+      int expected_change) {
     return InstallOrUpdateExtension(id, path, INSTALL_UI_TYPE_NONE,
                                     expected_change);
   }
 
   // Same as UpdateExtension but waits for the extension to be idle first.
-  const extensions::Extension* UpdateExtensionWaitForIdle(
-      const std::string& id, const base::FilePath& path, int expected_change);
+  scoped_refptr<const extensions::Extension> UpdateExtensionWaitForIdle(
+      const std::string& id,
+      const base::FilePath& path,
+      int expected_change);
 
   // Same as |InstallExtension| but with the normal extension UI showing up
   // (for e.g. info bar on success).
-  const extensions::Extension* InstallExtensionWithUI(
+  scoped_refptr<const extensions::Extension> InstallExtensionWithUI(
       const base::FilePath& path,
       int expected_change) {
     return InstallOrUpdateExtension(
         std::string(), path, INSTALL_UI_TYPE_NORMAL, expected_change);
   }
 
-  const extensions::Extension* InstallExtensionWithUIAutoConfirm(
+  scoped_refptr<const extensions::Extension> InstallExtensionWithUIAutoConfirm(
       const base::FilePath& path,
       int expected_change,
       Browser* browser) {
@@ -203,7 +212,7 @@ class ExtensionBrowserTest : virtual public InProcessBrowserTest {
                                     extensions::Extension::NO_FLAGS);
   }
 
-  const extensions::Extension* InstallExtensionWithSourceAndFlags(
+  scoped_refptr<const extensions::Extension> InstallExtensionWithSourceAndFlags(
       const base::FilePath& path,
       int expected_change,
       extensions::Manifest::Location install_source,
@@ -214,7 +223,7 @@ class ExtensionBrowserTest : virtual public InProcessBrowserTest {
   }
 
   // Begins install process but simulates a user cancel.
-  const extensions::Extension* StartInstallButCancel(
+  scoped_refptr<const extensions::Extension> StartInstallButCancel(
       const base::FilePath& path) {
     return InstallOrUpdateExtension(
         std::string(), path, INSTALL_UI_TYPE_CANCEL, 0);
@@ -333,25 +342,25 @@ class ExtensionBrowserTest : virtual public InProcessBrowserTest {
     INSTALL_UI_TYPE_AUTO_CONFIRM,
   };
 
-  const extensions::Extension* InstallOrUpdateExtension(
+  scoped_refptr<const extensions::Extension> InstallOrUpdateExtension(
       const std::string& id,
       const base::FilePath& path,
       InstallUIType ui_type,
       int expected_change);
-  const extensions::Extension* InstallOrUpdateExtension(
+  scoped_refptr<const extensions::Extension> InstallOrUpdateExtension(
       const std::string& id,
       const base::FilePath& path,
       InstallUIType ui_type,
       int expected_change,
       Browser* browser,
       extensions::Extension::InitFromValueFlags creation_flags);
-  const extensions::Extension* InstallOrUpdateExtension(
+  scoped_refptr<const extensions::Extension> InstallOrUpdateExtension(
       const std::string& id,
       const base::FilePath& path,
       InstallUIType ui_type,
       int expected_change,
       extensions::Manifest::Location install_source);
-  const extensions::Extension* InstallOrUpdateExtension(
+  scoped_refptr<const extensions::Extension> InstallOrUpdateExtension(
       const std::string& id,
       const base::FilePath& path,
       InstallUIType ui_type,

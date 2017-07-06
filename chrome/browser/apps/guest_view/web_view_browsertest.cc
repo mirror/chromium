@@ -2312,11 +2312,11 @@ IN_PROC_BROWSER_TEST_P(WebViewTest, ScreenCoordinates) {
 #define MAYBE_TearDownTest TearDownTest
 #endif
 IN_PROC_BROWSER_TEST_P(WebViewTest, MAYBE_TearDownTest) {
-  const extensions::Extension* extension =
+  scoped_refptr<const extensions::Extension> extension =
       LoadAndLaunchPlatformApp("web_view/simple", "WebViewTest.LAUNCHED");
   extensions::AppWindow* window = NULL;
   if (!GetAppWindowCount())
-    window = CreateAppWindow(browser()->profile(), extension);
+    window = CreateAppWindow(browser()->profile(), extension.get());
   else
     window = GetFirstAppWindow();
   CloseAppWindow(window);
@@ -2943,9 +2943,10 @@ IN_PROC_BROWSER_TEST_P(WebViewTest, WhitelistedContentScript) {
   extensions::ExtensionsClient::Get()->SetScriptingWhitelist(whitelist);
 
   // Load the extension.
-  const extensions::Extension* content_script_whitelisted_extension =
-      LoadExtension(test_data_dir_.AppendASCII(
-                        "platform_apps/web_view/extension_api/content_script"));
+  scoped_refptr<const extensions::Extension>
+      content_script_whitelisted_extension =
+          LoadExtension(test_data_dir_.AppendASCII(
+              "platform_apps/web_view/extension_api/content_script"));
   ASSERT_TRUE(content_script_whitelisted_extension);
   ASSERT_EQ(extension_id, content_script_whitelisted_extension->id());
 
@@ -2956,7 +2957,7 @@ IN_PROC_BROWSER_TEST_P(WebViewTest, WhitelistedContentScript) {
 
 IN_PROC_BROWSER_TEST_P(WebViewTest, SendMessageToExtensionFromGuest) {
   // Load the extension as a normal, non-component extension.
-  const extensions::Extension* extension =
+  scoped_refptr<const extensions::Extension> extension =
       LoadExtension(test_data_dir_.AppendASCII(
           "platform_apps/web_view/extension_api/component_extension"));
   ASSERT_TRUE(extension);
@@ -2966,7 +2967,7 @@ IN_PROC_BROWSER_TEST_P(WebViewTest, SendMessageToExtensionFromGuest) {
 }
 
 IN_PROC_BROWSER_TEST_P(WebViewTest, SendMessageToComponentExtensionFromGuest) {
-  const extensions::Extension* component_extension =
+  scoped_refptr<const extensions::Extension> component_extension =
       LoadExtensionAsComponent(test_data_dir_.AppendASCII(
           "platform_apps/web_view/extension_api/component_extension"));
   ASSERT_TRUE(component_extension);
@@ -3077,10 +3078,9 @@ IN_PROC_BROWSER_TEST_P(WebViewTest, Dialog_TestPromptDialog) {
 
 IN_PROC_BROWSER_TEST_P(WebViewTest, NoContentSettingsAPI) {
   // Load the extension.
-  const extensions::Extension* content_settings_extension =
-      LoadExtension(
-          test_data_dir_.AppendASCII(
-              "platform_apps/web_view/extension_api/content_settings"));
+  scoped_refptr<const extensions::Extension> content_settings_extension =
+      LoadExtension(test_data_dir_.AppendASCII(
+          "platform_apps/web_view/extension_api/content_settings"));
   ASSERT_TRUE(content_settings_extension);
   TestHelper("testPostMessageCommChannel", "web_view/shim", NO_TEST_SERVER);
 }

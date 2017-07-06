@@ -49,12 +49,12 @@ void PermissionBubbleBrowserTest::SetUpOnMainThread() {
 }
 
 Browser* PermissionBubbleBrowserTest::OpenExtensionAppWindow() {
-  auto* extension =
+  auto extension =
       LoadExtension(test_data_dir_.AppendASCII("app_with_panel_container/"));
   CHECK(extension);
 
   AppLaunchParams params(
-      browser()->profile(), extension, extensions::LAUNCH_CONTAINER_PANEL,
+      browser()->profile(), extension.get(), extensions::LAUNCH_CONTAINER_PANEL,
       WindowOpenDisposition::NEW_WINDOW, extensions::SOURCE_TEST);
 
   content::WebContents* app_window = OpenApplication(params);

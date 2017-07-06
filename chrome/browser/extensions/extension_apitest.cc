@@ -295,7 +295,7 @@ bool ExtensionApiTest::RunExtensionTestImpl(const std::string& extension_name,
   DCHECK(!extension_name.empty() || !page_url.empty()) <<
       "extension_name and page_url cannot both be empty";
 
-  const extensions::Extension* extension = NULL;
+  scoped_refptr<const extensions::Extension> extension = NULL;
   if (!extension_name.empty()) {
     base::FilePath extension_path = test_data_dir_.AppendASCII(extension_name);
     if (load_as_component) {
@@ -339,9 +339,10 @@ bool ExtensionApiTest::RunExtensionTestImpl(const std::string& extension_name,
     else
       ui_test_utils::NavigateToURL(browser(), url);
   } else if (launch_platform_app) {
-    AppLaunchParams params(
-        browser()->profile(), extension, extensions::LAUNCH_CONTAINER_NONE,
-        WindowOpenDisposition::NEW_WINDOW, extensions::SOURCE_TEST);
+    AppLaunchParams params(browser()->profile(), extension.get(),
+                           extensions::LAUNCH_CONTAINER_NONE,
+                           WindowOpenDisposition::NEW_WINDOW,
+                           extensions::SOURCE_TEST);
     params.command_line = *base::CommandLine::ForCurrentProcess();
     OpenApplication(params);
   }
@@ -355,11 +356,12 @@ bool ExtensionApiTest::RunExtensionTestImpl(const std::string& extension_name,
 }
 
 // Test that exactly one extension is loaded, and return it.
-const extensions::Extension* ExtensionApiTest::GetSingleLoadedExtension() {
+scoped_refptr<const extensions::Extension>
+ExtensionApiTest::GetSingleLoadedExtension() {
   extensions::ExtensionRegistry* registry =
       extensions::ExtensionRegistry::Get(browser()->profile());
 
-  const extensions::Extension* result = NULL;
+  scoped_refptr<const extensions::Extension> result = NULL;
   for (const scoped_refptr<const extensions::Extension>& extension :
        registry->enabled_extensions()) {
     // Ignore any component extensions. They are automatically loaded into all

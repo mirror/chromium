@@ -105,7 +105,7 @@ IN_PROC_BROWSER_TEST_F(CommandServiceTest,
                        RemoveKeybindingPrefsShouldBePlatformSpecific) {
   base::FilePath extension_dir =
       test_data_dir_.AppendASCII("keybinding").AppendASCII("basics");
-  const Extension* extension = InstallExtension(extension_dir, 1);
+  scoped_refptr<const Extension> extension = InstallExtension(extension_dir, 1);
   ASSERT_TRUE(extension);
 
   DictionaryPrefUpdate updater(browser()->profile()->GetPrefs(),
@@ -134,7 +134,7 @@ IN_PROC_BROWSER_TEST_F(CommandServiceTest,
                        GetExtensionActionCommandQueryAll) {
   base::FilePath extension_dir =
       test_data_dir_.AppendASCII("keybinding").AppendASCII("basics");
-  const Extension* extension = InstallExtension(extension_dir, 1);
+  scoped_refptr<const Extension> extension = InstallExtension(extension_dir, 1);
   ASSERT_TRUE(extension);
 
   CommandService* command_service = CommandService::Get(browser()->profile());
@@ -184,7 +184,7 @@ IN_PROC_BROWSER_TEST_F(CommandServiceTest,
                        GetExtensionActionCommandQueryActive) {
   base::FilePath extension_dir =
       test_data_dir_.AppendASCII("keybinding").AppendASCII("basics");
-  const Extension* extension = InstallExtension(extension_dir, 1);
+  scoped_refptr<const Extension> extension = InstallExtension(extension_dir, 1);
   ASSERT_TRUE(extension);
 
   CommandService* command_service = CommandService::Get(browser()->profile());
@@ -230,7 +230,7 @@ IN_PROC_BROWSER_TEST_F(CommandServiceTest,
                        GetExtensionActionCommandQuerySuggested) {
   base::FilePath extension_dir =
       test_data_dir_.AppendASCII("keybinding").AppendASCII("basics");
-  const Extension* extension = InstallExtension(extension_dir, 1);
+  scoped_refptr<const Extension> extension = InstallExtension(extension_dir, 1);
   ASSERT_TRUE(extension);
 
   CommandService* command_service = CommandService::Get(browser()->profile());
@@ -280,7 +280,7 @@ IN_PROC_BROWSER_TEST_F(CommandServiceTest,
                        GetNamedCommandsQueryAll) {
   base::FilePath extension_dir =
       test_data_dir_.AppendASCII("keybinding").AppendASCII("basics");
-  const Extension* extension = InstallExtension(extension_dir, 1);
+  scoped_refptr<const Extension> extension = InstallExtension(extension_dir, 1);
   ASSERT_TRUE(extension);
 
   CommandService* command_service = CommandService::Get(browser()->profile());
@@ -330,7 +330,7 @@ IN_PROC_BROWSER_TEST_F(CommandServiceTest,
 IN_PROC_BROWSER_TEST_F(CommandServiceTest, GetNamedCommandsQueryActive) {
   base::FilePath extension_dir =
       test_data_dir_.AppendASCII("keybinding").AppendASCII("basics");
-  const Extension* extension = InstallExtension(extension_dir, 1);
+  scoped_refptr<const Extension> extension = InstallExtension(extension_dir, 1);
   ASSERT_TRUE(extension);
 
   CommandService* command_service = CommandService::Get(browser()->profile());
@@ -377,7 +377,7 @@ IN_PROC_BROWSER_TEST_F(CommandServiceTest,
                        GetNamedCommandsQuerySuggested) {
   base::FilePath extension_dir =
       test_data_dir_.AppendASCII("keybinding").AppendASCII("basics");
-  const Extension* extension = InstallExtension(extension_dir, 1);
+  scoped_refptr<const Extension> extension = InstallExtension(extension_dir, 1);
   ASSERT_TRUE(extension);
 
   CommandService* command_service = CommandService::Get(browser()->profile());

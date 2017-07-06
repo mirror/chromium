@@ -132,7 +132,7 @@ void CheckManifestError(const ExtensionError* error,
 
 class ErrorConsoleBrowserTest : public ExtensionBrowserTest {
  public:
-  ErrorConsoleBrowserTest() : error_console_(NULL) { }
+  ErrorConsoleBrowserTest() : error_console_(nullptr) {}
   ~ErrorConsoleBrowserTest() override {}
 
  protected:
@@ -168,7 +168,7 @@ class ErrorConsoleBrowserTest : public ExtensionBrowserTest {
       }
     }
 
-    void OnErrorConsoleDestroyed() override { error_console_ = NULL; }
+    void OnErrorConsoleDestroyed() override { error_console_ = nullptr; }
 
     // Spin until the appropriate number of errors have been observed.
     void WaitForErrors() {
@@ -236,12 +236,11 @@ class ErrorConsoleBrowserTest : public ExtensionBrowserTest {
   // Load the extension at |path|, take the specified |action|, and wait for
   // |expected_errors| errors. Populate |extension| with a pointer to the loaded
   // extension.
-  void LoadExtensionAndCheckErrors(
-      const std::string& path,
-      int flags,
-      size_t errors_expected,
-      Action action,
-      const Extension** extension) {
+  void LoadExtensionAndCheckErrors(const std::string& path,
+                                   int flags,
+                                   size_t errors_expected,
+                                   Action action,
+                                   scoped_refptr<const Extension>* extension) {
     ErrorObserver observer(errors_expected, error_console_);
     *extension =
         LoadExtensionWithFlags(test_data_dir_.AppendASCII(path), flags);
@@ -255,7 +254,7 @@ class ErrorConsoleBrowserTest : public ExtensionBrowserTest {
       case ACTION_BROWSER_ACTION: {
         ExtensionActionRunner::GetForWebContents(
             browser()->tab_strip_model()->GetActiveWebContents())
-            ->RunAction(*extension, true);
+            ->RunAction(extension->get(), true);
         break;
       }
       case ACTION_NEW_TAB: {
@@ -293,7 +292,7 @@ class ErrorConsoleBrowserTest : public ExtensionBrowserTest {
 // Test to ensure that we are successfully reporting manifest errors as an
 // extension is installed.
 IN_PROC_BROWSER_TEST_F(ErrorConsoleBrowserTest, ReportManifestErrors) {
-  const Extension* extension = NULL;
+  scoped_refptr<const Extension> extension = nullptr;
   // We expect two errors - one for an invalid permission, and a second for
   // an unknown key.
   LoadExtensionAndCheckErrors("manifest_warnings",
@@ -309,8 +308,8 @@ IN_PROC_BROWSER_TEST_F(ErrorConsoleBrowserTest, ReportManifestErrors) {
   // manifest, so there's not a definitive order in which these errors may
   // occur. As such, we need to determine which error corresponds to which
   // expected error.
-  const ExtensionError* permissions_error = NULL;
-  const ExtensionError* unknown_key_error = NULL;
+  const ExtensionError* permissions_error = nullptr;
+  const ExtensionError* unknown_key_error = nullptr;
   const char kFakeKey[] = "not_a_real_key";
   for (const auto& error : errors) {
     ASSERT_EQ(ExtensionError::MANIFEST_ERROR, error->type());
@@ -348,7 +347,7 @@ IN_PROC_BROWSER_TEST_F(ErrorConsoleBrowserTest,
                        DontStoreErrorsWithoutDeveloperMode) {
   profile()->GetPrefs()->SetBoolean(prefs::kExtensionsUIDeveloperMode, false);
 
-  const Extension* extension = NULL;
+  scoped_refptr<const Extension> extension = nullptr;
   // Same test as ReportManifestErrors, except we don't expect any errors since
   // we disable Developer Mode.
   LoadExtensionAndCheckErrors("manifest_warnings",
@@ -371,7 +370,7 @@ IN_PROC_BROWSER_TEST_F(ErrorConsoleBrowserTest,
 // log, and then crashes with a JS TypeError.
 IN_PROC_BROWSER_TEST_F(ErrorConsoleBrowserTest,
                        ContentScriptLogAndRuntimeError) {
-  const Extension* extension = NULL;
+  scoped_refptr<const Extension> extension = nullptr;
   LoadExtensionAndCheckErrors(
       "content_script_log_and_runtime_error",
       kNoFlags,
@@ -432,7 +431,7 @@ IN_PROC_BROWSER_TEST_F(ErrorConsoleBrowserTest,
 #endif
 IN_PROC_BROWSER_TEST_F(ErrorConsoleBrowserTest,
                        MAYBE_BrowserActionRuntimeError) {
-  const Extension* extension = NULL;
+  scoped_refptr<const Extension> extension = nullptr;
   LoadExtensionAndCheckErrors(
       "browser_action_runtime_error",
       kNoFlags,
@@ -474,7 +473,7 @@ IN_PROC_BROWSER_TEST_F(ErrorConsoleBrowserTest,
 
 // Test that we can catch an error for calling an API with improper arguments.
 IN_PROC_BROWSER_TEST_F(ErrorConsoleBrowserTest, BadAPIArgumentsRuntimeError) {
-  const Extension* extension = NULL;
+  scoped_refptr<const Extension> extension = nullptr;
   LoadExtensionAndCheckErrors(
       "bad_api_arguments_runtime_error",
       kNoFlags,
@@ -517,7 +516,7 @@ IN_PROC_BROWSER_TEST_F(ErrorConsoleBrowserTest, BadAPIArgumentsRuntimeError) {
 // Test that we catch an error when we try to call an API method without
 // permission.
 IN_PROC_BROWSER_TEST_F(ErrorConsoleBrowserTest, BadAPIPermissionsRuntimeError) {
-  const Extension* extension = NULL;
+  scoped_refptr<const Extension> extension = nullptr;
   LoadExtensionAndCheckErrors(
       "bad_api_permissions_runtime_error",
       kNoFlags,
@@ -548,7 +547,7 @@ IN_PROC_BROWSER_TEST_F(ErrorConsoleBrowserTest, BadAPIPermissionsRuntimeError) {
 // Test that if there is an error in an HTML page loaded by an extension (most
 // common with apps), it is caught and reported by the ErrorConsole.
 IN_PROC_BROWSER_TEST_F(ErrorConsoleBrowserTest, BadExtensionPage) {
-  const Extension* extension = NULL;
+  scoped_refptr<const Extension> extension = nullptr;
   LoadExtensionAndCheckErrors(
       "bad_extension_page",
       kNoFlags,
@@ -560,7 +559,7 @@ IN_PROC_BROWSER_TEST_F(ErrorConsoleBrowserTest, BadExtensionPage) {
 // Test that extension errors that go to chrome.runtime.lastError are caught
 // and reported by the ErrorConsole.
 IN_PROC_BROWSER_TEST_F(ErrorConsoleBrowserTest, CatchesLastError) {
-  const Extension* extension = NULL;
+  scoped_refptr<const Extension> extension = nullptr;
   LoadExtensionAndCheckErrors(
       "trigger_last_error",
       kNoFlags,

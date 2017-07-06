@@ -18,7 +18,8 @@ class AppEventPageTest : public PlatformAppBrowserTest {
  protected:
   void TestUnloadEventPage(const char* app_path) {
     // Load and launch the app.
-    const Extension* extension = LoadAndLaunchPlatformApp(app_path, "launched");
+    scoped_refptr<const Extension> extension =
+        LoadAndLaunchPlatformApp(app_path, "launched");
     ASSERT_TRUE(extension);
 
     content::WindowedNotificationObserver event_page_suspended(

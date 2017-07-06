@@ -646,7 +646,7 @@ IN_PROC_BROWSER_TEST_F(MediaRouterIntegrationBrowserTest,
 }
 
 void MediaRouterIntegrationIncognitoBrowserTest::InstallAndEnableMRExtension() {
-  const extensions::Extension* extension =
+  scoped_refptr<const extensions::Extension> extension =
       LoadExtensionIncognito(extension_unpacked_);
   incognito_extension_id_ = extension->id();
 }

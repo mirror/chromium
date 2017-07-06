@@ -46,7 +46,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionApiTest, EventsAreUnregistered) {
   // Find the extension we just installed by looking for the path.
   base::FilePath extension_path =
       test_data_dir_.AppendASCII(test_extension_name);
-  const Extension* extension =
+  scoped_refptr<const Extension> extension =
       GetExtensionByPath(registry->enabled_extensions(), extension_path);
   ASSERT_TRUE(extension) << "No extension found at \"" << extension_path.value()
                          << "\" (absolute path \""
@@ -126,7 +126,7 @@ IN_PROC_BROWSER_TEST_F(EventsApiTest, ExtensionUpdateSendsOnInstalledEvent) {
     // Install version 1 of the extension and expect runtime.onInstalled.
     ResultCatcher catcher;
     const int expected_change = 1;
-    const Extension* extension_v1 =
+    scoped_refptr<const Extension> extension_v1 =
         InstallExtension(data[0].crx_path, expected_change);
     extension_id = extension_v1->id();
     ASSERT_TRUE(extension_v1);
@@ -136,7 +136,7 @@ IN_PROC_BROWSER_TEST_F(EventsApiTest, ExtensionUpdateSendsOnInstalledEvent) {
     // Update to version 2, also expect runtime.onInstalled.
     ResultCatcher catcher;
     const int expected_change = 0;
-    const Extension* extension_v2 =
+    scoped_refptr<const Extension> extension_v2 =
         UpdateExtension(extension_id, data[1].crx_path, expected_change);
     ASSERT_TRUE(extension_v2);
     EXPECT_TRUE(catcher.GetNextResult());
@@ -159,7 +159,7 @@ IN_PROC_BROWSER_TEST_F(EventsApiTest,
     // Install version 1 of the extension and expect runtime.onInstalled.
     ResultCatcher catcher;
     const int expected_change = 1;
-    const Extension* extension_v1 =
+    scoped_refptr<const Extension> extension_v1 =
         InstallExtension(data[0].crx_path, expected_change);
     extension_id = extension_v1->id();
     ASSERT_TRUE(extension_v1);
@@ -172,11 +172,11 @@ IN_PROC_BROWSER_TEST_F(EventsApiTest,
     ASSERT_FALSE(
         UpdateExtension(extension_id, data[1].crx_path, expected_change));
 
-    const Extension* extension_v2 =
+    scoped_refptr<const Extension> extension_v2 =
         registry->disabled_extensions().GetByID(extension_id);
     ASSERT_TRUE(extension_v2);
     // Enable the extension.
-    extension_service()->GrantPermissionsAndEnableExtension(extension_v2);
+    extension_service()->GrantPermissionsAndEnableExtension(extension_v2.get());
     EXPECT_TRUE(catcher.GetNextResult());
   }
 }
@@ -194,7 +194,7 @@ IN_PROC_BROWSER_TEST_F(EventsApiTest, NewlyIntroducedListener) {
     // Install version 1 of the extension.
     ResultCatcher catcher;
     const int expected_change = 1;
-    const Extension* extension_v1 =
+    scoped_refptr<const Extension> extension_v1 =
         InstallExtension(data[0].crx_path, expected_change);
     EXPECT_TRUE(extension_v1);
     extension_id = extension_v1->id();
@@ -205,7 +205,7 @@ IN_PROC_BROWSER_TEST_F(EventsApiTest, NewlyIntroducedListener) {
     // Update to version 2, that has tabs.onCreated event listener.
     ResultCatcher catcher;
     const int expected_change = 0;
-    const Extension* extension_v2 =
+    scoped_refptr<const Extension> extension_v2 =
         UpdateExtension(extension_id, data[1].crx_path, expected_change);
     ASSERT_TRUE(extension_v2);
     ui_test_utils::NavigateToURLWithDisposition(
@@ -232,7 +232,7 @@ class ChromeUpdatesEventsApiTest : public EventsApiTest,
     ProcessManager::Get(profile())->AddObserver(this);
     const ProcessManager::FrameSet& frames = process_manager->GetAllFrames();
     for (auto* frame : frames) {
-      const Extension* extension =
+      scoped_refptr<const Extension> extension =
           process_manager->GetExtensionForRenderFrameHost(frame);
       if (extension)
         observed_extension_names_.insert(extension->name());

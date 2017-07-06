@@ -46,24 +46,25 @@ class PlatformAppBrowserTest : public ExtensionApiTest {
  protected:
   // Runs the app named |name| out of the platform_apps subdirectory. Waits
   // for the provided listener to be satisifed.
-  const Extension* LoadAndLaunchPlatformApp(
+  scoped_refptr<const Extension> LoadAndLaunchPlatformApp(
       const char* name,
       ExtensionTestMessageListener* listener);
 
   // Runs the app named |name| out of the platform_apps subdirectory. Waits
   // until the given message is received from the app.
-  const Extension* LoadAndLaunchPlatformApp(const char* name,
-                                            const std::string& message);
+  scoped_refptr<const Extension> LoadAndLaunchPlatformApp(
+      const char* name,
+      const std::string& message);
 
   // Installs the app named |name| out of the platform_apps subdirectory.
-  const Extension* InstallPlatformApp(const char* name);
+  scoped_refptr<const Extension> InstallPlatformApp(const char* name);
 
   // Installs the sample hosted app.
-  const Extension* InstallHostedApp();
+  scoped_refptr<const Extension> InstallHostedApp();
 
   // Installs and runs the app named |name| out of the platform_apps
   // subdirectory. Waits until it is launched.
-  const Extension* InstallAndLaunchPlatformApp(const char* name);
+  scoped_refptr<const Extension> InstallAndLaunchPlatformApp(const char* name);
 
   // Launch the given platform app.
   virtual void LaunchPlatformApp(const Extension* extension);
@@ -85,12 +86,14 @@ class PlatformAppBrowserTest : public ExtensionApiTest {
 
   // Runs chrome.windows.getAll for the given extension and returns the number
   // of windows that the function returns.
-  size_t RunGetWindowsFunctionForExtension(const Extension* extension);
+  size_t RunGetWindowsFunctionForExtension(
+      scoped_refptr<const Extension> extension);
 
   // Runs chrome.windows.get(|window_id|) for the the given extension and
   // returns whether or not a window was found.
-  bool RunGetWindowFunctionForExtension(int window_id,
-                                        const Extension* extension);
+  bool RunGetWindowFunctionForExtension(
+      int window_id,
+      scoped_refptr<const Extension> extension);
 
   // Returns the number of app windows.
   size_t GetAppWindowCount();

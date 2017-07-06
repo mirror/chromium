@@ -303,7 +303,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionCrxInstallerTest,
                        ExperimentalExtensionFromGallery) {
   // Gallery-installed extensions should have their experimental permission
   // preserved, since we allow the Webstore to make that decision.
-  const Extension* extension = InstallExtensionFromWebstore(
+  scoped_refptr<const Extension> extension = InstallExtensionFromWebstore(
       test_data_dir_.AppendASCII("experimental.crx"), 1);
   ASSERT_TRUE(extension);
   EXPECT_TRUE(extension->permissions_data()->HasAPIPermission(
@@ -314,8 +314,8 @@ IN_PROC_BROWSER_TEST_F(ExtensionCrxInstallerTest,
                        ExperimentalExtensionFromOutsideGallery) {
   // Non-gallery-installed extensions should lose their experimental
   // permission if the flag isn't enabled.
-  const Extension* extension = InstallExtension(
-      test_data_dir_.AppendASCII("experimental.crx"), 1);
+  scoped_refptr<const Extension> extension =
+      InstallExtension(test_data_dir_.AppendASCII("experimental.crx"), 1);
   ASSERT_TRUE(extension);
   EXPECT_FALSE(extension->permissions_data()->HasAPIPermission(
       APIPermission::kExperimental));
@@ -325,8 +325,8 @@ IN_PROC_BROWSER_TEST_F(ExtensionCrxInstallerTestWithExperimentalApis,
                        ExperimentalExtensionFromOutsideGalleryWithFlag) {
   // Non-gallery-installed extensions should maintain their experimental
   // permission if the flag is enabled.
-  const Extension* extension = InstallExtension(
-      test_data_dir_.AppendASCII("experimental.crx"), 1);
+  scoped_refptr<const Extension> extension =
+      InstallExtension(test_data_dir_.AppendASCII("experimental.crx"), 1);
   ASSERT_TRUE(extension);
   EXPECT_TRUE(extension->permissions_data()->HasAPIPermission(
       APIPermission::kExperimental));
@@ -339,7 +339,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionCrxInstallerTestWithExperimentalApis,
 }
 
 IN_PROC_BROWSER_TEST_F(ExtensionCrxInstallerTest, BlockedFileTypes) {
-  const Extension* extension =
+  scoped_refptr<const Extension> extension =
       InstallExtension(test_data_dir_.AppendASCII("blocked_file_types.crx"), 1);
   base::ThreadRestrictions::ScopedAllowIO allow_io;
   EXPECT_TRUE(base::PathExists(extension->path().AppendASCII("test.html")));
@@ -349,7 +349,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionCrxInstallerTest, BlockedFileTypes) {
 }
 
 IN_PROC_BROWSER_TEST_F(ExtensionCrxInstallerTest, AllowedThemeFileTypes) {
-  const Extension* extension = InstallExtension(
+  scoped_refptr<const Extension> extension = InstallExtension(
       test_data_dir_.AppendASCII("theme_with_extension.crx"), 1);
   ASSERT_TRUE(extension);
   const base::FilePath& path = extension->path();
@@ -679,7 +679,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionCrxInstallerTest, UpdateWithFileAccess) {
     scoped_refptr<CrxInstaller> installer(CrxInstaller::CreateSilent(service));
     installer->InstallCrx(crx_with_file_permission);
     EXPECT_TRUE(WaitForCrxInstallerDone());
-    const Extension* extension = installer->extension();
+    scoped_refptr<const Extension> extension = installer->extension();
     ASSERT_TRUE(extension);
     // IDs must match, otherwise the test doesn't make any sense.
     ASSERT_EQ(extension_id, extension->id());
@@ -699,7 +699,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionCrxInstallerTest, UpdateWithFileAccess) {
     scoped_refptr<CrxInstaller> installer(CrxInstaller::CreateSilent(service));
     installer->InstallCrx(crx_with_file_permission);
     EXPECT_TRUE(WaitForCrxInstallerDone());
-    const Extension* extension = installer->extension();
+    scoped_refptr<const Extension> extension = installer->extension();
     ASSERT_TRUE(extension);
     ASSERT_EQ(extension_id, extension->id());
     EXPECT_FALSE(ExtensionPrefs::Get(profile())->AllowFileAccess(extension_id));
@@ -715,7 +715,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionCrxInstallerTest, UpdateWithFileAccess) {
     scoped_refptr<CrxInstaller> installer(CrxInstaller::CreateSilent(service));
     installer->InstallCrx(crx_update_with_file_permission);
     EXPECT_TRUE(WaitForCrxInstallerDone());
-    const Extension* extension = installer->extension();
+    scoped_refptr<const Extension> extension = installer->extension();
     ASSERT_TRUE(extension);
     ASSERT_EQ(extension_id, extension->id());
     EXPECT_TRUE(ExtensionPrefs::Get(profile())->AllowFileAccess(extension_id));

@@ -168,7 +168,7 @@ IN_PROC_BROWSER_TEST_F(DeclarativeApiTest, ExtensionLifetimeRulesHandling) {
                                        kRedirectToDataRules,
                                        kRedirectToDataInstallRules));
   ExtensionTestMessageListener ready("ready", /*will_reply=*/false);
-  const Extension* extension = InstallExtensionWithUIAutoConfirm(
+  scoped_refptr<const Extension> extension = InstallExtensionWithUIAutoConfirm(
       ext_dir.Pack(), 1 /*+1 installed extension*/, browser());
   ASSERT_TRUE(extension);
   std::string extension_id(extension->id());
@@ -235,7 +235,7 @@ IN_PROC_BROWSER_TEST_F(DeclarativeApiTest, NoTracesAfterUninstalling) {
                                        kRedirectToDataRules,
                                        kRedirectToDataInstallRules));
   ExtensionTestMessageListener ready("ready", /*will_reply=*/false);
-  const Extension* extension = InstallExtensionWithUIAutoConfirm(
+  scoped_refptr<const Extension> extension = InstallExtensionWithUIAutoConfirm(
       ext_dir.Pack(), 1 /*+1 installed extension*/, browser());
   ASSERT_TRUE(extension);
   std::string extension_id(extension->id());

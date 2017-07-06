@@ -55,10 +55,11 @@ IN_PROC_BROWSER_TEST_F(ExtensionTagsTest, Basic) {
   // Browser tests start with a single tab.
   EXPECT_EQ(1U, tracked_tags().size());
 
-  const extensions::Extension* extension = LoadExtension(
-      test_data_dir_.AppendASCII("good").AppendASCII("Extensions")
-          .AppendASCII("behllobkkfkfnphdnhnkndlbkcpglgmj")
-          .AppendASCII("1.0.0.0"));
+  scoped_refptr<const extensions::Extension> extension =
+      LoadExtension(test_data_dir_.AppendASCII("good")
+                        .AppendASCII("Extensions")
+                        .AppendASCII("behllobkkfkfnphdnhnkndlbkcpglgmj")
+                        .AppendASCII("1.0.0.0"));
   ASSERT_TRUE(extension);
 
   EXPECT_EQ(2U, tracked_tags().size());
@@ -81,10 +82,11 @@ IN_PROC_BROWSER_TEST_F(ExtensionTagsTest,
   MockWebContentsTaskManager task_manager;
   EXPECT_TRUE(task_manager.tasks().empty());
 
-  const extensions::Extension* extension = LoadExtension(
-      test_data_dir_.AppendASCII("good").AppendASCII("Extensions")
-          .AppendASCII("behllobkkfkfnphdnhnkndlbkcpglgmj")
-          .AppendASCII("1.0.0.0"));
+  scoped_refptr<const extensions::Extension> extension =
+      LoadExtension(test_data_dir_.AppendASCII("good")
+                        .AppendASCII("Extensions")
+                        .AppendASCII("behllobkkfkfnphdnhnkndlbkcpglgmj")
+                        .AppendASCII("1.0.0.0"));
   ASSERT_TRUE(extension);
 
   EXPECT_EQ(2U, tracked_tags().size());
@@ -102,8 +104,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionTagsTest,
 
   SkBitmap expected_bitmap =
       extensions::TestImageLoader::LoadAndGetExtensionBitmap(
-          extension,
-          "icon_128.png",
+          extension.get(), "icon_128.png",
           extension_misc::EXTENSION_ICON_SMALL);
   ASSERT_FALSE(expected_bitmap.empty());
 
@@ -128,4 +129,3 @@ IN_PROC_BROWSER_TEST_F(ExtensionTagsTest,
 }
 
 }  // namespace task_manager
-

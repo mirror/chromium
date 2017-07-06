@@ -72,7 +72,8 @@ void CheckConfirmResult(const std::string& dialog_name,
 IN_PROC_BROWSER_TEST_F(ExtensionApiTest, AlertBasic) {
   ASSERT_TRUE(RunExtensionTest("alert")) << message_;
 
-  const extensions::Extension* extension = GetSingleLoadedExtension();
+  scoped_refptr<const extensions::Extension> extension =
+      GetSingleLoadedExtension();
   extensions::ExtensionHost* host =
       extensions::ProcessManager::Get(browser()->profile())
           ->GetBackgroundHostForExtension(extension->id());
@@ -86,7 +87,8 @@ IN_PROC_BROWSER_TEST_F(ExtensionApiTest, AlertBasic) {
 IN_PROC_BROWSER_TEST_F(ExtensionApiTest, AlertQueue) {
   ASSERT_TRUE(RunExtensionTest("alert")) << message_;
 
-  const extensions::Extension* extension = GetSingleLoadedExtension();
+  scoped_refptr<const extensions::Extension> extension =
+      GetSingleLoadedExtension();
   extensions::ExtensionHost* host =
       extensions::ProcessManager::Get(browser()->profile())
           ->GetBackgroundHostForExtension(extension->id());
@@ -121,7 +123,8 @@ IN_PROC_BROWSER_TEST_F(ExtensionApiTest, AlertQueue) {
 IN_PROC_BROWSER_TEST_F(ExtensionApiTest, ConfirmQueue) {
   ASSERT_TRUE(RunExtensionTest("alert")) << message_;
 
-  const extensions::Extension* extension = GetSingleLoadedExtension();
+  scoped_refptr<const extensions::Extension> extension =
+      GetSingleLoadedExtension();
   extensions::ExtensionHost* host =
       extensions::ProcessManager::Get(browser()->profile())
           ->GetBackgroundHostForExtension(extension->id());

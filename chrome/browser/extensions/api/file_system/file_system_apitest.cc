@@ -131,7 +131,7 @@ class FileSystemApiTest : public PlatformAppBrowserTest {
 
   void CheckStoredDirectoryMatches(const base::FilePath& filename) {
     base::ThreadRestrictions::ScopedAllowIO allow_io;
-    const Extension* extension = GetSingleLoadedExtension();
+    scoped_refptr<const Extension> extension = GetSingleLoadedExtension();
     ASSERT_TRUE(extension);
     std::string extension_id = extension->id();
     ExtensionPrefs* prefs = ExtensionPrefs::Get(profile());

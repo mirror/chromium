@@ -259,8 +259,8 @@ IN_PROC_BROWSER_TEST_F(DesktopCaptureApiTest, DISABLED_Delegation) {
   // Load extension.
   base::FilePath extension_path =
       test_data_dir_.AppendASCII("desktop_capture_delegate");
-  const Extension* extension = LoadExtensionWithFlags(
-      extension_path, ExtensionBrowserTest::kFlagNone);
+  scoped_refptr<const Extension> extension =
+      LoadExtensionWithFlags(extension_path, ExtensionBrowserTest::kFlagNone);
   ASSERT_TRUE(extension);
 
   ui_test_utils::NavigateToURL(

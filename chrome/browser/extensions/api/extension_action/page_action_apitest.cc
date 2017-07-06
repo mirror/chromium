@@ -41,7 +41,7 @@ class PageActionApiTest : public ExtensionApiTest {
 IN_PROC_BROWSER_TEST_F(PageActionApiTest, Basic) {
   ASSERT_TRUE(embedded_test_server()->Start());
   ASSERT_TRUE(RunExtensionTest("page_action/basics")) << message_;
-  const Extension* extension = GetSingleLoadedExtension();
+  scoped_refptr<const Extension> extension = GetSingleLoadedExtension();
   ASSERT_TRUE(extension) << message_;
   {
     // Tell the extension to update the page action state.
@@ -63,7 +63,7 @@ IN_PROC_BROWSER_TEST_F(PageActionApiTest, Basic) {
     ResultCatcher catcher;
     ExtensionActionRunner::GetForWebContents(
         browser()->tab_strip_model()->GetActiveWebContents())
-        ->RunAction(extension, true);
+        ->RunAction(extension.get(), true);
     EXPECT_TRUE(catcher.GetNextResult());
   }
 
@@ -77,7 +77,8 @@ IN_PROC_BROWSER_TEST_F(PageActionApiTest, Basic) {
 
   // We should not be creating icons asynchronously, so we don't need an
   // observer.
-  ExtensionActionIconFactory icon_factory(profile(), extension, action, NULL);
+  ExtensionActionIconFactory icon_factory(profile(), extension.get(), action,
+                                          NULL);
 
   // Test that we received the changes.
   tab_id = SessionTabHelper::FromWebContents(
@@ -89,7 +90,7 @@ IN_PROC_BROWSER_TEST_F(PageActionApiTest, Basic) {
 IN_PROC_BROWSER_TEST_F(PageActionApiTest, AddPopup) {
   // Load the extension, which has no default popup.
   ASSERT_TRUE(RunExtensionTest("page_action/add_popup")) << message_;
-  const Extension* extension = GetSingleLoadedExtension();
+  scoped_refptr<const Extension> extension = GetSingleLoadedExtension();
   ASSERT_TRUE(extension) << message_;
 
   int tab_id = ExtensionTabUtil::GetTabId(
@@ -107,7 +108,7 @@ IN_PROC_BROWSER_TEST_F(PageActionApiTest, AddPopup) {
     ResultCatcher catcher;
     ExtensionActionRunner::GetForWebContents(
         browser()->tab_strip_model()->GetActiveWebContents())
-        ->RunAction(extension, true);
+        ->RunAction(extension.get(), true);
     ASSERT_TRUE(catcher.GetNextResult());
   }
 
@@ -136,7 +137,7 @@ IN_PROC_BROWSER_TEST_F(PageActionApiTest, AddPopup) {
 IN_PROC_BROWSER_TEST_F(PageActionApiTest, RemovePopup) {
   // Load the extension, which has a page action with a default popup.
   ASSERT_TRUE(RunExtensionTest("page_action/remove_popup")) << message_;
-  const Extension* extension = GetSingleLoadedExtension();
+  scoped_refptr<const Extension> extension = GetSingleLoadedExtension();
   ASSERT_TRUE(extension) << message_;
 
   int tab_id = ExtensionTabUtil::GetTabId(
@@ -166,15 +167,15 @@ IN_PROC_BROWSER_TEST_F(PageActionApiTest, RemovePopup) {
 // Flaky on the trybots. See http://crbug.com/96725.
 IN_PROC_BROWSER_TEST_F(PageActionApiTest, DISABLED_ShowPageActionPopup) {
   ASSERT_TRUE(RunExtensionTest("page_action/popup")) << message_;
-  const Extension* extension = GetSingleLoadedExtension();
+  scoped_refptr<const Extension> extension = GetSingleLoadedExtension();
   ASSERT_TRUE(extension) << message_;
 
   ASSERT_TRUE(WaitForPageActionVisibilityChangeTo(1));
 
   {
     ResultCatcher catcher;
-    ExtensionActionAPI::Get(browser()->profile())->ShowExtensionActionPopup(
-        extension, browser(), true);
+    ExtensionActionAPI::Get(browser()->profile())
+        ->ShowExtensionActionPopup(extension.get(), browser(), true);
     ASSERT_TRUE(catcher.GetNextResult());
   }
 }
@@ -194,7 +195,7 @@ IN_PROC_BROWSER_TEST_F(PageActionApiTest, TestCrash57333) {
 
 IN_PROC_BROWSER_TEST_F(PageActionApiTest, Getters) {
   ASSERT_TRUE(RunExtensionTest("page_action/getters")) << message_;
-  const Extension* extension = GetSingleLoadedExtension();
+  scoped_refptr<const Extension> extension = GetSingleLoadedExtension();
   ASSERT_TRUE(extension) << message_;
 
   ResultCatcher catcher;
@@ -208,7 +209,7 @@ IN_PROC_BROWSER_TEST_F(PageActionApiTest, TestTriggerPageAction) {
   ASSERT_TRUE(embedded_test_server()->Start());
 
   ASSERT_TRUE(RunExtensionTest("trigger_actions/page_action")) << message_;
-  const Extension* extension = GetSingleLoadedExtension();
+  scoped_refptr<const Extension> extension = GetSingleLoadedExtension();
   ASSERT_TRUE(extension) << message_;
 
   // Page action icon is displayed when a tab is created.
@@ -234,7 +235,7 @@ IN_PROC_BROWSER_TEST_F(PageActionApiTest, TestTriggerPageAction) {
     ResultCatcher catcher;
     ExtensionActionRunner::GetForWebContents(
         browser()->tab_strip_model()->GetActiveWebContents())
-        ->RunAction(extension, true);
+        ->RunAction(extension.get(), true);
     EXPECT_TRUE(catcher.GetNextResult());
   }
 

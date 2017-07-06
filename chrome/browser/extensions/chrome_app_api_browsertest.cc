@@ -105,8 +105,8 @@ IN_PROC_BROWSER_TEST_F(ChromeAppAPITest, IsInstalled) {
   EXPECT_FALSE(IsAppInstalledInMainFrame());
 
   // Load an app which includes app.com in its extent.
-  const Extension* extension = LoadExtension(
-      test_data_dir_.AppendASCII("app_dot_com_app"));
+  scoped_refptr<const Extension> extension =
+      LoadExtension(test_data_dir_.AppendASCII("app_dot_com_app"));
   ASSERT_TRUE(extension);
 
   // Even after the app is installed, the existing app.com tab is not in an
@@ -184,8 +184,8 @@ IN_PROC_BROWSER_TEST_F(ChromeAppAPITest, InstallAndRunningState) {
   EXPECT_EQ("cannot_run", RunningStateInMainFrame());
   EXPECT_FALSE(IsAppInstalledInMainFrame());
 
-  const Extension* extension = LoadExtension(
-      test_data_dir_.AppendASCII("app_dot_com_app"));
+  scoped_refptr<const Extension> extension =
+      LoadExtension(test_data_dir_.AppendASCII("app_dot_com_app"));
   ASSERT_TRUE(extension);
 
   EXPECT_EQ("installed", InstallStateInMainFrame());

@@ -19,7 +19,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionBrowserTest,
   // Load up an extension an begin opening an URL to a page within it. Since
   // this will be an extension tab, the extension will be active within that
   // process.
-  const Extension* extension =
+  scoped_refptr<const Extension> extension =
       LoadExtension(test_data_dir_.AppendASCII("simple_with_file"));
   ASSERT_TRUE(extension);
   GURL url = extension->GetResourceURL("file.html");
@@ -41,7 +41,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionBrowserTest,
 // Another part of crbug.com/528026 and related.
 IN_PROC_BROWSER_TEST_F(ExtensionBrowserTest,
                        TestRendererInitializationWithThemesTab) {
-  const Extension* extension = LoadExtensionWithFlags(
+  scoped_refptr<const Extension> extension = LoadExtensionWithFlags(
       test_data_dir_.AppendASCII("theme"), kFlagAllowOldManifestVersions);
   ASSERT_TRUE(extension);
   ASSERT_TRUE(extension->is_theme());

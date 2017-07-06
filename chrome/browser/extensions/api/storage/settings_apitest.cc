@@ -91,7 +91,7 @@ class ExtensionSettingsApiTest : public ExtensionApiTest {
         settings_namespace, normal_action, incognito_action, NULL, false);
   }
 
-  const Extension* LoadAndReplyWhenSatisfied(
+  scoped_refptr<const Extension> LoadAndReplyWhenSatisfied(
       Namespace settings_namespace,
       const std::string& normal_action,
       const std::string& incognito_action,
@@ -137,7 +137,7 @@ class ExtensionSettingsApiTest : public ExtensionApiTest {
   }
 
  private:
-  const Extension* MaybeLoadAndReplyWhenSatisfied(
+  scoped_refptr<const Extension> MaybeLoadAndReplyWhenSatisfied(
       Namespace settings_namespace,
       const std::string& normal_action,
       const std::string& incognito_action,
@@ -149,7 +149,7 @@ class ExtensionSettingsApiTest : public ExtensionApiTest {
 
     // Only load the extension after the listeners have been set up, to avoid
     // initialisation race conditions.
-    const Extension* extension = NULL;
+    scoped_refptr<const Extension> extension = nullptr;
     if (extension_dir) {
       extension = LoadExtensionIncognito(
           test_data_dir_.AppendASCII("settings").AppendASCII(*extension_dir));
@@ -319,9 +319,9 @@ IN_PROC_BROWSER_TEST_F(ExtensionSettingsApiTest,
   catcher_incognito.RestrictToBrowserContext(
       browser()->profile()->GetOffTheRecordProfile());
 
-  const Extension* extension =
-      LoadAndReplyWhenSatisfied(SYNC,
-          "assertNoNotifications", "assertNoNotifications", "split_incognito");
+  scoped_refptr<const Extension> extension =
+      LoadAndReplyWhenSatisfied(SYNC, "assertNoNotifications",
+                                "assertNoNotifications", "split_incognito");
   const std::string& extension_id = extension->id();
 
   syncer::FakeSyncChangeProcessor sync_processor;
@@ -364,9 +364,9 @@ IN_PROC_BROWSER_TEST_F(ExtensionSettingsApiTest,
   catcher_incognito.RestrictToBrowserContext(
       browser()->profile()->GetOffTheRecordProfile());
 
-  const Extension* extension =
-      LoadAndReplyWhenSatisfied(LOCAL,
-          "assertNoNotifications", "assertNoNotifications", "split_incognito");
+  scoped_refptr<const Extension> extension =
+      LoadAndReplyWhenSatisfied(LOCAL, "assertNoNotifications",
+                                "assertNoNotifications", "split_incognito");
   const std::string& extension_id = extension->id();
 
   syncer::FakeSyncChangeProcessor sync_processor;
@@ -429,7 +429,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionSettingsApiTest, ExtensionsSchemas) {
 
   // Install a managed extension.
   EXPECT_CALL(observer, OnSchemaRegistryUpdated(true));
-  const Extension* extension =
+  scoped_refptr<const Extension> extension =
       LoadExtension(test_data_dir_.AppendASCII("settings/managed_storage"));
   ASSERT_TRUE(extension);
   Mock::VerifyAndClearExpectations(&observer);
@@ -525,7 +525,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionSettingsApiTest,
 
   ExtensionTestMessageListener ready_listener("ready", false);
   // Load the extension to install the event listener.
-  const Extension* extension = LoadExtension(
+  scoped_refptr<const Extension> extension = LoadExtension(
       test_data_dir_.AppendASCII("settings/managed_storage_events"));
   ASSERT_TRUE(extension);
   // Wait until the extension sends the "ready" message.
@@ -551,7 +551,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionSettingsApiTest,
   ResultCatcher catcher;
 
   // Verify that the test extension is still installed.
-  const Extension* extension = GetSingleLoadedExtension();
+  scoped_refptr<const Extension> extension = GetSingleLoadedExtension();
   ASSERT_TRUE(extension);
   EXPECT_EQ(kManagedStorageExtensionId, extension->id());
 
