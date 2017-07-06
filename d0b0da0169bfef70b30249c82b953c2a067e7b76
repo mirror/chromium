@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa4f9d22_cb95dfd0",
+        "filename": "chrome/browser/thumbnails/simple_thumbnail_crop.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-06T13:02:10Z",
+      "side": 1,
+      "message": "nit: the file name does not really match it\u0027s content anymore. Rename it to tools/helpers/utils?",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 58
+      },
+      "revId": "d0b0da0169bfef70b30249c82b953c2a067e7b76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
