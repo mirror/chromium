@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06270bb3_f55ca32e",
+        "filename": "third_party/WebKit/Source/core/css/zoomAdjustedPixelValue.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-07-06T02:45:36Z",
+      "side": 1,
+      "message": "This function can just live inside ComputedStyleCSSValueMapping.cpp, no need for it to be exposed globally.\nAlso it should have \"BorderWidth\" in the name as this logic is specific to those properties, e.g. CreateBorderWidthCSSValue().",
+      "revId": "9bfbc8b239f94eb3612a3e3160bf0919d91877dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
