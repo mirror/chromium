@@ -1205,17 +1205,17 @@ void BrowserMainLoop::ShutdownThreadsAndCleanUp() {
   BrowserCompositorMac::DisableRecyclingForShutdown();
 #endif
 
-#if !defined(OS_ANDROID)
-  frame_sink_manager_.reset();
-  host_frame_sink_manager_.reset();
-#endif
-
 #if defined(USE_AURA) || defined(OS_MACOSX)
   {
     TRACE_EVENT0("shutdown",
                  "BrowserMainLoop::Subsystem:ImageTransportFactory");
     ImageTransportFactory::Terminate();
   }
+#endif
+
+#if !defined(OS_ANDROID)
+  host_frame_sink_manager_.reset();
+  frame_sink_manager_.reset();
 #endif
 
   // The device monitors are using |system_monitor_| as dependency, so delete
