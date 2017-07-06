@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2b37144_a984c805",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-06T17:13:53Z",
+      "side": 1,
+      "message": "unnecessary, this is the default",
+      "revId": "ec9322a438d0a90bff35a182210da4b52967907c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b68b60de_ec2be649",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-06T17:13:53Z",
+      "side": 1,
+      "message": "This should be a gfx::Rect on the stack, rather than a std::unique_ptr\u003cgfx::Rect\u003e on the heap.",
+      "revId": "ec9322a438d0a90bff35a182210da4b52967907c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10a4d508_7dda288f",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-06T17:13:53Z",
+      "side": 1,
+      "message": "Can we move the timer to start after the promo widget is shown?",
+      "revId": "ec9322a438d0a90bff35a182210da4b52967907c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20e679bb_fe896a22",
+        "filename": "chrome/browser/ui/views/tabs/tab_strip.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-06T17:13:53Z",
+      "side": 1,
+      "message": "no need to have changes in this file?",
+      "revId": "ec9322a438d0a90bff35a182210da4b52967907c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
