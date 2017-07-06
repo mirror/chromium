@@ -22,6 +22,30 @@
       "revId": "7e88d4773b9ece8fbce20fcef0fa291a5caf2814",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d56e765_42e9a3f7",
+        "filename": "third_party/WebKit/Source/core/mojo/MojoWatcher.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-06T00:25:26Z",
+      "side": 1,
+      "message": "The destructor needs to be defined here in the .cpp file because it depends on the definitions of types which are incomplete in the header. I did some research on StackOverflow and it appears that \"\u003d delete\" is allowed but not particularly correct for this case so I have changed it to {}.",
+      "parentUuid": "4f6d79b8_ee225455",
+      "range": {
+        "startLine": 46,
+        "startChar": 30,
+        "endLine": 46,
+        "endChar": 37
+      },
+      "revId": "7e88d4773b9ece8fbce20fcef0fa291a5caf2814",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
