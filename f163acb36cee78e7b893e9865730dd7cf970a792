@@ -1,0 +1,648 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a4a7272_6eed5d23",
+        "filename": "docs/process/merge_request.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-07-06T01:02:15Z",
+      "side": 1,
+      "message": "Can you add a note about what we expect to see in a merge request comment here?  E.g. rationale for why the merge is necessary, whether or not it\u0027s risky, exactly which patch the merge request is for (for larger bugs), ensure an OS tag is present, etc.",
+      "range": {
+        "startLine": 5,
+        "startChar": 2,
+        "endLine": 5,
+        "endChar": 5
+      },
+      "revId": "f163acb36cee78e7b893e9865730dd7cf970a792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f699133_0672239f",
+        "filename": "docs/process/merge_request.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-07-06T01:02:15Z",
+      "side": 1,
+      "message": "Newline after ## header",
+      "range": {
+        "startLine": 5,
+        "startChar": 7,
+        "endLine": 5,
+        "endChar": 8
+      },
+      "revId": "f163acb36cee78e7b893e9865730dd7cf970a792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "581e0d4e_af8f13a4",
+        "filename": "docs/process/merge_request.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-07-06T01:02:15Z",
+      "side": 1,
+      "message": "Anyone reading the tl;dr and only the tl;dr better know what a merge is, so I\u0027d remove this and just let it live below.",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 76
+      },
+      "revId": "f163acb36cee78e7b893e9865730dd7cf970a792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9507cfaa_682e0d04",
+        "filename": "docs/process/merge_request.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-07-06T01:02:15Z",
+      "side": 1,
+      "message": "This is a little complex for a tl;dr - perhaps just state we\u0027ll be much more stringent as we approach stable, and that any necessary merges should be requested as soon as possible after branch point?",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 31
+      },
+      "revId": "f163acb36cee78e7b893e9865730dd7cf970a792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10dca264_be23933b",
+        "filename": "docs/process/merge_request.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-07-06T01:02:15Z",
+      "side": 1,
+      "message": "have been deployed in canary",
+      "range": {
+        "startLine": 18,
+        "startChar": 60,
+        "endLine": 18,
+        "endChar": 68
+      },
+      "revId": "f163acb36cee78e7b893e9865730dd7cf970a792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4471cdc5_7849565d",
+        "filename": "docs/process/merge_request.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-07-06T01:02:15Z",
+      "side": 1,
+      "message": "merge candidates",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 12
+      },
+      "revId": "f163acb36cee78e7b893e9865730dd7cf970a792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72d91c4b_d49d141b",
+        "filename": "docs/process/merge_request.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-07-06T01:02:15Z",
+      "side": 1,
+      "message": "Remove \"need\", reads better without.",
+      "range": {
+        "startLine": 19,
+        "startChar": 29,
+        "endLine": 19,
+        "endChar": 33
+      },
+      "revId": "f163acb36cee78e7b893e9865730dd7cf970a792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "529ae001_c5252092",
+        "filename": "docs/process/merge_request.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-07-06T01:02:15Z",
+      "side": 1,
+      "message": "This probably isn\u0027t necessary in the public docs, remove.",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 49
+      },
+      "revId": "f163acb36cee78e7b893e9865730dd7cf970a792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96bcde6a_02fbb3ad",
+        "filename": "docs/process/merge_request.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-07-06T01:02:15Z",
+      "side": 1,
+      "message": "from trunk to a release branch.\n\n(as all changes that are cherry picked have to occur post branch point by default).",
+      "range": {
+        "startLine": 38,
+        "startChar": 44,
+        "endLine": 38,
+        "endChar": 73
+      },
+      "revId": "f163acb36cee78e7b893e9865730dd7cf970a792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a32aca0_929246ee",
+        "filename": "docs/process/merge_request.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-07-06T01:02:15Z",
+      "side": 1,
+      "message": "channels which are built from different release branches.",
+      "range": {
+        "startLine": 40,
+        "startChar": 29,
+        "endLine": 40,
+        "endChar": 57
+      },
+      "revId": "f163acb36cee78e7b893e9865730dd7cf970a792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f75e7819_8d82e4c5",
+        "filename": "docs/process/merge_request.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-07-06T01:02:15Z",
+      "side": 1,
+      "message": "In general, changes should land on trunk, be shipped to and verified in a canary release, and then promoted to our dev, beta and stable channels over time.",
+      "range": {
+        "startLine": 40,
+        "startChar": 59,
+        "endLine": 43,
+        "endChar": 29
+      },
+      "revId": "f163acb36cee78e7b893e9865730dd7cf970a792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78b8a852_59129ec2",
+        "filename": "docs/process/merge_request.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-07-06T01:02:15Z",
+      "side": 1,
+      "message": "Once changes are made to individual sentences, I\u0027d move this paragraph up right underneath the \"Introduction\" header (and move the definition of merge right after that).",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 75
+      },
+      "revId": "f163acb36cee78e7b893e9865730dd7cf970a792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "240550a1_d847c2c8",
+        "filename": "docs/process/merge_request.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-07-06T01:02:15Z",
+      "side": 1,
+      "message": "Folks should know why they\u0027re here already, remove.",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 79
+      },
+      "revId": "f163acb36cee78e7b893e9865730dd7cf970a792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ffd4182_2e8f1371",
+        "filename": "docs/process/merge_request.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-07-06T01:02:15Z",
+      "side": 1,
+      "message": "Line break between ## and content.",
+      "range": {
+        "startLine": 48,
+        "startChar": 21,
+        "endLine": 48,
+        "endChar": 26
+      },
+      "revId": "f163acb36cee78e7b893e9865730dd7cf970a792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d98d37c_836b6573",
+        "filename": "docs/process/merge_request.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-07-06T01:02:15Z",
+      "side": 1,
+      "message": "what types of bugs can be merged when based on the criticality of the issue.",
+      "range": {
+        "startLine": 49,
+        "startChar": 26,
+        "endLine": 50,
+        "endChar": 36
+      },
+      "revId": "f163acb36cee78e7b893e9865730dd7cf970a792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc525b75_a7179487",
+        "filename": "docs/process/merge_request.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-07-06T01:02:15Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 58,
+        "startChar": 31,
+        "endLine": 58,
+        "endChar": 32
+      },
+      "revId": "f163acb36cee78e7b893e9865730dd7cf970a792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "224a3189_46f46ff0",
+        "filename": "docs/process/merge_request.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-07-06T01:02:15Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 59,
+        "startChar": 8,
+        "endLine": 59,
+        "endChar": 9
+      },
+      "revId": "f163acb36cee78e7b893e9865730dd7cf970a792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbb92de7_4bcc3306",
+        "filename": "docs/process/merge_request.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-07-06T01:02:15Z",
+      "side": 1,
+      "message": "for the first two weeks post branch.",
+      "range": {
+        "startLine": 62,
+        "startChar": 24,
+        "endLine": 62,
+        "endChar": 26
+      },
+      "revId": "f163acb36cee78e7b893e9865730dd7cf970a792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54979280_256a7fb8",
+        "filename": "docs/process/merge_request.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-07-06T01:02:15Z",
+      "side": 1,
+      "message": "I think this is more appropriate for the schedule doc and can be removed here.",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 28
+      },
+      "revId": "f163acb36cee78e7b893e9865730dd7cf970a792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04e6a05f_77a74637",
+        "filename": "docs/process/merge_request.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-07-06T01:02:15Z",
+      "side": 1,
+      "message": "This is schedule stuff and can likely be deleted here too since you already point to Claude\u0027s doc above.",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 11
+      },
+      "revId": "f163acb36cee78e7b893e9865730dd7cf970a792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "550c4d9c_7e2eb619",
+        "filename": "docs/process/merge_request.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-07-06T01:02:15Z",
+      "side": 1,
+      "message": "Remove, since stable, beta, dev implies all release blockers, thus this is redundant.",
+      "range": {
+        "startLine": 83,
+        "startChar": 46,
+        "endLine": 83,
+        "endChar": 68
+      },
+      "revId": "f163acb36cee78e7b893e9865730dd7cf970a792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8d45f2d_4c29f8af",
+        "filename": "docs/process/merge_request.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-07-06T01:02:15Z",
+      "side": 1,
+      "message": "Make this a link with a bit more context or remove it (I\u0027m fine w/ latter since there\u0027s a link above).",
+      "range": {
+        "startLine": 84,
+        "startChar": 37,
+        "endLine": 84,
+        "endChar": 64
+      },
+      "revId": "f163acb36cee78e7b893e9865730dd7cf970a792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "866f3030_1a69d6fc",
+        "filename": "docs/process/merge_request.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-07-06T01:02:15Z",
+      "side": 1,
+      "message": "...for critical, release blocking issues where the fix is low complexity.",
+      "range": {
+        "startLine": 95,
+        "startChar": 25,
+        "endLine": 96,
+        "endChar": 50
+      },
+      "revId": "f163acb36cee78e7b893e9865730dd7cf970a792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62130488_c4cb2ce7",
+        "filename": "docs/process/merge_request.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-07-06T01:02:15Z",
+      "side": 1,
+      "message": "We should be requesting a detailed explanation for all merges really, right?  If so note this in the \"Requirements for a merge\" section and remove from here.",
+      "range": {
+        "startLine": 96,
+        "startChar": 52,
+        "endLine": 97,
+        "endChar": 57
+      },
+      "revId": "f163acb36cee78e7b893e9865730dd7cf970a792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "372d8886_95a34476",
+        "filename": "docs/process/merge_request.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-07-06T01:02:15Z",
+      "side": 1,
+      "message": "Line break between section header and content...",
+      "range": {
+        "startLine": 116,
+        "startChar": 17,
+        "endLine": 116,
+        "endChar": 21
+      },
+      "revId": "f163acb36cee78e7b893e9865730dd7cf970a792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fa89405_5e8aa35b",
+        "filename": "docs/process/merge_request.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-07-06T01:02:15Z",
+      "side": 1,
+      "message": "You already discuss this in the \"Merge Request\" section below - might be worth emphasizing more strongly there, and deleting it from here.",
+      "range": {
+        "startLine": 118,
+        "startChar": 0,
+        "endLine": 118,
+        "endChar": 64
+      },
+      "revId": "f163acb36cee78e7b893e9865730dd7cf970a792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f16ed43c_cfd623c4",
+        "filename": "docs/process/merge_request.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-07-06T01:02:15Z",
+      "side": 1,
+      "message": "Emphasize this more and note that an OS tag is required.",
+      "range": {
+        "startLine": 139,
+        "startChar": 0,
+        "endLine": 139,
+        "endChar": 39
+      },
+      "revId": "f163acb36cee78e7b893e9865730dd7cf970a792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9656f3e_b6121c4d",
+        "filename": "docs/process/merge_request.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-07-06T01:02:15Z",
+      "side": 1,
+      "message": "the bug",
+      "range": {
+        "startLine": 141,
+        "startChar": 24,
+        "endLine": 141,
+        "endChar": 27
+      },
+      "revId": "f163acb36cee78e7b893e9865730dd7cf970a792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
