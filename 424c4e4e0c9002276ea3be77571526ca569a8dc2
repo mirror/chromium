@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "a401e974_c56d760d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 16
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-07-06T16:27:07Z",
+      "side": 1,
+      "message": "Thinking about this more... I think this could be a lifecycle problem even if it doesn\u0027t assert today. Is it possible to move the root scroller recalculation to be before layout or move it fully out of layout so it causes a full second layout?",
+      "revId": "424c4e4e0c9002276ea3be77571526ca569a8dc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c585a29b_b24c9edb",
         "filename": "third_party/WebKit/LayoutTests/virtual/android/fast/rootscroller/browser-controls-background.html",
         "patchSetId": 16
