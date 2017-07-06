@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "264b210d_79efd128",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-06T12:05:25Z",
+      "side": 1,
+      "message": "nit: Use \"Bug: 739395\" to follow the syntax used by gerrit footer. You can also remove the \"R\u003d\" as gerrit add the correct reviewer to the CL upon commit (Reviewed-by: ...).",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 3
+      },
+      "revId": "2de9d5d26b1687d6d595b6e519fe701281bd20e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a8521924_f06798fc",
         "filename": "ios/chrome/browser/ui/settings/passwords_settings_egtest.mm",
         "patchSetId": 1
