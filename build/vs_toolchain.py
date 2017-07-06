@@ -264,7 +264,7 @@ def _CopyPGORuntime(target_dir, target_cpu):
   # We need to copy 2 runtime dependencies used during the profiling step:
   #     - pgort140.dll: runtime library required to run the instrumented image.
   #     - pgosweep.exe: executable used to collect the profiling data
-  pgo_runtimes = ['pgort140.dll', 'pgosweep.exe']
+  pgo_runtimes = ['pgort140.dll', 'pgosweep.exe', 'mspdb140.dll']
   for runtime in pgo_runtimes:
     if target_cpu == 'x86':
       source = os.path.join(pgo_x86_runtime_dir, runtime)
