@@ -117,7 +117,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionManagementApiBrowserTest,
 
 IN_PROC_BROWSER_TEST_F(ExtensionManagementApiBrowserTest,
                        CreateAppShortcutConfirmDialog) {
-  const Extension* app = InstallExtension(
+  scoped_refptr<const Extension> app = InstallExtension(
       test_data_dir_.AppendASCII("api_test/management/packaged_app"), 1);
   ASSERT_TRUE(app);
 
@@ -148,8 +148,8 @@ IN_PROC_BROWSER_TEST_F(ExtensionManagementApiBrowserTest,
   // Load an extension with a background page, so that we know it has a process
   // running.
   ExtensionTestMessageListener listener("ready", false);
-  const Extension* extension = LoadExtension(
-      test_data_dir_.AppendASCII("management/install_event"));
+  scoped_refptr<const Extension> extension =
+      LoadExtension(test_data_dir_.AppendASCII("management/install_event"));
   ASSERT_TRUE(extension);
   ASSERT_TRUE(listener.WaitUntilSatisfied());
 
@@ -286,9 +286,10 @@ IN_PROC_BROWSER_TEST_F(ExtensionManagementApiEscalationTest,
     ASSERT_TRUE(CrashEnabledExtension(kId));
     SetEnabled(false, true, std::string());
     SetEnabled(true, true, std::string());
-    const Extension* extension = ExtensionSystem::Get(browser()->profile())
-                                     ->extension_service()
-                                     ->GetExtensionById(kId, false);
+    scoped_refptr<const Extension> extension =
+        ExtensionSystem::Get(browser()->profile())
+            ->extension_service()
+            ->GetExtensionById(kId, false);
     EXPECT_TRUE(extension);
   }
 }

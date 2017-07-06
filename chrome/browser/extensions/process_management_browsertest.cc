@@ -110,7 +110,7 @@ IN_PROC_BROWSER_TEST_F(ProcessManagementTest, MAYBE_ProcessOverflow) {
   base_url = base_url.ReplaceComponents(replace_host);
 
   // Load an extension before adding tabs.
-  const extensions::Extension* extension1 = LoadExtension(
+  scoped_refptr<const extensions::Extension> extension1 = LoadExtension(
       test_data_dir_.AppendASCII("api_test/browser_action/basics"));
   ASSERT_TRUE(extension1);
   GURL extension1_url = extension1->url();
@@ -155,7 +155,7 @@ IN_PROC_BROWSER_TEST_F(ProcessManagementTest, MAYBE_ProcessOverflow) {
       ui_test_utils::BROWSER_TEST_WAIT_FOR_NAVIGATION);
 
   // Load another extension.
-  const extensions::Extension* extension2 = LoadExtension(
+  scoped_refptr<const extensions::Extension> extension2 = LoadExtension(
       test_data_dir_.AppendASCII("api_test/browser_action/close_background"));
   ASSERT_TRUE(extension2);
   GURL extension2_url = extension2->url();
@@ -289,7 +289,7 @@ IN_PROC_BROWSER_TEST_F(ProcessManagementTest,
   ASSERT_TRUE(embedded_test_server()->Start());
 
   // Load an extension.
-  const extensions::Extension* extension = LoadExtension(
+  scoped_refptr<const extensions::Extension> extension = LoadExtension(
       test_data_dir_.AppendASCII("api_test/browser_action/popup_with_form"));
   ASSERT_TRUE(extension);
 
@@ -392,7 +392,7 @@ IN_PROC_BROWSER_TEST_F(ProcessManagementTest,
   ASSERT_TRUE(embedded_test_server()->Start());
 
   // Load an extension, which will block a request for a specific page in it.
-  const extensions::Extension* extension = LoadExtension(
+  scoped_refptr<const extensions::Extension> extension = LoadExtension(
       test_data_dir_.AppendASCII("web_request_site_process_registration"));
   ASSERT_TRUE(extension);
 

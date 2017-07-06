@@ -76,9 +76,9 @@ IN_PROC_BROWSER_TEST_F(ExtensionBindingsApiTest, AboutBlankIframe) {
 
   ASSERT_TRUE(listener.WaitUntilSatisfied());
 
-  const Extension* extension = LoadExtension(
-        test_data_dir_.AppendASCII("bindings")
-                      .AppendASCII("internal_apis_not_on_chrome_object"));
+  scoped_refptr<const Extension> extension =
+      LoadExtension(test_data_dir_.AppendASCII("bindings")
+                        .AppendASCII("internal_apis_not_on_chrome_object"));
   ASSERT_TRUE(extension);
   listener.Reply(extension->id());
 
@@ -232,13 +232,13 @@ class FramesExtensionBindingsApiTest : public ExtensionBindingsApiTest {
 IN_PROC_BROWSER_TEST_F(FramesExtensionBindingsApiTest, FramesBeforeNavigation) {
   // Load the sender and receiver extensions, and make sure they are ready.
   ExtensionTestMessageListener sender_ready("sender_ready", true);
-  const Extension* sender = LoadExtension(
+  scoped_refptr<const Extension> sender = LoadExtension(
       test_data_dir_.AppendASCII("bindings").AppendASCII("message_sender"));
   ASSERT_NE(nullptr, sender);
   ASSERT_TRUE(sender_ready.WaitUntilSatisfied());
 
   ExtensionTestMessageListener receiver_ready("receiver_ready", false);
-  const Extension* receiver =
+  scoped_refptr<const Extension> receiver =
       LoadExtension(test_data_dir_.AppendASCII("bindings")
                         .AppendASCII("external_message_listener"));
   ASSERT_NE(nullptr, receiver);

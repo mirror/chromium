@@ -132,7 +132,8 @@ IN_PROC_BROWSER_TEST_F(ExtensionBrowserTest, PageActionRefreshCrash) {
   base::FilePath base_path = test_data_dir_.AppendASCII("browsertest")
                                      .AppendASCII("crash_44415");
   // Load extension A.
-  const Extension* extensionA = LoadExtension(base_path.AppendASCII("ExtA"));
+  scoped_refptr<const Extension> extensionA =
+      LoadExtension(base_path.AppendASCII("ExtA"));
   ASSERT_TRUE(extensionA);
   ASSERT_TRUE(WaitForPageActionVisibilityChangeTo(1));
   ASSERT_EQ(size_before + 1, registry->enabled_extensions().size());
@@ -142,7 +143,8 @@ IN_PROC_BROWSER_TEST_F(ExtensionBrowserTest, PageActionRefreshCrash) {
             << " ms" << std::flush;
 
   // Load extension B.
-  const Extension* extensionB = LoadExtension(base_path.AppendASCII("ExtB"));
+  scoped_refptr<const Extension> extensionB =
+      LoadExtension(base_path.AppendASCII("ExtB"));
   ASSERT_TRUE(extensionB);
   ASSERT_TRUE(WaitForPageActionVisibilityChangeTo(2));
   ASSERT_EQ(size_before + 2, registry->enabled_extensions().size());
@@ -186,7 +188,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionBrowserTest, TitleLocalizationPageAction) {
 
   base::FilePath extension_path(test_data_dir_.AppendASCII("browsertest")
                                         .AppendASCII("title_localized_pa"));
-  const Extension* extension = LoadExtension(extension_path);
+  scoped_refptr<const Extension> extension = LoadExtension(extension_path);
   ASSERT_TRUE(extension);
 
   // Any navigation prompts the location bar to load the page action.

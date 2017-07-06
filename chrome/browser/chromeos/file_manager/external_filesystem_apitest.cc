@@ -326,7 +326,7 @@ class FileSystemExtensionApiTestBase : public ExtensionApiTest {
       }
 
       BackgroundObserver page_complete;
-      const Extension* file_handler =
+      scoped_refptr<const Extension> file_handler =
           LoadExtension(test_data_dir_.AppendASCII(filehandler_path));
       if (!file_handler)
         return false;
@@ -340,9 +340,9 @@ class FileSystemExtensionApiTestBase : public ExtensionApiTest {
 
     extensions::ResultCatcher catcher;
 
-    const Extension* file_browser = LoadExtensionAsComponentWithManifest(
-        test_data_dir_.AppendASCII(filebrowser_path),
-        filebrowser_manifest);
+    scoped_refptr<const Extension> file_browser =
+        LoadExtensionAsComponentWithManifest(
+            test_data_dir_.AppendASCII(filebrowser_path), filebrowser_manifest);
     if (!file_browser)
       return false;
 

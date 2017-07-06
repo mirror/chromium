@@ -63,8 +63,8 @@ IN_PROC_BROWSER_TEST_F(BackgroundAppBrowserTest, ReloadBackgroundApp) {
   // Load our background extension
   ASSERT_FALSE(
       manager->showed_background_app_installed_notification_for_test());
-  const extensions::Extension* extension = LoadExtension(
-      test_data_dir_.AppendASCII("background_app"));
+  scoped_refptr<const extensions::Extension> extension =
+      LoadExtension(test_data_dir_.AppendASCII("background_app"));
   ASSERT_FALSE(extension == NULL);
 
   // Set the test flag to not shown.

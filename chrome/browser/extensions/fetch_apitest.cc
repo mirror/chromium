@@ -36,7 +36,8 @@ class ExtensionFetchTest : public ExtensionApiTest {
   // Writes an empty background page and a text file called "text" with content
   // "text content", then loads and returns the extension. |dir| must already
   // have a manifest.
-  const Extension* WriteFilesAndLoadTestExtension(TestExtensionDir* dir) {
+  scoped_refptr<const Extension> WriteFilesAndLoadTestExtension(
+      TestExtensionDir* dir) {
     dir->WriteFile(FILE_PATH_LITERAL("text"), "text content");
     dir->WriteFile(FILE_PATH_LITERAL("bg.js"), "");
     return LoadExtension(dir->UnpackedPath());
@@ -86,7 +87,8 @@ IN_PROC_BROWSER_TEST_F(ExtensionFetchTest, ExtensionCanFetchExtensionResource) {
       "'name': 'ExtensionCanFetchExtensionResource',"
       "'version': '1'"
       "}");
-  const Extension* extension = WriteFilesAndLoadTestExtension(&dir);
+  scoped_refptr<const Extension> extension =
+      WriteFilesAndLoadTestExtension(&dir);
   ASSERT_TRUE(extension);
 
   EXPECT_EQ(
@@ -106,7 +108,8 @@ IN_PROC_BROWSER_TEST_F(ExtensionFetchTest,
       "'permissions': ['http://example.com/*'],"
       "'version': '1'"
       "}");
-  const Extension* extension = WriteFilesAndLoadTestExtension(&dir);
+  scoped_refptr<const Extension> extension =
+      WriteFilesAndLoadTestExtension(&dir);
   ASSERT_TRUE(extension);
 
   EXPECT_EQ("Hello!", ExecuteScriptInBackgroundPage(
@@ -126,7 +129,8 @@ IN_PROC_BROWSER_TEST_F(
       "'name': 'ExtensionCannotFetchHostedResourceWithoutHostPermissions',"
       "'version': '1'"
       "}");
-  const Extension* extension = WriteFilesAndLoadTestExtension(&dir);
+  scoped_refptr<const Extension> extension =
+      WriteFilesAndLoadTestExtension(&dir);
   ASSERT_TRUE(extension);
 
   // TODO(kalman): Another test would be to configure the test server to work
@@ -149,7 +153,8 @@ IN_PROC_BROWSER_TEST_F(ExtensionFetchTest,
       "'version': '1',"
       "'web_accessible_resources': ['text']"
       "}");
-  const Extension* extension = WriteFilesAndLoadTestExtension(&dir);
+  scoped_refptr<const Extension> extension =
+      WriteFilesAndLoadTestExtension(&dir);
   ASSERT_TRUE(extension);
 
   content::WebContents* empty_tab = CreateAndNavigateTab(
@@ -174,7 +179,8 @@ IN_PROC_BROWSER_TEST_F(ExtensionFetchTest,
       "'name': 'HostCannotFetchNonWebAccessibleExtensionResource',"
       "'version': '1'"
       "}");
-  const Extension* extension = WriteFilesAndLoadTestExtension(&dir);
+  scoped_refptr<const Extension> extension =
+      WriteFilesAndLoadTestExtension(&dir);
   ASSERT_TRUE(extension);
 
   content::WebContents* empty_tab = CreateAndNavigateTab(

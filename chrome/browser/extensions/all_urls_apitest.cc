@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include <string>
+
 #include "base/command_line.h"
 #include "base/macros.h"
 #include "build/build_config.h"
@@ -71,7 +73,7 @@ class AllUrlsApiTest : public ExtensionApiTest {
 IN_PROC_BROWSER_TEST_F(AllUrlsApiTest, WhitelistedExtension) {
   WhitelistExtensions();
 
-  auto* bystander = LoadExtension(
+  auto bystander = LoadExtension(
       test_data_dir_.AppendASCII("all_urls").AppendASCII("bystander"));
   ASSERT_TRUE(bystander);
 

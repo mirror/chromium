@@ -313,12 +313,13 @@ IN_PROC_BROWSER_TEST_F(MediaGalleriesPlatformAppPpapiTest, SendFilesystem) {
   RemoveAllGalleries();
   MakeSingleFakeGallery(NULL);
 
-  const extensions::Extension* extension = LoadExtension(app_dir());
+  scoped_refptr<const extensions::Extension> extension =
+      LoadExtension(app_dir());
   ASSERT_TRUE(extension);
 
   extensions::ResultCatcher catcher;
   AppLaunchParams params(
-      browser()->profile(), extension, extensions::LAUNCH_CONTAINER_NONE,
+      browser()->profile(), extension.get(), extensions::LAUNCH_CONTAINER_NONE,
       WindowOpenDisposition::NEW_WINDOW, extensions::SOURCE_TEST);
   params.command_line = *base::CommandLine::ForCurrentProcess();
   OpenApplication(params);

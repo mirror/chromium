@@ -19,7 +19,8 @@ IN_PROC_BROWSER_TEST_F(AppListControllerDelegateAshTest, IsExtensionAppOpen) {
   EXPECT_FALSE(delegate.IsAppOpen("fake_extension_app_id"));
 
   base::FilePath extension_path = test_data_dir_.AppendASCII("app");
-  const extensions::Extension* extension_app = LoadExtension(extension_path);
+  scoped_refptr<const extensions::Extension> extension_app =
+      LoadExtension(extension_path);
   ASSERT_NE(nullptr, extension_app);
   EXPECT_FALSE(delegate.IsAppOpen(extension_app->id()));
   {
@@ -27,7 +28,7 @@ IN_PROC_BROWSER_TEST_F(AppListControllerDelegateAshTest, IsExtensionAppOpen) {
         content::NOTIFICATION_LOAD_COMPLETED_MAIN_FRAME,
         content::NotificationService::AllSources());
     OpenApplication(AppLaunchParams(
-        profile(), extension_app, extensions::LAUNCH_CONTAINER_WINDOW,
+        profile(), extension_app.get(), extensions::LAUNCH_CONTAINER_WINDOW,
         WindowOpenDisposition::NEW_WINDOW, extensions::SOURCE_TEST));
     app_loaded_observer.Wait();
   }
@@ -39,13 +40,14 @@ IN_PROC_BROWSER_TEST_F(AppListControllerDelegateAshTest, IsPlatformAppOpen) {
   AppListControllerDelegateAsh delegate(nullptr);
   EXPECT_FALSE(delegate.IsAppOpen("fake_platform_app_id"));
 
-  const extensions::Extension* app = InstallPlatformApp("minimal");
+  scoped_refptr<const extensions::Extension> app =
+      InstallPlatformApp("minimal");
   EXPECT_FALSE(delegate.IsAppOpen(app->id()));
   {
     content::WindowedNotificationObserver app_loaded_observer(
         content::NOTIFICATION_LOAD_COMPLETED_MAIN_FRAME,
         content::NotificationService::AllSources());
-    LaunchPlatformApp(app);
+    LaunchPlatformApp(app.get());
     app_loaded_observer.Wait();
   }
   EXPECT_TRUE(delegate.IsAppOpen(app->id()));

@@ -692,8 +692,8 @@ class GetAuthTokenFunctionTest
 
   // Helper to create an extension with specific OAuth2Info fields set.
   // |fields_to_set| should be computed by using fields of Oauth2Fields enum.
-  const Extension* CreateExtension(int fields_to_set) {
-    const Extension* ext;
+  scoped_refptr<const Extension> CreateExtension(int fields_to_set) {
+    scoped_refptr<const Extension> ext;
     base::FilePath manifest_path =
         test_data_dir_.AppendASCII("platform_apps/oauth2");
     base::FilePath component_manifest_path =
@@ -703,7 +703,7 @@ class GetAuthTokenFunctionTest
     else
       ext = LoadExtensionAsComponent(component_manifest_path);
     OAuth2Info& oauth2_info =
-        const_cast<OAuth2Info&>(OAuth2Info::GetOAuth2Info(ext));
+        const_cast<OAuth2Info&>(OAuth2Info::GetOAuth2Info(ext.get()));
     if ((fields_to_set & CLIENT_ID) != 0)
       oauth2_info.client_id = "client1";
     if ((fields_to_set & SCOPES) != 0) {

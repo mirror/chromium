@@ -89,7 +89,7 @@ class ProxySettingsApiTest : public ExtensionApiTest {
 // Tests direct connection settings.
 IN_PROC_BROWSER_TEST_F(ProxySettingsApiTest, ProxyDirectSettings) {
   ASSERT_TRUE(RunExtensionTestIncognito("proxy/direct")) << message_;
-  const Extension* extension = GetSingleLoadedExtension();
+  scoped_refptr<const Extension> extension = GetSingleLoadedExtension();
   ASSERT_TRUE(extension);
 
   PrefService* pref_service = browser()->profile()->GetPrefs();
@@ -106,7 +106,7 @@ IN_PROC_BROWSER_TEST_F(ProxySettingsApiTest, ProxyDirectSettings) {
 // Tests auto-detect settings.
 IN_PROC_BROWSER_TEST_F(ProxySettingsApiTest, ProxyAutoSettings) {
   ASSERT_TRUE(RunExtensionTestIncognito("proxy/auto")) << message_;
-  const Extension* extension = GetSingleLoadedExtension();
+  scoped_refptr<const Extension> extension = GetSingleLoadedExtension();
   ASSERT_TRUE(extension);
 
   PrefService* pref_service = browser()->profile()->GetPrefs();
@@ -117,7 +117,7 @@ IN_PROC_BROWSER_TEST_F(ProxySettingsApiTest, ProxyAutoSettings) {
 // Tests PAC proxy settings.
 IN_PROC_BROWSER_TEST_F(ProxySettingsApiTest, ProxyPacScript) {
   ASSERT_TRUE(RunExtensionTest("proxy/pac")) << message_;
-  const Extension* extension = GetSingleLoadedExtension();
+  scoped_refptr<const Extension> extension = GetSingleLoadedExtension();
   ASSERT_TRUE(extension);
 
   PrefService* pref_service = browser()->profile()->GetPrefs();
@@ -144,7 +144,7 @@ IN_PROC_BROWSER_TEST_F(ProxySettingsApiTest, ProxyPacScript) {
 // Tests PAC proxy settings.
 IN_PROC_BROWSER_TEST_F(ProxySettingsApiTest, ProxyPacDataUrl) {
   ASSERT_TRUE(RunExtensionTest("proxy/pacdataurl")) << message_;
-  const Extension* extension = GetSingleLoadedExtension();
+  scoped_refptr<const Extension> extension = GetSingleLoadedExtension();
   ASSERT_TRUE(extension);
   const char url[] =
        "data:;base64,ZnVuY3Rpb24gRmluZFByb3h5R"
@@ -158,7 +158,7 @@ IN_PROC_BROWSER_TEST_F(ProxySettingsApiTest, ProxyPacDataUrl) {
 // Tests PAC proxy settings.
 IN_PROC_BROWSER_TEST_F(ProxySettingsApiTest, ProxyPacData) {
   ASSERT_TRUE(RunExtensionTest("proxy/pacdata")) << message_;
-  const Extension* extension = GetSingleLoadedExtension();
+  scoped_refptr<const Extension> extension = GetSingleLoadedExtension();
   ASSERT_TRUE(extension);
   const char url[] =
       "data:application/x-ns-proxy-autoconfig;base64,ZnVuY3Rpb24gRmluZFByb3h5R"
@@ -172,7 +172,7 @@ IN_PROC_BROWSER_TEST_F(ProxySettingsApiTest, ProxyPacData) {
 // Tests setting a single proxy to cover all schemes.
 IN_PROC_BROWSER_TEST_F(ProxySettingsApiTest, ProxyFixedSingle) {
   ASSERT_TRUE(RunExtensionTest("proxy/single")) << message_;
-  const Extension* extension = GetSingleLoadedExtension();
+  scoped_refptr<const Extension> extension = GetSingleLoadedExtension();
   ASSERT_TRUE(extension);
 
   PrefService* pref_service = browser()->profile()->GetPrefs();
@@ -186,7 +186,7 @@ IN_PROC_BROWSER_TEST_F(ProxySettingsApiTest, ProxyFixedSingle) {
 // Tests setting to use the system's proxy settings.
 IN_PROC_BROWSER_TEST_F(ProxySettingsApiTest, ProxySystem) {
   ASSERT_TRUE(RunExtensionTest("proxy/system")) << message_;
-  const Extension* extension = GetSingleLoadedExtension();
+  scoped_refptr<const Extension> extension = GetSingleLoadedExtension();
   ASSERT_TRUE(extension);
 
   PrefService* pref_service = browser()->profile()->GetPrefs();
@@ -197,7 +197,7 @@ IN_PROC_BROWSER_TEST_F(ProxySettingsApiTest, ProxySystem) {
 // Tests setting separate proxies for each scheme.
 IN_PROC_BROWSER_TEST_F(ProxySettingsApiTest, ProxyFixedIndividual) {
   ASSERT_TRUE(RunExtensionTestIncognito("proxy/individual")) << message_;
-  const Extension* extension = GetSingleLoadedExtension();
+  scoped_refptr<const Extension> extension = GetSingleLoadedExtension();
   ASSERT_TRUE(extension);
 
   PrefService* pref_service = browser()->profile()->GetPrefs();
@@ -227,7 +227,7 @@ IN_PROC_BROWSER_TEST_F(ProxySettingsApiTest,
                        ProxyFixedIndividualIncognitoOnly) {
   ASSERT_TRUE(RunExtensionTestIncognito("proxy/individual_incognito_only")) <<
       message_;
-  const Extension* extension = GetSingleLoadedExtension();
+  scoped_refptr<const Extension> extension = GetSingleLoadedExtension();
   ASSERT_TRUE(extension);
 
   PrefService* pref_service = browser()->profile()->GetPrefs();
@@ -251,7 +251,7 @@ IN_PROC_BROWSER_TEST_F(ProxySettingsApiTest,
                        DISABLED_ProxyFixedIndividualIncognitoAlso) {
   ASSERT_TRUE(RunExtensionTestIncognito("proxy/individual_incognito_also")) <<
       message_;
-  const Extension* extension = GetSingleLoadedExtension();
+  scoped_refptr<const Extension> extension = GetSingleLoadedExtension();
   ASSERT_TRUE(extension);
 
   PrefService* pref_service = browser()->profile()->GetPrefs();
@@ -279,7 +279,7 @@ IN_PROC_BROWSER_TEST_F(ProxySettingsApiTest,
 // Tests setting and unsetting values
 IN_PROC_BROWSER_TEST_F(ProxySettingsApiTest, ProxyFixedIndividualRemove) {
   ASSERT_TRUE(RunExtensionTest("proxy/individual_remove")) << message_;
-  const Extension* extension = GetSingleLoadedExtension();
+  scoped_refptr<const Extension> extension = GetSingleLoadedExtension();
   ASSERT_TRUE(extension);
 
   PrefService* pref_service = browser()->profile()->GetPrefs();
@@ -289,7 +289,7 @@ IN_PROC_BROWSER_TEST_F(ProxySettingsApiTest, ProxyFixedIndividualRemove) {
 IN_PROC_BROWSER_TEST_F(ProxySettingsApiTest,
     ProxyBypass) {
   ASSERT_TRUE(RunExtensionTestIncognito("proxy/bypass")) << message_;
-  const Extension* extension = GetSingleLoadedExtension();
+  scoped_refptr<const Extension> extension = GetSingleLoadedExtension();
   ASSERT_TRUE(extension);
 
   PrefService* pref_service = browser()->profile()->GetPrefs();

@@ -124,7 +124,7 @@ IN_PROC_BROWSER_TEST_F(SocketApiTest, SocketTCPServerExtension) {
 
 IN_PROC_BROWSER_TEST_F(SocketApiTest, SocketTCPServerUnbindOnUnload) {
   ResultCatcher catcher;
-  const Extension* extension =
+  scoped_refptr<const Extension> extension =
       LoadExtension(test_data_dir_.AppendASCII("socket/unload"));
   ASSERT_TRUE(extension);
   EXPECT_TRUE(catcher.GetNextResult()) << catcher.message();

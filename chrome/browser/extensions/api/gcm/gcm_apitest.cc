@@ -65,8 +65,9 @@ class GcmApiTest : public ExtensionApiTest {
 
   void StartCollecting();
 
-  const Extension* LoadTestExtension(const std::string& extension_path,
-                                     const std::string& page_name);
+  scoped_refptr<const Extension> LoadTestExtension(
+      const std::string& extension_path,
+      const std::string& page_name);
   gcm::FakeGCMProfileService* service() const;
 
  private:
@@ -101,10 +102,10 @@ gcm::FakeGCMProfileService* GcmApiTest::service() const {
   return fake_gcm_profile_service_;
 }
 
-const Extension* GcmApiTest::LoadTestExtension(
+scoped_refptr<const Extension> GcmApiTest::LoadTestExtension(
     const std::string& extension_path,
     const std::string& page_name) {
-  const Extension* extension =
+  scoped_refptr<const Extension> extension =
       LoadExtension(test_data_dir_.AppendASCII(extension_path));
   if (extension) {
     ui_test_utils::NavigateToURL(
@@ -172,7 +173,7 @@ IN_PROC_BROWSER_TEST_F(GcmApiTest, OnMessagesDeleted) {
   ResultCatcher catcher;
   catcher.RestrictToBrowserContext(profile());
 
-  const extensions::Extension* extension =
+  scoped_refptr<const extensions::Extension> extension =
       LoadTestExtension(kEventsExtension, "on_messages_deleted.html");
   ASSERT_TRUE(extension);
 
@@ -185,7 +186,7 @@ IN_PROC_BROWSER_TEST_F(GcmApiTest, OnMessage) {
   ResultCatcher catcher;
   catcher.RestrictToBrowserContext(profile());
 
-  const extensions::Extension* extension =
+  scoped_refptr<const extensions::Extension> extension =
       LoadTestExtension(kEventsExtension, "on_message.html");
   ASSERT_TRUE(extension);
 
@@ -217,7 +218,7 @@ IN_PROC_BROWSER_TEST_F(GcmApiTest, OnSendError) {
   ResultCatcher catcher;
   catcher.RestrictToBrowserContext(profile());
 
-  const extensions::Extension* extension =
+  scoped_refptr<const extensions::Extension> extension =
       LoadTestExtension(kEventsExtension, "on_send_error.html");
   ASSERT_TRUE(extension);
 

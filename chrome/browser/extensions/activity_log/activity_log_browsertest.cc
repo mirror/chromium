@@ -83,7 +83,7 @@ IN_PROC_BROWSER_TEST_F(ActivityLogPrerenderTest, MAYBE_TestScriptInjected) {
   uint16_t port = embedded_test_server()->port();
 
   // Get the extension (chrome/test/data/extensions/activity_log)
-  const Extension* ext =
+  scoped_refptr<const Extension> ext =
       LoadExtension(test_data_dir_.AppendASCII("activity_log"));
   ASSERT_TRUE(ext);
 

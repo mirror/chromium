@@ -51,7 +51,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionBrowserTest,
   ExtensionTestMessageListener listener("Background Color Set",
                                         false /* won't send custom reply */);
 
-  const Extension* extension =
+  scoped_refptr<const Extension> extension =
       LoadExtension(test_data_dir_.AppendASCII("api_test")
                         .AppendASCII("browser_action")
                         .AppendASCII("default_persistence"));
@@ -75,7 +75,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionBrowserTest,
 IN_PROC_BROWSER_TEST_F(ExtensionBrowserTest, BrowserActionDefaultPersistence) {
   // Find the extension (it's a shame we don't have an ID for this, but it
   // was generated in the last test).
-  const Extension* extension = NULL;
+  scoped_refptr<const Extension> extension = nullptr;
   const ExtensionSet& extension_set =
       ExtensionRegistry::Get(profile())->enabled_extensions();
   for (ExtensionSet::const_iterator iter = extension_set.begin();

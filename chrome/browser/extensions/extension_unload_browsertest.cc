@@ -24,7 +24,7 @@ class ExtensionUnloadBrowserTest : public ExtensionBrowserTest {
 
 IN_PROC_BROWSER_TEST_F(ExtensionUnloadBrowserTest, TestUnload) {
   // Load an extension that installs unload and beforeunload listeners.
-  const Extension* extension =
+  scoped_refptr<const Extension> extension =
       LoadExtension(test_data_dir_.AppendASCII("unload_listener"));
   ASSERT_TRUE(extension);
   std::string id = extension->id();
@@ -50,7 +50,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionUnloadBrowserTest, UnloadWithContentScripts) {
   ASSERT_TRUE(embedded_test_server()->Start());
 
   // Load an extension with a content script that has a button to send XHRs.
-  const Extension* extension =
+  scoped_refptr<const Extension> extension =
       LoadExtension(test_data_dir_.AppendASCII("xhr_from_content_script"));
   ASSERT_TRUE(extension);
   std::string id = extension->id();

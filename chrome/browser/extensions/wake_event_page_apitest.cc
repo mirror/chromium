@@ -112,17 +112,18 @@ class WakeEventPageTest : public ExtensionBrowserTest {
     }
 
     // Install the extension, then close its background page if desired..
-    const Extension* extension = LoadExtension(extension_dir.UnpackedPath());
+    scoped_refptr<const Extension> extension =
+        LoadExtension(extension_dir.UnpackedPath());
     CHECK(extension);
 
     // Regardless of |will_be_open|, we haven't closed the background page yet,
     // so it should always open if it exists.
     if (bg_config != NONE)
-      BackgroundPageWatcher(process_manager(), extension).WaitForOpen();
+      BackgroundPageWatcher(process_manager(), extension.get()).WaitForOpen();
 
     if (should_close) {
       GetBackgroundPage(extension->id())->Close();
-      BackgroundPageWatcher(process_manager(), extension).WaitForClose();
+      BackgroundPageWatcher(process_manager(), extension.get()).WaitForClose();
       EXPECT_FALSE(GetBackgroundPage(extension->id()));
     }
 

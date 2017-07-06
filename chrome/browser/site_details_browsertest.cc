@@ -188,8 +188,8 @@ class SiteDetailsBrowserTest : public ExtensionBrowserTest {
 
   // Create and install an extension that has a couple of web-accessible
   // resources and, optionally, a background process.
-  const Extension* CreateExtension(const std::string& name,
-                                   bool has_background_process) {
+  scoped_refptr<const Extension> CreateExtension(const std::string& name,
+                                                 bool has_background_process) {
     std::unique_ptr<TestExtensionDir> dir(new TestExtensionDir);
 
     DictionaryBuilder manifest;
@@ -240,7 +240,8 @@ class SiteDetailsBrowserTest : public ExtensionBrowserTest {
                        name.c_str(), iframe_url.c_str(), iframe_url2.c_str()));
     dir->WriteManifest(manifest.ToJSON());
 
-    const Extension* extension = LoadExtension(dir->UnpackedPath());
+    scoped_refptr<const Extension> extension =
+        LoadExtension(dir->UnpackedPath());
     EXPECT_TRUE(extension);
     temp_dirs_.push_back(std::move(dir));
     return extension;
@@ -284,13 +285,14 @@ class SiteDetailsBrowserTest : public ExtensionBrowserTest {
                            name.c_str(), iframe_url.c_str()));
     dir->WriteManifest(manifest.ToJSON());
 
-    const Extension* extension = LoadExtension(dir->UnpackedPath());
+    scoped_refptr<const Extension> extension =
+        LoadExtension(dir->UnpackedPath());
     EXPECT_TRUE(extension);
     temp_dirs_.push_back(std::move(dir));
   }
 
-  const Extension* CreateHostedApp(const std::string& name,
-                                   const GURL& app_url) {
+  scoped_refptr<const Extension> CreateHostedApp(const std::string& name,
+                                                 const GURL& app_url) {
     std::unique_ptr<TestExtensionDir> dir(new TestExtensionDir);
 
     DictionaryBuilder manifest;
@@ -306,7 +308,8 @@ class SiteDetailsBrowserTest : public ExtensionBrowserTest {
                 .Build());
     dir->WriteManifest(manifest.ToJSON());
 
-    const Extension* extension = LoadExtension(dir->UnpackedPath());
+    scoped_refptr<const Extension> extension =
+        LoadExtension(dir->UnpackedPath());
     EXPECT_TRUE(extension);
     temp_dirs_.push_back(std::move(dir));
     return extension;
@@ -653,8 +656,10 @@ IN_PROC_BROWSER_TEST_F(SiteDetailsBrowserTest, MAYBE_IsolateExtensions) {
 
   // Install one script-injecting extension with background page, and an
   // extension with web accessible resources.
-  const Extension* extension1 = CreateExtension("Extension One", true);
-  const Extension* extension2 = CreateExtension("Extension Two", false);
+  scoped_refptr<const Extension> extension1 =
+      CreateExtension("Extension One", true);
+  scoped_refptr<const Extension> extension2 =
+      CreateExtension("Extension Two", false);
 
   // Open two a.com tabs (with cross site http iframes). IsolateExtensions mode
   // should have no effect so far, since there are no frames straddling the
@@ -795,7 +800,8 @@ IN_PROC_BROWSER_TEST_F(SiteDetailsBrowserTest, MAYBE_IsolateExtensions) {
               DependingOnPolicy(0, 4, 4));
 
   // Install extension3 (identical config to extension2)
-  const Extension* extension3 = CreateExtension("Extension Three", false);
+  scoped_refptr<const Extension> extension3 =
+      CreateExtension("Extension Three", false);
 
   // Navigate Tab2 to a top-level page from extension3. There are four processes
   // now: one for tab1's main frame, and one for each of the extensions:
@@ -925,7 +931,8 @@ IN_PROC_BROWSER_TEST_F(SiteDetailsBrowserTest, ExtensionWithTwoWebIframes) {
 
   // Install one script-injecting extension with background page, and an
   // extension with web accessible resources.
-  const Extension* extension = CreateExtension("Test Extension", false);
+  scoped_refptr<const Extension> extension =
+      CreateExtension("Test Extension", false);
 
   ui_test_utils::NavigateToURL(
       browser(), extension->GetResourceURL("/two_http_iframes.html"));
@@ -1189,7 +1196,8 @@ IN_PROC_BROWSER_TEST_F(
 
   // Load an extension without a background page, which will avoid creating a
   // BrowsingInstance for it.
-  const Extension* extension1 = CreateExtension("Extension One", false);
+  scoped_refptr<const Extension> extension1 =
+      CreateExtension("Extension One", false);
 
   // Navigate the tab's first iframe to a resource of the extension. The
   // extension iframe will be put in the same BrowsingInstance as it is part
@@ -1204,7 +1212,8 @@ IN_PROC_BROWSER_TEST_F(
 
   // Now load an extension with a background page. This will result in a
   // BrowsingInstance for the background page.
-  const Extension* extension2 = CreateExtension("Extension Two", true);
+  scoped_refptr<const Extension> extension2 =
+      CreateExtension("Extension Two", true);
   details = new TestMemoryDetails();
   details->StartFetchAndWait();
   EXPECT_THAT(details->uma()->GetAllSamples(

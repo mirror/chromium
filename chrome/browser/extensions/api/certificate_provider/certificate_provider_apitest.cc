@@ -202,7 +202,7 @@ class CertificateProviderRequestPinTest : public CertificateProviderApiTest {
       const std::string& file_name) {
     const base::FilePath extension_path =
         test_data_dir_.AppendASCII("certificate_provider/" + folder);
-    const extensions::Extension* const extension =
+    const scoped_refptr<const extensions::Extension> extension =
         LoadExtension(extension_path);
     chromeos::CertificateProviderService* service =
         chromeos::CertificateProviderServiceFactory::GetForBrowserContext(
@@ -228,7 +228,8 @@ IN_PROC_BROWSER_TEST_F(CertificateProviderApiTest, Basic) {
 
   const base::FilePath extension_path =
       test_data_dir_.AppendASCII("certificate_provider");
-  const extensions::Extension* const extension = LoadExtension(extension_path);
+  const scoped_refptr<const extensions::Extension> extension =
+      LoadExtension(extension_path);
   ui_test_utils::NavigateToURL(browser(),
                                extension->GetResourceURL("basic.html"));
 

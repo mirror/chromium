@@ -124,7 +124,7 @@ class DriveAppProviderTest : public ExtensionBrowserTest,
     ExtensionBrowserTest::TearDownOnMainThread();
   }
 
-  const Extension* InstallChromeApp(int expected_change) {
+  scoped_refptr<const Extension> InstallChromeApp(int expected_change) {
     base::FilePath test_data_path;
     if (!PathService::Get(chrome::DIR_TEST_DATA, &test_data_path)) {
       ADD_FAILURE();
@@ -132,7 +132,7 @@ class DriveAppProviderTest : public ExtensionBrowserTest,
     }
     test_data_path =
         test_data_path.AppendASCII("extensions").AppendASCII("hosted_app.crx");
-    const Extension* extension =
+    scoped_refptr<const Extension> extension =
         InstallExtension(test_data_path, expected_change);
     return extension;
   }
@@ -224,7 +224,7 @@ class DriveAppProviderTest : public ExtensionBrowserTest,
 // Uninstalling the chrome app would also disconnect the drive app.
 IN_PROC_BROWSER_TEST_F(DriveAppProviderTest, ExistingChromeApp) {
   // Prepare an existing chrome app.
-  const Extension* chrome_app = InstallChromeApp(1);
+  scoped_refptr<const Extension> chrome_app = InstallChromeApp(1);
   ASSERT_TRUE(chrome_app);
 
   // Prepare a Drive app that matches the chrome app id.
@@ -252,14 +252,14 @@ IN_PROC_BROWSER_TEST_F(DriveAppProviderTest, CreateUrlApp) {
   WaitForPendingDriveAppConverters();
 
   // An Url app should be created.
-  const Extension* chrome_app =
+  scoped_refptr<const Extension> chrome_app =
       ExtensionRegistry::Get(profile())->GetExtensionById(
           mapping()->GetChromeApp(kDriveAppId), ExtensionRegistry::EVERYTHING);
   ASSERT_TRUE(chrome_app);
   EXPECT_EQ(kDriveAppName, chrome_app->name());
   EXPECT_TRUE(chrome_app->is_hosted_app());
   EXPECT_TRUE(chrome_app->from_bookmark());
-  EXPECT_EQ(GURL(kLaunchUrl), AppLaunchInfo::GetLaunchWebURL(chrome_app));
+  EXPECT_EQ(GURL(kLaunchUrl), AppLaunchInfo::GetLaunchWebURL(chrome_app.get()));
 
   EXPECT_EQ(chrome_app->id(), mapping()->GetChromeApp(kDriveAppId));
   EXPECT_TRUE(mapping()->IsChromeAppGenerated(chrome_app->id()));
@@ -279,7 +279,7 @@ IN_PROC_BROWSER_TEST_F(DriveAppProviderTest, MatchingChromeAppInstalled) {
   WaitForPendingDriveAppConverters();
 
   // An Url app should be created.
-  const Extension* url_app =
+  scoped_refptr<const Extension> url_app =
       ExtensionRegistry::Get(profile())->GetExtensionById(
           mapping()->GetChromeApp(kDriveAppId), ExtensionRegistry::EVERYTHING);
   EXPECT_TRUE(url_app->is_hosted_app());
@@ -330,7 +330,7 @@ IN_PROC_BROWSER_TEST_F(DriveAppProviderTest,
 IN_PROC_BROWSER_TEST_F(DriveAppProviderTest,
                        DisconnectDriveAppPreserveChromeApp) {
   // Prepare an existing chrome app.
-  const Extension* chrome_app = InstallChromeApp(1);
+  scoped_refptr<const Extension> chrome_app = InstallChromeApp(1);
   ASSERT_TRUE(chrome_app);
 
   // Prepare a Drive app that matches the chrome app id.
@@ -382,14 +382,14 @@ IN_PROC_BROWSER_TEST_F(DriveAppProviderTest, DriveAppChanged) {
 
   // An Url app should be created.
   const std::string url_app_id = mapping()->GetChromeApp(kDriveAppId);
-  const Extension* url_app =
-      ExtensionRegistry::Get(profile())
-          ->GetExtensionById(url_app_id, ExtensionRegistry::EVERYTHING);
+  scoped_refptr<const Extension> url_app =
+      ExtensionRegistry::Get(profile())->GetExtensionById(
+          url_app_id, ExtensionRegistry::EVERYTHING);
   ASSERT_TRUE(url_app);
   EXPECT_EQ(kDriveAppName, url_app->name());
   EXPECT_TRUE(url_app->is_hosted_app());
   EXPECT_TRUE(url_app->from_bookmark());
-  EXPECT_EQ(GURL(kLaunchUrl), AppLaunchInfo::GetLaunchWebURL(url_app));
+  EXPECT_EQ(GURL(kLaunchUrl), AppLaunchInfo::GetLaunchWebURL(url_app.get()));
   EXPECT_TRUE(mapping()->IsChromeAppGenerated(url_app_id));
 
   // Register the Drive app with a different name and URL.
@@ -411,15 +411,15 @@ IN_PROC_BROWSER_TEST_F(DriveAppProviderTest, DriveAppChanged) {
   EXPECT_NE(new_url_app_id, url_app_id);
   EXPECT_TRUE(mapping()->IsChromeAppGenerated(new_url_app_id));
 
-  const Extension* new_url_app =
-      ExtensionRegistry::Get(profile())
-          ->GetExtensionById(new_url_app_id, ExtensionRegistry::EVERYTHING);
+  scoped_refptr<const Extension> new_url_app =
+      ExtensionRegistry::Get(profile())->GetExtensionById(
+          new_url_app_id, ExtensionRegistry::EVERYTHING);
   ASSERT_TRUE(new_url_app);
   EXPECT_EQ(kAnotherName, new_url_app->name());
   EXPECT_TRUE(new_url_app->is_hosted_app());
   EXPECT_TRUE(new_url_app->from_bookmark());
   EXPECT_EQ(GURL(kAnotherLaunchUrl),
-            AppLaunchInfo::GetLaunchWebURL(new_url_app));
+            AppLaunchInfo::GetLaunchWebURL(new_url_app.get()));
 }
 
 // An existing URL app is not changed when underlying drive app data (name and
@@ -432,9 +432,9 @@ IN_PROC_BROWSER_TEST_F(DriveAppProviderTest, NoChange) {
   WaitForPendingDriveAppConverters();
 
   const std::string url_app_id = mapping()->GetChromeApp(kDriveAppId);
-  const Extension* url_app =
-      ExtensionRegistry::Get(profile())
-          ->GetExtensionById(url_app_id, ExtensionRegistry::EVERYTHING);
+  scoped_refptr<const Extension> url_app =
+      ExtensionRegistry::Get(profile())->GetExtensionById(
+          url_app_id, ExtensionRegistry::EVERYTHING);
 
   // Refresh with no actual change.
   RefreshDriveAppRegistry();
@@ -444,9 +444,9 @@ IN_PROC_BROWSER_TEST_F(DriveAppProviderTest, NoChange) {
   const std::string new_url_app_id = mapping()->GetChromeApp(kDriveAppId);
   EXPECT_EQ(new_url_app_id, url_app_id);
 
-  const Extension* new_url_app =
-      ExtensionRegistry::Get(profile())
-          ->GetExtensionById(new_url_app_id, ExtensionRegistry::EVERYTHING);
+  scoped_refptr<const Extension> new_url_app =
+      ExtensionRegistry::Get(profile())->GetExtensionById(
+          new_url_app_id, ExtensionRegistry::EVERYTHING);
   EXPECT_EQ(url_app, new_url_app);
 }
 

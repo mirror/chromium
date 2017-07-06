@@ -113,16 +113,17 @@ class ExtensionStorageMonitorTest : public ExtensionBrowserTest {
     storage_monitor_->enable_for_all_extensions_ = false;
   }
 
-  const Extension* InitWriteDataApp() {
+  scoped_refptr<const Extension> InitWriteDataApp() {
     base::FilePath path = test_data_dir_.AppendASCII(kWriteDataApp);
-    const Extension* extension = InstallExtension(path, 1);
+    scoped_refptr<const Extension> extension = InstallExtension(path, 1);
     EXPECT_TRUE(extension);
     return extension;
   }
 
-  const Extension* CreateHostedApp(const std::string& name,
-                                   GURL app_url,
-                                   std::vector<std::string> permissions) {
+  scoped_refptr<const Extension> CreateHostedApp(
+      const std::string& name,
+      GURL app_url,
+      std::vector<std::string> permissions) {
     auto dir = base::MakeUnique<TestExtensionDir>();
 
     url::Replacements<char> clear_port;
@@ -148,7 +149,8 @@ class ExtensionStorageMonitorTest : public ExtensionBrowserTest {
     manifest.Set("permissions", permissions_builder.Build());
     dir->WriteManifest(manifest.ToJSON());
 
-    const Extension* extension = LoadExtension(dir->UnpackedPath());
+    scoped_refptr<const Extension> extension =
+        LoadExtension(dir->UnpackedPath());
     EXPECT_TRUE(extension);
     temp_dirs_.push_back(std::move(dir));
     return extension;
@@ -267,46 +269,49 @@ class ExtensionStorageMonitorTest : public ExtensionBrowserTest {
 // Control - No notifications should be shown if usage remains under the
 // threshold.
 IN_PROC_BROWSER_TEST_F(ExtensionStorageMonitorTest, UnderThreshold) {
-  const Extension* extension = InitWriteDataApp();
+  scoped_refptr<const Extension> extension = InitWriteDataApp();
   ASSERT_TRUE(extension);
-  WriteBytesNotExpectingNotification(extension, 1);
+  WriteBytesNotExpectingNotification(extension.get(), 1);
 }
 
 // Ensure a notification is shown when usage reaches the first threshold.
 IN_PROC_BROWSER_TEST_F(ExtensionStorageMonitorTest, ExceedInitialThreshold) {
-  const Extension* extension = InitWriteDataApp();
+  scoped_refptr<const Extension> extension = InitWriteDataApp();
   ASSERT_TRUE(extension);
-  WriteBytesExpectingNotification(extension, GetInitialExtensionThreshold());
+  WriteBytesExpectingNotification(extension.get(),
+                                  GetInitialExtensionThreshold());
 }
 
 // Ensure a notification is shown when usage immediately exceeds double the
 // first threshold.
 IN_PROC_BROWSER_TEST_F(ExtensionStorageMonitorTest, DoubleInitialThreshold) {
-  const Extension* extension = InitWriteDataApp();
+  scoped_refptr<const Extension> extension = InitWriteDataApp();
   ASSERT_TRUE(extension);
-  WriteBytesExpectingNotification(extension,
+  WriteBytesExpectingNotification(extension.get(),
                                   GetInitialExtensionThreshold() * 2);
 }
 
 // Ensure that notifications are not fired if the next threshold has not been
 // reached.
 IN_PROC_BROWSER_TEST_F(ExtensionStorageMonitorTest, ThrottleNotifications) {
-  const Extension* extension = InitWriteDataApp();
+  scoped_refptr<const Extension> extension = InitWriteDataApp();
   ASSERT_TRUE(extension);
 
   // Exceed the first threshold.
-  WriteBytesExpectingNotification(extension, GetInitialExtensionThreshold());
+  WriteBytesExpectingNotification(extension.get(),
+                                  GetInitialExtensionThreshold());
 
   // Stay within the next threshold.
-  WriteBytesNotExpectingNotification(extension, 1);
+  WriteBytesNotExpectingNotification(extension.get(), 1);
 }
 
 // Verify that notifications are disabled when the user clicks the action button
 // in the notification.
 IN_PROC_BROWSER_TEST_F(ExtensionStorageMonitorTest, UserDisabledNotifications) {
-  const Extension* extension = InitWriteDataApp();
+  scoped_refptr<const Extension> extension = InitWriteDataApp();
   ASSERT_TRUE(extension);
-  WriteBytesExpectingNotification(extension, GetInitialExtensionThreshold());
+  WriteBytesExpectingNotification(extension.get(),
+                                  GetInitialExtensionThreshold());
 
   EXPECT_TRUE(IsStorageNotificationEnabled(extension->id()));
 
@@ -323,7 +328,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionStorageMonitorTest, UserDisabledNotifications) {
   int64_t next_data_size = next_threshold - GetInitialExtensionThreshold();
   ASSERT_GT(next_data_size, 0);
 
-  WriteBytesNotExpectingNotification(extension, next_data_size);
+  WriteBytesNotExpectingNotification(extension.get(), next_data_size);
 }
 
 // Ensure that monitoring is disabled for installed extensions if
@@ -333,9 +338,10 @@ IN_PROC_BROWSER_TEST_F(ExtensionStorageMonitorTest,
                        DisableForInstalledExtensions) {
   DisableForInstalledExtensions();
 
-  const Extension* extension = InitWriteDataApp();
+  scoped_refptr<const Extension> extension = InitWriteDataApp();
   ASSERT_TRUE(extension);
-  WriteBytesNotExpectingNotification(extension, GetInitialExtensionThreshold());
+  WriteBytesNotExpectingNotification(extension.get(),
+                                     GetInitialExtensionThreshold());
 }
 
 // Regression test for https://crbug.com/716426
@@ -345,15 +351,15 @@ IN_PROC_BROWSER_TEST_F(ExtensionStorageMonitorTest,
 
   GURL url = embedded_test_server()->GetURL(
       "chromium.org", "/extensions/storage_monitor/hosted_apps/one/index.html");
-  const Extension* app =
+  scoped_refptr<const Extension> app =
       CreateHostedApp("Hosted App", url, {"unlimitedStorage"});
 
   EXPECT_NO_FATAL_FAILURE(WriteBytesExpectingNotification(
-      app, GetInitialExtensionThreshold(), "TEMPORARY"));
+      app.get(), GetInitialExtensionThreshold(), "TEMPORARY"));
   EXPECT_NO_FATAL_FAILURE(WriteBytesNotExpectingNotification(
-      app, GetInitialExtensionThreshold(), "PERSISTENT"));
+      app.get(), GetInitialExtensionThreshold(), "PERSISTENT"));
   EXPECT_NO_FATAL_FAILURE(WriteBytesExpectingNotification(
-      app, GetInitialExtensionThreshold(), "TEMPORARY"));
+      app.get(), GetInitialExtensionThreshold(), "TEMPORARY"));
 
   // Bug 716426 was a shutdown crash due to not removing a
   // storage::StorageObserver registration before deleting the observer. To
@@ -367,7 +373,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionStorageMonitorTest,
   // filesystem. Note that it's not a hosted app anymore -- it's just a webpage.
   // Bug 716426 caused this to crash the browser.
   EXPECT_NO_FATAL_FAILURE(WriteBytesNotExpectingNotification(
-      app, GetInitialExtensionThreshold(), "TEMPORARY"));
+      app.get(), GetInitialExtensionThreshold(), "TEMPORARY"));
 }
 
 // Exercises the case where two hosted apps are same-origin but have non-
@@ -378,25 +384,27 @@ IN_PROC_BROWSER_TEST_F(ExtensionStorageMonitorTest, TwoHostedAppsInSameOrigin) {
 
   GURL url1 = embedded_test_server()->GetURL(
       "chromium.org", "/extensions/storage_monitor/hosted_apps/one/index.html");
-  const Extension* app1 = CreateHostedApp("App 1", url1, {"unlimitedStorage"});
+  scoped_refptr<const Extension> app1 =
+      CreateHostedApp("App 1", url1, {"unlimitedStorage"});
 
   GURL url2 = embedded_test_server()->GetURL(
       "chromium.org", "/extensions/storage_monitor/hosted_apps/two/index.html");
-  const Extension* app2 = CreateHostedApp("App 2", url2, {"unlimitedStorage"});
+  scoped_refptr<const Extension> app2 =
+      CreateHostedApp("App 2", url2, {"unlimitedStorage"});
 
   EXPECT_EQ(url1.GetOrigin(), url2.GetOrigin());
 
-  EXPECT_NO_FATAL_FAILURE(
-      WriteBytesExpectingNotification(app1, GetInitialExtensionThreshold()));
   EXPECT_NO_FATAL_FAILURE(WriteBytesExpectingNotification(
-      app2, GetInitialExtensionThreshold() * 2));
+      app1.get(), GetInitialExtensionThreshold()));
+  EXPECT_NO_FATAL_FAILURE(WriteBytesExpectingNotification(
+      app2.get(), GetInitialExtensionThreshold() * 2));
 
   // Disable app2. We should still be monitoring the origin on behalf of app1.
   DisableExtension(app2->id());
 
   // Writing a bunch of data in app1 should trigger the warning.
   EXPECT_NO_FATAL_FAILURE(WriteBytesExpectingNotification(
-      app1, GetInitialExtensionThreshold() * 4));
+      app1.get(), GetInitialExtensionThreshold() * 4));
 }
 
 // Verify that notifications are disabled when the user clicks the action button
@@ -404,9 +412,10 @@ IN_PROC_BROWSER_TEST_F(ExtensionStorageMonitorTest, TwoHostedAppsInSameOrigin) {
 // Flaky: https://crbug.com/617801
 IN_PROC_BROWSER_TEST_F(ExtensionStorageMonitorTest,
                        DISABLED_UninstallExtension) {
-  const Extension* extension = InitWriteDataApp();
+  scoped_refptr<const Extension> extension = InitWriteDataApp();
   ASSERT_TRUE(extension);
-  WriteBytesExpectingNotification(extension, GetInitialExtensionThreshold());
+  WriteBytesExpectingNotification(extension.get(),
+                                  GetInitialExtensionThreshold());
 
   // Fake clicking the notification button to uninstall and accepting the
   // uninstall.

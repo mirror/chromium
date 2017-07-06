@@ -101,7 +101,7 @@ IN_PROC_BROWSER_TEST_F(DialAPITest, NonWhitelistedExtension) {
   catcher.RestrictToBrowserContext(browser()->profile());
 
   ExtensionTestMessageListener listener("ready", true);
-  const Extension* extension =
+  scoped_refptr<const Extension> extension =
       LoadExtensionWithFlags(test_data_dir_.AppendASCII("dial/whitelist"),
                              ExtensionBrowserTest::kFlagIgnoreManifestWarnings);
   // We should have a DIAL API not available warning.

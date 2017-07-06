@@ -147,7 +147,7 @@ class NetworkingConfigTest
   NetworkPortalDetectorImpl* network_portal_detector_ = nullptr;
 
  private:
-  const extensions::Extension* extension_ = nullptr;
+  scoped_refptr<const extensions::Extension> extension_ = nullptr;
 };
 
 IN_PROC_BROWSER_TEST_F(NetworkingConfigTest, ApiAvailability) {

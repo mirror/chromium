@@ -34,7 +34,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionBrowserTest, DISABLED_OptionsPage) {
   ExtensionRegistry* registry = ExtensionRegistry::Get(browser()->profile());
   size_t installed_extensions = registry->enabled_extensions().size();
   // Install an extension with an options page.
-  const Extension* extension =
+  scoped_refptr<const Extension> extension =
       InstallExtension(test_data_dir_.AppendASCII("options.crx"), 1);
   ASSERT_TRUE(extension);
   EXPECT_EQ(installed_extensions + 1, registry->enabled_extensions().size());

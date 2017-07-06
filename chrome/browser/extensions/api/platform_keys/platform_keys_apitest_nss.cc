@@ -150,7 +150,7 @@ class PlatformKeysTest : public ExtensionApiTest {
   }
 
   void RegisterClient1AsCorporateKey() {
-    const extensions::Extension* const fake_gen_extension =
+    const scoped_refptr<const extensions::Extension> fake_gen_extension =
         LoadExtension(test_data_dir_.AppendASCII("platform_keys_genkey"));
 
     policy::ProfilePolicyConnector* const policy_connector =
@@ -177,7 +177,7 @@ class PlatformKeysTest : public ExtensionApiTest {
 
   scoped_refptr<net::X509Certificate> client_cert1_;
   scoped_refptr<net::X509Certificate> client_cert2_;
-  const extensions::Extension* extension_;
+  scoped_refptr<const extensions::Extension> extension_;
 
  private:
   void SetupInitialEmptyPolicy() {

@@ -52,7 +52,7 @@ class ExtensionInstallDialogViewTestBase : public ExtensionBrowserTest {
   content::WebContents* web_contents() { return web_contents_; }
 
  private:
-  const extensions::Extension* extension_;
+  scoped_refptr<const extensions::Extension> extension_;
   ExtensionInstallPrompt::PromptType prompt_type_;
   content::WebContents* web_contents_;
 
@@ -76,7 +76,7 @@ std::unique_ptr<ExtensionInstallPrompt::Prompt>
 ExtensionInstallDialogViewTestBase::CreatePrompt() {
   std::unique_ptr<ExtensionInstallPrompt::Prompt> prompt(
       new ExtensionInstallPrompt::Prompt(prompt_type_));
-  prompt->set_extension(extension_);
+  prompt->set_extension(extension_.get());
 
   std::unique_ptr<ExtensionIconManager> icon_manager(
       new ExtensionIconManager());

@@ -281,9 +281,9 @@ IN_PROC_BROWSER_TEST_F(BrowserActionInteractiveTest,
   if (!ShouldRunPopupTest())
     return;
 
-  const Extension* extension =
-      LoadExtensionIncognito(test_data_dir_.AppendASCII("browser_action").
-          AppendASCII("open_popup_background"));
+  scoped_refptr<const Extension> extension =
+      LoadExtensionIncognito(test_data_dir_.AppendASCII("browser_action")
+                                 .AppendASCII("open_popup_background"));
   ASSERT_TRUE(extension);
   ExtensionTestMessageListener listener(false);
   listener.set_extension_id(extension->id());
@@ -312,7 +312,7 @@ IN_PROC_BROWSER_TEST_F(BrowserActionInteractiveTest,
   // Load a first extension that can open a popup.
   ASSERT_TRUE(LoadExtension(test_data_dir_.AppendASCII(
       "browser_action/popup")));
-  const Extension* extension = GetSingleLoadedExtension();
+  scoped_refptr<const Extension> extension = GetSingleLoadedExtension();
   ASSERT_TRUE(extension) << message_;
 
   ExtensionTestMessageListener listener("ready", true);
@@ -372,7 +372,7 @@ IN_PROC_BROWSER_TEST_F(BrowserActionInteractiveTest,
   // Load a first extension that can open a popup.
   ASSERT_TRUE(LoadExtension(test_data_dir_.AppendASCII(
       "browser_action/popup")));
-  const Extension* extension = GetSingleLoadedExtension();
+  scoped_refptr<const Extension> extension = GetSingleLoadedExtension();
   ASSERT_TRUE(extension) << message_;
   OpenPopupViaToolbar();
   ClosePopupViaFocusLoss();
@@ -415,8 +415,10 @@ IN_PROC_BROWSER_TEST_F(BrowserActionInteractiveTest,
       browser()->tab_strip_model()->GetActiveWebContents();
   ASSERT_TRUE(active_web_contents);
   GURL url = active_web_contents->GetLastCommittedURL();
-  const Extension* extension = ExtensionRegistry::Get(browser()->profile())->
-      enabled_extensions().GetExtensionOrAppByURL(url);
+  scoped_refptr<const Extension> extension =
+      ExtensionRegistry::Get(browser()->profile())
+          ->enabled_extensions()
+          .GetExtensionOrAppByURL(url);
   ASSERT_TRUE(extension);
 
   // Finally, uninstall the extension, which causes the view to be deleted and
@@ -440,7 +442,7 @@ IN_PROC_BROWSER_TEST_F(BrowserActionInteractiveTest,
   // Load a first extension that can open a popup.
   ASSERT_TRUE(LoadExtension(test_data_dir_.AppendASCII(
       "browser_action/popup")));
-  const Extension* extension = GetSingleLoadedExtension();
+  scoped_refptr<const Extension> extension = GetSingleLoadedExtension();
   ASSERT_TRUE(extension) << message_;
 
   // Open an extension popup by clicking the browser action button.

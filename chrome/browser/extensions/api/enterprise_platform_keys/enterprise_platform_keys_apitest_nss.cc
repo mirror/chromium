@@ -502,7 +502,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionApiTest,
       test_data_dir_.AppendASCII("enterprise_platform_keys");
   extensions::ExtensionRegistry* registry =
       extensions::ExtensionRegistry::Get(profile());
-  const extensions::Extension* extension =
+  scoped_refptr<const extensions::Extension> extension =
       GetExtensionByPath(registry->enabled_extensions(), extension_path);
   ASSERT_FALSE(extension->install_warnings().empty());
   EXPECT_EQ(

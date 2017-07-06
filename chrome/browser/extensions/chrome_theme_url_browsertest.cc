@@ -18,7 +18,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionBrowserTest,
 
   // First try loading the extension as a non-component extension.  The
   // chrome://theme/ image referenced in the extension should fail to load.
-  const Extension* extension = LoadExtension(extension_path);
+  scoped_refptr<const Extension> extension = LoadExtension(extension_path);
   ASSERT_TRUE(extension);
   EXPECT_TRUE(listener.WaitUntilSatisfied());
   EXPECT_EQ("not loaded", listener.message());

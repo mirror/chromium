@@ -389,8 +389,9 @@ class ShelfAppBrowserTestNoDefaultBrowser : public ShelfAppBrowserTest {
 // Test that we can launch a platform app and get a running item.
 IN_PROC_BROWSER_TEST_F(LauncherPlatformAppBrowserTest, LaunchUnpinned) {
   int item_count = shelf_model()->item_count();
-  const Extension* extension = LoadAndLaunchPlatformApp("launch", "Launched");
-  AppWindow* window = CreateAppWindow(browser()->profile(), extension);
+  scoped_refptr<const Extension> extension =
+      LoadAndLaunchPlatformApp("launch", "Launched");
+  AppWindow* window = CreateAppWindow(browser()->profile(), extension.get());
   ++item_count;
   ASSERT_EQ(item_count, shelf_model()->item_count());
   const ash::ShelfItem& item = GetLastLauncherItem();
@@ -406,7 +407,8 @@ IN_PROC_BROWSER_TEST_F(LauncherPlatformAppBrowserTest, LaunchPinned) {
   int item_count = shelf_model()->item_count();
 
   // First get app_id.
-  const Extension* extension = LoadAndLaunchPlatformApp("launch", "Launched");
+  scoped_refptr<const Extension> extension =
+      LoadAndLaunchPlatformApp("launch", "Launched");
   const std::string app_id = extension->id();
 
   // Then create a shortcut.
@@ -419,7 +421,7 @@ IN_PROC_BROWSER_TEST_F(LauncherPlatformAppBrowserTest, LaunchPinned) {
   EXPECT_EQ(ash::STATUS_CLOSED, item.status);
 
   // Open a window. Confirm the item is now running.
-  AppWindow* window = CreateAppWindow(browser()->profile(), extension);
+  AppWindow* window = CreateAppWindow(browser()->profile(), extension.get());
   ash::wm::ActivateWindow(window->GetNativeWindow());
   ASSERT_EQ(item_count, shelf_model()->item_count());
   item = *shelf_model()->ItemByID(shortcut_id);
@@ -437,8 +439,9 @@ IN_PROC_BROWSER_TEST_F(LauncherPlatformAppBrowserTest, LaunchPinned) {
 IN_PROC_BROWSER_TEST_F(LauncherPlatformAppBrowserTest, PinRunning) {
   // Run.
   int item_count = shelf_model()->item_count();
-  const Extension* extension = LoadAndLaunchPlatformApp("launch", "Launched");
-  AppWindow* window = CreateAppWindow(browser()->profile(), extension);
+  scoped_refptr<const Extension> extension =
+      LoadAndLaunchPlatformApp("launch", "Launched");
+  AppWindow* window = CreateAppWindow(browser()->profile(), extension.get());
   ++item_count;
   ASSERT_EQ(item_count, shelf_model()->item_count());
   const ash::ShelfItem& item1 = GetLastLauncherItem();
@@ -478,7 +481,8 @@ IN_PROC_BROWSER_TEST_F(LauncherPlatformAppBrowserTest, UnpinRunning) {
   int item_count = shelf_model()->item_count();
 
   // First get app_id.
-  const Extension* extension = LoadAndLaunchPlatformApp("launch", "Launched");
+  scoped_refptr<const Extension> extension =
+      LoadAndLaunchPlatformApp("launch", "Launched");
   const std::string app_id = extension->id();
 
   // Then create a shortcut.
@@ -500,7 +504,7 @@ IN_PROC_BROWSER_TEST_F(LauncherPlatformAppBrowserTest, UnpinRunning) {
             shelf_model()->ItemIndexByID(foo_id));
 
   // Open a window. Confirm the item is now running.
-  AppWindow* window = CreateAppWindow(browser()->profile(), extension);
+  AppWindow* window = CreateAppWindow(browser()->profile(), extension.get());
   ash::wm::ActivateWindow(window->GetNativeWindow());
   ASSERT_EQ(item_count, shelf_model()->item_count());
   item = *shelf_model()->ItemByID(shortcut_id);
@@ -528,8 +532,9 @@ IN_PROC_BROWSER_TEST_F(LauncherPlatformAppBrowserTest, MultipleWindows) {
   int item_count = shelf_model()->item_count();
 
   // Run the application; a shelf item should be added with one app menu item.
-  const Extension* extension = LoadAndLaunchPlatformApp("launch", "Launched");
-  AppWindow* window1 = CreateAppWindow(browser()->profile(), extension);
+  scoped_refptr<const Extension> extension =
+      LoadAndLaunchPlatformApp("launch", "Launched");
+  AppWindow* window1 = CreateAppWindow(browser()->profile(), extension.get());
   ASSERT_EQ(item_count + 1, shelf_model()->item_count());
   const ash::ShelfItem& item1 = GetLastLauncherItem();
   ash::ShelfID item_id = item1.id;
@@ -538,7 +543,7 @@ IN_PROC_BROWSER_TEST_F(LauncherPlatformAppBrowserTest, MultipleWindows) {
   EXPECT_EQ(1u, controller_->GetAppMenuItemsForTesting(item1).size());
 
   // Add a second window; confirm the shelf item stays; check the app menu.
-  AppWindow* window2 = CreateAppWindow(browser()->profile(), extension);
+  AppWindow* window2 = CreateAppWindow(browser()->profile(), extension.get());
   ASSERT_EQ(item_count + 1, shelf_model()->item_count());
   const ash::ShelfItem& item2 = *shelf_model()->ItemByID(item_id);
   EXPECT_EQ(ash::STATUS_ACTIVE, item2.status);
@@ -560,8 +565,9 @@ IN_PROC_BROWSER_TEST_F(LauncherPlatformAppBrowserTest, MultipleApps) {
   int item_count = shelf_model()->item_count();
 
   // First run app.
-  const Extension* extension1 = LoadAndLaunchPlatformApp("launch", "Launched");
-  AppWindow* window1 = CreateAppWindow(browser()->profile(), extension1);
+  scoped_refptr<const Extension> extension1 =
+      LoadAndLaunchPlatformApp("launch", "Launched");
+  AppWindow* window1 = CreateAppWindow(browser()->profile(), extension1.get());
   ++item_count;
   ASSERT_EQ(item_count, shelf_model()->item_count());
   const ash::ShelfItem& item1 = GetLastLauncherItem();
@@ -570,9 +576,9 @@ IN_PROC_BROWSER_TEST_F(LauncherPlatformAppBrowserTest, MultipleApps) {
   EXPECT_EQ(ash::STATUS_ACTIVE, item1.status);
 
   // Then run second app.
-  const Extension* extension2 =
+  scoped_refptr<const Extension> extension2 =
       LoadAndLaunchPlatformApp("launch_2", "Launched");
-  AppWindow* window2 = CreateAppWindow(browser()->profile(), extension2);
+  AppWindow* window2 = CreateAppWindow(browser()->profile(), extension2.get());
   ++item_count;
   ASSERT_EQ(item_count, shelf_model()->item_count());
   const ash::ShelfItem& item2 = GetLastLauncherItem();
@@ -602,8 +608,9 @@ IN_PROC_BROWSER_TEST_F(LauncherPlatformAppBrowserTest, WindowActivation) {
   int item_count = shelf_model()->item_count();
 
   // First run app.
-  const Extension* extension1 = LoadAndLaunchPlatformApp("launch", "Launched");
-  AppWindow* window1 = CreateAppWindow(browser()->profile(), extension1);
+  scoped_refptr<const Extension> extension1 =
+      LoadAndLaunchPlatformApp("launch", "Launched");
+  AppWindow* window1 = CreateAppWindow(browser()->profile(), extension1.get());
   ++item_count;
   ASSERT_EQ(item_count, shelf_model()->item_count());
   const ash::ShelfItem& item1 = GetLastLauncherItem();
@@ -612,9 +619,9 @@ IN_PROC_BROWSER_TEST_F(LauncherPlatformAppBrowserTest, WindowActivation) {
   EXPECT_EQ(ash::STATUS_ACTIVE, item1.status);
 
   // Then run second app.
-  const Extension* extension2 =
+  scoped_refptr<const Extension> extension2 =
       LoadAndLaunchPlatformApp("launch_2", "Launched");
-  AppWindow* window2 = CreateAppWindow(browser()->profile(), extension2);
+  AppWindow* window2 = CreateAppWindow(browser()->profile(), extension2.get());
   ++item_count;
   ASSERT_EQ(item_count, shelf_model()->item_count());
   const ash::ShelfItem& item2 = GetLastLauncherItem();
@@ -640,7 +647,7 @@ IN_PROC_BROWSER_TEST_F(LauncherPlatformAppBrowserTest, WindowActivation) {
   EXPECT_TRUE(ash::wm::IsActiveWindow(window2->GetNativeWindow()));
 
   // Add window for app1. This will activate it.
-  AppWindow* window1b = CreateAppWindow(browser()->profile(), extension1);
+  AppWindow* window1b = CreateAppWindow(browser()->profile(), extension1.get());
   ash::wm::ActivateWindow(window1b->GetNativeWindow());
   EXPECT_FALSE(ash::wm::IsActiveWindow(window1->GetNativeWindow()));
   EXPECT_FALSE(ash::wm::IsActiveWindow(window2->GetNativeWindow()));
@@ -683,8 +690,9 @@ IN_PROC_BROWSER_TEST_F(LauncherPlatformAppBrowserTest, WindowActivation) {
 IN_PROC_BROWSER_TEST_F(LauncherPlatformAppBrowserTest,
                        PackagedAppClickBehaviorInMinimizeMode) {
   // Launch one platform app and create a window for it.
-  const Extension* extension1 = LoadAndLaunchPlatformApp("launch", "Launched");
-  AppWindow* window1 = CreateAppWindow(browser()->profile(), extension1);
+  scoped_refptr<const Extension> extension1 =
+      LoadAndLaunchPlatformApp("launch", "Launched");
+  AppWindow* window1 = CreateAppWindow(browser()->profile(), extension1.get());
   EXPECT_TRUE(window1->GetNativeWindow()->IsVisible());
   EXPECT_TRUE(window1->GetBaseWindow()->IsActive());
 
@@ -718,7 +726,7 @@ IN_PROC_BROWSER_TEST_F(LauncherPlatformAppBrowserTest,
 
   // Creating a second window of the same type should change the behavior so
   // that a click does not change the activation state.
-  AppWindow* window1a = CreateAppWindow(browser()->profile(), extension1);
+  AppWindow* window1a = CreateAppWindow(browser()->profile(), extension1.get());
   EXPECT_TRUE(window1a->GetNativeWindow()->IsVisible());
   EXPECT_TRUE(window1a->GetBaseWindow()->IsActive());
   // The first click does nothing.
@@ -741,12 +749,13 @@ IN_PROC_BROWSER_TEST_F(LauncherPlatformAppBrowserTest, AppPanel) {
   base::CommandLine::ForCurrentProcess()->AppendSwitch(
       extensions::switches::kEnableExperimentalExtensionApis);
   // Launch a platform app and create a panel window for it.
-  const Extension* extension1 = LoadAndLaunchPlatformApp("launch", "Launched");
+  scoped_refptr<const Extension> extension1 =
+      LoadAndLaunchPlatformApp("launch", "Launched");
   AppWindow::CreateParams params;
   params.window_type = AppWindow::WINDOW_TYPE_PANEL;
   params.focused = false;
   AppWindow* panel =
-      CreateAppWindowFromParams(browser()->profile(), extension1, params);
+      CreateAppWindowFromParams(browser()->profile(), extension1.get(), params);
   EXPECT_TRUE(panel->GetNativeWindow()->IsVisible());
   // Panels should not be active by default.
   EXPECT_FALSE(panel->GetBaseWindow()->IsActive());
@@ -779,12 +788,13 @@ IN_PROC_BROWSER_TEST_F(LauncherPlatformAppBrowserTest, AppPanelClickBehavior) {
   base::CommandLine::ForCurrentProcess()->AppendSwitch(
       extensions::switches::kEnableExperimentalExtensionApis);
   // Launch a platform app and create a panel window for it.
-  const Extension* extension1 = LoadAndLaunchPlatformApp("launch", "Launched");
+  scoped_refptr<const Extension> extension1 =
+      LoadAndLaunchPlatformApp("launch", "Launched");
   AppWindow::CreateParams params;
   params.window_type = AppWindow::WINDOW_TYPE_PANEL;
   params.focused = false;
   AppWindow* panel =
-      CreateAppWindowFromParams(browser()->profile(), extension1, params);
+      CreateAppWindowFromParams(browser()->profile(), extension1.get(), params);
   EXPECT_TRUE(panel->GetNativeWindow()->IsVisible());
   // Panels should not be active by default.
   EXPECT_FALSE(panel->GetBaseWindow()->IsActive());
@@ -814,8 +824,9 @@ IN_PROC_BROWSER_TEST_F(LauncherPlatformAppBrowserTest, BrowserActivation) {
   int item_count = shelf_model()->item_count();
 
   // First run app.
-  const Extension* extension1 = LoadAndLaunchPlatformApp("launch", "Launched");
-  CreateAppWindow(browser()->profile(), extension1);
+  scoped_refptr<const Extension> extension1 =
+      LoadAndLaunchPlatformApp("launch", "Launched");
+  CreateAppWindow(browser()->profile(), extension1.get());
   ++item_count;
   ASSERT_EQ(item_count, shelf_model()->item_count());
   const ash::ShelfItem& item1 = GetLastLauncherItem();
@@ -1095,7 +1106,7 @@ IN_PROC_BROWSER_TEST_F(ShelfAppBrowserTest, LaunchMaximized) {
 IN_PROC_BROWSER_TEST_F(ShelfAppBrowserTest, ActivateApp) {
   TabStripModel* tab_strip = browser()->tab_strip_model();
   int tab_count = tab_strip->count();
-  const Extension* extension =
+  scoped_refptr<const Extension> extension =
       LoadExtension(test_data_dir_.AppendASCII("app1"));
 
   controller_->ActivateApp(extension->id(), ash::LAUNCH_FROM_UNKNOWN, 0);
@@ -1400,7 +1411,7 @@ IN_PROC_BROWSER_TEST_F(ShelfAppBrowserTest, AsyncActivationStateCheck) {
 // before it was closed.
 IN_PROC_BROWSER_TEST_F(ShelfAppBrowserTest, AppWindowRestoreBehaviorTest) {
   // Open an App, maximized its window, and close it.
-  const Extension* extension =
+  scoped_refptr<const Extension> extension =
       LoadAndLaunchExtension("app1", extensions::LAUNCH_CONTAINER_WINDOW,
                              WindowOpenDisposition::NEW_WINDOW);
   Browser* app_browser = FindBrowserForApp(extension->id());
@@ -1536,9 +1547,10 @@ IN_PROC_BROWSER_TEST_F(ShelfAppBrowserTest, AltNumberTabsTabbing) {
 // the items at hand.
 IN_PROC_BROWSER_TEST_F(LauncherPlatformAppBrowserTest, AltNumberAppsTabbing) {
   // First run app.
-  const Extension* extension1 = LoadAndLaunchPlatformApp("launch", "Launched");
+  scoped_refptr<const Extension> extension1 =
+      LoadAndLaunchPlatformApp("launch", "Launched");
   ui::BaseWindow* window1 =
-      CreateAppWindow(browser()->profile(), extension1)->GetBaseWindow();
+      CreateAppWindow(browser()->profile(), extension1.get())->GetBaseWindow();
   const ash::ShelfItem& item1 = GetLastLauncherItem();
   ash::ShelfID app_id = item1.id;
   int app_index = shelf_model()->ItemIndexByID(app_id);
@@ -1546,10 +1558,10 @@ IN_PROC_BROWSER_TEST_F(LauncherPlatformAppBrowserTest, AltNumberAppsTabbing) {
   EXPECT_EQ(ash::TYPE_APP, item1.type);
   EXPECT_EQ(ash::STATUS_ACTIVE, item1.status);
 
-  const Extension* extension2 =
+  scoped_refptr<const Extension> extension2 =
       LoadAndLaunchPlatformApp("launch_2", "Launched");
   ui::BaseWindow* window2 =
-      CreateAppWindow(browser()->profile(), extension2)->GetBaseWindow();
+      CreateAppWindow(browser()->profile(), extension2.get())->GetBaseWindow();
 
   // By now the browser should be active. Issue Alt keystrokes several times to
   // see that we stay on that application.
@@ -1560,7 +1572,7 @@ IN_PROC_BROWSER_TEST_F(LauncherPlatformAppBrowserTest, AltNumberAppsTabbing) {
   EXPECT_TRUE(window1->IsActive());
 
   ui::BaseWindow* window1a =
-      CreateAppWindow(browser()->profile(), extension1)->GetBaseWindow();
+      CreateAppWindow(browser()->profile(), extension1.get())->GetBaseWindow();
 
   EXPECT_TRUE(window1a->IsActive());
   EXPECT_FALSE(window1->IsActive());
@@ -1573,12 +1585,13 @@ IN_PROC_BROWSER_TEST_F(LauncherPlatformAppBrowserTest, AltNumberAppsTabbing) {
 // Test that we can launch a platform app panel and get a running item.
 IN_PROC_BROWSER_TEST_F(LauncherPlatformAppBrowserTest, LaunchPanelWindow) {
   int item_count = shelf_model()->item_count();
-  const Extension* extension = LoadAndLaunchPlatformApp("launch", "Launched");
+  scoped_refptr<const Extension> extension =
+      LoadAndLaunchPlatformApp("launch", "Launched");
   AppWindow::CreateParams params;
   params.window_type = AppWindow::WINDOW_TYPE_PANEL;
   params.focused = false;
   AppWindow* window =
-      CreateAppWindowFromParams(browser()->profile(), extension, params);
+      CreateAppWindowFromParams(browser()->profile(), extension.get(), params);
   ++item_count;
   ASSERT_EQ(item_count, shelf_model()->item_count());
   const ash::ShelfItem& item = GetLastLauncherPanelItem();
@@ -1593,19 +1606,20 @@ IN_PROC_BROWSER_TEST_F(LauncherPlatformAppBrowserTest, LaunchPanelWindow) {
 // Test that we get correct shelf presence with hidden app windows.
 IN_PROC_BROWSER_TEST_F(LauncherPlatformAppBrowserTest, HiddenAppWindows) {
   int item_count = shelf_model()->item_count();
-  const Extension* extension = LoadAndLaunchPlatformApp("launch", "Launched");
+  scoped_refptr<const Extension> extension =
+      LoadAndLaunchPlatformApp("launch", "Launched");
   AppWindow::CreateParams params;
 
   // Create a hidden window.
   params.hidden = true;
   AppWindow* window_1 =
-      CreateAppWindowFromParams(browser()->profile(), extension, params);
+      CreateAppWindowFromParams(browser()->profile(), extension.get(), params);
   EXPECT_EQ(item_count, shelf_model()->item_count());
 
   // Create a visible window.
   params.hidden = false;
   AppWindow* window_2 =
-      CreateAppWindowFromParams(browser()->profile(), extension, params);
+      CreateAppWindowFromParams(browser()->profile(), extension.get(), params);
   ++item_count;
   EXPECT_EQ(item_count, shelf_model()->item_count());
 
@@ -1631,12 +1645,13 @@ IN_PROC_BROWSER_TEST_F(LauncherPlatformAppBrowserTest, HiddenAppWindows) {
 
 // Test attention states of windows.
 IN_PROC_BROWSER_TEST_F(LauncherPlatformAppBrowserTest, WindowAttentionStatus) {
-  const Extension* extension = LoadAndLaunchPlatformApp("launch", "Launched");
+  scoped_refptr<const Extension> extension =
+      LoadAndLaunchPlatformApp("launch", "Launched");
   AppWindow::CreateParams params;
   params.window_type = AppWindow::WINDOW_TYPE_PANEL;
   params.focused = false;
   AppWindow* panel =
-      CreateAppWindowFromParams(browser()->profile(), extension, params);
+      CreateAppWindowFromParams(browser()->profile(), extension.get(), params);
   EXPECT_TRUE(panel->GetNativeWindow()->IsVisible());
   // Panels should not be active by default.
   EXPECT_FALSE(panel->GetBaseWindow()->IsActive());
@@ -1668,13 +1683,14 @@ IN_PROC_BROWSER_TEST_F(LauncherPlatformAppBrowserTest,
 
   // Add a window with shelf True, close it
   int item_count = shelf_model->item_count();
-  const Extension* extension = LoadAndLaunchPlatformApp("launch", "Launched");
+  scoped_refptr<const Extension> extension =
+      LoadAndLaunchPlatformApp("launch", "Launched");
   AppWindow::CreateParams params;
 
   params.show_in_shelf = true;
   params.window_key = "window1";
   AppWindow* window1 =
-      CreateAppWindowFromParams(browser()->profile(), extension, params);
+      CreateAppWindowFromParams(browser()->profile(), extension.get(), params);
   // There should be only 1 item added to the shelf.
   EXPECT_EQ(item_count + 1, shelf_model->item_count());
   CloseAppWindow(window1);
@@ -1686,12 +1702,13 @@ IN_PROC_BROWSER_TEST_F(LauncherPlatformAppBrowserTest,
 
   params.show_in_shelf = false;
   params.window_key = "window1";
-  window1 = CreateAppWindowFromParams(browser()->profile(), extension, params);
+  window1 =
+      CreateAppWindowFromParams(browser()->profile(), extension.get(), params);
   EXPECT_EQ(item_count + 1, shelf_model->item_count());
   params.show_in_shelf = true;
   params.window_key = "window2";
   AppWindow* window2 =
-      CreateAppWindowFromParams(browser()->profile(), extension, params);
+      CreateAppWindowFromParams(browser()->profile(), extension.get(), params);
   // There should be 2 items added to the shelf: although window1 has
   // show_in_shelf set to false, it's the first window created so its icon must
   // show up in shelf.
@@ -1707,7 +1724,8 @@ IN_PROC_BROWSER_TEST_F(LauncherPlatformAppBrowserTest,
 
   params.show_in_shelf = false;
   params.window_key = "window1";
-  window1 = CreateAppWindowFromParams(browser()->profile(), extension, params);
+  window1 =
+      CreateAppWindowFromParams(browser()->profile(), extension.get(), params);
   // There should be 1 item added to the shelf: although show_in_shelf is false,
   // this is the first window created.
   EXPECT_EQ(item_count + 1, shelf_model->item_count());
@@ -1720,11 +1738,13 @@ IN_PROC_BROWSER_TEST_F(LauncherPlatformAppBrowserTest,
 
   params.show_in_shelf = true;
   params.window_key = "window1";
-  window1 = CreateAppWindowFromParams(browser()->profile(), extension, params);
+  window1 =
+      CreateAppWindowFromParams(browser()->profile(), extension.get(), params);
   EXPECT_EQ(item_count + 1, shelf_model->item_count());  // main window
   params.show_in_shelf = false;
   params.window_key = "window2";
-  window2 = CreateAppWindowFromParams(browser()->profile(), extension, params);
+  window2 =
+      CreateAppWindowFromParams(browser()->profile(), extension.get(), params);
   EXPECT_EQ(item_count + 2, shelf_model->item_count());
   CloseAppWindow(window1);
   // There should be 1 item added to the shelf as the second window
@@ -1739,21 +1759,23 @@ IN_PROC_BROWSER_TEST_F(LauncherPlatformAppBrowserTest,
 
   params.show_in_shelf = false;
   params.window_key = "window1";
-  window1 = CreateAppWindowFromParams(browser()->profile(), extension, params);
+  window1 =
+      CreateAppWindowFromParams(browser()->profile(), extension.get(), params);
   EXPECT_EQ(item_count + 1, shelf_model->item_count());
   params.show_in_shelf = false;
   params.window_key = "window2";
-  window2 = CreateAppWindowFromParams(browser()->profile(), extension, params);
+  window2 =
+      CreateAppWindowFromParams(browser()->profile(), extension.get(), params);
   EXPECT_EQ(item_count + 1, shelf_model->item_count());
   params.show_in_shelf = true;
   params.window_key = "window3";
   AppWindow* window3 =
-      CreateAppWindowFromParams(browser()->profile(), extension, params);
+      CreateAppWindowFromParams(browser()->profile(), extension.get(), params);
   EXPECT_EQ(item_count + 2, shelf_model->item_count());
   params.show_in_shelf = true;
   params.window_key = "window4";
   AppWindow* window4 =
-      CreateAppWindowFromParams(browser()->profile(), extension, params);
+      CreateAppWindowFromParams(browser()->profile(), extension.get(), params);
   // There should be 3 items added to the shelf.
   EXPECT_EQ(item_count + 3, shelf_model->item_count());
   // Any window close order should be valid
@@ -2437,16 +2459,17 @@ IN_PROC_BROWSER_TEST_F(ShelfAppBrowserTest, SettingsAndTaskManagerWindows) {
 // Check that tabbed hosted and bookmark apps have correct shelf presence.
 IN_PROC_BROWSER_TEST_F(ShelfAppBrowserTest, TabbedHostedAndBookmarkApps) {
   // Load and pin a hosted app.
-  const Extension* hosted_app =
+  scoped_refptr<const Extension> hosted_app =
       LoadExtension(test_data_dir_.AppendASCII("app1/"));
   ASSERT_TRUE(hosted_app);
   controller_->PinAppWithID(hosted_app->id());
   const ash::ShelfID hosted_app_shelf_id(hosted_app->id());
 
   // Load and pin a bookmark app.
-  const Extension* bookmark_app = InstallExtensionWithSourceAndFlags(
-      test_data_dir_.AppendASCII("app2/"), 1, extensions::Manifest::INTERNAL,
-      extensions::Extension::FROM_BOOKMARK);
+  scoped_refptr<const Extension> bookmark_app =
+      InstallExtensionWithSourceAndFlags(test_data_dir_.AppendASCII("app2/"), 1,
+                                         extensions::Manifest::INTERNAL,
+                                         extensions::Extension::FROM_BOOKMARK);
   ASSERT_TRUE(bookmark_app);
   controller_->PinAppWithID(bookmark_app->id());
   const ash::ShelfID bookmark_app_shelf_id(bookmark_app->id());
@@ -2458,9 +2481,9 @@ IN_PROC_BROWSER_TEST_F(ShelfAppBrowserTest, TabbedHostedAndBookmarkApps) {
 
   // Navigate to the app's launch URLs in two tabs.
   ui_test_utils::NavigateToURL(
-      browser(), extensions::AppLaunchInfo::GetLaunchWebURL(hosted_app));
+      browser(), extensions::AppLaunchInfo::GetLaunchWebURL(hosted_app.get()));
   ui_test_utils::NavigateToURLWithDisposition(
-      browser(), extensions::AppLaunchInfo::GetLaunchWebURL(bookmark_app),
+      browser(), extensions::AppLaunchInfo::GetLaunchWebURL(bookmark_app.get()),
       WindowOpenDisposition::NEW_FOREGROUND_TAB, 0);
 
   // The apps should now be running, with the last opened app active.
@@ -2480,16 +2503,17 @@ IN_PROC_BROWSER_TEST_F(ShelfAppBrowserTest, TabbedHostedAndBookmarkApps) {
 // Check that windowed hosted and bookmark apps have correct shelf presence.
 IN_PROC_BROWSER_TEST_F(ShelfAppBrowserTest, WindowedHostedAndBookmarkApps) {
   // Load and pin a hosted app.
-  const Extension* hosted_app =
+  scoped_refptr<const Extension> hosted_app =
       LoadExtension(test_data_dir_.AppendASCII("app1/"));
   ASSERT_TRUE(hosted_app);
   controller_->PinAppWithID(hosted_app->id());
   const ash::ShelfID hosted_app_shelf_id(hosted_app->id());
 
   // Load and pin a bookmark app.
-  const Extension* bookmark_app = InstallExtensionWithSourceAndFlags(
-      test_data_dir_.AppendASCII("app2/"), 1, extensions::Manifest::INTERNAL,
-      extensions::Extension::FROM_BOOKMARK);
+  scoped_refptr<const Extension> bookmark_app =
+      InstallExtensionWithSourceAndFlags(test_data_dir_.AppendASCII("app2/"), 1,
+                                         extensions::Manifest::INTERNAL,
+                                         extensions::Extension::FROM_BOOKMARK);
   ASSERT_TRUE(bookmark_app);
   controller_->PinAppWithID(bookmark_app->id());
   const ash::ShelfID bookmark_app_shelf_id(bookmark_app->id());
@@ -2507,9 +2531,9 @@ IN_PROC_BROWSER_TEST_F(ShelfAppBrowserTest, WindowedHostedAndBookmarkApps) {
 
   // Navigate to the app's launch URLs in two tabs.
   ui_test_utils::NavigateToURL(
-      browser(), extensions::AppLaunchInfo::GetLaunchWebURL(hosted_app));
+      browser(), extensions::AppLaunchInfo::GetLaunchWebURL(hosted_app.get()));
   ui_test_utils::NavigateToURLWithDisposition(
-      browser(), extensions::AppLaunchInfo::GetLaunchWebURL(bookmark_app),
+      browser(), extensions::AppLaunchInfo::GetLaunchWebURL(bookmark_app.get()),
       WindowOpenDisposition::NEW_FOREGROUND_TAB, 0);
 
   // The apps should still be closed.

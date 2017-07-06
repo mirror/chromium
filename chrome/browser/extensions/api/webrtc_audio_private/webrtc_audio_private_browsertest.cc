@@ -213,7 +213,7 @@ IN_PROC_BROWSER_TEST_F(WebrtcAudioPrivateTest, TriggerEvent) {
   service->OnDevicesChanged(base::SystemMonitor::DEVTYPE_AUDIO);
 
   // Now load our test extension and do it again.
-  const extensions::Extension* extension = LoadExtension(
+  scoped_refptr<const extensions::Extension> extension = LoadExtension(
       test_data_dir_.AppendASCII("webrtc_audio_private_event_listener"));
   service->OnDevicesChanged(base::SystemMonitor::DEVTYPE_AUDIO);
 

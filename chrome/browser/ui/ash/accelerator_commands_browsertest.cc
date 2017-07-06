@@ -251,8 +251,8 @@ class AcceleratorCommandsPlatformAppFullscreenBrowserTest
 IN_PROC_BROWSER_TEST_P(AcceleratorCommandsPlatformAppFullscreenBrowserTest,
                        ToggleFullscreen) {
   ASSERT_TRUE(ash::Shell::HasInstance()) << "No Instance";
-  const extensions::Extension* extension = LoadAndLaunchPlatformApp("minimal",
-                                                                    "Launched");
+  scoped_refptr<const extensions::Extension> extension =
+      LoadAndLaunchPlatformApp("minimal", "Launched");
 
   {
     // Test that ToggleFullscreen() toggles a platform's app's fullscreen
@@ -260,8 +260,8 @@ IN_PROC_BROWSER_TEST_P(AcceleratorCommandsPlatformAppFullscreenBrowserTest,
     // if put_all_windows_in_immersive() returns true.
     extensions::AppWindow::CreateParams params;
     params.frame = extensions::AppWindow::FRAME_CHROME;
-    extensions::AppWindow* app_window =
-        CreateAppWindowFromParams(browser()->profile(), extension, params);
+    extensions::AppWindow* app_window = CreateAppWindowFromParams(
+        browser()->profile(), extension.get(), params);
     extensions::NativeAppWindow* native_app_window =
         app_window->GetBaseWindow();
     SetToInitialShowState(app_window);
@@ -285,8 +285,8 @@ IN_PROC_BROWSER_TEST_P(AcceleratorCommandsPlatformAppFullscreenBrowserTest,
     // into immersive fullscreen.
     extensions::AppWindow::CreateParams params;
     params.frame = extensions::AppWindow::FRAME_NONE;
-    extensions::AppWindow* app_window =
-        CreateAppWindowFromParams(browser()->profile(), extension, params);
+    extensions::AppWindow* app_window = CreateAppWindowFromParams(
+        browser()->profile(), extension.get(), params);
     extensions::NativeAppWindow* native_app_window =
         app_window->GetBaseWindow();
     ASSERT_TRUE(app_window->GetBaseWindow()->IsActive());

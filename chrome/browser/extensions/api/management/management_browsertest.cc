@@ -122,8 +122,8 @@ class ExtensionManagementTest : public ExtensionBrowserTest {
 
 // Tests that installing the same version overwrites.
 IN_PROC_BROWSER_TEST_F(ExtensionManagementTest, MAYBE_InstallSameVersion) {
-  const Extension* extension = InstallExtension(
-      test_data_dir_.AppendASCII("install/install.crx"), 1);
+  scoped_refptr<const Extension> extension =
+      InstallExtension(test_data_dir_.AppendASCII("install/install.crx"), 1);
   ASSERT_TRUE(extension);
   base::FilePath old_path = extension->path();
 
@@ -134,28 +134,28 @@ IN_PROC_BROWSER_TEST_F(ExtensionManagementTest, MAYBE_InstallSameVersion) {
   ASSERT_TRUE(extension);
   base::FilePath new_path = extension->path();
 
-  EXPECT_FALSE(IsExtensionAtVersion(extension, "1.0"));
+  EXPECT_FALSE(IsExtensionAtVersion(extension.get(), "1.0"));
   EXPECT_NE(old_path.value(), new_path.value());
 }
 
 IN_PROC_BROWSER_TEST_F(ExtensionManagementTest, InstallOlderVersion) {
-  const Extension* extension = InstallExtension(
-      test_data_dir_.AppendASCII("install/install.crx"), 1);
+  scoped_refptr<const Extension> extension =
+      InstallExtension(test_data_dir_.AppendASCII("install/install.crx"), 1);
   ASSERT_TRUE(extension);
   ASSERT_FALSE(InstallExtension(
       test_data_dir_.AppendASCII("install/install_older_version.crx"), 0));
-  EXPECT_TRUE(IsExtensionAtVersion(extension, "1.0"));
+  EXPECT_TRUE(IsExtensionAtVersion(extension.get(), "1.0"));
 }
 
 IN_PROC_BROWSER_TEST_F(ExtensionManagementTest, InstallThenCancel) {
-  const Extension* extension = InstallExtension(
-      test_data_dir_.AppendASCII("install/install.crx"), 1);
+  scoped_refptr<const Extension> extension =
+      InstallExtension(test_data_dir_.AppendASCII("install/install.crx"), 1);
   ASSERT_TRUE(extension);
 
   // Cancel this install.
   ASSERT_FALSE(StartInstallButCancel(
       test_data_dir_.AppendASCII("install/install_v2.crx")));
-  EXPECT_TRUE(IsExtensionAtVersion(extension, "1.0"));
+  EXPECT_TRUE(IsExtensionAtVersion(extension.get(), "1.0"));
 }
 
 #if defined(OS_WIN)
@@ -311,7 +311,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionManagementTest, MAYBE_AutoUpdate) {
   ExtensionRegistry* registry = ExtensionRegistry::Get(browser()->profile());
   const size_t size_before = registry->enabled_extensions().size();
   ASSERT_TRUE(registry->disabled_extensions().is_empty());
-  const Extension* extension =
+  scoped_refptr<const Extension> extension =
       InstallExtension(basedir.AppendASCII("v1.crx"), 1);
   ASSERT_TRUE(extension);
   listener1.WaitUntilSatisfied();
@@ -402,7 +402,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionManagementTest,
   ExtensionRegistry* registry = ExtensionRegistry::Get(browser()->profile());
   const size_t enabled_size_before = registry->enabled_extensions().size();
   const size_t disabled_size_before = registry->disabled_extensions().size();
-  const Extension* extension =
+  scoped_refptr<const Extension> extension =
       InstallExtension(basedir.AppendASCII("v1.crx"), 1);
   ASSERT_TRUE(extension);
   listener1.WaitUntilSatisfied();
@@ -490,7 +490,8 @@ IN_PROC_BROWSER_TEST_F(ExtensionManagementTest, ExternalUrlUpdate) {
   service->updater()->CheckNow(params);
   install_observer.WaitForExtensionWillBeInstalled();
   ASSERT_EQ(size_before + 1, registry->enabled_extensions().size());
-  const Extension* extension = service->GetExtensionById(kExtensionId, false);
+  scoped_refptr<const Extension> extension =
+      service->GetExtensionById(kExtensionId, false);
   ASSERT_TRUE(extension);
   ASSERT_EQ("2.0", extension->VersionString());
 
@@ -586,7 +587,8 @@ IN_PROC_BROWSER_TEST_F(ExtensionManagementTest, ExternalPolicyRefresh) {
 
   // Check if the extension got installed.
   ASSERT_EQ(size_before + 1, registry->enabled_extensions().size());
-  const Extension* extension = service->GetExtensionById(kExtensionId, false);
+  scoped_refptr<const Extension> extension =
+      service->GetExtensionById(kExtensionId, false);
   ASSERT_TRUE(extension);
   ASSERT_EQ("2.0", extension->VersionString());
   EXPECT_EQ(Manifest::EXTERNAL_POLICY_DOWNLOAD, extension->location());
@@ -654,7 +656,8 @@ IN_PROC_BROWSER_TEST_F(ExtensionManagementTest,
   // User install of the extension.
   ASSERT_TRUE(InstallExtension(basedir.AppendASCII("v2.crx"), 1));
   ASSERT_EQ(size_before + 1, registry->enabled_extensions().size());
-  const Extension* extension = service->GetExtensionById(kExtensionId, false);
+  scoped_refptr<const Extension> extension =
+      service->GetExtensionById(kExtensionId, false);
   ASSERT_TRUE(extension);
   EXPECT_EQ(Manifest::INTERNAL, extension->location());
   EXPECT_TRUE(service->IsExtensionEnabled(kExtensionId));

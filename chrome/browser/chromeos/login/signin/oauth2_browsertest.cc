@@ -897,8 +897,8 @@ IN_PROC_BROWSER_TEST_F(MergeSessionTest, XHRThrottle) {
 
   // Load extension with a background page. The background page will
   // attempt to load |fake_google_page_url_| via XHR.
-  const extensions::Extension* ext = LoadExtension(
-      test_data_dir_.AppendASCII("merge_session"));
+  scoped_refptr<const extensions::Extension> ext =
+      LoadExtension(test_data_dir_.AppendASCII("merge_session"));
   ASSERT_TRUE(ext);
 
   // Kick off XHR request from the extension.

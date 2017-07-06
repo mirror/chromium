@@ -96,12 +96,12 @@ class ExtensionActionRunnerBrowserTest : public ExtensionBrowserTest {
   // one already exists, the existing extension will be returned. Othewrwise,
   // one will be created.
   // This could potentially return NULL if LoadExtension() fails.
-  const Extension* CreateExtension(HostType host_type,
-                                   InjectionType injection_type);
+  scoped_refptr<const Extension> CreateExtension(HostType host_type,
+                                                 InjectionType injection_type);
 
  private:
   std::vector<std::unique_ptr<TestExtensionDir>> test_extension_dirs_;
-  std::vector<const Extension*> extensions_;
+  std::vector<scoped_refptr<const Extension>> extensions_;
 };
 
 void ExtensionActionRunnerBrowserTest::SetUpCommandLine(
@@ -117,7 +117,8 @@ void ExtensionActionRunnerBrowserTest::TearDownOnMainThread() {
   test_extension_dirs_.clear();
 }
 
-const Extension* ExtensionActionRunnerBrowserTest::CreateExtension(
+scoped_refptr<const Extension>
+ExtensionActionRunnerBrowserTest::CreateExtension(
     HostType host_type,
     InjectionType injection_type) {
   std::string name = base::StringPrintf(
@@ -163,7 +164,7 @@ const Extension* ExtensionActionRunnerBrowserTest::CreateExtension(
                  injection_type == CONTENT_SCRIPT ? kContentScriptSource
                                                   : kBackgroundScriptSource);
 
-  const Extension* extension = LoadExtension(dir->UnpackedPath());
+  scoped_refptr<const Extension> extension = LoadExtension(dir->UnpackedPath());
   if (extension) {
     test_extension_dirs_.push_back(std::move(dir));
     extensions_.push_back(extension);
@@ -176,7 +177,7 @@ const Extension* ExtensionActionRunnerBrowserTest::CreateExtension(
 class ActiveScriptTester {
  public:
   ActiveScriptTester(const std::string& name,
-                     const Extension* extension,
+                     scoped_refptr<const Extension> extension,
                      Browser* browser,
                      RequiresConsent requires_consent,
                      InjectionType type);
@@ -198,7 +199,7 @@ class ActiveScriptTester {
   std::string name_;
 
   // The extension associated with this tester.
-  const Extension* extension_;
+  scoped_refptr<const Extension> extension_;
 
   // The browser the tester is running in.
   Browser* browser_;
@@ -214,12 +215,12 @@ class ActiveScriptTester {
 };
 
 ActiveScriptTester::ActiveScriptTester(const std::string& name,
-                                       const Extension* extension,
+                                       scoped_refptr<const Extension> extension,
                                        Browser* browser,
                                        RequiresConsent requires_consent,
                                        InjectionType type)
     : name_(name),
-      extension_(extension),
+      extension_(std::move(extension)),
       browser_(browser),
       requires_consent_(requires_consent),
       inject_success_listener_(
@@ -283,7 +284,7 @@ testing::AssertionResult ActiveScriptTester::Verify() {
   DCHECK(wants_to_run);
 
   // Grant permission by clicking on the extension action.
-  runner->RunAction(extension_, true);
+  runner->RunAction(extension_.get(), true);
 
   // Now, the extension should be able to inject the script.
   inject_success_listener_->WaitUntilSatisfied();
@@ -305,7 +306,7 @@ ExtensionActionRunner* ActiveScriptTester::GetExtensionActionRunner() {
 
 bool ActiveScriptTester::WantsToRun() {
   ExtensionActionRunner* runner = GetExtensionActionRunner();
-  return runner ? runner->WantsToRun(extension_) : false;
+  return runner ? runner->WantsToRun(extension_.get()) : false;
 }
 
 IN_PROC_BROWSER_TEST_F(ExtensionActionRunnerBrowserTest,
@@ -350,9 +351,11 @@ IN_PROC_BROWSER_TEST_F(ExtensionActionRunnerBrowserTest,
 IN_PROC_BROWSER_TEST_F(ExtensionActionRunnerBrowserTest,
                        RemoveExtensionWithPendingInjections) {
   // Load up two extensions, each with content scripts.
-  const Extension* extension1 = CreateExtension(ALL_HOSTS, CONTENT_SCRIPT);
+  scoped_refptr<const Extension> extension1 =
+      CreateExtension(ALL_HOSTS, CONTENT_SCRIPT);
   ASSERT_TRUE(extension1);
-  const Extension* extension2 = CreateExtension(ALL_HOSTS, CONTENT_SCRIPT);
+  scoped_refptr<const Extension> extension2 =
+      CreateExtension(ALL_HOSTS, CONTENT_SCRIPT);
   ASSERT_TRUE(extension2);
 
   ASSERT_NE(extension1->id(), extension2->id());
@@ -369,8 +372,8 @@ IN_PROC_BROWSER_TEST_F(ExtensionActionRunnerBrowserTest,
       browser(), embedded_test_server()->GetURL("/extensions/test_file.html"));
 
   // Both extensions should have pending requests.
-  EXPECT_TRUE(action_runner->WantsToRun(extension1));
-  EXPECT_TRUE(action_runner->WantsToRun(extension2));
+  EXPECT_TRUE(action_runner->WantsToRun(extension1.get()));
+  EXPECT_TRUE(action_runner->WantsToRun(extension2.get()));
 
   // Unload one of the extensions.
   UnloadExtension(extension2->id());
@@ -379,15 +382,15 @@ IN_PROC_BROWSER_TEST_F(ExtensionActionRunnerBrowserTest,
 
   // We should have pending requests for extension1, but not the removed
   // extension2.
-  EXPECT_TRUE(action_runner->WantsToRun(extension1));
-  EXPECT_FALSE(action_runner->WantsToRun(extension2));
+  EXPECT_TRUE(action_runner->WantsToRun(extension1.get()));
+  EXPECT_FALSE(action_runner->WantsToRun(extension2.get()));
 
   // We should still be able to run the request for extension1.
   ExtensionTestMessageListener inject_success_listener(
       new ExtensionTestMessageListener(kInjectSucceeded,
                                        false /* won't reply */));
   inject_success_listener.set_extension_id(extension1->id());
-  action_runner->RunAction(extension1, true);
+  action_runner->RunAction(extension1.get(), true);
   inject_success_listener.WaitUntilSatisfied();
 }
 
@@ -396,7 +399,8 @@ IN_PROC_BROWSER_TEST_F(ExtensionActionRunnerBrowserTest,
 IN_PROC_BROWSER_TEST_F(ExtensionActionRunnerBrowserTest,
                        GrantExtensionAllUrlsPermission) {
   // Loadup an extension and navigate.
-  const Extension* extension = CreateExtension(ALL_HOSTS, CONTENT_SCRIPT);
+  scoped_refptr<const Extension> extension =
+      CreateExtension(ALL_HOSTS, CONTENT_SCRIPT);
   ASSERT_TRUE(extension);
 
   content::WebContents* web_contents =
@@ -416,7 +420,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionActionRunnerBrowserTest,
   ui_test_utils::NavigateToURL(browser(), url);
 
   // The extension shouldn't be allowed to run.
-  EXPECT_TRUE(action_runner->WantsToRun(extension));
+  EXPECT_TRUE(action_runner->WantsToRun(extension.get()));
   EXPECT_EQ(1, action_runner->num_page_requests());
   EXPECT_FALSE(inject_success_listener.was_satisfied());
 
@@ -428,7 +432,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionActionRunnerBrowserTest,
   // Navigate again - this time, the extension should execute immediately (and
   // should not need to ask the script controller for permission).
   ui_test_utils::NavigateToURL(browser(), url);
-  EXPECT_FALSE(action_runner->WantsToRun(extension));
+  EXPECT_FALSE(action_runner->WantsToRun(extension.get()));
   EXPECT_EQ(0, action_runner->num_page_requests());
   EXPECT_TRUE(inject_success_listener.WaitUntilSatisfied());
 
@@ -439,7 +443,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionActionRunnerBrowserTest,
 
   // Re-navigate; the extension should again need permission to run.
   ui_test_utils::NavigateToURL(browser(), url);
-  EXPECT_TRUE(action_runner->WantsToRun(extension));
+  EXPECT_TRUE(action_runner->WantsToRun(extension.get()));
   EXPECT_EQ(1, action_runner->num_page_requests());
   EXPECT_FALSE(inject_success_listener.was_satisfied());
 }
@@ -450,7 +454,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionActionRunnerBrowserTest,
   // load a test page.
   ASSERT_TRUE(embedded_test_server()->Start());
   const GURL url = embedded_test_server()->GetURL("/simple.html");
-  const Extension* extension = LoadExtension(
+  scoped_refptr<const Extension> extension = LoadExtension(
       test_data_dir_.AppendASCII("blocked_actions/content_scripts"));
   ASSERT_TRUE(extension);
   ui_test_utils::NavigateToURL(browser(), url);
@@ -463,7 +467,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionActionRunnerBrowserTest,
   ExtensionActionRunner* runner =
       ExtensionActionRunner::GetForWebContents(web_contents);
   ASSERT_TRUE(runner);
-  EXPECT_TRUE(runner->WantsToRun(extension));
+  EXPECT_TRUE(runner->WantsToRun(extension.get()));
   EXPECT_EQ("undefined", GetValue(web_contents));
 
   // Wire up the runner to automatically accept the bubble to prompt for page
@@ -480,7 +484,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionActionRunnerBrowserTest,
   // Run the extension action, which should cause a page refresh (since we
   // automatically accepted the bubble prompting us), and the extension should
   // have injected at document start.
-  runner->RunAction(extension, true);
+  runner->RunAction(extension.get(), true);
   base::RunLoop().RunUntilIdle();
   EXPECT_TRUE(content::WaitForLoadStop(web_contents));
   entry = web_contents->GetController().GetLastCommittedEntry();
@@ -488,7 +492,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionActionRunnerBrowserTest,
   // Confirm that we refreshed the page.
   EXPECT_GE(entry->GetUniqueID(), first_nav_id);
   EXPECT_EQ("success", GetValue(web_contents));
-  EXPECT_FALSE(runner->WantsToRun(extension));
+  EXPECT_FALSE(runner->WantsToRun(extension.get()));
 
   // Revoke permission and reload to try different bubble options.
   ActiveTabPermissionGranter* active_tab_granter =
@@ -500,7 +504,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionActionRunnerBrowserTest,
 
   // The extension should again want to run. Automatically dismiss the bubble
   // that pops up prompting for page refresh.
-  EXPECT_TRUE(runner->WantsToRun(extension));
+  EXPECT_TRUE(runner->WantsToRun(extension.get()));
   EXPECT_EQ("undefined", GetValue(web_contents));
   const int next_nav_id =
       web_contents->GetController().GetLastCommittedEntry()->GetUniqueID();
@@ -510,7 +514,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionActionRunnerBrowserTest,
 
   // Try running the extension. Nothing should happen, because the user
   // didn't agree to refresh the page. The extension should still want to run.
-  runner->RunAction(extension, true);
+  runner->RunAction(extension.get(), true);
   base::RunLoop().RunUntilIdle();
   EXPECT_TRUE(content::WaitForLoadStop(web_contents));
   EXPECT_EQ("undefined", GetValue(web_contents));
@@ -522,7 +526,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionActionRunnerBrowserTest,
   runner->set_default_bubble_close_action_for_testing(
       base::MakeUnique<ToolbarActionsBarBubbleDelegate::CloseAction>(
           ToolbarActionsBarBubbleDelegate::CLOSE_DISMISS_DEACTIVATION));
-  runner->RunAction(extension, true);
+  runner->RunAction(extension.get(), true);
   base::RunLoop().RunUntilIdle();
   EXPECT_TRUE(content::WaitForLoadStop(web_contents));
   EXPECT_EQ("undefined", GetValue(web_contents));

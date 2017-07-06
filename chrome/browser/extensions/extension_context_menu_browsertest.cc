@@ -36,7 +36,7 @@ class ExtensionContextMenuBrowserTest : public ExtensionBrowserTest {
  public:
   // Helper to load an extension from context_menus/|subdirectory| in the
   // extensions test data dir.
-  const extensions::Extension* LoadContextMenuExtension(
+  scoped_refptr<const extensions::Extension> LoadContextMenuExtension(
       std::string subdirectory) {
     base::FilePath extension_dir =
         test_data_dir_.AppendASCII("context_menus").AppendASCII(subdirectory);
@@ -45,7 +45,7 @@ class ExtensionContextMenuBrowserTest : public ExtensionBrowserTest {
 
   // Helper to load an extension from context_menus/top_level/|subdirectory| in
   // the extensions test data dir.
-  const extensions::Extension* LoadTopLevelContextMenuExtension(
+  scoped_refptr<const extensions::Extension> LoadTopLevelContextMenuExtension(
       std::string subdirectory) {
     base::FilePath extension_dir =
         test_data_dir_.AppendASCII("context_menus").AppendASCII("top_level");
@@ -53,7 +53,7 @@ class ExtensionContextMenuBrowserTest : public ExtensionBrowserTest {
     return LoadExtension(extension_dir);
   }
 
-  const extensions::Extension* LoadContextMenuExtensionIncognito(
+  scoped_refptr<const extensions::Extension> LoadContextMenuExtensionIncognito(
       std::string subdirectory) {
     base::FilePath extension_dir =
         test_data_dir_.AppendASCII("context_menus").AppendASCII(subdirectory);
@@ -72,7 +72,8 @@ class ExtensionContextMenuBrowserTest : public ExtensionBrowserTest {
 
   // Returns a pointer to the currently loaded extension with |name|, or null
   // if not found.
-  const extensions::Extension* GetExtensionNamed(const std::string& name) {
+  scoped_refptr<const extensions::Extension> GetExtensionNamed(
+      const std::string& name) {
     const extensions::ExtensionSet& extensions =
         extensions::ExtensionRegistry::Get(
             browser()->profile())->enabled_extensions();
@@ -260,7 +261,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionContextMenuBrowserTest, UpdateOnclick) {
   ExtensionTestMessageListener listener_update2("update2", false);
   ExtensionTestMessageListener listener_done("onclick2", false);
 
-  const extensions::Extension* extension =
+  scoped_refptr<const extensions::Extension> extension =
       LoadContextMenuExtension("onclick_null");
   ASSERT_TRUE(extension);
 
@@ -477,7 +478,8 @@ static void VerifyMenuForSeparatorsTest(const MenuModel& menu) {
 IN_PROC_BROWSER_TEST_F(ExtensionContextMenuBrowserTest, Separators) {
   // Load the extension.
   ASSERT_TRUE(LoadContextMenuExtension("separators"));
-  const extensions::Extension* extension = GetExtensionNamed("Separators Test");
+  scoped_refptr<const extensions::Extension> extension =
+      GetExtensionNamed("Separators Test");
   ASSERT_TRUE(extension != NULL);
 
   // Navigate to test1.html inside the extension, which should create a bunch
@@ -674,8 +676,8 @@ class ExtensionContextMenuBrowserLazyTest :
 IN_PROC_BROWSER_TEST_F(ExtensionContextMenuBrowserLazyTest, EventPage) {
   GURL about_blank("about:blank");
   LazyBackgroundObserver page_complete;
-  const extensions::Extension* extension = LoadContextMenuExtension(
-      "event_page");
+  scoped_refptr<const extensions::Extension> extension =
+      LoadContextMenuExtension("event_page");
   ASSERT_TRUE(extension);
   page_complete.Wait();
 

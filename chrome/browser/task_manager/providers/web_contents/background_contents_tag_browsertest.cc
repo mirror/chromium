@@ -24,10 +24,9 @@ class BackgroundContentsTagTest : public ExtensionBrowserTest {
   BackgroundContentsTagTest() {}
   ~BackgroundContentsTagTest() override {}
 
-  const extensions::Extension* LoadBackgroundExtension() {
-    auto* extension = LoadExtension(
+  scoped_refptr<const extensions::Extension> LoadBackgroundExtension() {
+    return LoadExtension(
         test_data_dir_.AppendASCII("app_process_background_instances"));
-    return extension;
   }
 
   base::string16 GetBackgroundTaskExpectedName(
@@ -60,7 +59,7 @@ class BackgroundContentsTagTest : public ExtensionBrowserTest {
 IN_PROC_BROWSER_TEST_F(BackgroundContentsTagTest, TagsManagerRecordsATag) {
   // Browser tests start with only one tab available.
   EXPECT_EQ(1U, tags_manager()->tracked_tags().size());
-  auto* extension = LoadBackgroundExtension();
+  auto extension = LoadBackgroundExtension();
   ASSERT_NE(nullptr, extension);
   EXPECT_EQ(2U, tags_manager()->tracked_tags().size());
 
@@ -82,7 +81,7 @@ IN_PROC_BROWSER_TEST_F(BackgroundContentsTagTest, TasksProvidedWhileObserving) {
   // The pre-existing tab is provided.
   EXPECT_EQ(1U, task_manager.tasks().size());
 
-  auto* extension = LoadBackgroundExtension();
+  auto extension = LoadBackgroundExtension();
   ASSERT_NE(nullptr, extension);
   EXPECT_EQ(2U, tags_manager()->tracked_tags().size());
   ASSERT_EQ(2U, task_manager.tasks().size());
@@ -90,7 +89,7 @@ IN_PROC_BROWSER_TEST_F(BackgroundContentsTagTest, TasksProvidedWhileObserving) {
   // Now check the newly provided task.
   const Task* task = task_manager.tasks().back();
   EXPECT_EQ(Task::RENDERER, task->GetType());
-  EXPECT_EQ(GetBackgroundTaskExpectedName(extension), task->title());
+  EXPECT_EQ(GetBackgroundTaskExpectedName(extension.get()), task->title());
 
   // Unload the extension.
   UnloadExtension(extension->id());
@@ -104,7 +103,7 @@ IN_PROC_BROWSER_TEST_F(BackgroundContentsTagTest, PreExistingTasksAreProvided) {
   EXPECT_TRUE(task_manager.tasks().empty());
   // Browser tests start with only one tab available.
   EXPECT_EQ(1U, tags_manager()->tracked_tags().size());
-  auto* extension = LoadBackgroundExtension();
+  auto extension = LoadBackgroundExtension();
   ASSERT_NE(nullptr, extension);
   EXPECT_EQ(2U, tags_manager()->tracked_tags().size());
 
@@ -116,7 +115,7 @@ IN_PROC_BROWSER_TEST_F(BackgroundContentsTagTest, PreExistingTasksAreProvided) {
   // Now check the provided task.
   const Task* task = task_manager.tasks().back();
   EXPECT_EQ(Task::RENDERER, task->GetType());
-  EXPECT_EQ(GetBackgroundTaskExpectedName(extension), task->title());
+  EXPECT_EQ(GetBackgroundTaskExpectedName(extension.get()), task->title());
 
   // Unload the extension.
   UnloadExtension(extension->id());

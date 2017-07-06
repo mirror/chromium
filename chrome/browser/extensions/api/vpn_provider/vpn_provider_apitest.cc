@@ -227,7 +227,7 @@ class VpnProviderApiTest : public ExtensionApiTest,
   VpnService* service_ = nullptr;
   std::string extension_id_;
   std::string service_path_;
-  const extensions::Extension* extension_ = nullptr;
+  scoped_refptr<const extensions::Extension> extension_ = nullptr;
 };
 
 IN_PROC_BROWSER_TEST_F(VpnProviderApiTest, ComboSuite) {

@@ -484,7 +484,7 @@ class ContentVerifierTest : public ExtensionBrowserTest {
     // |unload_observer| needs to destroy before the ExtensionRegistry gets
     // deleted, which happens before TearDownOnMainThread is called.
     RegistryObserver unload_observer(ExtensionRegistry::Get(profile()));
-    const Extension* extension = InstallExtensionFromWebstore(
+    scoped_refptr<const Extension> extension = InstallExtensionFromWebstore(
         test_data_dir_.AppendASCII("content_verifier/v1.crx"), 1);
     ASSERT_TRUE(extension);
     ASSERT_EQ(id, extension->id());
@@ -514,7 +514,7 @@ class ContentVerifierTest : public ExtensionBrowserTest {
     // the merkle tree, but the content verification system builds the entire
     // tree and caches it in the extension install directory - see
     // ContentHashFetcher for more details).
-    const Extension* extension = InstallExtensionFromWebstore(
+    scoped_refptr<const Extension> extension = InstallExtensionFromWebstore(
         test_data_dir_.AppendASCII(crx_relpath), 1);
     ASSERT_TRUE(extension);
     EXPECT_EQ(id, extension->id());
@@ -596,7 +596,7 @@ IN_PROC_BROWSER_TEST_F(ContentVerifierTest, DotSlashPaths) {
 
   // Install a test extension we copied from the webstore that has actual
   // signatures, and contains paths with a leading "./" in various places.
-  const Extension* extension = InstallExtensionFromWebstore(
+  scoped_refptr<const Extension> extension = InstallExtensionFromWebstore(
       test_data_dir_.AppendASCII("content_verifier/dot_slash_paths.crx"), 1);
 
   ASSERT_TRUE(extension);
@@ -646,7 +646,7 @@ IN_PROC_BROWSER_TEST_F(ContentVerifierTest, PolicyCorrupted) {
 
   base::FilePath crx_path =
       test_data_dir_.AppendASCII("content_verifier/v1.crx");
-  const Extension* extension =
+  scoped_refptr<const Extension> extension =
       InstallExtension(crx_path, 1, Manifest::EXTERNAL_POLICY_DOWNLOAD);
   EXPECT_NE(extension, nullptr);
 

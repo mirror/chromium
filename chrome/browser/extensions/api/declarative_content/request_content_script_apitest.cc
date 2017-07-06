@@ -108,7 +108,7 @@ class RequestContentScriptAPITest : public ExtensionBrowserTest {
       PermissionOrMatcherType script_matcher);
 
   std::unique_ptr<TestExtensionDir> test_extension_dir_;
-  const Extension* extension_;
+  scoped_refptr<const Extension> extension_;
 };
 
 RequestContentScriptAPITest::RequestContentScriptAPITest()
@@ -177,7 +177,7 @@ testing::AssertionResult RequestContentScriptAPITest::CreateAndLoadExtension(
   dir->WriteFile(FILE_PATH_LITERAL("script.js"),
                  kContentScriptSource);
 
-  const Extension* extension = LoadExtension(dir->UnpackedPath());
+  scoped_refptr<const Extension> extension = LoadExtension(dir->UnpackedPath());
   if (!extension)
     return testing::AssertionFailure() << "Failed to load extension.";
 

@@ -190,8 +190,8 @@ class ProcessManagerBrowserTest : public ExtensionBrowserTest {
 
   // Create an extension with web-accessible frames and an optional background
   // page.
-  const Extension* CreateExtension(const std::string& name,
-                                   bool has_background_process) {
+  scoped_refptr<const Extension> CreateExtension(const std::string& name,
+                                                 bool has_background_process) {
     std::unique_ptr<TestExtensionDir> dir(new TestExtensionDir());
 
     DictionaryBuilder manifest;
@@ -230,7 +230,8 @@ class ProcessManagerBrowserTest : public ExtensionBrowserTest {
 
     dir->WriteManifest(manifest.ToJSON());
 
-    const Extension* extension = LoadExtension(dir->UnpackedPath());
+    scoped_refptr<const Extension> extension =
+        LoadExtension(dir->UnpackedPath());
     EXPECT_TRUE(extension);
     temp_dirs_.push_back(std::move(dir));
     return extension;
@@ -457,7 +458,7 @@ IN_PROC_BROWSER_TEST_F(ProcessManagerBrowserTest, NoBackgroundPage) {
   ASSERT_TRUE(embedded_test_server()->Start());
 
   ProcessManager* pm = ProcessManager::Get(profile());
-  const Extension* extension =
+  scoped_refptr<const Extension> extension =
       LoadExtension(test_data_dir_.AppendASCII("api_test")
                         .AppendASCII("messaging")
                         .AppendASCII("connect_nobackground"));
@@ -491,8 +492,10 @@ IN_PROC_BROWSER_TEST_F(ProcessManagerBrowserTest, NoBackgroundPage) {
 // Disabled due to flake: https://crbug.com/693287.
 IN_PROC_BROWSER_TEST_F(ProcessManagerBrowserTest,
                        DISABLED_FrameClassification) {
-  const Extension* extension1 = CreateExtension("Extension 1", false);
-  const Extension* extension2 = CreateExtension("Extension 2", true);
+  scoped_refptr<const Extension> extension1 =
+      CreateExtension("Extension 1", false);
+  scoped_refptr<const Extension> extension2 =
+      CreateExtension("Extension 2", true);
   embedded_test_server()->ServeFilesFromDirectory(extension1->path());
   ASSERT_TRUE(embedded_test_server()->Start());
 
@@ -504,14 +507,14 @@ IN_PROC_BROWSER_TEST_F(ProcessManagerBrowserTest,
   ProcessManager* pm = ProcessManager::Get(profile());
 
   // 1 background page + 1 frame in background page from Extension 2.
-  BackgroundPageWatcher(pm, extension2).WaitForOpen();
+  BackgroundPageWatcher(pm, extension2.get()).WaitForOpen();
   EXPECT_EQ(2u, pm->GetAllFrames().size());
   EXPECT_EQ(0u, pm->GetRenderFrameHostsForExtension(extension1->id()).size());
   EXPECT_EQ(2u, pm->GetRenderFrameHostsForExtension(extension2->id()).size());
 
   ExecuteScriptInBackgroundPageNoWait(extension2->id(),
                                       "setTimeout(window.close, 0)");
-  BackgroundPageWatcher(pm, extension2).WaitForClose();
+  BackgroundPageWatcher(pm, extension2.get()).WaitForClose();
   EXPECT_EQ(0u, pm->GetAllFrames().size());
   EXPECT_EQ(0u, pm->GetRenderFrameHostsForExtension(extension2->id()).size());
 
@@ -682,13 +685,13 @@ IN_PROC_BROWSER_TEST_F(ProcessManagerBrowserTest, ExtensionProcessReuse) {
   ProcessManager* pm = ProcessManager::Get(profile());
 
   std::set<int> processes;
-  std::set<const Extension*> installed_extensions;
+  std::set<scoped_refptr<const Extension>> installed_extensions;
 
   // Create 3 extensions, which is more than the process limit.
   for (int i = 1; i <= static_cast<int>(kNumExtensions); ++i) {
-    const Extension* extension =
+    scoped_refptr<const Extension> extension =
         CreateExtension(base::StringPrintf("Extension %d", i), true);
-    installed_extensions.insert(extension);
+    installed_extensions.insert(extension.get());
     ExtensionHost* extension_host =
         pm->GetBackgroundHostForExtension(extension->id());
 
@@ -713,7 +716,7 @@ IN_PROC_BROWSER_TEST_F(ProcessManagerBrowserTest, ExtensionProcessReuse) {
   // the cookie. This would fail for one of the two extensions in a shared
   // process, if that process is locked to a single origin. This is a regression
   // test for http://crbug.com/600441.
-  for (const Extension* extension : installed_extensions) {
+  for (scoped_refptr<const Extension> extension : installed_extensions) {
     content::DOMMessageQueue queue;
     ExecuteScriptInBackgroundPageNoWait(
         extension->id(),
@@ -737,7 +740,8 @@ IN_PROC_BROWSER_TEST_F(ProcessManagerBrowserTest,
   prefs->SetBoolean(prefs::kWebKitWebSecurityEnabled, false);
 
   // Create a simple extension without a background page.
-  const Extension* extension = CreateExtension("Extension", false);
+  scoped_refptr<const Extension> extension =
+      CreateExtension("Extension", false);
   embedded_test_server()->ServeFilesFromDirectory(extension->path());
   ASSERT_TRUE(embedded_test_server()->Start());
 
@@ -863,7 +867,8 @@ IN_PROC_BROWSER_TEST_F(ProcessManagerBrowserTest,
 IN_PROC_BROWSER_TEST_F(ProcessManagerBrowserTest,
                        NestedURLNavigationsToExtensionAllowed) {
   // Create a simple extension without a background page.
-  const Extension* extension = CreateExtension("Extension", false);
+  scoped_refptr<const Extension> extension =
+      CreateExtension("Extension", false);
   embedded_test_server()->ServeFilesFromDirectory(extension->path());
   ASSERT_TRUE(embedded_test_server()->Start());
 
@@ -953,7 +958,7 @@ IN_PROC_BROWSER_TEST_F(ProcessManagerBrowserTest,
             .AppendASCII("platform_apps")
             .AppendASCII("web_view")
             .AppendASCII("simple");
-  const Extension* app = LoadAndLaunchApp(dir);
+  scoped_refptr<const Extension> app = LoadAndLaunchApp(dir);
   EXPECT_TRUE(app->permissions_data()->HasAPIPermission(
       extensions::APIPermission::kWebView));
 
@@ -1028,7 +1033,8 @@ IN_PROC_BROWSER_TEST_F(ProcessManagerBrowserTest,
                        NestedURLNavigationsViaProxyBlocked) {
   base::HistogramTester uma;
   // Create a simple extension without a background page.
-  const Extension* extension = CreateExtension("Extension", false);
+  scoped_refptr<const Extension> extension =
+      CreateExtension("Extension", false);
   embedded_test_server()->ServeFilesFromDirectory(extension->path());
   ASSERT_TRUE(embedded_test_server()->Start());
 
@@ -1103,7 +1109,8 @@ IN_PROC_BROWSER_TEST_F(ProcessManagerBrowserTest,
 IN_PROC_BROWSER_TEST_F(ProcessManagerBrowserTest,
                        WebPopupFromExtensionMainFrameHasValidOpener) {
   // Create a simple extension without a background page.
-  const Extension* extension = CreateExtension("Extension", false);
+  scoped_refptr<const Extension> extension =
+      CreateExtension("Extension", false);
   embedded_test_server()->ServeFilesFromDirectory(extension->path());
   ASSERT_TRUE(embedded_test_server()->Start());
 
@@ -1143,7 +1150,8 @@ IN_PROC_BROWSER_TEST_F(ProcessManagerBrowserTest,
 IN_PROC_BROWSER_TEST_F(ProcessManagerBrowserTest,
                        WebPopupFromExtensionSubframeHasValidOpener) {
   // Create a simple extension without a background page.
-  const Extension* extension = CreateExtension("Extension", false);
+  scoped_refptr<const Extension> extension =
+      CreateExtension("Extension", false);
   embedded_test_server()->ServeFilesFromDirectory(extension->path());
   ASSERT_TRUE(embedded_test_server()->Start());
 
@@ -1196,7 +1204,8 @@ IN_PROC_BROWSER_TEST_F(ProcessManagerBrowserTest,
     return;
 
   // Create a simple extension without a background page.
-  const Extension* extension = CreateExtension("Extension", false);
+  scoped_refptr<const Extension> extension =
+      CreateExtension("Extension", false);
   embedded_test_server()->ServeFilesFromDirectory(extension->path());
   ASSERT_TRUE(embedded_test_server()->Start());
 

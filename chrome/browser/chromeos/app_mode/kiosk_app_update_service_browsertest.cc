@@ -132,7 +132,7 @@ class KioskAppUpdateServiceTest
   }
 
   void FireAppUpdateAvailable() {
-    update_service_->OnAppUpdateAvailable(app_);
+    update_service_->OnAppUpdateAvailable(app_.get());
   }
 
   void FireUpdatedNeedReboot() {
@@ -153,7 +153,7 @@ class KioskAppUpdateServiceTest
  private:
   base::ScopedTempDir temp_dir_;
   std::unique_ptr<base::ScopedPathOverride> uptime_file_override_;
-  const extensions::Extension* app_;  // Not owned.
+  scoped_refptr<const extensions::Extension> app_;
   KioskAppUpdateService* update_service_;  // Not owned.
   system::AutomaticRebootManager* automatic_reboot_manager_;  // Not owned.
   std::unique_ptr<base::RunLoop> run_loop_;

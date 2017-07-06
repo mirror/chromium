@@ -72,7 +72,7 @@ IN_PROC_BROWSER_TEST_F(ActivityLogApiTest, MAYBE_TriggerEvent) {
       base::Bind(&ActivityLogApiTest::HandleRequest, base::Unretained(this)));
   ASSERT_TRUE(StartEmbeddedTestServer());
 
-  const Extension* friend_extension = LoadExtensionIncognito(
+  scoped_refptr<const Extension> friend_extension = LoadExtensionIncognito(
       test_data_dir_.AppendASCII("activity_log_private/friend"));
   ASSERT_TRUE(friend_extension);
   ASSERT_TRUE(RunExtensionTest("activity_log_private/test"));
@@ -80,4 +80,3 @@ IN_PROC_BROWSER_TEST_F(ActivityLogApiTest, MAYBE_TriggerEvent) {
 }
 
 }  // namespace extensions
-

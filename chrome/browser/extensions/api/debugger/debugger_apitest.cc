@@ -166,7 +166,7 @@ IN_PROC_BROWSER_TEST_F(DebuggerApiTest,
   base::FilePath path;
   ASSERT_TRUE(PathService::Get(chrome::DIR_TEST_DATA, &path));
   path = path.AppendASCII("extensions").AppendASCII("good_unpacked");
-  const Extension* another_extension = LoadExtension(path);
+  scoped_refptr<const Extension> another_extension = LoadExtension(path);
   ASSERT_TRUE(another_extension);
 
   GURL other_ext_url =

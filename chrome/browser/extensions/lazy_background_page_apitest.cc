@@ -117,11 +117,12 @@ class LazyBackgroundPageApiTest : public ExtensionApiTest {
 
   // Loads the extension, which temporarily starts the lazy background page
   // to dispatch the onInstalled event. We wait until it shuts down again.
-  const Extension* LoadExtensionAndWait(const std::string& test_name) {
+  scoped_refptr<const Extension> LoadExtensionAndWait(
+      const std::string& test_name) {
     LazyBackgroundObserver page_complete;
     base::FilePath extdir = test_data_dir_.AppendASCII("lazy_background_page").
         AppendASCII(test_name);
-    const Extension* extension = LoadExtension(extdir);
+    scoped_refptr<const Extension> extension = LoadExtension(extdir);
     if (extension)
       page_complete.Wait();
     return extension;
@@ -181,7 +182,8 @@ IN_PROC_BROWSER_TEST_F(LazyBackgroundPageApiTest,
 IN_PROC_BROWSER_TEST_F(LazyBackgroundPageApiTest, BroadcastEvent) {
   ASSERT_TRUE(StartEmbeddedTestServer());
 
-  const Extension* extension = LoadExtensionAndWait("broadcast_event");
+  scoped_refptr<const Extension> extension =
+      LoadExtensionAndWait("broadcast_event");
   ASSERT_TRUE(extension);
 
   // Lazy Background Page doesn't exist yet.
@@ -206,7 +208,7 @@ IN_PROC_BROWSER_TEST_F(LazyBackgroundPageApiTest, BroadcastEvent) {
 IN_PROC_BROWSER_TEST_F(LazyBackgroundPageApiTest, Filters) {
   ASSERT_TRUE(StartEmbeddedTestServer());
 
-  const Extension* extension = LoadExtensionAndWait("filters");
+  scoped_refptr<const Extension> extension = LoadExtensionAndWait("filters");
   ASSERT_TRUE(extension);
 
   // Lazy Background Page doesn't exist yet.
@@ -235,7 +237,7 @@ IN_PROC_BROWSER_TEST_F(LazyBackgroundPageApiTest, WaitForDialog) {
   LazyBackgroundObserver background_observer;
   base::FilePath extdir = test_data_dir_.AppendASCII("lazy_background_page").
       AppendASCII("wait_for_dialog");
-  const Extension* extension = LoadExtension(extdir);
+  scoped_refptr<const Extension> extension = LoadExtension(extdir);
   ASSERT_TRUE(extension);
 
   // The test extension opens a dialog on installation.
@@ -248,10 +250,10 @@ IN_PROC_BROWSER_TEST_F(LazyBackgroundPageApiTest, WaitForDialog) {
 
   // Close the dialog. The keep alive count is decremented.
   ProcessManager* pm = ProcessManager::Get(browser()->profile());
-  int previous_keep_alive_count = pm->GetLazyKeepaliveCount(extension);
+  int previous_keep_alive_count = pm->GetLazyKeepaliveCount(extension.get());
   dialog->CloseModalDialog();
   EXPECT_EQ(previous_keep_alive_count - 1,
-            pm->GetLazyKeepaliveCount(extension));
+            pm->GetLazyKeepaliveCount(extension.get()));
 
   // The background page closes now that the dialog is gone.
   background_observer.WaitUntilClosed();
@@ -265,7 +267,7 @@ IN_PROC_BROWSER_TEST_F(LazyBackgroundPageApiTest, WaitForView) {
   ResultCatcher catcher;
   base::FilePath extdir = test_data_dir_.AppendASCII("lazy_background_page").
       AppendASCII("wait_for_view");
-  const Extension* extension = LoadExtension(extdir);
+  scoped_refptr<const Extension> extension = LoadExtension(extdir);
   ASSERT_TRUE(extension);
   EXPECT_TRUE(catcher.GetNextResult()) << catcher.message();
 
@@ -296,7 +298,7 @@ IN_PROC_BROWSER_TEST_F(LazyBackgroundPageApiTest, WaitForRequest) {
   ResultCatcher catcher;
   base::FilePath extdir = test_data_dir_.AppendASCII("lazy_background_page").
       AppendASCII("wait_for_request");
-  const Extension* extension = LoadExtension(extdir);
+  scoped_refptr<const Extension> extension = LoadExtension(extdir);
   ASSERT_TRUE(extension);
   EXPECT_TRUE(catcher.GetNextResult()) << catcher.message();
 
@@ -365,7 +367,7 @@ IN_PROC_BROWSER_TEST_F(LazyBackgroundPageApiTest, NaClInView) {
     ASSERT_TRUE(PathService::Get(chrome::DIR_GEN_TEST_DATA, &extdir));
     extdir = extdir.AppendASCII("ppapi/tests/extensions/popup/newlib");
     ResultCatcher catcher;
-    const Extension* extension = LoadExtension(extdir);
+    scoped_refptr<const Extension> extension = LoadExtension(extdir);
     ASSERT_TRUE(extension);
     EXPECT_TRUE(catcher.GetNextResult()) << catcher.message();
     EXPECT_EQ(
@@ -401,7 +403,7 @@ IN_PROC_BROWSER_TEST_F(LazyBackgroundPageApiTest, MAYBE_WaitForNTP) {
   ResultCatcher catcher;
   base::FilePath extdir = test_data_dir_.AppendASCII("lazy_background_page").
       AppendASCII("wait_for_ntp");
-  const Extension* extension = LoadExtension(extdir);
+  scoped_refptr<const Extension> extension = LoadExtension(extdir);
   ASSERT_TRUE(extension);
   EXPECT_TRUE(catcher.GetNextResult()) << catcher.message();
 
@@ -539,7 +541,8 @@ IN_PROC_BROWSER_TEST_F(LazyBackgroundPageApiTest, EventDispatchToTab) {
   ResultCatcher catcher;
   catcher.RestrictToBrowserContext(browser()->profile());
 
-  const Extension* extension = LoadExtensionAndWait("event_dispatch_to_tab");
+  scoped_refptr<const Extension> extension =
+      LoadExtensionAndWait("event_dispatch_to_tab");
 
   ExtensionTestMessageListener page_ready("ready", true);
   GURL page_url = extension->GetResourceURL("page.html");
@@ -576,7 +579,7 @@ IN_PROC_BROWSER_TEST_F(LazyBackgroundPageApiTest, UpdateExtensionsPage) {
   ResultCatcher catcher;
   base::FilePath extdir = test_data_dir_.AppendASCII("lazy_background_page").
       AppendASCII("wait_for_view");
-  const Extension* extension = LoadExtension(extdir);
+  scoped_refptr<const Extension> extension = LoadExtension(extdir);
   ASSERT_TRUE(extension);
   EXPECT_TRUE(catcher.GetNextResult()) << catcher.message();
 

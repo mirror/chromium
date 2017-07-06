@@ -343,7 +343,7 @@ IN_PROC_BROWSER_TEST_F(AppWindowInteractiveTest, MAYBE_TestInnerBounds) {
 void AppWindowInteractiveTest::TestOuterBoundsHelper(
     const std::string& frame_type) {
   ExtensionTestMessageListener launched_listener("Launched", true);
-  const extensions::Extension* app =
+  scoped_refptr<const extensions::Extension> app =
       LoadAndLaunchPlatformApp("outer_bounds", &launched_listener);
 
   launched_listener.Reply(frame_type);

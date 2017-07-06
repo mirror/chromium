@@ -73,7 +73,7 @@ class HostedAppTest : public ExtensionBrowserTest {
   }
 
   void SetupApp(const base::FilePath& app_folder, bool is_bookmark_app) {
-    const Extension* app = InstallExtensionWithSourceAndFlags(
+    scoped_refptr<const Extension> app = InstallExtensionWithSourceAndFlags(
         app_folder, 1, extensions::Manifest::INTERNAL,
         is_bookmark_app ? extensions::Extension::FROM_BOOKMARK
                         : extensions::Extension::NO_FLAGS);
@@ -81,7 +81,7 @@ class HostedAppTest : public ExtensionBrowserTest {
 
     // Launch it in a window.
     ASSERT_TRUE(OpenApplication(AppLaunchParams(
-        browser()->profile(), app, extensions::LAUNCH_CONTAINER_WINDOW,
+        browser()->profile(), app.get(), extensions::LAUNCH_CONTAINER_WINDOW,
         WindowOpenDisposition::NEW_WINDOW, extensions::SOURCE_TEST)));
 
     for (auto* b : *BrowserList::GetInstance()) {
