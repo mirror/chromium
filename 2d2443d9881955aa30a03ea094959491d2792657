@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "ac4ef11b_87bb9314",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 17977,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-06T08:51:57Z",
+      "side": 1,
+      "message": "Argh, I had another version of the comment drafted and have not saved it:\n\nI\u0027ve further split the network errors into two buckets: \n - connection error (no internet, server not responding, etc.) and \n - HTTP error (a valid response received but no image included, notably 404).\nFiner logging is not needed. I\u0027ve rephrased the buckets to make it clearer.",
+      "parentUuid": "a0faf0d0_23a6c91e",
+      "range": {
+        "startLine": 17977,
+        "startChar": 2,
+        "endLine": 17977,
+        "endChar": 6
+      },
+      "revId": "2d2443d9881955aa30a03ea094959491d2792657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03e48c86_7543e72d",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 4
