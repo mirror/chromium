@@ -16,6 +16,24 @@
       "revId": "c1f83c1e9c3eb2dcf4a8d07a60c0753fd7dba5ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d2dd2688_dd347a9a",
+        "filename": "ui/ozone/platform/drm/gpu/drm_thread.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1112153
+      },
+      "writtenOn": "2017-07-06T16:45:40Z",
+      "side": 0,
+      "message": "make sense. chromium compositor composites layers on the buffer bound to FBO. remain GBM_BO_USE_RENDERING.",
+      "parentUuid": "c9cf2c8f_b4f9bd56",
+      "revId": "c1f83c1e9c3eb2dcf4a8d07a60c0753fd7dba5ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

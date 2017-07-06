@@ -158,6 +158,30 @@
       "revId": "d822a4f2dc5b12dbe3645c4773300e45adc0da0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71e5f664_7f797e47",
+        "filename": "ui/ozone/platform/drm/gpu/drm_thread.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1112153
+      },
+      "writtenOn": "2017-07-06T16:45:40Z",
+      "side": 1,
+      "message": "sorry about it. I had been usually reviewed by dnicoara and spang at the time. Fortunately, this CL will fix it :)",
+      "parentUuid": "b831ed2d_bb5c5d4f",
+      "range": {
+        "startLine": 129,
+        "startChar": 14,
+        "endLine": 129,
+        "endChar": 34
+      },
+      "revId": "d822a4f2dc5b12dbe3645c4773300e45adc0da0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
