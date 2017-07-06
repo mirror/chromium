@@ -94,6 +94,30 @@
       "revId": "81090bf13bedbcdb0ecfb2386169576e01d7f061",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16509e3a_b9262700",
+        "filename": "ios/web/public/global_state/ios_global_state.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-07-06T17:56:38Z",
+      "side": 1,
+      "message": "Ok, I couldn\u0027t determine if it was still necessary. It needs to live here instead of web_main_loop because the initialization path for Cronet and ChromeWebView need to be completely shared for TaakScheduler. This is becuase there are 3 frameworks which can be built: Cronet, ChromeWebView (an //ios/web_view wrapper), and CronetChromeWebView (both combined into a single framework) In the last case, we need to ensure only one TaskScheduler is created, but in the Cronet only case we don\u0027t necessarily want to depend on //componenets/variations. I should be able to split this out for Cronet into a separate GN target like I had in a previous CL for controlling the TaskScheduler name.\n\nExample of this is the configuration object in patch 11.\n\nhttps://chromium-review.googlesource.com/c/552763/11/ios/web/public/global_state/ios_global_state_configuration.h",
+      "parentUuid": "863fb9d0_d966ac91",
+      "range": {
+        "startLine": 56,
+        "startChar": 8,
+        "endLine": 56,
+        "endChar": 27
+      },
+      "revId": "81090bf13bedbcdb0ecfb2386169576e01d7f061",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

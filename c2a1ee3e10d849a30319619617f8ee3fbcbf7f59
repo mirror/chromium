@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "96fad7fb_ecc60270",
+        "filename": "ios/web/public/global_state/ios_global_state.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-07-06T17:56:38Z",
+      "side": 1,
+      "message": "I had that originally, but Sylvain recommended removing it here: https://chromium-review.googlesource.com/c/552763/4..5/ios/net/global_state/ios_global_state.mm",
+      "parentUuid": "573c9217_e1ddb170",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 31
+      },
+      "revId": "c2a1ee3e10d849a30319619617f8ee3fbcbf7f59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "967b3782_9f960e60",
+        "filename": "ios/web/public/global_state/ios_global_state.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-07-06T17:56:38Z",
+      "side": 1,
+      "message": "This is used below in StartTaskScheduler() and web_main_loop calls into that method at the same place where it was called previously.\n\nhttps://chromium-review.googlesource.com/c/552763/15/ios/web/app/web_main_loop.mm#125",
+      "parentUuid": "67d06920_bb446a42",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 69
+      },
+      "revId": "c2a1ee3e10d849a30319619617f8ee3fbcbf7f59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee42fa66_ef040279",
         "filename": "ios/web/public/global_state/ios_global_state.mm",
         "patchSetId": 15
@@ -59,6 +107,30 @@
       "writtenOn": "2017-07-06T16:45:40Z",
       "side": 1,
       "message": "We expect the task scheduler to be started synchronously in the startup path. This way any callers after Create() should be able to call post_task.h APIs without crashing.\n\nPutting this in GCD/libdispatch would prevent that guarantee, won\u0027t it?",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 15
+      },
+      "revId": "c2a1ee3e10d849a30319619617f8ee3fbcbf7f59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48376186_120468ed",
+        "filename": "ios/web/public/global_state/ios_global_state.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-07-06T17:56:38Z",
+      "side": 1,
+      "message": "No, this won\u0027t prevent that guarantee. The block will execute immediately and the TaskScheduler will exist before Create() returns. The dispatch_once will execute in place the first time, but be skipped after it has been executed once.",
+      "parentUuid": "ee42fa66_ef040279",
       "range": {
         "startLine": 45,
         "startChar": 2,
