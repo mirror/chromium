@@ -34,6 +34,24 @@
       "revId": "ccc15cfa30d02b30e15344f8a51d7784cb11f434",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cbdd688_32137550",
+        "filename": "testing/buildbot/gn_isolate_map.pyl",
+        "patchSetId": 3
+      },
+      "lineNbr": 1074,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-06T18:37:19Z",
+      "side": 1,
+      "message": "Oh FWIW, I since realized I was wrong here. These, and cc tests, do want the windowed launched cuz OSMesa still needs an X11 display even tho they are not onscreen.",
+      "parentUuid": "4b1bc24a_26a58350",
+      "revId": "ccc15cfa30d02b30e15344f8a51d7784cb11f434",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
