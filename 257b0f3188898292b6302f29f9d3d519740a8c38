@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "d0f2eb8b_ecaac86e",
+        "filename": "components/safe_browsing/triggers/trigger_throttler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-06T17:00:48Z",
+      "side": 1,
+      "message": "\u003e The goal is for most triggers to have quota configured via a Finch param (upcoming CL). Zero quota is valid if you want to disable a trigger via Finch.\n\u003e \nAck\n\n\u003e In general, though, I think it\u0027s safer to err on the side of skipping triggers, except for ones that are hardcoded here.\n\u003e \nAck\n\n\u003e Also note that the absence of a \"default:\" case in the switch statement will cause a compile error if new enums are added but not handled here, which will force us to remember to update this code. I imagine this function will look like this in the future:\n\u003e \n\u003e switch(type)\n\u003e  case SECURITY_INTERSTITIAL: \n\u003e    return unlimited;\n\u003e  case TRIG1:\n\u003e  case TRIG2:\n\u003e    return GetQuotaFromFinch(type);\nAck. I tend to get confused by the compiler behavior for switch (enum) unhandled value case.",
+      "parentUuid": "b624fb46_f2db8cb4",
+      "range": {
+        "startLine": 21,
+        "startChar": 8,
+        "endLine": 21,
+        "endChar": 9
+      },
+      "revId": "257b0f3188898292b6302f29f9d3d519740a8c38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81d961a0_97e3bed2",
         "filename": "components/safe_browsing/triggers/trigger_throttler.cc",
         "patchSetId": 1
@@ -328,6 +352,30 @@
       "revId": "257b0f3188898292b6302f29f9d3d519740a8c38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07cfe9f7_2202e5ad",
+        "filename": "components/safe_browsing/triggers/trigger_throttler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-06T17:00:48Z",
+      "side": 1,
+      "message": "Thanks for the clear explanation. So, to hit the corner case, it\u0027d require that:\n1. The user has already hit their existing trigger_type limit.\n2. They restart browser.\n3. The limit for the said trigger_type ought to have been lowered recently via Finch. (Unlikely this\u0027ll happen.)\n\nI am not sure the additional complexity is worth it for such a specific corner case.\nI\u0027ll defer to you on that but if you decide to keep this check, please add a detailed comment explaining when this\u0027ll be useful because it is not clear from reading the code.",
+      "parentUuid": "bc92d68c_03455b0c",
+      "range": {
+        "startLine": 93,
+        "startChar": 27,
+        "endLine": 93,
+        "endChar": 44
+      },
+      "revId": "257b0f3188898292b6302f29f9d3d519740a8c38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
