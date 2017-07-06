@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45f7bbea_19fe4a72",
+        "filename": "ios/chrome/browser/ui/commands/browser_commands.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-06T16:04:28Z",
+      "side": 1,
+      "message": "Nit: *Stops and *Reloads.",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 37
+      },
+      "revId": "aaac07cdf87e53b75e76b6fdfdf1b81ce4568fc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ed0c8e7_7216bc78",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-06T16:04:28Z",
+      "side": 1,
+      "message": "Nit: \u003e\u003d 0.",
+      "range": {
+        "startLine": 492,
+        "startChar": 52,
+        "endLine": 492,
+        "endChar": 53
+      },
+      "revId": "aaac07cdf87e53b75e76b6fdfdf1b81ce4568fc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
