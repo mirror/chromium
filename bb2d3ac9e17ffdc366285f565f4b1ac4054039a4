@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "757d5b0d_1ec55c99",
+        "filename": "media/mojo/interfaces/audio_decoder_config.typemap",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-07-06T23:48:02Z",
+      "side": 1,
+      "message": "Ha, woops. I found them a bit verbose anyway.",
+      "parentUuid": "671eaa73_06852144",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 77
+      },
+      "revId": "bb2d3ac9e17ffdc366285f565f4b1ac4054039a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "444a0ae5_c7ce4409",
         "filename": "media/mojo/interfaces/audio_decoder_config_struct_traits.cc",
         "patchSetId": 5
