@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "8bc35814_41a836f8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeBackgroundService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-06T10:03:34Z",
+      "side": 1,
+      "message": "rename this too?",
+      "range": {
+        "startLine": 101,
+        "startChar": 19,
+        "endLine": 101,
+        "endChar": 32
+      },
+      "revId": "c62049d839da1e02ff7a46f94700d8b366768f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7fb796a_8b5a5e96",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetsBridge.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-06T10:03:34Z",
+      "side": 1,
+      "message": "update doc? same above",
+      "range": {
+        "startLine": 76,
+        "startChar": 15,
+        "endLine": 76,
+        "endChar": 21
+      },
+      "revId": "c62049d839da1e02ff7a46f94700d8b366768f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f13b8c6c_33a34256",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 1
