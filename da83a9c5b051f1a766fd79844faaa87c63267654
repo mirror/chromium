@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e025362_dd1c4d39",
+        "filename": "third_party/WebKit/Source/core/geometry/DOMRect.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-07-06T21:30:34Z",
+      "side": 1,
+      "message": "This should be FromFloatRect since it\u0027s not a web-exposed method called from bindings. It\u0027ll look inconsistent, but that\u0027s what\u0027s been decided.",
+      "range": {
+        "startLine": 26,
+        "startChar": 18,
+        "endLine": 26,
+        "endChar": 31
+      },
+      "revId": "da83a9c5b051f1a766fd79844faaa87c63267654",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "295fe018_95ece5a8",
+        "filename": "third_party/WebKit/Source/core/geometry/DOMRectList.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-07-06T21:30:34Z",
+      "side": 1,
+      "message": "Remove this entirely instead.",
+      "range": {
+        "startLine": 55,
+        "startChar": 13,
+        "endLine": 55,
+        "endChar": 14
+      },
+      "revId": "da83a9c5b051f1a766fd79844faaa87c63267654",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5eb56b0_4eea94c9",
+        "filename": "third_party/WebKit/Source/core/geometry/DOMRectList.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-07-06T21:30:34Z",
+      "side": 1,
+      "message": "This doesn\u0027t exist yet, can you link to https://github.com/w3c/fxtf-drafts/pull/186 and do some poking of that to get it landed spec-side at least before this change reaches stable?",
+      "range": {
+        "startLine": 5,
+        "startChar": 11,
+        "endLine": 5,
+        "endChar": 14
+      },
+      "revId": "da83a9c5b051f1a766fd79844faaa87c63267654",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "731a7452_89c0003c",
+        "filename": "third_party/WebKit/Source/core/geometry/DOMRectList.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-07-06T21:30:34Z",
+      "side": 1,
+      "message": "Spec also has LegacyArrayClass, can you add a TODO about that?",
+      "revId": "da83a9c5b051f1a766fd79844faaa87c63267654",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3e998a7_8b2aa1b0",
+        "filename": "third_party/WebKit/Source/core/geometry/DOMRectReadOnly.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-07-06T21:30:34Z",
+      "side": 1,
+      "message": "Also From*Rect capitalization.",
+      "range": {
+        "startLine": 29,
+        "startChar": 26,
+        "endLine": 29,
+        "endChar": 37
+      },
+      "revId": "da83a9c5b051f1a766fd79844faaa87c63267654",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
