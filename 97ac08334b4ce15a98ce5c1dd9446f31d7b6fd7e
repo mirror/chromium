@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "682aa9b9_7f112ac5",
+        "filename": "chrome/browser/resources/settings/site_settings/constants.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-06T01:16:49Z",
+      "side": 1,
+      "message": "nit: Should this be ContentSettingsTypes? (I\u0027m assuming it refers to the enum just above this one.)",
+      "revId": "97ac08334b4ce15a98ce5c1dd9446f31d7b6fd7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14ded819_3c736ee0",
+        "filename": "chrome/browser/resources/settings/site_settings/constants.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-06T01:16:49Z",
+      "side": 1,
+      "message": "nit: Can we also add a comment here to say that this should be kept in sync with the ContentSetting enum in components/content_settings/core/common/content_settings.h? I think there\u0027s precedent for that sort of thing (e.g. in https://cs.chromium.org/chromium/src/chrome/browser/permissions/permission_uma_util.h?rcl\u003d8a439977cb7e98358e41cdbb532db92d42f8f14d\u0026l\u003d35)",
+      "revId": "97ac08334b4ce15a98ce5c1dd9446f31d7b6fd7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "502a9814_c9ac0ce0",
+        "filename": "chrome/browser/resources/settings/site_settings/site_list.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-06T01:16:49Z",
+      "side": 1,
+      "message": "nit: permissionValue -\u003e contentSetting",
+      "revId": "97ac08334b4ce15a98ce5c1dd9446f31d7b6fd7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d72f23c_5bda6e0e",
+        "filename": "chrome/test/data/webui/settings/site_details_permission_tests.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-06T01:16:49Z",
+      "side": 1,
+      "message": "nit: expectedPermissionValue -\u003e expectedContentSetting",
+      "revId": "97ac08334b4ce15a98ce5c1dd9446f31d7b6fd7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
