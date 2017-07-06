@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ae60fea7_61aad4fe",
+        "filename": "content/browser/gpu/gpu_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-07-06T17:06:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "220382c7_cdf03cef",
+      "range": {
+        "startLine": 112,
+        "startChar": 2,
+        "endLine": 114,
+        "endChar": 71
+      },
+      "revId": "11944f290af87145ceaf80fb946a54923ed000ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c322c202_ae8c52fb",
         "filename": "services/ui/public/cpp/gpu/gpu.cc",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-06T05:54:15Z",
       "side": 1,
       "message": "|connector_| is gone in the latest gpu.cc; call \n  factory_.Run();\ninstead\n\nAlso I\u0027m not sure if we should bind |gpu_| it would \npotentially change l.107: |gpu_| also marks that we\u0027re \nbetween EstablishGpuChannel{Sync}() and \nOnEstablishedGpuChannel().\n\n(I have the same situation in https://crrev.com//c/558833).",
+      "range": {
+        "startLine": 89,
+        "startChar": 4,
+        "endLine": 89,
+        "endChar": 14
+      },
+      "revId": "11944f290af87145ceaf80fb946a54923ed000ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e7a2470_b044a726",
+        "filename": "services/ui/public/cpp/gpu/gpu.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-07-06T17:06:52Z",
+      "side": 1,
+      "message": "Now that even CreateJDA/CreateVEA() will access |gpu_|, I think |gpu_| should not be reset in OnEstablishedGpuChannel(). \nAlso, if CreateJDA/CreateVEA() gets called before EstablishGpuChannel{Sync}(possible?), gpu channel will never be created(see l.103).\nSadrul, your opinion on this, please.",
+      "parentUuid": "c322c202_ae8c52fb",
       "range": {
         "startLine": 89,
         "startChar": 4,
@@ -68,6 +116,30 @@
       "revId": "11944f290af87145ceaf80fb946a54923ed000ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ce7c006_35107a80",
+        "filename": "services/ui/public/interfaces/gpu.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-07-06T17:06:52Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a1f1b0ef_e1141c83",
+      "range": {
+        "startLine": 33,
+        "startChar": 68,
+        "endLine": 33,
+        "endChar": 75
+      },
+      "revId": "11944f290af87145ceaf80fb946a54923ed000ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
