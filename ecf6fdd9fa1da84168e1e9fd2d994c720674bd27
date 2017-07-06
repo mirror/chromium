@@ -34,6 +34,24 @@
       "revId": "ecf6fdd9fa1da84168e1e9fd2d994c720674bd27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86f90af6_fe792d5f",
+        "filename": "cc/base/render_surface_filters.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1116015
+      },
+      "writtenOn": "2017-07-06T17:10:41Z",
+      "side": 1,
+      "message": "Yes, but let\u0027s just call it blur_tile_mode_. In the accessor, DCHECK_EQ(type_, BLUR) as in the other accessors.\n\nYou\u0027re right about the Sk* precedent in FilterOperation, so SkBlurImageFilter::TileMode is fine.",
+      "parentUuid": "ab090225_f605606b",
+      "revId": "ecf6fdd9fa1da84168e1e9fd2d994c720674bd27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
