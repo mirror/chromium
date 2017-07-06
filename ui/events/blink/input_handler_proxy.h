@@ -78,7 +78,8 @@ class InputHandlerProxy
                               std::unique_ptr<ui::DidOverscrollParams>)>;
   void HandleInputEventWithLatencyInfo(WebScopedInputEvent event,
                                        const LatencyInfo& latency_info,
-                                       EventDispositionCallback callback);
+                                       EventDispositionCallback callback,
+                                       cc::TouchAction* touch_action);
   EventDisposition HandleInputEvent(const blink::WebInputEvent& event);
 
   // cc::InputHandlerClient implementation.
@@ -271,6 +272,9 @@ class InputHandlerProxy
   bool has_ongoing_compositor_scroll_fling_pinch_;
 
   std::unique_ptr<base::TickClock> tick_clock_;
+
+  // Used to send whitelisted touch actions back to InputEventFilter.
+  cc::TouchAction* white_listed_touch_action_;
 
   DISALLOW_COPY_AND_ASSIGN(InputHandlerProxy);
 };
