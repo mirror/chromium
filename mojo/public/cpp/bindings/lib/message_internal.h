@@ -76,6 +76,11 @@ class MOJO_CPP_BINDINGS_EXPORT SyncMessageResponseSetup {
   static void SetCurrentSyncResponseMessage(Message* message);
 };
 
+// Used by generated bindings to bypass validation for unserialized message
+// objects and control messages.
+MOJO_CPP_BINDINGS_EXPORT
+bool ValidateUnserializedOrControlMessage(Message* message);
+
 }  // namespace internal
 }  // namespace mojo
 
