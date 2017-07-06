@@ -154,6 +154,15 @@ ScriptPromise ImageElementBase::CreateImageBitmap(
     return ScriptPromise();
   if (!ImageBitmap::IsResizeOptionValid(options, exception_state))
     return ScriptPromise();
+  if (IsSVGSource()) {
+    ScriptPromiseResolver* resolver =
+        ScriptPromiseResolver::Create(script_state);
+    ScriptPromise promise = resolver->Promise();
+    ImageBitmap::CreateAsync(this, crop_rect,
+                             event_target.ToLocalDOMWindow()->document(),
+                             resolver, options);
+    return promise;
+  }
   return ImageBitmapSource::FulfillImageBitmap(
       script_state, ImageBitmap::Create(
                         this, crop_rect,
