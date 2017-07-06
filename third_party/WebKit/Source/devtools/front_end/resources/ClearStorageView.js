@@ -7,15 +7,15 @@
 Resources.ClearStorageView = class extends UI.ThrottledWidget {
   constructor() {
     super(true, 1000);
-    this._pieColors = [
-      'rgba(110, 161, 226, 1)',  // blue
-      'rgba(229, 113, 113, 1)',  // red
-      'rgba(239, 196, 87, 1)',   // yellow
-      'rgba(155, 127, 230, 1)',  // purple
-      'rgba(116, 178, 102, 1)',  // green
-      'rgba(255, 167, 36, 1)',   // orange
-      'rgba(203, 220, 56, 1)',   // lime
-    ];
+    this._pieColors = new Map([
+      [Protocol.Storage.StorageType.Appcache, 'rgba(110, 161, 226, 1)'],        // blue
+      [Protocol.Storage.StorageType.Cache_storage, 'rgba(229, 113, 113, 1)'],   // red
+      [Protocol.Storage.StorageType.Cookies, 'rgba(239, 196, 87, 1)'],          // yellow
+      [Protocol.Storage.StorageType.Indexeddb, 'rgba(155, 127, 230, 1)'],       // purple
+      [Protocol.Storage.StorageType.Local_storage, 'rgba(116, 178, 102, 1)'],   // green
+      [Protocol.Storage.StorageType.Service_workers, 'rgba(255, 167, 36, 1)'],  // orange
+      [Protocol.Storage.StorageType.Websql, 'rgba(203, 220, 56, 1)'],           // lime
+    ]);
 
     this._reportView = new UI.ReportView(Common.UIString('Clear storage'));
     this._reportView.registerRequiredCSS('resources/clearStorageView.css');
@@ -27,11 +27,7 @@ Resources.ClearStorageView = class extends UI.ThrottledWidget {
     this._securityOrigin = null;
 
     this._settings = new Map();
-    for (var type
-             of [Protocol.Storage.StorageType.Appcache, Protocol.Storage.StorageType.Cache_storage,
-                 Protocol.Storage.StorageType.Cookies, Protocol.Storage.StorageType.Indexeddb,
-                 Protocol.Storage.StorageType.Local_storage, Protocol.Storage.StorageType.Service_workers,
-                 Protocol.Storage.StorageType.Websql])
+    for (var type of this._pieColors.keys())
       this._settings.set(type, Common.settings.createSetting('clear-storage-' + type, true));
 
     var quota = this._reportView.appendSection(Common.UIString('Usage'));
@@ -197,14 +193,17 @@ Resources.ClearStorageView = class extends UI.ThrottledWidget {
         '%s used out of %s storage quota', Number.bytesToString(response.usage), Number.bytesToString(response.quota));
 
     this._resetPieChart(response.usage);
-    var colorIndex = 0;
-    for (var usageForType of response.usageBreakdown) {
-      if (!usageForType.usage)
+    for (var usageForType of response.usageBreakdown.sort((a, b) => b.usage - a.usage)) {
+      var value = usageForType.usage;
+      if (!value)
         continue;
-      if (colorIndex === this._pieColors.length)
-        colorIndex = 0;
-      this._appendLegendRow(
-          this._getStorageTypeName(usageForType.storageType), usageForType.usage, this._pieColors[colorIndex++]);
+      var title = this._getStorageTypeName(usageForType.storageType);
+      var color = this._pieColors.get(usageForType.storageType);
+      this._pieChart.addSlice(value, color);
+      var rowElement = this._pieChartLegend.createChild('div', 'usage-breakdown-legend-row');
+      rowElement.createChild('span', 'usage-breakdown-legend-value').textContent = Number.bytesToString(value);
+      rowElement.createChild('span', 'usage-breakdown-legend-swatch').style.backgroundColor = color;
+      rowElement.createChild('span', 'usage-breakdown-legend-title').textContent = title;
     }
 
     this._usageUpdatedForTest(response.usage, response.quota, response.usageBreakdown);
@@ -221,21 +220,6 @@ Resources.ClearStorageView = class extends UI.ThrottledWidget {
   _resetPieChart(total) {
     this._pieChart.setTotal(total);
     this._pieChartLegend.removeChildren();
-  }
-
-  /**
-   * @param {string} title
-   * @param {number} value
-   * @param {string} color
-   */
-  _appendLegendRow(title, value, color) {
-    if (!value)
-      return;
-    this._pieChart.addSlice(value, color);
-    var rowElement = this._pieChartLegend.createChild('div');
-    rowElement.createChild('span', 'usage-breakdown-legend-value').textContent = Number.bytesToString(value);
-    rowElement.createChild('span', 'usage-breakdown-legend-swatch').style.backgroundColor = color;
-    rowElement.createChild('span', 'usage-breakdown-legend-title').textContent = title;
   }
 
   /**
