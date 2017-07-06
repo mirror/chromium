@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "097d86b0_f40755fd",
+        "filename": "net/base/data_url.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-07-06T18:25:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "602a436f_59599ec8",
+      "range": {
+        "startLine": 12,
+        "startChar": 26,
+        "endLine": 12,
+        "endChar": 0
+      },
+      "revId": "68c5095f333543a19d8c87b8e3bc492d18314112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d6d8b5a_7d84b292",
         "filename": "net/base/data_url.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "68c5095f333543a19d8c87b8e3bc492d18314112",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f42f4e7_cf0af1c2",
+        "filename": "net/base/data_url.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-07-06T18:25:51Z",
+      "side": 1,
+      "message": "That\u0027s what cbegin is for. Done.",
+      "parentUuid": "8d6d8b5a_7d84b292",
+      "range": {
+        "startLine": 46,
+        "startChar": 24,
+        "endLine": 46,
+        "endChar": 29
+      },
+      "revId": "68c5095f333543a19d8c87b8e3bc492d18314112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
