@@ -22,6 +22,30 @@
       "revId": "5bf60281e3ba01737805ba8b505aa0731cce8ea8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8528b152_3666dbd8",
+        "filename": "chrome/browser/android/chrome_jni_registrar.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-07-06T15:03:41Z",
+      "side": 0,
+      "message": "This is just an example. I planned to delete all functions in this file but there are lots of them. So I just deleted the first part under the comment of \"// Register JNI for components we depend on.\" At last, we will delete everything here.",
+      "parentUuid": "be9f049a_2261b0b0",
+      "range": {
+        "startLine": 13,
+        "startChar": 33,
+        "endLine": 13,
+        "endChar": 40
+      },
+      "revId": "5bf60281e3ba01737805ba8b505aa0731cce8ea8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
