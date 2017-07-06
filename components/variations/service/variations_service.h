@@ -18,6 +18,7 @@
 #include "base/time/time.h"
 #include "components/variations/client_filterable_state.h"
 #include "components/variations/service/ui_string_overrider.h"
+#include "components/variations/service/variations_seed_manager.h"
 #include "components/variations/service/variations_service_client.h"
 #include "components/variations/variations_request_scheduler.h"
 #include "components/variations/variations_seed_simulator.h"
@@ -53,7 +54,8 @@ namespace variations {
 // new seed data from the variations server.
 class VariationsService
     : public net::URLFetcherDelegate,
-      public web_resource::ResourceRequestAllowedNotifier::Observer {
+      public web_resource::ResourceRequestAllowedNotifier::Observer,
+      public VariationsSeedManager {
  public:
   class Observer {
    public:
@@ -75,13 +77,6 @@ class VariationsService
   };
 
   ~VariationsService() override;
-
-  // Creates field trials based on the variations seed loaded from local state.
-  // If there is a problem loading the seed data, all trials specified by the
-  // seed may not be created. Some field trials are configured to override or
-  // associate with (for reporting) specific features. These associations are
-  // registered with |feature_list|.
-  bool CreateTrialsFromSeed(base::FeatureList* feature_list);
 
   // Should be called before startup of the main message loop.
   void PerformPreMainMessageLoopStartup();
@@ -128,10 +123,6 @@ class VariationsService
   // the same as the stored variable, or if the update failed for any other
   // reason.
   bool OverrideStoredPermanentCountry(const std::string& override_country);
-
-  // Returns what variations will consider to be the latest country. Returns
-  // empty if it is not available.
-  std::string GetLatestCountry() const;
 
   // Exposed for testing.
   static std::string GetDefaultVariationsServerURLForTesting();
@@ -186,8 +177,8 @@ class VariationsService
   // Create an entropy provider based on low entropy. This is used to create
   // trials for studies that should only depend on low entropy, such as studies
   // that send experiment IDs to Google web properties. Virtual for testing.
-  virtual std::unique_ptr<const base::FieldTrial::EntropyProvider>
-  CreateLowEntropyProvider();
+  std::unique_ptr<const base::FieldTrial::EntropyProvider>
+  CreateLowEntropyProvider() override;
 
   // Creates the VariationsService with the given |local_state| prefs service
   // and |state_manager|. Does not take ownership of |state_manager|. Caller
@@ -215,37 +206,6 @@ class VariationsService
   FRIEND_TEST_ALL_PREFIXES(VariationsServiceTest, CountryHeader);
   FRIEND_TEST_ALL_PREFIXES(VariationsServiceTest, GetVariationsServerURL);
 
-  // Set of different possible values to report for the
-  // Variations.LoadPermanentConsistencyCountryResult histogram. This enum must
-  // be kept consistent with its counterpart in histograms.xml.
-  enum LoadPermanentConsistencyCountryResult {
-    LOAD_COUNTRY_NO_PREF_NO_SEED = 0,
-    LOAD_COUNTRY_NO_PREF_HAS_SEED,
-    LOAD_COUNTRY_INVALID_PREF_NO_SEED,
-    LOAD_COUNTRY_INVALID_PREF_HAS_SEED,
-    LOAD_COUNTRY_HAS_PREF_NO_SEED_VERSION_EQ,
-    LOAD_COUNTRY_HAS_PREF_NO_SEED_VERSION_NEQ,
-    LOAD_COUNTRY_HAS_BOTH_VERSION_EQ_COUNTRY_EQ,
-    LOAD_COUNTRY_HAS_BOTH_VERSION_EQ_COUNTRY_NEQ,
-    LOAD_COUNTRY_HAS_BOTH_VERSION_NEQ_COUNTRY_EQ,
-    LOAD_COUNTRY_HAS_BOTH_VERSION_NEQ_COUNTRY_NEQ,
-    LOAD_COUNTRY_MAX,
-  };
-
-  // Loads the seed from the variations store into |seed|. If successfull,
-  // |seed| will contain the loaded data and true is returned. Set as virtual
-  // so that it can be overridden by tests.
-  virtual bool LoadSeed(VariationsSeed* seed);
-
-  // Returns all of the client state used for filtering studies.
-  // As a side-effect, may update the stored permanent consistency country.
-  std::unique_ptr<ClientFilterableState> GetClientFilterableStateForVersion(
-      const base::Version& version);
-
-  // Sets the stored permanent country pref for this client.
-  void StorePermanentCountry(const base::Version& version,
-                             const std::string& country);
-
   // Checks if prerequisites for fetching the Variations seed are met, and if
   // so, performs the actual fetch using |DoActualFetch|.
   void FetchVariationsSeed();
@@ -266,24 +226,6 @@ class VariationsService
       std::unique_ptr<variations::VariationsSeed> seed,
       const base::Version& version);
 
-  // Record the time of the most recent successful fetch.
-  void RecordLastFetchTime();
-
-  // Loads the country code to use for filtering permanent consistency studies,
-  // updating the stored country code if the stored value was for a different
-  // Chrome version. The country used for permanent consistency studies is kept
-  // consistent between Chrome upgrades in order to avoid annoying the user due
-  // to experiment churn while traveling.
-  std::string LoadPermanentConsistencyCountry(
-      const base::Version& version,
-      const std::string& latest_country);
-
-  std::unique_ptr<VariationsServiceClient> client_;
-  UIStringOverrider ui_string_overrider_;
-
-  // The pref service used to store persist the variations seed.
-  PrefService* local_state_;
-
   // Used for instantiating entropy providers for variations seed simulation.
   // Weak pointer.
   metrics::MetricsStateManager* state_manager_;
@@ -291,8 +233,6 @@ class VariationsService
   // Used to obtain policy-related preferences. Depending on the platform, will
   // either be Local State or Profile prefs.
   PrefService* policy_pref_service_;
-
-  VariationsSeedStore seed_store_;
 
   // Contains the scheduler instance that handles timing for requests to the
   // server. Initially NULL and instantiated when the initial fetch is
@@ -310,10 +250,6 @@ class VariationsService
 
   // The URL to use for querying the variations server.
   GURL variations_server_url_;
-
-  // Tracks whether |CreateTrialsFromSeed| has been called, to ensure that
-  // it gets called prior to |StartRepeatedVariationsSeedFetch|.
-  bool create_trials_from_seed_called_;
 
   // Tracks whether the initial request to the variations server had completed.
   bool initial_request_completed_;
@@ -337,8 +273,6 @@ class VariationsService
 
   // List of observers of the VariationsService.
   base::ObserverList<Observer> observer_list_;
-
-  base::ThreadChecker thread_checker_;
 
   base::WeakPtrFactory<VariationsService> weak_ptr_factory_;
 
