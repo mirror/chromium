@@ -1333,7 +1333,7 @@ SDK.DOMModel = class extends SDK.SDKModel {
   _childNodeRemoved(parentId, nodeId) {
     var parent = this._idToDOMNode[parentId];
     var node = this._idToDOMNode[nodeId];
-    parent._removeChild(node);
+    parent && parent._removeChild(node);
     this._unbind(node);
     this.dispatchEventToListeners(SDK.DOMModel.Events.NodeRemoved, {node: node, parent: parent});
     this._scheduleMutationEvent(node);

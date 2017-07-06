@@ -91,7 +91,7 @@ TestRunner.runTests = function(tests) {
  * @param {!Object} receiver
  * @param {string} methodName
  * @param {!Function} override
- * @param {boolean} opt_sticky
+ * @param {boolean=} opt_sticky
  */
 TestRunner.addSniffer = function(receiver, methodName, override, opt_sticky) {
   override = TestRunner.safeWrap(override);
@@ -213,6 +213,44 @@ TestRunner.safeWrap = function(func, onexception) {
 };
 
 /**
+ * @param {!Element} node
+ * @return {string}
+ */
+TestRunner.textContentWithLineBreaks = function(node) {
+  function padding(currentNode) {
+    var result = 0;
+    while (currentNode && currentNode !== node) {
+      if (currentNode.nodeName === 'OL' &&
+          !(currentNode.classList && currentNode.classList.contains('object-properties-section')))
+        ++result;
+      currentNode = currentNode.parentNode;
+    }
+    return Array(result * 4 + 1).join(' ');
+  }
+
+  var buffer = '';
+  var currentNode = node;
+  var ignoreFirst = false;
+  while (currentNode.traverseNextNode(node)) {
+    currentNode = currentNode.traverseNextNode(node);
+    if (currentNode.nodeType === Node.TEXT_NODE) {
+      buffer += currentNode.nodeValue;
+    } else if (currentNode.nodeName === 'LI' || currentNode.nodeName === 'TR') {
+      if (!ignoreFirst)
+        buffer += '\n' + padding(currentNode);
+      else
+        ignoreFirst = false;
+    } else if (currentNode.nodeName === 'STYLE') {
+      currentNode = currentNode.traverseNextNode(node);
+      continue;
+    } else if (currentNode.classList && currentNode.classList.contains('object-properties-section')) {
+      ignoreFirst = true;
+    }
+  }
+  return buffer;
+};
+
+/**
  * @param {!Function} testFunction
  * @return {!Function}
  */
@@ -224,17 +262,17 @@ function debugTest(testFunction) {
 }
 
 (function() {
-  /**
+/**
    * @param {string|!Event} message
    * @param {string} source
    * @param {number} lineno
    * @param {number} colno
    * @param {!Error} error
    */
-  function completeTestOnError(message, source, lineno, colno, error) {
-    TestRunner.addResult('TEST ENDED IN ERROR: ' + error.stack);
-    TestRunner.completeTest();
-  }
+function completeTestOnError(message, source, lineno, colno, error) {
+  TestRunner.addResult('TEST ENDED IN ERROR: ' + error.stack);
+  TestRunner.completeTest();
+}
 
-  self['onerror'] = completeTestOnError;
+self['onerror'] = completeTestOnError;
 })();
