@@ -304,6 +304,15 @@ Polymer({
     this.isVolumeChanging_ = false;
     this.volumeSliderValue_ = e.target.value;
     media_router.browserApi.setCurrentMediaVolume(this.volumeSliderValue_);
+    if (this.volumeSliderValue_isVolumeChanging_) {
+      // Wait for 1 second before applying external volume updates, to prevent
+      // notifications originating from this controller moving the slider knob
+      // around.
+      var that = this;
+      setTimeout(function() {
+        that.isVolumeChanging_ = false;
+      }, 1000);
+    }
   },
 
   /**
@@ -315,14 +324,14 @@ Polymer({
     this.isVolumeChanging_ = true;
     var target = /** @type {{immediateValue: number}} */ (e.target);
     this.volumeSliderValue_ = target.immediateValue;
+    media_router.browserApi.setCurrentMediaVolume(this.volumeSliderValue_);
   },
 
   /**
    * Resets the route controls. Called when the route details view is closed.
    */
   reset: function() {
-    this.routeStatus = new media_router.RouteStatus(
-        '', '', false, false, false, false, false, false, 0, 0, 0);
+    this.routeStatus = new media_router.RouteStatus();
     media_router.ui.setRouteControls(null);
   },
 
