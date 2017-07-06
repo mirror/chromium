@@ -66,6 +66,8 @@ _cronet_deps = [
 _cronet_sources = [
   "../histogram_manager.cc",
   "../histogram_manager.h",
+  "../init_task_scheduler.cc",
+  "../init_task_scheduler.h",
   "../stale_host_resolver.cc",
   "../stale_host_resolver.h",
   "../url_request_context_config.cc",

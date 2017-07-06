@@ -23,6 +23,7 @@
 #include "components/cronet/android/cronet_upload_data_stream_adapter.h"
 #include "components/cronet/android/cronet_url_request_adapter.h"
 #include "components/cronet/android/cronet_url_request_context_adapter.h"
+#include "components/cronet/init_task_scheduler.h"
 #include "components/cronet/version.h"
 #include "jni/CronetLibraryLoader_jni.h"
 #include "net/android/net_jni_registrar.h"
@@ -67,6 +68,8 @@ bool RegisterJNI(JNIEnv* env) {
 bool NativeInit() {
   if (!base::android::OnJNIOnLoadInit())
     return false;
+  InitTaskScheduler();
+
   url::Initialize();
   // Initializes the statistics recorder system. This needs to be done before
   // emitting histograms to prevent memory leaks (crbug.com/707836).
@@ -97,6 +100,8 @@ jint CronetOnLoad(JavaVM* vm, void* reserved) {
 }
 
 void CronetOnUnLoad(JavaVM* jvm, void* reserved) {
+  ShutdownTaskScheduler();
+
   base::android::LibraryLoaderExitHook();
 }
 

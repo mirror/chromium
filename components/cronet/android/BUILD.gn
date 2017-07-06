@@ -205,6 +205,8 @@ template("cronet_static_tmpl") {
       "//components/cronet/histogram_manager.h",
       "//components/cronet/host_cache_persistence_manager.cc",
       "//components/cronet/host_cache_persistence_manager.h",
+      "//components/cronet/init_task_scheduler.cc",
+      "//components/cronet/init_task_scheduler.h",
       "//components/cronet/stale_host_resolver.cc",
       "//components/cronet/stale_host_resolver.h",
       "//components/cronet/url_request_context_config.cc",

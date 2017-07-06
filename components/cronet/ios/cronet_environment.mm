@@ -22,8 +22,8 @@
 #include "base/path_service.h"
 #include "base/single_thread_task_runner.h"
 #include "base/synchronization/waitable_event.h"
-#include "base/task_scheduler/task_scheduler.h"
 #include "components/cronet/histogram_manager.h"
+#include "components/cronet/init_task_scheduler.h"
 #include "components/cronet/ios/version.h"
 #include "components/prefs/json_pref_store.h"
 #include "components/prefs/pref_filter.h"
@@ -118,7 +118,7 @@ void CronetEnvironment::Initialize() {
   if (!g_at_exit_)
     g_at_exit_ = new base::AtExitManager;
 
-  base::TaskScheduler::CreateAndStartWithDefaultParams("CronetIos");
+  InitTaskScheduler();
 
   url::Initialize();
   base::CommandLine::Init(0, nullptr);
@@ -255,9 +255,7 @@ CronetEnvironment::~CronetEnvironment() {
 
   // TODO(lilyhoughton) this can only be run once, so right now leaking it.
   // Should be be called when the _last_ CronetEnvironment is destroyed.
-  // base::TaskScheduler* ts = base::TaskScheduler::GetInstance();
-  // if (ts)
-  //  ts->Shutdown();
+  // ShutdownTaskScheduler();
 
   // TODO(lilyhoughton) this should be smarter about making sure there are no
   // pending requests, etc.
