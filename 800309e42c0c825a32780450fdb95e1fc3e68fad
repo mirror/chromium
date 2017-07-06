@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b172867_77902677",
+        "filename": "ios/chrome/test/earl_grey/chrome_earl_grey.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-06T13:34:45Z",
+      "side": 1,
+      "message": "I think we should still use PRIuNS, similar to chrome_assertions. This was adopted as style for Chrome for iOS (unless it has changed). It avoids having to do a cast.",
+      "range": {
+        "startLine": 218,
+        "startChar": 60,
+        "endLine": 218,
+        "endChar": 62
+      },
+      "revId": "800309e42c0c825a32780450fdb95e1fc3e68fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31c3b1f8_888060c8",
+        "filename": "ios/chrome/test/earl_grey/chrome_earl_grey.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-06T13:34:45Z",
+      "side": 1,
+      "message": "same as previous comment.",
+      "range": {
+        "startLine": 231,
+        "startChar": 57,
+        "endLine": 231,
+        "endChar": 63
+      },
+      "revId": "800309e42c0c825a32780450fdb95e1fc3e68fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
