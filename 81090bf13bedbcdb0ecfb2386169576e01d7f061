@@ -118,6 +118,30 @@
       "revId": "81090bf13bedbcdb0ecfb2386169576e01d7f061",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52b53c41_5b7aa20d",
+        "filename": "ios/web/public/global_state/ios_global_state.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-06T18:05:43Z",
+      "side": 1,
+      "message": "Does Cronet and CronetChromeWebView have access to finch?\nIf not, then you\u0027ll need to keep the variations lookup within web_main_loop.mm and have that supply parameters to this call.",
+      "parentUuid": "16509e3a_b9262700",
+      "range": {
+        "startLine": 56,
+        "startChar": 8,
+        "endLine": 56,
+        "endChar": 27
+      },
+      "revId": "81090bf13bedbcdb0ecfb2386169576e01d7f061",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

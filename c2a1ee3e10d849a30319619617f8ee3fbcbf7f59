@@ -140,6 +140,30 @@
       "revId": "c2a1ee3e10d849a30319619617f8ee3fbcbf7f59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab4a2dfd_03312772",
+        "filename": "ios/web/public/global_state/ios_global_state.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-06T18:05:43Z",
+      "side": 1,
+      "message": "Ah, nifty!",
+      "parentUuid": "48376186_120468ed",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 15
+      },
+      "revId": "c2a1ee3e10d849a30319619617f8ee3fbcbf7f59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
