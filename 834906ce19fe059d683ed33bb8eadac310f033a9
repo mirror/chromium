@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0e21cd5_7308524d",
+        "filename": "chrome/browser/ui/cocoa/menu_button.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-07-06T18:16:34Z",
+      "side": 1,
+      "message": "Are you sure? The click-and-hold behavior I see only requires waiting a small bit of time. It requires no motion.",
+      "range": {
+        "startLine": 53,
+        "startChar": 19,
+        "endLine": 54,
+        "endChar": 33
+      },
+      "revId": "834906ce19fe059d683ed33bb8eadac310f033a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
