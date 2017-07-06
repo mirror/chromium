@@ -588,6 +588,8 @@ class CORE_EXPORT LayoutBox : public LayoutBoxModelObject {
   void ScrollByRecursively(const ScrollOffset& delta);
   // If makeVisibleInVisualViewport is set, the visual viewport will be scrolled
   // if required to make the rect visible.
+  // TODO(sunyunjia): Rename this method to distinguish with the one in
+  // LayoutObject. crbug.com/738160
   void ScrollRectToVisible(const LayoutRect&,
                            const ScrollAlignment& align_x,
                            const ScrollAlignment& align_y,

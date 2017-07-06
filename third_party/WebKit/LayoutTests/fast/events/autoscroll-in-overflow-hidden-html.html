@@ -39,7 +39,6 @@
             iframeScrollTopAfterAnchor = iframeDocument.scrollingElement.scrollTop;
             if (iframeDocument.scrollingElement.scrollTop == 0)
                 log("FAILED: anchor clicking within non-scrollable inner frame failed.");
-
             if (window.eventSender) {
                 var textInIframe = iframeDocument.getElementById('textInFrame');
                 var x = iframe.offsetLeft + textInIframe.offsetLeft - iframeDocument.scrollingElement.scrollLeft + 7;
