@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ee8fff9_0e63045d",
+        "filename": "chrome/browser/resources/settings/android_apps_page/android_apps_subpage.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-06T21:52:57Z",
+      "side": 1,
+      "message": "The event is not used anywhere in this method. Can we simply remove the parameter instead?",
+      "revId": "513285faf5b8cf00af1d480b7811bf7e6ba3a5a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a946021_0b03658f",
+        "filename": "chrome/browser/resources/settings/internet_page/network_apnlist.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-06T21:52:57Z",
+      "side": 1,
+      "message": "Same here, |event| is not used.",
+      "revId": "513285faf5b8cf00af1d480b7811bf7e6ba3a5a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "018d9ca7_81d5f526",
+        "filename": "chrome/browser/resources/settings/internet_page/network_proxy.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-06T21:52:57Z",
+      "side": 1,
+      "message": "Same here.",
+      "revId": "513285faf5b8cf00af1d480b7811bf7e6ba3a5a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12f75ce7_8e7a86ba",
+        "filename": "chrome/browser/resources/settings/internet_page/network_proxy.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-06T21:52:57Z",
+      "side": 1,
+      "message": "Same here.",
+      "revId": "513285faf5b8cf00af1d480b7811bf7e6ba3a5a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df91834d_db99129a",
+        "filename": "chrome/browser/resources/settings/internet_page/network_proxy.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-06T21:52:57Z",
+      "side": 1,
+      "message": "Same here (and elsewhere, did not identify such cases passed this file).",
+      "revId": "513285faf5b8cf00af1d480b7811bf7e6ba3a5a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
