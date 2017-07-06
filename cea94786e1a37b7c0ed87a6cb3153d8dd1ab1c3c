@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51fe0e79_c1301ba7",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 5397,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-07-06T13:01:19Z",
+      "side": 1,
+      "message": "nit: for even more clarification, please add \"...diagnostic data, including crash reports are reported...\"",
+      "range": {
+        "startLine": 5397,
+        "startChar": 52,
+        "endLine": 5397,
+        "endChar": 68
+      },
+      "revId": "cea94786e1a37b7c0ed87a6cb3153d8dd1ab1c3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
