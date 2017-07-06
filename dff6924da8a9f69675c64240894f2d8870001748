@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40ee9645_1e2f89fe",
+        "filename": "chrome/browser/web_applications/web_app.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-07-06T03:16:52Z",
+      "side": 1,
+      "message": "Can you move this comment to the .h file? And maybe add a TODO even if you don\u0027t intend to do it, because this is a description of work that needs to be done, not really documentation.",
+      "revId": "dff6924da8a9f69675c64240894f2d8870001748",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b88fd5c_022b4d50",
+        "filename": "chrome/browser/web_applications/web_app.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-07-06T03:16:52Z",
+      "side": 1,
+      "message": "Nice set of abstractions.",
+      "revId": "dff6924da8a9f69675c64240894f2d8870001748",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
