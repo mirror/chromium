@@ -43,7 +43,7 @@ enum ServiceWorkerState {
     DependentLifetime
 ] interface ServiceWorker : EventTarget {
 
-    [PostMessage, RaisesException] void postMessage(SerializedScriptValue message, optional sequence<Transferable> transfer);
+    [PostMessage, RaisesException] void postMessage(SerializedScriptValue message, optional sequence<object> transfer);
 
     readonly attribute USVString scriptURL;
     readonly attribute ServiceWorkerState  state;

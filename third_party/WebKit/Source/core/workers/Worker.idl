@@ -38,7 +38,7 @@
     void terminate();
 
     // TODO(foolip): The SerializedScriptValue type should be any.
-    [PostMessage, RaisesException] void postMessage(SerializedScriptValue message, optional sequence<Transferable> transfer);
+    [PostMessage, RaisesException] void postMessage(SerializedScriptValue message, optional sequence<object> transfer);
     attribute EventHandler onmessage;
 };
 
