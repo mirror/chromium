@@ -16,6 +16,24 @@
       "revId": "43095f76a88efede93509959635efdcce69c5a03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0b6fd47a_b2be6b4e",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXLayoutObject.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1871,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-06T23:49:27Z",
+      "side": 1,
+      "message": "No, the way it works is that start and end are always\nordered, and TextControlElement doesn\u0027t explicitly expose\nthe base/extent or focus/anchor.",
+      "parentUuid": "5165f55d_2fdcf12d",
+      "revId": "43095f76a88efede93509959635efdcce69c5a03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
