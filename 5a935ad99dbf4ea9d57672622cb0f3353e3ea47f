@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fc825da2_278af00e",
+        "filename": "chrome/browser/predictors/loading_predictor.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-07-06T16:53:13Z",
+      "side": 1,
+      "message": "Prefetch and preconnect are mutually exclusive now. We try to prefetch first.",
+      "parentUuid": "197edc57_dad5dcf8",
+      "revId": "5a935ad99dbf4ea9d57672622cb0f3353e3ea47f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "446c01b4_5b5fe90a",
         "filename": "chrome/browser/predictors/loading_predictor.cc",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "5a935ad99dbf4ea9d57672622cb0f3353e3ea47f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "919f286d_9d8c6644",
+        "filename": "chrome/browser/predictors/loading_predictor.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-07-06T16:53:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "446c01b4_5b5fe90a",
+      "revId": "5a935ad99dbf4ea9d57672622cb0f3353e3ea47f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "268f3614_725f6084",
+        "filename": "chrome/browser/predictors/loading_predictor.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-07-06T16:53:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54f0e3a7_d7f20415",
+      "revId": "5a935ad99dbf4ea9d57672622cb0f3353e3ea47f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5920c7cf_42d4488b",
         "filename": "chrome/browser/predictors/preconnect_manager.cc",
         "patchSetId": 7
@@ -67,6 +121,24 @@
       "revId": "5a935ad99dbf4ea9d57672622cb0f3353e3ea47f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "945ae455_238ead7f",
+        "filename": "chrome/browser/predictors/preconnect_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-07-06T16:53:13Z",
+      "side": 1,
+      "message": "This is also true for shared ptrs. And it\u0027s by design.\nI changed ctor to use move in resource_prefetcher.cc as well.",
+      "parentUuid": "5920c7cf_42d4488b",
+      "revId": "5a935ad99dbf4ea9d57672622cb0f3353e3ea47f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "dad0164c_e95a2def",
+        "filename": "chrome/browser/predictors/preconnect_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-07-06T16:53:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86e90a73_34beaaa0",
+      "range": {
+        "startLine": 26,
+        "startChar": 38,
+        "endLine": 26,
+        "endChar": 39
+      },
+      "revId": "5a935ad99dbf4ea9d57672622cb0f3353e3ea47f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30fccd5a_17910d80",
         "filename": "chrome/browser/predictors/preconnect_manager.h",
         "patchSetId": 7
@@ -113,6 +209,30 @@
       "revId": "5a935ad99dbf4ea9d57672622cb0f3353e3ea47f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bea3b36_a165c91b",
+        "filename": "chrome/browser/predictors/preconnect_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-07-06T16:53:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30fccd5a_17910d80",
+      "range": {
+        "startLine": 37,
+        "startChar": 4,
+        "endLine": 37,
+        "endChar": 11
+      },
+      "revId": "5a935ad99dbf4ea9d57672622cb0f3353e3ea47f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
