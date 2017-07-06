@@ -80,8 +80,8 @@ class OfflinePageModelImplTest
   void OfflinePageModelLoaded(OfflinePageModel* model) override;
   void OfflinePageAdded(OfflinePageModel* model,
                         const OfflinePageItem& added_page) override;
-  void OfflinePageDeleted(int64_t offline_id,
-                          const ClientId& client_id) override;
+  void OfflinePageDeleted(
+      const OfflinePageModel::DeletedPageInfo& pageInfo) override;
 
   // OfflinePageTestArchiver::Observer implementation.
   void SetLastPathCreatedByArchiver(const base::FilePath& file_path) override;
@@ -183,6 +183,10 @@ class OfflinePageModelImplTest
 
   ClientId last_deleted_client_id() const { return last_deleted_client_id_; }
 
+  std::string last_deleted_request_origin() const {
+    return last_deleted_request_origin_;
+  }
+
   const base::FilePath& last_archiver_path() { return last_archiver_path_; }
 
   int last_cleared_pages_count() const { return last_cleared_pages_count_; }
@@ -207,6 +211,7 @@ class OfflinePageModelImplTest
   base::FilePath last_archiver_path_;
   int64_t last_deleted_offline_id_;
   ClientId last_deleted_client_id_;
+  std::string last_deleted_request_origin_;
   CheckPagesExistOfflineResult last_pages_exist_result_;
   int last_cleared_pages_count_;
   DeletePageResult last_clear_page_result_;
@@ -250,10 +255,11 @@ void OfflinePageModelImplTest::OfflinePageModelLoaded(OfflinePageModel* model) {
   ASSERT_EQ(model_.get(), model);
 }
 
-void OfflinePageModelImplTest::OfflinePageDeleted(int64_t offline_id,
-                                                  const ClientId& client_id) {
-  last_deleted_offline_id_ = offline_id;
-  last_deleted_client_id_ = client_id;
+void OfflinePageModelImplTest::OfflinePageDeleted(
+    const OfflinePageModel::DeletedPageInfo& info) {
+  last_deleted_offline_id_ = info.offline_id;
+  last_deleted_client_id_ = info.client_id;
+  last_deleted_request_origin_ = info.request_origin;
 }
 
 void OfflinePageModelImplTest::OfflinePageAdded(
@@ -735,6 +741,7 @@ TEST_F(OfflinePageModelImplTest, DeletePageSuccessful) {
 
   EXPECT_EQ(last_deleted_offline_id(), offline1);
   EXPECT_EQ(last_deleted_client_id(), kTestClientId1);
+  EXPECT_EQ(last_deleted_request_origin(), "");
   EXPECT_EQ(DeletePageResult::SUCCESS, last_delete_result());
   ASSERT_EQ(1u, store->GetAllPages().size());
   EXPECT_EQ(kTestUrl2, store->GetAllPages()[0].url);
@@ -749,6 +756,7 @@ TEST_F(OfflinePageModelImplTest, DeletePageSuccessful) {
 
   EXPECT_EQ(last_deleted_offline_id(), offline2);
   EXPECT_EQ(last_deleted_client_id(), kTestClientId2);
+  EXPECT_EQ(last_deleted_request_origin(), "");
   EXPECT_EQ(DeletePageResult::SUCCESS, last_delete_result());
   EXPECT_EQ(0u, store->GetAllPages().size());
 }
