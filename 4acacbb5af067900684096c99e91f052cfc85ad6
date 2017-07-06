@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "45f254c0_dbebd94d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/scripting-1/the-script-element/load-event-3.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-07-06T21:48:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77500a8c_30eea56c",
+      "revId": "4acacbb5af067900684096c99e91f052cfc85ad6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0120417a_c3c75722",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/scripting-1/the-script-element/load-event.html",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-06T19:05:23Z",
       "side": 1,
       "message": "Maybe these files should be named something like finalizing-prepare-script, since they are about more than just load events now, but also e.g. error events and execution? I\u0027m not sure.",
+      "revId": "4acacbb5af067900684096c99e91f052cfc85ad6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f16f033f_6ff9ed75",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/scripting-1/the-script-element/load-event.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-07-06T21:48:18Z",
+      "side": 1,
+      "message": "I think these tests are still about load (and error) events, so load-error-events.html?\n\n\u003e finalizing-prepare-script\n\nTesting every cases of the final step of \"prepare a script\" is orthogonal to the tested behavior (load/error events in this case) and can/should be applied tests other than load/error events, because often only some (not all) of cases have bugs.\n(Another example is:\nhttps://codesearch.chromium.org/chromium/src/third_party/WebKit/LayoutTests/http/tests/security/subresourceIntegrity/subresource-integrity-script-cors-bad-integrity.html\nSRI check was wrong only in the impl of 3rd Clause of Step 23)",
+      "parentUuid": "0120417a_c3c75722",
       "revId": "4acacbb5af067900684096c99e91f052cfc85ad6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f55b6d41_5949bafa",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/scripting-1/the-script-element/load-event.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-07-06T21:48:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc940367_3ce613d9",
+      "revId": "4acacbb5af067900684096c99e91f052cfc85ad6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3261cc6_71667486",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/scripting-1/the-script-element/load-event.html",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "4acacbb5af067900684096c99e91f052cfc85ad6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "348714e5_92d294d7",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/scripting-1/the-script-element/load-event.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-07-06T21:48:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3261cc6_71667486",
+      "revId": "4acacbb5af067900684096c99e91f052cfc85ad6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "ac24ae02_f126a9f5",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/scripting-1/the-script-element/resources/load-event-helpers.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-07-06T21:48:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "002a0cfc_ce7ad54e",
+      "revId": "4acacbb5af067900684096c99e91f052cfc85ad6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3bf6967f_355ca1f0",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/scripting-1/the-script-element/resources/load-event-helpers.js",
         "patchSetId": 6
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "cf48fb8e_633ec6cb",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/scripting-1/the-script-element/resources/load-event-helpers.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-07-06T21:48:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3bf6967f_355ca1f0",
+      "revId": "4acacbb5af067900684096c99e91f052cfc85ad6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "585b4228_8faaf493",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/scripting-1/the-script-element/resources/load-event-helpers.js",
         "patchSetId": 6
@@ -118,6 +226,24 @@
       "revId": "4acacbb5af067900684096c99e91f052cfc85ad6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c73a37b6_ea18a329",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/scripting-1/the-script-element/resources/load-event-helpers.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-07-06T21:48:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "585b4228_8faaf493",
+      "revId": "4acacbb5af067900684096c99e91f052cfc85ad6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
