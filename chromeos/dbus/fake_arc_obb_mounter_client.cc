@@ -19,16 +19,15 @@ void FakeArcObbMounterClient::Init(dbus::Bus* bus) {}
 void FakeArcObbMounterClient::MountObb(const std::string& obb_file,
                                        const std::string& mount_path,
                                        int32_t owner_gid,
-                                       const VoidDBusMethodCallback& callback) {
+                                       StatusCallback callback) {
   base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::Bind(callback, DBUS_METHOD_CALL_FAILURE));
+      FROM_HERE, base::BindOnce(std::move(callback), false));
 }
 
-void FakeArcObbMounterClient::UnmountObb(
-    const std::string& mount_path,
-    const VoidDBusMethodCallback& callback) {
+void FakeArcObbMounterClient::UnmountObb(const std::string& mount_path,
+                                         StatusCallback callback) {
   base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::Bind(callback, DBUS_METHOD_CALL_FAILURE));
+      FROM_HERE, base::BindOnce(std::move(callback), false));
 }
 
 }  // namespace chromeos

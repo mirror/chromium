@@ -13,7 +13,6 @@
 #include "base/macros.h"
 #include "chromeos/chromeos_export.h"
 #include "chromeos/dbus/dbus_client.h"
-#include "chromeos/dbus/dbus_method_call_status.h"
 
 namespace chromeos {
 
@@ -30,16 +29,18 @@ class CHROMEOS_EXPORT ArcObbMounterClient : public DBusClient {
   // For normal usage, access the singleton via DBusThreadManager::Get().
   static ArcObbMounterClient* Create();
 
+  using StatusCallback = base::OnceCallback<void(bool success)>;
+
   // Mounts the specified OBB at the specified mount path, with the owner GID
   // set to the given value.
   virtual void MountObb(const std::string& obb_file,
                         const std::string& mount_path,
                         int32_t owner_gid,
-                        const VoidDBusMethodCallback& callback) = 0;
+                        StatusCallback callback) = 0;
 
   // Unmounts the OBB mounted at the specified path.
   virtual void UnmountObb(const std::string& mount_path,
-                          const VoidDBusMethodCallback& callback) = 0;
+                          StatusCallback callback) = 0;
 };
 
 }  // namespace chromeos
