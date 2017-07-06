@@ -109,6 +109,24 @@
     },
     {
       "key": {
+        "uuid": "7a5ba4db_5b78f82a",
+        "filename": "ui/compositor/clip_recorder.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-06T16:23:08Z",
+      "side": 1,
+      "message": "I think that would make fine follow-up work. My concern is that DIL has a purpose which is at the top level, and we\u0027re building and throwing it away, which seems like it\u0027s going to cause problems either in memory or performance or API mismatch in the future.",
+      "parentUuid": "3543e913_0faaed41",
+      "revId": "12ccfac98fad7e3d4006e8355014b93518ed4ad8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3761526a_0fcada1e",
         "filename": "ui/compositor/paint_cache.cc",
         "patchSetId": 12
@@ -210,6 +228,24 @@
       "side": 1,
       "message": "Erm, PaintRecorder takes an optional PaintCache in the ctor and instantiates the recording canvas with it. I\u0027m a bit unsure what you mean by PaintCache owning PaintRecorder...",
       "parentUuid": "f48bb6dd_c862329b",
+      "revId": "12ccfac98fad7e3d4006e8355014b93518ed4ad8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1de59c8_f0136ecb",
+        "filename": "ui/compositor/paint_cache.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-06T16:23:08Z",
+      "side": 1,
+      "message": "Sorry, I mean PaintRecorder owning DIL, and ReleaseAsRecord to pass the POB to the PaintCache.",
+      "parentUuid": "58cf0de9_b23b2b9f",
       "revId": "12ccfac98fad7e3d4006e8355014b93518ed4ad8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
