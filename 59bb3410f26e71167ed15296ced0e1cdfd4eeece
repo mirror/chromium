@@ -52,6 +52,24 @@
       "revId": "59bb3410f26e71167ed15296ced0e1cdfd4eeece",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eebebeda_c0b71123",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 1732,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-07-06T01:58:51Z",
+      "side": 1,
+      "message": "lgtm to land this assuming you do do a follow-up CL promptly :).",
+      "parentUuid": "cf46555a_0aeb8b16",
+      "revId": "59bb3410f26e71167ed15296ced0e1cdfd4eeece",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
