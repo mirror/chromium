@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eccc3baa_bc2720af",
+        "filename": "content/child/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-06T06:20:21Z",
+      "side": 1,
+      "message": "hm, referring content/renderer from content/child is probably a bad idea... we can let RenderThreadImpl or RendererBlinkPlatformImpl insert the throttler instead, so that content/child doesn\u0027t really need to know about that.",
+      "revId": "5b0910fbb1a68d80dac7769e144732869607f94a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8ef27da_aa316151",
+        "filename": "content/child/resource_dispatcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-06T06:20:21Z",
+      "side": 1,
+      "message": "Thanks for trying this plumbing.  Tricky thing with the throttling idea is that this would make CORS work before any URLLoader handling, while we probably don\u0027t want to hook up CORS if the given URLLoaderFactory is not for network (e.g. for interceptors).  We can split the throttles into two, e.g. before- and after- interceptors, but that might be a bit cumbersome.",
+      "revId": "5b0910fbb1a68d80dac7769e144732869607f94a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
