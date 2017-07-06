@@ -183,6 +183,7 @@ void MediaEngagementContentsObserver::UpdateTimer() {
   if (AreConditionsMet()) {
     if (playback_timer_->IsRunning())
       return;
+
     playback_timer_->Start(
         FROM_HERE, kSignificantMediaPlaybackTime,
         base::Bind(
