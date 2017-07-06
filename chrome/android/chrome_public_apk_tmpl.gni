@@ -144,5 +144,6 @@ template("monochrome_public_apk_tmpl") {
       }
       proguard_configs += [ "//android_webview/apk/java/proguard.flags" ]
     }
+    png_to_webp = true
   }
 }
