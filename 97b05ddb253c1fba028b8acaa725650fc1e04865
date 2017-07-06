@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7cd6bb05_4bc02f67",
+        "filename": "build/toolchain/mac/compile_xcassets.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-07-06T14:30:16Z",
+      "side": 1,
+      "message": "top level comment explaining what this script does, and perhaps a link to the radar that would make this script unnecessary if it returned failures.  Although perhaps it will always be necessary if Apple decides warnings are not failures..",
+      "revId": "97b05ddb253c1fba028b8acaa725650fc1e04865",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de11d5f0_6d246465",
+        "filename": "build/toolchain/mac/compile_xcassets.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-07-06T14:30:16Z",
+      "side": 1,
+      "message": "we could just do xml1 output instead and not do regexp, but I\u0027m fine with this.",
+      "range": {
+        "startLine": 11,
+        "startChar": 2,
+        "endLine": 11,
+        "endChar": 9
+      },
+      "revId": "97b05ddb253c1fba028b8acaa725650fc1e04865",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
