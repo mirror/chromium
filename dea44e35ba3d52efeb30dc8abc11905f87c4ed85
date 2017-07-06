@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "278de454_41a859b6",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/clearStorageView.css",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-07-06T18:45:31Z",
+      "side": 1,
+      "message": "why do you need this? flex layout should be enough.",
+      "revId": "dea44e35ba3d52efeb30dc8abc11905f87c4ed85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
