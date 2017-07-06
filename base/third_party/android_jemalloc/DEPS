@@ -1,0 +1,9 @@
+include_rules = [
+  "+jemalloc/include/jemalloc",
+  "+jemalloc/internal",
+  "+msvc_compat",
+  "+test",
+  "+jemalloc",
+  "+../jemalloc.h",
+]
+

@@ -30,6 +30,11 @@
 #include <windows.h>
 #endif
 
+#if defined(OS_ANDROID)
+#include <android/log.h>
+#include "base/third_party/android_jemalloc/jemalloc.h"
+#endif
+
 namespace base {
 namespace trace_event {
 
@@ -246,7 +251,17 @@ bool MallocDumpProvider::OnMemoryDump(const MemoryDumpArgs& args,
 #elif defined(OS_FUCHSIA)
 // TODO(fuchsia): Port, see https://crbug.com/706592.
 #else
+#if defined(OS_ANDROID)
+  struct mallinfo info = je_mallinfo();
+  je_malloc_stats_print(
+      [](void*, const char* message) {
+        __android_log_write(ANDROID_LOG_WARN, "JEMALLOC", message);
+      },
+      nullptr,
+      nullptr);
+#else
   struct mallinfo info = mallinfo();
+#endif
   DCHECK_GE(info.arena + info.hblkhd, info.uordblks);
 
   // In case of Android's jemalloc |arena| is 0 and the outer pages size is
@@ -264,6 +279,52 @@ bool MallocDumpProvider::OnMemoryDump(const MemoryDumpArgs& args,
                         total_virtual_size);
   outer_dump->AddScalar(MemoryAllocatorDump::kNameSize,
                         MemoryAllocatorDump::kUnitsBytes, resident_size);
+
+#if defined(OS_ANDROID)
+  auto dump_meminfo = [](MemoryAllocatorDump* dump, const struct mallinfo& info) {
+    dump->AddScalar("arena", /* non-mmapped space allocated from system */
+                    MemoryAllocatorDump::kUnitsBytes,
+                    info.arena);
+    dump->AddScalar("ordblks", /* number of free chunks */
+                    MemoryAllocatorDump::kUnitsBytes,
+                    info.ordblks);
+    dump->AddScalar("hblkhd",  /* space in mmapped regions */
+                    MemoryAllocatorDump::kUnitsBytes,
+                    info.hblkhd);
+    dump->AddScalar("usmblks", /* maximum total allocated space */
+                    MemoryAllocatorDump::kUnitsBytes,
+                    info.usmblks);
+    dump->AddScalar("uordblks",  /* total allocated space */
+                    MemoryAllocatorDump::kUnitsBytes,
+                    info.uordblks);
+    dump->AddScalar("fordblks",  /* total free space */
+                    MemoryAllocatorDump::kUnitsBytes,
+                    info.fordblks);
+    dump->AddScalar("keepcost",  /* releasable (via malloc_trim) space */
+                    MemoryAllocatorDump::kUnitsBytes,
+                    info.keepcost);
+  };
+
+  dump_meminfo(outer_dump, info);
+
+  {
+    struct mallinfo system_info = mallinfo();
+
+    size_t system_total_virtual_size = system_info.arena + system_info.hblkhd;
+    size_t system_resident_size = system_info.uordblks;
+
+    MemoryAllocatorDump* system_dump = pmd->CreateAllocatorDump("system-malloc");
+    system_dump->AddScalar("virtual_size",
+                           MemoryAllocatorDump::kUnitsBytes,
+                           system_total_virtual_size);
+
+    system_dump->AddScalar(MemoryAllocatorDump::kNameSize,
+                           MemoryAllocatorDump::kUnitsBytes,
+                           system_resident_size);
+
+    dump_meminfo(system_dump, system_info);
+  }
+#endif
 
   MemoryAllocatorDump* inner_dump = pmd->CreateAllocatorDump(kAllocatedObjects);
   inner_dump->AddScalar(MemoryAllocatorDump::kNameSize,

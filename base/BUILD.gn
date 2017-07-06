@@ -1183,9 +1183,10 @@ component("base") {
       sources += [ "allocator/allocator_shim_default_dispatch_to_glibc.cc" ]
     } else if (is_android && use_allocator == "none") {
       sources += [
-        "allocator/allocator_shim_default_dispatch_to_linker_wrapped_symbols.cc",
         "allocator/allocator_shim_override_linker_wrapped_symbols.h",
+        "allocator/allocator_shim_default_dispatch_to_jemalloc.cc",
       ]
+      deps += [ "//base/third_party/android_jemalloc:jemalloc" ]
       all_dependent_configs += [ "//base/allocator:wrap_malloc_symbols" ]
     } else if (is_mac) {
       sources += [

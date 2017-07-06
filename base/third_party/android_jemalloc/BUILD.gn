@@ -1,0 +1,66 @@
+config("common") {
+  cflags = [
+      "-std=c99",
+      "-D_REENTRANT",
+      "-O3",
+      "-funroll-loops",
+      "-fvisibility=hidden",
+      "-Wno-unused-parameter",
+      "-Wno-type-limits",
+  ]
+
+  # Default to a single arena for svelte configurations to minimize
+  # PSS consumed by jemalloc.
+  defines = [
+      "ANDROID_MAX_ARENAS=1",
+      "ANDROID_LG_TCACHE_MAXCLASS_DEFAULT=16",
+  ]
+
+  # Use a 512K chunk size on 32 bit systems.
+  # This keeps the total amount of virtual address space consumed
+  # by jemalloc lower.
+  defines += [ "ANDROID_LG_CHUNK_DEFAULT=19" ]
+
+  # Add stubs for private libc functions
+  cflags += [
+      "-include",
+      rebase_path("src/libc_private.h", root_build_dir)
+  ]
+}
+
+static_library("jemalloc") {
+  configs += [ ":common" ]
+
+  include_dirs = [ "jemalloc/include" ]
+
+  sources = [
+      "jemalloc/src/arena.c",
+      "jemalloc/src/atomic.c",
+      "jemalloc/src/base.c",
+      "jemalloc/src/bitmap.c",
+      "jemalloc/src/chunk.c",
+      "jemalloc/src/chunk_dss.c",
+      "jemalloc/src/chunk_mmap.c",
+      "jemalloc/src/ckh.c",
+      "jemalloc/src/ctl.c",
+      "jemalloc/src/extent.c",
+      "jemalloc/src/hash.c",
+      "jemalloc/src/huge.c",
+      "jemalloc/src/jemalloc.c",
+      "jemalloc/src/mb.c",
+      "jemalloc/src/mutex.c",
+      "jemalloc/src/nstime.c",
+      "jemalloc/src/pages.c",
+      "jemalloc/src/prng.c",
+      "jemalloc/src/prof.c",
+      "jemalloc/src/quarantine.c",
+      "jemalloc/src/rtree.c",
+      "jemalloc/src/spin.c",
+      "jemalloc/src/stats.c",
+      "jemalloc/src/tcache.c",
+      "jemalloc/src/ticker.c",
+      "jemalloc/src/tsd.c",
+      "jemalloc/src/util.c",
+      "jemalloc/src/witness.c",
+  ]
+}
