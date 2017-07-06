@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "27b4a9b1_ac30493d",
+        "filename": "media/filters/gpu_video_decoder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-07-06T04:59:54Z",
+      "side": 1,
+      "message": "The size is the content length in the buffer. It will be different from shared memory buffer size.",
+      "parentUuid": "972d051b_4367ad3f",
+      "revId": "8b06b12ebbb06c068b1840da5eb81b830a033f34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "816a3993_173628a1",
         "filename": "media/filters/gpu_video_decoder.h",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "d38ffd9f_3eb5b941",
+        "filename": "media/filters/gpu_video_decoder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-07-06T04:59:54Z",
+      "side": 1,
+      "message": "Yes, we do. If we have non-default destructor, the default move constructor won\u0027t be generated.\n\nhttp://en.cppreference.com/w/cpp/language/move_constructor",
+      "parentUuid": "816a3993_173628a1",
+      "revId": "8b06b12ebbb06c068b1840da5eb81b830a033f34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "19a0e3de_d9c32b83",
         "filename": "media/filters/gpu_video_decoder.h",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-06T04:47:32Z",
       "side": 1,
       "message": "Should we make this DISALLOW_COPY_AND_ASSIGN()?",
+      "revId": "8b06b12ebbb06c068b1840da5eb81b830a033f34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f3f6d1b_6614596a",
+        "filename": "media/filters/gpu_video_decoder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-07-06T04:59:54Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "19a0e3de_d9c32b83",
       "revId": "8b06b12ebbb06c068b1840da5eb81b830a033f34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
