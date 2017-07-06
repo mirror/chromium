@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c877adc_46ac54bd",
+        "filename": "chrome/common/safe_browsing/zip_analyzer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-07-06T19:54:43Z",
+      "side": 1,
+      "message": "out of curiosity, why do we use the baseName here, but the utf8 version down below? Should they be the same?",
+      "range": {
+        "startLine": 123,
+        "startChar": 40,
+        "endLine": 123,
+        "endChar": 44
+      },
+      "revId": "250584c6d7f7b1b943f5a661b6b021bcd574ba70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3466c9c0_a66702be",
+        "filename": "chrome/common/safe_browsing/zip_analyzer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-07-06T19:54:43Z",
+      "side": 1,
+      "message": "ClientDownloadRequest::ArchivedBinary",
+      "range": {
+        "startLine": 124,
+        "startChar": 6,
+        "endLine": 124,
+        "endChar": 42
+      },
+      "revId": "250584c6d7f7b1b943f5a661b6b021bcd574ba70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0000ec19_7489d02e",
+        "filename": "chrome/common/safe_browsing/zip_analyzer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-07-06T19:54:43Z",
+      "side": 1,
+      "message": "nit: i generally prefer results-\u003eadd_archived_binary(). If you do this, also change it on :135.",
+      "range": {
+        "startLine": 125,
+        "startChar": 35,
+        "endLine": 125,
+        "endChar": 38
+      },
+      "revId": "250584c6d7f7b1b943f5a661b6b021bcd574ba70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5d7ad9c_88f71415",
+        "filename": "chrome/common/safe_browsing/zip_analyzer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-07-06T19:54:43Z",
+      "side": 1,
+      "message": "nit: file_basename_utf8",
+      "range": {
+        "startLine": 126,
+        "startChar": 18,
+        "endLine": 126,
+        "endChar": 31
+      },
+      "revId": "250584c6d7f7b1b943f5a661b6b021bcd574ba70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
