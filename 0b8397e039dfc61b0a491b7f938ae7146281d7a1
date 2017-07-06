@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc5b7a0f_38a58691",
+        "filename": "content/renderer/render_view_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 926,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-07-06T18:19:52Z",
+      "side": 0,
+      "message": "I\u0027m surprised to see these things move out of Android. I guess we\u0027re experimenting with autoplay behavior for desktop too?",
+      "range": {
+        "startLine": 926,
+        "startChar": 50,
+        "endLine": 926,
+        "endChar": 0
+      },
+      "revId": "0b8397e039dfc61b0a491b7f938ae7146281d7a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
