@@ -16,6 +16,24 @@
       "revId": "f0571c3a8df8587638259e8e18e3a41f0ec22b07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f12b321_814f5bb5",
+        "filename": "chromeos/dbus/dbus_method_call_status.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-06T09:34:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a50244a_78e84f26",
+      "revId": "f0571c3a8df8587638259e8e18e3a41f0ec22b07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
