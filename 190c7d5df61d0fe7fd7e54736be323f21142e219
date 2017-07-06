@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d4e53eb_08f78a98",
+        "filename": "chrome/browser/after_startup_task_utils_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-06T17:45:06Z",
+      "side": 1,
+      "message": "Maybe background_sequence_ ?",
+      "range": {
+        "startLine": 121,
+        "startChar": 35,
+        "endLine": 121,
+        "endChar": 42
+      },
+      "revId": "190c7d5df61d0fe7fd7e54736be323f21142e219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9244bbda_db9b8e80",
+        "filename": "chrome/browser/after_startup_task_utils_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-06T17:45:06Z",
+      "side": 1,
+      "message": "Since that\u0027s how the comment here refer to it. Update thread to sequence in this paragraph.",
+      "range": {
+        "startLine": 135,
+        "startChar": 41,
+        "endLine": 135,
+        "endChar": 58
+      },
+      "revId": "190c7d5df61d0fe7fd7e54736be323f21142e219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
