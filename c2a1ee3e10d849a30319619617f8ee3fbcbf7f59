@@ -46,6 +46,30 @@
       "revId": "c2a1ee3e10d849a30319619617f8ee3fbcbf7f59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b9eec7b_ebc624f2",
+        "filename": "ios/web/app/web_main_runner.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-06T15:40:20Z",
+      "side": 0,
+      "message": "I would have a static AtExitManager* in ios_state_global, initialized to nullptr, and change Create to initialize it and DestroyAtExitManager will delete it and set the global to nullptr.",
+      "parentUuid": "abf9b265_5d25f618",
+      "range": {
+        "startLine": 101,
+        "startChar": 4,
+        "endLine": 101,
+        "endChar": 17
+      },
+      "revId": "c2a1ee3e10d849a30319619617f8ee3fbcbf7f59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
