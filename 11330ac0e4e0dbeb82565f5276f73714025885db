@@ -52,6 +52,24 @@
       "revId": "11330ac0e4e0dbeb82565f5276f73714025885db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bf28574_64ee204a",
+        "filename": "gpu/command_buffer/common/gles2_cmd_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1105284
+      },
+      "writtenOn": "2017-07-06T15:16:16Z",
+      "side": 1,
+      "message": "I updated to use a single call to SafeMultiplyUint32 but I dug into the code for the CheckedNumeric\u003cuint32_t\u003e mulitplication a bit.  It does a lot of work, at least 20 boolean operations and a few add/xor/div instructions.",
+      "parentUuid": "487ae358_2f52b324",
+      "revId": "11330ac0e4e0dbeb82565f5276f73714025885db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
