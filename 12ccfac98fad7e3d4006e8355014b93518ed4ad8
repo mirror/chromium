@@ -145,6 +145,24 @@
     },
     {
       "key": {
+        "uuid": "83aa234f_3a8ba83c",
+        "filename": "ui/compositor/clip_recorder.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-06T19:41:32Z",
+      "side": 1,
+      "message": "Hm I am not convinced that DIL should be the top level interface for building a POB that isn\u0027t going to cc. In particular:\n\n\u003e -drawPicture/drawRecord needs to take a DIL instead of a POB\n\nThat feels wrong to me cuz it forces caches to be DILs instead of POBs which are more heavy top-level things. drawRecord requires that the thing you pass is not a top-level thing cuz it\u0027s going into some higher level POB, so making a DIL is not intuitive to me.\n\n(This is all bikeshedding and not related to this CL in particular, my only question is still about owning the DIL in PaintRecorder)",
+      "parentUuid": "5932fe8b_1e499031",
+      "revId": "12ccfac98fad7e3d4006e8355014b93518ed4ad8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3761526a_0fcada1e",
         "filename": "ui/compositor/paint_cache.cc",
         "patchSetId": 12
