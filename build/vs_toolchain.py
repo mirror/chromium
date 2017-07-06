@@ -264,7 +264,7 @@ def _CopyPGORuntime(target_dir, target_cpu):
   # We need to copy 2 runtime dependencies used during the profiling step:
   #     - pgort140.dll: runtime library required to run the instrumented image.
   #     - pgosweep.exe: executable used to collect the profiling data
-  pgo_runtimes = ['pgort140.dll', 'pgosweep.exe']
+  pgo_runtimes = ['pgort140.dll', 'pgosweep.exe', 'mspdb140.dll']
   for runtime in pgo_runtimes:
     if target_cpu == 'x86':
       source = os.path.join(pgo_x86_runtime_dir, runtime)
@@ -284,7 +284,6 @@ def _CopyRuntime(target_dir, source_dir, target_cpu, debug):
   # VS 2017 uses the same CRT DLLs as VS 2015.
   _CopyUCRTRuntime(target_dir, source_dir, target_cpu, '%s140' + suffix,
                     suffix)
-
 
 def CopyDlls(target_dir, configuration, target_cpu):
   """Copy the VS runtime DLLs into the requested directory as needed.
@@ -308,7 +307,6 @@ def CopyDlls(target_dir, configuration, target_cpu):
     _CopyPGORuntime(target_dir, target_cpu)
 
   _CopyDebugger(target_dir, target_cpu)
-
 
 def _CopyDebugger(target_dir, target_cpu):
   """Copy dbghelp.dll and dbgcore.dll into the requested directory as needed.
