@@ -16,6 +16,24 @@
       "revId": "461d1459bd45163a71fbfe3d96b36a7b9471db60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9c47e5f_786e45fc",
+        "filename": "chrome/browser/ui/views/payments/modifiers_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-06T19:50:07Z",
+      "side": 1,
+      "message": "Yes.",
+      "parentUuid": "45e6a5e7_5c391766",
+      "revId": "461d1459bd45163a71fbfe3d96b36a7b9471db60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
