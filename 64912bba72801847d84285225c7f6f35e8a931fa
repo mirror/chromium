@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c07544b4_440036ee",
+        "filename": "chrome/installer/zucchini/labeled_pool.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-06T22:24:19Z",
+      "side": 1,
+      "message": "s/Target/Targets",
+      "range": {
+        "startLine": 22,
+        "startChar": 3,
+        "endLine": 22,
+        "endChar": 9
+      },
+      "revId": "64912bba72801847d84285225c7f6f35e8a931fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "025085a3_98fcaa48",
+        "filename": "chrome/installer/zucchini/labeled_pool.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-06T22:24:19Z",
+      "side": 1,
+      "message": "ResetLabels()",
+      "range": {
+        "startLine": 33,
+        "startChar": 18,
+        "endLine": 33,
+        "endChar": 28
+      },
+      "revId": "64912bba72801847d84285225c7f6f35e8a931fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06554087_2c99af58",
+        "filename": "chrome/installer/zucchini/labeled_pool.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-06T22:24:19Z",
+      "side": 1,
+      "message": "Returns",
+      "range": {
+        "startLine": 59,
+        "startChar": 5,
+        "endLine": 59,
+        "endChar": 11
+      },
+      "revId": "64912bba72801847d84285225c7f6f35e8a931fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "928956f1_93a0b287",
+        "filename": "chrome/installer/zucchini/labeled_pool_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-06T22:24:19Z",
+      "side": 1,
+      "message": "kBaseReferenceSet.size()",
+      "range": {
+        "startLine": 35,
+        "startChar": 12,
+        "endLine": 35,
+        "endChar": 18
+      },
+      "revId": "64912bba72801847d84285225c7f6f35e8a931fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
