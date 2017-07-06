@@ -865,9 +865,6 @@ int JumpList::CreateIconFiles(const base::FilePath& icon_dir,
                               URLIconCache* icon_next) {
   DCHECK(icon_next);
 
-  // TODO(chengx): Remove the UMA histogram after fixing http://crbug.com/40407.
-  SCOPED_UMA_HISTOGRAM_TIMER("WinJumplist.CreateIconFilesDuration");
-
   int icons_created = 0;
 
   // Reuse icons for urls that already present in the current JumpList.
