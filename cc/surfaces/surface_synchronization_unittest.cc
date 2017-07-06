@@ -3,7 +3,6 @@
 // found in the LICENSE file.
 
 #include "base/containers/flat_set.h"
-#include "cc/surfaces/compositor_frame_sink_support.h"
 #include "cc/surfaces/surface_id.h"
 #include "cc/surfaces/surface_manager.h"
 #include "cc/test/begin_frame_args_test.h"
@@ -11,6 +10,7 @@
 #include "cc/test/fake_external_begin_frame_source.h"
 #include "cc/test/fake_surface_observer.h"
 #include "cc/test/mock_compositor_frame_sink_support_client.h"
+#include "components/viz/service/frame_sinks/compositor_frame_sink_support.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -74,27 +74,29 @@ class SurfaceSynchronizationTest : public testing::Test {
         surface_observer_(false) {}
   ~SurfaceSynchronizationTest() override {}
 
-  CompositorFrameSinkSupport& display_support() { return *supports_[0]; }
+  viz::CompositorFrameSinkSupport& display_support() { return *supports_[0]; }
   Surface* display_surface() {
     return display_support().GetCurrentSurfaceForTesting();
   }
 
-  CompositorFrameSinkSupport& parent_support() { return *supports_[1]; }
+  viz::CompositorFrameSinkSupport& parent_support() { return *supports_[1]; }
   Surface* parent_surface() {
     return parent_support().GetCurrentSurfaceForTesting();
   }
 
-  CompositorFrameSinkSupport& child_support1() { return *supports_[2]; }
+  viz::CompositorFrameSinkSupport& child_support1() { return *supports_[2]; }
   Surface* child_surface1() {
     return child_support1().GetCurrentSurfaceForTesting();
   }
 
-  CompositorFrameSinkSupport& child_support2() { return *supports_[3]; }
+  viz::CompositorFrameSinkSupport& child_support2() { return *supports_[3]; }
   Surface* child_surface2() {
     return child_support2().GetCurrentSurfaceForTesting();
   }
 
-  CompositorFrameSinkSupport& support(int index) { return *supports_[index]; }
+  viz::CompositorFrameSinkSupport& support(int index) {
+    return *supports_[index];
+  }
   Surface* surface(int index) {
     return support(index).GetCurrentSurfaceForTesting();
   }
@@ -136,16 +138,16 @@ class SurfaceSynchronizationTest : public testing::Test {
     begin_frame_source_->SetClient(&begin_frame_source_client_);
     now_src_ = base::MakeUnique<base::SimpleTestTickClock>();
     surface_manager_.AddObserver(&surface_observer_);
-    supports_.push_back(CompositorFrameSinkSupport::Create(
+    supports_.push_back(viz::CompositorFrameSinkSupport::Create(
         &support_client_, &surface_manager_, kDisplayFrameSink, kIsRoot,
         kHandlesFrameSinkIdInvalidation, kNeedsSyncPoints));
-    supports_.push_back(CompositorFrameSinkSupport::Create(
+    supports_.push_back(viz::CompositorFrameSinkSupport::Create(
         &support_client_, &surface_manager_, kParentFrameSink, kIsChildRoot,
         kHandlesFrameSinkIdInvalidation, kNeedsSyncPoints));
-    supports_.push_back(CompositorFrameSinkSupport::Create(
+    supports_.push_back(viz::CompositorFrameSinkSupport::Create(
         &support_client_, &surface_manager_, kChildFrameSink1, kIsChildRoot,
         kHandlesFrameSinkIdInvalidation, kNeedsSyncPoints));
-    supports_.push_back(CompositorFrameSinkSupport::Create(
+    supports_.push_back(viz::CompositorFrameSinkSupport::Create(
         &support_client_, &surface_manager_, kChildFrameSink2, kIsChildRoot,
         kHandlesFrameSinkIdInvalidation, kNeedsSyncPoints));
 
@@ -182,7 +184,7 @@ class SurfaceSynchronizationTest : public testing::Test {
   FakeExternalBeginFrameSourceClient begin_frame_source_client_;
   std::unique_ptr<FakeExternalBeginFrameSource> begin_frame_source_;
   std::unique_ptr<base::SimpleTestTickClock> now_src_;
-  std::vector<std::unique_ptr<CompositorFrameSinkSupport>> supports_;
+  std::vector<std::unique_ptr<viz::CompositorFrameSinkSupport>> supports_;
 
   DISALLOW_COPY_AND_ASSIGN(SurfaceSynchronizationTest);
 };
