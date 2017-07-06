@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90bc3f83_3f5c5f70",
+        "filename": "components/variations/variations_switches.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-06T21:39:25Z",
+      "side": 1,
+      "message": "This is OK for now, but can you add the following line:\n\n// TODO(asvitkine): Consider removing or renaming this functionality.",
+      "range": {
+        "startLine": 13,
+        "startChar": 39,
+        "endLine": 13,
+        "endChar": 0
+      },
+      "revId": "fb3e6719aa6d8660f479c21f7ce0e6dd10a3a1b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
