@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3755071e_790d7416",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-06T18:28:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86e14b3c_2e035df3",
+      "range": {
+        "startLine": 113,
+        "startChar": 12,
+        "endLine": 113,
+        "endChar": 19
+      },
+      "revId": "a9f0efeeff627bb23e7c4144037d9242cb9b60b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81d2d1ac_35e98b6a",
         "filename": "ash/shelf/app_list_button.cc",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-30T22:52:54Z",
       "side": 1,
       "message": "nit: key_event.type \u003d ui::ET_KEY_RELEASED;",
+      "range": {
+        "startLine": 120,
+        "startChar": 8,
+        "endLine": 120,
+        "endChar": 17
+      },
+      "revId": "a9f0efeeff627bb23e7c4144037d9242cb9b60b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ceb2357_d986ebbd",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-06T18:28:13Z",
+      "side": 1,
+      "message": "Theres no setter for type_.\n\nhttps://cs.chromium.org/chromium/src/ui/events/event.h?rcl\u003d0dd36f4eeb07d64ae786f54d0db7932a637f3a15\u0026l\u003d79",
+      "parentUuid": "81d2d1ac_35e98b6a",
       "range": {
         "startLine": 120,
         "startChar": 8,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ea7ad409_ce2400d3",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-06T18:28:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8fed78a3_e99aace1",
+      "range": {
+        "startLine": 129,
+        "startChar": 24,
+        "endLine": 129,
+        "endChar": 32
+      },
+      "revId": "a9f0efeeff627bb23e7c4144037d9242cb9b60b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cedd3784_b4b15102",
         "filename": "ash/shelf/app_list_button.cc",
         "patchSetId": 4
@@ -91,6 +163,30 @@
       "revId": "a9f0efeeff627bb23e7c4144037d9242cb9b60b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "811f0b04_f0096772",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-06T18:28:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cedd3784_b4b15102",
+      "range": {
+        "startLine": 319,
+        "startChar": 30,
+        "endLine": 319,
+        "endChar": 31
+      },
+      "revId": "a9f0efeeff627bb23e7c4144037d9242cb9b60b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "73241322_1a26e9d5",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-06T18:28:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c466025_c8d2e909",
+      "range": {
+        "startLine": 354,
+        "startChar": 30,
+        "endLine": 354,
+        "endChar": 31
+      },
+      "revId": "a9f0efeeff627bb23e7c4144037d9242cb9b60b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3aee7889_46afb4dc",
         "filename": "ash/shelf/app_list_button.cc",
         "patchSetId": 4
@@ -137,6 +257,30 @@
       "revId": "a9f0efeeff627bb23e7c4144037d9242cb9b60b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d1be3ff_1ff4fd1f",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-06T18:28:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3aee7889_46afb4dc",
+      "range": {
+        "startLine": 396,
+        "startChar": 57,
+        "endLine": 396,
+        "endChar": 65
+      },
+      "revId": "a9f0efeeff627bb23e7c4144037d9242cb9b60b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "ef6677d6_89863d34",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-06T18:28:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99ae055a_59f745a8",
+      "range": {
+        "startLine": 400,
+        "startChar": 45,
+        "endLine": 400,
+        "endChar": 46
+      },
+      "revId": "a9f0efeeff627bb23e7c4144037d9242cb9b60b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "405e73f1_37593155",
         "filename": "ash/shelf/app_list_button.cc",
         "patchSetId": 4
@@ -174,6 +342,30 @@
       "writtenOn": "2017-06-30T22:52:54Z",
       "side": 1,
       "message": "Will the order be inverted horizontally in RTL languages? Not sure if that\u0027s worth mentioning. It may just be more pertinent to say something like \"In maximized mode, the button will increase its primary axis size to accommodate the back button arrow in addition to the app list button circle.\"",
+      "range": {
+        "startLine": 401,
+        "startChar": 6,
+        "endLine": 401,
+        "endChar": 22
+      },
+      "revId": "a9f0efeeff627bb23e7c4144037d9242cb9b60b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4410502_9e67d310",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-06T18:28:13Z",
+      "side": 1,
+      "message": "Done. The button order is as expected in RTL.",
+      "parentUuid": "405e73f1_37593155",
       "range": {
         "startLine": 401,
         "startChar": 6,
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "02c296b8_c697e2c4",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-06T18:28:13Z",
+      "side": 1,
+      "message": "This is handle the case when we use our finger to \"pull\" out the shelf a bit, and everything on the shelf becomes aligned to the right (left alignment).",
+      "parentUuid": "d3608564_e8f56250",
+      "range": {
+        "startLine": 426,
+        "startChar": 29,
+        "endLine": 426,
+        "endChar": 30
+      },
+      "revId": "a9f0efeeff627bb23e7c4144037d9242cb9b60b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1d6af0ba_48d1c4a2",
         "filename": "ash/shelf/app_list_button.cc",
         "patchSetId": 4
@@ -220,6 +436,30 @@
       "writtenOn": "2017-06-30T22:52:54Z",
       "side": 1,
       "message": "Why does AppListButton need to subclass EventSource to send back button events to the primary root window\u0027s host\u0027s event sink? Is the wrapping the notion of sending VKEY_BROWSER_BACK to the active window or event target? Perhaps add a brief explanatory comment here.",
+      "range": {
+        "startLine": 444,
+        "startChar": 0,
+        "endLine": 444,
+        "endChar": 46
+      },
+      "revId": "a9f0efeeff627bb23e7c4144037d9242cb9b60b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28e7a51a_bf7d06e5",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-06T18:28:13Z",
+      "side": 1,
+      "message": "Is there a better way to mimic presses on F1 than using EventSink?",
+      "parentUuid": "1d6af0ba_48d1c4a2",
       "range": {
         "startLine": 444,
         "startChar": 0,
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "0de7dad0_bbe35aed",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-06T18:28:13Z",
+      "side": 1,
+      "message": "Right, this will not work. I will address this when I figure if we should be using EventSource.",
+      "parentUuid": "2c3170f4_f9f35685",
+      "range": {
+        "startLine": 445,
+        "startChar": 21,
+        "endLine": 445,
+        "endChar": 41
+      },
+      "revId": "a9f0efeeff627bb23e7c4144037d9242cb9b60b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9fce67e4_195128ac",
         "filename": "ash/shelf/app_list_button.h",
         "patchSetId": 4
@@ -275,6 +539,30 @@
       "revId": "a9f0efeeff627bb23e7c4144037d9242cb9b60b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79aba598_31509b11",
+        "filename": "ash/shelf/app_list_button.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-06T18:28:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9fce67e4_195128ac",
+      "range": {
+        "startLine": 52,
+        "startChar": 18,
+        "endLine": 52,
+        "endChar": 19
+      },
+      "revId": "a9f0efeeff627bb23e7c4144037d9242cb9b60b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -301,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "cc2f6f61_f7c39d5f",
+        "filename": "ash/shelf/app_list_button.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-06T18:28:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc5640cc_2d65323e",
+      "range": {
+        "startLine": 78,
+        "startChar": 7,
+        "endLine": 78,
+        "endChar": 18
+      },
+      "revId": "a9f0efeeff627bb23e7c4144037d9242cb9b60b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84a78dc8_61b103b4",
         "filename": "ash/shelf/shelf_view.cc",
         "patchSetId": 4
@@ -312,6 +624,30 @@
       "writtenOn": "2017-06-30T22:52:54Z",
       "side": 1,
       "message": "Is this really possibly null here, but not in AppListButton?",
+      "range": {
+        "startLine": 760,
+        "startChar": 13,
+        "endLine": 760,
+        "endChar": 29
+      },
+      "revId": "a9f0efeeff627bb23e7c4144037d9242cb9b60b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e21d454e_47599c27",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-06T18:28:13Z",
+      "side": 1,
+      "message": "It should be something with the cleanup order thought I\u0027m not sure the details other than the fact it crashes here on shutdown and not in AppListButton.",
+      "parentUuid": "84a78dc8_61b103b4",
       "range": {
         "startLine": 760,
         "startChar": 13,
@@ -347,6 +683,30 @@
     },
     {
       "key": {
+        "uuid": "62b87e1c_7660ef1a",
+        "filename": "ash/shelf/shelf_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2573,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-06T18:28:13Z",
+      "side": 1,
+      "message": "Yes, failed in first patch set and confirmed locally.",
+      "parentUuid": "5bbdce4c_1dc2304e",
+      "range": {
+        "startLine": 2573,
+        "startChar": 23,
+        "endLine": 2573,
+        "endChar": 30
+      },
+      "revId": "a9f0efeeff627bb23e7c4144037d9242cb9b60b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ad66d066_38f170e7",
         "filename": "ash/shelf/shelf_view_unittest.cc",
         "patchSetId": 4
@@ -370,6 +730,30 @@
     },
     {
       "key": {
+        "uuid": "9a4f4f5a_0566c282",
+        "filename": "ash/shelf/shelf_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2588,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-06T18:28:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad66d066_38f170e7",
+      "range": {
+        "startLine": 2588,
+        "startChar": 19,
+        "endLine": 2588,
+        "endChar": 34
+      },
+      "revId": "a9f0efeeff627bb23e7c4144037d9242cb9b60b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e6923c9_115c8fa3",
         "filename": "ash/shelf/shelf_view_unittest.cc",
         "patchSetId": 4
@@ -390,6 +774,30 @@
       "revId": "a9f0efeeff627bb23e7c4144037d9242cb9b60b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4f9119d_df48a94c",
+        "filename": "ash/shelf/shelf_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2601,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-06T18:28:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e6923c9_115c8fa3",
+      "range": {
+        "startLine": 2601,
+        "startChar": 7,
+        "endLine": 2601,
+        "endChar": 11
+      },
+      "revId": "a9f0efeeff627bb23e7c4144037d9242cb9b60b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
