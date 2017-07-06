@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "972d051b_4367ad3f",
+        "filename": "media/filters/gpu_video_decoder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-07-06T04:47:32Z",
+      "side": 1,
+      "message": "Is SHMBuffer struct needed? Could we perhaps use SharedMemory directly and SharedMemory::mapped_size() instead?",
+      "revId": "8b06b12ebbb06c068b1840da5eb81b830a033f34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "816a3993_173628a1",
+        "filename": "media/filters/gpu_video_decoder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-07-06T04:47:32Z",
+      "side": 1,
+      "message": "Do we need to declare move constructor explicitly?",
+      "revId": "8b06b12ebbb06c068b1840da5eb81b830a033f34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19a0e3de_d9c32b83",
+        "filename": "media/filters/gpu_video_decoder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-07-06T04:47:32Z",
+      "side": 1,
+      "message": "Should we make this DISALLOW_COPY_AND_ASSIGN()?",
+      "revId": "8b06b12ebbb06c068b1840da5eb81b830a033f34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
