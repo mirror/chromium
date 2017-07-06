@@ -1039,6 +1039,9 @@ component("base") {
     "unguessable_token.h",
     "value_conversions.cc",
     "value_conversions.h",
+
+    # "value_iterators.cc",
+    "value_iterators.h",
     "values.cc",
     "values.h",
     "version.cc",

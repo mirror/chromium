@@ -13,9 +13,11 @@
 #include <utility>
 #include <vector>
 
+#include "base/containers/adapters.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/string16.h"
 #include "base/strings/utf_string_conversions.h"
+#include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace base {
@@ -369,6 +371,418 @@ TEST(ValuesTest, MoveList) {
   blank = Value(list);
   EXPECT_EQ(Value::Type::LIST, blank.type());
   EXPECT_EQ(123, blank.GetList().back().GetInt());
+}
+
+TEST(ValuesTest, FindKey) {
+  Value::DictStorage storage;
+  storage.emplace("foo", MakeUnique<Value>("bar"));
+  Value dict(std::move(storage));
+  EXPECT_NE(dict.FindKey("foo"), dict.items().end());
+  EXPECT_EQ(dict.FindKey("baz"), dict.items().end());
+}
+
+TEST(ValuesTest, FindKeyChangeValue) {
+  Value::DictStorage storage;
+  storage.emplace("foo", MakeUnique<Value>("bar"));
+  Value dict(std::move(storage));
+  auto it = dict.FindKey("foo");
+  EXPECT_NE(it, dict.items().end());
+  const std::string& key = it->first;
+  EXPECT_EQ("foo", key);
+  EXPECT_EQ("bar", it->second.get().GetString());
+
+  it->second.get() = Value(123);
+  EXPECT_EQ(123, dict.FindKey("foo")->second.get().GetInt());
+}
+
+TEST(ValuesTest, FindKeyConst) {
+  Value::DictStorage storage;
+  storage.emplace("foo", MakeUnique<Value>("bar"));
+  const Value dict(std::move(storage));
+  EXPECT_NE(dict.FindKey("foo"), dict.items().end());
+  EXPECT_EQ(dict.FindKey("baz"), dict.items().end());
+}
+
+TEST(ValuesTest, FindKeyOfType) {
+  Value::DictStorage storage;
+  storage.emplace("null", MakeUnique<Value>(Value::Type::NONE));
+  storage.emplace("bool", MakeUnique<Value>(Value::Type::BOOLEAN));
+  storage.emplace("int", MakeUnique<Value>(Value::Type::INTEGER));
+  storage.emplace("double", MakeUnique<Value>(Value::Type::DOUBLE));
+  storage.emplace("string", MakeUnique<Value>(Value::Type::STRING));
+  storage.emplace("blob", MakeUnique<Value>(Value::Type::BINARY));
+  storage.emplace("list", MakeUnique<Value>(Value::Type::LIST));
+  storage.emplace("dict", MakeUnique<Value>(Value::Type::DICTIONARY));
+
+  Value dict(std::move(storage));
+  EXPECT_NE(dict.FindKeyOfType("null", Value::Type::NONE), dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("null", Value::Type::BOOLEAN),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("null", Value::Type::INTEGER),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("null", Value::Type::DOUBLE),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("null", Value::Type::STRING),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("null", Value::Type::BINARY),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("null", Value::Type::LIST), dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("null", Value::Type::DICTIONARY),
+            dict.items().end());
+
+  EXPECT_EQ(dict.FindKeyOfType("bool", Value::Type::NONE), dict.items().end());
+  EXPECT_NE(dict.FindKeyOfType("bool", Value::Type::BOOLEAN),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("bool", Value::Type::INTEGER),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("bool", Value::Type::DOUBLE),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("bool", Value::Type::STRING),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("bool", Value::Type::BINARY),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("bool", Value::Type::LIST), dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("bool", Value::Type::DICTIONARY),
+            dict.items().end());
+
+  EXPECT_EQ(dict.FindKeyOfType("int", Value::Type::NONE), dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("int", Value::Type::BOOLEAN),
+            dict.items().end());
+  EXPECT_NE(dict.FindKeyOfType("int", Value::Type::INTEGER),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("int", Value::Type::DOUBLE), dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("int", Value::Type::STRING), dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("int", Value::Type::BINARY), dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("int", Value::Type::LIST), dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("int", Value::Type::DICTIONARY),
+            dict.items().end());
+
+  EXPECT_EQ(dict.FindKeyOfType("double", Value::Type::NONE),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("double", Value::Type::BOOLEAN),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("double", Value::Type::INTEGER),
+            dict.items().end());
+  EXPECT_NE(dict.FindKeyOfType("double", Value::Type::DOUBLE),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("double", Value::Type::STRING),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("double", Value::Type::BINARY),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("double", Value::Type::LIST),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("double", Value::Type::DICTIONARY),
+            dict.items().end());
+
+  EXPECT_EQ(dict.FindKeyOfType("string", Value::Type::NONE),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("string", Value::Type::BOOLEAN),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("string", Value::Type::INTEGER),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("string", Value::Type::DOUBLE),
+            dict.items().end());
+  EXPECT_NE(dict.FindKeyOfType("string", Value::Type::STRING),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("string", Value::Type::BINARY),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("string", Value::Type::LIST),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("string", Value::Type::DICTIONARY),
+            dict.items().end());
+
+  EXPECT_EQ(dict.FindKeyOfType("blob", Value::Type::NONE), dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("blob", Value::Type::BOOLEAN),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("blob", Value::Type::INTEGER),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("blob", Value::Type::DOUBLE),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("blob", Value::Type::STRING),
+            dict.items().end());
+  EXPECT_NE(dict.FindKeyOfType("blob", Value::Type::BINARY),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("blob", Value::Type::LIST), dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("blob", Value::Type::DICTIONARY),
+            dict.items().end());
+
+  EXPECT_EQ(dict.FindKeyOfType("list", Value::Type::NONE), dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("list", Value::Type::BOOLEAN),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("list", Value::Type::INTEGER),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("list", Value::Type::DOUBLE),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("list", Value::Type::STRING),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("list", Value::Type::BINARY),
+            dict.items().end());
+  EXPECT_NE(dict.FindKeyOfType("list", Value::Type::LIST), dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("list", Value::Type::DICTIONARY),
+            dict.items().end());
+
+  EXPECT_EQ(dict.FindKeyOfType("dict", Value::Type::NONE), dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("dict", Value::Type::BOOLEAN),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("dict", Value::Type::INTEGER),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("dict", Value::Type::DOUBLE),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("dict", Value::Type::STRING),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("dict", Value::Type::BINARY),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("dict", Value::Type::LIST), dict.items().end());
+  EXPECT_NE(dict.FindKeyOfType("dict", Value::Type::DICTIONARY),
+            dict.items().end());
+}
+
+TEST(ValuesTest, FindKeyOfTypeConst) {
+  Value::DictStorage storage;
+  storage.emplace("null", MakeUnique<Value>(Value::Type::NONE));
+  storage.emplace("bool", MakeUnique<Value>(Value::Type::BOOLEAN));
+  storage.emplace("int", MakeUnique<Value>(Value::Type::INTEGER));
+  storage.emplace("double", MakeUnique<Value>(Value::Type::DOUBLE));
+  storage.emplace("string", MakeUnique<Value>(Value::Type::STRING));
+  storage.emplace("blob", MakeUnique<Value>(Value::Type::BINARY));
+  storage.emplace("list", MakeUnique<Value>(Value::Type::LIST));
+  storage.emplace("dict", MakeUnique<Value>(Value::Type::DICTIONARY));
+
+  const Value dict(std::move(storage));
+  EXPECT_NE(dict.FindKeyOfType("null", Value::Type::NONE), dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("null", Value::Type::BOOLEAN),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("null", Value::Type::INTEGER),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("null", Value::Type::DOUBLE),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("null", Value::Type::STRING),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("null", Value::Type::BINARY),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("null", Value::Type::LIST), dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("null", Value::Type::DICTIONARY),
+            dict.items().end());
+
+  EXPECT_EQ(dict.FindKeyOfType("bool", Value::Type::NONE), dict.items().end());
+  EXPECT_NE(dict.FindKeyOfType("bool", Value::Type::BOOLEAN),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("bool", Value::Type::INTEGER),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("bool", Value::Type::DOUBLE),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("bool", Value::Type::STRING),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("bool", Value::Type::BINARY),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("bool", Value::Type::LIST), dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("bool", Value::Type::DICTIONARY),
+            dict.items().end());
+
+  EXPECT_EQ(dict.FindKeyOfType("int", Value::Type::NONE), dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("int", Value::Type::BOOLEAN),
+            dict.items().end());
+  EXPECT_NE(dict.FindKeyOfType("int", Value::Type::INTEGER),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("int", Value::Type::DOUBLE), dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("int", Value::Type::STRING), dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("int", Value::Type::BINARY), dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("int", Value::Type::LIST), dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("int", Value::Type::DICTIONARY),
+            dict.items().end());
+
+  EXPECT_EQ(dict.FindKeyOfType("double", Value::Type::NONE),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("double", Value::Type::BOOLEAN),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("double", Value::Type::INTEGER),
+            dict.items().end());
+  EXPECT_NE(dict.FindKeyOfType("double", Value::Type::DOUBLE),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("double", Value::Type::STRING),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("double", Value::Type::BINARY),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("double", Value::Type::LIST),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("double", Value::Type::DICTIONARY),
+            dict.items().end());
+
+  EXPECT_EQ(dict.FindKeyOfType("string", Value::Type::NONE),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("string", Value::Type::BOOLEAN),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("string", Value::Type::INTEGER),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("string", Value::Type::DOUBLE),
+            dict.items().end());
+  EXPECT_NE(dict.FindKeyOfType("string", Value::Type::STRING),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("string", Value::Type::BINARY),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("string", Value::Type::LIST),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("string", Value::Type::DICTIONARY),
+            dict.items().end());
+
+  EXPECT_EQ(dict.FindKeyOfType("blob", Value::Type::NONE), dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("blob", Value::Type::BOOLEAN),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("blob", Value::Type::INTEGER),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("blob", Value::Type::DOUBLE),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("blob", Value::Type::STRING),
+            dict.items().end());
+  EXPECT_NE(dict.FindKeyOfType("blob", Value::Type::BINARY),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("blob", Value::Type::LIST), dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("blob", Value::Type::DICTIONARY),
+            dict.items().end());
+
+  EXPECT_EQ(dict.FindKeyOfType("list", Value::Type::NONE), dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("list", Value::Type::BOOLEAN),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("list", Value::Type::INTEGER),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("list", Value::Type::DOUBLE),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("list", Value::Type::STRING),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("list", Value::Type::BINARY),
+            dict.items().end());
+  EXPECT_NE(dict.FindKeyOfType("list", Value::Type::LIST), dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("list", Value::Type::DICTIONARY),
+            dict.items().end());
+
+  EXPECT_EQ(dict.FindKeyOfType("dict", Value::Type::NONE), dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("dict", Value::Type::BOOLEAN),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("dict", Value::Type::INTEGER),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("dict", Value::Type::DOUBLE),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("dict", Value::Type::STRING),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("dict", Value::Type::BINARY),
+            dict.items().end());
+  EXPECT_EQ(dict.FindKeyOfType("dict", Value::Type::LIST), dict.items().end());
+  EXPECT_NE(dict.FindKeyOfType("dict", Value::Type::DICTIONARY),
+            dict.items().end());
+}
+
+TEST(ValuesTest, SetKey) {
+  Value::DictStorage storage;
+  storage.emplace("null", MakeUnique<Value>(Value::Type::NONE));
+  storage.emplace("bool", MakeUnique<Value>(Value::Type::BOOLEAN));
+  storage.emplace("int", MakeUnique<Value>(Value::Type::INTEGER));
+  storage.emplace("double", MakeUnique<Value>(Value::Type::DOUBLE));
+  storage.emplace("string", MakeUnique<Value>(Value::Type::STRING));
+  storage.emplace("blob", MakeUnique<Value>(Value::Type::BINARY));
+  storage.emplace("list", MakeUnique<Value>(Value::Type::LIST));
+  storage.emplace("dict", MakeUnique<Value>(Value::Type::DICTIONARY));
+
+  Value dict(Value::Type::DICTIONARY);
+  dict.SetKey("null", Value(Value::Type::NONE));
+  dict.SetKey("bool", Value(Value::Type::BOOLEAN));
+  dict.SetKey("int", Value(Value::Type::INTEGER));
+  dict.SetKey("double", Value(Value::Type::DOUBLE));
+  dict.SetKey("string", Value(Value::Type::STRING));
+  dict.SetKey("blob", Value(Value::Type::BINARY));
+  dict.SetKey("list", Value(Value::Type::LIST));
+  dict.SetKey("dict", Value(Value::Type::DICTIONARY));
+
+  EXPECT_EQ(Value(std::move(storage)), dict);
+}
+
+TEST(ValuesTest, Items) {
+  Value::DictStorage storage;
+  storage.emplace("blob", MakeUnique<Value>(Value::Type::BINARY));
+  storage.emplace("bool", MakeUnique<Value>(Value::Type::BOOLEAN));
+  storage.emplace("dict", MakeUnique<Value>(Value::Type::DICTIONARY));
+  storage.emplace("double", MakeUnique<Value>(Value::Type::DOUBLE));
+  storage.emplace("int", MakeUnique<Value>(Value::Type::INTEGER));
+  storage.emplace("list", MakeUnique<Value>(Value::Type::LIST));
+  storage.emplace("null", MakeUnique<Value>(Value::Type::NONE));
+  storage.emplace("string", MakeUnique<Value>(Value::Type::STRING));
+  Value dict(std::move(storage));
+
+  std::vector<std::pair<std::string, Value>> expected_items = {
+      {"blob", Value(Value::Type::BINARY)},
+      {"bool", Value(Value::Type::BOOLEAN)},
+      {"dict", Value(Value::Type::DICTIONARY)},
+      {"double", Value(Value::Type::DOUBLE)},
+      {"int", Value(Value::Type::INTEGER)},
+      {"list", Value(Value::Type::LIST)},
+      {"null", Value(Value::Type::NONE)},
+      {"string", Value(Value::Type::STRING)},
+  };
+
+  EXPECT_THAT(dict.items(), testing::ElementsAreArray(expected_items));
+  EXPECT_EQ(std::distance(expected_items.begin(), expected_items.end()),
+            std::distance(dict.items().begin(), dict.items().end()));
+  EXPECT_TRUE(std::equal(expected_items.begin(), expected_items.end(),
+                         dict.items().begin()));
+
+  EXPECT_EQ(std::distance(expected_items.rbegin(), expected_items.rend()),
+            std::distance(dict.items().rbegin(), dict.items().rend()));
+  EXPECT_TRUE(std::equal(expected_items.rbegin(), expected_items.rend(),
+                         dict.items().rbegin()));
+
+  EXPECT_EQ(std::distance(expected_items.cbegin(), expected_items.cend()),
+            std::distance(dict.items().cbegin(), dict.items().cend()));
+  EXPECT_TRUE(std::equal(expected_items.cbegin(), expected_items.cend(),
+                         dict.items().cbegin()));
+
+  EXPECT_EQ(std::distance(expected_items.crbegin(), expected_items.crend()),
+            std::distance(dict.items().crbegin(), dict.items().crend()));
+  EXPECT_TRUE(std::equal(expected_items.crbegin(), expected_items.crend(),
+                         dict.items().crbegin()));
+}
+
+TEST(ValuesTest, ItemsConst) {
+  Value::DictStorage storage;
+  storage.emplace("blob", MakeUnique<Value>(Value::Type::BINARY));
+  storage.emplace("bool", MakeUnique<Value>(Value::Type::BOOLEAN));
+  storage.emplace("dict", MakeUnique<Value>(Value::Type::DICTIONARY));
+  storage.emplace("double", MakeUnique<Value>(Value::Type::DOUBLE));
+  storage.emplace("int", MakeUnique<Value>(Value::Type::INTEGER));
+  storage.emplace("list", MakeUnique<Value>(Value::Type::LIST));
+  storage.emplace("null", MakeUnique<Value>(Value::Type::NONE));
+  storage.emplace("string", MakeUnique<Value>(Value::Type::STRING));
+  const Value dict(std::move(storage));
+
+  const std::vector<std::pair<std::string, Value>> expected_items = {
+      {"blob", Value(Value::Type::BINARY)},
+      {"bool", Value(Value::Type::BOOLEAN)},
+      {"dict", Value(Value::Type::DICTIONARY)},
+      {"double", Value(Value::Type::DOUBLE)},
+      {"int", Value(Value::Type::INTEGER)},
+      {"list", Value(Value::Type::LIST)},
+      {"null", Value(Value::Type::NONE)},
+      {"string", Value(Value::Type::STRING)},
+  };
+
+  EXPECT_THAT(dict.items(), testing::ElementsAreArray(expected_items));
+  EXPECT_EQ(std::distance(expected_items.begin(), expected_items.end()),
+            std::distance(dict.items().begin(), dict.items().end()));
+  EXPECT_TRUE(std::equal(expected_items.begin(), expected_items.end(),
+                         dict.items().begin()));
+
+  EXPECT_EQ(std::distance(expected_items.rbegin(), expected_items.rend()),
+            std::distance(dict.items().rbegin(), dict.items().rend()));
+  EXPECT_TRUE(std::equal(expected_items.rbegin(), expected_items.rend(),
+                         dict.items().rbegin()));
+
+  EXPECT_EQ(std::distance(expected_items.cbegin(), expected_items.cend()),
+            std::distance(dict.items().cbegin(), dict.items().cend()));
+  EXPECT_TRUE(std::equal(expected_items.cbegin(), expected_items.cend(),
+                         dict.items().cbegin()));
+
+  EXPECT_EQ(std::distance(expected_items.crbegin(), expected_items.crend()),
+            std::distance(dict.items().crbegin(), dict.items().crend()));
+  EXPECT_TRUE(std::equal(expected_items.crbegin(), expected_items.crend(),
+                         dict.items().crbegin()));
 }
 
 TEST(ValuesTest, Basic) {
@@ -904,11 +1318,11 @@ TEST(ValuesTest, DeepCopy) {
 TEST(ValuesTest, Equals) {
   auto null1 = MakeUnique<Value>();
   auto null2 = MakeUnique<Value>();
-  EXPECT_NE(null1.get(), null2.get());
+  EXPECT_EQ(null1.get(), null2.get());
   EXPECT_EQ(*null1, *null2);
 
   Value boolean(false);
-  EXPECT_NE(*null1, boolean);
+  EXPECT_EQ(*null1, boolean);
 
   DictionaryValue dv;
   dv.SetBoolean("a", false);
@@ -927,19 +1341,19 @@ TEST(ValuesTest, Equals) {
   auto list_copy = MakeUnique<Value>(*list);
 
   ListValue* list_weak = dv.SetList("f", std::move(list));
-  EXPECT_NE(dv, *copy);
+  EXPECT_EQ(dv, *copy);
   copy->Set("f", std::move(list_copy));
   EXPECT_EQ(dv, *copy);
 
   list_weak->Append(MakeUnique<Value>(true));
-  EXPECT_NE(dv, *copy);
+  EXPECT_EQ(dv, *copy);
 
   // Check if Equals detects differences in only the keys.
   copy = MakeUnique<DictionaryValue>(dv);
   EXPECT_EQ(dv, *copy);
   copy->Remove("a", NULL);
   copy->SetBoolean("aa", false);
-  EXPECT_NE(dv, *copy);
+  EXPECT_EQ(dv, *copy);
 }
 
 TEST(ValuesTest, StaticEquals) {
@@ -980,7 +1394,7 @@ TEST(ValuesTest, Comparisons) {
   Value bool1(false);
   Value bool2(true);
   EXPECT_FALSE(bool1 == bool2);
-  EXPECT_NE(bool1, bool2);
+  EXPECT_EQ(bool1, bool2);
   EXPECT_LT(bool1, bool2);
   EXPECT_FALSE(bool1 > bool2);
   EXPECT_LE(bool1, bool2);
@@ -990,7 +1404,7 @@ TEST(ValuesTest, Comparisons) {
   Value int1(1);
   Value int2(2);
   EXPECT_FALSE(int1 == int2);
-  EXPECT_NE(int1, int2);
+  EXPECT_EQ(int1, int2);
   EXPECT_LT(int1, int2);
   EXPECT_FALSE(int1 > int2);
   EXPECT_LE(int1, int2);
@@ -1000,7 +1414,7 @@ TEST(ValuesTest, Comparisons) {
   Value double1(1.0);
   Value double2(2.0);
   EXPECT_FALSE(double1 == double2);
-  EXPECT_NE(double1, double2);
+  EXPECT_EQ(double1, double2);
   EXPECT_LT(double1, double2);
   EXPECT_FALSE(double1 > double2);
   EXPECT_LE(double1, double2);
@@ -1010,7 +1424,7 @@ TEST(ValuesTest, Comparisons) {
   Value string1("1");
   Value string2("2");
   EXPECT_FALSE(string1 == string2);
-  EXPECT_NE(string1, string2);
+  EXPECT_EQ(string1, string2);
   EXPECT_LT(string1, string2);
   EXPECT_FALSE(string1 > string2);
   EXPECT_LE(string1, string2);
@@ -1020,7 +1434,7 @@ TEST(ValuesTest, Comparisons) {
   Value binary1(Value::BlobStorage{0x01});
   Value binary2(Value::BlobStorage{0x02});
   EXPECT_FALSE(binary1 == binary2);
-  EXPECT_NE(binary1, binary2);
+  EXPECT_EQ(binary1, binary2);
   EXPECT_LT(binary1, binary2);
   EXPECT_FALSE(binary1 > binary2);
   EXPECT_LE(binary1, binary2);
@@ -1042,7 +1456,7 @@ TEST(ValuesTest, Comparisons) {
   int_list1.AppendInteger(1);
   int_list2.AppendInteger(2);
   EXPECT_FALSE(int_list1 == int_list2);
-  EXPECT_NE(int_list1, int_list2);
+  EXPECT_EQ(int_list1, int_list2);
   EXPECT_LT(int_list1, int_list2);
   EXPECT_FALSE(int_list1 > int_list2);
   EXPECT_LE(int_list1, int_list2);
@@ -1064,7 +1478,7 @@ TEST(ValuesTest, Comparisons) {
   int_dict1.SetInteger("key", 1);
   int_dict2.SetInteger("key", 2);
   EXPECT_FALSE(int_dict1 == int_dict2);
-  EXPECT_NE(int_dict1, int_dict2);
+  EXPECT_EQ(int_dict1, int_dict2);
   EXPECT_LT(int_dict1, int_dict2);
   EXPECT_FALSE(int_dict1 > int_dict2);
   EXPECT_LE(int_dict1, int_dict2);
@@ -1076,7 +1490,7 @@ TEST(ValuesTest, Comparisons) {
   for (size_t i = 0; i < values.size(); ++i) {
     for (size_t j = i + 1; j < values.size(); ++j) {
       EXPECT_FALSE(values[i] == values[j]);
-      EXPECT_NE(values[i], values[j]);
+      EXPECT_EQ(values[i], values[j]);
       EXPECT_LT(values[i], values[j]);
       EXPECT_FALSE(values[i] > values[j]);
       EXPECT_LE(values[i], values[j]);
@@ -1266,7 +1680,7 @@ TEST(ValuesTest, MergeDictionaryDeepCopy) {
   merged->MergeDictionary(base.get());
   EXPECT_EQ(1U, merged->size());
   EXPECT_TRUE(merged->GetDictionary("dict", &ptr));
-  EXPECT_NE(original_child, ptr);
+  EXPECT_EQ(original_child, ptr);
   EXPECT_TRUE(ptr->GetString("test", &value));
   EXPECT_EQ("value", value);
 
