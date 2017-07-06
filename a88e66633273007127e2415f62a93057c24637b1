@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "793bf58f_3380cec6",
+        "filename": "cc/base/filter_operation.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1116015
+      },
+      "writtenOn": "2017-07-06T21:45:44Z",
+      "side": 1,
+      "message": "Do we need to expose IGNORE here? In fact, we probably shouldn\u0027t have exposed it in SkBlurImageFilter::TileMode, come to think of it. It would allow the caller to get garbage pixels. :(",
+      "revId": "a88e66633273007127e2415f62a93057c24637b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "703eefbd_eed7826b",
+        "filename": "cc/base/render_surface_filters.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116015
+      },
+      "writtenOn": "2017-07-06T21:45:44Z",
+      "side": 1,
+      "message": "Is this still necessary?",
+      "revId": "a88e66633273007127e2415f62a93057c24637b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
