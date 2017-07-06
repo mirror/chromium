@@ -61,6 +61,17 @@ MediaEngagementScore::MediaEngagementScore(
     last_media_playback_time_ = base::Time::FromInternalValue(internal_time);
 }
 
+mojom::MediaEngagementScoreDetails MediaEngagementScore::GetScoreDetails()
+    const {
+  mojom::MediaEngagementScoreDetails engagement;
+  engagement.origin = origin_;
+  engagement.total_score = GetTotalScore();
+  engagement.visits = visits();
+  engagement.media_playbacks = media_playbacks();
+  engagement.last_media_playback_time = last_media_playback_time().ToJsTime();
+  return engagement;
+}
+
 MediaEngagementScore::~MediaEngagementScore() = default;
 
 double MediaEngagementScore::GetTotalScore() const {

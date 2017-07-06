@@ -73,7 +73,8 @@
           "mojom::OmniboxPageHandler",
           "mojom::PluginsPageHandler",
           "mojom::SiteEngagementDetailsProvider",
-          "mojom::UsbInternalsPageHandler"
+          "mojom::UsbInternalsPageHandler",
+	  "mojom::MediaEngagementDetailsProvider"
         ]
       }
     }
