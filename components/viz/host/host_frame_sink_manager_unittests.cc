@@ -8,7 +8,6 @@
 #include <utility>
 
 #include "base/macros.h"
-#include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "cc/ipc/frame_sink_manager.mojom.h"
 #include "cc/surfaces/frame_sink_id.h"
@@ -124,7 +123,6 @@ class HostFrameSinkManagerTest : public testing::Test {
   }
 
  private:
-  base::MessageLoop message_loop_;
   std::unique_ptr<HostFrameSinkManager> host_manager_;
   std::unique_ptr<MockFrameSinkManagerImpl> manager_impl_;
 
