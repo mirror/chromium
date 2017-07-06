@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ba05a57b_9ae81d46",
+        "filename": "chrome/browser/resources/settings/site_settings/constants.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-06T01:32:11Z",
+      "side": 1,
+      "message": "Yes, but I also want to change that to be singular. I\u0027ll make it plural for consistency right now though, good point.\n\ndone.",
+      "parentUuid": "682aa9b9_7f112ac5",
+      "revId": "97ac08334b4ce15a98ce5c1dd9446f31d7b6fd7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "14ded819_3c736ee0",
         "filename": "chrome/browser/resources/settings/site_settings/constants.js",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "97ac08334b4ce15a98ce5c1dd9446f31d7b6fd7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c1d754d_5c809bca",
+        "filename": "chrome/browser/resources/settings/site_settings/constants.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-06T01:32:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14ded819_3c736ee0",
+      "revId": "97ac08334b4ce15a98ce5c1dd9446f31d7b6fd7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2a397f1e_9f476b06",
+        "filename": "chrome/browser/resources/settings/site_settings/site_list.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-06T01:32:11Z",
+      "side": 1,
+      "message": "Also changed {string} to {!settings.ContentSetting}\nAnd changed function name.\n\nDone",
+      "parentUuid": "502a9814_c9ac0ce0",
+      "revId": "97ac08334b4ce15a98ce5c1dd9446f31d7b6fd7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d72f23c_5bda6e0e",
         "filename": "chrome/test/data/webui/settings/site_details_permission_tests.js",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "97ac08334b4ce15a98ce5c1dd9446f31d7b6fd7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1edb937_bf82936b",
+        "filename": "chrome/test/data/webui/settings/site_details_permission_tests.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-06T01:32:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d72f23c_5bda6e0e",
+      "revId": "97ac08334b4ce15a98ce5c1dd9446f31d7b6fd7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
