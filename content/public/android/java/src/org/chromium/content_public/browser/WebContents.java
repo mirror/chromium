@@ -7,14 +7,13 @@ package org.chromium.content_public.browser;
 import android.graphics.Rect;
 import android.os.Handler;
 import android.os.Parcelable;
+import android.support.annotation.Nullable;
 
 import org.chromium.base.VisibleForTesting;
 import org.chromium.content.browser.RenderCoordinates;
 import org.chromium.ui.OverscrollRefreshHandler;
 import org.chromium.ui.base.EventForwarder;
 import org.chromium.ui.base.WindowAndroid;
-
-import java.util.List;
 
 /**
  * The WebContents Java wrapper to allow communicating with the native WebContents object.
@@ -427,10 +426,10 @@ public interface WebContents extends Parcelable {
     public boolean hasActiveEffectivelyFullscreenVideo();
 
     /**
-     * Gets a Rect containing the size of the currently playing video. The position of the rectangle
-     * is meaningless.
+     * Gets a Rect containing the size of the currently playing fullscreen video. The position of
+     * the rectangle is meaningless. Will return null if there is no such video.
      */
-    public List<Rect> getCurrentlyPlayingVideoSizes();
+    public @Nullable Rect getFullscreenVideoSize();
 
     /**
      * Issues a fake notification about the renderer being killed.

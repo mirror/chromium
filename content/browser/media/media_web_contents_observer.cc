@@ -77,6 +77,11 @@ bool MediaWebContentsObserver::HasActiveEffectivelyFullscreenVideo() const {
   return true;
 }
 
+const base::Optional<WebContentsObserver::MediaPlayerId>&
+MediaWebContentsObserver::GetFullscreenVideoMediaPlayerId() const {
+  return fullscreen_player_;
+}
+
 bool MediaWebContentsObserver::OnMessageReceived(
     const IPC::Message& msg,
     RenderFrameHost* render_frame_host) {
