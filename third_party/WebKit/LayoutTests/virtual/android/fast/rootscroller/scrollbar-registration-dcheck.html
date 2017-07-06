@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<meta name="viewport" content="width=device-width">
+<script src="../../../../resources/testharness.js"></script>
+<script src="../../../../resources/testharnessreport.js"></script>
+<style type="text/css">
+  body, html {
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+  }
+  iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+</style>
+<script>
+  addEventListener('load', function() {
+    test(function(){
+      document.rootScroller = document.getElementById('container');
+    }, "This test passes if it does not crash.");
+  });
+</script>
+
+<iframe id="container" src="resources/scrollbar-registration-dcheck-iframe.html" scrolling="yes"></iframe>
+<div style="height:2000px;"></div>
