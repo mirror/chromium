@@ -218,6 +218,7 @@ class CONTENT_EXPORT NavigationRequest : public NavigationURLLoaderDelegate {
   void OnRedirectChecksComplete(NavigationThrottle::ThrottleCheckResult result);
   void OnWillProcessResponseChecksComplete(
       NavigationThrottle::ThrottleCheckResult result);
+  bool AbortOnError(NavigationThrottle::ThrottleCheckResult result);
 
   // Have a RenderFrameHost commit the navigation. The NavigationRequest will
   // be destroyed after this call.
