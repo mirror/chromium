@@ -354,39 +354,6 @@ void BluetoothLowEnergyAPI::Shutdown() {
 
 namespace api {
 
-BluetoothLowEnergyExtensionFunctionDeprecated::
-    BluetoothLowEnergyExtensionFunctionDeprecated() {}
-
-BluetoothLowEnergyExtensionFunctionDeprecated::
-    ~BluetoothLowEnergyExtensionFunctionDeprecated() {}
-
-bool BluetoothLowEnergyExtensionFunctionDeprecated::RunAsync() {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
-
-  if (!BluetoothManifestData::CheckLowEnergyPermitted(extension())) {
-    error_ = kErrorPermissionDenied;
-    return false;
-  }
-
-  BluetoothLowEnergyEventRouter* event_router =
-      GetEventRouter(browser_context());
-  if (!event_router->IsBluetoothSupported()) {
-    SetError(kErrorPlatformNotSupported);
-    return false;
-  }
-
-  // It is safe to pass |this| here as ExtensionFunction is refcounted.
-  if (!event_router->InitializeAdapterAndInvokeCallback(base::Bind(
-          &DoWorkCallback<bool>,
-          base::Bind(&BluetoothLowEnergyExtensionFunctionDeprecated::DoWork,
-                     this)))) {
-    SetError(kErrorAdapterNotInitialized);
-    return false;
-  }
-
-  return true;
-}
-
 BluetoothLowEnergyExtensionFunction::BluetoothLowEnergyExtensionFunction()
     : event_router_(nullptr) {}
 
@@ -452,7 +419,7 @@ BLEPeripheralExtensionFunction<Params>::Run() {
   return BluetoothLowEnergyExtensionFunction::Run();
 }
 
-bool BluetoothLowEnergyConnectFunction::DoWork() {
+void BluetoothLowEnergyConnectFunction::DoWork() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   BluetoothLowEnergyEventRouter* event_router =
@@ -461,9 +428,8 @@ bool BluetoothLowEnergyConnectFunction::DoWork() {
   // The adapter must be initialized at this point, but return an error instead
   // of asserting.
   if (!event_router->HasAdapter()) {
-    SetError(kErrorAdapterNotInitialized);
-    SendResponse(false);
-    return false;
+    Respond(Error(kErrorAdapterNotInitialized));
+    return;
   }
 
   std::unique_ptr<apibtle::Connect::Params> params(
@@ -479,21 +445,18 @@ bool BluetoothLowEnergyConnectFunction::DoWork() {
       persistent, extension(), params->device_address,
       base::Bind(&BluetoothLowEnergyConnectFunction::SuccessCallback, this),
       base::Bind(&BluetoothLowEnergyConnectFunction::ErrorCallback, this));
-
-  return true;
 }
 
 void BluetoothLowEnergyConnectFunction::SuccessCallback() {
-  SendResponse(true);
+  Respond(NoArguments());
 }
 
 void BluetoothLowEnergyConnectFunction::ErrorCallback(
     BluetoothLowEnergyEventRouter::Status status) {
-  SetError(StatusToString(status));
-  SendResponse(false);
+  Respond(Error(StatusToString(status)));
 }
 
-bool BluetoothLowEnergyDisconnectFunction::DoWork() {
+void BluetoothLowEnergyDisconnectFunction::DoWork() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   BluetoothLowEnergyEventRouter* event_router =
@@ -502,9 +465,8 @@ bool BluetoothLowEnergyDisconnectFunction::DoWork() {
   // The adapter must be initialized at this point, but return an error instead
   // of asserting.
   if (!event_router->HasAdapter()) {
-    SetError(kErrorAdapterNotInitialized);
-    SendResponse(false);
-    return false;
+    Respond(Error(kErrorAdapterNotInitialized));
+    return;
   }
 
   std::unique_ptr<apibtle::Disconnect::Params> params(
@@ -515,21 +477,18 @@ bool BluetoothLowEnergyDisconnectFunction::DoWork() {
       extension(), params->device_address,
       base::Bind(&BluetoothLowEnergyDisconnectFunction::SuccessCallback, this),
       base::Bind(&BluetoothLowEnergyDisconnectFunction::ErrorCallback, this));
-
-  return true;
 }
 
 void BluetoothLowEnergyDisconnectFunction::SuccessCallback() {
-  SendResponse(true);
+  Respond(NoArguments());
 }
 
 void BluetoothLowEnergyDisconnectFunction::ErrorCallback(
     BluetoothLowEnergyEventRouter::Status status) {
-  SetError(StatusToString(status));
-  SendResponse(false);
+  Respond(Error(StatusToString(status)));
 }
 
-bool BluetoothLowEnergyGetServiceFunction::DoWork() {
+void BluetoothLowEnergyGetServiceFunction::DoWork() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   BluetoothLowEnergyEventRouter* event_router =
@@ -538,9 +497,8 @@ bool BluetoothLowEnergyGetServiceFunction::DoWork() {
   // The adapter must be initialized at this point, but return an error instead
   // of asserting.
   if (!event_router->HasAdapter()) {
-    SetError(kErrorAdapterNotInitialized);
-    SendResponse(false);
-    return false;
+    Respond(Error(kErrorAdapterNotInitialized));
+    return;
   }
 
   std::unique_ptr<apibtle::GetService::Params> params(
@@ -551,18 +509,14 @@ bool BluetoothLowEnergyGetServiceFunction::DoWork() {
   BluetoothLowEnergyEventRouter::Status status =
       event_router->GetService(params->service_id, &service);
   if (status != BluetoothLowEnergyEventRouter::kStatusSuccess) {
-    SetError(StatusToString(status));
-    SendResponse(false);
-    return false;
+    Respond(Error(StatusToString(status)));
+    return;
   }
 
-  results_ = apibtle::GetService::Results::Create(service);
-  SendResponse(true);
-
-  return true;
+  Respond(ArgumentList(apibtle::GetService::Results::Create(service)));
 }
 
-bool BluetoothLowEnergyGetServicesFunction::DoWork() {
+void BluetoothLowEnergyGetServicesFunction::DoWork() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   BluetoothLowEnergyEventRouter* event_router =
@@ -571,9 +525,8 @@ bool BluetoothLowEnergyGetServicesFunction::DoWork() {
   // The adapter must be initialized at this point, but return an error instead
   // of asserting.
   if (!event_router->HasAdapter()) {
-    SetError(kErrorAdapterNotInitialized);
-    SendResponse(false);
-    return false;
+    Respond(Error(kErrorAdapterNotInitialized));
+    return;
   }
 
   std::unique_ptr<apibtle::GetServices::Params> params(
@@ -582,18 +535,14 @@ bool BluetoothLowEnergyGetServicesFunction::DoWork() {
 
   BluetoothLowEnergyEventRouter::ServiceList service_list;
   if (!event_router->GetServices(params->device_address, &service_list)) {
-    SetError(kErrorNotFound);
-    SendResponse(false);
-    return false;
+    Respond(Error(kErrorNotFound));
+    return;
   }
 
-  results_ = apibtle::GetServices::Results::Create(service_list);
-  SendResponse(true);
-
-  return true;
+  Respond(ArgumentList(apibtle::GetServices::Results::Create(service_list)));
 }
 
-bool BluetoothLowEnergyGetCharacteristicFunction::DoWork() {
+void BluetoothLowEnergyGetCharacteristicFunction::DoWork() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   BluetoothLowEnergyEventRouter* event_router =
@@ -602,9 +551,8 @@ bool BluetoothLowEnergyGetCharacteristicFunction::DoWork() {
   // The adapter must be initialized at this point, but return an error instead
   // of asserting.
   if (!event_router->HasAdapter()) {
-    SetError(kErrorAdapterNotInitialized);
-    SendResponse(false);
-    return false;
+    Respond(Error(kErrorAdapterNotInitialized));
+    return;
   }
 
   std::unique_ptr<apibtle::GetCharacteristic::Params> params(
@@ -616,21 +564,17 @@ bool BluetoothLowEnergyGetCharacteristicFunction::DoWork() {
       event_router->GetCharacteristic(extension(), params->characteristic_id,
                                       &characteristic);
   if (status != BluetoothLowEnergyEventRouter::kStatusSuccess) {
-    SetError(StatusToString(status));
-    SendResponse(false);
-    return false;
+    Respond(Error(StatusToString(status)));
+    return;
   }
 
   // Manually construct the result instead of using
   // apibtle::GetCharacteristic::Result::Create as it doesn't convert lists of
   // enums correctly.
-  SetResult(apibtle::CharacteristicToValue(&characteristic));
-  SendResponse(true);
-
-  return true;
+  Respond(OneArgument(apibtle::CharacteristicToValue(&characteristic)));
 }
 
-bool BluetoothLowEnergyGetCharacteristicsFunction::DoWork() {
+void BluetoothLowEnergyGetCharacteristicsFunction::DoWork() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   BluetoothLowEnergyEventRouter* event_router =
@@ -639,9 +583,8 @@ bool BluetoothLowEnergyGetCharacteristicsFunction::DoWork() {
   // The adapter must be initialized at this point, but return an error instead
   // of asserting.
   if (!event_router->HasAdapter()) {
-    SetError(kErrorAdapterNotInitialized);
-    SendResponse(false);
-    return false;
+    Respond(Error(kErrorAdapterNotInitialized));
+    return;
   }
 
   std::unique_ptr<apibtle::GetCharacteristics::Params> params(
@@ -653,9 +596,8 @@ bool BluetoothLowEnergyGetCharacteristicsFunction::DoWork() {
       event_router->GetCharacteristics(extension(), params->service_id,
                                        &characteristic_list);
   if (status != BluetoothLowEnergyEventRouter::kStatusSuccess) {
-    SetError(StatusToString(status));
-    SendResponse(false);
-    return false;
+    Respond(Error(StatusToString(status)));
+    return;
   }
 
   // Manually construct the result instead of using
@@ -665,13 +607,10 @@ bool BluetoothLowEnergyGetCharacteristicsFunction::DoWork() {
   for (apibtle::Characteristic& characteristic : characteristic_list)
     result->Append(apibtle::CharacteristicToValue(&characteristic));
 
-  SetResult(std::move(result));
-  SendResponse(true);
-
-  return true;
+  Respond(OneArgument(std::move(result)));
 }
 
-bool BluetoothLowEnergyGetIncludedServicesFunction::DoWork() {
+void BluetoothLowEnergyGetIncludedServicesFunction::DoWork() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   BluetoothLowEnergyEventRouter* event_router =
@@ -680,9 +619,8 @@ bool BluetoothLowEnergyGetIncludedServicesFunction::DoWork() {
   // The adapter must be initialized at this point, but return an error instead
   // of asserting.
   if (!event_router->HasAdapter()) {
-    SetError(kErrorAdapterNotInitialized);
-    SendResponse(false);
-    return false;
+    Respond(Error(kErrorAdapterNotInitialized));
+    return;
   }
 
   std::unique_ptr<apibtle::GetIncludedServices::Params> params(
@@ -693,18 +631,15 @@ bool BluetoothLowEnergyGetIncludedServicesFunction::DoWork() {
   BluetoothLowEnergyEventRouter::Status status =
       event_router->GetIncludedServices(params->service_id, &service_list);
   if (status != BluetoothLowEnergyEventRouter::kStatusSuccess) {
-    SetError(StatusToString(status));
-    SendResponse(false);
-    return false;
+    Respond(Error(StatusToString(status)));
+    return;
   }
 
-  results_ = apibtle::GetIncludedServices::Results::Create(service_list);
-  SendResponse(true);
-
-  return true;
+  Respond(ArgumentList(
+      apibtle::GetIncludedServices::Results::Create(service_list)));
 }
 
-bool BluetoothLowEnergyGetDescriptorFunction::DoWork() {
+void BluetoothLowEnergyGetDescriptorFunction::DoWork() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   BluetoothLowEnergyEventRouter* event_router =
@@ -713,9 +648,8 @@ bool BluetoothLowEnergyGetDescriptorFunction::DoWork() {
   // The adapter must be initialized at this point, but return an error instead
   // of asserting.
   if (!event_router->HasAdapter()) {
-    SetError(kErrorAdapterNotInitialized);
-    SendResponse(false);
-    return false;
+    Respond(Error(kErrorAdapterNotInitialized));
+    return;
   }
 
   std::unique_ptr<apibtle::GetDescriptor::Params> params(
@@ -726,21 +660,17 @@ bool BluetoothLowEnergyGetDescriptorFunction::DoWork() {
   BluetoothLowEnergyEventRouter::Status status = event_router->GetDescriptor(
       extension(), params->descriptor_id, &descriptor);
   if (status != BluetoothLowEnergyEventRouter::kStatusSuccess) {
-    SetError(StatusToString(status));
-    SendResponse(false);
-    return false;
+    Respond(Error(StatusToString(status)));
+    return;
   }
 
   // Manually construct the result instead of using
   // apibtle::GetDescriptor::Result::Create as it doesn't convert lists of enums
   // correctly.
-  SetResult(apibtle::DescriptorToValue(&descriptor));
-  SendResponse(true);
-
-  return true;
+  Respond(OneArgument(apibtle::DescriptorToValue(&descriptor)));
 }
 
-bool BluetoothLowEnergyGetDescriptorsFunction::DoWork() {
+void BluetoothLowEnergyGetDescriptorsFunction::DoWork() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   BluetoothLowEnergyEventRouter* event_router =
@@ -749,9 +679,8 @@ bool BluetoothLowEnergyGetDescriptorsFunction::DoWork() {
   // The adapter must be initialized at this point, but return an error instead
   // of asserting.
   if (!event_router->HasAdapter()) {
-    SetError(kErrorAdapterNotInitialized);
-    SendResponse(false);
-    return false;
+    Respond(Error(kErrorAdapterNotInitialized));
+    return;
   }
 
   std::unique_ptr<apibtle::GetDescriptors::Params> params(
@@ -762,9 +691,8 @@ bool BluetoothLowEnergyGetDescriptorsFunction::DoWork() {
   BluetoothLowEnergyEventRouter::Status status = event_router->GetDescriptors(
       extension(), params->characteristic_id, &descriptor_list);
   if (status != BluetoothLowEnergyEventRouter::kStatusSuccess) {
-    SetError(StatusToString(status));
-    SendResponse(false);
-    return false;
+    Respond(Error(StatusToString(status)));
+    return;
   }
 
   // Manually construct the result instead of using
@@ -774,13 +702,10 @@ bool BluetoothLowEnergyGetDescriptorsFunction::DoWork() {
   for (apibtle::Descriptor& descriptor : descriptor_list)
     result->Append(apibtle::DescriptorToValue(&descriptor));
 
-  SetResult(std::move(result));
-  SendResponse(true);
-
-  return true;
+  Respond(OneArgument(std::move(result)));
 }
 
-bool BluetoothLowEnergyReadCharacteristicValueFunction::DoWork() {
+void BluetoothLowEnergyReadCharacteristicValueFunction::DoWork() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   BluetoothLowEnergyEventRouter* event_router =
@@ -789,9 +714,8 @@ bool BluetoothLowEnergyReadCharacteristicValueFunction::DoWork() {
   // The adapter must be initialized at this point, but return an error instead
   // of asserting.
   if (!event_router->HasAdapter()) {
-    SetError(kErrorAdapterNotInitialized);
-    SendResponse(false);
-    return false;
+    Respond(Error(kErrorAdapterNotInitialized));
+    return;
   }
 
   std::unique_ptr<apibtle::ReadCharacteristicValue::Params> params(
@@ -807,8 +731,6 @@ bool BluetoothLowEnergyReadCharacteristicValueFunction::DoWork() {
       base::Bind(
           &BluetoothLowEnergyReadCharacteristicValueFunction::ErrorCallback,
           this));
-
-  return true;
 }
 
 void BluetoothLowEnergyReadCharacteristicValueFunction::SuccessCallback() {
@@ -819,25 +741,22 @@ void BluetoothLowEnergyReadCharacteristicValueFunction::SuccessCallback() {
       GetEventRouter(browser_context())
           ->GetCharacteristic(extension(), instance_id_, &characteristic);
   if (status != BluetoothLowEnergyEventRouter::kStatusSuccess) {
-    SetError(StatusToString(status));
-    SendResponse(false);
+    Respond(Error(StatusToString(status)));
     return;
   }
 
   // Manually construct the result instead of using
   // apibtle::GetCharacteristic::Result::Create as it doesn't convert lists of
   // enums correctly.
-  SetResult(apibtle::CharacteristicToValue(&characteristic));
-  SendResponse(true);
+  Respond(OneArgument(apibtle::CharacteristicToValue(&characteristic)));
 }
 
 void BluetoothLowEnergyReadCharacteristicValueFunction::ErrorCallback(
     BluetoothLowEnergyEventRouter::Status status) {
-  SetError(StatusToString(status));
-  SendResponse(false);
+  Respond(Error(StatusToString(status)));
 }
 
-bool BluetoothLowEnergyWriteCharacteristicValueFunction::DoWork() {
+void BluetoothLowEnergyWriteCharacteristicValueFunction::DoWork() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   BluetoothLowEnergyEventRouter* event_router =
@@ -846,9 +765,8 @@ bool BluetoothLowEnergyWriteCharacteristicValueFunction::DoWork() {
   // The adapter must be initialized at this point, but return an error instead
   // of asserting.
   if (!event_router->HasAdapter()) {
-    SetError(kErrorAdapterNotInitialized);
-    SendResponse(false);
-    return false;
+    Respond(Error(kErrorAdapterNotInitialized));
+    return;
   }
 
   std::unique_ptr<apibtle::WriteCharacteristicValue::Params> params(
@@ -864,22 +782,18 @@ bool BluetoothLowEnergyWriteCharacteristicValueFunction::DoWork() {
       base::Bind(
           &BluetoothLowEnergyWriteCharacteristicValueFunction::ErrorCallback,
           this));
-
-  return true;
 }
 
 void BluetoothLowEnergyWriteCharacteristicValueFunction::SuccessCallback() {
-  results_ = apibtle::WriteCharacteristicValue::Results::Create();
-  SendResponse(true);
+  Respond(ArgumentList(apibtle::WriteCharacteristicValue::Results::Create()));
 }
 
 void BluetoothLowEnergyWriteCharacteristicValueFunction::ErrorCallback(
     BluetoothLowEnergyEventRouter::Status status) {
-  SetError(StatusToString(status));
-  SendResponse(false);
+  Respond(Error(StatusToString(status)));
 }
 
-bool BluetoothLowEnergyStartCharacteristicNotificationsFunction::DoWork() {
+void BluetoothLowEnergyStartCharacteristicNotificationsFunction::DoWork() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   BluetoothLowEnergyEventRouter* event_router =
@@ -888,9 +802,8 @@ bool BluetoothLowEnergyStartCharacteristicNotificationsFunction::DoWork() {
   // The adapter must be initialized at this point, but return an error instead
   // of asserting.
   if (!event_router->HasAdapter()) {
-    SetError(kErrorAdapterNotInitialized);
-    SendResponse(false);
-    return false;
+    Respond(Error(kErrorAdapterNotInitialized));
+    return;
   }
 
   std::unique_ptr<apibtle::StartCharacteristicNotifications::Params> params(
@@ -910,22 +823,19 @@ bool BluetoothLowEnergyStartCharacteristicNotificationsFunction::DoWork() {
       base::Bind(&BluetoothLowEnergyStartCharacteristicNotificationsFunction::
                      ErrorCallback,
                  this));
-
-  return true;
 }
 
 void BluetoothLowEnergyStartCharacteristicNotificationsFunction::
     SuccessCallback() {
-  SendResponse(true);
+  Respond(NoArguments());
 }
 
 void BluetoothLowEnergyStartCharacteristicNotificationsFunction::ErrorCallback(
     BluetoothLowEnergyEventRouter::Status status) {
-  SetError(StatusToString(status));
-  SendResponse(false);
+  Respond(Error(StatusToString(status)));
 }
 
-bool BluetoothLowEnergyStopCharacteristicNotificationsFunction::DoWork() {
+void BluetoothLowEnergyStopCharacteristicNotificationsFunction::DoWork() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   BluetoothLowEnergyEventRouter* event_router =
@@ -934,9 +844,8 @@ bool BluetoothLowEnergyStopCharacteristicNotificationsFunction::DoWork() {
   // The adapter must be initialized at this point, but return an error instead
   // of asserting.
   if (!event_router->HasAdapter()) {
-    SetError(kErrorAdapterNotInitialized);
-    SendResponse(false);
-    return false;
+    Respond(Error(kErrorAdapterNotInitialized));
+    return;
   }
 
   std::unique_ptr<apibtle::StopCharacteristicNotifications::Params> params(
@@ -951,22 +860,19 @@ bool BluetoothLowEnergyStopCharacteristicNotificationsFunction::DoWork() {
       base::Bind(&BluetoothLowEnergyStopCharacteristicNotificationsFunction::
                      ErrorCallback,
                  this));
-
-  return true;
 }
 
 void BluetoothLowEnergyStopCharacteristicNotificationsFunction::
     SuccessCallback() {
-  SendResponse(true);
+  Respond(NoArguments());
 }
 
 void BluetoothLowEnergyStopCharacteristicNotificationsFunction::ErrorCallback(
     BluetoothLowEnergyEventRouter::Status status) {
-  SetError(StatusToString(status));
-  SendResponse(false);
+  Respond(Error(StatusToString(status)));
 }
 
-bool BluetoothLowEnergyReadDescriptorValueFunction::DoWork() {
+void BluetoothLowEnergyReadDescriptorValueFunction::DoWork() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   BluetoothLowEnergyEventRouter* event_router =
@@ -975,9 +881,8 @@ bool BluetoothLowEnergyReadDescriptorValueFunction::DoWork() {
   // The adapter must be initialized at this point, but return an error instead
   // of asserting.
   if (!event_router->HasAdapter()) {
-    SetError(kErrorAdapterNotInitialized);
-    SendResponse(false);
-    return false;
+    Respond(Error(kErrorAdapterNotInitialized));
+    return;
   }
 
   std::unique_ptr<apibtle::ReadDescriptorValue::Params> params(
@@ -992,8 +897,6 @@ bool BluetoothLowEnergyReadDescriptorValueFunction::DoWork() {
           this),
       base::Bind(&BluetoothLowEnergyReadDescriptorValueFunction::ErrorCallback,
                  this));
-
-  return true;
 }
 
 void BluetoothLowEnergyReadDescriptorValueFunction::SuccessCallback() {
@@ -1004,25 +907,22 @@ void BluetoothLowEnergyReadDescriptorValueFunction::SuccessCallback() {
       GetEventRouter(browser_context())
           ->GetDescriptor(extension(), instance_id_, &descriptor);
   if (status != BluetoothLowEnergyEventRouter::kStatusSuccess) {
-    SetError(StatusToString(status));
-    SendResponse(false);
+    Respond(Error(StatusToString(status)));
     return;
   }
 
   // Manually construct the result instead of using
   // apibtle::GetDescriptor::Results::Create as it doesn't convert lists of
   // enums correctly.
-  SetResult(apibtle::DescriptorToValue(&descriptor));
-  SendResponse(true);
+  Respond(OneArgument(apibtle::DescriptorToValue(&descriptor)));
 }
 
 void BluetoothLowEnergyReadDescriptorValueFunction::ErrorCallback(
     BluetoothLowEnergyEventRouter::Status status) {
-  SetError(StatusToString(status));
-  SendResponse(false);
+  Respond(Error(StatusToString(status)));
 }
 
-bool BluetoothLowEnergyWriteDescriptorValueFunction::DoWork() {
+void BluetoothLowEnergyWriteDescriptorValueFunction::DoWork() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   BluetoothLowEnergyEventRouter* event_router =
@@ -1031,9 +931,8 @@ bool BluetoothLowEnergyWriteDescriptorValueFunction::DoWork() {
   // The adapter must be initialized at this point, but return an error instead
   // of asserting.
   if (!event_router->HasAdapter()) {
-    SetError(kErrorAdapterNotInitialized);
-    SendResponse(false);
-    return false;
+    Respond(Error(kErrorAdapterNotInitialized));
+    return;
   }
 
   std::unique_ptr<apibtle::WriteDescriptorValue::Params> params(
@@ -1048,19 +947,15 @@ bool BluetoothLowEnergyWriteDescriptorValueFunction::DoWork() {
           this),
       base::Bind(&BluetoothLowEnergyWriteDescriptorValueFunction::ErrorCallback,
                  this));
-
-  return true;
 }
 
 void BluetoothLowEnergyWriteDescriptorValueFunction::SuccessCallback() {
-  results_ = apibtle::WriteDescriptorValue::Results::Create();
-  SendResponse(true);
+  Respond(ArgumentList(apibtle::WriteDescriptorValue::Results::Create()));
 }
 
 void BluetoothLowEnergyWriteDescriptorValueFunction::ErrorCallback(
     BluetoothLowEnergyEventRouter::Status status) {
-  SetError(StatusToString(status));
-  SendResponse(false);
+  Respond(Error(StatusToString(status)));
 }
 
 BluetoothLowEnergyAdvertisementFunction::
@@ -1094,13 +989,13 @@ BluetoothLowEnergyAdvertisementFunction::GetAdvertisementIds() {
   return advertisements_manager_->GetResourceIds(extension_id());
 }
 
-bool BluetoothLowEnergyAdvertisementFunction::RunAsync() {
+ExtensionFunction::ResponseAction
+BluetoothLowEnergyAdvertisementFunction::Run() {
   Initialize();
 
   // Check permission in the manifest.
   if (!BluetoothManifestData::CheckPeripheralPermitted(extension())) {
-    SetError(kErrorPermissionDenied);
-    return false;
+    return RespondNow(Error(kErrorPermissionDenied));
   }
 
   // For advertisement API to be available the app has to be either auto
@@ -1108,11 +1003,10 @@ bool BluetoothLowEnergyAdvertisementFunction::RunAsync() {
   // should be set.
   if (!(IsAutoLaunchedKioskApp(extension()->id()) ||
         IsPeripheralFlagEnabled())) {
-    SetError(kErrorPermissionDenied);
-    return false;
+    return RespondNow(Error(kErrorPermissionDenied));
   }
 
-  return BluetoothLowEnergyExtensionFunctionDeprecated::RunAsync();
+  return BluetoothLowEnergyExtensionFunction::Run();
 }
 
 void BluetoothLowEnergyAdvertisementFunction::Initialize() {
@@ -1122,7 +1016,7 @@ void BluetoothLowEnergyAdvertisementFunction::Initialize() {
 
 // RegisterAdvertisement:
 
-bool BluetoothLowEnergyRegisterAdvertisementFunction::DoWork() {
+void BluetoothLowEnergyRegisterAdvertisementFunction::DoWork() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   BluetoothLowEnergyEventRouter* event_router =
@@ -1131,9 +1025,8 @@ bool BluetoothLowEnergyRegisterAdvertisementFunction::DoWork() {
   // The adapter must be initialized at this point, but return an error instead
   // of asserting.
   if (!event_router->HasAdapter()) {
-    SetError(kErrorAdapterNotInitialized);
-    SendResponse(false);
-    return false;
+    Respond(Error(kErrorAdapterNotInitialized));
+    return;
   }
 
   std::unique_ptr<apibtle::RegisterAdvertisement::Params> params(
@@ -1170,15 +1063,13 @@ bool BluetoothLowEnergyRegisterAdvertisementFunction::DoWork() {
       base::Bind(
           &BluetoothLowEnergyRegisterAdvertisementFunction::ErrorCallback,
           this));
-
-  return true;
 }
 
 void BluetoothLowEnergyRegisterAdvertisementFunction::SuccessCallback(
     scoped_refptr<device::BluetoothAdvertisement> advertisement) {
-  results_ = apibtle::RegisterAdvertisement::Results::Create(AddAdvertisement(
-      new BluetoothApiAdvertisement(extension_id(), advertisement)));
-  SendResponse(true);
+  Respond(ArgumentList(
+      apibtle::RegisterAdvertisement::Results::Create(AddAdvertisement(
+          new BluetoothApiAdvertisement(extension_id(), advertisement)))));
 }
 
 void BluetoothLowEnergyRegisterAdvertisementFunction::ErrorCallback(
@@ -1186,29 +1077,30 @@ void BluetoothLowEnergyRegisterAdvertisementFunction::ErrorCallback(
   switch (status) {
     case device::BluetoothAdvertisement::ErrorCode::
         ERROR_ADVERTISEMENT_ALREADY_EXISTS:
-      SetError(kStatusAdvertisementAlreadyExists);
+      Respond(Error(kStatusAdvertisementAlreadyExists));
       break;
     case device::BluetoothAdvertisement::ErrorCode::
         ERROR_ADVERTISEMENT_INVALID_LENGTH:
-      SetError(kErrorInvalidAdvertisementLength);
+      Respond(Error(kErrorInvalidAdvertisementLength));
       break;
     default:
-      SetError(kErrorOperationFailed);
+      Respond(Error(kErrorOperationFailed));
   }
-  SendResponse(false);
 }
 
 // UnregisterAdvertisement:
 
-bool BluetoothLowEnergyUnregisterAdvertisementFunction::DoWork() {
+void BluetoothLowEnergyUnregisterAdvertisementFunction::DoWork() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   BluetoothLowEnergyEventRouter* event_router =
       GetEventRouter(browser_context());
 
   // If we don't have an initialized adapter, unregistering is a no-op.
-  if (!event_router->HasAdapter())
-    return true;
+  if (!event_router->HasAdapter()) {
+    Respond(NoArguments());
+    return;
+  }
 
   std::unique_ptr<apibtle::UnregisterAdvertisement::Params> params(
       apibtle::UnregisterAdvertisement::Params::Create(*args_));
@@ -1217,9 +1109,8 @@ bool BluetoothLowEnergyUnregisterAdvertisementFunction::DoWork() {
   BluetoothApiAdvertisement* advertisement =
       GetAdvertisement(params->advertisement_id);
   if (!advertisement) {
-    error_ = kStatusAdvertisementDoesNotExist;
-    SendResponse(false);
-    return false;
+    Respond(Error(kStatusAdvertisementDoesNotExist));
+    return;
   }
 
   advertisement->advertisement()->Unregister(
@@ -1229,14 +1120,12 @@ bool BluetoothLowEnergyUnregisterAdvertisementFunction::DoWork() {
       base::Bind(
           &BluetoothLowEnergyUnregisterAdvertisementFunction::ErrorCallback,
           this, params->advertisement_id));
-
-  return true;
 }
 
 void BluetoothLowEnergyUnregisterAdvertisementFunction::SuccessCallback(
     int advertisement_id) {
   RemoveAdvertisement(advertisement_id);
-  SendResponse(true);
+  Respond(NoArguments());
 }
 
 void BluetoothLowEnergyUnregisterAdvertisementFunction::ErrorCallback(
@@ -1246,17 +1135,16 @@ void BluetoothLowEnergyUnregisterAdvertisementFunction::ErrorCallback(
   switch (status) {
     case device::BluetoothAdvertisement::ErrorCode::
         ERROR_ADVERTISEMENT_DOES_NOT_EXIST:
-      SetError(kStatusAdvertisementDoesNotExist);
+      Respond(Error(kStatusAdvertisementDoesNotExist));
       break;
     default:
-      SetError(kErrorOperationFailed);
+      Respond(Error(kErrorOperationFailed));
   }
-  SendResponse(false);
 }
 
 // ResetAdvertising:
 
-bool BluetoothLowEnergyResetAdvertisingFunction::DoWork() {
+void BluetoothLowEnergyResetAdvertisingFunction::DoWork() {
 #if defined(OS_CHROMEOS) || defined(OS_LINUX)
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
@@ -1265,14 +1153,14 @@ bool BluetoothLowEnergyResetAdvertisingFunction::DoWork() {
 
   // If the adapter is not initialized, there is nothing to reset.
   if (!event_router->HasAdapter()) {
-    SendResponse(true);
-    return true;
+    Respond(NoArguments());
+    return;
   }
 
   const base::hash_set<int>* advertisement_ids = GetAdvertisementIds();
   if (!advertisement_ids || advertisement_ids->empty()) {
-    SendResponse(true);
-    return true;
+    Respond(NoArguments());
+    return;
   }
 
   // Copy the hash set, as RemoveAdvertisement can change advertisement_ids
@@ -1288,18 +1176,15 @@ bool BluetoothLowEnergyResetAdvertisingFunction::DoWork() {
       base::Bind(&BluetoothLowEnergyResetAdvertisingFunction::ErrorCallback,
                  this));
 #endif
-
-  return true;
 }
 
 void BluetoothLowEnergyResetAdvertisingFunction::SuccessCallback() {
-  SendResponse(true);
+  Respond(NoArguments());
 }
 
 void BluetoothLowEnergyResetAdvertisingFunction::ErrorCallback(
     device::BluetoothAdvertisement::ErrorCode status) {
-  error_ = kErrorOperationFailed;
-  SendResponse(false);
+  Respond(Error(kErrorOperationFailed));
 }
 
 // SetAdvertisingInterval:
