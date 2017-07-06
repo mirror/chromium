@@ -96,7 +96,7 @@ class WebSettingsImpl;
 class WebViewScheduler;
 
 class WEB_EXPORT WebViewImpl final
-    : NON_EXPORTED_BASE(public WebViewBase),
+    : public WebViewBase,
       NON_EXPORTED_BASE(public WebGestureCurveTarget),
       public PageWidgetEventHandler,
       public WebScheduler::InterventionReporter,
@@ -361,12 +361,6 @@ class WEB_EXPORT WebViewImpl final
   void CleanupPagePopup() override;
   LocalDOMWindow* PagePopupWindow() const override;
 
-  // Returns the input event we're currently processing. This is used in some
-  // cases where the WebCore DOM event doesn't have the information we need.
-  static const WebInputEvent* CurrentInputEvent() {
-    return current_input_event_;
-  }
-
   GraphicsLayer* RootGraphicsLayer() override;
   void RegisterViewportLayersWithCompositor() override;
   PaintLayerCompositor* Compositor() const override;
@@ -466,9 +460,6 @@ class WEB_EXPORT WebViewImpl final
 
   void ForceNextWebGLContextCreationToFail() override;
   void ForceNextDrawingBufferCreationToFail() override;
-
-  CompositorWorkerProxyClient* CreateCompositorWorkerProxyClient() override;
-  AnimationWorkletProxyClient* CreateAnimationWorkletProxyClient() override;
 
   IntSize MainFrameSize() override;
   WebDisplayMode DisplayMode() const override { return display_mode_; }
@@ -588,6 +579,7 @@ class WEB_EXPORT WebViewImpl final
   LocalFrame* FocusedLocalFrameAvailableForIme() const;
 
   CompositorMutatorImpl& Mutator();
+  CompositorMutatorImpl* CompositorMutator() override;
 
   WebViewClient* client_;  // Can be 0 (e.g. unittests, shared workers, etc.)
 
@@ -677,7 +669,6 @@ class WEB_EXPORT WebViewImpl final
   GraphicsLayer* root_graphics_layer_;
   GraphicsLayer* visual_viewport_container_layer_;
   bool matches_heuristics_for_gpu_rasterization_;
-  static const WebInputEvent* current_input_event_;
 
   MediaKeysClient media_keys_client_impl_;
   std::unique_ptr<WebActiveGestureAnimation> gesture_animation_;

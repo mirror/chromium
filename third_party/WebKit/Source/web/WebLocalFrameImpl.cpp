@@ -100,6 +100,7 @@
 #include "bindings/core/v8/SourceLocation.h"
 #include "bindings/core/v8/V8BindingForCore.h"
 #include "bindings/core/v8/V8GCController.h"
+#include "controller/WebDevToolsAgentImpl.h"
 #include "core/HTMLNames.h"
 #include "core/dom/Document.h"
 #include "core/dom/IconURL.h"
@@ -231,7 +232,6 @@
 #include "public/web/WebSerializedScriptValue.h"
 #include "public/web/WebTreeScopeType.h"
 #include "skia/ext/platform_canvas.h"
-#include "web/WebDevToolsAgentImpl.h"
 #include "web/WebFrameWidgetImpl.h"
 
 namespace blink {
@@ -2523,6 +2523,10 @@ void WebLocalFrameImpl::SetTextCheckClient(
 void WebLocalFrameImpl::SetSpellCheckPanelHostClient(
     WebSpellCheckPanelHostClient* spell_check_panel_host_client) {
   spell_check_panel_host_client_ = spell_check_panel_host_client;
+}
+
+WebFrameWidgetBase* WebLocalFrameImpl::LocalRootFrameWidget() {
+  return LocalRoot()->FrameWidget();
 }
 
 }  // namespace blink

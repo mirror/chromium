@@ -5,6 +5,7 @@
 #ifndef WebViewBase_h
 #define WebViewBase_h
 
+#include "core/CoreExport.h"
 #include "core/page/EventWithHitTestResults.h"
 #include "platform/graphics/paint/PaintImage.h"
 #include "platform/transforms/TransformationMatrix.h"
@@ -16,11 +17,10 @@
 
 namespace blink {
 
-class AnimationWorkletProxyClient;
 class BrowserControls;
 class ChromeClient;
 class CompositorAnimationHost;
-class CompositorWorkerProxyClient;
+class CompositorMutatorImpl;
 class CompositorAnimationTimeline;
 class ContextMenuProvider;
 class DevToolsEmulator;
@@ -50,7 +50,8 @@ struct WebRect;
 //
 // Once WebViewImpl is moved from web to core/exported then this class should be
 // removed and clients can once again depend on WebViewImpl.
-class WebViewBase : public WebView, public RefCounted<WebViewBase> {
+class CORE_EXPORT WebViewBase : public NON_EXPORTED_BASE(WebView),
+                                public RefCounted<WebViewBase> {
  public:
   virtual ~WebViewBase() {}
 
@@ -167,7 +168,11 @@ class WebViewBase : public WebView, public RefCounted<WebViewBase> {
   virtual FloatSize ElasticOverscroll() const = 0;
   virtual double LastFrameTimeMonotonic() const = 0;
 
-  static const WebInputEvent* CurrentInputEvent();
+  // Returns the input event we're currently processing. This is used in some
+  // cases where the WebCore DOM event doesn't have the information we need.
+  static const WebInputEvent* CurrentInputEvent() {
+    return current_input_event_;
+  }
 
   virtual void SetCompositorVisibility(bool) = 0;
   using WebWidget::SetSuppressFrameRequestsWorkaroundFor704763Only;
@@ -180,8 +185,7 @@ class WebViewBase : public WebView, public RefCounted<WebViewBase> {
   virtual WebInputMethodController* GetActiveWebInputMethodController()
       const = 0;
   virtual void ScheduleAnimationForWidget() = 0;
-  virtual CompositorWorkerProxyClient* CreateCompositorWorkerProxyClient() = 0;
-  virtual AnimationWorkletProxyClient* CreateAnimationWorkletProxyClient() = 0;
+  virtual CompositorMutatorImpl* CompositorMutator() = 0;
   virtual void SetRootGraphicsLayer(GraphicsLayer*) = 0;
   virtual void SetRootLayer(WebLayer*) = 0;
   virtual CompositorAnimationHost* AnimationHost() const = 0;
@@ -224,7 +228,10 @@ class WebViewBase : public WebView, public RefCounted<WebViewBase> {
   virtual LinkHighlightImpl* GetLinkHighlight(int) = 0;
   virtual unsigned NumLinkHighlights() = 0;
   virtual void EnableTapHighlights(HeapVector<Member<Node>>&) = 0;
+
+ protected:
+  static const WebInputEvent* current_input_event_;
 };
 }
 
-#endif
+#endif  // WebViewBase_h

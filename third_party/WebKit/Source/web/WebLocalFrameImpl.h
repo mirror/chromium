@@ -37,7 +37,6 @@
 #include "core/frame/LocalFrame.h"
 #include "core/frame/WebFrameWidgetBase.h"
 #include "core/frame/WebLocalFrameBase.h"
-#include "modules/mediastream/UserMediaClientImpl.h"
 #include "platform/geometry/FloatRect.h"
 #include "platform/heap/SelfKeepAlive.h"
 #include "platform/wtf/Compiler.h"
@@ -448,6 +447,8 @@ class WEB_EXPORT WebLocalFrameImpl final
   std::unique_ptr<WebURLLoader> CreateURLLoader(
       const WebURLRequest&,
       base::SingleThreadTaskRunner*) override;
+
+  WebFrameWidgetBase* LocalRootFrameWidget() override;
 
   DECLARE_VIRTUAL_TRACE();
 
