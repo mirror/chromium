@@ -60,6 +60,7 @@ public class AppMenu implements OnItemClickListener, OnKeyListener {
     private final int mItemDividerHeight;
     private final int mVerticalFadeDistance;
     private final int mNegativeSoftwareVerticalOffset;
+    private final int mAnchorAtBottomVerticalOffset;
     private final int[] mTempLocation;
 
     private PopupWindow mPopup;
@@ -96,6 +97,8 @@ public class AppMenu implements OnItemClickListener, OnKeyListener {
         mNegativeSoftwareVerticalOffset =
                 res.getDimensionPixelSize(R.dimen.menu_negative_software_vertical_offset);
         mVerticalFadeDistance = res.getDimensionPixelSize(R.dimen.menu_vertical_fade_distance);
+        mAnchorAtBottomVerticalOffset =
+                res.getDimensionPixelSize(R.dimen.menu_anchor_at_bottom_vertical_offset);
 
         mTempLocation = new int[2];
     }
@@ -161,6 +164,7 @@ public class AppMenu implements OnItemClickListener, OnKeyListener {
             @IdRes int footerResourceId, Integer highlightedItemId) {
         mPopup = new PopupWindow(context);
         mPopup.setFocusable(true);
+        mPopup.setClippingEnabled(false);
         mPopup.setInputMethodMode(PopupWindow.INPUT_METHOD_NOT_NEEDED);
 
         boolean anchorAtBottom = isAnchorAtBottom(anchorView, visibleDisplayFrame);
@@ -367,7 +371,8 @@ public class AppMenu implements OnItemClickListener, OnKeyListener {
             if (anchorAtBottom) {
                 anchorView.getLocationOnScreen(mTempLocation);
                 int anchorViewLocationOnScreenY = mTempLocation[1];
-                offsets[1] += appRect.bottom - anchorViewLocationOnScreenY - popupHeight;
+                offsets[1] += appRect.bottom - anchorViewLocationOnScreenY - popupHeight
+                        + mAnchorAtBottomVerticalOffset;
             }
 
             if (!ApiCompatibilityUtils.isLayoutRtl(anchorView.getRootView())) {
