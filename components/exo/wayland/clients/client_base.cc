@@ -22,6 +22,7 @@
 #include "third_party/skia/include/core/SkCanvas.h"
 #include "third_party/skia/include/core/SkRefCnt.h"
 #include "third_party/skia/include/core/SkSurface.h"
+#include "third_party/skia/include/gpu/GrBackendSurface.h"
 #include "third_party/skia/include/gpu/GrContext.h"
 #include "third_party/skia/include/gpu/gl/GrGLAssembleInterface.h"
 #include "third_party/skia/include/gpu/gl/GrGLInterface.h"
@@ -418,16 +419,14 @@ std::unique_ptr<ClientBase::Buffer> ClientBase::CreateBuffer(
     GrGLTextureInfo texture_info;
     texture_info.fID = buffer->texture->get();
     texture_info.fTarget = GL_TEXTURE_2D;
-    GrBackendTextureDesc desc;
-    desc.fFlags = kRenderTarget_GrBackendTextureFlag;
-    desc.fWidth = width_;
-    desc.fHeight = height_;
-    desc.fConfig = kGrPixelConfig;
-    desc.fOrigin = kTopLeft_GrSurfaceOrigin;
-    desc.fTextureHandle = reinterpret_cast<GrBackendObject>(&texture_info);
-
+    GrBackendTexture backend_texture(width_, height_, kGrPixelConfig,
+                                     texture_info);
+    int sample_count = 0;
+    sk_sp<SkColorSpace> color_space = nullptr;
+    cosnt SkSurfaceProps* surface_props = nullptr;
     buffer->sk_surface = SkSurface::MakeFromBackendTextureAsRenderTarget(
-        gr_context_.get(), desc, nullptr);
+        gr_context_.get(), backend_texture, kTopLeft_GrSurfaceOrigin,
+        sample_count, color_space, surface_props);
     DCHECK(buffer->sk_surface);
     return buffer;
   }
