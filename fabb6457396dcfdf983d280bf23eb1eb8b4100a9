@@ -34,6 +34,24 @@
       "revId": "fabb6457396dcfdf983d280bf23eb1eb8b4100a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a53d99b2_6025a448",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ClearStorageView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1222287
+      },
+      "writtenOn": "2017-07-07T18:26:29Z",
+      "side": 1,
+      "message": "Sorry, I responded with the wrong reply. For clarification, the storage types that are returned are found here: https://cs.chromium.org/chromium/src/content/browser/devtools/protocol/storage_handler.cc?l\u003d23",
+      "parentUuid": "14ed4a26_088d949c",
+      "revId": "fabb6457396dcfdf983d280bf23eb1eb8b4100a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
