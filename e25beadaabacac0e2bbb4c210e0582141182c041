@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b631028_e8ae73df",
+        "filename": "third_party/WebKit/Source/platform/loader/testing/MockFetchContext.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-07-07T07:27:51Z",
+      "side": 0,
+      "message": "Now preferable task_runner is used without such a hook in all tests.",
+      "range": {
+        "startLine": 37,
+        "startChar": 56,
+        "endLine": 37,
+        "endChar": 67
+      },
+      "revId": "e25beadaabacac0e2bbb4c210e0582141182c041",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
