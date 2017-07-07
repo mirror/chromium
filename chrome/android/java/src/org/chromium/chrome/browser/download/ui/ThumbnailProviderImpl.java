@@ -68,6 +68,12 @@ public class ThumbnailProviderImpl implements ThumbnailProvider {
         mNativeThumbnailProvider = 0;
     }
 
+    /**
+     * The returned bitmap will have at least one of its dimensions smaller than or equal to the
+     * size specified in the request.
+     *
+     * @param request Parameters that describe the thumbnail being retrieved.
+     */
     @Override
     public void getThumbnail(ThumbnailRequest request) {
         String filePath = request.getFilePath();
