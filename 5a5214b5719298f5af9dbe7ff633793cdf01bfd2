@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a333b908_d204ed8f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-07-07T02:58:06Z",
+      "side": 1,
+      "message": "Make this the CL title\n\nNo need for a CL description. \n\nMention if there were any changes to the generated code.",
+      "revId": "5a5214b5719298f5af9dbe7ff633793cdf01bfd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
