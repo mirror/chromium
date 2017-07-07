@@ -22,6 +22,30 @@
       "revId": "fe6ea603bd62e9780b56b023fd0ecf51ca12b23a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e911f78a_3ae383d5",
+        "filename": "build/toolchain/mac/compile_xcassets.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-07T09:42:39Z",
+      "side": 1,
+      "message": "I don\u0027t really understand the question. This is exactly what my CL does, add an option to the wrapper that control whether we pass the flag to actool. Apparently the compression of PNGs was enabled on macOS, so I need to leave this enabled.\n\nBTW, I\u0027m not sure whether actool honor this option. It is passed by Xcode, but starting from Xcode 7, there is no way to control whether PNGs are compressed or not when packed in compiled assets catalogs.",
+      "parentUuid": "13e5e157_05684b43",
+      "range": {
+        "startLine": 159,
+        "startChar": 60,
+        "endLine": 159,
+        "endChar": 65
+      },
+      "revId": "fe6ea603bd62e9780b56b023fd0ecf51ca12b23a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
