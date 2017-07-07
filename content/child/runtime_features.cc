@@ -61,7 +61,7 @@ static void SetRuntimeFeatureDefaultsForPlatform() {
 
 #if !(defined OS_ANDROID || defined OS_CHROMEOS)
     // Only Android, ChromeOS support NetInfo right now.
-  WebRuntimeFeatures::EnableNetworkInformation(false);
+  WebRuntimeFeatures::EnableNetInfoDownlinkMaxEnabled(false);
 #endif
 
 // Web Bluetooth is shipped on Android, ChromeOS & MacOS, experimental
@@ -193,9 +193,9 @@ void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
   if (command_line.HasSwitch(switches::kEnablePrintBrowser))
     WebRuntimeFeatures::EnablePrintBrowser(true);
 
-  if (command_line.HasSwitch(switches::kEnableNetworkInformation) ||
+  if (command_line.HasSwitch(switches::kEnableNetworkInformationDownlinkMax) ||
       enableExperimentalWebPlatformFeatures) {
-    WebRuntimeFeatures::EnableNetworkInformation(true);
+    WebRuntimeFeatures::EnableNetworkInformationDownlinkMax(true);
   }
 
   if (command_line.HasSwitch(switches::kReducedReferrerGranularity))
