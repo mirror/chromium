@@ -217,24 +217,18 @@ int ManagePasswordItemsView::PasswordFormRow::GetFixedHeight(
 void ManagePasswordItemsView::PasswordFormRow::AddCredentialsRow(
     views::GridLayout* layout) {
   ResetControls();
-  int column_set_id =
-      host_->model_->state() == password_manager::ui::MANAGE_STATE
-          ? THREE_COLUMN_SET
-          : TWO_COLUMN_SET;
-  BuildColumnSetIfNeeded(layout, column_set_id);
-  layout->StartRow(0, column_set_id);
+  DCHECK_EQ(password_manager::ui::MANAGE_STATE, host_->model_->state());
+  BuildColumnSetIfNeeded(layout, THREE_COLUMN_SET);
+  layout->StartRow(0, THREE_COLUMN_SET);
   layout->AddView(GenerateUsernameLabel(*password_form_).release(), 1, 1,
                   views::GridLayout::FILL, views::GridLayout::FILL,
                   0, fixed_height_);
   layout->AddView(GeneratePasswordLabel(*password_form_).release(), 1, 1,
                   views::GridLayout::FILL, views::GridLayout::FILL,
                   0, fixed_height_);
-  if (column_set_id == THREE_COLUMN_SET) {
-    delete_button_ = GenerateDeleteButton(this).release();
-    layout->AddView(delete_button_, 1, 1,
-                    views::GridLayout::TRAILING, views::GridLayout::FILL,
-                    0, fixed_height_);
-  }
+  delete_button_ = GenerateDeleteButton(this).release();
+  layout->AddView(delete_button_, 1, 1, views::GridLayout::TRAILING,
+                  views::GridLayout::FILL, 0, fixed_height_);
 }
 
 void ManagePasswordItemsView::PasswordFormRow::AddUndoRow(
@@ -282,15 +276,6 @@ ManagePasswordItemsView::ManagePasswordItemsView(
     password_forms_rows_.push_back(base::MakeUnique<PasswordFormRow>(
         this, &password_form, fixed_height));
   }
-  AddRows();
-}
-
-ManagePasswordItemsView::ManagePasswordItemsView(
-    ManagePasswordsBubbleModel* manage_passwords_bubble_model,
-    const autofill::PasswordForm* password_form)
-    : model_(manage_passwords_bubble_model) {
-  password_forms_rows_.push_back(
-      base::MakeUnique<PasswordFormRow>(this, password_form, 0));
   AddRows();
 }
 
