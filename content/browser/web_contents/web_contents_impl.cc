@@ -2899,7 +2899,16 @@ void WebContentsImpl::DidProceedOnInterstitial() {
 }
 
 void WebContentsImpl::DetachInterstitialPage() {
-  // Disconnect from outer WebContents if necessary.
+  bool interstitial_pausing_throbber =
+      ShowingInterstitialPage() && interstitial_page_->pause_throbber();
+  if (ShowingInterstitialPage())
+    interstitial_page_ = nullptr;
+  for (auto& observer : observers_)
+    observer.DidDetachInterstitialPage();
+
+  // Disconnect from outer WebContents if necessary. This must happens after the
+  // interstitial page is cleared above, since this function is called after the
+  // interstitial's RenderView is destroyed in InterstitialPageImpl::Hide().
   if (node_.OuterContentsFrameTreeNode()) {
     if (GetRenderManager()->GetProxyToOuterDelegate()) {
       DCHECK(static_cast<RenderWidgetHostViewBase*>(
@@ -2911,13 +2920,6 @@ void WebContentsImpl::DetachInterstitialPage() {
       GetRenderManager()->SetRWHViewForInnerContents(view);
     }
   }
-
-  bool interstitial_pausing_throbber =
-      ShowingInterstitialPage() && interstitial_page_->pause_throbber();
-  if (ShowingInterstitialPage())
-    interstitial_page_ = nullptr;
-  for (auto& observer : observers_)
-    observer.DidDetachInterstitialPage();
 
   // Restart the throbber if needed now that the interstitial page is going
   // away.
