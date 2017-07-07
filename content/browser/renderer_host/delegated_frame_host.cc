@@ -18,11 +18,11 @@
 #include "cc/output/copy_output_request.h"
 #include "cc/resources/single_release_callback.h"
 #include "cc/resources/texture_mailbox.h"
-#include "cc/surfaces/compositor_frame_sink_support.h"
 #include "cc/surfaces/surface.h"
 #include "cc/surfaces/surface_hittest.h"
 #include "cc/surfaces/surface_manager.h"
 #include "components/viz/common/gl_helper.h"
+#include "components/viz/service/frame_sinks/compositor_frame_sink_support.h"
 #include "content/browser/compositor/surface_utils.h"
 #include "content/browser/gpu/compositor_util.h"
 #include "content/browser/renderer_host/compositor_resize_lock.h"
@@ -841,7 +841,7 @@ void DelegatedFrameHost::CreateCompositorFrameSinkSupport() {
   constexpr bool handles_frame_sink_id_invalidation = false;
   constexpr bool needs_sync_points = true;
   ImageTransportFactory* factory = ImageTransportFactory::GetInstance();
-  support_ = cc::CompositorFrameSinkSupport::Create(
+  support_ = viz::CompositorFrameSinkSupport::Create(
       this, factory->GetContextFactoryPrivate()->GetSurfaceManager(),
       frame_sink_id_, is_root, handles_frame_sink_id_invalidation,
       needs_sync_points);
