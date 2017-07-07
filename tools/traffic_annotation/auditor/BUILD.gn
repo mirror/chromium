@@ -2,6 +2,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//testing/test.gni")
 import("//third_party/protobuf/proto_library.gni")
 
 # Works only on desktop platforms.
@@ -41,20 +42,36 @@ proto_library("traffic_annotation") {
   use_protobuf_full = true
 }
 
-executable("traffic_annotation_auditor") {
-  sources = [
-    "../../../net/traffic_annotation/network_traffic_annotation.h",
-    "../../../net/traffic_annotation/network_traffic_annotation_test_helper.h",
-    "traffic_annotation_auditor.cc",
-    "traffic_annotation_auditor.h",
-    "traffic_annotation_auditor_ui.cc",
-    "traffic_annotation_file_filter.cc",
-    "traffic_annotation_file_filter.h",
-  ]
+auditor_sources = [
+  "../../../net/traffic_annotation/network_traffic_annotation.h",
+  "../../../net/traffic_annotation/network_traffic_annotation_test_helper.h",
+  "traffic_annotation_auditor.cc",
+  "traffic_annotation_auditor.h",
+  "traffic_annotation_file_filter.cc",
+  "traffic_annotation_file_filter.h",
+]
 
+executable("traffic_annotation_auditor") {
+  sources = auditor_sources + [ "traffic_annotation_auditor_ui.cc" ]
+
+  public_deps = [
+    ":traffic_annotation",
+    "//base",
+    "//net:traffic_annotation",
+    "//third_party/protobuf:protobuf_full",
+  ]
+}
+
+test("traffic_annotation_auditor_unittests") {
+  sources = auditor_sources + [ "traffic_annotation_auditor_unittest.cc" ]
   deps = [
     ":traffic_annotation",
     "//base",
+    "//base/test:run_all_unittests",
+    "//base/test:test_support",
+    "//net:traffic_annotation",
+    "//testing/gmock",
+    "//testing/gtest",
     "//third_party/protobuf:protobuf_full",
   ]
 }
