@@ -16,6 +16,24 @@
       "revId": "a9f4cb45f1dce590bd4c52badf261257403d1258",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e564f9f1_9463a293",
+        "filename": "services/resource_coordinator/coordination_unit/web_contents_coordination_unit_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1223950
+      },
+      "writtenOn": "2017-07-07T17:02:18Z",
+      "side": 1,
+      "message": "I will make sure to land the SetProperty CL first so that I have to rebase before submitting this one.",
+      "parentUuid": "7a2aeff7_f05eb1e4",
+      "revId": "a9f4cb45f1dce590bd4c52badf261257403d1258",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
