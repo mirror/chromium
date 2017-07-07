@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "b06bf465_17cbc30f",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliated_match_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-07T11:07:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9231f5d_37bdfa1e",
+      "revId": "b122b713554901af2ec6fb189173cfe605c453eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b13e7a45_489575ec",
         "filename": "components/password_manager/core/browser/android_affiliation/affiliated_match_helper.h",
         "patchSetId": 1
@@ -47,6 +65,30 @@
       "writtenOn": "2017-07-07T10:56:42Z",
       "side": 1,
       "message": "I really liked your suggestion from our discussion to name this InjectAffiliationAndBrandingInfo[rmation].",
+      "range": {
+        "startLine": 88,
+        "startChar": 15,
+        "endLine": 88,
+        "endChar": 43
+      },
+      "revId": "b122b713554901af2ec6fb189173cfe605c453eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e17219c2_fd5f0055",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliated_match_helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-07T11:07:10Z",
+      "side": 1,
+      "message": "Thanks, Done :)",
+      "parentUuid": "b13e7a45_489575ec",
       "range": {
         "startLine": 88,
         "startChar": 15,
