@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30160f63_2a34e3c1",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/ChildProcessLauncherTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-07T22:09:47Z",
+      "side": 1,
+      "message": "static?",
+      "revId": "585684f73e505dbfdcb111aa4dfb6aaefe8255e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2570ebf7_98df4749",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/ChildProcessLauncherTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-07T22:09:47Z",
+      "side": 1,
+      "message": "can these be made constants at the top too?",
+      "revId": "585684f73e505dbfdcb111aa4dfb6aaefe8255e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b21ac435_13119f2b",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/ChildProcessLauncherTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-07T22:09:47Z",
+      "side": 1,
+      "message": "we usually use CallbackHelper in base instead of ConditionVariable. also handles if things are called multiple times",
+      "revId": "585684f73e505dbfdcb111aa4dfb6aaefe8255e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fc9adf7_e880b343",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/ChildProcessLauncherTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-07T22:09:47Z",
+      "side": 1,
+      "message": "this doesn\u0027t actually work because you need to get and set all in one atomic operation, but I still just recommend using CallbackHelper for this as well.",
+      "revId": "585684f73e505dbfdcb111aa4dfb6aaefe8255e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c15ca34_99e155d6",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/ChildProcessLauncherTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-07T22:09:47Z",
+      "side": 1,
+      "message": "ditto constants",
+      "revId": "585684f73e505dbfdcb111aa4dfb6aaefe8255e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cb70583_cabd4e9b",
+        "filename": "content/shell/android/shell_apk/src/org/chromium/content_shell_apk/IChildProcessTest.aidl",
+        "patchSetId": 10
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-07T22:09:47Z",
+      "side": 1,
+      "message": "make all of these oneway?",
+      "revId": "585684f73e505dbfdcb111aa4dfb6aaefe8255e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abf3fb68_1c15d3d3",
+        "filename": "content/shell/android/shell_apk/src/org/chromium/content_shell_apk/TestChildProcessService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-07T22:09:47Z",
+      "side": 1,
+      "message": "does this actually matter?",
+      "revId": "585684f73e505dbfdcb111aa4dfb6aaefe8255e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
