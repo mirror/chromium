@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f5d5453_c0864e4a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 22
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-07-07T21:23:21Z",
+      "side": 1,
+      "message": "update commit message plz",
+      "range": {
+        "startLine": 12,
+        "startChar": 74,
+        "endLine": 12,
+        "endChar": 80
+      },
+      "revId": "2dd2d4b0d6f45d4d25bdf9b4e39b796914b43843",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1956ab7c_fa432e4f",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-07-07T21:23:21Z",
+      "side": 1,
+      "message": "This remains mildly bothersome.\n\nI would prefer to see GetOrCreateFullCardRequest() take the form and field and do whatever it needs to do to cache whatever it needs to cache, instead of having AutofillManager know about needing to cache the form parsed timestamp inside the request.\n\nIf that really doesn\u0027t make sense for GetOrCreateFullCardRequest(), and I\u0027ll defer to you and your team for that judgement, then I can live with it, bothersome though it may be.  :)",
+      "range": {
+        "startLine": 753,
+        "startChar": 25,
+        "endLine": 753,
+        "endChar": 47
+      },
+      "revId": "2dd2d4b0d6f45d4d25bdf9b4e39b796914b43843",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d564b6d9_7ef2b98e",
+        "filename": "components/autofill/core/browser/payments/full_card_request.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-07-07T21:23:21Z",
+      "side": 1,
+      "message": "Perhaps take a const ref to the FullCardRequest as the first param instead? And expose a getter for form_parsed_timestamp_?",
+      "range": {
+        "startLine": 36,
+        "startChar": 31,
+        "endLine": 36,
+        "endChar": 52
+      },
+      "revId": "2dd2d4b0d6f45d4d25bdf9b4e39b796914b43843",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
