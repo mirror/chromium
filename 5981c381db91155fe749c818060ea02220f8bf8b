@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ecf211d7_db87ec96",
+        "filename": "chromeos/cryptohome/homedir_methods_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-07T05:41:17Z",
+      "side": 1,
+      "message": "Done. I wish those initialization can be merged somehow nicely :-)",
+      "parentUuid": "4348d09e_f47d8f13",
+      "range": {
+        "startLine": 43,
+        "startChar": 4,
+        "endLine": 43,
+        "endChar": 54
+      },
+      "revId": "5981c381db91155fe749c818060ea02220f8bf8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9b82456_20e56afc",
         "filename": "chromeos/cryptohome/homedir_methods_unittest.cc",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "5981c381db91155fe749c818060ea02220f8bf8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "428dd982_928efacd",
+        "filename": "chromeos/cryptohome/homedir_methods_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-07T05:41:17Z",
+      "side": 1,
+      "message": "Done. Good catch.",
+      "parentUuid": "b9b82456_20e56afc",
+      "revId": "5981c381db91155fe749c818060ea02220f8bf8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "6f8118da_dcdee260",
+        "filename": "chromeos/cryptohome/homedir_methods_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-07T05:41:17Z",
+      "side": 1,
+      "message": "Hmm, ok. TBH, I\u0027m not very happy leaking unnecessary vars, but not strong opinion here. Done.",
+      "parentUuid": "25379457_6135c6ea",
+      "revId": "5981c381db91155fe749c818060ea02220f8bf8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6648dd12_67016c42",
         "filename": "chromeos/cryptohome/homedir_methods_unittest.cc",
         "patchSetId": 2
@@ -73,6 +133,24 @@
       "revId": "5981c381db91155fe749c818060ea02220f8bf8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4cd4a2b_61c1d947",
+        "filename": "chromeos/cryptohome/homedir_methods_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-07T05:41:17Z",
+      "side": 1,
+      "message": "Removed braces, but I disagreed to abusing a temp var for another purpose, so introduced a new one.",
+      "parentUuid": "6648dd12_67016c42",
+      "revId": "5981c381db91155fe749c818060ea02220f8bf8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "aafc9346_f5b61607",
+        "filename": "chromeos/cryptohome/homedir_methods_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-07T05:41:17Z",
+      "side": 1,
+      "message": "Good point! Done.",
+      "parentUuid": "01df9b71_7621bea3",
+      "revId": "5981c381db91155fe749c818060ea02220f8bf8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f61484e_b12c768d",
         "filename": "chromeos/cryptohome/homedir_methods_unittest.cc",
         "patchSetId": 2
@@ -107,6 +203,24 @@
       "revId": "5981c381db91155fe749c818060ea02220f8bf8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea2334b0_3d9ad381",
+        "filename": "chromeos/cryptohome/homedir_methods_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-07T05:41:17Z",
+      "side": 1,
+      "message": "Hmm, I personally prefer splitting running code and checking expectation, but I do not have strong opinion here. Done.",
+      "parentUuid": "8f61484e_b12c768d",
+      "revId": "5981c381db91155fe749c818060ea02220f8bf8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
