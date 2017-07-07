@@ -22,6 +22,57 @@
       "revId": "478e209c802fcb51b3476edfaa1f972637534c25",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5de281b0_2ab4ccd5",
+        "filename": "tools/perf/contrib/vr_benchmarks/run_benchmark.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-07-07T21:55:05Z",
+      "side": 1,
+      "message": "Our convention is that runnable script doesn\u0027t end with .py",
+      "revId": "478e209c802fcb51b3476edfaa1f972637534c25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e50cb5c_fb72340b",
+        "filename": "tools/perf/contrib/vr_benchmarks/run_benchmark.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-07-07T21:55:05Z",
+      "side": 1,
+      "message": "Where do you plan to store vr benchmarks code?",
+      "revId": "478e209c802fcb51b3476edfaa1f972637534c25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7997646c_eba68e65",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_config.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-07-07T21:55:05Z",
+      "side": 1,
+      "message": "nits: use \"..\" instead of os.pardir",
+      "revId": "478e209c802fcb51b3476edfaa1f972637534c25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
