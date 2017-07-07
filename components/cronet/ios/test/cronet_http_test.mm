@@ -372,4 +372,34 @@ TEST_F(HttpTest, DataSchemeNotSupported) {
   EXPECT_TRUE([[delegate_ responseBody] containsString:testString]);
 }
 
+TEST_F(HttpTest, BrotliAdvertisedTest) {
+  [Cronet shutdownForTesting];
+
+  [Cronet setBrotliEnabled:true];
+
+  StartCronet(grpc_support::GetQuicTestServerPort());
+
+  NSURL* url =
+      net::NSURLWithGURL(GURL(TestServer::GetEchoHeaderURL("Accept-Encoding")));
+  NSURLSessionDataTask* task = [session_ dataTaskWithURL:url];
+  StartDataTaskAndWaitForCompletion(task);
+  EXPECT_EQ(nil, [delegate_ error]);
+  EXPECT_TRUE([[delegate_ responseBody] containsString:@"br"]);
+}
+
+TEST_F(HttpTest, BrotliNotAdvertisedTest) {
+  [Cronet shutdownForTesting];
+
+  [Cronet setBrotliEnabled:false];
+
+  StartCronet(grpc_support::GetQuicTestServerPort());
+
+  NSURL* url =
+      net::NSURLWithGURL(GURL(TestServer::GetEchoHeaderURL("Accept-Encoding")));
+  NSURLSessionDataTask* task = [session_ dataTaskWithURL:url];
+  StartDataTaskAndWaitForCompletion(task);
+  EXPECT_EQ(nil, [delegate_ error]);
+  EXPECT_FALSE([[delegate_ responseBody] containsString:@"br"]);
+}
+
 }  // namespace cronet
