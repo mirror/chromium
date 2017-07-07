@@ -813,3 +813,4 @@ void NotificationViewMD::UpdateControlButtonsVisibility() {
 }
 
 }  // namespace message_center
+//TEST
