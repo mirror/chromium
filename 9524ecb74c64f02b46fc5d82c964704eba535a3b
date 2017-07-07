@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3638eb20_7bb5a920",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-07-07T05:59:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f48ae88d_b378500d",
+      "range": {
+        "startLine": 613,
+        "startChar": 0,
+        "endLine": 613,
+        "endChar": 49
+      },
+      "revId": "9524ecb74c64f02b46fc5d82c964704eba535a3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c24e097_5fd8fc5d",
         "filename": "chrome/browser/prefs/browser_prefs.cc",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "b6661fba_5896b21e",
+        "filename": "chrome/browser/prefs/browser_prefs.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-07-07T05:59:35Z",
+      "side": 1,
+      "message": "Left over from testing, sorry. Removed.",
+      "parentUuid": "6c24e097_5fd8fc5d",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 47
+      },
+      "revId": "9524ecb74c64f02b46fc5d82c964704eba535a3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e41ebfdc_57c3ffc3",
         "filename": "components/language/OWNERS",
         "patchSetId": 6
@@ -68,6 +116,30 @@
       "revId": "9524ecb74c64f02b46fc5d82c964704eba535a3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d34e85c2_d858f919",
+        "filename": "components/language/OWNERS",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-07-07T05:59:35Z",
+      "side": 1,
+      "message": "Fair enough; we\u0027ve found a local committer willing to take on ownership (Sam, cc\u0027d) in the meantime, and we\u0027re currently looking to organise a backup.",
+      "parentUuid": "e41ebfdc_57c3ffc3",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 6
+      },
+      "revId": "9524ecb74c64f02b46fc5d82c964704eba535a3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -114,6 +186,30 @@
       "revId": "9524ecb74c64f02b46fc5d82c964704eba535a3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a88ae7e9_78d9f7ca",
+        "filename": "ios/chrome/browser/language/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-07-07T05:59:35Z",
+      "side": 1,
+      "message": "Thanks - done.",
+      "parentUuid": "50f761b8_e5a98443",
+      "range": {
+        "startLine": 22,
+        "startChar": 12,
+        "endLine": 22,
+        "endChar": 22
+      },
+      "revId": "9524ecb74c64f02b46fc5d82c964704eba535a3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
