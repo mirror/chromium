@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61f0f4aa_ee480f7e",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1102,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-07T19:15:15Z",
+      "side": 0,
+      "message": "I was originally planning on only updating scrolling here, since animations are already updated on the recycle tree. But I think Wei had some plans on eliminating animation updates on the recycle tree instead.\n\nlgtm % weiliangc.",
+      "range": {
+        "startLine": 1102,
+        "startChar": 15,
+        "endLine": 1102,
+        "endChar": 68
+      },
+      "revId": "afef048df9416f31f2d90535c3ca946ac3f43b80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
