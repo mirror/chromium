@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a47fb91_41feaa0e",
+        "filename": "content/browser/service_worker/service_worker_process_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-07T06:07:29Z",
+      "side": 1,
+      "message": "nit: maybe briefly note that it reading this on UI thread doesn\u0027t need locking (while modifying does)",
+      "revId": "b3ffd45367357e9830304f433eb82b05940df8b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
