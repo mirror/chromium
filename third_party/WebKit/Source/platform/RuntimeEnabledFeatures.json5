@@ -689,7 +689,7 @@
     },
     {
       name: "NetInfoDownlink",
-      status: "experimental",
+      status: "stable",
     },
     {
       name: "NetInfoDownlinkMax",
@@ -697,11 +697,11 @@
     },
     {
       name: "NetInfoEffectiveType",
-      status: "experimental",
+      status: "stable",
     },
     {
       name: "NetInfoRtt",
-      status: "experimental",
+      status: "stable",
     },
     {
       name: "NetworkInformation",
