@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5f826b7_3c559eea",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-07-07T21:49:42Z",
+      "side": 1,
+      "message": "update commit message to indicate that it is behind a flag.",
+      "range": {
+        "startLine": 18,
+        "startChar": 5,
+        "endLine": 18,
+        "endChar": 7
+      },
+      "revId": "6a6437613be85bee81e55c6556de53dff7c907cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c79942a6_c973d877",
+        "filename": "android_webview/browser/aw_metrics_service_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-07-07T21:49:42Z",
+      "side": 1,
+      "message": "move to anonymous namespace, see https://google.github.io/styleguide/cppguide.html#Unnamed_Namespaces_and_Static_Variables",
+      "range": {
+        "startLine": 74,
+        "startChar": 6,
+        "endLine": 74,
+        "endChar": 12
+      },
+      "revId": "6a6437613be85bee81e55c6556de53dff7c907cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf9ac52d_65bebb68",
+        "filename": "android_webview/browser/aw_metrics_service_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-07-07T21:49:42Z",
+      "side": 1,
+      "message": "I don\u0027t think you need the wrapper",
+      "range": {
+        "startLine": 115,
+        "startChar": 5,
+        "endLine": 115,
+        "endChar": 27
+      },
+      "revId": "6a6437613be85bee81e55c6556de53dff7c907cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
