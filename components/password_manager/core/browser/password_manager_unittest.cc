@@ -76,7 +76,8 @@ class MockPasswordManagerClient : public StubPasswordManagerClient {
   // Workaround for std::unique_ptr<> lacking a copy constructor.
   bool PromptUserToSaveOrUpdatePassword(
       std::unique_ptr<PasswordFormManager> manager,
-      bool update_password) override {
+      bool update_password,
+      PasswordFormMetricsRecorder::SaveBubbleTrigger trigger) override {
     PromptUserToSaveOrUpdatePasswordPtr(manager.release());
     return false;
   }

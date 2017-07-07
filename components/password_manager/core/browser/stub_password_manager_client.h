@@ -24,7 +24,8 @@ class StubPasswordManagerClient : public PasswordManagerClient {
   // PasswordManagerClient:
   bool PromptUserToSaveOrUpdatePassword(
       std::unique_ptr<PasswordFormManager> form_to_save,
-      bool update_password) override;
+      bool update_password,
+      PasswordFormMetricsRecorder::SaveBubbleTrigger trigger) override;
   bool PromptUserToChooseCredentials(
       std::vector<std::unique_ptr<autofill::PasswordForm>> local_forms,
       const GURL& origin,

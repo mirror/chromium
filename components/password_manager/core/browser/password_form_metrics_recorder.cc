@@ -56,6 +56,9 @@ PasswordFormMetricsRecorder::~PasswordFormMetricsRecorder() {
 
     RecordUkmMetric(internal::kUkmSubmissionFormType, submitted_form_type_);
   }
+
+  RecordUkmMetric(internal::kUkmUpdatingPromptShown, update_prompt_shown_);
+  RecordUkmMetric(internal::kUkmSavingPromptShown, save_prompt_shown_);
 }
 
 // static
@@ -221,6 +224,19 @@ void PasswordFormMetricsRecorder::RecordHistogramsOnSuppressedAccounts(
       GetHistogramSampleForSuppressedAccounts(best_match),
       kMaxSuppressedAccountStats);
   RecordUkmMetric("SuppressedAccount.Manual.SameOrganizationName", best_match);
+}
+
+void PasswordFormMetricsRecorder::RecordSavingPrompt(
+    PasswordFormMetricsRecorder::SaveBubbleTrigger trigger,
+    bool update_password) {
+  RecordUkmMetric(update_password ? internal::kUkmUpdatingPromptTrigger
+                                  : internal::kUkmSavingPromptTrigger,
+                  static_cast<int64_t>(trigger));
+
+  if (update_password)
+    update_prompt_shown_ = true;
+  else
+    save_prompt_shown_ = true;
 }
 
 PasswordFormMetricsRecorder::SuppressedAccountExistence
