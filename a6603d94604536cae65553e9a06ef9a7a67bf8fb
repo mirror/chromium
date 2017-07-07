@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5338ce55_855309d6",
+        "filename": "ios/chrome/browser/ui/reading_list/reading_list_coordinator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-07T05:08:24Z",
+      "side": 1,
+      "message": "Is there a place where a user action is recorded for this event?\n\nAlso, a comment explaining this would be good.",
+      "range": {
+        "startLine": 119,
+        "startChar": 20,
+        "endLine": 119,
+        "endChar": 46
+      },
+      "revId": "a6603d94604536cae65553e9a06ef9a7a67bf8fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
