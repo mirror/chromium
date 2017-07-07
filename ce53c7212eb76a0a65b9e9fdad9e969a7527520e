@@ -88,6 +88,58 @@
       "revId": "ce53c7212eb76a0a65b9e9fdad9e969a7527520e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7798cad_eee06197",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParser.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1190,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-07-07T05:28:44Z",
+      "side": 1,
+      "message": "Since the bool that alancutter has suggested would be temporary, and able to be easily removed when all the legacy code is removed I think we should go with that. Alternatively split the parsing of keyword properties into a function, and the logic to call the api in a separate function, then the logic here can return the result of this method (iff we are a keyword property), else call the api and if that method returns nullptr then do legacy parsing. that is messier though and not necessary in future when no legacy code is being used, so i think alancutter\u0027s suggestion is better.",
+      "parentUuid": "4f0ecbfe_5e5a9ff4",
+      "revId": "ce53c7212eb76a0a65b9e9fdad9e969a7527520e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "123b3d09_832cc6fd",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParserHelpers.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1561,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-07-07T05:28:44Z",
+      "side": 1,
+      "message": "perhaps a DCHECK that the unresolved_property is not a shorthand?",
+      "revId": "ce53c7212eb76a0a65b9e9fdad9e969a7527520e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2cf4855_3272c79f",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParserHelpers.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1572,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-07-07T05:28:44Z",
+      "side": 1,
+      "message": "is it weird that with the introduction of this patch CSSPropertyParserHelpers calls to the APIs, which in turn call to CSSPropertyParserHelpers?",
+      "revId": "ce53c7212eb76a0a65b9e9fdad9e969a7527520e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
