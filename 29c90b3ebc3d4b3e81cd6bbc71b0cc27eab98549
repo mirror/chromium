@@ -124,6 +124,24 @@
       "revId": "29c90b3ebc3d4b3e81cd6bbc71b0cc27eab98549",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03c00e62_9665fdad",
+        "filename": "content/public/browser/android/motion_event_synthesizer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-07-07T14:00:31Z",
+      "side": 1,
+      "message": "\u003e But I think my point still stands that if something else caches the container view, then it needs to listen to the setContainerView event to know to update that reference.\n\nPoint taken. There\u0027s no more concern on container view in the new patch where I take a different approach.\n\n\u003e So I don\u0027t actually get it. VR doesn\u0027t call setContainerView, so the container view doesn\u0027t change for VR. ViewAndroidDelegate doesn\u0027t change either. So.. what\u0027s the problem you are trying to solve here again?\n\nMy issue was mostly on VrShell side, not content/. I wanted to get a Java target view for MES out of ViewAndroid. I was trying to handle it by swapping ViewAndroidDelegate that can be obtained by |ViewAndroid::GetContainerView()| but this was opening a can of worms (what to do with container view cached in Java classes, how to restore the old one back, etc).\n\nI have a new approach, which is having another interface |MotionEventSynthesizer::SetTargetView(gfx::NativeView)| Embedder then doesn\u0027t have to shove its VAD into existing ViewAndroid tree. Now MES constructor creates a Java object and stores it in WebContentsImpl only. Actual target view that MES uses to dispatch the synthesized event to is set via the new interface. Please take another look.",
+      "parentUuid": "c9069af1_f552a09c",
+      "revId": "29c90b3ebc3d4b3e81cd6bbc71b0cc27eab98549",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
