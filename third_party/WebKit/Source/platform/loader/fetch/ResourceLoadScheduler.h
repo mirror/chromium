@@ -78,8 +78,8 @@ class PLATFORM_EXPORT ResourceLoadScheduler final
   // step, bug the ReleaseOption must be kReleaseOnly in such a case.
   bool Release(ClientId, ReleaseOption);
 
-  // Sets outstanding limit for testing. Should be reset with
-  // kOutstandingUnlimited before calling Shutdown().
+  // Sets outstanding limit for testing. FetchContext should provide a
+  // FrameScheduler to call this method to enable throttling on unit tests.
   void SetOutstandingLimitForTesting(size_t limit);
 
   // WebFrameScheduler::Observer overrides:

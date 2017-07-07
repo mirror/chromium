@@ -338,9 +338,8 @@ void TestThatIsNotPlaceholderRequestAndServeResponse(
 }
 
 ResourceFetcher* CreateFetcher() {
-  auto* context =
-      MockFetchContext::Create(MockFetchContext::kShouldLoadNewResource);
-  return ResourceFetcher::Create(context, context->GetTaskRunner());
+  return ResourceFetcher::Create(
+      MockFetchContext::Create(MockFetchContext::kShouldLoadNewResource));
 }
 
 TEST(ImageResourceTest, MultipartImage) {
