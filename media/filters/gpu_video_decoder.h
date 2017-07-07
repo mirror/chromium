@@ -90,24 +90,19 @@ class MEDIA_EXPORT GpuVideoDecoder
     kError
   };
 
-  // A shared memory segment and its allocated size.
-  struct SHMBuffer {
-    SHMBuffer(std::unique_ptr<base::SharedMemory> m, size_t s);
-    ~SHMBuffer();
-    std::unique_ptr<base::SharedMemory> shm;
-    size_t size;
-  };
-
-  // A SHMBuffer and the DecoderBuffer its data came from.
+  // A SharedMemory and the DecoderBuffer its data came from.
   struct PendingDecoderBuffer {
-    PendingDecoderBuffer(SHMBuffer* s,
-                        const scoped_refptr<DecoderBuffer>& b,
-                        const DecodeCB& done_cb);
-    PendingDecoderBuffer(const PendingDecoderBuffer& other);
+    PendingDecoderBuffer(std::unique_ptr<base::SharedMemory> s,
+                         const scoped_refptr<DecoderBuffer>& b,
+                         const DecodeCB& done_cb);
+    PendingDecoderBuffer(PendingDecoderBuffer&& p);
     ~PendingDecoderBuffer();
-    SHMBuffer* shm_buffer;
+    std::unique_ptr<base::SharedMemory> shared_memory;
     scoped_refptr<DecoderBuffer> buffer;
     DecodeCB done_cb;
+
+   private:
+    DISALLOW_COPY_AND_ASSIGN(PendingDecoderBuffer);
   };
 
   typedef std::map<int32_t, PictureBuffer> PictureBufferMap;
@@ -134,10 +129,10 @@ class MEDIA_EXPORT GpuVideoDecoder
 
   // Request a shared-memory segment of at least |min_size| bytes.  Will
   // allocate as necessary.
-  std::unique_ptr<SHMBuffer> GetSHM(size_t min_size);
+  std::unique_ptr<base::SharedMemory> GetSharedMemory(size_t min_size);
 
   // Return a shared-memory segment to the available pool.
-  void PutSHM(std::unique_ptr<SHMBuffer> shm_buffer);
+  void PutSharedMemory(std::unique_ptr<base::SharedMemory> shm_buffer);
 
   // Destroy all PictureBuffers in |buffers|, and delete their textures.
   void DestroyPictureBuffers(PictureBufferMap* buffers);
@@ -196,7 +191,7 @@ class MEDIA_EXPORT GpuVideoDecoder
   // Shared-memory buffer pool.  Since allocating SHM segments requires a
   // round-trip to the browser process, we keep allocation out of the
   // steady-state of the decoder.
-  std::vector<SHMBuffer*> available_shm_segments_;
+  std::vector<std::unique_ptr<base::SharedMemory>> available_shm_segments_;
 
   // Placeholder sync token that was created and validated after the most
   // recent picture buffers were created.
