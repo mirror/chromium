@@ -18,8 +18,7 @@ OAuth2TokenServiceDelegate::ScopedBatchChange::~ScopedBatchChange() {
 }
 
 OAuth2TokenServiceDelegate::OAuth2TokenServiceDelegate()
-    : batch_change_depth_(0) {
-}
+    : batch_change_depth_(0), refresh_tokens_are_loaded_(false) {}
 
 OAuth2TokenServiceDelegate::~OAuth2TokenServiceDelegate() {
 }
@@ -98,6 +97,7 @@ void OAuth2TokenServiceDelegate::FireRefreshTokensLoaded() {
       FROM_HERE_WITH_EXPLICIT_FUNCTION(
           "422460 OAuth2TokenService::FireRefreshTokensLoaded"));
 
+  refresh_tokens_are_loaded_ = true;
   for (auto& observer : observer_list_)
     observer.OnRefreshTokensLoaded();
 }
@@ -110,6 +110,10 @@ net::URLRequestContextGetter* OAuth2TokenServiceDelegate::GetRequestContext()
 bool OAuth2TokenServiceDelegate::RefreshTokenHasError(
     const std::string& account_id) const {
   return false;
+}
+
+bool OAuth2TokenServiceDelegate::RefreshTokensAreLoaded() const {
+  return refresh_tokens_are_loaded_;
 }
 
 std::vector<std::string> OAuth2TokenServiceDelegate::GetAccounts() {

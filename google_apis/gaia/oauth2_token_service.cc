@@ -604,6 +604,10 @@ bool OAuth2TokenService::RefreshTokenIsAvailable(
   return delegate_->RefreshTokenIsAvailable(account_id);
 }
 
+bool OAuth2TokenService::RefreshTokensAreLoaded() const {
+  return delegate_->RefreshTokensAreLoaded();
+}
+
 void OAuth2TokenService::RevokeAllCredentials() {
   CancelAllRequests();
   ClearCache();

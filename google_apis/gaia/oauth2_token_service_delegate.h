@@ -40,6 +40,7 @@ class OAuth2TokenServiceDelegate {
 
   virtual bool RefreshTokenIsAvailable(const std::string& account_id) const = 0;
   virtual bool RefreshTokenHasError(const std::string& account_id) const;
+  bool RefreshTokensAreLoaded() const;
   virtual void UpdateAuthError(const std::string& account_id,
                                const GoogleServiceAuthError& error) {}
 
@@ -106,6 +107,9 @@ class OAuth2TokenServiceDelegate {
 
   // The depth of batch changes.
   int batch_change_depth_;
+
+  // Whether all refresh tokens have been loaded.
+  bool refresh_tokens_are_loaded_;
 
   DISALLOW_COPY_AND_ASSIGN(OAuth2TokenServiceDelegate);
 };
