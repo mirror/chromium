@@ -27,13 +27,6 @@ using testing::CallbackToFunctor;
 using testing::InvokeWithoutArgs;
 using testing::StrictMock;
 
-#if defined(OS_CHROMEOS)
-// ChromeOS doesn't have SigninManager.
-using SigninManagerForTest = FakeSigninManagerBase;
-#else
-using SigninManagerForTest = FakeSigninManager;
-#endif  // OS_CHROMEOS
-
 class AccessTokenFetcherTest : public testing::Test {
  public:
   using TestTokenCallback =
