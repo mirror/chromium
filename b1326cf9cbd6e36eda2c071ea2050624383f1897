@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "de4a9aab_05f8d590",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-07T16:03:09Z",
+      "side": 0,
+      "message": "The button inside the ToolsMenuViewToolsCell is the thing with the tag; there isn\u0027t a ToolsMenuViewItem for it, so l.160 will never be reached, and ToolsMenuViewToolsCell isn\u0027t a subclass of ToolsMenuViewCell so the condition on l.167 will prevent l.174 from ever being reached. So I\u0027m pretty sure this line was a no-op.",
+      "parentUuid": "6e91420d_7643fe2b",
+      "revId": "b1326cf9cbd6e36eda2c071ea2050624383f1897",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5e4f4727_c22cab18",
         "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_view_controller.mm",
         "patchSetId": 4
@@ -53,6 +71,30 @@
       "writtenOn": "2017-07-07T13:03:01Z",
       "side": 0,
       "message": "Consider marking that bug fixed.",
+      "range": {
+        "startLine": 485,
+        "startChar": 0,
+        "endLine": 485,
+        "endChar": 33
+      },
+      "revId": "b1326cf9cbd6e36eda2c071ea2050624383f1897",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eddfb59f_c090d9e5",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-07T16:03:09Z",
+      "side": 0,
+      "message": "When this CL lands, yep!",
+      "parentUuid": "0f60f279_8096742a",
       "range": {
         "startLine": 485,
         "startChar": 0,
