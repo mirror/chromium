@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "745101ec_6600f456",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-07T22:10:39Z",
+      "side": 1,
+      "message": "Nit: renamed -\u003e Renamed",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 1
+      },
+      "revId": "2530b6926b454006faf9237f0a25d6df68364391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25b8439b_7097830b",
+        "filename": "base/single_thread_task_runner.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-07T22:10:39Z",
+      "side": 1,
+      "message": "This seems wrong, but we can save this for a later code review since it\u0027s already aliased today.",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 28,
+        "endChar": 78
+      },
+      "revId": "2530b6926b454006faf9237f0a25d6df68364391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0c03a19d_5e189bc5",
+        "filename": "base/task_scheduler/test_task_factory.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-07T22:10:39Z",
+      "side": 1,
+      "message": "Reflow this comment.",
+      "range": {
+        "startLine": 28,
+        "startChar": 4,
+        "endLine": 29,
+        "endChar": 4
+      },
+      "revId": "2530b6926b454006faf9237f0a25d6df68364391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7752fbaf_b9090aa9",
+        "filename": "base/test/test_mock_time_task_runner.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-07T22:10:39Z",
+      "side": 1,
+      "message": "Reflow this comment.",
+      "range": {
+        "startLine": 34,
+        "startChar": 6,
+        "endLine": 35,
+        "endChar": 11
+      },
+      "revId": "2530b6926b454006faf9237f0a25d6df68364391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
