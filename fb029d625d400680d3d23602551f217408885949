@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "bcb9ca9b_a92f1b90",
+        "filename": "content/browser/service_worker/embedded_worker_instance.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-07T02:14:42Z",
+      "side": 1,
+      "message": "Sorry, I don\u0027t understand what\u0027s the point here. Can I ask you question to catch up?\n\nI *guess* OnceCallback passes values by std::move() from the storage of the callback, so there seems to be no big difference between const reference and value. What\u0027s the point we should care about?\n\nI slightly prefer pass-by-value \u0026 std::move() because it\u0027s easy to understand where copy is happening (ServiceWorkerIdentifier actually copies |weak_context|, but if we use const reference for |weak_context| it\u0027s vague unless we see the definition of ServiceWorkerIdentifier).",
+      "parentUuid": "14980b3f_0616e938",
+      "revId": "fb029d625d400680d3d23602551f217408885949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2830226b_fa98ab91",
         "filename": "content/browser/service_worker/embedded_worker_instance.cc",
         "patchSetId": 1
@@ -202,6 +220,30 @@
     },
     {
       "key": {
+        "uuid": "7ee19383_12abbe63",
+        "filename": "content/browser/service_worker/service_worker_process_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-07T02:14:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0615b91c_0a71e3f4",
+      "range": {
+        "startLine": 169,
+        "startChar": 2,
+        "endLine": 169,
+        "endChar": 39
+      },
+      "revId": "fb029d625d400680d3d23602551f217408885949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d4b86b9_94e0727e",
         "filename": "content/browser/service_worker/service_worker_process_manager.h",
         "patchSetId": 1
@@ -231,6 +273,24 @@
       "side": 1,
       "message": "Done. Kinda makes me wonder why all classes don\u0027t just keep one WeakPtr to return instead of using weak_factory_.GetWeakPtr() each time.",
       "parentUuid": "6d4b86b9_94e0727e",
+      "revId": "fb029d625d400680d3d23602551f217408885949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "876b881e_6a2f8f16",
+        "filename": "content/browser/service_worker/service_worker_process_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-07T02:14:42Z",
+      "side": 1,
+      "message": "The difference between copying WeakPtr and WeakPtrFactory::GetWeakPtr looks re-creating a Flag object when no WeakPtr instance exists. (It might be safer...?)\nhttps://cs.chromium.org/chromium/src/base/memory/weak_ptr.cc?sq\u003dpackage:chromium\u0026l\u003d58\n\n// BTW I found an useful helper class to add weak_ptr_factory and AsWeakPtr: https://cs.chromium.org/chromium/src/base/memory/weak_ptr.h?sq\u003dpackage:chromium\u0026l\u003d338",
+      "parentUuid": "c5a5b754_a418dadb",
       "revId": "fb029d625d400680d3d23602551f217408885949",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -272,6 +332,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "c57561c7_0c0ba11b",
+      "range": {
+        "startLine": 55,
+        "startChar": 2,
+        "endLine": 55,
+        "endChar": 49
+      },
+      "revId": "fb029d625d400680d3d23602551f217408885949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7ffdaf76_9ba74969",
+        "filename": "content/browser/service_worker/service_worker_process_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-07T02:14:42Z",
+      "side": 1,
+      "message": "It might be before |process_manager_| which needs to live on the UI thread.",
+      "parentUuid": "73a3fcaa_a03a8f6c",
       "range": {
         "startLine": 55,
         "startChar": 2,
