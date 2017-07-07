@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a04ca0e_e5d342da",
+        "filename": "tools/perf/contrib/vr_benchmarks/run_benchmark",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-07-07T22:45:25Z",
+      "side": 1,
+      "message": "nits: top level definition are separated by 2 lines. See https://google.github.io/styleguide/pyguide.html?showone\u003dBlank_Lines#Blank_Lines",
+      "revId": "56963a53f40e470e80e07af22a200228f0f40cb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "712154a6_25d8d574",
+        "filename": "tools/perf/contrib/vr_benchmarks/run_benchmark",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-07-07T22:45:25Z",
+      "side": 1,
+      "message": "Later we should find a better place to host these logic. One flaw I am seeing here is these code would still be run even if someone running a desktop telemetry benchmark on a machine which is connected to a device.\n\nI think the best place is probably by extending the shared_state class in Telemetry so that you can run some common code for the whole benchmark. We can deal with this later though",
+      "revId": "56963a53f40e470e80e07af22a200228f0f40cb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36ea5ff8_76809c67",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_config.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-07-07T22:45:25Z",
+      "side": 1,
+      "message": "nits: this can be fit in one line",
+      "revId": "56963a53f40e470e80e07af22a200228f0f40cb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
