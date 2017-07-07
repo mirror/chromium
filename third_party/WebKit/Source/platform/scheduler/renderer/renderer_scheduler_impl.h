@@ -204,7 +204,8 @@ class PLATFORM_EXPORT RendererSchedulerImpl
   // the main thread.
   void DidCommitProvisionalLoad(bool is_web_history_inert_commit,
                                 bool is_reload,
-                                bool is_main_frame);
+                                bool is_main_frame,
+                                bool is_same_document);
 
   // Test helpers.
   SchedulerHelper* GetSchedulerHelperForTesting();
