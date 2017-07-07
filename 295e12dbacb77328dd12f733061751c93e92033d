@@ -22,6 +22,30 @@
       "revId": "295e12dbacb77328dd12f733061751c93e92033d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1c9b742_580bb418",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-07-07T11:51:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3bf3607b_462e26b7",
+      "range": {
+        "startLine": 220,
+        "startChar": 2,
+        "endLine": 220,
+        "endChar": 11
+      },
+      "revId": "295e12dbacb77328dd12f733061751c93e92033d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
