@@ -16,6 +16,24 @@
       "revId": "7a35dec872d6f96adec74187245ffba0109d3c62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "281bd3ef_e235ae09",
+        "filename": "content/browser/android/android_overlay_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-07-07T19:23:27Z",
+      "side": 1,
+      "message": "This comes back to the first update of my original CL. The difference is that in that CL, there was still a lot of accounting that was happening, due to the fact that we we not enforcing policies such as \"Prevent Overlays from being created for hidden WCs and pending RFHs\".\n\nEnforcing these policies means that \"If an overlay exists, we want to be in overlay mode\" which is a lot simpler.\n\nI will submit a CL where DialogOverlayImpl is a WCO, and where we can set OverlayVideoMode based off of overlayCount.",
+      "parentUuid": "5ac83691_64544ddb",
+      "revId": "7a35dec872d6f96adec74187245ffba0109d3c62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
