@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3acf84e7_b287ca98",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/security/subresourceIntegrity/resources/clear-integrity-attribute.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-07-07T01:16:09Z",
+      "side": 1,
+      "message": "Optional: no need to indent \u003chead\u003e and \u003cbody\u003e",
+      "range": {
+        "startLine": 3,
+        "startChar": 8,
+        "endLine": 3,
+        "endChar": 0
+      },
+      "revId": "5e5d9f74349b107027927a5fb13c3a28718ef0b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
