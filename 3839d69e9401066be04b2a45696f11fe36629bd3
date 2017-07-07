@@ -1,0 +1,248 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ec7445c_59b6f494",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-07T13:46:41Z",
+      "side": 1,
+      "message": "explicit",
+      "revId": "3839d69e9401066be04b2a45696f11fe36629bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b13a5cd_9791eef1",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-07T13:46:41Z",
+      "side": 1,
+      "message": "DCHECK_CURRENTLY_ON(BrowserThread::IO);",
+      "revId": "3839d69e9401066be04b2a45696f11fe36629bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c158f415_cc43f8cd",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-07T13:46:41Z",
+      "side": 1,
+      "message": "DCHECK_CURRENTLY_ON(BrowserThread::IO);",
+      "revId": "3839d69e9401066be04b2a45696f11fe36629bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8df02b77_c4cab0c9",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-07T13:46:41Z",
+      "side": 1,
+      "message": "DCHECK_CURRENTLY_ON(BrowserThread::IO);",
+      "revId": "3839d69e9401066be04b2a45696f11fe36629bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76eb3a27_8a701fa7",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-07T13:46:41Z",
+      "side": 1,
+      "message": "s/is/are/",
+      "revId": "3839d69e9401066be04b2a45696f11fe36629bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5060fe48_fea63714",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-07T13:46:41Z",
+      "side": 1,
+      "message": "DCHECK_CURRENTLY_ON(BrowserThread::IO);",
+      "revId": "3839d69e9401066be04b2a45696f11fe36629bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bba3214_0e2eaada",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-07T13:46:41Z",
+      "side": 1,
+      "message": "DCHECK_CURRENTLY_ON(BrowserThread::IO);",
+      "revId": "3839d69e9401066be04b2a45696f11fe36629bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba9c2542_e43855cb",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-07T13:46:41Z",
+      "side": 1,
+      "message": "|callback_| seems to never run if one of the receivers is unexpectedly failed.",
+      "revId": "3839d69e9401066be04b2a45696f11fe36629bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0768b24d_eae2b83f",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-07T13:46:41Z",
+      "side": 1,
+      "message": "DCHECK_CURRENTLY_ON(BrowserThread::IO);",
+      "revId": "3839d69e9401066be04b2a45696f11fe36629bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ccd374c_25221583",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-07T13:46:41Z",
+      "side": 1,
+      "message": "std::move(script_container)",
+      "revId": "3839d69e9401066be04b2a45696f11fe36629bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1aa7d9b2_23abb9b4",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-07T13:46:41Z",
+      "side": 1,
+      "message": "DCHECK_CURRENTLY_ON(BrowserThread::IO);",
+      "revId": "3839d69e9401066be04b2a45696f11fe36629bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d71b9cf8_6b0df535",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-07T13:46:41Z",
+      "side": 1,
+      "message": "DCHECK_CURRENTLY_ON(BrowserThread::IO);",
+      "revId": "3839d69e9401066be04b2a45696f11fe36629bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f894d2bd_e281a112",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-07T13:46:41Z",
+      "side": 1,
+      "message": "The return type of Take() is not obvious from the function name, so can you clarify the type of |data|?",
+      "revId": "3839d69e9401066be04b2a45696f11fe36629bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b142fc52_ca9e68f3",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-07T13:46:41Z",
+      "side": 1,
+      "message": "Can you add a comment about what this |lock_| protect?",
+      "range": {
+        "startLine": 44,
+        "startChar": 15,
+        "endLine": 44,
+        "endChar": 20
+      },
+      "revId": "3839d69e9401066be04b2a45696f11fe36629bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
