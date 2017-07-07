@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0aadd652_a5be6260",
+        "filename": "remoting/host/DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-07-07T13:35:51Z",
+      "side": 1,
+      "message": "nit: I would add a comment here referencing the bug on which we discussed this.",
+      "revId": "f459874e216f23e25a59f37d7ff38b53970fe7da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc64ac21_f199e861",
+        "filename": "services/device/wake_lock/power_save_blocker/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-07-07T13:35:51Z",
+      "side": 1,
+      "message": "nit: add a reference to the bug",
+      "revId": "f459874e216f23e25a59f37d7ff38b53970fe7da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
