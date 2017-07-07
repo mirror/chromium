@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15161c04_93f604e1",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-07T14:12:47Z",
+      "side": 1,
+      "message": "Can you comment on the issue you had where not moving this here didn\u0027t work?",
+      "revId": "66114b35d408f1ad876035260fca0da62d78d10f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
