@@ -23,6 +23,9 @@
           <select id="permission" class="md-select"
               aria-labelledby="permissionHeader"
               on-change="onPermissionSelectionChange_">
+            <option id="default" value$="[[ContentSetting.DEFAULT]]">
+              [[defaultSettingString_]]
+            </option>
             <option id="allow" value$="[[ContentSetting.ALLOW]]">
               $i18n{siteSettingsActionAllow}
             </option>
