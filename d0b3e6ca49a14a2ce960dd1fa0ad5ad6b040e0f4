@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3aaba3c0_2bb437ca",
+        "filename": "build/android/gyp/merge_manifest.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1113224
+      },
+      "writtenOn": "2017-07-07T15:16:54Z",
+      "side": 1,
+      "message": "So this is the only change not addressing any comment - grabbing the first child didn\u0027t work with comments..",
+      "revId": "d0b3e6ca49a14a2ce960dd1fa0ad5ad6b040e0f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

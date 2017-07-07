@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "75839993_85875a13",
+        "filename": "build/android/gyp/merge_manifest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1113224
+      },
+      "writtenOn": "2017-07-07T15:16:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0976ada_2c7f0531",
+      "range": {
+        "startLine": 20,
+        "startChar": 18,
+        "endLine": 20,
+        "endChar": 27
+      },
+      "revId": "ad261779d2fa35f42a3695b83cc9b553ae82d285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3a17181_78f1c33e",
         "filename": "build/android/gyp/merge_manifest.py",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "ad261779d2fa35f42a3695b83cc9b553ae82d285",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bf694ff_63f60bf1",
+        "filename": "build/android/gyp/merge_manifest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1113224
+      },
+      "writtenOn": "2017-07-07T15:16:54Z",
+      "side": 1,
+      "message": "👍",
+      "parentUuid": "d3a17181_78f1c33e",
+      "revId": "ad261779d2fa35f42a3695b83cc9b553ae82d285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "2681765d_5a5accd6",
+        "filename": "build/android/gyp/util/build_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1113224
+      },
+      "writtenOn": "2017-07-07T15:16:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1f6806b_14ebbd38",
+      "range": {
+        "startLine": 84,
+        "startChar": 18,
+        "endLine": 84,
+        "endChar": 33
+      },
+      "revId": "ad261779d2fa35f42a3695b83cc9b553ae82d285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15c4ef9a_dee9a13b",
         "filename": "build/android/gyp/util/build_utils.py",
         "patchSetId": 2
@@ -85,6 +151,30 @@
       "revId": "ad261779d2fa35f42a3695b83cc9b553ae82d285",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab41a3fa_4abc1e6b",
+        "filename": "build/android/gyp/util/build_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1113224
+      },
+      "writtenOn": "2017-07-07T15:16:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15c4ef9a_dee9a13b",
+      "range": {
+        "startLine": 86,
+        "startChar": 26,
+        "endLine": 86,
+        "endChar": 34
+      },
+      "revId": "ad261779d2fa35f42a3695b83cc9b553ae82d285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
