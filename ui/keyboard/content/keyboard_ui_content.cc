@@ -30,6 +30,15 @@
 
 namespace {
 
+// Gets the view of the widget if it's not embedded in other RWHV.
+content::RenderWidgetHostView* MaybeGetView(content::RenderWidgetHost* widget) {
+  content::RenderWidgetHostView* view = widget->GetView();
+  if (view && !view->IsRenderWidgetHostViewChildFrame()) {
+    return view;
+  }
+  return nullptr;
+}
+
 // The WebContentsDelegate for the keyboard.
 // The delegate deletes itself when the keyboard is destroyed.
 class KeyboardContentsDelegate : public content::WebContentsDelegate,
@@ -183,7 +192,7 @@ void KeyboardUIContent::UpdateInsetsForWindow(aura::Window* window) {
   std::unique_ptr<content::RenderWidgetHostIterator> widgets(
       content::RenderWidgetHost::GetRenderWidgetHosts());
   while (content::RenderWidgetHost* widget = widgets->GetNextHost()) {
-    content::RenderWidgetHostView* view = widget->GetView();
+    content::RenderWidgetHostView* view = MaybeGetView(widget);
     if (view && window->Contains(view->GetNativeView())) {
       gfx::Rect window_bounds = view->GetNativeView()->GetBoundsInScreen();
       gfx::Rect intersect =
@@ -244,7 +253,7 @@ void KeyboardUIContent::InitInsets(const gfx::Rect& new_bounds) {
   std::unique_ptr<content::RenderWidgetHostIterator> widgets(
       content::RenderWidgetHost::GetRenderWidgetHosts());
   while (content::RenderWidgetHost* widget = widgets->GetNextHost()) {
-    content::RenderWidgetHostView* view = widget->GetView();
+    content::RenderWidgetHostView* view = MaybeGetView(widget);
     // Can be NULL, e.g. if the RenderWidget is being destroyed or
     // the render process crashed.
     if (view) {
@@ -275,7 +284,7 @@ void KeyboardUIContent::ResetInsets() {
   std::unique_ptr<content::RenderWidgetHostIterator> widgets(
       content::RenderWidgetHost::GetRenderWidgetHosts());
   while (content::RenderWidgetHost* widget = widgets->GetNextHost()) {
-    content::RenderWidgetHostView* view = widget->GetView();
+    content::RenderWidgetHostView* view = MaybeGetView(widget);
     if (view)
       view->SetInsets(insets);
   }

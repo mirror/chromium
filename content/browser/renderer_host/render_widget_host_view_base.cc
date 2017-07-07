@@ -317,7 +317,7 @@ gfx::Size RenderWidgetHostViewBase::GetVisibleViewportSize() const {
 }
 
 void RenderWidgetHostViewBase::SetInsets(const gfx::Insets& insets) {
-  NOTIMPLEMENTED();
+  NOTREACHED();
 }
 
 // static

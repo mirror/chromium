@@ -236,6 +236,13 @@ class CONTENT_EXPORT RenderWidgetHostView {
   // when the value has changed.  Views must initially default to false.
   virtual void SetNeedsBeginFrames(bool needs_begin_frames) = 0;
 
+  // Subclass identifier for RenderWidgetHostViewChildFrames. This is useful
+  // to be able to know if this RWHV is embedded within another RWHV. If
+  // other kinds of embeddable RWHVs are created, this should be renamed to
+  // a more generic term -- in which case, static casts to RWHVChildFrame will
+  // need to also be resolved.
+  virtual bool IsRenderWidgetHostViewChildFrame() = 0;
+
 #if defined(OS_MACOSX)
   // Return the accelerated widget which hosts the CALayers that draw the
   // content of the view in GetNativeView. This may be null.
