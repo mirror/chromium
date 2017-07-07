@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eeaae5a4_72c512b2",
+        "filename": "testing/buildbot/chromium.linux.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 3678,
+      "author": {
+        "id": 1153089
+      },
+      "writtenOn": "2017-07-07T11:09:28Z",
+      "side": 1,
+      "message": "IMHO the data can be used by other apps than just Flake Predictor. Besides, this name does not suggest what is being uploaded and where to? How about \"upload_summary_to_gs_bucket\"?",
+      "range": {
+        "startLine": 3678,
+        "startChar": 9,
+        "endLine": 3678,
+        "endChar": 34
+      },
+      "revId": "499674d5c1959aa9510377743e87eb68279d0b52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
