@@ -22,6 +22,30 @@
       "revId": "89e248339af076df5e71d7e9e33cbd66009fa0ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fc07e37_922e23f5",
+        "filename": "components/cronet/init_task_scheduler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-07T20:42:44Z",
+      "side": 1,
+      "message": "I think this is best settled once there is some shared ios/android policy.\nSo would prefer to leave it as the default for now.",
+      "parentUuid": "cad40cd9_bf45871f",
+      "range": {
+        "startLine": 12,
+        "startChar": 23,
+        "endLine": 12,
+        "endChar": 54
+      },
+      "revId": "89e248339af076df5e71d7e9e33cbd66009fa0ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
