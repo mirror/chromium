@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06795c09_3d8e49ed",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-07T12:43:34Z",
+      "side": 1,
+      "message": "you shouldn\u0027t need to include metrics_web_contents_observer - can you see if this can be removed?",
+      "revId": "2edbc67d720fd5dea1c17fe3e2dc08a07163f640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14304c7a_c8769b4f",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-07T12:43:34Z",
+      "side": 1,
+      "message": "same - should not need to include page_load_tracker.h",
+      "revId": "2edbc67d720fd5dea1c17fe3e2dc08a07163f640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92cd0943_dc8aaf8e",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-07T12:43:34Z",
+      "side": 1,
+      "message": "can remove this include, and the test_ukm_recorder.h include as well",
+      "revId": "2edbc67d720fd5dea1c17fe3e2dc08a07163f640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45b0d3f1_aa72f1be",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-07T12:43:34Z",
+      "side": 1,
+      "message": "the test harness does this registration now, so you can omit it. i believe this is what is causing the dchecks to fire in your tests.",
+      "revId": "2edbc67d720fd5dea1c17fe3e2dc08a07163f640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0dd1cff_6fe5f94a",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-07T12:43:34Z",
+      "side": 1,
+      "message": "can remove this as well, since the test harness manages the test recorder now",
+      "revId": "2edbc67d720fd5dea1c17fe3e2dc08a07163f640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
