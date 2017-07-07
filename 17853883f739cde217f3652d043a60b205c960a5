@@ -1,0 +1,310 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9db5e648_ccb0c6c4",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/ImageSerializationTag.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-07T20:00:50Z",
+      "side": 1,
+      "message": "Nit: I don\u0027t feel strongly, but I\u0027ve been annoyed in the past by these being chars (because we keep having to creatively come up with \"related\" chars). It might be easier to do:\n\n// These tags must remain supported indefinitely, and enumerators must not\n// be reused.\nenum class ImageSerializationTag {\n  kEnd \u003d 0,\n  kCanvasColorSpace \u003d 1,\n  kCanvasPixelFormatTag \u003d 2,\n  kStorageFormat \u003d 3,\n};\n\nnit: If this could be an \"enum class\", it will reduce risk of namespace collisions.",
+      "revId": "17853883f739cde217f3652d043a60b205c960a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a1b2b1e_8852644c",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/ImageSerializationTag.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-07T20:00:50Z",
+      "side": 1,
+      "message": "nit: Foramt -\u003e Format",
+      "revId": "17853883f739cde217f3652d043a60b205c960a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df94cf0f_4e86ee1c",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/ImageSerializationTag.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-07T20:00:50Z",
+      "side": 1,
+      "message": "For each of these tags, please comment what\u0027s expected to follow, and how it will be interpreted. Also update SerializationTag.h to reflect the presence of these tags.",
+      "revId": "17853883f739cde217f3652d043a60b205c960a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09ff0c99_851b16ed",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueDeserializer.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-07T20:00:50Z",
+      "side": 1,
+      "message": "Could these be values of enum type, so that we can more clearly see what the default value of 0 means?",
+      "revId": "17853883f739cde217f3652d043a60b205c960a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9717c24_155e2fbf",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueDeserializer.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-07T20:00:50Z",
+      "side": 1,
+      "message": "Super-nit: I\u0027d find it clearer to write \"Version() \u003e\u003d 18\", to make the correspondence with the comment about version 18 clearer.",
+      "revId": "17853883f739cde217f3652d043a60b205c960a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3655aefb_8efedc73",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueDeserializer.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-07T20:00:50Z",
+      "side": 1,
+      "message": "ditto about preferring enums",
+      "revId": "17853883f739cde217f3652d043a60b205c960a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d85c9c3_8522e55c",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueDeserializer.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-07T20:00:50Z",
+      "side": 1,
+      "message": "ditto: Version() \u003e\u003d 18",
+      "revId": "17853883f739cde217f3652d043a60b205c960a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bb18047_213db9ec",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueDeserializer.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-07T20:00:50Z",
+      "side": 1,
+      "message": "nit: that it\u0027s a base isn\u0027t really helpful in the variable name here. Suggest something like \"pixel_buffer\".",
+      "revId": "17853883f739cde217f3652d043a60b205c960a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52afff46_4a2207f8",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueDeserializer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-07T20:00:50Z",
+      "side": 1,
+      "message": "nit: If you adopt sequential tags (see other comment), this can probably be done more simply by using ReadUint32 (and it\u0027ll give us the flexibility to have more than 256 tags, not that we\u0027ll ever need it).\n\nAlso, please make this private (and probably move it to the source file), as I don\u0027t expect V8ScriptValueDeserializerForModules to require it.",
+      "revId": "17853883f739cde217f3652d043a60b205c960a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a71f787_15ef58eb",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueSerializer.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-07T20:00:50Z",
+      "side": 1,
+      "message": "nit: The origin clean and premultiplied bits seem like they might fit nicely as tags, too. If we are going to do that, now\u0027s the time to.",
+      "revId": "17853883f739cde217f3652d043a60b205c960a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4701ac2e_cbf51642",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueSerializer.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-07T20:00:50Z",
+      "side": 1,
+      "message": "nit: I\u0027d mildly prefer having helper functions to convert between the two in this file, or possibly in a related helper source file, but defer to junov@\u0027s preference. Making all of the objects have a \"Get*ForSerialization\" method seems like it makes those classes more confusing to read, when it\u0027s only needed locally by the serialization code.",
+      "revId": "17853883f739cde217f3652d043a60b205c960a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b743d8c_510ef115",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueSerializer.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-07T20:00:50Z",
+      "side": 1,
+      "message": "nit: might as well avoid calling BufferBase repeatedly; you can factor this out to a variable (e.g. \"pixels\") like was done previously (this also avoids needing to do the logic in BufferBase repeatedly).",
+      "revId": "17853883f739cde217f3652d043a60b205c960a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01280abd_dcee594b",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueSerializer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-07T20:00:50Z",
+      "side": 1,
+      "message": "If you change to using ReadUint32 on the other end, we can just use WriteUint32 at the call sites of this. If not, make this private.",
+      "revId": "17853883f739cde217f3652d043a60b205c960a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "352bdb29_3e8e023c",
+        "filename": "third_party/WebKit/Source/core/html/ImageData.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-07T20:00:50Z",
+      "side": 1,
+      "message": "nit: using enum class lets the enumerators be a little less verbose. This might also make sense in ImageSerializationTag.h, to group these together.\n\nenum class ImageDataStorageFormat {\n  kUint8,\n  kUint16,\n  kFloat32,\n};\n\nA brief comment about what this means would also be helpful.",
+      "revId": "17853883f739cde217f3652d043a60b205c960a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53d768a9_d702e3a0",
+        "filename": "third_party/WebKit/Source/core/html/ImageData.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-07T20:00:50Z",
+      "side": 1,
+      "message": "Name these parameters. Also, don\u0027t use \"const\u0026\" for integral types, just use pass the integer.",
+      "revId": "17853883f739cde217f3652d043a60b205c960a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9587fbf_4f391ee4",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasColorParams.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-07T20:00:50Z",
+      "side": 1,
+      "message": "Defer to junov@, but building these (though we will thankfully hit a Skia-side cache) just to do the comparison looks kinda expensive. Is this the idiomatic way to tell?",
+      "revId": "17853883f739cde217f3652d043a60b205c960a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f52952c_61b4b2eb",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasColorParams.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-07T20:00:50Z",
+      "side": 1,
+      "message": "nit: this seems like it would be clearer as a switch",
+      "revId": "17853883f739cde217f3652d043a60b205c960a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0a65fdb_ce853435",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasColorParams.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-07T20:00:50Z",
+      "side": 1,
+      "message": "These seem like they could be smaller helper functions living somewhere that convert between the for-serialization and internal-use enums (assuming we\u0027re not willing to lock in values of the current enums forever), to avoid making this class more complicated.",
+      "revId": "17853883f739cde217f3652d043a60b205c960a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
