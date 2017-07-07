@@ -6,13 +6,14 @@
 
 namespace content {
 
-static SeccompSandboxStatus g_status = SeccompSandboxStatus::NOT_SUPPORTED;
+static sandbox::SeccompSandboxStatus g_status =
+    sandbox::SeccompSandboxStatus::NOT_SUPPORTED;
 
-void SetSeccompSandboxStatus(SeccompSandboxStatus status) {
+void SetSeccompSandboxStatus(sandbox::SeccompSandboxStatus status) {
   g_status = status;
 }
 
-SeccompSandboxStatus GetSeccompSandboxStatus() {
+sandbox::SeccompSandboxStatus GetSeccompSandboxStatus() {
   return g_status;
 }
 
