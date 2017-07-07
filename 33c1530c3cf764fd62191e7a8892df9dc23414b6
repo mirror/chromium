@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "316f0b8c_e4ccbe4e",
+        "filename": "net/http/http_server_properties_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-07-07T19:38:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1cf9b1f_27ff551e",
+      "revId": "33c1530c3cf764fd62191e7a8892df9dc23414b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10a06f7a_1c042ca3",
         "filename": "net/http/http_server_properties_manager.cc",
         "patchSetId": 2
@@ -59,6 +77,48 @@
     },
     {
       "key": {
+        "uuid": "0cca79d5_99105728",
+        "filename": "net/http/http_server_properties_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-07-07T19:38:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10a06f7a_1c042ca3",
+      "range": {
+        "startLine": 588,
+        "startChar": 57,
+        "endLine": 588,
+        "endChar": 0
+      },
+      "revId": "33c1530c3cf764fd62191e7a8892df9dc23414b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "41dff3e9_1425057a",
+        "filename": "net/http/http_server_properties_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-07-07T19:38:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56acb929_a41b18f4",
+      "revId": "33c1530c3cf764fd62191e7a8892df9dc23414b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a8b743a_87552b1a",
         "filename": "net/http/http_server_properties_manager.cc",
         "patchSetId": 2
@@ -73,6 +133,24 @@
       "revId": "33c1530c3cf764fd62191e7a8892df9dc23414b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "629d481b_ee430d59",
+        "filename": "net/http/http_server_properties_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 728,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-07-07T19:38:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a8b743a_87552b1a",
+      "revId": "33c1530c3cf764fd62191e7a8892df9dc23414b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "5e3454e4_e68b76a2",
+        "filename": "net/http/http_server_properties_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 927,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-07-07T19:38:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b269ab5_ca5c9adc",
+      "revId": "33c1530c3cf764fd62191e7a8892df9dc23414b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dde82931_5dd79590",
         "filename": "net/http/http_server_properties_manager.cc",
         "patchSetId": 2
@@ -104,6 +200,24 @@
       "writtenOn": "2017-07-07T18:48:55Z",
       "side": 1,
       "message": "Do we ever expect recently_broken_alternative_service to be null?",
+      "revId": "33c1530c3cf764fd62191e7a8892df9dc23414b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edcb23bc_591ac048",
+        "filename": "net/http/http_server_properties_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1131,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-07-07T19:38:14Z",
+      "side": 1,
+      "message": "|recently_broken_alternative_service| could be null if broken alt-svcs aren\u0027t found in disk.\n|recently_broken_alternative_services| is passed from UpdateCacheFromPrefsOnPrefSequence(); |broken_alternative_service_list| and |recently_broken_alternative_services| are only allocated if the broken alt-svcs JSON list is found in disk.",
+      "parentUuid": "dde82931_5dd79590",
       "revId": "33c1530c3cf764fd62191e7a8892df9dc23414b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -124,6 +238,24 @@
       "revId": "33c1530c3cf764fd62191e7a8892df9dc23414b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2792fa96_8e3604fb",
+        "filename": "net/http/http_server_properties_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1257,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-07-07T19:38:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c1d38ca_dd30ff85",
+      "revId": "33c1530c3cf764fd62191e7a8892df9dc23414b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -150,6 +282,30 @@
     },
     {
       "key": {
+        "uuid": "1ec431c9_9f62cf2f",
+        "filename": "net/http/http_server_properties_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1258,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-07-07T19:38:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1adb73dd_5031a8e7",
+      "range": {
+        "startLine": 1258,
+        "startChar": 73,
+        "endLine": 1258,
+        "endChar": 0
+      },
+      "revId": "33c1530c3cf764fd62191e7a8892df9dc23414b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "acd7feca_52d304fe",
         "filename": "net/http/http_server_properties_manager.h",
         "patchSetId": 2
@@ -170,6 +326,30 @@
       "revId": "33c1530c3cf764fd62191e7a8892df9dc23414b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c082e12_552f2cc1",
+        "filename": "net/http/http_server_properties_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-07-07T19:38:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "acd7feca_52d304fe",
+      "range": {
+        "startLine": 290,
+        "startChar": 68,
+        "endLine": 290,
+        "endChar": 0
+      },
+      "revId": "33c1530c3cf764fd62191e7a8892df9dc23414b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
