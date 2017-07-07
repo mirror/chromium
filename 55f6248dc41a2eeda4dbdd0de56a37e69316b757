@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "ab726ae8_635226a3",
+        "filename": "content/browser/compositor/gpu_process_transport_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-07-07T03:36:23Z",
+      "side": 1,
+      "message": "If there\u0027s no ExternalBeginFrameController (see comments there) then this can be a unique_ptr and the factory can create it by itself based on the enable_external_begin_frames flag.",
+      "revId": "55f6248dc41a2eeda4dbdd0de56a37e69316b757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "30fee002_92ac3bbb",
         "filename": "content/renderer/gpu/render_widget_compositor.h",
         "patchSetId": 3
@@ -96,6 +113,30 @@
     },
     {
       "key": {
+        "uuid": "1f1df8bf_ebac743a",
+        "filename": "content/renderer/gpu/render_widget_compositor.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-07-07T03:36:23Z",
+      "side": 1,
+      "message": "Almost every flag in CompositorDependencies is passed via command-line flags so they are per RenderThread. The notable exception is the scroll animator flag set here in a super hacky way (let\u0027s not do that) from CreateViewParams: https://cs.chromium.org/chromium/src/content/renderer/render_thread_impl.cc?rcl\u003d25ff9b7cb09ab7db6dd453c5d5c43779a58c8159\u0026l\u003d2161",
+      "parentUuid": "7b178ed0_535a4c37",
+      "range": {
+        "startLine": 82,
+        "startChar": 11,
+        "endLine": 82,
+        "endChar": 51
+      },
+      "revId": "55f6248dc41a2eeda4dbdd0de56a37e69316b757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "86c999d5_6911b0ad",
         "filename": "ui/compositor/external_begin_frame_controller.h",
         "patchSetId": 3
@@ -113,6 +154,23 @@
         "endLine": 15,
         "endChar": 23
       },
+      "revId": "55f6248dc41a2eeda4dbdd0de56a37e69316b757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfe1dc74_2c27fa1f",
+        "filename": "ui/compositor/external_begin_frame_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-07-07T03:36:23Z",
+      "side": 1,
+      "message": "I feel like a simpler design would be to add BeginFrameAck as a param to BeginFrameSource::DidFinishFrame which gets forwarded to ExternalBeginFrameSourceClient::DidFinishFrame (new method in that interface). That way there\u0027s no DisplaySchedulerObserver or ExternalBeginFrameController because you can use ExternalBeginFrameSource directly.",
       "revId": "55f6248dc41a2eeda4dbdd0de56a37e69316b757",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
