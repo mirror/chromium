@@ -66,8 +66,14 @@ bool EnumTraits<media::mojom::DecodeError,
 mojo::ScopedSharedBufferHandle
 StructTraits<media::mojom::BitstreamBufferDataView, media::BitstreamBuffer>::
     memory_handle(const media::BitstreamBuffer& input) {
-  return mojo::WrapSharedMemoryHandle(input.handle(), input.handle().GetSize(),
-                                      false);
+  base::SharedMemoryHandle input_handle =
+      base::SharedMemory::DuplicateHandle(input.handle());
+  if (!base::SharedMemory::IsHandleValid(input_handle)) {
+    DLOG(ERROR) << "Failed to duplicate handle of BitstreamBuffer";
+    return mojo::ScopedSharedBufferHandle();
+  }
+  return mojo::WrapSharedMemoryHandle(input_handle, input.size(),
+                                      true /* read_only */);
 }
 
 // static
@@ -102,7 +108,8 @@ bool StructTraits<
     return false;
 
   media::BitstreamBuffer bitstream_buffer(
-      input.id(), memory_handle, input.size(), input.offset(), timestamp);
+      input.id(), memory_handle, input.size(),
+      base::checked_cast<off_t>(input.offset()), timestamp);
   bitstream_buffer.SetDecryptConfig(
       media::DecryptConfig(key_id, iv, subsamples));
   *output = bitstream_buffer;
