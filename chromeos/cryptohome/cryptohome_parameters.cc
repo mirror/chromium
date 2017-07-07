@@ -254,11 +254,11 @@ void SetGaiaIdMigrationStatusDone(const AccountId& account_id) {
 
 }  // namespace cryptohome
 
-namespace BASE_HASH_NAMESPACE {
+namespace std {
 
 std::size_t hash<cryptohome::Identification>::operator()(
     const cryptohome::Identification& cryptohome_id) const {
   return hash<std::string>()(cryptohome_id.id());
 }
 
-}  // namespace BASE_HASH_NAMESPACE
+}  // namespace std
