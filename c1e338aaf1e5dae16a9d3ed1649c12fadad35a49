@@ -46,6 +46,30 @@
       "revId": "c1e338aaf1e5dae16a9d3ed1649c12fadad35a49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f420df4c_cab0104b",
+        "filename": "content/browser/service_worker/service_worker_register_job.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-07T14:43:46Z",
+      "side": 1,
+      "message": "Ah yea, having a timer on every update may be a bit overkill since it happens so often.\n\nWe could have a single repeating timer in JobCoordinator that just checks the current job (the front of the queue) every 30 min.  If the job was started 30 min ago, call Abort(). That\u0027s pretty simple and will ensure we don\u0027t get stuck forever.",
+      "parentUuid": "f49e8433_7bef0913",
+      "range": {
+        "startLine": 167,
+        "startChar": 23,
+        "endLine": 167,
+        "endChar": 41
+      },
+      "revId": "c1e338aaf1e5dae16a9d3ed1649c12fadad35a49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
