@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "bc10ead7_842311d6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-07-07T10:05:47Z",
+      "side": 1,
+      "message": "Maybe it\u0027s better to have a link there. To the revision crrev.com/2fd1706822e4bd350826788f822d9a738ffca034",
+      "range": {
+        "startLine": 9,
+        "startChar": 12,
+        "endLine": 9,
+        "endChar": 22
+      },
+      "revId": "b5fd27405ae8c6be37baee0b7259b803a49f3040",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "79485f69_1fdded4e",
         "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
         "patchSetId": 2
