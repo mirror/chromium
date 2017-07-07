@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<style>
+.parent {
+  --transform-list: translateX(30px);
+}
+.target {
+  --transform-list: translateX(10px);
+}
+</style>
+<body>
+<script src="../interpolation/resources/interpolation-test.js"></script>
+<script>
+CSS.registerProperty({
+  name: '--transform-list',
+  syntax: '<transform-list>',
+  initialValue: 'translateX(40px)',
+});
+
+assertInterpolation({
+  property: '--transform-list',
+  from: neutralKeyframe,
+  to: 'translateX(20px)',
+}, [
+  {at: -0.3, is: 'translate3d(7px, 0px, 0)'},
+  {at: 0, is: 'translate3d(10px, 0px, 0)'},
+  {at: 0.5, is: 'translate3d(15px, 0px, 0)'},
+  {at: 1, is: 'translate3d(20px, 0px, 0)'},
+  {at: 1.5, is: 'translate3d(25px, 0px, 0)'},
+]);
+
+assertInterpolation({
+  property: '--transform-list',
+  from: 'initial',
+  to: 'translate3d(20px, 0px, 0px)',
+}, [
+  {at: -0.3, is: 'translate3d(46px, 0px, 0px)'},
+  {at: 0, is: 'translate3d(40px, 0px, 0px)'},
+  {at: 0.5, is: 'translate3d(30px, 0px, 0px)'},
+  {at: 1, is: 'translate3d(20px, 0px, 0px)'},
+  {at: 1.5, is: 'translate3d(10px, 0px, 0px)'},
+]);
+
+assertInterpolation({
+  property: '--transform-list',
+  from: 'inherit',
+  to: 'translate3d(20px, 0px, 0px)',
+}, [
+  {at: -0.3, is: 'translate3d(33px, 0px, 0px)'},
+  {at: 0, is: 'translate3d(30px, 0px, 0px)'},
+  {at: 0.5, is: 'translate3d(25px, 0px, 0px)'},
+  {at: 1, is: 'translate3d(20px, 0px, 0px)'},
+  {at: 1.5, is: 'translate3d(15px, 0px, 0px)'},
+]);
+
+assertInterpolation({
+  property: '--transform-list',
+  from: 'unset',
+  to: 'translate3d(20px, 0px, 0px)',
+}, [
+  {at: -0.3, is: 'translate3d(46px, 0px, 0px)'},
+  {at: 0, is: 'translate3d(40px, 0px, 0px)'},
+  {at: 0.5, is: 'translate3d(30px, 0px, 0px)'},
+  {at: 1, is: 'translate3d(20px, 0px, 0px)'},
+  {at: 1.5, is: 'translate3d(10px, 0px, 0px)'},
+]);
+
+assertInterpolation({
+  property: '--transform-list',
+  from: 'translateY(-10px)',
+  to: 'translateY(10px)',
+}, [
+  {at: -0.3, is: 'translate3d(0px, -16px, 0px)'},
+  {at: 0, is: 'translate3d(0px, -10px, 0px)'},
+  {at: 0.5, is: 'translate3d(0px, 0px, 0px)'},
+  {at: 1, is: 'translate3d(0px, 10px, 0px)'},
+  {at: 1.5, is: 'translate3d(0px, 20px, 0px)'}
+]);
+
+assertInterpolation({
+  property: '--transform-list',
+  from: 'translateX(100px)',
+  to: 'translateY(100px)',
+}, [
+  {at: -0.3, is: 'translate3d(-16px, 0px, 0px)'},
+  {at: 0, is: 'translate3d(-10px, 0px, 0px)'},
+  {at: 0.5, is: 'translate3d(0px, 0px, 0px)'},
+  {at: 1, is: 'translate3d(10px, 0px, 0px)'},
+  {at: 1.5, is: 'translate3d(20px, 0px, 0px)'}
+]);
+
+assertInterpolation({
+  property: '--transform-list',
+  from: 'translateX(100px)',
+  to: 'translateX(100%)',
+}, [
+  {at: -0.3, is: 'translate3d(-16px, 0px, 0px)'},
+  {at: 0, is: 'translate3d(-10px, 0px, 0px)'},
+  {at: 0.5, is: 'translate3d(0px, 0px, 0px)'},
+  {at: 1, is: 'translate3d(10px, 0px, 0px)'},
+  {at: 1.5, is: 'translate3d(20px, 0px, 0px)'}
+]);
+</script>
+</body>

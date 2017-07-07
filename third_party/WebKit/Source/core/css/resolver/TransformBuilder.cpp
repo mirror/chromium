@@ -100,6 +100,53 @@ static TransformOperation::OperationType GetTransformOperationType(
   }
 }
 
+static CSSValueID GetCSSKeyword(TransformOperation::OperationType type) {
+  switch (type) {
+    default:
+      NOTREACHED();
+    case TransformOperation::kScale:
+      return CSSValueScale;
+    case TransformOperation::kScaleX:
+      return CSSValueScaleX;
+    case TransformOperation::kScaleY:
+      return CSSValueScaleY;
+    case TransformOperation::kScaleZ:
+      return CSSValueScaleZ;
+    case TransformOperation::kScale3D:
+      return CSSValueScale3d;
+    case TransformOperation::kTranslate:
+      return CSSValueTranslate;
+    case TransformOperation::kTranslateX:
+      return CSSValueTranslateX;
+    case TransformOperation::kTranslateY:
+      return CSSValueTranslateY;
+    case TransformOperation::kTranslateZ:
+      return CSSValueTranslateZ;
+    case TransformOperation::kTranslate3D:
+      return CSSValueTranslate3d;
+    case TransformOperation::kRotate:
+      return CSSValueRotate;
+    case TransformOperation::kRotateX:
+      return CSSValueRotateX;
+    case TransformOperation::kRotateY:
+      return CSSValueRotateY;
+    case TransformOperation::kRotate3D:
+      return CSSValueRotate3d;
+    case TransformOperation::kSkew:
+      return CSSValueSkew;
+    case TransformOperation::kSkewX:
+      return CSSValueSkewX;
+    case TransformOperation::kSkewY:
+      return CSSValueSkewY;
+    case TransformOperation::kMatrix:
+      return CSSValueMatrix;
+    case TransformOperation::kMatrix3D:
+      return CSSValueMatrix3d;
+    case TransformOperation::kPerspective:
+      return CSSValuePerspective;
+  }
+}
+
 bool TransformBuilder::HasRelativeLengths(const CSSValueList& value_list) {
   for (auto& value : value_list) {
     const CSSFunctionValue* transform_value = ToCSSFunctionValue(value.Get());
@@ -341,6 +388,135 @@ TransformOperations TransformBuilder::CreateTransformOperations(
     }
   }
   return operations;
+}
+
+static CSSValue& CreateNumber(double value) {
+  return *CSSPrimitiveValue::Create(value,
+                                    CSSPrimitiveValue::UnitType::kNumber);
+}
+
+static CSSValue& CreateMatrix3D(TransformationMatrix& matrix, float zoom) {
+  CSSFunctionValue& function = *CSSFunctionValue::Create(CSSValueMatrix3d);
+  matrix.Zoom(1 / zoom);
+  function.Append(CreateNumber(matrix.M11()));
+  function.Append(CreateNumber(matrix.M12()));
+  function.Append(CreateNumber(matrix.M13()));
+  function.Append(CreateNumber(matrix.M14()));
+  function.Append(CreateNumber(matrix.M21()));
+  function.Append(CreateNumber(matrix.M22()));
+  function.Append(CreateNumber(matrix.M23()));
+  function.Append(CreateNumber(matrix.M24()));
+  function.Append(CreateNumber(matrix.M31()));
+  function.Append(CreateNumber(matrix.M32()));
+  function.Append(CreateNumber(matrix.M33()));
+  function.Append(CreateNumber(matrix.M34()));
+  function.Append(CreateNumber(matrix.M41()));
+  function.Append(CreateNumber(matrix.M42()));
+  function.Append(CreateNumber(matrix.M43()));
+  function.Append(CreateNumber(matrix.M44()));
+  return function;
+}
+
+const CSSValue& TransformBuilder::CreateCSSValue(
+    const TransformOperations& operations,
+    float zoom) {
+  CSSValueList& result = *CSSValueList::CreateSpaceSeparated();
+  for (size_t i = 0; i < operations.size(); ++i) {
+    const TransformOperation& operation = *operations.at(i);
+    TransformOperation::OperationType type = operation.PrimitiveType();
+
+    if (type == TransformOperation::kIdentity) {
+      continue;
+    }
+
+    if (type == TransformOperation::kMatrix3D) {
+      TransformationMatrix matrix =
+          ToMatrix3DTransformOperation(operation).Matrix();
+      result.Append(CreateMatrix3D(matrix, zoom));
+      continue;
+    }
+
+    if (type == TransformOperation::kInterpolated) {
+      // TODO: We should be able to construct a CSS Value representing this
+      // transform operation without depending on layout. Spec issue:
+      // https://github.com/w3c/css-houdini-drafts/issues/425
+      TransformationMatrix matrix;
+      operation.Apply(matrix, FloatSize());
+      result.Append(CreateMatrix3D(matrix, zoom));
+      continue;
+    }
+
+    CSSFunctionValue& function = *CSSFunctionValue::Create(GetCSSKeyword(type));
+    switch (type) {
+      case TransformOperation::kScale3D: {
+        const ScaleTransformOperation& scale =
+            ToScaleTransformOperation(operation);
+        function.Append(CreateNumber(scale.X()));
+        function.Append(CreateNumber(scale.Y()));
+        function.Append(CreateNumber(scale.Z()));
+        break;
+      }
+      case TransformOperation::kTranslate3D: {
+        const TranslateTransformOperation& translate =
+            ToTranslateTransformOperation(operation);
+        function.Append(*CSSPrimitiveValue::Create(translate.X(), zoom));
+        function.Append(*CSSPrimitiveValue::Create(translate.Y(), zoom));
+        function.Append(*CSSPrimitiveValue::Create(
+            translate.Z(), CSSPrimitiveValue::UnitType::kPixels));
+        break;
+      }
+      case TransformOperation::kRotate3D: {
+        const RotateTransformOperation& rotate =
+            ToRotateTransformOperation(operation);
+        function.Append(CreateNumber(rotate.X()));
+        function.Append(CreateNumber(rotate.Y()));
+        function.Append(CreateNumber(rotate.Z()));
+        function.Append(*CSSPrimitiveValue::Create(
+            rotate.Angle(), CSSPrimitiveValue::UnitType::kDegrees));
+        break;
+      }
+      case TransformOperation::kSkew: {
+        const SkewTransformOperation& skew =
+            ToSkewTransformOperation(operation);
+        function.Append(CreateNumber(skew.AngleX()));
+        function.Append(CreateNumber(skew.AngleY()));
+        break;
+      }
+      case TransformOperation::kSkewX:
+        function.Append(
+            CreateNumber(ToSkewTransformOperation(operation).AngleX()));
+        break;
+      case TransformOperation::kSkewY:
+        function.Append(
+            CreateNumber(ToSkewTransformOperation(operation).AngleY()));
+        break;
+      case TransformOperation::kMatrix: {
+        TransformationMatrix matrix =
+            ToMatrixTransformOperation(operation).Matrix();
+        matrix.Zoom(1 / zoom);
+        function.Append(CreateNumber(matrix.A()));
+        function.Append(CreateNumber(matrix.B()));
+        function.Append(CreateNumber(matrix.C()));
+        function.Append(CreateNumber(matrix.D()));
+        function.Append(CreateNumber(matrix.E()));
+        function.Append(CreateNumber(matrix.F()));
+        break;
+      }
+      case TransformOperation::kPerspective:
+        function.Append(CreateNumber(
+            ToPerspectiveTransformOperation(operation).Perspective()));
+        break;
+      default:
+        NOTREACHED();
+        break;
+    }
+    result.Append(function);
+  }
+
+  if (result.length() == 0) {
+    return *CSSIdentifierValue::Create(CSSValueNone);
+  }
+  return result;
 }
 
 }  // namespace blink

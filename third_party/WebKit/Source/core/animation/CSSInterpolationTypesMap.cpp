@@ -382,8 +382,10 @@ CSSInterpolationTypesMap::CreateInterpolationTypesForCSSSyntax(
       case CSSSyntaxType::kInteger:
         result.push_back(WTF::MakeUnique<CSSNumberInterpolationType>(
             property, &registration, true));
+        break;
       case CSSSyntaxType::kTransformList:
-        // TODO(alancutter): Support smooth interpolation of these types.
+        result.push_back(WTF::MakeUnique<CSSTransformInterpolationType>(
+            property, &registration));
         break;
       case CSSSyntaxType::kCustomIdent:
       case CSSSyntaxType::kIdent:

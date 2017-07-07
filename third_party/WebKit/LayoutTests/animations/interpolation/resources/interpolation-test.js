@@ -162,7 +162,7 @@
       animation.pause();
       animation.currentTime = 0.5;
     },
-    rebaseline: false,
+    rebaseline: true,
   };
 
   function expectFlip(from, to, flipAt) {

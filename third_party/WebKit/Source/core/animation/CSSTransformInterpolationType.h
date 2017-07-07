@@ -11,9 +11,12 @@ namespace blink {
 
 class CSSTransformInterpolationType : public CSSInterpolationType {
  public:
-  CSSTransformInterpolationType(PropertyHandle property)
-      : CSSInterpolationType(property) {
-    DCHECK_EQ(CssProperty(), CSSPropertyTransform);
+  CSSTransformInterpolationType(
+      PropertyHandle property,
+      const PropertyRegistration* registration = nullptr)
+      : CSSInterpolationType(property, registration) {
+    DCHECK(property.IsCSSCustomProperty() ||
+           CssProperty() == CSSPropertyTransform);
   }
 
   InterpolationValue MaybeConvertStandardPropertyUnderlyingValue(
@@ -40,6 +43,10 @@ class CSSTransformInterpolationType : public CSSInterpolationType {
                                        const StyleResolverState*,
                                        ConversionCheckers&) const final;
   void AdditiveKeyframeHook(InterpolationValue&) const final;
+
+  const CSSValue* CreateCSSValue(const InterpolableValue&,
+                                 const NonInterpolableValue*,
+                                 const StyleResolverState&) const final;
 };
 
 }  // namespace blink

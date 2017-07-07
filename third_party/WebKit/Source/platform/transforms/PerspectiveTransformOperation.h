@@ -43,9 +43,12 @@ class PLATFORM_EXPORT PerspectiveTransformOperation final
     return IsSameType(other);
   }
 
- private:
   OperationType GetType() const override { return kPerspective; }
+  static bool IsMatchingOperationType(OperationType type) {
+    return type == kPerspective;
+  }
 
+ private:
   bool operator==(const TransformOperation& o) const override {
     if (!IsSameType(o))
       return false;
@@ -67,6 +70,8 @@ class PLATFORM_EXPORT PerspectiveTransformOperation final
 
   double p_;
 };
+
+DEFINE_TRANSFORM_TYPE_CASTS(PerspectiveTransformOperation);
 
 }  // namespace blink
 

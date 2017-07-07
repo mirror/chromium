@@ -49,6 +49,7 @@ class TransformBuilder {
   static TransformOperations CreateTransformOperations(
       const CSSValue& in_value,
       const CSSToLengthConversionData&);
+  static const CSSValue& CreateCSSValue(const TransformOperations&, float zoom);
 };
 
 }  // namespace blink

@@ -177,8 +177,7 @@ InterpolationValue CSSTransformInterpolationType::MaybeConvertValue(
     const CSSValue& value,
     const StyleResolverState* state,
     ConversionCheckers& conversion_checkers) const {
-  DCHECK(state);
-  if (value.IsValueList()) {
+  if (state && value.IsValueList()) {
     CSSLengthArray length_array;
     for (const CSSValue* item : ToCSSValueList(value)) {
       const CSSFunctionValue& transform_function = ToCSSFunctionValue(*item);
@@ -202,9 +201,9 @@ InterpolationValue CSSTransformInterpolationType::MaybeConvertValue(
       conversion_checkers.push_back(std::move(length_units_checker));
   }
 
-  DCHECK(state);
   TransformOperations transform = TransformBuilder::CreateTransformOperations(
-      value, state->CssToLengthConversionData());
+      value,
+      state ? state->CssToLengthConversionData() : CSSToLengthConversionData());
   return ConvertTransform(std::move(transform));
 }
 
@@ -262,6 +261,18 @@ void CSSTransformInterpolationType::ApplyStandardPropertyValue(
       ToCSSTransformNonInterpolableValue(*untyped_non_interpolable_value);
   state.Style()->SetTransform(
       non_interpolable_value.GetInterpolatedTransform(progress));
+}
+
+const CSSValue* CSSTransformInterpolationType::CreateCSSValue(
+    const InterpolableValue& interpolable_value,
+    const NonInterpolableValue* untyped_non_interpolable_value,
+    const StyleResolverState& state) const {
+  double progress = ToInterpolableNumber(interpolable_value).Value();
+  const CSSTransformNonInterpolableValue& non_interpolable_value =
+      ToCSSTransformNonInterpolableValue(*untyped_non_interpolable_value);
+  return &TransformBuilder::CreateCSSValue(
+      non_interpolable_value.GetInterpolatedTransform(progress),
+      state.Style()->EffectiveZoom());
 }
 
 }  // namespace blink

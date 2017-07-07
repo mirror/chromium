@@ -43,9 +43,12 @@ class PLATFORM_EXPORT SkewTransformOperation final : public TransformOperation {
 
   virtual bool CanBlendWith(const TransformOperation& other) const;
 
- private:
   OperationType GetType() const override { return type_; }
+  static bool IsMatchingOperationType(OperationType type) {
+    return type == kSkew || type == kSkewX || type == kSkewY;
+  }
 
+ private:
   bool operator==(const TransformOperation& o) const override {
     if (!IsSameType(o))
       return false;
@@ -70,6 +73,8 @@ class PLATFORM_EXPORT SkewTransformOperation final : public TransformOperation {
   double angle_y_;
   OperationType type_;
 };
+
+DEFINE_TRANSFORM_TYPE_CASTS(SkewTransformOperation);
 
 }  // namespace blink
 
