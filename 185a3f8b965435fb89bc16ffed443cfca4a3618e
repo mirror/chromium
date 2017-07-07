@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "d379e042_97ddc5db",
+        "filename": "ios/chrome/browser/payments/itunes_json_request.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-07-07T19:47:15Z",
+      "side": 1,
+      "message": "use https if possible",
+      "range": {
+        "startLine": 22,
+        "startChar": 41,
+        "endLine": 22,
+        "endChar": 45
+      },
+      "revId": "185a3f8b965435fb89bc16ffed443cfca4a3618e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "557b243e_aa6bc053",
         "filename": "ios/chrome/browser/payments/itunes_json_request.cc",
         "patchSetId": 3
@@ -18,6 +41,53 @@
         "startChar": 2,
         "endLine": 41,
         "endChar": 4
+      },
+      "revId": "185a3f8b965435fb89bc16ffed443cfca4a3618e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5be77b29_a41d2e2d",
+        "filename": "ios/chrome/browser/payments/itunes_json_request.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-07-07T19:47:15Z",
+      "side": 1,
+      "message": "nit on the nit:\n\nA switch is way better, but don\u0027t put a \"default:\" case.\nThat way, you\u0027ll have a compilation error if you ever add a new entry to the ITunesStoreRequestType enum, which will remind you to update this switch.",
+      "parentUuid": "557b243e_aa6bc053",
+      "range": {
+        "startLine": 41,
+        "startChar": 2,
+        "endLine": 41,
+        "endChar": 4
+      },
+      "revId": "185a3f8b965435fb89bc16ffed443cfca4a3618e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a6bd31c_f1418881",
+        "filename": "ios/chrome/browser/payments/itunes_json_request.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-07-07T19:47:15Z",
+      "side": 1,
+      "message": "I don\u0027t know about your feature, but maybe we could use some other flags?\nMAYBE_USER_GESTURE?\nDO_NOT_SEND_COOKIES?\nVERIFY_EV_CERT?\n\n(I have no idea, just throwing ideas)",
+      "range": {
+        "startLine": 52,
+        "startChar": 12,
+        "endLine": 52,
+        "endChar": 24
       },
       "revId": "185a3f8b965435fb89bc16ffed443cfca4a3618e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -53,6 +123,29 @@
       "writtenOn": "2017-07-07T16:25:15Z",
       "side": 1,
       "message": "I\u0027m not sure about the tradeoffs, but you should be able to run the callbacks synchronously. Perhaps another reviewer can comment:\nif (value)\n  success_callback.Run(std::move(value));\nelse\n  error_callback.Run(json_reader.GetErrorMessage());",
+      "revId": "185a3f8b965435fb89bc16ffed443cfca4a3618e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7187cbde_7af0d703",
+        "filename": "ios/chrome/browser/payments/itunes_json_request.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-07-07T19:47:15Z",
+      "side": 1,
+      "message": "Can we use net::HTTP_OK instead of 200?",
+      "range": {
+        "startLine": 99,
+        "startChar": 74,
+        "endLine": 99,
+        "endChar": 77
+      },
       "revId": "185a3f8b965435fb89bc16ffed443cfca4a3618e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
