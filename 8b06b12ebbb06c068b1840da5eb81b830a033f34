@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "a66f55f6_322e500a",
+        "filename": "media/filters/gpu_video_decoder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-07-07T03:12:24Z",
+      "side": 1,
+      "message": "Sorry, I was the one misread the code. I agree with you that SHMBuffer is not needed. Since it is not directly related to the memory-leak issue. I prepared another CL to remove it.\nhttps://chromium-review.googlesource.com/c/562907/",
+      "parentUuid": "20cb4434_0dcb1365",
+      "revId": "8b06b12ebbb06c068b1840da5eb81b830a033f34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "816a3993_173628a1",
         "filename": "media/filters/gpu_video_decoder.h",
         "patchSetId": 1
