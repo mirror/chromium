@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cdb58aa9_9df9a347",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParser.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1205,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-07-07T05:49:50Z",
+      "side": 1,
+      "message": "how about instead of both these if statements\nif (!needs_legacy_parsing)\n  return parsed_value;",
+      "revId": "58faee0be286c8f83fbaa6b03241d74435196f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
