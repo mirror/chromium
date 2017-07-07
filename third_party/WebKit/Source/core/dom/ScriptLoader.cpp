@@ -676,22 +676,8 @@ bool ScriptLoader::PrepareScript(const TextPosition& script_start_position,
                         ? element_document.Url()
                         : KURL();
 
-  switch (ExecuteScript(ClassicScript::Create(
-      ScriptSourceCode(element_->TextFromChildren(), script_url, position)))) {
-    case ExecuteScriptResult::kShouldFireLoadEvent:
-      // The load event is not fired because this is an inline script.
-      return true;
-
-    case ExecuteScriptResult::kShouldFireErrorEvent:
-      DispatchErrorEvent();
-      return false;
-
-    case ExecuteScriptResult::kShouldFireNone:
-      return true;
-  }
-
-  NOTREACHED();
-  return false;
+  return ExecuteScriptBlock(ClassicPendingScript::Create(element_, position),
+                            script_url);
 }
 
 bool ScriptLoader::FetchClassicScript(
@@ -910,26 +896,56 @@ void ScriptLoader::Execute() {
   DCHECK(!will_be_parser_executed_);
   DCHECK(async_exec_type_ != ScriptRunner::kNone);
   DCHECK(pending_script_->IsExternalOrModule());
-  bool error_occurred = false;
-  Script* script = pending_script_->GetSource(NullURL(), error_occurred);
-  const bool wasCanceled = pending_script_->WasCanceled();
-  DetachPendingScript();
-  if (error_occurred) {
-    DispatchErrorEvent();
-  } else if (!wasCanceled) {
-    switch (ExecuteScript(script)) {
-      case ExecuteScriptResult::kShouldFireLoadEvent:
-        DispatchLoadEvent();
-        break;
-      case ExecuteScriptResult::kShouldFireErrorEvent:
-        DispatchErrorEvent();
-        break;
-      case ExecuteScriptResult::kShouldFireNone:
-        break;
-    }
-  }
+  PendingScript* pending_script = pending_script_;
+  pending_script_ = nullptr;
+  ExecuteScriptBlock(pending_script, NullURL());
   resource_ = nullptr;
   module_tree_client_ = nullptr;
+}
+
+// https://html.spec.whatwg.org/#execute-the-script-block
+bool ScriptLoader::ExecuteScriptBlock(PendingScript* pending_script,
+                                      const KURL& document_url) {
+  DCHECK(pending_script);
+  DCHECK_EQ(pending_script->IsExternal(), is_external_script_);
+
+  bool error_occurred = false;
+  Script* script = pending_script->GetSource(document_url, error_occurred);
+  const bool was_canceled = pending_script->WasCanceled();
+  const bool is_external = pending_script->IsExternal();
+  pending_script->Dispose();
+
+  // 2. "If the script's script is null, fire an event named error at the
+  //     element, and abort these steps."
+  if (error_occurred) {
+    DispatchErrorEvent();
+    return false;
+  }
+
+  if (was_canceled)
+    return false;
+
+  // Steps 3--7 are in ExecuteScript().
+  switch (ExecuteScript(script)) {
+    case ExecuteScriptResult::kShouldFireLoadEvent:
+      // 8. "If the script is from an external file, then fire an event named
+      //     load at the script element."
+      if (is_external)
+        DispatchLoadEvent();
+      return true;
+
+    case ExecuteScriptResult::kShouldFireErrorEvent:
+      // Consider as if "the script's script is null" retrospectively,
+      // due to CSP check failures etc., which are considered as load failure.
+      DispatchErrorEvent();
+      return false;
+
+    case ExecuteScriptResult::kShouldFireNone:
+      return true;
+  }
+
+  NOTREACHED();
+  return false;
 }
 
 void ScriptLoader::PendingScriptFinished(PendingScript* pending_script) {
@@ -957,13 +973,6 @@ void ScriptLoader::PendingScriptFinished(PendingScript* pending_script) {
     return;
   }
 
-  if (ErrorOccurred()) {
-    context_document->GetScriptRunner()->NotifyScriptLoadError(
-        this, async_exec_type_);
-    DetachPendingScript();
-    DispatchErrorEvent();
-    return;
-  }
   context_document->GetScriptRunner()->NotifyScriptReady(this,
                                                          async_exec_type_);
   pending_script_->StopWatchingForLoad();
