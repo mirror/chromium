@@ -12,6 +12,7 @@
 #include "base/strings/stringprintf.h"
 #include "chrome/browser/signin/account_tracker_service_factory.h"
 #include "chrome/browser/signin/profile_oauth2_token_service_factory.h"
+#include "chrome/browser/signin/signin_manager_factory.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/test/base/in_process_browser_test.h"
@@ -19,6 +20,7 @@
 #include "components/signin/core/browser/account_tracker_service.h"
 #include "components/signin/core/browser/profile_oauth2_token_service.h"
 #include "components/signin/core/browser/signin_header_helper.h"
+#include "components/signin/core/browser/signin_manager.h"
 #include "components/signin/core/common/profile_management_switches.h"
 #include "content/public/test/browser_test.h"
 #include "content/public/test/browser_test_utils.h"
@@ -42,8 +44,11 @@ const char kAuthorizationCode[] = "authorization_code";
 const char kDiceResponseHeader[] = "X-Chrome-ID-Consistency-Response";
 const char kEmail[] = "email@example.com";
 const char kGaiaID[] = "gaia_id";
+const char kGoogleSignoutResponseHeader[] = "Google-Accounts-SignOut";
 const char kOAuth2TokenExchangeURL[] = "/oauth2/v4/token";
 const char kSigninURL[] = "/signin";
+const char kSignoutURL[] = "/signout";
+const char kSignedOutMessage[] = "signed_out";
 
 // Handler for the signin page on the embedded test server.
 // Displays the content of the Dice request header and sets the dice response
@@ -65,6 +70,23 @@ std::unique_ptr<HttpResponse> HandleSigninURL(const HttpRequest& request) {
       base::StringPrintf(
           "action=SIGNIN,authuser=1,id=%s,email=%s,authorization_code=%s",
           kGaiaID, kEmail, kAuthorizationCode));
+  http_response->AddCustomHeader("Cache-Control", "no-store");
+  return std::move(http_response);
+}
+
+// Handler for the signout page on the embedded test server.
+// Responds with a Google-Accounts-SignOut header.
+std::unique_ptr<HttpResponse> HandleSignoutURL(const HttpRequest& request) {
+  if (!net::test_server::ShouldHandle(request, kSignoutURL))
+    return nullptr;
+
+  std::unique_ptr<BasicHttpResponse> http_response(new BasicHttpResponse);
+  http_response->set_content(kSignedOutMessage);
+  http_response->set_content_type("text/plain");
+  http_response->AddCustomHeader(
+      kGoogleSignoutResponseHeader,
+      base::StringPrintf("email=\"%s\", obfuscatedid=\"%s\", sessionindex=1",
+                         kEmail, kGaiaID));
   http_response->AddCustomHeader("Cache-Control", "no-store");
   return std::move(http_response);
 }
@@ -112,6 +134,7 @@ class DiceBrowserTest : public InProcessBrowserTest,
         token_requested_(false),
         refresh_token_available_(false) {
     https_server_.RegisterDefaultHandler(base::Bind(&HandleSigninURL));
+    https_server_.RegisterDefaultHandler(base::Bind(&HandleSignoutURL));
     https_server_.RegisterDefaultHandler(
         base::Bind(&HandleOAuth2TokenExchangeURL, &token_requested_));
   }
@@ -121,6 +144,27 @@ class DiceBrowserTest : public InProcessBrowserTest,
   }
 
  protected:
+  ProfileOAuth2TokenService* GetTokenService() {
+    return ProfileOAuth2TokenServiceFactory::GetForProfile(
+        browser()->profile());
+  }
+
+  std::string GetAccountID() {
+    return AccountTrackerServiceFactory::GetForProfile(browser()->profile())
+        ->PickAccountIdForAccount(kGaiaID, kEmail);
+  }
+
+  void SignOutWithDice() {
+    NavigateToURL(kSignoutURL);
+    std::string page_content;
+    EXPECT_TRUE(content::ExecuteScriptAndExtractString(
+        browser()->tab_strip_model()->GetActiveWebContents(),
+        "window.domAutomationController.send(document.body.textContent);",
+        &page_content));
+    EXPECT_EQ(kSignedOutMessage, page_content);
+    base::RunLoop().RunUntilIdle();
+  }
+
   // InProcessBrowserTest:
   void SetUp() override {
     ASSERT_TRUE(https_server_.InitializeAndListen());
@@ -137,22 +181,16 @@ class DiceBrowserTest : public InProcessBrowserTest,
   void SetUpOnMainThread() override {
     InProcessBrowserTest::SetUpOnMainThread();
     https_server_.StartAcceptingConnections();
-
-    ProfileOAuth2TokenServiceFactory::GetForProfile(browser()->profile())
-        ->AddObserver(this);
+    GetTokenService()->AddObserver(this);
   }
 
   void TearDownOnMainThread() override {
-    ProfileOAuth2TokenServiceFactory::GetForProfile(browser()->profile())
-        ->RemoveObserver(this);
+    GetTokenService()->RemoveObserver(this);
   }
 
   // OAuth2TokenService::Observer:
   void OnRefreshTokenAvailable(const std::string& account_id) override {
-    std::string expected_account_id =
-        AccountTrackerServiceFactory::GetForProfile(browser()->profile())
-            ->PickAccountIdForAccount(kGaiaID, kEmail);
-    if (account_id == expected_account_id)
+    if (account_id == GetAccountID())
       refresh_token_available_ = true;
   }
 
@@ -181,4 +219,60 @@ IN_PROC_BROWSER_TEST_F(DiceBrowserTest, Signin) {
   base::RunLoop().RunUntilIdle();
   EXPECT_TRUE(token_requested_);
   EXPECT_TRUE(refresh_token_available_);
+}
+
+// Checks that the Dice signout flow works and deletes all tokens.
+IN_PROC_BROWSER_TEST_F(DiceBrowserTest, SignoutMainAccount) {
+  // Start from a signed-in state.
+  SigninManager* signin_manager =
+      SigninManagerFactory::GetForProfile(browser()->profile());
+  signin_manager->StartSignInWithRefreshToken(
+      "refresh_token", kGaiaID, kEmail, "password",
+      SigninManager::OAuthTokenFetchedCallback());
+  ASSERT_TRUE(GetTokenService()->RefreshTokenIsAvailable(GetAccountID()));
+  ASSERT_EQ(GetAccountID(), signin_manager->GetAuthenticatedAccountId());
+
+  // Add a token for a secondary account.
+  const char kSecondaryAccountID[] = "secondary_account_id";
+  GetTokenService()->UpdateCredentials(kSecondaryAccountID, "other_token");
+  ASSERT_TRUE(GetTokenService()->RefreshTokenIsAvailable(kSecondaryAccountID));
+
+  // Signout from main account.
+  SignOutWithDice();
+
+  // Check that the user is signed out and all tokens are deleted.
+  EXPECT_TRUE(signin_manager->GetAuthenticatedAccountId().empty());
+  EXPECT_FALSE(GetTokenService()->RefreshTokenIsAvailable(GetAccountID()));
+  EXPECT_FALSE(GetTokenService()->RefreshTokenIsAvailable(kSecondaryAccountID));
+}
+
+// Checks that signing out from a secondary account does not delete the main
+// token.
+IN_PROC_BROWSER_TEST_F(DiceBrowserTest, SignoutSecondaryAccount) {
+  // Start from a signed-in state.
+  const char kMainEmail[] = "main_email@example.com";
+  const char kMainGaiaID[] = "main_gaia_id";
+  SigninManager* signin_manager =
+      SigninManagerFactory::GetForProfile(browser()->profile());
+  signin_manager->StartSignInWithRefreshToken(
+      "refresh_token", kMainGaiaID, kMainEmail, "password",
+      SigninManager::OAuthTokenFetchedCallback());
+  std::string main_account_id =
+      AccountTrackerServiceFactory::GetForProfile(browser()->profile())
+          ->PickAccountIdForAccount(kMainGaiaID, kMainEmail);
+  ASSERT_TRUE(GetTokenService()->RefreshTokenIsAvailable(main_account_id));
+  ASSERT_EQ(main_account_id, signin_manager->GetAuthenticatedAccountId());
+
+  // Add a token for a secondary account.
+  GetTokenService()->UpdateCredentials(GetAccountID(), "other_token");
+  ASSERT_TRUE(GetTokenService()->RefreshTokenIsAvailable(GetAccountID()));
+
+  // Signout from secondary account.
+  SignOutWithDice();
+
+  // Check that the user is still signed in from main account, but secondary
+  // token is deleted.
+  EXPECT_EQ(main_account_id, signin_manager->GetAuthenticatedAccountId());
+  EXPECT_TRUE(GetTokenService()->RefreshTokenIsAvailable(main_account_id));
+  EXPECT_FALSE(GetTokenService()->RefreshTokenIsAvailable(GetAccountID()));
 }
