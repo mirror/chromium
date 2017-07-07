@@ -103,6 +103,7 @@
           "blink::mojom::SensitiveInputVisibilityService",
           "blink::mojom::WebBluetoothService",
           "blink::mojom::WebSocket",
+	  "blink::mojom::FrameBroker",
           // TODO(beng): figure out how to overlay test interfaces like this.
           "content::mojom::BrowserTarget",
           "content::mojom::RendererAudioOutputStreamFactory",
