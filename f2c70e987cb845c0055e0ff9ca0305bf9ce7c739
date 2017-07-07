@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "846a194e_3fd454e2",
+        "filename": "extensions/common/api/virtual_keyboard_private.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-07T07:26:01Z",
+      "side": 1,
+      "message": "Can we remove also this?",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 8
+      },
+      "revId": "f2c70e987cb845c0055e0ff9ca0305bf9ce7c739",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
