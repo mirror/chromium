@@ -59,6 +59,8 @@ class TabManager::WebContentsData
       content::NavigationHandle* navigation_handle) override;
   void WebContentsDestroyed() override;
 
+  void DoneLoading() {}
+
   // Returns true if the tab has been discarded to save memory.
   bool IsDiscarded();
 

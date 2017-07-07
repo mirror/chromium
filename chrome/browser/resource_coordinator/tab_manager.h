@@ -67,6 +67,7 @@ class TabManagerDelegate;
 class TabManager : public TabStripModelObserver,
                    public chrome::BrowserListObserver {
  public:
+  class GRCTabSignalObserver;
   // Needs to be public for DEFINE_WEB_CONTENTS_USER_DATA_KEY.
   class WebContentsData;
 
@@ -407,6 +408,9 @@ class TabManager : public TabStripModelObserver,
 
   class TabManagerSessionRestoreObserver;
   std::unique_ptr<TabManagerSessionRestoreObserver> session_restore_observer_;
+
+  //
+  std::unique_ptr<GRCTabSignalObserver> grc_tab_signal_observer_;
 
   // Weak pointer factory used for posting delayed tasks.
   base::WeakPtrFactory<TabManager> weak_ptr_factory_;
