@@ -22,6 +22,30 @@
       "revId": "b8f0d6feb6d8fa9e28286fbacf18b222bbb7965b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "625883f9_7b96537c",
+        "filename": "chrome/browser/chromeos/app_mode/kiosk_app_icon_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-07T05:19:10Z",
+      "side": 1,
+      "message": "the task runner is also passed to LoadOnBlockingPool, which passes it to IconImageRequest, which passes it to ImageRequest. it\u0027s possible that IconImageRequest could create a task runner itself and pass it to ImageRequest, but i\u0027m unfamiliar with this code and wasn\u0027t excited about changing it more than i am already. please let me know if you think it\u0027s safe and better to change this, though.",
+      "parentUuid": "0d543856_b8e5c4b7",
+      "range": {
+        "startLine": 78,
+        "startChar": 12,
+        "endLine": 78,
+        "endChar": 47
+      },
+      "revId": "b8f0d6feb6d8fa9e28286fbacf18b222bbb7965b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
