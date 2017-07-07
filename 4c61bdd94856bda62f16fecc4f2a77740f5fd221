@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "23dc4099_082865d9",
+        "filename": "third_party/WebKit/Source/modules/payments/CanMakePaymentRespondWithObserver.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2017-07-07T14:57:57Z",
+      "side": 1,
+      "message": "Thank you for guide!\n\nDone.",
+      "parentUuid": "bef42c88_87484c45",
+      "revId": "4c61bdd94856bda62f16fecc4f2a77740f5fd221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3eba6ded_dd195a28",
         "filename": "third_party/WebKit/Source/modules/payments/PaymentHandlerUtils.h",
         "patchSetId": 8
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "36592710_3fcd54c6",
+        "filename": "third_party/WebKit/Source/modules/payments/PaymentHandlerUtils.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2017-07-07T14:57:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3eba6ded_dd195a28",
+      "revId": "4c61bdd94856bda62f16fecc4f2a77740f5fd221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "488a3509_2a72a9a3",
         "filename": "third_party/WebKit/Source/modules/payments/PaymentHandlerUtils.h",
         "patchSetId": 8
@@ -50,6 +86,24 @@
       "revId": "4c61bdd94856bda62f16fecc4f2a77740f5fd221",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae318ec9_0fdcd8bb",
+        "filename": "third_party/WebKit/Source/modules/payments/PaymentHandlerUtils.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2017-07-07T14:57:57Z",
+      "side": 1,
+      "message": "You\u0027re right!\n\nDone",
+      "parentUuid": "488a3509_2a72a9a3",
+      "revId": "4c61bdd94856bda62f16fecc4f2a77740f5fd221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
