@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e28350b3_322854b2",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 37738,
+      "author": {
+        "id": 1211634
+      },
+      "writtenOn": "2017-07-07T20:37:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07315e47_4c1ab45f",
+      "range": {
+        "startLine": 37738,
+        "startChar": 4,
+        "endLine": 37738,
+        "endChar": 30
+      },
+      "revId": "4ad23bb942daccfff0ff07274af8bce5dc2760e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "828511e9_7add2d5f",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 11
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-07T00:39:15Z",
       "side": 1,
       "message": "Is it appropriate to stop recording Net.HttpContentLength given that this is now being recorded?",
+      "range": {
+        "startLine": 37739,
+        "startChar": 18,
+        "endLine": 37739,
+        "endChar": 0
+      },
+      "revId": "4ad23bb942daccfff0ff07274af8bce5dc2760e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "973c0290_691d7ee4",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 37739,
+      "author": {
+        "id": 1211634
+      },
+      "writtenOn": "2017-07-07T20:37:50Z",
+      "side": 1,
+      "message": "I marked Net.HttpContentLength obsolete, but we can\u0027t stop recording it until the dashboards are updated to use the new metrics.",
+      "parentUuid": "828511e9_7add2d5f",
       "range": {
         "startLine": 37739,
         "startChar": 18,
@@ -62,6 +110,24 @@
       "revId": "4ad23bb942daccfff0ff07274af8bce5dc2760e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb3d5764_97dc1ac8",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 37832,
+      "author": {
+        "id": 1211634
+      },
+      "writtenOn": "2017-07-07T20:37:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9de93930_3f79c714",
+      "revId": "4ad23bb942daccfff0ff07274af8bce5dc2760e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
