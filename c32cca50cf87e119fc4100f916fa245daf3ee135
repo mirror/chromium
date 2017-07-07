@@ -22,6 +22,30 @@
       "revId": "c32cca50cf87e119fc4100f916fa245daf3ee135",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0960856e_1b480298",
+        "filename": "ui/events/blink/input_handler_proxy.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1172,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-07-07T16:11:37Z",
+      "side": 1,
+      "message": "The way touch actions are determined are based on where the touch start is located. Once we have determined the white listed touch action for that point, where the first move occurs does not make a difference on what touch action should be allowed.",
+      "parentUuid": "479c193f_382adbf5",
+      "range": {
+        "startLine": 1172,
+        "startChar": 11,
+        "endLine": 1172,
+        "endChar": 36
+      },
+      "revId": "c32cca50cf87e119fc4100f916fa245daf3ee135",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
