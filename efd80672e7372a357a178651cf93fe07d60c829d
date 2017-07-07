@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0bf6a809_6c68b2f0",
+        "filename": "cc/paint/paint_shader.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-07T18:06:53Z",
+      "side": 1,
+      "message": "Could we have PaintImage here instead?",
+      "revId": "efd80672e7372a357a178651cf93fe07d60c829d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
