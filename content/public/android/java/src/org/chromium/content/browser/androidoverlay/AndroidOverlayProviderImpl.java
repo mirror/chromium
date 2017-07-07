@@ -67,7 +67,7 @@ public class AndroidOverlayProviderImpl implements AndroidOverlayProvider {
         mNumOverlays++;
 
         DialogOverlayImpl impl =
-                new DialogOverlayImpl(client, config, mHandler, mNotifyReleasedRunnable);
+                new DialogOverlayImpl(client, config, mHandler, mNotifyReleasedRunnable, false);
         DialogOverlayImpl.MANAGER.bind(impl, request);
     }
 
