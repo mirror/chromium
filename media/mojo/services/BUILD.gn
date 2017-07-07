@@ -20,7 +20,7 @@ component("services") {
 # TODO(xhwang): Add this intermediate target because ServiceTest doesn't support
 # services that depend on shared libraries in component build.
 # See http://crbug.com/670094
-source_set("lib") {
+static_library("lib") {
   sources = [
     "gpu_mojo_media_client.cc",
     "gpu_mojo_media_client.h",
@@ -35,6 +35,7 @@ source_set("lib") {
     "media_service.h",
     "media_service_factory.cc",
     "media_service_factory.h",
+    "media_service_factory_test.cc",
     "mojo_audio_decoder_service.cc",
     "mojo_audio_decoder_service.h",
     "mojo_audio_output_stream.cc",

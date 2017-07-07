@@ -8,7 +8,6 @@
 #include "base/memory/ptr_util.h"
 #include "media/mojo/services/gpu_mojo_media_client.h"
 #include "media/mojo/services/media_service.h"
-#include "media/mojo/services/test_mojo_media_client.h"
 
 #if defined(OS_ANDROID)
 #include "media/mojo/services/android_mojo_media_client.h"  // nogncheck
@@ -34,11 +33,6 @@ std::unique_ptr<service_manager::Service> CreateGpuMediaService(
   return std::unique_ptr<service_manager::Service>(
       new MediaService(base::MakeUnique<GpuMojoMediaClient>(
           task_runner, media_gpu_channel_manager)));
-}
-
-std::unique_ptr<service_manager::Service> CreateMediaServiceForTesting() {
-  return std::unique_ptr<service_manager::Service>(
-      new MediaService(base::MakeUnique<TestMojoMediaClient>()));
 }
 
 }  // namespace media
