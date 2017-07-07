@@ -40,6 +40,7 @@ from pylib.base import test_instance_factory
 from pylib.base import test_run_factory
 from pylib.results import json_results
 from pylib.results import report_results
+from pylib.utils import instrumentation_tracing
 from pylib.utils import logdog_helper
 from pylib.utils import logging_utils
 
@@ -100,7 +101,12 @@ def AddTracingOptions(parser):
   parser.add_argument(
       '--trace-output',
       metavar='FILENAME', type=os.path.realpath,
-      help='Path to save test_runner trace data to.')
+      help='Path to save test_runner trace json output to.')
+
+  parser.add_argument(
+      '--trace-all',
+      action='store_true',
+      help='Whether to trace all function calls.')
 
 
 def AddCommonOptions(parser):
@@ -955,6 +961,16 @@ def main():
       args.enable_concurrent_adb):
     parser.error('--replace-system-package and --enable-concurrent-adb cannot '
                  'be used together')
+  if args.trace_output:
+    to_include = ["__main__"]
+    to_exclude = ["proguard", "logging"]
+    instrumentation_tracing.start_instrumenting(args.trace_output, to_include,
+                                               to_exclude)
+  if args.trace_output and args.trace_all:
+    to_include = [r'pylib\..*', r'devil\..*', '__main__']
+    to_exclude = ['proguard', 'logging']
+    instrumentation_tracing.start_instrumenting(args.trace_output, to_include,
+                                                to_exclude)
 
   try:
     return RunTestsCommand(args)
