@@ -404,11 +404,6 @@ class LocalDeviceInstrumentationTestRun(
 
     logcat_url = logmon.GetLogcatURL()
     duration_ms = time_ms() - start_ms
-    if flags_to_add or flags_to_remove:
-      self._flag_changers[str(device)].Restore()
-    if test_timeout_scale:
-      valgrind_tools.SetChromeTimeoutScale(
-          device, self._test_instance.timeout_scale)
 
     # TODO(jbudorick): Make instrumentation tests output a JSON so this
     # doesn't have to parse the output.
@@ -416,6 +411,7 @@ class LocalDeviceInstrumentationTestRun(
         self._test_instance.ParseAmInstrumentRawOutput(output))
     results = self._test_instance.GenerateTestResults(
         result_code, result_bundle, statuses, start_ms, duration_ms)
+
     for result in results:
       if logcat_url:
         result.SetLink('logcat', logcat_url)
@@ -445,11 +441,54 @@ class LocalDeviceInstrumentationTestRun(
         base_test_result.BaseTestResult(u, base_test_result.ResultType.UNKNOWN)
         for u in test_names.difference(results_names))
 
-    # Update the result type if we detect a crash.
-    if DidPackageCrashOnDevice(self._test_instance.test_package, device):
-      for r in results:
-        if r.GetType() == base_test_result.ResultType.UNKNOWN:
-          r.SetType(base_test_result.ResultType.CRASH)
+    def restore_flags():
+      if flags_to_add or flags_to_remove:
+        self._flag_changers[str(device)].Restore()
+
+    def restore_timeout_scale():
+      if test_timeout_scale:
+        valgrind_tools.SetChromeTimeoutScale(
+            device, self._test_instance.timeout_scale)
+
+    def handle_crash():
+      # Update the result type if we detect a crash.
+      if DidPackageCrashOnDevice(self._test_instance.test_package, device):
+        for r in results:
+          if r.GetType() == base_test_result.ResultType.UNKNOWN:
+            r.SetType(base_test_result.ResultType.CRASH)
+      if self._test_instance.store_tombstones:
+        tombstones_url = None
+        for result in results:
+          if result.GetType() == base_test_result.ResultType.CRASH:
+            if not tombstones_url:
+              resolved_tombstones = tombstones.ResolveTombstones(
+                  device,
+                  resolve_all_tombstones=True,
+                  include_stack_symbols=False,
+                  wipe_tombstones=True)
+              stream_name = 'tombstones_%s_%s' % (
+                  time.strftime('%Y%m%dT%H%M%S-UTC', time.gmtime()),
+                  device.serial)
+              tombstones_url = logdog_helper.text(
+                  stream_name, '\n'.join(resolved_tombstones))
+            result.SetLink('tombstones', tombstones_url)
+
+    def handle_coverage_data():
+      if self._test_instance.coverage_directory:
+        device.PullFile(coverage_directory,
+            self._test_instance.coverage_directory)
+        device.RunShellCommand(
+            'rm -f %s' % posixpath.join(coverage_directory, '*'),
+            check_return=True, shell=True)
+
+    # Can parallelize several steps that involve interacting with ADB.
+    post_test_steps = [restore_flags, restore_timeout_scale, handle_crash,
+                        handle_coverage_data]
+    if self._env.concurrent_adb:
+      reraiser_thread.RunAsync(post_test_steps)
+    else:
+      for step in post_test_steps:
+        step()
 
     # Handle failures by:
     #   - optionally taking a screenshot
@@ -483,28 +522,7 @@ class LocalDeviceInstrumentationTestRun(
       logging.debug('raw output from %s:', test_display_name)
       for l in output:
         logging.debug('  %s', l)
-    if self._test_instance.coverage_directory:
-      device.PullFile(coverage_directory,
-          self._test_instance.coverage_directory)
-      device.RunShellCommand(
-          'rm -f %s' % posixpath.join(coverage_directory, '*'),
-          check_return=True, shell=True)
-    if self._test_instance.store_tombstones:
-      tombstones_url = None
-      for result in results:
-        if result.GetType() == base_test_result.ResultType.CRASH:
-          if not tombstones_url:
-            resolved_tombstones = tombstones.ResolveTombstones(
-                device,
-                resolve_all_tombstones=True,
-                include_stack_symbols=False,
-                wipe_tombstones=True)
-            stream_name = 'tombstones_%s_%s' % (
-                time.strftime('%Y%m%dT%H%M%S-UTC', time.gmtime()),
-                device.serial)
-            tombstones_url = logdog_helper.text(
-                stream_name, '\n'.join(resolved_tombstones))
-          result.SetLink('tombstones', tombstones_url)
+
     return results, None
 
   def _SaveScreenshot(self, device, screenshot_host_dir, screenshot_device_file,
