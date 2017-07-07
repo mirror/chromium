@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5720597b_416db674",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/RequestTimingView.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1118499
+      },
+      "writtenOn": "2017-07-07T22:31:10Z",
+      "side": 1,
+      "message": "this change lgtm.\nI tested and wasn\u0027t able to find a place where these two numbers differed by more than 1 nanosecond, so they\u0027re effectively the same.",
+      "revId": "24d3d14a2d410d1fda77019c805db7fecc1e0d4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ea97522_809771c3",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/RequestTimingView.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1118499
+      },
+      "writtenOn": "2017-07-07T22:31:10Z",
+      "side": 1,
+      "message": "wanna rename this to blockingEnd while we\u0027re here?",
+      "revId": "24d3d14a2d410d1fda77019c805db7fecc1e0d4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff3e77f5_966f4cb9",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/RequestTimingView.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1118499
+      },
+      "writtenOn": "2017-07-07T22:31:10Z",
+      "side": 1,
+      "message": "timing.sendEnd is duplicated.\n\n\ndo you know of a case where connect/dns/proxy(END)/blocking ends after sendEnd?",
+      "revId": "24d3d14a2d410d1fda77019c805db7fecc1e0d4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
