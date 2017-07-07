@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "892beca7_7a3ce3de",
+        "filename": "ui/events/win/system_event_state_lookup.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-07T17:00:41Z",
+      "side": 1,
+      "message": "This branch handles the case in which we receive keydown-ControlLeft, and then see some other event rather than keydown-\u003eAltRight - i.e. a case in which we know the physical Control key is pressed, rather than it potentially being AltGr.\n\nThis is only called for KeyEvent right now because this CL is a prototype, intended to illustrate the state-machine we\u0027ll need in order to un-pick AltGr from Control+Alt.",
+      "parentUuid": "a7dfc99d_468ccac4",
+      "range": {
+        "startLine": 26,
+        "startChar": 7,
+        "endLine": 26,
+        "endChar": 16
+      },
+      "revId": "81426201ae57b2e1e7a8247518dcec4685547dc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "83ecc21b_951fb20b",
         "filename": "ui/events/win/system_event_state_lookup.cc",
         "patchSetId": 1
@@ -36,6 +60,24 @@
       "writtenOn": "2017-07-06T19:50:14Z",
       "side": 1,
       "message": "I find this comment confusing. We are disallowing the left control modifier because Ctrl was pressed before AltGr was down.\n\nie. LCtrl, AltGr sequence cancels out the original Ctrl.\nbut AltGr, LCtrl sequence allows the ctrl.\n\nRight?",
+      "revId": "81426201ae57b2e1e7a8247518dcec4685547dc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5572ec0b_ae69703f",
+        "filename": "ui/events/win/system_event_state_lookup.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-07T17:00:41Z",
+      "side": 1,
+      "message": "Yes, the comment needs fixing.\n\nThis is handling the case of having just received keydown-ControlLeft, and then immediately receiving keydown-AltRight - which indicates AltGr.\n\nAfter we see keydown-ControlLeft, until we see some other event we are in the maybe_alt_graph state. Once we see some other event we can disambiguate to AltGraph state (allow_left_control\u003dfalse) or Control state (allow_left_control\u003dtrue).\n\nSo yes, your summary of the sequence is correct; I can update the comments to document this better if we decide we want to land this.",
+      "parentUuid": "83ecc21b_951fb20b",
       "revId": "81426201ae57b2e1e7a8247518dcec4685547dc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "fbc0b82f_c20b2407",
+        "filename": "ui/events/win/system_event_state_lookup.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-07T17:00:41Z",
+      "side": 1,
+      "message": "Yes, I think we should have failsafes, to reset things if (1) we switch from an AltGraph to a non-AltGraph layout and/or (2) we see Control or Alt modifiers cleared without seeing the keyup events.  I\u0027d planned to add them in OnInputEvent, rather than in the modifier getters, though.",
+      "parentUuid": "462831df_9fcbaa97",
+      "range": {
+        "startLine": 69,
+        "startChar": 6,
+        "endLine": 69,
+        "endChar": 26
+      },
+      "revId": "81426201ae57b2e1e7a8247518dcec4685547dc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d784735_cafa0cbf",
         "filename": "ui/events/win/system_event_state_lookup.cc",
         "patchSetId": 1
@@ -76,6 +142,30 @@
       "writtenOn": "2017-07-06T19:50:14Z",
       "side": 1,
       "message": "This probably deserves a comment why checking VK_LCONTROL is not needed here?",
+      "range": {
+        "startLine": 84,
+        "startChar": 38,
+        "endLine": 84,
+        "endChar": 44
+      },
+      "revId": "81426201ae57b2e1e7a8247518dcec4685547dc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1a0a1d5_8c23abb0",
+        "filename": "ui/events/win/system_event_state_lookup.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-07T17:00:41Z",
+      "side": 1,
+      "message": "Yes, good point.",
+      "parentUuid": "5d784735_cafa0cbf",
       "range": {
         "startLine": 84,
         "startChar": 38,
