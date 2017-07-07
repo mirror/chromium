@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7419735e_76613df9",
+        "filename": "chrome/browser/android/vr_shell/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-07T21:25:56Z",
+      "side": 1,
+      "message": "Ha, right you are!  Bonus!  I\u0027ll clean up a couple other comments and includes as well, related to this.",
+      "parentUuid": "00581109_a18123db",
+      "range": {
+        "startLine": 17,
+        "startChar": 30,
+        "endLine": 17,
+        "endChar": 37
+      },
+      "revId": "9ceef022ef44f9726de0ae495b669341947d828b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "501575aa_1ccfe686",
         "filename": "chrome/browser/vr/BUILD.gn",
         "patchSetId": 2
@@ -82,6 +106,30 @@
     },
     {
       "key": {
+        "uuid": "0250cee9_40cf555f",
+        "filename": "chrome/browser/vr/elements/url_bar_texture_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-07T21:25:56Z",
+      "side": 1,
+      "message": "Don\u0027t know.  It might be a new presumbit check, I only started seeing this within the past week.",
+      "parentUuid": "c88f9d5f_9fc23af7",
+      "range": {
+        "startLine": 11,
+        "startChar": 31,
+        "endLine": 11,
+        "endChar": 0
+      },
+      "revId": "9ceef022ef44f9726de0ae495b669341947d828b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b7d5549a_5f92ec85",
         "filename": "chrome/browser/vr/ui_input_manager.h",
         "patchSetId": 2
@@ -110,6 +158,24 @@
       "writtenOn": "2017-07-07T20:27:58Z",
       "side": 1,
       "message": "No ../textures sub-directory anymore?  It looks like all textures are under elements now.  Which is fine I guess, I was just wondering if there was some motivation for that change.",
+      "revId": "9ceef022ef44f9726de0ae495b669341947d828b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9eeea5e4_0fb33509",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-07T21:25:56Z",
+      "side": 1,
+      "message": "The separate directories were annoying to me, as the textures are fundamental to elements.  Ian thought this merge was okay, so I rolled it in.",
+      "parentUuid": "2d7f6e1b_0dbafacb",
       "revId": "9ceef022ef44f9726de0ae495b669341947d828b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
