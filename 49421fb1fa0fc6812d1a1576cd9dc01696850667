@@ -255,6 +255,30 @@
     },
     {
       "key": {
+        "uuid": "1a71e2a1_23ce10d7",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker_unittest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-07-07T21:16:49Z",
+      "side": 1,
+      "message": "I had a question with regards to the second part of the NewTabFeatureEngagementTracker expectations.\n\nI thought that unit tests would just have to check if ShouldShowPromo is called as the ShouldTriggerHelpUI is based off of the FeatureEngagementTracker that Tommy wrote. But it seems that what your comment meant was that the unit tests also have to account for whether or not the ShouldTriggerHelpUi is returning the correct value too.\n\nI\u0027ve only worked in Google3 until recently and mostly in Java/Javascript. Normally, I used mocks to mock out methods from other classes and only test that methods are called appropriately and return proper values in the class that I am unit testing. In this case, I would just mock out ShouldTriggerHelpUI as this method should have already been tested in the unit test for the FeatureEngagementTracker which it seems like it has:\nhttps://cs.chromium.org/chromium/src/components/feature_engagement_tracker/internal/feature_engagement_tracker_impl_unittest.cc?sq\u003dpackage:chromium\u0026dr\u0026l\u003d466\n\nIs this not standard or am I misunderstanding something? I hope you don\u0027t mind me asking.",
+      "parentUuid": "a6f75079_98c0102a",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 38
+      },
+      "revId": "49421fb1fa0fc6812d1a1576cd9dc01696850667",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "42e588fd_af865065",
         "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker_unittest.cc",
         "patchSetId": 27
