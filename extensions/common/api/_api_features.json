@@ -353,13 +353,18 @@
   "runtime": {
     "channel": "stable",
     "extension_types": ["extension", "legacy_packaged_app", "platform_app"],
-    "contexts": ["blessed_extension"]
+    "contexts": ["blessed_extension", "lock_screen_extension"]
   },
   "runtime.getManifest": {
-    "contexts": ["blessed_extension", "unblessed_extension", "content_script"]
+    "contexts": [
+      "blessed_extension",
+      "lock_screen_extension",
+      "unblessed_extension",
+      "content_script"
+    ]
   },
   "runtime.connect": {
-    // Everything except WebUI.
+    // Everything except WebUI and lock screen extensions.
     "contexts": [
       "blessed_web_page",
       "content_script",
@@ -374,10 +379,20 @@
     "contexts": ["blessed_extension"]
   },
   "runtime.getURL": {
-    "contexts": ["blessed_extension", "unblessed_extension", "content_script"]
+    "contexts": [
+      "blessed_extension",
+      "lock_screen_extension",
+      "unblessed_extension",
+      "content_script"
+    ]
   },
   "runtime.id": {
-    "contexts": ["blessed_extension", "unblessed_extension", "content_script"]
+    "contexts": [
+      "blessed_extension",
+      "lock_screen_extension",
+      "unblessed_extension",
+      "content_script"
+    ]
   },
   "runtime.lastError": {
     "contexts": "all",
@@ -388,7 +403,12 @@
     "contexts": ["blessed_extension", "unblessed_extension", "content_script"]
   },
   "runtime.onMessage": {
-    "contexts": ["blessed_extension", "unblessed_extension", "content_script"]
+    "contexts": [
+      "blessed_extension",
+      "unblessed_extension",
+      "content_script",
+      "lock_screen_extension"
+    ]
   },
   "runtime.sendMessage": {
     // Everything except WebUI.
@@ -396,6 +416,7 @@
       "blessed_web_page",
       "content_script",
       "blessed_extension",
+      "lock_screen_extension",
       "unblessed_extension",
       "web_page"
     ],
@@ -470,6 +491,7 @@
       "blessed_web_page",
       "content_script",
       "extension_service_worker",
+      "lock_screen_extension",
       "unblessed_extension"
     ]
   }, {
