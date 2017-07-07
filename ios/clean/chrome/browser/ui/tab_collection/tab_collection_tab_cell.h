@@ -14,7 +14,7 @@
 // Cell represents a tab for use in the tab collection. It has a title, favicon,
 // screenshot image, and close button. Cell selection is represented by a border
 // highlight in the tintColor.
-// PLACEHOLDER: Create custom implemementation rather than subclassing.
+// PLACEHOLDER: Create custom implemementation rather than subclassing..
 @interface TabCollectionTabCell : TabSwitcherLocalSessionCell
 @property(nonatomic, strong) TabCollectionItem* item;
 @end
