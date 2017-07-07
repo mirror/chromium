@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf60a70b_13a1d5a4",
+        "filename": "chrome/browser/resources/settings/settings_page/settings_animated_pages.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-07T23:53:56Z",
+      "side": 1,
+      "message": "The version of neon-animated-pages in third_party is not recent enough, meaning that it is not using \u003cslot\u003e internally, see https://cs.chromium.org/chromium/src/third_party/polymer/v1_0/components-chromium/neon-animation/neon-animated-pages.html?l\u003d51.\n\nI am guessing that this still works? Can you verify? Perhaps it is safer to migrate Polymer elements first, before updating our code (which builds on them). WDYT?",
+      "revId": "a4b2446cffe1e99889f4593e63cba631969687d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
