@@ -693,6 +693,60 @@ TEST(JourneyLoggerTest,
               testing::ContainerEq(base::HistogramTester::CountsMap()));
 }
 
+// Tests that the UserHadInitialFormOfPayment metric is correctly logged.
+TEST(JourneyLoggerTest,
+     RecordJourneyStatsHistograms_UserHadInitialFormOfPayment) {
+  base::HistogramTester histogram_tester;
+  JourneyLogger logger(/*is_incognito=*/false, /*url=*/GURL(""),
+                       /*ukm_recorder=*/nullptr);
+
+  // The merchant only requests payment information.
+  logger.SetRequestedInformation(
+      /*requested_shipping=*/false, /*requested_email=*/false,
+      /*requested_phone=*/false, /*requested_name=*/false);
+
+  // Simulate that the user had an inital form of payment.
+  logger.SetUserHadInitialFormOfPayment();
+
+  // Simulate that the Payment Request was shown to the user.
+  logger.SetShowCalled();
+
+  // Simulate that the the checkout is aborted.
+  logger.SetAborted(JourneyLogger::ABORT_REASON_OTHER);
+
+  histogram_tester.ExpectBucketCount(
+      "PaymentRequest.UserHadInitialFormOfPayment.EffectOnCompletion",
+      JourneyLogger::COMPLETION_STATUS_OTHER_ABORTED, 1);
+  histogram_tester.ExpectTotalCount(
+      "PaymentRequest.UserDidNotHaveInitialFormOfPayment.EffectOnCompletion",
+      0);
+}
+
+// Tests that the UserDidNotHaveInitialFormOfPayment metric is correctly logged.
+TEST(JourneyLoggerTest,
+     RecordJourneyStatsHistograms_UserDidNotHaveInitialFormOfPayment) {
+  base::HistogramTester histogram_tester;
+  JourneyLogger logger(/*is_incognito=*/false, /*url=*/GURL(""),
+                       /*ukm_recorder=*/nullptr);
+
+  // The merchant only requests payment information.
+  logger.SetRequestedInformation(
+      /*requested_shipping=*/false, /*requested_email=*/false,
+      /*requested_phone=*/false, /*requested_name=*/false);
+
+  // Simulate that the Payment Request was shown to the user.
+  logger.SetShowCalled();
+
+  // Simulate that the the checkout is aborted.
+  logger.SetAborted(JourneyLogger::ABORT_REASON_OTHER);
+
+  histogram_tester.ExpectBucketCount(
+      "PaymentRequest.UserDidNotHaveInitialFormOfPayment.EffectOnCompletion",
+      JourneyLogger::COMPLETION_STATUS_OTHER_ABORTED, 1);
+  histogram_tester.ExpectTotalCount(
+      "PaymentRequest.UserHadInitialFormOfPayment.EffectOnCompletion", 0);
+}
+
 // Tests that the metrics are logged correctly for two simultaneous Payment
 // Requests.
 TEST(JourneyLoggerTest, RecordJourneyStatsHistograms_TwoPaymentRequests) {
