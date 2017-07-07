@@ -16,6 +16,24 @@
       "revId": "1de678ce8d18e98b30c40247cb27ed8141714a75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0a1f771_ba22197e",
+        "filename": "testing/buildbot/chromium.fyi.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-07-07T15:39:18Z",
+      "side": 1,
+      "message": "(filed https://bugs.chromium.org/p/chromium/issues/detail?id\u003d740131)",
+      "parentUuid": "4afe7f53_5dd59e83",
+      "revId": "1de678ce8d18e98b30c40247cb27ed8141714a75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
