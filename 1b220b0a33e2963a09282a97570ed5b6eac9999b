@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2fd8edc5_55c87ec9",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AutofillActionModeCallback.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-07T18:22:40Z",
+      "side": 1,
+      "message": "pass in AutofillProvider?\nor at least make an interface rather than use AwContents directly",
+      "revId": "1b220b0a33e2963a09282a97570ed5b6eac9999b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d67474c0_400e279e",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AutofillActionModeCallback.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-07T18:22:40Z",
+      "side": 1,
+      "message": "it\u0027s not ok to use random resources from content in embedder code",
+      "revId": "1b220b0a33e2963a09282a97570ed5b6eac9999b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d817a61b_91f44a9d",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-07T18:22:40Z",
+      "side": 1,
+      "message": "probably leave a comment that this is used to customize PastePopupMenu, since the names don\u0027t actually match, and that this can be null",
+      "revId": "1b220b0a33e2963a09282a97570ed5b6eac9999b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6e3404e_7d206cfa",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-07T18:22:40Z",
+      "side": 1,
+      "message": "I don\u0027t think FloatingPastePopupMenu expects canPaste to be false, and that needs to be handled now",
+      "revId": "1b220b0a33e2963a09282a97570ed5b6eac9999b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28f9b50a_3660ed31",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-07T18:22:40Z",
+      "side": 1,
+      "message": "in content, this is just some generic thing, so it makes no sense to say it\u0027s only needed in O",
+      "revId": "1b220b0a33e2963a09282a97570ed5b6eac9999b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f356c01_f032c781",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/FloatingPastePopupMenu.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-07T18:22:40Z",
+      "side": 1,
+      "message": "either don\u0027t make the mExternalCallback an ActionMode.Callback, or you have to make a serious effort to actually chain everything correctly, like returning the same return value.",
+      "revId": "1b220b0a33e2963a09282a97570ed5b6eac9999b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
