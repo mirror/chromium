@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de054cbd_e09fb279",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 1722,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-07-07T08:27:38Z",
+      "side": 0,
+      "message": "that means that test_data won\u0027t end up in the isolate, so we\u0027ll never execute the if() on swarming. Can we just remove the code then entirely? or if it depends on gn flags (is_asan I guess), maybe make that explicit (and #ifdef instead of if)?",
+      "revId": "470ac8ad6279aeecc13ea5349dbc842ab0eb39f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
