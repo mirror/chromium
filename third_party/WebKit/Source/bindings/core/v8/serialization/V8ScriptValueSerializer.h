@@ -6,6 +6,7 @@
 #define V8ScriptValueSerializer_h
 
 #include "bindings/core/v8/ExceptionState.h"
+#include "bindings/core/v8/serialization/ImageSerializationTag.h"
 #include "bindings/core/v8/serialization/SerializationTag.h"
 #include "bindings/core/v8/serialization/SerializedScriptValue.h"
 #include "core/CoreExport.h"
@@ -50,6 +51,10 @@ class CORE_EXPORT V8ScriptValueSerializer
   virtual bool WriteDOMObject(ScriptWrappable*, ExceptionState&);
 
   void WriteTag(SerializationTag tag) {
+    uint8_t tag_byte = tag;
+    serializer_.WriteRawBytes(&tag_byte, 1);
+  }
+  void WriteImageTag(ImageSerializationTag tag) {
     uint8_t tag_byte = tag;
     serializer_.WriteRawBytes(&tag_byte, 1);
   }

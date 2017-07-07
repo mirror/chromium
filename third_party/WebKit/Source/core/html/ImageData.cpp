@@ -281,7 +281,8 @@ ImageData* ImageData::CreateImageData(
     unsigned height,
     const ImageDataColorSettings& color_settings,
     ExceptionState& exception_state) {
-  if (!RuntimeEnabledFeatures::ColorCanvasExtensionsEnabled())
+  if (!RuntimeEnabledFeatures::ColorCanvasExtensionsEnabled() &&
+      !RuntimeEnabledFeatures::ColorCorrectRenderingEnabled())
     return nullptr;
 
   if (!ImageData::ValidateConstructorArguments(
@@ -501,6 +502,54 @@ ImageDataStorageFormat ImageData::GetImageDataStorageFormat(
     return kFloat32ArrayStorageFormat;
   NOTREACHED();
   return kUint8ClampedArrayStorageFormat;
+}
+
+ImageDataStorageFormatForSerialization
+ImageData::GetImageDataStorageFormatForSerialization() {
+  if (data_u16_)
+    return kUint16ArrayStorageFormatForSerialization;
+  if (data_f32_)
+    return kFloat32ArrayStorageFormatForSerialization;
+  return kUint8ClampedArrayStorageFormatForSerialization;
+}
+
+unsigned ImageData::StorageFormatDataSizeForSerialization(
+    const uint32_t& storage_format) {
+  if (storage_format == kUint8ClampedArrayStorageFormatForSerialization)
+    return 1;
+  if (storage_format == kUint16ArrayStorageFormatForSerialization)
+    return 2;
+  if (storage_format == kFloat32ArrayStorageFormatForSerialization)
+    return 4;
+  NOTREACHED();
+  return 1;
+}
+
+ImageData* ImageData::CreateForV8Deserializer(const IntSize& size,
+                                              const uint32_t& color_space,
+                                              const uint32_t& storage_format) {
+  ImageDataColorSettings color_settings;
+  if (color_space == kLegacyCanvasColorSpaceForSerialization)
+    color_settings.setColorSpace(kLegacyCanvasColorSpaceName);
+  else if (color_space == kSRGBCanvasColorSpaceForSerialization)
+    color_settings.setColorSpace(kSRGBCanvasColorSpaceName);
+  else if (color_space == kRec2020CanvasColorSpaceForSerialization)
+    color_settings.setColorSpace(kRec2020CanvasColorSpaceName);
+  else if (color_space == kP3CanvasColorSpaceForSerialization)
+    color_settings.setColorSpace(kP3CanvasColorSpaceName);
+  else
+    NOTREACHED();
+
+  if (storage_format == kUint8ClampedArrayStorageFormatForSerialization)
+    color_settings.setStorageFormat(kUint8ClampedArrayStorageFormatName);
+  else if (storage_format == kUint16ArrayStorageFormatForSerialization)
+    color_settings.setStorageFormat(kUint16ArrayStorageFormatName);
+  else if (storage_format == kFloat32ArrayStorageFormatForSerialization)
+    color_settings.setStorageFormat(kFloat32ArrayStorageFormatName);
+  else
+    NOTREACHED();
+
+  return ImageData::Create(size, &color_settings);
 }
 
 unsigned ImageData::StorageFormatDataSize(const String& storage_format_name) {

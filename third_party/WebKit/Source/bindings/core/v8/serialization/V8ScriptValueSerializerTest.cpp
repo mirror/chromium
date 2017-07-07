@@ -760,6 +760,45 @@ TEST(V8ScriptValueSerializerTest, RoundTripImageData) {
   EXPECT_EQ(200, new_image_data->data()->Data()[0]);
 }
 
+TEST(V8ScriptValueSerializerTest, RoundTripImageDataWithColorSpaceInfo) {
+  // set up run time flags
+  bool experimental_canvas_features =
+      RuntimeEnabledFeatures::ExperimentalCanvasFeaturesEnabled();
+  bool color_canvas_extensions =
+      RuntimeEnabledFeatures::ColorCanvasExtensionsEnabled();
+  RuntimeEnabledFeatures::SetExperimentalCanvasFeaturesEnabled(true);
+  RuntimeEnabledFeatures::SetColorCanvasExtensionsEnabled(true);
+  // ImageData objects with color space information should serialize and
+  // deserialize correctly.
+  V8TestingScope scope;
+  ImageDataColorSettings color_settings;
+  color_settings.setColorSpace("p3");
+  color_settings.setStorageFormat("float32");
+  ImageData* image_data =
+      ImageData::CreateImageData(2, 1, color_settings, ASSERT_NO_EXCEPTION);
+  static_cast<unsigned char*>(image_data->BufferBase()->Data())[0] = 200;
+  v8::Local<v8::Value> wrapper =
+      ToV8(image_data, scope.GetContext()->Global(), scope.GetIsolate());
+  v8::Local<v8::Value> result = RoundTrip(wrapper, scope);
+  ASSERT_TRUE(V8ImageData::hasInstance(result, scope.GetIsolate()));
+  ImageData* new_image_data = V8ImageData::toImpl(result.As<v8::Object>());
+  EXPECT_NE(image_data, new_image_data);
+  EXPECT_EQ(image_data->Size(), new_image_data->Size());
+  ImageDataColorSettings new_color_settings;
+  new_image_data->getColorSettings(new_color_settings);
+  EXPECT_EQ("p3", new_color_settings.colorSpace());
+  EXPECT_EQ("float32", new_color_settings.storageFormat());
+  EXPECT_EQ(image_data->BufferBase()->ByteLength(),
+            new_image_data->BufferBase()->ByteLength());
+  EXPECT_EQ(200, static_cast<unsigned char*>(
+                     new_image_data->BufferBase()->Data())[0]);
+  // restore run time flags
+  RuntimeEnabledFeatures::SetExperimentalCanvasFeaturesEnabled(
+      experimental_canvas_features);
+  RuntimeEnabledFeatures::SetColorCanvasExtensionsEnabled(
+      color_canvas_extensions);
+}
+
 TEST(V8ScriptValueSerializerTest, DecodeImageDataV9) {
   // Backward compatibility with existing serialized ImageData objects must be
   // maintained. Add more cases if the format changes; don't remove tests for
@@ -936,6 +975,42 @@ TEST(V8ScriptValueSerializerTest, RoundTripImageBitmap) {
           SkImageInfo::Make(1, 1, kRGBA_8888_SkColorType, kPremul_SkAlphaType),
           &pixel, 4, 3, 3));
   ASSERT_THAT(pixel, ::testing::ElementsAre(255, 0, 0, 255));
+}
+
+TEST(V8ScriptValueSerializerTest, RoundTripImageBitmapWithColorSpaceInfo) {
+  V8TestingScope scope;
+
+  // Make a 10x7 red ImageBitmap in P3 color space.
+  SkImageInfo info = SkImageInfo::Make(
+      10, 7, kRGBA_F16_SkColorType, kPremul_SkAlphaType,
+      SkColorSpace::MakeRGB(SkColorSpace::kLinear_RenderTargetGamma,
+                            SkColorSpace::kDCIP3_D65_Gamut));
+  sk_sp<SkSurface> surface = SkSurface::MakeRaster(info);
+  surface->getCanvas()->clear(SK_ColorRED);
+  ImageBitmap* image_bitmap = ImageBitmap::Create(
+      StaticBitmapImage::Create(surface->makeImageSnapshot()));
+
+  // Serialize and deserialize it.
+  v8::Local<v8::Value> wrapper = ToV8(image_bitmap, scope.GetScriptState());
+  v8::Local<v8::Value> result = RoundTrip(wrapper, scope);
+  ASSERT_TRUE(V8ImageBitmap::hasInstance(result, scope.GetIsolate()));
+  ImageBitmap* new_image_bitmap =
+      V8ImageBitmap::toImpl(result.As<v8::Object>());
+  ASSERT_EQ(IntSize(10, 7), new_image_bitmap->Size());
+
+  // Check the color settings.
+  CanvasColorParams color_params =
+      new_image_bitmap->GetCanvasColorParamsForSerialization();
+  EXPECT_EQ(kP3CanvasColorSpace, color_params.color_space());
+  EXPECT_EQ(kF16CanvasPixelFormat, color_params.pixel_format());
+
+  // Check that the pixel at (3, 3) is red.
+  uint8_t pixel[8] = {};
+  ASSERT_TRUE(
+      new_image_bitmap->BitmapImage()->ImageForCurrentFrame()->readPixels(
+          info.makeWH(1, 1), &pixel, 8, 3, 3));
+  ASSERT_THAT(pixel, ::testing::ElementsAre(0x94, 0x3A, 0x3F, 0x28, 0x5F, 0x24,
+                                            0x0, 0x3C));
 }
 
 TEST(V8ScriptValueSerializerTest, DecodeImageBitmap) {

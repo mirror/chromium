@@ -238,29 +238,37 @@ bool V8ScriptValueSerializer::WriteDOMObject(ScriptWrappable* wrappable,
     }
 
     // Otherwise, it must be fully serialized.
-    // Warning: using N32ColorType here is not portable (across CPU
-    // architectures, across platforms, etc.).
-    RefPtr<Uint8Array> pixels = image_bitmap->CopyBitmapData(
-        image_bitmap->IsPremultiplied() ? kPremultiplyAlpha
-                                        : kDontPremultiplyAlpha,
-        kN32ColorType);
     WriteTag(kImageBitmapTag);
+    CanvasColorParams color_params =
+        image_bitmap->GetCanvasColorParamsForSerialization();
+    WriteImageTag(kCanvasColorSpaceTag);
+    WriteUint32(color_params.GetColorSpaceForSerialization());
+    WriteImageTag(kCanvasPixelForamtTag);
+    WriteUint32(color_params.GetPixelFormatForSerialization());
+    WriteImageTag(kEndTag);
     WriteUint32(image_bitmap->OriginClean());
     WriteUint32(image_bitmap->IsPremultiplied());
     WriteUint32(image_bitmap->width());
     WriteUint32(image_bitmap->height());
+    RefPtr<Uint8Array> pixels = image_bitmap->CopyBitmapData();
     WriteUint32(pixels->length());
     WriteRawBytes(pixels->Data(), pixels->length());
     return true;
   }
   if (wrapper_type_info == &V8ImageData::wrapperTypeInfo) {
     ImageData* image_data = wrappable->ToImpl<ImageData>();
-    DOMUint8ClampedArray* pixels = image_data->data();
     WriteTag(kImageDataTag);
+    WriteImageTag(kCanvasColorSpaceTag);
+    WriteUint32(
+        image_data->GetCanvasColorParams().GetColorSpaceForSerialization());
+    WriteImageTag(kImageDataStorageFormatTag);
+    WriteUint32(image_data->GetImageDataStorageFormatForSerialization());
+    WriteImageTag(kEndTag);
     WriteUint32(image_data->width());
     WriteUint32(image_data->height());
-    WriteUint32(pixels->length());
-    WriteRawBytes(pixels->Data(), pixels->length());
+    WriteUint32(image_data->BufferBase()->ByteLength());
+    WriteRawBytes(image_data->BufferBase()->Data(),
+                  image_data->BufferBase()->ByteLength());
     return true;
   }
   if (wrapper_type_info == &V8DOMPoint::wrapperTypeInfo) {
