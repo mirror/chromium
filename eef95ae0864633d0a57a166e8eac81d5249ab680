@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0067ed44_53c750ec",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position-3/position-sticky-flexbox.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2017-07-07T18:26:10Z",
+      "side": 1,
+      "message": "Why do we need to use flex-flow? Making the flexible items display in reverse order seems irrelevant. Right? Same for the ref.html.",
+      "range": {
+        "startLine": 19,
+        "startChar": 22,
+        "endLine": 19,
+        "endChar": 0
+      },
+      "revId": "eef95ae0864633d0a57a166e8eac81d5249ab680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
