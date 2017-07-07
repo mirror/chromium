@@ -50,6 +50,7 @@ namespace android_webview {
 
 class AwFormDatabaseService;
 class AwQuotaManagerBridge;
+class AwSafeBrowsingWhitelistManager;
 class AwURLRequestContextGetter;
 
 namespace prefs {
@@ -122,6 +123,7 @@ class AwBrowserContext : public content::BrowserContext,
   AwSafeBrowsingUIManager* GetSafeBrowsingUIManager();
   safe_browsing::RemoteSafeBrowsingDatabaseManager* GetSafeBrowsingDBManager();
   safe_browsing::TriggerManager* GetSafeBrowsingTriggerManager() const;
+  AwSafeBrowsingWhitelistManager* GetSafeBrowsingWhitelistManager();
 
  private:
   void InitUserPrefService();
@@ -159,6 +161,9 @@ class AwBrowserContext : public content::BrowserContext,
   scoped_refptr<safe_browsing::RemoteSafeBrowsingDatabaseManager>
       safe_browsing_db_manager_;
   bool safe_browsing_db_manager_started_ = false;
+
+  std::unique_ptr<AwSafeBrowsingWhitelistManager>
+      safe_browsing_whitelist_manager_;
 
   DISALLOW_COPY_AND_ASSIGN(AwBrowserContext);
 };

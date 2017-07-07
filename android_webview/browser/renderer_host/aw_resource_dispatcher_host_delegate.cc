@@ -302,7 +302,8 @@ void AwResourceDispatcherHostDelegate::RequestBeginning(
         AwSafeBrowsingResourceThrottle::MaybeCreate(
             request, resource_type,
             AwBrowserContext::GetDefault()->GetSafeBrowsingDBManager(),
-            AwBrowserContext::GetDefault()->GetSafeBrowsingUIManager());
+            AwBrowserContext::GetDefault()->GetSafeBrowsingUIManager(),
+            AwBrowserContext::GetDefault()->GetSafeBrowsingWhitelistManager());
     if (throttle == nullptr) {
       // Should not happen
       DLOG(WARNING) << "Failed creating safebrowsing throttle";
