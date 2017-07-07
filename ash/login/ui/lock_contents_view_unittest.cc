@@ -7,8 +7,11 @@
 #include "ash/login/ui/login_display_style.h"
 #include "ash/login/ui/login_test_base.h"
 #include "ash/login/ui/login_user_view.h"
+#include "ash/shell.h"
 #include "base/strings/utf_string_conversions.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "ui/display/manager/display_manager.h"
+#include "ui/display/test/display_manager_test_api.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/views/widget/widget.h"
 
@@ -70,6 +73,34 @@ TEST_F(LockContentsViewUnitTest, SingleUserCentered) {
   EXPECT_EQ(expected_margin, auth_bounds.x());
   EXPECT_EQ(expected_margin,
             widget_bounds.width() - (auth_bounds.x() + auth_bounds.width()));
+}
+
+// Verifies that layout dynamically updates after a rotation by checking the
+// distance between the auth user and the user list in landscape and portrait
+// mode.
+TEST_F(LockContentsViewUnitTest, AutoLayoutAfterRotation) {
+  // Build lock screen with three users.
+  auto* contents = new LockContentsView(data_dispatcher());
+  LockContentsView::TestApi test_api(contents);
+  SetUserCount(3);
+  ShowWidgetWithContent(contents);
+
+  int landscape_distance = test_api.user_views()[0]->GetBoundsInScreen().x() -
+                           test_api.auth_user_view()->GetBoundsInScreen().x();
+
+  // Rotate the display.
+  const display::Display& display =
+      display::Screen::GetScreen()->GetDisplayNearestWindow(
+          widget()->GetNativeWindow());
+  display_manager()->SetDisplayRotation(display.id(),
+                                        display::Display::ROTATE_90,
+                                        display::Display::ROTATION_SOURCE_USER);
+
+  int portrait_distance = test_api.user_views()[0]->GetBoundsInScreen().x() -
+                          test_api.auth_user_view()->GetBoundsInScreen().x();
+
+  EXPECT_NE(landscape_distance, 0);
+  EXPECT_NE(landscape_distance, portrait_distance);
 }
 
 }  // namespace ash
