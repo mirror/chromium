@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "420104df_b6fde584",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-07-07T22:44:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5f826b7_3c559eea",
+      "range": {
+        "startLine": 18,
+        "startChar": 5,
+        "endLine": 18,
+        "endChar": 7
+      },
+      "revId": "6a6437613be85bee81e55c6556de53dff7c907cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c79942a6_c973d877",
         "filename": "android_webview/browser/aw_metrics_service_client.cc",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "a819b03e_6282f034",
+        "filename": "android_webview/browser/aw_metrics_service_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-07-07T22:44:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c79942a6_c973d877",
+      "range": {
+        "startLine": 74,
+        "startChar": 6,
+        "endLine": 74,
+        "endChar": 12
+      },
+      "revId": "6a6437613be85bee81e55c6556de53dff7c907cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf9ac52d_65bebb68",
         "filename": "android_webview/browser/aw_metrics_service_client.cc",
         "patchSetId": 6
@@ -59,6 +107,30 @@
       "writtenOn": "2017-07-07T21:49:42Z",
       "side": 1,
       "message": "I don\u0027t think you need the wrapper",
+      "range": {
+        "startLine": 115,
+        "startChar": 5,
+        "endLine": 115,
+        "endChar": 27
+      },
+      "revId": "6a6437613be85bee81e55c6556de53dff7c907cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3daae4c6_58b09813",
+        "filename": "android_webview/browser/aw_metrics_service_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-07-07T22:44:04Z",
+      "side": 1,
+      "message": "base::Bind(\u0026AwMetricsServiceClient::GetOrCreateGUID) give me a compilation error, while\nbase::Bind(\u0026GetOrCreateGUIDWrapper) does not.\n\nI\u0027m not very familiar with bind so I\u0027m probably missing something.",
+      "parentUuid": "cf9ac52d_65bebb68",
       "range": {
         "startLine": 115,
         "startChar": 5,
