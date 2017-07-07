@@ -455,8 +455,19 @@ public class SuggestionsSection extends InnerNode {
         return true;
     }
 
-    /** Lets the {@link SuggestionsSection} know when a suggestion fetch has been started. */
-    public void onFetchStarted() {
+    /** Fetches additional suggestions only for this section. */
+    public void fetchSuggestions(SuggestionsSource suggestionsSource) {
+        suggestionsSource.fetchSuggestions(mCategoryInfo.getCategory(), getDisplayedSuggestionIds(),
+                new Callback<List<SnippetArticle>>() {
+                    @Override
+                    public void onResult(List<SnippetArticle> additionalSuggestions) {
+                        if (!isAttached()) return; // The section has been dismissed.
+
+                        mProgressIndicator.setVisible(false);
+                        appendSuggestions(additionalSuggestions, /* userRequested = */ true);
+                    }
+                });
+
         mProgressIndicator.setVisible(true);
     }
 
