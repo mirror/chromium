@@ -16,6 +16,23 @@
       "revId": "adb0b596b4e15427e72afdc82b925c1e59b816c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b17524ee_84a0ae3e",
+        "filename": "content/browser/renderer_host/render_widget_host_view_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 2426,
+      "author": {
+        "id": 1228384
+      },
+      "writtenOn": "2017-07-07T19:52:41Z",
+      "side": 1,
+      "message": "I\u0027m thinking we\u0027d be better off (at least in the scope of this CL) to not route these. Instead, we could just have PDF specific handling.\n\nAs you mention, there\u0027s no way to cancel this smart magnify on Mac. It would just zoom into the target element. But that also means that creating ctrl-wheel events for these would be a problem, since the way the scale is calculated (scaling to fit the block to the screen) is meaningless in the context of the app.",
+      "revId": "adb0b596b4e15427e72afdc82b925c1e59b816c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
