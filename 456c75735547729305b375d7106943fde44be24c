@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "5c15879c_7ac96bd9",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-07T13:39:26Z",
+      "side": 1,
+      "message": "Yes, 5 is future, I just received the link to the slides. I am fine with assuming 4 (or 3) for now but agree that ktam should be looped in.\n(A comment pointing out the differences would be nice then.)",
+      "parentUuid": "fe23b61e_1b13ced6",
+      "range": {
+        "startLine": 423,
+        "startChar": 14,
+        "endLine": 423,
+        "endChar": 15
+      },
+      "revId": "456c75735547729305b375d7106943fde44be24c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "485152ed_8fbbadd3",
         "filename": "components/ntp_tiles/most_visited_sites.cc",
         "patchSetId": 1
@@ -198,6 +222,30 @@
       "writtenOn": "2017-07-07T13:31:28Z",
       "side": 1,
       "message": "It is easy to check whether a vector contains something.\nThis can be done with some gmock-matchers-fu (https://github.com/google/googletest/blob/master/googlemock/docs/CheatSheet.md is a good reference).\n\nIt should be something like:\n\nContains(AllOf(Field(\u0026NTPTile::title, \"\"), Field(\u0026NTPTile::url, GURL(\"http://ho.me/\")), /* etc */))\n\nwhich means\n\n\"A matcher, which matches a vector, which contains an element, which matches all of the following:\n- it has field title equal to \"\"\n- it has field url equal to GURL(\"http://ho.me/\")\n\nHowever, you don\u0027t need entire vector, but only first 4 elements. \nI am not aware of any matcher to allow this.\n\nHowever, you can use SaveArg, resize the vector and then EXPECT. Otherwise, write a custom matcher which resizes a vector and then applies a matcher.",
+      "range": {
+        "startLine": 604,
+        "startChar": 30,
+        "endLine": 604,
+        "endChar": 56
+      },
+      "revId": "456c75735547729305b375d7106943fde44be24c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e528478_6a2a1556",
+        "filename": "components/ntp_tiles/most_visited_sites_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-07T13:39:26Z",
+      "side": 1,
+      "message": "Resizing a vector sounds pretty nice here to crop everything we don\u0027t care about.",
+      "parentUuid": "9044cda7_332ec03c",
       "range": {
         "startLine": 604,
         "startChar": 30,
