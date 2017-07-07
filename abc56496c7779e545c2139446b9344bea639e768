@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86f03b04_aba70d56",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2947,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-07-07T19:09:47Z",
+      "side": 1,
+      "message": "Xiaohan, is this the preferred way for us to register media services we expect to have on all platforms? I see that we have our own MediaInterfaceProvider, but it doesn\u0027t seem to be available on all platforms. So I just followed the model of other RenderFrameHost services.",
+      "revId": "abc56496c7779e545c2139446b9344bea639e768",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "095cb953_efc8aa58",
+        "filename": "media/blink/watch_time_reporter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-07-07T19:09:47Z",
+      "side": 1,
+      "message": "Note to self, requiring AudioCodec and VideoCodec will not work for HLS. It\u0027s also unclear if valid DecoderConfigs are reported up through PipelineMetadata for Chromecast. +chcunningham in case he has checked this out in regards to capabilities work.",
+      "revId": "abc56496c7779e545c2139446b9344bea639e768",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "998f7dff_97eb5453",
+        "filename": "media/mojo/interfaces/watch_time_recorder.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-07-07T19:09:47Z",
+      "side": 1,
+      "message": "Xiaohan, I wonder if instead we should put this in its own mojom as something like MediaMetricsProvider; which at the moment would only provide a WatchTimeRecorder. I.e., it would be our home for any future metrics interfaces we might add.",
+      "revId": "abc56496c7779e545c2139446b9344bea639e768",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
