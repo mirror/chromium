@@ -46,6 +46,30 @@
       "revId": "b8f0d6feb6d8fa9e28286fbacf18b222bbb7965b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "577a2dcc_986ddb36",
+        "filename": "chrome/browser/chromeos/app_mode/kiosk_app_icon_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000140
+      },
+      "writtenOn": "2017-07-07T05:23:18Z",
+      "side": 1,
+      "message": "Thanks. Didn\u0027t notice that task_runner was passed via a callback to another thread, which sounds rather unusual, but that\u0027s not something this patch should fix. :)",
+      "parentUuid": "625883f9_7b96537c",
+      "range": {
+        "startLine": 78,
+        "startChar": 12,
+        "endLine": 78,
+        "endChar": 47
+      },
+      "revId": "b8f0d6feb6d8fa9e28286fbacf18b222bbb7965b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
