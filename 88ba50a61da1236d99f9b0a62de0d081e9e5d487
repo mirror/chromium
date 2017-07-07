@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "fdd6226b_fcc4c628",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_base_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-07T01:46:27Z",
+      "side": 1,
+      "message": "SGTM!",
+      "parentUuid": "76815d06_269b6df3",
+      "revId": "88ba50a61da1236d99f9b0a62de0d081e9e5d487",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de4c14a7_0259eabc",
         "filename": "chrome/browser/ui/views/autofill/autofill_popup_base_view.cc",
         "patchSetId": 2
