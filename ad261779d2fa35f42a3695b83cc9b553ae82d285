@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0976ada_2c7f0531",
+        "filename": "build/android/gyp/merge_manifest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-07T13:59:05Z",
+      "side": 1,
+      "message": "nit: now unused",
+      "range": {
+        "startLine": 20,
+        "startChar": 18,
+        "endLine": 20,
+        "endChar": 27
+      },
+      "revId": "ad261779d2fa35f42a3695b83cc9b553ae82d285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3a17181_78f1c33e",
+        "filename": "build/android/gyp/merge_manifest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-07T13:59:05Z",
+      "side": 1,
+      "message": "nit: rather than having try/finally, could do:\n\nwith tempfile.NamedTemporaryFile(...) as patched_manifest:\n  doc.writexml(patched_manifest)\n  patched_manifest.flush()\n  yield patched_manifest.name",
+      "revId": "ad261779d2fa35f42a3695b83cc9b553ae82d285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1f6806b_14ebbd38",
+        "filename": "build/android/gyp/util/build_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-07T13:59:05Z",
+      "side": 1,
+      "message": "Although I think this makes the most sense as a stand-alone function, most scripts base everything off of having an output directory passed to them, and it might be a bit annoying for every one of them to build the path to this file when calling this helper. \n\nHow about either:\na) Make it take in the path to the output directory (and append \"build_vars.txt\" to it), or\nb) Make the parameter optional and retrieve the output directory from constants.GetOutputDir()",
+      "range": {
+        "startLine": 84,
+        "startChar": 18,
+        "endLine": 84,
+        "endChar": 33
+      },
+      "revId": "ad261779d2fa35f42a3695b83cc9b553ae82d285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15c4ef9a_dee9a13b",
+        "filename": "build/android/gyp/util/build_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-07T13:59:05Z",
+      "side": 1,
+      "message": "nit: I think the replace(\"//\", \"\") is an artifact from when one of the paths was missing a rebase_path() on it. Doesn\u0027t look like any paths have it, so should remove it.",
+      "range": {
+        "startLine": 86,
+        "startChar": 26,
+        "endLine": 86,
+        "endChar": 34
+      },
+      "revId": "ad261779d2fa35f42a3695b83cc9b553ae82d285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
