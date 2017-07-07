@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe8de333_4c8593a3",
+        "filename": "third_party/WebKit/Source/core/layout/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1214,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-07-07T19:32:05Z",
+      "side": 1,
+      "message": "Just trying to understand what\u0027s happening here.  This codepath determines the position of the main GraphicsLayer for the LayoutView, right?  How does it work in the non RLS case?  I would have thought it should be 0,0 there too, since the scroll origin is plumbed into the PLC scroll layer.",
+      "revId": "5e5158e6788d2930378d0e1fb1e9c65377a6ca14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
