@@ -16,6 +16,24 @@
       "revId": "3589c7c9b4e53af197ee02fb4c48dda75f88b47a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84c4f272_ed88e445",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerGlobalScopeProxy.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2017-07-07T11:02:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70f3ee3b_cd4f6bfa",
+      "revId": "3589c7c9b4e53af197ee02fb4c48dda75f88b47a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
