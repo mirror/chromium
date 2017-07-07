@@ -114,6 +114,7 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
     private static VrShellDelegate sInstance;
     private static VrBroadcastReceiver sVrBroadcastReceiver;
     private static boolean sRegisteredDaydreamHook = false;
+    private static View sBlackOverlayView;
 
     private ChromeActivity mActivity;
 
@@ -166,8 +167,6 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
     // presentation experience.
     private boolean mVrBrowserUsed;
 
-    private View mOverlayView;
-
     private static final class VrBroadcastReceiver extends BroadcastReceiver {
         private final WeakReference<ChromeActivity> mTargetActivity;
 
@@ -192,7 +191,7 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
                 // resuming the Activity, see the comment about the custom animation below.
                 // However, if we're already in VR (in one of the cases where we chose not to exit
                 // VR before the DON flow), we don't need to add the overlay.
-                if (!sInstance.mInVr) sInstance.addOverlayView();
+                if (!sInstance.mInVr) addBlackOverlayViewForActivity(sInstance.mActivity);
 
                 // We start the Activity with a custom animation that keeps it hidden for a few
                 // hundred milliseconds - enough time for us to draw the first black view.
@@ -358,6 +357,23 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
             sInstance.shutdownVr(
                     true /* disableVrMode */, false /* canReenter */, true /* stayingInChrome */);
         }
+    }
+
+    public static void addBlackOverlayViewForActivity(ChromeActivity activity) {
+        if (sBlackOverlayView != null) return;
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
+                WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+        FrameLayout decor = (FrameLayout) activity.getWindow().getDecorView();
+        sBlackOverlayView = new View(activity);
+        sBlackOverlayView.setBackgroundColor(Color.BLACK);
+        decor.addView(sBlackOverlayView, -1, params);
+    }
+
+    public static void removeBlackOverlayViewForActivity(ChromeActivity activity) {
+        if (sBlackOverlayView == null) return;
+        FrameLayout decor = (FrameLayout) activity.getWindow().getDecorView();
+        decor.removeView(sBlackOverlayView);
+        sBlackOverlayView = null;
     }
 
     @CalledByNative
@@ -692,7 +708,7 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
 
         maybeSetPresentResult(true, donSuceeded);
         mVrShell.getContainer().setOnSystemUiVisibilityChangeListener(this);
-        removeOverlayView();
+        removeBlackOverlayViewForActivity(mActivity);
         if (!donSuceeded && !mAutopresentWebVr && isDaydreamCurrentViewer()) {
             // TODO(mthiesse): This is a VERY dirty hack. We need to know whether or not entering VR
             // will trigger the DON flow, so that we can wait for it to complete before we let the
@@ -718,6 +734,10 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
         assert !mInVr;
         mAutopresentWebVr = true;
         mDonSucceeded = true;
+    }
+
+    public static boolean isVrIntent(Intent intent) {
+        return IntentUtils.safeGetBooleanExtra(intent, DAYDREAM_VR_EXTRA, false);
     }
 
     /**
@@ -1029,7 +1049,7 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
         // Ensure we can't asynchronously enter VR after trying to exit it.
         mEnterVrHandler.removeCallbacksAndMessages(null);
         mDonSucceeded = false;
-        removeOverlayView();
+        removeBlackOverlayViewForActivity(mActivity);
     }
 
     /**
@@ -1254,23 +1274,6 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
                     .setSystemUiVisibility(mRestoreSystemUiVisibilityFlag);
         }
         mRestoreSystemUiVisibilityFlag = -1;
-    }
-
-    private void addOverlayView() {
-        if (mOverlayView != null) return;
-        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
-                WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-        FrameLayout decor = (FrameLayout) mActivity.getWindow().getDecorView();
-        mOverlayView = new View(mActivity);
-        mOverlayView.setBackgroundColor(Color.BLACK);
-        decor.addView(mOverlayView, -1, params);
-    }
-
-    private void removeOverlayView() {
-        if (mOverlayView == null) return;
-        FrameLayout decor = (FrameLayout) sInstance.mActivity.getWindow().getDecorView();
-        decor.removeView(mOverlayView);
-        mOverlayView = null;
     }
 
     /**

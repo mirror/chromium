@@ -1332,6 +1332,9 @@ public class ChromeTabbedActivity
     @Override
     public void preInflationStartup() {
         super.preInflationStartup();
+        if (VrShellDelegate.isVrIntent(getIntent())) {
+            VrShellDelegate.addBlackOverlayViewForActivity(this);
+        }
 
         // Decide whether to record startup UMA histograms. This is done  early in the main
         // Activity.onCreate() to avoid recording navigation delays when they require user input to
