@@ -1478,7 +1478,8 @@ void ServiceWorkerVersion::StartWorkerInternal() {
   if (ServiceWorkerUtils::IsScriptStreamingEnabled()) {
     DCHECK(!installed_scripts_sender_);
     installed_scripts_sender_ =
-        base::MakeUnique<ServiceWorkerInstalledScriptsSender>();
+        base::MakeUnique<ServiceWorkerInstalledScriptsSender>(
+            this, script_url(), script_cache_map()->AsWeakPtr(), context());
     installed_scripts_info = installed_scripts_sender_->CreateInfoAndBind();
   }
 
