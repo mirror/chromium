@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84be0472_68ce7cb1",
+        "filename": "content/common/indexed_db/indexed_db.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-07T22:07:55Z",
+      "side": 1,
+      "message": "Would it make sense to share a common status enum for indexed db operations that corresponds to leveldb::Status?",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 101,
+        "endChar": 2
+      },
+      "revId": "442580ad605f66f344cb95d3c991cf296e94af63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
