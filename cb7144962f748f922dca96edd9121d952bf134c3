@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64edcb01_750a7635",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentRequestImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1553,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-07T13:47:18Z",
+      "side": 1,
+      "message": "Just making sure, at this point the instruments are shown or the PR is only initiated?",
+      "revId": "cb7144962f748f922dca96edd9121d952bf134c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7df5d48c_c3e3f258",
+        "filename": "chrome/browser/ui/views/payments/payment_request_journey_logger_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-07T13:47:18Z",
+      "side": 1,
+      "message": "Let\u0027s have a test where the user has an Amex card (autofill::test::GetCreditCard2()) but the merchant doesn\u0027t support it",
+      "range": {
+        "startLine": 498,
+        "startChar": 23,
+        "endLine": 498,
+        "endChar": 57
+      },
+      "revId": "cb7144962f748f922dca96edd9121d952bf134c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e62a096_4f027915",
+        "filename": "components/payments/core/journey_logger.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-07T13:47:18Z",
+      "side": 1,
+      "message": "Is it only when shown?",
+      "range": {
+        "startLine": 190,
+        "startChar": 34,
+        "endLine": 190,
+        "endChar": 35
+      },
+      "revId": "cb7144962f748f922dca96edd9121d952bf134c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "027965ed_701fb861",
+        "filename": "components/payments/core/journey_logger_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 727,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-07T13:47:18Z",
+      "side": 1,
+      "message": "Have a test where show is not called, see that it\u0027s not logged?",
+      "range": {
+        "startLine": 727,
+        "startChar": 5,
+        "endLine": 727,
+        "endChar": 68
+      },
+      "revId": "cb7144962f748f922dca96edd9121d952bf134c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
