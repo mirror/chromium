@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "7b8054c0_18c1aaea",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 791,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-07-07T16:59:29Z",
+      "side": 1,
+      "message": "Out of curiosity, why did you remove this in the original CL? Did it just seem unnecessary with the addition of SetDisplayOffset(0)?",
+      "revId": "d59ca64cf96dc0c957b71c4036028ac48df52fed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "830a2a4d_229a747c",
         "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views_browsertest.cc",
         "patchSetId": 1
@@ -13,6 +30,24 @@
       "writtenOn": "2017-07-07T06:25:43Z",
       "side": 1,
       "message": "Note: The changes made to this file are reverts of the changes made in https://crrev.com/473830.",
+      "revId": "d59ca64cf96dc0c957b71c4036028ac48df52fed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d336e12c_f800fc6e",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-07-07T16:59:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "830a2a4d_229a747c",
       "revId": "d59ca64cf96dc0c957b71c4036028ac48df52fed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
