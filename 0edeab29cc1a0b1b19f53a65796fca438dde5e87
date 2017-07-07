@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b409101_046f3d42",
+        "filename": "third_party/WebKit/Source/core/testing/data/mhtml/simple_test.mht",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-07T20:48:20Z",
+      "side": 1,
+      "message": "Is this change unintentional?",
+      "range": {
+        "startLine": 1,
+        "startChar": 5,
+        "endLine": 1,
+        "endChar": 6
+      },
+      "revId": "0edeab29cc1a0b1b19f53a65796fca438dde5e87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

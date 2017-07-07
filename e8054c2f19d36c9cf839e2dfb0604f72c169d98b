@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "265b7b71_bf4cba16",
+        "filename": "chrome/browser/apps/guest_view/web_view_interactive_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1787,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-07T20:48:20Z",
+      "side": 1,
+      "message": "Is this a typo or is it gerrit?",
+      "range": {
+        "startLine": 1787,
+        "startChar": 2,
+        "endLine": 1787,
+        "endChar": 32
+      },
+      "revId": "e8054c2f19d36c9cf839e2dfb0604f72c169d98b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

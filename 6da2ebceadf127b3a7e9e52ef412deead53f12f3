@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78439222_9ee8201e",
+        "filename": "chrome/browser/apps/guest_view/web_view_interactive_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1741,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-07T20:48:20Z",
+      "side": 0,
+      "message": "Don\u0027t need to delete the test description.",
+      "range": {
+        "startLine": 1741,
+        "startChar": 3,
+        "endLine": 1741,
+        "endChar": 7
+      },
+      "revId": "6da2ebceadf127b3a7e9e52ef412deead53f12f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
