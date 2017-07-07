@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "92f6a077_3ad2916c",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueDeserializer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-07-07T16:17:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4cd4c9ff_b24f12c5",
+      "revId": "c2d0eb495085ac5d73961c6b7ab5bf63f1bb72eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "151bd086_ae595aeb",
         "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueDeserializer.cpp",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-29T17:39:21Z",
       "side": 1,
       "message": "This...is potentially very large (4x larger than 32-bit RGBA, which was already large). For storage to disk this does hit LevelDB Snappy compression, but do you have an idea whether this is likely to be an issue with typical use?",
+      "revId": "c2d0eb495085ac5d73961c6b7ab5bf63f1bb72eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b6be319_95539c22",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueDeserializer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-07-07T16:17:11Z",
+      "side": 1,
+      "message": "I think the compression should not cause any issues assuming that proper decompression mechanism is in place before reading back the data in ReadDOMObject(). However, Skia is using a half float back storage to work with the float32 image data, which means at least for now we are losing precision anyway. Considering that the standard mentions the possibility of precision loss in a writeImageData/readImageData round trip (due to premul/unpremul operations) I was wondering if it worths to serialize float32 ImageData into half floats. I\u0027ll discuss this with Justin.",
+      "parentUuid": "151bd086_ae595aeb",
       "revId": "c2d0eb495085ac5d73961c6b7ab5bf63f1bb72eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "c2d0eb495085ac5d73961c6b7ab5bf63f1bb72eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ee5bf22_c7b6b563",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueSerializer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-07-07T16:17:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d3d260fa_1e5e950c",
+      "revId": "c2d0eb495085ac5d73961c6b7ab5bf63f1bb72eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
