@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "ea4be8f7_55144749",
+        "filename": "content/browser/service_worker/embedded_worker_instance.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-07T05:00:29Z",
+      "side": 1,
+      "message": "#include \"content/public/common/content_client.h\" for GetContentClient()",
+      "revId": "d9f9da9fdd987156cfb32357aa28203e37584b92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "82722370_1065b9c2",
         "filename": "content/browser/service_worker/embedded_worker_instance.cc",
         "patchSetId": 2
