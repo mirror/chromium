@@ -281,4 +281,9 @@ bool WebContentsDelegate::ShouldAllowRunningInsecureContent(
   return allowed_per_prefs;
 }
 
+bool WebContentsDelegate::ShouldWaitForAllPipelineStagesBeforeDraw(
+    WebContents* web_contents) {
+  return false;
+}
+
 }  // namespace content

@@ -192,6 +192,11 @@ class CONTENT_EXPORT RenderViewHostDelegate {
   // Whether the WebContents as a persistent video.
   virtual bool HasPersistentVideo() const;
 
+  // Whether the RenderWidgetCompositor should wait for all compositing pipeline
+  // stages (main thread, commit, tiles, activation) before triggering a
+  // BeginFrame deadline and producing a CompositorFrame. False by default.
+  virtual bool ShouldWaitForAllPipelineStagesBeforeDraw();
+
  protected:
   virtual ~RenderViewHostDelegate() {}
 };

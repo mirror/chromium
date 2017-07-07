@@ -560,6 +560,10 @@ std::string BrowserContext::GetMediaDeviceIDSalt() {
   return media_device_id_salt_;
 }
 
+bool BrowserContext::ShouldWaitForAllPipelineStagesBeforeDraw() {
+  return false;
+}
+
 // static
 std::string BrowserContext::CreateRandomMediaDeviceIDSalt() {
   std::string salt;

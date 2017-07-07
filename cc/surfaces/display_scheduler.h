@@ -11,6 +11,7 @@
 #include "base/containers/flat_map.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "base/observer_list.h"
 #include "base/single_thread_task_runner.h"
 #include "cc/output/renderer_settings.h"
 #include "cc/scheduler/begin_frame_source.h"
@@ -34,6 +35,13 @@ class CC_SURFACES_EXPORT DisplaySchedulerClient {
   virtual void SurfaceDiscarded(const SurfaceId& surface_id) = 0;
 };
 
+class CC_SURFACES_EXPORT DisplaySchedulerObserver {
+ public:
+  virtual ~DisplaySchedulerObserver() {}
+
+  virtual void OnDisplayDidFinishFrame(const BeginFrameAck& ack) = 0;
+};
+
 class CC_SURFACES_EXPORT DisplayScheduler : public BeginFrameObserverBase,
                                             public SurfaceObserver {
  public:
@@ -44,6 +52,8 @@ class CC_SURFACES_EXPORT DisplayScheduler : public BeginFrameObserverBase,
   ~DisplayScheduler() override;
 
   void SetClient(DisplaySchedulerClient* client);
+  void AddObserver(DisplaySchedulerObserver* observer);
+  void RemoveObserver(DisplaySchedulerObserver* observer);
 
   void SetVisible(bool visible);
   void SetRootSurfaceResourcesLocked(bool locked);
@@ -124,6 +134,8 @@ class CC_SURFACES_EXPORT DisplayScheduler : public BeginFrameObserverBase,
   bool observing_begin_frame_source_;
 
   SurfaceId root_surface_id_;
+
+  base::ObserverList<DisplaySchedulerObserver> observers_;
 
   base::WeakPtrFactory<DisplayScheduler> weak_ptr_factory_;
 
