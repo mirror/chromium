@@ -1,0 +1,152 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a339639d_157ecffe",
+        "filename": "chrome/browser/memory/memory_kills_monitor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-07T01:29:37Z",
+      "side": 1,
+      "message": "Can you add \n DCHECK_CURRENTLY_ON(content::BrowserThread::UI);\nto make sure that only UI thread touches |monitoring_started_|?",
+      "revId": "c93b0695ecfa1e37f774bf404b41efaecc369e27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ebd737d_b4efef32",
+        "filename": "chrome/browser/memory/memory_kills_monitor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-07T01:29:37Z",
+      "side": 1,
+      "message": "omit {} ?",
+      "revId": "c93b0695ecfa1e37f774bf404b41efaecc369e27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5634804_35d8088e",
+        "filename": "chrome/browser/memory/memory_kills_monitor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-07T01:29:37Z",
+      "side": 1,
+      "message": "same",
+      "range": {
+        "startLine": 93,
+        "startChar": 9,
+        "endLine": 93,
+        "endChar": 10
+      },
+      "revId": "c93b0695ecfa1e37f774bf404b41efaecc369e27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81187109_2c2c7ecd",
+        "filename": "chrome/browser/memory/memory_kills_monitor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-07T01:29:37Z",
+      "side": 1,
+      "message": "Add DCHECK_CURRENTLY_ON(content::BrowserThread::UI); ?",
+      "revId": "c93b0695ecfa1e37f774bf404b41efaecc369e27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4def63a9_3dd0fd51",
+        "filename": "chrome/browser/memory/memory_kills_monitor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-07T01:29:37Z",
+      "side": 1,
+      "message": "nit: can you add const?\n\n MemoryKillsMonitor* const outer_;",
+      "revId": "c93b0695ecfa1e37f774bf404b41efaecc369e27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10e1c8ff_f75c8754",
+        "filename": "chrome/browser/memory/memory_kills_monitor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-07T01:29:37Z",
+      "side": 1,
+      "message": "nit: add an empty line between L48 and 49.",
+      "revId": "c93b0695ecfa1e37f774bf404b41efaecc369e27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c496322_76b386c7",
+        "filename": "chrome/browser/memory/memory_kills_monitor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-07T01:29:37Z",
+      "side": 1,
+      "message": "Why is this base::Time and the other one is int64?",
+      "revId": "c93b0695ecfa1e37f774bf404b41efaecc369e27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afff188a_8bf349b6",
+        "filename": "chrome/browser/memory/memory_kills_monitor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-07T01:29:37Z",
+      "side": 1,
+      "message": "brief variable comments please.",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 102,
+        "endChar": 23
+      },
+      "revId": "c93b0695ecfa1e37f774bf404b41efaecc369e27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

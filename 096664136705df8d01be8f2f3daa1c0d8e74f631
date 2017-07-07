@@ -458,6 +458,24 @@
     },
     {
       "key": {
+        "uuid": "f3731ece_2f48d93c",
+        "filename": "chrome/browser/memory/memory_kills_monitor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-07T01:29:37Z",
+      "side": 1,
+      "message": "It\u0027s (sort of) unfortunate that Chromium\u0027s base/ doesn\u0027t provide a utility to read a file line by line, but either way, using std::getline is slightly more popular in Chromium code base than fgets. Please go ahead with getline. Re stream handling, you can do the same as TextContentsEqual() in base/files/file_util.cc.\n\nWhen doing so, would you mind making the Run() function testable and add some tests as I asked in the original comment?",
+      "parentUuid": "e51742e6_8736f627",
+      "revId": "096664136705df8d01be8f2f3daa1c0d8e74f631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4aa0a662_b6564fac",
         "filename": "chrome/browser/memory/memory_kills_monitor.cc",
         "patchSetId": 1
@@ -487,6 +505,24 @@
       "side": 1,
       "message": "If browser process is restarted, shouldn\u0027t it be a new process so totally unrelated to the old process? \n\nI do observed that sometimes LoggedInStateChanged is called multiple times (when I run autotest for it), like:\n\n[25225:25225:0621/014411.860149:VERBOSE1:memory_kills_monitor.cc(141)] MemoryKillsMonitor:: Initializing 25225\n[25225:25225:0621/014414.361732:VERBOSE1:memory_kills_monitor.cc(163)] LoggedInStateChanged\n[25225:25225:0621/014414.361772:VERBOSE1:memory_kills_monitor.cc(168)] User logged in\n[25225:25225:0621/014414.361783:VERBOSE1:memory_kills_monitor.cc(175)] MemoryKillsMonitor: Start monitoring.25225\n[25225:25419:0621/014414.362363:VERBOSE1:memory_kills_monitor.cc(254)] MemoryKillsMonitor started 25419\n[25225:25225:0621/014415.464665:VERBOSE1:memory_kills_monitor.cc(163)] LoggedInStateChanged\n[25225:25225:0621/014415.464713:VERBOSE1:memory_kills_monitor.cc(168)] User logged in\n[25225:25225:0621/014415.464724:VERBOSE1:memory_kills_monitor.cc(175)] MemoryKillsMonitor: Start monitoring.25225\n[25225:25225:0621/014415.464733:WARNING:memory_kills_monitor.cc(180)] Monitoring has been started\n\nSo I use the member variable monitoring_started_ to avoid re-creation of the listening thread.",
       "parentUuid": "4aa0a662_b6564fac",
+      "revId": "096664136705df8d01be8f2f3daa1c0d8e74f631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95068bc1_7146e3f3",
+        "filename": "chrome/browser/memory/memory_kills_monitor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-07T01:29:37Z",
+      "side": 1,
+      "message": "Ok, can you test it in the unit test? (i.e. call StartMonitoring() multiple times and then confirm UMA with 0 is recorded only once, or something like that.)\n\nSince the thread is not joinable, synchronization (e.g. some wait before EXPECT_EQ) might be a bit tricky though.",
+      "parentUuid": "02f0a703_66eb439e",
       "revId": "096664136705df8d01be8f2f3daa1c0d8e74f631",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
