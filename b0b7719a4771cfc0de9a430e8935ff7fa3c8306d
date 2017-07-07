@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3e0b72a_c59c48ab",
+        "filename": "ui/ozone/platform/drm/gpu/gbm_surfaceless.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-07-07T20:53:44Z",
+      "side": 1,
+      "message": "The test of IsUniversalDisplayLinkDevice() is subtle. How was the need for it discovered?",
+      "revId": "b0b7719a4771cfc0de9a430e8935ff7fa3c8306d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed1ea9cc_01b69478",
+        "filename": "ui/ozone/platform/drm/gpu/gbm_surfaceless.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-07-07T20:53:44Z",
+      "side": 1,
+      "message": "Could you please document this better, i.e., how you discovered the need for this check?",
+      "range": {
+        "startLine": 250,
+        "startChar": 5,
+        "endLine": 250,
+        "endChar": 19
+      },
+      "revId": "b0b7719a4771cfc0de9a430e8935ff7fa3c8306d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
