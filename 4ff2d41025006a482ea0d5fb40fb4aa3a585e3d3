@@ -22,6 +22,30 @@
       "revId": "4ff2d41025006a482ea0d5fb40fb4aa3a585e3d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "195ed924_6b050d4b",
+        "filename": "google_apis/gcm/monitoring/fake_gcm_stats_recorder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-07T14:09:14Z",
+      "side": 0,
+      "message": "Oops, readded w/o the to_registered_app argument.",
+      "parentUuid": "68c1b220_9968e009",
+      "range": {
+        "startLine": 75,
+        "startChar": 27,
+        "endLine": 75,
+        "endChar": 52
+      },
+      "revId": "4ff2d41025006a482ea0d5fb40fb4aa3a585e3d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
