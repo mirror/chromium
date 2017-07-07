@@ -774,7 +774,11 @@ MediaError* HTMLMediaElement::error() const {
   return error_;
 }
 
-void HTMLMediaElement::SetSrc(const AtomicString& url) {
+const AtomicString& HTMLMediaElement::src() const {
+  return FastGetAttribute(srcAttr);
+}
+
+void HTMLMediaElement::setSrc(const AtomicString& url) {
   setAttribute(srcAttr, url);
 }
 
@@ -782,6 +786,14 @@ void HTMLMediaElement::SetSrcObject(MediaStreamDescriptor* src_object) {
   BLINK_MEDIA_LOG << "setSrcObject(" << (void*)this << ")";
   src_object_ = src_object;
   InvokeLoadAlgorithm();
+}
+
+const AtomicString& HTMLMediaElement::crossOrigin() const {
+  return FastGetAttribute(crossoriginAttr);
+}
+
+void HTMLMediaElement::setCrossOrigin(const AtomicString& origin) {
+  setAttribute(crossoriginAttr, origin);
 }
 
 HTMLMediaElement::NetworkState HTMLMediaElement::getNetworkState() const {
@@ -2181,8 +2193,12 @@ bool HTMLMediaElement::ended() const {
   return EndedPlayback() && GetDirectionOfPlayback() == kForward;
 }
 
-bool HTMLMediaElement::Autoplay() const {
+bool HTMLMediaElement::autoplay() const {
   return FastHasAttribute(autoplayAttr);
+}
+
+void HTMLMediaElement::setAutoplay(bool b) {
+  SetBooleanAttribute(autoplayAttr, b);
 }
 
 String HTMLMediaElement::preload() const {
@@ -2249,7 +2265,7 @@ String HTMLMediaElement::EffectivePreload() const {
 }
 
 WebMediaPlayer::Preload HTMLMediaElement::EffectivePreloadType() const {
-  if (Autoplay() && !autoplay_policy_->IsGestureNeededForPlayback())
+  if (autoplay() && !autoplay_policy_->IsGestureNeededForPlayback())
     return WebMediaPlayer::kPreloadAuto;
 
   WebMediaPlayer::Preload preload = PreloadType();
@@ -2413,11 +2429,11 @@ void HTMLMediaElement::CloseMediaSource() {
   media_source_ = nullptr;
 }
 
-bool HTMLMediaElement::Loop() const {
+bool HTMLMediaElement::loop() const {
   return FastHasAttribute(loopAttr);
 }
 
-void HTMLMediaElement::SetLoop(bool b) {
+void HTMLMediaElement::setLoop(bool b) {
   BLINK_MEDIA_LOG << "setLoop(" << (void*)this << ", " << BoolString(b) << ")";
   SetBooleanAttribute(loopAttr, b);
 }
@@ -2516,6 +2532,12 @@ void HTMLMediaElement::setMuted(bool muted) {
 
   autoplay_policy_->StopAutoplayMutedWhenVisible();
 }
+
+bool HTMLMediaElement::defaultMuted() const {
+  return false;
+}
+
+void HTMLMediaElement::setDefaultMuted(bool) {}
 
 double HTMLMediaElement::EffectiveMediaVolume() const {
   if (muted_)
@@ -3095,7 +3117,7 @@ void HTMLMediaElement::TimeChanged() {
   if (!std::isnan(dur) && dur && now >= dur &&
       GetDirectionOfPlayback() == kForward) {
     // If the media element has a loop attribute specified
-    if (Loop()) {
+    if (loop()) {
       //  then seek to the earliest possible position of the media resource and
       //  abort these steps.
       Seek(EarliestPossiblePosition());
@@ -3308,9 +3330,10 @@ bool HTMLMediaElement::EndedPlayback(LoopCondition loop_condition) const {
   // direction of playback is forwards, Either the media element does not have a
   // loop attribute specified,
   double now = CurrentPlaybackPosition();
-  if (GetDirectionOfPlayback() == kForward)
+  if (GetDirectionOfPlayback() == kForward) {
     return dur > 0 && now >= dur &&
-           (loop_condition == LoopCondition::kIgnored || !Loop());
+           (loop_condition == LoopCondition::kIgnored || !loop());
+  }
 
   // or the current playback position is the earliest possible position and the
   // direction of playback is backwards

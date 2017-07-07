@@ -139,10 +139,13 @@ class CORE_EXPORT HTMLMediaElement
   MediaError* error() const;
 
   // network state
-  void SetSrc(const AtomicString&);
+  const AtomicString& src() const;
+  void setSrc(const AtomicString&);
   const KURL& currentSrc() const { return current_src_; }
   void SetSrcObject(MediaStreamDescriptor*);
   MediaStreamDescriptor* GetSrcObject() const { return src_object_.Get(); }
+  const AtomicString& crossOrigin() const;
+  void setCrossOrigin(const AtomicString&);
 
   enum NetworkState {
     kNetworkEmpty,
@@ -186,10 +189,11 @@ class CORE_EXPORT HTMLMediaElement
   TimeRanges* played();
   TimeRanges* seekable() const;
   bool ended() const;
-  bool Autoplay() const;
+  bool autoplay() const;
+  void setAutoplay(bool);
   bool ShouldAutoplay();
-  bool Loop() const;
-  void SetLoop(bool);
+  bool loop() const;
+  void setLoop(bool);
   ScriptPromise playForBindings(ScriptState*);
   Nullable<ExceptionCode> Play();
   void pause();
@@ -214,6 +218,8 @@ class CORE_EXPORT HTMLMediaElement
   void setVolume(double, ExceptionState& = ASSERT_NO_EXCEPTION);
   bool muted() const;
   void setMuted(bool);
+  bool defaultMuted() const;
+  void setDefaultMuted(bool);
 
   void TogglePlayState();
 
