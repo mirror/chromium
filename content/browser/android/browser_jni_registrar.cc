@@ -9,6 +9,7 @@
 #include "base/macros.h"
 #include "content/browser/accessibility/browser_accessibility_android.h"
 #include "content/browser/accessibility/web_contents_accessibility_android.h"
+#include "content/browser/android/android_overlay_provider_impl.h"
 #include "content/browser/android/app_web_message_port.h"
 #include "content/browser/android/background_sync_network_observer_android.h"
 #include "content/browser/android/browser_startup_controller.h"
@@ -38,6 +39,8 @@
 
 namespace {
 base::android::RegistrationMethod kContentRegisteredMethods[] = {
+    {"AndroidOverlayProviderImpl",
+     content::AndroidOverlayProviderImpl::RegisterAndroidOverlayProviderImpl},
     {"AppWebMessagePort", content::RegisterAppWebMessagePort},
     {"AudioFocusDelegate", content::AudioFocusDelegateAndroid::Register},
     {"BrowserStartupController", content::RegisterBrowserStartupController},
