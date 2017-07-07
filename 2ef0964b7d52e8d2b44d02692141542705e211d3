@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "77dc1e50_f8ba5b35",
+        "filename": "chrome/browser/password_manager/chrome_password_manager_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-07T07:12:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b45fe3f1_efa39fd2",
+      "range": {
+        "startLine": 288,
+        "startChar": 6,
+        "endLine": 288,
+        "endChar": 22
+      },
+      "revId": "2ef0964b7d52e8d2b44d02692141542705e211d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "820fefe5_97eece93",
         "filename": "chrome/browser/password_manager/chrome_password_manager_client_unittest.cc",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "3b7b5f37_6e9337df",
+        "filename": "chrome/browser/password_manager/chrome_password_manager_client_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-07T07:12:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "820fefe5_97eece93",
+      "range": {
+        "startLine": 675,
+        "startChar": 25,
+        "endLine": 675,
+        "endChar": 44
+      },
+      "revId": "2ef0964b7d52e8d2b44d02692141542705e211d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ffbcc1de_f6bffdfa",
         "filename": "chrome/browser/password_manager/chrome_password_manager_client_unittest.cc",
         "patchSetId": 3
@@ -62,6 +110,24 @@
       "revId": "2ef0964b7d52e8d2b44d02692141542705e211d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "653229fb_fbb79c6b",
+        "filename": "chrome/browser/password_manager/chrome_password_manager_client_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 703,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-07T07:12:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ffbcc1de_f6bffdfa",
+      "revId": "2ef0964b7d52e8d2b44d02692141542705e211d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "fe7e938a_875f1061",
+        "filename": "components/password_manager/core/browser/password_form_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-07T07:12:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5323e105_454f4e0b",
+      "range": {
+        "startLine": 272,
+        "startChar": 2,
+        "endLine": 272,
+        "endChar": 7
+      },
+      "revId": "2ef0964b7d52e8d2b44d02692141542705e211d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e95fcfd_0ed6f828",
         "filename": "ios/chrome/browser/passwords/ios_chrome_password_manager_client.mm",
         "patchSetId": 3
@@ -108,6 +198,30 @@
       "revId": "2ef0964b7d52e8d2b44d02692141542705e211d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84392c66_78d67b7d",
+        "filename": "ios/chrome/browser/passwords/ios_chrome_password_manager_client.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-07T07:12:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e95fcfd_0ed6f828",
+      "range": {
+        "startLine": 88,
+        "startChar": 6,
+        "endLine": 88,
+        "endChar": 22
+      },
+      "revId": "2ef0964b7d52e8d2b44d02692141542705e211d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
