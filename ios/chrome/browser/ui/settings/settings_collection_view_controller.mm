@@ -315,6 +315,17 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
   [self updateSearchCell];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+  [super viewDidAppear:animated];
+  if (!_signinInteractionController && _signinPromoViewMediator) {
+    PrefService* prefs = _browserState->GetPrefs();
+    int displayedCount =
+        prefs->GetInteger(prefs::kIosSettingsSigninPromoDisplayedCount);
+    prefs->SetInteger(prefs::kIosSettingsSigninPromoDisplayedCount,
+                      displayedCount + 1);
+  }
+}
+
 - (void)viewDidDisappear:(BOOL)animated {
   [super viewDidDisappear:animated];
   if (!_signinStarted && _signinPromoViewMediator) {
@@ -354,8 +365,6 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
       _signinPromoViewMediator =
           [[SigninPromoViewMediator alloc] initWithBrowserState:_browserState];
       _signinPromoViewMediator.consumer = self;
-      prefs->SetInteger(prefs::kIosSettingsSigninPromoDisplayedCount,
-                        displayedCount + 1);
     }
     [model addItem:[self signInTextItem]
         toSectionWithIdentifier:SectionIdentifierSignIn];
@@ -1225,6 +1234,8 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
   UMA_HISTOGRAM_COUNTS_100(
       "MobileSignInPromo.SettingsManager.ImpressionsTilSigninButtons",
       displayedCount);
+  NSLog(@"MobileSignInPromo.SettingsManager.ImpressionsTilSigninButtons %d",
+        displayedCount);
 }
 
 @end

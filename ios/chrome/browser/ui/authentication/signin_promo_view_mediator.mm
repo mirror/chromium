@@ -147,8 +147,13 @@ enum class SigninPromoViewState {
         base::MakeUnique<ChromeIdentityServiceObserverBridge>(self);
     _browserProviderObserver =
         base::MakeUnique<ChromeBrowserProviderObserverBridge>(self);
+    [self performSelector:@selector(test) withObject:nil afterDelay:5];
   }
   return self;
+}
+
+- (void)test {
+  [self sendConsumerNotificationWithIdentityChanged:NO];
 }
 
 - (void)dealloc {
@@ -162,6 +167,8 @@ enum class SigninPromoViewState {
         UMA_HISTOGRAM_COUNTS_100(
             "MobileSignInPromo.BookmarkManager.ImpressionsTilDismiss",
             displayedCount);
+        NSLog(@"MobileSignInPromo.BookmarkManager.ImpressionsTilDismiss %d",
+              displayedCount);
         break;
       case ios::SigninPromoViewHistograms::None:
         break;
@@ -222,6 +229,8 @@ enum class SigninPromoViewState {
       UMA_HISTOGRAM_COUNTS_100(
           "MobileSignInPromo.BookmarkManager.ImpressionsTilSigninButtons",
           displayedCount);
+      NSLog(@"MobileSignInPromo.BookmarkManager.ImpressionsTilSigninButtons %d",
+            displayedCount);
       break;
     case ios::SigninPromoViewHistograms::None:
       break;
@@ -266,6 +275,8 @@ enum class SigninPromoViewState {
       UMA_HISTOGRAM_COUNTS_100(
           "MobileSignInPromo.BookmarkManager.ImpressionsTilXButton",
           displayedCount);
+      NSLog(@"MobileSignInPromo.BookmarkManager.ImpressionsTilXButton %d",
+            displayedCount);
       break;
     case ios::SigninPromoViewHistograms::None:
       break;
