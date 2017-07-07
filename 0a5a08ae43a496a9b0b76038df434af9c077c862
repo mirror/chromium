@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "0d938342_bddf1e93",
+        "filename": "content/browser/service_worker/embedded_worker_instance.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-07T03:59:50Z",
+      "side": 1,
+      "message": "How about creating this on the IO thread by passing |worker_devtools_agent_route_id| to the IO thread?",
+      "revId": "0a5a08ae43a496a9b0b76038df434af9c077c862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b51889c2_5fddddb7",
+        "filename": "content/browser/service_worker/embedded_worker_instance.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-07T03:59:50Z",
+      "side": 1,
+      "message": "As I commented on SetupOnUIThread, this could be created on IO thread.",
+      "revId": "0a5a08ae43a496a9b0b76038df434af9c077c862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "170a98e9_73a79512",
         "filename": "content/browser/service_worker/embedded_worker_instance.h",
         "patchSetId": 7
