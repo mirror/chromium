@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d546e96_2bbcae80",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-07-07T09:42:55Z",
+      "side": 1,
+      "message": "I prefer code flow using \"PositionInFlatTree pivot\":\nif ()\n pivot \u003d start;\nelse ()\n pivot \u003d end;\n\nif (position \u003c pivot)\n builder.SetBaseAndExtent(position, pivot);\nelse\n builder.SetBaseAndExtent(pivot, position);",
+      "revId": "8aed5c34bdb3dce3ec41b3f6e785e26967cc34d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab2a05f0_82bc9108",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-07-07T09:42:55Z",
+      "side": 1,
+      "message": "ComputeStartRespectingGranularity(pos_a, gran) and ComputeEndRespectingGranularity(start, pos_b, gran) are used only if pos_a \u003c\u003d pos_b(see VisibleSelection::validate).\nIs this usage O.K?\n\nAlso, first argument of CERG is return value of CSRG.",
+      "revId": "8aed5c34bdb3dce3ec41b3f6e785e26967cc34d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
