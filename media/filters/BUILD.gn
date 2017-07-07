@@ -4,7 +4,12 @@
 
 import("//media/media_options.gni")
 
-source_set("filters") {
+if (is_component_build) {
+  link_target_type = "source_set"
+} else {
+  link_target_type = "static_library"
+}
+target(link_target_type, "filters") {
   visibility = [ "//media/*" ]
 
   sources = [
