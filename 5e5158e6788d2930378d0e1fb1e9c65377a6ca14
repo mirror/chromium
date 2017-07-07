@@ -16,6 +16,24 @@
       "revId": "5e5158e6788d2930378d0e1fb1e9c65377a6ca14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50487d63_d69dcac6",
+        "filename": "third_party/WebKit/Source/core/layout/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1214,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-07-07T21:45:14Z",
+      "side": 1,
+      "message": "I generated a few graphics layer tree dumps that will hopefully clarify it.  All of these were generated with RLS enabled:\n\n- RTL body with frame overflow:\nhttps://paste.googleplex.com/6633618109628416\n\n- RTL div with overflow:\nhttps://paste.googleplex.com/6606157162479616\n\nWith this patch applied, the RTL div example is unchanged, but the RTL body example becomes:\n\nhttps://paste.googleplex.com/5510343233110016\n\nAs you can see, in the RTL body example, the main top-level graphics layer has a non-zero position, which is bonkers.  The scroll origin is already accounted for in the offsetFromLayoutObject of the scrolling contents layer.\n\nIn the RTL div example, the main graphics layer for the div does not have the scroll origin added into its position.\n\nWith this patch applied, the scroll origin is likewise not added into the position of the main graphics layer on the root PaintLayer.",
+      "parentUuid": "fe8de333_4c8593a3",
+      "revId": "5e5158e6788d2930378d0e1fb1e9c65377a6ca14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
