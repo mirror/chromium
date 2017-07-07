@@ -2355,7 +2355,8 @@ void TabStrip::ButtonPressed(views::Button* sender, const ui::Event& event) {
       }
     }
 
-    controller_->CreateNewTab();
+    // controller_->CreateNewTab();
+    newtab_button_->ShowPromo();
     if (event.type() == ui::ET_GESTURE_TAP)
       TouchUMA::RecordGestureAction(TouchUMA::GESTURE_NEWTAB_TAP);
   }
