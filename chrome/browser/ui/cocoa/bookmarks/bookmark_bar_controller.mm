@@ -343,7 +343,7 @@ bool operator!=(const BookmarkBarLayout& lhs, const BookmarkBarLayout& rhs) {
   [self.view addSubview:buttonView_];
 
   // viewDidLoad became part of the API in 10.10.
-  if (!base::mac::IsAtLeastOS10_10())
+  if (@available(macOS 10.10, *))
     [self viewDidLoad];
 }
 

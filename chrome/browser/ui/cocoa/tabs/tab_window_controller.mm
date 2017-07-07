@@ -426,15 +426,7 @@
 
   // In Material Design on 10.10 and higher, the top portion of the window is
   // blurred using an NSVisualEffectView.
-  Class nsVisualEffectViewClass = NSClassFromString(@"NSVisualEffectView");
-  if (!nsVisualEffectViewClass) {
-    DCHECK(!chrome::ShouldUseFullSizeContentView());
-    [rootView addSubview:tabStripBackgroundView_
-              positioned:NSWindowBelow
-              relativeTo:nil];
-    return;
-  }
-
+  if (@available(macOS 10.10, *)) {
   [window setTitlebarAppearsTransparent:YES];
 
   // If the window has a normal titlebar, then do not add NSVisualEffectView.
@@ -447,7 +439,7 @@
   NSView* visualEffectWrapperView = [[[NSView alloc]
       initWithFrame:[tabStripBackgroundView_ frame]] autorelease];
 
-  visualEffectView_.reset([[nsVisualEffectViewClass alloc]
+  visualEffectView_.reset([[NSVisualEffectView alloc]
       initWithFrame:visualEffectWrapperView.bounds]);
   DCHECK(visualEffectView_);
 
@@ -483,6 +475,13 @@
   // Make the |tabStripBackgroundView_| a child of the NSVisualEffectView.
   [tabStripBackgroundView_ setFrame:[visualEffectView_ bounds]];
   [visualEffectView_ addSubview:tabStripBackgroundView_];
+  } else {
+    DCHECK(!chrome::ShouldUseFullSizeContentView());
+    [rootView addSubview:tabStripBackgroundView_
+              positioned:NSWindowBelow
+              relativeTo:nil];
+    return;
+  }
 }
 
 // Called when the size of the window content area has changed. Override to

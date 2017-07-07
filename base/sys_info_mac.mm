@@ -58,16 +58,15 @@ void SysInfo::OperatingSystemVersionNumbers(int32_t* major_version,
                                             int32_t* minor_version,
                                             int32_t* bugfix_version) {
   NSProcessInfo* processInfo = [NSProcessInfo processInfo];
-  if ([processInfo respondsToSelector:@selector(operatingSystemVersion)]) {
+  if (@available(macOS 10.10, *)) {
     NSOperatingSystemVersion version = [processInfo operatingSystemVersion];
     *major_version = version.majorVersion;
     *minor_version = version.minorVersion;
     *bugfix_version = version.patchVersion;
   } else {
     // -[NSProcessInfo operatingSystemVersion] is documented available in 10.10.
-    // It's also available via a private API since 10.9.2. For the remaining
-    // cases in 10.9, rely on ::Gestalt(..). Since this code is only needed for
-    // 10.9.0 and 10.9.1 and uses the recommended replacement thereafter,
+    // For the remaining cases in 10.9, rely on ::Gestalt(..). Since this code
+    // is only needed for 10.9 and uses the recommended replacement thereafter,
     // suppress the warning for this fallback case.
     DCHECK(base::mac::IsOS10_9());
 #pragma clang diagnostic push
