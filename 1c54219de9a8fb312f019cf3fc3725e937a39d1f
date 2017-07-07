@@ -51,6 +51,24 @@
       "revId": "1c54219de9a8fb312f019cf3fc3725e937a39d1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a432fa2_ea2d6785",
+        "filename": "testing/buildbot/manage.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-07-07T14:04:12Z",
+      "side": 1,
+      "message": "You likely need to rebase on https://chromium.googlesource.com/chromium/src/+/be93c2c6d82f449ff2796cce7fa6d26712055c3f",
+      "parentUuid": "4b293185_f2ed129d",
+      "revId": "1c54219de9a8fb312f019cf3fc3725e937a39d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
