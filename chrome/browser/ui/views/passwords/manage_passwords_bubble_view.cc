@@ -300,7 +300,7 @@ class ManagePasswordsBubbleView::PendingView
   // views::View:
   bool OnKeyPressed(const ui::KeyEvent& event) override;
 
-  void ToggleEditingState();
+  void ToggleEditingState(bool discard_changes = false);
 
   ManagePasswordsBubbleView* parent_;
 
@@ -429,13 +429,18 @@ bool ManagePasswordsBubbleView::PendingView::OnKeyPressed(
     const ui::KeyEvent& event) {
   if (editing_ && (event.key_code() == ui::KeyboardCode::VKEY_RETURN ||
                    event.key_code() == ui::KeyboardCode::VKEY_ESCAPE)) {
-    ToggleEditingState();
+    ToggleEditingState(event.key_code() == ui::KeyboardCode::VKEY_ESCAPE);
     return true;
   }
   return false;
 }
 
-void ManagePasswordsBubbleView::PendingView::ToggleEditingState() {
+void ManagePasswordsBubbleView::PendingView::ToggleEditingState(
+    bool discard_changes) {
+  if (editing_ && !discard_changes) {
+    parent_->model()->OnUsernameEdited(
+        static_cast<views::Textfield*>(username_field_)->text());
+  }
   editing_ = !editing_;
   edit_button_->SetEnabled(!editing_);
   RemoveChildView(username_field_);
