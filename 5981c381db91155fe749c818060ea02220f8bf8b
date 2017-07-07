@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4348d09e_f47d8f13",
+        "filename": "chromeos/cryptohome/homedir_methods_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-07T05:03:29Z",
+      "side": 1,
+      "message": "chromeos::DBusThreadManager::Initialize();",
+      "range": {
+        "startLine": 43,
+        "startChar": 4,
+        "endLine": 43,
+        "endChar": 54
+      },
+      "revId": "5981c381db91155fe749c818060ea02220f8bf8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9b82456_20e56afc",
+        "filename": "chromeos/cryptohome/homedir_methods_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-07T05:03:29Z",
+      "side": 1,
+      "message": "Could you rephrase this comment?",
+      "revId": "5981c381db91155fe749c818060ea02220f8bf8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25379457_6135c6ea",
+        "filename": "chromeos/cryptohome/homedir_methods_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-07T05:03:29Z",
+      "side": 1,
+      "message": "I don\u0027t think this is needed.\nCould you remove this to make the test shorter?",
+      "revId": "5981c381db91155fe749c818060ea02220f8bf8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6648dd12_67016c42",
+        "filename": "chromeos/cryptohome/homedir_methods_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-07T05:03:29Z",
+      "side": 1,
+      "message": "ditto.\nI find the original code fine.",
+      "revId": "5981c381db91155fe749c818060ea02220f8bf8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01df9b71_7621bea3",
+        "filename": "chromeos/cryptohome/homedir_methods_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-07T05:03:29Z",
+      "side": 1,
+      "message": "Could you check if no error is set?\nFake impl may start doing more complicated things in future.",
+      "revId": "5981c381db91155fe749c818060ea02220f8bf8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f61484e_b12c768d",
+        "filename": "chromeos/cryptohome/homedir_methods_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-07T05:03:29Z",
+      "side": 1,
+      "message": "How about just doing EXPECT_TRUE(success) and EXPECT_EQ(MOUNT_ERROR_NONE, return_code) in this lambda?",
+      "revId": "5981c381db91155fe749c818060ea02220f8bf8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "217ecbef_efff02c2",
+        "filename": "chromeos/dbus/fake_cryptohome_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-07T05:03:29Z",
+      "side": 1,
+      "message": "This is not needed when key.pb.h is included.",
+      "revId": "5981c381db91155fe749c818060ea02220f8bf8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9df6cf6_c1ac5cd9",
+        "filename": "chromeos/dbus/fake_cryptohome_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-07T05:03:29Z",
+      "side": 1,
+      "message": "Prefer map to unordered_map.\nhttps://groups.google.com/a/chromium.org/forum/?utm_medium\u003demail\u0026utm_source\u003dfooter#!msg/chromium-dev/rdxOHKzQmRY/4A65nMuBAAAJ",
+      "revId": "5981c381db91155fe749c818060ea02220f8bf8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
