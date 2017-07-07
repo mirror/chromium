@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "69e73720_98f2c516",
+        "filename": "content/browser/service_worker/embedded_worker_instance.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-07T02:37:26Z",
+      "side": 1,
+      "message": "I was just trying to stick with the original code, which used const refs. I think you\u0027re right that BindOnce is doing copy then std::move() under the hood, so I don\u0027t need to worry about it. I\u0027m going to return them to pass-by-value.",
+      "parentUuid": "bcb9ca9b_a92f1b90",
+      "revId": "fb029d625d400680d3d23602551f217408885949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2830226b_fa98ab91",
         "filename": "content/browser/service_worker/embedded_worker_instance.cc",
         "patchSetId": 1
@@ -297,6 +315,24 @@
     },
     {
       "key": {
+        "uuid": "db4b6740_0a052341",
+        "filename": "content/browser/service_worker/service_worker_process_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-07T02:37:26Z",
+      "side": 1,
+      "message": "Ack. IIRC SupportsWeakPtr was deprecated or something.",
+      "parentUuid": "876b881e_6a2f8f16",
+      "revId": "fb029d625d400680d3d23602551f217408885949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c57561c7_0c0ba11b",
         "filename": "content/browser/service_worker/service_worker_process_manager_unittest.cc",
         "patchSetId": 1
@@ -356,6 +392,30 @@
       "side": 1,
       "message": "It might be before |process_manager_| which needs to live on the UI thread.",
       "parentUuid": "73a3fcaa_a03a8f6c",
+      "range": {
+        "startLine": 55,
+        "startChar": 2,
+        "endLine": 55,
+        "endChar": 49
+      },
+      "revId": "fb029d625d400680d3d23602551f217408885949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e592a829_6f232642",
+        "filename": "content/browser/service_worker/service_worker_process_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-07T02:37:26Z",
+      "side": 1,
+      "message": "Ah.. didn\u0027t notice that protected: section. Moved even higher up.",
+      "parentUuid": "7ffdaf76_9ba74969",
       "range": {
         "startLine": 55,
         "startChar": 2,
