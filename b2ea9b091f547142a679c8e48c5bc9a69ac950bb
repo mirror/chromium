@@ -136,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "30a64a02_00d14d7c",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ImageResource.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-07-07T05:39:09Z",
+      "side": 1,
+      "message": "This condition should indicate that the encoded image is on disk and the UMA indicate the size of it to estimate reducible size from physical memory.\n\nI think we don\u0027t have to change this, but why was this changed?",
+      "parentUuid": "f543cf74_7250751e",
+      "revId": "b2ea9b091f547142a679c8e48c5bc9a69ac950bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e5dd4bab_399389bc",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
         "patchSetId": 18
