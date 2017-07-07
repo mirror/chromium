@@ -34,6 +34,24 @@
       "revId": "fadf94f7b9bd8b3ba331d5be1ec64cd110353ed2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fdba597_40de4c74",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3250,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-07T21:16:16Z",
+      "side": 1,
+      "message": "I\u0027d be ok with factoring out the parsing into a helper method and writing some small unit tests for it, to avoid a huge set of dependencies for a browser_test.  Parsing in the browser process is a common source of security bugs, though, so I do think we need a test for this before landing it.",
+      "parentUuid": "3f35bb31_44628521",
+      "revId": "fadf94f7b9bd8b3ba331d5be1ec64cd110353ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

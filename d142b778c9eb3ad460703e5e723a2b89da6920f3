@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "844b4741_a6b1ca54",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3252,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-07T21:16:16Z",
+      "side": 1,
+      "message": "I\u0027m still not sure how this is a safe assumption.  Aren\u0027t headers out of our control?  If we end up with a line with no colon on it here, we\u0027re going to crash (or worse) on the next line.  It seems like we should be doing more safety checks when parsing here, not relying on it to be well-formed.\n\nOr is it the case that the headers are 100% under our control in the browser process?  (Even the renderer process is untrusted, and could give us a bad value to trigger a crash or exploit.)",
+      "revId": "d142b778c9eb3ad460703e5e723a2b89da6920f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
