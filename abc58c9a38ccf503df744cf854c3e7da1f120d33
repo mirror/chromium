@@ -16,6 +16,24 @@
       "revId": "abc58c9a38ccf503df744cf854c3e7da1f120d33",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3cadf6b_2d471107",
+        "filename": "infra/config/cq.cfg",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-07-07T17:27:19Z",
+      "side": 1,
+      "message": "Looking at this \u0026 how the CQ is behaving, I think it does.",
+      "parentUuid": "7ea180e7_810857d5",
+      "revId": "abc58c9a38ccf503df744cf854c3e7da1f120d33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
