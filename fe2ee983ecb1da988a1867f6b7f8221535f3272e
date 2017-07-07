@@ -22,6 +22,30 @@
       "revId": "fe2ee983ecb1da988a1867f6b7f8221535f3272e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dc99a36_d5dc22f2",
+        "filename": "chromecast/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1176174
+      },
+      "writtenOn": "2017-07-07T15:48:41Z",
+      "side": 1,
+      "message": "Also, note you should be able to just do \"CHROMECAST_BRANDING\u003d$chromecast_branding\" and then use:\n\n  #if BUILDFLAG(CHROMECAST_BRANDING) \u003d\u003d \"public\"\n   ...\n\nhttps://cs.chromium.org/chromium/src/build/buildflag_header.gni?q\u003dbuildflag\u0026sq\u003dpackage:chromium\u0026l\u003d32",
+      "parentUuid": "c616c1d8_8c86ad2e",
+      "range": {
+        "startLine": 481,
+        "startChar": 0,
+        "endLine": 481,
+        "endChar": 61
+      },
+      "revId": "fe2ee983ecb1da988a1867f6b7f8221535f3272e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
