@@ -14,6 +14,29 @@ CanvasColorParams::CanvasColorParams(CanvasColorSpace color_space,
                                      CanvasPixelFormat pixel_format)
     : color_space_(color_space), pixel_format_(pixel_format) {}
 
+CanvasColorParams::CanvasColorParams(const SkImageInfo& info) {
+  color_space_ = kLegacyCanvasColorSpace;
+  pixel_format_ = kRGBA8CanvasPixelFormat;
+  if (!info.colorSpace())
+    return;
+  if (SkColorSpace::Equals(info.colorSpace(), SkColorSpace::MakeSRGB().get()))
+    color_space_ = kSRGBCanvasColorSpace;
+  else if (SkColorSpace::Equals(
+               info.colorSpace(),
+               SkColorSpace::MakeRGB(SkColorSpace::kLinear_RenderTargetGamma,
+                                     SkColorSpace::kRec2020_Gamut)
+                   .get()))
+    color_space_ = kRec2020CanvasColorSpace;
+  else if (SkColorSpace::Equals(
+               info.colorSpace(),
+               SkColorSpace::MakeRGB(SkColorSpace::kLinear_RenderTargetGamma,
+                                     SkColorSpace::kDCIP3_D65_Gamut)
+                   .get()))
+    color_space_ = kP3CanvasColorSpace;
+  if (info.colorType() == kRGBA_F16_SkColorType)
+    pixel_format_ = kF16CanvasPixelFormat;
+}
+
 void CanvasColorParams::SetCanvasColorSpace(CanvasColorSpace color_space) {
   color_space_ = color_space;
 }
@@ -78,6 +101,45 @@ sk_sp<SkColorSpace> CanvasColorParams::GetSkColorSpace() const {
 
 bool CanvasColorParams::LinearPixelMath() const {
   return pixel_format_ == kF16CanvasPixelFormat;
+}
+
+CanvasColorSpaceForSerialization
+CanvasColorParams::GetColorSpaceForSerialization() {
+  switch (color_space_) {
+    case kSRGBCanvasColorSpace:
+      return kSRGBCanvasColorSpaceForSerialization;
+    case kRec2020CanvasColorSpace:
+      return kRec2020CanvasColorSpaceForSerialization;
+    case kP3CanvasColorSpace:
+      return kP3CanvasColorSpaceForSerialization;
+    default:
+      return kLegacyCanvasColorSpaceForSerialization;
+  }
+}
+
+CanvasPixelFormatForSerialization
+CanvasColorParams::GetPixelFormatForSerialization() {
+  if (pixel_format_ == kF16CanvasPixelFormat)
+    return kF16CanvasPixelFormatForSerialization;
+  return kRGBA8CanvasPixelFormatForSerialization;
+}
+
+CanvasColorParams CanvasColorParams::GetCanvasColorParamsForSerialization(
+    const uint32_t& color_space_for_serialization,
+    const uint32_t& pixel_format_for_serialization) {
+  CanvasColorSpace color_space = kLegacyCanvasColorSpace;
+  if (color_space_for_serialization == kSRGBCanvasColorSpaceForSerialization)
+    color_space = kSRGBCanvasColorSpace;
+  else if (color_space_for_serialization ==
+           kRec2020CanvasColorSpaceForSerialization)
+    color_space = kRec2020CanvasColorSpace;
+  else if (color_space_for_serialization == kP3CanvasColorSpaceForSerialization)
+    color_space = kP3CanvasColorSpace;
+
+  CanvasPixelFormat pixel_format = kRGBA8CanvasPixelFormat;
+  if (pixel_format_for_serialization == kF16CanvasPixelFormatForSerialization)
+    pixel_format = kF16CanvasPixelFormat;
+  return CanvasColorParams(color_space, pixel_format);
 }
 
 }  // namespace blink

@@ -5,6 +5,7 @@
 #ifndef V8ScriptValueDeserializer_h
 #define V8ScriptValueDeserializer_h
 
+#include "bindings/core/v8/serialization/ImageSerializationTag.h"
 #include "bindings/core/v8/serialization/SerializationTag.h"
 #include "bindings/core/v8/serialization/SerializedScriptValue.h"
 #include "core/CoreExport.h"
@@ -50,6 +51,14 @@ class CORE_EXPORT V8ScriptValueDeserializer
     if (!deserializer_.ReadRawBytes(1, &tag_bytes))
       return false;
     *tag = static_cast<SerializationTag>(
+        *reinterpret_cast<const uint8_t*>(tag_bytes));
+    return true;
+  }
+  bool ReadImageTag(ImageSerializationTag* tag) {
+    const void* tag_bytes = nullptr;
+    if (!deserializer_.ReadRawBytes(1, &tag_bytes))
+      return false;
+    *tag = static_cast<ImageSerializationTag>(
         *reinterpret_cast<const uint8_t*>(tag_bytes));
     return true;
   }
