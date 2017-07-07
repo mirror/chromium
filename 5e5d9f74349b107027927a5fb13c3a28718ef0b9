@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "9ac740fc_a46c57b3",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/security/subresourceIntegrity/clear-integrity-attribute-expected.txt",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-07-07T04:54:02Z",
+      "side": 1,
+      "message": "This console error is due to a recent change to require CORS for SRI, and thus this test no longer fail (because the script is blocked anyway) without this CL.\nPerhaps we should make the test same-origin (by \u003ciframe src\u003d\"resources/clear-integrity-attribute.html\"\u003e\u003c/iframe\u003e), or apply CORS, so that this test fail without this CL.",
+      "revId": "5e5d9f74349b107027927a5fb13c3a28718ef0b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8b6a179_8c5d14d7",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/security/subresourceIntegrity/clear-integrity-attribute.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-07-07T04:54:02Z",
+      "side": 1,
+      "message": "Could you set a different integrity (or a different script url such as fail.js?test\u003dclear-integrity-atttribute) to avoid unintended interaction with other tests via MemoryCache?\n\ni.e. the pair clear-integrity-attribute.html/resources/clear-integrity-attribute.html should use the same url/integrity but the url/integrity should be different from those used in other tests.",
+      "revId": "5e5d9f74349b107027927a5fb13c3a28718ef0b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3acf84e7_b287ca98",
         "filename": "third_party/WebKit/LayoutTests/http/tests/security/subresourceIntegrity/resources/clear-integrity-attribute.html",
         "patchSetId": 10
@@ -19,6 +53,40 @@
         "endLine": 3,
         "endChar": 0
       },
+      "revId": "5e5d9f74349b107027927a5fb13c3a28718ef0b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e1349e8_808fdaa1",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/security/subresourceIntegrity/resources/shared-with-xhtml.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-07-07T04:54:02Z",
+      "side": 1,
+      "message": "ditto \u003e url/integrity to avoid confusion with other tests.",
+      "revId": "5e5d9f74349b107027927a5fb13c3a28718ef0b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ced9b1f4_ebd9bf34",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/security/subresourceIntegrity/shared-with-xhtml-expected.txt",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-07-07T04:54:02Z",
+      "side": 1,
+      "message": "ditto \u003e same-origin/CORS.",
       "revId": "5e5d9f74349b107027927a5fb13c3a28718ef0b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
