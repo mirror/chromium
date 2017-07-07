@@ -148,7 +148,8 @@ class AutofillManager : public AutofillHandler,
     return download_manager_.get();
   }
 
-  payments::FullCardRequest* GetOrCreateFullCardRequest();
+  payments::FullCardRequest* GetOrCreateFullCardRequest(
+      const base::TimeTicks& form_parsed_timestamp);
 
   base::WeakPtr<payments::FullCardRequest::UIDelegate>
   GetAsFullCardRequestUIDelegate() {
@@ -296,8 +297,10 @@ class AutofillManager : public AutofillHandler,
       std::unique_ptr<base::DictionaryValue> legal_message) override;
 
   // payments::FullCardRequest::ResultDelegate:
-  void OnFullCardRequestSucceeded(const CreditCard& card,
-                                  const base::string16& cvc) override;
+  void OnFullCardRequestSucceeded(
+      const CreditCard& card,
+      const base::string16& cvc,
+      const base::TimeTicks& form_parsed_timestamp) override;
   void OnFullCardRequestFailed() override;
 
   // payments::FullCardRequest::UIDelegate:
