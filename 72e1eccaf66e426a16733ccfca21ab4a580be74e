@@ -1,0 +1,327 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a50a69b_342b088b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/ResourceType.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-07T02:01:26Z",
+      "side": 1,
+      "message": "Can we be a bit more specific, e.g. mimeType.startsWith(\u0027font/\u0027) || mimeType.startsWith(\u0027application/font\u0027);",
+      "revId": "72e1eccaf66e426a16733ccfca21ab4a580be74e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3500bbce_91e4e8c0",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/ResourceType.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-07T02:01:26Z",
+      "side": 1,
+      "message": "Can we do better than that? I.e. infer types for CSS, HTML and JS? Also, note eostroukhov@ is adding a very similar method, you may want to coordinate with him.",
+      "revId": "72e1eccaf66e426a16733ccfca21ab4a580be74e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28972a05_b6366502",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/ResourceType.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-07T02:01:26Z",
+      "side": 1,
+      "message": "Can we do it via mimeTypeByExtension?",
+      "revId": "72e1eccaf66e426a16733ccfca21ab4a580be74e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "952046bb_3dcc590d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARFormat.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-07T02:01:26Z",
+      "side": 1,
+      "message": "Let\u0027s have a consistent spelling for HAR, lines like this would look much better.",
+      "revId": "72e1eccaf66e426a16733ccfca21ab4a580be74e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ae8c6f7_c8067ae9",
+        "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARFormat.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-07T02:01:26Z",
+      "side": 1,
+      "message": "... || !data",
+      "revId": "72e1eccaf66e426a16733ccfca21ab4a580be74e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ff57b94_f4db1056",
+        "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARFormat.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-07T02:01:26Z",
+      "side": 1,
+      "message": "nit: drop punctuation.",
+      "revId": "72e1eccaf66e426a16733ccfca21ab4a580be74e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2206c42b_8e8c6922",
+        "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARFormat.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-07T02:01:26Z",
+      "side": 1,
+      "message": "drop parenthesis",
+      "revId": "72e1eccaf66e426a16733ccfca21ab4a580be74e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fe7937a_6d2dfd32",
+        "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARFormat.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-07T02:01:26Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "72e1eccaf66e426a16733ccfca21ab4a580be74e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b774fc14_dd5939b2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARFormat.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-07T02:01:26Z",
+      "side": 1,
+      "message": "Can we use @suppress {visibility} instead?",
+      "revId": "72e1eccaf66e426a16733ccfca21ab4a580be74e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe30f602_1e22c447",
+        "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARFormat.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-07T02:01:26Z",
+      "side": 1,
+      "message": "Can we have a JSDoc for HAR structure? ;-)",
+      "revId": "72e1eccaf66e426a16733ccfca21ab4a580be74e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fca1824_ad54bb3b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARFormat.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-07T02:01:26Z",
+      "side": 1,
+      "message": "nit: perhaps make \"new Date(...)\" a part of _safeDate() implementation?",
+      "revId": "72e1eccaf66e426a16733ccfca21ab4a580be74e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d760d89e_8b25bbdc",
+        "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARFormat.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-07T02:01:26Z",
+      "side": 1,
+      "message": "looks redundant.",
+      "revId": "72e1eccaf66e426a16733ccfca21ab4a580be74e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25560018_e2c3e30c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARFormat.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-07T02:01:26Z",
+      "side": 1,
+      "message": "redundant?",
+      "revId": "72e1eccaf66e426a16733ccfca21ab4a580be74e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9444ede0_80f35e06",
+        "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARImporter.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-07T02:01:26Z",
+      "side": 1,
+      "message": "nit: drop || null",
+      "revId": "72e1eccaf66e426a16733ccfca21ab4a580be74e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4912af17_dd73dde9",
+        "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARImporter.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-07T02:01:26Z",
+      "side": 1,
+      "message": "nit: convert for loop into for (var entry of log.entries), use request.length instead of i.",
+      "revId": "72e1eccaf66e426a16733ccfca21ab4a580be74e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbb38d74_21878576",
+        "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARImporter.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-07T02:01:26Z",
+      "side": 1,
+      "message": "Let\u0027s drop it -- we should be pretty functional without live headers text, so faking it should not be necessary, but may prove to be confusing.",
+      "revId": "72e1eccaf66e426a16733ccfca21ab4a580be74e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c827cd3_451b8c74",
+        "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARImporter.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-07T02:01:26Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "72e1eccaf66e426a16733ccfca21ab4a580be74e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d119a7a_f1fa218e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARImporter.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-07T02:01:26Z",
+      "side": 1,
+      "message": "As above, I think we should be operational without transferSize.",
+      "revId": "72e1eccaf66e426a16733ccfca21ab4a580be74e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afa2c175_f157cbce",
+        "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARImporter.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-07T02:01:26Z",
+      "side": 1,
+      "message": "else if ...",
+      "revId": "72e1eccaf66e426a16733ccfca21ab4a580be74e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
