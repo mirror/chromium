@@ -7,14 +7,14 @@
 
 #include "base/optional.h"
 #include "ui/native_theme/native_theme.h"
-#include "ui/views/view.h"
+#include "ui/views/controls/base_focus_ring.h"
 
 namespace views {
 
 // FocusRing is a View that is designed to act as an indicator of focus for its
 // parent. It is a stand-alone view that paints to a layer which extends beyond
 // the bounds of its parent view.
-class FocusRing : public View {
+class FocusRing : public BaseFocusRing {
  public:
   static const char kViewClassName[];
 
@@ -22,22 +22,22 @@ class FocusRing : public View {
   // exists. |override_color_id| will be used in place of the default coloration
   // when provided.
   static View* Install(views::View* parent,
-                      ui::NativeTheme::ColorId override_color_id =
-                          ui::NativeTheme::kColorId_NumColors);
+                       ui::NativeTheme::ColorId override_color_id =
+                           ui::NativeTheme::kColorId_NumColors);
 
   // Removes the FocusRing from |parent|.
   static void Uninstall(views::View* parent);
 
   // View:
   const char* GetClassName() const override;
-  bool CanProcessEventsWithinSubtree() const override;
   void Layout() override;
   void OnPaint(gfx::Canvas* canvas) override;
 
- private:
+ protected:
   FocusRing();
   ~FocusRing() override;
 
+ private:
   ui::NativeTheme::ColorId override_color_id_;
 
   DISALLOW_COPY_AND_ASSIGN(FocusRing);
