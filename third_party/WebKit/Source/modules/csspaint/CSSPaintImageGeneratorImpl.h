@@ -47,6 +47,7 @@ class CSSPaintImageGeneratorImpl final : public CSSPaintImageGenerator {
 
   Member<CSSPaintDefinition> definition_;
   Member<Observer> observer_;
+  String name_;
 };
 
 }  // namespace blink

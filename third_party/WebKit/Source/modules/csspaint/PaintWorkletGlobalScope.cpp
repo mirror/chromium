@@ -200,6 +200,25 @@ void PaintWorkletGlobalScope::registerPaint(const String& name,
   paint_definitions_.Set(
       name, TraceWrapperMember<CSSPaintDefinition>(this, definition));
   pending_generator_registry_->SetDefinition(name, definition);
+
+  // TODO(xidachen): the following steps should be done with a postTask.
+  DocumentPaintDefinitionMap document_paint_definition_map =
+      GetFrame()->GetDocument()->GetPaintDefinitionMap();
+  DocumentPaintDefinition* document_definition =
+      DocumentPaintDefinition::Create(input_properties_value,
+                                      input_argument_types, has_alpha);
+  if (document_paint_definition_map.Contains(name)) {
+    DocumentPaintDefinition* existing_document_definition =
+        document_paint_definition_map.at(name);
+    if (!existing_document_definition)
+      return;
+    if (existing_document_definition != document_definition) {
+      document_paint_definition_map.at(name) = nullptr;
+      exception_state.ThrowDOMException("Fill in error message");
+    }
+  }
+  document_paint_definition_map.Set(
+      name, TraceWrapperMember<DocumentPaintDefinition>(this, document_definition);
 }
 
 CSSPaintDefinition* PaintWorkletGlobalScope::FindDefinition(

@@ -36,19 +36,30 @@ void PaintWorklet::AddPendingGenerator(const String& name,
   pending_generator_registry_->AddPendingGenerator(name, generator);
 }
 
+RefPtr<Image> PaintWorklet::Paint(const String& name,
+                                  const ImageResourceObserver& observer,
+                                  const IntSize& size,
+                                  const CSSStyleValueVector* data) {
+  DocumentPaintDefinitionMap* document_paint_definition_map =
+      GetFrame()->GetDocument()->GetDocumentPaintDefinitionMap();
+  if (!document_paint_definition_map.Contains(name))
+    return nullptr;
+
+  DocumentPaintDefinition* document_definition =
+      document_paint_definition_map.at(name);
+  if (!document_definition)
+    return nullptr;
+
+  FindDefinition(name)->Paint(observer, size, data);
+}
+
 DEFINE_TRACE(PaintWorklet) {
   visitor->Trace(pending_generator_registry_);
   Worklet::Trace(visitor);
 }
 
 bool PaintWorklet::NeedsToCreateGlobalScope() {
-  // "The user agent must have, and select from at least two
-  // PaintWorkletGlobalScopes in the worklet's WorkletGlobalScopes list, unless
-  // the user agent is under memory constraints."
-  // https://drafts.css-houdini.org/css-paint-api-1/#drawing-an-image
-  // TODO(nhiroki): In the current impl, we create only one global scope. We
-  // should create at least two global scopes as the spec.
-  return !GetNumberOfGlobalScopes();
+  return GetNumberOfGlobalScopes() <= 1;
 }
 
 WorkletGlobalScopeProxy* PaintWorklet::CreateGlobalScope() {

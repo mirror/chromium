@@ -38,6 +38,7 @@
 #include "core/dom/DocumentEncodingData.h"
 #include "core/dom/DocumentInit.h"
 #include "core/dom/DocumentLifecycle.h"
+#include "core/dom/DocumentPaintDefinition.h"
 #include "core/dom/DocumentShutdownNotifier.h"
 #include "core/dom/DocumentShutdownObserver.h"
 #include "core/dom/DocumentTiming.h"
@@ -1690,6 +1691,10 @@ class CORE_EXPORT Document : public ContainerNode,
   mojom::EngagementLevel engagement_level_;
 
   Member<NetworkStateObserver> network_state_observer_;
+
+  typedef HeapHashMap<String, TraceWrapperMember<DocumentPaintDefinition>>
+      DefinitionMap;
+  DefinitionMap document_paint_definitions_;
 };
 
 extern template class CORE_EXTERN_TEMPLATE_EXPORT Supplement<Document>;

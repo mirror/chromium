@@ -16,7 +16,8 @@ namespace blink {
 CSSPaintImageGenerator* CSSPaintImageGeneratorImpl::Create(
     const String& name,
     const Document& document,
-    Observer* observer) {
+    Observer* observer)
+    : name_(name) {
   LocalDOMWindow* dom_window = document.domWindow();
   PaintWorklet* paint_worklet =
       WindowPaintWorklet::From(*dom_window).paintWorklet();
@@ -54,7 +55,9 @@ PassRefPtr<Image> CSSPaintImageGeneratorImpl::Paint(
     const ImageResourceObserver& observer,
     const IntSize& size,
     const CSSStyleValueVector* data) {
-  return definition_ ? definition_->Paint(observer, size, data) : nullptr;
+  PaintWorklet* paint_worklet =
+      WindowPaintWorklet::From(*dom_window).paintWorklet();
+  return paint_worklet->Paint(name_, observer, size, data);
 }
 
 const Vector<CSSPropertyID>&
