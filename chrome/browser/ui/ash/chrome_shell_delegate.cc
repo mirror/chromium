@@ -601,8 +601,9 @@ void ChromeShellDelegate::SuspendMediaSessions() {
   }
 }
 
-keyboard::KeyboardUI* ChromeShellDelegate::CreateKeyboardUI() {
-  return new ChromeKeyboardUI(ProfileManager::GetActiveUserProfile());
+std::unique_ptr<keyboard::KeyboardUI> ChromeShellDelegate::CreateKeyboardUI() {
+  return base::MakeUnique<ChromeKeyboardUI>(
+      ProfileManager::GetActiveUserProfile());
 }
 
 ash::AccessibilityDelegate* ChromeShellDelegate::CreateAccessibilityDelegate() {
