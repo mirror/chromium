@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd32b12c_8e0873f6",
+        "filename": "content/browser/devtools/render_frame_devtools_agent_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-07T04:38:21Z",
+      "side": 1,
+      "message": "Move this block after line 502 to avoid dangling pointer from PageHandler to EmulationHandler on detach.",
+      "revId": "d4247803e65b68bc059cf878577a4f2937dbda62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2895065b_ddc3a9b6",
+        "filename": "third_party/WebKit/Source/devtools/front_end/emulation/DeviceModeModel.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-07T04:38:21Z",
+      "side": 1,
+      "message": "I think this call will be ignored due to next captureScreenshot call, which means fullSize should not work?",
+      "revId": "d4247803e65b68bc059cf878577a4f2937dbda62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "520a2cb6_4f8f5588",
+        "filename": "third_party/WebKit/Source/devtools/front_end/emulation/DeviceModeView.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-07T04:38:21Z",
+      "side": 1,
+      "message": "Here you rely on fullSize screenshot being same width as device (basically, meta viewport\u003ddevice-width). This may be wrong for many websites.",
+      "revId": "d4247803e65b68bc059cf878577a4f2937dbda62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
