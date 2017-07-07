@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de7aacc6_52e8fb68",
+        "filename": "tools/traffic_annotation/presubmit_checks.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-07-07T23:53:50Z",
+      "side": 1,
+      "message": "typo: s/annoations/annotations.",
+      "revId": "151e0fd6fefb0ac0c8e25ba15e7de3d8400dde52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6041865c_f24cb2bb",
+        "filename": "tools/traffic_annotation/presubmit_checks.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-07-07T23:53:50Z",
+      "side": 1,
+      "message": "I don\u0027t think we should write the code to look in two places for the binary; instead, we should just look for the checked-in binary and use that. Of course, that\u0027ll require us to actually check in the binary :).",
+      "revId": "151e0fd6fefb0ac0c8e25ba15e7de3d8400dde52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
