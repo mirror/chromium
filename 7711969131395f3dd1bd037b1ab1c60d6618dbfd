@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "af00594c_d50f3408",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-07-07T14:32:02Z",
+      "side": 1,
+      "message": "If everything works with SwiftShader instead of mesa then we can make it the default I guess? This will turn it on by default when running in headless, unless the --override-software-gl-for-tests flag is provided, which defaults back to mesa and is used in a bunch of tests. That should probably change (for CrOS Ozone) in a subsequent CL in case it does cause problems.\n\nThis should work fine though since the build flags are checked at runtime. If GN |enable_swiftshader| is off then this CL changes nothing. I guess there is no reason not to also update the ui/gl/BUILD.gn too though, done.",
+      "parentUuid": "fddf30d8_d78add55",
+      "revId": "7711969131395f3dd1bd037b1ab1c60d6618dbfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "367cb9bb_9b3253c4",
         "filename": "ui/ozone/platform/headless/headless_surface_factory.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "7711969131395f3dd1bd037b1ab1c60d6618dbfd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc84adfe_c476ff02",
+        "filename": "ui/ozone/platform/headless/headless_surface_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-07-07T14:32:02Z",
+      "side": 1,
+      "message": "I filed crbug.com/739182 for that. If this lands without issues then we would then want to make gl::GetSoftwareGLImplementation() return kGLImplementationSwiftShaderGL for Ozone CrOS to remove all usage of mesa I think?",
+      "parentUuid": "367cb9bb_9b3253c4",
+      "revId": "7711969131395f3dd1bd037b1ab1c60d6618dbfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
