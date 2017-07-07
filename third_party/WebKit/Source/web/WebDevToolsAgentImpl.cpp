@@ -32,6 +32,7 @@
 
 #include <v8-inspector.h>
 #include <memory>
+#include <utility>
 
 #include "bindings/core/v8/ScriptController.h"
 #include "bindings/core/v8/V8BindingForCore.h"
@@ -376,6 +377,8 @@ InspectorSession* WebDevToolsAgentImpl::InitializeSession(int session_id,
   overlay_agents_.Set(session_id, overlay_agent);
   session->Append(overlay_agent);
 
+  session->Append(InspectorCacheStorageAgent::Create(inspected_frames_.Get()));
+
   tracing_agent->SetLayerTreeId(layer_tree_id_);
   network_agent->SetHostId(host_id);
 
@@ -391,7 +394,6 @@ InspectorSession* WebDevToolsAgentImpl::InitializeSession(int session_id,
     session->Append(InspectorDatabaseAgent::Create(page));
     session->Append(new InspectorAccessibilityAgent(page, dom_agent));
     session->Append(InspectorDOMStorageAgent::Create(page));
-    session->Append(InspectorCacheStorageAgent::Create());
   }
 
   if (!sessions_.size())
