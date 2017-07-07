@@ -441,6 +441,13 @@ function generateRequestDeviceArgsWithServices(services = ['heart_rate']) {
   }];
 }
 
+function disconnectFakeAndWaitForEvent(device, fake_peripheral) {
+  // Promise will hang until the event is fired.
+  let disconnected = eventPromise(device, 'gattserverdisconnected');
+  fake_peripheral.simulateDisconnect();
+  return disconnected;
+}
+
 // Simulates a pre-connected device with |address|, |name| and
 // |knownServiceUUIDs|.
 function setUpPreconnectedDevice({

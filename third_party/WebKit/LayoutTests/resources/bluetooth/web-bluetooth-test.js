@@ -198,6 +198,10 @@
       if (success !== true) throw 'setNextGATTConnectionResponse failed.';
     }
 
+    simulateDisconnect() {
+      this.fake_central_ptr_.simulateDisconnect(this.address);
+    }
+
     // Adds a fake GATT Service with |uuid| to be discovered when discovering
     // the peripheral's GATT Attributes. Returns a FakeRemoteGATTService
     // corresponding to this service. |uuid| should be a BluetoothServiceUUIDs

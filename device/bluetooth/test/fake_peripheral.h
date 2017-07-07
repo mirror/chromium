@@ -40,6 +40,8 @@ class FakePeripheral : public device::BluetoothDevice {
   // with the ConnectErrorCode corresponding to |code|.
   void SetNextGATTConnectionResponse(uint16_t code);
 
+  void SimulateDisconnect();
+
   // If |code| is kHCISuccess, calls
   // BluetoothAdapter::Observer::GattServicesDiscovered otherwise
   // sets IsGattDiscoveryComplete to false. Both of these happen

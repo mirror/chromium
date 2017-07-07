@@ -63,6 +63,17 @@ void FakeCentral::SetNextGATTConnectionResponse(
   std::move(callback).Run(true);
 }
 
+void FakeCentral::SimulateDisconnect(const std::string& address) {
+  auto device_iter = devices_.find(address);
+  if (device_iter == devices_.end()) {
+    return;
+  }
+
+  FakePeripheral* fake_peripheral =
+      static_cast<FakePeripheral*>(device_iter->second.get());
+  fake_peripheral->SimulateDisconnect();
+}
+
 void FakeCentral::SetNextGATTDiscoveryResponse(
     const std::string& address,
     uint16_t code,

@@ -8,30 +8,23 @@
 <script>
 'use strict';
 promise_test(() => {
-  return setBluetoothFakeAdapter('DisconnectingHealthThermometerAdapter')
-    .then(() => requestDeviceWithKeyDown({
-      filters: [{services: ['health_thermometer']}],
-      optionalServices: [request_disconnection_service_uuid]}))
-    .then(device => device.gatt.connect())
-    .then(gattServer => {
+  return getHealthThermometerDevice()
+    .then(({device, fake_peripheral}) => {
       let services;
-      return gattServer
-        .getPrimaryServices('health_thermometer')
+      return device.gatt.getPrimaryServices('health_thermometer')
         .then(s => {
           // Convert to array if necessary.
           services = [].concat(s);
-          return get_request_disconnection(gattServer);
+          return disconnectFakeAndWaitForEvent(device, fake_peripheral);
         })
-        .then(requestDisconnection => requestDisconnection())
-        .then(() => gattServer.connect())
+        .then(() => fake_peripheral.setNextGATTConnectionResponse({
+          code: HCI_SUCCESS}))
+        .then(() => device.gatt.connect())
         .then(() => services);
     })
     .then(services => {
       let promises = Promise.resolve();
       for (let service of services) {
-        if (service.uuid == request_disconnection_service_uuid) {
-          continue;
-        }
         let error = new DOMException(
           'Service with UUID ' + service.uuid +
           ' is no longer valid. Remember to retrieve the service ' +

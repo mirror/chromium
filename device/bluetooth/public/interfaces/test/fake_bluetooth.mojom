@@ -85,6 +85,8 @@ interface FakeCentral {
   // response.
   SetNextGATTConnectionResponse(string address, uint16 code) => (bool success);
 
+  SimulateDisconnect(string address);
+
   // Sets the next GATT Discovery request response for peripheral with
   // |address| to |code|. |code| could be an HCI Error Code from
   // BT 4.2 Vol 2 Part D 1.3 List Of Error Codes or a number outside that range

@@ -36,6 +36,7 @@ class FakeCentral : NON_EXPORTED_BASE(public mojom::FakeCentral),
       const std::string& address,
       uint16_t code,
       SetNextGATTConnectionResponseCallback) override;
+  void SimulateDisconnect(const std::string& address) override;
   void SetNextGATTDiscoveryResponse(
       const std::string& address,
       uint16_t code,

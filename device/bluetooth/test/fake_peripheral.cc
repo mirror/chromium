@@ -44,6 +44,12 @@ void FakePeripheral::SetNextGATTConnectionResponse(uint16_t code) {
   next_connection_response_ = code;
 }
 
+void FakePeripheral::SimulateDisconnect() {
+  system_connected_ = false;
+  gatt_connected_ = false;
+  GetAdapter()->NotifyDeviceChanged(this);
+}
+
 void FakePeripheral::SetNextGATTDiscoveryResponse(uint16_t code) {
   DCHECK(!next_discovery_response_);
   next_discovery_response_ = code;
