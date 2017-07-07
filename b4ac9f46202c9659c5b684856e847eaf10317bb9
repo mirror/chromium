@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e573b3c_07be262d",
+        "filename": "tools/clang/scripts/run_tool.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-07T04:40:03Z",
+      "side": 0,
+      "message": "I\u0027d rather just keep this, to avoid running into Windows issues in the future. WDYT?",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 100,
+        "endChar": 0
+      },
+      "revId": "b4ac9f46202c9659c5b684856e847eaf10317bb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

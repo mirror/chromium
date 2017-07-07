@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0389a37d_9bb6c4dd",
+        "filename": "tools/clang/scripts/run_tool.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-07T04:40:03Z",
+      "side": 1,
+      "message": "FWIW, I was suggesting just making this flag implicit: if all the things in path_filter pass the os.path.isfile() check, just avoid shelling out to git ls-files at all.",
+      "range": {
+        "startLine": 215,
+        "startChar": 0,
+        "endLine": 220,
+        "endChar": 25
+      },
+      "revId": "8ead0fcea66b658ec2fe73826fb7657141c5e59e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
