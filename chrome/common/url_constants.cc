@@ -294,7 +294,6 @@ const char kChromeUISandboxHost[] = "sandbox";
 const char kChromeUIContextualSearchPromoHost[] = "contextual-search-promo";
 const char kChromeUIOfflineInternalsHost[] = "offline-internals";
 const char kChromeUIPhysicalWebDiagnosticsHost[] = "physical-web-diagnostics";
-const char kChromeUIPopularSitesInternalsHost[] = "popular-sites-internals";
 const char kChromeUISnippetsInternalsHost[] = "snippets-internals";
 const char kChromeUIWebApksHost[] = "webapks";
 #endif
@@ -711,7 +710,6 @@ const char* const kChromeHostURLs[] = {
 #if defined(OS_ANDROID)
     kChromeUINetExportHost,
     kChromeUIOfflineInternalsHost,
-    kChromeUIPopularSitesInternalsHost,
     kChromeUISnippetsInternalsHost,
     kChromeUIWebApksHost,
 #endif
