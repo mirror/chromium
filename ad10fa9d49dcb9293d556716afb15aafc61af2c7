@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5255ce5c_4ecad4df",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerGlobalScope.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2017-07-07T14:58:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ddb84b2_5c119e6b",
+      "range": {
+        "startLine": 213,
+        "startChar": 5,
+        "endLine": 213,
+        "endChar": 29
+      },
+      "revId": "ad10fa9d49dcb9293d556716afb15aafc61af2c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9832663_ef9b170a",
         "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerGlobalScope.cpp",
         "patchSetId": 5
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "211aeefa_44fdf858",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerGlobalScope.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2017-07-07T14:58:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9832663_ef9b170a",
+      "revId": "ad10fa9d49dcb9293d556716afb15aafc61af2c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20c5c2f2_a64c461e",
         "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerGlobalScope.h",
         "patchSetId": 5
@@ -56,6 +98,24 @@
       "revId": "ad10fa9d49dcb9293d556716afb15aafc61af2c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6f84250_cbfa7c08",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerGlobalScope.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2017-07-07T14:58:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20c5c2f2_a64c461e",
+      "revId": "ad10fa9d49dcb9293d556716afb15aafc61af2c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
