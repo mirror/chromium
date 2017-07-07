@@ -285,15 +285,6 @@ ManagePasswordItemsView::ManagePasswordItemsView(
   AddRows();
 }
 
-ManagePasswordItemsView::ManagePasswordItemsView(
-    ManagePasswordsBubbleModel* manage_passwords_bubble_model,
-    const autofill::PasswordForm* password_form)
-    : model_(manage_passwords_bubble_model) {
-  password_forms_rows_.push_back(
-      base::MakeUnique<PasswordFormRow>(this, password_form, 0));
-  AddRows();
-}
-
 ManagePasswordItemsView::~ManagePasswordItemsView() = default;
 
 void ManagePasswordItemsView::AddRows() {
