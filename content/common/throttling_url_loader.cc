@@ -112,6 +112,7 @@ ThrottlingURLLoader::ThrottlingURLLoader(
   if (throttles.size() > 0) {
     // TODO(yzshen): Implement a URLLoaderThrottle subclass which handles a list
     // of URLLoaderThrottles.
+
     CHECK_EQ(1u, throttles.size());
     throttle_ = std::move(throttles[0]);
     throttle_->set_delegate(this);
@@ -189,7 +190,7 @@ void ThrottlingURLLoader::OnReceiveResponse(
 
   if (throttle_) {
     bool deferred = false;
-    throttle_->WillProcessResponse(&deferred);
+    throttle_->WillProcessResponse(response_head, &deferred);
     if (cancelled_by_throttle_)
       return;
 
@@ -214,7 +215,7 @@ void ThrottlingURLLoader::OnReceiveRedirect(
 
   if (throttle_) {
     bool deferred = false;
-    throttle_->WillRedirectRequest(redirect_info, &deferred);
+    throttle_->WillRedirectRequest(redirect_info, response_head, &deferred);
     if (cancelled_by_throttle_)
       return;
 

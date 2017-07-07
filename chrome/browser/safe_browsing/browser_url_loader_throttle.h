@@ -10,6 +10,7 @@
 #include "base/callback.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "content/public/common/resource_response.h"
 #include "content/public/common/url_loader_throttle.h"
 
 namespace content {
@@ -43,8 +44,10 @@ class BrowserURLLoaderThrottle : public content::URLLoaderThrottle {
                         content::ResourceType resource_type,
                         bool* defer) override;
   void WillRedirectRequest(const net::RedirectInfo& redirect_info,
+                           const content::ResourceResponseHead& response,
                            bool* defer) override;
-  void WillProcessResponse(bool* defer) override;
+  void WillProcessResponse(const content::ResourceResponseHead& response,
+                           bool* defer) override;
 
  private:
   void OnCheckUrlResult(bool safe);

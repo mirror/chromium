@@ -171,13 +171,15 @@ class TestURLLoaderThrottle : public URLLoaderThrottle {
   }
 
   void WillRedirectRequest(const net::RedirectInfo& redirect_info,
+                           const ResourceResponseHead& response_head,
                            bool* defer) override {
     will_redirect_request_called_++;
     if (will_redirect_request_callback_)
       will_redirect_request_callback_.Run(delegate_, defer);
   }
 
-  void WillProcessResponse(bool* defer) override {
+  void WillProcessResponse(const ResourceResponseHead& response,
+                           bool* defer) override {
     will_process_response_called_++;
     if (will_process_response_callback_)
       will_process_response_callback_.Run(delegate_, defer);
