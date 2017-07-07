@@ -5,7 +5,7 @@
 #ifndef CHROME_BROWSER_ANDROID_VR_SHELL_VR_SHELL_GL_H_
 #define CHROME_BROWSER_ANDROID_VR_SHELL_VR_SHELL_GL_H_
 
-#include <chrome/browser/android/vr_shell/ui_input_manager.h>
+#include <chrome/browser/vr/ui_input_manager.h>
 #include <memory>
 #include <queue>
 #include <utility>

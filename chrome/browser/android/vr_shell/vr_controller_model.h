@@ -7,7 +7,7 @@
 
 #include <memory>
 
-#include "chrome/browser/android/vr_shell/gltf_asset.h"
+#include "chrome/browser/vr/gltf_asset.h"
 #include "third_party/skia/include/core/SkImage.h"
 #include "ui/gfx/geometry/point.h"
 #include "ui/gl/gl_bindings.h"
