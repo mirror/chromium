@@ -1,0 +1,5 @@
+include_rules = [
+  "+mojo/edk/embedder",
+  "+ui/gl",
+]
+
