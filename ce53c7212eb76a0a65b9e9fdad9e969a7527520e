@@ -52,6 +52,24 @@
       "revId": "ce53c7212eb76a0a65b9e9fdad9e969a7527520e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "074f7c71_fedab5d7",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParser.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1190,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-07-07T04:10:12Z",
+      "side": 1,
+      "message": "Thanks for the comment. As the function ParseLonghandViaAPI should only be used to parse a property that has API impl, I would prefer to keep it clean and only call it when the property has an API. It would also make this function a bit confusing if it has to return a bool to say whether the property has an API impl (this bool will be come redundant once all properties have their API).\n\nIn addition, the current impl of ParseSingleValue is temporary: as soon as all properties have their API, we can call the new function directly. So to summarize, I\u0027d prefer to keep ParseSingleValue as it is for now.",
+      "parentUuid": "654efae1_9e08e26e",
+      "revId": "ce53c7212eb76a0a65b9e9fdad9e969a7527520e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
