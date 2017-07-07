@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "36068660_708d7585",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_navigation_observer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-07T20:04:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46298fa8_096d98f7",
+      "revId": "2ed132170fc3b2b6a808aadaf5aa8bb10e139ac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c950dca1_8e5b14ec",
         "filename": "chrome/browser/safe_browsing/safe_browsing_navigation_observer.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-06T23:24:48Z",
       "side": 1,
       "message": "Does this \"eat\" the gesture, such that the web contents doesn\u0027t get it?",
+      "revId": "2ed132170fc3b2b6a808aadaf5aa8bb10e139ac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1b4be3d_d242f9ae",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_navigation_observer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-07T20:04:27Z",
+      "side": 1,
+      "message": "Resolved offline.",
+      "parentUuid": "c950dca1_8e5b14ec",
       "revId": "2ed132170fc3b2b6a808aadaf5aa8bb10e139ac3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
