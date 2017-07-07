@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "29e30a9c_df7f84a2",
+        "filename": "ui/views/controls/base_focus_ring.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-07-07T15:22:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17a0837c_1dfc9539",
+      "range": {
+        "startLine": 7,
+        "startChar": 13,
+        "endLine": 7,
+        "endChar": 16
+      },
+      "revId": "dc9e0e47e455eba8a3fcc74fc351b9636dd20bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be03bafd_136a0a9f",
         "filename": "ui/views/controls/base_focus_ring.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "dc9e0e47e455eba8a3fcc74fc351b9636dd20bb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcbe30f7_467cedd2",
+        "filename": "ui/views/controls/base_focus_ring.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-07-07T15:22:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be03bafd_136a0a9f",
+      "range": {
+        "startLine": 11,
+        "startChar": 20,
+        "endLine": 11,
+        "endChar": 49
+      },
+      "revId": "dc9e0e47e455eba8a3fcc74fc351b9636dd20bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f8252271_bcc16654",
+        "filename": "ui/views/controls/base_focus_ring.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-07-07T15:22:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae228471_b84aec8a",
+      "range": {
+        "startLine": 8,
+        "startChar": 14,
+        "endLine": 8,
+        "endChar": 15
+      },
+      "revId": "dc9e0e47e455eba8a3fcc74fc351b9636dd20bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6beb025a_372e89ef",
         "filename": "ui/views/controls/base_focus_ring.h",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "dc9e0e47e455eba8a3fcc74fc351b9636dd20bb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31cf45a8_5764f85f",
+        "filename": "ui/views/controls/base_focus_ring.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-07-07T15:22:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6beb025a_372e89ef",
+      "range": {
+        "startLine": 14,
+        "startChar": 8,
+        "endLine": 14,
+        "endChar": 18
+      },
+      "revId": "dc9e0e47e455eba8a3fcc74fc351b9636dd20bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "e38713fd_0a29229e",
+        "filename": "ui/views/controls/button/checkbox.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-07-07T15:22:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae1ac737_09de5f3d",
+      "range": {
+        "startLine": 18,
+        "startChar": 19,
+        "endLine": 18,
+        "endChar": 28
+      },
+      "revId": "dc9e0e47e455eba8a3fcc74fc351b9636dd20bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ebbe91cc_72c8b5be",
         "filename": "ui/views/controls/button/checkbox.cc",
         "patchSetId": 5
@@ -137,6 +257,30 @@
       "revId": "dc9e0e47e455eba8a3fcc74fc351b9636dd20bb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5df307a3_74e0257a",
+        "filename": "ui/views/controls/button/checkbox.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-07-07T15:22:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebbe91cc_72c8b5be",
+      "range": {
+        "startLine": 209,
+        "startChar": 15,
+        "endLine": 209,
+        "endChar": 29
+      },
+      "revId": "dc9e0e47e455eba8a3fcc74fc351b9636dd20bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "465ff601_83958370",
+        "filename": "ui/views/controls/button/checkbox.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-07-07T15:22:41Z",
+      "side": 1,
+      "message": "Once Material Design is the default, always constructing the focus ring class in the constructor would probably be better. Right now it\u0027s just on-demand/lazily constructed.",
+      "parentUuid": "8e9e0f59_81fb8350",
+      "range": {
+        "startLine": 239,
+        "startChar": 5,
+        "endLine": 239,
+        "endChar": 13
+      },
+      "revId": "dc9e0e47e455eba8a3fcc74fc351b9636dd20bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ccc0152a_5a0bb9bf",
         "filename": "ui/views/controls/button/checkbox.cc",
         "patchSetId": 5
@@ -183,6 +351,30 @@
       "revId": "dc9e0e47e455eba8a3fcc74fc351b9636dd20bb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49825af6_6192b6b5",
+        "filename": "ui/views/controls/button/checkbox.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-07-07T15:22:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ccc0152a_5a0bb9bf",
+      "range": {
+        "startLine": 240,
+        "startChar": 2,
+        "endLine": 240,
+        "endChar": 15
+      },
+      "revId": "dc9e0e47e455eba8a3fcc74fc351b9636dd20bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "5cf69014_e3854e84",
+        "filename": "ui/views/controls/button/checkbox.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-07-07T15:22:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d8b31cf_07fbf52b",
+      "range": {
+        "startLine": 245,
+        "startChar": 10,
+        "endLine": 245,
+        "endChar": 20
+      },
+      "revId": "dc9e0e47e455eba8a3fcc74fc351b9636dd20bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77b465e3_dd7689aa",
         "filename": "ui/views/controls/button/checkbox.cc",
         "patchSetId": 5
@@ -229,6 +445,30 @@
       "revId": "dc9e0e47e455eba8a3fcc74fc351b9636dd20bb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b14c3fea_c097fca0",
+        "filename": "ui/views/controls/button/checkbox.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-07-07T15:22:41Z",
+      "side": 1,
+      "message": "Renamed Install/Uninstall to Show/Hide to better reflect what is actually happening.",
+      "parentUuid": "77b465e3_dd7689aa",
+      "range": {
+        "startLine": 254,
+        "startChar": 15,
+        "endLine": 254,
+        "endChar": 28
+      },
+      "revId": "dc9e0e47e455eba8a3fcc74fc351b9636dd20bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "edef07e1_cc8dcf02",
+        "filename": "ui/views/controls/button/checkbox.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-07-07T15:22:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9fb649e_588df8ec",
+      "range": {
+        "startLine": 255,
+        "startChar": 17,
+        "endLine": 255,
+        "endChar": 21
+      },
+      "revId": "dc9e0e47e455eba8a3fcc74fc351b9636dd20bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e3caacb_395e9e3e",
         "filename": "ui/views/controls/button/checkbox.cc",
         "patchSetId": 5
@@ -269,6 +533,24 @@
       "revId": "dc9e0e47e455eba8a3fcc74fc351b9636dd20bb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e473922_fae6f044",
+        "filename": "ui/views/controls/button/checkbox.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-07-07T15:22:41Z",
+      "side": 1,
+      "message": "Yes, the FocusRing was a preexisting class/concept. Originally, I\u0027d used an actual delegate interface to \"override\" the layout/painting of the FocusRing class.\n\nThe use of BaseFocusRing* in the PaintFocusRing() methods changed to merely View*.",
+      "parentUuid": "4e3caacb_395e9e3e",
+      "revId": "dc9e0e47e455eba8a3fcc74fc351b9636dd20bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -295,6 +577,30 @@
     },
     {
       "key": {
+        "uuid": "6b2c3d31_dfb598ea",
+        "filename": "ui/views/controls/button/checkbox.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-07-07T15:22:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "606efab2_22445e8d",
+      "range": {
+        "startLine": 62,
+        "startChar": 58,
+        "endLine": 62,
+        "endChar": 69
+      },
+      "revId": "dc9e0e47e455eba8a3fcc74fc351b9636dd20bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bcac0a0c_0c41cb15",
         "filename": "ui/views/controls/button/checkbox.h",
         "patchSetId": 5
@@ -309,6 +615,24 @@
       "revId": "dc9e0e47e455eba8a3fcc74fc351b9636dd20bb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bb93c57_18656281",
+        "filename": "ui/views/controls/button/checkbox.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-07-07T15:22:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bcac0a0c_0c41cb15",
+      "revId": "dc9e0e47e455eba8a3fcc74fc351b9636dd20bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -358,6 +682,54 @@
     },
     {
       "key": {
+        "uuid": "6a96ad12_edaa4ad5",
+        "filename": "ui/views/controls/button/checkbox.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-07-07T15:22:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92b5746f_06d30c1c",
+      "range": {
+        "startLine": 74,
+        "startChar": 18,
+        "endLine": 74,
+        "endChar": 26
+      },
+      "revId": "dc9e0e47e455eba8a3fcc74fc351b9636dd20bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b4e22d15_306eea62",
+        "filename": "ui/views/controls/button/checkbox.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-07-07T15:22:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45e6f7e3_48fb43f4",
+      "range": {
+        "startLine": 74,
+        "startChar": 28,
+        "endLine": 74,
+        "endChar": 37
+      },
+      "revId": "dc9e0e47e455eba8a3fcc74fc351b9636dd20bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "407b5027_2b76a694",
         "filename": "ui/views/controls/focus_ring.cc",
         "patchSetId": 5
@@ -378,6 +750,30 @@
       "revId": "dc9e0e47e455eba8a3fcc74fc351b9636dd20bb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "591bd70f_799c514d",
+        "filename": "ui/views/controls/focus_ring.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-07-07T15:22:41Z",
+      "side": 1,
+      "message": "A subclass of FocusRing won\u0027t work correctly since the Install/Uninstall mechanism relies on there being a single instance within the child view hierarchy. See GetFocusRing(). It uses GetClassName() to locate the existing specific class instance. A subclass could be a different class type.\n\nTechnically, it could be made to work, but the resulting code would be more obscure/obtuse.",
+      "parentUuid": "407b5027_2b76a694",
+      "range": {
+        "startLine": 66,
+        "startChar": 16,
+        "endLine": 66,
+        "endChar": 23
+      },
+      "revId": "dc9e0e47e455eba8a3fcc74fc351b9636dd20bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
