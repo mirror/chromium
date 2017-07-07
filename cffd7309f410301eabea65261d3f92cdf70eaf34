@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78be4b3e_979eac3a",
+        "filename": "components/payments/core/address_normalization_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-07-07T20:05:50Z",
+      "side": 1,
+      "message": "Feels like this should be in a \"Reset\" method. I would not expect this object to be reusable after a call to FinalizeWithCompletionCallback. WDYT?",
+      "revId": "cffd7309f410301eabea65261d3f92cdf70eaf34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ab0e194_2f3b9163",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-07-07T20:05:50Z",
+      "side": 1,
+      "message": "nit: unordered_map ?",
+      "range": {
+        "startLine": 100,
+        "startChar": 7,
+        "endLine": 100,
+        "endChar": 10
+      },
+      "revId": "cffd7309f410301eabea65261d3f92cdf70eaf34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28ed1611_c57f4c79",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-07-07T20:05:50Z",
+      "side": 1,
+      "message": "This will not work, as DCHECKs are only in debug builds (what they check will be stripped in release builds). Please move the statement outside the DCHECK, and have a DCHECK after for the return value.",
+      "range": {
+        "startLine": 260,
+        "startChar": 2,
+        "endLine": 260,
+        "endChar": 8
+      },
+      "revId": "cffd7309f410301eabea65261d3f92cdf70eaf34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea0b7f5b_bf0017ac",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-07-07T20:05:50Z",
+      "side": 1,
+      "message": "Is it worth checking if _activeWebState is equal to webState, and if so, call [self setActiveWebState:nil] or some other method?",
+      "range": {
+        "startLine": 261,
+        "startChar": 1,
+        "endLine": 261,
+        "endChar": 0
+      },
+      "revId": "cffd7309f410301eabea65261d3f92cdf70eaf34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "569e61e1_00bf49df",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-07-07T20:05:50Z",
+      "side": 1,
+      "message": "nit: const auto",
+      "range": {
+        "startLine": 390,
+        "startChar": 2,
+        "endLine": 390,
+        "endChar": 6
+      },
+      "revId": "cffd7309f410301eabea65261d3f92cdf70eaf34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d58dcfb8_69a02c0b",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-07-07T20:05:50Z",
+      "side": 1,
+      "message": "nit: const auto",
+      "range": {
+        "startLine": 392,
+        "startChar": 2,
+        "endLine": 392,
+        "endChar": 6
+      },
+      "revId": "cffd7309f410301eabea65261d3f92cdf70eaf34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
