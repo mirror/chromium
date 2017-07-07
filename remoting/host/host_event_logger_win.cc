@@ -28,7 +28,7 @@ namespace {
 
 class HostEventLoggerWin : public HostEventLogger, public HostStatusObserver {
  public:
-  HostEventLoggerWin(base::WeakPtr<HostStatusMonitor> monitor,
+  HostEventLoggerWin(scoped_refptr<HostStatusMonitor> monitor,
                      const std::string& application_name);
 
   ~HostEventLoggerWin() override;
@@ -49,7 +49,7 @@ class HostEventLoggerWin : public HostEventLogger, public HostStatusObserver {
   void LogString(WORD type, DWORD event_id, const std::string& string);
   void Log(WORD type, DWORD event_id, const std::vector<std::string>& strings);
 
-  base::WeakPtr<HostStatusMonitor> monitor_;
+  scoped_refptr<HostStatusMonitor> monitor_;
 
   // The handle of the application event log.
   HANDLE event_log_;
@@ -57,7 +57,7 @@ class HostEventLoggerWin : public HostEventLogger, public HostStatusObserver {
   DISALLOW_COPY_AND_ASSIGN(HostEventLoggerWin);
 };
 
-} //namespace
+}  // namespace
 
 HostEventLoggerWin::HostEventLoggerWin(base::WeakPtr<HostStatusMonitor> monitor,
                                        const std::string& application_name)
@@ -74,8 +74,7 @@ HostEventLoggerWin::HostEventLoggerWin(base::WeakPtr<HostStatusMonitor> monitor,
 
 HostEventLoggerWin::~HostEventLoggerWin() {
   if (event_log_ != nullptr) {
-    if (monitor_)
-      monitor_->RemoveStatusObserver(this);
+    monitor_->RemoveStatusObserver(this);
     DeregisterEventSource(event_log_);
   }
 }
@@ -128,14 +127,8 @@ void HostEventLoggerWin::Log(WORD type,
     raw_strings[i] = utf16_strings[i].c_str();
   }
 
-  if (!ReportEventW(event_log_,
-                    type,
-                    HOST_CATEGORY,
-                    event_id,
-                    nullptr,
-                    static_cast<WORD>(raw_strings.size()),
-                    0,
-                    &raw_strings[0],
+  if (!ReportEventW(event_log_, type, HOST_CATEGORY, event_id, nullptr,
+                    static_cast<WORD>(raw_strings.size()), 0, &raw_strings[0],
                     nullptr)) {
     PLOG(ERROR) << "Failed to write an event to the event log";
   }
