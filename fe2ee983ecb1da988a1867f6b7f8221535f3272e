@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c616c1d8_8c86ad2e",
+        "filename": "chromecast/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1129958
+      },
+      "writtenOn": "2017-07-07T14:28:57Z",
+      "side": 1,
+      "message": "Let\u0027s not add this until we have a specific reason to do so.",
+      "range": {
+        "startLine": 481,
+        "startChar": 0,
+        "endLine": 481,
+        "endChar": 61
+      },
+      "revId": "fe2ee983ecb1da988a1867f6b7f8221535f3272e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
