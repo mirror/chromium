@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "23dfbe98_e88a7ea2",
+        "filename": "cc/base/filter_operation.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-07-07T01:49:34Z",
+      "side": 1,
+      "message": "Removed. I can make a change to SkBlurImageFilter later.",
+      "parentUuid": "793bf58f_3380cec6",
+      "revId": "a88e66633273007127e2415f62a93057c24637b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "703eefbd_eed7826b",
         "filename": "cc/base/render_surface_filters.h",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-06T21:45:44Z",
       "side": 1,
       "message": "Is this still necessary?",
+      "revId": "a88e66633273007127e2415f62a93057c24637b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cba4dbf7_69fc0293",
+        "filename": "cc/base/render_surface_filters.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-07-07T01:49:34Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "703eefbd_eed7826b",
       "revId": "a88e66633273007127e2415f62a93057c24637b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
