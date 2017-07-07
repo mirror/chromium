@@ -87,6 +87,9 @@ class BackgroundDownloader : public CrxDownloader {
   void StartTimer();
   void OnTimer();
 
+  // Creates or opens a job for the given url and queues it up. Returns S_OK if
+  // a new job was created or S_FALSE if an existing job for the |url| was found
+  // in the BITS queue.
   HRESULT QueueBitsJob(const GURL& url,
                        Microsoft::WRL::ComPtr<IBackgroundCopyJob>* job);
   HRESULT CreateOrOpenJob(const GURL& url,
@@ -114,6 +117,13 @@ class BackgroundDownloader : public CrxDownloader {
   // Resets the BITS interface pointers. Call this function when a thread
   // from the thread pool leaves the object to release the interface pointers.
   void ResetInterfacePointers();
+
+  // Returns the number of jobs in the BITS queue which were created by this
+  // downloader.
+  HRESULT GetBackgroundDownloaderJobCount(size_t* num_jobs);
+
+  // Cleans up incompleted jobs that are too old.
+  void CleanupStaleJobs();
 
   // Ensures that we are running on the same thread we created the object on.
   base::ThreadChecker thread_checker_;
