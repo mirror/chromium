@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00581109_a18123db",
+        "filename": "chrome/browser/android/vr_shell/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-07-07T20:27:58Z",
+      "side": 1,
+      "message": "looks like you did rename it below.  Remove the TODO?",
+      "range": {
+        "startLine": 17,
+        "startChar": 30,
+        "endLine": 17,
+        "endChar": 37
+      },
+      "revId": "9ceef022ef44f9726de0ae495b669341947d828b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98b723c5_fa853460",
+        "filename": "chrome/browser/vr/elements/exclusive_screen_toast.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-07-07T20:27:58Z",
+      "side": 1,
+      "message": "Hmm, the copy detection didn\u0027t work for this file, maybe because the rename ended up being too much of a difference from the original on a small file?\n\nIt would be nice if gerrit had a way to override this.",
+      "revId": "9ceef022ef44f9726de0ae495b669341947d828b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c88f9d5f_9fc23af7",
+        "filename": "chrome/browser/vr/elements/url_bar_texture_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-07-07T20:27:58Z",
+      "side": 1,
+      "message": "? was this pulled in some other way before?",
+      "range": {
+        "startLine": 11,
+        "startChar": 31,
+        "endLine": 11,
+        "endChar": 0
+      },
+      "revId": "9ceef022ef44f9726de0ae495b669341947d828b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d7f6e1b_0dbafacb",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-07-07T20:27:58Z",
+      "side": 1,
+      "message": "No ../textures sub-directory anymore?  It looks like all textures are under elements now.  Which is fine I guess, I was just wondering if there was some motivation for that change.",
+      "revId": "9ceef022ef44f9726de0ae495b669341947d828b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
