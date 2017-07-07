@@ -16,6 +16,24 @@
       "revId": "fadf94f7b9bd8b3ba331d5be1ec64cd110353ed2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f35bb31_44628521",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3250,
+      "author": {
+        "id": 1130690
+      },
+      "writtenOn": "2017-07-07T21:06:38Z",
+      "side": 1,
+      "message": "When manually testing and switching ALL on and off it looks like I accidentally put it below right before uploading even thought I meant two lines above. Fixed.\n\nCan we land this and do a test later? I\u0027d like to fix the crash and a test for this seems non-trivial since ideally it\u0027d need to live in chrome and have drp dependencies since it adding the headers is only used by that path. This change is due to kundaji@ using a different format for the drp passthrough header a long time ago and having that various formats of that string in many locations. He also wrote this parsing code. I don\u0027t know why he did it that way, and to prevent the headers from getting out of sync, I consolidated the code so we only have one drp passthrough value, but apparently missed this path that it affected since I was checking on Android.\n\nI can add a small test just to handle the issue I would have had above, but that wouldn\u0027t prevent crashes if the drp passthrough header changes.",
+      "parentUuid": "c416c641_c442467e",
+      "revId": "fadf94f7b9bd8b3ba331d5be1ec64cd110353ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
