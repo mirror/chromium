@@ -34,6 +34,24 @@
       "revId": "ce53c7212eb76a0a65b9e9fdad9e969a7527520e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "654efae1_9e08e26e",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParser.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1190,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-07-07T03:58:37Z",
+      "side": 1,
+      "message": "I think the logic here is complex enough that we should avoid copy-pasting it. Let\u0027s add a \"bool\u0026 needs_legacy_parsing\" out parameter.",
+      "parentUuid": "b47ac1c1_5346ac2d",
+      "revId": "ce53c7212eb76a0a65b9e9fdad9e969a7527520e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
