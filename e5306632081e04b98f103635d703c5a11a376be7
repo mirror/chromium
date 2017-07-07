@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "deb40eb9_ec225185",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-07T19:57:53Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2d573b61_6e3ff5aa",
+      "range": {
+        "startLine": 245,
+        "startChar": 0,
+        "endLine": 245,
+        "endChar": 77
+      },
+      "revId": "e5306632081e04b98f103635d703c5a11a376be7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1efc6e3b_d1c85cbe",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryAdapter.java",
         "patchSetId": 1
@@ -213,6 +237,30 @@
       "side": 1,
       "message": "I changed this because I found that history service won\u0027t update \"other forms of browsing history\" quickly enough that the info button (and info header if available) shows up when user signed out and open history page.",
       "parentUuid": "522bebcf_33bf94f5",
+      "range": {
+        "startLine": 416,
+        "startChar": 48,
+        "endLine": 416,
+        "endChar": 54
+      },
+      "revId": "e5306632081e04b98f103635d703c5a11a376be7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a8f4ec4_dde83e19",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-07T19:57:53Z",
+      "side": 1,
+      "message": "Can you provide repro steps please?",
+      "parentUuid": "3c97dc16_22ce119b",
       "range": {
         "startLine": 416,
         "startChar": 48,
@@ -448,6 +496,30 @@
       "side": 1,
       "message": "Right, it should return 0 in this case. I moved hasHeaderItems to ItemGroup to make returning 0 possible. I tested it by hardcoding PrefServiceBridge.getInstance().canDeleteBrowsingHistory() to return false, but how do I force delete browsing history to false in an intrumentation test?",
       "parentUuid": "63e16d01_06e33e6b",
+      "range": {
+        "startLine": 274,
+        "startChar": 0,
+        "endLine": 274,
+        "endChar": 73
+      },
+      "revId": "e5306632081e04b98f103635d703c5a11a376be7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dba31f2_bdad089a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/DateDividedAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-07T19:57:53Z",
+      "side": 1,
+      "message": "What I\u0027d really like to see tested is that DateDividedAdapter behaves appropriately when a addHeaders() is called without any visible items. We could introduce a static variable to HistoryAdapter (and a static way to set it) that forces CBD to be hidden regardless of the PrefServiceBridge#canDeleteBrowsingHistory() value. Checkout HistoryManager#sProviderForTests for an example.",
+      "parentUuid": "3ce3ba8d_d514f503",
       "range": {
         "startLine": 274,
         "startChar": 0,

@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f51a59bf_7c59fcc7",
+        "filename": "chrome/android/java/res/layout/history_header_view.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-07T19:57:53Z",
+      "side": 1,
+      "message": "I believe that setting marginTop and marginBottom here in the container is going to cause extra space.\n\nPreviously we had:\n\nScenario 1) Privacy disclaimers and CBD\n8dp margin (from LinearLayout around privacy disclaimer)\nPrivacy text\n16dp margin (from LinearLayout around privacy disclaimer)\nCBD\n8dp margin (from root LinearLayout)\n\nScenario 2) Only privacy disclaimers\n8dp margin\nPrivacy text\n24dp margin (from root LinearLayout + privacy disclaimer)\n\nScenario 3) Only CBD\nCBD\n8dp margin (from root LinearLayout)\n\nScenario 4) Neither visible\n8dp margin (from root LinearLayout)\n\nScenario 5) Searching\n0dp margin (this is actually a bug.. we should still have 8dp)\n\n\nWith the current patch I think we have:\n\n1)\n8dp margin\nPrivacy text\n16dp margin\nCBD\n8dp margin\n\n2)\n8dp margin\nPrivacy text\n8dp margin\n\n3)\n8dp margin\nCBD\n8dp margin\n\n4)\n0dp margin\n\n5)\n0dp margin\n\n\nI think we should move the 8dp top margin that should always exist to history_main.xml\u0027s SelectableListLayout. To achieve the desired margins, we could add 24dp margin to the privacy disclaimer text, -8dp top margin to the CBD and 8dp bottom margin to the CBD:\n\n1)\n8dp (from history_main)\nPrivacy text\n16 (24dp privacy text - 8dp CBD)\nCBD\n8dp (CBD bottom margin)\n\n2)\n8dp (from history_main)\nprivacy\n24dp (from privacy text)\n\n\n3)\n0dp (8 from histroy_main - 8dp CBD)\nCBD\n8dp (CBD bottom margin)\n\n\n4)\n8dp\n\n5)\n8dp",
+      "range": {
+        "startLine": 10,
+        "startChar": 33,
+        "endLine": 10,
+        "endChar": 36
+      },
+      "revId": "10c4856a2f6ba6f7184bdd833f4cb04df7cc7696",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92aa4ff1_2ee04e78",
+        "filename": "chrome/android/java/res/layout/history_privacy_disclaimer_header.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-07T19:57:53Z",
+      "side": 1,
+      "message": "2017",
+      "range": {
+        "startLine": 2,
+        "startChar": 15,
+        "endLine": 2,
+        "endChar": 19
+      },
+      "revId": "10c4856a2f6ba6f7184bdd833f4cb04df7cc7696",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77306441_fa0ad48e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-07T19:57:53Z",
+      "side": 1,
+      "message": "This isn\u0027t really necessary. Resources are based on the current context, which is ChromeTabbedActivity for both of these views.",
+      "range": {
+        "startLine": 377,
+        "startChar": 8,
+        "endLine": 377,
+        "endChar": 17
+      },
+      "revId": "10c4856a2f6ba6f7184bdd833f4cb04df7cc7696",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5511950_367c5173",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/history/HistoryActivityTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-07T19:57:53Z",
+      "side": 1,
+      "message": "I thought we had two items in the headerGroup, one for the privacy disclaimers and one for the history items?\n\nAlso, can we loop over the headerGroup and assert the visibility of CBD and privacy disclaimer header items is correct?",
+      "range": {
+        "startLine": 508,
+        "startChar": 24,
+        "endLine": 508,
+        "endChar": 35
+      },
+      "revId": "10c4856a2f6ba6f7184bdd833f4cb04df7cc7696",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
