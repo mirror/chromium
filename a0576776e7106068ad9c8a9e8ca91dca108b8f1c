@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3eee0d17_3ae259ce",
+        "filename": "media/base/scoped_callback_runner.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-07-07T07:33:54Z",
+      "side": 1,
+      "message": "Bound arguments may be different to the callback signature when wrappers are used, e.g. in base::Owned and base::Unretained case, they are OwnedWrapper and UnretainedWrapper.\nLet\u0027s make the ctor a template and use perfect forwarding here as:\n  template \u003ctypename... BoundArgs\u003e\n  ScopedCallbackRunnerHelper(CallbackType callback, BoundArgs\u0026\u0026... args)",
+      "range": {
+        "startLine": 41,
+        "startChar": 52,
+        "endLine": 41,
+        "endChar": 56
+      },
+      "revId": "a0576776e7106068ad9c8a9e8ca91dca108b8f1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "564791c3_3d4f95e2",
+        "filename": "media/base/scoped_callback_runner.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-07-07T07:33:54Z",
+      "side": 1,
+      "message": "nit: DISALLOW_COPY_AND_ASSIGN?",
+      "range": {
+        "startLine": 61,
+        "startChar": 2,
+        "endLine": 61,
+        "endChar": 0
+      },
+      "revId": "a0576776e7106068ad9c8a9e8ca91dca108b8f1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
