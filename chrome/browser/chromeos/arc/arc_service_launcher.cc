@@ -10,7 +10,7 @@
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "chrome/browser/chromeos/app_mode/arc/arc_kiosk_app_service.h"
-#include "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.h"
+#include "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge_factory.h"
 #include "chrome/browser/chromeos/arc/arc_play_store_enabled_preference_handler.h"
 #include "chrome/browser/chromeos/arc/arc_session_manager.h"
 #include "chrome/browser/chromeos/arc/arc_util.h"
@@ -94,8 +94,6 @@ void ArcServiceLauncher::Initialize() {
           base::Bind(ArcSession::Create, arc_bridge_service)));
 
   // List in lexicographical order.
-  arc_service_manager_->AddService(
-      base::MakeUnique<ArcAccessibilityHelperBridge>(arc_bridge_service));
   arc_service_manager_->AddService(
       base::MakeUnique<ArcAudioBridge>(arc_bridge_service));
   arc_service_manager_->AddService(
@@ -185,6 +183,7 @@ void ArcServiceLauncher::MaybeSetProfile(Profile* profile) {
     arc_session_manager_->Shutdown();
 
   arc_session_manager_->SetProfile(profile);
+  arc_service_manager_->set_browser_context(profile);
 }
 
 void ArcServiceLauncher::OnPrimaryUserProfilePrepared(Profile* profile) {
@@ -198,6 +197,8 @@ void ArcServiceLauncher::OnPrimaryUserProfilePrepared(Profile* profile) {
   }
 
   // List in lexicographical order
+  ArcAccessibilityHelperBridgeFactory::GetForBrowserContext(profile);
+
   arc_service_manager_->AddService(base::MakeUnique<ArcBootPhaseMonitorBridge>(
       arc_service_manager_->arc_bridge_service(),
       multi_user_util::GetAccountIdFromProfile(profile)));

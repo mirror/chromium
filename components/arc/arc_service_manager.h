@@ -18,6 +18,10 @@
 #include "components/arc/arc_service.h"
 #include "components/arc/intent_helper/local_activity_resolver.h"
 
+namespace content {
+class BrowserContext;
+}  // namespace content
+
 namespace arc {
 
 class ArcBridgeService;
@@ -62,6 +66,15 @@ class ArcServiceManager {
  public:
   ArcServiceManager();
   ~ArcServiceManager();
+
+  // Returns the current BrowserContext which ARC is allowed.
+  // TODO(hidehiko): This is workaround to split the dependency from chrome/.
+  // Remove this when we resolve it.
+  content::BrowserContext* browser_context() { return browser_context_; }
+
+  void set_browser_context(content::BrowserContext* browser_context) {
+    browser_context_ = browser_context;
+  }
 
   // |arc_bridge_service| can only be accessed on the thread that this
   // class was created on.
@@ -118,6 +131,7 @@ class ArcServiceManager {
   std::unique_ptr<ArcBridgeService> arc_bridge_service_;
   std::unordered_multimap<std::string, std::unique_ptr<ArcService>> services_;
   scoped_refptr<LocalActivityResolver> activity_resolver_;
+  content::BrowserContext* browser_context_ = nullptr;
 
   DISALLOW_COPY_AND_ASSIGN(ArcServiceManager);
 };
