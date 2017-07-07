@@ -740,7 +740,7 @@ Resources.DatabaseTreeElement = class extends Resources.BaseStorageTreeElement {
       for (var i = 0; i < tableNamesLength; ++i)
         this.appendChild(new Resources.DatabaseTableTreeElement(this._sidebar, this._database, tableNames[i]));
     }
-    this._database.getTableNames(tableNamesCallback.bind(this));
+    this._database.getTableNames().then(tableNamesCallback.bind(this));
   }
 };
 
