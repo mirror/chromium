@@ -217,5 +217,9 @@ id<GREYMatcher> SettingsMenuBackButton() {
   return grey_allOf(grey_accessibilityID(@"ic_arrow_back"),
                     grey_accessibilityTrait(UIAccessibilityTraitButton), nil);
 }
+id<GREYMatcher> SettingsMenuPrivacyButton() {
+  return ButtonWithAccessibilityLabelId(
+      IDS_OPTIONS_ADVANCED_SECTION_TITLE_PRIVACY);
+}
 
 }  // namespace chrome_test_util

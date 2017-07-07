@@ -123,6 +123,9 @@ id<GREYMatcher> ContentSettingsButton();
 // Returns matcher for the back button on a settings menu.
 id<GREYMatcher> SettingsMenuBackButton();
 
+// Matcher for the Privacy cell on the main Settings screen.
+id<GREYMatcher> SettingsMenuPrivacyButton();
+
 }  // namespace chrome_test_util
 
 #endif  // IOS_CHROME_TEST_EARL_GREY_CHROME_MATCHERS_H_
