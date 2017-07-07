@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "28e11a39_b04924af",
+        "filename": "chrome/browser/password_manager/chrome_password_manager_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-07T10:38:52Z",
+      "side": 1,
+      "message": "I have. I chosen this path because of having a single choke point that ensures that we record a trigger reason in all cases. It felt to me that recording by the caller is too brittle.\n\nvabr@ do you have an opinion?",
+      "parentUuid": "23b77d41_2435238b",
+      "revId": "429de7554827036611aba6bd433cd328cf426092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ec92dd41_bf422d3c",
         "filename": "chrome/browser/password_manager/chrome_password_manager_client.cc",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "c4742f29_7c5f59e1",
+        "filename": "chrome/browser/password_manager/chrome_password_manager_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-07T10:38:52Z",
+      "side": 1,
+      "message": "Fixed. I have figured out a way to inject the ukm_recorder into the g_browser_process.",
+      "parentUuid": "ec92dd41_bf422d3c",
+      "revId": "429de7554827036611aba6bd433cd328cf426092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69fa690f_0c10dd52",
         "filename": "components/password_manager/core/browser/password_form_metrics_recorder.cc",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-07T08:39:49Z",
       "side": 1,
       "message": "Did you verify if we can show a saving prompt multiple times for a form? Or are we fine with \u003e1 PromptTrigger samples?",
+      "revId": "429de7554827036611aba6bd433cd328cf426092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4bb8e08_903115bb",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-07T10:38:52Z",
+      "side": 1,
+      "message": "This was intentional. I intend to record one PromptTrigger and one UIDismissalReason for every time the bubble is shown. I wanted to record a single boolean to indicate whether the bubble was ever shown.",
+      "parentUuid": "69fa690f_0c10dd52",
       "revId": "429de7554827036611aba6bd433cd328cf426092",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "7d6f0daa_36240422",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-07T10:38:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bdd2769c_dc2f8b76",
+      "range": {
+        "startLine": 39,
+        "startChar": 23,
+        "endLine": 39,
+        "endChar": 41
+      },
+      "revId": "429de7554827036611aba6bd433cd328cf426092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c97921f_db2ad830",
         "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
         "patchSetId": 4
@@ -96,6 +174,30 @@
       "revId": "429de7554827036611aba6bd433cd328cf426092",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d540acfb_cbfcc323",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-07T10:38:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c97921f_db2ad830",
+      "range": {
+        "startLine": 43,
+        "startChar": 72,
+        "endLine": 44,
+        "endChar": 8
+      },
+      "revId": "429de7554827036611aba6bd433cd328cf426092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
