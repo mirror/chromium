@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "011df42b_de3c507d",
+        "filename": "ios/chrome/browser/web_state_list/web_state_list.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-07T16:13:39Z",
+      "side": 1,
+      "message": "OK.",
+      "parentUuid": "0bff6452_ce7fd562",
+      "range": {
+        "startLine": 90,
+        "startChar": 7,
+        "endLine": 90,
+        "endChar": 21
+      },
+      "revId": "0982df81dd2313d6ea9c5762b0ad9bf96667b6ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "261c386a_db56567d",
         "filename": "ios/chrome/browser/web_state_list/web_state_list_observer.h",
         "patchSetId": 4
@@ -130,6 +154,30 @@
       "side": 1,
       "message": "Well, at this point the web_state is still not the active WebState. It will soon become active tough. Would \"will_become_active\" work better?",
       "parentUuid": "76d45acc_696aec03",
+      "range": {
+        "startLine": 27,
+        "startChar": 39,
+        "endLine": 27,
+        "endChar": 49
+      },
+      "revId": "0982df81dd2313d6ea9c5762b0ad9bf96667b6ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c986b23d_24cc56f6",
+        "filename": "ios/chrome/browser/web_state_list/web_state_list_observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-07T16:13:39Z",
+      "side": 1,
+      "message": "\u0027activating\u0027 ?",
+      "parentUuid": "52ca980a_cc09467f",
       "range": {
         "startLine": 27,
         "startChar": 39,
