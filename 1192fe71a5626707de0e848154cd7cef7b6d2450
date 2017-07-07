@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "202d5299_8baa1595",
+        "filename": "chrome/browser/android/vr_shell/ui_renderer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-07T17:49:14Z",
+      "side": 1,
+      "message": "We could even pass the scene and texture ID to the draw calls (or make them part of RenderInfo). Then, the UiRenderer would be as stateless as possible.",
+      "revId": "1192fe71a5626707de0e848154cd7cef7b6d2450",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0afb3cc7_ee337db6",
+        "filename": "chrome/browser/android/vr_shell/ui_renderer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-07T17:49:14Z",
+      "side": 1,
+      "message": "I want to make the VrShell renderers singletons in a follow-up CL. Then, we don\u0027t have to keep passing this pointer around.",
+      "revId": "1192fe71a5626707de0e848154cd7cef7b6d2450",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
