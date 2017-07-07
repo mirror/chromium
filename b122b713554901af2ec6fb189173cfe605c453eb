@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "f90c26d7_3830b350",
+        "filename": "components/autofill/core/common/password_form.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-07T12:20:44Z",
+      "side": 1,
+      "message": "I think that those new fields are different enough by meaning from the existing ones. Thus, I\u0027d avoid using the same struct for them.",
+      "parentUuid": "2a1dfdf3_9552aeb0",
+      "revId": "b122b713554901af2ec6fb189173cfe605c453eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b9231f5d_37bdfa1e",
         "filename": "components/password_manager/core/browser/android_affiliation/affiliated_match_helper.cc",
         "patchSetId": 1
