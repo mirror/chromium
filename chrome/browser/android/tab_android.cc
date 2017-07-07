@@ -576,11 +576,19 @@ bool TabAndroid::Print(JNIEnv* env, const JavaParamRef<jobject>& obj) {
   if (!print_view_manager)
     return false;
 
-  print_view_manager->PrintNow(printing::GetFrameToPrint(web_contents()));
+  print_view_manager->PrintNow(
+      render_frame_host_to_print_
+          ? render_frame_host_to_print_
+          : printing::GetRenderFrameHostToPrint(web_contents()));
+  render_frame_host_to_print_ = nullptr;
   return true;
 }
 
 void TabAndroid::SetPendingPrint() {
+  render_frame_host_to_print_ =
+      printing::GetRenderFrameHostToPrint(web_contents());
+  web_contents()->SetScriptedPrintFrame(nullptr);
+
   JNIEnv* env = base::android::AttachCurrentThread();
   Java_Tab_setPendingPrint(env, weak_java_tab_.get(env));
 }

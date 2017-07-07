@@ -42,6 +42,7 @@ class TabContentManager;
 
 namespace content {
 class DevToolsAgentHost;
+class RenderFrameHost;
 class WebContents;
 }
 
@@ -270,6 +271,8 @@ class TabAndroid : public CoreTabHelperDelegate,
   SessionID session_window_id_;
 
   content::NotificationRegistrar notification_registrar_;
+
+  content::RenderFrameHost* render_frame_host_to_print_;
 
   scoped_refptr<cc::Layer> content_layer_;
   android::TabContentManager* tab_content_manager_;
