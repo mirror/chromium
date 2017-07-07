@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b79aa216_a349b537",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-07T16:20:02Z",
+      "side": 1,
+      "message": "No default argument. It\u0027s excessive. Also I\u0027d think positively |accept_changes|.",
+      "range": {
+        "startLine": 303,
+        "startChar": 49,
+        "endLine": 303,
+        "endChar": 54
+      },
+      "revId": "bcbdd3775dbbce2f7c19448d954952cf4ad78813",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
