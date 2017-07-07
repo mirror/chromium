@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab5cd905_c0b79b5d",
+        "filename": "chrome/common/extensions/api/automation.idl",
+        "patchSetId": 24
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-07T15:07:08Z",
+      "side": 1,
+      "message": "Match the ax_enums documentation here.",
+      "revId": "78d79c88ba56c6f30c69eefeb53286e3e407c3f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e37190a4_39a5e930",
+        "filename": "chrome/common/extensions/api/automation.idl",
+        "patchSetId": 24
+      },
+      "lineNbr": 666,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-07T15:07:08Z",
+      "side": 1,
+      "message": "This is good! Make ax_enums match this.",
+      "revId": "78d79c88ba56c6f30c69eefeb53286e3e407c3f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe5afcbb_009394da",
+        "filename": "chrome/common/extensions/api/automation.idl",
+        "patchSetId": 24
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-07T15:07:08Z",
+      "side": 1,
+      "message": "nit: it\u0027s more verbose, but we could say chrome.automation.Restrictions.READONLY here, or just Restrictions.READONLY - to encourage use of the enum rather than the raw string.",
+      "revId": "78d79c88ba56c6f30c69eefeb53286e3e407c3f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3daef5d0_85ad8940",
+        "filename": "ui/accessibility/ax_enums.idl",
+        "patchSetId": 24
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-07T15:07:08Z",
+      "side": 1,
+      "message": "I\u0027d make this more concise and define it more clearly below, like:\n\n  // Like readonly or disabled. Of type AXRestrictions, see below.",
+      "revId": "78d79c88ba56c6f30c69eefeb53286e3e407c3f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39861db0_620f3876",
+        "filename": "ui/accessibility/ax_enums.idl",
+        "patchSetId": 24
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-07T15:07:08Z",
+      "side": 1,
+      "message": "I\u0027d make this more detailed and clear, this is the canonical documentation for it. Be explicit that if it\u0027s a control, no value for AXRestrictions explicitly means it\u0027s enabled",
+      "revId": "78d79c88ba56c6f30c69eefeb53286e3e407c3f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
