@@ -22,6 +22,30 @@
       "revId": "661b99fc181c9ef15a707e72f1ed15d2b35079b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8fbc7bb4_257cd3b0",
+        "filename": "chrome/browser/chromeos/chrome_browser_main_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-07T21:49:41Z",
+      "side": 1,
+      "message": "thanks, removing this argument sounds great to me!",
+      "parentUuid": "97c85167_b425055f",
+      "range": {
+        "startLine": 618,
+        "startChar": 12,
+        "endLine": 618,
+        "endChar": 38
+      },
+      "revId": "661b99fc181c9ef15a707e72f1ed15d2b35079b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
