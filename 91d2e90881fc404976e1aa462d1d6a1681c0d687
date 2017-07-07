@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fd0a713f_8a6d577b",
+        "filename": "chrome/browser/chromeos/system/automatic_reboot_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000140
+      },
+      "writtenOn": "2017-07-07T01:40:00Z",
+      "side": 0,
+      "message": "Oh no. Does kiosk_app_update_service_browsertest.cc rely on the same token used in this code for the browser test to pass? If so we need to fix that test. :P",
+      "parentUuid": "90387654_d749276b",
+      "revId": "91d2e90881fc404976e1aa462d1d6a1681c0d687",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "802ca55b_f7568803",
         "filename": "chrome/browser/chromeos/system/automatic_reboot_manager_unittest.cc",
         "patchSetId": 1
