@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f79b82b5_7fa6e302",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/androidoverlay/DialogOverlayImplTestBase.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-07-07T22:26:02Z",
+      "side": 1,
+      "message": "s/priot/prior",
+      "range": {
+        "startLine": 35,
+        "startChar": 95,
+        "endLine": 35,
+        "endChar": 100
+      },
+      "revId": "7bba5bb9ea81a389251df6a3b9570e7ade4cf9fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
