@@ -352,12 +352,6 @@ void SnippetsInternalsMessageHandler::SendAllContent() {
   SendBoolean(
       "flag-article-suggestions",
       base::FeatureList::IsEnabled(ntp_snippets::kArticleSuggestionsFeature));
-  SendBoolean("flag-recent-offline-tab-suggestions",
-              base::FeatureList::IsEnabled(
-                  ntp_snippets::kRecentOfflineTabSuggestionsFeature));
-  SendBoolean("flag-offlining-recent-pages-feature",
-              base::FeatureList::IsEnabled(
-                  offline_pages::kOffliningRecentPagesFeature));
   SendBoolean(
       "flag-asset-download-suggestions",
       base::FeatureList::IsEnabled(features::kAssetDownloadSuggestionsFeature));
@@ -367,13 +361,6 @@ void SnippetsInternalsMessageHandler::SendAllContent() {
   SendBoolean(
       "flag-bookmark-suggestions",
       base::FeatureList::IsEnabled(ntp_snippets::kBookmarkSuggestionsFeature));
-
-  SendBoolean("flag-physical-web-page-suggestions",
-              base::FeatureList::IsEnabled(
-                  ntp_snippets::kPhysicalWebPageSuggestionsFeature));
-
-  SendBoolean("flag-physical-web", base::FeatureList::IsEnabled(
-                                       chrome::android::kPhysicalWebFeature));
 
   SendClassification();
   SendRankerDebugData();

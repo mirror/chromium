@@ -30,8 +30,6 @@ extern const base::Feature*(kAllFeatures[]);
 // TODO(jkrcal): Rename to kRemoteSuggestionsFeature.
 extern const base::Feature kArticleSuggestionsFeature;
 extern const base::Feature kBookmarkSuggestionsFeature;
-extern const base::Feature kRecentOfflineTabSuggestionsFeature;
-extern const base::Feature kPhysicalWebPageSuggestionsFeature;
 extern const base::Feature kForeignSessionsSuggestionsFeature;
 
 // Feature to allow UI as specified here: https://crbug.com/660837.
