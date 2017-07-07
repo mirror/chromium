@@ -217,6 +217,10 @@ source_set("browser_sources") {
     "guest_view/mime_handler_view/mime_handler_view_guest.h",
     "guest_view/mime_handler_view/mime_handler_view_guest_delegate.cc",
     "guest_view/mime_handler_view/mime_handler_view_guest_delegate.h",
+    "ruleset_manager.cc",
+    "ruleset_manager.h",
+    "ruleset_matcher.cc",
+    "ruleset_matcher.h",
 
     # TODO(crbug.com/730220): Ideally web_view should be a separate target on
     # which the extension system depends.
@@ -334,7 +338,7 @@ source_set("browser_sources") {
   ]
 
   deps = [
-    "//base:i18n",
+    "//base",
     "//components/cast_certificate",
     "//components/cast_channel",
     "//components/crx_file",
@@ -367,9 +371,11 @@ source_set("browser_sources") {
     "//services/preferences/public/cpp",
     "//services/service_manager/public/cpp",
     "//ui/display",
+    "//url",
   ]
 
   public_deps = [
+    "//components/url_pattern_index",
     "//extensions/browser/install",
     "//extensions/browser/kiosk",
     "//extensions/browser/updater",

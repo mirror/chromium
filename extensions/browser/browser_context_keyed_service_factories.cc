@@ -12,6 +12,7 @@
 #include "extensions/browser/api/bluetooth/bluetooth_private_api.h"
 #include "extensions/browser/api/bluetooth_socket/bluetooth_socket_event_dispatcher.h"
 #include "extensions/browser/api/clipboard/clipboard_api.h"
+#include "extensions/browser/api/declarative_net_request/rules_monitor_service.h"
 #include "extensions/browser/api/display_source/display_source_event_router_factory.h"
 #include "extensions/browser/api/hid/hid_device_manager.h"
 #include "extensions/browser/api/idle/idle_manager_factory.h"
@@ -67,6 +68,7 @@ void EnsureBrowserContextKeyedServiceFactoriesBuilt() {
   api::TCPServerSocketEventDispatcher::GetFactoryInstance();
   api::TCPSocketEventDispatcher::GetFactoryInstance();
   api::UDPSocketEventDispatcher::GetFactoryInstance();
+  declarative_net_request::RulesMonitorService::GetFactoryInstance();
   DeclarativeUserScriptManagerFactory::GetInstance();
   DisplaySourceEventRouterFactory::GetInstance();
   EventRouterFactory::GetInstance();

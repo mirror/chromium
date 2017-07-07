@@ -8,6 +8,7 @@
 #include "content/public/browser/site_instance.h"
 #include "extensions/browser/extension_prefs.h"
 #include "extensions/browser/extension_registry.h"
+#include "extensions/common/api/declarative_net_request/rules_manifest_info.h"
 #include "extensions/common/features/behavior_feature.h"
 #include "extensions/common/features/feature.h"
 #include "extensions/common/features/feature_provider.h"
@@ -93,6 +94,15 @@ content::StoragePartition* GetStoragePartitionForExtensionId(
       content::BrowserContext::GetStoragePartitionForSite(browser_context,
                                                           site_url);
   return storage_partition;
+}
+
+bool HasIndexedRuleset(const Extension* extension) {
+  // TODO this needs to change, especially once add/remove rules are supported.
+  // This should probably use ExtensionPrefs.
+  // Also, for e.g. this is not true if the extension is not installed yet. But
+  // that can be added as a check as well.
+  return declarative_net_request::RulesManifestData::GetJSONRulesetPath(
+             extension) != nullptr;
 }
 
 }  // namespace util

@@ -1976,6 +1976,9 @@ split_static_library("browser") {
       "//components/drive",
       "//components/guest_view/browser",
       "//device/wake_lock/public/interfaces",
+
+      # chrome_extension_function.h -> extension_function.h
+      "//extensions/browser",
       "//extensions/components/javascript_dialog_extensions_client",
       "//media/cast:net",
     ]
