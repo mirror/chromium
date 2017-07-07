@@ -4,6 +4,7 @@
 
 #include "core/dom/ModulatorImpl.h"
 
+#include "core/dom/DynamicModuleResolver.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/dom/ModuleMap.h"
 #include "core/dom/ModuleScript.h"
@@ -37,6 +38,9 @@ ModulatorImpl::ModulatorImpl(RefPtr<ScriptState> script_state,
   DCHECK(script_state_);
   DCHECK(task_runner_);
   DCHECK(fetcher_);
+
+  // if (feature enabled)
+  dynamic_module_resolver_ = DynamicModuleResolver::Create(this);
 }
 
 ModulatorImpl::~ModulatorImpl() {}
@@ -111,6 +115,13 @@ void ModulatorImpl::FetchNewSingleModule(
 
 ModuleScript* ModulatorImpl::GetFetchedModuleScript(const KURL& url) {
   return map_->GetFetchedModuleScript(url);
+}
+
+void ModulatorImpl::ResolveDynamically(const String& specifier,
+                                       const String& referrer,
+                                       ScriptPromiseResolver* resolver) {
+  DCHECK(dynamic_module_resolver_);
+  dynamic_module_resolver_->ResolveDynamically(specifier, referrer, resolver);
 }
 
 bool ModulatorImpl::HasValidContext() {
@@ -243,6 +254,7 @@ DEFINE_TRACE(ModulatorImpl) {
   visitor->Trace(loader_registry_);
   visitor->Trace(tree_linker_registry_);
   visitor->Trace(script_module_resolver_);
+  visitor->Trace(dynamic_module_resolver_);
 }
 
 DEFINE_TRACE_WRAPPERS(ModulatorImpl) {

@@ -31,6 +31,8 @@
 #include "bindings/core/v8/RejectedPromises.h"
 #include "bindings/core/v8/RetainedDOMInfo.h"
 #include "bindings/core/v8/ScriptController.h"
+#include "bindings/core/v8/ScriptPromise.h"
+#include "bindings/core/v8/ScriptPromiseResolver.h"
 #include "bindings/core/v8/ScriptValue.h"
 #include "bindings/core/v8/SourceLocation.h"
 #include "bindings/core/v8/UseCounterCallback.h"
@@ -43,6 +45,8 @@
 #include "bindings/core/v8/WorkerOrWorkletScriptController.h"
 #include "core/dom/Document.h"
 #include "core/dom/ExecutionContext.h"
+#include "core/dom/Modulator.h"
+#include "core/dom/ScriptModuleResolver.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/inspector/ConsoleMessage.h"
@@ -314,6 +318,28 @@ static bool CodeGenerationCheckCallbackInMainThread(
   return false;
 }
 
+// https://tc39.github.io/proposal-dynamic-import/#sec-hostimportmoduledynamically
+static v8::Local<v8::Promise> HostImportModuleDynamicallyInMainThread(
+    v8::Local<v8::Context> context,
+    v8::Local<v8::String> v8_referrer,
+    v8::Local<v8::String> v8_specifier) {
+  CHECK(RuntimeEnabledFeatures::ModuleScriptsEnabled() &&
+        RuntimeEnabledFeatures::ModuleScriptsDynamicImportsEnabled());
+  ScriptState* script_state = ScriptState::From(context);
+  ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
+  ScriptPromise promise = resolver->Promise();
+
+  Modulator* modulator = Modulator::From(script_state);
+  if (!modulator) {
+    resolver->Reject();
+    return v8::Local<v8::Promise>::Cast(promise.V8Value());
+  }
+  String referrer = ToCoreString(v8_referrer);
+  String specifier = ToCoreString(v8_specifier);
+  modulator->ResolveDynamically(specifier, referrer, resolver);
+  return v8::Local<v8::Promise>::Cast(promise.V8Value());
+}
+
 v8::Local<v8::Value> NewRangeException(v8::Isolate* isolate,
                                        const char* message) {
   return v8::Exception::RangeError(
@@ -467,6 +493,11 @@ void V8Initializer::InitializeMainThread() {
   if (RuntimeEnabledFeatures::V8IdleTasksEnabled()) {
     V8PerIsolateData::EnableIdleTasks(
         isolate, WTF::MakeUnique<V8IdleTaskRunner>(scheduler));
+  }
+  if (RuntimeEnabledFeatures::ModuleScriptsEnabled() &&
+      RuntimeEnabledFeatures::ModuleScriptsDynamicImportsEnabled()) {
+    isolate->SetHostImportModuleDynamicallyCallback(
+        HostImportModuleDynamicallyInMainThread);
   }
 
   isolate->SetPromiseRejectCallback(PromiseRejectHandlerInMainThread);

@@ -14,6 +14,7 @@
 
 namespace blink {
 
+class DynamicModuleResolver;
 class ExecutionContext;
 class ModuleMap;
 class ModuleScriptLoaderRegistry;
@@ -56,6 +57,9 @@ class ModulatorImpl final : public Modulator {
                    ModuleGraphLevel,
                    SingleModuleClient*) override;
   ModuleScript* GetFetchedModuleScript(const KURL&) override;
+  void ResolveDynamically(const String& specifier,
+                          const String& referrer,
+                          ScriptPromiseResolver*) override;
   bool HasValidContext() override;
   void FetchNewSingleModule(const ModuleScriptFetchRequest&,
                             ModuleGraphLevel,
@@ -82,6 +86,7 @@ class ModulatorImpl final : public Modulator {
   Member<ModuleScriptLoaderRegistry> loader_registry_;
   TraceWrapperMember<ModuleTreeLinkerRegistry> tree_linker_registry_;
   Member<ScriptModuleResolver> script_module_resolver_;
+  Member<DynamicModuleResolver> dynamic_module_resolver_;
 };
 
 }  // namespace blink
