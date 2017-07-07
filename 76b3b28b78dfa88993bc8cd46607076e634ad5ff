@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b7c2ac61_2ca09d46",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-07T09:15:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49e4e56a_9cdf6d79",
+      "range": {
+        "startLine": 191,
+        "startChar": 36,
+        "endLine": 191,
+        "endChar": 37
+      },
+      "revId": "76b3b28b78dfa88993bc8cd46607076e634ad5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8bf57096_c64a376c",
         "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "76b3b28b78dfa88993bc8cd46607076e634ad5ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85213a81_8f6750b5",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-07T09:15:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8bf57096_c64a376c",
+      "range": {
+        "startLine": 222,
+        "startChar": 36,
+        "endLine": 222,
+        "endChar": 37
+      },
+      "revId": "76b3b28b78dfa88993bc8cd46607076e634ad5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,54 @@
     },
     {
       "key": {
+        "uuid": "7f02da31_7cda51f1",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-07T09:15:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5df5fab2_f2e207d2",
+      "range": {
+        "startLine": 150,
+        "startChar": 33,
+        "endLine": 150,
+        "endChar": 57
+      },
+      "revId": "76b3b28b78dfa88993bc8cd46607076e634ad5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "83ee49af_b924646e",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-07T09:15:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f0fd2ba_88e8dc4e",
+      "range": {
+        "startLine": 150,
+        "startChar": 5,
+        "endLine": 150,
+        "endChar": 17
+      },
+      "revId": "76b3b28b78dfa88993bc8cd46607076e634ad5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b94a14df_e6785a9d",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 4
@@ -105,6 +201,30 @@
       "writtenOn": "2017-07-06T13:10:12Z",
       "side": 1,
       "message": "This is ambigous. It feels like once per lifetime, but it also may be once after each fetch (i.e. once per fetch).",
+      "range": {
+        "startLine": 45154,
+        "startChar": 23,
+        "endLine": 45155,
+        "endChar": 14
+      },
+      "revId": "76b3b28b78dfa88993bc8cd46607076e634ad5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f418b1a5_59f389ed",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 45155,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-07T09:15:03Z",
+      "side": 1,
+      "message": "I tried to clarify. Is it better?",
+      "parentUuid": "b94a14df_e6785a9d",
       "range": {
         "startLine": 45154,
         "startChar": 23,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "4013937c_665aa492",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 45163,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-07T09:15:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6cf00e20_6b4f6326",
+      "range": {
+        "startLine": 45163,
+        "startChar": 3,
+        "endLine": 45163,
+        "endChar": 73
+      },
+      "revId": "76b3b28b78dfa88993bc8cd46607076e634ad5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1fec8743_ebce6d97",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 4
@@ -151,6 +295,30 @@
       "writtenOn": "2017-07-06T13:17:30Z",
       "side": 1,
       "message": "Also having \u003cobsolete\u003e here is somewhat uncommon. There are only 36 matches of \u003c/obsolete\u003e[^\u003c]*\u003c/affected\u003e vs 2366 of \u003c/obsolete\u003e[^\u003c]*\u003cowner\u003e, but OWNERS should know better.",
+      "range": {
+        "startLine": 97302,
+        "startChar": 2,
+        "endLine": 97304,
+        "endChar": 14
+      },
+      "revId": "76b3b28b78dfa88993bc8cd46607076e634ad5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80cf4b6b_a6d61bcf",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 97304,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-07T09:15:03Z",
+      "side": 1,
+      "message": "Agreed, I expect clarification from metrics folks.",
+      "parentUuid": "1fec8743_ebce6d97",
       "range": {
         "startLine": 97302,
         "startChar": 2,
@@ -183,6 +351,30 @@
       "revId": "76b3b28b78dfa88993bc8cd46607076e634ad5ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4538fc9_97ae9c50",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 97306,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-07T09:15:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0161f49_8bb205cb",
+      "range": {
+        "startLine": 97306,
+        "startChar": 36,
+        "endLine": 97306,
+        "endChar": 62
+      },
+      "revId": "76b3b28b78dfa88993bc8cd46607076e634ad5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
