@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95f2fa7f_77c3b5ce",
+        "filename": "components/signin/core/browser/fake_signin_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-07T09:46:20Z",
+      "side": 1,
+      "message": "This is not correct - the SigninManagerBase never fires OnGoogleSigninSucceeded. Consider using the FakeSigninManager and just call SignIn().",
+      "range": {
+        "startLine": 30,
+        "startChar": 7,
+        "endLine": 30,
+        "endChar": 32
+      },
+      "revId": "d07f104d5911aabb5aa0e8a04f5e2bc2501fde12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01de81b2_570d2f8b",
+        "filename": "components/signin/core/browser/fake_signin_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-07T09:46:20Z",
+      "side": 1,
+      "message": "While you are here, may I ask you to rename account_id to gaia_id (this argument name is incorrect now).",
+      "range": {
+        "startLine": 51,
+        "startChar": 25,
+        "endLine": 51,
+        "endChar": 31
+      },
+      "revId": "d07f104d5911aabb5aa0e8a04f5e2bc2501fde12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
