@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28bc4f19_512e4a4d",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 3615,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-07T04:44:49Z",
+      "side": 1,
+      "message": "I think this should go under the RecordAction call, with a comment describing what is happening.",
+      "revId": "8b0334f5ab1440d458d1e68ddaf09c956215713f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
