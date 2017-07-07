@@ -10,11 +10,18 @@
 #include "base/metrics/statistics_recorder.h"
 #include "base/time/time.h"
 #include "chrome/browser/memory/memory_kills_histogram.h"
+#include "content/public/test/test_browser_thread_bundle.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace memory {
 
-using MemoryKillsMonitorTest = testing::Test;
+class MemoryKillsMonitorTest : public testing::Test {
+ public:
+  MemoryKillsMonitorTest() = default;
+
+ private:
+  content::TestBrowserThreadBundle test_browser_thread_bundle_;
+};
 
 TEST_F(MemoryKillsMonitorTest, LogLowMemoryKill) {
   MemoryKillsMonitor::LogLowMemoryKill("APP", 123);
@@ -23,9 +30,23 @@ TEST_F(MemoryKillsMonitorTest, LogLowMemoryKill) {
 
   auto* histogram_count =
       base::StatisticsRecorder::FindHistogram("Arc.LowMemoryKiller.Count");
+  // Before StartMonitoring() is called, nothing is recorded.
+  ASSERT_FALSE(histogram_count);
+
+  // Start monitoring.
+  MemoryKillsMonitor::Get()->StartMonitoring();
+
+  MemoryKillsMonitor::LogLowMemoryKill("APP", 123);
+  MemoryKillsMonitor::LogLowMemoryKill("APP", 100);
+  MemoryKillsMonitor::LogLowMemoryKill("TAB", 10000);
+
+  histogram_count =
+      base::StatisticsRecorder::FindHistogram("Arc.LowMemoryKiller.Count");
   ASSERT_TRUE(histogram_count);
   auto count_samples = histogram_count->SnapshotSamples();
-  EXPECT_EQ(3, count_samples->TotalCount());
+  EXPECT_EQ(4, count_samples->TotalCount());
+  // The zero count is implicitly added when StartMonitoring() is called.
+  EXPECT_EQ(1, count_samples->GetCount(0));
   EXPECT_EQ(1, count_samples->GetCount(1));
   EXPECT_EQ(1, count_samples->GetCount(2));
   EXPECT_EQ(1, count_samples->GetCount(3));
@@ -62,6 +83,8 @@ TEST_F(MemoryKillsMonitorTest, TryMatchOomKillLine) {
       "score 653 or sacrifice child"
   };
 
+  MemoryKillsMonitor::Get()->StartMonitoring();
+
   for (unsigned long i = 0; i < arraysize(sample_lines); ++i) {
     MemoryKillsMonitor::TryMatchOomKillLine(sample_lines[i]);
   }
@@ -70,7 +93,9 @@ TEST_F(MemoryKillsMonitorTest, TryMatchOomKillLine) {
       base::StatisticsRecorder::FindHistogram("Arc.OOMKills.Count");
   ASSERT_TRUE(histogram_count);
   auto count_samples = histogram_count->SnapshotSamples();
-  EXPECT_EQ(3, count_samples->TotalCount());
+  EXPECT_EQ(4, count_samples->TotalCount());
+  // The zero count is implicitly added when StartMonitoring() is called.
+  EXPECT_EQ(1, count_samples->GetCount(0));
   EXPECT_EQ(1, count_samples->GetCount(1));
   EXPECT_EQ(1, count_samples->GetCount(2));
   EXPECT_EQ(1, count_samples->GetCount(3));
