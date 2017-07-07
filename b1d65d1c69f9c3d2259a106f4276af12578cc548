@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b92ef930_479293d6",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 4127,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-07T13:03:01Z",
+      "side": 1,
+      "message": "Optional: remove?",
+      "revId": "b1d65d1c69f9c3d2259a106f4276af12578cc548",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e74dbad4_37da89e1",
+        "filename": "ios/chrome/browser/ui/commands/browser_commands.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-07T13:03:01Z",
+      "side": 1,
+      "message": "*Stops, *Reloads, *Shows, *Bookmarks.",
+      "revId": "b1d65d1c69f9c3d2259a106f4276af12578cc548",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
