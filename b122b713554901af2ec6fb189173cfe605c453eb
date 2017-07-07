@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "2da8b225_c5556f1b",
+        "filename": "components/autofill/core/common/password_form.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-07T10:56:42Z",
+      "side": 1,
+      "message": "As discussed + for consistency with other stuff below, maybe we could call this (realm|signon_realm|site)_display_name? Maybe Vasilii has a better idea. We could consider introducing a struct that consists of a pair of display name and icon URL, as we also need it for the user below. Would also discuss with Vasilii who is the primary owner of this struct.",
+      "revId": "b122b713554901af2ec6fb189173cfe605c453eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b9231f5d_37bdfa1e",
         "filename": "components/password_manager/core/browser/android_affiliation/affiliated_match_helper.cc",
         "patchSetId": 1
@@ -13,6 +30,29 @@
       "writtenOn": "2017-07-06T11:56:14Z",
       "side": 1,
       "message": "Could you please double-check with affiliation API owners that this is how they intended we use their API?  It\u0027s not clear to me whether we should get the branding info from the affiliated Web site, or the Android app itself.\n\nIf the latter is indeed how the API should be used, I\u0027d argue that there is nothing \"affiliated\" about |name| and |icon_url| in that case, it\u0027s just `branding info`, so we should reflect that in the naming of things. In this case we should also update comments around AffiliationService::GetAffiliations and its implementation, and add tests to ensure that it actually returns the queried facet.",
+      "revId": "b122b713554901af2ec6fb189173cfe605c453eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b13e7a45_489575ec",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliated_match_helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-07T10:56:42Z",
+      "side": 1,
+      "message": "I really liked your suggestion from our discussion to name this InjectAffiliationAndBrandingInfo[rmation].",
+      "range": {
+        "startLine": 88,
+        "startChar": 15,
+        "endLine": 88,
+        "endChar": 43
+      },
       "revId": "b122b713554901af2ec6fb189173cfe605c453eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
