@@ -25,6 +25,7 @@
 
 #if defined(USE_OZONE)
 #include "ui/ozone/public/ozone_platform.h"
+#include "ui/ozone/public/ozone_switches.h"
 #endif
 
 #if defined(OS_WIN)
@@ -84,6 +85,12 @@ void GetGpuInfoFromCommandLine(gpu::GPUInfo& gpu_info,
       }
     }
   }
+#if defined(USE_OZONE)
+  // Note: Ozone would fail to initialize if kEnableDrmAtomic is passed
+  // and we can't set DRM_ATOMIC capabilities.
+  gpu_info.supports_overlays =
+      command_line.HasSwitch(switches::kEnableDrmAtomic);
+#endif  // defined(USE_OZONE)
 }
 
 #if !defined(OS_MACOSX)
@@ -116,7 +123,7 @@ void CollectGraphicsInfo(gpu::GPUInfo& gpu_info) {
   }
 #endif  // defined(OS_WIN)
 }
-#endif  // defined(OS_MACOSX)
+#endif  // !defined(OS_MACOSX)
 
 #if defined(OS_LINUX) && !defined(OS_CHROMEOS)
 bool CanAccessNvidiaDeviceFile() {
