@@ -16,6 +16,24 @@
       "revId": "ce53c7212eb76a0a65b9e9fdad9e969a7527520e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b47ac1c1_5346ac2d",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParser.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1190,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-07-07T03:14:16Z",
+      "side": 1,
+      "message": "I will rewrite this method using the new function after all longhands have their API implemented. This is because the ParseLonghandViaAPI method may return nullptr either because the property doesn\u0027t have API or because CSSParserFastPaths::IsValidKeywordPropertyAndValue returns false. In the first case, we should continue using the old switch statement, but in the latter case, we should return nullptr as well. Hence calling the new ParseLonghandViaAPI would require us to check why a nullptr is returned.",
+      "parentUuid": "1ebfbd39_a8387cdc",
+      "revId": "ce53c7212eb76a0a65b9e9fdad9e969a7527520e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
