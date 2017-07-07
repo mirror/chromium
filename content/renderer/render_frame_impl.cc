@@ -1539,6 +1539,8 @@ MediaStreamDispatcher* RenderFrameImpl::GetMediaStreamDispatcher() {
 }
 
 void RenderFrameImpl::ScriptedPrint(bool user_initiated) {
+  Send(new FrameHostMsg_ScriptedPrint(routing_id_));
+
   for (auto& observer : observers_)
     observer.ScriptedPrint(user_initiated);
 }

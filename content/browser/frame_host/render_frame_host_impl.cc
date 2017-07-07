@@ -829,6 +829,7 @@ bool RenderFrameHostImpl::OnMessageReceived(const IPC::Message &msg) {
                         OnDidAddMessageToConsole)
     IPC_MESSAGE_HANDLER(FrameHostMsg_Detach, OnDetach)
     IPC_MESSAGE_HANDLER(FrameHostMsg_FrameFocused, OnFrameFocused)
+    IPC_MESSAGE_HANDLER(FrameHostMsg_ScriptedPrint, OnScriptedPrint)
     IPC_MESSAGE_HANDLER(FrameHostMsg_DidStartProvisionalLoad,
                         OnDidStartProvisionalLoad)
     IPC_MESSAGE_HANDLER(FrameHostMsg_DidFailProvisionalLoadWithError,
@@ -1292,6 +1293,10 @@ void RenderFrameHostImpl::OnDetach() {
 
 void RenderFrameHostImpl::OnFrameFocused() {
   delegate_->SetFocusedFrame(frame_tree_node_, GetSiteInstance());
+}
+
+void RenderFrameHostImpl::OnScriptedPrint() {
+  delegate_->SetScriptedPrintFrame(frame_tree_node_);
 }
 
 void RenderFrameHostImpl::OnOpenURL(const FrameHostMsg_OpenURL_Params& params) {

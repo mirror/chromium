@@ -233,7 +233,6 @@ void PrintJobWorker::GetSettingsWithUI(
       tab->SetPendingPrint();
   }
 #endif
-
   // Running a dialog causes an exit to webpage-initiated fullscreen.
   // http://crbug.com/728276
   if (web_contents->IsFullscreenForCurrentTab())

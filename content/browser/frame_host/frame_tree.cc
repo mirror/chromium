@@ -110,6 +110,8 @@ FrameTree::FrameTree(Navigator* navigator,
                               std::string(),
                               FrameOwnerProperties())),
       focused_frame_tree_node_id_(FrameTreeNode::kFrameTreeNodeInvalidId),
+      scripted_print_frame_tree_node_id_(
+          FrameTreeNode::kFrameTreeNodeInvalidId),
       load_progress_(0.0) {}
 
 FrameTree::~FrameTree() {
@@ -266,6 +268,10 @@ FrameTreeNode* FrameTree::GetFocusedFrame() {
   return FindByID(focused_frame_tree_node_id_);
 }
 
+FrameTreeNode* FrameTree::GetScriptedPrintFrame() {
+  return FindByID(scripted_print_frame_tree_node_id_);
+}
+
 void FrameTree::SetFocusedFrame(FrameTreeNode* node, SiteInstance* source) {
   if (node == GetFocusedFrame())
     return;
@@ -308,6 +314,14 @@ void FrameTree::SetFocusedFrame(FrameTreeNode* node, SiteInstance* source) {
   // track of the focused frame too, so update that every time the
   // focused frame changes.
   root()->current_frame_host()->UpdateAXTreeData();
+}
+
+void FrameTree::SetScriptedPrintFrame(FrameTreeNode* node) {
+  if (node == GetScriptedPrintFrame())
+    return;
+  scripted_print_frame_tree_node_id_ =
+      node ? node->frame_tree_node_id()
+           : FrameTreeNode::kFrameTreeNodeInvalidId;
 }
 
 void FrameTree::SetFrameRemoveListener(
