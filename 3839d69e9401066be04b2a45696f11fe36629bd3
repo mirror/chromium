@@ -138,6 +138,24 @@
     },
     {
       "key": {
+        "uuid": "69dcc39a_b69acfcf",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-07T13:53:33Z",
+      "side": 1,
+      "message": "Sorry, I misread the impl. Please ignore this comment.\n\nBy the way, if you want to wait for multiple callback calls, you could use base::BarrierClosure instead:\nhttps://chromium.googlesource.com/chromium/src/+/65232ab5522a55c5643bdd6d1fca47f02df9cb69/base/barrier_closure.h",
+      "parentUuid": "ba9c2542_e43855cb",
+      "revId": "3839d69e9401066be04b2a45696f11fe36629bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0768b24d_eae2b83f",
         "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
         "patchSetId": 5
