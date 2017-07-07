@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "73abf854_b86a78f1",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorLayerTreeAgent.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-07-07T17:58:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c4bfe2d_eb99ba1d",
+      "revId": "23c5ebce2c8b32e263fd90403ba301d3e829f5cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ef16d7f_f17360b4",
         "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "23c5ebce2c8b32e263fd90403ba301d3e829f5cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ca7544b_7ce4b152",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 4047,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-07-07T17:58:14Z",
+      "side": 1,
+      "message": "Done, and on nearestLayerShiftingContainingBlock which is also optional.",
+      "parentUuid": "0ef16d7f_f17360b4",
+      "revId": "23c5ebce2c8b32e263fd90403ba301d3e829f5cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4af47358_6ac48f7c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/layer_viewer/LayerDetailsView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-07-07T17:58:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7e606b1_6d0b878c",
+      "revId": "23c5ebce2c8b32e263fd90403ba301d3e829f5cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ba82761_80a33d63",
         "filename": "third_party/WebKit/Source/devtools/front_end/layer_viewer/LayerDetailsView.js",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "23c5ebce2c8b32e263fd90403ba301d3e829f5cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4294419f_ab485e5b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/layer_viewer/LayerDetailsView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-07-07T17:58:14Z",
+      "side": 1,
+      "message": "I gave this a go. I imagine it\u0027s not quite right so please take a look and lmk :)",
+      "parentUuid": "7ba82761_80a33d63",
+      "revId": "23c5ebce2c8b32e263fd90403ba301d3e829f5cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "a40aaa37_06609bdd",
+        "filename": "third_party/WebKit/Source/devtools/front_end/layer_viewer/LayerDetailsView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-07-07T17:58:14Z",
+      "side": 1,
+      "message": "Haha, that is just my forgetting that it was a string. But yes, a null is much better, done.",
+      "parentUuid": "90c3aa04_11998450",
+      "revId": "23c5ebce2c8b32e263fd90403ba301d3e829f5cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3f8cb0a_91357174",
         "filename": "third_party/WebKit/Source/devtools/front_end/layer_viewer/LayerDetailsView.js",
         "patchSetId": 1
@@ -101,6 +191,24 @@
       "revId": "23c5ebce2c8b32e263fd90403ba301d3e829f5cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8690af5_b0e88258",
+        "filename": "third_party/WebKit/Source/devtools/front_end/layer_viewer/LayerDetailsView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-07-07T17:58:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a3f8cb0a_91357174",
+      "revId": "23c5ebce2c8b32e263fd90403ba301d3e829f5cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "373b1a44_6b4d4766",
+        "filename": "third_party/WebKit/Source/devtools/front_end/layer_viewer/LayerDetailsView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-07-07T17:58:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d9bef27_7d92631d",
+      "revId": "23c5ebce2c8b32e263fd90403ba301d3e829f5cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a146a53b_c932c14c",
         "filename": "third_party/WebKit/Source/devtools/front_end/layer_viewer/LayerDetailsView.js",
         "patchSetId": 1
@@ -135,6 +261,24 @@
       "revId": "23c5ebce2c8b32e263fd90403ba301d3e829f5cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e62be109_10aed3ad",
+        "filename": "third_party/WebKit/Source/devtools/front_end/layer_viewer/LayerDetailsView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-07-07T17:58:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a146a53b_c932c14c",
+      "revId": "23c5ebce2c8b32e263fd90403ba301d3e829f5cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -173,6 +317,24 @@
     },
     {
       "key": {
+        "uuid": "2bd1adc5_b52bdd38",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline_model/TracingLayerTree.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-07-07T17:58:14Z",
+      "side": 1,
+      "message": "Ok. For now I\u0027m not clear how we would get sticky information into a dump so I\u0027ve switched this to returning null (I hope I got the type markup correct!). Lmk if it\u0027s ok to have different support between the Layers panel and the dump info.",
+      "parentUuid": "fc462550_4115237d",
+      "revId": "23c5ebce2c8b32e263fd90403ba301d3e829f5cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2aab0cd_a5e2b10f",
         "filename": "third_party/WebKit/Source/devtools/front_end/timeline_model/TracingLayerTree.js",
         "patchSetId": 1
@@ -190,6 +352,24 @@
     },
     {
       "key": {
+        "uuid": "4305d855_04481d0a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline_model/TracingLayerTree.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-07-07T17:58:14Z",
+      "side": 1,
+      "message": "Now irrelevant; returning null.",
+      "parentUuid": "b2aab0cd_a5e2b10f",
+      "revId": "23c5ebce2c8b32e263fd90403ba301d3e829f5cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0381ed77_11302ca7",
         "filename": "third_party/WebKit/Source/devtools/front_end/timeline_model/TracingLayerTree.js",
         "patchSetId": 1
@@ -204,6 +384,24 @@
       "revId": "23c5ebce2c8b32e263fd90403ba301d3e829f5cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90bd49a8_75b47b63",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline_model/TracingLayerTree.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-07-07T17:58:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0381ed77_11302ca7",
+      "revId": "23c5ebce2c8b32e263fd90403ba301d3e829f5cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
