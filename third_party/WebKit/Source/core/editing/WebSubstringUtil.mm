@@ -171,7 +171,7 @@ NSAttributedString* WebSubstringUtil::AttributedWordAtPoint(
   // Expand to word under point.
   const VisibleSelection& selection = CreateVisibleSelectionWithGranularity(
       SelectionInDOMTree::Builder().SetBaseAndExtent(range).Build(),
-      kWordGranularity);
+      TextGrGranularity::kWord);
   const EphemeralRange word_range = selection.ToNormalizedEphemeralRange();
 
   // Convert to NSAttributedString.
