@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "19d27e71_74848355",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position-3/position-sticky-inline-ref.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-07-07T18:00:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8f0793f_73903fff",
+      "revId": "316cd4fae0e5886407ab95d65d10b6e11b078fa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a22ed959_c33838af",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position-3/position-sticky-inline.html",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "316cd4fae0e5886407ab95d65d10b6e11b078fa0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0d451a0_e0600d65",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position-3/position-sticky-inline.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-07-07T18:00:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a22ed959_c33838af",
+      "revId": "316cd4fae0e5886407ab95d65d10b6e11b078fa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
