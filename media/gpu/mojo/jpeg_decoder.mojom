@@ -24,7 +24,7 @@ struct BitstreamBuffer {
   int32 id;
   handle<shared_buffer> memory_handle;
   uint32 size;
-  uint64 offset;
+  int64 offset;
   mojo.common.mojom.TimeDelta timestamp;
   string key_id;
   string iv;
@@ -36,8 +36,6 @@ interface GpuJpegDecodeAccelerator {
   // Initializes the JPEG decoder. Should be called once per decoder
   // construction and before using Decode(). This call returns true if
   // initialization is successful.
-  // TODO(c.padhi): Make this method asynchronous.
-  [Sync]
   Initialize() => (bool success);
 
   // Decodes the given bitstream buffer that contains one JPEG image.
