@@ -16,6 +16,24 @@
       "revId": "0d2aa6351407bf6a7b075c082293a341d9e75a5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2beae7c5_dc542776",
+        "filename": "testing/buildbot/chromium.android.json",
+        "patchSetId": 13
+      },
+      "lineNbr": 2853,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-07T20:52:07Z",
+      "side": 1,
+      "message": "As of this CL it has like 4 tests so less than 1 second. As we migrate cc_unittests to it, we\u0027ll move the 5 seconds of work there over. https://build.chromium.org/p/tryserver.chromium.android/builders/android_n5x_swarming_rel/builds/215559/steps/%5Btrigger%5D%20cc_unittests%20%28with%20patch%29%20on%20Android",
+      "parentUuid": "c0165f17_afb97d2b",
+      "revId": "0d2aa6351407bf6a7b075c082293a341d9e75a5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
