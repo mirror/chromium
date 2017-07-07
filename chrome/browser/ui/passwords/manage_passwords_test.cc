@@ -21,6 +21,7 @@
 #include "chrome/test/base/interactive_test_utils.h"
 #include "components/autofill/core/common/password_form.h"
 #include "components/password_manager/core/browser/password_form_manager.h"
+#include "components/password_manager/core/browser/password_manager_client.h"
 #include "components/password_manager/core/browser/password_manager_metrics_util.h"
 #include "components/password_manager/core/browser/stub_form_saver.h"
 
@@ -73,7 +74,9 @@ void ManagePasswordsTest::SetupPendingPassword() {
           base::WrapUnique(new password_manager::StubFormSaver), &fetcher_));
   test_form_manager->Init(nullptr);
   fetcher_.SetNonFederated(std::vector<const autofill::PasswordForm*>(), 0u);
-  GetController()->OnPasswordSubmitted(std::move(test_form_manager));
+  GetController()->OnPasswordSubmitted(std::move(test_form_manager),
+                                       password_manager::CredentialSourceType::
+                                           CREDENTIAL_SOURCE_PASSWORD_MANAGER);
 }
 
 void ManagePasswordsTest::SetupAutomaticPassword() {

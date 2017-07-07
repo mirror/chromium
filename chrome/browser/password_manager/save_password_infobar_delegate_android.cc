@@ -24,7 +24,8 @@
 // static
 void SavePasswordInfoBarDelegate::Create(
     content::WebContents* web_contents,
-    std::unique_ptr<password_manager::PasswordFormManager> form_to_save) {
+    std::unique_ptr<password_manager::PasswordFormManager> form_to_save,
+    password_manager::CredentialSourceType type) {
   Profile* profile =
       Profile::FromBrowserContext(web_contents->GetBrowserContext());
   syncer::SyncService* sync_service =

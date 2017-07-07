@@ -45,11 +45,11 @@ class ManagePasswordsUIController
 
   // PasswordsClientUIDelegate:
   void OnPasswordSubmitted(
-      std::unique_ptr<password_manager::PasswordFormManager> form_manager)
-      override;
+      std::unique_ptr<password_manager::PasswordFormManager> form_manager,
+      password_manager::CredentialSourceType type) override;
   void OnUpdatePasswordSubmitted(
-      std::unique_ptr<password_manager::PasswordFormManager> form_manager)
-      override;
+      std::unique_ptr<password_manager::PasswordFormManager> form_manager,
+      password_manager::CredentialSourceType type) override;
   bool OnChooseCredentials(
       std::vector<std::unique_ptr<autofill::PasswordForm>> local_credentials,
       const GURL& origin,

@@ -66,8 +66,8 @@ class CustomManagePasswordsUIController : public ManagePasswordsUIController {
  private:
   // PasswordsClientUIDelegate:
   void OnPasswordSubmitted(
-      std::unique_ptr<password_manager::PasswordFormManager> form_manager)
-      override;
+      std::unique_ptr<password_manager::PasswordFormManager> form_manager,
+      password_manager::CredentialSourceType type) override;
   bool OnChooseCredentials(
       std::vector<std::unique_ptr<autofill::PasswordForm>> local_credentials,
       const GURL& origin,
@@ -110,14 +110,15 @@ void CustomManagePasswordsUIController::WaitForState(
 }
 
 void CustomManagePasswordsUIController::OnPasswordSubmitted(
-    std::unique_ptr<password_manager::PasswordFormManager> form_manager) {
+    std::unique_ptr<password_manager::PasswordFormManager> form_manager,
+    password_manager::CredentialSourceType type) {
   if (target_state_ == password_manager::ui::PENDING_PASSWORD_STATE) {
     run_loop_->Quit();
     run_loop_ = nullptr;
     target_state_ = password_manager::ui::INACTIVE_STATE;
   }
   return ManagePasswordsUIController::OnPasswordSubmitted(
-      std::move(form_manager));
+      std::move(form_manager), type);
 }
 
 bool CustomManagePasswordsUIController::OnChooseCredentials(

@@ -12,6 +12,7 @@
 #include "base/callback.h"
 #include "base/strings/string16.h"
 #include "components/autofill/core/common/password_form.h"
+#include "components/password_manager/core/browser/password_manager_client.h"
 
 namespace content {
 class WebContents;
@@ -30,13 +31,15 @@ class PasswordsClientUIDelegate {
   // This stores the provided object and triggers the UI to prompt the user
   // about whether they would like to save the password.
   virtual void OnPasswordSubmitted(
-      std::unique_ptr<password_manager::PasswordFormManager> form_manager) = 0;
+      std::unique_ptr<password_manager::PasswordFormManager> form_manager,
+      password_manager::CredentialSourceType type) = 0;
 
   // Called when the user submits a new password for an existing credential.
   // This stores the provided object and triggers the UI to prompt the user
   // about whether they would like to update the password.
   virtual void OnUpdatePasswordSubmitted(
-      std::unique_ptr<password_manager::PasswordFormManager> form_manager) = 0;
+      std::unique_ptr<password_manager::PasswordFormManager> form_manager,
+      password_manager::CredentialSourceType type) = 0;
 
   // Called when the site asks user to choose from credentials. This triggers
   // the UI to prompt the user. |local_credentials| shouldn't be empty. |origin|

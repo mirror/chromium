@@ -283,10 +283,10 @@ bool ChromePasswordManagerClient::PromptUserToSaveOrUpdatePassword(
       PasswordsClientUIDelegateFromWebContents(web_contents());
   if (update_password) {
     manage_passwords_ui_controller->OnUpdatePasswordSubmitted(
-        std::move(form_to_save));
+        std::move(form_to_save), type);
   } else {
-    manage_passwords_ui_controller->OnPasswordSubmitted(
-        std::move(form_to_save));
+    manage_passwords_ui_controller->OnPasswordSubmitted(std::move(form_to_save),
+                                                        type);
   }
 #else
   if (form_to_save->IsBlacklisted())
@@ -294,11 +294,11 @@ bool ChromePasswordManagerClient::PromptUserToSaveOrUpdatePassword(
 
   if (update_password) {
     UpdatePasswordInfoBarDelegate::Create(web_contents(),
-                                          std::move(form_to_save));
-    return true;
+                                          std::move(form_to_save), type);
+  } else {
+    SavePasswordInfoBarDelegate::Create(web_contents(), std::move(form_to_save),
+                                        type);
   }
-  SavePasswordInfoBarDelegate::Create(web_contents(),
-                                      std::move(form_to_save));
 #endif  // !defined(OS_ANDROID)
   return true;
 }

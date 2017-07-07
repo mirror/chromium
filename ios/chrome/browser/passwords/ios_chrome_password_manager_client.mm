@@ -83,6 +83,7 @@ bool IOSChromePasswordManagerClient::PromptUserToSaveOrUpdatePassword(
   if (form_to_save->IsBlacklisted())
     return false;
 
+  // TODO: pass type.
   if (update_password) {
     [delegate_ showUpdatePasswordInfoBar:std::move(form_to_save)];
   } else {

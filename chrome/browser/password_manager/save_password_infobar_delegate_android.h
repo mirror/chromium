@@ -12,6 +12,7 @@
 #include "chrome/browser/password_manager/password_manager_infobar_delegate_android.h"
 #include "components/infobars/core/confirm_infobar_delegate.h"
 #include "components/password_manager/core/browser/password_form_manager.h"
+#include "components/password_manager/core/browser/password_manager_client.h"
 #include "components/password_manager/core/browser/password_manager_metrics_util.h"
 #include "ui/gfx/range/range.h"
 
@@ -32,7 +33,8 @@ class SavePasswordInfoBarDelegate : public PasswordManagerInfoBarDelegate {
   // for |web_contents|.
   static void Create(
       content::WebContents* web_contents,
-      std::unique_ptr<password_manager::PasswordFormManager> form_to_save);
+      std::unique_ptr<password_manager::PasswordFormManager> form_to_save,
+      password_manager::CredentialSourceType type);
 
   ~SavePasswordInfoBarDelegate() override;
 

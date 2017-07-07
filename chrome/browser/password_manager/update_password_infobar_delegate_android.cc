@@ -24,7 +24,8 @@
 // static
 void UpdatePasswordInfoBarDelegate::Create(
     content::WebContents* web_contents,
-    std::unique_ptr<password_manager::PasswordFormManager> form_to_save) {
+    std::unique_ptr<password_manager::PasswordFormManager> form_to_save,
+    password_manager::CredentialSourceType type) {
   const bool is_smartlock_branding_enabled =
       password_bubble_experiment::IsSmartLockUser(
           ProfileSyncServiceFactory::GetForProfile(

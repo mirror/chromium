@@ -11,8 +11,10 @@
 
 #include "base/callback.h"
 #include "base/macros.h"
+#include "base/optional.h"
 #include "base/strings/string16.h"
 #include "components/autofill/core/common/password_form.h"
+#include "components/password_manager/core/browser/password_manager_client.h"
 #include "components/password_manager/core/browser/password_store_change.h"
 #include "components/password_manager/core/common/credential_manager_types.h"
 #include "components/password_manager/core/common/password_manager_ui.h"
@@ -44,11 +46,13 @@ class ManagePasswordsState {
 
   // Move to PENDING_PASSWORD_STATE.
   void OnPendingPassword(
-      std::unique_ptr<password_manager::PasswordFormManager> form_manager);
+      std::unique_ptr<password_manager::PasswordFormManager> form_manager,
+      password_manager::CredentialSourceType type);
 
   // Move to PENDING_PASSWORD_UPDATE_STATE.
   void OnUpdatePassword(
-      std::unique_ptr<password_manager::PasswordFormManager> form_manager);
+      std::unique_ptr<password_manager::PasswordFormManager> form_manager,
+      password_manager::CredentialSourceType type);
 
   // Move to CREDENTIAL_REQUEST_STATE.
   void OnRequestCredentials(
@@ -140,6 +144,10 @@ class ManagePasswordsState {
 
   // The client used for logging.
   password_manager::PasswordManagerClient* client_;
+
+  // The type of credentials being saved or updated.
+  base::Optional<password_manager::CredentialSourceType>
+      credential_source_type_;
 
   DISALLOW_COPY_AND_ASSIGN(ManagePasswordsState);
 };

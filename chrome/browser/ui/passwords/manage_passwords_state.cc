@@ -80,9 +80,11 @@ ManagePasswordsState::ManagePasswordsState()
 ManagePasswordsState::~ManagePasswordsState() {}
 
 void ManagePasswordsState::OnPendingPassword(
-    std::unique_ptr<password_manager::PasswordFormManager> form_manager) {
+    std::unique_ptr<password_manager::PasswordFormManager> form_manager,
+    password_manager::CredentialSourceType type) {
   ClearData();
   form_manager_ = std::move(form_manager);
+  credential_source_type_ = type;
   local_credentials_forms_ =
       DeepCopyNonPSLMapToVector(form_manager_->best_matches());
   AppendDeepCopyVector(form_manager_->form_fetcher()->GetFederatedMatches(),
@@ -92,9 +94,11 @@ void ManagePasswordsState::OnPendingPassword(
 }
 
 void ManagePasswordsState::OnUpdatePassword(
-    std::unique_ptr<password_manager::PasswordFormManager> form_manager) {
+    std::unique_ptr<password_manager::PasswordFormManager> form_manager,
+    password_manager::CredentialSourceType type) {
   ClearData();
   form_manager_ = std::move(form_manager);
+  credential_source_type_ = type;
   local_credentials_forms_ =
       DeepCopyNonPSLMapToVector(form_manager_->best_matches());
   AppendDeepCopyVector(form_manager_->form_fetcher()->GetFederatedMatches(),
@@ -225,6 +229,7 @@ void ManagePasswordsState::ClearData() {
   form_manager_.reset();
   local_credentials_forms_.clear();
   credentials_callback_.Reset();
+  credential_source_type_.reset();
 }
 
 void ManagePasswordsState::AddForm(const autofill::PasswordForm& form) {

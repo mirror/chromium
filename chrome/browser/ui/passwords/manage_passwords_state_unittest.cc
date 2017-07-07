@@ -13,6 +13,7 @@
 #include "components/password_manager/core/browser/fake_form_fetcher.h"
 #include "components/password_manager/core/browser/password_form_manager.h"
 #include "components/password_manager/core/browser/password_manager.h"
+#include "components/password_manager/core/browser/password_manager_client.h"
 #include "components/password_manager/core/browser/stub_form_saver.h"
 #include "components/password_manager/core/browser/stub_password_manager_client.h"
 #include "components/password_manager/core/browser/stub_password_manager_driver.h"
@@ -28,6 +29,8 @@ using ::testing::IsEmpty;
 using ::testing::Not;
 using ::testing::Pointee;
 using ::testing::UnorderedElementsAre;
+
+using password_manager::CredentialSourceType;
 
 namespace {
 
@@ -277,7 +280,9 @@ TEST_F(ManagePasswordsStateTest, PasswordSubmitted) {
   test_form_manager->ProvisionallySave(
       test_submitted_form(),
       password_manager::PasswordFormManager::IGNORE_OTHER_POSSIBLE_USERNAMES);
-  passwords_data().OnPendingPassword(std::move(test_form_manager));
+  passwords_data().OnPendingPassword(
+      std::move(test_form_manager),
+      CredentialSourceType::CREDENTIAL_SOURCE_PASSWORD_MANAGER);
 
   EXPECT_THAT(passwords_data().GetCurrentForms(),
               ElementsAre(Pointee(test_local_form())));
@@ -297,7 +302,9 @@ TEST_F(ManagePasswordsStateTest, PasswordSaved) {
   test_form_manager->ProvisionallySave(
       test_submitted_form(),
       password_manager::PasswordFormManager::IGNORE_OTHER_POSSIBLE_USERNAMES);
-  passwords_data().OnPendingPassword(std::move(test_form_manager));
+  passwords_data().OnPendingPassword(
+      std::move(test_form_manager),
+      CredentialSourceType::CREDENTIAL_SOURCE_PASSWORD_MANAGER);
   EXPECT_EQ(password_manager::ui::PENDING_PASSWORD_STATE,
             passwords_data().state());
 
@@ -316,7 +323,9 @@ TEST_F(ManagePasswordsStateTest, PasswordSubmittedFederationsPresent) {
   test_form_manager->ProvisionallySave(
       test_submitted_form(),
       password_manager::PasswordFormManager::IGNORE_OTHER_POSSIBLE_USERNAMES);
-  passwords_data().OnPendingPassword(std::move(test_form_manager));
+  passwords_data().OnPendingPassword(
+      std::move(test_form_manager),
+      CredentialSourceType::CREDENTIAL_SOURCE_PASSWORD_MANAGER);
 
   EXPECT_THAT(passwords_data().GetCurrentForms(),
               ElementsAre(Pointee(test_local_federated_form())));
@@ -468,7 +477,9 @@ TEST_F(ManagePasswordsStateTest, OnInactive) {
   test_form_manager->ProvisionallySave(
       test_submitted_form(),
       password_manager::PasswordFormManager::IGNORE_OTHER_POSSIBLE_USERNAMES);
-  passwords_data().OnPendingPassword(std::move(test_form_manager));
+  passwords_data().OnPendingPassword(
+      std::move(test_form_manager),
+      CredentialSourceType::CREDENTIAL_SOURCE_PASSWORD_MANAGER);
   EXPECT_EQ(password_manager::ui::PENDING_PASSWORD_STATE,
             passwords_data().state());
   passwords_data().OnInactive();
@@ -485,7 +496,9 @@ TEST_F(ManagePasswordsStateTest, PendingPasswordAddBlacklisted) {
   test_form_manager->ProvisionallySave(
       test_submitted_form(),
       password_manager::PasswordFormManager::IGNORE_OTHER_POSSIBLE_USERNAMES);
-  passwords_data().OnPendingPassword(std::move(test_form_manager));
+  passwords_data().OnPendingPassword(
+      std::move(test_form_manager),
+      CredentialSourceType::CREDENTIAL_SOURCE_PASSWORD_MANAGER);
   EXPECT_EQ(password_manager::ui::PENDING_PASSWORD_STATE,
             passwords_data().state());
 
@@ -544,7 +557,9 @@ TEST_F(ManagePasswordsStateTest, PasswordUpdateAddBlacklisted) {
   test_form_manager->ProvisionallySave(
       test_submitted_form(),
       password_manager::PasswordFormManager::IGNORE_OTHER_POSSIBLE_USERNAMES);
-  passwords_data().OnUpdatePassword(std::move(test_form_manager));
+  passwords_data().OnUpdatePassword(
+      std::move(test_form_manager),
+      CredentialSourceType::CREDENTIAL_SOURCE_PASSWORD_MANAGER);
   EXPECT_EQ(password_manager::ui::PENDING_PASSWORD_UPDATE_STATE,
             passwords_data().state());
 
@@ -559,7 +574,9 @@ TEST_F(ManagePasswordsStateTest, PasswordUpdateSubmitted) {
   test_form_manager->ProvisionallySave(
       test_submitted_form(),
       password_manager::PasswordFormManager::IGNORE_OTHER_POSSIBLE_USERNAMES);
-  passwords_data().OnUpdatePassword(std::move(test_form_manager));
+  passwords_data().OnUpdatePassword(
+      std::move(test_form_manager),
+      CredentialSourceType::CREDENTIAL_SOURCE_PASSWORD_MANAGER);
 
   EXPECT_THAT(passwords_data().GetCurrentForms(),
               ElementsAre(Pointee(test_local_form())));
@@ -584,7 +601,9 @@ TEST_F(ManagePasswordsStateTest, AndroidPasswordUpdateSubmitted) {
   test_form_manager->ProvisionallySave(
       test_submitted_form(),
       password_manager::PasswordFormManager::IGNORE_OTHER_POSSIBLE_USERNAMES);
-  passwords_data().OnUpdatePassword(std::move(test_form_manager));
+  passwords_data().OnUpdatePassword(
+      std::move(test_form_manager),
+      CredentialSourceType::CREDENTIAL_SOURCE_PASSWORD_MANAGER);
 
   EXPECT_THAT(passwords_data().GetCurrentForms(),
               ElementsAre(Pointee(android_form)));
@@ -605,7 +624,9 @@ TEST_F(ManagePasswordsStateTest, PasswordUpdateSubmittedWithFederations) {
   test_form_manager->ProvisionallySave(
       test_submitted_form(),
       password_manager::PasswordFormManager::IGNORE_OTHER_POSSIBLE_USERNAMES);
-  passwords_data().OnUpdatePassword(std::move(test_form_manager));
+  passwords_data().OnUpdatePassword(
+      std::move(test_form_manager),
+      CredentialSourceType::CREDENTIAL_SOURCE_PASSWORD_MANAGER);
 
   EXPECT_THAT(passwords_data().GetCurrentForms(),
               UnorderedElementsAre(Pointee(test_local_form()),
