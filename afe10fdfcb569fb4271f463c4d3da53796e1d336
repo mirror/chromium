@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "213e9a3e_3fa3eb48",
+        "filename": "ios/chrome/browser/ui/external_url_error_page_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-07T16:35:15Z",
+      "side": 1,
+      "message": "Do you still need this include? Could you please also check in other files.",
+      "range": {
+        "startLine": 11,
+        "startChar": 35,
+        "endLine": 11,
+        "endChar": 50
+      },
+      "revId": "afe10fdfcb569fb4271f463c4d3da53796e1d336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
