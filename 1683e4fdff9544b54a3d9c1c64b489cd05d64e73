@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0b5b83f_55551bf4",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 989,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-07-07T19:37:58Z",
+      "side": 1,
+      "message": "Don\u0027t call ToSkPicture it is unnecessarily expensive. It converts a PaintOpBuffer into an SkPicture by re-recording the whole thing! \nInstead, what you want to do is something like this\nsk_sp\u003cSkSurface\u003e surface \u003d SkSurface::MakeRaster(...);\npaint_record-\u003ePlayback(surface-\u003egetCanvas());\nsk_sp\u003cSkImage\u003e skia_image \u003d surface-\u003emakeImageSnapshot();",
+      "range": {
+        "startLine": 989,
+        "startChar": 6,
+        "endLine": 989,
+        "endChar": 17
+      },
+      "revId": "1683e4fdff9544b54a3d9c1c64b489cd05d64e73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e65aab9e_f3fecedf",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-07-07T19:37:58Z",
+      "side": 1,
+      "message": "You can remove this now (you removed the implementation).",
+      "range": {
+        "startLine": 164,
+        "startChar": 2,
+        "endLine": 164,
+        "endChar": 13
+      },
+      "revId": "1683e4fdff9544b54a3d9c1c64b489cd05d64e73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
