@@ -871,6 +871,10 @@
       status: "stable",
     },
     {
+      name: "ReportingObserver",
+      status: "experimental",
+    },
+    {
       name: "ResizeObserver",
       status: "experimental",
     },
