@@ -108,8 +108,6 @@ class PLATFORM_EXPORT ResourceLoadScheduler final
   bool is_enabled_ = false;
 
   // Outstanding limit. 0u means unlimited.
-  // TODO(crbug.com/735410): If this throttling is enabled always, it makes some
-  // tests fail.
   size_t outstanding_limit_ = kOutstandingUnlimited;
 
   // The last used ClientId to calculate the next.

@@ -22,8 +22,8 @@ ResourceLoadScheduler::ResourceLoadScheduler(FetchContext* context)
     : context_(context) {
   DCHECK(context);
 
-  if (!RuntimeEnabledFeatures::ResourceLoadSchedulerEnabled())
-    return;
+  //if (!RuntimeEnabledFeatures::ResourceLoadSchedulerEnabled())
+  //  return;
 
   auto* scheduler = context->GetFrameScheduler();
   if (!scheduler)
@@ -111,7 +111,7 @@ void ResourceLoadScheduler::OnThrottlingStateChanged(
       SetOutstandingLimitAndMaybeRun(kOutstandingThrottledLimit);
       break;
     case WebFrameScheduler::ThrottlingState::kNotThrottled:
-      SetOutstandingLimitAndMaybeRun(kOutstandingUnlimited);
+      SetOutstandingLimitAndMaybeRun(kOutstandingThrottledLimit);
       break;
   }
 }
