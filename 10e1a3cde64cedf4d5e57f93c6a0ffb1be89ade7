@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82d38011_37c0bf6f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-07T07:16:17Z",
+      "side": 1,
+      "message": "Not quite sure I understand this comment.",
+      "range": {
+        "startLine": 16,
+        "startChar": 12,
+        "endLine": 16,
+        "endChar": 20
+      },
+      "revId": "10e1a3cde64cedf4d5e57f93c6a0ffb1be89ade7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4ea8f17_d12fa1f3",
+        "filename": "third_party/WebKit/Source/core/frame/EmbeddedContentView.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-07T07:16:17Z",
+      "side": 1,
+      "message": "Any chance we can add a comment that describes the purpose of this method?",
+      "range": {
+        "startLine": 34,
+        "startChar": 2,
+        "endLine": 34,
+        "endChar": 36
+      },
+      "revId": "10e1a3cde64cedf4d5e57f93c6a0ffb1be89ade7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b500f0e_f530a843",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 965,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-07T07:16:17Z",
+      "side": 1,
+      "message": "It\u0027s not really clear from the name what the difference between UpdateGeometry, UpdateGeometries, and UpdateGeometriesIfNeeded are. Can we use more descriptive names for these two? (A followup would be OK)",
+      "range": {
+        "startLine": 965,
+        "startChar": 7,
+        "endLine": 965,
+        "endChar": 23
+      },
+      "revId": "10e1a3cde64cedf4d5e57f93c6a0ffb1be89ade7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdb3ee45_89b65301",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/RootScrollerController.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-07T07:16:17Z",
+      "side": 1,
+      "message": "FWIW, ToLocalFrameView() should do this DCHECK already.",
+      "range": {
+        "startLine": 187,
+        "startChar": 30,
+        "endLine": 187,
+        "endChar": 75
+      },
+      "revId": "10e1a3cde64cedf4d5e57f93c6a0ffb1be89ade7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f4d6bb5_8626ddf6",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/RootScrollerController.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-07T07:16:17Z",
+      "side": 1,
+      "message": "It\u0027s unclear to me why the code can assume this now.",
+      "range": {
+        "startLine": 191,
+        "startChar": 2,
+        "endLine": 191,
+        "endChar": 65
+      },
+      "revId": "10e1a3cde64cedf4d5e57f93c6a0ffb1be89ade7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
