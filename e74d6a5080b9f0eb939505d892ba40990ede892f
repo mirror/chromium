@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a4ed7d5_b3df66f5",
+        "filename": "chrome/browser/ntp_tiles/ntp_tiles_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-07T08:52:50Z",
+      "side": 1,
+      "message": "this code was copied from most_visited_sites_unittest, I may be able to simplify it for this test, but I\u0027ll wait and see if a mock is the right answer.",
+      "range": {
+        "startLine": 21,
+        "startChar": 19,
+        "endLine": 21,
+        "endChar": 26
+      },
+      "revId": "e74d6a5080b9f0eb939505d892ba40990ede892f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8402c901_daf16d99",
+        "filename": "chrome/browser/ntp_tiles/ntp_tiles_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-07T08:52:50Z",
+      "side": 1,
+      "message": "I had to reset this on teardown, or there would be a DCHECK do to there being an extra callback in the callbacks_ list.\n\nIf you have a cleaner way to manage the objects, let me know!",
+      "range": {
+        "startLine": 64,
+        "startChar": 41,
+        "endLine": 64,
+        "endChar": 60
+      },
+      "revId": "e74d6a5080b9f0eb939505d892ba40990ede892f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1f7968a_4aa23a1f",
+        "filename": "chrome/browser/ntp_tiles/ntp_tiles_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-07T08:52:50Z",
+      "side": 1,
+      "message": "When I removed this call, the ntp_tiles didn\u0027t get updated (at least with the calls and delay that I used)",
+      "range": {
+        "startLine": 84,
+        "startChar": 14,
+        "endLine": 84,
+        "endChar": 29
+      },
+      "revId": "e74d6a5080b9f0eb939505d892ba40990ede892f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1038119_6a270f5e",
+        "filename": "chrome/browser/ntp_tiles/ntp_tiles_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-07T08:52:50Z",
+      "side": 1,
+      "message": "I\u0027m going to continue investigating these options, but let me know if you have any suggestions.",
+      "range": {
+        "startLine": 91,
+        "startChar": 42,
+        "endLine": 91,
+        "endChar": 0
+      },
+      "revId": "e74d6a5080b9f0eb939505d892ba40990ede892f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
