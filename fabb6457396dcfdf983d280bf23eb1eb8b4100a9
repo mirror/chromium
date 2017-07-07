@@ -16,6 +16,24 @@
       "revId": "fabb6457396dcfdf983d280bf23eb1eb8b4100a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14ed4a26_088d949c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ClearStorageView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-07-07T00:24:59Z",
+      "side": 1,
+      "message": "I\u0027m fine with adjusting colors. We can actually do it later. I\u0027m just a bit concerned that you suggest the same grey color for cookies, local storage, and other.",
+      "parentUuid": "5dfb43fd_efa07df5",
+      "revId": "fabb6457396dcfdf983d280bf23eb1eb8b4100a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
