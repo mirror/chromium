@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e2d055b_45058c7f",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-07T01:31:34Z",
+      "side": 1,
+      "message": "Move these two lines after `properties_[property_type] \u003d value;`",
+      "range": {
+        "startLine": 319,
+        "startChar": 30,
+        "endLine": 319,
+        "endChar": 0
+      },
+      "revId": "ffe1b97be0bcd9d56f5e32a81167ee777141e8d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
