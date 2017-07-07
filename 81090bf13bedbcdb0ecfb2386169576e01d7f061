@@ -142,6 +142,30 @@
       "revId": "81090bf13bedbcdb0ecfb2386169576e01d7f061",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4ec3b1b_d2df04a6",
+        "filename": "ios/web/public/global_state/ios_global_state.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-07-07T06:01:42Z",
+      "side": 1,
+      "message": "I\u0027ve re-implemented the split target I had in patchset 11 so that I can prevent Cronet from unnecessary binary size.",
+      "parentUuid": "52b53c41_5b7aa20d",
+      "range": {
+        "startLine": 56,
+        "startChar": 8,
+        "endLine": 56,
+        "endChar": 27
+      },
+      "revId": "81090bf13bedbcdb0ecfb2386169576e01d7f061",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
