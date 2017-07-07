@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f183d3f9_40c91428",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-07T05:04:22Z",
+      "side": 1,
+      "message": "There seem to be two titles here.\n\nThe title should mention the FeatureEngagementTracker (or an abbreviation if it cannot fit).\n\nHere is an example:\n[iOS] Notify FeatureEngagementTracker of reading list item open.\n\nNotifyEvent could very well be implemented by multiple classes, so it is not clear what the CL is doing by the title.",
+      "revId": "81237f89466f1c0c8aa60b01d8c66c3f5462a5fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "001f6b07_d083704c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-07T05:04:22Z",
+      "side": 1,
+      "message": "This paragraph is a bit hard to parse and some details can be left out.\nYou could include the different entry points, but you do not need to mention ReadingListCollectionViewController. ReadingListCoordinator makes sense because it is the place where the user action is handled (and the metric is recorded).",
+      "revId": "81237f89466f1c0c8aa60b01d8c66c3f5462a5fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "380750d5_f10781f1",
+        "filename": "ios/chrome/browser/ui/reading_list/reading_list_coordinator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-07T05:04:22Z",
+      "side": 1,
+      "message": "Here and below: move this to under RecordAction is called, and add a comment.",
+      "revId": "81237f89466f1c0c8aa60b01d8c66c3f5462a5fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
