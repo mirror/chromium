@@ -142,6 +142,24 @@
       "revId": "29c90b3ebc3d4b3e81cd6bbc71b0cc27eab98549",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f245a510_489c182d",
+        "filename": "content/public/browser/android/motion_event_synthesizer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-07T19:29:22Z",
+      "side": 1,
+      "message": "\u003e My issue was mostly on VrShell side, not content/. I wanted to get a Java target view for MES out of ViewAndroid. I was trying to handle it by swapping ViewAndroidDelegate that can be obtained by |ViewAndroid::GetContainerView()| but this was opening a can of worms (what to do with container view cached in Java classes, how to restore the old one back, etc).\n\u003e \n\u003e I have a new approach, which is having another interface |MotionEventSynthesizer::SetTargetView(gfx::NativeView)| Embedder then doesn\u0027t have to shove its VAD into existing ViewAndroid tree. Now MES constructor creates a Java object and stores it in WebContentsImpl only. Actual target view that MES uses to dispatch the synthesized event to is set via the new interface. Please take another look.\n\nOh VR targets another view? Ok, it\u0027s more broken than I thought then. And there is no way to fix that. content has no business sending events to random views. VR should just duplicate that code or something.\n\nNote to VR people. This is really really bad code. Please stop taking shortcuts like this.",
+      "parentUuid": "03c00e62_9665fdad",
+      "revId": "29c90b3ebc3d4b3e81cd6bbc71b0cc27eab98549",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
