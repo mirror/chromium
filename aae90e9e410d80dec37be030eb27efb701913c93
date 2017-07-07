@@ -22,6 +22,30 @@
       "revId": "aae90e9e410d80dec37be030eb27efb701913c93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69c5a35f_3ceb853b",
+        "filename": "media/base/scoped_callback_runner.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-07T20:14:06Z",
+      "side": 1,
+      "message": "Agreed again that macro is not a great idea. I thought about using tuple but I gave up because I hate to complicate our code for IMHO slightly better readability. With that, maybe I should just revert to PS5? WDYT?",
+      "parentUuid": "08226d23_67831b35",
+      "range": {
+        "startLine": 29,
+        "startChar": 37,
+        "endLine": 29,
+        "endChar": 0
+      },
+      "revId": "aae90e9e410d80dec37be030eb27efb701913c93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
