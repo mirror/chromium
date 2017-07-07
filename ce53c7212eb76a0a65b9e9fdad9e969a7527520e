@@ -194,6 +194,24 @@
       "revId": "ce53c7212eb76a0a65b9e9fdad9e969a7527520e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0828fc5_2639d88c",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParserHelpers.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1572,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-07-07T05:52:27Z",
+      "side": 1,
+      "message": "FWIW it doesn\u0027t seem weird to me.",
+      "parentUuid": "adda3298_99e5ccbb",
+      "revId": "ce53c7212eb76a0a65b9e9fdad9e969a7527520e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
