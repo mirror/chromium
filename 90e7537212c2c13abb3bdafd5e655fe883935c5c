@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "6b77d712_02a57037",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2819,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-07T16:30:36Z",
+      "side": 1,
+      "message": "Ah great, didn\u0027t realize we found a platform neutral approach. Good to know it\u0027ll work on desktop if you set the flag. The actual experiment will likely just be Android but having the flag is good if we later decide to do more.\n\nI will have to update the design doc which says something about omnibox code being different for different platforms.",
+      "parentUuid": "d950d907_d47f78fd",
+      "revId": "90e7537212c2c13abb3bdafd5e655fe883935c5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c0563544_cf1bc384",
         "filename": "chrome/browser/autocomplete/chrome_autocomplete_provider_client.cc",
         "patchSetId": 2
