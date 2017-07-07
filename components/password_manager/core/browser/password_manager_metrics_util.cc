@@ -199,6 +199,12 @@ void LogSubmittedFormFrame(SubmittedFormFrame frame) {
                             SubmittedFormFrame::SUBMITTED_FORM_FRAME_COUNT);
 }
 
+void LogIsSyncPasswordHashSaved(IsSyncPasswordHashSaved state) {
+  UMA_HISTOGRAM_ENUMERATION(
+      "PasswordManager.IsSyncPasswordHashSaved", state,
+      IsSyncPasswordHashSaved::IS_SYNC_PASSWORD_HASH_SAVED_COUNT);
+}
+
 }  // namespace metrics_util
 
 }  // namespace password_manager

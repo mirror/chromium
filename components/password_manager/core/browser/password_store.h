@@ -266,6 +266,8 @@ class PasswordStore : protected PasswordStoreSync,
   // Shouldn't be called more than once, |notifier| must be not nullptr.
   void SetPasswordStoreSigninNotifier(
       std::unique_ptr<PasswordStoreSigninNotifier> notifier);
+
+  void ReportIsSyncPasswordHashSavedMetric();
 #endif
 #endif
 
