@@ -93,6 +93,30 @@
       "revId": "294dd97eff7cfebd0f6c3024a86e795070f71ca2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b354e85_5b2c98a2",
+        "filename": "ios/web/public/global_state/ios_global_state.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-07T17:17:55Z",
+      "side": 1,
+      "message": "I was thinking we would follow the same pattern used by Chromium content for supplying the parameters.\n\nStartTaskScheduler would take the init params as an argument. If those were null, then the default ones would be used instead.\n\nWould that not work here?",
+      "parentUuid": "5ef83225_bd8759e9",
+      "range": {
+        "startLine": 55,
+        "startChar": 4,
+        "endLine": 55,
+        "endChar": 68
+      },
+      "revId": "294dd97eff7cfebd0f6c3024a86e795070f71ca2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
