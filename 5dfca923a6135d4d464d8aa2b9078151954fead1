@@ -22,6 +22,30 @@
       "revId": "5dfca923a6135d4d464d8aa2b9078151954fead1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0271bff4_b091dea8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/emulation/DeviceModeModel.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-07-07T23:35:44Z",
+      "side": 0,
+      "message": "I think this._calculateAndEmulate(false) is doing it.",
+      "parentUuid": "14e377c5_03abc1bd",
+      "range": {
+        "startLine": 676,
+        "startChar": 25,
+        "endLine": 676,
+        "endChar": 39
+      },
+      "revId": "5dfca923a6135d4d464d8aa2b9078151954fead1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

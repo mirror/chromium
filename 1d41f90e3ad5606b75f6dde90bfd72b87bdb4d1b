@@ -16,6 +16,24 @@
       "revId": "1d41f90e3ad5606b75f6dde90bfd72b87bdb4d1b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bde87f32_ca6f2f95",
+        "filename": "third_party/WebKit/Source/devtools/front_end/emulation/DeviceModeModel.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-07-07T23:35:44Z",
+      "side": 1,
+      "message": "I don\u0027t want to call emulateDevice here because page handler will do that. But in alternative clients, they would only be doing emulateDevice once...",
+      "parentUuid": "459bd4a3_63158817",
+      "revId": "1d41f90e3ad5606b75f6dde90bfd72b87bdb4d1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
