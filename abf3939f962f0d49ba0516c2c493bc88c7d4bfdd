@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7453816e_270ceeee",
+        "filename": "content/renderer/net/DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-07-07T08:00:43Z",
+      "side": 1,
+      "message": "this should not be needed?",
+      "revId": "abf3939f962f0d49ba0516c2c493bc88c7d4bfdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4f725bc_b1aeeef3",
+        "filename": "content/renderer/net/cross_origin_preflight_result_cache.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-07-07T08:00:43Z",
+      "side": 1,
+      "message": "why std::string instead of url::Origin?",
+      "revId": "abf3939f962f0d49ba0516c2c493bc88c7d4bfdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "277a9411_60f2f114",
+        "filename": "content/renderer/net/cross_origin_preflight_result_cache.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-07-07T08:00:43Z",
+      "side": 1,
+      "message": "that\u0027s DISALLOW_COPY_AND_ASSIGN() in content and goes at the end of the class def",
+      "revId": "abf3939f962f0d49ba0516c2c493bc88c7d4bfdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8911f3d_80cb5f37",
+        "filename": "content/renderer/net/cross_origin_preflight_result_cache.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-07-07T08:00:43Z",
+      "side": 1,
+      "message": "doesn\u0027t exist in content",
+      "revId": "abf3939f962f0d49ba0516c2c493bc88c7d4bfdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1800dfc_8650b2ec",
+        "filename": "content/renderer/net/cross_origin_preflight_result_cache.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-07-07T08:00:43Z",
+      "side": 1,
+      "message": "in content, we never omit parameter names",
+      "revId": "abf3939f962f0d49ba0516c2c493bc88c7d4bfdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
