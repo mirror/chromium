@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ca98dc2_364357b3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-07T21:19:56Z",
+      "side": 1,
+      "message": "Reworded:\n\nSince the TaskScheduler is now actively being used, StandbyThreadPolicy::LAZY is no longer useful as a thread will at some point always be created.\n\nThe rest of the CL description can be removed.",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 16
+      },
+      "revId": "b594806f58070278876bfd0bffa3488e301f3cca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
