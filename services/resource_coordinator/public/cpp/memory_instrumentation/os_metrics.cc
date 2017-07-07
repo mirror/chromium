@@ -6,10 +6,14 @@
 
 namespace memory_instrumentation {
 
+namespace OSMetrics {
+
 mojom::RawOSMemDumpPtr GetOSMemoryDump(base::ProcessId pid) {
   mojom::RawOSMemDumpPtr dump = mojom::RawOSMemDump::New();
   FillOSMemoryDump(pid, dump.get());
   return dump;
 }
+
+}  // namespace OSMetrics
 
 }  // namespace memory_instrumentation
