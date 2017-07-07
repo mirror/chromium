@@ -1,0 +1,214 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b27d5bf0_83e953d8",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-07T19:33:29Z",
+      "side": 1,
+      "message": "Typo: shide",
+      "revId": "32f55ac0b75040ec8adf86cfc8eac57d9a20ad4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b2a06cc_30a0e1a1",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-07T19:33:29Z",
+      "side": 1,
+      "message": "shared_ptr is disallowed in Chromium.  Is there a reason to not just use unique_ptr?",
+      "revId": "32f55ac0b75040ec8adf86cfc8eac57d9a20ad4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00f34f06_2fbe2f27",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-07T19:33:29Z",
+      "side": 1,
+      "message": "Can we check the third\u0027s visibility?",
+      "revId": "32f55ac0b75040ec8adf86cfc8eac57d9a20ad4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6cef446_4525a5c1",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-07T19:33:29Z",
+      "side": 1,
+      "message": "Why do we look for command id 1 here, but check label at 0 below?",
+      "revId": "32f55ac0b75040ec8adf86cfc8eac57d9a20ad4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ac34815_4f61e653",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-07T19:33:29Z",
+      "side": 1,
+      "message": "nit: Prefer base::ASCIIToUTF16(\"item1\") when passing raw character strings.",
+      "range": {
+        "startLine": 131,
+        "startChar": 12,
+        "endLine": 131,
+        "endChar": 51
+      },
+      "revId": "32f55ac0b75040ec8adf86cfc8eac57d9a20ad4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63a76b30_4724c15d",
+        "filename": "chrome/browser/renderer_context_menu/render_view_context_menu.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1657,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-07T19:33:29Z",
+      "side": 1,
+      "message": "It looks like the rest of this file uses ContextMenuMatcher::IsExtensionCustomCommandId(id).  Let\u0027s be consistent.",
+      "revId": "32f55ac0b75040ec8adf86cfc8eac57d9a20ad4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80f31b56_bfa2428c",
+        "filename": "chrome/test/data/extensions/api_test/context_menus/item_visibility/create_item/background.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-07T19:33:29Z",
+      "side": 1,
+      "message": "nit: space between title: and \u0027item1\u0027",
+      "revId": "32f55ac0b75040ec8adf86cfc8eac57d9a20ad4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd992bb6_14950d4e",
+        "filename": "chrome/test/data/extensions/api_test/context_menus/item_visibility/create_item/background.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-07T19:33:29Z",
+      "side": 1,
+      "message": "May as well instantiate id with it\u0027s declaration above.",
+      "revId": "32f55ac0b75040ec8adf86cfc8eac57d9a20ad4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c93e1680_ea250d00",
+        "filename": "chrome/test/data/extensions/api_test/context_menus/item_visibility/create_item/background.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-07T19:33:29Z",
+      "side": 1,
+      "message": "nit: we play a bit fast and loose with the rectangle rule in chromium, but prefer to define objects in such a way that it would follow it.  Something like:\nchrome.contextMenus.create(\n    {title: \u0027child1\u0027, visible: true, parentId: id},\n    function() {\n....\n\n(This just makes it a bit easier to read what is part of the same object)",
+      "revId": "32f55ac0b75040ec8adf86cfc8eac57d9a20ad4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f7988fd_baee141b",
+        "filename": "chrome/test/data/extensions/api_test/context_menus/item_visibility/item_limit/background.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-07T19:33:29Z",
+      "side": 1,
+      "message": "oof - this block is a bit hard to parse.  Can we use a loop to make this a bit less nested?",
+      "revId": "32f55ac0b75040ec8adf86cfc8eac57d9a20ad4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "249f6700_6ef94c28",
+        "filename": "chrome/test/data/extensions/api_test/context_menus/item_visibility/item_limit/background.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-07T19:33:29Z",
+      "side": 1,
+      "message": "optional: We have a utility method \"callbackPass()\" which takes a function an automatically assertNoLastError()s.  So these calls could be:\nchrome.contextMenus.doFoo(..., callbackPass(function() {\n  \u003cdo next thing, no need to assertNoLastError\u003e\n});",
+      "revId": "32f55ac0b75040ec8adf86cfc8eac57d9a20ad4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ed154b8_f1b2ceaa",
+        "filename": "chrome/test/data/extensions/api_test/context_menus/item_visibility/update_item/background.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-07T19:33:29Z",
+      "side": 1,
+      "message": "nit: prefer to align function() with the rest of the param list, so either:\nchrome.contextMenus.create({title:\u0027item3\u0027, visible: false},\n                           function() {\n\n});\n\nor:\n\nchrome.contextMenus.create(\n    {title:\u0027item3\u0027, visible: false},\n    function() {\n\n});",
+      "revId": "32f55ac0b75040ec8adf86cfc8eac57d9a20ad4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

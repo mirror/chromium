@@ -488,6 +488,24 @@
     },
     {
       "key": {
+        "uuid": "56df811d_13a2ae52",
+        "filename": "chrome/browser/extensions/menu_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-07T19:33:29Z",
+      "side": 1,
+      "message": "Right, when Chrome updates, the next time we write the preferences, they will reflect the new format here.  So after some amount of time, users should be updated and we can remove the unique logic for visible vs the rest.",
+      "parentUuid": "c4f23b71_702ab9f4",
+      "revId": "e92cf4239940278aaf91a5eebbc5c19cc9e3c944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4178e76e_76811817",
         "filename": "chrome/browser/renderer_context_menu/render_view_context_menu_browsertest.cc",
         "patchSetId": 2
