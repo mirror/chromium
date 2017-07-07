@@ -556,9 +556,13 @@ void SchedulerWorkerPoolImpl::WakeUpOneWorker() {
         worker = AddNewWorker().get();
       else
         worker = idle_workers_stack_.Pop();
+
+      // Try to keep at least one idle worker at all times for better
+      // responsiveness.
+      if (idle_workers_stack_.IsEmpty() && workers_.size() < worker_capacity_)
+        idle_workers_stack_.Push(AddNewWorker().get());
     }
   }
-
   if (worker)
     worker->WakeUp();
 }
