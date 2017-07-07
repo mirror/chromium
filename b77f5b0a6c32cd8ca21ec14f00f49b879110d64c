@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d578445_6e28e94f",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-07T01:25:38Z",
+      "side": 1,
+      "message": "I do think the \"path very long results in bad ellipsizing\" case merits a TODO comment here, since it\u0027s theoretically a phishing sort of concern (low importance though).",
+      "revId": "b77f5b0a6c32cd8ca21ec14f00f49b879110d64c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
