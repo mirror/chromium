@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97c85167_b425055f",
+        "filename": "chrome/browser/chromeos/chrome_browser_main_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1113104
+      },
+      "writtenOn": "2017-07-07T21:24:56Z",
+      "side": 1,
+      "message": "Dan, sorry I didn\u0027t get to this yesterday, no bandwidth.  I know the CL has already landed, but I do have one possible edit (I can write the new CL myself, I just wanted your opinion...)\n\nWe originally called content::BrowserThread::GetBlockingPool() here because calling it from within quirks_manager.cc caused a dependency violation.  However, there seems to be no such restriction for CreateTaskRunnerWithTraits().  That being the case, it seems like we could remove this argument from Initialize(), and just do this within Initialize() instead.  I tested this out, and it seems to work fine.  Any comments or concerns with me writing this CL?\n\nOshima, same question to you, if you\u0027re reading this.",
+      "range": {
+        "startLine": 618,
+        "startChar": 12,
+        "endLine": 618,
+        "endChar": 38
+      },
+      "revId": "661b99fc181c9ef15a707e72f1ed15d2b35079b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
