@@ -117,6 +117,30 @@
       "revId": "294dd97eff7cfebd0f6c3024a86e795070f71ca2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25416880_f1fe0f8b",
+        "filename": "ios/web/public/global_state/ios_global_state.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-07-07T17:25:09Z",
+      "side": 1,
+      "message": "That won\u0027t work because when CronetChromeWebView framework is being used, we want to use the ios/web implementation and pass that \"param\" value from the variations server, but vanilla Cronet wants to know nothing about this nor rely on it.\n\nThe way it is split here will use the correct params based on the framework that was built, even if the embedder initializes Cronet first.\n\nThis CL was based on my prototype which has more details about Pros/Cons of this approach and what we\u0027re trying to accomplish:\nhttps://codereview.chromium.org/2949833002/",
+      "parentUuid": "7b354e85_5b2c98a2",
+      "range": {
+        "startLine": 55,
+        "startChar": 4,
+        "endLine": 55,
+        "endChar": 68
+      },
+      "revId": "294dd97eff7cfebd0f6c3024a86e795070f71ca2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
