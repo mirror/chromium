@@ -133,10 +133,25 @@ struct PasswordForm {
 
   // The web realm affiliated with the Android application, if the form is an
   // Android credential. Otherwise, the string is empty. If there are several
-  // realms affiliated with the application, an arbitrary realm is chosen.
-  // The field is filled out in PasswordStore's InjectAffiliatedWebRealms.
-  // If there was no call of InjectAffiliatedWebRealms, the string is empty.
+  // realms affiliated with the application, an arbitrary realm is chosen. The
+  // field is filled out in PasswordStore's
+  // InjectAffiliationAndBrandingInformation. If there was no call of
+  // InjectAffiliationAndBrandingInformation, the string is empty.
   std::string affiliated_web_realm;
+
+  // The branding info name (i.e. PlayStore name) of the Android application, if
+  // the form is an Android credential. Otherwise, the string is empty. The
+  // field is filled out in PasswordStore's
+  // InjectAffiliationAndBrandingInformation. If there was no call of
+  // InjectAffiliationAndBrandingInformation, the string is empty.
+  std::string branding_info_name;
+
+  // The branding info icon URL (i.e. PlayStore icon URL) of the Android
+  // application, if the form is an Android credential. Otherwise, the URL is
+  // empty. The field is filled out in PasswordStore's
+  // InjectAffiliationAndBrandingInformation. If there was no call of
+  // InjectAffiliationAndBrandingInformation, the URL is empty.
+  GURL branding_info_icon_url;
 
   // The name of the submit button used. Optional; only used in scoring
   // of PasswordForm results from the database to make matches as tight as

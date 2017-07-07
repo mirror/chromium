@@ -92,6 +92,10 @@ class MockFacetManagerHost : public FacetManagerHost {
     expected_facet_uri_ = facet_uri;
   }
 
+  // Returns the facet URI that will be expected to appear in calls coming from
+  // the FacetManager under test.
+  const FacetURI& expected_facet_uri() const { return expected_facet_uri_; }
+
   // Sets up fake |database_content| as the canned response to be returned to
   // the FacetManager every time it calls ReadAffiliationsFromDatabase().
   void set_fake_database_content(
@@ -352,7 +356,14 @@ class FacetManagerTest : public testing::Test {
   }
 
   void ExpectConsumerSuccessCallback() {
-    mock_consumer()->ExpectSuccessWithResult(GetTestEquivalenceClass());
+    AffiliatedFacets equivalence_class(GetTestEquivalenceClass());
+    mock_consumer()->ExpectSuccessWithResult(equivalence_class);
+    EXPECT_TRUE(std::any_of(
+        equivalence_class.begin(), equivalence_class.end(),
+        [this](const Facet& facet) {
+          return facet.uri == fake_facet_manager_host()->expected_facet_uri();
+        }));
+
     consumer_task_runner()->RunUntilIdle();
     testing::Mock::VerifyAndClearExpectations(mock_consumer());
   }

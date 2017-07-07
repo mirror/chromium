@@ -112,7 +112,14 @@ TEST_F(AffiliationServiceTest, GetAffiliations) {
   ASSERT_TRUE(fake_affiliation_api()->HasPendingRequest());
   fake_affiliation_api()->ServeNextRequest();
 
-  mock_consumer()->ExpectSuccessWithResult(GetTestEquivalenceClassAlpha());
+  AffiliatedFacets equivalence_class_alpha(GetTestEquivalenceClassAlpha());
+  mock_consumer()->ExpectSuccessWithResult(equivalence_class_alpha);
+  EXPECT_TRUE(
+      std::any_of(equivalence_class_alpha.begin(),
+                  equivalence_class_alpha.end(), [this](const Facet& facet) {
+                    return facet.uri.canonical_spec() == kTestFacetURIAlpha1;
+                  }));
+
   main_task_runner()->RunUntilIdle();
   testing::Mock::VerifyAndClearExpectations(mock_consumer());
 
@@ -124,7 +131,7 @@ TEST_F(AffiliationServiceTest, GetAffiliations) {
   background_task_runner()->RunUntilIdle();
   ASSERT_FALSE(fake_affiliation_api()->HasPendingRequest());
 
-  mock_consumer()->ExpectSuccessWithResult(GetTestEquivalenceClassAlpha());
+  mock_consumer()->ExpectSuccessWithResult(equivalence_class_alpha);
   main_task_runner()->RunUntilIdle();
   testing::Mock::VerifyAndClearExpectations(mock_consumer());
 

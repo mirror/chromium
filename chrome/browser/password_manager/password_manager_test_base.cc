@@ -453,7 +453,8 @@ void PasswordManagerBrowserTestBase::WaitForPasswordStore() {
       PasswordStoreFactory::GetForProfile(browser()->profile(),
                                           ServiceAccessType::IMPLICIT_ACCESS);
   PasswordStoreResultsObserver syncer;
-  password_store->GetAutofillableLoginsWithAffiliatedRealms(&syncer);
+  password_store->GetAutofillableLoginsWithAffiliationAndBrandingInformation(
+      &syncer);
   syncer.Wait();
 }
 
