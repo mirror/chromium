@@ -95,6 +95,29 @@ MATCHER_P3(FirstTileIs,
          arg[0].url == GURL(url) && arg[0].source == source;
 }
 
+MATCHER_P3(FirstFourTilesContain,
+           title,
+           url,
+           source,
+           std::string("first four tiles contain ") +
+               PrintTile(title, url, source)) {
+  base::string16 utf16_title = base::ASCIIToUTF16(title);
+  GURL gurl = GURL(url);
+  size_t n_tiles = 4;
+
+  for (auto& current : arg) {
+    if (n_tiles == 0) {
+      break;
+    } else if (current.title == utf16_title && current.url == gurl &&
+               current.source == source) {
+      return true;
+    }
+
+    --n_tiles;
+  }
+  return false;
+}
+
 // testing::InvokeArgument<N> does not work with base::Callback, fortunately
 // gmock makes it simple to create action templates that do for the various
 // possible numbers of arguments.
@@ -548,7 +571,7 @@ TEST_P(MostVisitedSitesTest, ShouldNotIncludeHomePageIfNoTileRequested) {
   base::RunLoop().RunUntilIdle();
 }
 
-TEST_P(MostVisitedSitesTest, ShouldReturnOnlyHomePageIfOneTileRequested) {
+TEST_P(MostVisitedSitesTest, ShouldReturnMostPopularPageIfOneTileRequested) {
   FakeHomePageClient* home_page_client = RegisterNewHomePageClient();
   home_page_client->SetHomePageEnabled(true);
   DisableRemoteSuggestions();
@@ -560,10 +583,28 @@ TEST_P(MostVisitedSitesTest, ShouldReturnOnlyHomePageIfOneTileRequested) {
       .Times(AnyNumber())
       .WillRepeatedly(Return(false));
   EXPECT_CALL(mock_observer_,
-              OnMostVisitedURLsAvailable(ElementsAre(
-                  MatchesTile("", kHomePageUrl, TileSource::HOMEPAGE))));
+              OnMostVisitedURLsAvailable(ElementsAre(MatchesTile(
+                  "Site 1", "http://site1/", TileSource::TOP_SITES))));
   most_visited_sites_->SetMostVisitedURLsObserver(&mock_observer_,
                                                   /*num_sites=*/1);
+  base::RunLoop().RunUntilIdle();
+}
+
+TEST_P(MostVisitedSitesTest, ShouldContainHomePageInFirstFourTiles) {
+  FakeHomePageClient* home_page_client = RegisterNewHomePageClient();
+  home_page_client->SetHomePageEnabled(true);
+  DisableRemoteSuggestions();
+  EXPECT_CALL(*mock_top_sites_, GetMostVisitedURLs(_, false))
+      .WillRepeatedly(InvokeCallbackArgument<0>(
+          (MostVisitedURLList{MakeMostVisitedURL("Site 1", "http://site1/")})));
+  EXPECT_CALL(*mock_top_sites_, SyncWithHistory());
+  EXPECT_CALL(*mock_top_sites_, IsBlacklisted(Eq(GURL(kHomePageUrl))))
+      .Times(AnyNumber())
+      .WillRepeatedly(Return(false));
+  EXPECT_CALL(mock_observer_, OnMostVisitedURLsAvailable(FirstFourTilesContain(
+                                  "", "http://ho.me/", TileSource::HOMEPAGE)));
+  most_visited_sites_->SetMostVisitedURLsObserver(&mock_observer_,
+                                                  /*num_sites=*/8);
   base::RunLoop().RunUntilIdle();
 }
 
@@ -580,10 +621,12 @@ TEST_P(MostVisitedSitesTest, ShouldDeduplicateHomePageWithTopSites) {
       .Times(AnyNumber())
       .WillRepeatedly(Return(false));
   EXPECT_CALL(mock_observer_,
-              OnMostVisitedURLsAvailable(
-                  AllOf(FirstTileIs("", kHomePageUrl, TileSource::HOMEPAGE),
-                        Not(Contains(MatchesTile("", kHomePageUrl,
-                                                 TileSource::TOP_SITES))))));
+              OnMostVisitedURLsAvailable(AllOf(
+                  Contains(MatchesTile("Site 1", "http://site1/",
+                                       TileSource::TOP_SITES)),
+                  Contains(MatchesTile("", kHomePageUrl, TileSource::HOMEPAGE)),
+                  Not(Contains(
+                      MatchesTile("", kHomePageUrl, TileSource::TOP_SITES))))));
   most_visited_sites_->SetMostVisitedURLsObserver(&mock_observer_,
                                                   /*num_sites=*/3);
   base::RunLoop().RunUntilIdle();
