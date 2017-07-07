@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "de0c0fdf_396af572",
+        "filename": "ios/chrome/browser/ui/commands/browser_commands.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-07T12:16:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45f7bbea_19fe4a72",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 37
+      },
+      "revId": "aaac07cdf87e53b75e76b6fdfdf1b81ce4568fc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ed0c8e7_7216bc78",
         "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_view_controller.mm",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-06T16:04:28Z",
       "side": 1,
       "message": "Nit: \u003e\u003d 0.",
+      "range": {
+        "startLine": 492,
+        "startChar": 52,
+        "endLine": 492,
+        "endChar": 53
+      },
+      "revId": "aaac07cdf87e53b75e76b6fdfdf1b81ce4568fc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "170dab21_9403b7af",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-07T12:16:23Z",
+      "side": 1,
+      "message": "I debated this. 0 is the default value for a view\u0027s tag, so that should only happen if something\u0027s gone wrong.",
+      "parentUuid": "7ed0c8e7_7216bc78",
       "range": {
         "startLine": 492,
         "startChar": 52,
