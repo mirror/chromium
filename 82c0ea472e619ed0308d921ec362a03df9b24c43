@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4d1e24d_df0f98ec",
+        "filename": "content/browser/service_worker/service_worker_process_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-07T06:19:05Z",
+      "side": 1,
+      "message": "(A bit orthogonal to this change itself) hm, I wondered if we could remove this lock, and found that we sometimes call this just to check the SW context\u0027s not shut down (while it doesn\u0027t care about process allocation), which feels a bit weird...",
+      "revId": "82c0ea472e619ed0308d921ec362a03df9b24c43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
