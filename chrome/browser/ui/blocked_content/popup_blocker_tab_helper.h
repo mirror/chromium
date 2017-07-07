@@ -34,18 +34,22 @@ class PopupBlockerTabHelper
   // Mapping from popup IDs to blocked popup requests.
   typedef std::map<int32_t, GURL> PopupIdMap;
 
-  // Returns true if a popup with |user_gesture| should be considered for
-  // blocking from |web_contents|.
-  static bool ConsiderForPopupBlocking(
-      content::WebContents* web_contents,
-      bool user_gesture,
-      const content::OpenURLParams* open_url_params);
+  // Returns true if a popup with |user_gesture| and |disposition| should be
+  // blocked from |web_contents|.
+  // Popups (e.g. ctrl-click a link) that we always allow can use IGNORE_ACTION
+  // for the disposition.
+  static bool ShouldBlockPopup(content::WebContents* web_contents,
+                               bool user_gesture,
+                               WindowOpenDisposition disposition,
+                               const GURL& opener_top_level_frame_url,
+                               const content::OpenURLParams* open_url_params);
 
   ~PopupBlockerTabHelper() override;
 
   // Returns true if the popup request defined by |params| should be blocked.
   // In that case, it is also added to the |blocked_popups_| container.
-  bool MaybeBlockPopup(const chrome::NavigateParams& params,
+  bool MaybeBlockPopup(const chrome::NavigateParams& navigate_params,
+                       const content::OpenURLParams& open_url_params,
                        const blink::mojom::WindowFeatures& window_features);
 
   // Adds a popup request to the |blocked_popups_| container.
