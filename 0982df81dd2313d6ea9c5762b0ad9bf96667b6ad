@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "0bff6452_ce7fd562",
+        "filename": "ios/chrome/browser/web_state_list/web_state_list.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-07T15:03:38Z",
+      "side": 1,
+      "message": "I\u0027ve based the API on TabStripModel API for the rest of the API and I\u0027m trying to keep them close. TabStripModel uses a bitfield instead of a single boolean since they pass more information.\n\nI\u0027m not sure multiplying the method make for a simpler API, and it definitely make a more complex implementation (because the method body has to be duplicated or an helper method has to be implemented that will correspond to the current API).\n\nBTW, I\u0027m not really adding a new parameter but more restoring one that I forgot to add initially when I implemented the API.",
+      "parentUuid": "b1dd27ae_df797349",
+      "range": {
+        "startLine": 90,
+        "startChar": 7,
+        "endLine": 90,
+        "endChar": 21
+      },
+      "revId": "0982df81dd2313d6ea9c5762b0ad9bf96667b6ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "261c386a_db56567d",
         "filename": "ios/chrome/browser/web_state_list/web_state_list_observer.h",
         "patchSetId": 4
@@ -91,6 +115,30 @@
       "revId": "0982df81dd2313d6ea9c5762b0ad9bf96667b6ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52ca980a_cc09467f",
+        "filename": "ios/chrome/browser/web_state_list/web_state_list_observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-07T15:03:38Z",
+      "side": 1,
+      "message": "Well, at this point the web_state is still not the active WebState. It will soon become active tough. Would \"will_become_active\" work better?",
+      "parentUuid": "76d45acc_696aec03",
+      "range": {
+        "startLine": 27,
+        "startChar": 39,
+        "endLine": 27,
+        "endChar": 49
+      },
+      "revId": "0982df81dd2313d6ea9c5762b0ad9bf96667b6ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
