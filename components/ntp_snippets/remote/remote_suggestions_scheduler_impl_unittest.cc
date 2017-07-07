@@ -206,7 +206,7 @@ class RemoteSuggestionsSchedulerImplTest : public ::testing::Test {
 
 TEST_F(RemoteSuggestionsSchedulerImplTest, ShouldIgnoreSignalsWhenNotEnabled) {
   scheduler()->OnPersistentSchedulerWakeUp();
-  scheduler()->OnNTPOpened();
+  scheduler()->OnSuggestionsSurfaceOpened();
   scheduler()->OnBrowserForegrounded();
   scheduler()->OnBrowserColdStart();
 }
@@ -239,7 +239,7 @@ TEST_F(RemoteSuggestionsSchedulerImplTest,
 
   // All signals are ignored because of Eula not being accepted.
   scheduler()->OnPersistentSchedulerWakeUp();
-  scheduler()->OnNTPOpened();
+  scheduler()->OnSuggestionsSurfaceOpened();
   scheduler()->OnBrowserForegrounded();
   scheduler()->OnBrowserColdStart();
 }
@@ -272,7 +272,7 @@ TEST_F(RemoteSuggestionsSchedulerImplTest,
   ActivateProvider();
 
   scheduler()->OnPersistentSchedulerWakeUp();
-  scheduler()->OnNTPOpened();
+  scheduler()->OnSuggestionsSurfaceOpened();
   scheduler()->OnBrowserForegrounded();
   scheduler()->OnBrowserColdStart();
 }
@@ -360,7 +360,7 @@ TEST_F(RemoteSuggestionsSchedulerImplTest,
 }
 
 TEST_F(RemoteSuggestionsSchedulerImplTest,
-       ShouldFetchOnNTPOpenedForTheFirstTime) {
+       ShouldFetchOnSuggestionsSurfaceOpenedForTheFirstTime) {
   // First set only this type to be allowed.
   SetVariationParameter("scheduler_trigger_types", "ntp_opened");
   ResetProvider();
@@ -370,7 +370,7 @@ TEST_F(RemoteSuggestionsSchedulerImplTest,
   ActivateProvider();
 
   EXPECT_CALL(*provider(), RefetchInTheBackground(_));
-  scheduler()->OnNTPOpened();
+  scheduler()->OnSuggestionsSurfaceOpened();
 }
 
 TEST_F(RemoteSuggestionsSchedulerImplTest,
@@ -402,7 +402,7 @@ TEST_F(RemoteSuggestionsSchedulerImplTest,
 }
 
 TEST_F(RemoteSuggestionsSchedulerImplTest,
-       ShouldNotFetchOnNTPOpenedAfterSuccessfulSoftFetch) {
+       ShouldNotFetchOnSuggestionsSurfaceOpenedAfterSuccessfulSoftFetch) {
   // First enable the scheduler; the second Schedule is called after the
   // successful fetch.
   EXPECT_CALL(*persistent_scheduler(), Schedule(_, _)).Times(2);
@@ -412,14 +412,14 @@ TEST_F(RemoteSuggestionsSchedulerImplTest,
   RemoteSuggestionsProvider::FetchStatusCallback signal_fetch_done;
   EXPECT_CALL(*provider(), RefetchInTheBackground(_))
       .WillOnce(SaveArg<0>(&signal_fetch_done));
-  scheduler()->OnNTPOpened();
+  scheduler()->OnSuggestionsSurfaceOpened();
   signal_fetch_done.Run(Status::Success());
   // The second call is ignored if it happens right after the first one.
-  scheduler()->OnNTPOpened();
+  scheduler()->OnSuggestionsSurfaceOpened();
 }
 
 TEST_F(RemoteSuggestionsSchedulerImplTest,
-       ShouldNotFetchOnNTPOpenedAfterSuccessfulPersistentFetch) {
+       ShouldNotFetchOnSuggestionsSurfaceOpenedAfterSuccessfulPersistentFetch) {
   // First enable the scheduler; the second Schedule is called after the
   // successful fetch.
   EXPECT_CALL(*persistent_scheduler(), Schedule(_, _)).Times(2);
@@ -432,11 +432,11 @@ TEST_F(RemoteSuggestionsSchedulerImplTest,
   scheduler()->OnPersistentSchedulerWakeUp();
   signal_fetch_done.Run(Status::Success());
   // The second call is ignored if it happens right after the first one.
-  scheduler()->OnNTPOpened();
+  scheduler()->OnSuggestionsSurfaceOpened();
 }
 
 TEST_F(RemoteSuggestionsSchedulerImplTest,
-       ShouldNotFetchOnNTPOpenedAfterFailedSoftFetch) {
+       ShouldNotFetchOnSuggestionsSurfaceOpenedAfterFailedSoftFetch) {
   // First enable the scheduler.
   EXPECT_CALL(*persistent_scheduler(), Schedule(_, _));
   ActivateProvider();
@@ -445,15 +445,15 @@ TEST_F(RemoteSuggestionsSchedulerImplTest,
   RemoteSuggestionsProvider::FetchStatusCallback signal_fetch_done;
   EXPECT_CALL(*provider(), RefetchInTheBackground(_))
       .WillOnce(SaveArg<0>(&signal_fetch_done));
-  scheduler()->OnNTPOpened();
+  scheduler()->OnSuggestionsSurfaceOpened();
   signal_fetch_done.Run(Status(StatusCode::PERMANENT_ERROR, ""));
 
   // The second call is ignored if it happens right after the first one.
-  scheduler()->OnNTPOpened();
+  scheduler()->OnSuggestionsSurfaceOpened();
 }
 
 TEST_F(RemoteSuggestionsSchedulerImplTest,
-       ShouldNotFetchOnNTPOpenedAfterFailedPersistentFetch) {
+       ShouldNotFetchOnSuggestionsSurfaceOpenedAfterFailedPersistentFetch) {
   // First enable the scheduler.
   EXPECT_CALL(*persistent_scheduler(), Schedule(_, _));
   ActivateProvider();
@@ -466,7 +466,7 @@ TEST_F(RemoteSuggestionsSchedulerImplTest,
   signal_fetch_done.Run(Status(StatusCode::PERMANENT_ERROR, ""));
 
   // The second call is ignored if it happens right after the first one.
-  scheduler()->OnNTPOpened();
+  scheduler()->OnSuggestionsSurfaceOpened();
 }
 
 TEST_F(RemoteSuggestionsSchedulerImplTest,
@@ -495,10 +495,9 @@ TEST_F(RemoteSuggestionsSchedulerImplTest,
   scheduler()->OnBrowserForegrounded();
 }
 
-TEST_F(RemoteSuggestionsSchedulerImplTest,
-       ShouldRescheduleOnRescheduleFetching) {
+TEST_F(RemoteSuggestionsSchedulerImplTest, ShouldRescheduleOnBrowserUpgraded) {
   EXPECT_CALL(*persistent_scheduler(), Schedule(_, _));
-  scheduler()->RescheduleFetching();
+  scheduler()->OnBrowserUpgraded();
 }
 
 TEST_F(RemoteSuggestionsSchedulerImplTest, ShouldScheduleOnActivation) {
@@ -674,19 +673,19 @@ TEST_F(RemoteSuggestionsSchedulerImplTest, FetchIntervalForShownTriggerOnWifi) {
   RemoteSuggestionsProvider::FetchStatusCallback signal_fetch_done;
   EXPECT_CALL(*provider(), RefetchInTheBackground(_))
       .WillOnce(SaveArg<0>(&signal_fetch_done));
-  scheduler()->OnNTPOpened();
+  scheduler()->OnSuggestionsSurfaceOpened();
   // Rescheduling after a succesful fetch.
   EXPECT_CALL(*persistent_scheduler(), Schedule(_, _));
   signal_fetch_done.Run(Status::Success());
 
   // Open NTP again after too short delay. This time no fetch is executed.
   test_clock()->Advance(base::TimeDelta::FromHours(1));
-  scheduler()->OnNTPOpened();
+  scheduler()->OnSuggestionsSurfaceOpened();
 
   // Open NTP after another delay, now together long enough to issue a fetch.
   test_clock()->Advance(base::TimeDelta::FromHours(7));
   EXPECT_CALL(*provider(), RefetchInTheBackground(_));
-  scheduler()->OnNTPOpened();
+  scheduler()->OnSuggestionsSurfaceOpened();
 }
 
 TEST_F(RemoteSuggestionsSchedulerImplTest,
@@ -707,19 +706,19 @@ TEST_F(RemoteSuggestionsSchedulerImplTest,
   RemoteSuggestionsProvider::FetchStatusCallback signal_fetch_done;
   EXPECT_CALL(*provider(), RefetchInTheBackground(_))
       .WillOnce(SaveArg<0>(&signal_fetch_done));
-  scheduler()->OnNTPOpened();
+  scheduler()->OnSuggestionsSurfaceOpened();
   // Rescheduling after a succesful fetch.
   EXPECT_CALL(*persistent_scheduler(), Schedule(_, _));
   signal_fetch_done.Run(Status::Success());
 
   // Open NTP again after too short delay. This time no fetch is executed.
   test_clock()->Advance(base::TimeDelta::FromMinutes(20));
-  scheduler()->OnNTPOpened();
+  scheduler()->OnSuggestionsSurfaceOpened();
 
   // Open NTP after another delay, now together long enough to issue a fetch.
   test_clock()->Advance(base::TimeDelta::FromMinutes(10));
   EXPECT_CALL(*provider(), RefetchInTheBackground(_));
-  scheduler()->OnNTPOpened();
+  scheduler()->OnSuggestionsSurfaceOpened();
 }
 
 TEST_F(RemoteSuggestionsSchedulerImplTest,
@@ -738,19 +737,19 @@ TEST_F(RemoteSuggestionsSchedulerImplTest,
   RemoteSuggestionsProvider::FetchStatusCallback signal_fetch_done;
   EXPECT_CALL(*provider(), RefetchInTheBackground(_))
       .WillOnce(SaveArg<0>(&signal_fetch_done));
-  scheduler()->OnNTPOpened();
+  scheduler()->OnSuggestionsSurfaceOpened();
   // Rescheduling after a succesful fetch.
   EXPECT_CALL(*persistent_scheduler(), Schedule(_, _));
   signal_fetch_done.Run(Status::Success());
 
   // Open NTP again after too short delay. This time no fetch is executed.
   test_clock()->Advance(base::TimeDelta::FromHours(5));
-  scheduler()->OnNTPOpened();
+  scheduler()->OnSuggestionsSurfaceOpened();
 
   // Open NTP after another delay, now together long enough to issue a fetch.
   test_clock()->Advance(base::TimeDelta::FromHours(7));
   EXPECT_CALL(*provider(), RefetchInTheBackground(_));
-  scheduler()->OnNTPOpened();
+  scheduler()->OnSuggestionsSurfaceOpened();
 }
 
 TEST_F(RemoteSuggestionsSchedulerImplTest,
@@ -771,19 +770,19 @@ TEST_F(RemoteSuggestionsSchedulerImplTest,
   RemoteSuggestionsProvider::FetchStatusCallback signal_fetch_done;
   EXPECT_CALL(*provider(), RefetchInTheBackground(_))
       .WillOnce(SaveArg<0>(&signal_fetch_done));
-  scheduler()->OnNTPOpened();
+  scheduler()->OnSuggestionsSurfaceOpened();
   // Rescheduling after a succesful fetch.
   EXPECT_CALL(*persistent_scheduler(), Schedule(_, _));
   signal_fetch_done.Run(Status::Success());
 
   // Open NTP again after too short delay. This time no fetch is executed.
   test_clock()->Advance(base::TimeDelta::FromMinutes(20));
-  scheduler()->OnNTPOpened();
+  scheduler()->OnSuggestionsSurfaceOpened();
 
   // Open NTP after another delay, now together long enough to issue a fetch.
   test_clock()->Advance(base::TimeDelta::FromMinutes(10));
   EXPECT_CALL(*provider(), RefetchInTheBackground(_));
-  scheduler()->OnNTPOpened();
+  scheduler()->OnSuggestionsSurfaceOpened();
 }
 
 TEST_F(RemoteSuggestionsSchedulerImplTest,
