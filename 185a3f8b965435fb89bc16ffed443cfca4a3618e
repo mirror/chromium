@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a4621658_913a000e",
+        "filename": "ios/chrome/browser/payments/itunes_json_request.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-07T20:58:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d379e042_97ddc5db",
+      "range": {
+        "startLine": 22,
+        "startChar": 41,
+        "endLine": 22,
+        "endChar": 45
+      },
+      "revId": "185a3f8b965435fb89bc16ffed443cfca4a3618e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "557b243e_aa6bc053",
         "filename": "ios/chrome/browser/payments/itunes_json_request.cc",
         "patchSetId": 3
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "219030f7_98b7b52a",
+        "filename": "ios/chrome/browser/payments/itunes_json_request.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-07T20:58:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5be77b29_a41d2e2d",
+      "range": {
+        "startLine": 41,
+        "startChar": 2,
+        "endLine": 41,
+        "endChar": 4
+      },
+      "revId": "185a3f8b965435fb89bc16ffed443cfca4a3618e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a6bd31c_f1418881",
         "filename": "ios/chrome/browser/payments/itunes_json_request.cc",
         "patchSetId": 3
@@ -83,6 +131,30 @@
       "writtenOn": "2017-07-07T19:47:15Z",
       "side": 1,
       "message": "I don\u0027t know about your feature, but maybe we could use some other flags?\nMAYBE_USER_GESTURE?\nDO_NOT_SEND_COOKIES?\nVERIFY_EV_CERT?\n\n(I have no idea, just throwing ideas)",
+      "range": {
+        "startLine": 52,
+        "startChar": 12,
+        "endLine": 52,
+        "endChar": 24
+      },
+      "revId": "185a3f8b965435fb89bc16ffed443cfca4a3618e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe6c8ed3_acde4f78",
+        "filename": "ios/chrome/browser/payments/itunes_json_request.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-07T20:58:12Z",
+      "side": 1,
+      "message": "I agree with these flags, looked through all of them and these seem most appropriate.",
+      "parentUuid": "2a6bd31c_f1418881",
       "range": {
         "startLine": 52,
         "startChar": 12,
@@ -109,6 +181,24 @@
       "revId": "185a3f8b965435fb89bc16ffed443cfca4a3618e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a969ccd_b6fdf8ee",
+        "filename": "ios/chrome/browser/payments/itunes_json_request.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-07T20:58:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15f74c0b_22d1d16a",
+      "revId": "185a3f8b965435fb89bc16ffed443cfca4a3618e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -147,6 +237,24 @@
     },
     {
       "key": {
+        "uuid": "560371ea_01ae05d3",
+        "filename": "ios/chrome/browser/payments/itunes_json_request.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-07T20:58:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ce9bf2c_a0565690",
+      "revId": "185a3f8b965435fb89bc16ffed443cfca4a3618e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7187cbde_7af0d703",
         "filename": "ios/chrome/browser/payments/itunes_json_request.cc",
         "patchSetId": 3
@@ -167,6 +275,30 @@
       "revId": "185a3f8b965435fb89bc16ffed443cfca4a3618e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22ad014d_9bf804d9",
+        "filename": "ios/chrome/browser/payments/itunes_json_request.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-07T20:58:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7187cbde_7af0d703",
+      "range": {
+        "startLine": 99,
+        "startChar": 74,
+        "endLine": 99,
+        "endChar": 77
+      },
+      "revId": "185a3f8b965435fb89bc16ffed443cfca4a3618e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -193,6 +325,30 @@
     },
     {
       "key": {
+        "uuid": "1ea30552_3e1dfd8d",
+        "filename": "ios/chrome/browser/payments/itunes_json_request.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-07T20:58:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4a2ae8e_4c2b2dcb",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 49
+      },
+      "revId": "185a3f8b965435fb89bc16ffed443cfca4a3618e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53f3608e_b51311e7",
         "filename": "ios/chrome/browser/payments/itunes_json_request.h",
         "patchSetId": 3
@@ -213,6 +369,30 @@
       "revId": "185a3f8b965435fb89bc16ffed443cfca4a3618e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d2c0212_01f9dec9",
+        "filename": "ios/chrome/browser/payments/itunes_json_request.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-07T20:58:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53f3608e_b51311e7",
+      "range": {
+        "startLine": 58,
+        "startChar": 7,
+        "endLine": 58,
+        "endChar": 16
+      },
+      "revId": "185a3f8b965435fb89bc16ffed443cfca4a3618e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
