@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fcd39055_05636318",
+        "filename": "components/omnibox/browser/scored_history_match.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-07T23:40:00Z",
+      "side": 1,
+      "message": "above lines will probably \"accidentally\" fix a bug with IP addresses.",
+      "revId": "a1d96a727eb4e9d78f7c4b40421c22fbae77acfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
