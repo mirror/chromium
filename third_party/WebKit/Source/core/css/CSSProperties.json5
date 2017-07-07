@@ -3035,6 +3035,8 @@
       inherited: true,
       field_template: "keyword",
       type_name: "LineBreak",
+      // The "after-white-space" value should not be accepted for
+      // the unprefixed line-break property.
       keywords: ["auto", "loose", "normal", "strict", "after-white-space"],
       default_value: "auto",
       field_group: "rare-inherited",
