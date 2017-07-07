@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "09ceeca2_50c292fe",
+        "filename": "chrome/browser/password_manager/chrome_password_manager_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-07T10:57:02Z",
+      "side": 1,
+      "message": "As for the single choke point -- having the recording call in the embedder is actually also not completely fool-proof, because there are more embedders (well, one more: iOS).\nConceptually, PromptUserToSaveOrUpdatePassword should be a call outside of the password_manager, limited to just performing the action, so recording the metrics would make more sense inside the password_manager component.\nI\u0027m not feeling too strongly about this, but I slightly prefer Balázs\u0027 suggestion here.",
+      "parentUuid": "28e11a39_b04924af",
+      "revId": "429de7554827036611aba6bd433cd328cf426092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ec92dd41_bf422d3c",
         "filename": "chrome/browser/password_manager/chrome_password_manager_client.cc",
         "patchSetId": 4
