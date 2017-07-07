@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "55d319d3_85ec84c4",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-07-07T01:04:47Z",
+      "side": 1,
+      "message": "\u003e Does this mean if we have a very long path and a very short width to display it in, we will elide the end of the domain (incl. TLD) + path instead of the subdomain + path?\n\nYes, if the path is very long (\u003e 1024 elements which means at least 2048 characters if every segment is a single char) then we\u0027ll just chop off the end.\n\nI looked deeper and realised that the problem is ElideComponentizedPath is O(N^2), which is probably why this check exists (in fact 1024 might be too large a cutoff). If nothing else, I think that logic belongs in ECP, not here. Added a TODO.\n\n\u003e We should probably check whether the string would fit if we replaced the whole path with an ellipsis; if so, we\u0027re good to elide using the existing method, but if not, then we should further elide from the front.\n\nI\u0027m not sure ... if we replace the whole path with an ellipsis it\u0027s highly likely to succeed but then we may end up using only 100px of a 1000px row, followed by a silly looking ellipsis. I think we can do a better job... I\u0027m thinking of changing ECP when given very long paths to try halving the length each time instead of -1, making it O(N log N) instead of O(N^2).",
+      "parentUuid": "efd755eb_7f9f9adc",
+      "revId": "ad1884f7e06cce0895f70d7fcc16cbfc401ceeb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "020e39b4_13c8e598",
         "filename": "components/url_formatter/elide_url.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "ad1884f7e06cce0895f70d7fcc16cbfc401ceeb7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f17d9a64_d533014b",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-07-07T01:04:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "020e39b4_13c8e598",
+      "revId": "ad1884f7e06cce0895f70d7fcc16cbfc401ceeb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
