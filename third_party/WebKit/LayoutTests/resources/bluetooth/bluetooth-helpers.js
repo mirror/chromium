@@ -574,6 +574,18 @@ function getMeasurementIntervalCharacteristic() {
     });
 }
 
+function getTemperatureTypeCharacteristic() {
+  return getHealthThermometerDevice()
+    .then(result => {
+      return result.device.gatt.getPrimaryService('health_thermometer')
+        .then(service => service.getCharacteristic('temperature_type'))
+        .then(characteristic => ({
+          characteristic: characteristic,
+          fake_characteristic: result.fake_temperature_type
+        }));
+    });
+}
+
 function getUserDescriptionDescriptor() {
   return getHealthThermometerDevice()
     .then(result => {

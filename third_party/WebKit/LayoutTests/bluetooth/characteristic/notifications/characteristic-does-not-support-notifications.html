@@ -2,16 +2,14 @@
 <script src="../../../resources/testharness.js"></script>
 <script src="../../../resources/testharnessreport.js"></script>
 <script src="../../../resources/bluetooth/bluetooth-helpers.js"></script>
+<script src="../../../resources/bluetooth/web-bluetooth-test.js"></script>
+<script src="../../../resources/mojo-helpers.js"></script>
 <script>
 'use strict';
 promise_test(() => {
-  return setBluetoothFakeAdapter('HeartRateAdapter')
-    .then(() => requestDeviceWithKeyDown({
-      filters: [{services: ['heart_rate']}]}))
-    .then(device => device.gatt.connect())
-    .then(gattService => gattService.getPrimaryService('heart_rate'))
-    .then(service => service.getCharacteristic('body_sensor_location'))
-    .then(characteristic => assert_promise_rejects_with_message(
+  // The temperature type characteristic only supports 'read'.
+  return getTemperatureTypeCharacteristic()
+    .then(({characteristic}) => assert_promise_rejects_with_message(
       characteristic.startNotifications(),
       new DOMException('GATT Error: Not supported.',
                        'NotSupportedError'),

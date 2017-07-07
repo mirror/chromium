@@ -205,6 +205,14 @@ interface FakeCentral {
       string service_id,
       string peripheral_address) => (bool success);
 
+  // Simulates the |peripheral_address| peripheral sending a notification with
+  // |value| for |characteristic_id| in |service_id|.
+  SimulateNotification(
+      array<uint8> value,
+      string characteristic_id,
+      string service_id,
+      string peripheral_address) => (bool success);
+
   // Returns whether or not a client has subscribed to notifications for
   // characteristic with |characteristics_id| in |service_id| and in
   // |peripheral_address|.

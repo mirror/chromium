@@ -59,6 +59,10 @@ class FakeRemoteGattCharacteristic
   // call its error callback.
   void SetNextUnsubscribeFromNotificationsResponse(uint16_t gatt_code);
 
+  // Changes this characteristic's value to |value| and calls
+  // device::BluetoothAdapterObserver::CharacteristicValueChanged.
+  void SimulateNotification(const std::vector<uint8_t>& value);
+
   // Returns the last sucessfully written value to the characteristic. Returns
   // nullopt if no value has been written yet.
   const base::Optional<std::vector<uint8_t>>& last_written_value() {

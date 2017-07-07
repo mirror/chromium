@@ -370,6 +370,14 @@
       if (!success) throw 'setNextUnsubscribeToNotificationsResponse failed';
     }
 
+    // Simulates the device sending a notification with |value| for this
+    // characteristic.
+    async simulateNotification({value}) {
+      let {success} =
+        await this.fake_central_ptr_.simulateNotification(value, ...this.ids_);
+      if (!success) throw 'simulateNotification failed';
+    }
+
     // Returns whether or not a client has subscribed to notifications for this
     // characteristic.
     async isNotifying() {
