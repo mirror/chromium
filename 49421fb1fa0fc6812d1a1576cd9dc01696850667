@@ -279,6 +279,30 @@
     },
     {
       "key": {
+        "uuid": "4b2740cf_77a7fb9b",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker_unittest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-07T21:23:15Z",
+      "side": 1,
+      "message": "The issue here is that this test would not actually test the production code as it directly passes through to the test. As a result, you\u0027re only testing test code.\n\nIn this case, you would be better off without the test or actually creating a lightweight FeatureEngagementTracker to validate you\u0027re doing the right thing. Not testing the code seems wrong, so we\u0027re going with the lightweight option.",
+      "parentUuid": "1a71e2a1_23ce10d7",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 38
+      },
+      "revId": "49421fb1fa0fc6812d1a1576cd9dc01696850667",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "42e588fd_af865065",
         "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_feature_engagement_tracker_unittest.cc",
         "patchSetId": 27
