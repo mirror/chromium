@@ -164,6 +164,30 @@
       "revId": "537f2d0bd214299dabe561df1550e6f6732027c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "186c3f15_d0438415",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/BottomToolbarPhone.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-07-07T17:03:29Z",
+      "side": 1,
+      "message": "Can we avoid this by adding the two calls (it is 3 but I think we only use 2) to the LocationBar interface? That way we will keep the current state where the ToolbarLayouts dont handover control over the whole layout but only a smaller interface.",
+      "parentUuid": "4f65f2d1_4b5a999f",
+      "range": {
+        "startLine": 188,
+        "startChar": 29,
+        "endLine": 188,
+        "endChar": 43
+      },
+      "revId": "537f2d0bd214299dabe561df1550e6f6732027c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
