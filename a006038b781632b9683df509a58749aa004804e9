@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a36ff55e_674cbb4a",
+        "filename": "ios/chrome/browser/ui/reading_list/reading_list_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-07T16:33:52Z",
+      "side": 1,
+      "message": "Do you still need this include? Could you please also check in other places.",
+      "range": {
+        "startLine": 28,
+        "startChar": 35,
+        "endLine": 28,
+        "endChar": 50
+      },
+      "revId": "a006038b781632b9683df509a58749aa004804e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
