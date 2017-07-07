@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2b40801_a719d791",
+        "filename": "content/browser/service_worker/service_worker_register_job.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-07-07T06:35:08Z",
+      "side": 1,
+      "message": "Starting a timer for every job seems to be heavy.. \nTo find and doom some jobs running for too long time, how about such a solution:\n  - Mark a time stamp(current time) on every job when it\u0027s pushed into the job queue.\n  - Change the DoomInstallingWorkerIfNeeded() impl to do: Iterate the job queue, for any one job, compare its\u0027 marked time stamp with current time, if we found it has been in the queue longer than for example 30 minutes, doom it.",
+      "range": {
+        "startLine": 167,
+        "startChar": 23,
+        "endLine": 167,
+        "endChar": 41
+      },
+      "revId": "c1e338aaf1e5dae16a9d3ed1649c12fadad35a49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
