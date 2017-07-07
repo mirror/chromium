@@ -33,6 +33,24 @@
       "revId": "87c728c530f3381cc478b415b64ff2b19f8fb7bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40b0fdb3_533dd4a4",
+        "filename": "components/viz/run_all_unittests.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-07-07T13:59:18Z",
+      "side": 1,
+      "message": "danakj: Sure I can destroy it explicitly. The reason I changed it to unique_ptr\u003c\u003e is because in component builds (static builds work fine) it complains !base::MessageLoop::current() after the test process forks. Something to do with how the thread local storage of the singleton is copied between processes I guess? I don\u0027t think the parent process gets far enough to call Initialize() so this doesn\u0027t cause problems.\n\nsadrul: I don\u0027t think that would work? At least, it would be the same as a MessageLoop, since the test would have no way of accessing the ScopedTaskEnvironment?",
+      "parentUuid": "a556f3ea_dc638897",
+      "revId": "87c728c530f3381cc478b415b64ff2b19f8fb7bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
