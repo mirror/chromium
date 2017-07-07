@@ -473,11 +473,17 @@ group("chromecast_locales_pak") {
   }
 }
 
+chromecast_branding_public = chromecast_branding == "public"
+
 buildflag_header("chromecast_features") {
   header = "chromecast_features.h"
   flags = [
+    "CHROMECAST_BRANDING_PUBLIC=$chromecast_branding_public",
+    "ENABLE_ASSISTANT=$enable_assistant",
+    "IS_ANDROID_THINGS=$is_android_things",
     "IS_CAST_AUDIO_ONLY=$is_cast_audio_only",
     "IS_CAST_USING_CMA_BACKEND=$is_cast_using_cma_backend",
+    "SUPPORTS_MULTIZONE=$supports_multizone",
   ]
 }
 
