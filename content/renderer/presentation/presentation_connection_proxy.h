@@ -76,8 +76,8 @@ class CONTENT_EXPORT PresentationConnectionProxy
 
   ~PresentationConnectionProxy() override;
 
-  virtual void SendConnectionMessage(PresentationConnectionMessage message,
-                                     OnMessageCallback callback) const;
+  virtual void SendConnectionMessage(
+      PresentationConnectionMessage message) const;
 
   // blink::mojom::PresentationConnection implementation
   void OnMessage(PresentationConnectionMessage message,
@@ -89,6 +89,8 @@ class CONTENT_EXPORT PresentationConnectionProxy
   void Close() const override;
   void NotifyTargetConnection(
       blink::WebPresentationConnectionState state) override;
+  void SendTextMessage(const blink::WebString& message) override;
+  void SendBinaryMessage(const uint8_t* data, size_t length) override;
 
  protected:
   explicit PresentationConnectionProxy(

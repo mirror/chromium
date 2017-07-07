@@ -8,7 +8,6 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#include <deque>
 #include <map>
 #include <memory>
 #include <set>
@@ -19,7 +18,6 @@
 #include "base/id_map.h"
 #include "base/macros.h"
 #include "content/common/content_export.h"
-#include "content/public/common/presentation_connection_message.h"
 #include "content/public/common/presentation_info.h"
 #include "content/public/renderer/render_frame_observer.h"
 #include "mojo/public/cpp/bindings/binding.h"
@@ -41,7 +39,7 @@ namespace content {
 
 class TestPresentationDispatcher;
 
-// PresentationDispatcher is a delegate for Presentation API messages used by
+// PresentationDispatcher is a delegate for Presentation API used by
 // Blink. It forwards the calls to the Mojo PresentationService.
 class CONTENT_EXPORT PresentationDispatcher
     : public RenderFrameObserver,
@@ -79,35 +77,6 @@ class CONTENT_EXPORT PresentationDispatcher
   FRIEND_TEST_ALL_PREFIXES(PresentationDispatcherTest,
                            TestSetDefaultPresentationUrls);
 
-  struct SendMessageRequest {
-    SendMessageRequest(
-        const PresentationInfo& presentation_info,
-        PresentationConnectionMessage connection_message,
-        const blink::WebPresentationConnectionProxy* connection_proxy);
-
-    ~SendMessageRequest();
-
-    PresentationInfo presentation_info;
-    PresentationConnectionMessage message;
-    // Proxy of Blink connection object |connection| calling connection.send().
-    // It does not take ownership of proxy object. Proxy object is owned by
-    // Blink connection. Blink connection is destroyed after
-    // PresentationDispatcher so |connection_proxy| should always be valid.
-    const blink::WebPresentationConnectionProxy* connection_proxy;
-  };
-
-  static std::unique_ptr<SendMessageRequest> CreateSendTextMessageRequest(
-      const blink::WebURL& presentationUrl,
-      const blink::WebString& presentationId,
-      const blink::WebString& message,
-      const blink::WebPresentationConnectionProxy* connection_proxy);
-  static std::unique_ptr<SendMessageRequest> CreateSendBinaryMessageRequest(
-      const blink::WebURL& presentationUrl,
-      const blink::WebString& presentationId,
-      const uint8_t* data,
-      size_t length,
-      const blink::WebPresentationConnectionProxy* connection_proxy);
-
   // WebPresentationClient implementation.
   void SetController(blink::WebPresentationController* controller) override;
   void SetReceiver(blink::WebPresentationReceiver*) override;
@@ -122,23 +91,6 @@ class CONTENT_EXPORT PresentationDispatcher
       override;
   void TerminatePresentation(const blink::WebURL& presentationUrl,
                              const blink::WebString& presentationId) override;
-  void SendString(
-      const blink::WebURL& presentationUrl,
-      const blink::WebString& presentationId,
-      const blink::WebString& message,
-      const blink::WebPresentationConnectionProxy* connection_proxy) override;
-  void SendArrayBuffer(
-      const blink::WebURL& presentationUrl,
-      const blink::WebString& presentationId,
-      const uint8_t* data,
-      size_t length,
-      const blink::WebPresentationConnectionProxy* connection_proxy) override;
-  void SendBlobData(
-      const blink::WebURL& presentationUrl,
-      const blink::WebString& presentationId,
-      const uint8_t* data,
-      size_t length,
-      const blink::WebPresentationConnectionProxy* connection_proxy) override;
   void CloseConnection(
       const blink::WebURL& presentationUrl,
       const blink::WebString& presentationId,
@@ -153,8 +105,6 @@ class CONTENT_EXPORT PresentationDispatcher
       const blink::WebVector<blink::WebURL>& presentationUrls) override;
 
   // RenderFrameObserver implementation.
-  void DidCommitProvisionalLoad(bool is_new_navigation,
-                                bool is_same_document_navigation) override;
   void DidFinishDocumentLoad() override;
   void OnDestruct() override;
   void WidgetWillClose() override;
@@ -181,12 +131,6 @@ class CONTENT_EXPORT PresentationDispatcher
       blink::mojom::PresentationConnectionRequest /*connection_request*/)
       override;
 
-  // Call to PresentationService to send the message in |request|.
-  // |presentation_info| and |message| of |reuqest| will be consumed.
-  // |HandleSendMessageRequests| will be invoked after the send is attempted.
-  void DoSendMessage(SendMessageRequest* request);
-  void HandleSendMessageRequests(bool success);
-
   // Creates ControllerConnectionProxy object |controller_connection_proxy| with
   // |connection|. Sends mojo interface ptr of |controller_connection_proxy|
   // and mojo interface request of |controller_connection_proxy|'s
@@ -207,11 +151,6 @@ class CONTENT_EXPORT PresentationDispatcher
   blink::WebPresentationReceiver* receiver_;
   blink::mojom::PresentationServicePtr presentation_service_;
   mojo::Binding<blink::mojom::PresentationServiceClient> binding_;
-
-  // Message requests are queued here and only one message at a time is sent
-  // over mojo channel.
-  using MessageRequestQueue = std::deque<std::unique_ptr<SendMessageRequest>>;
-  MessageRequestQueue message_request_queue_;
 
   enum class ListeningState {
     INACTIVE,
