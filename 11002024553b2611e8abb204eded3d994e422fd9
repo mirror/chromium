@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40a419cd_1f593699",
+        "filename": "components/omnibox/browser/autocomplete_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-07T20:29:56Z",
+      "side": 1,
+      "message": "nit for later :-): omit \"we\"",
+      "range": {
+        "startLine": 352,
+        "startChar": 36,
+        "endLine": 352,
+        "endChar": 38
+      },
+      "revId": "11002024553b2611e8abb204eded3d994e422fd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

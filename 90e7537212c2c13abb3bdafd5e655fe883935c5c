@@ -196,6 +196,30 @@
     },
     {
       "key": {
+        "uuid": "ffa029d3_121b3d92",
+        "filename": "components/omnibox/browser/autocomplete_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-07T20:29:56Z",
+      "side": 1,
+      "message": "Thanks for indulging my paranoia. :-)\n\nI\u0027m glad I\u0027m not the only one who doesn\u0027t trust THE SYSTEM!",
+      "parentUuid": "9c8ec7fa_7d5090d9",
+      "range": {
+        "startLine": 355,
+        "startChar": 21,
+        "endLine": 355,
+        "endChar": 22
+      },
+      "revId": "90e7537212c2c13abb3bdafd5e655fe883935c5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40a71dc0_c2bc9c20",
         "filename": "components/omnibox/browser/autocomplete_controller.h",
         "patchSetId": 2
