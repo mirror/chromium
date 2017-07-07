@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06f0a4b5_eecb557a",
+        "filename": "ios/chrome/browser/chrome_url_constants.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-07T16:59:55Z",
+      "side": 1,
+      "message": "Does clang-format automatically align this in two columns? That seems a bit uncommon otherwise (and adds a lot of churn when a value in the middle is removed or added) :-/",
+      "range": {
+        "startLine": 61,
+        "startChar": 4,
+        "endLine": 61,
+        "endChar": 25
+      },
+      "revId": "19e4b33091dde0549ec0a02c01df1eed10e5f4b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
