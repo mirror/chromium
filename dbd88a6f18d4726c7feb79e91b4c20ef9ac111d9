@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1dfbd0a_d04d2a49",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/client_process_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-07T18:53:13Z",
+      "side": 1,
+      "message": "remove this, if it\u0027s null the next line is going to crash anyways",
+      "range": {
+        "startLine": 188,
+        "startChar": 0,
+        "endLine": 188,
+        "endChar": 30
+      },
+      "revId": "dbd88a6f18d4726c7feb79e91b4c20ef9ac111d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3070ae99_aa99a7d5",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/client_process_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-07T18:53:13Z",
+      "side": 1,
+      "message": "add a TODO: it\u0027s temporary move to the service with a link to the bug",
+      "range": {
+        "startLine": 80,
+        "startChar": 2,
+        "endLine": 80,
+        "endChar": 53
+      },
+      "revId": "dbd88a6f18d4726c7feb79e91b4c20ef9ac111d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
