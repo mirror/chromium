@@ -149,15 +149,17 @@ void FakeCryptohomeClient::GetSanitizedUsername(
     const StringDBusMethodCallback& callback) {
   // Even for stub implementation we have to return different values so that
   // multi-profiles would work.
-  std::string sanitized_username = GetStubSanitizedUsername(cryptohome_id);
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE,
-      base::Bind(callback, DBUS_METHOD_CALL_SUCCESS, sanitized_username));
+  auto task = system_salt_.empty()
+                  ? base::BindOnce(callback, DBUS_METHOD_CALL_FAILURE, "")
+                  : base::BindOnce(callback, DBUS_METHOD_CALL_SUCCESS,
+                                   GetStubSanitizedUsername(cryptohome_id));
+  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, std::move(task));
 }
 
 std::string FakeCryptohomeClient::BlockingGetSanitizedUsername(
     const cryptohome::Identification& cryptohome_id) {
-  return GetStubSanitizedUsername(cryptohome_id);
+  return system_salt_.empty() ? std::string()
+                              : GetStubSanitizedUsername(cryptohome_id);
 }
 
 void FakeCryptohomeClient::AsyncMount(
