@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19fcb98d_bba322fc",
+        "filename": "chrome/browser/ui/webui/signin/signin_error_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-07-07T11:33:42Z",
+      "side": 1,
+      "message": "This comment is not very clear. It says we should avoid closing something, but then calls a Close() method anyway.",
+      "revId": "9f1c8525b5ac9e6e458961cceb9983eb61b805fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
