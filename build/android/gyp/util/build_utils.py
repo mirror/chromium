@@ -81,6 +81,11 @@ def FindInDirectories(directories, filename_filter):
   return all_files
 
 
+def ReadBuildVars(build_vars_path):
+  with open(build_vars_path) as f:
+    return dict(l.replace('//', '').rstrip().split('=', 1) for l in f)
+
+
 def ParseGnList(gn_string):
   """Converts a command-line parameter into a list.
 
