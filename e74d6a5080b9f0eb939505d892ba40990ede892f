@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "d4c3aadc_6305f79e",
+        "filename": "chrome/browser/ntp_tiles/ntp_tiles_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-07-07T09:17:55Z",
+      "side": 1,
+      "message": "Which callbacks_list? Can you please add a comment documenting that in the code?",
+      "parentUuid": "8402c901_daf16d99",
+      "range": {
+        "startLine": 64,
+        "startChar": 41,
+        "endLine": 64,
+        "endChar": 60
+      },
+      "revId": "e74d6a5080b9f0eb939505d892ba40990ede892f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f1f7968a_4aa23a1f",
         "filename": "chrome/browser/ntp_tiles/ntp_tiles_browsertest.cc",
         "patchSetId": 2
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "e3ab7d0e_629aa290",
+        "filename": "chrome/browser/ntp_tiles/ntp_tiles_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-07-07T09:17:55Z",
+      "side": 1,
+      "message": "Ack, I think this is the right thing to do, since it\u0027s otherwise time-based and I don\u0027t think this is an important piece to test here.",
+      "parentUuid": "f1f7968a_4aa23a1f",
+      "range": {
+        "startLine": 84,
+        "startChar": 14,
+        "endLine": 84,
+        "endChar": 29
+      },
+      "revId": "e74d6a5080b9f0eb939505d892ba40990ede892f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1038119_6a270f5e",
         "filename": "chrome/browser/ntp_tiles/ntp_tiles_browsertest.cc",
         "patchSetId": 2
@@ -82,6 +130,30 @@
       "writtenOn": "2017-07-07T08:52:50Z",
       "side": 1,
       "message": "I\u0027m going to continue investigating these options, but let me know if you have any suggestions.",
+      "range": {
+        "startLine": 91,
+        "startChar": 42,
+        "endLine": 91,
+        "endChar": 0
+      },
+      "revId": "e74d6a5080b9f0eb939505d892ba40990ede892f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af8451ae_591a53d0",
+        "filename": "chrome/browser/ntp_tiles/ntp_tiles_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-07-07T09:17:55Z",
+      "side": 1,
+      "message": "Since you are expecting a call to OnMostVisitedURLsAvailable() anyway, can you simply wait for it? You could introduce something like:\n\nclass MostVisitedSitesWaiter : public MostVisitedSites::Observer {\npublic:\n  void Wait() {\n    base::RunLoop run_loop;\n    quit_closure_ \u003d run_loop.QuitClosure();\n    run_loop.Run();\n  }\n  void OnMostVisitedURLsAvailable(const NTPTilesVector\u0026 tiles) override {\n    if (!quit_closure_.is_null()) {\n      quit_closure_.Run();\n    }\n  }\n  void OnIconMadeAvailable(const GURL\u0026 site_url) {};\n\nprivate:\n  base::Closure quit_closure_;\n};",
+      "parentUuid": "c1038119_6a270f5e",
       "range": {
         "startLine": 91,
         "startChar": 42,
