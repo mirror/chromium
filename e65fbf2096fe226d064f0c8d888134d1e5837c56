@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "4838822f_f4696252",
+        "filename": "headless/lib/browser/devtools_api/devtools_connection.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-07-07T09:58:23Z",
+      "side": 1,
+      "message": "Ah, ok. I think it\u0027s missing a single space \" \" then to match the start of \"number\".",
+      "parentUuid": "171a3020_87a5b2f5",
+      "range": {
+        "startLine": 47,
+        "startChar": 17,
+        "endLine": 47,
+        "endChar": 34
+      },
+      "revId": "e65fbf2096fe226d064f0c8d888134d1e5837c56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40cae9c8_3ac0e75b",
         "filename": "headless/lib/browser/devtools_api/domain_js.template",
         "patchSetId": 2
