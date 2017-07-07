@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "03d35143_4eef84bd",
+        "filename": "content/child/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-07-07T11:09:58Z",
+      "side": 1,
+      "message": "I see. I reverted the changes to content/child (and removed the throttle).",
+      "parentUuid": "eccc3baa_bc2720af",
+      "revId": "5b0910fbb1a68d80dac7769e144732869607f94a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8ef27da_aa316151",
         "filename": "content/child/resource_dispatcher.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "5b0910fbb1a68d80dac7769e144732869607f94a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66096670_74f91d51",
+        "filename": "content/child/resource_dispatcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-07-07T11:09:58Z",
+      "side": 1,
+      "message": "I removed the throttle in favor of an URLLoader (though I have yet to figure out where that would plumbed in).",
+      "parentUuid": "b8ef27da_aa316151",
+      "revId": "5b0910fbb1a68d80dac7769e144732869607f94a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

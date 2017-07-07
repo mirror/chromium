@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f3927dc7_8bd6e455",
+        "filename": "content/renderer/net/DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-07-07T11:09:58Z",
+      "side": 1,
+      "message": "Removed it.",
+      "parentUuid": "7453816e_270ceeee",
+      "revId": "abf3939f962f0d49ba0516c2c493bc88c7d4bfdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4f725bc_b1aeeef3",
         "filename": "content/renderer/net/cross_origin_preflight_result_cache.h",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "abf3939f962f0d49ba0516c2c493bc88c7d4bfdd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2906292_d20feebf",
+        "filename": "content/renderer/net/cross_origin_preflight_result_cache.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-07-07T11:09:58Z",
+      "side": 1,
+      "message": "I followed the current implementation of the cache in blink, but using url::Origin is indeed nicer. Changed it.",
+      "parentUuid": "a4f725bc_b1aeeef3",
+      "revId": "abf3939f962f0d49ba0516c2c493bc88c7d4bfdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3f3e8480_95f479bb",
+        "filename": "content/renderer/net/cross_origin_preflight_result_cache.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-07-07T11:09:58Z",
+      "side": 1,
+      "message": "Thx!",
+      "parentUuid": "277a9411_60f2f114",
+      "revId": "abf3939f962f0d49ba0516c2c493bc88c7d4bfdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8911f3d_80cb5f37",
         "filename": "content/renderer/net/cross_origin_preflight_result_cache.h",
         "patchSetId": 4
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "887ee0d6_01248f22",
+        "filename": "content/renderer/net/cross_origin_preflight_result_cache.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-07-07T11:09:58Z",
+      "side": 1,
+      "message": "Thx!",
+      "parentUuid": "b8911f3d_80cb5f37",
+      "revId": "abf3939f962f0d49ba0516c2c493bc88c7d4bfdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1800dfc_8650b2ec",
         "filename": "content/renderer/net/cross_origin_preflight_result_cache.h",
         "patchSetId": 4
@@ -84,6 +156,24 @@
       "revId": "abf3939f962f0d49ba0516c2c493bc88c7d4bfdd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e49248c6_deb029e3",
+        "filename": "content/renderer/net/cross_origin_preflight_result_cache.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-07-07T11:09:58Z",
+      "side": 1,
+      "message": "Ack. Added parameter names where they where missing.",
+      "parentUuid": "c1800dfc_8650b2ec",
+      "revId": "abf3939f962f0d49ba0516c2c493bc88c7d4bfdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
