@@ -66,9 +66,15 @@ public class DialogOverlayImpl implements AndroidOverlay, DialogOverlayCore.Host
         mDialogCore = new DialogOverlayCore();
         mHoppingHost = new ThreadHoppingHost(this);
 
+        // Register to get token updates.  Note that this may not call us back directly, since
+        // |mDialogCore| hasn't been initialized yet.
+        mNativeHandle = nativeInit(config.routingToken.high, config.routingToken.low);
+        assert mNativeHandle != 0;
+
         // Post init to the overlay thread.
         final DialogOverlayCore dialogCore = mDialogCore;
         final Context context = ContextUtils.getApplicationContext();
+        nativeGetCompositorOffset(mNativeHandle, config.rect);
         mOverlayHandler.post(new Runnable() {
             @Override
             public void run() {
@@ -76,9 +82,6 @@ public class DialogOverlayImpl implements AndroidOverlay, DialogOverlayCore.Host
             }
         });
 
-        // Register to get token updates.
-        mNativeHandle = nativeInit(config.routingToken.high, config.routingToken.low);
-        assert mNativeHandle != 0;
     }
 
     // AndroidOverlay impl.
@@ -298,4 +301,10 @@ public class DialogOverlayImpl implements AndroidOverlay, DialogOverlayCore.Host
      * @param surfaceId Id that was returned by registerSurface.
      */
     private static native void nativeUnregisterSurface(int surfaceId);
+
+    /**
+     * Look up and return a surface.
+     * @param surfaceId Id that was returned by registerSurface.
+     */
+    /* package */ static native Surface nativeLookupSurfaceForTesting(int surfaceId);
 }

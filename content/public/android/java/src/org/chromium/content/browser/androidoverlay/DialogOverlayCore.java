@@ -184,7 +184,8 @@ class DialogOverlayCore {
         // Use a media surface, which is what SurfaceView uses by default.  For
         // debugging overlay drawing, consider using TYPE_APPLICATION_PANEL to
         // move the dialog over the CompositorView.
-        layoutParams.type = WindowManager.LayoutParams.TYPE_APPLICATION_MEDIA;
+        // layoutParams.type = WindowManager.LayoutParams.TYPE_APPLICATION_MEDIA;
+        layoutParams.type = WindowManager.LayoutParams.TYPE_APPLICATION_PANEL;
 
         layoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
                 | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
