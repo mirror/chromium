@@ -53,8 +53,9 @@ void ChildProcessLauncherHelper::BeforeLaunchOnClientThread() {
         process_type == switches::kUtilityProcess)
       << "Unsupported process type: " << process_type;
 
-  // Non-sandboxed utility or renderer process are currently not supported.
+  // Non-sandboxed renderer processes are currently not supported.
   DCHECK(process_type == switches::kGpuProcess ||
+         process_type == switches::kUtilityProcess ||
          !command_line()->HasSwitch(switches::kNoSandbox));
 }
 
@@ -131,8 +132,16 @@ ChildProcessLauncherHelper::LaunchProcessOnLauncherThread(
   }
 
   constexpr int param_key = 0;  // TODO(boliu): Use this.
+  bool sandboxed = true;
+  if (command_line()->GetSwitchValueASCII(switches::kProcessType) ==
+      switches::kGpuProcess) {
+    sandboxed = false;
+  }
+  if (command_line()->HasSwitch(switches::kNoSandbox))
+    sandboxed = false;
   java_peer_.Reset(Java_ChildProcessLauncherHelper_createAndStart(
-      env, reinterpret_cast<intptr_t>(this), param_key, j_argv, j_file_infos));
+      env, reinterpret_cast<intptr_t>(this), param_key, j_argv, j_file_infos,
+      sandboxed));
   AddRef();  // Balanced by OnChildProcessStarted.
 
   return Process();
