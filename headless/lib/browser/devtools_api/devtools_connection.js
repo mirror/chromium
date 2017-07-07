@@ -10,13 +10,13 @@
 
 'use strict';
 
-goog.module('chromium.DevTools.Connection');
+goog.provide('chromium.DevTools.Connection');
 
 /**
  * Handles sending and receiving DevTools JSON protocol messages over the
  * provided low level message transport.
  */
-class Connection {
+chromium.DevTools.Connection = class {
   /**
    * @param {!Object} transport The API providing transport for devtools
    *     commands.
@@ -31,7 +31,7 @@ class Connection {
     /**
      * An object containing pending DevTools protocol commands keyed by id.
      *
-     * @private {!Map<number, !Connection.PendingCommand>}
+     * @private {!Map<number, !chromium.DevTools.Connection.PendingCommand>}
      */
     this.pendingCommands_ = new Map();
 
@@ -42,7 +42,8 @@ class Connection {
      * An object containing DevTools protocol events we are listening for keyed
      * by name.
      *
-     * @private {!Map<string, !Map<number, !Connection.EventFunction>>}
+     * @private {!Map<string, !Map<number,
+     *                            !chromium.DevTools.Connection.EventFunction>>}
      */
     this.eventListeners_ = new Map();
 
@@ -62,8 +63,9 @@ class Connection {
    *
    * @param {string} eventName Name of the DevTools protocol event to listen
    *     for.
-   * @param {!Connection.EventFunction} listener The callback issued when we
-   *     receive a DevTools protocol event corresponding to the given name.
+   * @param {!chromium.DevTools.Connection.EventFunction} listener The callback
+   *     issued when we receive a DevTools protocol event corresponding to the
+   *     given name.
    * @return {number} The id of this event listener.
    */
   addEventListener(eventName, listener) {
@@ -100,7 +102,8 @@ class Connection {
    * @param {string} method The name of the DevTools protocol command method.
    * @param {!Object=} params An object containing the command parameters if
    *     any.
-   * @return {!Promise<!Object>} A promise for the results object.
+   * @return {!Promise<!TYPE>} A promise for the results object.
+   * @template TYPE
    */
   sendDevToolsMessage(method, params = {}) {
     let id = this.commandId_;
@@ -165,7 +168,7 @@ class Connection {
 /**
  * @typedef {function(Object): undefined|function(string): undefined}
  */
-Connection.EventFunction;
+chromium.DevTools.Connection.EventFunction;
 
 /**
  * @typedef {{
@@ -173,6 +176,6 @@ Connection.EventFunction;
  *    reject: function(!Object)
  * }}
  */
-Connection.PendingCommand;
+chromium.DevTools.Connection.PendingCommand;
 
-exports = Connection;
+goog.exportSymbol('chromium.DevTools.Connection', chromium.DevTools.Connection);
