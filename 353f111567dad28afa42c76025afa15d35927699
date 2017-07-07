@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c69c6131_58fc695a",
+        "filename": "components/autofill/core/browser/autofill_assistant.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-07-07T18:41:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84abbff2_e17882e4",
+      "range": {
+        "startLine": 65,
+        "startChar": 27,
+        "endLine": 65,
+        "endChar": 48
+      },
+      "revId": "353f111567dad28afa42c76025afa15d35927699",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf762bdc_a2c91d8e",
         "filename": "components/autofill/core/browser/autofill_manager.cc",
         "patchSetId": 19
@@ -45,6 +69,30 @@
       "revId": "353f111567dad28afa42c76025afa15d35927699",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53d99811_f98f8d1d",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 752,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-07-07T18:41:50Z",
+      "side": 1,
+      "message": "Prefer not to do this because GetOrCreateFullCardRequest is used in other places like iOS, where we don\u0027t log ukm.",
+      "parentUuid": "bf762bdc_a2c91d8e",
+      "range": {
+        "startLine": 752,
+        "startChar": 10,
+        "endLine": 752,
+        "endChar": 36
+      },
+      "revId": "353f111567dad28afa42c76025afa15d35927699",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
