@@ -53,8 +53,6 @@ class UrlBar : public TexturedElement {
   bool can_go_back_ = false;
   bool down_ = false;
   bool security_region_down_ = false;
-  base::TimeTicks last_begin_frame_time_;
-  base::TimeTicks last_update_time_;
 
   DISALLOW_COPY_AND_ASSIGN(UrlBar);
 };
