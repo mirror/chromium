@@ -363,6 +363,14 @@ TEST_F(LargeIconServiceTest, ShouldNotGetFromGoogleServerIfUnavailable) {
               IsEmpty());
 }
 
+TEST_F(LargeIconServiceTest, ShouldCallOnTouch) {
+  const GURL kIconUrl("http://www.example.com/favicon.ico");
+
+  EXPECT_CALL(mock_favicon_service_, TouchOnDemandFavicon(kIconUrl));
+
+  large_icon_service_.TouchIconFromGoogleServer(kIconUrl);
+}
+
 class LargeIconServiceGetterTest : public LargeIconServiceTest,
                                    public ::testing::WithParamInterface<bool> {
  public:
@@ -402,6 +410,7 @@ class LargeIconServiceGetterTest : public LargeIconServiceTest,
     if (!result.image.IsEmpty()) {
       returned_bitmap_size_ =
           base::MakeUnique<gfx::Size>(result.image.ToImageSkia()->size());
+      ASSERT_TRUE(result.icon_url.is_valid());
     }
     StoreFallbackStyle(result.fallback_icon_style.get());
   }
