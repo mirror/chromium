@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "865dc306_4a3f15a7",
+        "filename": "chrome/test/chromedriver/session_commands.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-07-07T02:04:49Z",
+      "side": 1,
+      "message": "The life time of the objects is not correct. Initially, each unique_ptr owns an object. At line 199, the ownership of the first dictionary is transferred from inner to the list.  Then at 200, the ownership of the list is transferred to the second dictionary (your code said inner, but I assume you meant outer). At 202, you get a pointer to the list without changing the ownership. At line 203, the end of the scope of outer is reached. Since outer still owns the second dictionary, it is immediately destructed, and recursively causes the destruction of the list and the first dictionary (both now owned by the second dictionary). So by the time code reaches 204, first_match_list points to freed memory.\n\nI think outer is not necessary. I\u0027d move the declaration of tmp_list before 194, so it survives after the if statement. Since the list isn\u0027t always needed, tmp_list doesn\u0027t need to have an initial value, just do the following (it receives default value of 0)\n  std::unique_ptr\u003cbase::ListValue\u003e tmp_list;\n\nInside the if statement, keep lines 196 and 199, and then do\n  first_match_list \u003d tmp_list.get();\nso first_match_list points to the list, without transferring ownership.",
+      "revId": "845f6cd9789b435a54624cbd802651a003a4e874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
