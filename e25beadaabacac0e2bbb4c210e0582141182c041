@@ -16,6 +16,24 @@
       "revId": "e25beadaabacac0e2bbb4c210e0582141182c041",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25f545c7_08643959",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-07-07T06:16:45Z",
+      "side": 1,
+      "message": "As we chatted offline, the \"not enabled\" virtually means unthrottled (unlimited). So, it\u0027s consistent though it will be a bit confusing.\n\nUsing mocked WebFrameScheduler to call this method sounds a better solution. But since EmptyFrameScheduler exists in core/, let me make a separate CL to introduce an equivalent thing in MockFetchContext. I will submit this patch without this fix, and send a separate review request soon (local patch is already working).",
+      "parentUuid": "de5ebeb8_70b2eb5a",
+      "revId": "e25beadaabacac0e2bbb4c210e0582141182c041",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
