@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22611634_64d0f818",
+        "filename": "content/browser/service_worker/embedded_worker_instance.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-07T05:58:43Z",
+      "side": 1,
+      "message": "Hmm, OK. The naming is still confusing for me. A sentence like:\n\nThese are called \"pending\" because they are not used directly by this class and are just transferred to the renderer in SendStartWorker().\n\n\nis easier to understand for me. I would use that for the second sentence.",
+      "revId": "273d0af94c5ba3ef874857f3a0477e0c7d0fd18e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b68a7688_2a83c8c2",
+        "filename": "content/common/service_worker/service_worker_installed_scripts_manager.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-07T05:58:43Z",
+      "side": 1,
+      "message": "\"// Browser-side interface. The renderer uses this interface to receive information about installed scripts from the browser.\"",
+      "revId": "273d0af94c5ba3ef874857f3a0477e0c7d0fd18e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
