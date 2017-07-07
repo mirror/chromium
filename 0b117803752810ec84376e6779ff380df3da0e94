@@ -16,6 +16,24 @@
       "revId": "0b117803752810ec84376e6779ff380df3da0e94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28ace34c_854c479d",
+        "filename": "chrome/browser/task_manager/providers/arc/arc_process_filter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1179631
+      },
+      "writtenOn": "2017-07-07T05:23:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6a00572_4d5e7eaa",
+      "revId": "0b117803752810ec84376e6779ff380df3da0e94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
