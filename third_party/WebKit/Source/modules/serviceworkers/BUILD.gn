@@ -6,6 +6,8 @@ import("//third_party/WebKit/Source/modules/modules.gni")
 
 blink_modules_sources("serviceworkers") {
   sources = [
+    "ContentSettingInstanceClient.cpp",
+    "ContentSettingInstanceClient.h",
     "ExtendableEvent.cpp",
     "ExtendableEvent.h",
     "ExtendableMessageEvent.cpp",
