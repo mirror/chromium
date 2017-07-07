@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5b6d32c_c982a6e2",
+        "filename": "components/translate/DEPS",
+        "patchSetId": 8
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-07-07T09:09:33Z",
+      "side": 1,
+      "message": "should this be in translate/ios/browser and be restricted to language/core/browser?",
+      "revId": "c1fc7acd5a1d50f7e613151787f59dee2d8147dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
