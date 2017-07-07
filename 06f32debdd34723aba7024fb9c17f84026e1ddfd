@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9775c62d_e0a27062",
+        "filename": "gpu/command_buffer/service/program_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-07-07T23:25:23Z",
+      "side": 1,
+      "message": "I was confused about why it was legal to use an ES 3.0 type here but see that in SetUp() this is already mocking an ES 3.1 context.",
+      "range": {
+        "startLine": 207,
+        "startChar": 2,
+        "endLine": 207,
+        "endChar": 8
+      },
+      "revId": "06f32debdd34723aba7024fb9c17f84026e1ddfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d86993d2_37134994",
+        "filename": "gpu/command_buffer/tests/gl_oob_attrib_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-07-07T23:25:23Z",
+      "side": 1,
+      "message": "Are there other obvious cases which should be tested here? This one attempts to stride the middle column of the matrix through the buffer? Did the bounds checking previously work if the base location of the matrix was the one which was enabled as an array? Should that be tested too? Never mind if the intent is to keep the test targeted.",
+      "revId": "06f32debdd34723aba7024fb9c17f84026e1ddfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
