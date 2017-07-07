@@ -107,6 +107,10 @@ class PaymentRequestStateTest : public testing::Test,
     return &test_payment_request_delegate_;
   }
 
+  autofill::TestPersonalDataManager* test_personal_data_manager() {
+    return &test_personal_data_manager_;
+  }
+
  private:
   std::unique_ptr<PaymentRequestState> state_;
   std::unique_ptr<PaymentRequestSpec> spec_;
