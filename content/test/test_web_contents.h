@@ -144,6 +144,10 @@ class TestWebContents : public WebContentsImpl, public WebContentsTester {
       NavigationHandle* navigation_handle,
       scoped_refptr<net::HttpResponseHeaders> response_headers) override;
 
+  void SetLastCommittedURL(const GURL& url) override;
+
+  const GURL& GetLastCommittedURL() const override;
+
  protected:
   // The deprecated WebContentsTester still needs to subclass this.
   explicit TestWebContents(BrowserContext* browser_context);
@@ -185,6 +189,7 @@ class TestWebContents : public WebContentsImpl, public WebContentsTester {
   // Map keyed by image URL. Values are <id, callback> pairs.
   std::map<GURL, std::list<std::pair<int, ImageDownloadCallback>>>
       pending_image_downloads_;
+  GURL last_committed_url_;
 };
 
 }  // namespace content
