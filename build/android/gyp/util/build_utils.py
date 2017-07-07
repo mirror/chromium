@@ -21,7 +21,8 @@ import zipfile
 import md5_check  # pylint: disable=relative-import
 
 sys.path.append(os.path.join(os.path.dirname(__file__), os.pardir, os.pardir))
-from pylib.constants import host_paths
+from pylib import constants
+from constants import host_paths
 
 sys.path.append(os.path.join(os.path.dirname(__file__),
                              os.pardir, os.pardir, os.pardir))
@@ -79,6 +80,14 @@ def FindInDirectories(directories, filename_filter):
   for directory in directories:
     all_files.extend(FindInDirectory(directory, filename_filter))
   return all_files
+
+
+def ReadBuildVars(build_vars_path=None):
+  if not build_vars_path:
+    build_vars_path = os.path.join(constants.GetOutDirectory(),
+                                   "build_vars.txt")
+  with open(build_vars_path) as f:
+    return dict(l.rstrip().split('=', 1) for l in f)
 
 
 def ParseGnList(gn_string):
