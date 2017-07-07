@@ -477,6 +477,16 @@ void ResourceLoader::DidReceiveResponse(
     }
   }
 
+  bool enabled_types[kWebClientHintsTypeNumValues] = {false};
+  int64_t persist_duration_seconds = -1;
+  ClientHintsPreferences::UpdatePersistentHintsFromHeaders(
+      response.HttpHeaderField(HTTPNames::Accept_CH),
+      response.HttpHeaderField(HTTPNames::Accept_CH_Lifetime), enabled_types,
+      &persist_duration_seconds);
+  // TODO(tbansal): https://crbug.com/735518. Use |enabled_types| and
+  // |persist_duration_seconds| to update the persistent client hints on the
+  // embedder.
+
   Context().DispatchDidReceiveResponse(
       resource_->Identifier(), response,
       resource_->GetResourceRequest().GetFrameType(),
