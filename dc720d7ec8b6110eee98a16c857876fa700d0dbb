@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8cee15ff_4b3bee0e",
+        "filename": "components/exo/keyboard.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-07T18:24:13Z",
+      "side": 1,
+      "message": "nit: maybe a blank line after this to separate the delegate functions from the ack handler",
+      "revId": "dc720d7ec8b6110eee98a16c857876fa700d0dbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dec9c855_d40da48e",
+        "filename": "components/exo/keyboard.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-07T18:24:13Z",
+      "side": 1,
+      "message": "AckKeyboardKey? \"On\" prefix is not used for requests and KeyboardKey would match the KeyboardDelegate call name this acks.",
+      "revId": "dc720d7ec8b6110eee98a16c857876fa700d0dbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fae47de8_e2c07bc6",
+        "filename": "components/exo/keyboard_device_configuration_delegate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-07T18:24:13Z",
+      "side": 1,
+      "message": "I don\u0027t think we should change this interface. Two delegate interfaces both with a OnKeyboardDestroying function is preferred.",
+      "revId": "dc720d7ec8b6110eee98a16c857876fa700d0dbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a64b10a_45a6f3f2",
+        "filename": "components/exo/keyboard_extension_delegate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-07T18:24:13Z",
+      "side": 1,
+      "message": "Nothing in this interface that relates to the keyboard extension interface. I think we should either extend the existing delegate interface or add the new function to this class to justify it\u0027s existence.",
+      "revId": "dc720d7ec8b6110eee98a16c857876fa700d0dbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d805b860_835b0b68",
+        "filename": "components/exo/keyboard_extension_delegate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-07T18:24:13Z",
+      "side": 1,
+      "message": "why not ExtendedKeyboardDelegate?",
+      "revId": "dc720d7ec8b6110eee98a16c857876fa700d0dbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
