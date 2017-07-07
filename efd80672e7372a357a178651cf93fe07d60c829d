@@ -34,6 +34,24 @@
       "revId": "efd80672e7372a357a178651cf93fe07d60c829d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bc9f689_5ba62aeb",
+        "filename": "cc/paint/paint_shader.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-07T18:33:28Z",
+      "side": 1,
+      "message": "Is this the only use of it in ui/ code: https://cs.chromium.org/chromium/src/ui/gfx/skia_paint_util.cc?dr\u003dCSs\u0026l\u003d24?\n\nWe already use kNonLazyStableId for bitmap backed images, could we use the same here?",
+      "parentUuid": "b9be33e7_1be3acc2",
+      "revId": "efd80672e7372a357a178651cf93fe07d60c829d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
