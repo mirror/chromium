@@ -18,6 +18,15 @@ Polymer({
      * @type {SiteException}
      */
     site: Object,
+
+    /**
+     * The default setting string for this permission category.
+     * @type {string}
+     * @private
+     */
+    defaultSettingString_: {
+      type: String,
+    }
   },
 
   observers: ['siteChanged_(site, category)'],
@@ -48,6 +57,12 @@ Polymer({
    * @private
    */
   siteChanged_: function(site) {
+    if (site.enforcement == chrome.settingsPrivate.Enforcement.RECOMMENDED) {
+      this.updateDefaultSettingString_(site.setting);
+      this.$.permission.value = settings.ContentSetting.DEFAULT;
+      return;
+    }
+    this.updateDefaultSettingString_(null);
     this.$.permission.value = site.setting;
   },
 
@@ -86,8 +101,47 @@ Polymer({
    * @private
    */
   onPermissionSelectionChange_: function() {
+    if (this.$.permission.value == settings.ContentSetting.DEFAULT) {
+      this.resetPermission();
+      return;
+    }
     this.browserProxy.setCategoryPermissionForOrigin(
         this.site.origin, this.site.embeddingOrigin, this.category,
         this.$.permission.value, this.site.incognito);
+  },
+
+  /**
+   * Updates the string used for this permission category's default setting.
+   * @param {?settings.ContentSetting} defaultSetting The default setting, if
+   *    known.
+   * @private
+   */
+  updateDefaultSettingString_: function(defaultSetting) {
+    var getDefaultSettingString = function(setting) {
+      var stringId;
+      if (setting == settings.ContentSetting.ASK ||
+          setting == settings.ContentSetting.IMPORTANT_CONTENT)
+        stringId = 'siteSettingsActionAskDefault';
+      else if (setting == settings.ContentSetting.ALLOW)
+        stringId = 'siteSettingsActionAllowDefault';
+      else if (setting == settings.ContentSetting.BLOCK)
+        stringId = 'siteSettingsActionBlockDefault';
+      assert(
+          stringId,
+          'No string for ' + this.category + '\'s default setting of ' +
+              setting);
+      this.defaultSettingString_ = loadTimeData.getString(stringId);
+    }.bind(this);
+
+    if (defaultSetting != null) {
+      getDefaultSettingString(defaultSetting);
+      return;
+    }
+
+    // The default setting is unknown, so consult the C++ backend for it.
+    this.browserProxy.getDefaultValueForContentType(this.category)
+        .then(function(defaultValue) {
+          getDefaultSettingString(defaultValue.setting);
+        });
   },
 });

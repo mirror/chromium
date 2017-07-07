@@ -179,6 +179,14 @@ ContentSetting GetContentSettingForOrigin(const GURL& origin,
   // Retrieve the source of the content setting.
   *source_string =
       ConvertContentSettingSourceToString(info.source, result.source);
+
+  // Mark the setting as a default one if it's a Chrome built-in default or a
+  // user-set global default.
+  if (info.primary_pattern == ContentSettingsPattern::Wildcard() &&
+      info.secondary_pattern == ContentSettingsPattern::Wildcard() &&
+      *source_string == site_settings::kPreferencesSource) {
+    *source_string = "default";
+  }
   return result.content_setting;
 }
 
