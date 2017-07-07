@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "802ca55b_f7568803",
+        "filename": "chrome/browser/chromeos/system/automatic_reboot_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-07T01:17:34Z",
+      "side": 0,
+      "message": "i don\u0027t understand these GetBlockingPool flushes. i think they were maybe here to run the SaveUpdateRebootNeededUptime call that was moved away from PostBlockingPoolTask by https://codereview.chromium.org/2770783002/, but that change *added* the base::TaskScheduler flushes and didn\u0027t remove these.\n\ni experimented with trying to switch this code to use ScopedTaskEnvironment, but i get a lot of test failures that i don\u0027t understand. i suspect that the problem may be that there\u0027s seemingly no way to flush only ready (but not delayed) blocking tasks when using ScopedTaskEnvironment -- i only see a RunUntilIdle method.\n\nthe test continues to pass locally for me when i remove these calls, but i have no idea if doing so will cause flakiness.",
+      "revId": "91d2e90881fc404976e1aa462d1d6a1681c0d687",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
