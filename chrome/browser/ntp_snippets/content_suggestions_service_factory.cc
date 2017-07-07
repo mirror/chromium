@@ -168,31 +168,6 @@ bool AreLocalCategoriesEnabled() {
 
 #if BUILDFLAG(ENABLE_OFFLINE_PAGES)
 
-bool IsRecentTabProviderEnabled() {
-  return AreLocalCategoriesEnabled() &&
-         base::FeatureList::IsEnabled(
-             ntp_snippets::kRecentOfflineTabSuggestionsFeature) &&
-         base::FeatureList::IsEnabled(
-             offline_pages::kOffliningRecentPagesFeature);
-}
-
-void RegisterRecentTabProviderIfEnabled(ContentSuggestionsService* service,
-                                        Profile* profile,
-                                        OfflinePageModel* offline_page_model) {
-  if (!IsRecentTabProviderEnabled()) {
-    return;
-  }
-
-  RequestCoordinator* request_coordinator =
-      RequestCoordinatorFactory::GetForBrowserContext(profile);
-  offline_pages::DownloadUIAdapter* ui_adapter = offline_pages::
-      RecentTabsUIAdapterDelegate::GetOrCreateRecentTabsUIAdapter(
-          offline_page_model, request_coordinator);
-  auto provider = base::MakeUnique<RecentTabSuggestionsProvider>(
-      service, ui_adapter, profile->GetPrefs());
-  service->RegisterProvider(std::move(provider));
-}
-
 void RegisterPrefetchingObserver(ContentSuggestionsService* service,
                                  Profile* profile) {
   // The observer is always there, but the Prefetch Dispatcher will do nothing
@@ -269,31 +244,6 @@ void RegisterBookmarkProviderIfEnabled(ContentSuggestionsService* service,
       base::MakeUnique<BookmarkSuggestionsProvider>(service, bookmark_model);
   service->RegisterProvider(std::move(provider));
 }
-
-#if defined(OS_ANDROID)
-
-bool IsPhysicalWebPageProviderEnabled() {
-  return AreLocalCategoriesEnabled() &&
-         base::FeatureList::IsEnabled(
-             ntp_snippets::kPhysicalWebPageSuggestionsFeature) &&
-         base::FeatureList::IsEnabled(chrome::android::kPhysicalWebFeature);
-}
-
-void RegisterPhysicalWebPageProviderIfEnabled(
-    ContentSuggestionsService* service,
-    Profile* profile) {
-  if (!IsPhysicalWebPageProviderEnabled()) {
-    return;
-  }
-
-  PhysicalWebDataSource* physical_web_data_source =
-      g_browser_process->GetPhysicalWebDataSource();
-  auto provider = base::MakeUnique<PhysicalWebPageSuggestionsProvider>(
-      service, physical_web_data_source, profile->GetPrefs());
-  service->RegisterProvider(std::move(provider));
-}
-
-#endif  // OS_ANDROID
 
 bool IsArticleProviderEnabled() {
   return base::FeatureList::IsEnabled(ntp_snippets::kArticleSuggestionsFeature);
@@ -526,11 +476,9 @@ KeyedService* ContentSuggestionsServiceFactory::BuildServiceInstanceFor(
 
 #if defined(OS_ANDROID)
   RegisterDownloadsProviderIfEnabled(service, profile, offline_page_model);
-  RegisterPhysicalWebPageProviderIfEnabled(service, profile);
 #endif  // OS_ANDROID
 
 #if BUILDFLAG(ENABLE_OFFLINE_PAGES)
-  RegisterRecentTabProviderIfEnabled(service, profile, offline_page_model);
   RegisterPrefetchingObserver(service, profile);
 #endif
 
