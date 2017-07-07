@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f9bdbffa_89b0b362",
+        "filename": "content/browser/service_worker/embedded_worker_instance.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-07T04:14:46Z",
+      "side": 1,
+      "message": "I actually was just looking into this too but there is a reason it\u0027s here. I\u0027ll add a comment in the follow up.",
+      "parentUuid": "0d938342_bddf1e93",
+      "revId": "0a5a08ae43a496a9b0b76038df434af9c077c862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b51889c2_5fddddb7",
         "filename": "content/browser/service_worker/embedded_worker_instance.cc",
         "patchSetId": 7
