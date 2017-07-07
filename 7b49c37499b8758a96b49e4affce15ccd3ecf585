@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ccd1e93b_be45d7ff",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/RequestTimingView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-07T00:02:13Z",
+      "side": 1,
+      "message": "please also add @return {!Element}",
+      "revId": "7b49c37499b8758a96b49e4affce15ccd3ecf585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80818132_e05df52b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network_log/NetworkLog.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-07T00:02:13Z",
+      "side": 1,
+      "message": "nit: bindRequest()?",
+      "revId": "7b49c37499b8758a96b49e4affce15ccd3ecf585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
