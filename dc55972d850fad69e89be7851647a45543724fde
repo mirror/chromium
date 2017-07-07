@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e6d6350_2ef9ec6b",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
+        "patchSetId": 4
+      },
+      "lineNbr": 3840,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-07T03:21:31Z",
+      "side": 1,
+      "message": "Not really relevant, but I wonder...is api_class necessary if we have api_methods? Can we just say if api_methods is not [] then api_class is true?",
+      "revId": "dc55972d850fad69e89be7851647a45543724fde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
