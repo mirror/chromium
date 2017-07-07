@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "557b243e_aa6bc053",
+        "filename": "ios/chrome/browser/payments/itunes_json_request.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-07T16:25:15Z",
+      "side": 1,
+      "message": "nit: Use a switch statement with a NOTREACHED() in the default case.",
+      "range": {
+        "startLine": 41,
+        "startChar": 2,
+        "endLine": 41,
+        "endChar": 4
+      },
+      "revId": "185a3f8b965435fb89bc16ffed443cfca4a3618e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15f74c0b_22d1d16a",
+        "filename": "ios/chrome/browser/payments/itunes_json_request.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-07T16:25:15Z",
+      "side": 1,
+      "message": "DCHECK for !success_callback.is_null() and !error_callback.is_null()",
+      "revId": "185a3f8b965435fb89bc16ffed443cfca4a3618e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a43195a_8b96fced",
+        "filename": "ios/chrome/browser/payments/itunes_json_request.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-07T16:25:15Z",
+      "side": 1,
+      "message": "I\u0027m not sure about the tradeoffs, but you should be able to run the callbacks synchronously. Perhaps another reviewer can comment:\nif (value)\n  success_callback.Run(std::move(value));\nelse\n  error_callback.Run(json_reader.GetErrorMessage());",
+      "revId": "185a3f8b965435fb89bc16ffed443cfca4a3618e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4a2ae8e_4c2b2dcb",
+        "filename": "ios/chrome/browser/payments/itunes_json_request.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-07T16:25:15Z",
+      "side": 1,
+      "message": "enum ITunesStoreRequestType {\n  LOOKUP,\n  SEARCH,\n};",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 49
+      },
+      "revId": "185a3f8b965435fb89bc16ffed443cfca4a3618e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53f3608e_b51311e7",
+        "filename": "ios/chrome/browser/payments/itunes_json_request.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-07T16:25:15Z",
+      "side": 1,
+      "message": "nit: ParseJson?",
+      "range": {
+        "startLine": 58,
+        "startChar": 7,
+        "endLine": 58,
+        "endChar": 16
+      },
+      "revId": "185a3f8b965435fb89bc16ffed443cfca4a3618e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
