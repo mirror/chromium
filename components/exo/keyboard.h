@@ -20,6 +20,7 @@ class KeyEvent;
 namespace exo {
 class KeyboardDelegate;
 class KeyboardDeviceConfigurationDelegate;
+class KeyboardExtensionDelegate;
 class Surface;
 
 // This class implements a client keyboard that represents one or more keyboard
@@ -36,6 +37,10 @@ class Keyboard : public ui::EventHandler,
   bool HasDeviceConfigurationDelegate() const;
   void SetDeviceConfigurationDelegate(
       KeyboardDeviceConfigurationDelegate* delegate);
+
+  bool HasExtendedKeyboardDelegate() const;
+  void SetExtendedKeyboardDelegate(KeyboardExtensionDelegate* delegate);
+  void OnAckKeyEvent(uint32_t serial, bool handled);
 
   // Overridden from ui::EventHandler:
   void OnKeyEvent(ui::KeyEvent* event) override;
@@ -66,6 +71,9 @@ class Keyboard : public ui::EventHandler,
   // The delegate instance that events about device configuration are dispatched
   // to.
   KeyboardDeviceConfigurationDelegate* device_configuration_delegate_ = nullptr;
+
+  // The delegate instance that sends ack_key events to this instance.
+  KeyboardExtensionDelegate* extended_keyboard_delegate_ = nullptr;
 
   // The current focus surface for the keyboard.
   Surface* focus_ = nullptr;
