@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "fe23b61e_1b13ced6",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-07-07T13:30:06Z",
+      "side": 1,
+      "message": "On small screens, it might be \u003c4. I don\u0027t think we show \u003e4 on large screens, though \u003e4 might be part of future work on the NTP, so holding our assumptions in a constant would be good.\n\nYou can simulate a small screen with Settings \u003e  Accessibility \u003e Display Size \u003e Largest. On my 5x, this results in 3 columns. Don\u0027t know about a 6P. There are also 3 columns on 4\" iOS screens, like my iTouch.\n\nOne tricky part is that, as far as I can tell, the NTP on these platforms still always requests 8 (4x2) tiles, even if it might only display 6 (3x2), because when rotated into landscape mode, they *will* use 4x2. I think that we should just assume the smaller (portrait) number: we don\u0027t want to reorder tiles for landscape mode, and portrait is the common case. Might we worth confirming with ktam.\n\n(just so we\u0027re clear, I\u0027m all in favor of a first CL that assumes 4, since it\u0027s *usually* true)",
+      "parentUuid": "61eea7a5_fa3f17eb",
+      "range": {
+        "startLine": 423,
+        "startChar": 14,
+        "endLine": 423,
+        "endChar": 15
+      },
+      "revId": "456c75735547729305b375d7106943fde44be24c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "485152ed_8fbbadd3",
         "filename": "components/ntp_tiles/most_visited_sites.cc",
         "patchSetId": 1
