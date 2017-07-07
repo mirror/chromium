@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "459bd4a3_63158817",
+        "filename": "third_party/WebKit/Source/devtools/front_end/emulation/DeviceModeModel.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-07T23:20:57Z",
+      "side": 1,
+      "message": "Perhaps, we should change this to an emulateDevice call instead, emulating a large height for fullSize? This way, we don\u0027t use setVisibleSize anymore, and can remove it in a followup.\nThis will also fix the restore problem below.",
+      "revId": "1d41f90e3ad5606b75f6dde90bfd72b87bdb4d1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

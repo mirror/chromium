@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14e377c5_03abc1bd",
+        "filename": "third_party/WebKit/Source/devtools/front_end/emulation/DeviceModeModel.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-07T23:20:57Z",
+      "side": 0,
+      "message": "Shouldn\u0027t you keep this to undo fullSized setVisibleSize? Otherwise, PageHandler is going to restore to the full.",
+      "range": {
+        "startLine": 676,
+        "startChar": 25,
+        "endLine": 676,
+        "endChar": 39
+      },
+      "revId": "5dfca923a6135d4d464d8aa2b9078151954fead1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
