@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e83bc1c_2a20eff0",
+        "filename": "cc/resources/video_resource_updater.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-07-07T03:48:56Z",
+      "side": 1,
+      "message": "I think we go through here with a software compositor, where context_provider-\u003eContextGL() will be null - but we don\u0027t need a sync token in that case, so a simple test should work.",
+      "revId": "f6861b6945bda05ce7bdfcead2b3609105f20675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
