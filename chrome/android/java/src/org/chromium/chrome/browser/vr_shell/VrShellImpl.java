@@ -436,7 +436,7 @@ public class VrShellImpl
     // Exits VR, telling the user to remove their headset, and returning to Chromium.
     @CalledByNative
     public void forceExitVr() {
-        mDelegate.showDoffAndExitVr(false);
+        VrShellDelegate.showDoffAndExitVr(false);
     }
 
     // Called because showing PageInfo isn't supported in VR. This happens when the user clicks on

@@ -42,6 +42,7 @@ import org.chromium.chrome.browser.instantapps.InstantAppsHandler;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.util.IntentUtils;
 import org.chromium.chrome.browser.util.UrlUtilities;
+import org.chromium.chrome.browser.vr_shell.VrShellDelegate;
 import org.chromium.chrome.browser.webapps.WebappActivity;
 import org.chromium.content_public.browser.LoadUrlParams;
 import org.chromium.content_public.browser.NavigationController;
@@ -384,6 +385,11 @@ public class ExternalNavigationDelegateImpl implements ExternalNavigationDelegat
         if (!(context instanceof Activity)) return;
 
         Activity activity = (Activity) context;
+        if (VrShellDelegate.isInVr()) {
+            VrShellDelegate.showDoffAndExitVr(false);
+            return;
+        }
+
         new AlertDialog.Builder(activity, R.style.AlertDialogTheme)
                 .setTitle(R.string.external_app_leave_incognito_warning_title)
                 .setMessage(R.string.external_app_leave_incognito_warning)
