@@ -131,6 +131,10 @@ template("msvc_toolchain") {
     } else {
       # clang-cl doesn't need this env hoop, so omit it there.
       assert(!toolchain_uses_clang)
+
+      # indirect goma invorking makes building time slow around 20%
+      # on Windows10 AU due to many process spawn and shutdown.
+      assert(!use_goma)
       env_wrapper = "ninja -t msvc -e $env -- "  # Note trailing space.
       sys_include_flags = ""
     }
@@ -149,7 +153,7 @@ template("msvc_toolchain") {
       outputs = [
         "$object_subdir/{{source_name_part}}.obj",
       ]
-      rspfile_content = "$sys_include_flags{{defines}} {{include_dirs}} {{cflags}} {{cflags_c}}"
+      rspfile_content = "{{defines}} {{include_dirs}} $sys_include_flags{{cflags}} {{cflags_c}}"
     }
 
     tool("cxx") {
@@ -166,7 +170,7 @@ template("msvc_toolchain") {
       outputs = [
         "$object_subdir/{{source_name_part}}.obj",
       ]
-      rspfile_content = "$sys_include_flags{{defines}} {{include_dirs}} {{cflags}} {{cflags_cc}}"
+      rspfile_content = "{{defines}} {{include_dirs}} $sys_include_flags{{cflags}} {{cflags_cc}}"
     }
 
     tool("rc") {
@@ -343,6 +347,10 @@ if (target_cpu == "x86") {
   msvc_toolchain("x86") {
     environment = "environment.x86"
     cl = "${goma_prefix}\"${x86_toolchain_data.vc_bin_dir}/cl.exe\""
+    if (use_goma) {
+      sys_include_flags = "${x86_toolchain_data.include_flags_I}"
+    }
+
     toolchain_args = {
       current_cpu = "x86"
       is_clang = false
@@ -376,6 +384,10 @@ template("win_x64_toolchains") {
   msvc_toolchain(target_name) {
     environment = "environment.x64"
     cl = "${goma_prefix}\"${x64_toolchain_data.vc_bin_dir}/cl.exe\""
+
+    if (use_goma) {
+      sys_include_flags = "${x64_toolchain_data.include_flags_I}"
+    }
 
     toolchain_args = {
       if (defined(invoker.toolchain_args)) {

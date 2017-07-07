@@ -240,26 +240,31 @@ def FindVCToolsRoot():
       return os.path.join(vc_tools_msvc_root, directory, 'bin')
   raise Exception('Unable to find the VC tools directory.')
 
-
-def _CopyPGORuntime(target_dir, target_cpu):
-  """Copy the runtime dependencies required during a PGO build.
-  """
+def _GetVCRuntimeDir():
   env_version = GetVisualStudioVersion()
   # These dependencies will be in a different location depending on the version
   # of the toolchain.
   if env_version == '2015':
-    pgo_x86_runtime_dir = os.path.join(os.environ.get('GYP_MSVS_OVERRIDE_PATH'),
+    x86_runtime_dir = os.path.join(os.environ.get('GYP_MSVS_OVERRIDE_PATH'),
                                        'VC', 'bin')
-    pgo_x64_runtime_dir = os.path.join(pgo_x86_runtime_dir, 'amd64')
+    x64_runtime_dir = os.path.join(x86_runtime_dir, 'amd64')
   elif env_version == '2017':
-    pgo_runtime_root = FindVCToolsRoot()
-    assert pgo_runtime_root
+    runtime_root = FindVCToolsRoot()
+    assert runtime_root
     # There's no version of pgosweep.exe in HostX64/x86, so we use the copy
     # from HostX86/x86.
-    pgo_x86_runtime_dir = os.path.join(pgo_runtime_root, 'HostX86', 'x86')
-    pgo_x64_runtime_dir = os.path.join(pgo_runtime_root, 'HostX64', 'x64')
+    x86_runtime_dir = os.path.join(runtime_root, 'HostX86', 'x86')
+    x64_runtime_dir = os.path.join(runtime_root, 'HostX64', 'x64')
   else:
     raise Exception('Unexpected toolchain version: %s.' % env_version)
+
+  return [x64_runtime_dir, x86_runtime_dir]
+
+
+def _CopyPGORuntime(target_dir, target_cpu):
+  """Copy the runtime dependencies required during a PGO build.
+  """
+  pgo_x64_runtime_dir, pgo_x86_runtime_dir = _GetVCRuntimeDir()
 
   # We need to copy 2 runtime dependencies used during the profiling step:
   #     - pgort140.dll: runtime library required to run the instrumented image.
@@ -275,6 +280,17 @@ def _CopyPGORuntime(target_dir, target_cpu):
     if not os.path.exists(source):
       raise Exception('Unable to find %s.' % source)
     _CopyRuntimeImpl(os.path.join(target_dir, runtime), source)
+
+
+def _CopyClRuntime(target_dir):
+  """Copy the runtime dependencies required to run cl.exe
+     without passing %PATH% env on buildbots.
+  """
+  x64_runtime_dir, _ = _GetVCRuntimeDir()
+  source = os.path.join(x64_runtime_dir, 'mspdb140.dll')
+  if not os.path.exists(source):
+    raise Exception('Unable to find %s.' % source)
+  _CopyRuntimeImpl(os.path.join(target_dir, 'mspdb140.dll'), source)
 
 
 def _CopyRuntime(target_dir, source_dir, target_cpu, debug):
@@ -308,6 +324,7 @@ def CopyDlls(target_dir, configuration, target_cpu):
     _CopyPGORuntime(target_dir, target_cpu)
 
   _CopyDebugger(target_dir, target_cpu)
+  _CopyClRuntime(target_dir)
 
 
 def _CopyDebugger(target_dir, target_cpu):
