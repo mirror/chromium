@@ -8,6 +8,8 @@
 #include <string>
 
 #include "base/callback_forward.h"
+#include "base/macros.h"
+#include "base/observer_list.h"
 #include "chrome/browser/chromeos/customization/customization_document.h"
 #include "chrome/browser/chromeos/login/oobe_screen.h"
 #include "chrome/browser/chromeos/login/ui/login_display.h"
@@ -18,6 +20,7 @@ class AccountId;
 namespace chromeos {
 
 class AppLaunchController;
+class LoginDisplayHostObserver;
 class LoginScreenContext;
 class OobeUI;
 class WebUILoginView;
@@ -31,7 +34,7 @@ class LoginDisplayHost {
   // Returns the default LoginDisplayHost instance if it has been created.
   static LoginDisplayHost* default_host() { return default_host_; }
 
-  virtual ~LoginDisplayHost() {}
+  virtual ~LoginDisplayHost();
 
   // Creates UI implementation specific login display instance (views/WebUI).
   // The caller takes ownership of the returned value.
@@ -109,9 +112,21 @@ class LoginDisplayHost {
   // Returns whether current host is for voice interaction OOBE.
   virtual bool IsVoiceInteractionOobe() = 0;
 
+  void AddObserver(LoginDisplayHostObserver* observer);
+  void RemoveObserver(LoginDisplayHostObserver* observer);
+
  protected:
+  LoginDisplayHost();
+
+  void NotifyClosed();
+
   // Default LoginDisplayHost. Child class sets the reference.
   static LoginDisplayHost* default_host_;
+
+  // List of observers.
+  base::ObserverList<LoginDisplayHostObserver> observer_list_;
+
+  DISALLOW_COPY_AND_ASSIGN(LoginDisplayHost);
 };
 
 }  // namespace chromeos
