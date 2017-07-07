@@ -99,6 +99,13 @@ class CORE_EXPORT SVGImage final : public Image {
 
   bool HasIntrinsicDimensions() const;
 
+  std::unique_ptr<PaintRecorder> PaintRecorderForContainer(
+      const KURL&,
+      const IntSize& container_size,
+      const IntRect& draw_src_rect,
+      const IntRect& draw_dst_rect,
+      bool flip_y) override;
+
  private:
   // Accesses m_page.
   friend class SVGImageChromeClient;
