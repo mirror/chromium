@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07315e47_4c1ab45f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 37738,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-07T00:39:15Z",
+      "side": 1,
+      "message": "nit: Rather than referencing a different histogram, please inline the full description here.  Otherwise, it becomes hard to understand the description when viewing the histogram on a dashboard.",
+      "range": {
+        "startLine": 37738,
+        "startChar": 4,
+        "endLine": 37738,
+        "endChar": 30
+      },
+      "revId": "4ad23bb942daccfff0ff07274af8bce5dc2760e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "828511e9_7add2d5f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 37739,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-07T00:39:15Z",
+      "side": 1,
+      "message": "Is it appropriate to stop recording Net.HttpContentLength given that this is now being recorded?",
+      "range": {
+        "startLine": 37739,
+        "startChar": 18,
+        "endLine": 37739,
+        "endChar": 0
+      },
+      "revId": "4ad23bb942daccfff0ff07274af8bce5dc2760e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9de93930_3f79c714",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 37832,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-07T00:39:15Z",
+      "side": 1,
+      "message": "Same: Could the previous histogram be deprecated?",
+      "revId": "4ad23bb942daccfff0ff07274af8bce5dc2760e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
