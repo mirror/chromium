@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "98c19229_b1fede41",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AndroidPaymentAppFinder.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-07T16:00:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99222371_dcd1c8da",
+      "range": {
+        "startLine": 185,
+        "startChar": 17,
+        "endLine": 185,
+        "endChar": 28
+      },
+      "revId": "06b99238f92cd5be0caabb5defccaafc5aa99bc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc53d28e_4b5c93cd",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/payments/PaymentManifestDownloaderTest.java",
         "patchSetId": 7
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "2832c619_3ab72f2d",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/payments/PaymentManifestDownloaderTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-07T16:00:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc53d28e_4b5c93cd",
+      "range": {
+        "startLine": 124,
+        "startChar": 5,
+        "endLine": 124,
+        "endChar": 15
+      },
+      "revId": "06b99238f92cd5be0caabb5defccaafc5aa99bc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9689c6d0_b14a175c",
         "filename": "components/payments/content/android/java/src/org/chromium/components/payments/PaymentManifestDownloader.java",
         "patchSetId": 7
@@ -68,6 +116,30 @@
       "revId": "06b99238f92cd5be0caabb5defccaafc5aa99bc2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b02df3d0_ea62599d",
+        "filename": "components/payments/content/android/java/src/org/chromium/components/payments/PaymentManifestDownloader.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-07T16:00:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9689c6d0_b14a175c",
+      "range": {
+        "startLine": 60,
+        "startChar": 8,
+        "endLine": 60,
+        "endChar": 14
+      },
+      "revId": "06b99238f92cd5be0caabb5defccaafc5aa99bc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
