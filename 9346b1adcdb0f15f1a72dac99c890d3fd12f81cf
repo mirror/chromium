@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "ca7e57ea_1e439473",
+        "filename": "chrome/browser/ui/views/passwords/account_chooser_dialog_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-07-07T16:57:34Z",
+      "side": 1,
+      "message": "https://drive.google.com/open?id\u003d0B6LQg8CWo5bNSDlfcTN1OVRic1E\n\nPre-MD, it looks like it naturally lands at a width of 320px. In that case, I\u0027ll just remove the CalculatePreferredSize() override.",
+      "parentUuid": "2330bf23_85947b0b",
+      "revId": "9346b1adcdb0f15f1a72dac99c890d3fd12f81cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2b68285_22538432",
         "filename": "chrome/browser/ui/views/passwords/password_dialog_view_browsertest.cc",
         "patchSetId": 2
@@ -87,6 +105,24 @@
       "revId": "9346b1adcdb0f15f1a72dac99c890d3fd12f81cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46acbf4a_cd706359",
+        "filename": "chrome/browser/ui/views/passwords/password_dialog_view_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-07-07T16:57:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9368a59_b12c99df",
+      "revId": "9346b1adcdb0f15f1a72dac99c890d3fd12f81cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
