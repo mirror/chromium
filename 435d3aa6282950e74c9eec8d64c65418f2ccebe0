@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2eee02a1_96dd0ca5",
+        "filename": "chrome/browser/android/vr_shell/ui_elements/url_bar.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-07T21:46:40Z",
+      "side": 1,
+      "message": "This looks okay, but now I\u0027m wondering if this OnBeginFrame override should now live in TexturedElement.  Basically, if a textured element IsVisible(), and is dirty, it should probably be redrawn.  Only this class and the loading bar have overrides.",
+      "revId": "435d3aa6282950e74c9eec8d64c65418f2ccebe0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd631b29_8ccd8a9b",
+        "filename": "chrome/browser/android/vr_shell/ui_elements/url_bar.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-07T21:46:40Z",
+      "side": 1,
+      "message": "In another review, I think it was suggested that UpdateTexture() should bail if not initialized, or not dirty, or not visible.  It looks like that wasn\u0027t incorporated, but if we do it now, then OnBeginFrame can call UpdateTexture unconditionally.",
+      "range": {
+        "startLine": 68,
+        "startChar": 4,
+        "endLine": 68,
+        "endChar": 17
+      },
+      "revId": "435d3aa6282950e74c9eec8d64c65418f2ccebe0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

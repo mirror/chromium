@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9fdacbba_25867eee",
+        "filename": "chrome/browser/android/vr_shell/ui_elements/url_bar.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-07T21:46:40Z",
+      "side": 0,
+      "message": "If we want to re-incorporate this later, it feels like it ought to be a property of TexturedElement, enabled for all elements automatically.",
+      "revId": "059d59a5bb73dcceb7d655c8e67b168642db2928",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
