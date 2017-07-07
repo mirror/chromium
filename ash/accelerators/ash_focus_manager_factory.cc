@@ -14,20 +14,20 @@ namespace ash {
 AshFocusManagerFactory::AshFocusManagerFactory() {}
 AshFocusManagerFactory::~AshFocusManagerFactory() {}
 
-std::unique_ptr<views::FocusManager> AshFocusManagerFactory::CreateFocusManager(
+views::FocusManager* AshFocusManagerFactory::CreateFocusManager(
     views::Widget* widget,
     bool desktop_widget) {
-  return base::MakeUnique<views::FocusManager>(
-      widget, desktop_widget ? nullptr : base::MakeUnique<Delegate>());
+  return new views::FocusManager(
+      widget,
+      desktop_widget ? nullptr : base::WrapUnique<Delegate>(new Delegate));
 }
-
-AshFocusManagerFactory::Delegate::Delegate() {}
-AshFocusManagerFactory::Delegate::~Delegate() {}
 
 bool AshFocusManagerFactory::Delegate::ProcessAccelerator(
     const ui::Accelerator& accelerator) {
   AcceleratorController* controller = Shell::Get()->accelerator_controller();
-  return controller && controller->Process(accelerator);
+  if (controller)
+    return controller->Process(accelerator);
+  return false;
 }
 
 }  // namespace ash

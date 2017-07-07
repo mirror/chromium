@@ -622,18 +622,6 @@
             ]
         }
     ],
-    "DataReductionProxyPreviewsBlacklistTransition": [
-        {
-            "platforms": [
-                "android"
-            ],
-            "experiments": [
-                {
-                    "name": "Enabled"
-                }
-            ]
-        }
-    ],
     "DataReductionProxyServerExperiments": [
         {
             "platforms": [
@@ -3002,21 +2990,6 @@
                 {
                     "name": "VerifyFeatureIsStillDisabledByDefault",
                     "forcing_flag": "suppress-enabling-subresource-filter-from-fieldtrial-testing-config"
-                }
-            ]
-        }
-    ],
-    "SuperfishInterstitial": [
-        {
-            "platforms": [
-                "win"
-            ],
-            "experiments": [
-                {
-                    "name": "Enabled",
-                    "enable_features": [
-                        "SuperfishInterstitial"
-                    ]
                 }
             ]
         }

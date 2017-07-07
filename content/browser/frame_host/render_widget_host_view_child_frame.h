@@ -115,7 +115,7 @@ class CONTENT_EXPORT RenderWidgetHostViewChildFrame
   void GestureEventAck(const blink::WebGestureEvent& event,
                        InputEventAckState ack_result) override;
   void DidCreateNewRendererCompositorFrameSink(
-      cc::mojom::CompositorFrameSinkClient* renderer_compositor_frame_sink)
+      cc::mojom::MojoCompositorFrameSinkClient* renderer_compositor_frame_sink)
       override;
   void SubmitCompositorFrame(const cc::LocalSurfaceId& local_surface_id,
                              cc::CompositorFrame frame) override;
@@ -199,8 +199,6 @@ class CONTENT_EXPORT RenderWidgetHostViewChildFrame
 
   void UpdateViewportIntersection(const gfx::Rect& viewport_intersection);
 
-  void SetIsInert();
-
   bool has_frame() { return has_frame_; }
 
   ui::TextInputType GetTextInputType() const;
@@ -280,7 +278,7 @@ class CONTENT_EXPORT RenderWidgetHostViewChildFrame
   cc::FrameSinkId parent_frame_sink_id_;
 
   bool has_frame_ = false;
-  cc::mojom::CompositorFrameSinkClient* renderer_compositor_frame_sink_ =
+  cc::mojom::MojoCompositorFrameSinkClient* renderer_compositor_frame_sink_ =
       nullptr;
 
   // The background color of the widget.

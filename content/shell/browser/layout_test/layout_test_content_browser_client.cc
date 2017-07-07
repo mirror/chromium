@@ -144,10 +144,10 @@ BrowserMainParts* LayoutTestContentBrowserClient::CreateBrowserMainParts(
 void LayoutTestContentBrowserClient::GetQuotaSettings(
     BrowserContext* context,
     StoragePartition* partition,
-    storage::OptionalQuotaSettingsCallback callback) {
+    const storage::OptionalQuotaSettingsCallback& callback) {
   // The 1GB limit is intended to give a large headroom to tests that need to
   // build up a large data set and issue many concurrent reads or writes.
-  std::move(callback).Run(storage::GetHardCodedSettings(1024 * 1024 * 1024));
+  callback.Run(storage::GetHardCodedSettings(1024 * 1024 * 1024));
 }
 
 bool LayoutTestContentBrowserClient::DoesSiteRequireDedicatedProcess(

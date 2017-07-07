@@ -5,6 +5,7 @@
 package org.chromium.chrome.browser.contextmenu;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.util.Pair;
 import android.view.LayoutInflater;
@@ -15,8 +16,8 @@ import android.widget.ImageView;
 import android.widget.Space;
 import android.widget.TextView;
 
-import org.chromium.base.Callback;
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.share.ShareHelper;
 
 import java.util.List;
 
@@ -27,16 +28,15 @@ import java.util.List;
 class TabularContextMenuListAdapter extends BaseAdapter {
     private final List<ContextMenuItem> mMenuItems;
     private final Activity mActivity;
-    private final Callback<Boolean> mOnDirectShare;
+    private final Runnable mOnDirectShare;
 
     /**
      * Adapter for the tabular context menu UI
      * @param menuItems The list of items to display in the view.
      * @param activity Used to inflate the layout.
-     * @param onDirectShare Callback to handle direct share.
      */
     TabularContextMenuListAdapter(
-            List<ContextMenuItem> menuItems, Activity activity, Callback<Boolean> onDirectShare) {
+            List<ContextMenuItem> menuItems, Activity activity, Runnable onDirectShare) {
         mMenuItems = menuItems;
         mActivity = activity;
         mOnDirectShare = onDirectShare;
@@ -59,7 +59,7 @@ class TabularContextMenuListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final ContextMenuItem menuItem = mMenuItems.get(position);
+        ContextMenuItem menuItem = mMenuItems.get(position);
         ViewHolderItem viewHolder;
 
         if (convertView == null) {
@@ -84,9 +84,10 @@ class TabularContextMenuListAdapter extends BaseAdapter {
         viewHolder.mIcon.setImageDrawable(icon);
         viewHolder.mIcon.setVisibility(icon != null ? View.VISIBLE : View.INVISIBLE);
 
-        if (menuItem instanceof ShareContextMenuItem) {
+        if (menuItem == ChromeContextMenuItem.SHARE_IMAGE) {
+            Intent shareIntent = ShareHelper.getShareImageIntent(null);
             final Pair<Drawable, CharSequence> shareInfo =
-                    ((ShareContextMenuItem) menuItem).getShareInfo();
+                    ShareHelper.getShareableIconAndName(mActivity, shareIntent);
             if (shareInfo.first != null) {
                 viewHolder.mShareIcon.setImageDrawable(shareInfo.first);
                 viewHolder.mShareIcon.setVisibility(View.VISIBLE);
@@ -95,7 +96,7 @@ class TabularContextMenuListAdapter extends BaseAdapter {
                 viewHolder.mShareIcon.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        mOnDirectShare.onResult(((ShareContextMenuItem) menuItem).isShareLink());
+                        mOnDirectShare.run();
                     }
                 });
                 viewHolder.mRightPadding.setVisibility(View.GONE);

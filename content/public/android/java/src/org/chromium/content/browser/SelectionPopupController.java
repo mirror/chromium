@@ -111,7 +111,7 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
 
     private boolean mEditable;
     private boolean mIsPasswordType;
-    private boolean mIsInsertionForTesting;
+    private boolean mIsInsertion;
     private boolean mCanSelectAllForPastePopup;
     private boolean mCanEditRichly;
 
@@ -502,7 +502,7 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
                     "paste_as_plain_text", "string", "android"));
         }
 
-        if (!hasSelection() || isSelectionPassword()) return;
+        if (isInsertion() || isSelectionPassword()) return;
 
         initializeTextProcessingMenu(menu);
     }
@@ -888,8 +888,8 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
      * @return true if the current selection is an insertion point.
      */
     @VisibleForTesting
-    public boolean isInsertionForTesting() {
-        return mIsInsertionForTesting;
+    public boolean isInsertion() {
+        return mIsInsertion;
     }
 
     /**
@@ -991,7 +991,7 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
 
             case SelectionEventType.INSERTION_HANDLE_SHOWN:
                 mSelectionRect.set(left, top, right, bottom);
-                mIsInsertionForTesting = true;
+                mIsInsertion = true;
                 break;
 
             case SelectionEventType.INSERTION_HANDLE_MOVED:
@@ -1015,7 +1015,7 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
 
             case SelectionEventType.INSERTION_HANDLE_CLEARED:
                 destroyPastePopup();
-                mIsInsertionForTesting = false;
+                mIsInsertion = false;
                 mSelectionRect.setEmpty();
                 break;
 

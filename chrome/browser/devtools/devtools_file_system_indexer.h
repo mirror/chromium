@@ -46,7 +46,7 @@ class DevToolsFileSystemIndexer
     virtual ~FileSystemIndexingJob();
 
     void Start();
-    void StopOnImplSequence();
+    void StopOnFileThread();
     void CollectFilesToIndex();
     void IndexFiles();
     void StartFileIndexing(base::File::Error error);
@@ -56,6 +56,7 @@ class DevToolsFileSystemIndexer
                 int bytes_read);
     void FinishFileIndexing(bool success);
     void CloseFile();
+    void CloseCallback(base::File::Error error);
     void ReportWorked();
 
     base::FilePath file_system_path_;
@@ -97,9 +98,9 @@ class DevToolsFileSystemIndexer
 
   virtual ~DevToolsFileSystemIndexer();
 
-  void SearchInPathOnImplSequence(const std::string& file_system_path,
-                                  const std::string& query,
-                                  const SearchCallback& callback);
+  void SearchInPathOnFileThread(const std::string& file_system_path,
+                                const std::string& query,
+                                const SearchCallback& callback);
 
   DISALLOW_COPY_AND_ASSIGN(DevToolsFileSystemIndexer);
 };

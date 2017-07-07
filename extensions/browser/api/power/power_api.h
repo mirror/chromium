@@ -12,7 +12,7 @@
 #include "base/callback.h"
 #include "base/macros.h"
 #include "base/single_thread_task_runner.h"
-#include "device/wake_lock/public/interfaces/wake_lock.mojom.h"
+#include "device/power_save_blocker/power_save_blocker.h"
 #include "extensions/browser/browser_context_keyed_api_factory.h"
 #include "extensions/browser/extension_function.h"
 #include "extensions/browser/extension_registry_observer.h"
@@ -54,9 +54,13 @@ class PowerReleaseKeepAwakeFunction : public UIThreadExtensionFunction {
 class PowerAPI : public BrowserContextKeyedAPI,
                  public extensions::ExtensionRegistryObserver {
  public:
-  typedef base::Callback<void(device::mojom::WakeLockType)>
-      ActivateWakeLockFunction;
-  typedef base::Callback<void()> CancelWakeLockFunction;
+  typedef base::Callback<std::unique_ptr<device::PowerSaveBlocker>(
+      device::PowerSaveBlocker::PowerSaveBlockerType,
+      device::PowerSaveBlocker::Reason,
+      const std::string&,
+      scoped_refptr<base::SequencedTaskRunner> ui_task_runner,
+      scoped_refptr<base::SingleThreadTaskRunner> file_task_runner)>
+      CreateBlockerFunction;
 
   static PowerAPI* Get(content::BrowserContext* context);
 
@@ -78,11 +82,10 @@ class PowerAPI : public BrowserContextKeyedAPI,
   // extension id without a lock will do nothing.
   void RemoveRequest(const std::string& extension_id);
 
-  // Replaces the functions that will be called to activate and cancel the wake
-  // lock. Passing empty callbacks will revert to the default.
-  void SetWakeLockFunctionsForTesting(
-      const ActivateWakeLockFunction& activate_function,
-      const CancelWakeLockFunction& cancel_function);
+  // Replaces the function that will be called to create PowerSaveBlocker
+  // objects.  Passing an empty callback will revert to the default.
+  void SetCreateBlockerFunctionForTesting(
+      const CreateBlockerFunction& function);
 
   // Overridden from extensions::ExtensionRegistryObserver.
   void OnExtensionUnloaded(content::BrowserContext* browser_context,
@@ -95,9 +98,9 @@ class PowerAPI : public BrowserContextKeyedAPI,
   explicit PowerAPI(content::BrowserContext* context);
   ~PowerAPI() override;
 
-  // Updates wake lock status and |current_level_| after iterating
+  // Updates |power_save_blocker_| and |current_level_| after iterating
   // over |extension_levels_|.
-  void UpdateWakeLock();
+  void UpdatePowerSaveBlocker();
 
   // BrowserContextKeyedAPI implementation.
   static const char* service_name() { return "PowerAPI"; }
@@ -105,31 +108,17 @@ class PowerAPI : public BrowserContextKeyedAPI,
   static const bool kServiceIsCreatedWithBrowserContext = false;
   void Shutdown() override;
 
-  // Activates the wake lock with the type. |is_wake_lock_active_| is set true.
-  void ActivateWakeLock(device::mojom::WakeLockType type);
-
-  // Cancels the current wake lock if it is in active state.
-  // |is_wake_lock_active_| is set false.
-  void CancelWakeLock();
-
-  // Returns the raw pointer of the bound |wake_lock_|. This function is used
-  // only inside ActivateWakeLock() and CancelWakeLock() to perform the wake
-  // lock mojo calls. The |wake_lock_| is bound and the wake lock mojo pipe is
-  // created only once at the first time the GetWakeLock() is called.
-  device::mojom::WakeLock* GetWakeLock();
-
   content::BrowserContext* browser_context_;
 
-  // Functions that should be called to activate and cancel the wake lock.
+  // Function that should be called to create PowerSaveBlocker objects.
   // Tests can change this to record what would've been done instead of
   // actually changing the system power-saving settings.
-  ActivateWakeLockFunction activate_wake_lock_function_;
-  CancelWakeLockFunction cancel_wake_lock_function_;
+  CreateBlockerFunction create_blocker_function_;
 
-  device::mojom::WakeLockPtr wake_lock_;
-  bool is_wake_lock_active_;
+  std::unique_ptr<device::PowerSaveBlocker> power_save_blocker_;
 
-  // Current level used by wake lock.
+  // Current level used by |power_save_blocker_|.  Meaningless if
+  // |power_save_blocker_| is NULL.
   api::power::Level current_level_;
 
   // Outstanding requests.

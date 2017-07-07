@@ -25,6 +25,7 @@
 #include "platform/fonts/opentype/OpenTypeVerticalData.h"
 
 #include "SkTypeface.h"
+#include "platform/SharedBuffer.h"
 #include "platform/fonts/SimpleFontData.h"
 #include "platform/fonts/opentype/OpenTypeTypes.h"
 #include "platform/geometry/FloatRect.h"
@@ -131,7 +132,7 @@ OpenTypeVerticalData::OpenTypeVerticalData(
 void OpenTypeVerticalData::LoadMetrics(const FontPlatformData& platform_data) {
   // Load hhea and hmtx to get x-component of vertical origins.
   // If these tables are missing, it's not an OpenType font.
-  Vector<char> buffer = platform_data.OpenTypeTable(OpenType::kHheaTag);
+  RefPtr<SharedBuffer> buffer = platform_data.OpenTypeTable(OpenType::kHheaTag);
   const OpenType::HheaTable* hhea =
       OpenType::ValidateTable<OpenType::HheaTable>(buffer);
   if (!hhea)
@@ -170,7 +171,7 @@ void OpenTypeVerticalData::LoadMetrics(const FontPlatformData& platform_data) {
   buffer = platform_data.OpenTypeTable(OpenType::kVORGTag);
   const OpenType::VORGTable* vorg =
       OpenType::ValidateTable<OpenType::VORGTable>(buffer);
-  if (vorg && buffer.size() >= vorg->RequiredSize()) {
+  if (vorg && buffer->size() >= vorg->RequiredSize()) {
     default_vert_origin_y_ = vorg->default_vert_origin_y;
     uint16_t count_vert_origin_y_metrics = vorg->num_vert_origin_y_metrics;
     if (!count_vert_origin_y_metrics) {
@@ -204,7 +205,7 @@ void OpenTypeVerticalData::LoadMetrics(const FontPlatformData& platform_data) {
     return;
 
   size_t size_extra =
-      buffer.size() - sizeof(OpenType::VmtxTable::Entry) * count_vmtx_entries;
+      buffer->size() - sizeof(OpenType::VmtxTable::Entry) * count_vmtx_entries;
   if (size_extra % sizeof(OpenType::Int16)) {
     DLOG(ERROR) << "vmtx has incorrect tsb count";
     return;

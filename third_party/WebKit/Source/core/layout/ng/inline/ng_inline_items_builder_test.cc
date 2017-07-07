@@ -16,7 +16,7 @@ namespace {
 static PassRefPtr<ComputedStyle> CreateWhitespaceStyle(EWhiteSpace whitespace) {
   RefPtr<ComputedStyle> style(ComputedStyle::Create());
   style->SetWhiteSpace(whitespace);
-  return style;
+  return style.Release();
 }
 
 class NGInlineItemsBuilderTest : public ::testing::Test {
@@ -218,18 +218,6 @@ TEST_F(NGInlineItemsBuilderTest, CollapseEastAsianWidth) {
   EXPECT_EQ(String(u"\u4E00\u4E00"), TestAppend(u"\u4E00", u"\n\u4E00"))
       << "Newline at the beginning of elements is removed "
          "when both sides are Wide.";
-}
-
-TEST_F(NGInlineItemsBuilderTest, OpaqueToSpaceCollapsing) {
-  NGInlineItemsBuilder builder(&items_);
-  builder.Append("Hello ", style_.Get());
-  builder.AppendOpaque(NGInlineItem::kBidiControl,
-                       kFirstStrongIsolateCharacter);
-  builder.Append(" ", style_.Get());
-  builder.AppendOpaque(NGInlineItem::kBidiControl,
-                       kFirstStrongIsolateCharacter);
-  builder.Append(" World", style_.Get());
-  EXPECT_EQ(String(u"Hello \u2068\u2068World"), builder.ToString());
 }
 
 TEST_F(NGInlineItemsBuilderTest, CollapseAroundReplacedElement) {

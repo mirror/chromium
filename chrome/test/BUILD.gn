@@ -11,7 +11,6 @@ import("//chrome/common/features.gni")
 import("//chrome/chrome_repack_locales.gni")
 import("//components/offline_pages/features/features.gni")
 import("//components/os_crypt/features.gni")
-import("//components/signin/features.gni")
 import("//components/spellcheck/spellcheck_build_features.gni")
 import("//extensions/features/features.gni")
 import("//media/media_options.gni")
@@ -218,7 +217,6 @@ static_library("test_support") {
     public_deps += [
       "//chrome/install_static/test:test_support",
       "//components/crash/content/app",
-      "//gpu/config:crash_keys",
       "//third_party/wtl",
     ]
   }
@@ -1332,6 +1330,7 @@ test("browser_tests") {
       "../browser/metrics/process_memory_metrics_emitter_browsertest.cc",
       "../browser/metrics/startup_metrics_browsertest.cc",
       "../browser/metrics/tab_reactivation_tracker_browsertest.cc",
+      "../browser/metrics/ukm_browsertest.cc",
       "../browser/net/chrome_network_delegate_browsertest.cc",
       "../browser/net/cookie_policy_browsertest.cc",
       "../browser/net/dns_probe_browsertest.cc",
@@ -1697,7 +1696,6 @@ test("browser_tests") {
       "//third_party/accessibility-audit/axs_testing.js",
       "//third_party/chaijs/chai.js",
       "//third_party/mocha/mocha.js",
-      "//third_party/polymer/v1_0/components-chromium/iron-test-helpers/mock-interactions.js",
       "//third_party/pyftpdlib/",
       "//third_party/pywebsocket/",
       "//third_party/simplejson/",
@@ -2067,7 +2065,6 @@ test("browser_tests") {
         "../browser/ui/views/payments/payment_request_can_make_payment_metrics_browsertest.cc",
         "../browser/ui/views/payments/payment_request_completion_status_metrics_browsertest.cc",
         "../browser/ui/views/payments/payment_request_data_url_browsertest.cc",
-        "../browser/ui/views/payments/payment_request_debit_browsertest.cc",
         "../browser/ui/views/payments/payment_request_journey_logger_browsertest.cc",
         "../browser/ui/views/payments/payment_request_payment_app_browsertest.cc",
         "../browser/ui/views/payments/payment_request_payment_response_browsertest.cc",
@@ -3059,6 +3056,7 @@ test("unit_tests") {
     "../browser/data_use_measurement/chrome_data_use_ascriber_service_unittest.cc",
     "../browser/data_use_measurement/chrome_data_use_ascriber_unittest.cc",
     "../browser/devtools/devtools_network_controller_unittest.cc",
+    "../browser/download/all_download_item_notifier_unittest.cc",
     "../browser/download/chrome_download_manager_delegate_unittest.cc",
     "../browser/download/download_history_unittest.cc",
     "../browser/download/download_item_model_unittest.cc",
@@ -3286,6 +3284,8 @@ test("unit_tests") {
     "../browser/sync/sessions/sync_sessions_web_contents_router_unittest.cc",
     "../browser/sync/sync_startup_tracker_unittest.cc",
     "../browser/task_profiler/task_profiler_data_serializer_unittest.cc",
+    "../browser/thumbnails/content_analysis_unittest.cc",
+    "../browser/thumbnails/content_based_thumbnailing_algorithm_unittest.cc",
     "../browser/thumbnails/simple_thumbnail_crop_unittest.cc",
     "../browser/thumbnails/thumbnail_service_unittest.cc",
     "../browser/translate/chrome_translate_client_unittest.cc",
@@ -3492,10 +3492,6 @@ test("unit_tests") {
 
   if (is_mac) {
     data_deps += [ "//chrome:chrome_framework" ]
-  }
-
-  if (enable_dice_support) {
-    sources += [ "../browser/signin/dice_response_handler_unittest.cc" ]
   }
 
   if (enable_offline_pages) {
@@ -3995,6 +3991,7 @@ test("unit_tests") {
       "../browser/extensions/shared_module_service_unittest.cc",
       "../browser/extensions/standard_management_policy_provider_unittest.cc",
       "../browser/extensions/tab_helper_unittest.cc",
+      "../browser/extensions/token_cache/token_cache_service_unittest.cc",
       "../browser/extensions/update_install_gate_unittest.cc",
       "../browser/extensions/updater/extension_cache_fake.cc",
       "../browser/extensions/updater/extension_cache_fake.h",
@@ -4896,7 +4893,6 @@ test("unit_tests") {
       "../browser/ui/app_list/arc/arc_app_test.cc",
       "../browser/ui/app_list/arc/arc_app_test.h",
       "../browser/ui/app_list/arc/arc_app_unittest.cc",
-      "../browser/ui/app_list/arc/arc_app_utils_unittest.cc",
       "../browser/ui/app_list/extension_app_model_builder_unittest.cc",
       "../browser/ui/app_list/profile_loader_unittest.cc",
       "../browser/ui/app_list/search/answer_card/answer_card_result_unittest.cc",

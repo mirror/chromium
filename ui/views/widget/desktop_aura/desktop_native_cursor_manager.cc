@@ -74,8 +74,8 @@ void DesktopNativeCursorManager::SetVisibility(
     (*i)->OnCursorVisibilityChanged(visible);
 }
 
-void DesktopNativeCursorManager::SetCursorSize(
-    ui::CursorSize cursor_size,
+void DesktopNativeCursorManager::SetCursorSet(
+    ui::CursorSetType cursor_set,
     wm::NativeCursorManagerDelegate* delegate) {
   NOTIMPLEMENTED();
 }

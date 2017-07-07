@@ -132,7 +132,7 @@ LayoutObject* HTMLVideoElement::CreateLayoutObject(const ComputedStyle&) {
   return new LayoutVideo(this);
 }
 
-void HTMLVideoElement::AttachLayoutTree(AttachContext& context) {
+void HTMLVideoElement::AttachLayoutTree(const AttachContext& context) {
   HTMLMediaElement::AttachLayoutTree(context);
 
   UpdateDisplayState();
@@ -456,7 +456,7 @@ PassRefPtr<Image> HTMLVideoElement::GetSourceImageForCanvas(
   }
 
   *status = kNormalSourceImageStatus;
-  return snapshot;
+  return snapshot.Release();
 }
 
 bool HTMLVideoElement::WouldTaintOrigin(

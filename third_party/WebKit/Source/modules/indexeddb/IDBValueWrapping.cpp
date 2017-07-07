@@ -201,8 +201,7 @@ RefPtr<IDBValue> IDBValueUnwrapper::Unwrap(
   }
 
   return IDBValue::Create(std::move(wrapper_blob_content), std::move(blob_data),
-                          std::move(blob_info), wrapped_value->PrimaryKey(),
-                          wrapped_value->KeyPath());
+                          std::move(blob_info));
 }
 
 bool IDBValueUnwrapper::Parse(IDBValue* value) {

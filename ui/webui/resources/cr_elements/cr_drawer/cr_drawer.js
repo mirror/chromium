@@ -7,8 +7,6 @@ Polymer({
   extends: 'dialog',
 
   properties: {
-    title: String,
-
     /** Enables notifications for |Dialog.open|. */
     open: {
       type: Boolean,

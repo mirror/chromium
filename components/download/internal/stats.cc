@@ -34,7 +34,7 @@ void LogScheduledTaskStatus(DownloadTaskType task_type,
   // TODO(shaktisahu): Log |task_type| and |status|.
 }
 
-void LogDownloadCompletion(CompletionType type, unsigned int attempt_count) {
+void LogDownloadCompletion(CompletionType type) {
   // TODO(xingliu): Log completion.
 }
 

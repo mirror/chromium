@@ -471,10 +471,8 @@ NSError* WKWebViewErrorWithSource(NSError* error, WKWebViewErrorSource source) {
 // Returns YES if the user interacted with the page recently.
 @property(nonatomic, readonly) BOOL userClickedRecently;
 
-// User agent type of the transient item if any, the pending item if a
-// navigation is in progress or the last committed item otherwise.
-// Returns MOBILE, the default type, if navigation manager is nullptr or empty.
-@property(nonatomic, readonly) web::UserAgentType userAgentType;
+// Whether or not desktop user agent is used for the currentItem.
+@property(nonatomic, readonly) BOOL usesDesktopUserAgent;
 
 // Facade for Mojo API.
 @property(nonatomic, readonly) web::MojoFacade* mojoFacade;
@@ -495,11 +493,10 @@ NSError* WKWebViewErrorWithSource(NSError* error, WKWebViewErrorSource source) {
 // loaded.
 @property(nonatomic, readwrite) BOOL userInteractionRegistered;
 
-// Requires page reconstruction if |userAgentType| is a non-NONE and it differs
-// from that of |previousUserAgentType|.
-- (void)updateWebViewFromUserAgentType:(web::UserAgentType)userAgentType
-                 previousUserAgentType:
-                     (web::UserAgentType)previousUserAgentType;
+// Requires page reconstruction if |item| has a non-NONE UserAgentType and it
+// differs from that of |fromItem|.
+- (void)updateDesktopUserAgentForItem:(web::NavigationItem*)item
+                previousUserAgentType:(web::UserAgentType)userAgentType;
 
 // Removes the container view from the hierarchy and resets the ivar.
 - (void)resetContainerView;
@@ -1199,10 +1196,6 @@ const NSTimeInterval kSnapshotOverlayTransition = 0.5;
 
   // Remove the web view now. Otherwise, delegate callbacks occur.
   [self removeWebViewAllowingCachedReconstruction:NO];
-
-  // Explicitly reset content to clean up views and avoid dangling KVO
-  // observers.
-  [_containerView resetContent];
 
   _webStateImpl = nullptr;
 
@@ -2062,16 +2055,13 @@ registerLoadRequestForURL:(const GURL&)requestURL
   [self clearTransientContentView];
 
   // Update the user agent before attempting the navigation.
-  // TODO(crbug.com/736103): due to the bug, updating the user agent of web view
-  // requires reconstructing the while web view, change the behavior to call
-  // [WKWebView setCustomUserAgent] once the bug is fixed.
   web::NavigationItem* toItem = items[index].get();
   web::NavigationItem* previousItem = sessionController.currentItem;
   web::UserAgentType previousUserAgentType =
       previousItem ? previousItem->GetUserAgentType()
                    : web::UserAgentType::NONE;
-  [self updateWebViewFromUserAgentType:toItem->GetUserAgentType()
-                 previousUserAgentType:previousUserAgentType];
+  [self updateDesktopUserAgentForItem:toItem
+                previousUserAgentType:previousUserAgentType];
 
   BOOL sameDocumentNavigation =
       [sessionController isSameDocumentNavigationBetweenItem:previousItem
@@ -2231,9 +2221,9 @@ registerLoadRequestForURL:(const GURL&)requestURL
   return rendererInitiatedWithoutInteraction || noNavigationItems;
 }
 
-- (web::UserAgentType)userAgentType {
+- (BOOL)usesDesktopUserAgent {
   web::NavigationItem* item = self.currentNavItem;
-  return item ? item->GetUserAgentType() : web::UserAgentType::MOBILE;
+  return item && item->GetUserAgentType() == web::UserAgentType::DESKTOP;
 }
 
 - (web::MojoFacade*)mojoFacade {
@@ -2270,15 +2260,6 @@ registerLoadRequestForURL:(const GURL&)requestURL
       initWithContextGetter:browserState->GetRequestContext()
           completionHandler:passKitCompletion]);
   return _passKitDownloader.get();
-}
-
-- (void)updateWebViewFromUserAgentType:(web::UserAgentType)userAgentType
-                 previousUserAgentType:
-                     (web::UserAgentType)previousUserAgentType {
-  if (userAgentType != web::UserAgentType::NONE &&
-      userAgentType != previousUserAgentType) {
-    [self requirePageReconstruction];
-  }
 }
 
 - (void)updateDesktopUserAgentForItem:(web::NavigationItem*)item
@@ -3992,7 +3973,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
   // delegate must be specified.
   return web::BuildWKWebView(CGRectZero, config,
                              self.webStateImpl->GetBrowserState(),
-                             self.userAgentType);
+                             self.usesDesktopUserAgent);
 }
 
 - (void)setWebView:(WKWebView*)webView {

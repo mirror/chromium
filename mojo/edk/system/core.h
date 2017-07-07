@@ -183,7 +183,6 @@ class MOJO_SYSTEM_IMPL_EXPORT Core {
   MojoResult Watch(MojoHandle watcher_handle,
                    MojoHandle handle,
                    MojoHandleSignals signals,
-                   MojoWatchCondition condition,
                    uintptr_t context);
   MojoResult CancelWatch(MojoHandle watcher_handle, uintptr_t context);
   MojoResult ArmWatcher(MojoHandle watcher_handle,

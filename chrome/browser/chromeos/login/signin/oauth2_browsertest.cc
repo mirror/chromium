@@ -151,7 +151,7 @@ class BrowserThreadBlocker {
             base::WaitableEvent::InitialState::NOT_SIGNALED)) {
     content::BrowserThread::PostTask(
         identifier, FROM_HERE,
-        base::BindOnce(&BlockThreadOnThread, base::Owned(unblock_event_)));
+        base::Bind(&BlockThreadOnThread, base::Owned(unblock_event_)));
   }
   ~BrowserThreadBlocker() { unblock_event_->Signal(); }
 
@@ -408,7 +408,8 @@ class CookieReader : public base::RefCountedThreadSafe<CookieReader> {
     context_ = profile->GetRequestContext();
     content::BrowserThread::PostTask(
         content::BrowserThread::IO, FROM_HERE,
-        base::BindOnce(&CookieReader::ReadCookiesOnIOThread, this));
+        base::Bind(&CookieReader::ReadCookiesOnIOThread,
+                   this));
     runner_ = new content::MessageLoopRunner;
     runner_->Run();
   }
@@ -440,7 +441,8 @@ class CookieReader : public base::RefCountedThreadSafe<CookieReader> {
     cookie_list_ = cookies;
     content::BrowserThread::PostTask(
         content::BrowserThread::UI, FROM_HERE,
-        base::BindOnce(&CookieReader::OnCookiesReadyOnUIThread, this));
+        base::Bind(&CookieReader::OnCookiesReadyOnUIThread,
+                   this));
   }
 
   void OnCookiesReadyOnUIThread() {
@@ -538,15 +540,8 @@ IN_PROC_BROWSER_TEST_F(OAuth2Test, PRE_OverlappingContinueSessionRestore) {
   StartNewUserSession(true);
 }
 
-#if defined(OS_CHROMEOS)
-#define MAYBE_OverlappingContinueSessionRestore \
-  DISABLED_OverlappingContinueSessionRestore
-#else
-#define MAYBE_OverlappingContinueSessionRestore \
-  OverlappingContinueSessionRestore
-#endif
 // Tests that ContinueSessionRestore could be called multiple times.
-IN_PROC_BROWSER_TEST_F(OAuth2Test, MAYBE_OverlappingContinueSessionRestore) {
+IN_PROC_BROWSER_TEST_F(OAuth2Test, OverlappingContinueSessionRestore) {
   SetupGaiaServerForUnexpiredAccount();
   SimulateNetworkOnline();
 
@@ -652,8 +647,8 @@ class FakeGoogle {
       start_event_.Signal();
       content::BrowserThread::PostTask(
           content::BrowserThread::UI, FROM_HERE,
-          base::BindOnce(&FakeGoogle::QuitRunnerOnUIThread,
-                         base::Unretained(this)));
+          base::Bind(&FakeGoogle::QuitRunnerOnUIThread,
+                     base::Unretained(this)));
 
       http_response->set_code(net::HTTP_OK);
       http_response->set_content_type("text/html");
@@ -726,8 +721,8 @@ class DelayedFakeGaia : public FakeGaia {
     start_event_.Signal();
     content::BrowserThread::PostTask(
         content::BrowserThread::UI, FROM_HERE,
-        base::BindOnce(&DelayedFakeGaia::QuitRunnerOnUIThread,
-                       base::Unretained(this)));
+        base::Bind(&DelayedFakeGaia::QuitRunnerOnUIThread,
+                   base::Unretained(this)));
     blocking_event_.Wait();
     FakeGaia::HandleMergeSession(request, http_response);
   }

@@ -10,7 +10,6 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/thumbnails/thumbnail_service.h"
 #include "components/history/core/browser/top_sites.h"
-#include "ui/base/page_transition_types.h"
 
 namespace base {
 class RefCountedMemory;
@@ -32,8 +31,7 @@ class ThumbnailServiceImpl : public ThumbnailService {
                         bool prefix_match,
                         scoped_refptr<base::RefCountedMemory>* bytes) override;
   void AddForcedURL(const GURL& url) override;
-  bool ShouldAcquirePageThumbnail(const GURL& url,
-                                  ui::PageTransition transition) override;
+  bool ShouldAcquirePageThumbnail(const GURL& url) override;
 
   // Implementation of RefcountedKeyedService.
   void ShutdownOnUIThread() override;
@@ -42,6 +40,7 @@ class ThumbnailServiceImpl : public ThumbnailService {
   ~ThumbnailServiceImpl() override;
 
   scoped_refptr<history::TopSites> top_sites_;
+  bool use_thumbnail_retargeting_;
 
   DISALLOW_COPY_AND_ASSIGN(ThumbnailServiceImpl);
 };

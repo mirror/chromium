@@ -3,15 +3,15 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-"""Simple certificate chain for a serverAuth which is comprised of a root,
-intermediate, and leaf certificate."""
+"""Certificate chain with 1 intermediate and a trusted root. Verification is
+expected to succeed."""
 
 import sys
 sys.path += ['..']
 
 import common
 
-# Self-signed root certificate.
+# Self-signed root certificate (used as trust anchor).
 root = common.create_self_signed_root_certificate('Root')
 
 # Intermediate certificate.

@@ -27,8 +27,8 @@ base::FilePath TestContentBrowserClient::GetDefaultDownloadDirectory() {
 void TestContentBrowserClient::GetQuotaSettings(
     BrowserContext* context,
     StoragePartition* partition,
-    storage::OptionalQuotaSettingsCallback callback) {
-  std::move(callback).Run(storage::GetHardCodedSettings(100 * 1024 * 1024));
+    const storage::OptionalQuotaSettingsCallback& callback) {
+  callback.Run(storage::GetHardCodedSettings(100 * 1024 * 1024));
 }
 
 }  // namespace content

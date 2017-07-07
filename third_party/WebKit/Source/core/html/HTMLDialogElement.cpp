@@ -34,7 +34,6 @@
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/UseCounter.h"
 #include "core/html/HTMLFormControlElement.h"
-#include "core/html/HTMLFrameOwnerElement.h"
 #include "core/style/ComputedStyle.h"
 
 namespace blink {
@@ -83,13 +82,6 @@ static void SetFocusForDialog(HTMLDialogElement* dialog) {
 }
 
 static void InertSubtreesChanged(Document& document) {
-  if (document.GetFrame()) {
-    // SetIsInert recurses through subframes to propagate the inert bit as
-    // needed.
-    document.GetFrame()->SetIsInert(document.LocalOwner() &&
-                                    document.LocalOwner()->IsInert());
-  }
-
   // When a modal dialog opens or closes, nodes all over the accessibility
   // tree can change inertness which means they must be added or removed from
   // the tree. The most foolproof way is to clear the entire tree and rebuild
@@ -197,7 +189,7 @@ void HTMLDialogElement::showModal(ExceptionState& exception_state) {
 void HTMLDialogElement::RemovedFrom(ContainerNode* insertion_point) {
   HTMLElement::RemovedFrom(insertion_point);
   SetNotCentered();
-  InertSubtreesChanged(GetDocument());
+  // FIXME: We should call inertSubtreesChanged() here.
 }
 
 void HTMLDialogElement::SetCentered(LayoutUnit centered_position) {

@@ -17,7 +17,6 @@ AppResult::AppResult(Profile* profile,
       app_id_(app_id),
       controller_(controller) {
   set_display_type(is_recommendation ? DISPLAY_RECOMMENDATION : DISPLAY_TILE);
-  set_result_type(RESULT_INSTALLED_APP);
 }
 
 AppResult::~AppResult() {

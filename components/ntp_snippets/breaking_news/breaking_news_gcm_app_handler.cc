@@ -15,19 +15,19 @@ using instance_id::InstanceID;
 
 namespace ntp_snippets {
 
-const char kBreakingNewsGCMAppID[] = "com.google.breakingnews.gcm";
+const char kContentSuggestionsGCMAppID[] = "com.google.contentsuggestions.gcm";
 
 // The sender ID is used in the registration process.
 // See: https://developers.google.com/cloud-messaging/gcm#senderid
 // TODO(mamir): use proper sender Id.
-const char kBreakingNewsGCMSenderId[] = "128223710667";
+const char kContentSuggestionsGCMSenderId[] = "128223710667";
 
 // OAuth2 Scope passed to getToken to obtain GCM registration tokens.
 // Must match Java GoogleCloudMessaging.INSTANCE_ID_SCOPE.
 const char kGCMScope[] = "GCM";
 
-// Key of the news json in the data in the pushed breaking news.
-const char kPushedNewsKey[] = "payload";
+// Key of the suggestion json in the data in the pushed content suggestion.
+const char kPushedSuggestionKey[] = "payload";
 
 BreakingNewsGCMAppHandler::BreakingNewsGCMAppHandler(
     gcm::GCMDriver* gcm_driver,
@@ -40,7 +40,7 @@ BreakingNewsGCMAppHandler::BreakingNewsGCMAppHandler(
       pref_service_(pref_service),
       subscription_manager_(std::move(subscription_manager)),
       parse_json_callback_(parse_json_callback),
-      weak_ptr_factory_(this) {}
+      weak_factory_(this) {}
 
 BreakingNewsGCMAppHandler::~BreakingNewsGCMAppHandler() {
   StopListening();
@@ -54,23 +54,23 @@ void BreakingNewsGCMAppHandler::StartListening(
 #endif
   Subscribe();
   on_new_content_callback_ = std::move(on_new_content_callback);
-  gcm_driver_->AddAppHandler(kBreakingNewsGCMAppID, this);
+  gcm_driver_->AddAppHandler(kContentSuggestionsGCMAppID, this);
 }
 
 void BreakingNewsGCMAppHandler::StopListening() {
-  DCHECK_EQ(gcm_driver_->GetAppHandler(kBreakingNewsGCMAppID), this);
-  gcm_driver_->RemoveAppHandler(kBreakingNewsGCMAppID);
+  DCHECK_EQ(gcm_driver_->GetAppHandler(kContentSuggestionsGCMAppID), this);
+  gcm_driver_->RemoveAppHandler(kContentSuggestionsGCMAppID);
   on_new_content_callback_ = OnNewContentCallback();
   // TODO(mamir): Check which token should be used for unsubscription when
   // handling change in the token.
   std::string token = pref_service_->GetString(
-      ntp_snippets::prefs::kBreakingNewsGCMSubscriptionTokenCache);
+      ntp_snippets::prefs::kContentSuggestionsGCMSubscriptionTokenCache);
   subscription_manager_->Unsubscribe(token);
 }
 
 void BreakingNewsGCMAppHandler::Subscribe() {
   std::string token = pref_service_->GetString(
-      ntp_snippets::prefs::kBreakingNewsGCMSubscriptionTokenCache);
+      ntp_snippets::prefs::kContentSuggestionsGCMSubscriptionTokenCache);
   // If a token has been already obtained, subscribe directly at the content
   // suggestions server.
   if (!token.empty()) {
@@ -80,11 +80,11 @@ void BreakingNewsGCMAppHandler::Subscribe() {
     return;
   }
 
-  instance_id_driver_->GetInstanceID(kBreakingNewsGCMAppID)
-      ->GetToken(kBreakingNewsGCMSenderId, kGCMScope,
+  instance_id_driver_->GetInstanceID(kContentSuggestionsGCMAppID)
+      ->GetToken(kContentSuggestionsGCMSenderId, kGCMScope,
                  std::map<std::string, std::string>() /* options */,
                  base::Bind(&BreakingNewsGCMAppHandler::DidSubscribe,
-                            weak_ptr_factory_.GetWeakPtr()));
+                            weak_factory_.GetWeakPtr()));
 }
 
 void BreakingNewsGCMAppHandler::DidSubscribe(const std::string& subscription_id,
@@ -92,7 +92,7 @@ void BreakingNewsGCMAppHandler::DidSubscribe(const std::string& subscription_id,
   switch (result) {
     case InstanceID::SUCCESS:
       pref_service_->SetString(
-          ntp_snippets::prefs::kBreakingNewsGCMSubscriptionTokenCache,
+          ntp_snippets::prefs::kContentSuggestionsGCMSubscriptionTokenCache,
           subscription_id);
       subscription_manager_->Subscribe(subscription_id);
       return;
@@ -114,27 +114,27 @@ void BreakingNewsGCMAppHandler::ShutdownHandler() {}
 
 void BreakingNewsGCMAppHandler::OnStoreReset() {
   pref_service_->ClearPref(
-      ntp_snippets::prefs::kBreakingNewsGCMSubscriptionTokenCache);
+      ntp_snippets::prefs::kContentSuggestionsGCMSubscriptionTokenCache);
 }
 
 void BreakingNewsGCMAppHandler::OnMessage(const std::string& app_id,
                                           const gcm::IncomingMessage& message) {
-  DCHECK_EQ(app_id, kBreakingNewsGCMAppID);
+  DCHECK_EQ(app_id, kContentSuggestionsGCMAppID);
 
-  gcm::MessageData::const_iterator it = message.data.find(kPushedNewsKey);
+  gcm::MessageData::const_iterator it = message.data.find(kPushedSuggestionKey);
   if (it == message.data.end()) {
     LOG(WARNING)
-        << "Receiving pushed content failure: Breaking News ID missing.";
+        << "Receiving pushed content failure: Content suggestion ID missing.";
     return;
   }
 
-  std::string news = it->second;
+  std::string suggestions = it->second;
 
-  parse_json_callback_.Run(news,
+  parse_json_callback_.Run(suggestions,
                            base::Bind(&BreakingNewsGCMAppHandler::OnJsonSuccess,
-                                      weak_ptr_factory_.GetWeakPtr()),
+                                      weak_factory_.GetWeakPtr()),
                            base::Bind(&BreakingNewsGCMAppHandler::OnJsonError,
-                                      weak_ptr_factory_.GetWeakPtr(), news));
+                                      weak_factory_.GetWeakPtr(), suggestions));
 }
 
 void BreakingNewsGCMAppHandler::OnMessagesDeleted(const std::string& app_id) {
@@ -160,8 +160,8 @@ void BreakingNewsGCMAppHandler::OnSendAcknowledged(
 
 void BreakingNewsGCMAppHandler::RegisterProfilePrefs(
     PrefRegistrySimple* registry) {
-  registry->RegisterStringPref(prefs::kBreakingNewsGCMSubscriptionTokenCache,
-                               std::string());
+  registry->RegisterStringPref(
+      prefs::kContentSuggestionsGCMSubscriptionTokenCache, std::string());
 }
 
 void BreakingNewsGCMAppHandler::OnJsonSuccess(

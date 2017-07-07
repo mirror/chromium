@@ -5,8 +5,6 @@
 #ifndef UI_VIEWS_FOCUS_FOCUS_MANAGER_FACTORY_H_
 #define UI_VIEWS_FOCUS_FOCUS_MANAGER_FACTORY_H_
 
-#include <memory>
-
 #include "base/macros.h"
 #include "ui/views/views_export.h"
 
@@ -19,9 +17,8 @@ class Widget;
 // to inject a custom factory.
 class VIEWS_EXPORT FocusManagerFactory {
  public:
-  // Create a FocusManager for the given |widget| using the installed Factory.
-  static std::unique_ptr<FocusManager> Create(Widget* widget,
-                                              bool desktop_widget);
+  // Create a FocusManager for the given |widget| using installe Factory.
+  static FocusManager* Create(Widget* widget, bool desktop_widget);
 
   // Installs FocusManagerFactory. If |factory| is NULL, it resets
   // to the default factory which creates plain FocusManager.
@@ -34,9 +31,8 @@ class VIEWS_EXPORT FocusManagerFactory {
   // Create a FocusManager for the given |widget|.
   // The |desktop_widget| bool is true for widgets created in the desktop and
   // false for widgets created in the shell.
-  virtual std::unique_ptr<FocusManager> CreateFocusManager(
-      Widget* widget,
-      bool desktop_widget) = 0;
+  virtual FocusManager* CreateFocusManager(Widget* widget,
+                                           bool desktop_widget) = 0;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(FocusManagerFactory);

@@ -1240,9 +1240,8 @@ class CORE_EXPORT LayoutBox : public LayoutBoxModelObject {
   LayoutRect VisualOverflowRectForPropagation() const {
     return RectForOverflowPropagation(VisualOverflowRect());
   }
-  LayoutRect LogicalLayoutOverflowRectForPropagation(
-      LayoutObject* container) const;
-  LayoutRect LayoutOverflowRectForPropagation(LayoutObject* container) const;
+  LayoutRect LogicalLayoutOverflowRectForPropagation() const;
+  LayoutRect LayoutOverflowRectForPropagation() const;
 
   bool HasOverflowModel() const { return overflow_.get(); }
   bool HasSelfVisualOverflow() const {

@@ -12,8 +12,7 @@ define([
                                    core.HANDLE_SIGNAL_READABLE;
   var HANDLE_SIGNAL_ALL = core.HANDLE_SIGNAL_WRITABLE |
                           core.HANDLE_SIGNAL_READABLE |
-                          core.HANDLE_SIGNAL_PEER_CLOSED |
-                          core.HANDLE_SIGNAL_PEER_REMOTE;
+                          core.HANDLE_SIGNAL_PEER_CLOSED;
 
   runWithMessagePipe(testNop);
   runWithMessagePipe(testReadAndWriteMessage);

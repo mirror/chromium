@@ -123,4 +123,6 @@ var tests = [
   }
 ];
 
-chrome.test.runTests(tests);
+importTestHelpers().then(function() {
+  chrome.test.runTests(tests);
+});

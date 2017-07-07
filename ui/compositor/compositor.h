@@ -62,7 +62,7 @@ class GpuMemoryBufferManager;
 }
 
 namespace viz {
-class HostFrameSinkManager;
+class FrameSinkManagerHost;
 }
 
 namespace ui {
@@ -109,7 +109,7 @@ class COMPOSITOR_EXPORT ContextFactoryPrivate {
   virtual cc::SurfaceManager* GetSurfaceManager() = 0;
 
   // Gets the frame sink manager host instance.
-  virtual viz::HostFrameSinkManager* GetHostFrameSinkManager() = 0;
+  virtual viz::FrameSinkManagerHost* GetFrameSinkManagerHost() = 0;
 
   // Inform the display corresponding to this compositor if it is visible. When
   // false it does not need to produce any frames. Visibility is reset for each
@@ -246,7 +246,7 @@ class COMPOSITOR_EXPORT Compositor
   void SetScaleAndSize(float scale, const gfx::Size& size_in_pixel);
 
   // Set the output color profile into which this compositor should render.
-  void SetDisplayColorSpace(const gfx::ColorSpace& color_space);
+  void SetDisplayColorProfile(const gfx::ICCProfile& icc_profile);
 
   // Returns the size of the widget that is being drawn to in pixel coordinates.
   const gfx::Size& size() const { return size_; }

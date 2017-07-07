@@ -94,13 +94,8 @@ public class MostVisitedSitesBridge
     }
 
     @Override
-    public void recordPageImpression(int tilesCount) {
-        nativeRecordPageImpression(mNativeMostVisitedSitesBridge, tilesCount);
-    }
-
-    @Override
-    public void recordTileImpression(int index, int type, int source, String url) {
-        nativeRecordTileImpression(mNativeMostVisitedSitesBridge, index, type, source, url);
+    public void recordPageImpression(int[] tileTypes, int[] sources, String[] tileUrls) {
+        nativeRecordPageImpression(mNativeMostVisitedSitesBridge, tileTypes, sources, tileUrls);
     }
 
     @Override
@@ -128,9 +123,7 @@ public class MostVisitedSitesBridge
     private native void nativeAddOrRemoveBlacklistedUrl(
             long nativeMostVisitedSitesBridge, String url, boolean addUrl);
     private native void nativeRecordPageImpression(
-            long nativeMostVisitedSitesBridge, int tilesCount);
-    private native void nativeRecordTileImpression(
-            long nativeMostVisitedSitesBridge, int index, int type, int source, String url);
+            long nativeMostVisitedSitesBridge, int[] tileTypes, int[] sources, String[] tileUrls);
     private native void nativeRecordOpenedMostVisitedItem(
             long nativeMostVisitedSitesBridge, int index, int tileType, int source);
 }

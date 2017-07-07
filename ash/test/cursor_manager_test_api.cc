@@ -20,8 +20,8 @@ CursorManagerTestApi::CursorManagerTestApi(::wm::CursorManager* cursor_manager)
 CursorManagerTestApi::~CursorManagerTestApi() {}
 
 // TODO(tdanderson): CursorManagerTestApi may no longer be needed.
-ui::CursorSize CursorManagerTestApi::GetCurrentCursorSize() const {
-  return cursor_manager_->GetCursorSize();
+ui::CursorSetType CursorManagerTestApi::GetCurrentCursorSet() const {
+  return cursor_manager_->GetCursorSet();
 }
 
 gfx::NativeCursor CursorManagerTestApi::GetCurrentCursor() const {

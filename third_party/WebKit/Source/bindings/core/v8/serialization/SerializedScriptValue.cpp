@@ -82,7 +82,7 @@ SerializedScriptValue::SerializeAndSwallowExceptions(
       Serialize(isolate, value, SerializeOptions(), exception_state);
   if (exception_state.HadException())
     return NullValue();
-  return serialized;
+  return serialized.Release();
 }
 
 PassRefPtr<SerializedScriptValue> SerializedScriptValue::Create() {

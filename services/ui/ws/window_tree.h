@@ -459,8 +459,8 @@ class WindowTree : public mojom::WindowTree,
                         float opacity) override;
   void AttachCompositorFrameSink(
       Id transport_window_id,
-      cc::mojom::CompositorFrameSinkRequest compositor_frame_sink,
-      cc::mojom::CompositorFrameSinkClientPtr client) override;
+      cc::mojom::MojoCompositorFrameSinkRequest compositor_frame_sink,
+      cc::mojom::MojoCompositorFrameSinkClientPtr client) override;
   void Embed(Id transport_window_id,
              mojom::WindowTreeClientPtr client,
              uint32_t flags,
@@ -537,7 +537,6 @@ class WindowTree : public mojom::WindowTree,
   void WmLockCursor() override;
   void WmUnlockCursor() override;
   void WmSetCursorVisible(bool visible) override;
-  void WmSetCursorSize(ui::CursorSize cursor_size) override;
   void WmSetGlobalOverrideCursor(
       base::Optional<ui::CursorData> cursor) override;
   void WmMoveCursorToDisplayLocation(const gfx::Point& display_pixels,

@@ -7,23 +7,13 @@
       "drawsContent": true,
       "paintInvalidations": [
         {
-          "object": "LayoutTableRow TR",
-          "rect": [8, 353, 60, 38],
+          "object": "CollapsedBorderValues",
+          "rect": [8, 308, 60, 83],
           "reason": "geometry"
         },
         {
-          "object": "LayoutTableRow TR",
-          "rect": [8, 338, 60, 38],
-          "reason": "geometry"
-        },
-        {
-          "object": "LayoutTableRow TR",
-          "rect": [8, 323, 60, 38],
-          "reason": "geometry"
-        },
-        {
-          "object": "LayoutTableRow TR",
-          "rect": [8, 308, 60, 38],
+          "object": "CollapsedBorderValues",
+          "rect": [8, 308, 60, 83],
           "reason": "geometry"
         },
         {
@@ -189,11 +179,19 @@
       "reason": "geometry"
     },
     {
+      "object": "CollapsedBorderValues",
+      "reason": "geometry"
+    },
+    {
       "object": "LayoutTableRow TR",
       "reason": "geometry"
     },
     {
       "object": "LayoutTableCell TD class='half'",
+      "reason": "geometry"
+    },
+    {
+      "object": "CollapsedBorderValues",
       "reason": "geometry"
     }
   ]

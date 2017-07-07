@@ -66,7 +66,7 @@ void SubscriptionManager::DidSubscribe(const ntp_snippets::Status& status) {
       // change.
       // TODO(mamir): store region and language.
       pref_service_->SetString(
-          ntp_snippets::prefs::kBreakingNewsSubscriptionDataToken,
+          ntp_snippets::prefs::kContentSuggestionsSubscriptionDataToken,
           subscription_token_);
       break;
     default:
@@ -97,7 +97,7 @@ void SubscriptionManager::Unsubscribe(const std::string& token) {
 
 bool SubscriptionManager::IsSubscribed() {
   std::string subscription_token_ = pref_service_->GetString(
-      ntp_snippets::prefs::kBreakingNewsSubscriptionDataToken);
+      ntp_snippets::prefs::kContentSuggestionsSubscriptionDataToken);
   return !subscription_token_.empty();
 }
 
@@ -109,7 +109,7 @@ void SubscriptionManager::DidUnsubscribe(const ntp_snippets::Status& status) {
       // In case of successful unsubscription, clear the previously stored data.
       // TODO(mamir): clear stored region and language.
       pref_service_->ClearPref(
-          ntp_snippets::prefs::kBreakingNewsSubscriptionDataToken);
+          ntp_snippets::prefs::kContentSuggestionsSubscriptionDataToken);
       break;
     default:
       // TODO(mamir): handle failure.
@@ -118,13 +118,14 @@ void SubscriptionManager::DidUnsubscribe(const ntp_snippets::Status& status) {
 }
 
 void SubscriptionManager::RegisterProfilePrefs(PrefRegistrySimple* registry) {
-  registry->RegisterStringPref(prefs::kBreakingNewsSubscriptionDataToken,
+  registry->RegisterStringPref(prefs::kContentSuggestionsSubscriptionDataToken,
                                std::string());
 }
 
 GURL GetPushUpdatesSubscriptionEndpoint(version_info::Channel channel) {
   std::string endpoint = base::GetFieldTrialParamValueByFeature(
-      ntp_snippets::kBreakingNewsPushFeature, kPushSubscriptionBackendParam);
+      ntp_snippets::kContentSuggestionsPushFeature,
+      kPushSubscriptionBackendParam);
   if (!endpoint.empty()) {
     return GURL{endpoint};
   }
@@ -145,7 +146,8 @@ GURL GetPushUpdatesSubscriptionEndpoint(version_info::Channel channel) {
 
 GURL GetPushUpdatesUnsubscriptionEndpoint(version_info::Channel channel) {
   std::string endpoint = base::GetFieldTrialParamValueByFeature(
-      ntp_snippets::kBreakingNewsPushFeature, kPushUnsubscriptionBackendParam);
+      ntp_snippets::kContentSuggestionsPushFeature,
+      kPushUnsubscriptionBackendParam);
   if (!endpoint.empty()) {
     return GURL{endpoint};
   }

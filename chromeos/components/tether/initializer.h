@@ -21,7 +21,6 @@ class PrefService;
 
 namespace cryptauth {
 class CryptAuthService;
-class LocalDeviceDataProvider;
 class RemoteBeaconSeedFetcher;
 }
 
@@ -44,6 +43,7 @@ class HostScanner;
 class HostScanScheduler;
 class HostScanDevicePrioritizerImpl;
 class KeepAliveScheduler;
+class LocalDeviceDataProvider;
 class NetworkConfigurationRemover;
 class NotificationPresenter;
 class TetherConnector;
@@ -113,8 +113,7 @@ class Initializer : public OAuth2TokenService::Observer {
   // initialization to ensure that they are destroyed in the correct order. This
   // order will be enforced by InitializerTest.TestCreateAndDestroy.
   std::unique_ptr<TetherHostFetcher> tether_host_fetcher_;
-  std::unique_ptr<cryptauth::LocalDeviceDataProvider>
-      local_device_data_provider_;
+  std::unique_ptr<LocalDeviceDataProvider> local_device_data_provider_;
   std::unique_ptr<cryptauth::RemoteBeaconSeedFetcher>
       remote_beacon_seed_fetcher_;
   std::unique_ptr<BleConnectionManager> ble_connection_manager_;

@@ -43,13 +43,12 @@ bool ShouldShowDownloadItem(content::DownloadItem* item) {
   return !item->IsTemporary() && !item->IsTransient();
 }
 
-void UpdateNotifier(
-    DownloadManagerService* service,
-    content::DownloadManager* manager,
-    std::unique_ptr<content::AllDownloadItemNotifier>& notifier) {
+void UpdateNotifier(DownloadManagerService* service,
+                    content::DownloadManager* manager,
+                    std::unique_ptr<AllDownloadItemNotifier>& notifier) {
   if (manager) {
     if (!notifier || notifier->GetManager() != manager)
-      notifier.reset(new content::AllDownloadItemNotifier(manager, service));
+      notifier.reset(new AllDownloadItemNotifier(manager, service));
   } else {
     notifier.reset(nullptr);
   }

@@ -201,8 +201,6 @@ class FakeAutofillAgent : public mojom::AutofillAgent {
       int32_t key,
       const PasswordFormFillData& form_data) override {}
 
-  void SetUserGestureRequired(bool required) override {}
-
   mojo::BindingSet<mojom::AutofillAgent> bindings_;
 
   base::Closure quit_closure_;

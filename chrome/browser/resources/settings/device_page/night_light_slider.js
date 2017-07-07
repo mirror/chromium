@@ -37,12 +37,6 @@ Polymer({
      * @private
      */
     endTime_: String,
-
-    /**
-     * Whether the window is in RTL locales.
-     * @private
-     */
-    isRTL_: Boolean,
   },
 
   observers: [
@@ -63,11 +57,6 @@ Polymer({
   dragObject_: null,
 
   /** @override */
-  attached: function() {
-    this.isRTL_ = window.getComputedStyle(this).direction == 'rtl';
-  },
-
-  /** @override */
   ready: function() {
     // Build the legend markers.
     var markersContainer = this.$.markersContainer;
@@ -83,18 +72,6 @@ Polymer({
       // Read the initial prefs values and refresh the slider.
       this.customTimesChanged_();
     });
-  },
-
-  /**
-   * Gets the style of legend div determining its absolute left position.
-   * @param {number} percent The value of the div's left as a percent (0 - 100).
-   * @param {boolean} isRTL whether window is in RTL locale.
-   * @return {string} The CSS style of the legend div.
-   * @private
-   */
-  getLegendStyle_: function(percent, isRTL) {
-    percent = isRTL ? 100 - percent : percent;
-    return 'left: ' + percent + '%';
   },
 
   /**
@@ -193,8 +170,7 @@ Polymer({
         'ash.night_light.custom_start_time' :
         'ash.night_light.custom_end_time';
 
-    var ddx = this.isRTL_ ? event.detail.ddx * -1 : event.detail.ddx;
-    if (ddx > 0) {
+    if (event.detail.ddx > 0) {
       // Increment the knob's pref by the amount of deltaMinutes.
       this.incrementPref_(knobPref, deltaMinutes);
     } else {
@@ -295,7 +271,7 @@ Polymer({
       var currentKnobRatio = this.getKnobRatio_(knob);
       ratio = currentKnobRatio > 0.5 ? 1.0 : 0.0;
     }
-    ratio = this.isRTL_ ? (1.0 - ratio) : ratio;
+
     knob.style.left = (ratio * this.$.sliderBar.offsetWidth) + 'px';
   },
 
@@ -305,18 +281,17 @@ Polymer({
    * @private
    */
   refresh_: function() {
+    var endKnob = this.$.endKnob;
+    var startKnob = this.$.startKnob;
+    var startProgress = this.$.startProgress;
+    var endProgress = this.$.endProgress;
+    var startLabel = this.$.startLabel;
+    var endLabel = this.$.endLabel;
+
     // The label bubbles have the same left coordinates as their corresponding
     // knobs.
-    this.$.startLabel.style.left = this.$.startKnob.style.left;
-    this.$.endLabel.style.left = this.$.endKnob.style.left;
-
-    // In RTL locales, the relative positions of the knobs are flipped for the
-    // purpose of calculating the styles of the progress bars below.
-    var rtl = this.isRTL_;
-    var endKnob = rtl ? this.$.startKnob : this.$.endKnob;
-    var startKnob = rtl ? this.$.endKnob : this.$.startKnob;
-    var startProgress = rtl ? this.$.endProgress : this.$.startProgress;
-    var endProgress = rtl ? this.$.startProgress : this.$.endProgress;
+    startLabel.style.left = startKnob.style.left;
+    endLabel.style.left = endKnob.style.left;
 
     // The end progress bar starts from either the start knob or the start of
     // the slider (whichever is to its left) and ends at the end knob.
@@ -468,10 +443,7 @@ Polymer({
     if (!knobPref)
       return;
 
-    if (this.isRTL_)
-      this.incrementPref_(knobPref, 1);
-    else
-      this.decrementPref_(knobPref, 1);
+    this.decrementPref_(knobPref, 1);
   },
 
   /**
@@ -484,10 +456,7 @@ Polymer({
     if (!knobPref)
       return;
 
-    if (this.isRTL_)
-      this.decrementPref_(knobPref, 1);
-    else
-      this.incrementPref_(knobPref, 1);
+    this.incrementPref_(knobPref, 1);
   },
 
   /**

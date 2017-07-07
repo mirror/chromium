@@ -25,10 +25,6 @@ cr.define('cr_profile_avatar_selector', function() {
         return avatarSelector;
       }
 
-      function getGridItems() {
-        return avatarSelector.$['avatar-grid'].querySelectorAll('.avatar');
-      }
-
       setup(function() {
         avatarSelector = createElement();
         document.body.appendChild(avatarSelector);
@@ -41,33 +37,65 @@ cr.define('cr_profile_avatar_selector', function() {
 
       // Run in CrElementsProfileAvatarSelectorTest.All as a browser_test.
       suite(TestNames.Basic, function() {
+
         test('Displays avatars', function() {
-          assertEquals(3, getGridItems().length);
+          assertEquals(3, avatarSelector.$['avatar-grid'].items.length);
         });
 
         test('Can update avatars', function() {
           avatarSelector.pop('avatars');
           Polymer.dom.flush();
-          assertEquals(2, getGridItems().length);
+          assertEquals(2, avatarSelector.$['avatar-grid'].items.length);
         });
 
         test('No avatar is initially selected', function() {
-          assertFalse(!!avatarSelector.selectedAvatar);
-          getGridItems().forEach(function(item) {
-            assertFalse(item.classList.contains('iron-selected'));
-          });
+          var selector = avatarSelector.$['avatar-grid'];
+
+          assertFalse(!!avatarSelector.selectedAvatarUrl);
+          assertFalse(selector.items[0].classList.contains('iron-selected'));
+          assertFalse(selector.items[1].classList.contains('iron-selected'));
+          assertFalse(selector.items[2].classList.contains('iron-selected'));
+        });
+
+        test('An avatar is initially selected if selectedAvatarUrl is set',
+             function() {
+          var anotherAvatarSelector = createElement();
+          anotherAvatarSelector.selectedAvatarUrl =
+              anotherAvatarSelector.avatars[0].url;
+          document.body.appendChild(anotherAvatarSelector);
+          Polymer.dom.flush();
+
+          var selector = anotherAvatarSelector.$['avatar-grid'];
+
+          assertEquals('chrome://avatar1.png',
+                       anotherAvatarSelector.selectedAvatarUrl);
+          assertTrue(selector.items[0].classList.contains('iron-selected'));
+          assertFalse(selector.items[1].classList.contains('iron-selected'));
+          assertFalse(selector.items[2].classList.contains('iron-selected'));
         });
 
         test('Can select avatar', function() {
-          var items = getGridItems();
+          var selector = avatarSelector.$['avatar-grid'];
 
           // Simulate tapping the third avatar.
-          MockInteractions.tap(items[2]);
+          MockInteractions.tap(selector.items[2]);
           assertEquals(
-              'chrome://avatar3.png', avatarSelector.selectedAvatar.url);
-          assertFalse(items[0].classList.contains('iron-selected'));
-          assertFalse(items[1].classList.contains('iron-selected'));
-          assertTrue(items[2].classList.contains('iron-selected'));
+              'chrome://avatar3.png', avatarSelector.selectedAvatarUrl);
+          assertFalse(selector.items[0].classList.contains('iron-selected'));
+          assertFalse(selector.items[1].classList.contains('iron-selected'));
+          assertTrue(selector.items[2].classList.contains('iron-selected'));
+        });
+
+        test('Fires iron-activate event when an avatar is activated',
+             function(done) {
+          avatarSelector.addEventListener('iron-activate',
+                                          function(event) {
+            assertEquals(event.detail.selected, 'chrome://avatar2.png');
+            done();
+          });
+
+          // Simulate tapping the second avatar.
+          MockInteractions.tap(avatarSelector.$['avatar-grid'].items[1]);
         });
       });
 
@@ -75,9 +103,9 @@ cr.define('cr_profile_avatar_selector', function() {
       // interactive_ui_test.
       test(TestNames.Focus, function() {
         var selector = avatarSelector.$['avatar-grid'];
-        var items = getGridItems();
+        var items = selector.items;
 
-        items[0].focus();
+        selector._setFocusedItem(items[0]);
         assertTrue(items[0].focused);
 
         MockInteractions.keyDownOn(items[0], 39, [], 'ArrowRight');

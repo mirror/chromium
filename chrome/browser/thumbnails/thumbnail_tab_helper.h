@@ -14,10 +14,8 @@
 #include "content/public/browser/readback_types.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/browser/web_contents_user_data.h"
-#include "ui/base/page_transition_types.h"
 
 namespace content {
-class NavigationHandle;
 class RenderViewHost;
 class RenderWidgetHost;
 }
@@ -40,10 +38,6 @@ class ThumbnailTabHelper
 
   // content::WebContentsObserver overrides.
   void RenderViewDeleted(content::RenderViewHost* render_view_host) override;
-  void DidStartNavigation(
-      content::NavigationHandle* navigation_handle) override;
-  void DidFinishNavigation(
-      content::NavigationHandle* navigation_handle) override;
   void DidStartLoading() override;
   void DidStopLoading() override;
   void NavigationStopped() override;
@@ -79,7 +73,6 @@ class ThumbnailTabHelper
 
   content::NotificationRegistrar registrar_;
 
-  ui::PageTransition page_transition_;
   bool load_interrupted_;
 
   scoped_refptr<thumbnails::ThumbnailingContext> thumbnailing_context_;

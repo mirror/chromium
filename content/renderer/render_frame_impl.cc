@@ -176,7 +176,6 @@
 #include "third_party/WebKit/public/platform/URLConversion.h"
 #include "third_party/WebKit/public/platform/WebCachePolicy.h"
 #include "third_party/WebKit/public/platform/WebData.h"
-#include "third_party/WebKit/public/platform/WebFocusType.h"
 #include "third_party/WebKit/public/platform/WebKeyboardEvent.h"
 #include "third_party/WebKit/public/platform/WebMediaPlayer.h"
 #include "third_party/WebKit/public/platform/WebMediaPlayerSource.h"
@@ -1641,7 +1640,6 @@ bool RenderFrameImpl::OnMessageReceived(const IPC::Message& msg) {
     IPC_MESSAGE_HANDLER(FrameMsg_SetFrameOwnerProperties,
                         OnSetFrameOwnerProperties)
     IPC_MESSAGE_HANDLER(FrameMsg_AdvanceFocus, OnAdvanceFocus)
-    IPC_MESSAGE_HANDLER(FrameMsg_AdvanceFocusInForm, OnAdvanceFocusInForm)
     IPC_MESSAGE_HANDLER(FrameMsg_SetFocusedFrame, OnSetFocusedFrame)
     IPC_MESSAGE_HANDLER(FrameMsg_SetTextTrackSettings,
                         OnTextTrackSettingsChanged)
@@ -2270,12 +2268,6 @@ void RenderFrameImpl::OnAdvanceFocus(blink::WebFocusType type,
 
   render_view_->webview()->AdvanceFocusAcrossFrames(
       type, source_frame->web_frame(), frame_);
-}
-
-void RenderFrameImpl::OnAdvanceFocusInForm(blink::WebFocusType focus_type) {
-  if (render_view_->webview()->FocusedFrame() != frame_)
-    return;
-  frame_->AdvanceFocusInForm(focus_type);
 }
 
 void RenderFrameImpl::OnSetFocusedFrame() {
@@ -4441,10 +4433,11 @@ void RenderFrameImpl::DidReceiveResponse(
         extra_data->was_fetched_via_spdy());
     document_state->set_was_alpn_negotiated(extra_data->was_alpn_negotiated());
     document_state->set_alpn_negotiated_protocol(
-        response.AlpnNegotiatedProtocol().Utf8());
+        extra_data->alpn_negotiated_protocol());
     document_state->set_was_alternate_protocol_available(
         extra_data->was_alternate_protocol_available());
-    document_state->set_connection_info(response.ConnectionInfo());
+    document_state->set_connection_info(
+        extra_data->connection_info());
   }
   InternalDocumentStateData* internal_data =
       InternalDocumentStateData::FromDocumentState(document_state);
@@ -5126,13 +5119,6 @@ void RenderFrameImpl::OnCommitNavigation(
     const CommonNavigationParams& common_params,
     const RequestNavigationParams& request_params) {
   CHECK(IsBrowserSideNavigationEnabled());
-
-  RenderThreadImpl* render_thread_impl = RenderThreadImpl::current();
-  // Can be NULL in tests.
-  if (render_thread_impl &&
-      !FrameMsg_Navigate_Type::IsSameDocument(common_params.navigation_type))
-    render_thread_impl->GetRendererScheduler()->OnNavigate();
-
   // This will override the url requested by the WebURLLoader, as well as
   // provide it with the response to the request.
   std::unique_ptr<StreamOverrideParameters> stream_override(

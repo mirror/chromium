@@ -198,7 +198,7 @@ void ShadowRoot::SkipRebuildLayoutTree(Text*& next_text_sibling) const {
   }
 }
 
-void ShadowRoot::AttachLayoutTree(AttachContext& context) {
+void ShadowRoot::AttachLayoutTree(const AttachContext& context) {
   StyleSharingDepthScope sharing_scope(*this);
   DocumentFragment::AttachLayoutTree(context);
 }

@@ -85,10 +85,6 @@ void ShellPortClassic::HideCursor() {
   Shell::Get()->cursor_manager()->HideCursor();
 }
 
-void ShellPortClassic::SetCursorSize(ui::CursorSize cursor_size) {
-  Shell::Get()->cursor_manager()->SetCursorSize(cursor_size);
-}
-
 void ShellPortClassic::SetGlobalOverrideCursor(
     base::Optional<ui::CursorData> cursor) {
   // This is part of a fat interface that is only implemented on the mash side;

@@ -198,7 +198,7 @@ def ProcessOutput(filename):
   import numpy as np
   data = np.genfromtxt(filename, delimiter=',', skip_header=1)
   result = np.array(np.zeros(len(data)),
-                    dtype=[('warmup', bool), ('speculation_mode', str),
+                    dtype=[('warmup', bool), ('speculation_mode', np.int32),
                            ('delay_to_may_launch_url', np.int32),
                            ('delay_to_launch_url', np.int32),
                            ('commit', np.int32), ('plt', np.int32),
@@ -223,9 +223,10 @@ def _CreateOptionParser():
   parser.add_option('--warmup', help='Call warmup.', default=False,
                     action='store_true')
   parser.add_option('--speculation_mode', default='prerender',
-                    help='The speculation mode (prerender, '
+                    help='The speculation mode (prerender, disabled, '
                     'speculative_prefetch or no_state_prefetch).',
-                    choices=['disabled', 'prerender', 'hidden_tab'])
+                    choices=['prerender', 'disabled', 'speculative_prefetch',
+                             'no_state_prefetch'])
   parser.add_option('--delay_to_may_launch_url',
                     help='Delay before calling mayLaunchUrl() in ms.',
                     type='int', default=1000)

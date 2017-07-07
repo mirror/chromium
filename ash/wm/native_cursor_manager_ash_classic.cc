@@ -119,11 +119,11 @@ void NativeCursorManagerAshClassic::SetCursor(
     SetCursorOnAllRootWindows(cursor);
 }
 
-void NativeCursorManagerAshClassic::SetCursorSize(
-    ui::CursorSize cursor_size,
+void NativeCursorManagerAshClassic::SetCursorSet(
+    ui::CursorSetType cursor_set,
     ::wm::NativeCursorManagerDelegate* delegate) {
-  image_cursors_->SetCursorSize(cursor_size);
-  delegate->CommitCursorSize(cursor_size);
+  image_cursors_->SetCursorSet(cursor_set);
+  delegate->CommitCursorSet(cursor_set);
 
   // Sets the cursor to reflect the scale change immediately.
   if (delegate->IsCursorVisible())
@@ -132,7 +132,7 @@ void NativeCursorManagerAshClassic::SetCursorSize(
   Shell::Get()
       ->window_tree_host_manager()
       ->cursor_window_controller()
-      ->SetCursorSize(cursor_size);
+      ->SetCursorSet(cursor_set);
 }
 
 void NativeCursorManagerAshClassic::SetVisibility(

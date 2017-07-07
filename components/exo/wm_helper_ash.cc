@@ -70,11 +70,11 @@ aura::Window* WMHelperAsh::GetFocusedWindow() const {
   return focus_client->GetFocusedWindow();
 }
 
-ui::CursorSize WMHelperAsh::GetCursorSize() const {
+ui::CursorSetType WMHelperAsh::GetCursorSet() const {
   // TODO(crbug.com/631103): Mushrome doesn't have a cursor manager yet.
   if (ash::Shell::GetAshConfig() == ash::Config::MUS)
-    return ui::CursorSize::kNormal;
-  return ash::Shell::Get()->cursor_manager()->GetCursorSize();
+    return ui::CURSOR_SET_NORMAL;
+  return ash::Shell::Get()->cursor_manager()->GetCursorSet();
 }
 
 const display::Display& WMHelperAsh::GetCursorDisplay() const {
@@ -128,8 +128,8 @@ void WMHelperAsh::OnCursorVisibilityChanged(bool is_visible) {
   NotifyCursorVisibilityChanged(is_visible);
 }
 
-void WMHelperAsh::OnCursorSizeChanged(ui::CursorSize cursor_size) {
-  NotifyCursorSizeChanged(cursor_size);
+void WMHelperAsh::OnCursorSetChanged(ui::CursorSetType cursor_set) {
+  NotifyCursorSetChanged(cursor_set);
 }
 
 void WMHelperAsh::OnCursorDisplayChanged(const display::Display& display) {

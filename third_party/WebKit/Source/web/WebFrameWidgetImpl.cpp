@@ -139,7 +139,6 @@ WebFrameWidgetImpl::~WebFrameWidgetImpl() {}
 DEFINE_TRACE(WebFrameWidgetImpl) {
   visitor->Trace(local_root_);
   visitor->Trace(mouse_capture_node_);
-  WebFrameWidgetBase::Trace(visitor);
 }
 
 // WebWidget ------------------------------------------------------------------
@@ -782,12 +781,6 @@ void WebFrameWidgetImpl::SetRemoteViewportIntersection(
 
   local_root_->GetFrame()->SetViewportIntersectionFromParent(
       viewport_intersection);
-}
-
-void WebFrameWidgetImpl::SetIsInert(bool inert) {
-  DCHECK(local_root_->Parent());
-  DCHECK(local_root_->Parent()->IsWebRemoteFrame());
-  local_root_->GetFrame()->SetIsInert(inert);
 }
 
 void WebFrameWidgetImpl::HandleMouseLeave(LocalFrame& main_frame,

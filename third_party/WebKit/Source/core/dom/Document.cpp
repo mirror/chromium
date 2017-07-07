@@ -2534,8 +2534,7 @@ void Document::Initialize() {
   layout_view_->Compositor()->SetNeedsCompositingUpdate(
       kCompositingUpdateAfterCompositingInputChange);
 
-  AttachContext context;
-  ContainerNode::AttachLayoutTree(context);
+  ContainerNode::AttachLayoutTree();
 
   // The TextAutosizer can't update layout view info while the Document is
   // detached, so update now in case anything changed.
@@ -3251,8 +3250,6 @@ void Document::DispatchUnloadEvents() {
     return;
 
   if (load_event_progress_ <= kUnloadEventInProgress) {
-    if (GetPage())
-      GetPage()->WillUnloadDocument(*this);
     Element* current_focused_element = FocusedElement();
     if (isHTMLInputElement(current_focused_element))
       toHTMLInputElement(*current_focused_element).EndEditing();

@@ -13,7 +13,6 @@
 #include "device/bluetooth/bluetooth_remote_gatt_characteristic.h"
 #include "device/bluetooth/bluetooth_uuid.h"
 #include "device/bluetooth/public/interfaces/test/fake_bluetooth.mojom.h"
-#include "device/bluetooth/test/fake_read_response.h"
 #include "device/bluetooth/test/fake_remote_gatt_descriptor.h"
 
 namespace device {
@@ -53,6 +52,10 @@ class FakeRemoteGattCharacteristic
   // notifications request will call its success callback. Otherwise it will
   // call its error callback.
   void SetNextUnsubscribeFromNotificationsResponse(uint16_t gatt_code);
+
+  // Changes this characteristic's value to |value| and calls
+  // device::BluetoothAdapterObserver::CharacteristicValueChanged.
+  void SimulateNotification(const std::vector<uint8_t>& value);
 
   // device::BluetoothGattCharacteristic overrides:
   std::string GetIdentifier() const override;
@@ -100,9 +103,20 @@ class FakeRemoteGattCharacteristic
   device::BluetoothRemoteGattService* service_;
   std::vector<uint8_t> value_;
 
+  struct ReadResponse {
+    ReadResponse(uint16_t gatt_code,
+                 const base::Optional<std::vector<uint8_t>>& value);
+    ~ReadResponse();
+
+    uint16_t gatt_code;
+    base::Optional<std::vector<uint8_t>> value;
+
+    DISALLOW_COPY_AND_ASSIGN(ReadResponse);
+  };
+
   // Used to decide which callback should be called when
   // ReadRemoteCharacteristic is called.
-  base::Optional<FakeReadResponse> next_read_response_;
+  base::Optional<ReadResponse> next_read_response_;
 
   // Used to decide which callback should be called when
   // SubscribeToNotifications is called.

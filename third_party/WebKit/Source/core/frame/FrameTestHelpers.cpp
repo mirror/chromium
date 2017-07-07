@@ -328,11 +328,11 @@ void WebViewHelper::Reset() {
   }
 }
 
-WebLocalFrameBase* WebViewHelper::LocalMainFrame() const {
+WebLocalFrameBase* WebViewHelper::LocalMainFrame() {
   return ToWebLocalFrameBase(web_view_->MainFrame());
 }
 
-WebRemoteFrameBase* WebViewHelper::RemoteMainFrame() const {
+WebRemoteFrameBase* WebViewHelper::RemoteMainFrame() {
   return ToWebRemoteFrameBase(web_view_->MainFrame());
 }
 

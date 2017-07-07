@@ -7,6 +7,7 @@
 #include "ash/display/screen_orientation_controller_chromeos.h"
 #include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/shell.h"
+#include "ash/shell_port.h"
 #include "ash/strings/grit/ash_strings.h"
 #include "ash/system/tray/actionable_view.h"
 #include "ash/system/tray/system_tray.h"
@@ -37,6 +38,16 @@ bool IsMaximizeModeWindowManagerEnabled() {
 
 bool IsUserRotationLocked() {
   return Shell::Get()->screen_orientation_controller()->user_rotation_locked();
+}
+
+bool IsCurrentRotationPortrait() {
+  display::Display::Rotation current_rotation =
+      Shell::Get()
+          ->display_manager()
+          ->GetDisplayInfo(display::Display::InternalDisplayId())
+          .GetActiveRotation();
+  return current_rotation == display::Display::ROTATE_90 ||
+         current_rotation == display::Display::ROTATE_270;
 }
 
 }  // namespace
@@ -106,19 +117,12 @@ void RotationLockDefaultView::Update() {
   TrayPopupItemStyle style(TrayPopupItemStyle::FontStyle::DEFAULT_VIEW_LABEL);
   base::string16 label;
   if (IsUserRotationLocked()) {
-    // If user rotation is locked, display the icon and text of the preferred
-    // orientation.
-    bool is_user_locked_orientation_portrait =
-        Shell::Get()
-            ->screen_orientation_controller()
-            ->IsUserLockedOrientationPortrait();
-    icon_->SetImage(
-        gfx::CreateVectorIcon(is_user_locked_orientation_portrait
-                                  ? kSystemMenuRotationLockPortraitIcon
-                                  : kSystemMenuRotationLockLandscapeIcon,
-                              kMenuIconSize, style.GetIconColor()));
+    icon_->SetImage(gfx::CreateVectorIcon(
+        IsCurrentRotationPortrait() ? kSystemMenuRotationLockPortraitIcon
+                                    : kSystemMenuRotationLockLandscapeIcon,
+        kMenuIconSize, style.GetIconColor()));
     label = l10n_util::GetStringUTF16(
-        is_user_locked_orientation_portrait
+        IsCurrentRotationPortrait()
             ? IDS_ASH_STATUS_TRAY_ROTATION_LOCK_PORTRAIT
             : IDS_ASH_STATUS_TRAY_ROTATION_LOCK_LANDSCAPE);
   } else {

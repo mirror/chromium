@@ -3,13 +3,11 @@
 <link rel="import" href="chrome://resources/polymer/v1_0/iron-a11y-keys-behavior/iron-a11y-keys-behavior.html">
 <link rel="import" href="chrome://resources/polymer/v1_0/paper-behaviors/paper-inky-focus-behavior.html">
 <link rel="import" href="../prefs/prefs_behavior.html">
-<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 </head><body><dom-module id="night-light-slider">
   <template>
     <style>
       :host {
         cursor: default;
-        font-family: 'Roboto', sans-serif;
         text-align: center;
         user-select: none;
       }
@@ -81,6 +79,7 @@
         background: var(--google-blue-700);
         border-radius: 14px;
         color: white;
+        font-family: Roboto-Bold;
         font-size: 12px;
         left: 0;
         line-height: 1.5em;
@@ -123,6 +122,7 @@
 
       #legendContainer > div {
         color: rgb(100, 100, 100);
+        font-family: Roboto-Regular;
         font-size: 12px;
         margin-left: -2.5em;
         position: absolute;
@@ -166,21 +166,11 @@
         </div>
       </div>
       <div id="legendContainer">
-        <div style="[[getLegendStyle_(0, isRTL_)]]">
-          [[getLocaleTimeString_(18, 0)]]
-        </div>
-        <div style="[[getLegendStyle_(25, isRTL_)]]">
-          [[getLocaleTimeString_(0, 0)]]
-        </div>
-        <div style="[[getLegendStyle_(50, isRTL_)]]">
-          [[getLocaleTimeString_(6, 0)]]
-        </div>
-        <div style="[[getLegendStyle_(75, isRTL_)]]">
-          [[getLocaleTimeString_(12, 0)]]
-        </div>
-        <div style="[[getLegendStyle_(100, isRTL_)]]">
-          [[getLocaleTimeString_(18, 0)]]
-        </div>
+        <div style="left: 0%;">[[getLocaleTimeString_(18, 0)]]</div>
+        <div style="left: 25%;">[[getLocaleTimeString_(0, 0)]]</div>
+        <div style="left: 50%;">[[getLocaleTimeString_(6, 0)]]</div>
+        <div style="left: 75%;">[[getLocaleTimeString_(12, 0)]]</div>
+        <div style="left: 100%;">[[getLocaleTimeString_(18, 0)]]</div>
       </div>
       <div id="dummyRippleContainer" hidden></div>
     </div>

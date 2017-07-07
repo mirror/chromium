@@ -71,7 +71,7 @@ public class SiteChannelsManagerTest {
         assertThat(Arrays.asList(mSiteChannelsManager.getSiteChannels()), hasSize(1));
         NotificationSettingsBridge.SiteChannel channel = mSiteChannelsManager.getSiteChannels()[0];
         assertThat(channel.getOrigin(), is("https://chromium.org"));
-        assertThat(channel.getStatus(), matchesChannelStatus(NotificationChannelStatus.ENABLED));
+        assertThat(channel.getStatus(), is(NotificationChannelStatus.ENABLED));
     }
 
     @Test
@@ -82,7 +82,7 @@ public class SiteChannelsManagerTest {
         assertThat(Arrays.asList(mSiteChannelsManager.getSiteChannels()), hasSize(1));
         NotificationSettingsBridge.SiteChannel channel = mSiteChannelsManager.getSiteChannels()[0];
         assertThat(channel.getOrigin(), is("https://example.com"));
-        assertThat(channel.getStatus(), matchesChannelStatus(NotificationChannelStatus.BLOCKED));
+        assertThat(channel.getStatus(), is(NotificationChannelStatus.BLOCKED));
     }
 
     @Test

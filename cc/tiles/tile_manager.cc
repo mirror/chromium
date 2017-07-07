@@ -497,12 +497,6 @@ bool TileManager::PrepareTiles(
   signals_.reset();
   global_state_ = state;
 
-  // Ensure that we don't schedule any decode work for checkered images until
-  // the raster work for visible tiles is complete. This is done in
-  // CheckAndIssueSignals when the ready to activate/draw signals are dispatched
-  // to the client.
-  checker_image_tracker_.SetNoDecodesAllowed();
-
   // We need to call CheckForCompletedTasks() once in-between each call
   // to ScheduleTasks() to prevent canceled tasks from being scheduled.
   if (!did_check_for_completed_tasks_since_last_schedule_tasks_) {
@@ -519,7 +513,7 @@ bool TileManager::PrepareTiles(
       prioritized_work.tiles_to_raster.front().tile()->required_for_draw());
 
   // Schedule tile tasks.
-  ScheduleTasks(std::move(prioritized_work));
+  ScheduleTasks(prioritized_work);
 
   TRACE_EVENT_INSTANT1("cc", "DidPrepareTiles", TRACE_EVENT_SCOPE_THREAD,
                        "state", BasicStateAsValue());
@@ -715,7 +709,6 @@ TileManager::PrioritizedWorkToSchedule TileManager::AssignGpuMemoryToTiles() {
 
       AddCheckeredImagesToDecodeQueue(
           prioritized_tile, raster_color_space,
-          CheckerImageTracker::DecodeType::kRaster,
           &work_to_schedule.checker_image_decode_queue);
       continue;
     }
@@ -774,7 +767,6 @@ TileManager::PrioritizedWorkToSchedule TileManager::AssignGpuMemoryToTiles() {
           prioritized_tile.should_decode_checkered_images_for_tile()) {
         AddCheckeredImagesToDecodeQueue(
             prioritized_tile, raster_color_space,
-            CheckerImageTracker::DecodeType::kRaster,
             &work_to_schedule.checker_image_decode_queue);
       }
     } else {
@@ -817,7 +809,6 @@ TileManager::PrioritizedWorkToSchedule TileManager::AssignGpuMemoryToTiles() {
           tile->raster_task_scheduled_with_checker_images()) {
         AddCheckeredImagesToDecodeQueue(
             prioritized_tile, raster_color_space,
-            CheckerImageTracker::DecodeType::kRaster,
             &work_to_schedule.checker_image_decode_queue);
       }
     }
@@ -887,7 +878,6 @@ void TileManager::PartitionImagesForCheckering(
 void TileManager::AddCheckeredImagesToDecodeQueue(
     const PrioritizedTile& prioritized_tile,
     const gfx::ColorSpace& raster_color_space,
-    CheckerImageTracker::DecodeType decode_type,
     CheckerImageTracker::ImageDecodeQueue* image_decode_queue) {
   Tile* tile = prioritized_tile.tile();
   std::vector<DrawImage> images_in_tile;
@@ -897,14 +887,13 @@ void TileManager::AddCheckeredImagesToDecodeQueue(
   WhichTree tree = tile->tiling()->tree();
 
   for (auto& draw_image : images_in_tile) {
-    if (checker_image_tracker_.ShouldCheckerImage(draw_image, tree)) {
-      image_decode_queue->push_back(CheckerImageTracker::ImageDecodeRequest(
-          draw_image.paint_image(), decode_type));
-    }
+    if (checker_image_tracker_.ShouldCheckerImage(draw_image, tree))
+      image_decode_queue->push_back(draw_image.paint_image());
   }
 }
 
-void TileManager::ScheduleTasks(PrioritizedWorkToSchedule work_to_schedule) {
+void TileManager::ScheduleTasks(
+    const PrioritizedWorkToSchedule& work_to_schedule) {
   const std::vector<PrioritizedTile>& tiles_that_need_to_be_rasterized =
       work_to_schedule.tiles_to_raster;
   TRACE_EVENT1("cc", "TileManager::ScheduleTasks", "count",
@@ -984,23 +973,16 @@ void TileManager::ScheduleTasks(PrioritizedWorkToSchedule work_to_schedule) {
       work_to_schedule.tiles_to_process_for_images;
   std::vector<DrawImage> new_locked_images;
   for (const PrioritizedTile& prioritized_tile : tiles_to_process_for_images) {
-    std::vector<DrawImage> sync_decoded_images;
-    std::vector<PaintImage> checkered_images;
-    PartitionImagesForCheckering(prioritized_tile, raster_color_space,
-                                 &sync_decoded_images, &checkered_images);
+    Tile* tile = prioritized_tile.tile();
 
-    // Add the sync decoded images to |new_locked_images| so they can be added
-    // to the task graph.
-    new_locked_images.insert(new_locked_images.end(),
-                             sync_decoded_images.begin(),
-                             sync_decoded_images.end());
-
-    // For checkered-images, send them to the decode service.
-    for (auto& image : checkered_images) {
-      work_to_schedule.checker_image_decode_queue.push_back(
-          CheckerImageTracker::ImageDecodeRequest(
-              std::move(image), CheckerImageTracker::DecodeType::kPreDecode));
-    }
+    // TODO(khushalsagar): Send these images to the ImageDecodeService, through
+    // the CheckerImageTracker as well. See crbug.com/691087.
+    std::vector<DrawImage> images;
+    prioritized_tile.raster_source()->GetDiscardableImagesInRect(
+        tile->enclosing_layer_rect(), tile->raster_transform().scale(),
+        raster_color_space, &images);
+    new_locked_images.insert(new_locked_images.end(), images.begin(),
+                             images.end());
   }
 
   // TODO(vmpstr): SOON is misleading here, but these images can come from
@@ -1125,11 +1107,8 @@ scoped_refptr<TileTask> TileManager::CreateRasterTask(
       // or are occluded on the pending tree. While we still need to continue
       // skipping images for these tiles, we don't need to decode them since
       // they will not be required on the next active tree.
-      if (prioritized_tile.should_decode_checkered_images_for_tile()) {
-        checker_image_decode_queue->push_back(
-            CheckerImageTracker::ImageDecodeRequest(
-                image, CheckerImageTracker::DecodeType::kRaster));
-      }
+      if (prioritized_tile.should_decode_checkered_images_for_tile())
+        checker_image_decode_queue->push_back(image);
     }
   }
 
@@ -1328,19 +1307,6 @@ void TileManager::CheckAndIssueSignals() {
       client_->NotifyAllTileTasksCompleted();
     }
   }
-
-  // Allow decodes for rasterized tiles if all required for draw/activate tiles
-  // are done. And pre-decode tiles once all tile tasks are done.
-  // Note that the order is important here, since all signals could have become
-  // true and in that case we want to allow the most decodes.
-  if (signals_.did_notify_all_tile_tasks_completed) {
-    checker_image_tracker_.SetMaxDecodePriorityAllowed(
-        CheckerImageTracker::DecodeType::kPreDecode);
-  } else if (signals_.did_notify_ready_to_activate &&
-             signals_.did_notify_ready_to_draw) {
-    checker_image_tracker_.SetMaxDecodePriorityAllowed(
-        CheckerImageTracker::DecodeType::kRaster);
-  }
 }
 
 void TileManager::CheckIfMoreTilesNeedToBePrepared() {
@@ -1360,7 +1326,7 @@ void TileManager::CheckIfMoreTilesNeedToBePrepared() {
   // |tiles_that_need_to_be_rasterized| will be empty when we reach a
   // steady memory state. Keep scheduling tasks until we reach this state.
   if (!work_to_schedule.tiles_to_raster.empty()) {
-    ScheduleTasks(std::move(work_to_schedule));
+    ScheduleTasks(work_to_schedule);
     return;
   }
 

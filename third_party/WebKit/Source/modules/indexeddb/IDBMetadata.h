@@ -65,8 +65,7 @@ class IDBIndexMetadata : public RefCounted<IDBIndexMetadata> {
   bool multi_entry;
 };
 
-class MODULES_EXPORT IDBObjectStoreMetadata
-    : public RefCounted<IDBObjectStoreMetadata> {
+class IDBObjectStoreMetadata : public RefCounted<IDBObjectStoreMetadata> {
   USING_FAST_MALLOC(IDBObjectStoreMetadata);
 
  public:

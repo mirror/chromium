@@ -78,7 +78,7 @@ class AwContentBrowserClient : public content::ContentBrowserClient {
   void GetQuotaSettings(
       content::BrowserContext* context,
       content::StoragePartition* partition,
-      storage::OptionalQuotaSettingsCallback callback) override;
+      const storage::OptionalQuotaSettingsCallback& callback) override;
   void AllowCertificateError(
       content::WebContents* web_contents,
       int cert_error,

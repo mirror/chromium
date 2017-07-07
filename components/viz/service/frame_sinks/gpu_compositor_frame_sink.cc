@@ -10,10 +10,10 @@ GpuCompositorFrameSink::GpuCompositorFrameSink(
     GpuCompositorFrameSinkDelegate* delegate,
     cc::SurfaceManager* surface_manager,
     const cc::FrameSinkId& frame_sink_id,
-    cc::mojom::CompositorFrameSinkRequest request,
-    cc::mojom::CompositorFrameSinkPrivateRequest
+    cc::mojom::MojoCompositorFrameSinkRequest request,
+    cc::mojom::MojoCompositorFrameSinkPrivateRequest
         compositor_frame_sink_private_request,
-    cc::mojom::CompositorFrameSinkClientPtr client)
+    cc::mojom::MojoCompositorFrameSinkClientPtr client)
     : delegate_(delegate),
       support_(cc::CompositorFrameSinkSupport::Create(
           this,

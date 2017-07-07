@@ -3,15 +3,16 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-"""Certificate chain where the target certificate is a CA rather than an
-end-entity certificate (based on the basic constraints extension)."""
+"""Certificate chain with 1 intermediate, a trusted root, and a target
+certificate that is also a CA. Verification is expected to succeed, as the test
+code accepts any target certificate."""
 
 import sys
 sys.path += ['..']
 
 import common
 
-# Self-signed root certificate.
+# Self-signed root certificate (used as trust anchor).
 root = common.create_self_signed_root_certificate('Root')
 
 # Intermediate certificate.

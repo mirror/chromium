@@ -6,20 +6,15 @@ let mockFaceDetectionProviderReady = define(
    'services/shape_detection/public/interfaces/facedetection_provider.mojom',
    'mojo/public/js/bindings',
    'mojo/public/js/core',
-   'content/public/renderer/frame_interfaces',
    'content/public/renderer/interfaces',
-  ], (faceDetection, faceDetectionProvider, bindings, mojo, frameInterfaces,
-      processInterfaces) => {
+  ], (faceDetection, faceDetectionProvider, bindings, mojo, interfaces) => {
 
   class MockFaceDetectionProvider {
     constructor() {
       this.bindingSet_ = new bindings.BindingSet(
           faceDetectionProvider.FaceDetectionProvider);
 
-      frameInterfaces.addInterfaceOverrideForTesting(
-          faceDetectionProvider.FaceDetectionProvider.name,
-          handle => this.bindingSet_.addBinding(this, handle));
-      processInterfaces.addInterfaceOverrideForTesting(
+      interfaces.addInterfaceOverrideForTesting(
           faceDetectionProvider.FaceDetectionProvider.name,
           handle => this.bindingSet_.addBinding(this, handle));
     }

@@ -42,37 +42,6 @@ const int kCompatibleVersionNumber = 16;
 const char kEarlyExpirationThresholdKey[] = "early_expiration_threshold";
 const int kMaxHostsInMemory = 10000;
 
-// Logs a migration failure to UMA and logging. The return value will be
-// what to return from ::Init (to simplify the call sites). Migration failures
-// are almost always fatal since the database can be in an inconsistent state.
-sql::InitStatus LogMigrationFailure(int from_version) {
-  UMA_HISTOGRAM_SPARSE_SLOWLY("History.MigrateFailureFromVersion",
-                              from_version);
-  LOG(ERROR) << "History failed to migrate from version " << from_version
-             << ". History will be disabled.";
-  return sql::INIT_FAILURE;
-}
-
-// Reasons for initialization to fail. These are logged to UMA. It corresponds
-// to the HistoryInitStep enum in enums.xml.
-//
-// DO NOT CHANGE THE VALUES. Leave holes if anything is removed and add only
-// to the end.
-enum class InitStep {
-  OPEN = 0,
-  TRANSACTION_BEGIN = 1,
-  META_TABLE_INIT = 2,
-  CREATE_TABLES = 3,
-  VERSION = 4,
-  COMMIT = 5,
-};
-
-sql::InitStatus LogInitFailure(InitStep what) {
-  UMA_HISTOGRAM_SPARSE_SLOWLY("History.InitializationFailureStep",
-                              static_cast<int>(what));
-  return sql::INIT_FAILURE;
-}
-
 }  // namespace
 
 HistoryDatabase::HistoryDatabase(
@@ -105,13 +74,13 @@ sql::InitStatus HistoryDatabase::Init(const base::FilePath& history_name) {
   // mode to start out for the in-memory backend to read the data).
 
   if (!db_.Open(history_name))
-    return LogInitFailure(InitStep::OPEN);
+    return sql::INIT_FAILURE;
 
   // Wrap the rest of init in a tranaction. This will prevent the database from
   // getting corrupted if we crash in the middle of initialization or migration.
   sql::Transaction committer(&db_);
   if (!committer.Begin())
-    return LogInitFailure(InitStep::TRANSACTION_BEGIN);
+    return sql::INIT_FAILURE;
 
 #if defined(OS_MACOSX) && !defined(OS_IOS)
   // Exclude the history file from backups.
@@ -125,11 +94,11 @@ sql::InitStatus HistoryDatabase::Init(const base::FilePath& history_name) {
   // NOTE: If you add something here, also add it to
   //       RecreateAllButStarAndURLTables.
   if (!meta_table_.Init(&db_, GetCurrentVersion(), kCompatibleVersionNumber))
-    return LogInitFailure(InitStep::META_TABLE_INIT);
+    return sql::INIT_FAILURE;
   if (!CreateURLTable(false) || !InitVisitTable() ||
       !InitKeywordSearchTermsTable() || !InitDownloadTable() ||
       !InitSegmentTables() || !InitSyncTable())
-    return LogInitFailure(InitStep::CREATE_TABLES);
+    return sql::INIT_FAILURE;
   CreateMainURLIndex();
   CreateKeywordSearchTermsIndices();
 
@@ -138,14 +107,10 @@ sql::InitStatus HistoryDatabase::Init(const base::FilePath& history_name) {
 
   // Version check.
   sql::InitStatus version_status = EnsureCurrentVersion();
-  if (version_status != sql::INIT_OK) {
-    LogInitFailure(InitStep::VERSION);
+  if (version_status != sql::INIT_OK)
     return version_status;
-  }
 
-  if (!committer.Commit())
-    return LogInitFailure(InitStep::COMMIT);
-  return sql::INIT_OK;
+  return committer.Commit() ? sql::INIT_OK : sql::INIT_FAILURE;
 }
 
 void HistoryDatabase::ComputeDatabaseMetrics(
@@ -418,8 +383,10 @@ sql::InitStatus HistoryDatabase::EnsureCurrentVersion() {
   // Put migration code here
 
   if (cur_version == 15) {
-    if (!db_.Execute("DROP TABLE starred") || !DropStarredIDFromURLs())
-      return LogMigrationFailure(15);
+    if (!db_.Execute("DROP TABLE starred") || !DropStarredIDFromURLs()) {
+      LOG(WARNING) << "Unable to update history database to version 16.";
+      return sql::INIT_FAILURE;
+    }
     ++cur_version;
     meta_table_.SetVersionNumber(cur_version);
     meta_table_.SetCompatibleVersionNumber(
@@ -463,8 +430,10 @@ sql::InitStatus HistoryDatabase::EnsureCurrentVersion() {
   if (cur_version == 20) {
     // This is the version prior to adding the visit_duration field in visits
     // database. We need to migrate the database.
-    if (!MigrateVisitsWithoutDuration())
-      return LogMigrationFailure(20);
+    if (!MigrateVisitsWithoutDuration()) {
+      LOG(WARNING) << "Unable to update history database to version 21.";
+      return sql::INIT_FAILURE;
+    }
     ++cur_version;
     meta_table_.SetVersionNumber(cur_version);
   }
@@ -472,79 +441,102 @@ sql::InitStatus HistoryDatabase::EnsureCurrentVersion() {
   if (cur_version == 21) {
     // The android_urls table's data schemal was changed in version 21.
 #if defined(OS_ANDROID)
-    if (!MigrateToVersion22())
-      return LogMigrationFailure(21);
+    if (!MigrateToVersion22()) {
+      LOG(WARNING) << "Unable to migrate the android_urls table to version 22";
+    }
 #endif
     ++cur_version;
     meta_table_.SetVersionNumber(cur_version);
   }
 
   if (cur_version == 22) {
-    if (!MigrateDownloadsState())
-      return LogMigrationFailure(22);
+    if (!MigrateDownloadsState()) {
+      LOG(WARNING) << "Unable to fix invalid downloads state values";
+      // Invalid state values may cause crashes.
+      return sql::INIT_FAILURE;
+    }
     cur_version++;
     meta_table_.SetVersionNumber(cur_version);
   }
 
   if (cur_version == 23) {
-    if (!MigrateDownloadsReasonPathsAndDangerType())
-      return LogMigrationFailure(23);
+    if (!MigrateDownloadsReasonPathsAndDangerType()) {
+      LOG(WARNING) << "Unable to upgrade download interrupt reason and paths";
+      // Invalid state values may cause crashes.
+      return sql::INIT_FAILURE;
+    }
     cur_version++;
     meta_table_.SetVersionNumber(cur_version);
   }
 
   if (cur_version == 24) {
-    if (!MigratePresentationIndex())
-      return LogMigrationFailure(24);
+    if (!MigratePresentationIndex()) {
+      LOG(WARNING) << "Unable to migrate history to version 25";
+      return sql::INIT_FAILURE;
+    }
     cur_version++;
     meta_table_.SetVersionNumber(cur_version);
   }
 
   if (cur_version == 25) {
-    if (!MigrateReferrer())
-      return LogMigrationFailure(25);
+    if (!MigrateReferrer()) {
+      LOG(WARNING) << "Unable to migrate history to version 26";
+      return sql::INIT_FAILURE;
+    }
     cur_version++;
     meta_table_.SetVersionNumber(cur_version);
   }
 
   if (cur_version == 26) {
-    if (!MigrateDownloadedByExtension())
-      return LogMigrationFailure(26);
+    if (!MigrateDownloadedByExtension()) {
+      LOG(WARNING) << "Unable to migrate history to version 27";
+      return sql::INIT_FAILURE;
+    }
     cur_version++;
     meta_table_.SetVersionNumber(cur_version);
   }
 
   if (cur_version == 27) {
-    if (!MigrateDownloadValidators())
-      return LogMigrationFailure(27);
+    if (!MigrateDownloadValidators()) {
+      LOG(WARNING) << "Unable to migrate history to version 28";
+      return sql::INIT_FAILURE;
+    }
     cur_version++;
     meta_table_.SetVersionNumber(cur_version);
   }
 
   if (cur_version == 28) {
-    if (!MigrateMimeType())
-      return LogMigrationFailure(28);
+    if (!MigrateMimeType()) {
+      LOG(WARNING) << "Unable to migrate history to version 29";
+      return sql::INIT_FAILURE;
+    }
     cur_version++;
     meta_table_.SetVersionNumber(cur_version);
   }
 
   if (cur_version == 29) {
-    if (!MigrateHashHttpMethodAndGenerateGuids())
-      return LogMigrationFailure(29);
+    if (!MigrateHashHttpMethodAndGenerateGuids()) {
+      LOG(WARNING) << "Unable to migrate history to version 30";
+      return sql::INIT_FAILURE;
+    }
     cur_version++;
     meta_table_.SetVersionNumber(cur_version);
   }
 
   if (cur_version == 30) {
-    if (!MigrateDownloadTabUrl())
-      return LogMigrationFailure(30);
+    if (!MigrateDownloadTabUrl()) {
+      LOG(WARNING) << "Unable to migrate history to version 31";
+      return sql::INIT_FAILURE;
+    }
     cur_version++;
     meta_table_.SetVersionNumber(cur_version);
   }
 
   if (cur_version == 31) {
-    if (!MigrateDownloadSiteInstanceUrl())
-      return LogMigrationFailure(31);
+    if (!MigrateDownloadSiteInstanceUrl()) {
+      LOG(WARNING) << "Unable to migrate history to version 32";
+      return sql::INIT_FAILURE;
+    }
     cur_version++;
     meta_table_.SetVersionNumber(cur_version);
   }
@@ -556,56 +548,36 @@ sql::InitStatus HistoryDatabase::EnsureCurrentVersion() {
   }
 
   if (cur_version == 33) {
-    if (!MigrateDownloadLastAccessTime())
-      return LogMigrationFailure(33);
+    if (!MigrateDownloadLastAccessTime()) {
+      LOG(WARNING) << "Unable to migrate to version 34";
+      return sql::INIT_FAILURE;
+    }
     cur_version++;
     meta_table_.SetVersionNumber(cur_version);
   }
 
   if (cur_version == 34) {
-    /*
-    This code is commented out because we suspect the additional disk storage
-    requirements of duplicating the URL table to update the schema cause
-    some devices to run out of storage. Errors during initialization are
-    very disruptive to the user experience.
-
-    TODO(https://crbug.com/736136) figure out how to update users to use
-    AUTOINCREMENT.
-
     // AUTOINCREMENT is added to urls table PRIMARY KEY(id), need to recreate a
     // new table and copy all contents over. favicon_id is removed from urls
     // table since we never use it. Also typed_url_sync_metadata and
     // autofill_model_type_state tables are introduced, no migration needed for
     // those two tables.
-    if (!RecreateURLTableWithAllContents())
-      return LogMigrationFailure(34);
-    */
+    if (!RecreateURLTableWithAllContents()) {
+      LOG(WARNING) << "Unable to update history database to version 35.";
+      return sql::INIT_FAILURE;
+    }
     cur_version++;
     meta_table_.SetVersionNumber(cur_version);
   }
 
   if (cur_version == 35) {
-    if (!MigrateDownloadTransient())
-      return LogMigrationFailure(35);
+    if (!MigrateDownloadTransient()) {
+      LOG(WARNING) << "Unable to migrate to version 36";
+      return sql::INIT_FAILURE;
+    }
     cur_version++;
     meta_table_.SetVersionNumber(cur_version);
   }
-
-  // =========================       ^^ new migration code goes here ^^
-  // ADDING NEW MIGRATION CODE
-  // =========================
-  //
-  // Add new migration code above here. It's important to use as little space
-  // as possible during migration. Many phones are very near their storage
-  // limit, so anything that recreates or duplicates large history tables can
-  // easily push them over that limit.
-  //
-  // When failures happen during initialization, history is not loaded. This
-  // causes all components related to the history database file to fail
-  // completely, including autocomplete and downloads. Devices near their
-  // storage limit are likely to fail doing some update later, but those
-  // operations will then just be skipped which is not nearly as disruptive.
-  // See https://crbug.com/734194.
 
   // When the version is too old, we just try to continue anyway, there should
   // not be a released product that makes a database too old for us to handle.

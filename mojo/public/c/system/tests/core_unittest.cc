@@ -19,9 +19,9 @@ namespace {
 const MojoHandleSignals kSignalReadadableWritable =
     MOJO_HANDLE_SIGNAL_READABLE | MOJO_HANDLE_SIGNAL_WRITABLE;
 
-const MojoHandleSignals kSignalAll =
-    MOJO_HANDLE_SIGNAL_READABLE | MOJO_HANDLE_SIGNAL_WRITABLE |
-    MOJO_HANDLE_SIGNAL_PEER_CLOSED | MOJO_HANDLE_SIGNAL_PEER_REMOTE;
+const MojoHandleSignals kSignalAll = MOJO_HANDLE_SIGNAL_READABLE |
+                                     MOJO_HANDLE_SIGNAL_WRITABLE |
+                                     MOJO_HANDLE_SIGNAL_PEER_CLOSED;
 
 TEST(CoreTest, GetTimeTicksNow) {
   const MojoTimeTicks start = MojoGetTimeTicksNow();
@@ -166,15 +166,13 @@ TEST(CoreTest, BasicDataPipe) {
   EXPECT_EQ(MOJO_RESULT_OK, MojoQueryHandleSignalsState(hc, &state));
   EXPECT_EQ(MOJO_HANDLE_SIGNAL_NONE, state.satisfied_signals);
   EXPECT_EQ(MOJO_HANDLE_SIGNAL_READABLE | MOJO_HANDLE_SIGNAL_PEER_CLOSED |
-                MOJO_HANDLE_SIGNAL_NEW_DATA_READABLE |
-                MOJO_HANDLE_SIGNAL_PEER_REMOTE,
+                MOJO_HANDLE_SIGNAL_NEW_DATA_READABLE,
             state.satisfiable_signals);
 
   // The producer |hp| should be writable.
   EXPECT_EQ(MOJO_RESULT_OK, MojoQueryHandleSignalsState(hp, &state));
   EXPECT_EQ(MOJO_HANDLE_SIGNAL_WRITABLE, state.satisfied_signals);
-  EXPECT_EQ(MOJO_HANDLE_SIGNAL_WRITABLE | MOJO_HANDLE_SIGNAL_PEER_CLOSED |
-                MOJO_HANDLE_SIGNAL_PEER_REMOTE,
+  EXPECT_EQ(MOJO_HANDLE_SIGNAL_WRITABLE | MOJO_HANDLE_SIGNAL_PEER_CLOSED,
             state.satisfiable_signals);
 
   // Try to read from |hc|.
@@ -206,8 +204,8 @@ TEST(CoreTest, BasicDataPipe) {
   EXPECT_EQ(0u, result_index);
   EXPECT_EQ(MOJO_HANDLE_SIGNAL_READABLE | MOJO_HANDLE_SIGNAL_NEW_DATA_READABLE,
             states[0].satisfied_signals);
-  EXPECT_EQ(MOJO_HANDLE_SIGNAL_READABLE | MOJO_HANDLE_SIGNAL_NEW_DATA_READABLE |
-                MOJO_HANDLE_SIGNAL_PEER_CLOSED | MOJO_HANDLE_SIGNAL_PEER_REMOTE,
+  EXPECT_EQ(MOJO_HANDLE_SIGNAL_READABLE | MOJO_HANDLE_SIGNAL_PEER_CLOSED |
+                MOJO_HANDLE_SIGNAL_NEW_DATA_READABLE,
             states[0].satisfiable_signals);
 
   // Do a two-phase write to |hp|.

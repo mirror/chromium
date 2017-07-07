@@ -228,7 +228,7 @@ void DefaultComponentInstaller::StartRegistration(
     ComponentUpdateService* cus) {
   VLOG(1) << __func__ << " for " << installer_traits_->GetName();
   DCHECK(task_runner_.get());
-  DCHECK(task_runner_->RunsTasksInCurrentSequence());
+  DCHECK(task_runner_->RunsTasksOnCurrentThread());
 
   base::Version latest_version(kNullVersion);
 
@@ -325,7 +325,7 @@ void DefaultComponentInstaller::StartRegistration(
 
 void DefaultComponentInstaller::UninstallOnTaskRunner() {
   DCHECK(task_runner_.get());
-  DCHECK(task_runner_->RunsTasksInCurrentSequence());
+  DCHECK(task_runner_->RunsTasksOnCurrentThread());
 
   // Only try to delete any files that are in our user-level install path.
   base::FilePath userInstallPath;

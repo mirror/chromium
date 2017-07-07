@@ -44,10 +44,11 @@ void TestCursorClient::HideCursor() {
     observer.OnCursorVisibilityChanged(false);
 }
 
-void TestCursorClient::SetCursorSize(ui::CursorSize cursor_size) {}
+void TestCursorClient::SetCursorSet(ui::CursorSetType cursor_set) {
+}
 
-ui::CursorSize TestCursorClient::GetCursorSize() const {
-  return ui::CursorSize::kNormal;
+ui::CursorSetType TestCursorClient::GetCursorSet() const {
+  return ui::CURSOR_SET_NORMAL;
 }
 
 bool TestCursorClient::IsCursorVisible() const {

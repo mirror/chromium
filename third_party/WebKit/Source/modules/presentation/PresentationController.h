@@ -96,11 +96,15 @@ class MODULES_EXPORT PresentationController final
   // client can't be used.
   WebPresentationClient* client_;
 
-  // The Presentation instance associated with that frame.
+  // Default PresentationRequest used by the embedder.
+  // Member<PresentationRequest> m_defaultRequest;
   WeakMember<Presentation> presentation_;
 
   // The presentation connections associated with that frame.
-  HeapHashSet<WeakMember<PresentationConnection>> connections_;
+  // TODO(mlamouri): the PresentationController will keep any created
+  // connections alive until the frame is detached. These should be weak ptr
+  // so that the connection can be GC'd.
+  HeapHashSet<Member<PresentationConnection>> connections_;
 };
 
 }  // namespace blink

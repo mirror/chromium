@@ -4,13 +4,7 @@
 
 #include "chrome/browser/signin/dice_response_handler.h"
 
-#include "base/bind.h"
-#include "base/bind_helpers.h"
-#include "base/location.h"
-#include "base/logging.h"
 #include "base/memory/singleton.h"
-#include "base/threading/thread_task_runner_handle.h"
-#include "base/time/time.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/signin/account_tracker_service_factory.h"
 #include "chrome/browser/signin/chrome_signin_client_factory.h"
@@ -25,8 +19,6 @@
 #include "google_apis/gaia/gaia_auth_fetcher.h"
 #include "google_apis/gaia/gaia_constants.h"
 #include "google_apis/gaia/google_service_auth_error.h"
-
-const int kDiceTokenFetchTimeoutSeconds = 10;
 
 namespace {
 
@@ -72,64 +64,6 @@ class DiceResponseHandlerFactory : public BrowserContextKeyedServiceFactory {
 
 }  // namespace
 
-////////////////////////////////////////////////////////////////////////////////
-// DiceTokenFetcher
-////////////////////////////////////////////////////////////////////////////////
-
-DiceResponseHandler::DiceTokenFetcher::DiceTokenFetcher(
-    const std::string& gaia_id,
-    const std::string& email,
-    const std::string& authorization_code,
-    SigninClient* signin_client,
-    DiceResponseHandler* dice_response_handler)
-    : gaia_id_(gaia_id),
-      email_(email),
-      authorization_code_(authorization_code),
-      dice_response_handler_(dice_response_handler),
-      timeout_closure_(
-          base::Bind(&DiceResponseHandler::DiceTokenFetcher::OnTimeout,
-                     base::Unretained(this))) {
-  DCHECK(dice_response_handler_);
-  gaia_auth_fetcher_ = signin_client->CreateGaiaAuthFetcher(
-      this, GaiaConstants::kChromeSource,
-      signin_client->GetURLRequestContext());
-  gaia_auth_fetcher_->StartAuthCodeForOAuth2TokenExchange(authorization_code_);
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-      FROM_HERE, timeout_closure_.callback(),
-      base::TimeDelta::FromSeconds(kDiceTokenFetchTimeoutSeconds));
-}
-
-DiceResponseHandler::DiceTokenFetcher::~DiceTokenFetcher() {}
-
-void DiceResponseHandler::DiceTokenFetcher::OnTimeout() {
-  gaia_auth_fetcher_.reset();
-  timeout_closure_.Cancel();
-  dice_response_handler_->OnTokenExchangeFailure(
-      this, GoogleServiceAuthError(GoogleServiceAuthError::REQUEST_CANCELED));
-  // |this| may be deleted at this point.
-}
-
-void DiceResponseHandler::DiceTokenFetcher::OnClientOAuthSuccess(
-    const GaiaAuthConsumer::ClientOAuthResult& result) {
-  gaia_auth_fetcher_.reset();
-  timeout_closure_.Cancel();
-  dice_response_handler_->OnTokenExchangeSuccess(this, gaia_id_, email_,
-                                                 result);
-  // |this| may be deleted at this point.
-}
-
-void DiceResponseHandler::DiceTokenFetcher::OnClientOAuthFailure(
-    const GoogleServiceAuthError& error) {
-  gaia_auth_fetcher_.reset();
-  timeout_closure_.Cancel();
-  dice_response_handler_->OnTokenExchangeFailure(this, error);
-  // |this| may be deleted at this point.
-}
-
-////////////////////////////////////////////////////////////////////////////////
-// DiceResponseHandler
-////////////////////////////////////////////////////////////////////////////////
-
 // static
 DiceResponseHandler* DiceResponseHandler::GetForProfile(Profile* profile) {
   return DiceResponseHandlerFactory::GetForProfile(profile);
@@ -156,7 +90,7 @@ void DiceResponseHandler::ProcessDiceHeader(
 
   switch (dice_params.user_intention) {
     case signin::DiceAction::SIGNIN:
-      ProcessDiceSigninHeader(dice_params.gaia_id, dice_params.email,
+      ProcessDiceSigninHeader(dice_params.obfuscated_gaia_id, dice_params.email,
                               dice_params.authorization_code);
       return;
     case signin::DiceAction::SIGNOUT:
@@ -172,10 +106,6 @@ void DiceResponseHandler::ProcessDiceHeader(
   return;
 }
 
-size_t DiceResponseHandler::GetPendingDiceTokenFetchersCountForTesting() const {
-  return token_fetchers_.size();
-}
-
 void DiceResponseHandler::ProcessDiceSigninHeader(
     const std::string& gaia_id,
     const std::string& email,
@@ -183,44 +113,36 @@ void DiceResponseHandler::ProcessDiceSigninHeader(
   DCHECK(!gaia_id.empty());
   DCHECK(!email.empty());
   DCHECK(!authorization_code.empty());
+  DCHECK(!gaia_auth_fetcher_);
+  DCHECK(gaia_id_.empty());
+  DCHECK(email_.empty());
+  gaia_id_ = gaia_id;
+  email_ = email;
+  gaia_auth_fetcher_ = signin_client_->CreateGaiaAuthFetcher(
+      this, GaiaConstants::kChromeSource,
+      signin_client_->GetURLRequestContext());
+  gaia_auth_fetcher_->StartAuthCodeForOAuth2TokenExchange(authorization_code);
 
-  for (auto it = token_fetchers_.begin(); it != token_fetchers_.end(); ++it) {
-    if ((it->get()->gaia_id() == gaia_id) && (it->get()->email() == email) &&
-        (it->get()->authorization_code() == authorization_code)) {
-      return;  // There is already a request in flight with the same parameters.
-    }
-  }
-
-  token_fetchers_.push_back(base::MakeUnique<DiceTokenFetcher>(
-      gaia_id, email, authorization_code, signin_client_, this));
+  // TODO(droger): The token exchange must complete quickly or be cancelled. Add
+  // a timeout logic.
 }
 
-void DiceResponseHandler::DeleteTokenFetcher(DiceTokenFetcher* token_fetcher) {
-  for (auto it = token_fetchers_.begin(); it != token_fetchers_.end(); ++it) {
-    if (it->get() == token_fetcher) {
-      token_fetchers_.erase(it);
-      return;
-    }
-  }
-  NOTREACHED();
-}
-
-void DiceResponseHandler::OnTokenExchangeSuccess(
-    DiceTokenFetcher* token_fetcher,
-    const std::string& gaia_id,
-    const std::string& email,
-    const GaiaAuthConsumer::ClientOAuthResult& result) {
+void DiceResponseHandler::OnClientOAuthSuccess(
+    const ClientOAuthResult& result) {
   std::string account_id =
-      account_tracker_service_->SeedAccountInfo(gaia_id, email);
+      account_tracker_service_->SeedAccountInfo(gaia_id_, email_);
   VLOG(1) << "Dice OAuth success for account: " << account_id;
   token_service_->UpdateCredentials(account_id, result.refresh_token);
-  DeleteTokenFetcher(token_fetcher);
+  gaia_id_.clear();
+  email_.clear();
+  gaia_auth_fetcher_.reset();
 }
 
-void DiceResponseHandler::OnTokenExchangeFailure(
-    DiceTokenFetcher* token_fetcher,
+void DiceResponseHandler::OnClientOAuthFailure(
     const GoogleServiceAuthError& error) {
   // TODO(droger): Handle authentication errors.
   VLOG(1) << "Dice OAuth failed with error: " << error.ToString();
-  DeleteTokenFetcher(token_fetcher);
+  gaia_id_.clear();
+  email_.clear();
+  gaia_auth_fetcher_.reset();
 }

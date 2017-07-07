@@ -328,16 +328,9 @@ void LayoutTableRow::AddOverflowFromCell(const LayoutTableCell* cell) {
   AddContentsVisualOverflow(cell_visual_overflow_rect);
 
   LayoutRect cell_layout_overflow_rect =
-      cell->LayoutOverflowRectForPropagation(this);
+      cell->LayoutOverflowRectForPropagation();
   cell_layout_overflow_rect.Move(cell_row_offset);
   AddLayoutOverflow(cell_layout_overflow_rect);
-}
-
-bool LayoutTableRow::PaintedOutputOfObjectHasNoEffectRegardlessOfSize() const {
-  return LayoutTableBoxComponent::
-             PaintedOutputOfObjectHasNoEffectRegardlessOfSize() &&
-         // Row paints collapsed borders.
-         !Table()->HasCollapsedBorders();
 }
 
 }  // namespace blink

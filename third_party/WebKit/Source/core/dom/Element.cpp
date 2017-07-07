@@ -1785,7 +1785,7 @@ void Element::RemovedFrom(ContainerNode* insertion_point) {
     GetDocument().GetFrame()->GetEventHandler().ElementRemoved(this);
 }
 
-void Element::AttachLayoutTree(AttachContext& context) {
+void Element::AttachLayoutTree(const AttachContext& context) {
   DCHECK(GetDocument().InStyleRecalc());
 
   // We've already been through detach when doing an attach, but we might
@@ -1920,7 +1920,7 @@ PassRefPtr<ComputedStyle> Element::StyleForLayoutObject() {
   style->UpdateIsStackingContext(this == GetDocument().documentElement(),
                                  IsInTopLayer());
 
-  return style;
+  return style.Release();
 }
 
 PassRefPtr<ComputedStyle> Element::OriginalStyleForLayoutObject() {
@@ -3456,9 +3456,7 @@ void Element::CreatePseudoElementIfNeeded(PseudoId pseudo_id) {
   if (pseudo_id == kPseudoIdBackdrop)
     GetDocument().AddToTopLayer(element, this);
   element->InsertedInto(this);
-
-  AttachContext context;
-  element->AttachLayoutTree(context);
+  element->AttachLayoutTree();
 
   probe::pseudoElementCreated(element);
 
@@ -3527,7 +3525,7 @@ PassRefPtr<ComputedStyle> Element::GetUncachedPseudoStyle(
         GetDocument().EnsureStyleResolver().StyleForElement(
             this, parent_style, parent_style, kDisallowStyleSharing);
     result->SetStyleType(kPseudoIdFirstLineInherited);
-    return result;
+    return result.Release();
   }
 
   return GetDocument().EnsureStyleResolver().PseudoStyleForElement(

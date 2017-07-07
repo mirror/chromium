@@ -14,19 +14,19 @@
 #include "third_party/WebKit/public/platform/modules/offscreencanvas/offscreen_canvas_surface.mojom.h"
 
 namespace viz {
-class HostFrameSinkManager;
+class FrameSinkManagerHost;
 }
 
 namespace content {
 
 class OffscreenCanvasSurfaceImpl;
 
-// Creates OffscreenCanvasSurfaces and CompositorFrameSinks for a renderer.
+// Creates OffscreenCanvasSurfaces and MojoCompositorFrameSinks for a renderer.
 class CONTENT_EXPORT OffscreenCanvasProviderImpl
     : public blink::mojom::OffscreenCanvasProvider {
  public:
   OffscreenCanvasProviderImpl(
-      viz::HostFrameSinkManager* host_frame_sink_manager,
+      viz::FrameSinkManagerHost* frame_sink_manager_host,
       uint32_t renderer_client_id);
   ~OffscreenCanvasProviderImpl() override;
 
@@ -40,8 +40,8 @@ class CONTENT_EXPORT OffscreenCanvasProviderImpl
       blink::mojom::OffscreenCanvasSurfaceRequest request) override;
   void CreateCompositorFrameSink(
       const cc::FrameSinkId& frame_sink_id,
-      cc::mojom::CompositorFrameSinkClientPtr client,
-      cc::mojom::CompositorFrameSinkRequest request) override;
+      cc::mojom::MojoCompositorFrameSinkClientPtr client,
+      cc::mojom::MojoCompositorFrameSinkRequest request) override;
 
  private:
   friend class OffscreenCanvasProviderImplTest;
@@ -50,7 +50,7 @@ class CONTENT_EXPORT OffscreenCanvasProviderImpl
   // callback to each OffscreenCanvasSurfaceImpl so they can destroy themselves.
   void DestroyOffscreenCanvasSurface(cc::FrameSinkId frame_sink_id);
 
-  viz::HostFrameSinkManager* const host_frame_sink_manager_;
+  viz::FrameSinkManagerHost* const frame_sink_manager_host_;
 
   // FrameSinkIds for offscreen canvas must use the renderer client id.
   const uint32_t renderer_client_id_;

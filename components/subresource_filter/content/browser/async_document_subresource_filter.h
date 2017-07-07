@@ -114,7 +114,9 @@ class AsyncDocumentSubresourceFilter {
   void ReportDisallowedLoad();
 
   // Must be called after activation state computation is finished.
-  const ActivationState& activation_state() const;
+  const ActivationState& activation_state() const {
+    return activation_state_.value();
+  }
 
   // The |first_disallowed_load_callback|, if it is non-null, is invoked on the
   // first ReportDisallowedLoad() call.

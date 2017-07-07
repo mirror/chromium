@@ -56,7 +56,7 @@
 
 #if defined(OS_CHROMEOS)
 #include "ash/multi_profile_uma.h"
-#include "ash/shell.h"
+#include "ash/shell_port.h"
 #include "chrome/browser/resource_coordinator/tab_manager_delegate_chromeos.h"
 #include "components/user_manager/user_manager.h"
 #endif
@@ -527,7 +527,7 @@ void TabManager::RecordDiscardStatistics() {
 #if defined(OS_CHROMEOS)
   // Record the discarded tab in relation to the amount of simultaneously
   // logged in users.
-  if (ash::Shell::HasInstance()) {
+  if (ash::ShellPort::HasInstance()) {
     ash::MultiProfileUMA::RecordDiscardedTab(
         user_manager::UserManager::Get()->GetLoggedInUsers().size());
   }
@@ -717,8 +717,7 @@ WebContents* TabManager::DiscardWebContentsAt(int index, TabStripModel* model) {
       WebContents::Create(WebContents::CreateParams(model->profile()));
   // Copy over the state from the navigation controller to preserve the
   // back/forward history and to continue to display the correct title/favicon.
-  null_contents->GetController().CopyStateFrom(old_contents->GetController(),
-                                               /* needs_reload */ true);
+  null_contents->GetController().CopyStateFrom(old_contents->GetController());
 
   // Make sure to persist the last active time property.
   null_contents->SetLastActiveTime(old_contents->GetLastActiveTime());

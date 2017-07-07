@@ -1413,7 +1413,7 @@ void RenderWidgetHostViewMac::FocusedNodeChanged(
 }
 
 void RenderWidgetHostViewMac::DidCreateNewRendererCompositorFrameSink(
-    cc::mojom::CompositorFrameSinkClient* renderer_compositor_frame_sink) {
+    cc::mojom::MojoCompositorFrameSinkClient* renderer_compositor_frame_sink) {
   browser_compositor_->DidCreateNewRendererCompositorFrameSink(
       renderer_compositor_frame_sink);
 }
@@ -3354,8 +3354,8 @@ extern NSString *NSTextInputReplacementRangeAttributeName;
       color_space = base::mac::GetSystemColorSpace();
     gfx::ICCProfile icc_profile =
         gfx::ICCProfile::FromCGColorSpace(color_space);
-    renderWidgetHostView_->browser_compositor_->SetDisplayColorSpace(
-        icc_profile.GetColorSpace());
+    renderWidgetHostView_->browser_compositor_->SetDisplayColorProfile(
+        icc_profile);
   }
 }
 

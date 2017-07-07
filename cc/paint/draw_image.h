@@ -30,8 +30,6 @@ class CC_PAINT_EXPORT DrawImage {
   DrawImage(const DrawImage& other);
   ~DrawImage();
 
-  bool operator==(const DrawImage& other) const;
-
   const PaintImage& paint_image() const { return paint_image_; }
   const sk_sp<SkImage>& image() const { return paint_image_.sk_image(); }
   const SkSize& scale() const { return scale_; }

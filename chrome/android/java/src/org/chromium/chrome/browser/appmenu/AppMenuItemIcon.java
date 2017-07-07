@@ -6,14 +6,12 @@ package org.chromium.chrome.browser.appmenu;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.widget.Checkable;
-
-import org.chromium.chrome.browser.widget.TintedImageView;
+import android.widget.ImageView;
 
 /**
- * A TintedImageView that supports the checkable state.
+ * A menu icon that supports the checkable state.
  */
-public class AppMenuItemIcon extends TintedImageView implements Checkable {
+public class AppMenuItemIcon extends ImageView {
     private static final int[] CHECKED_STATE_SET = new int[] {android.R.attr.state_checked};
     private boolean mCheckedState;
 
@@ -21,11 +19,20 @@ public class AppMenuItemIcon extends TintedImageView implements Checkable {
         super(context, attrs);
     }
 
-    @Override
-    public void setChecked(boolean state) {
+    /**
+     * Sets whether the item is checked and refreshes the View if necessary.
+     */
+    protected void setChecked(boolean state) {
         if (state == mCheckedState) return;
         mCheckedState = state;
         refreshDrawableState();
+    }
+
+    @Override
+    public void setPressed(boolean state) {
+        // We don't want to highlight the checkbox icon since the parent item is already
+        // highlighted.
+        return;
     }
 
     @Override
@@ -35,15 +42,5 @@ public class AppMenuItemIcon extends TintedImageView implements Checkable {
             mergeDrawableStates(drawableState, CHECKED_STATE_SET);
         }
         return drawableState;
-    }
-
-    @Override
-    public boolean isChecked() {
-        return mCheckedState;
-    }
-
-    @Override
-    public void toggle() {
-        setChecked(!mCheckedState);
     }
 }

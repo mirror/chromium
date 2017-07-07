@@ -889,7 +889,7 @@ bool Node::IsInert() const {
       element = FlatTreeTraversal::ParentElement(*element);
     }
   }
-  return GetDocument().GetFrame() && GetDocument().GetFrame()->IsInert();
+  return GetDocument().LocalOwner() && GetDocument().LocalOwner()->IsInert();
 }
 
 unsigned Node::NodeIndex() const {
@@ -1007,31 +1007,27 @@ Node* Node::CommonAncestor(const Node& other,
   return nullptr;
 }
 
-void Node::ReattachLayoutTree(AttachContext& context) {
-  context.performing_reattach = true;
+void Node::ReattachLayoutTree(const AttachContext& context) {
+  AttachContext reattach_context(context);
+  reattach_context.performing_reattach = true;
 
   // We only need to detach if the node has already been through
   // attachLayoutTree().
   if (GetStyleChangeType() < kNeedsReattachStyleChange)
-    DetachLayoutTree(context);
-  AttachLayoutTree(context);
+    DetachLayoutTree(reattach_context);
+  AttachLayoutTree(reattach_context);
 }
 
-void Node::AttachLayoutTree(AttachContext& context) {
+void Node::AttachLayoutTree(const AttachContext&) {
   DCHECK(GetDocument().InStyleRecalc() || IsDocumentNode());
   DCHECK(!GetDocument().Lifecycle().InDetach());
   DCHECK(NeedsAttach());
-
-  LayoutObject* layout_object = GetLayoutObject();
-  DCHECK(!layout_object ||
-         (layout_object->Style() &&
-          (layout_object->Parent() || layout_object->IsLayoutView())));
+  DCHECK(!GetLayoutObject() ||
+         (GetLayoutObject()->Style() &&
+          (GetLayoutObject()->Parent() || GetLayoutObject()->IsLayoutView())));
 
   ClearNeedsStyleRecalc();
   ClearNeedsReattachLayoutTree();
-
-  if (layout_object && !layout_object->IsFloatingOrOutOfFlowPositioned())
-    context.previous_in_flow = layout_object;
 
   if (AXObjectCache* cache = GetDocument().AxObjectCache())
     cache->UpdateCacheAfterNodeIsAttached(this);

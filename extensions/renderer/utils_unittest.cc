@@ -11,7 +11,7 @@ namespace extensions {
 namespace {
 
 class UtilsUnittest : public ModuleSystemTest {
- public:
+ private:
   void SetUp() override {
     ModuleSystemTest::SetUp();
 
@@ -29,26 +29,6 @@ class UtilsUnittest : public ModuleSystemTest {
         gin::Dictionary::CreateEmpty(env()->isolate()));
     chrome.Set("runtime", chrome_runtime);
   }
-
-  void RunTest(const std::string& test_name) { RunTestImpl(test_name, false); }
-
-  void RunTestWithPromises(const std::string& test_name) {
-    RunTestImpl(test_name, true);
-  }
-
- private:
-  void RunTestImpl(const std::string& test_name, bool run_promises) {
-    ModuleSystem::NativesEnabledScope natives_enabled_scope(
-        env()->module_system());
-    ASSERT_FALSE(env()
-                     ->module_system()
-                     ->Require("utils_unittest")
-                     .ToLocalChecked()
-                     .IsEmpty());
-    env()->module_system()->CallModuleMethodSafe("utils_unittest", test_name);
-    if (run_promises)
-      RunResolvedPromises();
-  }
 };
 
 TEST_F(UtilsUnittest, TestNothing) {
@@ -56,23 +36,42 @@ TEST_F(UtilsUnittest, TestNothing) {
 }
 
 TEST_F(UtilsUnittest, SuperClass) {
-  RunTest("testSuperClass");
+  ModuleSystem::NativesEnabledScope natives_enabled_scope(
+      env()->module_system());
+  env()->module_system()->CallModuleMethodSafe("utils_unittest",
+                                               "testSuperClass");
 }
 
 TEST_F(UtilsUnittest, PromiseNoResult) {
-  RunTestWithPromises("testPromiseNoResult");
+  ModuleSystem::NativesEnabledScope natives_enabled_scope(
+      env()->module_system());
+  env()->module_system()->CallModuleMethodSafe("utils_unittest",
+                                               "testPromiseNoResult");
+  RunResolvedPromises();
 }
 
 TEST_F(UtilsUnittest, PromiseOneResult) {
-  RunTestWithPromises("testPromiseOneResult");
+  ModuleSystem::NativesEnabledScope natives_enabled_scope(
+      env()->module_system());
+  env()->module_system()->CallModuleMethodSafe("utils_unittest",
+                                               "testPromiseOneResult");
+  RunResolvedPromises();
 }
 
 TEST_F(UtilsUnittest, PromiseTwoResults) {
-  RunTestWithPromises("testPromiseTwoResults");
+  ModuleSystem::NativesEnabledScope natives_enabled_scope(
+      env()->module_system());
+  env()->module_system()->CallModuleMethodSafe("utils_unittest",
+                                               "testPromiseTwoResults");
+  RunResolvedPromises();
 }
 
 TEST_F(UtilsUnittest, PromiseError) {
-  RunTestWithPromises("testPromiseError");
+  ModuleSystem::NativesEnabledScope natives_enabled_scope(
+      env()->module_system());
+  env()->module_system()->CallModuleMethodSafe("utils_unittest",
+                                               "testPromiseError");
+  RunResolvedPromises();
 }
 
 }  // namespace

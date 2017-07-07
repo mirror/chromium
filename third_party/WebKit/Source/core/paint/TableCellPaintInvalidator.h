@@ -10,7 +10,6 @@
 
 namespace blink {
 
-class LayoutObject;
 class LayoutTableCell;
 struct PaintInvalidatorContext;
 
@@ -25,10 +24,6 @@ class TableCellPaintInvalidator {
   PaintInvalidationReason InvalidatePaint();
 
  private:
-  void InvalidateContainerForCellGeometryChange(
-      const LayoutObject& container,
-      const PaintInvalidatorContext* container_context);
-
   const LayoutTableCell& cell_;
   const PaintInvalidatorContext& context_;
 };

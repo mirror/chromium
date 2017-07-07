@@ -273,10 +273,13 @@ const int kMaxTimesHistoryNoticeShown = 1;
 
   // Data types section.
   [model addSectionWithIdentifier:SectionIdentifierDataTypes];
+  int clearBrowsingHistoryMask =
+      IOSChromeBrowsingDataRemover::REMOVE_HISTORY |
+      IOSChromeBrowsingDataRemover::REMOVE_GOOGLE_APP_LAUNCHER_DATA;
   CollectionViewItem* browsingHistoryItem =
       [self clearDataItemWithType:ItemTypeDataTypeBrowsingHistory
                           titleID:IDS_IOS_CLEAR_BROWSING_HISTORY
-                             mask:IOSChromeBrowsingDataRemover::REMOVE_HISTORY
+                             mask:clearBrowsingHistoryMask
                          prefName:browsing_data::prefs::kDeleteBrowsingHistory];
   [model addItem:browsingHistoryItem
       toSectionWithIdentifier:SectionIdentifierDataTypes];
@@ -723,7 +726,9 @@ const int kMaxTimesHistoryNoticeShown = 1;
   if (!model)
     return;
 
-  if (data_mask & IOSChromeBrowsingDataRemover::REMOVE_HISTORY) {
+  if (data_mask &
+      (IOSChromeBrowsingDataRemover::REMOVE_HISTORY |
+       IOSChromeBrowsingDataRemover::REMOVE_GOOGLE_APP_LAUNCHER_DATA)) {
     NSIndexPath* indexPath = [self.collectionViewModel
         indexPathForItemType:ItemTypeDataTypeBrowsingHistory
            sectionIdentifier:SectionIdentifierDataTypes];

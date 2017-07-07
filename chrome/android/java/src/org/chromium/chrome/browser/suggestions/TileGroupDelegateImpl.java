@@ -92,12 +92,17 @@ public class TileGroupDelegateImpl implements TileGroup.Delegate {
     public void onLoadingComplete(Tile[] tiles) {
         assert !mIsDestroyed;
 
+        int types[] = new int[tiles.length];
+        int sources[] = new int[tiles.length];
+        String urls[] = new String[tiles.length];
+
         for (int i = 0; i < tiles.length; i++) {
-            mMostVisitedSites.recordTileImpression(
-                    i, tiles[i].getType(), tiles[i].getSource(), tiles[i].getUrl());
+            types[i] = tiles[i].getType();
+            sources[i] = tiles[i].getSource();
+            urls[i] = tiles[i].getUrl();
         }
 
-        mMostVisitedSites.recordPageImpression(tiles.length);
+        mMostVisitedSites.recordPageImpression(types, sources, urls);
     }
 
     @Override

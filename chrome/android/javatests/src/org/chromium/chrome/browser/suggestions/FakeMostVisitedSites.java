@@ -49,12 +49,7 @@ public class FakeMostVisitedSites implements MostVisitedSites {
     }
 
     @Override
-    public void recordPageImpression(int tilesCount) {
-        // Metrics are stubbed out.
-    }
-
-    @Override
-    public void recordTileImpression(int index, int source, int type, String url) {
+    public void recordPageImpression(int[] sources, int[] tileTypes, String[] tileUrls) {
         // Metrics are stubbed out.
     }
 

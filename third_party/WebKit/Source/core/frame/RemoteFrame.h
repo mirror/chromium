@@ -38,7 +38,6 @@ class CORE_EXPORT RemoteFrame final : public Frame {
   void PrintNavigationWarning(const String&) override {}
   bool PrepareForCommit() override;
   bool ShouldClose() override;
-  void SetIsInert(bool) override;
 
   void SetWebLayer(WebLayer*);
   WebLayer* GetWebLayer() const { return web_layer_; }

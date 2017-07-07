@@ -397,13 +397,10 @@ jboolean NavigationControllerAndroid::CanPruneAllButLastCommitted(
 void NavigationControllerAndroid::CopyStateFrom(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj,
-    jlong source_navigation_controller_android,
-    jboolean needs_reload) {
+    jlong source_navigation_controller_android) {
   navigation_controller_->CopyStateFrom(
       *(reinterpret_cast<NavigationControllerAndroid*>(
-            source_navigation_controller_android)
-            ->navigation_controller_),
-      needs_reload);
+          source_navigation_controller_android)->navigation_controller_));
 }
 
 void NavigationControllerAndroid::CopyStateFromAndPrune(

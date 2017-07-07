@@ -45,7 +45,7 @@ editing.TextEditHandler = function(node) {
  * Flag set to indicate whether ChromeVox uses experimental rich text support.
  * @type {boolean}
  */
-editing.useRichText = true;
+editing.useRichText = false;
 
 editing.TextEditHandler.prototype = {
   /** @return {!AutomationNode} */
@@ -313,11 +313,6 @@ AutomationRichEditableText.prototype = {
               new Range(cur.start_, cur.end_),
               new Range(prev.start_, prev.end_), Output.EventType.NAVIGATE)
           .go();
-    } else if (!cur.hasCollapsedSelection()) {
-      // This is a selection.
-      cvox.ChromeVox.tts.speak(cur.selectedText, cvox.QueueMode.CATEGORY_FLUSH);
-      cvox.ChromeVox.tts.speak(Msgs.getMsg('selected'), cvox.QueueMode.QUEUE);
-      this.brailleCurrentRichLine_();
     } else {
       // Describe the current line. This accounts for previous/current
       // selections and picking the line edge boundary that changed (as computed
@@ -365,8 +360,6 @@ AutomationRichEditableText.prototype = {
    */
   speakTextStyle_: function(style, opt_end) {
     var msgs = [];
-    if (style.state.linked)
-      msgs.push(opt_end ? 'link_end' : 'link_start');
     if (style.bold)
       msgs.push(opt_end ? 'bold_end' : 'bold_start');
     if (style.italic)
@@ -398,13 +391,9 @@ AutomationRichEditableText.prototype = {
 
   /** @override */
   describeSelectionChanged: function(evt) {
-    // Note that since Chrome allows for selection to be placed immediately at
-    // the end of a line (i.e. end == value.length) and since we try to describe
-    // the character to the right, just describe it as a new line.
-    if ((this.start + 1) == evt.start && evt.start == this.value.length) {
-      this.speak('\n', evt.triggeredByUser);
+    // Ignore end of text announcements.
+    if ((this.start + 1) == evt.start && evt.start == this.value.length)
       return;
-    }
 
     cvox.ChromeVoxEditableTextBase.prototype.describeSelectionChanged.call(
         this, evt);
@@ -729,16 +718,6 @@ editing.EditableLine.prototype = {
    */
   get text() {
     return this.value_.toString();
-  },
-
-  /** @return {string} */
-  get selectedText() {
-    return this.value_.toString().substring(this.startOffset, this.endOffset);
-  },
-
-  /** @return {boolean} */
-  hasCollapsedSelection: function() {
-    return this.start_.equals(this.end_);
   },
 
   /**

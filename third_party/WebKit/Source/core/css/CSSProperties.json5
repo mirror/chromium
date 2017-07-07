@@ -548,6 +548,7 @@
       field_template: "keyword",
       keywords: ["sideways", "mixed", "upright"],
       default_value: "mixed",
+      field_size: 2,
       field_group: "rare-inherited",
       getter: "GetTextOrientation"
     },
@@ -950,11 +951,11 @@
       field_group: "rare-non-inherited",
       default_value: "nullptr",
       wrapper_pointer_name: "RefPtr",
-      include_paths: ["core/style/ShadowList.h"],
     },
     {
       name: "box-sizing",
       field_template: "keyword",
+      type_name: "EBoxSizing",
       default_value: "content-box",
       keywords: ["content-box", "border-box"],
       field_group: "box",
@@ -1073,6 +1074,7 @@
       field_template: "keyword",
       keywords: ["balance", "auto"],
       default_value: "balance",
+      field_size: 1,
       field_group: "rare-non-inherited->multi-col",
       getter: "GetColumnFill",
     },
@@ -1175,6 +1177,7 @@
       default_value: "show",
       field_template: "keyword",
       keywords: ["show", "hide"],
+      type_name: "EEmptyCells",
     },
     {
       name: "fill",
@@ -1217,10 +1220,10 @@
       field_template: "external",
       default_value: "Length(kAuto)",
       field_group: "rare-non-inherited->flexible-box",
-      include_paths: ["platform/Length.h"],
     },
     {
       name: "flex-direction",
+      type_name: "EFlexDirection",
       field_template: "keyword",
       default_value: "row",
       field_group: "rare-non-inherited->flexible-box",
@@ -1248,6 +1251,7 @@
     },
     {
       name: "flex-wrap",
+      type_name: "EFlexWrap",
       field_template: "keyword",
       default_value: "nowrap",
       field_group: "rare-non-inherited->flexible-box",
@@ -1286,7 +1290,6 @@
       field_template: "external",
       default_value: "Vector<GridTrackSize>(1, GridTrackSize(Length(kAuto)))",
       field_group: "rare-non-inherited->grid",
-      include_paths: ["platform/wtf/Vector.h", "core/style/GridTrackSize.h"],
     },
     {
       name: "grid-auto-flow",
@@ -1309,7 +1312,6 @@
       field_template: "external",
       default_value: "Vector<GridTrackSize>(1, GridTrackSize(Length(kAuto)))",
       field_group: "rare-non-inherited->grid",
-      include_paths: ["platform/wtf/Vector.h", "core/style/GridTrackSize.h"],
     },
     {
       name: "grid-column-end",
@@ -1320,7 +1322,6 @@
       field_template: "external",
       default_value: "GridPosition()",
       field_group: "rare-non-inherited->grid-item",
-      include_paths: ["core/style/GridPosition.h"],
     },
     {
       name: "grid-column-gap",
@@ -1330,7 +1331,6 @@
       field_template: "external",
       default_value: "Length(kFixed)",
       field_group: "rare-non-inherited->grid",
-      include_paths: ["platform/Length.h"],
     },
     {
       name: "grid-column-start",
@@ -1341,7 +1341,6 @@
       field_template: "external",
       default_value: "GridPosition()",
       field_group: "rare-non-inherited->grid-item",
-      include_paths: ["core/style/GridPosition.h"],
     },
     {
       name: "grid-row-end",
@@ -1352,7 +1351,6 @@
       field_template: "external",
       default_value: "GridPosition()",
       field_group: "rare-non-inherited->grid-item",
-      include_paths: ["core/style/GridPosition.h"],
     },
     {
       name: "grid-row-gap",
@@ -1362,7 +1360,6 @@
       field_template: "external",
       default_value: "Length(kFixed)",
       field_group: "rare-non-inherited->grid",
-      include_paths: ["platform/Length.h"],
     },
     {
       name: "grid-row-start",
@@ -1373,7 +1370,6 @@
       field_template: "external",
       default_value: "GridPosition()",
       field_group: "rare-non-inherited->grid-item",
-      include_paths: ["core/style/GridPosition.h"],
     },
     {
       name: "grid-template-areas",
@@ -1390,7 +1386,6 @@
       type_name: "Vector<GridTrackSize>",
       field_group: "rare-non-inherited->grid",
       default_value: "Vector<GridTrackSize>()",
-      include_paths: ["platform/wtf/Vector.h", "core/style/GridTrackSize.h"],
     },
     {
       name: "grid-template-rows",
@@ -1401,7 +1396,6 @@
       type_name: "Vector<GridTrackSize>",
       field_group: "rare-non-inherited->grid",
       default_value: "Vector<GridTrackSize>()",
-      include_paths: ["platform/wtf/Vector.h", "core/style/GridTrackSize.h"],
     },
     {
       name: "height",
@@ -1450,9 +1444,11 @@
     },
     {
       name: "isolation",
+      type_name: "EIsolation",
       field_template: "keyword",
       keywords: ["auto", "isolate"],
       field_group: "rare-non-inherited",
+      field_size: 1,
       default_value: "auto",
     },
     {
@@ -1560,7 +1556,6 @@
       wrapper_pointer_name: "Persistent",
       default_value: "nullptr",
       field_group: "rare-inherited",
-      include_paths: ["core/style/StyleImage.h"],
     },
     {
       name: "list-style-position",
@@ -1730,6 +1725,7 @@
       field_template: "keyword",
       keywords: ["fill", "contain", "cover", "none", "scale-down"],
       field_group: "rare-non-inherited",
+      field_size: 3,
       getter: "GetObjectFit",
       default_value: "fill",
     },
@@ -1897,6 +1893,7 @@
       field_template: "keyword",
       keywords: ["normal", "break-word"],
       default_value: "normal",
+      field_size: 1,
       field_group: "rare-inherited",
     },
     {
@@ -2487,6 +2484,7 @@
       field_template: "keyword",
       keywords: ["auto", "start", "end", "left", "right", "center", "justify"],
       default_value: "auto",
+      field_size: 3,
       field_group: "rare-inherited",
     },
     {
@@ -2501,6 +2499,7 @@
       field_template: "keyword",
       keywords: ["none", "all"],
       default_value: "none",
+      field_size: 1,
       field_group: "rare-inherited",
     },
     {
@@ -2693,6 +2692,7 @@
       keywords: ["flat", "preserve-3d"],
       field_group: "rare-non-inherited",
       default_value: "flat",
+      field_size: 1,
     },
     {
       name: "translate",
@@ -2881,6 +2881,7 @@
     },
     {
       name: "-webkit-box-lines",
+      type_name: "EBoxLines",
       field_template: "keyword",
       keywords: ["single", "multiple"],
       default_value: "single",
@@ -2897,6 +2898,7 @@
     },
     {
       name: "-webkit-box-orient",
+      type_name: "EBoxOrient",
       field_template: "keyword",
       keywords: ["horizontal", "vertical"],
       default_value: "horizontal",
@@ -2904,6 +2906,7 @@
     },
     {
       name: "-webkit-box-pack",
+      type_name: "EBoxPack",
       field_template: "keyword",
       keywords: ["start", "center", "end", "justify"],
       default_value: "start",
@@ -2985,6 +2988,7 @@
       field_group: "rare-non-inherited->multi-col",
       default_value: "none",
       getter: "GetColumnSpan",
+      field_size: 1,
     },
     {
       name: "column-width",

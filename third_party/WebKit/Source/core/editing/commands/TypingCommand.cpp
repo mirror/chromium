@@ -685,7 +685,7 @@ bool TypingCommand::MakeEditableRootEmpty(EditingState* editing_state) {
   if (editing_state->IsAborted())
     return false;
   SetEndingSelection(SelectionInDOMTree::Builder()
-                         .Collapse(Position::FirstPositionInNode(*root))
+                         .Collapse(Position::FirstPositionInNode(root))
                          .SetIsDirectional(EndingSelection().IsDirectional())
                          .Build());
 
@@ -809,12 +809,10 @@ void TypingCommand::DeleteKeyPressed(TextGranularity granularity,
               1) {
         // If there are multiple Unicode code points to be deleted, adjust the
         // range to match platform conventions.
-        selection_to_delete =
-            VisibleSelection::CreateWithoutValidationDeprecated(
-                selection_to_delete.End(),
-                PreviousPositionOf(selection_to_delete.End(),
-                                   PositionMoveType::kBackwardDeletion),
-                selection_to_delete.Affinity());
+        selection_to_delete.SetWithoutValidation(
+            selection_to_delete.End(),
+            PreviousPositionOf(selection_to_delete.End(),
+                               PositionMoveType::kBackwardDeletion));
       }
 
       if (!StartingSelection().IsRange() ||
@@ -825,10 +823,8 @@ void TypingCommand::DeleteKeyPressed(TextGranularity granularity,
         // have been in the original document. We can't let the VisibleSelection
         // class's validation kick in or it'll adjust for us based on the
         // current state of the document and we'll get the wrong result.
-        selection_after_undo =
-            VisibleSelection::CreateWithoutValidationDeprecated(
-                StartingSelection().End(), selection_to_delete.Extent(),
-                selection_after_undo.Affinity());
+        selection_after_undo.SetWithoutValidation(StartingSelection().End(),
+                                                  selection_to_delete.Extent());
       }
       break;
     }
@@ -959,10 +955,8 @@ void TypingCommand::ForwardDeleteKeyPressed(TextGranularity granularity,
               extent.ComputeContainerNode(),
               extent.ComputeOffsetInContainerNode() + extra_characters);
         }
-        selection_after_undo =
-            VisibleSelection::CreateWithoutValidationDeprecated(
-                StartingSelection().Start(), extent,
-                selection_after_undo.Affinity());
+        selection_after_undo.SetWithoutValidation(StartingSelection().Start(),
+                                                  extent);
       }
       break;
     }

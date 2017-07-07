@@ -76,6 +76,8 @@ class NetworkMetricsProvider
   SystemProfileProto::Network::ConnectionType GetConnectionType() const;
   SystemProfileProto::Network::WifiPHYLayerProtocol GetWifiPHYLayerProtocol()
       const;
+  SystemProfileProto::Network::EffectiveConnectionType
+  GetEffectiveConnectionType() const;
 
   // Posts a call to net::GetWifiPHYLayerProtocol on the blocking pool.
   void ProbeWifiPHYLayerProtocol();
@@ -131,10 +133,9 @@ class NetworkMetricsProvider
   // Last known effective connection type.
   net::EffectiveConnectionType effective_connection_type_;
 
-  // Minimum and maximum effective connection type since the metrics were last
-  // provided.
-  net::EffectiveConnectionType min_effective_connection_type_;
-  net::EffectiveConnectionType max_effective_connection_type_;
+  // True if |effective_connection_type_| changed during the lifetime of the
+  // log.
+  bool effective_connection_type_is_ambiguous_;
 
   base::ThreadChecker thread_checker_;
 

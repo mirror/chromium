@@ -60,7 +60,7 @@ class Pointer : public ui::EventHandler,
   void OnScrollEvent(ui::ScrollEvent* event) override;
 
   // Overridden from WMHelper::CursorObserver:
-  void OnCursorSizeChanged(ui::CursorSize cursor_size) override;
+  void OnCursorSetChanged(ui::CursorSetType cursor_set) override;
   void OnCursorDisplayChanged(const display::Display& display) override;
 
   // Overridden from WMHelper::DisplayConfigurationObserver:
@@ -110,10 +110,6 @@ class Pointer : public ui::EventHandler,
 
   // The current cursor.
   ui::Cursor cursor_;
-
-  // Scale at which cursor snapshot is captured. The resulting bitmap is scaled
-  // on displays whose DSF does not match this scale.
-  float capture_scale_;
 
   // Source used for cursor capture copy output requests.
   const base::UnguessableToken cursor_capture_source_id_;

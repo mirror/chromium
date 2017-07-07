@@ -329,15 +329,17 @@ PassRefPtr<OpenTypeVerticalData> FontPlatformData::VerticalData() const {
                                                     *this);
 }
 
-Vector<char> FontPlatformData::OpenTypeTable(SkFontTableTag tag) const {
-  Vector<char> table_buffer;
+PassRefPtr<SharedBuffer> FontPlatformData::OpenTypeTable(
+    SkFontTableTag tag) const {
+  RefPtr<SharedBuffer> buffer;
 
   const size_t table_size = typeface_->getTableSize(tag);
   if (table_size) {
-    table_buffer.resize(table_size);
+    Vector<char> table_buffer(table_size);
     typeface_->getTableData(tag, 0, table_size, &table_buffer[0]);
+    buffer = SharedBuffer::AdoptVector(table_buffer);
   }
-  return table_buffer;
+  return buffer.Release();
 }
 
 }  // namespace blink

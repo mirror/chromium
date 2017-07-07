@@ -15,7 +15,6 @@
 
 namespace blink {
 
-class ExecutionContext;
 class FaceDetectorOptions;
 
 class MODULES_EXPORT FaceDetector final : public ShapeDetector,
@@ -23,12 +22,12 @@ class MODULES_EXPORT FaceDetector final : public ShapeDetector,
   DEFINE_WRAPPERTYPEINFO();
 
  public:
-  static FaceDetector* Create(ExecutionContext*, const FaceDetectorOptions&);
+  static FaceDetector* Create(const FaceDetectorOptions&);
 
   DECLARE_VIRTUAL_TRACE();
 
  private:
-  FaceDetector(ExecutionContext*, const FaceDetectorOptions&);
+  explicit FaceDetector(const FaceDetectorOptions&);
   ~FaceDetector() override = default;
 
   ScriptPromise DoDetect(ScriptPromiseResolver*,

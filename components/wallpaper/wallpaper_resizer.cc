@@ -34,7 +34,7 @@ void Resize(const gfx::ImageSkia image,
             WallpaperLayout layout,
             SkBitmap* resized_bitmap_out,
             base::TaskRunner* task_runner) {
-  DCHECK(task_runner->RunsTasksInCurrentSequence());
+  DCHECK(task_runner->RunsTasksOnCurrentThread());
 
   SkBitmap orig_bitmap = *image.bitmap();
   SkBitmap new_bitmap = orig_bitmap;

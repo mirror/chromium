@@ -11,9 +11,6 @@
 #include "ui/base/cursor/cursor_data.h"
 
 namespace ui {
-
-enum class CursorSize;
-
 namespace ws {
 
 class DisplayManager;
@@ -39,17 +36,11 @@ class CursorState {
   // Sets a cursor globally, which overrides the per-window cursors.
   void SetGlobalOverrideCursor(const base::Optional<ui::CursorData>& cursor);
 
-  // Sets the cursor size.
-  void SetCursorSize(ui::CursorSize cursor_size);
-
  private:
   // A snapshot of the cursor state at a specific time.
   class StateSnapshot;
 
-  // Synchronizes cursor set data with all platform displays.
-  void SetPlatformCursorSize();
-
-  // Synchronizes the current cursor state with all the platform displays.
+  // Synchronizes |current_state_| with all the platform displays.
   void SetPlatformCursor();
 
   // Contains are the displays we notify on cursor changes.

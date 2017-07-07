@@ -19,8 +19,8 @@ class SurfaceManager;
 }  // namespace cc
 
 namespace viz {
-class HostFrameSinkManager;
-class FrameSinkManagerImpl;
+class FrameSinkManagerHost;
+class MojoFrameSinkManager;
 }
 
 namespace content {
@@ -29,7 +29,7 @@ CONTENT_EXPORT cc::FrameSinkId AllocateFrameSinkId();
 
 CONTENT_EXPORT cc::SurfaceManager* GetSurfaceManager();
 
-CONTENT_EXPORT viz::HostFrameSinkManager* GetHostFrameSinkManager();
+CONTENT_EXPORT viz::FrameSinkManagerHost* GetFrameSinkManagerHost();
 
 void CopyFromCompositingSurfaceHasResult(
     const gfx::Size& dst_size_in_pixel,
@@ -40,8 +40,8 @@ void CopyFromCompositingSurfaceHasResult(
 namespace surface_utils {
 
 CONTENT_EXPORT void ConnectWithInProcessFrameSinkManager(
-    viz::HostFrameSinkManager* host,
-    viz::FrameSinkManagerImpl* manager);
+    viz::FrameSinkManagerHost* host,
+    viz::MojoFrameSinkManager* manager);
 
 }  // namespace surface_utils
 

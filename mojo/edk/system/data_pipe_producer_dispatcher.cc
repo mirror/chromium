@@ -435,10 +435,7 @@ HandleSignalsState DataPipeProducerDispatcher::GetHandleSignalsStateNoLock()
   if (!peer_closed_) {
     if (!in_two_phase_write_ && shared_ring_buffer_ && available_capacity_ > 0)
       rv.satisfied_signals |= MOJO_HANDLE_SIGNAL_WRITABLE;
-    if (peer_remote_)
-      rv.satisfied_signals |= MOJO_HANDLE_SIGNAL_PEER_REMOTE;
-    rv.satisfiable_signals |=
-        MOJO_HANDLE_SIGNAL_WRITABLE | MOJO_HANDLE_SIGNAL_PEER_REMOTE;
+    rv.satisfiable_signals |= MOJO_HANDLE_SIGNAL_WRITABLE;
   } else {
     rv.satisfied_signals |= MOJO_HANDLE_SIGNAL_PEER_CLOSED;
   }
@@ -474,13 +471,11 @@ void DataPipeProducerDispatcher::OnPortStatusChanged() {
 void DataPipeProducerDispatcher::UpdateSignalsStateNoLock() {
   lock_.AssertAcquired();
 
-  const bool was_peer_closed = peer_closed_;
-  const bool was_peer_remote = peer_remote_;
+  bool was_peer_closed = peer_closed_;
   size_t previous_capacity = available_capacity_;
 
   ports::PortStatus port_status;
   int rv = node_controller_->node()->GetStatus(control_port_, &port_status);
-  peer_remote_ = port_status.peer_remote;
   if (rv != ports::OK || !port_status.receiving_messages) {
     DVLOG(1) << "Data pipe producer " << pipe_id_ << " is aware of peer closure"
              << " [control_port=" << control_port_.name() << "]";
@@ -525,8 +520,7 @@ void DataPipeProducerDispatcher::UpdateSignalsStateNoLock() {
   }
 
   if (peer_closed_ != was_peer_closed ||
-      available_capacity_ != previous_capacity ||
-      was_peer_remote != peer_remote_) {
+      available_capacity_ != previous_capacity) {
     watchers_.NotifyState(GetHandleSignalsStateNoLock());
   }
 }

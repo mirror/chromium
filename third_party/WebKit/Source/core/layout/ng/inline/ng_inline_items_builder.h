@@ -63,16 +63,10 @@ class CORE_EXPORT NGInlineItemsBuilder {
               const ComputedStyle* = nullptr,
               LayoutObject* = nullptr);
 
-  // Append a character.
-  // The character is opaque to space collapsing; i.e., spaces before this
-  // character and after this character can collapse as if this character does
-  // not exist.
-  void AppendOpaque(NGInlineItem::NGInlineItemType, UChar);
-
-  // Append a non-character item that is opaque to space collapsing.
-  void AppendOpaque(NGInlineItem::NGInlineItemType,
-                    const ComputedStyle* = nullptr,
-                    LayoutObject* = nullptr);
+  // Append a non-character item.
+  void Append(NGInlineItem::NGInlineItemType,
+              const ComputedStyle* = nullptr,
+              LayoutObject* = nullptr);
 
   // Append a Bidi control character, for LTR or RTL depends on the style.
   void AppendBidiControl(const ComputedStyle*, UChar ltr, UChar rtl);
@@ -118,9 +112,12 @@ class CORE_EXPORT NGInlineItemsBuilder {
   // This function determines whether to add the newline or ignore.
   void ProcessPendingNewline(const String&, const ComputedStyle*);
 
-  void RemoveTrailingCollapsibleSpaceIfExists();
-  void RemoveTrailingCollapsibleSpace(unsigned);
-  void RemoveTrailingCollapsibleNewlineIfNeeded(const String&,
+  // Removes the collapsible space at the end of |text_| if exists.
+  void RemoveTrailingCollapsibleSpaceIfExists(unsigned*);
+  void RemoveTrailingCollapsibleSpace(unsigned*);
+
+  void RemoveTrailingCollapsibleNewlineIfNeeded(unsigned*,
+                                                const String&,
                                                 unsigned,
                                                 const ComputedStyle*);
 

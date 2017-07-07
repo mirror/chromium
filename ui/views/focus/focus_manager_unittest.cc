@@ -11,7 +11,6 @@
 
 #include "base/command_line.h"
 #include "base/macros.h"
-#include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "ui/base/accelerators/accelerator.h"
 #include "ui/events/keycodes/keyboard_codes.h"
@@ -478,17 +477,14 @@ class FocusManagerDtorTest : public FocusManagerTest {
     explicit TestFocusManagerFactory(DtorTrackVector* dtor_tracker)
         : dtor_tracker_(dtor_tracker) {
     }
-    ~TestFocusManagerFactory() override {}
 
-    std::unique_ptr<FocusManager> CreateFocusManager(
-        Widget* widget,
-        bool desktop_widget) override {
-      return base::MakeUnique<FocusManagerDtorTracked>(widget, dtor_tracker_);
+    FocusManager* CreateFocusManager(Widget* widget,
+                                     bool desktop_widget) override {
+      return new FocusManagerDtorTracked(widget, dtor_tracker_);
     }
 
    private:
     DtorTrackVector* dtor_tracker_;
-
     DISALLOW_COPY_AND_ASSIGN(TestFocusManagerFactory);
   };
 

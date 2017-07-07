@@ -28,7 +28,6 @@
 #include "ui/aura/window.h"
 #include "ui/snapshot/snapshot.h"
 #include "ui/wm/public/activation_client.h"
-#include "url/gurl.h"
 
 namespace arc {
 
@@ -65,17 +64,10 @@ mojom::VoiceInteractionStructurePtr CreateVoiceInteractionStructure(
 
 void RequestVoiceInteractionStructureCallback(
     const base::Callback<void(mojom::VoiceInteractionStructurePtr)>& callback,
-    const gfx::Rect& bounds,
-    const std::string& web_url,
     const ui::AXTreeUpdate& update) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  auto root = mojom::VoiceInteractionStructure::New();
-  root->rect = bounds;
-  root->class_name = "android.view.dummy.root.WebUrl";
-  root->text = base::UTF8ToUTF16(web_url);
-  root->children.push_back(CreateVoiceInteractionStructure(
+  callback.Run(CreateVoiceInteractionStructure(
       *ui::AXSnapshotNodeAndroid::Create(update, false)));
-  callback.Run(std::move(root));
 }
 
 }  // namespace
@@ -129,9 +121,7 @@ void ArcVoiceInteractionArcHomeService::GetVoiceInteractionStructure(
   }
 
   web_contents->RequestAXTreeSnapshot(
-      base::Bind(&RequestVoiceInteractionStructureCallback, callback,
-                 browser->window()->GetBounds(),
-                 web_contents->GetLastCommittedURL().spec()));
+      base::Bind(&RequestVoiceInteractionStructureCallback, callback));
 }
 
 void ArcVoiceInteractionArcHomeService::OnVoiceInteractionOobeSetupComplete() {

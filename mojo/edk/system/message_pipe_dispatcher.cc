@@ -97,7 +97,8 @@ MessagePipeDispatcher::MessagePipeDispatcher(NodeController* node_controller,
            << " [pipe_id=" << pipe_id << "; endpoint=" << endpoint << "]";
 
   node_controller_->SetPortObserver(
-      port_, make_scoped_refptr(new PortObserverThunk(this)));
+      port_,
+      make_scoped_refptr(new PortObserverThunk(this)));
 }
 
 bool MessagePipeDispatcher::Fuse(MessagePipeDispatcher* other) {
@@ -195,7 +196,8 @@ MojoResult MessagePipeDispatcher::ReadMessage(
   return MOJO_RESULT_OK;
 }
 
-HandleSignalsState MessagePipeDispatcher::GetHandleSignalsState() const {
+HandleSignalsState
+MessagePipeDispatcher::GetHandleSignalsState() const {
   base::AutoLock lock(signal_lock_);
   return GetHandleSignalsStateNoLock();
 }
@@ -323,9 +325,6 @@ HandleSignalsState MessagePipeDispatcher::GetHandleSignalsStateNoLock() const {
     rv.satisfied_signals |= MOJO_HANDLE_SIGNAL_WRITABLE;
     rv.satisfiable_signals |= MOJO_HANDLE_SIGNAL_WRITABLE;
     rv.satisfiable_signals |= MOJO_HANDLE_SIGNAL_READABLE;
-    rv.satisfiable_signals |= MOJO_HANDLE_SIGNAL_PEER_REMOTE;
-    if (port_status.peer_remote)
-      rv.satisfied_signals |= MOJO_HANDLE_SIGNAL_PEER_REMOTE;
   } else {
     rv.satisfied_signals |= MOJO_HANDLE_SIGNAL_PEER_CLOSED;
   }

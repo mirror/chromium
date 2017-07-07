@@ -367,8 +367,8 @@ void WindowTreeClient::Embed(
 
 void WindowTreeClient::AttachCompositorFrameSink(
     Id window_id,
-    cc::mojom::CompositorFrameSinkRequest compositor_frame_sink,
-    cc::mojom::CompositorFrameSinkClientPtr client) {
+    cc::mojom::MojoCompositorFrameSinkRequest compositor_frame_sink,
+    cc::mojom::MojoCompositorFrameSinkClientPtr client) {
   DCHECK(tree_);
   tree_->AttachCompositorFrameSink(window_id, std::move(compositor_frame_sink),
                                    std::move(client));
@@ -1882,11 +1882,6 @@ void WindowTreeClient::UnlockCursor() {
 void WindowTreeClient::SetCursorVisible(bool visible) {
   if (window_manager_client_)
     window_manager_client_->WmSetCursorVisible(visible);
-}
-
-void WindowTreeClient::SetCursorSize(ui::CursorSize cursor_size) {
-  if (window_manager_client_)
-    window_manager_client_->WmSetCursorSize(cursor_size);
 }
 
 void WindowTreeClient::SetGlobalOverrideCursor(

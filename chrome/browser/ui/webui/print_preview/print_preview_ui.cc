@@ -5,7 +5,6 @@
 #include "chrome/browser/ui/webui/print_preview/print_preview_ui.h"
 
 #include <map>
-#include <memory>
 #include <utility>
 #include <vector>
 
@@ -623,6 +622,10 @@ void PrintPreviewUI::OnPreviewDataIsAvailable(int expected_pages_count,
   base::Value ui_preview_request_id(preview_request_id);
   web_ui()->CallJavascriptFunctionUnsafe("updatePrintPreview", ui_identifier,
                                          ui_preview_request_id);
+}
+
+void PrintPreviewUI::OnFileSelectionCancelled() {
+  web_ui()->CallJavascriptFunctionUnsafe("fileSelectionCancelled");
 }
 
 void PrintPreviewUI::OnCancelPendingPreviewRequest() {

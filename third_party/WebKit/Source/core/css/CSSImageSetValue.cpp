@@ -101,7 +101,6 @@ StyleImage* CSSImageSetValue::CachedImage(float device_scale_factor) const {
 StyleImage* CSSImageSetValue::CacheImage(
     const Document& document,
     float device_scale_factor,
-    FetchParameters::PlaceholderImageRequestType placeholder_image_request_type,
     CrossOriginAttributeValue cross_origin) {
   if (!images_in_set_.size())
     FillImageSet();
@@ -123,8 +122,7 @@ StyleImage* CSSImageSetValue::CacheImage(
                                          cross_origin);
     }
 
-    if (document.GetFrame() &&
-        placeholder_image_request_type == FetchParameters::kAllowPlaceholder)
+    if (document.GetFrame())
       document.GetFrame()->MaybeAllowImagePlaceholder(params);
 
     if (ImageResourceContent* cached_image =

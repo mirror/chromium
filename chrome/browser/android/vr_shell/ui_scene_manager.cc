@@ -433,10 +433,10 @@ void UiSceneManager::SetWebVrMode(bool web_vr,
   web_vr_mode_ = web_vr;
   web_vr_autopresented_ = auto_presented;
   web_vr_show_toast_ = show_toast;
-  toast_state_ = SET_FOR_WEB_VR;
   ConfigureScene();
   ConfigureSecurityWarnings();
   ConfigureTransientUrlBar();
+  ConfigureIndicators();
   ConfigurePresentationToast();
 }
 
@@ -498,14 +498,6 @@ void UiSceneManager::ConfigureScene() {
   scene_->SetBackgroundDistance(main_content_->translation().z() *
                                 -kBackgroundDistanceMultiplier);
   UpdateBackgroundColor();
-
-  // Configure other subsystems here as well. Ultimately, it would be nice if we
-  // could configure all elements through ConfigureScene(), as the exact
-  // conditions that control each element are getting complicated. More systems
-  // should move in here, such that a single method call can update the entire
-  // scene. The drawback is slightly more overhead for individual scene
-  // reconfigurations.
-  ConfigureIndicators();
 }
 
 void UiSceneManager::UpdateBackgroundColor() {
@@ -553,7 +545,8 @@ void UiSceneManager::SetIncognito(bool incognito) {
 void UiSceneManager::OnGLInitialized() {
   scene_->OnGLInitialized();
 
-  ConfigureScene();
+  // Indicators don't know their position until they've rendered themselves.
+  ConfigureIndicators();
 }
 
 void UiSceneManager::OnAppButtonClicked() {
@@ -569,9 +562,7 @@ void UiSceneManager::SetFullscreen(bool fullscreen) {
   if (fullscreen_ == fullscreen)
     return;
   fullscreen_ = fullscreen;
-  toast_state_ = SET_FOR_FULLSCREEN;
   ConfigureScene();
-  ConfigurePresentationToast();
 }
 
 void UiSceneManager::ConfigureSecurityWarnings() {
@@ -588,24 +579,17 @@ void UiSceneManager::ConfigureSecurityWarnings() {
 }
 
 void UiSceneManager::ConfigureIndicators() {
-  bool allowed = !web_vr_mode_ && !fullscreen_;
-  audio_capture_indicator_->set_visible(allowed && audio_capturing_);
-  video_capture_indicator_->set_visible(allowed && video_capturing_);
-  screen_capture_indicator_->set_visible(allowed && screen_capturing_);
-  location_access_indicator_->set_visible(allowed && location_access_);
-
-  if (!allowed)
-    return;
+  audio_capture_indicator_->set_visible(!web_vr_mode_ && audio_capturing_);
+  video_capture_indicator_->set_visible(!web_vr_mode_ && video_capturing_);
+  screen_capture_indicator_->set_visible(!web_vr_mode_ && screen_capturing_);
+  location_access_indicator_->set_visible(!web_vr_mode_ && location_access_);
 
   // Position elements dynamically relative to each other, based on which
   // indicators are showing, and how big each one is.
-  float total_width = 0;
+  float total_width = kIndicatorGap * (system_indicators_.size() - 1);
   for (const UiElement* indicator : system_indicators_) {
-    if (indicator->visible()) {
-      if (total_width > 0)
-        total_width += kIndicatorGap;
+    if (indicator->visible())
       total_width += indicator->size().x();
-    }
   }
   float x_position = -total_width / 2;
   for (UiElement* indicator : system_indicators_) {
@@ -620,26 +604,14 @@ void UiSceneManager::ConfigureIndicators() {
 }
 
 void UiSceneManager::ConfigurePresentationToast() {
-  bool toast_visible = false;
-  switch (toast_state_) {
-    case SET_FOR_WEB_VR:
-      toast_visible = web_vr_show_toast_;
-      break;
-    case SET_FOR_FULLSCREEN:
-      toast_visible = fullscreen_;
-      break;
-    case UNCHANGED:
-      return;
-  }
-  presentation_toast_->set_visible(toast_visible);
-  if (toast_visible) {
+  presentation_toast_->set_visible(web_vr_show_toast_);
+  if (web_vr_show_toast_) {
     presentation_toast_timer_.Start(
         FROM_HERE, base::TimeDelta::FromSeconds(kToastTimeoutSeconds), this,
         &UiSceneManager::OnPresentationToastTimer);
   } else {
     presentation_toast_timer_.Stop();
   }
-  toast_state_ = UNCHANGED;
 }
 
 void UiSceneManager::OnSecurityWarningTimer() {

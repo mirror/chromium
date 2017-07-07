@@ -30,16 +30,10 @@ Polymer({
     },
 
     /**
-     * The currently selected profile avatar icon, if any.
-     * @type {?AvatarIcon}
+     * The currently selected profile avatar URL. May be a data URI.
+     * @type {string}
      */
-    selectedAvatar: {
-      type: Object,
-      notify: true,
-    },
-
-    /** @private {?HTMLElement} */
-    selectedAvatarElement_: Object,
+    selectedAvatarUrl: {type: String, notify: true},
 
     ignoreModifiedKeyEvents: {
       type: Boolean,
@@ -54,21 +48,5 @@ Polymer({
    */
   getIconImageset_: function(iconUrl) {
     return cr.icon.getImage(iconUrl);
-  },
-
-  /**
-   * @param {!Event} e
-   * @private
-   */
-  onAvatarTap_: function(e) {
-    // TODO(dpapad): Rename 'iron-selected' to 'selected' now that this CSS
-    // class is not assigned by any iron-* behavior.
-    if (this.selectedAvatarElement_)
-      this.selectedAvatarElement_.classList.remove('iron-selected');
-
-    this.selectedAvatarElement_ = /** @type {!HTMLElement} */ (e.target);
-    this.selectedAvatarElement_.classList.add('iron-selected');
-    this.selectedAvatar =
-        /** @type {!{model: {item: !AvatarIcon}}} */ (e).model.item;
   },
 });

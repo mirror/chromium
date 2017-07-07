@@ -10,7 +10,7 @@ namespace impl {
 
 // static
 void RefcountedKeyedServiceTraits::Destruct(const RefcountedKeyedService* obj) {
-  if (obj->task_runner_ && !obj->task_runner_->RunsTasksInCurrentSequence()) {
+  if (obj->task_runner_ && !obj->task_runner_->RunsTasksOnCurrentThread()) {
     obj->task_runner_->DeleteSoon(FROM_HERE, obj);
   } else {
     delete obj;

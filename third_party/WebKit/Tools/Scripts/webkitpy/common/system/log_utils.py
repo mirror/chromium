@@ -28,12 +28,11 @@ import sys
 _log = logging.getLogger(__name__)
 
 
-def _default_handlers(stream, logging_level, include_time):
+def _default_handlers(stream, logging_level):
     """Return a list of the default logging handlers to use.
 
     Args:
       stream: See the configure_logging() docstring.
-      include_time: See the configure_logging() docstring.
     """
     # Create the filter.
     def should_log(record):
@@ -47,15 +46,10 @@ def _default_handlers(stream, logging_level, include_time):
 
     # Create the handler.
     handler = logging.StreamHandler(stream)
-    if include_time:
-        prefix = '%(asctime)s - '
-    else:
-        prefix = ''
-
     if logging_level == logging.DEBUG:
-        formatter = logging.Formatter(prefix + '%(name)s: [%(levelname)s] %(message)s')
+        formatter = logging.Formatter('%(name)s: [%(levelname)s] %(message)s')
     else:
-        formatter = logging.Formatter(prefix + '%(message)s')
+        formatter = logging.Formatter('%(message)s')
 
     handler.setFormatter(formatter)
     handler.addFilter(logging_filter)
@@ -64,7 +58,7 @@ def _default_handlers(stream, logging_level, include_time):
 
 
 def configure_logging(logging_level=None, logger=None, stream=None,
-                      handlers=None, include_time=True):
+                      handlers=None):
     """Configure logging for standard purposes.
 
     Returns:
@@ -86,9 +80,6 @@ def configure_logging(logging_level=None, logger=None, stream=None,
       handlers: A list of logging.Handler instances to add to the logger
                 being configured.  If this parameter is provided, then the
                 stream parameter is not used.
-      include_time: Include time information at the start of every log message.
-                    Useful for understanding how much time has passed between
-                    subsequent log messages.
     """
     # If the stream does not define an "encoding" data attribute, the
     # logging module can throw an error like the following:
@@ -105,7 +96,7 @@ def configure_logging(logging_level=None, logger=None, stream=None,
     if stream is None:
         stream = sys.stderr
     if handlers is None:
-        handlers = _default_handlers(stream, logging_level, include_time)
+        handlers = _default_handlers(stream, logging_level)
 
     logger.setLevel(logging_level)
 

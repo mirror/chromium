@@ -124,14 +124,14 @@ ContentSuggestionsSectionInformation* MostVisitedSectionInformation() {
   return sectionInfo;
 }
 
-void RecordImpression(const ntp_tiles::NTPTilesVector& mostVisited) {
-  int index = 0;
+void RecordPageImpression(const ntp_tiles::NTPTilesVector& mostVisited) {
+  std::vector<ntp_tiles::metrics::TileImpression> tiles;
   for (const ntp_tiles::NTPTile& ntpTile : mostVisited) {
-    ntp_tiles::metrics::RecordTileImpression(
-        index++, ntpTile.source, ntp_tiles::UNKNOWN_TILE_TYPE, ntpTile.url,
-        GetApplicationContext()->GetRapporServiceImpl());
+    tiles.emplace_back(ntpTile.source, ntp_tiles::UNKNOWN_TILE_TYPE,
+                       ntpTile.url);
   }
-  ntp_tiles::metrics::RecordPageImpression(mostVisited.size());
+  ntp_tiles::metrics::RecordPageImpression(
+      tiles, GetApplicationContext()->GetRapporServiceImpl());
 }
 
 ContentSuggestionsMostVisitedItem* ConvertNTPTile(

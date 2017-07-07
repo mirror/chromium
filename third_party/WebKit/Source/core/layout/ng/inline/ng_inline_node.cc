@@ -230,10 +230,12 @@ LayoutObject* NGInlineNode::CollectInlines(LayoutObject* start,
       // Add floats and positioned objects in the same way as atomic inlines.
       // Because these objects need positions, they will be handled in
       // NGInlineLayoutAlgorithm.
-      builder->AppendOpaque(NGInlineItem::kFloating, nullptr, node);
+      builder->Append(NGInlineItem::kFloating, kObjectReplacementCharacter,
+                      nullptr, node);
 
     } else if (node->IsOutOfFlowPositioned()) {
-      builder->AppendOpaque(NGInlineItem::kOutOfFlowPositioned, nullptr, node);
+      builder->Append(NGInlineItem::kOutOfFlowPositioned,
+                      kObjectReplacementCharacter, nullptr, node);
 
     } else if (node->IsAtomicInlineLevel()) {
       // For atomic inlines add a unicode "object replacement character" to

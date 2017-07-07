@@ -6,45 +6,66 @@ package org.chromium.chrome.browser.widget;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
-import android.graphics.Canvas;
+import android.content.res.TypedArray;
+import android.graphics.PorterDuff;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 
-import org.chromium.chrome.browser.widget.ImageViewTinter.ImageViewTinterOwner;
+import org.chromium.chrome.R;
 
 /**
- * Implementation of ImageView that allows tinting its Drawable for all states.
- * For usage, see {@link ImageViewTinter}.
+ * Implementation of ImageView that allows to tint the color of the image view for all
+ * image view states using chrome:chrometint attribute in XML.
  */
-public class TintedImageView extends AppCompatImageView implements ImageViewTinterOwner {
-    private ImageViewTinter mTinter;
+public class TintedImageView extends AppCompatImageView {
+    private ColorStateList mTint;
 
     public TintedImageView(Context context) {
-        this(context, null);
+        super(context);
     }
 
     public TintedImageView(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+        super(context, attrs);
+        init(context, attrs, 0);
     }
 
     public TintedImageView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        mTinter = new ImageViewTinter(this, attrs, defStyle);
+        init(context, attrs, defStyle);
+    }
+
+    private void init(Context context, AttributeSet attrs, int defStyle) {
+        TypedArray a = context.obtainStyledAttributes(
+                attrs, R.styleable.TintedImage, defStyle, 0);
+        setTintInternal(a.getColorStateList(R.styleable.TintedImage_chrometint));
+        a.recycle();
     }
 
     @Override
-    public void drawableStateChanged() {
+    protected void drawableStateChanged() {
         super.drawableStateChanged();
-        mTinter.drawableStateChanged();
+        updateTintColor();
     }
 
-    @Override
-    public void setTint(ColorStateList tintList) {
-        mTinter.setTint(tintList);
+    /**
+     * Sets the tint color for the given ImageView for all view states.
+     * @param tint The set of colors to use to color the ImageView.
+     */
+    public void setTint(ColorStateList tint) {
+        if (mTint == tint) return;
+        setTintInternal(tint);
+        updateTintColor();
     }
 
-    @Override
-    public void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
+    private void setTintInternal(ColorStateList tint) {
+        mTint = tint;
+    }
+
+    private void updateTintColor() {
+        if (mTint == null) {
+            clearColorFilter();
+            return;
+        }
+        setColorFilter(mTint.getColorForState(getDrawableState(), 0), PorterDuff.Mode.SRC_IN);
     }
 }

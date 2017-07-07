@@ -7,7 +7,6 @@
 
 #include "components/history/core/common/thumbnail_score.h"
 #include "components/keyed_service/core/refcounted_keyed_service.h"
-#include "ui/base/page_transition_types.h"
 #include "ui/gfx/image/image.h"
 
 class GURL;
@@ -37,7 +36,6 @@ class ThumbnailService : public RefcountedKeyedService {
   // process of creating a thumbnail from tab contents. The lifetime of these
   // instances is limited to the act of processing a single tab image. They
   // are permitted to hold the state of such process.
-  // TODO(treib): Return a scoped_refptr rather than raw pointer.
   virtual ThumbnailingAlgorithm* GetThumbnailingAlgorithm() const = 0;
 
   // Gets a thumbnail for a given page. Returns true iff we have the thumbnail.
@@ -57,8 +55,7 @@ class ThumbnailService : public RefcountedKeyedService {
   virtual void AddForcedURL(const GURL& url) = 0;
 
   // Returns true if the page thumbnail should be updated.
-  virtual bool ShouldAcquirePageThumbnail(const GURL& url,
-                                          ui::PageTransition transition) = 0;
+  virtual bool ShouldAcquirePageThumbnail(const GURL& url) = 0;
 
  protected:
   ~ThumbnailService() override {}

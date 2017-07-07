@@ -7,38 +7,18 @@
       "drawsContent": true,
       "paintInvalidations": [
         {
-          "object": "LayoutTableRow TR",
-          "rect": [3, 264, 441, 110],
-          "reason": "style change"
-        },
-        {
-          "object": "LayoutTableRow TR",
-          "rect": [3, 166, 441, 108],
-          "reason": "style change"
-        },
-        {
-          "object": "LayoutTableRow TR",
-          "rect": [3, 364, 441, 105],
-          "reason": "style change"
-        },
-        {
-          "object": "LayoutTableRow TR",
-          "rect": [8, 64, 436, 108],
-          "reason": "style change"
-        },
-        {
           "object": "LayoutTableCell TD id='t3'",
-          "rect": [225, 269, 112, 100],
+          "rect": [220, 264, 122, 110],
           "reason": "style change"
         },
         {
           "object": "LayoutTableCell TD id='t1'",
-          "rect": [225, 69, 112, 100],
+          "rect": [220, 64, 122, 108],
           "reason": "style change"
         },
         {
           "object": "LayoutTableCell TD id='t2'",
-          "rect": [8, 269, 110, 100],
+          "rect": [3, 264, 118, 110],
           "reason": "style change"
         }
       ]
@@ -46,7 +26,7 @@
   ],
   "objectPaintInvalidations": [
     {
-      "object": "LayoutTableRow TR",
+      "object": "LayoutTableCell TD",
       "reason": "style change"
     },
     {
@@ -54,11 +34,43 @@
       "reason": "style change"
     },
     {
-      "object": "LayoutTableRow TR",
+      "object": "LayoutTableCell TD",
       "reason": "style change"
     },
     {
-      "object": "LayoutTableRow TR",
+      "object": "LayoutTableCell TD",
+      "reason": "style change"
+    },
+    {
+      "object": "LayoutTableCell TD",
+      "reason": "style change"
+    },
+    {
+      "object": "LayoutTableCell TD id='t2'",
+      "reason": "style change"
+    },
+    {
+      "object": "LayoutTableCell TD",
+      "reason": "style change"
+    },
+    {
+      "object": "LayoutTableCell TD id='t3'",
+      "reason": "style change"
+    },
+    {
+      "object": "LayoutTableCell TD",
+      "reason": "style change"
+    },
+    {
+      "object": "LayoutTableCell TD",
+      "reason": "style change"
+    },
+    {
+      "object": "LayoutTableCell TD",
+      "reason": "style change"
+    },
+    {
+      "object": "LayoutTableCell TD id='t1'",
       "reason": "style change"
     },
     {
@@ -67,10 +79,6 @@
     },
     {
       "object": "LayoutTableCell TD id='t3'",
-      "reason": "style change"
-    },
-    {
-      "object": "LayoutTableRow TR",
       "reason": "style change"
     }
   ]

@@ -40,11 +40,11 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling Skia
   # and whatever else without interference from each other.
-  'skia_revision': 'df669811b16e317b307b335822c4c7c881c1d163',
+  'skia_revision': 'eb64b9b201d04f9f72b37a05e86d459e6a91d974',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling V8
   # and whatever else without interference from each other.
-  'v8_revision': '64735758443e0a81a2f8a67338a5203fd725c2f3',
+  'v8_revision': 'b068de4b847de082426a856c3bd3d0b3913fa8a7',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling swarming_client
   # and whatever else without interference from each other.
@@ -60,7 +60,7 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling SwiftShader
   # and whatever else without interference from each other.
-  'swiftshader_revision': '9282c6d71f730ff604469951a1f6615baa57c056',
+  'swiftshader_revision': '3b9e1eab3544111f3f1ff8fc652d6548acb608ba',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling PDFium
   # and whatever else without interference from each other.
@@ -88,7 +88,7 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling NaCl
   # and whatever else without interference from each other.
-  'nacl_revision': '015356a98e4430dff9ce7e80ce9d2a62b04c2c4e',
+  'nacl_revision': 'f88070127d32714df2714d94c9494fce951993d8',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling freetype
   # and whatever else without interference from each other.
@@ -96,7 +96,7 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling catapult
   # and whatever else without interference from each other.
-  'catapult_revision': 'd4f2d777c7aa4d9454a74afe92ff17e13da62380',
+  'catapult_revision': '326eb241976eb5c38a648b75c0ff94c5b667a3d7',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling libFuzzer
   # and whatever else without interference from each other.
@@ -199,7 +199,7 @@ deps = {
     Var('chromium_git') + '/external/bidichecker/lib.git' + '@' + '97f2aa645b74c28c57eca56992235c79850fa9e0',
 
   'src/third_party/webgl/src':
-    Var('chromium_git') + '/external/khronosgroup/webgl.git' + '@' + '9ffa3b5a09e9d86be4ec4cdf6c151a503fa1c0e0',
+    Var('chromium_git') + '/external/khronosgroup/webgl.git' + '@' + '331fe3a462b2e1f5c9baa1a710312a1b5888e404',
 
   'src/third_party/webdriver/pylib':
     Var('chromium_git') + '/external/selenium/py.git' + '@' + '5fd78261a75fe08d27ca4835fb6c5ce4b42275bd',
@@ -354,7 +354,7 @@ deps_os = {
   },
   'ios': {
     'src/ios/third_party/earl_grey/src':
-      Var('chromium_git') + '/external/github.com/google/EarlGrey.git' + '@' + '83e8379d838e4ee4777aa803ed8615965e1cd3e7',
+      Var('chromium_git') + '/external/github.com/google/EarlGrey.git' + '@' + '9fc7647d0cfcca132bbb96996c537002425be7d7',
 
     'src/ios/third_party/fishhook/src':
       Var('chromium_git') + '/external/github.com/facebook/fishhook.git' + '@' + 'd172d5247aa590c25d0b1885448bae76036ea22c',
@@ -403,7 +403,7 @@ deps_os = {
 
     # For Linux and Chromium OS.
     'src/third_party/cros_system_api':
-      Var('chromium_git') + '/chromiumos/platform/system_api.git' + '@' + 'e79b0c771217d6b84b85c692ae5740df8e8a2b36',
+      Var('chromium_git') + '/chromiumos/platform/system_api.git' + '@' + '0fed00b89ef09f5cafa1d4ed1f6c816b9710053e',
 
     # Build tools for Chrome OS. Note: This depends on third_party/pyelftools.
     'src/third_party/chromite':
@@ -510,7 +510,7 @@ deps_os = {
       Var('chromium_git') + '/external/github.com/kennethreitz/requests.git' + '@' + 'f172b30356d821d180fa4ecfa3e71c7274a32de4',
 
     'src/third_party/custom_tabs_client/src':
-      Var('chromium_git') + '/external/github.com/GoogleChrome/custom-tabs-client.git' + '@' + 'bbdd5c4537fd4372d4339984fadc4791055bc182',
+      Var('chromium_git') + '/external/github.com/GoogleChrome/custom-tabs-client.git' + '@' + '4889dd9d552d24f08584dde29f639c0da4ea0f12',
 
     'src/third_party/gvr-android-sdk/src':
       Var('chromium_git') + '/external/github.com/googlevr/gvr-android-sdk.git' + '@' + 'a27f768b13682189c23eed69656319db5ef7cbfc',

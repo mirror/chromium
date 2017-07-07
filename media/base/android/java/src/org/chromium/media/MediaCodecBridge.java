@@ -277,7 +277,7 @@ class MediaCodecBridge {
         try {
             mFlushed = true;
             mMediaCodec.flush();
-        } catch (Exception e) {
+        } catch (IllegalStateException e) {
             Log.e(TAG, "Failed to flush MediaCodec", e);
             return MediaCodecStatus.ERROR;
         }

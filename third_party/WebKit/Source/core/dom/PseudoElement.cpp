@@ -118,7 +118,7 @@ void PseudoElement::Dispose() {
   RemovedFrom(parent);
 }
 
-void PseudoElement::AttachLayoutTree(AttachContext& context) {
+void PseudoElement::AttachLayoutTree(const AttachContext& context) {
   DCHECK(!GetLayoutObject());
 
   Element::AttachLayoutTree(context);

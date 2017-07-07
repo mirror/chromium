@@ -30,8 +30,7 @@ class Watch : public base::RefCountedThreadSafe<Watch> {
   Watch(const scoped_refptr<WatcherDispatcher>& watcher,
         const scoped_refptr<Dispatcher>& dispatcher,
         uintptr_t context,
-        MojoHandleSignals signals,
-        MojoWatchCondition condition);
+        MojoHandleSignals signals);
 
   // Notifies the Watch of a potential state change.
   //
@@ -96,7 +95,6 @@ class Watch : public base::RefCountedThreadSafe<Watch> {
   const scoped_refptr<Dispatcher> dispatcher_;
   const uintptr_t context_;
   const MojoHandleSignals signals_;
-  const MojoWatchCondition condition_;
 
   // The result code with which this Watch would notify if currently armed,
   // based on the last known signaling state of |dispatcher_|. Guarded by the

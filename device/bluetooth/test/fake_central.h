@@ -16,7 +16,6 @@
 namespace bluetooth {
 
 class FakeRemoteGattCharacteristic;
-class FakeRemoteGattDescriptor;
 
 // Implementation of FakeCentral in
 // src/device/bluetooth/public/interfaces/test/fake_bluetooth.mojom.
@@ -73,18 +72,15 @@ class FakeCentral : NON_EXPORTED_BASE(public mojom::FakeCentral),
       const std::string& service_id,
       const std::string& peripheral_address,
       SetNextUnsubscribeFromNotificationsResponseCallback callback) override;
+  void SimulateNotification(const std::vector<uint8_t>& value,
+                            const std::string& characteristic_id,
+                            const std::string& service_id,
+                            const std::string& peripheral_address,
+                            SimulateNotificationCallback callback) override;
   void IsNotifying(const std::string& characteristic_id,
                    const std::string& service_id,
                    const std::string& peripheral_address,
                    IsNotifyingCallback callback) override;
-  void SetNextReadDescriptorResponse(
-      uint16_t gatt_code,
-      const base::Optional<std::vector<uint8_t>>& value,
-      const std::string& descriptor_id,
-      const std::string& characteristic_id,
-      const std::string& service_id,
-      const std::string& peripheral_address,
-      SetNextReadDescriptorResponseCallback callback) override;
 
   // BluetoothAdapter overrides:
   std::string GetAddress() const override;
@@ -149,11 +145,6 @@ class FakeCentral : NON_EXPORTED_BASE(public mojom::FakeCentral),
       const std::string& peripheral_address,
       const std::string& service_id,
       const std::string& characteristic_id) const;
-  FakeRemoteGattDescriptor* GetFakeRemoteGattDescriptor(
-      const std::string& peripheral_address,
-      const std::string& service_id,
-      const std::string& characteristic_id,
-      const std::string& descriptor_id) const;
 
   mojom::CentralState state_;
   mojo::Binding<mojom::FakeCentral> binding_;

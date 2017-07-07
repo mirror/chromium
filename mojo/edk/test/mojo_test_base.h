@@ -157,13 +157,7 @@ class MojoTestBase : public testing::Test {
   // Queries the signals state of |handle|.
   static MojoHandleSignalsState GetSignalsState(MojoHandle handle);
 
-  // Helper to block the calling thread waiting for signals to go high or low.
-  static MojoResult WaitForSignals(MojoHandle handle,
-                                   MojoHandleSignals signals,
-                                   MojoWatchCondition condition,
-                                   MojoHandleSignalsState* state = nullptr);
-
-  // Like above but only waits for signals to go high.
+  // Helper to block the calling thread waiting for signals to be raised.
   static MojoResult WaitForSignals(MojoHandle handle,
                                    MojoHandleSignals signals,
                                    MojoHandleSignalsState* state = nullptr);

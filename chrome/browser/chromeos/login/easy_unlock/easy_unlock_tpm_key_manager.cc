@@ -40,7 +40,7 @@ void RunCallbackOnTaskRunner(
     const base::Callback<void(crypto::ScopedPK11Slot)>& callback,
     crypto::ScopedPK11Slot slot) {
   response_task_runner->PostTask(FROM_HERE,
-                                 base::BindOnce(callback, base::Passed(&slot)));
+                                 base::Bind(callback, base::Passed(&slot)));
 }
 
 // Gets TPM system slot. Must be called on IO thread.
@@ -114,7 +114,7 @@ void SignDataOnWorkerThread(
   if (!private_key) {
     LOG(ERROR) << "Private key for signing data not found";
     response_task_runner->PostTask(FROM_HERE,
-                                   base::BindOnce(callback, std::string()));
+                                   base::Bind(callback, std::string()));
     return;
   }
 
@@ -125,14 +125,13 @@ void SignDataOnWorkerThread(
                    SEC_OID_PKCS1_SHA256_WITH_RSA_ENCRYPTION) != SECSuccess) {
     LOG(ERROR) << "Failed to sign data";
     response_task_runner->PostTask(FROM_HERE,
-                                   base::BindOnce(callback, std::string()));
+                                   base::Bind(callback, std::string()));
     return;
   }
 
   std::string signature(reinterpret_cast<const char*>(sign_result->data),
                         sign_result->len);
-  response_task_runner->PostTask(FROM_HERE,
-                                 base::BindOnce(callback, signature));
+  response_task_runner->PostTask(FROM_HERE, base::Bind(callback, signature));
 }
 
 // Creates a RSA key pair in |slot|. When done, it runs |callback| with the
@@ -147,8 +146,7 @@ void CreateTpmKeyPairOnWorkerThread(
     const base::Callback<void(const std::string&)>& callback) {
   if (!public_key.empty() &&
       GetPrivateKeyOnWorkerThread(slot.get(), public_key)) {
-    response_task_runner->PostTask(FROM_HERE,
-                                   base::BindOnce(callback, public_key));
+    response_task_runner->PostTask(FROM_HERE, base::Bind(callback, public_key));
     return;
   }
 
@@ -159,7 +157,7 @@ void CreateTpmKeyPairOnWorkerThread(
                                      &private_key_obj)) {
     LOG(ERROR) << "Failed to create an RSA key.";
     response_task_runner->PostTask(FROM_HERE,
-                                   base::BindOnce(callback, std::string()));
+                                   base::Bind(callback, std::string()));
     return;
   }
 
@@ -168,15 +166,14 @@ void CreateTpmKeyPairOnWorkerThread(
   if (!public_key_der) {
     LOG(ERROR) << "Failed to export public key.";
     response_task_runner->PostTask(FROM_HERE,
-                                   base::BindOnce(callback, std::string()));
+                                   base::Bind(callback, std::string()));
     return;
   }
 
   response_task_runner->PostTask(
-      FROM_HERE,
-      base::BindOnce(callback, std::string(reinterpret_cast<const char*>(
-                                               public_key_der->data),
-                                           public_key_der->len)));
+      FROM_HERE, base::Bind(callback, std::string(reinterpret_cast<const char*>(
+                                                      public_key_der->data),
+                                                  public_key_der->len)));
 }
 
 }  // namespace
@@ -240,8 +237,8 @@ bool EasyUnlockTpmKeyManager::PrepareTpmKey(
 
     content::BrowserThread::PostTask(
         content::BrowserThread::IO, FROM_HERE,
-        base::BindOnce(&EnsureUserTPMInitializedOnIOThread, username_hash_,
-                       base::ThreadTaskRunnerHandle::Get(), on_user_tpm_ready));
+        base::Bind(&EnsureUserTPMInitializedOnIOThread, username_hash_,
+                   base::ThreadTaskRunnerHandle::Get(), on_user_tpm_ready));
   }
 
   return false;
@@ -253,9 +250,9 @@ bool EasyUnlockTpmKeyManager::StartGetSystemSlotTimeoutMs(size_t timeout_ms) {
 
   base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
       FROM_HERE,
-      base::BindOnce(&EasyUnlockTpmKeyManager::OnTpmKeyCreated,
-                     get_tpm_slot_weak_ptr_factory_.GetWeakPtr(),
-                     std::string()),
+      base::Bind(&EasyUnlockTpmKeyManager::OnTpmKeyCreated,
+                 get_tpm_slot_weak_ptr_factory_.GetWeakPtr(),
+                 std::string()),
       base::TimeDelta::FromMilliseconds(timeout_ms));
   return true;
 }
@@ -290,10 +287,11 @@ void EasyUnlockTpmKeyManager::SignUsingTpmKey(
                  key, data, callback);
 
   content::BrowserThread::PostTask(
-      content::BrowserThread::IO, FROM_HERE,
-      base::BindOnce(&GetSystemSlotOnIOThread,
-                     base::ThreadTaskRunnerHandle::Get(),
-                     sign_with_system_slot));
+      content::BrowserThread::IO,
+      FROM_HERE,
+      base::Bind(&GetSystemSlotOnIOThread,
+                 base::ThreadTaskRunnerHandle::Get(),
+                 sign_with_system_slot));
 }
 
 bool EasyUnlockTpmKeyManager::StartedCreatingTpmKeys() const {
@@ -323,9 +321,8 @@ void EasyUnlockTpmKeyManager::OnUserTPMInitialized(
 
   content::BrowserThread::PostTask(
       content::BrowserThread::IO, FROM_HERE,
-      base::BindOnce(&GetSystemSlotOnIOThread,
-                     base::ThreadTaskRunnerHandle::Get(),
-                     create_key_with_system_slot));
+      base::Bind(&GetSystemSlotOnIOThread, base::ThreadTaskRunnerHandle::Get(),
+                 create_key_with_system_slot));
 }
 
 void EasyUnlockTpmKeyManager::CreateKeyInSystemSlot(
@@ -344,11 +341,10 @@ void EasyUnlockTpmKeyManager::CreateKeyInSystemSlot(
   base::PostTaskWithTraits(
       FROM_HERE,
       {base::MayBlock(), base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
-      base::BindOnce(&CreateTpmKeyPairOnWorkerThread,
-                     base::Passed(&system_slot), public_key,
-                     base::ThreadTaskRunnerHandle::Get(),
-                     base::Bind(&EasyUnlockTpmKeyManager::OnTpmKeyCreated,
-                                weak_ptr_factory_.GetWeakPtr())));
+      base::Bind(&CreateTpmKeyPairOnWorkerThread, base::Passed(&system_slot),
+                 public_key, base::ThreadTaskRunnerHandle::Get(),
+                 base::Bind(&EasyUnlockTpmKeyManager::OnTpmKeyCreated,
+                            weak_ptr_factory_.GetWeakPtr())));
 }
 
 void EasyUnlockTpmKeyManager::SignDataWithSystemSlot(
@@ -362,10 +358,10 @@ void EasyUnlockTpmKeyManager::SignDataWithSystemSlot(
   base::PostTaskWithTraits(
       FROM_HERE,
       {base::MayBlock(), base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
-      base::BindOnce(&SignDataOnWorkerThread, base::Passed(&system_slot),
-                     public_key, data, base::ThreadTaskRunnerHandle::Get(),
-                     base::Bind(&EasyUnlockTpmKeyManager::OnDataSigned,
-                                weak_ptr_factory_.GetWeakPtr(), callback)));
+      base::Bind(&SignDataOnWorkerThread, base::Passed(&system_slot),
+                 public_key, data, base::ThreadTaskRunnerHandle::Get(),
+                 base::Bind(&EasyUnlockTpmKeyManager::OnDataSigned,
+                            weak_ptr_factory_.GetWeakPtr(), callback)));
 }
 
 void EasyUnlockTpmKeyManager::OnTpmKeyCreated(const std::string& public_key) {

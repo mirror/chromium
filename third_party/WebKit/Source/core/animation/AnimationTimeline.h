@@ -87,6 +87,8 @@ class CORE_EXPORT AnimationTimeline
   double currentTime();
   double CurrentTimeInternal(bool& is_null);
   double CurrentTimeInternal();
+  void setCurrentTime(double, bool is_null);
+  void SetCurrentTimeInternal(double);
   double EffectiveTime();
   void PauseAnimationsForTesting(double);
 

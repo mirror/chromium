@@ -147,8 +147,6 @@ ShelfLayoutManager::ShelfLayoutManager(ShelfWidget* shelf_widget, Shelf* shelf)
       shelf_(shelf),
       window_overlaps_shelf_(false),
       mouse_over_shelf_when_auto_hide_timer_started_(false),
-      is_fullscreen_app_list_enabled_(
-          app_list::features::IsFullscreenAppListEnabled()),
       gesture_drag_status_(GESTURE_DRAG_NONE),
       gesture_drag_amount_(0.f),
       gesture_drag_auto_hide_state_(SHELF_AUTO_HIDE_SHOWN),
@@ -434,7 +432,7 @@ void ShelfLayoutManager::OnAppListVisibilityChanged(bool shown,
     return;
 
   is_app_list_visible_ = shown;
-  if (is_fullscreen_app_list_enabled_)
+  if (app_list::features::IsFullscreenAppListEnabled())
     MaybeUpdateShelfBackground(AnimationChangeType::IMMEDIATE);
 }
 
@@ -481,14 +479,8 @@ ShelfBackgroundType ShelfLayoutManager::GetShelfBackgroundType() const {
   if (state_.session_state != session_manager::SessionState::ACTIVE)
     return SHELF_BACKGROUND_OVERLAP;
 
-  // If the app list is active and the shelf is oriented vertically, enable the
-  // shelf background.
-  if (is_app_list_visible_ && !shelf_->IsHorizontalAlignment() &&
-      is_fullscreen_app_list_enabled_)
-    return SHELF_BACKGROUND_OVERLAP;
-
   // If the app list is active, hide the shelf background to prevent overlap.
-  if (is_app_list_visible_ && is_fullscreen_app_list_enabled_)
+  if (is_app_list_visible_ && app_list::features::IsFullscreenAppListEnabled())
     return SHELF_BACKGROUND_DEFAULT;
 
   if (state_.visibility_state != SHELF_AUTO_HIDE &&

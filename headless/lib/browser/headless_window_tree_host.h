@@ -48,6 +48,7 @@ class HeadlessWindowTreeHost : public aura::WindowTreeHost,
   void SetCursorNative(gfx::NativeCursor cursor_type) override;
   void MoveCursorToScreenLocationInPixels(const gfx::Point& location) override;
   void OnCursorVisibilityChangedNative(bool show) override;
+  gfx::ICCProfile GetICCProfileForCurrentDisplay() override;
 
  private:
   gfx::Rect bounds_;

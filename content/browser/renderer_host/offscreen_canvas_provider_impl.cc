@@ -10,9 +10,9 @@
 namespace content {
 
 OffscreenCanvasProviderImpl::OffscreenCanvasProviderImpl(
-    viz::HostFrameSinkManager* host_frame_sink_manager,
+    viz::FrameSinkManagerHost* frame_sink_manager_host,
     uint32_t renderer_client_id)
-    : host_frame_sink_manager_(host_frame_sink_manager),
+    : frame_sink_manager_host_(frame_sink_manager_host),
       renderer_client_id_(renderer_client_id) {}
 
 OffscreenCanvasProviderImpl::~OffscreenCanvasProviderImpl() = default;
@@ -42,14 +42,14 @@ void OffscreenCanvasProviderImpl::CreateOffscreenCanvasSurface(
       base::Unretained(this), frame_sink_id);
 
   canvas_map_[frame_sink_id] = base::MakeUnique<OffscreenCanvasSurfaceImpl>(
-      host_frame_sink_manager_, parent_frame_sink_id, frame_sink_id,
+      frame_sink_manager_host_, parent_frame_sink_id, frame_sink_id,
       std::move(client), std::move(request), std::move(destroy_callback));
 }
 
 void OffscreenCanvasProviderImpl::CreateCompositorFrameSink(
     const cc::FrameSinkId& frame_sink_id,
-    cc::mojom::CompositorFrameSinkClientPtr client,
-    cc::mojom::CompositorFrameSinkRequest request) {
+    cc::mojom::MojoCompositorFrameSinkClientPtr client,
+    cc::mojom::MojoCompositorFrameSinkRequest request) {
   // TODO(kylechar): Kill the renderer too.
   if (frame_sink_id.client_id() != renderer_client_id_) {
     DLOG(ERROR) << "Invalid client id " << frame_sink_id;

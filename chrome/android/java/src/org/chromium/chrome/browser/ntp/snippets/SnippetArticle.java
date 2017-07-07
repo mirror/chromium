@@ -45,9 +45,6 @@ public class SnippetArticle implements OfflinableSuggestion {
      */
     public final long mFetchTimestampMilliseconds;
 
-    /** The flag that indicates whether this is a video suggestion. */
-    public boolean mIsVideoSuggestion;
-
     /** The rank of this article within its section. */
     private int mPerSectionRank = -1;
 
@@ -82,8 +79,8 @@ public class SnippetArticle implements OfflinableSuggestion {
      * Creates a SnippetArticleListItem object that will hold the data.
      */
     public SnippetArticle(int category, String idWithinCategory, String title, String publisher,
-            String previewText, String url, long publishTimestamp, float score, long fetchTimestamp,
-            boolean isVideoSuggestion) {
+            String previewText, String url, long publishTimestamp, float score,
+            long fetchTimestamp) {
         mCategory = category;
         mIdWithinCategory = idWithinCategory;
         mTitle = title;
@@ -93,7 +90,6 @@ public class SnippetArticle implements OfflinableSuggestion {
         mPublishTimestampMilliseconds = publishTimestamp;
         mScore = score;
         mFetchTimestampMilliseconds = fetchTimestamp;
-        mIsVideoSuggestion = isVideoSuggestion;
     }
 
     @Override

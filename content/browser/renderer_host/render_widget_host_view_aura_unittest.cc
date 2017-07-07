@@ -418,10 +418,10 @@ class FakeRenderWidgetHostViewAura : public RenderWidgetHostViewAura {
   ~FakeRenderWidgetHostViewAura() override {}
 
   void CreateNewRendererCompositorFrameSink() {
-    cc::mojom::CompositorFrameSinkPtr sink;
-    cc::mojom::CompositorFrameSinkRequest sink_request =
+    cc::mojom::MojoCompositorFrameSinkPtr sink;
+    cc::mojom::MojoCompositorFrameSinkRequest sink_request =
         mojo::MakeRequest(&sink);
-    cc::mojom::CompositorFrameSinkClientRequest client_request =
+    cc::mojom::MojoCompositorFrameSinkClientRequest client_request =
         mojo::MakeRequest(&renderer_compositor_frame_sink_ptr_);
     renderer_compositor_frame_sink_ =
         base::MakeUnique<FakeRendererCompositorFrameSink>(
@@ -496,7 +496,8 @@ class FakeRenderWidgetHostViewAura : public RenderWidgetHostViewAura {
 
  private:
   FakeDelegatedFrameHostClientAura* delegated_frame_host_client_;
-  cc::mojom::CompositorFrameSinkClientPtr renderer_compositor_frame_sink_ptr_;
+  cc::mojom::MojoCompositorFrameSinkClientPtr
+      renderer_compositor_frame_sink_ptr_;
 
   DISALLOW_COPY_AND_ASSIGN(FakeRenderWidgetHostViewAura);
 };

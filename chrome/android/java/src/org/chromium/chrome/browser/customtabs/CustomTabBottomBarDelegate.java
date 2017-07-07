@@ -214,9 +214,7 @@ class CustomTabBottomBarDelegate implements FullscreenListener {
     }
 
     @Override
-    public void onBottomControlsHeightChanged(int bottomControlsHeight) {
-        getBottomBarView().setTranslationY(mFullscreenManager.getBottomControlOffset());
-    }
+    public void onBottomControlsHeightChanged(int bottomControlsHeight) { }
 
     @Override
     public void onContentOffsetChanged(float offset) { }

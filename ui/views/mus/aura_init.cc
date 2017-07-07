@@ -63,16 +63,14 @@ AuraInit::AuraInit(service_manager::Connector* connector,
       env_(aura::Env::CreateInstance(
           (mode == Mode::AURA_MUS || mode == Mode::AURA_MUS_WINDOW_MANAGER)
               ? aura::Env::Mode::MUS
-              : aura::Env::Mode::LOCAL)) {
-  if (!ViewsDelegate::GetInstance())
-    views_delegate_ = base::MakeUnique<MusViewsDelegate>();
+              : aura::Env::Mode::LOCAL)),
+      views_delegate_(new MusViewsDelegate) {
   if (mode == Mode::AURA_MUS) {
     mus_client_ =
         base::WrapUnique(new MusClient(connector, identity, io_task_runner));
   }
   ui::MaterialDesignController::Initialize();
-  if (!InitializeResources(connector))
-    return;
+  InitializeResources(connector);
 
 // Initialize the skia font code to go ask fontconfig underneath.
 #if defined(OS_LINUX)
@@ -85,7 +83,6 @@ AuraInit::AuraInit(service_manager::Connector* connector,
   gfx::Font();
 
   ui::InitializeInputMethodForTesting();
-  initialized_ = true;
 }
 
 AuraInit::~AuraInit() {
@@ -100,11 +97,11 @@ AuraInit::~AuraInit() {
 #endif
 }
 
-bool AuraInit::InitializeResources(service_manager::Connector* connector) {
+void AuraInit::InitializeResources(service_manager::Connector* connector) {
   // Resources may have already been initialized (e.g. when 'chrome --mash' is
   // used to launch the current app).
   if (ui::ResourceBundle::HasSharedInstance())
-    return false;
+    return;
 
   std::set<std::string> resource_paths({resource_file_});
   if (!resource_file_200_.empty())
@@ -113,15 +110,7 @@ bool AuraInit::InitializeResources(service_manager::Connector* connector) {
   catalog::ResourceLoader loader;
   filesystem::mojom::DirectoryPtr directory;
   connector->BindInterface(catalog::mojom::kServiceName, &directory);
-  // TODO(jonross): if this proves useful in resolving the crash of
-  // mash_unittests then switch AuraInit to have an Init method, returning a
-  // bool for success. Then update all callsites to use this to determine the
-  // shutdown of their ServiceContext.
-  // One cause of failure is that the peer has closed, but we have not been
-  // notified yet. It is not possible to complete initialization, so exit now.
-  // Calling services will shutdown ServiceContext as appropriate.
-  if (!loader.OpenFiles(std::move(directory), resource_paths))
-    return false;
+  CHECK(loader.OpenFiles(std::move(directory), resource_paths));
   ui::RegisterPathProvider();
   base::File pak_file = loader.TakeFile(resource_file_);
   base::File pak_file_2 = pak_file.Duplicate();
@@ -132,7 +121,6 @@ bool AuraInit::InitializeResources(service_manager::Connector* connector) {
   if (!resource_file_200_.empty())
     ui::ResourceBundle::GetSharedInstance().AddDataPackFromFile(
         loader.TakeFile(resource_file_200_), ui::SCALE_FACTOR_200P);
-  return true;
 }
 
 }  // namespace views

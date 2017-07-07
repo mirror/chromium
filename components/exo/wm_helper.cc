@@ -98,9 +98,9 @@ void WMHelper::NotifyCursorVisibilityChanged(bool is_visible) {
     observer.OnCursorVisibilityChanged(is_visible);
 }
 
-void WMHelper::NotifyCursorSizeChanged(ui::CursorSize cursor_size) {
+void WMHelper::NotifyCursorSetChanged(ui::CursorSetType cursor_set) {
   for (CursorObserver& observer : cursor_observers_)
-    observer.OnCursorSizeChanged(cursor_size);
+    observer.OnCursorSetChanged(cursor_set);
 }
 
 void WMHelper::NotifyCursorDisplayChanged(const display::Display& display) {

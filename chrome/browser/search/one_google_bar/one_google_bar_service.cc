@@ -79,12 +79,8 @@ void OneGoogleBarService::SigninStatusChanged() {
 }
 
 void OneGoogleBarService::OneGoogleBarDataFetched(
-    OneGoogleBarFetcher::Status status,
     const base::Optional<OneGoogleBarData>& data) {
-  // In case of transient erros, keep our cached data (if any).
-  if (status != OneGoogleBarFetcher::Status::TRANSIENT_ERROR) {
-    SetOneGoogleBarData(data);
-  }
+  SetOneGoogleBarData(data);
   if (!data) {
     for (auto& observer : observers_) {
       observer.OnOneGoogleBarFetchFailed();

@@ -143,7 +143,7 @@ StringKeyframe::CSSPropertySpecificKeyframe::CloneWithOffset(
   RefPtr<CSSPropertySpecificKeyframe> clone =
       Create(offset, easing_, value_.Get(), composite_);
   clone->animatable_value_cache_ = animatable_value_cache_;
-  return clone;
+  return clone.Release();
 }
 
 PassRefPtr<Keyframe::PropertySpecificKeyframe>

@@ -988,6 +988,8 @@ void WebContentsImpl::CancelActiveAndPendingDialogs() {
   }
   if (browser_plugin_embedder_)
     browser_plugin_embedder_->CancelGuestDialogs();
+  if (delegate_)
+    delegate_->HideValidationMessage(this);
 }
 
 void WebContentsImpl::ClosePage() {
@@ -1613,7 +1615,7 @@ WebContents* WebContentsImpl::Clone() {
   create_params.initial_size = GetContainerBounds().size();
   WebContentsImpl* tc =
       CreateWithOpener(create_params, frame_tree_.root()->opener());
-  tc->GetController().CopyStateFrom(controller_, true);
+  tc->GetController().CopyStateFrom(controller_);
   for (auto& observer : observers_)
     observer.DidCloneToNewWebContents(this, tc);
   return tc;
@@ -4693,9 +4695,6 @@ void WebContentsImpl::RenderViewTerminated(RenderViewHost* rvh,
 
   // Cancel any visible dialogs so they are not left dangling over the sad tab.
   CancelActiveAndPendingDialogs();
-
-  if (delegate_)
-    delegate_->HideValidationMessage(this);
 
   audio_stream_monitor_.RenderProcessGone(rvh->GetProcess()->GetID());
 

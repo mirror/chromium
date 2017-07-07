@@ -4,6 +4,8 @@
 
 #import "ios/chrome/browser/ui/main/browser_view_wrangler.h"
 
+#include "base/mac/objc_property_releaser.h"
+#import "base/mac/scoped_nsobject.h"
 #include "base/strings/sys_string_conversions.h"
 #include "ios/chrome/browser/application_context.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
@@ -22,19 +24,17 @@
 #import "ios/chrome/browser/ui/browser_view_controller_dependency_factory.h"
 #include "ios/public/provider/chrome/browser/chrome_browser_provider.h"
 
-#if !defined(__has_feature) || !__has_feature(objc_arc)
-#error "This file requires ARC support."
-#endif
-
 @interface BrowserViewWrangler ()<TabModelObserver> {
   ios::ChromeBrowserState* _browserState;
   __unsafe_unretained id<TabModelObserver> _tabModelObserver;
   BOOL _isShutdown;
+
+  base::mac::ObjCPropertyReleaser _propertyReleaser_BrowserViewWrangler;
 }
 
 // Responsible for maintaining all state related to sharing to other devices.
 // Redeclared readwrite from the readonly declaration in the Testing interface.
-@property(nonatomic, strong, readwrite)
+@property(nonatomic, retain, readwrite)
     DeviceSharingManager* deviceSharingManager;
 
 // Creates a new autoreleased tab model for |browserState|; if |empty| is NO,
@@ -69,6 +69,8 @@
 - (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState
                     tabModelObserver:(id<TabModelObserver>)tabModelObserver {
   if ((self = [super init])) {
+    _propertyReleaser_BrowserViewWrangler.Init(self,
+                                               [BrowserViewWrangler class]);
     _browserState = browserState;
     _tabModelObserver = tabModelObserver;
   }
@@ -82,6 +84,7 @@
 
 - (void)dealloc {
   DCHECK(_isShutdown) << "-shutdown must be called before -dealloc";
+  [super dealloc];
 }
 
 #pragma mark - BrowserViewInformation property implementations
@@ -105,9 +108,10 @@
   if (_mainBVC) {
     [_mainBVC browserStateDestroyed];
     [_mainBVC shutdown];
+    [_mainBVC autorelease];
   }
 
-  _mainBVC = mainBVC;
+  _mainBVC = [mainBVC retain];
 }
 
 - (TabModel*)mainTabModel {
@@ -131,9 +135,10 @@
       [_mainTabModel removeObserver:_tabModelObserver];
     }
     [_mainTabModel removeObserver:self];
+    [_mainTabModel autorelease];
   }
 
-  _mainTabModel = mainTabModel;
+  _mainTabModel = [mainTabModel retain];
 }
 
 - (BrowserViewController*)otrBVC {
@@ -158,9 +163,10 @@
   if (_otrBVC) {
     [_otrBVC browserStateDestroyed];
     [_otrBVC shutdown];
+    [_otrBVC autorelease];
   }
 
-  _otrBVC = otrBVC;
+  _otrBVC = [otrBVC retain];
 }
 
 - (TabModel*)otrTabModel {
@@ -180,9 +186,10 @@
       [_otrTabModel removeObserver:_tabModelObserver];
     }
     [_otrTabModel removeObserver:self];
+    [_otrTabModel autorelease];
   }
 
-  _otrTabModel = otrTabModel;
+  _otrTabModel = [otrTabModel retain];
 }
 
 - (void)setCurrentBVC:(BrowserViewController*)bvc
@@ -252,7 +259,8 @@
 
 - (void)updateDeviceSharingManager {
   if (!self.deviceSharingManager) {
-    self.deviceSharingManager = [[DeviceSharingManager alloc] init];
+    self.deviceSharingManager =
+        [[[DeviceSharingManager alloc] init] autorelease];
   }
   [self.deviceSharingManager updateBrowserState:_browserState];
 
@@ -367,9 +375,9 @@
 
   // Create tab model from saved session (nil is ok).
   TabModel* tabModel =
-      [[TabModel alloc] initWithSessionWindow:sessionWindow
-                               sessionService:[SessionServiceIOS sharedService]
-                                 browserState:browserState];
+      [[[TabModel alloc] initWithSessionWindow:sessionWindow
+                                sessionService:[SessionServiceIOS sharedService]
+                                  browserState:browserState] autorelease];
   // Add observers.
   if (_tabModelObserver) {
     [tabModel addObserver:_tabModelObserver];
@@ -383,12 +391,12 @@
 - (BrowserViewController*)bvcForBrowserState:
                               (ios::ChromeBrowserState*)browserState
                                     tabModel:(TabModel*)tabModel {
-  BrowserViewControllerDependencyFactory* factory =
+  base::scoped_nsobject<BrowserViewControllerDependencyFactory> factory(
       [[BrowserViewControllerDependencyFactory alloc]
-          initWithBrowserState:browserState];
-  return [[BrowserViewController alloc] initWithTabModel:tabModel
-                                            browserState:browserState
-                                       dependencyFactory:factory];
+          initWithBrowserState:browserState]);
+  return [[[BrowserViewController alloc] initWithTabModel:tabModel
+                                             browserState:browserState
+                                        dependencyFactory:factory] autorelease];
 }
 
 @end

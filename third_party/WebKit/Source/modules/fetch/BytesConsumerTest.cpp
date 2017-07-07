@@ -73,7 +73,7 @@ class FakeBlobBytesConsumer : public BytesConsumer {
         blob_handle_->size() == UINT64_MAX)
       return nullptr;
     state_ = PublicState::kClosed;
-    return std::move(blob_handle_);
+    return blob_handle_.Release();
   }
 
   void SetClient(Client*) override {}

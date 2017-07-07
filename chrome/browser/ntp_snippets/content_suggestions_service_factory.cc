@@ -46,7 +46,6 @@
 #include "components/ntp_snippets/features.h"
 #include "components/ntp_snippets/ntp_snippets_constants.h"
 #include "components/ntp_snippets/remote/persistent_scheduler.h"
-#include "components/ntp_snippets/remote/prefetched_pages_tracker.h"
 #include "components/ntp_snippets/remote/remote_suggestions_database.h"
 #include "components/ntp_snippets/remote/remote_suggestions_fetcher_impl.h"
 #include "components/ntp_snippets/remote/remote_suggestions_provider_impl.h"
@@ -84,7 +83,6 @@
 #include "chrome/browser/android/offline_pages/request_coordinator_factory.h"
 #include "chrome/browser/offline_pages/prefetch/prefetch_service_factory.h"
 #include "components/ntp_snippets/offline_pages/recent_tab_suggestions_provider.h"
-#include "components/ntp_snippets/remote/prefetched_pages_tracker_impl.h"
 #include "components/offline_pages/core/background/request_coordinator.h"
 #include "components/offline_pages/core/offline_page_feature.h"
 #include "components/offline_pages/core/offline_page_model.h"
@@ -107,7 +105,6 @@ using ntp_snippets::GetFetchEndpoint;
 using ntp_snippets::GetPushUpdatesSubscriptionEndpoint;
 using ntp_snippets::GetPushUpdatesUnsubscriptionEndpoint;
 using ntp_snippets::PersistentScheduler;
-using ntp_snippets::PrefetchedPagesTracker;
 using ntp_snippets::RemoteSuggestionsDatabase;
 using ntp_snippets::RemoteSuggestionsFetcherImpl;
 using ntp_snippets::RemoteSuggestionsProviderImpl;
@@ -127,11 +124,10 @@ using physical_web::PhysicalWebDataSource;
 #endif  // OS_ANDROID
 
 #if BUILDFLAG(ENABLE_OFFLINE_PAGES)
-using ntp_snippets::PrefetchedPagesTrackerImpl;
 using ntp_snippets::RecentTabSuggestionsProvider;
 using offline_pages::OfflinePageModel;
-using offline_pages::OfflinePageModelFactory;
 using offline_pages::RequestCoordinator;
+using offline_pages::OfflinePageModelFactory;
 using offline_pages::RequestCoordinatorFactory;
 #endif  // BUILDFLAG(ENABLE_OFFLINE_PAGES)
 
@@ -302,8 +298,7 @@ bool IsArticleProviderEnabled() {
 void RegisterArticleProviderIfEnabled(ContentSuggestionsService* service,
                                       Profile* profile,
                                       SigninManagerBase* signin_manager,
-                                      UserClassifier* user_classifier,
-                                      OfflinePageModel* offline_page_model) {
+                                      UserClassifier* user_classifier) {
   if (!IsArticleProviderEnabled()) {
     return;
   }
@@ -342,11 +337,6 @@ void RegisterArticleProviderIfEnabled(ContentSuggestionsService* service,
           chrome::android::kContentSuggestionsSettings)) {
     additional_toggle_pref = prefs::kSearchSuggestEnabled;
   }
-  std::unique_ptr<PrefetchedPagesTracker> prefetched_pages_tracker;
-#if BUILDFLAG(ENABLE_OFFLINE_PAGES)
-  prefetched_pages_tracker =
-      base::MakeUnique<PrefetchedPagesTrackerImpl>(offline_page_model);
-#endif  // BUILDFLAG(ENABLE_OFFLINE_PAGES)
   auto suggestions_fetcher = base::MakeUnique<RemoteSuggestionsFetcherImpl>(
       signin_manager, token_service, request_context, pref_service,
       language_model, base::Bind(&safe_json::SafeJsonParser::Parse),
@@ -359,8 +349,7 @@ void RegisterArticleProviderIfEnabled(ContentSuggestionsService* service,
                                          request_context.get()),
       base::MakeUnique<RemoteSuggestionsDatabase>(database_dir, task_runner),
       base::MakeUnique<RemoteSuggestionsStatusService>(
-          signin_manager, pref_service, additional_toggle_pref),
-      std::move(prefetched_pages_tracker));
+          signin_manager, pref_service, additional_toggle_pref));
 
   service->remote_suggestions_scheduler()->SetProvider(provider.get());
   service->set_remote_suggestions_provider(provider.get());
@@ -426,6 +415,7 @@ void SubscribeForGCMPushUpdates(PrefService* pref_service,
   auto provider = base::MakeUnique<BreakingNewsSuggestionsProvider>(
       service, std::move(handler), base::MakeUnique<base::DefaultClock>(),
       base::MakeUnique<RemoteSuggestionsDatabase>(database_dir, task_runner));
+  provider->Start();
   service->RegisterProvider(std::move(provider));
 }
 
@@ -520,7 +510,7 @@ KeyedService* ContentSuggestionsServiceFactory::BuildServiceInstanceFor(
       std::move(scheduler));
 
   RegisterArticleProviderIfEnabled(service, profile, signin_manager,
-                                   user_classifier_raw, offline_page_model);
+                                   user_classifier_raw);
   RegisterBookmarkProviderIfEnabled(service, profile);
   RegisterForeignSessionsProviderIfEnabled(service, profile);
 
@@ -534,7 +524,8 @@ KeyedService* ContentSuggestionsServiceFactory::BuildServiceInstanceFor(
   RegisterPrefetchingObserver(service, profile);
 #endif
 
-  if (base::FeatureList::IsEnabled(ntp_snippets::kBreakingNewsPushFeature)) {
+  if (base::FeatureList::IsEnabled(
+          ntp_snippets::kContentSuggestionsPushFeature)) {
     SubscribeForGCMPushUpdates(pref_service, service, profile);
   }
   return service;

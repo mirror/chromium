@@ -11,11 +11,6 @@
 #include "base/macros.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
 
-namespace ukm {
-class MojoUkmRecorder;
-class UkmEntryBuilder;
-}  // namespace ukm
-
 namespace service_manager {
 class ServiceContextRefFactory;
 }  // service_manager
@@ -34,10 +29,6 @@ class CoordinationUnitManager {
   CoordinationUnitManager();
   ~CoordinationUnitManager();
 
-  void set_ukm_recorder(ukm::MojoUkmRecorder* ukm_recorder) {
-    ukm_recorder_ = ukm_recorder;
-  }
-
   void OnStart(service_manager::BinderRegistry* registry,
                service_manager::ServiceContextRefFactory* service_ref_factory);
   void RegisterObserver(
@@ -46,9 +37,6 @@ class CoordinationUnitManager {
   void OnCoordinationUnitWillBeDestroyed(
       CoordinationUnitImpl* coordination_unit);
 
-  std::unique_ptr<ukm::UkmEntryBuilder> CreateUkmEntryBuilder(
-      const char* event_name);
-
   std::vector<std::unique_ptr<CoordinationUnitGraphObserver>>&
   observers_for_testing() {
     return observers_;
@@ -56,7 +44,6 @@ class CoordinationUnitManager {
 
  private:
   std::vector<std::unique_ptr<CoordinationUnitGraphObserver>> observers_;
-  ukm::MojoUkmRecorder* ukm_recorder_ = nullptr;
 
   static void Create(
       service_manager::ServiceContextRefFactory* service_ref_factory);

@@ -3,15 +3,16 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-"""Certificate chain where the intermediate lacks a basic constraints
-extension (yet is used to issue another certificate)."""
+"""Certificate chain with 1 intermediate and a trusted root. The intermediate
+lacks the basic constraints extension, and hence is expected to fail validation
+(RFC 5280 requires v3 signing certificates have a BasicConstaints)."""
 
 import sys
 sys.path += ['..']
 
 import common
 
-# Self-signed root certificate.
+# Self-signed root certificate (used as trust anchor).
 root = common.create_self_signed_root_certificate('Root')
 
 # Intermediate that lacks basic constraints.

@@ -62,8 +62,10 @@ class WebFrameWidgetImpl;
 using WebFrameWidgetsSet =
     PersistentHeapHashSet<WeakMember<WebFrameWidgetImpl>>;
 
-class WebFrameWidgetImpl final : public WebFrameWidgetBase,
-                                 public PageWidgetEventHandler {
+class WebFrameWidgetImpl final
+    : public GarbageCollectedFinalized<WebFrameWidgetImpl>,
+      public WebFrameWidgetBase,
+      public PageWidgetEventHandler {
  public:
   static WebFrameWidgetImpl* Create(WebWidgetClient*, WebLocalFrame*);
 
@@ -107,7 +109,6 @@ class WebFrameWidgetImpl final : public WebFrameWidgetBase,
   void WillCloseLayerTreeView() override;
   bool GetCompositionCharacterBounds(WebVector<WebRect>& bounds) override;
   void SetRemoteViewportIntersection(const WebRect&) override;
-  void SetIsInert(bool) override;
 
   // WebFrameWidget implementation.
   WebLocalFrameBase* LocalRoot() const override { return local_root_; }

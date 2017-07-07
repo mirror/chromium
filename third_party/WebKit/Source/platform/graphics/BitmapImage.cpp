@@ -56,7 +56,7 @@ PassRefPtr<BitmapImage> BitmapImage::CreateWithOrientationForTesting(
   result->frames_[0].orientation_ = orientation;
   if (orientation.UsesWidthAsHeight())
     result->size_respecting_orientation_ = result->size_.TransposedSize();
-  return result;
+  return result.Release();
 }
 
 BitmapImage::BitmapImage(ImageObserver* observer, bool is_multipart)

@@ -8,20 +8,21 @@ cr.define('accessibility', function() {
   // Note: keep these values in sync with the values in
   // content/common/accessibility_mode_enums.h
   const AccessibilityMode = {
+    kOff: 0,
     kNativeAPIs: 1 << 0,
     kWebContents: 1 << 1,
     kInlineTextBoxes: 1 << 2,
     kScreenReader: 1 << 3,
     kHTML: 1 << 4,
 
-    get kAccessibilityModeWebContentsOnly() {
-      return AccessibilityMode.kWebContents |
+    get kComplete() {
+      return AccessibilityMode.kNativeAPIs | AccessibilityMode.kWebContents |
         AccessibilityMode.kInlineTextBoxes | AccessibilityMode.kScreenReader |
         AccessibilityMode.kHTML;
     },
 
-    get kAccessibilityModeComplete() {
-      return AccessibilityMode.kNativeAPIs | AccessibilityMode.kWebContents |
+    get kWebContentsOnly() {
+      return AccessibilityMode.kWebContents |
         AccessibilityMode.kInlineTextBoxes | AccessibilityMode.kScreenReader |
         AccessibilityMode.kHTML;
     }

@@ -325,8 +325,8 @@ ShellContentBrowserClient::CreateQuotaPermissionContext() {
 void ShellContentBrowserClient::GetQuotaSettings(
     BrowserContext* context,
     StoragePartition* partition,
-    storage::OptionalQuotaSettingsCallback callback) {
-  std::move(callback).Run(storage::GetHardCodedSettings(100 * 1024 * 1024));
+    const storage::OptionalQuotaSettingsCallback& callback) {
+  callback.Run(storage::GetHardCodedSettings(100 * 1024 * 1024));
 }
 
 void ShellContentBrowserClient::SelectClientCertificate(

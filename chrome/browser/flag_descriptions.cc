@@ -2486,12 +2486,6 @@ const char kEnableExpandedAutofillCreditCardPopupLayoutDescription[] =
 
 #endif  // defined(OS_ANDROID)
 
-const char kEnableAutofillCreditCardBankNameDisplayName[] =
-    "Display the issuer bank name of a credit card in autofill.";
-
-const char kEnableAutofillCreditCardBankNameDisplayDescription[] =
-    "If enabled, displays the issuer bank name of a credit card in autofill.";
-
 const char kEnableAutofillCreditCardLastUsedDateDisplayName[] =
     "Display the last used date of a credit card in autofill.";
 
@@ -2519,12 +2513,6 @@ const char kGoogleBrandedContextMenuDescription[] =
 const char kEnableWebUsbName[] = "WebUSB";
 
 const char kEnableWebUsbDescription[] = "Enable WebUSB support.";
-
-const char kEnableImageCaptureAPIName[] = "Image Capture API";
-
-const char kEnableImageCaptureAPIDescription[] =
-    "Enables the Web Platform Image Capture API: takePhoto(), "
-    "getPhotoCapabilities(), etc.";
 
 const char kEnableGenericSensorName[] = "Generic Sensor";
 

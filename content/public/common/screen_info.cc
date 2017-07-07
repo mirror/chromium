@@ -12,9 +12,11 @@ ScreenInfo::~ScreenInfo() = default;
 
 bool ScreenInfo::operator==(const ScreenInfo& other) const {
   return device_scale_factor == other.device_scale_factor &&
-         color_space == other.color_space && depth == other.depth &&
+         icc_profile == other.icc_profile &&
+         depth == other.depth &&
          depth_per_component == other.depth_per_component &&
-         is_monochrome == other.is_monochrome && rect == other.rect &&
+         is_monochrome == other.is_monochrome &&
+         rect == other.rect &&
          available_rect == other.available_rect &&
          orientation_type == other.orientation_type &&
          orientation_angle == other.orientation_angle;

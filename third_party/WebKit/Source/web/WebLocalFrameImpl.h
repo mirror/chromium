@@ -325,8 +325,6 @@ class WEB_EXPORT WebLocalFrameImpl final
                             WebString& clip_text,
                             WebString& clip_html) override;
 
-  void AdvanceFocusInForm(WebFocusType) override;
-
   void InitializeCoreFrame(Page&,
                            FrameOwner*,
                            const AtomicString& name) override;
@@ -487,7 +485,7 @@ class WEB_EXPORT WebLocalFrameImpl final
 
   // This is set if the frame is the root of a local frame tree, and requires a
   // widget for layout.
-  Member<WebFrameWidgetBase> frame_widget_;
+  WebFrameWidgetBase* frame_widget_;
 
   WebFrameClient* client_;
   WebAutofillClient* autofill_client_;

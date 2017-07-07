@@ -91,7 +91,7 @@ bool LazySchedulerMessageLoopDelegateForTests::RunsTasksInCurrentSequence()
 }
 
 bool LazySchedulerMessageLoopDelegateForTests::IsNested() const {
-  DCHECK(RunsTasksInCurrentSequence());
+  DCHECK(RunsTasksOnCurrentThread());
   EnsureMessageLoop();
   return base::RunLoop::IsNestedOnCurrentThread();
 }

@@ -143,7 +143,7 @@ class CORE_EXPORT ContainerNode : public Node {
 
   void CloneChildNodes(ContainerNode* clone);
 
-  void AttachLayoutTree(AttachContext&) override;
+  void AttachLayoutTree(const AttachContext& = AttachContext()) override;
   void DetachLayoutTree(const AttachContext& = AttachContext()) override;
   LayoutRect BoundingBox() const final;
   void SetFocused(bool, WebFocusType) override;

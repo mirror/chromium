@@ -120,7 +120,6 @@ class DownloadServiceControllerImplTest : public testing::Test {
     auto driver = base::MakeUnique<test::TestDownloadDriver>();
     auto store = base::MakeUnique<test::TestStore>();
     config_ = base::MakeUnique<Configuration>();
-    config_->max_retry_count = 2;
     config_->file_keep_alive_time = base::TimeDelta::FromMinutes(10);
     config_->file_cleanup_window = base::TimeDelta::FromMinutes(5);
     config_->max_concurrent_downloads = 5;
@@ -423,18 +422,17 @@ TEST_F(DownloadServiceControllerImplTest,
 TEST_F(DownloadServiceControllerImplTest, AddDownloadFailsWithDuplicateCall) {
   testing::InSequence sequence;
 
+  EXPECT_CALL(*client_, OnServiceInitialized(_)).Times(1);
   EXPECT_CALL(*scheduler_, Next(_, _)).Times(1);
   EXPECT_CALL(*scheduler_, Reschedule(_)).Times(1);
-  EXPECT_CALL(*client_, OnServiceInitialized(_)).Times(1);
+  EXPECT_CALL(*scheduler_, Next(_, _)).Times(1);
+  EXPECT_CALL(*scheduler_, Reschedule(_)).Times(1);
 
   // Set up the Controller.
   controller_->Initialize();
   store_->TriggerInit(true, base::MakeUnique<std::vector<Entry>>());
   driver_->MakeReady();
   task_runner_->RunUntilIdle();
-
-  EXPECT_CALL(*scheduler_, Next(_, _)).Times(1);
-  EXPECT_CALL(*scheduler_, Reschedule(_)).Times(1);
 
   // Trigger the download twice.
   DownloadParams params = MakeDownloadParams();
@@ -659,51 +657,8 @@ TEST_F(DownloadServiceControllerImplTest, OnDownloadFailed) {
   DriverEntry driver_entry;
   driver_entry.guid = entry.guid;
 
-  driver_->NotifyDownloadFailed(driver_entry, FailureType::NOT_RECOVERABLE);
+  driver_->NotifyDownloadFailed(driver_entry, 1);
   EXPECT_EQ(nullptr, model_->Get(entry.guid));
-
-  task_runner_->RunUntilIdle();
-}
-
-TEST_F(DownloadServiceControllerImplTest, RetryOnFailure) {
-  Entry entry1 = test::BuildBasicEntry(Entry::State::ACTIVE);
-  Entry entry2 = test::BuildBasicEntry(Entry::State::ACTIVE);
-  std::vector<Entry> entries = {entry1, entry2};
-
-  DriverEntry dentry1 =
-      BuildDriverEntry(entry1, DriverEntry::State::INTERRUPTED);
-  DriverEntry dentry2 =
-      BuildDriverEntry(entry2, DriverEntry::State::INTERRUPTED);
-  std::vector<DriverEntry> dentries = {dentry1, dentry2};
-
-  EXPECT_CALL(*client_, OnServiceInitialized(_)).Times(1);
-
-  // Set up the Controller.
-  device_status_listener_->SetDeviceStatus(
-      DeviceStatus(BatteryStatus::CHARGING, NetworkStatus::UNMETERED));
-
-  driver_->AddTestData(dentries);
-  controller_->Initialize();
-  store_->TriggerInit(true, base::MakeUnique<std::vector<Entry>>(entries));
-  driver_->MakeReady();
-  task_runner_->RunUntilIdle();
-
-  // Test retry on failure.
-  config_->max_retry_count = 4;
-  EXPECT_CALL(*client_, OnDownloadSucceeded(entry1.guid, _, _)).Times(1);
-  base::FilePath path = base::FilePath::FromUTF8Unsafe("123");
-  driver_->NotifyDownloadFailed(dentry1, FailureType::RECOVERABLE);
-  driver_->NotifyDownloadFailed(dentry1, FailureType::RECOVERABLE);
-  driver_->NotifyDownloadSucceeded(dentry1);
-
-  EXPECT_CALL(*client_,
-              OnDownloadFailed(entry2.guid, Client::FailureReason::NETWORK))
-      .Times(1);
-  driver_->NotifyDownloadFailed(dentry2, FailureType::RECOVERABLE);
-  driver_->NotifyDownloadFailed(dentry2, FailureType::RECOVERABLE);
-  driver_->NotifyDownloadFailed(dentry2, FailureType::RECOVERABLE);
-  driver_->NotifyDownloadFailed(dentry2, FailureType::RECOVERABLE);
-  EXPECT_EQ(nullptr, model_->Get(entry2.guid));
 
   task_runner_->RunUntilIdle();
 }
@@ -844,7 +799,7 @@ TEST_F(DownloadServiceControllerImplTest, DownloadCompletionTest) {
   EXPECT_CALL(*client_,
               OnDownloadFailed(entry3.guid, Client::FailureReason::NETWORK))
       .Times(1);
-  driver_->NotifyDownloadFailed(dentry3, FailureType::NOT_RECOVERABLE);
+  driver_->NotifyDownloadFailed(dentry3, 1);
 
   task_runner_->RunUntilIdle();
 }
@@ -1112,7 +1067,7 @@ TEST_F(DownloadServiceControllerImplTest, NewExternalDownload) {
 
   // Simulate a failed external download.
   dentry2.state = DriverEntry::State::INTERRUPTED;
-  driver_->NotifyDownloadFailed(dentry2, FailureType::RECOVERABLE);
+  driver_->NotifyDownloadFailed(dentry2, 1);
 
   EXPECT_FALSE(driver_->Find(entry1.guid).value().paused);
   EXPECT_FALSE(driver_->Find(entry2.guid).value().paused);

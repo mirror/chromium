@@ -16,8 +16,7 @@
 // The view controller this coordinator creates and manages.
 // (This is only public while the view controller architecture is being
 // refactored).
-@property(nonatomic, weak, readonly, nullable)
-    MainViewController* mainViewController;
+@property(nonatomic, readonly, nullable) MainViewController* mainViewController;
 
 @end
 

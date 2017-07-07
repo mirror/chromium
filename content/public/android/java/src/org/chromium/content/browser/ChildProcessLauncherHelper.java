@@ -21,7 +21,6 @@ import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.base.annotations.SuppressFBWarnings;
 import org.chromium.base.library_loader.Linker;
-import org.chromium.base.process_launcher.ChildProcessConstants;
 import org.chromium.base.process_launcher.ChildProcessCreationParams;
 import org.chromium.base.process_launcher.FileDescriptorInfo;
 import org.chromium.content.app.ChromiumLinkerParams;
@@ -54,7 +53,7 @@ public class ChildProcessLauncherHelper {
     // Represents an invalid process handle; same as base/process/process.h kNullProcessHandle.
     private static final int NULL_PROCESS_HANDLE = 0;
 
-    // Delay between the call to freeConnection and the connection actually beeing freed.
+    // Delay between the call to freeConnection and the connection actually beeing   freed.
     private static final long FREE_CONNECTION_DELAY_MILLIS = 1;
 
     // Factory used by the SpareConnection to create the actual ChildProcessConnection.
@@ -296,8 +295,7 @@ public class ChildProcessLauncherHelper {
     static ChildConnectionAllocator getConnectionAllocator(
             Context context, ChildProcessCreationParams creationParams, boolean sandboxed) {
         assert LauncherThread.runningOnLauncherThread();
-        final String packageName =
-                getPackageNameFromCreationParams(context, creationParams, sandboxed);
+        String packageName = getPackageNameFromCreationParams(context, creationParams, sandboxed);
         boolean bindAsExternalService =
                 isServiceExternalFromCreationParams(creationParams, sandboxed);
 
@@ -334,21 +332,6 @@ public class ChildProcessLauncherHelper {
                         sSandboxedServiceFactoryForTesting);
             }
             sSandboxedChildConnectionAllocatorMap.put(packageName, connectionAllocator);
-            final ChildConnectionAllocator finalConnectionAllocator = connectionAllocator;
-            // Tracks connections removal so the allocator can be freed when no longer used.
-            connectionAllocator.addListener(new ChildConnectionAllocator.Listener() {
-                @Override
-                public void onConnectionFreed(
-                        ChildConnectionAllocator allocator, ChildProcessConnection connection) {
-                    assert allocator == finalConnectionAllocator;
-                    if (!allocator.anyConnectionAllocated()) {
-                        allocator.removeListener(this);
-                        ChildConnectionAllocator removedAllocator =
-                                sSandboxedChildConnectionAllocatorMap.remove(packageName);
-                        assert removedAllocator == allocator;
-                    }
-                }
-            });
         }
         return sSandboxedChildConnectionAllocatorMap.get(packageName);
     }
@@ -365,21 +348,15 @@ public class ChildProcessLauncherHelper {
                     @Override
                     public void onChildProcessDied(ChildProcessConnection connection) {
                         assert LauncherThread.runningOnLauncherThread();
-
+                        if (connection.getPid() != 0) {
+                            stop(connection.getPid());
+                        } else {
+                            freeConnection(connectionAllocator, connection);
+                        }
                         // Forward the call to the provided callback if any. The spare connection
                         // uses that for clean-up.
                         if (deathCallback != null) {
                             deathCallback.onChildProcessDied(connection);
-                        }
-                        // TODO(jcivelli): make SparedChildConnection use an allocator instead of
-                        // calling this method, so it does not have to be static and we can retrieve
-                        // the launcher directly.
-                        int pid = connection.getPid();
-                        if (pid != 0) {
-                            // If the PID has not been set the connection has not been connected yet
-                            // and we don't need to notify the process stopped.
-                            ChildProcessLauncherHelper launcher = getLauncherForPid(pid);
-                            launcher.onChildProcessStopped();
                         }
                     }
                 };
@@ -521,7 +498,31 @@ public class ChildProcessLauncherHelper {
         mConnection.setupConnection(connectionBundle, getIBinderCallback(), connectionCallback);
     }
 
-    private void onChildProcessStarted() {
+    private static void freeConnection(final ChildConnectionAllocator connectionAllocator,
+            final ChildProcessConnection connection) {
+        assert LauncherThread.runningOnLauncherThread();
+
+        // Freeing a service should be delayed. This is so that we avoid immediately reusing the
+        // freed service (see http://crbug.com/164069): the framework might keep a service process
+        // alive when it's been unbound for a short time. If a new connection to the same service
+        // is bound at that point, the process is reused and bad things happen (mostly static
+        // variables are set when we don't expect them to).
+        LauncherThread.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                assert connectionAllocator != null;
+                connectionAllocator.free(connection);
+                String packageName = connectionAllocator.getPackageName();
+                if (!connectionAllocator.anyConnectionAllocated()
+                        && sSandboxedChildConnectionAllocatorMap.get(packageName)
+                                == connectionAllocator) {
+                    sSandboxedChildConnectionAllocatorMap.remove(packageName);
+                }
+            }
+        }, FREE_CONNECTION_DELAY_MILLIS);
+    }
+
+    public void onChildProcessStarted() {
         assert LauncherThread.runningOnLauncherThread();
 
         int pid = mConnection.getPid();
@@ -546,12 +547,6 @@ public class ChildProcessLauncherHelper {
             nativeOnChildProcessStarted(mNativeChildProcessLauncherHelper, getPid());
         }
         mNativeChildProcessLauncherHelper = 0;
-    }
-
-    private void onChildProcessStopped() {
-        assert LauncherThread.runningOnLauncherThread();
-        onConnectionLost(mConnection, getPid());
-        sLauncherByPid.remove(getPid());
     }
 
     public int getPid() {
@@ -585,11 +580,14 @@ public class ChildProcessLauncherHelper {
     static void stop(int pid) {
         assert LauncherThread.runningOnLauncherThread();
         Log.d(TAG, "stopping child connection: pid=%d", pid);
-        ChildProcessLauncherHelper launcher = sLauncherByPid.get(pid);
-        // Launcher can be null for single process.
-        if (launcher != null) {
-            launcher.mConnection.stop();
+        ChildProcessLauncherHelper launcher = sLauncherByPid.remove(pid);
+        if (launcher == null) {
+            // Can happen for single process.
+            return;
         }
+        launcher.onConnectionLost(launcher.mConnection, pid);
+        launcher.mConnection.stop();
+        freeConnection(launcher.mConnectionAllocator, launcher.mConnection);
     }
 
     @CalledByNative
@@ -662,8 +660,8 @@ public class ChildProcessLauncherHelper {
         initLinker();
         Bundle bundle = new Bundle();
         bundle.putBoolean(ChildProcessConstants.EXTRA_BIND_TO_CALLER, bindToCallerCheck);
-        bundle.putParcelable(ContentChildProcessConstants.EXTRA_LINKER_PARAMS,
-                getLinkerParamsForNewConnection());
+        bundle.putParcelable(
+                ChildProcessConstants.EXTRA_LINKER_PARAMS, getLinkerParamsForNewConnection());
         return bundle;
     }
 
@@ -690,10 +688,8 @@ public class ChildProcessLauncherHelper {
         }
 
         // Popuplate the bundle passed to the service setup call with content specific parameters.
-        connectionBundle.putInt(
-                ContentChildProcessConstants.EXTRA_CPU_COUNT, CpuFeatures.getCount());
-        connectionBundle.putLong(
-                ContentChildProcessConstants.EXTRA_CPU_FEATURES, CpuFeatures.getMask());
+        connectionBundle.putInt(ChildProcessConstants.EXTRA_CPU_COUNT, CpuFeatures.getCount());
+        connectionBundle.putLong(ChildProcessConstants.EXTRA_CPU_FEATURES, CpuFeatures.getMask());
         connectionBundle.putBundle(
                 Linker.EXTRA_LINKER_SHARED_RELROS, Linker.getInstance().getSharedRelros());
     }
