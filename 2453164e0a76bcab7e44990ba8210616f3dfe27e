@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21f1de32_51847b9d",
+        "filename": "gpu/ipc/service/gpu_init.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1161469
+      },
+      "writtenOn": "2017-07-07T16:59:36Z",
+      "side": 1,
+      "message": "I think this would be more useful if we did something like what\u0027s done for OS_WIN in CollectGraphics - see if we successfully enabled the DRM cap instead of just reporting whether the flag was on the command line.",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 90,
+        "endChar": 57
+      },
+      "revId": "2453164e0a76bcab7e44990ba8210616f3dfe27e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
