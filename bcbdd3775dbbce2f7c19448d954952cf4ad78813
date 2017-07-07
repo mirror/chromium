@@ -22,6 +22,30 @@
       "revId": "bcbdd3775dbbce2f7c19448d954952cf4ad78813",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "118ed816_1dca694c",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-07-07T16:24:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b79aa216_a349b537",
+      "range": {
+        "startLine": 303,
+        "startChar": 49,
+        "endLine": 303,
+        "endChar": 54
+      },
+      "revId": "bcbdd3775dbbce2f7c19448d954952cf4ad78813",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
