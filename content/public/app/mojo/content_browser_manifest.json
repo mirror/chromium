@@ -84,7 +84,7 @@
           "face_detection",
           "text_detection"
         ],
-        "resource_coordinator": [ "coordination_unit", "service_callbacks" ],
+        "resource_coordinator": [ "coordination_unit" ],
         "video_capture": [ "capture", "tests" ]
       }
     },
