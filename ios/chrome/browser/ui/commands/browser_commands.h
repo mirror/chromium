@@ -18,11 +18,17 @@
 // Navigates forwards in the current tab's history.
 - (void)goForward;
 
-// Stops loading the current web page.
+// Stop loading the current web page.
 - (void)stopLoading;
 
-// Reloads the current web page
+// Reload the current web page
 - (void)reload;
+
+// Show the share sheet for the current page.
+- (void)sharePage;
+
+// Bookmark the current page.
+- (void)bookmarkPage;
 
 @end
 
