@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "024321a8_b5490a84",
+        "filename": "components/cronet/ios/DEPS",
+        "patchSetId": 16
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-07-07T16:49:33Z",
+      "side": 1,
+      "message": "Cronet depends on //ios/web:user_agent.\nWould it make sense to move that into ios/web/public?",
+      "range": {
+        "startLine": 3,
+        "startChar": 8,
+        "endLine": 3,
+        "endChar": 11
+      },
+      "revId": "294dd97eff7cfebd0f6c3024a86e795070f71ca2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
