@@ -680,6 +680,9 @@ void FormStructure::UpdateFromCache(const FormStructure& cached_form,
 
   UpdateAutofillCount();
 
+  // Update form parsed timestamp
+  set_form_parsed_timestamp(cached_form.form_parsed_timestamp());
+
   // The form signature should match between query and upload requests to the
   // server. On many websites, form elements are dynamically added, removed, or
   // rearranged via JavaScript between page load and form submission, so we
@@ -718,15 +721,18 @@ void FormStructure::LogQualityMetrics(
           AutofillMetrics::USER_DID_ENTER_UPI_VPA);
     }
 
-    form_interactions_ukm_logger->LogFieldFillStatus(*this, *field,
-                                                     metric_type);
+    form_interactions_ukm_logger->LogFieldFillStatus(
+        *this, *field, form_parsed_timestamp_, metric_type);
 
     AutofillMetrics::LogHeuristicPredictionQualityMetrics(
-        form_interactions_ukm_logger, *this, *field, metric_type);
+        form_interactions_ukm_logger, *this, *field, metric_type,
+        form_parsed_timestamp_);
     AutofillMetrics::LogServerPredictionQualityMetrics(
-        form_interactions_ukm_logger, *this, *field, metric_type);
+        form_interactions_ukm_logger, *this, *field, metric_type,
+        form_parsed_timestamp_);
     AutofillMetrics::LogOverallPredictionQualityMetrics(
-        form_interactions_ukm_logger, *this, *field, metric_type);
+        form_interactions_ukm_logger, *this, *field, metric_type,
+        form_parsed_timestamp_);
     // We count fields that were autofilled but later modified, regardless of
     // whether the data now in the field is recognized.
     if (field->previously_autofilled())
@@ -803,7 +809,7 @@ void FormStructure::LogQualityMetrics(
     if (form_interactions_ukm_logger->url() != source_url())
       form_interactions_ukm_logger->UpdateSourceURL(source_url());
     AutofillMetrics::LogAutofillFormSubmittedState(
-        state, form_interactions_ukm_logger);
+        state, form_parsed_timestamp_, form_interactions_ukm_logger);
   }
 }
 
@@ -816,9 +822,11 @@ void FormStructure::LogQualityMetricsBasedOnAutocomplete(
     if (field->html_type() != HTML_TYPE_UNSPECIFIED &&
         field->html_type() != HTML_TYPE_UNRECOGNIZED) {
       AutofillMetrics::LogHeuristicPredictionQualityMetrics(
-          form_interactions_ukm_logger, *this, *field, metric_type);
+          form_interactions_ukm_logger, *this, *field, metric_type,
+          form_parsed_timestamp_);
       AutofillMetrics::LogServerPredictionQualityMetrics(
-          form_interactions_ukm_logger, *this, *field, metric_type);
+          form_interactions_ukm_logger, *this, *field, metric_type,
+          form_parsed_timestamp_);
     }
   }
 }
