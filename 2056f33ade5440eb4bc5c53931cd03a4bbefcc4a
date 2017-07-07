@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "2fc2c640_5406a0fb",
+        "filename": "media/base/scoped_callback_runner.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-07T07:20:56Z",
+      "side": 1,
+      "message": "DispatchToCallbackImpl() is removed per your suggestion. Do I still need base::internal::Unwrap() somewhere?",
+      "parentUuid": "6d002ed1_6d5cc00d",
+      "range": {
+        "startLine": 35,
+        "startChar": 6,
+        "endLine": 35,
+        "endChar": 15
+      },
+      "revId": "2056f33ade5440eb4bc5c53931cd03a4bbefcc4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a6b8d3da_ebf6194f",
         "filename": "media/base/scoped_callback_runner.h",
         "patchSetId": 1
@@ -59,6 +83,30 @@
       "writtenOn": "2017-07-07T05:22:30Z",
       "side": 1,
       "message": "Can we use std::decay for reference types?\nE.g.: typename std::decay\u003cArgs\u003e::type...",
+      "range": {
+        "startLine": 71,
+        "startChar": 13,
+        "endLine": 71,
+        "endChar": 20
+      },
+      "revId": "2056f33ade5440eb4bc5c53931cd03a4bbefcc4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77efcd49_fdd383c4",
+        "filename": "media/base/scoped_callback_runner.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-07T07:20:56Z",
+      "side": 1,
+      "message": "ditto, now I am not using std::tuple, I guess I don\u0027t need this anymore.",
+      "parentUuid": "a6b8d3da_ebf6194f",
       "range": {
         "startLine": 71,
         "startChar": 13,
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "3ed60c90_039b12bc",
+        "filename": "media/base/scoped_callback_runner.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-07T07:20:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "848b20b5_60f718f4",
+      "range": {
+        "startLine": 80,
+        "startChar": 50,
+        "endLine": 80,
+        "endChar": 54
+      },
+      "revId": "2056f33ade5440eb4bc5c53931cd03a4bbefcc4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40583096_6c325c0f",
         "filename": "media/base/scoped_callback_runner.h",
         "patchSetId": 1
@@ -114,6 +186,30 @@
       "revId": "2056f33ade5440eb4bc5c53931cd03a4bbefcc4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "add962bc_b0b0f39f",
+        "filename": "media/base/scoped_callback_runner.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-07T07:20:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40583096_6c325c0f",
+      "range": {
+        "startLine": 84,
+        "startChar": 30,
+        "endLine": 84,
+        "endChar": 34
+      },
+      "revId": "2056f33ade5440eb4bc5c53931cd03a4bbefcc4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
