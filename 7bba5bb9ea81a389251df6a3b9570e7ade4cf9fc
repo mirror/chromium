@@ -2,6 +2,148 @@
   "comments": [
     {
       "key": {
+        "uuid": "daf940cc_4fa21c7e",
+        "filename": "content/browser/android/dialog_overlay_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-07T23:58:02Z",
+      "side": 1,
+      "message": "umm, can we use a weakptr and post to a native method instead? don\u0027t want to start a pattern of posting jni, mainly to reduce number of jni references flying around. ditto below",
+      "revId": "7bba5bb9ea81a389251df6a3b9570e7ade4cf9fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebbccd86_d06f7a9e",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/androidoverlay/AndroidOverlayProviderImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-07T23:58:02Z",
+      "side": 1,
+      "message": "/* asPanel */",
+      "range": {
+        "startLine": 70,
+        "startChar": 89,
+        "endLine": 70,
+        "endChar": 94
+      },
+      "revId": "7bba5bb9ea81a389251df6a3b9570e7ade4cf9fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "107d5183_9dd19de0",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/androidoverlay/DialogOverlayImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-07T23:58:02Z",
+      "side": 1,
+      "message": "you can still move to after all the final variables are set, and then native side can call up as usual?",
+      "revId": "7bba5bb9ea81a389251df6a3b9570e7ade4cf9fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a130a63f_5d48e67e",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/androidoverlay/DialogOverlayImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-07T23:58:02Z",
+      "side": 1,
+      "message": "noticed this can be static",
+      "revId": "7bba5bb9ea81a389251df6a3b9570e7ade4cf9fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b298876_072f3948",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/androidoverlay/DialogOverlayImplPixelTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-07T23:58:02Z",
+      "side": 1,
+      "message": "maybe follow up todo, these probably should be converted to junit4 instrumentation tests",
+      "revId": "7bba5bb9ea81a389251df6a3b9570e7ade4cf9fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "146e7634_44afd171",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/androidoverlay/DialogOverlayImplPixelTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-07T23:58:02Z",
+      "side": 1,
+      "message": "what textured background..? seems a bit too lenient",
+      "revId": "7bba5bb9ea81a389251df6a3b9570e7ade4cf9fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e395fb3_16fdd8a0",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/androidoverlay/DialogOverlayImplPixelTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-07T23:58:02Z",
+      "side": 1,
+      "message": "make 5 and 50ms below constants at the top of file",
+      "revId": "7bba5bb9ea81a389251df6a3b9570e7ade4cf9fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6c81510_55887e56",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/androidoverlay/DialogOverlayImplPixelTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-07T23:58:02Z",
+      "side": 1,
+      "message": "ditto constants",
+      "revId": "7bba5bb9ea81a389251df6a3b9570e7ade4cf9fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f79b82b5_7fa6e302",
         "filename": "content/public/android/javatests/src/org/chromium/content/browser/androidoverlay/DialogOverlayImplTestBase.java",
         "patchSetId": 4
@@ -18,6 +160,63 @@
         "startChar": 95,
         "endLine": 35,
         "endChar": 100
+      },
+      "revId": "7bba5bb9ea81a389251df6a3b9570e7ade4cf9fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f265eec_9d183b41",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/androidoverlay/DialogOverlayImplTestBase.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-07T23:58:02Z",
+      "side": 1,
+      "message": "not mOverlayUiThread?",
+      "revId": "7bba5bb9ea81a389251df6a3b9570e7ade4cf9fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1beedb4b_0139a0c1",
+        "filename": "content/public/android/junit/src/org/chromium/content/browser/androidoverlay/DialogOverlayCoreTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-07T23:58:02Z",
+      "side": 1,
+      "message": "\"\u003d false\" part is unnecessary",
+      "revId": "7bba5bb9ea81a389251df6a3b9570e7ade4cf9fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2abf0e6_9047d696",
+        "filename": "content/public/android/junit/src/org/chromium/content/browser/androidoverlay/DialogOverlayCoreTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-07T23:58:02Z",
+      "side": 1,
+      "message": "-_-",
+      "range": {
+        "startLine": 83,
+        "startChar": 61,
+        "endLine": 83,
+        "endChar": 62
       },
       "revId": "7bba5bb9ea81a389251df6a3b9570e7ade4cf9fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
