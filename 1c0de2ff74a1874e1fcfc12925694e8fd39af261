@@ -16,6 +16,24 @@
       "revId": "1c0de2ff74a1874e1fcfc12925694e8fd39af261",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8442f0f2_a4cd1dd7",
+        "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-07-07T16:49:09Z",
+      "side": 0,
+      "message": "Yes, good catch.\n\nI updated the text \u0026 moved the TODO to ScriptResource::CheckResourceIntegrity.\nDone.",
+      "parentUuid": "b4cdc4f2_6fcc94ed",
+      "revId": "1c0de2ff74a1874e1fcfc12925694e8fd39af261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
