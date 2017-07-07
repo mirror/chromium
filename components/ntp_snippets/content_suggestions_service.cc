@@ -233,6 +233,7 @@ void ContentSuggestionsService::OnGetFaviconFromCacheFinished(
     RecordFaviconFetchResult(continue_to_google_server
                                  ? FaviconFetchResult::SUCCESS_CACHED
                                  : FaviconFetchResult::SUCCESS_FETCHED);
+    large_icon_service_->TouchIconFromGoogleServer(result.icon_url);
     return;
   }
 
