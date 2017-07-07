@@ -23,7 +23,8 @@ StubPasswordManagerClient::~StubPasswordManagerClient() {}
 
 bool StubPasswordManagerClient::PromptUserToSaveOrUpdatePassword(
     std::unique_ptr<PasswordFormManager> form_to_save,
-    bool update_password) {
+    bool update_password,
+    PasswordFormMetricsRecorder::SaveBubbleTrigger trigger) {
   return false;
 }
 
