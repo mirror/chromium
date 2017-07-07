@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "defae6f7_7a88988a",
+        "filename": "third_party/WebKit/Source/modules/payments/CanMakePaymentRespondWithObserver.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-07T05:35:29Z",
+      "side": 1,
+      "message": "Who is the client?",
+      "revId": "d117262c8953aae791d8e7a3088ecd03229f7704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ce45a41_1f650539",
         "filename": "third_party/WebKit/Source/modules/payments/CanMakePaymentRespondWithObserver.h",
         "patchSetId": 6
@@ -19,6 +36,57 @@
         "endLine": 23,
         "endChar": 36
       },
+      "revId": "d117262c8953aae791d8e7a3088ecd03229f7704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2f0380a_27cb9d52",
+        "filename": "third_party/WebKit/Source/modules/payments/PaymentHandlerUtils.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-07T05:35:29Z",
+      "side": 1,
+      "message": "\"The respondWith()\" doesn\u0027t look right. \"respondWith() was rejected\"? I don\u0027t know if it makes sense to say respondWith() was rejected though. The error message \"preventDefault() was called without calling respondWith()\" is saying respondWith() was never called.\n\n\"PaymentRequestEvent.respondWith() failed:\" ?",
+      "revId": "d117262c8953aae791d8e7a3088ecd03229f7704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b63f060_66b0e361",
+        "filename": "third_party/WebKit/Source/modules/payments/PaymentHandlerUtils.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-07T05:35:29Z",
+      "side": 1,
+      "message": "\"the promise passed to respondWith() was rejected\" ?",
+      "revId": "d117262c8953aae791d8e7a3088ecd03229f7704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "910ae325_5dea98e6",
+        "filename": "third_party/WebKit/Source/modules/payments/PaymentHandlerUtils.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-07T05:35:29Z",
+      "side": 1,
+      "message": "\"the promise passed to respondWith() was resolved...\"",
       "revId": "d117262c8953aae791d8e7a3088ecd03229f7704",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
