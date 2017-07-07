@@ -652,8 +652,28 @@ void ControllerImpl::UpdateDriverState(Entry* entry) {
     if (driver_entry.has_value()) {
       driver_->Resume(entry->guid);
     } else {
+      net::NetworkTrafficAnnotationTag traffic_annotation =
+          net::DefineNetworkTrafficAnnotation("...", R"(
+          semantics {
+            sender: "..."
+            description: "..."
+            trigger: "..."
+            data: "..."
+            destination: WEBSITE/GOOGLE_OWNED_SERVICE/OTHER/LOCAL
+          }
+          policy {
+            cookies_allowed: false/true
+            cookies_store: "..."
+            setting: "..."
+            chrome_policy {
+              [POLICY_NAME] {
+                [POLICY_NAME]: ... //(value to disable it)
+              }
+            }
+            policy_exception_justification: "..."
+          })");
       driver_->Start(entry->request_params, entry->guid,
-                     entry->target_file_path, NO_TRAFFIC_ANNOTATION_YET);
+                     entry->target_file_path, traffic_annotation);
     }
   }
 }
