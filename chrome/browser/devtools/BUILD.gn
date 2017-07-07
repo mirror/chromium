@@ -75,6 +75,9 @@ static_library("devtools") {
       "//chrome:strings",
       "//chrome/app/theme:theme_resources",
       "//chrome/common",
+
+      # COMMENT (chrome_devtools_manager_delegate.cc->extension_host.h)
+      "//extensions/browser",
       "//net:http_server",
       "//skia",
       "//third_party/icu",
