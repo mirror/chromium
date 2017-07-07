@@ -134,10 +134,8 @@ TEST(TextEliderTest, TestMoreEliding) {
       {"http://xyz.google.com/foo?bar", kEllipsisStr + "g" + kEllipsisStr},
 
       // URL with no path.
-      // TODO(mgiuca): These should elide the start of the URL, not the end.
-      // https://crbug.com/739636.
-      {"http://xyz.google.com", "xyz.google" + kEllipsisStr},
-      {"https://xyz.google.com", "xyz.google" + kEllipsisStr},
+      {"http://xyz.google.com", kEllipsisStr + "google.com"},
+      {"https://xyz.google.com", kEllipsisStr + "google.com"},
 
       {"http://a.b.com/pathname/c?d", "a.b.com/" + kEllipsisStr + "/c?d"},
       {"", ""},
