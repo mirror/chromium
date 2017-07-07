@@ -178,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "20676bdb_761cbdbb",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 1296,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-07T06:11:47Z",
+      "side": 1,
+      "message": "I changed this to AdvanceTo in the latest patch, granted, I\u0027m not really sure what the practical difference between LayoutClean and AfterPerformLayout is. It passed all unit tests locally, lets see what try bots say.",
+      "parentUuid": "a80e3e7b_1d2201a8",
+      "revId": "424c4e4e0c9002276ea3be77571526ca569a8dc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1dc7a641_92726717",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
         "patchSetId": 16
@@ -189,6 +207,24 @@
       "writtenOn": "2017-07-06T16:23:21Z",
       "side": 1,
       "message": "Can this call a layout due to scrollbars (per the comment in PaintLayerScrollableArea::DidChangeGlobalRootScroller)? If so, I think the following check would fail. Can you add a test for this?",
+      "revId": "424c4e4e0c9002276ea3be77571526ca569a8dc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e04f55c5_d0e2026f",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 1352,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-07T06:11:47Z",
+      "side": 1,
+      "message": "It cannot. We can cause creation/destruction of scrollbars but only on Android where scrollbars don\u0027t affect layout due to being overlay. In any case, I call UpdateStyleAndLayout in this method now, wouldn\u0027t that bring us back to \"DoesNotNeedLayout\"? I think basically any test in RootScrollerTest run on Android would catch this as many (e.g. TestSetRootScroller) load a page (implicitly setting the rootScroller to the #document), update lifecycle, then change the rootScroller without changing anything else.\n\nSome background:\n\nOn Android, we create a pair of scrollbars from VisualViewport and register them to whatever the rootScroller/outerViewport happens to currently be (this ensures correct behavior under pinch zoom). This means that we have to suppress scrollbars for a scroller if it\u0027s currently the outerViewport, so if a scroller becomes the outer viewport we destroy it\u0027s scrollbars (and create them if something else becomes RS). On desktop each scroller is always responsible for its own scrollbars. This avoids any issues with layout w.r.t. changing root scrollers (but we do live with some bugs on scrollbars and pinch-zoom on desktop for now)",
+      "parentUuid": "1dc7a641_92726717",
       "revId": "424c4e4e0c9002276ea3be77571526ca569a8dc2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
