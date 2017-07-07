@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3eba6ded_dd195a28",
+        "filename": "third_party/WebKit/Source/modules/payments/PaymentHandlerUtils.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-07T13:55:31Z",
+      "side": 1,
+      "message": "Add the STATIC_ONLY macro.",
+      "revId": "4c61bdd94856bda62f16fecc4f2a77740f5fd221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "488a3509_2a72a9a3",
+        "filename": "third_party/WebKit/Source/modules/payments/PaymentHandlerUtils.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-07T13:55:31Z",
+      "side": 1,
+      "message": "const-ref?\n\nAlso, I believe the newest style uses hacker_case for variable names instead of camelCase.",
+      "revId": "4c61bdd94856bda62f16fecc4f2a77740f5fd221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
