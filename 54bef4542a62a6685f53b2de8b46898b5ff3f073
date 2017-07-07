@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2acaf288_c803020d",
+        "filename": "extensions/browser/api/bluetooth_low_energy/bluetooth_low_energy_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-07T23:27:35Z",
+      "side": 1,
+      "message": "return params_; Should be fine (or params_.get())",
+      "range": {
+        "startLine": 422,
+        "startChar": 2,
+        "endLine": 422,
+        "endChar": 31
+      },
+      "revId": "54bef4542a62a6685f53b2de8b46898b5ff3f073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8bb5e92_04ca701b",
+        "filename": "extensions/browser/api/bluetooth_low_energy/bluetooth_low_energy_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 895,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-07T23:27:35Z",
+      "side": 1,
+      "message": "not needed - you can use params_ (here and few other places)",
+      "revId": "54bef4542a62a6685f53b2de8b46898b5ff3f073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e445939_e5c2a1fd",
+        "filename": "extensions/browser/api/bluetooth_low_energy/bluetooth_low_energy_api.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-07T23:27:35Z",
+      "side": 1,
+      "message": "nit: s/params_/params/\n(params_ as a variable is a subclass specific concept)",
+      "range": {
+        "startLine": 109,
+        "startChar": 5,
+        "endLine": 109,
+        "endChar": 12
+      },
+      "revId": "54bef4542a62a6685f53b2de8b46898b5ff3f073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd496057_366bcbf0",
+        "filename": "extensions/browser/api/bluetooth_low_energy/bluetooth_low_energy_api.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-07T23:27:35Z",
+      "side": 1,
+      "message": "nit: no ;",
+      "range": {
+        "startLine": 110,
+        "startChar": 21,
+        "endLine": 110,
+        "endChar": 22
+      },
+      "revId": "54bef4542a62a6685f53b2de8b46898b5ff3f073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "469c1d92_e9ed7618",
+        "filename": "extensions/browser/api/bluetooth_low_energy/bluetooth_low_energy_api.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-07T23:27:35Z",
+      "side": 1,
+      "message": "nit: Mention the purpose of this method - To allow early exit in Run() in case of the args validation failure.",
+      "revId": "54bef4542a62a6685f53b2de8b46898b5ff3f073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b63483fa_a84f1114",
+        "filename": "extensions/browser/api/bluetooth_low_energy/bluetooth_low_energy_api.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-07T23:27:35Z",
+      "side": 1,
+      "message": "you don\u0027t need this (throughout the file) - function implementations are already in extensions::api namespace",
+      "range": {
+        "startLine": 760,
+        "startChar": 18,
+        "endLine": 760,
+        "endChar": 35
+      },
+      "revId": "54bef4542a62a6685f53b2de8b46898b5ff3f073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
