@@ -34,6 +34,24 @@
       "revId": "0d2aa6351407bf6a7b075c082293a341d9e75a5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f8efdfc_ed40b817",
+        "filename": "testing/buildbot/chromium.android.json",
+        "patchSetId": 13
+      },
+      "lineNbr": 2853,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-07-07T20:52:44Z",
+      "side": 1,
+      "message": "2 seconds now? I used the values from cc_unittests since we are in the process of moving tests from cc_unittests to viz_unittests so it should end up taking a similar amount of time.",
+      "parentUuid": "c0165f17_afb97d2b",
+      "revId": "0d2aa6351407bf6a7b075c082293a341d9e75a5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

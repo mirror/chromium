@@ -51,6 +51,24 @@
       "revId": "f34ac51088a21f3d4a23071684e644040c2a14d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f56515b8_07adb44d",
+        "filename": "testing/buildbot/chromium.chromiumos.json",
+        "patchSetId": 12
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-07-07T20:52:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20fc3bb9_3d42d08f",
+      "revId": "f34ac51088a21f3d4a23071684e644040c2a14d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
