@@ -166,6 +166,72 @@ void FindXCTestApplicationTargets(
   }
 }
 
+// Adds |base_pbxtarget| as a dependency of |dependent_pbxtarget| in the
+// generated Xcode project.
+void AddPBXTargetDependency(const PBXTarget* base_pbxtarget,
+                            PBXTarget* dependent_pbxtarget,
+                            const PBXProject* project) {
+  std::unique_ptr<PBXContainerItemProxy> container_item_proxy(
+      new PBXContainerItemProxy(project, base_pbxtarget));
+  std::unique_ptr<PBXTargetDependency> dependency(
+      new PBXTargetDependency(base_pbxtarget, std::move(container_item_proxy)));
+
+  dependent_pbxtarget->AddDependency(std::move(dependency));
+}
+
+// Adds the corresponding test rig application target as dependency of xctest
+// module target in the generated Xcode project.
+void AddDependencyTargetForXCModuleTargets(
+    const std::vector<const Target*>& targets,
+    const TargetToPBXTarget& bundle_target_to_pbxtarget,
+    const PBXProject* project) {
+  for (const Target* target : targets) {
+    if (!IsXCTestModuleTarget(target))
+      continue;
+
+    const Target* application_target =
+        FindXCTestApplicationTarget(target, targets);
+    const PBXTarget* application_pbxtarget =
+        bundle_target_to_pbxtarget.at(application_target);
+    PBXTarget* module_pbxtarget = bundle_target_to_pbxtarget.at(target);
+    DCHECK(application_pbxtarget);
+    DCHECK(module_pbxtarget);
+
+    AddPBXTargetDependency(application_pbxtarget, module_pbxtarget, project);
+  }
+}
+
+const Target* FindChromeApplicationTarget(
+    const std::vector<const Target*>& targets) {
+  for (const Target* target : targets) {
+    if (IsApplicationTarget(target) && target->label().name() == "chrome")
+      return target;
+  }
+  NOTREACHED();
+  return nullptr;
+}
+
+// Adds chrome application target as dependency of xcuitest module target in the
+// generated Xcode project.
+void AddDependencyTargetForXCUIModuleTargets(
+    const std::vector<const Target*>& targets,
+    const TargetToPBXTarget& bundle_target_to_pbxtarget,
+    const PBXProject* project) {
+  const Target* chrome_target = FindChromeApplicationTarget(targets);
+  for (const Target* target : targets) {
+    if (!IsXCUITestModuleTarget(target))
+      continue;
+
+    const PBXTarget* chrome_pbxtarget =
+        bundle_target_to_pbxtarget.at(chrome_target);
+    PBXTarget* module_pbxtarget = bundle_target_to_pbxtarget.at(target);
+    DCHECK(chrome_pbxtarget);
+    DCHECK(module_pbxtarget);
+
+    AddPBXTargetDependency(chrome_pbxtarget, module_pbxtarget, project);
+  }
+}
+
 // Searches the list of xctest files recursively under |target|.
 void SearchXCTestFiles(const Target* target,
                        TargetToFileList* xctest_files_per_target) {
@@ -477,6 +543,7 @@ void XcodeWriter::CreateProductsProject(
   DCHECK_EQ(xctest_application_targets.size(),
             xctest_files_per_application_target.size());
 
+  std::vector<const Target*> bundle_targets;
   TargetToPBXTarget bundle_target_to_pbxtarget;
 
   std::string build_path;
@@ -527,6 +594,12 @@ void XcodeWriter::CreateProductsProject(
           extra_attributes["DEBUG_INFORMATION_FORMAT"] = "dwarf";
         }
 
+        // For XCUITest, Xcode requires specifying the host application via
+        // the TEST_TARGET_NAME attribute.
+        if (IsXCUITestModuleTarget(target)) {
+          extra_attributes["TEST_TARGET_NAME"] = "chrome";
+        }
+
         PBXNativeTarget* native_target = main_project->AddNativeTarget(
             pbxtarget_name, std::string(),
             RebasePath(target->bundle_data()
@@ -536,6 +609,8 @@ void XcodeWriter::CreateProductsProject(
             target->bundle_data().product_type(),
             GetBuildScript(pbxtarget_name, ninja_extra_args, env.get()),
             extra_attributes);
+
+        bundle_targets.push_back(target);
         bundle_target_to_pbxtarget.insert(
             std::make_pair(target, native_target));
 
@@ -568,30 +643,19 @@ void XcodeWriter::CreateProductsProject(
     }
   }
 
-  // Add corresponding application target as dependency of xctest module target
-  // so that application target is re-compiled when compiling xctest module
-  // target.
-  for (const Target* target : targets) {
-    if (target->output_type() != Target::CREATE_BUNDLE)
-      continue;
-    if (!IsXCTestModuleTarget(target))
-      continue;
+  // For XCTest, tests are compiled into the application bundle, thus adding
+  // the corresponding test rig application target as a dependency of xctest
+  // module target in the generated Xcode project so that the application target
+  // is re-compiled when compiling the xctest module target.
+  AddDependencyTargetForXCModuleTargets(
+      bundle_targets, bundle_target_to_pbxtarget, main_project.get());
 
-    const Target* application_target =
-        FindXCTestApplicationTarget(target, targets);
-    PBXTarget* application_pbxtarget =
-        bundle_target_to_pbxtarget[application_target];
-    DCHECK(application_pbxtarget);
-    PBXTarget* xctest_module_pbxtarget = bundle_target_to_pbxtarget[target];
-    DCHECK(xctest_module_pbxtarget);
-
-    std::unique_ptr<PBXContainerItemProxy> container_item_proxy(
-        new PBXContainerItemProxy(main_project.get(), application_pbxtarget));
-    std::unique_ptr<PBXTargetDependency> dependency(new PBXTargetDependency(
-        application_pbxtarget, std::move(container_item_proxy)));
-
-    xctest_module_pbxtarget->AddDependency(std::move(dependency));
-  }
+  // For XCUITest, tests are compiled into the dynamic module, thus adding the
+  // vanilla chrome application target as dependency of xcuitest module target
+  // in the generated Xcode project so that chrome is re-compiled when compiling
+  // the xcuitest module target.
+  AddDependencyTargetForXCUIModuleTargets(
+      bundle_targets, bundle_target_to_pbxtarget, main_project.get());
 
   projects_.push_back(std::move(main_project));
 }
