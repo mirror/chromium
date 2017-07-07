@@ -22,6 +22,30 @@
       "revId": "8ead0fcea66b658ec2fe73826fb7657141c5e59e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3aa31ae1_7f62791d",
+        "filename": "tools/clang/scripts/run_tool.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-07-07T07:17:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0389a37d_9bb6c4dd",
+      "range": {
+        "startLine": 215,
+        "startChar": 0,
+        "endLine": 220,
+        "endChar": 25
+      },
+      "revId": "8ead0fcea66b658ec2fe73826fb7657141c5e59e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
