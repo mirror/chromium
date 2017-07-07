@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4ad31503_ce862272",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeBackgroundService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-07T10:54:36Z",
+      "side": 1,
+      "message": "Renamed based on an offline discussion.",
+      "parentUuid": "48f8fa7a_2b5eead3",
+      "range": {
+        "startLine": 101,
+        "startChar": 4,
+        "endLine": 103,
+        "endChar": 5
+      },
+      "revId": "68eed0d5d514855d252223f9049c21ee95e83796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2418e503_b2a53a3d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeBackgroundService.java",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "68eed0d5d514855d252223f9049c21ee95e83796",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fae92fc4_2c0f4370",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeBackgroundService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-07T10:54:36Z",
+      "side": 1,
+      "message": "Renamed based on an offline discussion.",
+      "parentUuid": "2418e503_b2a53a3d",
+      "range": {
+        "startLine": 166,
+        "startChar": 12,
+        "endLine": 166,
+        "endChar": 32
+      },
+      "revId": "68eed0d5d514855d252223f9049c21ee95e83796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,54 @@
     },
     {
       "key": {
+        "uuid": "613840a5_7e79f5db",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetsBridge.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-07T10:54:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ec70341_a683e82a",
+      "range": {
+        "startLine": 69,
+        "startChar": 16,
+        "endLine": 69,
+        "endChar": 18
+      },
+      "revId": "68eed0d5d514855d252223f9049c21ee95e83796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a3abb7b8_175892ab",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetsBridge.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-07T10:54:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f31c1090_38ffd1a4",
+      "range": {
+        "startLine": 69,
+        "startChar": 23,
+        "endLine": 69,
+        "endChar": 52
+      },
+      "revId": "68eed0d5d514855d252223f9049c21ee95e83796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "102092c0_22b94842",
         "filename": "chrome/browser/android/ntp/ntp_snippets_bridge.cc",
         "patchSetId": 3
@@ -114,6 +210,30 @@
       "revId": "68eed0d5d514855d252223f9049c21ee95e83796",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97e7689d_3273fa77",
+        "filename": "chrome/browser/android/ntp/ntp_snippets_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-07T10:54:36Z",
+      "side": 1,
+      "message": "Ah, just forgotten. Removed here and above, there is no logic in the birdge -- I see no need to document that.",
+      "parentUuid": "102092c0_22b94842",
+      "range": {
+        "startLine": 138,
+        "startChar": 0,
+        "endLine": 139,
+        "endChar": 70
+      },
+      "revId": "68eed0d5d514855d252223f9049c21ee95e83796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "973fffe9_d597ae59",
+        "filename": "components/ntp_snippets/remote/persistent_scheduler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-07T10:54:36Z",
+      "side": 1,
+      "message": "Done, removed the comment completely.",
+      "parentUuid": "eb1398f5_506dda79",
+      "range": {
+        "startLine": 21,
+        "startChar": 22,
+        "endLine": 21,
+        "endChar": 28
+      },
+      "revId": "68eed0d5d514855d252223f9049c21ee95e83796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "429cceb3_e85cbaca",
         "filename": "components/ntp_snippets/remote/persistent_scheduler.h",
         "patchSetId": 3
@@ -160,6 +304,30 @@
       "revId": "68eed0d5d514855d252223f9049c21ee95e83796",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a9f0ff7_814bbdc4",
+        "filename": "components/ntp_snippets/remote/persistent_scheduler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-07T10:54:36Z",
+      "side": 1,
+      "message": "s/corrupted/removed/",
+      "parentUuid": "429cceb3_e85cbaca",
+      "range": {
+        "startLine": 23,
+        "startChar": 7,
+        "endLine": 23,
+        "endChar": 41
+      },
+      "revId": "68eed0d5d514855d252223f9049c21ee95e83796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "460fe87f_632f5a02",
+        "filename": "components/ntp_snippets/remote/persistent_scheduler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-07T10:54:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aadfc1b8_701b0de7",
+      "range": {
+        "startLine": 24,
+        "startChar": 3,
+        "endLine": 24,
+        "endChar": 35
+      },
+      "revId": "68eed0d5d514855d252223f9049c21ee95e83796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2176c556_4fdfa38f",
         "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler.h",
         "patchSetId": 3
@@ -206,6 +398,30 @@
       "revId": "68eed0d5d514855d252223f9049c21ee95e83796",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b84628f_02ba2ed5",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-07T10:54:36Z",
+      "side": 1,
+      "message": "Done, removed.",
+      "parentUuid": "2176c556_4fdfa38f",
+      "range": {
+        "startLine": 66,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 47
+      },
+      "revId": "68eed0d5d514855d252223f9049c21ee95e83796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
