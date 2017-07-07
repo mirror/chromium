@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4be65c9_24541df5",
+        "filename": "content/browser/service_worker/service_worker_process_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-07T07:27:48Z",
+      "side": 0,
+      "message": "How about avoiding this pattern from other functions in this class, too?",
+      "revId": "80691f19cde8a41c2e3d8eaa6677615d753c705f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
