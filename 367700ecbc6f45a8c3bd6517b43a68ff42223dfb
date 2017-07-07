@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "739a916a_01625af1",
+        "filename": "chrome/test/base/javascript_browser_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-07T18:33:09Z",
+      "side": 1,
+      "message": "I am not 100% sure that this assumption holds everywhere. Searching for js2gtest.gni, see [1], reveals some usages of that GN rule that are outside of src/chrome/test/data/webui/BUILD.gn. Per my understanding only the ones under src/chrome/test/data/webui/BUILD.gn are excluded in ASAN/TSAN/MSAN. The remaining ones seem to me that they are still happening.\n\n[1] https://cs.chromium.org/search/?q\u003djs2gtest.gni\u0026sq\u003dpackage:chromium\u0026type\u003dcs",
+      "revId": "367700ecbc6f45a8c3bd6517b43a68ff42223dfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
