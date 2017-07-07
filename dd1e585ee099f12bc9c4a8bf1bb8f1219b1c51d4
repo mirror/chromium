@@ -1,0 +1,342 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8599350_5cc23b31",
+        "filename": "chrome/browser/ntp_snippets/content_suggestions_service_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-07T08:25:42Z",
+      "side": 1,
+      "message": "Why pass in the SigninManager, but get the TokenService from the profile?\n(In fact, the same applies to pref_service and service. Also, can we get a better name for \"service\"? :) )",
+      "range": {
+        "startLine": 400,
+        "startChar": 63,
+        "endLine": 400,
+        "endChar": 0
+      },
+      "revId": "dd1e585ee099f12bc9c4a8bf1bb8f1219b1c51d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a0888c9_177ceb01",
+        "filename": "components/ntp_snippets/breaking_news/subscription_json_request.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-07T08:25:42Z",
+      "side": 1,
+      "message": "I recently learned of HttpRequestHeaders::kContentType - no need to duplicate the literal string everywhere :)\nThere\u0027s also kAuthorization for below.",
+      "range": {
+        "startLine": 120,
+        "startChar": 71,
+        "endLine": 120,
+        "endChar": 0
+      },
+      "revId": "dd1e585ee099f12bc9c4a8bf1bb8f1219b1c51d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e80a4535_4fffe370",
+        "filename": "components/ntp_snippets/breaking_news/subscription_json_request.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-07T08:25:42Z",
+      "side": 1,
+      "message": "I think you need to actually attach the auth header here?",
+      "revId": "dd1e585ee099f12bc9c4a8bf1bb8f1219b1c51d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f385c02_391981d3",
+        "filename": "components/ntp_snippets/breaking_news/subscription_json_request.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-07T08:25:42Z",
+      "side": 1,
+      "message": "Is this needed?",
+      "range": {
+        "startLine": 65,
+        "startChar": 36,
+        "endLine": 65,
+        "endChar": 0
+      },
+      "revId": "dd1e585ee099f12bc9c4a8bf1bb8f1219b1c51d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c6a760e_07051b24",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-07T08:25:42Z",
+      "side": 1,
+      "message": "Should you register as an observer of signin_manager, so you can resubscribe on sign-in/sign-out events? IIUC, right now that\u0027ll only happen when Chrome is restarted?\nOr does some other layer handle that?",
+      "range": {
+        "startLine": 49,
+        "startChar": 42,
+        "endLine": 49,
+        "endChar": 0
+      },
+      "revId": "dd1e585ee099f12bc9c4a8bf1bb8f1219b1c51d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf506252_7e19174d",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-07T08:25:42Z",
+      "side": 1,
+      "message": "s/is_auth/is_authenticated/ ?\n(But is this even needed? Can\u0027t it be inferred from access_token.empty()?)",
+      "range": {
+        "startLine": 64,
+        "startChar": 17,
+        "endLine": 64,
+        "endChar": 0
+      },
+      "revId": "dd1e585ee099f12bc9c4a8bf1bb8f1219b1c51d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd85327f_011fa247",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-07T08:25:42Z",
+      "side": 1,
+      "message": "Probably best to check this before landing :)",
+      "range": {
+        "startLine": 88,
+        "startChar": 49,
+        "endLine": 88,
+        "endChar": 0
+      },
+      "revId": "dd1e585ee099f12bc9c4a8bf1bb8f1219b1c51d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c36b498b_9cba1ba0",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-07T08:25:42Z",
+      "side": 1,
+      "message": "This probably isn\u0027t safe: We\u0027re in a callback, called from this very object, so deleting it might have weird consequences.\nThe usual pattern is to move the object into a local unique_ptr variable, so it\u0027ll be deleted once we leave the method.",
+      "revId": "dd1e585ee099f12bc9c4a8bf1bb8f1219b1c51d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da808b6f_2f4d86d5",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-07T08:25:42Z",
+      "side": 1,
+      "message": "I guess in this case it\u0027s probably okay?\nWhat do we do for regular (non-breaking) content suggestions?",
+      "range": {
+        "startLine": 102,
+        "startChar": 68,
+        "endLine": 102,
+        "endChar": 0
+      },
+      "revId": "dd1e585ee099f12bc9c4a8bf1bb8f1219b1c51d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8058dba_2868f4b8",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-07T08:25:42Z",
+      "side": 1,
+      "message": "s/is_auth/is_authenticated/?\n(In my mind, \"is_auth\" expands to \"is_authentication\" and then I\u0027m confused.)",
+      "revId": "dd1e585ee099f12bc9c4a8bf1bb8f1219b1c51d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0db21df_4a8a667e",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-07T08:25:42Z",
+      "side": 1,
+      "message": "\"ntp_snippets::\" isn\u0027t required, we\u0027re already in that namespace (here and in a few other places)",
+      "range": {
+        "startLine": 132,
+        "startChar": 76,
+        "endLine": 132,
+        "endChar": 0
+      },
+      "revId": "dd1e585ee099f12bc9c4a8bf1bb8f1219b1c51d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e97b378e_11d08c75",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-07T08:25:42Z",
+      "side": 1,
+      "message": "Do we actually need this as a member variable? Could we pass it to Unsubscribe, and there Bind it as an extra parameter to DidUnsubscribe?\n\n(The state machine of this class is getting quite complicated...)",
+      "range": {
+        "startLine": 184,
+        "startChar": 37,
+        "endLine": 184,
+        "endChar": 0
+      },
+      "revId": "dd1e585ee099f12bc9c4a8bf1bb8f1219b1c51d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8931d37_fc9afb0b",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-07T08:25:42Z",
+      "side": 1,
+      "message": "nit: Put pipes around variable names, like |old_token|",
+      "revId": "dd1e585ee099f12bc9c4a8bf1bb8f1219b1c51d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c695798_d0b6e78a",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-07T08:25:42Z",
+      "side": 1,
+      "message": "Can you use either \"oauth token\" or \"access token\" everywhere? Right now it\u0027s a bit inconsistent.\n(I prefer \"access token\", since there are also refresh tokens, which are also oauth tokens.)",
+      "range": {
+        "startLine": 88,
+        "startChar": 68,
+        "endLine": 88,
+        "endChar": 0
+      },
+      "revId": "dd1e585ee099f12bc9c4a8bf1bb8f1219b1c51d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98103054_5c1599a8",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-07T08:25:42Z",
+      "side": 1,
+      "message": "Should this be up, next to kTestEmail?\nAlso, kUrl (or kURL) please (I was wondering below where the local variable \"url\" came from.)\nAlso, nit: prefer initialization with \"\u003d\", see https://www.chromium.org/developers/coding-style/cpp-dos-and-donts.",
+      "revId": "dd1e585ee099f12bc9c4a8bf1bb8f1219b1c51d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52b10c0f_95e3ba5d",
+        "filename": "components/ntp_snippets/pref_names.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-07T08:25:42Z",
+      "side": 1,
+      "message": "Is this comment accurate? I\u0027d assume that storing in prefs is for persisting the token across Chrome restarts?",
+      "range": {
+        "startLine": 95,
+        "startChar": 75,
+        "endLine": 95,
+        "endChar": 0
+      },
+      "revId": "dd1e585ee099f12bc9c4a8bf1bb8f1219b1c51d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
