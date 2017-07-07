@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "38d9358f_ac8521d9",
+        "filename": "cc/surfaces/display_scheduler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-07-07T14:50:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87a84850_e2330419",
+      "range": {
+        "startLine": 38,
+        "startChar": 25,
+        "endLine": 38,
+        "endChar": 49
+      },
+      "revId": "55f6248dc41a2eeda4dbdd0de56a37e69316b757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab726ae8_635226a3",
         "filename": "content/browser/compositor/gpu_process_transport_factory.cc",
         "patchSetId": 3
@@ -137,6 +161,30 @@
     },
     {
       "key": {
+        "uuid": "1e51d2ee_49513300",
+        "filename": "content/renderer/gpu/render_widget_compositor.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-07-07T14:50:49Z",
+      "side": 1,
+      "message": "OK, now using a command line flag instead and controlling whether to set it from BrowserContext.",
+      "parentUuid": "1f1df8bf_ebac743a",
+      "range": {
+        "startLine": 82,
+        "startChar": 11,
+        "endLine": 82,
+        "endChar": 51
+      },
+      "revId": "55f6248dc41a2eeda4dbdd0de56a37e69316b757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86c999d5_6911b0ad",
         "filename": "ui/compositor/external_begin_frame_controller.h",
         "patchSetId": 3
@@ -160,6 +208,30 @@
     },
     {
       "key": {
+        "uuid": "7e9ef687_baad6727",
+        "filename": "ui/compositor/external_begin_frame_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-07-07T14:50:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86c999d5_6911b0ad",
+      "range": {
+        "startLine": 15,
+        "startChar": 6,
+        "endLine": 15,
+        "endChar": 23
+      },
+      "revId": "55f6248dc41a2eeda4dbdd0de56a37e69316b757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dfe1dc74_2c27fa1f",
         "filename": "ui/compositor/external_begin_frame_controller.h",
         "patchSetId": 3
@@ -171,6 +243,24 @@
       "writtenOn": "2017-07-07T03:36:23Z",
       "side": 1,
       "message": "I feel like a simpler design would be to add BeginFrameAck as a param to BeginFrameSource::DidFinishFrame which gets forwarded to ExternalBeginFrameSourceClient::DidFinishFrame (new method in that interface). That way there\u0027s no DisplaySchedulerObserver or ExternalBeginFrameController because you can use ExternalBeginFrameSource directly.",
+      "revId": "55f6248dc41a2eeda4dbdd0de56a37e69316b757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3869affa_872d356a",
+        "filename": "ui/compositor/external_begin_frame_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-07-07T14:50:49Z",
+      "side": 1,
+      "message": "This would be an alternative, yes. It feels a little weird adding it to the BFS interface only for DisplayScheduler, though. We are not interested in BeginFrameAcks from any other BeginFrameObserver, so we\u0027d have to filter out all other BeginFrameObservers\u0027 calls to DidFinishFrame in GpuPTF.\n\nThe DisplaySchedulerObserver makes it explicit that we only want the ack from the DisplayScheduler. With the ExternalBFController, GpuPTF also doesn\u0027t need to deal with the ExternalBFS and ExternalBFControllerClient directly.\n\nI think I prefer this over adding the acks back to BFS::DidFinishFrame and making GpuPTF an ExternalBFSourceClient, wdyt?",
+      "parentUuid": "dfe1dc74_2c27fa1f",
       "revId": "55f6248dc41a2eeda4dbdd0de56a37e69316b757",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
