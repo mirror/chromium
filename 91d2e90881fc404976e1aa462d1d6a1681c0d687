@@ -16,6 +16,24 @@
       "revId": "91d2e90881fc404976e1aa462d1d6a1681c0d687",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1ffc6b4_d3be6489",
+        "filename": "chrome/browser/chromeos/system/automatic_reboot_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1000140
+      },
+      "writtenOn": "2017-07-07T01:30:07Z",
+      "side": 0,
+      "message": "How about running the test under ASAN [1]?  I recently converted a unit tests that was using FlushForTesting() and my original patch [2] got reverted due to an ASAN error, hence needed a reland with a fix [3]. In my reland patch, I replaced FlushForTesting() with an explicit synchronization with RunLoop.\n\n\n[1] https://www.chromium.org/developers/testing/addresssanitizer\n[2] https://codereview.chromium.org/2966713002/\n[3] https://codereview.chromium.org/2970653002/",
+      "parentUuid": "802ca55b_f7568803",
+      "revId": "91d2e90881fc404976e1aa462d1d6a1681c0d687",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

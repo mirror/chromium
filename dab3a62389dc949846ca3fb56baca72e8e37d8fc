@@ -16,6 +16,24 @@
       "revId": "dab3a62389dc949846ca3fb56baca72e8e37d8fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e242e5ce_d8027581",
+        "filename": "chrome/browser/chromeos/system/automatic_reboot_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1000140
+      },
+      "writtenOn": "2017-07-07T01:30:07Z",
+      "side": 1,
+      "message": "I guess it was because that\u0027s what GetBlockingPool() returns.",
+      "parentUuid": "6bcf394d_9c1c91a2",
+      "revId": "dab3a62389dc949846ca3fb56baca72e8e37d8fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
