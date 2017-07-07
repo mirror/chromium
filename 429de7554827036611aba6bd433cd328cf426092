@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "0a043101_b1e56095",
+        "filename": "chrome/browser/password_manager/chrome_password_manager_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-07T14:43:07Z",
+      "side": 1,
+      "message": "Vasilii, could you take a look at this as well, please? I\u0027d be curious about your opinion.\n\nI have elaborated what we discussed:\n- Revive the old CredentialSourceType: https://chromium-review.googlesource.com/c/563392\n- Plumb it through: https://chromium-review.googlesource.com/c/563411/ (this CL is in draft state)\n\nI could now fairly easily record metrics about the disposition and dismissal of the dialog in the respective UI classes. Is this desirable or do you consider the plumbing too excessive?",
+      "parentUuid": "09ceeca2_50c292fe",
+      "revId": "429de7554827036611aba6bd433cd328cf426092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ec92dd41_bf422d3c",
         "filename": "chrome/browser/password_manager/chrome_password_manager_client.cc",
         "patchSetId": 4
