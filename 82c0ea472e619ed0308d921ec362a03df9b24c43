@@ -34,6 +34,24 @@
       "revId": "82c0ea472e619ed0308d921ec362a03df9b24c43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff41530c_d97fb113",
+        "filename": "content/browser/service_worker/service_worker_process_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-07T07:23:22Z",
+      "side": 1,
+      "message": "DB corruption should not happen. ServiceWorkerDatabase living on the database task runner transactionally writes data into the leveldb. When ServiceWorkerStorage, which is the owner of ServiceWorkerDatabase, is destructed, it posts DeleteSoon task to the database task runner in order to delay the database destruction until the transaction finishes.\n\n[1] https://chromium.googlesource.com/chromium/src/+/a5ed187842d23ad31d3f86650bf260d421c7559b/content/browser/service_worker/service_worker_storage.cc#115",
+      "parentUuid": "8182a99b_2d1059bb",
+      "revId": "82c0ea472e619ed0308d921ec362a03df9b24c43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
