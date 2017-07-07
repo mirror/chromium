@@ -35,10 +35,15 @@ bool ArcProcessFilter::ShouldDisplayProcess(
   // ProcessState::TOP: Process is hosting the current top activities
   // ProcessState::IMPORTANT_FOREGROUND: Process is important to the user
   // ProcessState::TOP_SLEEPING: Same as TOP, but while the device is sleeping
+  // ProcessState::LAST_ACTIVITY: The last activity - see crbug.com/738651.
+  // ProcessState::FOREGROUND_SERVICE: Foreground service - in Android, the user
+  //   is made aware of these via a notification.
   switch (process.process_state()) {
     case arc::mojom::ProcessState::TOP:  // Fallthrough.
     case arc::mojom::ProcessState::IMPORTANT_FOREGROUND:
     case arc::mojom::ProcessState::TOP_SLEEPING:
+    case arc::mojom::ProcessState::LAST_ACTIVITY:
+    case arc::mojom::ProcessState::FOREGROUND_SERVICE:
       return true;
     default:
       break;
