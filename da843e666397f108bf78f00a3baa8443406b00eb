@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e66c8a9_e2e16ed3",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkPanel.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-07T21:14:07Z",
+      "side": 1,
+      "message": "Just call this before calling networkLog.reset()",
+      "revId": "da843e666397f108bf78f00a3baa8443406b00eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5505280f_7ac02d64",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network_log/NetworkLog.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-07T21:14:07Z",
+      "side": 1,
+      "message": "Let\u0027s not do this -- it\u0027s the client (NetworkPanel) the calls reset(), so they already know.",
+      "revId": "da843e666397f108bf78f00a3baa8443406b00eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
