@@ -12,6 +12,7 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
+#include "base/observer_list.h"
 #include "base/time/time.h"
 #include "cc/animation/animation.h"
 #include "cc/animation/animation_export.h"
@@ -29,6 +30,7 @@ namespace cc {
 class AnimationPlayer;
 class AnimationTimeline;
 class ElementAnimations;
+class GroupAnimationPlayer;
 class LayerTreeHost;
 class ScrollOffsetAnimations;
 class ScrollOffsetAnimationsImpl;
@@ -173,14 +175,6 @@ class CC_ANIMATION_EXPORT AnimationHost
   // This should only be called from the main thread.
   ScrollOffsetAnimations& scroll_offset_animations() const;
 
-  // Registers the given animation player as ticking. A ticking animation
-  // player is one that has a running animation.
-  void AddToTicking(scoped_refptr<AnimationPlayer> player);
-
-  // Unregisters the given animation player. When this happens, the
-  // animation player will no longer be ticked.
-  void RemoveFromTicking(scoped_refptr<AnimationPlayer> player);
-
   const PlayersList& ticking_players_for_testing() const;
   const ElementToAnimationsMap& element_animations_for_testing() const;
 
@@ -210,6 +204,10 @@ class CC_ANIMATION_EXPORT AnimationHost
 
   bool supports_scroll_animations_;
   bool needs_push_properties_;
+
+  typedef std::vector<scoped_refptr<GroupAnimationPlayer>>
+      GroupAnimationPlayers;
+  GroupAnimationPlayers group_animation_players_;
 
   DISALLOW_COPY_AND_ASSIGN(AnimationHost);
 };
