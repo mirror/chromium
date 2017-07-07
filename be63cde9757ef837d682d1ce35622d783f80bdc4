@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "827cd821_6fc0cc60",
+        "filename": "services/ui/public/cpp/gpu/gpu.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-07-07T03:48:44Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we store factory_.Run() here, so that |gpu_| can be reused in EstablishGpuChannel{Sync}?",
+      "revId": "be63cde9757ef837d682d1ce35622d783f80bdc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e634c06c_9740a8bc",
+        "filename": "services/ui/public/cpp/gpu/gpu.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-07-07T03:48:44Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we check if |gpu_| is bound or not?",
+      "revId": "be63cde9757ef837d682d1ce35622d783f80bdc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69a06184_482ae2dd",
+        "filename": "services/ui/public/cpp/gpu/gpu.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-07-07T03:48:44Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "be63cde9757ef837d682d1ce35622d783f80bdc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
