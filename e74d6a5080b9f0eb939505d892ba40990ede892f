@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "8d9ae97a_5222c7f4",
+        "filename": "chrome/browser/ntp_tiles/ntp_tiles_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-07T11:10:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4c3aadc_6305f79e",
+      "range": {
+        "startLine": 64,
+        "startChar": 41,
+        "endLine": 64,
+        "endChar": 60
+      },
+      "revId": "e74d6a5080b9f0eb939505d892ba40990ede892f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1f7968a_4aa23a1f",
         "filename": "chrome/browser/ntp_tiles/ntp_tiles_browsertest.cc",
         "patchSetId": 2
@@ -119,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "9d91058a_4016f7af",
+        "filename": "chrome/browser/ntp_tiles/ntp_tiles_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-07T11:10:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3ab7d0e_629aa290",
+      "range": {
+        "startLine": 84,
+        "startChar": 14,
+        "endLine": 84,
+        "endChar": 29
+      },
+      "revId": "e74d6a5080b9f0eb939505d892ba40990ede892f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1038119_6a270f5e",
         "filename": "chrome/browser/ntp_tiles/ntp_tiles_browsertest.cc",
         "patchSetId": 2
@@ -154,6 +202,30 @@
       "side": 1,
       "message": "Since you are expecting a call to OnMostVisitedURLsAvailable() anyway, can you simply wait for it? You could introduce something like:\n\nclass MostVisitedSitesWaiter : public MostVisitedSites::Observer {\npublic:\n  void Wait() {\n    base::RunLoop run_loop;\n    quit_closure_ \u003d run_loop.QuitClosure();\n    run_loop.Run();\n  }\n  void OnMostVisitedURLsAvailable(const NTPTilesVector\u0026 tiles) override {\n    if (!quit_closure_.is_null()) {\n      quit_closure_.Run();\n    }\n  }\n  void OnIconMadeAvailable(const GURL\u0026 site_url) {};\n\nprivate:\n  base::Closure quit_closure_;\n};",
       "parentUuid": "c1038119_6a270f5e",
+      "range": {
+        "startLine": 91,
+        "startChar": 42,
+        "endLine": 91,
+        "endChar": 0
+      },
+      "revId": "e74d6a5080b9f0eb939505d892ba40990ede892f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77a6bfa0_e4c7d124",
+        "filename": "chrome/browser/ntp_tiles/ntp_tiles_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-07T11:10:48Z",
+      "side": 1,
+      "message": "I went back and forth between that and using the mock class. I changed it similar to how you suggested. This works much better.",
+      "parentUuid": "af8451ae_591a53d0",
       "range": {
         "startLine": 91,
         "startChar": 42,

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc0f1bb1_a9073bac",
+        "filename": "chrome/browser/ntp_tiles/ntp_tiles_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-07T11:10:48Z",
+      "side": 1,
+      "message": "Instead of checking for existence of URL, I could store the URLs seen, then have a method to check if the URL was found. That way it wouldn\u0027t timeout if the URL is not found, but I\u0027m not sure if that complexity is worth it.",
+      "revId": "a803b72fcfe21ad80fa13abb11fb1863a457d5ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
