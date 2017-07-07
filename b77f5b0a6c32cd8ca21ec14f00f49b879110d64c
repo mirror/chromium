@@ -16,6 +16,24 @@
       "revId": "b77f5b0a6c32cd8ca21ec14f00f49b879110d64c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fb05c8b_73e45934",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-07-07T01:42:11Z",
+      "side": 1,
+      "message": "OK well, I\u0027m now looking into this long path behaviour and have discovered at least two new bugs. Let me do some experiments and file some bug reports, then I\u0027ll update the TODOs here to refer to them.",
+      "parentUuid": "6d578445_6e28e94f",
+      "revId": "b77f5b0a6c32cd8ca21ec14f00f49b879110d64c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "17c89e26_d56b5f14",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-07-07T01:42:11Z",
+      "side": 1,
+      "message": "I see. That just short circuits bisecting the path in the edge case that not even the domain fits. That\u0027s a valid optimization but I\u0027m not sure it\u0027s worth doing (it doesn\u0027t solve the problem this check is trying to solve, which is a very long path, part of which fits).\n\n\u003e Binary-searching the length will work as long as you know that each added component makes the name strictly longer.  Given the weirdness of unicode + ligatures and such, I\u0027m not certain whether that\u0027s true, maybe it is?\n\nI wasn\u0027t proposing a binary search, just that if the length is long (say, \u003e20), we halve the length on each attempt instead of subtracting 1. The result would be imperfect (may cut off too much) but acceptable and only suboptimal in cases where the path is quite long. We can also bisect.\n\nI\u0027m quite sure string length and text width are non-monotonic in certain cases. But I don\u0027t think we have to worry about that, as long as we are okay with the text not always taking up the maximum allowable width in edge cases.\n\nPhishing shouldn\u0027t be a concern here: this is only for non-secure contexts (such as the status bubble).",
+      "parentUuid": "3035779b_c27a87d4",
+      "revId": "ad1884f7e06cce0895f70d7fcc16cbfc401ceeb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "020e39b4_13c8e598",
         "filename": "components/url_formatter/elide_url.cc",
         "patchSetId": 1
