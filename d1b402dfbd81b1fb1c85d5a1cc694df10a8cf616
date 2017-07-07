@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "972a5493_f466d25d",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-07-07T18:20:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c9f6b5a_280b06fc",
+      "range": {
+        "startLine": 27,
+        "startChar": 10,
+        "endLine": 27,
+        "endChar": 19
+      },
+      "revId": "d1b402dfbd81b1fb1c85d5a1cc694df10a8cf616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2087e39_73d57097",
         "filename": "build/android/apk_operations.py",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "d1b402dfbd81b1fb1c85d5a1cc694df10a8cf616",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17361b55_d1280218",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-07-07T18:20:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2087e39_73d57097",
+      "range": {
+        "startLine": 30,
+        "startChar": 4,
+        "endLine": 30,
+        "endChar": 14
+      },
+      "revId": "d1b402dfbd81b1fb1c85d5a1cc694df10a8cf616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "642a1309_6240ec6d",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-07-07T18:20:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe57e83c_d99bde2d",
+      "range": {
+        "startLine": 33,
+        "startChar": 2,
+        "endLine": 33,
+        "endChar": 15
+      },
+      "revId": "d1b402dfbd81b1fb1c85d5a1cc694df10a8cf616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26b1f3e8_6d521468",
         "filename": "build/android/apk_operations.py",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "d1b402dfbd81b1fb1c85d5a1cc694df10a8cf616",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02041c73_ff1ebab8",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-07-07T18:20:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26b1f3e8_6d521468",
+      "range": {
+        "startLine": 63,
+        "startChar": 14,
+        "endLine": 63,
+        "endChar": 18
+      },
+      "revId": "d1b402dfbd81b1fb1c85d5a1cc694df10a8cf616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "4322af2f_f177975e",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-07-07T18:20:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da7c22ef_95994330",
+      "range": {
+        "startLine": 68,
+        "startChar": 52,
+        "endLine": 68,
+        "endChar": 61
+      },
+      "revId": "d1b402dfbd81b1fb1c85d5a1cc694df10a8cf616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5cf71ab_ee355c9f",
         "filename": "build/android/apk_operations.py",
         "patchSetId": 2
@@ -137,6 +257,30 @@
       "revId": "d1b402dfbd81b1fb1c85d5a1cc694df10a8cf616",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e986ae6e_01ac6434",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-07-07T18:20:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5cf71ab_ee355c9f",
+      "range": {
+        "startLine": 92,
+        "startChar": 42,
+        "endLine": 92,
+        "endChar": 65
+      },
+      "revId": "d1b402dfbd81b1fb1c85d5a1cc694df10a8cf616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "ec354bb2_34de3175",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-07-07T18:20:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "319395fa_1cc73d98",
+      "range": {
+        "startLine": 98,
+        "startChar": 26,
+        "endLine": 98,
+        "endChar": 42
+      },
+      "revId": "d1b402dfbd81b1fb1c85d5a1cc694df10a8cf616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56e2aa6b_1059d0d9",
         "filename": "build/android/apk_operations.py",
         "patchSetId": 2
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "06896afb_97bc3795",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-07-07T18:20:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56e2aa6b_1059d0d9",
+      "range": {
+        "startLine": 110,
+        "startChar": 60,
+        "endLine": 110,
+        "endChar": 70
+      },
+      "revId": "d1b402dfbd81b1fb1c85d5a1cc694df10a8cf616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f1ca810_79ce8656",
         "filename": "build/android/apk_operations.py",
         "patchSetId": 2
@@ -200,6 +392,24 @@
       "revId": "d1b402dfbd81b1fb1c85d5a1cc694df10a8cf616",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a306d5e_8c6bb113",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-07-07T18:20:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f1ca810_79ce8656",
+      "revId": "d1b402dfbd81b1fb1c85d5a1cc694df10a8cf616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +433,30 @@
       "revId": "d1b402dfbd81b1fb1c85d5a1cc694df10a8cf616",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a42d67e_6d1a24fe",
+        "filename": "build/android/gyp/create_apk_operations_script.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-07-07T18:20:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4aabaf82_59901379",
+      "range": {
+        "startLine": 62,
+        "startChar": 2,
+        "endLine": 62,
+        "endChar": 12
+      },
+      "revId": "d1b402dfbd81b1fb1c85d5a1cc694df10a8cf616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
