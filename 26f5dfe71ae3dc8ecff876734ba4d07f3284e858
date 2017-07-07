@@ -679,6 +679,30 @@
       "revId": "26f5dfe71ae3dc8ecff876734ba4d07f3284e858",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cad9bcd7_ae70d400",
+        "filename": "third_party/WebKit/PerformanceTests/OWPStorage/resources/shared.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-07-07T21:04:34Z",
+      "side": 1,
+      "message": "I would just leave it out for now. \n\nAlso if the current test doesn\u0027t use tracing, what is the noise level you are seeing?",
+      "parentUuid": "519d3b0d_a6ce09aa",
+      "range": {
+        "startLine": 93,
+        "startChar": 49,
+        "endLine": 93,
+        "endChar": 0
+      },
+      "revId": "26f5dfe71ae3dc8ecff876734ba4d07f3284e858",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
