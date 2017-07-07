@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b439067f_10b1add6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-07-07T21:54:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be202d0f_e82656ce",
+      "range": {
+        "startLine": 19,
+        "startChar": 32,
+        "endLine": 19,
+        "endChar": 56
+      },
+      "revId": "b191c255092ec50b7e4c0095b6d6cecb6e147191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "396f7aad_91150cf6",
         "filename": "components/variations/service/variations_field_trial_creator.h",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "b191c255092ec50b7e4c0095b6d6cecb6e147191",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbda1c74_c93bc0c2",
+        "filename": "components/variations/service/variations_field_trial_creator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-07-07T21:54:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "396f7aad_91150cf6",
+      "range": {
+        "startLine": 22,
+        "startChar": 62,
+        "endLine": 22,
+        "endChar": 66
+      },
+      "revId": "b191c255092ec50b7e4c0095b6d6cecb6e147191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0a681834_f2d4fd53",
+        "filename": "components/variations/service/variations_field_trial_creator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-07-07T21:54:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b6053aa_3db95cd5",
+      "range": {
+        "startLine": 41,
+        "startChar": 5,
+        "endLine": 41,
+        "endChar": 11
+      },
+      "revId": "b191c255092ec50b7e4c0095b6d6cecb6e147191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a905bf3_ec0bdd81",
         "filename": "components/variations/service/variations_field_trial_creator.h",
         "patchSetId": 6
@@ -91,6 +163,30 @@
       "revId": "b191c255092ec50b7e4c0095b6d6cecb6e147191",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03f21951_d09700fc",
+        "filename": "components/variations/service/variations_field_trial_creator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-07-07T21:54:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a905bf3_ec0bdd81",
+      "range": {
+        "startLine": 69,
+        "startChar": 5,
+        "endLine": 69,
+        "endChar": 11
+      },
+      "revId": "b191c255092ec50b7e4c0095b6d6cecb6e147191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "2b52d1f9_1ce12bf2",
+        "filename": "components/variations/service/variations_field_trial_creator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-07-07T21:54:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5059abc_29195dcb",
+      "range": {
+        "startLine": 90,
+        "startChar": 7,
+        "endLine": 90,
+        "endChar": 44
+      },
+      "revId": "b191c255092ec50b7e4c0095b6d6cecb6e147191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "434b9d0b_7b9bd905",
         "filename": "components/variations/service/variations_field_trial_creator.h",
         "patchSetId": 6
@@ -128,6 +248,30 @@
       "writtenOn": "2017-07-07T19:11:45Z",
       "side": 1,
       "message": "Can this section be moved up? Ideally we would have as much as possible in private section rather than protected.\n\nIn particular, member variables should be private. https://google.github.io/styleguide/cppguide.html#Access_Control\n\nAlso, another option to consider is using composition instead of inheritance. That is, the new class could be a member of VariationsService and VariationsService could call only public functions on it.",
+      "range": {
+        "startLine": 104,
+        "startChar": 9,
+        "endLine": 104,
+        "endChar": 0
+      },
+      "revId": "b191c255092ec50b7e4c0095b6d6cecb6e147191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82df51a6_d767e2ba",
+        "filename": "components/variations/service/variations_field_trial_creator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-07-07T21:54:05Z",
+      "side": 1,
+      "message": "The way I have it right now VariationsService directly uses the member variables of VariationsFieldTrialCreator.  Is it better to duplicate the data and have both classes contain a copy or make them private in VariationsFieldTrialCreator and provide public methods to access them?",
+      "parentUuid": "434b9d0b_7b9bd905",
       "range": {
         "startLine": 104,
         "startChar": 9,
