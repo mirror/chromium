@@ -8,6 +8,7 @@
 #include "base/compiler_specific.h"
 #include "base/containers/flat_map.h"
 #include "base/macros.h"
+#include "base/memory/ref_counted.h"
 #include "base/observer_list.h"
 #include "base/optional.h"
 #include "cc/ipc/frame_sink_manager.mojom.h"
@@ -15,6 +16,10 @@
 #include "components/viz/host/frame_sink_observer.h"
 #include "components/viz/host/viz_host_export.h"
 #include "mojo/public/cpp/bindings/binding.h"
+
+namespace base {
+class SequencedTaskRunner;
+}
 
 namespace cc {
 class SurfaceInfo;
@@ -32,10 +37,11 @@ class VIZ_HOST_EXPORT HostFrameSinkManager
   ~HostFrameSinkManager() override;
 
   // Binds |this| as a FrameSinkManagerClient to the |request|. May only be
-  // called once.
-  void BindManagerClientAndSetManagerPtr(
-      cc::mojom::FrameSinkManagerClientRequest request,
-      cc::mojom::FrameSinkManagerPtr ptr);
+  // called once. |task_runner| is explicitly provided as Mac has a special task
+  // runner in the browser process.
+  void BindAndSetManager(cc::mojom::FrameSinkManagerClientRequest request,
+                         cc::mojom::FrameSinkManagerPtr ptr,
+                         scoped_refptr<base::SequencedTaskRunner> task_runner);
 
   void AddObserver(FrameSinkObserver* observer);
   void RemoveObserver(FrameSinkObserver* observer);
