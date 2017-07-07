@@ -786,17 +786,26 @@ void FrameFetchContext::AddClientHintsIfNecessary(
   if (!RuntimeEnabledFeatures::ClientHintsEnabled())
     return;
 
+  // TODO(tbansal): https://crbug.com/735518. Client hint should also be sent
+  // if the origin for the |request| had persisted the client hint preference
+  // in the past.
   bool should_send_device_ram =
-      GetClientHintsPreferences().ShouldSendDeviceRAM() ||
-      hints_preferences.ShouldSendDeviceRAM();
-  bool should_send_dpr = GetClientHintsPreferences().ShouldSendDPR() ||
-                         hints_preferences.ShouldSendDPR();
+      GetClientHintsPreferences().ShouldSend(kWebClientHintsTypeDeviceRam) ||
+      hints_preferences.ShouldSend(kWebClientHintsTypeDeviceRam);
+  bool should_send_dpr =
+      GetClientHintsPreferences().ShouldSend(kWebClientHintsTypeDPR) ||
+      hints_preferences.ShouldSend(kWebClientHintsTypeDPR);
   bool should_send_resource_width =
-      GetClientHintsPreferences().ShouldSendResourceWidth() ||
-      hints_preferences.ShouldSendResourceWidth();
+      GetClientHintsPreferences().ShouldSend(
+          kWebClientHintsTypeResourceWidth) ||
+      hints_preferences.ShouldSend(kWebClientHintsTypeResourceWidth);
   bool should_send_viewport_width =
-      GetClientHintsPreferences().ShouldSendViewportWidth() ||
-      hints_preferences.ShouldSendViewportWidth();
+      GetClientHintsPreferences().ShouldSend(
+          kWebClientHintsTypeViewportWidth) ||
+      hints_preferences.ShouldSend(kWebClientHintsTypeViewportWidth);
+  static_assert(
+      kWebClientHintsTypeResourceWidth + 1 == kWebClientHintsTypeNumValues,
+      "unhandled client hints");
 
   if (should_send_device_ram) {
     int64_t physical_memory = MemoryCoordinator::GetPhysicalMemoryMB();
