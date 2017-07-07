@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ce45a41_1f650539",
+        "filename": "third_party/WebKit/Source/modules/payments/CanMakePaymentRespondWithObserver.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-07T05:23:24Z",
+      "side": 1,
+      "message": "It looks like this indent is broken (the presubmit checker missed this...?)",
+      "range": {
+        "startLine": 23,
+        "startChar": 3,
+        "endLine": 23,
+        "endChar": 36
+      },
+      "revId": "d117262c8953aae791d8e7a3088ecd03229f7704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67bac603_ae4fae9e",
+        "filename": "third_party/WebKit/Source/modules/payments/PaymentHandlerUtils.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-07T05:23:24Z",
+      "side": 1,
+      "message": "Can you wrap this with a class that has a static function because \"ReportResponseError\" is too generic to expose to \"blink\" namespace?\n\nclass PaymentHandlerUtils {\n public:\n  static void ReportResponseError(...);\n};",
+      "range": {
+        "startLine": 14,
+        "startChar": 5,
+        "endLine": 14,
+        "endChar": 24
+      },
+      "revId": "d117262c8953aae791d8e7a3088ecd03229f7704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
