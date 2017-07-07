@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ce3df37c_e84c10c5",
+        "filename": "ui/ozone/platform/drm/gpu/gbm_surfaceless.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-07-07T21:29:00Z",
+      "side": 1,
+      "message": "This test for IsUniversalDisplayLinkDevice was already there before crrev.com/2858693002, this CL is just restoring the logic we used to have as a workaround on Intel to avoid a performance regression.\n\nChanged the name to IsOnExternalDrmDevice, also added a comment with a link to a bug that explains why we can\u0027t rely on implicit sync in that case.",
+      "parentUuid": "f3e0b72a_c59c48ab",
+      "revId": "b0b7719a4771cfc0de9a430e8935ff7fa3c8306d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed1ea9cc_01b69478",
         "filename": "ui/ozone/platform/drm/gpu/gbm_surfaceless.cc",
         "patchSetId": 2
@@ -39,6 +57,30 @@
       "revId": "b0b7719a4771cfc0de9a430e8935ff7fa3c8306d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba35e74d_6f2986ce",
+        "filename": "ui/ozone/platform/drm/gpu/gbm_surfaceless.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-07-07T21:29:00Z",
+      "side": 1,
+      "message": "Changed the name, added a comment where we call it and linked to a bug.",
+      "parentUuid": "ed1ea9cc_01b69478",
+      "range": {
+        "startLine": 250,
+        "startChar": 5,
+        "endLine": 250,
+        "endChar": 19
+      },
+      "revId": "b0b7719a4771cfc0de9a430e8935ff7fa3c8306d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
