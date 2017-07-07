@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "eed46d7b_a64da5a6",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-07T02:18:38Z",
+      "side": 1,
+      "message": "Ok, keeping the tests here.\n\nI added IsCommandIdVisible to RenderViewContextMenu. To test custom extension menu item command ids, I added tests to this file. To test standard menu items, I added tests to RenderViewContextMenuBrowsertest.",
+      "parentUuid": "f49f0c79_b2931291",
+      "revId": "e92cf4239940278aaf91a5eebbc5c19cc9e3c944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62fc6a66_ff768072",
         "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
         "patchSetId": 2
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "21d3cede_75d8b265",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-07T02:18:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62fc6a66_ff768072",
+      "revId": "e92cf4239940278aaf91a5eebbc5c19cc9e3c944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a9597ac_0efc6042",
         "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
         "patchSetId": 2
@@ -65,6 +101,24 @@
       "writtenOn": "2017-07-05T20:24:49Z",
       "side": 1,
       "message": "This will be leaked, won\u0027t it?",
+      "revId": "e92cf4239940278aaf91a5eebbc5c19cc9e3c944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a7faf69_11e7a2f7",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-07T02:18:38Z",
+      "side": 1,
+      "message": "I believe this should be addressed in this new patch.",
+      "parentUuid": "0a9597ac_0efc6042",
       "revId": "e92cf4239940278aaf91a5eebbc5c19cc9e3c944",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -88,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "cd0bbb81_d1210d45",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-07T02:18:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4812199_9c4295e8",
+      "revId": "e92cf4239940278aaf91a5eebbc5c19cc9e3c944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac5c5a5a_47389599",
         "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
         "patchSetId": 2
@@ -102,6 +174,24 @@
       "revId": "e92cf4239940278aaf91a5eebbc5c19cc9e3c944",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d6ff4b1_fa5fd1bd",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-07T02:18:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac5c5a5a_47389599",
+      "revId": "e92cf4239940278aaf91a5eebbc5c19cc9e3c944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "db63eeb5_f162ef18",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menus_api_helpers.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-07T02:18:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0657351c_242ce990",
+      "revId": "e92cf4239940278aaf91a5eebbc5c19cc9e3c944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61f4144c_1acec26b",
         "filename": "chrome/browser/extensions/extension_context_menu_model.cc",
         "patchSetId": 2
@@ -139,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "825d39f4_550b28e9",
+        "filename": "chrome/browser/extensions/extension_context_menu_model.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-07T02:18:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61f4144c_1acec26b",
+      "revId": "e92cf4239940278aaf91a5eebbc5c19cc9e3c944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2dfa87c_37d20a13",
         "filename": "chrome/browser/extensions/extension_context_menu_model_unittest.cc",
         "patchSetId": 2
@@ -153,6 +279,24 @@
       "revId": "e92cf4239940278aaf91a5eebbc5c19cc9e3c944",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23742e96_3f683100",
+        "filename": "chrome/browser/extensions/extension_context_menu_model_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-07T02:18:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2dfa87c_37d20a13",
+      "revId": "e92cf4239940278aaf91a5eebbc5c19cc9e3c944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -191,6 +335,24 @@
     },
     {
       "key": {
+        "uuid": "88b56280_19bcf995",
+        "filename": "chrome/browser/extensions/extension_context_menu_model_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-07T02:18:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac9f7b32_aa9d915e",
+      "revId": "e92cf4239940278aaf91a5eebbc5c19cc9e3c944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "067642d4_aab264b8",
         "filename": "chrome/browser/extensions/extension_context_menu_model_unittest.cc",
         "patchSetId": 2
@@ -226,6 +388,24 @@
     },
     {
       "key": {
+        "uuid": "b834372f_db3f080f",
+        "filename": "chrome/browser/extensions/extension_context_menu_model_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-07T02:18:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a9609ed_ec2de013",
+      "revId": "e92cf4239940278aaf91a5eebbc5c19cc9e3c944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "588d6197_6e066624",
         "filename": "chrome/browser/extensions/menu_manager.cc",
         "patchSetId": 2
@@ -249,6 +429,30 @@
     },
     {
       "key": {
+        "uuid": "edd1524f_743c3b10",
+        "filename": "chrome/browser/extensions/menu_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-07T02:18:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "588d6197_6e066624",
+      "range": {
+        "startLine": 249,
+        "startChar": 70,
+        "endLine": 249,
+        "endChar": 73
+      },
+      "revId": "e92cf4239940278aaf91a5eebbc5c19cc9e3c944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15cdf831_17941dac",
         "filename": "chrome/browser/extensions/menu_manager.cc",
         "patchSetId": 2
@@ -260,6 +464,47 @@
       "writtenOn": "2017-07-05T20:24:49Z",
       "side": 1,
       "message": "nit: We should maybe add a TODO(catmullings): Remove this in MXX+3 when all prefs should be migrated.",
+      "revId": "e92cf4239940278aaf91a5eebbc5c19cc9e3c944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4f23b71_702ab9f4",
+        "filename": "chrome/browser/extensions/menu_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-07T02:18:38Z",
+      "side": 1,
+      "message": "Added the comment. What do you mean by migrating prefs? I presume that a user\u0027s local extension prefs will be refreshed/updated in a later release of chrome.",
+      "parentUuid": "15cdf831_17941dac",
+      "revId": "e92cf4239940278aaf91a5eebbc5c19cc9e3c944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4178e76e_76811817",
+        "filename": "chrome/browser/renderer_context_menu/render_view_context_menu_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-07T02:18:38Z",
+      "side": 1,
+      "message": "FYI, this test still exists. See line 232.",
+      "range": {
+        "startLine": 206,
+        "startChar": 23,
+        "endLine": 206,
+        "endChar": 52
+      },
       "revId": "e92cf4239940278aaf91a5eebbc5c19cc9e3c944",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -301,6 +546,24 @@
     },
     {
       "key": {
+        "uuid": "ccf29181_c97612a1",
+        "filename": "chrome/test/data/extensions/api_test/context_menus/item_visibility/create_item/background.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-07T02:18:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "609aa8d0_4efe10de",
+      "revId": "e92cf4239940278aaf91a5eebbc5c19cc9e3c944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04914656_475bf04d",
         "filename": "chrome/test/data/extensions/api_test/context_menus/item_visibility/create_item/popup.js",
         "patchSetId": 2
@@ -315,6 +578,24 @@
       "revId": "e92cf4239940278aaf91a5eebbc5c19cc9e3c944",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c9ecb46_17814074",
+        "filename": "chrome/test/data/extensions/api_test/context_menus/item_visibility/create_item/popup.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-07T02:18:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04914656_475bf04d",
+      "revId": "e92cf4239940278aaf91a5eebbc5c19cc9e3c944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -376,6 +657,48 @@
     },
     {
       "key": {
+        "uuid": "87bb7e2c_6bcfb9a8",
+        "filename": "chrome/test/data/extensions/api_test/context_menus/item_visibility/create_item/popup.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-07T02:18:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c9467d6_4cfa35a8",
+      "range": {
+        "startLine": 6,
+        "startChar": 28,
+        "endLine": 6,
+        "endChar": 35
+      },
+      "revId": "e92cf4239940278aaf91a5eebbc5c19cc9e3c944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a59f4d4a_102856c3",
+        "filename": "chrome/test/data/extensions/api_test/context_menus/item_visibility/create_item/popup.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-07T02:18:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5407569_80487df8",
+      "revId": "e92cf4239940278aaf91a5eebbc5c19cc9e3c944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5bd4e887_3fb069fc",
         "filename": "chrome/test/data/extensions/api_test/context_menus/item_visibility/create_item/popup.js",
         "patchSetId": 2
@@ -390,6 +713,24 @@
       "revId": "e92cf4239940278aaf91a5eebbc5c19cc9e3c944",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d4c874c_6258727e",
+        "filename": "chrome/test/data/extensions/api_test/context_menus/item_visibility/create_item/popup.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-07T02:18:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5bd4e887_3fb069fc",
+      "revId": "e92cf4239940278aaf91a5eebbc5c19cc9e3c944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -410,6 +751,24 @@
     },
     {
       "key": {
+        "uuid": "6cf7d372_a60c3899",
+        "filename": "chrome/test/data/extensions/api_test/context_menus/item_visibility/item_limit/popup.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-07T02:18:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1c0e32b_cf93ad64",
+      "revId": "e92cf4239940278aaf91a5eebbc5c19cc9e3c944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8dbd2ded_854645f0",
         "filename": "chrome/test/data/extensions/api_test/context_menus/item_visibility/item_limit/popup.js",
         "patchSetId": 2
@@ -424,6 +783,24 @@
       "revId": "e92cf4239940278aaf91a5eebbc5c19cc9e3c944",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f38bd62_cfd63d49",
+        "filename": "chrome/test/data/extensions/api_test/context_menus/item_visibility/item_limit/popup.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-07-07T02:18:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8dbd2ded_854645f0",
+      "revId": "e92cf4239940278aaf91a5eebbc5c19cc9e3c944",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
