@@ -35,6 +35,7 @@ ASH_EXPORT extern const char kAshForceTabletModeAuto[];
 ASH_EXPORT extern const char kAshForceTabletModeClamshell[];
 ASH_EXPORT extern const char kAshForceTabletModeTouchView[];
 ASH_EXPORT extern const char kAshHideNotificationsForFactory[];
+ASH_EXPORT extern const char kAshHideTitlebarsForTablet[];
 ASH_EXPORT extern const char kAshShelfColor[];
 ASH_EXPORT extern const char kAshShelfColorEnabled[];
 ASH_EXPORT extern const char kAshShelfColorDisabled[];

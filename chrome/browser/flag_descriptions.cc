@@ -1825,6 +1825,10 @@ const char kGestureEditingDescription[] =
     "Enable/Disable gesture editing option in the settings page for the "
     "virtual keyboard.";
 
+const char kHideTitlebarsForTabletName[] = "Hide title bars in tablet mode.";
+const char kHideTitlebarsForTabletDescription[] =
+    "Hides title bars of windows when the device is in tablet mode.";
+
 const char kCaptivePortalBypassProxyName[] =
     "Bypass proxy for Captive Portal Authorization";
 
