@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "36f2ea73_5524b1ef",
+        "filename": "ash/laser/laser_pointer_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-07T20:00:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09fd7248_dc611735",
+      "revId": "a8ef980f7c50395d63c5901dddd26cefb18ef488",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d50babbb_3b863fb8",
         "filename": "cc/DEPS",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "a8ef980f7c50395d63c5901dddd26cefb18ef488",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "849a43a8_46672877",
+        "filename": "cc/DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-07T20:00:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d50babbb_3b863fb8",
+      "revId": "a8ef980f7c50395d63c5901dddd26cefb18ef488",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "00fc1e32_baaa90fb",
+        "filename": "components/exo/buffer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-07T20:00:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efaa6701_9ded68a6",
+      "revId": "a8ef980f7c50395d63c5901dddd26cefb18ef488",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7cac5ae8_0c6183bf",
         "filename": "components/viz/common/BUILD.gn",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-07-07T19:15:28Z",
       "side": 1,
       "message": "Can you verify you have everything needed to DEPS in quads/ and resources/? I don\u0027t see base or skia but maybe they come for free? Not sure if anything else.\n\nI\u0027m deleting all inherited deps for them in https://chromium-review.googlesource.com/c/563522/.",
+      "revId": "a8ef980f7c50395d63c5901dddd26cefb18ef488",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52cb6183_ce05ffe7",
+        "filename": "components/viz/common/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-07T20:00:50Z",
+      "side": 1,
+      "message": "skia is already there. I\u0027m adding base.",
+      "parentUuid": "7cac5ae8_0c6183bf",
       "revId": "a8ef980f7c50395d63c5901dddd26cefb18ef488",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "8fe00099_fa179ac6",
+        "filename": "components/viz/common/resources/DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-07T20:00:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d745a636_ad1b8e6c",
+      "revId": "a8ef980f7c50395d63c5901dddd26cefb18ef488",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a677f716_f4be5285",
         "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasFrameDispatcherImpl.cpp",
         "patchSetId": 3
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "8d2b7ee1_6b80f634",
+        "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasFrameDispatcherImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-07T20:00:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a677f716_f4be5285",
+      "revId": "a8ef980f7c50395d63c5901dddd26cefb18ef488",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d13267a_663e4861",
         "filename": "ui/compositor/compositor.cc",
         "patchSetId": 3
@@ -118,6 +226,24 @@
       "revId": "a8ef980f7c50395d63c5901dddd26cefb18ef488",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb025232_ff238018",
+        "filename": "ui/compositor/compositor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-07T20:00:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d13267a_663e4861",
+      "revId": "a8ef980f7c50395d63c5901dddd26cefb18ef488",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
