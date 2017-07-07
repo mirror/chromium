@@ -6,7 +6,7 @@
 
 #include "base/memory/ptr_util.h"
 #include "base/trace_event/trace_event.h"
-#include "chrome/browser/android/vr_shell/gltf_parser.h"
+#include "chrome/browser/vr/gltf_parser.h"
 #include "chrome/grit/browser_resources.h"
 #include "third_party/skia/include/core/SkCanvas.h"
 #include "third_party/skia/include/core/SkRect.h"

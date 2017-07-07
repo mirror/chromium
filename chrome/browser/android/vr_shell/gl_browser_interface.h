@@ -8,7 +8,7 @@
 #include <memory>
 
 #include "base/android/jni_weak_ref.h"
-#include "chrome/browser/android/vr_shell/ui_interface.h"
+#include "chrome/browser/vr/ui_interface.h"
 #include "device/vr/android/gvr/gvr_gamepad_data_provider.h"
 #include "device/vr/vr_service.mojom.h"
 #include "third_party/gvr-android-sdk/src/libraries/headers/vr/gvr/capi/include/gvr_types.h"

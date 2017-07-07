@@ -10,8 +10,8 @@
 #include <vector>
 
 #include "base/macros.h"
-#include "chrome/browser/android/vr_shell/ui_element_renderer.h"
 #include "chrome/browser/android/vr_shell/vr_controller_model.h"
+#include "chrome/browser/vr/ui_element_renderer.h"
 #include "ui/gfx/geometry/size.h"
 #include "ui/gfx/geometry/size_f.h"
 #include "ui/gfx/transform.h"

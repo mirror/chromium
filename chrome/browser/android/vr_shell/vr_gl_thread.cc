@@ -6,13 +6,13 @@
 
 #include <utility>
 
-#include "chrome/browser/android/vr_shell/toolbar_state.h"
-#include "chrome/browser/android/vr_shell/ui_interface.h"
-#include "chrome/browser/android/vr_shell/ui_scene.h"
-#include "chrome/browser/android/vr_shell/ui_scene_manager.h"
 #include "chrome/browser/android/vr_shell/vr_input_manager.h"
 #include "chrome/browser/android/vr_shell/vr_shell.h"
 #include "chrome/browser/android/vr_shell/vr_shell_gl.h"
+#include "chrome/browser/vr/toolbar_state.h"
+#include "chrome/browser/vr/ui_interface.h"
+#include "chrome/browser/vr/ui_scene.h"
+#include "chrome/browser/vr/ui_scene_manager.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 
 namespace vr_shell {
