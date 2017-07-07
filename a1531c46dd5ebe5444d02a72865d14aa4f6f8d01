@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac8a8aae_9b2e5e80",
+        "filename": "content/browser/blob_storage/blob_registry_wrapper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-07-07T18:20:21Z",
+      "side": 1,
+      "message": "nit: DCHECK we\u0027re on IO thread?",
+      "revId": "a1531c46dd5ebe5444d02a72865d14aa4f6f8d01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b8ea73b_2b1396c2",
+        "filename": "storage/browser/blob/blob_registry_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-07-07T18:20:21Z",
+      "side": 1,
+      "message": "Can you double check that this is the appropriate \u0027unknown\u0027 time value? From memory I remember it being like uint64_max, but this might work too.",
+      "range": {
+        "startLine": 221,
+        "startChar": 0,
+        "endLine": 221,
+        "endChar": 80
+      },
+      "revId": "a1531c46dd5ebe5444d02a72865d14aa4f6f8d01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a79ae32_5480a56e",
+        "filename": "storage/browser/blob/blob_registry_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-07-07T18:20:21Z",
+      "side": 1,
+      "message": "same",
+      "revId": "a1531c46dd5ebe5444d02a72865d14aa4f6f8d01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
