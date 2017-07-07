@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08226d23_67831b35",
+        "filename": "media/base/scoped_callback_runner.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-07-07T19:55:30Z",
+      "side": 1,
+      "message": "Hmm, I don\u0027t like macros too as it tends to cause name conflicts.\nWithout macros, we need templates similar to the PS1, but its pitfall seems smaller.\nCan we forward the default args as tuple like below if it\u0027s not too hard to read?\n\ntemplate \u003ctypename... Args\u003e\nstd::tuple\u003cArgs\u0026\u0026...\u003e DefaultArgs(Args\u0026\u0026... args) {\n  return std::forward_as_tuple\u003cArgs...\u003e(args...);\n}\n\ntemplate \u003ctypename Tuple, size_t... Ns\u003e\nSCRH::ScopedCallbackRunnerHelper(CallbackType callback, Tuple\u0026\u0026 args,\n                                 base::IndexSequence\u003cNs...\u003e)\n    : callback_(std::move(callback)) {\n  destruction_callback_ \u003d\n      base::BindOnce(\u0026ScopedCallbackRunnerHelper::Run, base::Unretained(this),\n                     std::get\u003cNs\u003e(std::forward\u003cTuple\u003e(args))...);\n}\n\ntemplate \u003ctypename T, typename Tuple\u003e\ninline base::OnceCallback\u003cT\u003e ScopedCallbackRunner(base::OnceCallback\u003cT\u003e cb,\n                                                  Tuple\u0026\u0026... args) {\n  return base::BindOnce(\n      \u0026internal::ScopedCallbackRunnerHelper\u003cT\u003e::Run,\n      base::MakeUnique\u003cinternal::ScopedCallbackRunnerHelper\u003cT\u003e\u003e(\n          std::move(cb), std::forward\u003cTuple\u003e(args)...),\n          base::MakeIndexSequenceForTuple\u003cTuple\u003e());\n}",
+      "range": {
+        "startLine": 29,
+        "startChar": 37,
+        "endLine": 29,
+        "endChar": 0
+      },
+      "revId": "aae90e9e410d80dec37be030eb27efb701913c93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
