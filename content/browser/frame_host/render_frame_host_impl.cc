@@ -511,13 +511,21 @@ RenderFrameHostImpl::RenderFrameHostImpl(SiteInstance* site_instance,
     // https://crbug.com/545684
     render_widget_host_ =
         RenderWidgetHostImpl::FromID(GetProcess()->GetID(), widget_routing_id);
+
+    mojom::WidgetInputHandlerAssociatedPtr widget_handler;
+    if (frame_input_handler_) {
+      frame_input_handler_->GetWidgetInputHandler(
+          mojo::MakeRequest(&widget_handler));
+    }
     if (!render_widget_host_) {
       DCHECK(frame_tree_node->parent());
-      render_widget_host_ = new RenderWidgetHostImpl(rwh_delegate, GetProcess(),
-                                                     widget_routing_id, hidden);
+      render_widget_host_ = new RenderWidgetHostImpl(
+          rwh_delegate, GetProcess(), widget_routing_id,
+          std::move(widget_handler), hidden);
       render_widget_host_->set_owned_by_render_frame_host(true);
     } else {
       DCHECK(!render_widget_host_->owned_by_render_frame_host());
+      render_widget_host_->SetWidgetInputHandler(std::move(widget_handler));
     }
     render_widget_host_->input_router()->SetFrameTreeNodeId(
         frame_tree_node_->frame_tree_node_id());
