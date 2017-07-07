@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2a0beb6a_075ad519",
+        "filename": "services/ui/public/cpp/gpu/gpu.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-07T04:24:15Z",
+      "side": 1,
+      "message": "Oh yeah, sorry, I forgot to modify this method :P",
+      "parentUuid": "827cd821_6fc0cc60",
+      "revId": "be63cde9757ef837d682d1ce35622d783f80bdc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e634c06c_9740a8bc",
         "filename": "services/ui/public/cpp/gpu/gpu.cc",
         "patchSetId": 19
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ff1a7194_b2328381",
+        "filename": "services/ui/public/cpp/gpu/gpu.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-07T04:24:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e634c06c_9740a8bc",
+      "revId": "be63cde9757ef837d682d1ce35622d783f80bdc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69a06184_482ae2dd",
         "filename": "services/ui/public/cpp/gpu/gpu.cc",
         "patchSetId": 19
@@ -50,6 +86,24 @@
       "revId": "be63cde9757ef837d682d1ce35622d783f80bdc4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c33158a0_0ce90d57",
+        "filename": "services/ui/public/cpp/gpu/gpu.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-07T04:24:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69a06184_482ae2dd",
+      "revId": "be63cde9757ef837d682d1ce35622d783f80bdc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
