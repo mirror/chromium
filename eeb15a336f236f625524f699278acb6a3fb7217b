@@ -22,6 +22,30 @@
       "revId": "eeb15a336f236f625524f699278acb6a3fb7217b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6ba7f98_18cf7906",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-07-07T15:56:49Z",
+      "side": 1,
+      "message": "On line #431 I handle both enter and esc keys, and tab is handled with focus manager. They all call this ToggleEditingState function. :)",
+      "parentUuid": "1e7e08db_bf8dc936",
+      "range": {
+        "startLine": 440,
+        "startChar": 22,
+        "endLine": 440,
+        "endChar": 38
+      },
+      "revId": "eeb15a336f236f625524f699278acb6a3fb7217b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
