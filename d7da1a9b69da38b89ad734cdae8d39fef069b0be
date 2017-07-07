@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "06648897_8569b61a",
+        "filename": "net/log/log_urls_to_file.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-07T17:57:02Z",
+      "side": 1,
+      "message": "IIRC, components/net_log isn\u0027t included in content/shell. Therefore, shell_network_delegate cannot access it.\n\nnet/url_request might make more sense, though it doesn\u0027t depend on anything in net/url_request (and vice versa). But the name makes more sense.",
+      "parentUuid": "a31a14ed_08bee6a0",
+      "range": {
+        "startLine": 15,
+        "startChar": 19,
+        "endLine": 15,
+        "endChar": 0
+      },
+      "revId": "d7da1a9b69da38b89ad734cdae8d39fef069b0be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5c5e3b71_43f1d5b4",
         "filename": "net/log/log_urls_to_file.h",
         "patchSetId": 9
