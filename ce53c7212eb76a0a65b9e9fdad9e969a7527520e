@@ -109,6 +109,24 @@
     },
     {
       "key": {
+        "uuid": "50dc7d6b_9ca03e5a",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParser.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1190,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-07-07T05:45:13Z",
+      "side": 1,
+      "message": "I\u0027ve added a bool output param in ParseLonghandViaAPI.",
+      "parentUuid": "c7798cad_eee06197",
+      "revId": "ce53c7212eb76a0a65b9e9fdad9e969a7527520e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "123b3d09_832cc6fd",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParserHelpers.cpp",
         "patchSetId": 4
@@ -126,6 +144,24 @@
     },
     {
       "key": {
+        "uuid": "af039e79_d4decf38",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParserHelpers.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1561,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-07-07T05:45:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "123b3d09_832cc6fd",
+      "revId": "ce53c7212eb76a0a65b9e9fdad9e969a7527520e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2cf4855_3272c79f",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParserHelpers.cpp",
         "patchSetId": 4
@@ -137,6 +173,24 @@
       "writtenOn": "2017-07-07T05:28:44Z",
       "side": 1,
       "message": "is it weird that with the introduction of this patch CSSPropertyParserHelpers calls to the APIs, which in turn call to CSSPropertyParserHelpers?",
+      "revId": "ce53c7212eb76a0a65b9e9fdad9e969a7527520e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adda3298_99e5ccbb",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParserHelpers.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1572,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-07-07T05:45:13Z",
+      "side": 1,
+      "message": "It\u0027s not weird to me, because this is Helpers file containing all aux functions. We could consider splitting it up later, but I would suggest we hold it off until ribbon is finished.",
+      "parentUuid": "e2cf4855_3272c79f",
       "revId": "ce53c7212eb76a0a65b9e9fdad9e969a7527520e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
