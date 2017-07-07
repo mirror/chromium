@@ -13,12 +13,9 @@ namespace zucchini {
 
 class BufferSinkTest : public testing::Test {
  protected:
-  void SetUp() override {
-    buffer_ = std::vector<uint8_t>(10, 0);
-    sink_ = BufferSink(buffer_.data(), buffer_.size());
-  }
+  void SetUp() override { sink_ = BufferSink(buffer_.data(), buffer_.size()); }
 
-  std::vector<uint8_t> buffer_;
+  std::vector<uint8_t> buffer_ = std::vector<uint8_t>(10, 0);
   BufferSink sink_;
 };
 
@@ -36,19 +33,7 @@ TEST_F(BufferSinkTest, PutRange) {
   std::vector<uint8_t> range = {0x10, 0x32, 0x54, 0x76, 0x98, 0xBA,
                                 0xDC, 0xFE, 0x10, 0x00, 0x42};
   EXPECT_FALSE(sink_.PutRange(range.begin(), range.end()));
-
-  EXPECT_TRUE(sink_.PutRange(range.begin(), range.begin() + 8));
-  EXPECT_EQ(std::vector<uint8_t>(
-                {0x10, 0x32, 0x54, 0x76, 0x98, 0xBA, 0xDC, 0xFE, 0x00, 0x00}),
-            buffer_);
-
-  EXPECT_EQ(size_t(2), sink_.Remaining());
-  EXPECT_FALSE(sink_.PutRange(range.begin(), range.begin() + 4));
-
-  // range is not written
-  EXPECT_EQ(std::vector<uint8_t>(
-                {0x10, 0x32, 0x54, 0x76, 0x98, 0xBA, 0xDC, 0xFE, 0x00, 0x00}),
-            buffer_);
+  EXPECT_TRUE(sink_.PutRange(range.begin(), range.begin() + 10));
 }
 
 }  // namespace zucchini

@@ -13,25 +13,6 @@ BufferSource& BufferSource::Skip(size_type n) {
   return *this;
 }
 
-bool BufferSource::CheckNextBytes(std::initializer_list<uint8_t> bytes) const {
-  if (begin() + bytes.size() > end())
-    return false;
-  const_iterator it = begin();
-  for (auto byte : bytes) {
-    if (byte != *it++)
-      return false;
-  }
-  return true;
-}
-
-bool BufferSource::ConsumeBytes(std::initializer_list<uint8_t> bytes) {
-  if (!CheckNextBytes(bytes)) {
-    return false;
-  }
-  remove_prefix(bytes.size());
-  return true;
-}
-
 ConstBufferView BufferSource::GetRegion(size_t count) {
   DCHECK(begin() != nullptr);
   if (begin() + count > end()) {
@@ -42,6 +23,26 @@ ConstBufferView BufferSource::GetRegion(size_t count) {
   ConstBufferView buffer(begin(), count);
   remove_prefix(count);
   return buffer;
+}
+
+bool BufferSource::ExpectBytes(std::initializer_list<uint8_t> bytes,
+                               size_type pos) const {
+  if (begin() + pos + bytes.size() > end())
+    return false;
+  const_iterator it = begin() + pos;
+  for (auto byte : bytes) {
+    if (byte != *it++)
+      return false;
+  }
+  return true;
+}
+
+bool BufferSource::ConsumeBytes(std::initializer_list<uint8_t> bytes) {
+  if (!ExpectBytes(bytes)) {
+    return false;
+  }
+  remove_prefix(bytes.size());
+  return true;
 }
 
 size_t BufferSource::Remaining() const {

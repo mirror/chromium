@@ -28,52 +28,30 @@ TEST_F(BufferSourceTest, Skip) {
   EXPECT_EQ(0, source_.Remaining());
 }
 
-TEST_F(BufferSourceTest, CheckNextBytes) {
-  EXPECT_TRUE(source_.CheckNextBytes({0x10, 0x32, 0x54, 0x76}));
-  source_.Skip(4);
-  EXPECT_TRUE(source_.CheckNextBytes({0x98, 0xBA, 0xDC, 0xFE}));
-  EXPECT_FALSE(source_.CheckNextBytes({0x10, 0x00}));
-
-  source_.Skip(4);
-  EXPECT_EQ(size_t(2), source_.Remaining());
-
-  // Goes beyond end by 2 bytes.
-  EXPECT_FALSE(source_.CheckNextBytes({0x10, 0x00, 0x00, 0x00}));
-  EXPECT_EQ(size_t(2), source_.Remaining());
+TEST_F(BufferSourceTest, ExpectBytes) {
+  EXPECT_TRUE(source_.ExpectBytes({0x10, 0x32, 0x54, 0x76}));
+  EXPECT_TRUE(source_.ExpectBytes({0x98, 0xBA, 0xDC, 0xFE}, 4));
+  EXPECT_FALSE(source_.ExpectBytes({0x10, 0x00}));
+  EXPECT_FALSE(source_.ExpectBytes({0x10, 0x00, 0x00, 0x00}, 8));
 }
 
 TEST_F(BufferSourceTest, ConsumeBytes) {
   EXPECT_FALSE(source_.ConsumeBytes({0x10, 0x00}));
   EXPECT_TRUE(source_.ConsumeBytes({0x10, 0x32, 0x54, 0x76}));
   EXPECT_TRUE(source_.ConsumeBytes({0x98, 0xBA, 0xDC, 0xFE}));
-  EXPECT_EQ(size_t(2), source_.Remaining());
-
-  // Goes beyond end by 2 bytes.
   EXPECT_FALSE(source_.ConsumeBytes({0x10, 0x00, 0x00, 0x00}));
-  EXPECT_EQ(size_t(2), source_.Remaining());
 }
 
-TEST_F(BufferSourceTest, CheckNextValue) {
-  EXPECT_TRUE(source_.CheckNextValue(uint32_t(0x76543210)));
-  EXPECT_FALSE(source_.CheckNextValue(uint32_t(0x0)));
-  EXPECT_TRUE(source_.CheckNextValue(uint64_t(0xFEDCBA9876543210)));
-  EXPECT_FALSE(source_.CheckNextValue(uint64_t(0x0)));
-
-  source_.Skip(8);
-  EXPECT_EQ(size_t(2), source_.Remaining());
-
-  // Goes beyond end by 2 bytes.
-  EXPECT_FALSE(source_.CheckNextValue(uint32_t(0x1000)));
+TEST_F(BufferSourceTest, ExpectValue) {
+  EXPECT_TRUE(source_.ExpectValue(uint32_t(0x76543210)));
+  EXPECT_TRUE(source_.ExpectValue(uint32_t(0xFEDCBA98), 4));
+  EXPECT_FALSE(source_.ExpectValue(uint32_t(0x0)));
+  EXPECT_TRUE(source_.ExpectValue(uint64_t(0xFEDCBA9876543210)));
+  EXPECT_FALSE(source_.ExpectValue(uint64_t(0x0)));
+  EXPECT_FALSE(source_.ExpectValue(uint64_t(0x0010), 8));
 }
 
-#pragma pack(push, 1)  // Supported by MSVC and GCC. Ensures no gaps in packing.
-struct ValueType {
-  uint32_t a;
-  uint16_t b;
-};
-#pragma pack(pop)
-
-TEST_F(BufferSourceTest, ReadValueIntegral) {
+TEST_F(BufferSourceTest, ReadValue) {
   uint32_t value = 0;
   EXPECT_TRUE(source_.ReadValue(&value));
   EXPECT_EQ(uint32_t(0x76543210), value);
@@ -84,14 +62,6 @@ TEST_F(BufferSourceTest, ReadValueIntegral) {
   EXPECT_EQ(size_t(2), source_.Remaining());
 
   EXPECT_FALSE(source_.ReadValue(&value));
-}
-
-TEST_F(BufferSourceTest, ReadValueAggregate) {
-  ValueType value = {};
-  EXPECT_TRUE(source_.ReadValue(&value));
-  EXPECT_EQ(uint32_t(0x76543210), value.a);
-  EXPECT_EQ(uint32_t(0xBA98), value.b);
-  EXPECT_EQ(size_t(4), source_.Remaining());
 }
 
 TEST_F(BufferSourceTest, GetRegion) {
@@ -115,7 +85,7 @@ TEST_F(BufferSourceTest, GetRegion) {
   EXPECT_EQ(size_t(0), source_.Remaining());
 }
 
-TEST_F(BufferSourceTest, GetPointerIntegral) {
+TEST_F(BufferSourceTest, GetPointer) {
   const uint32_t* ptr = source_.GetPointer<uint32_t>();
   EXPECT_NE(nullptr, ptr);
   EXPECT_EQ(uint32_t(0x76543210), *ptr);
@@ -129,34 +99,13 @@ TEST_F(BufferSourceTest, GetPointerIntegral) {
   EXPECT_EQ(nullptr, source_.GetPointer<uint32_t>());
 }
 
-TEST_F(BufferSourceTest, GetPointerAggregate) {
-  const ValueType* ptr = source_.GetPointer<ValueType>();
-  EXPECT_NE(nullptr, ptr);
-  EXPECT_EQ(uint32_t(0x76543210), ptr->a);
-  EXPECT_EQ(uint32_t(0xBA98), ptr->b);
-  EXPECT_EQ(size_t(4), source_.Remaining());
-}
-
-TEST_F(BufferSourceTest, GetArrayIntegral) {
+TEST_F(BufferSourceTest, GetArray) {
   EXPECT_EQ(nullptr, source_.GetArray<uint32_t>(3));
 
-  const uint32_t* ptr = source_.GetArray<uint32_t>(2);
+  const uint32_t* ptr = source_.GetArray<uint32_t>(1);
   EXPECT_NE(nullptr, ptr);
-  EXPECT_EQ(uint32_t(0x76543210), ptr[0]);
-  EXPECT_EQ(uint32_t(0xFEDCBA98), ptr[1]);
-  EXPECT_EQ(size_t(2), source_.Remaining());
-}
-
-TEST_F(BufferSourceTest, GetArrayAggregate) {
-  const ValueType* ptr = source_.GetArray<ValueType>(2);
-  EXPECT_EQ(nullptr, ptr);
-
-  ptr = source_.GetArray<ValueType>(1);
-
-  EXPECT_NE(nullptr, ptr);
-  EXPECT_EQ(uint32_t(0x76543210), ptr[0].a);
-  EXPECT_EQ(uint32_t(0xBA98), ptr[0].b);
-  EXPECT_EQ(size_t(4), source_.Remaining());
+  EXPECT_EQ(uint32_t(0x76543210), *ptr);
+  EXPECT_EQ(size_t(6), source_.Remaining());
 }
 
 }  // namespace zucchini

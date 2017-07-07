@@ -8,8 +8,6 @@
 #include <algorithm>
 #include <cstddef>
 #include <cstdint>
-#include <initializer_list>
-#include <type_traits>
 
 #include "chrome/installer/zucchini/buffer_view.h"
 
@@ -17,7 +15,7 @@ namespace zucchini {
 
 // BufferSource acts like an input stream with convenience methods to parse data
 // from a contiguous sequence of raw data. It keeps a cursor pointing at the
-// current read position.
+// current  read position.
 class BufferSource : public ConstBufferView {
  public:
   static BufferSource FromRange(const_iterator first, const_iterator last) {
@@ -32,26 +30,22 @@ class BufferSource : public ConstBufferView {
   using ConstBufferView::operator=;
   BufferSource& operator=(const BufferSource&) = default;
 
-  // Tries to move cursor forward by |n| bytes, or until end if data is
-  // exhausted. Returns a reference to self.
+  // Moves cursor forward by min(|n|, Remaining()). Returns a reference to self.
   BufferSource& Skip(size_type n);
 
-  // Returns true if |value| matches data starting at cursor when reinterpreted
-  // as the integral type |T|.
+  // Returns true if |value| can be read by reinterpreting data as type |T|,
+  // starting at cursor + |pos|.
   template <class T>
-  bool CheckNextValue(const T& value) const {
-    static_assert(std::is_integral<T>::value,
-                  "Value type must be an integral type");
-
+  bool ExpectValue(const T& value, size_type pos = 0) {
     DCHECK(begin() != nullptr);
-    if (begin() + sizeof(T) > end())
+    if (begin() + pos + sizeof(T) > end())
       return false;
-    return value == *reinterpret_cast<const T*>(begin());
+    return value == *reinterpret_cast<const T*>(begin() + pos);
   }
 
-  // Returns true if the next bytes.size() bytes at the cursor match those in
-  // |bytes|.
-  bool CheckNextBytes(std::initializer_list<uint8_t> bytes) const;
+  // Returns true if |bytes| can be read starting at cursor + |pos|.
+  bool ExpectBytes(std::initializer_list<uint8_t> bytes,
+                   size_type pos = 0) const;
 
   // Same as ExpectBytes(), but moves the cursor by bytes.size() if read is
   // successfull.
@@ -62,9 +56,6 @@ class BufferSource : public ConstBufferView {
   // if sufficient data is available, and false otherwise.
   template <class T>
   bool ReadValue(T* value) {
-    static_assert(std::is_standard_layout<T>::value,
-                  "Value type must be a standard layout type");
-
     DCHECK(begin() != nullptr);
     if (begin() + sizeof(T) > end())
       return false;
@@ -79,9 +70,6 @@ class BufferSource : public ConstBufferView {
   // available.
   template <class T>
   const T* GetPointer() {
-    static_assert(std::is_standard_layout<T>::value,
-                  "Value type must be a standard layout type");
-
     DCHECK(begin() != nullptr);
     if (begin() + sizeof(T) > end())
       return nullptr;
@@ -96,9 +84,6 @@ class BufferSource : public ConstBufferView {
   // Returns nullptr if insufficient data is available.
   template <class T>
   const T* GetArray(size_t count) {
-    static_assert(std::is_standard_layout<T>::value,
-                  "Value type must be a standard layout type");
-
     if (Remaining() < count * sizeof(T))
       return nullptr;
     const T* array = reinterpret_cast<const T*>(begin());
