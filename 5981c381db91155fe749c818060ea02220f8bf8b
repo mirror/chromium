@@ -259,6 +259,24 @@
     },
     {
       "key": {
+        "uuid": "ad411e26_3ba68791",
+        "filename": "chromeos/dbus/fake_cryptohome_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-07T06:00:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c149b9f7_91799533",
+      "revId": "5981c381db91155fe749c818060ea02220f8bf8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9df6cf6_c1ac5cd9",
         "filename": "chromeos/dbus/fake_cryptohome_client.h",
         "patchSetId": 2
@@ -291,6 +309,24 @@
       "revId": "5981c381db91155fe749c818060ea02220f8bf8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8666d68c_62df7773",
+        "filename": "chromeos/dbus/fake_cryptohome_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-07T06:00:24Z",
+      "side": 1,
+      "message": "Done. Great to know the doc. Thanks!",
+      "parentUuid": "a379bc44_2d82e181",
+      "revId": "5981c381db91155fe749c818060ea02220f8bf8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
