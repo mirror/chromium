@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc67ca0e_cfc9281c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-07T21:11:47Z",
+      "side": 1,
+      "message": "Create SchedulerWorkers on Demand",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 63
+      },
+      "revId": "46cc8803f5628f2a19dfd84cd078bbe747de3e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "460214b4_cb4523af",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-07T21:11:47Z",
+      "side": 1,
+      "message": "Currently, all SchedulerWorkers are created in Start(). With this change, one SchedulerWorker in addition to the number required based off of tasks in flight will be created in Start().\n\nAfter that, WakeUpOneWork() will create SchedulerWorkers as needed.",
+      "range": {
+        "startLine": 9,
+        "startChar": 51,
+        "endLine": 9,
+        "endChar": 56
+      },
+      "revId": "46cc8803f5628f2a19dfd84cd078bbe747de3e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdeda031_171d2274",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-07T21:11:47Z",
+      "side": 1,
+      "message": "auto_lock",
+      "range": {
+        "startLine": 229,
+        "startChar": 20,
+        "endLine": 229,
+        "endChar": 37
+      },
+      "revId": "46cc8803f5628f2a19dfd84cd078bbe747de3e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a92bab9_2d0913a0",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-07T21:11:47Z",
+      "side": 1,
+      "message": "Let\u0027s go ahead and adjust this as it previously restated the code.\n\n// Ensures we respect the Standby Thread Policy.\nconst int minimum_initial_workers \u003d params.standby_thread_policy() \u003d\u003d\n                            SchedulerWorkerPoolParams::StandbyThreadPolicy::ONE ? 1 : 0;\nconst int num_initial_workers \u003d std::max(num_wakeups_before_start_ + minimum_initial_workers, 1);",
+      "range": {
+        "startLine": 241,
+        "startChar": 0,
+        "endLine": 245,
+        "endChar": 39
+      },
+      "revId": "46cc8803f5628f2a19dfd84cd078bbe747de3e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de08f654_2a7ab5de",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-07T21:11:47Z",
+      "side": 1,
+      "message": "This should directly use |worker|",
+      "range": {
+        "startLine": 263,
+        "startChar": 6,
+        "endLine": 263,
+        "endChar": 32
+      },
+      "revId": "46cc8803f5628f2a19dfd84cd078bbe747de3e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4efea13_fd9ab48f",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-07T21:11:47Z",
+      "side": 1,
+      "message": "We don\u0027t need to CHECK on every creation. We only CHECK when we weren\u0027t able to create any workers.\n\nThis may be better broken up\n\nCreateAndRegisterSchedulerWorker() only does creation and is used by Start() so we can do the two phase startup when we create all necessary and then start.\n\nCreateRegisterAndStartSchedulerWorker() is used by WakeUpOneWorker() which calls CreateSchedulerWorker() and starts it.\n\nThis would also allow you to keep the workers created DCHECK in OnMainEntry.",
+      "range": {
+        "startLine": 626,
+        "startChar": 2,
+        "endLine": 626,
+        "endChar": 34
+      },
+      "revId": "46cc8803f5628f2a19dfd84cd078bbe747de3e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8336c07a_c25b77fa",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-07T21:11:47Z",
+      "side": 1,
+      "message": "StandbyThreadPolicy",
+      "range": {
+        "startLine": 783,
+        "startChar": 5,
+        "endLine": 783,
+        "endChar": 19
+      },
+      "revId": "46cc8803f5628f2a19dfd84cd078bbe747de3e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
