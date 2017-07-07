@@ -238,6 +238,7 @@ void DevToolsEmulator::EnableDeviceEmulation(
     DisableMobileEmulation();
 
   web_view_->SetCompositorDeviceScaleFactorOverride(params.device_scale_factor);
+  web_view_->ResetScaleStateImmediately();
   UpdateRootLayerTransform();
   // TODO(dgozman): mainFrameImpl() is null when it's remote. Figure out how
   // we end up with enabling emulation in this case.
