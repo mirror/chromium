@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "36eb8d8c_93a0219b",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 4718,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-07T05:56:47Z",
+      "side": 1,
+      "message": "ScrollableArea::ScrollIntoView says it returns the new location of the rect in *content* coordinates. This is a difference between FrameView and PaintLayerScrollableArea. Scrolling a PLSA (i.e. a \u003cdiv\u003e) changes the rect\u0027s location relative to the document origin. Scrolling a FrameView does not.\n\nIMHO, it\u0027s useful to be able to specify the coordinate space for the return/arguments of a function in a concrete way like this so it\u0027d be preferable to do this adjustment in LayoutBox just for FrameView (perhaps with a comment explaining why).",
+      "parentUuid": "e3a508de_13de8d93",
+      "range": {
+        "startLine": 4718,
+        "startChar": 17,
+        "endLine": 4718,
+        "endChar": 21
+      },
+      "revId": "ee0005269e04960c744ed028cfb8833322ece093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "21b07f9c_56f47f04",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
         "patchSetId": 16
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-06T23:40:36Z",
       "side": 1,
       "message": "A layout test failed with a image diff and I located a 0.5 diff from this value. So I added a Round here.",
+      "range": {
+        "startLine": 4719,
+        "startChar": 29,
+        "endLine": 4719,
+        "endChar": 44
+      },
+      "revId": "ee0005269e04960c744ed028cfb8833322ece093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0238e392_f3bc7d02",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 4719,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-07T05:56:47Z",
+      "side": 1,
+      "message": "I\u0027ve personally been warned about using Round before as it can lead to less predictable behavior, thought to be honest, I\u0027m not totally sure I understand the nuances here. Perhaps we could use floor/ceil?",
+      "parentUuid": "21b07f9c_56f47f04",
       "range": {
         "startLine": 4719,
         "startChar": 29,

@@ -238,6 +238,30 @@
     },
     {
       "key": {
+        "uuid": "f1563fa8_2428a1f9",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1798,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-07T05:56:47Z",
+      "side": 1,
+      "message": "There\u0027s two notions of a sequenced scroll we\u0027re discussing:\n\n1) Scroll that comes from the animation/execution of a scroll from the sequencer itself - it should prevent aborting the sequenced scroll\n\n2) Beginning a sequenced scroll where rather than actually causing a scroll, we should queue it in the sequencer.\n\nIn this case, I think we want #2 here. My definition for kSequencedSmoothScroll in the previous patchset was #1. I think these are two separate notions. I think I\u0027d prefer adding a param, bool is_for_scroll_sequence, to ScrollIntoView and other functions that need it and preserving the kSequencedSmoothScroll type for the non-aborting scrolls coming from the sequencer. Does that sound ok?",
+      "parentUuid": "83c398a0_a04bde24",
+      "range": {
+        "startLine": 1798,
+        "startChar": 26,
+        "endLine": 1798,
+        "endChar": 48
+      },
+      "revId": "c8d3b2100de1cd03564b7d196da42e332b45d6b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c060a572_51caef83",
         "filename": "third_party/WebKit/Source/platform/scroll/ProgrammaticScrollAnimator.cpp",
         "patchSetId": 3
