@@ -64,8 +64,10 @@ class TestCoordinationUnitGraphObserver : public CoordinationUnitGraphObserver {
       const CoordinationUnitImpl* parent_coordination_unit) override {
     ++parent_added_count_;
   }
+
   void OnPropertyChanged(const CoordinationUnitImpl* coordination_unit,
-                         const mojom::PropertyPtr& property) override {
+                         const mojom::PropertyType property_type,
+                         const base::Value& value) override {
     ++property_changed_count_;
   }
   void OnChildRemoved(
