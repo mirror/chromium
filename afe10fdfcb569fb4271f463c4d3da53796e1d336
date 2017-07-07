@@ -22,6 +22,99 @@
       "revId": "afe10fdfcb569fb4271f463c4d3da53796e1d336",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea5fd16a_b396c2ef",
+        "filename": "ios/chrome/browser/ui/external_url_error_page_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-07T17:45:07Z",
+      "side": 1,
+      "message": "Yes, it\u0027s still needed in the other files.",
+      "parentUuid": "213e9a3e_3fa3eb48",
+      "range": {
+        "startLine": 11,
+        "startChar": 35,
+        "endLine": 11,
+        "endChar": 50
+      },
+      "revId": "afe10fdfcb569fb4271f463c4d3da53796e1d336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7b45834_6983a0f5",
+        "filename": "ios/chrome/browser/ui/external_url_error_page_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-07T17:45:07Z",
+      "side": 1,
+      "message": "this needs chrome_matchers.h",
+      "range": {
+        "startLine": 25,
+        "startChar": 24,
+        "endLine": 25,
+        "endChar": 35
+      },
+      "revId": "afe10fdfcb569fb4271f463c4d3da53796e1d336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e8c3444_895783e3",
+        "filename": "ios/chrome/browser/web/navigation_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-07T17:45:07Z",
+      "side": 1,
+      "message": "this needs chrome_matchers.h",
+      "range": {
+        "startLine": 465,
+        "startChar": 0,
+        "endLine": 465,
+        "endChar": 61
+      },
+      "revId": "afe10fdfcb569fb4271f463c4d3da53796e1d336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ceac9e4e_7ca7685c",
+        "filename": "ios/chrome/browser/web/push_and_replace_state_navigation_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-07T17:45:07Z",
+      "side": 1,
+      "message": "this needs chrome_matchers.h",
+      "range": {
+        "startLine": 341,
+        "startChar": 56,
+        "endLine": 341,
+        "endChar": 67
+      },
+      "revId": "afe10fdfcb569fb4271f463c4d3da53796e1d336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
