@@ -149,7 +149,7 @@ template("msvc_toolchain") {
       outputs = [
         "$object_subdir/{{source_name_part}}.obj",
       ]
-      rspfile_content = "$sys_include_flags{{defines}} {{include_dirs}} {{cflags}} {{cflags_c}}"
+      rspfile_content = "{{defines}} {{include_dirs}} $sys_include_flags{{cflags}} {{cflags_c}}"
     }
 
     tool("cxx") {
@@ -166,7 +166,7 @@ template("msvc_toolchain") {
       outputs = [
         "$object_subdir/{{source_name_part}}.obj",
       ]
-      rspfile_content = "$sys_include_flags{{defines}} {{include_dirs}} {{cflags}} {{cflags_cc}}"
+      rspfile_content = "{{defines}} {{include_dirs}} $sys_include_flags{{cflags}} {{cflags_cc}}"
     }
 
     tool("rc") {
@@ -343,6 +343,8 @@ if (target_cpu == "x86") {
   msvc_toolchain("x86") {
     environment = "environment.x86"
     cl = "${goma_prefix}\"${x86_toolchain_data.vc_bin_dir}/cl.exe\""
+    sys_include_flags = "${x86_toolchain_data.include_flags_I}"
+
     toolchain_args = {
       current_cpu = "x86"
       is_clang = false
@@ -376,6 +378,7 @@ template("win_x64_toolchains") {
   msvc_toolchain(target_name) {
     environment = "environment.x64"
     cl = "${goma_prefix}\"${x64_toolchain_data.vc_bin_dir}/cl.exe\""
+    sys_include_flags = "${x64_toolchain_data.include_flags_I}"
 
     toolchain_args = {
       if (defined(invoker.toolchain_args)) {

@@ -276,6 +276,11 @@ def _CopyPGORuntime(target_dir, target_cpu):
       raise Exception('Unable to find %s.' % source)
     _CopyRuntimeImpl(os.path.join(target_dir, runtime), source)
 
+  source = os.path.join(pgo_x64_runtime_dir, 'mspdb140.dll')
+  if not os.path.exists(source):
+    raise Exception('Unable to find %s.' % source)
+  _CopyRuntimeImpl(os.path.join(target_dir, 'mspdb140.dll'), source)
+
 
 def _CopyRuntime(target_dir, source_dir, target_cpu, debug):
   """Copy the VS runtime DLLs, only if the target doesn't exist, but the target
@@ -304,8 +309,8 @@ def CopyDlls(target_dir, configuration, target_cpu):
   _CopyRuntime(target_dir, runtime_dir, target_cpu, debug=False)
   if configuration == 'Debug':
     _CopyRuntime(target_dir, runtime_dir, target_cpu, debug=True)
-  else:
-    _CopyPGORuntime(target_dir, target_cpu)
+
+  _CopyPGORuntime(target_dir, target_cpu)
 
   _CopyDebugger(target_dir, target_cpu)
 
