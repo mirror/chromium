@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "4abe66fa_0e95407c",
+        "filename": "chrome/browser/memory/memory_kills_monitor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-07T04:46:27Z",
+      "side": 1,
+      "message": "Similarly, DCHECK_CURRENTLY_ON, too, please?",
+      "revId": "c93b0695ecfa1e37f774bf404b41efaecc369e27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ebd737d_b4efef32",
         "filename": "chrome/browser/memory/memory_kills_monitor.cc",
         "patchSetId": 2
@@ -59,6 +76,40 @@
     },
     {
       "key": {
+        "uuid": "f22e529d_3994a4b8",
+        "filename": "chrome/browser/memory/memory_kills_monitor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-07T04:46:27Z",
+      "side": 1,
+      "message": "The comment is now stale. Could you update?",
+      "revId": "c93b0695ecfa1e37f774bf404b41efaecc369e27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "930b7403_11160168",
+        "filename": "chrome/browser/memory/memory_kills_monitor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-07T04:46:27Z",
+      "side": 1,
+      "message": "Uninitialized?",
+      "revId": "c93b0695ecfa1e37f774bf404b41efaecc369e27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "81187109_2c2c7ecd",
         "filename": "chrome/browser/memory/memory_kills_monitor.cc",
         "patchSetId": 2
@@ -70,6 +121,41 @@
       "writtenOn": "2017-07-07T01:29:37Z",
       "side": 1,
       "message": "Add DCHECK_CURRENTLY_ON(content::BrowserThread::UI); ?",
+      "revId": "c93b0695ecfa1e37f774bf404b41efaecc369e27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f3bf6eb_96b0ffd6",
+        "filename": "chrome/browser/memory/memory_kills_monitor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-07T04:46:27Z",
+      "side": 1,
+      "message": "I think this is not on UI, so maybe some guard is needed here?",
+      "parentUuid": "81187109_2c2c7ecd",
+      "revId": "c93b0695ecfa1e37f774bf404b41efaecc369e27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b47490c_aec90895",
+        "filename": "chrome/browser/memory/memory_kills_monitor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-07T04:46:27Z",
+      "side": 1,
+      "message": "Ditto.",
       "revId": "c93b0695ecfa1e37f774bf404b41efaecc369e27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +190,23 @@
       "writtenOn": "2017-07-07T01:29:37Z",
       "side": 1,
       "message": "nit: add an empty line between L48 and 49.",
+      "revId": "c93b0695ecfa1e37f774bf404b41efaecc369e27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0961f62_2eb7abd1",
+        "filename": "chrome/browser/memory/memory_kills_monitor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-07T04:46:27Z",
+      "side": 1,
+      "message": "Clarification: any reason you made these public?",
       "revId": "c93b0695ecfa1e37f774bf404b41efaecc369e27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
