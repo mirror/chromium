@@ -47,6 +47,14 @@ void DisplayScheduler::SetClient(DisplaySchedulerClient* client) {
   client_ = client;
 }
 
+void DisplayScheduler::AddObserver(DisplaySchedulerObserver* observer) {
+  observers_.AddObserver(observer);
+}
+
+void DisplayScheduler::RemoveObserver(DisplaySchedulerObserver* observer) {
+  observers_.RemoveObserver(observer);
+}
+
 void DisplayScheduler::SetVisible(bool visible) {
   if (visible_ == visible)
     return;
@@ -470,8 +478,13 @@ void DisplayScheduler::OnBeginFrameDeadline() {
 
 void DisplayScheduler::DidFinishFrame(bool did_draw) {
   DCHECK(begin_frame_source_);
-  // TODO(eseckler): Let client know that frame was completed.
   begin_frame_source_->DidFinishFrame(this);
+
+  BeginFrameAck ack(current_begin_frame_args_.source_id,
+                    current_begin_frame_args_.sequence_number,
+                    BeginFrameArgs::kInvalidFrameNumber, did_draw);
+  for (auto& observer : observers_)
+    observer.OnDisplayDidFinishFrame(ack);
 }
 
 void DisplayScheduler::DidSwapBuffers() {

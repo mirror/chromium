@@ -69,6 +69,7 @@ namespace ui {
 
 class Compositor;
 class CompositorVSyncManager;
+class ExternalBeginFrameController;
 class LatencyInfo;
 class Layer;
 class Reflector;
@@ -174,6 +175,12 @@ class COMPOSITOR_EXPORT ContextFactory {
   virtual void RemoveObserver(ContextFactoryObserver* observer) = 0;
 };
 
+struct COMPOSITOR_EXPORT CompositorSettings {
+  bool enable_surface_synchronization = false;
+  bool enable_external_begin_frames = false;
+  bool wait_for_all_pipeline_stages_before_draw = false;
+};
+
 // Compositor object to take care of GPU painting.
 // A Browser compositor object is responsible for generating the final
 // displayable form of pixels comprising a single widget's contents. It draws an
@@ -188,8 +195,10 @@ class COMPOSITOR_EXPORT Compositor
              ui::ContextFactory* context_factory,
              ui::ContextFactoryPrivate* context_factory_private,
              scoped_refptr<base::SingleThreadTaskRunner> task_runner,
-             bool enable_surface_synchronization);
+             const CompositorSettings& compositor_settings);
   ~Compositor() override;
+
+  const CompositorSettings& settings() { return settings_; }
 
   ui::ContextFactory* context_factory() { return context_factory_; }
 
@@ -291,6 +300,12 @@ class COMPOSITOR_EXPORT Compositor
   // Returns the vsync manager for this compositor.
   scoped_refptr<CompositorVSyncManager> vsync_manager() const;
 
+  // Allows compositor clients to control when BeginFrames are issued.
+  // Is null if |settings_.enable_external_begin_frame_control| is false.
+  ExternalBeginFrameController* external_begin_frame_controller() const {
+    return external_begin_frame_controller_.get();
+  }
+
   // Returns the main thread task runner this compositor uses. Users of the
   // compositor generally shouldn't use this.
   scoped_refptr<base::SingleThreadTaskRunner> task_runner() const {
@@ -384,6 +399,8 @@ class COMPOSITOR_EXPORT Compositor
   // Causes all active CompositorLocks to be timed out.
   void TimeoutLocks();
 
+  const CompositorSettings settings_;
+
   gfx::Size size_;
 
   ui::ContextFactory* context_factory_;
@@ -414,6 +431,8 @@ class COMPOSITOR_EXPORT Compositor
 
   // The manager of vsync parameters for this compositor.
   scoped_refptr<CompositorVSyncManager> vsync_manager_;
+  std::unique_ptr<ExternalBeginFrameController>
+      external_begin_frame_controller_;
 
   // The device scale factor of the monitor that this compositor is compositing
   // layers on.

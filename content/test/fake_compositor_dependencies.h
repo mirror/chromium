@@ -38,6 +38,7 @@ class FakeCompositorDependencies : public CompositorDependencies {
   cc::TaskGraphRunner* GetTaskGraphRunner() override;
   bool IsThreadedAnimationEnabled() override;
   bool IsScrollAnimatorEnabled() override;
+  bool IsWaitForAllPipelineStagesBeforeDrawEnabled() override;
 
  private:
   cc::TestTaskGraphRunner task_graph_runner_;
