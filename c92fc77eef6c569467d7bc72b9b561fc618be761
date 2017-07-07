@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "89162838_7965e87c",
+        "filename": "components/variations/service/variations_seed_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-07-07T17:43:19Z",
+      "side": 1,
+      "message": "There are a few function not declared in .h that are used as helpers in .cc, I put them at the top for now.  What is the convention for this type of thing?",
+      "parentUuid": "8e6ecd9d_6959952e",
+      "range": {
+        "startLine": 43,
+        "startChar": 12,
+        "endLine": 43,
+        "endChar": 33
+      },
+      "revId": "c92fc77eef6c569467d7bc72b9b561fc618be761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9af429e9_6dd81b35",
         "filename": "components/variations/service/variations_seed_manager.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "c92fc77eef6c569467d7bc72b9b561fc618be761",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bfb582c_4847a3e6",
+        "filename": "components/variations/service/variations_seed_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-07-07T17:43:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9af429e9_6dd81b35",
+      "range": {
+        "startLine": 23,
+        "startChar": 6,
+        "endLine": 23,
+        "endChar": 27
+      },
+      "revId": "c92fc77eef6c569467d7bc72b9b561fc618be761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "297dd29e_b2067099",
+        "filename": "components/variations/service/variations_seed_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-07-07T17:43:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "943cb9cd_a3d6c22b",
+      "range": {
+        "startLine": 41,
+        "startChar": 15,
+        "endLine": 41,
+        "endChar": 25
+      },
+      "revId": "c92fc77eef6c569467d7bc72b9b561fc618be761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0c1b387_088f28c9",
         "filename": "components/variations/service/variations_seed_manager.h",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "369f2c38_4eb6afcb",
+        "filename": "components/variations/service/variations_seed_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-07-07T17:43:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0c1b387_088f28c9",
+      "range": {
+        "startLine": 68,
+        "startChar": 36,
+        "endLine": 68,
+        "endChar": 0
+      },
+      "revId": "c92fc77eef6c569467d7bc72b9b561fc618be761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c40e5f9_4e9ab712",
         "filename": "components/variations/service/variations_service.h",
         "patchSetId": 2
@@ -114,6 +210,30 @@
       "revId": "c92fc77eef6c569467d7bc72b9b561fc618be761",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65bd6800_531166fc",
+        "filename": "components/variations/service/variations_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-07-07T17:43:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c40e5f9_4e9ab712",
+      "range": {
+        "startLine": 179,
+        "startChar": 15,
+        "endLine": 179,
+        "endChar": 25
+      },
+      "revId": "c92fc77eef6c569467d7bc72b9b561fc618be761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
