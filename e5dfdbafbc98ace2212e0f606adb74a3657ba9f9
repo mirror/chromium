@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbad10c0_99cb38e6",
+        "filename": "android_webview/renderer/aw_content_renderer_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1000112
+      },
+      "writtenOn": "2017-07-07T14:11:54Z",
+      "side": 1,
+      "message": "nit: this shouldn\u0027t be just \"consider\".  We absolutely do not want webview vs. Chrome differences long-term, so all such hacks like this really should be phased out with a target SDK quirk.",
+      "revId": "e5dfdbafbc98ace2212e0f606adb74a3657ba9f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
