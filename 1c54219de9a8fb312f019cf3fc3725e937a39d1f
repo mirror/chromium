@@ -16,6 +16,41 @@
       "revId": "1c54219de9a8fb312f019cf3fc3725e937a39d1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e21f2443_7cc7376a",
+        "filename": "testing/buildbot/gn_isolate_map.pyl",
+        "patchSetId": 4
+      },
+      "lineNbr": 898,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-07-07T05:20:41Z",
+      "side": 1,
+      "message": "Revered the changes about android_tools. But it seems that I still need the change in manage.py about this target.",
+      "parentUuid": "a83ae465_89e49cb0",
+      "revId": "1c54219de9a8fb312f019cf3fc3725e937a39d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b293185_f2ed129d",
+        "filename": "testing/buildbot/manage.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-07-07T05:20:41Z",
+      "side": 1,
+      "message": "Do I still need this line? Without it, presubmit complains:\n\n$ git cl pre\nRunning presubmit commit checks ...\n...\nmanage (0.42s) failed\nsystem_webview_shell_layout_test_apk is listed in gn_isolate_map.pyl but not in any .json files\n\n\nPresubmit checks took 2.2s to calculate.",
+      "revId": "1c54219de9a8fb312f019cf3fc3725e937a39d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
