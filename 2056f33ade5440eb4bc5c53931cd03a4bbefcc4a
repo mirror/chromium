@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26b260eb_5f6bea93",
+        "filename": "media/base/scoped_callback_runner.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-07T01:13:24Z",
+      "side": 1,
+      "message": "This code is a bit harder to read, I think the following would be better:\n\nScopedCallbackRunner(base::Bind(\u0026Foo::OnResult, this), OnDestructionRunCallbackWith(false)));\n\nWDYT? If it looks good to you I can add it to this CL.",
+      "range": {
+        "startLine": 23,
+        "startChar": 62,
+        "endLine": 23,
+        "endChar": 67
+      },
+      "revId": "2056f33ade5440eb4bc5c53931cd03a4bbefcc4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c865cce3_5814117c",
+        "filename": "media/base/scoped_callback_runner_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-07T01:13:24Z",
+      "side": 1,
+      "message": "I\u0027ll add more tests if the idea/approach looks good. For example, make sure scoped_refptr is supported, etc.",
+      "revId": "2056f33ade5440eb4bc5c53931cd03a4bbefcc4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "502c8a9d_4becca1f",
+        "filename": "media/mojo/services/mojo_media_drm_storage.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-07T01:13:24Z",
+      "side": 1,
+      "message": "See alternative solution at: https://chromium-review.googlesource.com/c/538537/\n\nIMHO, my approach is more generic and clean :)",
+      "revId": "2056f33ade5440eb4bc5c53931cd03a4bbefcc4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9b4663b_f1e2898b",
+        "filename": "media/mojo/services/mojo_media_drm_storage.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-07T01:13:24Z",
+      "side": 1,
+      "message": "This doesn\u0027t compile and I need to rebase this CL on top of https://chromium-review.googlesource.com/c/536384/",
+      "revId": "2056f33ade5440eb4bc5c53931cd03a4bbefcc4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
