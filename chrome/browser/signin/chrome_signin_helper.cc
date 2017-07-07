@@ -118,6 +118,8 @@ void ProcessDiceHeaderUIThread(
   DCHECK_EQ(switches::AccountConsistencyMethod::kDice,
             switches::GetAccountConsistencyMethod());
 
+  DLOG(ERROR) << "ProcessDiceHeaderUIThread";
+
   content::WebContents* web_contents = web_contents_getter.Run();
   if (!web_contents)
     return;
@@ -186,6 +188,8 @@ void ProcessMirrorResponseHeaderIfExists(net::URLRequest* request,
 void ProcessDiceResponseHeaderIfExists(net::URLRequest* request,
                                        bool is_off_the_record) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+
+  DLOG(ERROR) << "ProcessDiceResponseHeaderIfExists";
 
   if (is_off_the_record)
     return;
