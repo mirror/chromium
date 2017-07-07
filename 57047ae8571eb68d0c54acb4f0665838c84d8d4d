@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23f79232_0c343b05",
+        "filename": "third_party/WebKit/Source/devtools/front_end/layer_viewer/LayerDetailsView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-07T22:18:07Z",
+      "side": 1,
+      "message": "Common.UIString(\u0027\u003cunnamed\u003e\u0027);",
+      "revId": "57047ae8571eb68d0c54acb4f0665838c84d8d4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7cd7df5_81d72415",
+        "filename": "third_party/WebKit/Source/devtools/front_end/layer_viewer/LayerDetailsView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-07T22:18:07Z",
+      "side": 1,
+      "message": "add Common.UIString() around string literal.",
+      "revId": "57047ae8571eb68d0c54acb4f0665838c84d8d4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52ba7f55_04b4b8c6",
+        "filename": "third_party/WebKit/Source/devtools/front_end/layer_viewer/LayerDetailsView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-07T22:18:07Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "57047ae8571eb68d0c54acb4f0665838c84d8d4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52975784_abbaee1c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/StickyPositionConstraint.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-07T22:18:07Z",
+      "side": 1,
+      "message": "This looks fine, though I\u0027d just name it SDK.Layer.StickyPositioncontraint and put it next to SDK.Layer.",
+      "revId": "57047ae8571eb68d0c54acb4f0665838c84d8d4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2182b6a8_513b00a3",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/module.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-07T22:18:07Z",
+      "side": 1,
+      "message": "Looks like a tab character! Please expand to spaces.",
+      "revId": "57047ae8571eb68d0c54acb4f0665838c84d8d4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
