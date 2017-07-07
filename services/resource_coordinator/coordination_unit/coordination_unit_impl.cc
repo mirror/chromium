@@ -313,8 +313,12 @@ void CoordinationUnitImpl::ClearProperty(
 
 void CoordinationUnitImpl::SetProperty(mojom::PropertyPtr property) {
   SetProperty(property->property_type, *property->value);
+  // The |CoordinationUnitGraphObserver| API specification dictates that
+  // the property is guarranteed to be propagated before |OnPropertyChanged|
+  // is invoked on all of the registered observers.
   PropagateProperty(property);
-  NOTIFY_OBSERVERS(observers_, OnPropertyChanged, this, property);
+  NOTIFY_OBSERVERS(observers_, OnPropertyChanged, this, property->property_type,
+                   *property->value);
 }
 
 void CoordinationUnitImpl::SetProperty(mojom::PropertyType property_type,
