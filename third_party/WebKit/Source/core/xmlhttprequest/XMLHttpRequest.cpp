@@ -1416,7 +1416,6 @@ AtomicString XMLHttpRequest::FinalResponseMIMEType() const {
   if (response_.IsHTTP())
     return ExtractMIMETypeFromMediaType(
         response_.HttpHeaderField(HTTPNames::Content_Type));
-
   return response_.MimeType();
 }
 
@@ -1595,6 +1594,8 @@ PassRefPtr<BlobDataHandle> XMLHttpRequest::CreateBlobDataHandleFromResponse() {
     // finalResponseMIMEType() after compatibility investigation.
     blob_data->SetContentType(FinalResponseMIMETypeWithFallback().LowerASCII());
   }
+  blob_data->SetContentType(
+      FinalResponseMIMETypeWithFallback().DeprecatedLower());
   return BlobDataHandle::Create(std::move(blob_data),
                                 length_downloaded_to_file_);
 }
