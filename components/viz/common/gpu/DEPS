@@ -1,0 +1,7 @@
+include_rules = [
+  "+cc/output",
+  "+cc/resources",
+  "+ui/gfx",
+  "+third_party/khronos/GLES2/gl2.h",
+  "+third_party/khronos/GLES2/gl2ext.h",
+]
