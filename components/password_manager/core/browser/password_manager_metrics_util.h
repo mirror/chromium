@@ -208,6 +208,12 @@ enum ReauthToAccessPasswordInSettingsEvent {
   REAUTH_COUNT
 };
 
+enum class IsSyncPasswordHashSaved {
+  NOT_SAVED,
+  SAVED,
+  IS_SYNC_PASSWORD_HASH_SAVED_COUNT
+};
+
 // A version of the UMA_HISTOGRAM_BOOLEAN macro that allows the |name|
 // to vary over the program's runtime.
 void LogUMAHistogramBoolean(const std::string& name, bool sample);
@@ -296,6 +302,9 @@ void LogPasswordAcceptedSaveUpdateSubmissionIndicatorEvent(
 
 // Log a frame of a submitted password form.
 void LogSubmittedFormFrame(SubmittedFormFrame frame);
+
+// Log whether a sync password hash saved.
+void LogIsSyncPasswordHashSaved(IsSyncPasswordHashSaved state);
 
 }  // namespace metrics_util
 
