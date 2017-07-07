@@ -136,6 +136,7 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
     private final Handler mEnterVrHandler;
     private final Handler mExpectPauseOrDonSucceeded;
     private boolean mProbablyInDon;
+    private boolean mInHack;
 
     // Whether or not the VR Device ON flow succeeded. If this is true it means the user has a VR
     // headset on, but we haven't switched into VR mode yet.
@@ -784,6 +785,10 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
                     handleDonFlowSuccess();
                 }
             }, EXPECT_DON_TIMEOUT_MS);
+        } else {
+            mInHack = true;
+            Bundle options = ActivityOptions.makeCustomAnimation(mActivity, 0, 0).toBundle();
+            mActivity.startActivity(new Intent(mActivity, NoDisplayActivity.class), options);
         }
     }
 
@@ -952,11 +957,12 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
 
         if (mDonSucceeded) {
             handleDonFlowSuccess();
-        } else if (mRestoreOrientation != null) {
+        } else if (mRestoreOrientation != null && !mInHack) {
             // This means the user backed out of the DON flow, and we won't be entering VR.
             maybeSetPresentResult(false, mDonSucceeded);
             shutdownVr(true, false, false);
         }
+        mInHack = false;
     }
 
     private void handleDonFlowSuccess() {
@@ -998,6 +1004,7 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
 
     private void onStop() {
         cancelPendingVrEntry();
+        assert !mInHack;
         // We defer pausing of VrShell until the app is stopped to keep head tracking working for
         // as long as possible while going to daydream home.
         if (mInVr) {
