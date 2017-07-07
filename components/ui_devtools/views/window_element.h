@@ -11,6 +11,10 @@
 #include "ui/aura/window_observer.h"
 #include "ui/gfx/geometry/rect.h"
 
+namespace ui {
+class Layer;
+}
+
 namespace ui_devtools {
 
 class WindowElement : public aura::WindowObserver, public UIElement {
@@ -20,6 +24,7 @@ class WindowElement : public aura::WindowObserver, public UIElement {
                 UIElement* parent);
   ~WindowElement() override;
   aura::Window* window() const { return window_; };
+  ui::Layer* layer() override;
 
   // WindowObserver:
   void OnWindowHierarchyChanging(

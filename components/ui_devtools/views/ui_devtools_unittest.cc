@@ -139,11 +139,10 @@ int GetPropertyByName(const std::string& name,
   return -1;
 }
 
-aura::Window* GetHighlightingWindow(aura::Window* root_window) {
-  const aura::Window::Windows& overlay_windows = root_window->children();
-  for (aura::Window* window : overlay_windows) {
-    if (window->GetName() == "HighlightingWidget")
-      return window;
+ui::Layer* GetHighlightingLayer(ui::Layer* root_layer) {
+  for (auto* layer : root_layer->children()) {
+    if (layer->name() == "HighlightingLayer")
+      return layer;
   }
   NOTREACHED();
   return nullptr;
@@ -167,15 +166,11 @@ std::unique_ptr<DOM::HighlightConfig> CreateHighlightConfig(
       .build();
 }
 
-void ExpectHighlighted(const gfx::Rect& bounds, aura::Window* root_window) {
-  aura::Window* highlighting_window = GetHighlightingWindow(root_window);
-  EXPECT_TRUE(highlighting_window->IsVisible());
-  EXPECT_EQ(bounds, highlighting_window->GetBoundsInScreen());
-  EXPECT_EQ(kBackgroundColor,
-            views::Widget::GetWidgetForNativeView(highlighting_window)
-                ->GetRootView()
-                ->background()
-                ->get_color());
+void ExpectHighlighted(const gfx::Rect& bounds, ui::Layer* root_layer) {
+  ui::Layer* highlighting_layer = GetHighlightingLayer(root_layer);
+  EXPECT_TRUE(highlighting_layer->visible());
+  EXPECT_EQ(bounds, highlighting_layer->bounds());
+  EXPECT_EQ(kBackgroundColor, highlighting_layer->GetTargetColor());
 }
 
 }  // namespace
@@ -313,9 +308,9 @@ class UIDevToolsTest : public views::ViewsTestBase {
     DCHECK_GE(root_window_index, 0);
     DCHECK_LE(root_window_index,
               static_cast<int>(dom_agent()->root_windows().size()));
-    ASSERT_FALSE(
-        GetHighlightingWindow(dom_agent()->root_windows()[root_window_index])
-            ->IsVisible());
+    ASSERT_FALSE(GetHighlightingLayer(
+                     dom_agent()->root_windows()[root_window_index]->layer())
+                     ->visible());
   }
 
   FakeFrontendChannel* frontend_channel() {
@@ -691,7 +686,8 @@ TEST_F(UIDevToolsTest, WindowWidgetViewHighlight) {
   DOM::Node* root_view_node = widget_node->getChildren(nullptr)->get(0);
 
   HighlightNode(window_node->getNodeId());
-  ExpectHighlighted(window->GetBoundsInScreen(), GetPrimaryRootWindow());
+  ExpectHighlighted(window->GetBoundsInScreen(),
+                    GetPrimaryRootWindow()->layer());
   ui_devtools::UIElement* element =
       dom_agent()->GetElementFromNodeId(window_node->getNodeId());
   ASSERT_EQ(ui_devtools::UIElementType::WINDOW, element->type());
@@ -702,7 +698,8 @@ TEST_F(UIDevToolsTest, WindowWidgetViewHighlight) {
   HideHighlight(0);
 
   HighlightNode(widget_node->getNodeId());
-  ExpectHighlighted(widget->GetWindowBoundsInScreen(), GetPrimaryRootWindow());
+  ExpectHighlighted(widget->GetWindowBoundsInScreen(),
+                    GetPrimaryRootWindow()->layer());
 
   element = dom_agent()->GetElementFromNodeId(widget_node->getNodeId());
   ASSERT_EQ(ui_devtools::UIElementType::WIDGET, element->type());
@@ -713,7 +710,8 @@ TEST_F(UIDevToolsTest, WindowWidgetViewHighlight) {
   HideHighlight(0);
 
   HighlightNode(root_view_node->getNodeId());
-  ExpectHighlighted(root_view->GetBoundsInScreen(), GetPrimaryRootWindow());
+  ExpectHighlighted(root_view->GetBoundsInScreen(),
+                    GetPrimaryRootWindow()->layer());
 
   element = dom_agent()->GetElementFromNodeId(root_view_node->getNodeId());
   ASSERT_EQ(ui_devtools::UIElementType::VIEW, element->type());
@@ -726,7 +724,8 @@ TEST_F(UIDevToolsTest, WindowWidgetViewHighlight) {
 
   // Highlight non-existent node
   HighlightNode(10000);
-  EXPECT_FALSE(GetHighlightingWindow(GetPrimaryRootWindow())->IsVisible());
+  EXPECT_FALSE(
+      GetHighlightingLayer(GetPrimaryRootWindow()->layer())->visible());
 }
 
 int GetNodeIdFromWindow(ui_devtools::UIElement* ui_element,

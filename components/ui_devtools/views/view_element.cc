@@ -5,6 +5,7 @@
 #include "components/ui_devtools/views/view_element.h"
 
 #include "components/ui_devtools/views/ui_element_delegate.h"
+#include "ui/compositor/layer.h"
 #include "ui/views/widget/widget.h"
 
 namespace ui_devtools {
@@ -18,6 +19,10 @@ ViewElement::ViewElement(views::View* view,
 
 ViewElement::~ViewElement() {
   view_->RemoveObserver(this);
+}
+
+ui::Layer* ViewElement::layer() {
+  return view_->layer();
 }
 
 void ViewElement::OnChildViewRemoved(views::View* parent, views::View* view) {

@@ -12,6 +12,10 @@
 #include "ui/views/view.h"
 #include "ui/views/view_observer.h"
 
+namespace ui {
+class Layer;
+}
+
 namespace ui_devtools {
 
 class UIElementDelegate;
@@ -23,6 +27,7 @@ class ViewElement : public views::ViewObserver, public UIElement {
               UIElement* parent);
   ~ViewElement() override;
   views::View* view() const { return view_; };
+  ui::Layer* layer() override;
 
   // views::ViewObserver
   void OnChildViewRemoved(views::View* parent, views::View* view) override;

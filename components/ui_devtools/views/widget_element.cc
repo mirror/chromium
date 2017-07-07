@@ -5,6 +5,7 @@
 #include "components/ui_devtools/views/widget_element.h"
 
 #include "components/ui_devtools/views/ui_element_delegate.h"
+#include "ui/compositor/layer.h"
 
 namespace ui_devtools {
 
@@ -18,6 +19,10 @@ WidgetElement::WidgetElement(views::Widget* widget,
 
 WidgetElement::~WidgetElement() {
   widget_->RemoveRemovalsObserver(this);
+}
+
+ui::Layer* WidgetElement::layer() {
+  return widget_->GetLayer();
 }
 
 void WidgetElement::OnWillRemoveView(views::Widget* widget, views::View* view) {

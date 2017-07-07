@@ -12,6 +12,10 @@
 #include "ui/gfx/geometry/rect.h"
 #include "ui/views/view.h"
 
+namespace ui {
+class Layer;
+}
+
 namespace ui_devtools {
 
 class UIElementDelegate;
@@ -44,6 +48,7 @@ class UIElement {
   virtual void SetBounds(const gfx::Rect& bounds) = 0;
   virtual void GetVisible(bool* visible) const = 0;
   virtual void SetVisible(bool visible) = 0;
+  virtual ui::Layer* layer() = 0;
 
   // If element exists, return its associated native window and its bounds.
   // Otherwise, return null and empty bounds.

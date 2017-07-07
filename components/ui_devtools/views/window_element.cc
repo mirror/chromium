@@ -6,6 +6,7 @@
 
 #include "components/ui_devtools/views/ui_element_delegate.h"
 #include "ui/aura/window.h"
+#include "ui/compositor/layer.h"
 
 namespace ui_devtools {
 namespace {
@@ -33,6 +34,12 @@ WindowElement::~WindowElement() {
     window_->RemoveObserver(this);
 }
 
+ui::Layer* WindowElement::layer() {
+  if (window_)
+    return window_->layer();
+  return nullptr;
+}
+
 // Handles removing window_.
 void WindowElement::OnWindowHierarchyChanging(
     const aura::WindowObserver::HierarchyChangeParams& params) {
@@ -46,8 +53,6 @@ void WindowElement::OnWindowHierarchyChanging(
 void WindowElement::OnWindowHierarchyChanged(
     const aura::WindowObserver::HierarchyChangeParams& params) {
   if (window_ == params.new_parent && params.receiver == params.new_parent) {
-    if (delegate()->IsHighlightingWindow(params.target))
-      return;
     AddChild(new WindowElement(params.target, delegate(), this),
              children().empty() ? nullptr : children().back());
   }

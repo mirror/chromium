@@ -13,6 +13,10 @@
 #include "ui/views/widget/widget_observer.h"
 #include "ui/views/widget/widget_removals_observer.h"
 
+namespace ui {
+class Layer;
+}
+
 namespace ui_devtools {
 
 class UIElementDelegate;
@@ -26,6 +30,7 @@ class WidgetElement : public views::WidgetRemovalsObserver,
                 UIElement* parent);
   ~WidgetElement() override;
   views::Widget* widget() const { return widget_; };
+  ui::Layer* layer() override;
 
   // views::WidgetRemovalsObserver:
   void OnWillRemoveView(views::Widget* widget, views::View* view) override;
