@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dcd4a632_806abd03",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/ResourceType.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-07-07T21:14:43Z",
+      "side": 1,
+      "message": "Yes, but I was trying to be consistent with: Bindings.ResourceMapping.ModelInfo::_acceptsResource",
+      "parentUuid": "7a50a69b_342b088b",
+      "revId": "72e1eccaf66e426a16733ccfca21ab4a580be74e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3500bbce_91e4e8c0",
         "filename": "third_party/WebKit/Source/devtools/front_end/common/ResourceType.js",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-07T02:01:26Z",
       "side": 1,
       "message": "Can we do better than that? I.e. infer types for CSS, HTML and JS? Also, note eostroukhov@ is adding a very similar method, you may want to coordinate with him.",
+      "revId": "72e1eccaf66e426a16733ccfca21ab4a580be74e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b2d6763_adea54bd",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/ResourceType.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-07-07T21:14:43Z",
+      "side": 1,
+      "message": "I would rather try to keep this as basic as possible and expand it with future patches. Trying to figure out resourceTypes is not going to be easy. We may end up adding a chrome specific field for it in the future. I\u0027d rather have bug reports come in about it than try and be \"smart\" about it.",
+      "parentUuid": "3500bbce_91e4e8c0",
       "revId": "72e1eccaf66e426a16733ccfca21ab4a580be74e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "63bef68b_1b5b4430",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/ResourceType.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-07-07T21:14:43Z",
+      "side": 1,
+      "message": "We currently do not ever need to go from mimeType to a resourceType. We currently don\u0027t have mapping that is not more than the basics (they are inlined).",
+      "parentUuid": "28972a05_b6366502",
+      "revId": "72e1eccaf66e426a16733ccfca21ab4a580be74e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "952046bb_3dcc590d",
         "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARFormat.js",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "72e1eccaf66e426a16733ccfca21ab4a580be74e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc8e50c9_45a25f56",
+        "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARFormat.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-07-07T21:14:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "952046bb_3dcc590d",
+      "revId": "72e1eccaf66e426a16733ccfca21ab4a580be74e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "80f0d5e4_cf9c376c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARFormat.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-07-07T21:14:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ae8c6f7_c8067ae9",
+      "revId": "72e1eccaf66e426a16733ccfca21ab4a580be74e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ff57b94_f4db1056",
         "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARFormat.js",
         "patchSetId": 1
@@ -101,6 +191,24 @@
       "revId": "72e1eccaf66e426a16733ccfca21ab4a580be74e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "797d6576_0ff83fe9",
+        "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARFormat.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-07-07T21:14:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ff57b94_f4db1056",
+      "revId": "72e1eccaf66e426a16733ccfca21ab4a580be74e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "15e627a8_98e2a6f7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARFormat.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-07-07T21:14:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2206c42b_8e8c6922",
+      "revId": "72e1eccaf66e426a16733ccfca21ab4a580be74e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6fe7937a_6d2dfd32",
         "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARFormat.js",
         "patchSetId": 1
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "313be410_93c69b1a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARFormat.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-07-07T21:14:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6fe7937a_6d2dfd32",
+      "revId": "72e1eccaf66e426a16733ccfca21ab4a580be74e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b774fc14_dd5939b2",
         "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARFormat.js",
         "patchSetId": 1
@@ -149,6 +293,24 @@
       "writtenOn": "2017-07-07T02:01:26Z",
       "side": 1,
       "message": "Can we use @suppress {visibility} instead?",
+      "revId": "72e1eccaf66e426a16733ccfca21ab4a580be74e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05315c93_f93448a1",
+        "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARFormat.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-07-07T21:14:43Z",
+      "side": 1,
+      "message": "I tried but it complains about being unable to access using [] on a struct. I looked up what it\u0027d take to suppress this error and it would suppress more than I would be happy with, so I went with this one line hack.",
+      "parentUuid": "b774fc14_dd5939b2",
       "revId": "72e1eccaf66e426a16733ccfca21ab4a580be74e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "9a1f7ed5_a375c553",
+        "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARFormat.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-07-07T21:14:43Z",
+      "side": 1,
+      "message": "This class is the HAR structure. It would almost double the size of this file if we added another JSDoc spec of what HAR structure looks like in a simple object.\n\nI could add @struct to these to allow closure to safely cast simple objects into this structure, but I don\u0027t see what the gain would be now.",
+      "parentUuid": "fe30f602_1e22c447",
+      "revId": "72e1eccaf66e426a16733ccfca21ab4a580be74e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7fca1824_ad54bb3b",
         "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARFormat.js",
         "patchSetId": 1
@@ -186,6 +366,24 @@
       "revId": "72e1eccaf66e426a16733ccfca21ab4a580be74e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c93c11c7_0152374c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARFormat.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-07-07T21:14:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fca1824_ad54bb3b",
+      "revId": "72e1eccaf66e426a16733ccfca21ab4a580be74e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "b37d21be_0c7ae529",
+        "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARFormat.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-07-07T21:14:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d760d89e_8b25bbdc",
+      "revId": "72e1eccaf66e426a16733ccfca21ab4a580be74e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25560018_e2c3e30c",
         "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARFormat.js",
         "patchSetId": 1
@@ -220,6 +436,24 @@
       "revId": "72e1eccaf66e426a16733ccfca21ab4a580be74e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24394996_d8f30b0f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARFormat.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-07-07T21:14:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25560018_e2c3e30c",
+      "revId": "72e1eccaf66e426a16733ccfca21ab4a580be74e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -240,6 +474,24 @@
     },
     {
       "key": {
+        "uuid": "257ee395_9ad74856",
+        "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARImporter.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-07-07T21:14:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9444ede0_80f35e06",
+      "revId": "72e1eccaf66e426a16733ccfca21ab4a580be74e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4912af17_dd73dde9",
         "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARImporter.js",
         "patchSetId": 1
@@ -254,6 +506,24 @@
       "revId": "72e1eccaf66e426a16733ccfca21ab4a580be74e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55258f64_9197a0b7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARImporter.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-07-07T21:14:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4912af17_dd73dde9",
+      "revId": "72e1eccaf66e426a16733ccfca21ab4a580be74e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -274,6 +544,24 @@
     },
     {
       "key": {
+        "uuid": "6838ef99_ce48dc64",
+        "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARImporter.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-07-07T21:14:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbb38d74_21878576",
+      "revId": "72e1eccaf66e426a16733ccfca21ab4a580be74e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c827cd3_451b8c74",
         "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARImporter.js",
         "patchSetId": 1
@@ -288,6 +576,24 @@
       "revId": "72e1eccaf66e426a16733ccfca21ab4a580be74e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ad4618f_1f07f5bb",
+        "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARImporter.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-07-07T21:14:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c827cd3_451b8c74",
+      "revId": "72e1eccaf66e426a16733ccfca21ab4a580be74e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -308,6 +614,24 @@
     },
     {
       "key": {
+        "uuid": "87b1e8cc_b37933fe",
+        "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARImporter.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-07-07T21:14:43Z",
+      "side": 1,
+      "message": "Yes... my goal is to make it show the same data in every column to the best of our ability if saved from devtools and loaded back into devtools. The totals in the summary bar use transferSize (I believe).",
+      "parentUuid": "1d119a7a_f1fa218e",
+      "revId": "72e1eccaf66e426a16733ccfca21ab4a580be74e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "afa2c175_f157cbce",
         "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARImporter.js",
         "patchSetId": 1
@@ -322,6 +646,24 @@
       "revId": "72e1eccaf66e426a16733ccfca21ab4a580be74e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "704fa62f_efd60a6f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/har_importer/HARImporter.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-07-07T21:14:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "afa2c175_f157cbce",
+      "revId": "72e1eccaf66e426a16733ccfca21ab4a580be74e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
