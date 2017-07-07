@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "186b4251_3072471c",
+        "filename": "components/signin/core/browser/fake_signin_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-07T10:52:46Z",
+      "side": 1,
+      "message": "There is already a FakeSigninManagerForTesting defined in https://cs.chromium.org/chromium/src/components/signin/core/browser/fake_signin_manager.cc. I think it is bad to add a new alias to that here.\n\nI would have 2 suggestions:\n1. [the good one, but harder] Move the FakeSigninManagerForTesting here just like this define, remove the constructor of FakeSigninManagerForTesting as it is only used from two places now https://cs.chromium.org/chromium/src/chrome/browser/signin/fake_signin_manager_builder.cc?rcl\u003da3eecf282d888c03d8204713277f6f6dc20cc8b1\u0026l\u003d17 . Convert he other usage to use the BuildFakeSigninManagerBase(\n\n2. [the easy one] Move this define in your test file.",
+      "range": {
+        "startLine": 76,
+        "startChar": 6,
+        "endLine": 76,
+        "endChar": 26
+      },
+      "revId": "f4082cb13759309b6ab19cfbac8f40bd551b569c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
