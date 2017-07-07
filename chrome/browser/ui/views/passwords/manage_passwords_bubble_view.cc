@@ -436,6 +436,10 @@ bool ManagePasswordsBubbleView::PendingView::OnKeyPressed(
 }
 
 void ManagePasswordsBubbleView::PendingView::ToggleEditingState() {
+  if (editing_) {
+    parent_->model()->OnUsernameEdited(
+        static_cast<views::Textfield*>(username_field_)->text());
+  }
   editing_ = !editing_;
   edit_button_->SetEnabled(!editing_);
   RemoveChildView(username_field_);
