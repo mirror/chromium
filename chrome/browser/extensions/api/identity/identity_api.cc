@@ -189,6 +189,12 @@ BrowserContextKeyedAPIFactory<IdentityAPI>* IdentityAPI::GetFactoryInstance() {
   return g_factory.Pointer();
 }
 
+void IdentityAPI::OnAccountAdded(const gaia::AccountIds& ids) {
+}
+
+void IdentityAPI::OnAccountRemoved(const gaia::AccountIds& ids) {
+}
+
 void IdentityAPI::OnAccountSignInChanged(const gaia::AccountIds& ids,
                                          bool is_signed_in) {
   api::identity::AccountInfo account_info;

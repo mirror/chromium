@@ -83,6 +83,40 @@
 #include "platform/wtf/Vector.h"
 #include "platform/wtf/text/AtomicString.h"
 
+template <typename T, typename U>
+inline bool compareEqual(const T& t, const U& u) {
+  return t == static_cast<T>(u);
+}
+
+template <typename T>
+inline bool compareEqual(const T& a, const T& b) {
+  return a == b;
+}
+
+#define SET_VAR(group, variable, value)      \
+  if (!compareEqual(group->variable, value)) \
+  group.Access()->variable = value
+
+#define SET_NESTED_VAR(group, base, variable, value) \
+  if (!compareEqual(group->base->variable, value))   \
+  group.Access()->base.Access()->variable = value
+
+#define SET_VAR_WITH_SETTER(group, getter, setter, value) \
+  if (!compareEqual(group->getter(), value))              \
+  group.Access()->setter(value)
+
+#define SET_BORDERVALUE_COLOR(group, variable, value)   \
+  if (!compareEqual(group->variable.GetColor(), value)) \
+  group.Access()->variable.SetColor(value)
+
+#define SET_BORDER_WIDTH(group, variable, value) \
+  if (!group->variable.WidthEquals(value))       \
+  group.Access()->variable.SetWidth(value)
+
+#define SET_NESTED_BORDER_WIDTH(group, base, variable, value) \
+  if (!group->base->variable.WidthEquals(value))              \
+  group.Access()->base.Access()->variable.SetWidth(value)
+
 namespace blink {
 
 using std::max;
@@ -449,7 +483,7 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   // Border color properties.
   // border-left-color
   void SetBorderLeftColor(const StyleColor& color) {
-    if (BorderLeftColor() != color) {
+    if (!compareEqual(BorderLeftColor(), color)) {
       SetBorderLeftColorInternal(color.Resolve(Color()));
       SetBorderLeftColorIsCurrentColor(color.IsCurrentColor());
     }
@@ -457,7 +491,7 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
 
   // border-right-color
   void SetBorderRightColor(const StyleColor& color) {
-    if (BorderRightColor() != color) {
+    if (!compareEqual(BorderRightColor(), color)) {
       SetBorderRightColorInternal(color.Resolve(Color()));
       SetBorderRightColorIsCurrentColor(color.IsCurrentColor());
     }
@@ -465,7 +499,7 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
 
   // border-top-color
   void SetBorderTopColor(const StyleColor& color) {
-    if (BorderTopColor() != color) {
+    if (!compareEqual(BorderTopColor(), color)) {
       SetBorderTopColorInternal(color.Resolve(Color()));
       SetBorderTopColorIsCurrentColor(color.IsCurrentColor());
     }
@@ -473,7 +507,7 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
 
   // border-bottom-color
   void SetBorderBottomColor(const StyleColor& color) {
-    if (BorderBottomColor() != color) {
+    if (!compareEqual(BorderBottomColor(), color)) {
       SetBorderBottomColorInternal(color.Resolve(Color()));
       SetBorderBottomColorIsCurrentColor(color.IsCurrentColor());
     }
@@ -503,32 +537,45 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   // Column properties.
   // column-count (aka -webkit-column-count)
   static unsigned short InitialColumnCount() { return 1; }
-  unsigned short ColumnCount() const { return ColumnCountInternal(); }
-  void SetColumnCount(unsigned short c) {
-    SetColumnAutoCountInternal(false);
-    SetColumnCountInternal(c);
+  unsigned short ColumnCount() const {
+    return rare_non_inherited_data_->multi_col_data_->column_count_;
   }
-  bool HasAutoColumnCount() const { return ColumnAutoCountInternal(); }
+  void SetColumnCount(unsigned short c) {
+    SET_NESTED_VAR(rare_non_inherited_data_, multi_col_data_,
+                   column_auto_count_, false);
+    SET_NESTED_VAR(rare_non_inherited_data_, multi_col_data_, column_count_, c);
+  }
+  bool HasAutoColumnCount() const {
+    return rare_non_inherited_data_->multi_col_data_->column_auto_count_;
+  }
   void SetHasAutoColumnCount() {
-    SetColumnAutoCountInternal(true);
-    SetColumnCountInternal(InitialColumnCount());
+    SET_NESTED_VAR(rare_non_inherited_data_, multi_col_data_,
+                   column_auto_count_, true);
+    SET_NESTED_VAR(rare_non_inherited_data_, multi_col_data_, column_count_,
+                   InitialColumnCount());
   }
 
   // column-gap (aka -webkit-column-gap)
-  float ColumnGap() const { return ColumnGapInternal(); }
-  void SetColumnGap(float f) {
-    SetColumnNormalGapInternal(false);
-    SetColumnGapInternal(f);
+  float ColumnGap() const {
+    return rare_non_inherited_data_->multi_col_data_->column_gap_;
   }
-  bool HasNormalColumnGap() const { return ColumnNormalGapInternal(); }
+  void SetColumnGap(float f) {
+    SET_NESTED_VAR(rare_non_inherited_data_, multi_col_data_,
+                   column_normal_gap_, false);
+    SET_NESTED_VAR(rare_non_inherited_data_, multi_col_data_, column_gap_, f);
+  }
+  bool HasNormalColumnGap() const {
+    return rare_non_inherited_data_->multi_col_data_->column_normal_gap_;
+  }
   void SetHasNormalColumnGap() {
-    SetColumnNormalGapInternal(true);
-    SetColumnGapInternal(0);
+    SET_NESTED_VAR(rare_non_inherited_data_, multi_col_data_,
+                   column_normal_gap_, true);
+    SET_NESTED_VAR(rare_non_inherited_data_, multi_col_data_, column_gap_, 0);
   }
 
   // column-rule-color (aka -webkit-column-rule-color)
   void SetColumnRuleColor(const StyleColor& c) {
-    if (ColumnRuleColor() != c) {
+    if (!compareEqual(ColumnRuleColor(), c)) {
       SetColumnRuleColorInternal(c.Resolve(Color()));
       SetColumnRuleColorIsCurrentColor(c.IsCurrentColor());
     }
@@ -547,15 +594,21 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   }
 
   // column-width (aka -webkit-column-width)
-  float ColumnWidth() const { return ColumnWidthInternal(); }
-  void SetColumnWidth(float f) {
-    SetColumnAutoWidthInternal(false);
-    SetColumnWidthInternal(f);
+  float ColumnWidth() const {
+    return rare_non_inherited_data_->multi_col_data_->column_width_;
   }
-  bool HasAutoColumnWidth() const { return ColumnAutoWidthInternal(); }
+  void SetColumnWidth(float f) {
+    SET_NESTED_VAR(rare_non_inherited_data_, multi_col_data_,
+                   column_auto_width_, false);
+    SET_NESTED_VAR(rare_non_inherited_data_, multi_col_data_, column_width_, f);
+  }
+  bool HasAutoColumnWidth() const {
+    return rare_non_inherited_data_->multi_col_data_->column_auto_width_;
+  }
   void SetHasAutoColumnWidth() {
-    SetColumnAutoWidthInternal(true);
-    SetColumnWidthInternal(0);
+    SET_NESTED_VAR(rare_non_inherited_data_, multi_col_data_,
+                   column_auto_width_, true);
+    SET_NESTED_VAR(rare_non_inherited_data_, multi_col_data_, column_width_, 0);
   }
 
   // contain
@@ -569,10 +622,14 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
 
   // -webkit-box-ordinal-group
   static unsigned InitialBoxOrdinalGroup() { return 1; }
-  unsigned BoxOrdinalGroup() const { return BoxOrdinalGroupInternal(); }
+  unsigned BoxOrdinalGroup() const {
+    return rare_non_inherited_data_->deprecated_flexible_box_data_
+        ->box_ordinal_group_;
+  }
   void SetBoxOrdinalGroup(unsigned og) {
-    SetBoxOrdinalGroupInternal(
-        std::min(std::numeric_limits<unsigned>::max() - 1, og));
+    SET_NESTED_VAR(rare_non_inherited_data_, deprecated_flexible_box_data_,
+                   box_ordinal_group_,
+                   std::min(std::numeric_limits<unsigned>::max() - 1, og));
   }
 
   // -webkit-box-reflect
@@ -594,15 +651,17 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
 
   // offset-path
   static BasicShape* InitialOffsetPath() { return nullptr; }
-  BasicShape* OffsetPath() const { return OffsetPathInternal().Get(); }
+  BasicShape* OffsetPath() const {
+    return rare_non_inherited_data_->transform_data_->offset_path_.Get();
+  }
   void SetOffsetPath(RefPtr<BasicShape>);
 
   // opacity (aka -webkit-opacity)
   static float InitialOpacity() { return 1.0f; }
-  float Opacity() const { return OpacityInternal(); }
+  float Opacity() const { return rare_non_inherited_data_->opacity_; }
   void SetOpacity(float f) {
     float v = clampTo<float>(f, 0, 1);
-    SetOpacityInternal(v);
+    SET_VAR(rare_non_inherited_data_, opacity_, v);
   }
 
   bool OpacityChangedStackingContext(const ComputedStyle& other) const {
@@ -625,11 +684,12 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
 
   // order (aka -webkit-order)
   static int InitialOrder() { return 0; }
-  int Order() const { return OrderInternal(); }
+  int Order() const { return rare_non_inherited_data_->order_; }
   // We restrict the smallest value to int min + 2 because we use int min and
   // int min + 1 as special values in a hash set.
   void SetOrder(int o) {
-    SetOrderInternal(max(std::numeric_limits<int>::min() + 2, o));
+    SET_VAR(rare_non_inherited_data_, order_,
+            max(std::numeric_limits<int>::min() + 2, o));
   }
 
   // Outline properties.
@@ -648,7 +708,7 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
 
   // outline-color
   void SetOutlineColor(const StyleColor& v) {
-    if (OutlineColor() != v) {
+    if (!compareEqual(OutlineColor(), v)) {
       SetOutlineColorInternal(v.Resolve(Color()));
       SetOutlineColorIsCurrentColor(v.IsCurrentColor());
     }
@@ -695,10 +755,11 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
     return EmptyTransformOperations();
   }
   const TransformOperations& Transform() const {
-    return TransformOperationsInternal();
+    return rare_non_inherited_data_->transform_data_->transform_operations_;
   }
   void SetTransform(const TransformOperations& ops) {
-    SetTransformOperationsInternal(ops);
+    SET_NESTED_VAR(rare_non_inherited_data_, transform_data_,
+                   transform_operations_, ops);
   }
 
   // -webkit-transform-origin-x
@@ -731,24 +792,31 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
     return nullptr;
   }
   TranslateTransformOperation* Translate() const {
-    return TranslateInternal().Get();
+    return rare_non_inherited_data_->transform_data_->translate_.Get();
   }
   void SetTranslate(RefPtr<TranslateTransformOperation> v) {
-    SetTranslateInternal(std::move(v));
+    rare_non_inherited_data_.Access()->transform_data_.Access()->translate_ =
+        std::move(v);
   }
 
   // rotate
   static RefPtr<RotateTransformOperation> InitialRotate() { return nullptr; }
-  RotateTransformOperation* Rotate() const { return RotateInternal().Get(); }
+  RotateTransformOperation* Rotate() const {
+    return rare_non_inherited_data_->transform_data_->rotate_.Get();
+  }
   void SetRotate(RefPtr<RotateTransformOperation> v) {
-    SetRotateInternal(std::move(v));
+    rare_non_inherited_data_.Access()->transform_data_.Access()->rotate_ =
+        std::move(v);
   }
 
   // scale
   static RefPtr<ScaleTransformOperation> InitialScale() { return nullptr; }
-  ScaleTransformOperation* Scale() const { return ScaleInternal().Get(); }
+  ScaleTransformOperation* Scale() const {
+    return rare_non_inherited_data_->transform_data_->scale_.Get();
+  }
   void SetScale(RefPtr<ScaleTransformOperation> v) {
-    SetScaleInternal(std::move(v));
+    rare_non_inherited_data_.Access()->transform_data_.Access()->scale_ =
+        std::move(v);
   }
 
   // Scroll properties.
@@ -853,11 +921,14 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
 
   // shape-image-threshold (aka -webkit-shape-image-threshold)
   static float InitialShapeImageThreshold() { return 0; }
-  float ShapeImageThreshold() const { return ShapeImageThresholdInternal(); }
+  float ShapeImageThreshold() const {
+    return rare_non_inherited_data_->shape_image_threshold_;
+  }
   void SetShapeImageThreshold(float shape_image_threshold) {
     float clamped_shape_image_threshold =
         clampTo<float>(shape_image_threshold, 0, 1);
-    SetShapeImageThresholdInternal(clamped_shape_image_threshold);
+    SET_VAR(rare_non_inherited_data_, shape_image_threshold_,
+            clamped_shape_image_threshold);
   }
 
   // shape-outside (aka -webkit-shape-outside)
@@ -972,10 +1043,10 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
 
   // -webkit-mask-box-image-width
   const BorderImageLengthBox& MaskBoxImageWidth() const {
-    return MaskBoxImageInternal().BorderSlices();
+    return rare_non_inherited_data_->mask_box_image_.BorderSlices();
   }
   void SetMaskBoxImageWidth(const BorderImageLengthBox& slices) {
-    MutableMaskBoxImageInternal().SetBorderSlices(slices);
+    rare_non_inherited_data_.Access()->mask_box_image_.SetBorderSlices(slices);
   }
 
   // Inherited properties.
@@ -1303,19 +1374,8 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   }
   bool ColumnRuleEquivalent(const ComputedStyle* other_style) const;
   void InheritColumnPropertiesFrom(const ComputedStyle& parent) {
-    SetColumnGapInternal(parent.ColumnGapInternal());
-    SetColumnWidthInternal(parent.ColumnWidthInternal());
-    SetVisitedLinkColumnRuleColorInternal(
-        parent.VisitedLinkColumnRuleColorInternal());
-    SetColumnRuleColorInternal(parent.ColumnRuleColorInternal());
-    SetColumnCountInternal(parent.ColumnCountInternal());
-    SetColumnRuleStyle(parent.ColumnRuleStyle());
-    SetColumnAutoCountInternal(parent.ColumnAutoCountInternal());
-    SetColumnAutoWidthInternal(parent.ColumnAutoWidthInternal());
-    SetColumnFill(parent.GetColumnFill());
-    SetColumnNormalGapInternal(parent.ColumnNormalGapInternal());
-    SetColumnRuleColorIsCurrentColor(parent.ColumnRuleColorIsCurrentColor());
-    SetColumnSpan(parent.GetColumnSpan());
+    rare_non_inherited_data_.Access()->multi_col_data_ =
+        parent.rare_non_inherited_data_->multi_col_data_;
   }
 
   // Flex utility functions.
@@ -1334,44 +1394,62 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
 
   // Mask utility functions.
   bool HasMask() const {
-    return MaskInternal().HasImage() || MaskBoxImageInternal().HasImage();
+    return rare_non_inherited_data_->mask_.HasImage() ||
+           rare_non_inherited_data_->mask_box_image_.HasImage();
   }
-  StyleImage* MaskImage() const { return MaskInternal().GetImage(); }
-  FillLayer& AccessMaskLayers() { return MutableMaskInternal(); }
-  const FillLayer& MaskLayers() const { return MaskInternal(); }
-  const NinePieceImage& MaskBoxImage() const { return MaskBoxImageInternal(); }
-  bool MaskBoxImageSlicesFill() const { return MaskBoxImageInternal().Fill(); }
+  StyleImage* MaskImage() const {
+    return rare_non_inherited_data_->mask_.GetImage();
+  }
+  FillLayer& AccessMaskLayers() {
+    return rare_non_inherited_data_.Access()->mask_;
+  }
+  const FillLayer& MaskLayers() const {
+    return rare_non_inherited_data_->mask_;
+  }
+  const NinePieceImage& MaskBoxImage() const {
+    return rare_non_inherited_data_->mask_box_image_;
+  }
+  bool MaskBoxImageSlicesFill() const {
+    return rare_non_inherited_data_->mask_box_image_.Fill();
+  }
   void AdjustMaskLayers() {
     if (MaskLayers().Next()) {
       AccessMaskLayers().CullEmptyLayers();
       AccessMaskLayers().FillUnsetProperties();
     }
   }
-  void SetMaskBoxImage(const NinePieceImage& b) { SetMaskBoxImageInternal(b); }
+  void SetMaskBoxImage(const NinePieceImage& b) {
+    SET_VAR(rare_non_inherited_data_, mask_box_image_, b);
+  }
   void SetMaskBoxImageSlicesFill(bool fill) {
-    MutableMaskBoxImageInternal().SetFill(fill);
+    rare_non_inherited_data_.Access()->mask_box_image_.SetFill(fill);
   }
 
   // Text-combine utility functions.
   bool HasTextCombine() const { return TextCombine() != ETextCombine::kNone; }
 
   // Grid utility functions.
-  GridAutoFlow GetGridAutoFlow() const { return GridAutoFlowInternal(); }
+  GridAutoFlow GetGridAutoFlow() const {
+    return static_cast<GridAutoFlow>(
+        rare_non_inherited_data_->grid_data_->grid_auto_flow_);
+  }
   bool IsGridAutoFlowDirectionRow() const {
-    return (GridAutoFlowInternal() & kInternalAutoFlowDirectionRow) ==
-           kInternalAutoFlowDirectionRow;
+    return (rare_non_inherited_data_->grid_data_->grid_auto_flow_ &
+            kInternalAutoFlowDirectionRow) == kInternalAutoFlowDirectionRow;
   }
   bool IsGridAutoFlowDirectionColumn() const {
-    return (GridAutoFlowInternal() & kInternalAutoFlowDirectionColumn) ==
+    return (rare_non_inherited_data_->grid_data_->grid_auto_flow_ &
+            kInternalAutoFlowDirectionColumn) ==
            kInternalAutoFlowDirectionColumn;
   }
   bool IsGridAutoFlowAlgorithmSparse() const {
-    return (GridAutoFlowInternal() & kInternalAutoFlowAlgorithmSparse) ==
+    return (rare_non_inherited_data_->grid_data_->grid_auto_flow_ &
+            kInternalAutoFlowAlgorithmSparse) ==
            kInternalAutoFlowAlgorithmSparse;
   }
   bool IsGridAutoFlowAlgorithmDense() const {
-    return (GridAutoFlowInternal() & kInternalAutoFlowAlgorithmDense) ==
-           kInternalAutoFlowAlgorithmDense;
+    return (rare_non_inherited_data_->grid_data_->grid_auto_flow_ &
+            kInternalAutoFlowAlgorithmDense) == kInternalAutoFlowAlgorithmDense;
   }
 
   // align-content utility functions.
@@ -2075,7 +2153,8 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
 
   // Filter/transform utility functions.
   bool Has3DTransform() const {
-    return TransformOperationsInternal().Has3DOperation() ||
+    return rare_non_inherited_data_->transform_data_->transform_operations_
+               .Has3DOperation() ||
            (Translate() && Translate()->Z() != 0) ||
            (Rotate() && (Rotate()->X() != 0 || Rotate()->Y() != 0)) ||
            (Scale() && Scale()->Z() != 1);
@@ -2085,7 +2164,9 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
            HasCurrentTransformAnimation() || Translate() || Rotate() || Scale();
   }
   bool HasTransformOperations() const {
-    return !TransformOperationsInternal().Operations().IsEmpty();
+    return !rare_non_inherited_data_->transform_data_->transform_operations_
+                .Operations()
+                .IsEmpty();
   }
   ETransformStyle3D UsedTransformStyle3D() const {
     return HasGroupingProperty() ? ETransformStyle3D::kFlat
@@ -2097,7 +2178,8 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   // transform operations but differ in other transform-impacting style
   // respects.
   bool TransformDataEquivalent(const ComputedStyle& other) const {
-    return !DiffTransformData(*this, other);
+    return rare_non_inherited_data_->transform_data_ ==
+           other.rare_non_inherited_data_->transform_data_;
   }
   bool Preserves3D() const {
     return UsedTransformStyle3D() != ETransformStyle3D::kFlat;
@@ -2613,7 +2695,7 @@ inline float AdjustScrollForAbsoluteZoom(float scroll_offset,
 }
 
 inline bool ComputedStyle::SetZoom(float f) {
-  if (ZoomInternal() == f)
+  if (compareEqual(ZoomInternal(), f))
     return false;
   SetZoomInternal(f);
   SetEffectiveZoom(EffectiveZoom() * Zoom());
@@ -2624,7 +2706,7 @@ inline bool ComputedStyle::SetEffectiveZoom(float f) {
   // Clamp the effective zoom value to a smaller (but hopeful still large
   // enough) range, to avoid overflow in derived computations.
   float clamped_effective_zoom = clampTo<float>(f, 1e-6, 1e6);
-  if (EffectiveZoomInternal() == clamped_effective_zoom)
+  if (compareEqual(EffectiveZoomInternal(), clamped_effective_zoom))
     return false;
   SetEffectiveZoomInternal(clamped_effective_zoom);
   return true;

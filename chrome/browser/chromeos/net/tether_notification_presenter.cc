@@ -191,7 +191,6 @@ void TetherNotificationPresenter::OnNotificationClicked(
   PA_LOG(INFO) << "Notification with ID " << notification_id << " was clicked.";
   settings_ui_delegate_->ShowSettingsSubPageForProfile(profile_,
                                                        kTetherSettingsSubpage);
-  message_center_->RemoveNotification(notification_id, true /* by_user */);
 }
 
 void TetherNotificationPresenter::OnNotificationButtonClicked(
@@ -204,7 +203,6 @@ void TetherNotificationPresenter::OnNotificationButtonClicked(
   if (notification_id == kPotentialHotspotNotificationId && button_index == 0) {
     network_connect_->ConnectToNetworkId(hotspot_nearby_device_.GetDeviceId());
   }
-  message_center_->RemoveNotification(notification_id, true /* by_user */);
 }
 
 void TetherNotificationPresenter::SetSettingsUiDelegateForTesting(

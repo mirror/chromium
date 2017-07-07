@@ -43,8 +43,9 @@ class WM_CORE_EXPORT NativeCursorManager {
     NativeCursorManagerDelegate* delegate) = 0;
 
   // A request to set the cursor set.
-  virtual void SetCursorSize(ui::CursorSize cursor_size,
-                             NativeCursorManagerDelegate* delegate) = 0;
+  virtual void SetCursorSet(
+      ui::CursorSetType cursor_set,
+      NativeCursorManagerDelegate* delegate) = 0;
 
   // A request to set whether mouse events are disabled. At minimum,
   // implementer should call NativeCursorManagerDelegate::

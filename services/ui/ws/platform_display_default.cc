@@ -144,10 +144,6 @@ void PlatformDisplayDefault::MoveCursorTo(
   platform_window_->MoveCursorTo(window_pixel_location);
 }
 
-void PlatformDisplayDefault::SetCursorSize(const ui::CursorSize& cursor_size) {
-  image_cursors_->SetCursorSize(cursor_size);
-}
-
 void PlatformDisplayDefault::UpdateTextInputState(
     const ui::TextInputState& state) {
   ui::PlatformImeController* ime = platform_window_->GetPlatformImeController();
@@ -248,10 +244,10 @@ void PlatformDisplayDefault::OnAcceleratedWidgetAvailable(
   widget_ = widget;
   delegate_->OnAcceleratedWidgetAvailable();
 
-  cc::mojom::CompositorFrameSinkAssociatedPtr compositor_frame_sink;
+  cc::mojom::MojoCompositorFrameSinkAssociatedPtr compositor_frame_sink;
   cc::mojom::DisplayPrivateAssociatedPtr display_private;
-  cc::mojom::CompositorFrameSinkClientPtr compositor_frame_sink_client;
-  cc::mojom::CompositorFrameSinkClientRequest
+  cc::mojom::MojoCompositorFrameSinkClientPtr compositor_frame_sink_client;
+  cc::mojom::MojoCompositorFrameSinkClientRequest
       compositor_frame_sink_client_request =
           mojo::MakeRequest(&compositor_frame_sink_client);
 

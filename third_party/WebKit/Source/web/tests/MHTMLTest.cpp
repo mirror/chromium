@@ -172,7 +172,7 @@ class MHTMLTest : public ::testing::Test {
     EXPECT_FALSE(parser.ParseArchive().IsEmpty())
         << "Generated MHTML is malformed";
 
-    return mhtml_data;
+    return mhtml_data.Release();
   }
 
   PassRefPtr<RawData> Serialize(const char* title,

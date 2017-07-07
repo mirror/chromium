@@ -27,7 +27,6 @@
 #include "components/crash/content/app/crashpad.h"
 #include "components/crash/core/common/crash_keys.h"
 #include "components/version_info/channel.h"
-#include "gpu/config/gpu_crash_keys.h"
 
 namespace {
 
@@ -52,6 +51,12 @@ constexpr char kBrowserUnpinTrace[] = "browser-unpin-trace";
 // https://crbug.com/579504.
 constexpr char kApValue[] = "ap";
 constexpr char kCohortName[] = "cohort-name";
+
+constexpr char kGPUVendorID[] = "gpu-venid";
+constexpr char kGPUDeviceID[] = "gpu-devid";
+constexpr char kGPUDriverVersion[] = "gpu-driver";
+constexpr char kGPUPixelShaderVersion[] = "gpu-psver";
+constexpr char kGPUVertexShaderVersion[] = "gpu-vsver";
 
 constexpr char kHungRendererOutstandingAckCount[] = "hung-outstanding-acks";
 constexpr char kHungRendererOutstandingEventType[] =
@@ -104,17 +109,11 @@ size_t RegisterCrashKeysHelper() {
       {kBrowserUnpinTrace, kMediumSize},
       {kApValue, kSmallSize},
       {kCohortName, kSmallSize},
-
-      // gpu
-      {gpu::crash_keys::kGPUVendorID, kSmallSize},
-      {gpu::crash_keys::kGPUDeviceID, kSmallSize},
-      {gpu::crash_keys::kGPUDriverVersion, kSmallSize},
-      {gpu::crash_keys::kGPUPixelShaderVersion, kSmallSize},
-      {gpu::crash_keys::kGPUVertexShaderVersion, kSmallSize},
-      // Temporary for https://crbug.com/729483.
-      // TODO(sunnyps): Remove after https://crbug.com/729483 is fixed.
-      {gpu::crash_keys::kGpuChannelFilterTrace, kMediumSize},
-      {gpu::crash_keys::kMediaGpuChannelFilterTrace, kMediumSize},
+      {kGPUVendorID, kSmallSize},
+      {kGPUDeviceID, kSmallSize},
+      {kGPUDriverVersion, kSmallSize},
+      {kGPUPixelShaderVersion, kSmallSize},
+      {kGPUVertexShaderVersion, kSmallSize},
 
       // browser/:
       {kThirdPartyModulesLoaded, kSmallSize},

@@ -680,8 +680,10 @@ bool RenderWidgetHostImpl::GetResizeParams(ResizeParams* resize_params) {
   // coloring.
   // TODO(ccameron): Disable this once color correct rasterization is functional
   // https://crbug.com/701942
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(switches::kEnableHDR))
-    resize_params->screen_info.color_space = gfx::ColorSpace::CreateSRGB();
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(switches::kEnableHDR)) {
+    gfx::ColorSpace::CreateSRGB().GetICCProfile(
+        &resize_params->screen_info.icc_profile);
+  }
 
   if (delegate_) {
     resize_params->is_fullscreen_granted =
@@ -2438,7 +2440,7 @@ void RenderWidgetHostImpl::WindowSnapshotReachedScreen(int snapshot_id) {
     // On Android, call sites should pass in the bounds with correct offset
     // to capture the intended content area.
     gfx::Rect snapshot_bounds(GetView()->GetViewBounds());
-    snapshot_bounds.Offset(0, GetView()->GetNativeView()->content_offset());
+    snapshot_bounds.Offset(0, GetView()->GetNativeView()->content_offset().y());
 #else
     gfx::Rect snapshot_bounds(GetView()->GetViewBounds().size());
 #endif
@@ -2560,9 +2562,9 @@ void RenderWidgetHostImpl::RequestCompositionUpdates(bool immediate_request,
                                               monitor_updates));
 }
 
-void RenderWidgetHostImpl::RequestCompositorFrameSink(
-    cc::mojom::CompositorFrameSinkRequest request,
-    cc::mojom::CompositorFrameSinkClientPtr client) {
+void RenderWidgetHostImpl::RequestMojoCompositorFrameSink(
+    cc::mojom::MojoCompositorFrameSinkRequest request,
+    cc::mojom::MojoCompositorFrameSinkClientPtr client) {
   if (compositor_frame_sink_binding_.is_bound())
     compositor_frame_sink_binding_.Close();
 #if defined(OS_MACOSX)

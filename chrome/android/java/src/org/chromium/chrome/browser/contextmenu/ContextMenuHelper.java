@@ -7,6 +7,7 @@ package org.chromium.chrome.browser.contextmenu;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Pair;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -21,7 +22,6 @@ import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.share.ShareHelper;
-import org.chromium.chrome.browser.share.ShareParams;
 import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.ui.base.WindowAndroid;
@@ -84,8 +84,7 @@ public class ContextMenuHelper implements OnCreateContextMenuListener {
      * @param params          The {@link ContextMenuParams} that indicate what menu items to show.
      */
     @CalledByNative
-    private void showContextMenu(
-            final ContentViewCore contentViewCore, final ContextMenuParams params) {
+    private void showContextMenu(final ContentViewCore contentViewCore, ContextMenuParams params) {
         if (params.isFile()) return;
         View view = contentViewCore.getContainerView();
         final WindowAndroid windowAndroid = contentViewCore.getWindowAndroid();
@@ -128,19 +127,10 @@ public class ContextMenuHelper implements OnCreateContextMenuListener {
                 return;
             }
 
-            final TabularContextMenuUi menuUi = new TabularContextMenuUi(new Callback<Boolean>() {
+            final TabularContextMenuUi menuUi = new TabularContextMenuUi(new Runnable() {
                 @Override
-                public void onResult(Boolean isShareLink) {
-                    if (isShareLink) {
-                        ShareParams shareParams =
-                                new ShareParams.Builder(mActivity, params.getUrl(), params.getUrl())
-                                        .setShareDirectly(true)
-                                        .setSaveLastUsed(false)
-                                        .build();
-                        ShareHelper.share(shareParams);
-                    } else {
-                        shareImageDirectly(ShareHelper.getLastShareComponentName(null));
-                    }
+                public void run() {
+                    shareImageDirectly(ShareHelper.getLastShareComponentName());
                 }
             });
             menuUi.setRenderCoordinates(contentViewCore.getRenderCoordinates());
@@ -215,7 +205,7 @@ public class ContextMenuHelper implements OnCreateContextMenuListener {
                 ShareHelper.shareImage(activity, result, name);
             }
         };
-        nativeRetrieveImageForShare(mNativeContextMenuHelper, callback, MAX_SHARE_DIMEN_PX);
+        nativeRetrieveImage(mNativeContextMenuHelper, callback, MAX_SHARE_DIMEN_PX);
     }
 
     /**
@@ -226,13 +216,15 @@ public class ContextMenuHelper implements OnCreateContextMenuListener {
         if (mNativeContextMenuHelper == 0) return;
         int maxSizePx = mActivity.getResources().getDimensionPixelSize(
                 R.dimen.context_menu_header_image_max_size);
-        Callback<Bitmap> bitmapCallback = new Callback<Bitmap>() {
+        Callback<byte[]> rawDataCallback = new Callback<byte[]>() {
             @Override
-            public void onResult(Bitmap result) {
-                callback.onResult(result);
+            public void onResult(byte[] result) {
+                // TODO(tedchoc): Decode in separate process before launch.
+                Bitmap bitmap = BitmapFactory.decodeByteArray(result, 0, result.length);
+                callback.onResult(bitmap);
             }
         };
-        nativeRetrieveImageForContextMenu(mNativeContextMenuHelper, bitmapCallback, maxSizePx);
+        nativeRetrieveImage(mNativeContextMenuHelper, rawDataCallback, maxSizePx);
     }
 
     @Override
@@ -261,9 +253,7 @@ public class ContextMenuHelper implements OnCreateContextMenuListener {
     private native void nativeOnStartDownload(
             long nativeContextMenuHelper, boolean isLink, boolean isDataReductionProxyEnabled);
     private native void nativeSearchForImage(long nativeContextMenuHelper);
-    private native void nativeRetrieveImageForShare(
+    private native void nativeRetrieveImage(
             long nativeContextMenuHelper, Callback<byte[]> callback, int maxSizePx);
-    private native void nativeRetrieveImageForContextMenu(
-            long nativeContextMenuHelper, Callback<Bitmap> callback, int maxSizePx);
     private native void nativeOnContextMenuClosed(long nativeContextMenuHelper);
 }

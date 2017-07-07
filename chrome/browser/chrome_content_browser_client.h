@@ -180,7 +180,7 @@ class ChromeContentBrowserClient : public content::ContentBrowserClient {
   void GetQuotaSettings(
       content::BrowserContext* context,
       content::StoragePartition* partition,
-      storage::OptionalQuotaSettingsCallback callback) override;
+      const storage::OptionalQuotaSettingsCallback& callback) override;
 
   void AllowCertificateError(
       content::WebContents* web_contents,
@@ -327,11 +327,6 @@ class ChromeContentBrowserClient : public content::ContentBrowserClient {
   std::vector<std::unique_ptr<content::URLLoaderThrottle>>
   CreateURLLoaderThrottles(
       const base::Callback<content::WebContents*()>& wc_getter) override;
-
- protected:
-  static bool HandleWebUI(GURL* url, content::BrowserContext* browser_context);
-  static bool HandleWebUIReverse(GURL* url,
-                                 content::BrowserContext* browser_context);
 
  private:
   friend class DisableWebRtcEncryptionFlagTest;

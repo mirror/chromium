@@ -55,7 +55,7 @@ class FirstLetterPseudoElement final : public PseudoElement {
 
   void UpdateTextFragments();
 
-  void AttachLayoutTree(AttachContext&) override;
+  void AttachLayoutTree(const AttachContext& = AttachContext()) override;
   void DetachLayoutTree(const AttachContext& = AttachContext()) override;
 
  private:

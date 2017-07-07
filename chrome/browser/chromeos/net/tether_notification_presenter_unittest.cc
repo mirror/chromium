@@ -28,6 +28,10 @@ class TestMessageCenter : public message_center::FakeMessageCenter {
   ~TestMessageCenter() override {}
 
   void NotifyNotificationTapped(const std::string& notification_id) {
+    // Simulate the notification being removed, since a tap on the notification
+    // removes that notification.
+    RemoveNotification(notification_id, true /* by_user */);
+
     for (auto& observer : observer_list_) {
       observer.OnNotificationClicked(notification_id);
     }
@@ -35,6 +39,10 @@ class TestMessageCenter : public message_center::FakeMessageCenter {
 
   void NotifyNotificationButtonTapped(const std::string& notification_id,
                                       int button_index) {
+    // Simulate the notification being removed, since a tap on a notification
+    // button removes that notification.
+    RemoveNotification(notification_id, true /* by_user */);
+
     for (auto& observer : observer_list_) {
       observer.OnNotificationButtonClicked(notification_id, button_index);
     }
@@ -245,9 +253,6 @@ TEST_F(TetherNotificationPresenterTest,
   // Tap the notification.
   test_message_center_->NotifyNotificationTapped(GetActiveHostNotificationId());
   VerifySettingsOpened();
-  EXPECT_FALSE(test_message_center_->FindVisibleNotificationById(
-      GetActiveHostNotificationId()));
-  EXPECT_EQ(0u, test_message_center_->GetNumNotifications());
 }
 
 TEST_F(TetherNotificationPresenterTest, TestSetupRequiredNotification) {
@@ -303,9 +308,6 @@ TEST_F(TetherNotificationPresenterTest,
   test_message_center_->NotifyNotificationTapped(
       GetPotentialHotspotNotificationId());
   VerifySettingsOpened();
-  EXPECT_FALSE(test_message_center_->FindVisibleNotificationById(
-      GetPotentialHotspotNotificationId()));
-  EXPECT_EQ(0u, test_message_center_->GetNumNotifications());
 }
 
 TEST_F(TetherNotificationPresenterTest,
@@ -323,9 +325,6 @@ TEST_F(TetherNotificationPresenterTest,
   // Tap the notification's button.
   test_message_center_->NotifyNotificationButtonTapped(
       GetPotentialHotspotNotificationId(), 0 /* button_index */);
-  EXPECT_FALSE(test_message_center_->FindVisibleNotificationById(
-      GetPotentialHotspotNotificationId()));
-  EXPECT_EQ(0u, test_message_center_->GetNumNotifications());
 
   EXPECT_EQ(test_device_.GetDeviceId(),
             test_network_connect_->network_id_to_connect());
@@ -366,9 +365,6 @@ TEST_F(TetherNotificationPresenterTest,
   test_message_center_->NotifyNotificationTapped(
       GetPotentialHotspotNotificationId());
   VerifySettingsOpened();
-  EXPECT_FALSE(test_message_center_->FindVisibleNotificationById(
-      GetPotentialHotspotNotificationId()));
-  EXPECT_EQ(0u, test_message_center_->GetNumNotifications());
 }
 
 TEST_F(TetherNotificationPresenterTest,

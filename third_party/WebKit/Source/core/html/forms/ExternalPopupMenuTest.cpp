@@ -127,7 +127,9 @@ class ExternalPopupMenuTest : public ::testing::Test {
   const ExternalPopupMenuWebFrameClient& Client() const {
     return web_frame_client_;
   }
-  WebLocalFrameBase* MainFrame() const { return helper_.LocalMainFrame(); }
+  WebLocalFrameBase* MainFrame() const {
+    return helper_.WebView()->MainFrameImpl();
+  }
 
  private:
   std::string base_url_;

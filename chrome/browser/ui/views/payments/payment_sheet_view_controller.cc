@@ -327,8 +327,11 @@ class PaymentSheetRowBuilder {
         base::MakeUnique<PreviewEliderLabel>(preview_text, format_string, n,
                                              STYLE_HINT);
     content_view->SetHorizontalAlignment(gfx::ALIGN_LEFT);
-    return CreateWithButton(std::move(content_view), button_string,
-                            button_enabled);
+    base::string16 accessible_content =
+        content_view->CreateElidedString(std::numeric_limits<int>::max());
+    return AccessibleContent(accessible_content)
+        .CreateWithButton(std::move(content_view), button_string,
+                          button_enabled);
   }
 
  private:
@@ -669,9 +672,10 @@ std::unique_ptr<views::Button> PaymentSheetViewController::CreateShippingRow() {
           GetShippingAddressLabelFormAutofillProfile(
               *state()->shipping_profiles()[0],
               state()->GetApplicationLocale());
-      return builder.CreateWithButton(truncated_content,
-                                      l10n_util::GetStringUTF16(IDS_CHOOSE),
-                                      /*button_enabled=*/true);
+      return builder.AccessibleContent(truncated_content)
+          .CreateWithButton(truncated_content,
+                            l10n_util::GetStringUTF16(IDS_CHOOSE),
+                            /*button_enabled=*/true);
     } else {
       base::string16 format = l10n_util::GetPluralStringFUTF16(
           IDS_PAYMENT_REQUEST_SHIPPING_ADDRESSES_PREVIEW,
@@ -730,8 +734,7 @@ PaymentSheetViewController::CreatePaymentMethodRow() {
                                  selected_instrument->GetLabel());
     card_icon_view->SetImageSize(gfx::Size(32, 20));
 
-    return builder.AccessibleContent(selected_instrument->GetLabel())
-        .Id(DialogViewID::PAYMENT_SHEET_PAYMENT_METHOD_SECTION)
+    return builder.Id(DialogViewID::PAYMENT_SHEET_PAYMENT_METHOD_SECTION)
         .CreateWithChevron(std::move(content_view), std::move(card_icon_view));
   } else {
     builder.Id(DialogViewID::PAYMENT_SHEET_PAYMENT_METHOD_SECTION_BUTTON);
@@ -806,9 +809,10 @@ PaymentSheetViewController::CreateContactInfoRow() {
               {autofill::NAME_FULL, autofill::PHONE_HOME_WHOLE_NUMBER,
                autofill::EMAIL_ADDRESS},
               3, state()->GetApplicationLocale());
-      return builder.CreateWithButton(truncated_content,
-                                      l10n_util::GetStringUTF16(IDS_CHOOSE),
-                                      /*button_enabled=*/true);
+      return builder.AccessibleContent(truncated_content)
+          .CreateWithButton(truncated_content,
+                            l10n_util::GetStringUTF16(IDS_CHOOSE),
+                            /*button_enabled=*/true);
     } else {
       base::string16 preview =
           state()->contact_profiles()[0]->ConstructInferredLabel(

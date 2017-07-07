@@ -1585,10 +1585,9 @@ void QuotaManager::DidGetLRUOrigin(const GURL* origin,
 
 namespace {
 void DidGetSettingsThreadAdapter(base::TaskRunner* task_runner,
-                                 OptionalQuotaSettingsCallback callback,
+                                 const OptionalQuotaSettingsCallback& callback,
                                  base::Optional<QuotaSettings> settings) {
-  task_runner->PostTask(
-      FROM_HERE, base::BindOnce(std::move(callback), std::move(settings)));
+  task_runner->PostTask(FROM_HERE, base::Bind(callback, std::move(settings)));
 }
 }  // namespace
 
@@ -1606,13 +1605,13 @@ void QuotaManager::GetQuotaSettings(const QuotaSettingsCallback& callback) {
   // UI thread and plumb the resulting value back to this thread.
   get_settings_task_runner_->PostTask(
       FROM_HERE,
-      base::BindOnce(
+      base::Bind(
           get_settings_function_,
-          base::BindOnce(&DidGetSettingsThreadAdapter,
-                         base::RetainedRef(base::ThreadTaskRunnerHandle::Get()),
-                         base::BindOnce(&QuotaManager::DidGetSettings,
-                                        weak_factory_.GetWeakPtr(),
-                                        base::TimeTicks::Now()))));
+          base::Bind(
+              &DidGetSettingsThreadAdapter,
+              base::RetainedRef(base::ThreadTaskRunnerHandle::Get()),
+              base::Bind(&QuotaManager::DidGetSettings,
+                         weak_factory_.GetWeakPtr(), base::TimeTicks::Now()))));
 }
 
 void QuotaManager::DidGetSettings(base::TimeTicks start_ticks,

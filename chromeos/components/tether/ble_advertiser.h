@@ -15,13 +15,14 @@
 #include "device/bluetooth/bluetooth_advertisement.h"
 
 namespace cryptauth {
-class LocalDeviceDataProvider;
 class RemoteBeaconSeedFetcher;
 }
 
 namespace chromeos {
 
 namespace tether {
+
+class LocalDeviceDataProvider;
 
 // Advertises to a given device. When StartAdvertisingToDevice() is called, a
 // device-specific EID value is computed deterministically and is set as the
@@ -32,7 +33,7 @@ class BleAdvertiser {
  public:
   BleAdvertiser(
       scoped_refptr<device::BluetoothAdapter> adapter,
-      const cryptauth::LocalDeviceDataProvider* local_device_data_provider,
+      const LocalDeviceDataProvider* local_device_data_provider,
       const cryptauth::RemoteBeaconSeedFetcher* remote_beacon_seed_fetcher);
   virtual ~BleAdvertiser();
 
@@ -94,14 +95,14 @@ class BleAdvertiser {
       scoped_refptr<device::BluetoothAdapter> adapter,
       std::unique_ptr<cryptauth::ForegroundEidGenerator> eid_generator,
       const cryptauth::RemoteBeaconSeedFetcher* remote_beacon_seed_fetcher,
-      const cryptauth::LocalDeviceDataProvider* local_device_data_provider);
+      const LocalDeviceDataProvider* local_device_data_provider);
 
   scoped_refptr<device::BluetoothAdapter> adapter_;
 
   std::unique_ptr<cryptauth::ForegroundEidGenerator> eid_generator_;
   // Not owned by this instance and must outlive it.
   const cryptauth::RemoteBeaconSeedFetcher* remote_beacon_seed_fetcher_;
-  const cryptauth::LocalDeviceDataProvider* local_device_data_provider_;
+  const LocalDeviceDataProvider* local_device_data_provider_;
 
   std::map<std::string, std::unique_ptr<IndividualAdvertisement>>
       device_id_to_advertisement_map_;

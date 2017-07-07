@@ -42,10 +42,8 @@ leveldb::Status ForEachWithPrefix(leveldb::DB* db,
 LevelDBDatabaseImpl::LevelDBDatabaseImpl(
     std::unique_ptr<leveldb::Env> environment,
     std::unique_ptr<leveldb::DB> db,
-    std::unique_ptr<leveldb::Cache> cache,
     base::Optional<base::trace_event::MemoryAllocatorDumpGuid> memory_dump_id)
     : environment_(std::move(environment)),
-      cache_(std::move(cache)),
       db_(std::move(db)),
       memory_dump_id_(memory_dump_id) {
   base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
@@ -287,9 +285,8 @@ void LevelDBDatabaseImpl::IteratorPrev(const base::UnguessableToken& iterator,
 bool LevelDBDatabaseImpl::OnMemoryDump(
     const base::trace_event::MemoryDumpArgs& args,
     base::trace_event::ProcessMemoryDump* pmd) {
-  std::string name = base::StringPrintf("leveldb/mojo/0x%" PRIXPTR,
-                                        reinterpret_cast<uintptr_t>(db_.get()));
-  auto* mad = pmd->CreateAllocatorDump(name);
+  auto* mad = pmd->CreateAllocatorDump(base::StringPrintf(
+      "leveldb/mojo/0x%" PRIXPTR, reinterpret_cast<uintptr_t>(db_.get())));
 
   uint64_t memory_usage = 0;
   std::string memory_usage_string;
@@ -301,12 +298,6 @@ bool LevelDBDatabaseImpl::OnMemoryDump(
   mad->AddScalar(base::trace_event::MemoryAllocatorDump::kNameSize,
                  base::trace_event::MemoryAllocatorDump::kUnitsBytes,
                  memory_usage);
-  if (cache_) {
-    auto* cache_mad = pmd->CreateAllocatorDump(name + "/block_cache");
-    cache_mad->AddScalar(base::trace_event::MemoryAllocatorDump::kNameSize,
-                         base::trace_event::MemoryAllocatorDump::kUnitsBytes,
-                         cache_->TotalCharge());
-  }
 
   const char* system_allocator_name =
       base::trace_event::MemoryDumpManager::GetInstance()

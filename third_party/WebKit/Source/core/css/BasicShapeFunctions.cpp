@@ -355,7 +355,7 @@ PassRefPtr<BasicShape> BasicShapeForValue(const StyleResolverState& state,
     NOTREACHED();
   }
 
-  return basic_shape;
+  return basic_shape.Release();
 }
 
 FloatPoint FloatPointForCenterCoordinate(

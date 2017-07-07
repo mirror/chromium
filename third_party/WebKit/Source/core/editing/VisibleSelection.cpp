@@ -473,36 +473,32 @@ bool VisibleSelectionTemplate<Strategy>::IsValidFor(
 // |VisibleSelection| or create a new class for editing to use that can
 // manipulate selections that are not currently valid.
 template <typename Strategy>
-VisibleSelectionTemplate<Strategy>
-VisibleSelectionTemplate<Strategy>::CreateWithoutValidationDeprecated(
+void VisibleSelectionTemplate<Strategy>::SetWithoutValidation(
     const PositionTemplate<Strategy>& base,
-    const PositionTemplate<Strategy>& extent,
-    TextAffinity affinity) {
-  DCHECK(base.IsNotNull());
-  DCHECK(extent.IsNotNull());
+    const PositionTemplate<Strategy>& extent) {
+  if (base.IsNull() || extent.IsNull()) {
+    base_ = extent_ = start_ = end_ = PositionTemplate<Strategy>();
+    UpdateSelectionType();
+    return;
+  }
 
-  VisibleSelectionTemplate<Strategy> visible_selection;
-  visible_selection.base_ = base;
-  visible_selection.extent_ = extent;
-  visible_selection.base_is_first_ = base.CompareTo(extent) <= 0;
-  if (visible_selection.base_is_first_) {
-    visible_selection.start_ = base;
-    visible_selection.end_ = extent;
+  base_ = base;
+  extent_ = extent;
+  base_is_first_ = base.CompareTo(extent) <= 0;
+  if (base_is_first_) {
+    start_ = base;
+    end_ = extent;
   } else {
-    visible_selection.start_ = extent;
-    visible_selection.end_ = base;
+    start_ = extent;
+    end_ = base;
   }
-  if (base == extent) {
-    visible_selection.selection_type_ = kCaretSelection;
-    visible_selection.affinity_ = affinity;
-    return visible_selection;
+  selection_type_ = base == extent ? kCaretSelection : kRangeSelection;
+  if (selection_type_ != kCaretSelection) {
+    // Since |m_affinity| for non-|CaretSelection| is always |Downstream|,
+    // we should keep this invariant. Note: This function can be called with
+    // |m_affinity| is |TextAffinity::Upstream|.
+    affinity_ = TextAffinity::kDownstream;
   }
-  // Since |affinity_| for non-|CaretSelection| is always |kDownstream|,
-  // we should keep this invariant. Note: This function can be called with
-  // |affinity_| is |kUpstream|.
-  visible_selection.selection_type_ = kRangeSelection;
-  visible_selection.affinity_ = TextAffinity::kDownstream;
-  return visible_selection;
 }
 
 template <typename Strategy>

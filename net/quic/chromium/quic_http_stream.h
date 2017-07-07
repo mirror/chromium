@@ -35,7 +35,9 @@ class QuicHttpStreamPeer;
 // The QuicHttpStream is a QUIC-specific HttpStream subclass.  It holds a
 // non-owning pointer to a QuicChromiumClientStream which it uses to
 // send and receive data.
-class NET_EXPORT_PRIVATE QuicHttpStream : public MultiplexedHttpStream {
+class NET_EXPORT_PRIVATE QuicHttpStream
+    : public QuicClientPushPromiseIndex::Delegate,
+      public MultiplexedHttpStream {
  public:
   explicit QuicHttpStream(
       std::unique_ptr<QuicChromiumClientSession::Handle> session);
@@ -64,6 +66,15 @@ class NET_EXPORT_PRIVATE QuicHttpStream : public MultiplexedHttpStream {
       AlternativeService* alternative_service) const override;
   void PopulateNetErrorDetails(NetErrorDetails* details) override;
   void SetPriority(RequestPriority priority) override;
+
+  // QuicClientPushPromiseIndex::Delegate implementation
+  bool CheckVary(const SpdyHeaderBlock& client_request,
+                 const SpdyHeaderBlock& promise_request,
+                 const SpdyHeaderBlock& promise_response) override;
+  // TODO(rch): QuicClientPushPromiseIndex::Delegate is part of shared code.
+  // Figure out how to make the QuicHttpStream receive a Handle in this
+  // case instead of a QuicSpdyStream.
+  void OnRendezvousResult(QuicSpdyStream* stream) override;
 
   static HttpResponseInfo::ConnectionInfo ConnectionInfoFromQuicVersion(
       QuicVersion quic_version);
@@ -206,6 +217,11 @@ class NET_EXPORT_PRIVATE QuicHttpStream : public MultiplexedHttpStream {
   int session_error_;  // Error code from the connection shutdown.
 
   bool found_promise_;
+  // |QuicClientPromisedInfo| owns this. It will be set when |Try()|
+  // is asynchronous, i.e. it returned QUIC_PENDING, and remains valid
+  // until |OnRendezvouResult()| fires or |push_handle_->Cancel()| is
+  // invoked.
+  QuicClientPushPromiseIndex::TryHandle* push_handle_;
 
   // Set to true when DoLoop() is being executed, false otherwise.
   bool in_loop_;

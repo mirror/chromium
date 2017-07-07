@@ -429,7 +429,6 @@ MojoResult Core::CreateWatcher(MojoWatcherCallback callback,
 MojoResult Core::Watch(MojoHandle watcher_handle,
                        MojoHandle handle,
                        MojoHandleSignals signals,
-                       MojoWatchCondition condition,
                        uintptr_t context) {
   RequestContext request_context;
   scoped_refptr<Dispatcher> watcher = GetDispatcher(watcher_handle);
@@ -438,7 +437,7 @@ MojoResult Core::Watch(MojoHandle watcher_handle,
   scoped_refptr<Dispatcher> dispatcher = GetDispatcher(handle);
   if (!dispatcher)
     return MOJO_RESULT_INVALID_ARGUMENT;
-  return watcher->WatchDispatcher(dispatcher, signals, condition, context);
+  return watcher->WatchDispatcher(dispatcher, signals, context);
 }
 
 MojoResult Core::CancelWatch(MojoHandle watcher_handle, uintptr_t context) {
@@ -495,7 +494,6 @@ MojoResult Core::DestroyMessage(MojoMessageHandle message_handle) {
 MojoResult Core::SerializeMessage(MojoMessageHandle message_handle) {
   if (!message_handle)
     return MOJO_RESULT_INVALID_ARGUMENT;
-  RequestContext request_context;
   return reinterpret_cast<ports::UserMessageEvent*>(message_handle)
       ->GetMessage<UserMessageImpl>()
       ->SerializeIfNecessary();
@@ -541,7 +539,6 @@ MojoResult Core::GetSerializedMessageContents(
     return MOJO_RESULT_RESOURCE_EXHAUSTED;
   }
 
-  RequestContext request_context;
   return message->ExtractSerializedHandles(
       UserMessageImpl::ExtractBadHandlePolicy::kAbort, handles);
 }

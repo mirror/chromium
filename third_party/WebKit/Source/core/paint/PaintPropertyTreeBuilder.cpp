@@ -276,13 +276,12 @@ void PaintPropertyTreeBuilder::UpdatePaintOffsetTranslation(
         fractional_paint_offset = LayoutPoint();
     }
 
-    auto result = properties.UpdatePaintOffsetTranslation(
+    force_subtree_update |= properties.UpdatePaintOffsetTranslation(
         context.current.transform,
         TransformationMatrix().Translate(rounded_paint_offset.X(),
                                          rounded_paint_offset.Y()),
         FloatPoint3D(), context.current.should_flatten_inherited_transform,
         context.current.rendering_context_id);
-    force_subtree_update |= result.NewNodeCreated();
 
     context.current.transform = properties.PaintOffsetTranslation();
     context.current.paint_offset = fractional_paint_offset;
@@ -325,10 +324,9 @@ void PaintPropertyTreeBuilder::UpdateTransformForNonRootSVG(
     AffineTransform transform = object.LocalToSVGParentTransform();
     if (NeedsTransformForNonRootSVG(object)) {
       // The origin is included in the local transform, so leave origin empty.
-      auto result = properties.UpdateTransform(context.current.transform,
-                                               TransformationMatrix(transform),
-                                               FloatPoint3D());
-      force_subtree_update |= result.NewNodeCreated();
+      force_subtree_update |= properties.UpdateTransform(
+          context.current.transform, TransformationMatrix(transform),
+          FloatPoint3D());
     } else {
       force_subtree_update |= properties.ClearTransform();
     }
@@ -422,13 +420,12 @@ void PaintPropertyTreeBuilder::UpdateTransform(
         rendering_context_id = PtrHash<const LayoutObject>::GetHash(&object);
 
       auto& properties = *object.GetMutableForPainting().PaintProperties();
-      auto result = properties.UpdateTransform(
+      force_subtree_update |= properties.UpdateTransform(
           context.current.transform, matrix, TransformOrigin(box),
           context.current.should_flatten_inherited_transform,
           rendering_context_id, compositing_reasons,
           CompositorElementIdFromLayoutObjectId(
               object.UniqueId(), CompositorElementIdNamespace::kPrimary));
-      force_subtree_update |= result.NewNodeCreated();
     } else {
       force_subtree_update |= properties.ClearTransform();
     }
@@ -567,10 +564,9 @@ void PaintPropertyTreeBuilder::UpdateEffect(
       bool has_mask = ComputeMaskParameters(
           mask_clip, mask_color_filter, object, context.current.paint_offset);
       if (has_mask) {
-        auto result = properties.UpdateMaskClip(context.current.clip,
-                                                context.current.transform,
-                                                FloatRoundedRect(mask_clip));
-        force_subtree_update |= result.NewNodeCreated();
+        force_subtree_update |= properties.UpdateMaskClip(
+            context.current.clip, context.current.transform,
+            FloatRoundedRect(mask_clip));
         output_clip = properties.MaskClip();
 
         // TODO(crbug.com/683425): PaintArtifactCompositor does not handle
@@ -589,26 +585,24 @@ void PaintPropertyTreeBuilder::UpdateEffect(
 
       DCHECK(!style.HasCurrentOpacityAnimation() ||
              compositing_reasons != kCompositingReasonNone);
-      auto result = properties.UpdateEffect(
+      force_subtree_update |= properties.UpdateEffect(
           context.current_effect, context.current.transform, output_clip,
           kColorFilterNone, CompositorFilterOperations(), style.Opacity(),
           blend_mode, compositing_reasons,
           CompositorElementIdFromLayoutObjectId(
               object.UniqueId(), CompositorElementIdNamespace::kPrimary));
-      force_subtree_update |= result.NewNodeCreated();
       if (has_mask) {
         // TODO(crbug.com/683425): PaintArtifactCompositor does not handle
         // grouping (i.e. descendant-dependent compositing reason) properly
         // yet. Adding CompositingReasonSquashingDisallowed forces mask not
         // getting squashed into a child effect. Have no compositing reason
         // otherwise.
-        auto result = properties.UpdateMask(
+        force_subtree_update |= properties.UpdateMask(
             properties.Effect(), context.current.transform, output_clip,
             mask_color_filter, CompositorFilterOperations(), 1.f,
             SkBlendMode::kDstIn, kCompositingReasonSquashingDisallowed,
             CompositorElementIdFromLayoutObjectId(
                 object.UniqueId(), CompositorElementIdNamespace::kEffectMask));
-        force_subtree_update |= result.NewNodeCreated();
       } else {
         force_subtree_update |= properties.ClearMask();
       }
@@ -684,13 +678,12 @@ void PaintPropertyTreeBuilder::UpdateFilter(
       DCHECK(!style.HasCurrentFilterAnimation() ||
              compositing_reasons != kCompositingReasonNone);
 
-      auto result = properties.UpdateFilter(
+      force_subtree_update |= properties.UpdateFilter(
           context.current_effect, context.current.transform, output_clip,
           kColorFilterNone, std::move(filter), 1.f, SkBlendMode::kSrcOver,
           compositing_reasons,
           CompositorElementIdFromLayoutObjectId(
               object.UniqueId(), CompositorElementIdNamespace::kEffectFilter));
-      force_subtree_update |= result.NewNodeCreated();
     } else {
       force_subtree_update |= properties.ClearFilter();
     }
@@ -724,10 +717,9 @@ void PaintPropertyTreeBuilder::UpdateCssClip(
       DCHECK(object.CanContainAbsolutePositionObjects());
       LayoutRect clip_rect =
           ToLayoutBox(object).ClipRect(context.current.paint_offset);
-      auto result = properties.UpdateCssClip(
+      force_subtree_update |= properties.UpdateCssClip(
           context.current.clip, context.current.transform,
           FloatRoundedRect(FloatRect(clip_rect)));
-      force_subtree_update |= result.NewNodeCreated();
     } else {
       force_subtree_update |= properties.ClearCssClip();
     }
@@ -780,9 +772,8 @@ void PaintPropertyTreeBuilder::UpdateScrollbarPaintOffset(
         RoundedIntPoint(context.current.paint_offset);
     auto paint_offset = TransformationMatrix().Translate(
         rounded_paint_offset.X(), rounded_paint_offset.Y());
-    auto result = properties.UpdateScrollbarPaintOffset(
+    force_subtree_update |= properties.UpdateScrollbarPaintOffset(
         context.current.transform, paint_offset, FloatPoint3D());
-    force_subtree_update |= result.NewNodeCreated();
   } else {
     force_subtree_update |= properties.ClearScrollbarPaintOffset();
   }
@@ -808,18 +799,16 @@ void PaintPropertyTreeBuilder::UpdateOverflowClip(
       if (box.StyleRef().HasBorderRadius()) {
         auto inner_border = box.StyleRef().GetRoundedInnerBorderFor(
             LayoutRect(context.current.paint_offset, box.Size()));
-        auto result = properties.UpdateInnerBorderRadiusClip(
+        force_subtree_update |= properties.UpdateInnerBorderRadiusClip(
             context.current.clip, context.current.transform, inner_border);
-        force_subtree_update |= result.NewNodeCreated();
         current_clip = properties.InnerBorderRadiusClip();
       } else {
         force_subtree_update |= properties.ClearInnerBorderRadiusClip();
       }
 
-      auto result =
+      force_subtree_update |=
           properties.UpdateOverflowClip(current_clip, context.current.transform,
                                         FloatRoundedRect(FloatRect(clip_rect)));
-      force_subtree_update |= result.NewNodeCreated();
     } else {
       force_subtree_update |= properties.ClearInnerBorderRadiusClip();
       force_subtree_update |= properties.ClearOverflowClip();
@@ -861,11 +850,10 @@ void PaintPropertyTreeBuilder::UpdatePerspective(
           TransformationMatrix().ApplyPerspective(style.Perspective());
       FloatPoint3D origin = PerspectiveOrigin(ToLayoutBox(object)) +
                             ToLayoutSize(context.current.paint_offset);
-      auto result = properties.UpdatePerspective(
+      force_subtree_update |= properties.UpdatePerspective(
           context.current.transform, matrix, origin,
           context.current.should_flatten_inherited_transform,
           context.current.rendering_context_id);
-      force_subtree_update |= result.NewNodeCreated();
     } else {
       force_subtree_update |= properties.ClearPerspective();
     }
@@ -895,9 +883,8 @@ void PaintPropertyTreeBuilder::UpdateSvgLocalToBorderBoxTransform(
             .TransformToPixelSnappedBorderBox(context.current.paint_offset);
     if (!transform_to_border_box.IsIdentity() &&
         NeedsSVGLocalToBorderBoxTransform(object)) {
-      auto result = properties.UpdateSvgLocalToBorderBoxTransform(
+      force_subtree_update |= properties.UpdateSvgLocalToBorderBoxTransform(
           context.current.transform, transform_to_border_box, FloatPoint3D());
-      force_subtree_update |= result.NewNodeCreated();
     } else {
       force_subtree_update |= properties.ClearSvgLocalToBorderBoxTransform();
     }
@@ -967,7 +954,7 @@ void PaintPropertyTreeBuilder::UpdateScrollAndScrollTranslation(
 
       TransformationMatrix matrix = TransformationMatrix().Translate(
           -scroll_offset.Width(), -scroll_offset.Height());
-      auto result = properties.UpdateScrollTranslation(
+      force_subtree_update |= properties.UpdateScrollTranslation(
           context.current.transform, matrix, FloatPoint3D(),
           context.current.should_flatten_inherited_transform,
           context.current.rendering_context_id, kCompositingReasonNone,
@@ -977,7 +964,6 @@ void PaintPropertyTreeBuilder::UpdateScrollAndScrollTranslation(
           context.current.scroll, scroll_clip, scroll_bounds,
           user_scrollable_horizontal, user_scrollable_vertical, reasons,
           scrollable_area);
-      force_subtree_update |= result.NewNodeCreated();
     } else {
       // Ensure pre-existing properties are cleared.
       force_subtree_update |= properties.ClearScrollTranslation();
@@ -1034,12 +1020,11 @@ void PaintPropertyTreeBuilder::UpdateOutOfFlowContext(
       context.fixed_position.clip = css_clip;
     } else {
       if (object.NeedsPaintPropertyUpdate() || force_subtree_update) {
-        auto result = properties.UpdateCssClipFixedPosition(
+        force_subtree_update |= properties.UpdateCssClipFixedPosition(
             context.fixed_position.clip,
             const_cast<TransformPaintPropertyNode*>(
                 css_clip->LocalTransformSpace()),
             css_clip->ClipRect());
-        force_subtree_update |= result.NewNodeCreated();
       }
       if (properties.CssClipFixedPosition())
         context.fixed_position.clip = properties.CssClipFixedPosition();

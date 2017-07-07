@@ -69,8 +69,6 @@ void TestWindowManagerClient::WmUnlockCursor() {}
 
 void TestWindowManagerClient::WmSetCursorVisible(bool visible) {}
 
-void TestWindowManagerClient::WmSetCursorSize(ui::CursorSize cursor_size) {}
-
 void TestWindowManagerClient::WmSetGlobalOverrideCursor(
     base::Optional<ui::CursorData> cursor) {}
 

@@ -32,9 +32,7 @@ class MODULES_EXPORT IDBValue final : public RefCounted<IDBValue> {
   static PassRefPtr<IDBValue> Create(
       PassRefPtr<SharedBuffer> unwrapped_data,
       std::unique_ptr<Vector<RefPtr<BlobDataHandle>>>,
-      std::unique_ptr<Vector<WebBlobInfo>>,
-      const IDBKey*,
-      const IDBKeyPath&);
+      std::unique_ptr<Vector<WebBlobInfo>>);
 
   ~IDBValue();
 
@@ -57,16 +55,14 @@ class MODULES_EXPORT IDBValue final : public RefCounted<IDBValue> {
   IDBValue(const IDBValue*, IDBKey*, const IDBKeyPath&);
   IDBValue(RefPtr<SharedBuffer> unwrapped_data,
            std::unique_ptr<Vector<RefPtr<BlobDataHandle>>>,
-           std::unique_ptr<Vector<WebBlobInfo>>,
-           const IDBKey*,
-           const IDBKeyPath&);
+           std::unique_ptr<Vector<WebBlobInfo>>);
 
   // Keep this private to prevent new refs because we manually bookkeep the
   // memory to V8.
   const RefPtr<SharedBuffer> data_;
   const std::unique_ptr<Vector<RefPtr<BlobDataHandle>>> blob_data_;
   const std::unique_ptr<Vector<WebBlobInfo>> blob_info_;
-  const Persistent<const IDBKey> primary_key_;
+  const Persistent<IDBKey> primary_key_;
   const IDBKeyPath key_path_;
   int64_t external_allocated_size_ = 0;
   // Used to register memory externally allocated by the WebIDBValue, and to

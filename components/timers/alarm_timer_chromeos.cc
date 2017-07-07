@@ -26,12 +26,12 @@ AlarmTimer::AlarmTimer(bool retain_user_task, bool is_repeating)
       weak_factory_(this) {}
 
 AlarmTimer::~AlarmTimer() {
-  DCHECK(origin_task_runner_->RunsTasksInCurrentSequence());
+  DCHECK(origin_task_runner_->RunsTasksOnCurrentThread());
   Stop();
 }
 
 void AlarmTimer::Stop() {
-  DCHECK(origin_task_runner_->RunsTasksInCurrentSequence());
+  DCHECK(origin_task_runner_->RunsTasksOnCurrentThread());
 
   if (!base::Timer::is_running())
     return;
@@ -53,7 +53,7 @@ void AlarmTimer::Stop() {
 }
 
 void AlarmTimer::Reset() {
-  DCHECK(origin_task_runner_->RunsTasksInCurrentSequence());
+  DCHECK(origin_task_runner_->RunsTasksOnCurrentThread());
   DCHECK(!base::Timer::user_task().is_null());
 
   if (!CanWakeFromSuspend()) {
@@ -107,7 +107,7 @@ void AlarmTimer::Reset() {
 }
 
 void AlarmTimer::OnAlarmFdReadableWithoutBlocking() {
-  DCHECK(origin_task_runner_->RunsTasksInCurrentSequence());
+  DCHECK(origin_task_runner_->RunsTasksOnCurrentThread());
   DCHECK(base::Timer::IsRunning());
 
   // Read from |alarm_fd_| to ack the event.
@@ -119,7 +119,7 @@ void AlarmTimer::OnAlarmFdReadableWithoutBlocking() {
 }
 
 void AlarmTimer::OnTimerFired() {
-  DCHECK(origin_task_runner_->RunsTasksInCurrentSequence());
+  DCHECK(origin_task_runner_->RunsTasksOnCurrentThread());
   DCHECK(base::Timer::IsRunning());
   DCHECK(pending_task_.get());
 

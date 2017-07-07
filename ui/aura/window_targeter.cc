@@ -19,48 +19,44 @@ namespace aura {
 WindowTargeter::WindowTargeter() {}
 WindowTargeter::~WindowTargeter() {}
 
-bool WindowTargeter::SubtreeShouldBeExploredForEvent(
-    Window* window,
-    const ui::LocatedEvent& event) {
-  return SubtreeCanAcceptEvent(window, event) &&
-         EventLocationInsideBounds(window, event);
+Window* WindowTargeter::FindTargetForLocatedEvent(Window* window,
+                                                  ui::LocatedEvent* event) {
+  if (!window->parent()) {
+    Window* target = FindTargetInRootWindow(window, *event);
+    if (target) {
+      window->ConvertEventToTarget(target, event);
+      return target;
+    }
+  }
+  return FindTargetForLocatedEventRecursively(window, event);
 }
 
-Window* WindowTargeter::FindTargetInRootWindow(Window* root_window,
-                                               const ui::LocatedEvent& event) {
-  DCHECK_EQ(root_window, root_window->GetRootWindow());
+bool WindowTargeter::SubtreeCanAcceptEvent(
+    Window* window,
+    const ui::LocatedEvent& event) const {
+  if (!window->IsVisible())
+    return false;
+  if (window->ignore_events())
+    return false;
+  client::EventClient* client = client::GetEventClient(window->GetRootWindow());
+  if (client && !client->CanProcessEventsWithinSubtree(window))
+    return false;
 
-  // Mouse events should be dispatched to the window that processed the
-  // mouse-press events (if any).
-  if (event.IsScrollEvent() || event.IsMouseEvent()) {
-    WindowEventDispatcher* dispatcher = root_window->GetHost()->dispatcher();
-    if (dispatcher->mouse_pressed_handler())
-      return dispatcher->mouse_pressed_handler();
+  Window* parent = window->parent();
+  if (parent && parent->delegate_ && !parent->delegate_->
+      ShouldDescendIntoChildForEventHandling(window, event.location())) {
+    return false;
   }
+  return true;
+}
 
-  // All events should be directed towards the capture window (if any).
-  Window* capture_window = client::GetCaptureWindow(root_window);
-  if (capture_window)
-    return capture_window;
-
-  if (event.IsTouchEvent()) {
-    // Query the gesture-recognizer to find targets for touch events.
-    const ui::TouchEvent& touch = *event.AsTouchEvent();
-    ui::GestureConsumer* consumer =
-        ui::GestureRecognizer::Get()->GetTouchLockedTarget(touch);
-    if (consumer)
-      return static_cast<Window*>(consumer);
-    consumer = ui::GestureRecognizer::Get()->GetTargetForLocation(
-        event.location_f(), touch.source_device_id());
-    if (consumer)
-      return static_cast<Window*>(consumer);
-
-    // If the initial touch is outside the root window, target the root.
-    if (!root_window->bounds().Contains(event.location()))
-      return root_window;
-  }
-
-  return nullptr;
+bool WindowTargeter::EventLocationInsideBounds(
+    Window* window,
+    const ui::LocatedEvent& event) const {
+  gfx::Point point = event.location();
+  if (window->parent())
+    Window::ConvertPointToTarget(window->parent(), window, &point);
+  return gfx::Rect(window->bounds().size()).Contains(point);
 }
 
 ui::EventTarget* WindowTargeter::FindTargetForEvent(ui::EventTarget* root,
@@ -99,45 +95,11 @@ ui::EventTarget* WindowTargeter::FindNextBestTarget(
   return nullptr;
 }
 
-Window* WindowTargeter::FindTargetForLocatedEvent(Window* window,
-                                                  ui::LocatedEvent* event) {
-  if (!window->parent()) {
-    Window* target = FindTargetInRootWindow(window, *event);
-    if (target) {
-      window->ConvertEventToTarget(target, event);
-      return target;
-    }
-  }
-  return FindTargetForLocatedEventRecursively(window, event);
-}
-
-bool WindowTargeter::SubtreeCanAcceptEvent(
+bool WindowTargeter::SubtreeShouldBeExploredForEvent(
     Window* window,
-    const ui::LocatedEvent& event) const {
-  if (!window->IsVisible())
-    return false;
-  if (window->ignore_events())
-    return false;
-  client::EventClient* client = client::GetEventClient(window->GetRootWindow());
-  if (client && !client->CanProcessEventsWithinSubtree(window))
-    return false;
-
-  Window* parent = window->parent();
-  if (parent && parent->delegate_ &&
-      !parent->delegate_->ShouldDescendIntoChildForEventHandling(
-          window, event.location())) {
-    return false;
-  }
-  return true;
-}
-
-bool WindowTargeter::EventLocationInsideBounds(
-    Window* window,
-    const ui::LocatedEvent& event) const {
-  gfx::Point point = event.location();
-  if (window->parent())
-    Window::ConvertPointToTarget(window->parent(), window, &point);
-  return gfx::Rect(window->bounds().size()).Contains(point);
+    const ui::LocatedEvent& event) {
+  return SubtreeCanAcceptEvent(window, event) &&
+         EventLocationInsideBounds(window, event);
 }
 
 Window* WindowTargeter::FindTargetForKeyEvent(Window* window,
@@ -165,6 +127,43 @@ Window* WindowTargeter::FindTargetForNonKeyEvent(Window* root_window,
     return root_window;
   return FindTargetForLocatedEvent(root_window,
                                    static_cast<ui::LocatedEvent*>(event));
+}
+
+Window* WindowTargeter::FindTargetInRootWindow(Window* root_window,
+                                               const ui::LocatedEvent& event) {
+  DCHECK_EQ(root_window, root_window->GetRootWindow());
+
+  // Mouse events should be dispatched to the window that processed the
+  // mouse-press events (if any).
+  if (event.IsScrollEvent() || event.IsMouseEvent()) {
+    WindowEventDispatcher* dispatcher = root_window->GetHost()->dispatcher();
+    if (dispatcher->mouse_pressed_handler())
+      return dispatcher->mouse_pressed_handler();
+  }
+
+  // All events should be directed towards the capture window (if any).
+  Window* capture_window = client::GetCaptureWindow(root_window);
+  if (capture_window)
+    return capture_window;
+
+  if (event.IsTouchEvent()) {
+    // Query the gesture-recognizer to find targets for touch events.
+    const ui::TouchEvent& touch = *event.AsTouchEvent();
+    ui::GestureConsumer* consumer =
+        ui::GestureRecognizer::Get()->GetTouchLockedTarget(touch);
+    if (consumer)
+      return static_cast<Window*>(consumer);
+    consumer = ui::GestureRecognizer::Get()->GetTargetForLocation(
+        event.location_f(), touch.source_device_id());
+    if (consumer)
+      return static_cast<Window*>(consumer);
+
+    // If the initial touch is outside the root window, target the root.
+    if (!root_window->bounds().Contains(event.location()))
+      return root_window;
+  }
+
+  return nullptr;
 }
 
 Window* WindowTargeter::FindTargetForLocatedEventRecursively(

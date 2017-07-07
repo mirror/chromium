@@ -5,19 +5,15 @@ let mockBarcodeDetectionReady = define(
   ['services/shape_detection/public/interfaces/barcodedetection.mojom',
    'mojo/public/js/bindings',
    'mojo/public/js/core',
-   'content/public/renderer/frame_interfaces',
    'content/public/renderer/interfaces',
-  ], (barcodeDetection, bindings, mojo, frameInterfaces, processInterfaces) => {
+  ], (barcodeDetection, bindings, mojo, interfaces) => {
 
   class MockBarcodeDetection {
     constructor() {
       this.bindingSet_ = new bindings.BindingSet(
           barcodeDetection.BarcodeDetection);
 
-      frameInterfaces.addInterfaceOverrideForTesting(
-          barcodeDetection.BarcodeDetection.name,
-          handle => this.bindingSet_.addBinding(this, handle));
-      processInterfaces.addInterfaceOverrideForTesting(
+      interfaces.addInterfaceOverrideForTesting(
           barcodeDetection.BarcodeDetection.name,
           handle => this.bindingSet_.addBinding(this, handle));
     }

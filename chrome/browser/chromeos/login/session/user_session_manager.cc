@@ -1178,7 +1178,7 @@ void UserSessionManager::UserProfileInitialized(Profile* profile,
       // NOTIFICATION_PROFILE_CREATED which marks user profile as initialized.
       base::ThreadTaskRunnerHandle::Get()->PostTask(
           FROM_HERE,
-          base::BindOnce(
+          base::Bind(
               &UserSessionManager::CompleteProfileCreateAfterAuthTransfer,
               AsWeakPtr(), profile));
     }
@@ -1189,8 +1189,8 @@ void UserSessionManager::UserProfileInitialized(Profile* profile,
     // Call FinalizePrepareProfile directly and skip RestoreAuthSessionImpl
     // because there is no need to merge session for Active Directory users.
     base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::BindOnce(&UserSessionManager::FinalizePrepareProfile,
-                                  AsWeakPtr(), profile));
+        FROM_HERE, base::Bind(&UserSessionManager::FinalizePrepareProfile,
+                              AsWeakPtr(), profile));
     return;
   }
 
@@ -1340,9 +1340,8 @@ bool UserSessionManager::InitializeUserSession(Profile* profile) {
       base::Bind(&UserSessionManager::ChildAccountStatusReceivedCallback,
                  weak_factory_.GetWeakPtr(), profile));
   base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-      FROM_HERE,
-      base::BindOnce(&UserSessionManager::StopChildStatusObserving,
-                     weak_factory_.GetWeakPtr(), profile),
+      FROM_HERE, base::Bind(&UserSessionManager::StopChildStatusObserving,
+                            weak_factory_.GetWeakPtr(), profile),
       base::TimeDelta::FromMilliseconds(kFlagsFetchingLoginTimeoutMs));
 
   user_manager::UserManager* user_manager = user_manager::UserManager::Get();
@@ -1661,7 +1660,7 @@ void UserSessionManager::AttemptRestart(Profile* profile) {
   // Restart unconditionally in case if we are stuck somewhere in a session
   // restore process. http://crbug.com/520346.
   base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-      FROM_HERE, base::BindOnce(RestartOnTimeout),
+      FROM_HERE, base::Bind(RestartOnTimeout),
       base::TimeDelta::FromSeconds(kMaxRestartDelaySeconds));
 
   if (CheckEasyUnlockKeyOps(base::Bind(&UserSessionManager::AttemptRestart,

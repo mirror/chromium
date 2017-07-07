@@ -155,8 +155,8 @@ class AURA_EXPORT WindowTreeClient
 
   void AttachCompositorFrameSink(
       Id window_id,
-      cc::mojom::CompositorFrameSinkRequest compositor_frame_sink,
-      cc::mojom::CompositorFrameSinkClientPtr client);
+      cc::mojom::MojoCompositorFrameSinkRequest compositor_frame_sink,
+      cc::mojom::MojoCompositorFrameSinkClientPtr client);
 
   bool IsRoot(WindowMus* window) const { return roots_.count(window) > 0; }
 
@@ -484,7 +484,6 @@ class AURA_EXPORT WindowTreeClient
   void LockCursor() override;
   void UnlockCursor() override;
   void SetCursorVisible(bool visible) override;
-  void SetCursorSize(ui::CursorSize cursor_size) override;
   void SetGlobalOverrideCursor(base::Optional<ui::CursorData> cursor) override;
   void RequestClose(Window* window) override;
   bool WaitForInitialDisplays() override;

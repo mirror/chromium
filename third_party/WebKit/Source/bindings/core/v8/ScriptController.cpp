@@ -359,20 +359,20 @@ void ScriptController::ExecuteScriptInIsolatedWorld(
   }
 }
 
-PassRefPtr<DOMWrapperWorld> ScriptController::CreateNewInspectorIsolatedWorld(
+int ScriptController::CreateNewDInspectorIsolatedWorld(
     const String& world_name) {
   RefPtr<DOMWrapperWorld> world = DOMWrapperWorld::Create(
       GetIsolate(), DOMWrapperWorld::WorldType::kInspectorIsolated);
   // Bail out if we could not create an isolated world.
   if (!world)
-    return nullptr;
+    return DOMWrapperWorld::kInvalidWorldId;
   if (!world_name.IsEmpty()) {
     DOMWrapperWorld::SetIsolatedWorldHumanReadableName(world->GetWorldId(),
                                                        world_name);
   }
   // Make sure the execution context exists.
   WindowProxy(*world);
-  return world;
+  return world->GetWorldId();
 }
 
 }  // namespace blink

@@ -18,7 +18,7 @@ namespace client {
 class AURA_EXPORT CursorClientObserver {
  public:
   virtual void OnCursorVisibilityChanged(bool is_visible) {}
-  virtual void OnCursorSizeChanged(ui::CursorSize cursor_size) {}
+  virtual void OnCursorSetChanged(ui::CursorSetType cursor_set) {}
   virtual void OnCursorDisplayChanged(const display::Display& display) {}
 
  protected:

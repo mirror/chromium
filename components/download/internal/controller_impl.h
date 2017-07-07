@@ -72,8 +72,7 @@ class ControllerImpl : public Controller,
   // DownloadDriver::Client implementation.
   void OnDriverReady(bool success) override;
   void OnDownloadCreated(const DriverEntry& download) override;
-  void OnDownloadFailed(const DriverEntry& download,
-                        FailureType failure_type) override;
+  void OnDownloadFailed(const DriverEntry& download, int reason) override;
   void OnDownloadSucceeded(const DriverEntry& download) override;
   void OnDownloadUpdated(const DriverEntry& download) override;
 
@@ -120,7 +119,7 @@ class ControllerImpl : public Controller,
 
   // Processes the download based on the state of |entry|. May start, pause
   // or resume a download accordingly.
-  void UpdateDriverState(Entry* entry);
+  void UpdateDriverState(const Entry& entry);
 
   // Notifies all Client in |clients_| that this controller is initialized and
   // lets them know which download requests we are aware of for their
@@ -154,8 +153,6 @@ class ControllerImpl : public Controller,
 
   // Postable methods meant to just be pass throughs to Client APIs.  This is
   // meant to help prevent reentrancy.
-  void SendOnServiceInitialized(DownloadClient client_id,
-                                const std::vector<std::string>& guids);
   void SendOnDownloadUpdated(DownloadClient client_id,
                              const std::string& guid,
                              uint64_t bytes_downloaded);

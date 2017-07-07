@@ -44,11 +44,6 @@ void SetCursorOnAllRootWindows(gfx::NativeCursor cursor) {
   // event targeting issue.
   ShellPort::Get()->SetGlobalOverrideCursor(mojo_cursor);
 
-  // Make sure the local state is set properly, so that local queries show that
-  // we set the cursor.
-  for (aura::Window* root : Shell::Get()->GetAllRootWindows())
-    root->GetHost()->SetCursor(cursor);
-
   Shell::Get()
       ->window_tree_host_manager()
       ->cursor_window_controller()
@@ -179,17 +174,12 @@ void NativeCursorManagerAshMus::SetVisibility(
   NotifyCursorVisibilityChange(visible);
 }
 
-void NativeCursorManagerAshMus::SetCursorSize(
-    ui::CursorSize cursor_size,
+void NativeCursorManagerAshMus::SetCursorSet(
+    ui::CursorSetType cursor_set,
     ::wm::NativeCursorManagerDelegate* delegate) {
-  delegate->CommitCursorSize(cursor_size);
-
-  ShellPort::Get()->SetCursorSize(cursor_size);
-
-  Shell::Get()
-      ->window_tree_host_manager()
-      ->cursor_window_controller()
-      ->SetCursorSize(cursor_size);
+  // We can't just hand this off to ImageCursors like we do in the classic ash
+  // case. We need to collaborate with the mus server to fully implement this.
+  NOTIMPLEMENTED();
 }
 
 void NativeCursorManagerAshMus::SetMouseEventsEnabled(

@@ -51,13 +51,10 @@ class StubPasswordManagerClient : public PasswordManagerClient {
   void CheckProtectedPasswordEntry(const std::string& password_saved_domain,
                                    bool password_field_exists) override;
 #endif
-  ukm::UkmRecorder* GetUkmRecorder() override;
-  ukm::SourceId GetUkmSourceId() override;
 
  private:
   const StubCredentialsFilter credentials_filter_;
   StubLogManager log_manager_;
-  ukm::SourceId ukm_source_id_;
 
   DISALLOW_COPY_AND_ASSIGN(StubPasswordManagerClient);
 };

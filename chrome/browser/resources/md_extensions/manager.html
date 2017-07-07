@@ -80,7 +80,8 @@
           on-cr-toolbar-menu-tap="onMenuButtonTap_"
           on-search-changed="onFilterChanged_">
       </extensions-toolbar>
-      <dialog id="drawer" is="cr-drawer" title="$i18n{toolbarTitle}">
+      <dialog id="drawer" is="cr-drawer">
+        <div class="drawer-header">$i18n{toolbarTitle}</div>
         <div class="drawer-content">
           <extensions-sidebar></extensions-sidebar>
         </div>

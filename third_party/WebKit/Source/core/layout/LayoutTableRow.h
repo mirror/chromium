@@ -137,7 +137,6 @@ class CORE_EXPORT LayoutTableRow final : public LayoutTableBoxComponent {
   bool BackgroundIsKnownToBeOpaqueInRect(const LayoutRect&) const override {
     return false;
   }
-  bool PaintedOutputOfObjectHasNoEffectRegardlessOfSize() const override;
 
  private:
   void AddOverflowFromCell(const LayoutTableCell*);

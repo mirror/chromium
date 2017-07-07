@@ -79,8 +79,6 @@ class ProximityAuthClient {
   GetCryptAuthEnrollmentManager() = 0;
 
   virtual cryptauth::CryptAuthDeviceManager* GetCryptAuthDeviceManager() = 0;
-
-  virtual std::string GetLocalDevicePublicKey() = 0;
 };
 
 }  // namespace proximity_auth

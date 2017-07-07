@@ -38,7 +38,7 @@ extern const base::Feature kForeignSessionsSuggestionsFeature;
 extern const base::Feature kIncreasedVisibility;
 
 // Feature to listen for GCM push updates from the server.
-extern const base::Feature kBreakingNewsPushFeature;
+extern const base::Feature kContentSuggestionsPushFeature;
 
 // Feature to choose a category ranker.
 extern const base::Feature kCategoryRanker;

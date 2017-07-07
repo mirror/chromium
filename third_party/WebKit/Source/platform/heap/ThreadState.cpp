@@ -1453,11 +1453,9 @@ void ThreadState::CollectGarbage(BlinkGC::StackState stack_state,
   GCForbiddenScope gc_forbidden_scope(this);
 
   {
-    // Access to the CrossThreadPersistentRegion has to be prevented
-    // while in the marking phase because otherwise other threads may
-    // allocate or free PersistentNodes and we can't handle
-    // that. Grabbing this lock also prevents non-attached threads
-    // from accessing any GCed heap while a GC runs.
+    // Access to the CrossThreadPersistentRegion has to be prevented while in
+    // the marking phase because otherwise other threads may allocate or free
+    // PersistentNodes and we can't handle that.
     CrossThreadPersistentRegion::LockScope persistent_lock(
         ProcessHeap::GetCrossThreadPersistentRegion());
     {

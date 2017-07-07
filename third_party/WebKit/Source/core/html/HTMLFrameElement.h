@@ -45,7 +45,7 @@ class CORE_EXPORT HTMLFrameElement final : public HTMLFrameElementBase {
  private:
   explicit HTMLFrameElement(Document&);
 
-  void AttachLayoutTree(AttachContext&) override;
+  void AttachLayoutTree(const AttachContext& = AttachContext()) override;
 
   bool LayoutObjectIsNeeded(const ComputedStyle&) override;
   LayoutObject* CreateLayoutObject(const ComputedStyle&) override;

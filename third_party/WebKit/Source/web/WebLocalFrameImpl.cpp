@@ -1581,6 +1581,7 @@ WebLocalFrameImpl::WebLocalFrameImpl(
     blink::InterfaceRegistry* interface_registry)
     : WebLocalFrameBase(scope),
       local_frame_client_impl_(LocalFrameClientImpl::Create(this)),
+      frame_widget_(0),
       client_(client),
       autofill_client_(0),
       input_events_scale_factor_for_emulation_(1),
@@ -1618,7 +1619,6 @@ DEFINE_TRACE(WebLocalFrameImpl) {
   visitor->Trace(local_frame_client_impl_);
   visitor->Trace(frame_);
   visitor->Trace(dev_tools_agent_);
-  visitor->Trace(frame_widget_);
   visitor->Trace(text_finder_);
   visitor->Trace(print_context_);
   visitor->Trace(context_menu_node_);
@@ -2469,22 +2469,6 @@ void WebLocalFrameImpl::ExtractSmartClipData(WebRect rect_in_viewport,
         CreateMarkup(end_position, start_position, kAnnotateForInterchange,
                      ConvertBlocksToInlines::kNotConvert, kResolveNonLocalURLs);
   }
-}
-
-void WebLocalFrameImpl::AdvanceFocusInForm(WebFocusType focus_type) {
-  DCHECK(GetFrame()->GetDocument());
-  Element* element = GetFrame()->GetDocument()->FocusedElement();
-  if (!element)
-    return;
-
-  Element* next_element =
-      GetFrame()->GetPage()->GetFocusController().NextFocusableElementInForm(
-          element, focus_type);
-  if (!next_element)
-    return;
-
-  next_element->scrollIntoViewIfNeeded(true /*centerIfNeeded*/);
-  next_element->focus();
 }
 
 TextCheckerClient& WebLocalFrameImpl::GetTextCheckerClient() const {

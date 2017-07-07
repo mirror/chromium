@@ -172,7 +172,7 @@ class CORE_EXPORT HTMLImageElement final
                                             MutableStylePropertySet*) override;
   void SetLayoutDisposition(LayoutDisposition, bool force_reattach = false);
 
-  void AttachLayoutTree(AttachContext&) override;
+  void AttachLayoutTree(const AttachContext& = AttachContext()) override;
   LayoutObject* CreateLayoutObject(const ComputedStyle&) override;
 
   bool CanStartSelection() const override { return false; }

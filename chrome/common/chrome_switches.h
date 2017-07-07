@@ -132,6 +132,7 @@ extern const char kEnableSiteEngagementEvictionPolicy[];
 extern const char kEnableSiteSettings[];
 extern const char kEnableSupervisedUserManagedBookmarksFolder[];
 extern const char kEnableTabAudioMuting[];
+extern const char kEnableThumbnailRetargeting[];
 extern const char kEnableWebNotificationCustomLayouts[];
 extern const char kEnableWebRtcEventLoggingFromExtension[];
 extern const char kExtensionContentVerification[];

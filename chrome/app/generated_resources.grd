@@ -4983,9 +4983,6 @@ Keep your key file in a safe place. You will need it to create new versions of y
       </message>
       <message name="IDS_PREVIEWS_INFOBAR_TIMESTAMP_HOURS" desc="The desciption stating how old a preview version of a page is in hours. This is shown on the infobar notifying the user that a preview page has been shown.">
          Updated <ph name="HOURS">$1<ex>4</ex></ph>hrs ago
-      </message>      
-      <message name="IDS_PREVIEWS_INFOBAR_TIMESTAMP_UPDATED_NOW" desc="The desciption stating that a preview version of a page was just updated. This is shown on the infobar notifying the user that a preview page has been shown.">
-         Updated just now
       </message>
 
       <!-- WebRTC logs -->
@@ -5459,8 +5456,8 @@ Keep your key file in a safe place. You will need it to create new versions of y
         </message>
       </if>
       <if expr="use_titlecase">
-        <message name="IDS_TOOLTIP_SAVE_CREDIT_CARD" desc="In Title Case: The tooltip for the icon that shows the save card bubble">
-          Save Card
+        <message name="IDS_TOOLTIP_SAVE_CREDIT_CARD" desc="In Title Case: The tooltip for the icon that shows the save credit card bubble">
+          Save Credit Card
         </message>
        </if>
       <message name="IDS_TOOLTIP_TRANSLATE" desc="The tooltip for translate">
@@ -6458,12 +6455,6 @@ I don't think this site should be blocked!
         </message>
         <message name="IDS_CHROME_CLEANUP_WEBUI_TITLE_RESTART" desc="A status message, appearing on the Chrome Cleanup web page, that the cleanup of unwanted software initiated by the user was performed but isn't finished. User must take additional action to finish the cleanup. 'Restart' is imperative. Short for 'To finish removing harmful software...'">
           To finish removing harmful software, restart your computer
-        </message>
-        <message name="IDS_CHROME_CLEANUP_LOGS_PERMISSION" desc="A checkbox label, appearing on both the Chrome Cleanup dialog and web page, asking the user for permission to send some system information to Google in order to help with detection of harmful software. The word 'settings' refers to the user's operating system settings. The word 'applications' refers to any software that is installed or runs on the user's computer.">
-          Send information about your system and applications to Google to help detect harmful software
-        </message>
-        <message name="IDS_CHROME_CLEANUP_LOGS_PERMISSION_WITH_LINK" desc="A checkbox label, appearing on both the Chrome Cleanup dialog and web page, asking the user for permission to send some system information to Google in order to help with detection of harmful software. The word 'settings' refers to the user's operating system settings. The word 'applications' refers to any software that is installed or runs on the user's computer. The translation for this string should have the same meaning as IDS_CHROME_CLEANUP_LOGS_PERMISSION">
-          Send <ph name="BEGIN_LINK">&lt;a target="_blank" href="$1"&gt;</ph>information about your system and applications<ph name="END_LINK">&lt;/a&gt;</ph> to Google to help detect harmful software
         </message>
       </if>
 
@@ -7593,8 +7584,8 @@ I don't think this site should be blocked!
         <message name="IDS_AUTOFILL_ADDRESSES_GROUP_NAME" desc="The name of the Addresses group of the Autofill dialog.">
           Addresses
         </message>
-        <message name="IDS_AUTOFILL_CREDITCARDS_GROUP_NAME" desc="The name of the Cards group of the Autofill dialog.">
-          Cards
+        <message name="IDS_AUTOFILL_CREDITCARDS_GROUP_NAME" desc="IThe name of the Credit Cards group of the Autofill dialog.">
+          Credit cards
         </message>
         <message name="IDS_AUTOFILL_EDIT_ADDRESS_CAPTION" desc="The caption on the edit Autofill address dialog.">
           Edit address
@@ -7605,14 +7596,14 @@ I don't think this site should be blocked!
         <message name="IDS_AUTOFILL_ADD_CONTACT_CAPTION" desc="The caption on the edit Autofill contact dialog for the new entry.">
           Add a contact
         </message>
-        <message name="IDS_AUTOFILL_EDIT_CREDITCARD_CAPTION" desc="The caption on the edit Autofill card dialog. The card can be either credit, debit, or prepaid.">
-          Edit card
+        <message name="IDS_AUTOFILL_EDIT_CREDITCARD_CAPTION" desc="The caption on the edit Autofill credit card dialog.">
+          Edit credit card
         </message>
-        <message name="IDS_AUTOFILL_ADD_CREDITCARD_CAPTION" desc="The caption on the edit Autofill card dialog the new entry. The card can be either credit, debit, or prepaid.">
-          Add a card
+        <message name="IDS_AUTOFILL_ADD_CREDITCARD_CAPTION" desc="The caption on the edit Autofill credit card dialog the new entry.">
+          Add a credit card
         </message>
         <message name="IDS_AUTOFILL_USE_PAYMENTS_DATA" desc="The text for the checkbox that controls the Autofill/Payments integration feature.">
-          Cards and addresses using Google Payments
+          Credit cards and addresses using Google Payments
         </message>
 
         <message name="IDS_AUTOFILL_FIELD_LABEL_EMAIL" desc="The label of the Email entry.">
@@ -7624,8 +7615,8 @@ I don't think this site should be blocked!
         <message name="IDS_AUTOFILL_FIELD_LABEL_NAME_ON_CARD" desc="The label of the Name on card entry.">
           Name on card
         </message>
-        <message name="IDS_AUTOFILL_FIELD_LABEL_CREDIT_CARD_NUMBER" desc="The label of the card number entry. This can be either credit, debit, or prepaid card.">
-          Card number
+        <message name="IDS_AUTOFILL_FIELD_LABEL_CREDIT_CARD_NUMBER" desc="The label of the Credit card number entry.">
+          Credit card number
         </message>
         <message name="IDS_AUTOFILL_FIELD_LABEL_EXPIRATION_DATE" desc="The label of the Expiration date entry.">
           Expiration date
@@ -8473,10 +8464,6 @@ I don't think this site should be blocked!
                    desc="Text for the button that activates Android App. (In sentence case.)">
             Open
           </message>
-          <message name="IDS_APP_CONTEXT_MENU_INSTALL_ARC"
-                   desc="Text for the button that installs the Android app. (In sentence case.)">
-            Install
-          </message>
         </if>
       </if>
 
@@ -8533,10 +8520,6 @@ I don't think this site should be blocked!
           <message name="IDS_APP_CONTEXT_MENU_ACTIVATE_ARC"
                    desc="Text for the button that activates Android App. (In title case.)">
             Open
-          </message>
-          <message name="IDS_APP_CONTEXT_MENU_INSTALL_ARC"
-                   desc="Text for the button that installs the Android app. (In title case.)">
-            Install
           </message>
         </if>
       </if>

@@ -44,7 +44,6 @@ class ResourceTimingInfo;
 
 class CORE_EXPORT PerformanceResourceTiming : public PerformanceEntry {
   DEFINE_WRAPPERTYPEINFO();
-  friend class PerformanceResourceTimingTest;
 
  public:
   ~PerformanceResourceTiming() override;
@@ -68,7 +67,6 @@ class CORE_EXPORT PerformanceResourceTiming : public PerformanceEntry {
   }
   // Related doc: https://goo.gl/uNecAj.
   virtual AtomicString initiatorType() const;
-  AtomicString nextHopProtocol() const;
   DOMHighResTimeStamp workerStart() const;
   virtual DOMHighResTimeStamp redirectStart() const;
   virtual DOMHighResTimeStamp redirectEnd() const;
@@ -94,8 +92,6 @@ class CORE_EXPORT PerformanceResourceTiming : public PerformanceEntry {
                             const String& entry_type,
                             double start_time,
                             double duration);
-  virtual AtomicString AlpnNegotiatedProtocol() const;
-  virtual AtomicString ConnectionInfo() const;
 
  private:
   PerformanceResourceTiming(const ResourceTimingInfo&,
@@ -104,10 +100,6 @@ class CORE_EXPORT PerformanceResourceTiming : public PerformanceEntry {
                             double last_redirect_end_time,
                             bool allow_timing_details,
                             bool allow_redirect_details);
-
-  static AtomicString GetNextHopProtocol(
-      const AtomicString& alpn_negotiated_protocol,
-      const AtomicString& connection_info);
 
   double WorkerReady() const;
 
@@ -119,8 +111,6 @@ class CORE_EXPORT PerformanceResourceTiming : public PerformanceEntry {
   virtual unsigned long long GetDecodedBodySize() const;
 
   AtomicString initiator_type_;
-  AtomicString alpn_negotiated_protocol_;
-  AtomicString connection_info_;
   double time_origin_;
   RefPtr<ResourceLoadTiming> timing_;
   double last_redirect_end_time_;

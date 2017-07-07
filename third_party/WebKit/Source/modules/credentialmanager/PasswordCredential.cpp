@@ -179,7 +179,7 @@ PassRefPtr<EncodedFormData> PasswordCredential::EncodeFormData(
   RefPtr<EncodedFormData> encoded_data = form_data->EncodeMultiPartFormData();
   content_type = AtomicString("multipart/form-data; boundary=") +
                  encoded_data->Boundary().data();
-  return encoded_data;
+  return encoded_data.Release();
 }
 
 DEFINE_TRACE(PasswordCredential) {

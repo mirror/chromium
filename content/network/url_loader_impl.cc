@@ -170,7 +170,6 @@ URLLoaderImpl::URLLoaderImpl(
       peer_closed_handle_watcher_(FROM_HERE,
                                   mojo::SimpleWatcher::ArmingPolicy::MANUAL),
       weak_ptr_factory_(this) {
-  context_->RegisterURLLoader(this);
   binding_.set_connection_error_handler(
       base::Bind(&URLLoaderImpl::OnConnectionError, base::Unretained(this)));
 
@@ -202,13 +201,11 @@ URLLoaderImpl::URLLoaderImpl(
   url_request_->Start();
 }
 
-URLLoaderImpl::~URLLoaderImpl() {
-  context_->DeregisterURLLoader(this);
-}
+URLLoaderImpl::~URLLoaderImpl() {}
 
 void URLLoaderImpl::Cleanup() {
   // The associated network context is going away and we have to destroy
-  // net::URLRequest held by this loader.
+  // net::URLRequest hold by this loader.
   delete this;
 }
 
@@ -355,10 +352,6 @@ void URLLoaderImpl::OnReadCompleted(net::URLRequest* url_request,
   }
 
   DidRead(static_cast<uint32_t>(bytes_read), false);
-}
-
-base::WeakPtr<URLLoaderImpl> URLLoaderImpl::GetWeakPtrForTests() {
-  return weak_ptr_factory_.GetWeakPtr();
 }
 
 void URLLoaderImpl::NotifyCompleted(int error_code) {

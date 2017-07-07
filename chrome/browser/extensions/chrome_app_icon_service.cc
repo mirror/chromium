@@ -6,7 +6,6 @@
 
 #include "base/bind.h"
 #include "base/memory/ptr_util.h"
-#include "base/threading/thread_task_runner_handle.h"
 #include "chrome/browser/extensions/chrome_app_icon.h"
 #include "chrome/browser/extensions/chrome_app_icon_service_factory.h"
 #include "extensions/browser/extension_registry.h"
@@ -76,12 +75,8 @@ void ChromeAppIconService::OnAppUpdated(const std::string& app_id) {
   IconMap::const_iterator it = icon_map_.find(app_id);
   if (it == icon_map_.end())
     return;
-  // Set can be updated during the UpdateIcon call.
-  const std::set<ChromeAppIcon*> icons_to_update = it->second;
-  for (auto* icon : icons_to_update) {
-    if (it->second.count(icon))
-      icon->UpdateIcon();
-  }
+  for (auto* icon : it->second)
+    icon->UpdateIcon();
 }
 
 void ChromeAppIconService::OnIconDestroyed(ChromeAppIcon* icon) {
@@ -89,16 +84,7 @@ void ChromeAppIconService::OnIconDestroyed(ChromeAppIcon* icon) {
   IconMap::iterator it = icon_map_.find(icon->app_id());
   DCHECK(it != icon_map_.end());
   it->second.erase(icon);
-  if (it->second.empty()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::Bind(&ChromeAppIconService::MaybeCleanupIconSet,
-                              weak_ptr_factory_.GetWeakPtr(), icon->app_id()));
-  }
-}
-
-void ChromeAppIconService::MaybeCleanupIconSet(const std::string& app_id) {
-  IconMap::iterator it = icon_map_.find(app_id);
-  if (it != icon_map_.end() && it->second.empty())
+  if (it->second.empty())
     icon_map_.erase(it);
 }
 

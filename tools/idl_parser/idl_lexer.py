@@ -42,6 +42,7 @@ class IDLLexer(object):
       'string',
 
     # Symbol and keywords types
+      'COMMENT',
       'identifier',
 
     # MultiChar operators
@@ -144,10 +145,10 @@ class IDLLexer(object):
     return t
 
   # A C or C++ style comment:  /* xxx */ or //
-  # This token is ignored.
   def t_COMMENT(self, t):
     r'(/\*(.|\n)*?\*/)|(//.*(\n[ \t]*//.*)*)'
     self.AddLines(t.value.count('\n'))
+    return t
 
   # A symbol or keyword.
   def t_KEYWORD_OR_SYMBOL(self, t):

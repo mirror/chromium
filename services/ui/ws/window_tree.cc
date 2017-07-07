@@ -1644,8 +1644,8 @@ void WindowTree::SetWindowOpacity(uint32_t change_id,
 
 void WindowTree::AttachCompositorFrameSink(
     Id transport_window_id,
-    cc::mojom::CompositorFrameSinkRequest compositor_frame_sink,
-    cc::mojom::CompositorFrameSinkClientPtr client) {
+    cc::mojom::MojoCompositorFrameSinkRequest compositor_frame_sink,
+    cc::mojom::MojoCompositorFrameSinkClientPtr client) {
   ServerWindow* window =
       GetWindowByClientId(ClientWindowId(transport_window_id));
   if (!window) {
@@ -2354,11 +2354,6 @@ void WindowTree::WmUnlockCursor() {
 void WindowTree::WmSetCursorVisible(bool visible) {
   DCHECK(window_manager_state_);
   window_manager_state_->cursor_state().SetCursorVisible(visible);
-}
-
-void WindowTree::WmSetCursorSize(ui::CursorSize cursor_size) {
-  DCHECK(window_manager_state_);
-  window_manager_state_->cursor_state().SetCursorSize(cursor_size);
 }
 
 void WindowTree::WmSetGlobalOverrideCursor(

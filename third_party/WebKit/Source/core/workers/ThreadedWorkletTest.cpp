@@ -70,7 +70,7 @@ class ThreadedWorkletThreadForTest : public WorkerThread {
         SecurityOrigin::Create(startup_data->script_url_);
     return new ThreadedWorkletGlobalScope(
         startup_data->script_url_, startup_data->user_agent_,
-        std::move(security_origin), this->GetIsolate(), this,
+        security_origin.Release(), this->GetIsolate(), this,
         startup_data->worker_clients_);
   }
 

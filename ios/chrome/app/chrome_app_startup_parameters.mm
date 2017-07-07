@@ -10,6 +10,7 @@
 #include "base/metrics/user_metrics_action.h"
 #include "base/strings/sys_string_conversions.h"
 #include "ios/chrome/browser/chrome_url_constants.h"
+#include "ios/chrome/browser/xcallback_parameters.h"
 #include "ios/chrome/common/app_group/app_group_constants.h"
 #include "ios/chrome/common/x_callback_url.h"
 #import "net/base/mac/url_conversions.h"
@@ -55,10 +56,18 @@ enum MobileSessionStartAction {
 }
 
 - (instancetype)initWithExternalURL:(const GURL&)externalURL
+                xCallbackParameters:(XCallbackParameters*)xCallbackParameters {
+  NOTREACHED();
+  return nil;
+}
+
+- (instancetype)initWithExternalURL:(const GURL&)externalURL
+                xCallbackParameters:(XCallbackParameters*)xCallbackParameters
                   declaredSourceApp:(NSString*)declaredSourceApp
                     secureSourceApp:(NSString*)secureSourceApp
                         completeURL:(NSURL*)completeURL {
-  self = [super initWithExternalURL:externalURL];
+  self = [super initWithExternalURL:externalURL
+                xCallbackParameters:xCallbackParameters];
   if (self) {
     _declaredSourceApp = [declaredSourceApp copy];
     _secureSourceApp = [secureSourceApp copy];
@@ -111,8 +120,12 @@ enum MobileSessionStartAction {
       return nil;
     }
 
+    XCallbackParameters* xcallbackParameters =
+        [[XCallbackParameters alloc] initWithSourceAppId:appId];
+
     return [[ChromeAppStartupParameters alloc]
         initWithExternalURL:url
+        xCallbackParameters:xcallbackParameters
           declaredSourceApp:appId
             secureSourceApp:nil
                 completeURL:completeURL];
@@ -132,6 +145,7 @@ enum MobileSessionStartAction {
     if (!externalURL.is_valid())
       return nil;
     return [[ChromeAppStartupParameters alloc] initWithExternalURL:externalURL
+                                               xCallbackParameters:nil
                                                  declaredSourceApp:appId
                                                    secureSourceApp:nil
                                                        completeURL:completeURL];
@@ -152,6 +166,7 @@ enum MobileSessionStartAction {
     if (!externalURL.is_valid())
       return nil;
     return [[ChromeAppStartupParameters alloc] initWithExternalURL:externalURL
+                                               xCallbackParameters:nil
                                                  declaredSourceApp:appId
                                                    secureSourceApp:nil
                                                        completeURL:completeURL];
@@ -228,6 +243,7 @@ enum MobileSessionStartAction {
                               app_group::kChromeAppGroupVoiceSearchCommand)]) {
     ChromeAppStartupParameters* params = [[ChromeAppStartupParameters alloc]
         initWithExternalURL:GURL(kChromeUINewTabURL)
+        xCallbackParameters:nil
           declaredSourceApp:appId
             secureSourceApp:secureSourceApp
                 completeURL:url];
@@ -239,6 +255,7 @@ enum MobileSessionStartAction {
                                    app_group::kChromeAppGroupNewTabCommand)]) {
     return [[ChromeAppStartupParameters alloc]
         initWithExternalURL:GURL(kChromeUINewTabURL)
+        xCallbackParameters:nil
           declaredSourceApp:appId
             secureSourceApp:secureSourceApp
                 completeURL:url];
@@ -249,6 +266,7 @@ enum MobileSessionStartAction {
                               app_group::kChromeAppGroupFocusOmniboxCommand)]) {
     ChromeAppStartupParameters* params = [[ChromeAppStartupParameters alloc]
         initWithExternalURL:GURL(kChromeUINewTabURL)
+        xCallbackParameters:nil
           declaredSourceApp:appId
             secureSourceApp:secureSourceApp
                 completeURL:url];
@@ -265,6 +283,7 @@ enum MobileSessionStartAction {
       return nil;
     return
         [[ChromeAppStartupParameters alloc] initWithExternalURL:externalURL
+                                            xCallbackParameters:nil
                                               declaredSourceApp:appId
                                                 secureSourceApp:secureSourceApp
                                                     completeURL:url];
@@ -275,6 +294,7 @@ enum MobileSessionStartAction {
                               app_group::kChromeAppGroupQRScannerCommand)]) {
     ChromeAppStartupParameters* params = [[ChromeAppStartupParameters alloc]
         initWithExternalURL:GURL(kChromeUINewTabURL)
+        xCallbackParameters:nil
           declaredSourceApp:appId
             secureSourceApp:secureSourceApp
                 completeURL:url];
@@ -287,6 +307,7 @@ enum MobileSessionStartAction {
                        app_group::kChromeAppGroupIncognitoSearchCommand)]) {
     ChromeAppStartupParameters* params = [[ChromeAppStartupParameters alloc]
         initWithExternalURL:GURL(kChromeUINewTabURL)
+        xCallbackParameters:nil
           declaredSourceApp:appId
             secureSourceApp:secureSourceApp
                 completeURL:url];

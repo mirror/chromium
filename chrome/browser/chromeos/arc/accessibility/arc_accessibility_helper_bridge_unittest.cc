@@ -35,8 +35,8 @@ class ArcAccessibilityHelperBridgeTest : public testing::Test {
     }
     aura::Window* GetActiveWindow() const override { return nullptr; }
     aura::Window* GetFocusedWindow() const override { return nullptr; }
-    ui::CursorSize GetCursorSize() const override {
-      return ui::CursorSize::kNormal;
+    ui::CursorSetType GetCursorSet() const override {
+      return ui::CursorSetType::CURSOR_SET_NORMAL;
     }
     const display::Display& GetCursorDisplay() const override {
       static const display::Display display;

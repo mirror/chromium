@@ -78,9 +78,6 @@ class TestExporterTest(unittest.TestCase):
 
         self.assertEqual(test_exporter.wpt_github.calls, [
             'pr_with_position',
-            'pr_with_position',
-            'pr_with_position',
-            'pr_with_position',
             'pr_with_change_id',
             'create_pr',
             'add_label "default"',

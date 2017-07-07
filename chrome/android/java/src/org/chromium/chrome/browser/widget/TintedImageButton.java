@@ -6,45 +6,63 @@ package org.chromium.chrome.browser.widget;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
-import android.graphics.Canvas;
+import android.content.res.TypedArray;
+import android.graphics.PorterDuff;
 import android.util.AttributeSet;
 import android.widget.ImageButton;
 
-import org.chromium.chrome.browser.widget.ImageViewTinter.ImageViewTinterOwner;
+import org.chromium.chrome.R;
 
 /**
- * Implementation of ImageButton that allows tinting the Drawable for all states.
- * For usage, see {@link ImageViewTinter}.
+ * Implementation of ImageButton that allows to tint the color of the image button for all
+ * image button states using chrome:chrometint attribute in XML.
  */
-public class TintedImageButton extends ImageButton implements ImageViewTinterOwner {
-    private ImageViewTinter mTinter;
+public class TintedImageButton extends ImageButton {
+    private ColorStateList mTint;
 
     public TintedImageButton(Context context) {
-        this(context, null);
+        super(context);
     }
 
     public TintedImageButton(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+        super(context, attrs);
+        init(context, attrs, 0);
     }
 
     public TintedImageButton(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        mTinter = new ImageViewTinter(this, attrs, defStyle);
+        init(context, attrs, defStyle);
+    }
+
+    private void init(Context context, AttributeSet attrs, int defStyle) {
+        TypedArray a = context.obtainStyledAttributes(
+                attrs, R.styleable.TintedImage, defStyle, 0);
+        setTintInternal(a.getColorStateList(R.styleable.TintedImage_chrometint));
+        a.recycle();
     }
 
     @Override
-    public void drawableStateChanged() {
+    protected void drawableStateChanged() {
         super.drawableStateChanged();
-        mTinter.drawableStateChanged();
+        updateTintColor();
     }
 
-    @Override
-    public void setTint(ColorStateList tintList) {
-        mTinter.setTint(tintList);
+    /**
+     * Sets the tint color for the given ImageButton for all button states.
+     * @param tint The set of colors to use to color the ImageButton.
+     */
+    public void setTint(ColorStateList tint) {
+        if (mTint == tint) return;
+        setTintInternal(tint);
+        updateTintColor();
     }
 
-    @Override
-    public void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
+    private void setTintInternal(ColorStateList tint) {
+        mTint = tint;
+    }
+
+    private void updateTintColor() {
+        if (mTint == null) return;
+        setColorFilter(mTint.getColorForState(getDrawableState(), 0), PorterDuff.Mode.SRC_IN);
     }
 }

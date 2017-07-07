@@ -269,14 +269,6 @@ class BlinkPerfBindings(_BlinkPerfBenchmark):
             'structured-clone-long-string-serialize.html',
             [story.expectations.ALL_ANDROID],
             'crbug.com/528472')
-        self.DisableStory(
-            'structured-clone-json-serialize.html',
-            [story.expectations.ANDROID_ONE],
-            'crbug.com/736123')
-        self.DisableStory(
-            'structured-clone-json-deserialize.html',
-            [story.expectations.ANDROID_ONE],
-            'crbug.com/736123')
     return StoryExpectations()
 
 
@@ -413,17 +405,5 @@ class BlinkPerfShadowDOM(_BlinkPerfBenchmark):
       def SetExpectations(self):
         self.PermanentlyDisableBenchmark(
             [story.expectations.ANDROID_NEXUS5X], 'crbug.com/702319')
-        self.DisableStory(
-            'v1-large-deep-layout.html',
-            [story.expectations.ANDROID_ONE],
-            'crbug.com/736512')
-        self.DisableStory(
-            'v1-large-deep-distribution.html',
-            [story.expectations.ANDROID_ONE],
-            'crbug.com/736512')
-        self.DisableStory(
-            'v1-distribution-disconnected-and-reconnected.html',
-            [story.expectations.ANDROID_ONE],
-            'crbug.com/736512')
     return StoryExpectations()
 

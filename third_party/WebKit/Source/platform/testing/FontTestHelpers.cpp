@@ -4,7 +4,6 @@
 
 #include "platform/testing/FontTestHelpers.h"
 
-#include "platform/SharedBuffer.h"
 #include "platform/fonts/Font.h"
 #include "platform/fonts/FontCustomPlatformData.h"
 #include "platform/fonts/FontDescription.h"

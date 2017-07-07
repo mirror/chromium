@@ -92,10 +92,13 @@ source_set("browsing_data_internal") {
     "//components/signin/ios/browser",
     "//ios/chrome/browser:browser_internal",
     "//ios/chrome/browser/browser_state",
+    "//ios/chrome/browser/native_app_launcher:native_app_launcher_internal",
     "//ios/chrome/browser/sessions:serialisation",
     "//ios/chrome/browser/signin",
     "//ios/chrome/browser/snapshots",
     "//ios/chrome/browser/ui:ui_internal",
+    "//ios/public/provider/chrome/browser",
+    "//ios/public/provider/chrome/browser/native_app_launcher",
     "//ios/web",
     "//net",
   ]

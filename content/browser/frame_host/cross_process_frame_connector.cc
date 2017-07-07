@@ -44,7 +44,6 @@ bool CrossProcessFrameConnector::OnMessageReceived(const IPC::Message& msg) {
     IPC_MESSAGE_HANDLER(FrameHostMsg_UpdateViewportIntersection,
                         OnUpdateViewportIntersection)
     IPC_MESSAGE_HANDLER(FrameHostMsg_VisibilityChanged, OnVisibilityChanged)
-    IPC_MESSAGE_HANDLER(FrameHostMsg_SetIsInert, OnSetIsInert)
     IPC_MESSAGE_HANDLER(FrameHostMsg_SatisfySequence, OnSatisfySequence)
     IPC_MESSAGE_HANDLER(FrameHostMsg_RequireSequence, OnRequireSequence)
     IPC_MESSAGE_UNHANDLED(handled = false)
@@ -277,12 +276,6 @@ void CrossProcessFrameConnector::OnVisibilityChanged(bool visible) {
   } else if (!visible) {
     view_->Hide();
   }
-}
-
-void CrossProcessFrameConnector::OnSetIsInert(bool inert) {
-  is_inert_ = inert;
-  if (view_)
-    view_->SetIsInert();
 }
 
 void CrossProcessFrameConnector::SetRect(const gfx::Rect& frame_rect) {

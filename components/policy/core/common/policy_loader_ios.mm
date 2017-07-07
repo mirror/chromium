@@ -97,11 +97,11 @@ PolicyLoaderIOS::PolicyLoaderIOS(
       weak_factory_(this) {}
 
 PolicyLoaderIOS::~PolicyLoaderIOS() {
-  DCHECK(task_runner()->RunsTasksInCurrentSequence());
+  DCHECK(task_runner()->RunsTasksOnCurrentThread());
 }
 
 void PolicyLoaderIOS::InitOnBackgroundThread() {
-  DCHECK(task_runner()->RunsTasksInCurrentSequence());
+  DCHECK(task_runner()->RunsTasksOnCurrentThread());
   base::Closure callback = base::Bind(&PolicyLoaderIOS::UserDefaultsChanged,
                                       weak_factory_.GetWeakPtr());
   notification_observer_.reset(

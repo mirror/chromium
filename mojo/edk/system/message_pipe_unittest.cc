@@ -22,10 +22,9 @@ namespace mojo {
 namespace edk {
 namespace {
 
-const MojoHandleSignals kAllSignals =
-    MOJO_HANDLE_SIGNAL_READABLE | MOJO_HANDLE_SIGNAL_WRITABLE |
-    MOJO_HANDLE_SIGNAL_PEER_CLOSED | MOJO_HANDLE_SIGNAL_PEER_REMOTE;
-
+const MojoHandleSignals kAllSignals = MOJO_HANDLE_SIGNAL_READABLE |
+                                      MOJO_HANDLE_SIGNAL_WRITABLE |
+                                      MOJO_HANDLE_SIGNAL_PEER_CLOSED;
 static const char kHelloWorld[] = "hello world";
 
 class MessagePipeTest : public test::MojoTestBase {

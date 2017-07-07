@@ -722,7 +722,7 @@ PassRefPtr<ShapeResult> HarfBuzzShaper::Shape(const Font* font,
   }
 #endif
 
-  return result;
+  return result.Release();
 }
 
 PassRefPtr<ShapeResult> HarfBuzzShaper::Shape(const Font* font,

@@ -103,7 +103,6 @@ base::string16 NetworkForFill(const std::string& network) {
 CreditCard::CreditCard(const std::string& guid, const std::string& origin)
     : AutofillDataModel(guid, origin),
       record_type_(LOCAL_CARD),
-      card_type_(CARD_TYPE_UNKNOWN),
       network_(kGenericCard),
       expiration_month_(0),
       expiration_year_(0),
@@ -491,7 +490,6 @@ void CreditCard::operator=(const CreditCard& credit_card) {
     return;
 
   record_type_ = credit_card.record_type_;
-  card_type_ = credit_card.card_type_;
   number_ = credit_card.number_;
   name_on_card_ = credit_card.name_on_card_;
   network_ = credit_card.network_;
@@ -500,7 +498,6 @@ void CreditCard::operator=(const CreditCard& credit_card) {
   server_id_ = credit_card.server_id_;
   server_status_ = credit_card.server_status_;
   billing_address_id_ = credit_card.billing_address_id_;
-  bank_name_ = credit_card.bank_name_;
 
   set_guid(credit_card.guid());
   set_origin(credit_card.origin());
@@ -564,10 +561,6 @@ int CreditCard::Compare(const CreditCard& credit_card) const {
     return comparison;
 
   comparison = billing_address_id_.compare(credit_card.billing_address_id_);
-  if (comparison != 0)
-    return comparison;
-
-  comparison = bank_name_.compare(credit_card.bank_name_);
   if (comparison != 0)
     return comparison;
 
@@ -746,7 +739,6 @@ base::string16 CreditCard::NetworkForDisplay() const {
 
 base::string16 CreditCard::NetworkAndLastFourDigits() const {
   base::string16 network = NetworkForDisplay();
-  // TODO(crbug.com/734197): truncate network.
 
   base::string16 digits = LastFourDigits();
   if (digits.empty())
@@ -754,14 +746,6 @@ base::string16 CreditCard::NetworkAndLastFourDigits() const {
 
   // TODO(estade): i18n?
   return network + base::string16(kMidlineEllipsis) + digits;
-}
-
-base::string16 CreditCard::BankNameAndLastFourDigits() const {
-  base::string16 digits = LastFourDigits();
-  // TODO(crbug.com/734197): truncate bank name.
-  if (digits.empty())
-    return ASCIIToUTF16(bank_name_);
-  return ASCIIToUTF16(bank_name_) + base::string16(kMidlineEllipsis) + digits;
 }
 
 base::string16 CreditCard::AbbreviatedExpirationDateForDisplay() const {

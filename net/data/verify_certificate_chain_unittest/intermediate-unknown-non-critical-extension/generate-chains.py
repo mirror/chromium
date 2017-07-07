@@ -3,15 +3,17 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-"""Certificate chain where the intermediate contains an unknown non-critical
-extension."""
+"""Certificate chain with 1 intermediate and a trusted root. The intermediate
+has an unknown X.509v3 extension that is marked as non-critical. Verification
+is expected to succeed because although unrecognized, the extension is not
+critical."""
 
 import sys
 sys.path += ['..']
 
 import common
 
-# Self-signed root certificate.
+# Self-signed root certificate (used as trust anchor).
 root = common.create_self_signed_root_certificate('Root')
 intermediate = common.create_intermediate_certificate('Intermediate', root)
 

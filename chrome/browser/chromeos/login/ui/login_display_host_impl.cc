@@ -9,6 +9,7 @@
 
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/shell.h"
+#include "ash/shell_port.h"
 #include "ash/system/tray/system_tray.h"
 #include "ash/wallpaper/wallpaper_delegate.h"
 #include "base/bind.h"
@@ -1247,7 +1248,7 @@ void LoginDisplayHostImpl::TryToPlayStartupSound() {
   }
 
   base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-      FROM_HERE, base::BindOnce(&EnableSystemSoundsForAccessibility),
+      FROM_HERE, base::Bind(&EnableSystemSoundsForAccessibility),
       media::SoundsManager::Get()->GetDuration(SOUND_STARTUP));
 }
 

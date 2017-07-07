@@ -15,7 +15,6 @@ cr.define('print_preview', function() {
         'getExtensionPrinters',
         'getPrivetPrinters',
         'getPrinterCapabilities',
-        'print',
         'setupPrinter'
       ]);
 
@@ -24,6 +23,9 @@ cr.define('print_preview', function() {
      *     receiving events.
      */
     this.eventTarget_ = new cr.EventTarget();
+
+    /** @private {boolean} Whether the native layer has sent a print message. */
+    this.printStarted_ = false;
 
     /**
      * @private {boolean} Whether the native layer has set the generate draft
@@ -98,12 +100,6 @@ cr.define('print_preview', function() {
     },
 
     /** @override */
-    print: function() {
-      this.methodCalled('print');
-      return Promise.resolve();
-    },
-
-    /** @override */
     setupPrinter: function(printerId) {
       this.methodCalled('setupPrinter', printerId);
       return this.shouldRejectPrinterSetup_ ?
@@ -118,6 +114,7 @@ cr.define('print_preview', function() {
                               generateDraft, requestId) {
       this.generateDraft_ = generateDraft;
     },
+    startPrint: function () { this.printStarted_ = true; },
     startHideDialog: function () {},
 
     /** @return {!cr.EventTarget} The native layer event target. */
@@ -130,6 +127,9 @@ cr.define('print_preview', function() {
 
     /** @return {boolean} Whether a new draft was requested for preview. */
     generateDraft: function() { return this.generateDraft_; },
+
+    /** @return {boolean} Whether a print request has been issued. */
+    isPrintStarted: function() { return this.printStarted_; },
 
     /**
      * @param {!print_preview.NativeInitialSettings} settings The settings

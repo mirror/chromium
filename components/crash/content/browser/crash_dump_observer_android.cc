@@ -85,6 +85,7 @@ void CrashDumpObserver::OnChildExit(int child_process_id,
 void CrashDumpObserver::BrowserChildProcessStarted(
     int child_process_id,
     content::FileDescriptorInfo* mappings) {
+  DCHECK_CURRENTLY_ON(BrowserThread::PROCESS_LAUNCHER);
   std::vector<Client*> registered_clients_copy;
   {
     base::AutoLock auto_lock(registered_clients_lock_);

@@ -26,6 +26,7 @@ public class BitmapUtils {
             return null;
         }
 
+        // TODO(junwei.fu): https://crbug.com/684921 support other bitmap pixel formats.
         if (bitmapData.colorType != ColorType.RGBA_8888
                 && bitmapData.colorType != ColorType.BGRA_8888) {
             return null;

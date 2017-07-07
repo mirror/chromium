@@ -338,7 +338,7 @@ void LeakDetector::NotifyObservers(
   if (reports.empty())
     return;
 
-  if (!task_runner_->RunsTasksInCurrentSequence()) {
+  if (!task_runner_->RunsTasksOnCurrentThread()) {
     task_runner_->PostTask(FROM_HERE,
                            base::Bind(&LeakDetector::NotifyObservers,
                                       base::Unretained(this), reports));

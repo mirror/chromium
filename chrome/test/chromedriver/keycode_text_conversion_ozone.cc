@@ -14,15 +14,10 @@
 #include "ui/events/ozone/layout/keyboard_layout_engine.h"
 #include "ui/events/ozone/layout/keyboard_layout_engine_manager.h"
 
-#if defined(USE_X11)
-bool ConvertKeyCodeToTextOzone
-#else
-bool ConvertKeyCodeToText
-#endif
-    (ui::KeyboardCode key_code,
-     int modifiers,
-     std::string* text,
-     std::string* error_msg) {
+bool ConvertKeyCodeToText(ui::KeyboardCode key_code,
+                          int modifiers,
+                          std::string* text,
+                          std::string* error_msg) {
   ui::KeyboardLayoutEngine* keyboard_layout_engine =
       ui::KeyboardLayoutEngineManager::GetKeyboardLayoutEngine();
   ui::DomCode dom_code = ui::UsLayoutKeyboardCodeToDomCode(key_code);
@@ -53,15 +48,10 @@ bool ConvertKeyCodeToText
   return true;
 }
 
-#if defined(USE_X11)
-bool ConvertCharToKeyCodeOzone
-#else
-bool ConvertCharToKeyCode
-#endif
-    (base::char16 key,
-     ui::KeyboardCode* key_code,
-     int* necessary_modifiers,
-     std::string* error_msg) {
+bool ConvertCharToKeyCode(base::char16 key,
+                          ui::KeyboardCode* key_code,
+                          int* necessary_modifiers,
+                          std::string* error_msg) {
   base::string16 key_string;
   key_string.push_back(key);
   std::string key_string_utf8 = base::UTF16ToUTF8(key_string);

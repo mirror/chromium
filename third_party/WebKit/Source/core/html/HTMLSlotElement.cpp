@@ -160,17 +160,12 @@ AtomicString HTMLSlotElement::GetName() const {
   return NormalizeSlotName(FastGetAttribute(HTMLNames::nameAttr));
 }
 
-void HTMLSlotElement::AttachLayoutTree(AttachContext& context) {
+void HTMLSlotElement::AttachLayoutTree(const AttachContext& context) {
   if (SupportsDistribution()) {
-    AttachContext children_context(context);
-    children_context.resolved_style = nullptr;
-
     for (auto& node : distributed_nodes_) {
       if (node->NeedsAttach())
-        node->AttachLayoutTree(children_context);
+        node->AttachLayoutTree(context);
     }
-    if (children_context.previous_in_flow)
-      context.previous_in_flow = children_context.previous_in_flow;
   }
   HTMLElement::AttachLayoutTree(context);
 }

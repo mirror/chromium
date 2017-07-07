@@ -18,7 +18,6 @@ import org.junit.runner.RunWith;
 import org.chromium.base.test.util.CommandLineFlags;
 import org.chromium.base.test.util.MinAndroidSdkLevel;
 import org.chromium.base.test.util.Restriction;
-import org.chromium.base.test.util.RetryOnFailure;
 import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.vr_shell.util.NfcSimUtils;
 import org.chromium.chrome.browser.vr_shell.util.VrTransitionUtils;
@@ -58,7 +57,6 @@ public class WebVrTransitionTest {
     @Test
     @MediumTest
     @Restriction(RESTRICTION_TYPE_VIEWER_DAYDREAM)
-    @RetryOnFailure(message = "crbug.com/736527")
     public void testNfcFiresVrdisplayactivate() throws InterruptedException {
         mVrTestRule.loadUrlAndAwaitInitialization(
                 VrTestRule.getHtmlTestFile("test_nfc_fires_vrdisplayactivate"),

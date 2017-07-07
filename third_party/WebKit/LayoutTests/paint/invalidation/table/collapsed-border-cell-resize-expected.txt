@@ -7,26 +7,17 @@
       "drawsContent": true,
       "paintInvalidations": [
         {
-          "object": "LayoutTableRow TR",
+          "object": "LayoutTableCell TD id='target'",
           "rect": [8, 8, 104, 204],
           "reason": "geometry"
-        },
-        {
-          "object": "LayoutTableCell TD id='target'",
-          "rect": [8, 111, 103, 100],
-          "reason": "incremental"
         }
       ]
     }
   ],
   "objectPaintInvalidations": [
     {
-      "object": "LayoutTableRow TR",
-      "reason": "geometry"
-    },
-    {
       "object": "LayoutTableCell TD id='target'",
-      "reason": "incremental"
+      "reason": "geometry"
     }
   ]
 }

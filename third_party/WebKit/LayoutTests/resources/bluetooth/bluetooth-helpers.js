@@ -479,9 +479,6 @@ function setUpHealthThermometerAndHeartRateDevices() {
 //  - 'temperature_measurement' (indicate),
 //  - 'temperature_type' (read),
 //  - 'measurement_interval' (read, write, indicate)
-// The 'measurement_interval' characteristic contains a
-// 'gatt.client_characteristic_configuration' descriptor and a
-// 'characteristic_user_description' descriptor.
 // The device has been connected to and its attributes are ready to be
 // discovered.
 // TODO(crbug.com/719816): Add descriptors.
@@ -491,7 +488,6 @@ function getHealthThermometerDevice(options) {
   let fake_generic_access;
   let fake_health_thermometer;
   let fake_measurement_interval;
-  let fake_user_description;
   return getConnectedHealthThermometerDevice(options)
     .then(result => {
       ({
@@ -500,7 +496,6 @@ function getHealthThermometerDevice(options) {
         fake_generic_access,
         fake_health_thermometer,
         fake_measurement_interval,
-        fake_user_description,
       } = result);
     })
     .then(() => fake_peripheral.setNextGATTDiscoveryResponse({
@@ -511,7 +506,6 @@ function getHealthThermometerDevice(options) {
       fake_generic_access: fake_generic_access,
       fake_health_thermometer: fake_health_thermometer,
       fake_measurement_interval: fake_measurement_interval,
-      fake_user_description: fake_user_description,
     }));
 }
 
@@ -574,17 +568,14 @@ function getMeasurementIntervalCharacteristic() {
     });
 }
 
-function getUserDescriptionDescriptor() {
+function getTemperatureTypeCharacteristic() {
   return getHealthThermometerDevice()
     .then(result => {
-      return result
-        .device.gatt.getPrimaryService('health_thermometer')
-        .then(service => service.getCharacteristic('measurement_interval'))
-        .then(characteristic => characteristic.getDescriptor(
-          'gatt.characteristic_user_description'))
-        .then(descriptor => ({
-          descriptor: descriptor,
-          fake_descriptor: result.fake_user_description,
+      return result.device.gatt.getPrimaryService('health_thermometer')
+        .then(service => service.getCharacteristic('temperature_type'))
+        .then(characteristic => ({
+          characteristic: characteristic,
+          fake_characteristic: result.fake_temperature_type
         }));
     });
 }
@@ -597,7 +588,6 @@ function getConnectedHealthThermometerDevice(options) {
   let fake_generic_access;
   let fake_health_thermometer;
   let fake_measurement_interval;
-  let fake_user_description;
   let fake_temperature_measurement;
   let fake_temperature_type;
   return getDiscoveredHealthThermometerDevice(options)
@@ -621,7 +611,6 @@ function getConnectedHealthThermometerDevice(options) {
       fake_measurement_interval.addFakeDescriptor({
         uuid: 'gatt.client_characteristic_configuration'})
     ]))
-    .then(([d,]) => fake_user_description = d)
     .then(() => fake_health_thermometer.addFakeCharacteristic({
       uuid: 'temperature_measurement', properties: ['indicate']}))
     .then(c => fake_temperature_measurement = c)
@@ -634,7 +623,6 @@ function getConnectedHealthThermometerDevice(options) {
       fake_generic_access: fake_generic_access,
       fake_health_thermometer: fake_health_thermometer,
       fake_measurement_interval: fake_measurement_interval,
-      fake_user_description: fake_user_description,
       fake_temperature_measurement: fake_temperature_measurement,
       fake_temperature_type: fake_temperature_type,
     }));

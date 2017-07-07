@@ -10,7 +10,6 @@
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
-#include "base/stl_util.h"
 #include "base/trace_event/trace_event.h"
 #include "base/trace_event/trace_event_argument.h"
 #include "components/subresource_filter/content/browser/activation_state_computing_navigation_throttle.h"
@@ -73,18 +72,13 @@ void ContentSubresourceFilterThrottleManager::ReadyToCommitNavigation(
   if (navigation_handle->GetNetErrorCode() != net::OK)
     return;
 
-  auto it = ongoing_activation_throttles_.find(navigation_handle);
-  if (it == ongoing_activation_throttles_.end())
+  auto throttle = ongoing_activation_throttles_.find(navigation_handle);
+  if (throttle == ongoing_activation_throttles_.end())
     return;
-
-  // TODO(crbug.com/736249): Remove CHECKs in this file when the root cause of
-  // the crash is found.
-  ActivationStateComputingNavigationThrottle* throttle = it->second;
-  CHECK_EQ(navigation_handle, throttle->navigation_handle());
 
   // Main frame throttles with disabled page-level activation will not have
   // associated filters.
-  AsyncDocumentSubresourceFilter* filter = throttle->filter();
+  AsyncDocumentSubresourceFilter* filter = throttle->second->filter();
   if (!filter)
     return;
 
@@ -98,7 +92,7 @@ void ContentSubresourceFilterThrottleManager::ReadyToCommitNavigation(
       "ContentSubresourceFilterThrottleManager::ReadyToCommitNavigation",
       "activation_state", filter->activation_state().ToTracedValue());
 
-  throttle->WillSendActivationToRenderer();
+  throttle->second->WillSendActivationToRenderer();
 
   content::RenderFrameHost* frame_host =
       navigation_handle->GetRenderFrameHost();
@@ -119,7 +113,6 @@ void ContentSubresourceFilterThrottleManager::DidFinishNavigation(
   auto throttle = ongoing_activation_throttles_.find(navigation_handle);
   std::unique_ptr<AsyncDocumentSubresourceFilter> filter;
   if (throttle != ongoing_activation_throttles_.end()) {
-    CHECK_EQ(navigation_handle, throttle->second->navigation_handle());
     filter = throttle->second->ReleaseFilter();
     ongoing_activation_throttles_.erase(throttle);
   }
@@ -213,7 +206,6 @@ void ContentSubresourceFilterThrottleManager::MaybeAppendNavigationThrottles(
   }
   if (auto activation_throttle =
           MaybeCreateActivationStateComputingThrottle(navigation_handle)) {
-    CHECK(!base::ContainsKey(ongoing_activation_throttles_, navigation_handle));
     ongoing_activation_throttles_[navigation_handle] =
         activation_throttle.get();
     throttles->push_back(std::move(activation_throttle));

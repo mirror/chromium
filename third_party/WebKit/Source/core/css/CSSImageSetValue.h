@@ -28,7 +28,6 @@
 
 #include "core/css/CSSValueList.h"
 #include "platform/CrossOriginAttributeValue.h"
-#include "platform/loader/fetch/FetchParameters.h"
 #include "platform/weborigin/Referrer.h"
 #include "platform/wtf/Allocator.h"
 
@@ -47,7 +46,6 @@ class CSSImageSetValue : public CSSValueList {
   StyleImage* CacheImage(
       const Document&,
       float device_scale_factor,
-      FetchParameters::PlaceholderImageRequestType,
       CrossOriginAttributeValue = kCrossOriginAttributeNotSet);
 
   String CustomCSSText() const;

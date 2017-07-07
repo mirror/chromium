@@ -228,9 +228,9 @@ QuotaPermissionContext* ContentBrowserClient::CreateQuotaPermissionContext() {
 void ContentBrowserClient::GetQuotaSettings(
     BrowserContext* context,
     StoragePartition* partition,
-    storage::OptionalQuotaSettingsCallback callback) {
+    const storage::OptionalQuotaSettingsCallback& callback) {
   // By default, no quota is provided, embedders should override.
-  std::move(callback).Run(storage::GetNoQuotaSettings());
+  callback.Run(storage::GetNoQuotaSettings());
 }
 
 void ContentBrowserClient::AllowCertificateError(

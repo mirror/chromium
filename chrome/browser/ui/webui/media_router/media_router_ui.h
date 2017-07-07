@@ -268,7 +268,8 @@ class MediaRouterUI
 
   // Methods for MediaRouterFileDialogDelegate
   void FileDialogFileSelected(const ui::SelectedFileInfo& file_info) override;
-  void FileDialogSelectionFailed(const IssueInfo& issue) override;
+  void FileDialogSelectionFailed(
+      MediaRouterFileDialog::FailureReason reason) override;
 
   // QueryResultManager::Observer
   void OnResultsUpdated(

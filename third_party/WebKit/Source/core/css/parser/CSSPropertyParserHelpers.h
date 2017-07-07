@@ -157,8 +157,6 @@ CSSValueList* ConsumeCommaSeparatedList(Func callback,
   return list;
 }
 
-CSSValue* ConsumeTransformList(CSSParserTokenRange&, const CSSParserContext&);
-
 }  // namespace CSSPropertyParserHelpers
 
 }  // namespace blink

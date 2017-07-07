@@ -11,8 +11,10 @@
 #include "platform/graphics/CompositorFilterOperations.h"
 #include "platform/graphics/GraphicsTypes.h"
 #include "platform/graphics/paint/ClipPaintPropertyNode.h"
-#include "platform/graphics/paint/PaintPropertyNode.h"
 #include "platform/graphics/paint/TransformPaintPropertyNode.h"
+#include "platform/wtf/PassRefPtr.h"
+#include "platform/wtf/RefCounted.h"
+#include "platform/wtf/RefPtr.h"
 #include "platform/wtf/text/WTFString.h"
 
 #include <iosfwd>
@@ -25,7 +27,7 @@ namespace blink {
 // The effect tree is rooted at a node with no parent. This root node should
 // not be modified.
 class PLATFORM_EXPORT EffectPaintPropertyNode
-    : public PaintPropertyNode<EffectPaintPropertyNode> {
+    : public RefCounted<EffectPaintPropertyNode> {
  public:
   // This node is really a sentinel, and does not represent a real effect.
   static EffectPaintPropertyNode* Root();
@@ -48,7 +50,7 @@ class PLATFORM_EXPORT EffectPaintPropertyNode
         paint_offset));
   }
 
-  bool Update(
+  void Update(
       PassRefPtr<const EffectPaintPropertyNode> parent,
       PassRefPtr<const TransformPaintPropertyNode> local_transform_space,
       PassRefPtr<const ClipPaintPropertyNode> output_clip,
@@ -59,16 +61,9 @@ class PLATFORM_EXPORT EffectPaintPropertyNode
       CompositingReasons direct_compositing_reasons = kCompositingReasonNone,
       const CompositorElementId& compositor_element_id = CompositorElementId(),
       const FloatPoint& paint_offset = FloatPoint()) {
-    bool parent_changed = PaintPropertyNode::Update(std::move(parent));
-
-    if (local_transform_space == local_transform_space_ &&
-        output_clip == output_clip_ && color_filter == color_filter_ &&
-        filter == filter_ && opacity == opacity_ && blend_mode == blend_mode_ &&
-        direct_compositing_reasons == direct_compositing_reasons_ &&
-        compositor_element_id == compositor_element_id_ &&
-        paint_offset == paint_offset_)
-      return parent_changed;
-
+    DCHECK(!IsRoot());
+    DCHECK(parent != this);
+    parent_ = std::move(parent);
     local_transform_space_ = std::move(local_transform_space);
     output_clip_ = std::move(output_clip);
     color_filter_ = color_filter;
@@ -78,7 +73,6 @@ class PLATFORM_EXPORT EffectPaintPropertyNode
     direct_compositing_reasons_ = direct_compositing_reasons;
     compositor_element_id_ = compositor_element_id;
     paint_offset_ = paint_offset;
-    return true;
   }
 
   const TransformPaintPropertyNode* LocalTransformSpace() const {
@@ -90,6 +84,10 @@ class PLATFORM_EXPORT EffectPaintPropertyNode
   float Opacity() const { return opacity_; }
   const CompositorFilterOperations& Filter() const { return filter_; }
   ColorFilter GetColorFilter() const { return color_filter_; }
+
+  // Parent effect or nullptr if this is the root effect.
+  const EffectPaintPropertyNode* Parent() const { return parent_.Get(); }
+  bool IsRoot() const { return !parent_; }
 
   bool HasFilterThatMovesPixels() const {
     return filter_.HasFilterThatMovesPixels();
@@ -106,7 +104,7 @@ class PLATFORM_EXPORT EffectPaintPropertyNode
   // an effect node before it has been updated, to later detect changes.
   PassRefPtr<EffectPaintPropertyNode> Clone() const {
     return AdoptRef(new EffectPaintPropertyNode(
-        Parent(), local_transform_space_, output_clip_, color_filter_, filter_,
+        parent_, local_transform_space_, output_clip_, color_filter_, filter_,
         opacity_, blend_mode_, direct_compositing_reasons_,
         compositor_element_id_, paint_offset_));
   }
@@ -115,7 +113,7 @@ class PLATFORM_EXPORT EffectPaintPropertyNode
   // if an effect node has changed. It ignores changes of reference filters
   // because SkImageFilter doesn't have an equality operator.
   bool operator==(const EffectPaintPropertyNode& o) const {
-    return Parent() == o.Parent() &&
+    return parent_ == o.parent_ &&
            local_transform_space_ == o.local_transform_space_ &&
            output_clip_ == o.output_clip_ && color_filter_ == o.color_filter_ &&
            filter_.EqualsIgnoringReferenceFilters(o.filter_) &&
@@ -154,7 +152,7 @@ class PLATFORM_EXPORT EffectPaintPropertyNode
       CompositingReasons direct_compositing_reasons,
       CompositorElementId compositor_element_id,
       const FloatPoint& paint_offset)
-      : PaintPropertyNode(std::move(parent)),
+      : parent_(std::move(parent)),
         local_transform_space_(std::move(local_transform_space)),
         output_clip_(std::move(output_clip)),
         color_filter_(color_filter),
@@ -165,6 +163,7 @@ class PLATFORM_EXPORT EffectPaintPropertyNode
         compositor_element_id_(compositor_element_id),
         paint_offset_(paint_offset) {}
 
+  RefPtr<const EffectPaintPropertyNode> parent_;
   // The local transform space serves two purposes:
   // 1. Assign a depth mapping for 3D depth sorting against other paint chunks
   //    and effects under the same parent.

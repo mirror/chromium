@@ -7,6 +7,7 @@
 #include "base/android/jni_android.h"
 #include "base/android/jni_registrar.h"
 #include "base/macros.h"
+#include "content/app/android/child_process_service_impl.h"
 #include "content/app/android/content_child_process_service_delegate.h"
 #include "content/app/android/content_main.h"
 
@@ -16,6 +17,7 @@ base::android::RegistrationMethod kContentRegisteredMethods[] = {
     {"ContentChildProcessServiceDelegate",
      content::RegisterContentChildProcessServiceDelegate},
     {"ContentMain", content::RegisterContentMain},
+    {"ChildProcessServiceImpl", content::RegisterChildProcessServiceImpl},
 };
 
 }  // namespace

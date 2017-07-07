@@ -236,7 +236,6 @@ class SafeBrowsingService : public base::RefCountedThreadSafe<
   friend class SafeBrowsingBlockingQuietPageTest;
   friend class SafeBrowsingServerTest;
   friend class SafeBrowsingServiceTest;
-  friend class SafeBrowsingUIManagerTest;
   friend class SafeBrowsingURLRequestContextGetter;
   friend class TestSafeBrowsingService;
   friend class TestSafeBrowsingServiceFactory;

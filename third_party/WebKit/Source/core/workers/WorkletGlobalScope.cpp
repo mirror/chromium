@@ -7,10 +7,8 @@
 #include <memory>
 #include "bindings/core/v8/SourceLocation.h"
 #include "bindings/core/v8/WorkerOrWorkletScriptController.h"
-#include "core/dom/Modulator.h"
 #include "core/inspector/MainThreadDebugger.h"
 #include "core/probe/CoreProbes.h"
-#include "platform/bindings/TraceWrapperMember.h"
 
 namespace blink {
 
@@ -22,8 +20,7 @@ WorkletGlobalScope::WorkletGlobalScope(
     WorkerClients* worker_clients)
     : WorkerOrWorkletGlobalScope(isolate, worker_clients),
       url_(url),
-      user_agent_(user_agent),
-      modulator_(this, nullptr) {
+      user_agent_(user_agent) {
   SetSecurityOrigin(std::move(security_origin));
 }
 
@@ -68,10 +65,6 @@ bool WorkletGlobalScope::IsSecureContext(String& error_message) const {
   return false;
 }
 
-void WorkletGlobalScope::SetModulator(Modulator* modulator) {
-  modulator_ = modulator;
-}
-
 KURL WorkletGlobalScope::VirtualCompleteURL(const String& url) const {
   // Always return a null URL when passed a null string.
   // TODO(ikilpatrick): Should we change the KURL constructor to have this
@@ -83,14 +76,9 @@ KURL WorkletGlobalScope::VirtualCompleteURL(const String& url) const {
 }
 
 DEFINE_TRACE(WorkletGlobalScope) {
-  visitor->Trace(modulator_);
   ExecutionContext::Trace(visitor);
   SecurityContext::Trace(visitor);
   WorkerOrWorkletGlobalScope::Trace(visitor);
-}
-
-DEFINE_TRACE_WRAPPERS(WorkletGlobalScope) {
-  visitor->TraceWrappers(modulator_);
 }
 
 }  // namespace blink

@@ -178,7 +178,7 @@ void HTMLPlugInElement::DidMoveToNewDocument(Document& old_document) {
   HTMLFrameOwnerElement::DidMoveToNewDocument(old_document);
 }
 
-void HTMLPlugInElement::AttachLayoutTree(AttachContext& context) {
+void HTMLPlugInElement::AttachLayoutTree(const AttachContext& context) {
   HTMLFrameOwnerElement::AttachLayoutTree(context);
 
   if (!GetLayoutObject() || UseFallbackContent()) {
@@ -203,9 +203,6 @@ void HTMLPlugInElement::AttachLayoutTree(AttachContext& context) {
     GetDocument().IncrementLoadEventDelayCount();
     GetDocument().LoadPluginsSoon();
   }
-  LayoutObject* layout_object = GetLayoutObject();
-  if (layout_object && !layout_object->IsFloatingOrOutOfFlowPositioned())
-    context.previous_in_flow = layout_object;
 }
 
 void HTMLPlugInElement::UpdatePlugin() {

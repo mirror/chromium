@@ -50,9 +50,8 @@ MojoResult MojoArmWatcherImpl(MojoHandle watcher_handle,
 MojoResult MojoWatchImpl(MojoHandle watcher_handle,
                          MojoHandle handle,
                          MojoHandleSignals signals,
-                         MojoWatchCondition condition,
                          uintptr_t context) {
-  return g_core->Watch(watcher_handle, handle, signals, condition, context);
+  return g_core->Watch(watcher_handle, handle, signals, context);
 }
 
 MojoResult MojoCancelWatchImpl(MojoHandle watcher_handle, uintptr_t context) {

@@ -79,4 +79,8 @@ void HeadlessWindowTreeHost::MoveCursorToScreenLocationInPixels(
 
 void HeadlessWindowTreeHost::OnCursorVisibilityChangedNative(bool show) {}
 
+gfx::ICCProfile HeadlessWindowTreeHost::GetICCProfileForCurrentDisplay() {
+  return gfx::ICCProfile();
+}
+
 }  // namespace headless

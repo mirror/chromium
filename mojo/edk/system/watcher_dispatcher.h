@@ -45,7 +45,6 @@ class WatcherDispatcher : public Dispatcher {
   MojoResult Close() override;
   MojoResult WatchDispatcher(scoped_refptr<Dispatcher> dispatcher,
                              MojoHandleSignals signals,
-                             MojoWatchCondition condition,
                              uintptr_t context) override;
   MojoResult CancelWatch(uintptr_t context) override;
   MojoResult Arm(uint32_t* num_ready_contexts,

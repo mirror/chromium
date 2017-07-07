@@ -26,7 +26,7 @@ ProximityAuth = {
 class CryptAuthController {
   constructor() {
     this.elements_ = {
-      localDeviceId: document.getElementById('local-device-id'),
+      publicKey: document.getElementById('public-key'),
       gcmRegistration: document.getElementById('gcm-registration'),
       currentEid: document.getElementById('current-eid'),
       enrollmentTitle: document.getElementById('enrollment-title'),
@@ -41,14 +41,6 @@ class CryptAuthController {
 
     this.elements_.enrollmentButton.onclick = this.forceEnrollment_.bind(this);
     this.elements_.deviceSyncButton.onclick = this.forceDeviceSync_.bind(this);
-  }
-
-  /**
-   * Sets the local device's ID. Note that this value is truncated since the
-   * full value is very long and does not cleanly fit on the screen.
-   */
-  setLocalDeviceId(deviceIdTruncated) {
-    this.elements_.localDeviceId.textContent = deviceIdTruncated;
   }
 
   /**
@@ -261,16 +253,10 @@ class EligibleDevicesController {
  * Interface for the native WebUI to call into our JS.
  */
 LocalStateInterface = {
-  onGotLocalState: function(
-      localDeviceId, enrollmentState, deviceSyncState, remoteDevices) {
-    LocalStateInterface.setLocalDeviceId(localDeviceId);
+  onGotLocalState: function(enrollmentState, deviceSyncState, remoteDevices) {
     LocalStateInterface.onEnrollmentStateChanged(enrollmentState);
     LocalStateInterface.onDeviceSyncStateChanged(deviceSyncState);
     LocalStateInterface.onRemoteDevicesChanged(remoteDevices);
-  },
-
-  setLocalDeviceId: function(localDeviceId) {
-    ProximityAuth.cryptauthController_.setLocalDeviceId(localDeviceId);
   },
 
   onEnrollmentStateChanged: function(enrollmentState) {

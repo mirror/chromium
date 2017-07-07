@@ -51,6 +51,7 @@
 #include "chrome/browser/permissions/permission_dialog_delegate.h"
 #include "chrome/browser/permissions/permission_update_infobar_delegate_android.h"
 #include "chrome/grit/theme_resources.h"
+#include "content/public/browser/android/content_view_core.h"
 #include "ui/android/window_android.h"
 #else  // !defined(OS_ANDROID)
 #include "ui/vector_icons/vector_icons.h"
@@ -763,8 +764,12 @@ ContentSetting MediaStreamDevicesController::GetContentSetting(
 bool MediaStreamDevicesController::IsUserAcceptAllowed(
     ContentSettingsType content_type) const {
 #if defined(OS_ANDROID)
-  ui::WindowAndroid* window_android =
-      web_contents_->GetNativeView()->GetWindowAndroid();
+  content::ContentViewCore* cvc =
+      content::ContentViewCore::FromWebContents(web_contents_);
+  if (!cvc)
+    return false;
+
+  ui::WindowAndroid* window_android = cvc->GetWindowAndroid();
   if (!window_android)
     return false;
 

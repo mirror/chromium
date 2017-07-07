@@ -308,8 +308,9 @@ void ChromeRestartRequest::Start() {
           base::FilePath(chrome::kLocalStorePoolName),
           BrowserThread::GetBlockingPool());
   local_state_task_runner->PostTaskAndReply(
-      FROM_HERE, base::BindOnce(&EnsureLocalStateIsWritten),
-      base::BindOnce(&ChromeRestartRequest::RestartJob, AsWeakPtr()));
+      FROM_HERE,
+      base::Bind(&EnsureLocalStateIsWritten),
+      base::Bind(&ChromeRestartRequest::RestartJob, AsWeakPtr()));
 }
 
 void ChromeRestartRequest::RestartJob() {

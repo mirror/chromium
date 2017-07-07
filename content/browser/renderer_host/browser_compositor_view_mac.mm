@@ -271,7 +271,7 @@ void BrowserCompositorMac::CopyFromCompositingSurfaceToVideoFrame(
 }
 
 void BrowserCompositorMac::DidCreateNewRendererCompositorFrameSink(
-    cc::mojom::CompositorFrameSinkClient* renderer_compositor_frame_sink) {
+    cc::mojom::MojoCompositorFrameSinkClient* renderer_compositor_frame_sink) {
   renderer_compositor_frame_sink_ = renderer_compositor_frame_sink;
   delegated_frame_host_->DidCreateNewRendererCompositorFrameSink(
       renderer_compositor_frame_sink_);
@@ -306,10 +306,10 @@ void BrowserCompositorMac::SetHasTransparentBackground(bool transparent) {
   }
 }
 
-void BrowserCompositorMac::SetDisplayColorSpace(
-    const gfx::ColorSpace& color_space) {
+void BrowserCompositorMac::SetDisplayColorProfile(
+    const gfx::ICCProfile& icc_profile) {
   if (recyclable_compositor_)
-    recyclable_compositor_->compositor()->SetDisplayColorSpace(color_space);
+    recyclable_compositor_->compositor()->SetDisplayColorProfile(icc_profile);
 }
 
 void BrowserCompositorMac::UpdateVSyncParameters(

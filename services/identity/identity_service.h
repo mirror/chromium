@@ -9,7 +9,6 @@
 #include "services/service_manager/public/cpp/binder_registry.h"
 #include "services/service_manager/public/cpp/service.h"
 
-class AccountTrackerService;
 class SigninManagerBase;
 class ProfileOAuth2TokenService;
 
@@ -17,8 +16,7 @@ namespace identity {
 
 class IdentityService : public service_manager::Service {
  public:
-  IdentityService(AccountTrackerService* account_tracker,
-                  SigninManagerBase* signin_manager,
+  IdentityService(SigninManagerBase* signin_manager,
                   ProfileOAuth2TokenService* token_service);
   ~IdentityService() override;
 
@@ -32,7 +30,6 @@ class IdentityService : public service_manager::Service {
   void Create(const service_manager::BindSourceInfo& source_info,
               mojom::IdentityManagerRequest request);
 
-  AccountTrackerService* account_tracker_;
   SigninManagerBase* signin_manager_;
   ProfileOAuth2TokenService* token_service_;
 

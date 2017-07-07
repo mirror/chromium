@@ -9,19 +9,19 @@
 
 #include "base/memory/ptr_util.h"
 #include "cc/surfaces/surface_manager.h"
-#include "components/viz/host/host_frame_sink_manager.h"
+#include "components/viz/host/frame_sink_manager_host.h"
 #include "content/browser/compositor/surface_utils.h"
 
 namespace content {
 
 OffscreenCanvasSurfaceImpl::OffscreenCanvasSurfaceImpl(
-    viz::HostFrameSinkManager* host_frame_sink_manager,
+    viz::FrameSinkManagerHost* frame_sink_manager_host,
     const cc::FrameSinkId& parent_frame_sink_id,
     const cc::FrameSinkId& frame_sink_id,
     blink::mojom::OffscreenCanvasSurfaceClientPtr client,
     blink::mojom::OffscreenCanvasSurfaceRequest request,
     DestroyCallback destroy_callback)
-    : host_frame_sink_manager_(host_frame_sink_manager),
+    : frame_sink_manager_host_(frame_sink_manager_host),
       client_(std::move(client)),
       binding_(this, std::move(request)),
       destroy_callback_(std::move(destroy_callback)),
@@ -30,30 +30,30 @@ OffscreenCanvasSurfaceImpl::OffscreenCanvasSurfaceImpl(
   binding_.set_connection_error_handler(
       base::Bind(&OffscreenCanvasSurfaceImpl::OnSurfaceConnectionClosed,
                  base::Unretained(this)));
-  host_frame_sink_manager_->AddObserver(this);
+  frame_sink_manager_host_->AddObserver(this);
 }
 
 OffscreenCanvasSurfaceImpl::~OffscreenCanvasSurfaceImpl() {
   if (has_created_compositor_frame_sink_) {
-    host_frame_sink_manager_->UnregisterFrameSinkHierarchy(
+    frame_sink_manager_host_->UnregisterFrameSinkHierarchy(
         parent_frame_sink_id_, frame_sink_id_);
-    host_frame_sink_manager_->DestroyCompositorFrameSink(frame_sink_id_);
+    frame_sink_manager_host_->DestroyCompositorFrameSink(frame_sink_id_);
   }
-  host_frame_sink_manager_->RemoveObserver(this);
+  frame_sink_manager_host_->RemoveObserver(this);
 }
 
 void OffscreenCanvasSurfaceImpl::CreateCompositorFrameSink(
-    cc::mojom::CompositorFrameSinkClientPtr client,
-    cc::mojom::CompositorFrameSinkRequest request) {
+    cc::mojom::MojoCompositorFrameSinkClientPtr client,
+    cc::mojom::MojoCompositorFrameSinkRequest request) {
   if (has_created_compositor_frame_sink_) {
     DLOG(ERROR) << "CreateCompositorFrameSink() called more than once.";
     return;
   }
 
-  host_frame_sink_manager_->CreateCompositorFrameSink(
+  frame_sink_manager_host_->CreateCompositorFrameSink(
       frame_sink_id_, std::move(request), std::move(client));
 
-  host_frame_sink_manager_->RegisterFrameSinkHierarchy(parent_frame_sink_id_,
+  frame_sink_manager_host_->RegisterFrameSinkHierarchy(parent_frame_sink_id_,
                                                        frame_sink_id_);
   has_created_compositor_frame_sink_ = true;
 }

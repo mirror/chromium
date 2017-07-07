@@ -54,8 +54,4 @@ void WakeLockForTesting::RemoveWakeLock() {
   has_wake_lock_ = false;
 }
 
-void WakeLockForTesting::SwapWakeLock() {
-  DCHECK(has_wake_lock_);
-}
-
 }  // namespace device

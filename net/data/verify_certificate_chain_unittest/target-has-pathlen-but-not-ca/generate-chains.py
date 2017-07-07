@@ -3,15 +3,16 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-"""Certificate chain where the leaf has a basic constraints extension with
-CA=false, however specifies the optional pathlen."""
+"""Certificate chain with 1 intermediate, a trusted root, and a target
+certificate that is not a CA, and yet has a pathlen set. Verification is
+expected to fail, since pathlen should only be set for CAs."""
 
 import sys
 sys.path += ['..']
 
 import common
 
-# Self-signed root certificate.
+# Self-signed root certificate (used as trust anchor).
 root = common.create_self_signed_root_certificate('Root')
 
 # Intermediate certificate.

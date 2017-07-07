@@ -90,7 +90,6 @@ Host.UserMetrics.Action = {
   SelectCommandFromCommandMenu: 25,
   ChangeInspectedNodeInElementsPanel: 26,
   StyleRuleCopied: 27,
-  CoverageStarted: 28,
 };
 
 Host.UserMetrics._PanelCodes = {

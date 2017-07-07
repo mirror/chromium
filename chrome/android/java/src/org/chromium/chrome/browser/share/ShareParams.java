@@ -8,10 +8,8 @@ import android.app.Activity;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 
 import org.chromium.chrome.browser.share.ShareHelper.TargetChosenCallback;
-import org.chromium.components.dom_distiller.core.DomDistillerUrlUtils;
 
 /**
  * A container object for passing share parameters to {@link ShareHelper}.
@@ -53,13 +51,9 @@ public class ShareParams {
      */
     private TargetChosenCallback mCallback;
 
-    /** The package name of the app who requests for share. If Null, it is requested by Chrome */
-    private final String mSourcePackageName;
-
     private ShareParams(boolean shareDirectly, boolean saveLastUsed, Activity activity,
             String title, String text, String url, @Nullable Uri offlineUri,
-            @Nullable Uri screenshotUri, @Nullable TargetChosenCallback callback,
-            @Nullable String sourcePackageName) {
+            @Nullable Uri screenshotUri, @Nullable TargetChosenCallback callback) {
         mShareDirectly = shareDirectly;
         mSaveLastUsed = saveLastUsed;
         mActivity = activity;
@@ -69,7 +63,6 @@ public class ShareParams {
         mOfflineUri = offlineUri;
         mScreenshotUri = screenshotUri;
         mCallback = callback;
-        mSourcePackageName = sourcePackageName;
     }
 
     /**
@@ -139,13 +132,6 @@ public class ShareParams {
         return mCallback;
     }
 
-    /**
-     * @return The package name of the app who requests for share.
-     */
-    public String getSourcePackageName() {
-        return mSourcePackageName;
-    }
-
     /** The builder for {@link ShareParams} objects. */
     public static class Builder {
         private boolean mShareDirectly;
@@ -157,8 +143,6 @@ public class ShareParams {
         private Uri mOfflineUri;
         private Uri mScreenshotUri;
         private TargetChosenCallback mCallback;
-        private String mSourcePackageName;
-        private boolean mIsExternalUrl;
 
         public Builder(@NonNull Activity activity, @NonNull String title, @NonNull String url) {
             mActivity = activity;
@@ -223,37 +207,10 @@ public class ShareParams {
             return this;
         }
 
-        /**
-         * Set the package name of the app who requests for share.
-         */
-        public Builder setSourcePackageName(String sourcePackageName) {
-            mSourcePackageName = sourcePackageName;
-            return this;
-        }
-
-        /**
-         * Set whether the params are created by the url from external app.
-         */
-        public Builder setIsExternalUrl(boolean isExternalUrl) {
-            mIsExternalUrl = isExternalUrl;
-            return this;
-        }
-
         /** @return A fully constructed {@link ShareParams} object. */
         public ShareParams build() {
-            if (!TextUtils.isEmpty(mUrl)) {
-                if (!mIsExternalUrl) {
-                    mUrl = DomDistillerUrlUtils.getOriginalUrlFromDistillerUrl(mUrl);
-                }
-                if (!TextUtils.isEmpty(mText)) {
-                    // Concatenate text and URL with a space.
-                    mText = mText + " " + mUrl;
-                } else {
-                    mText = mUrl;
-                }
-            }
             return new ShareParams(mShareDirectly, mSaveLastUsed, mActivity, mTitle, mText, mUrl,
-                    mOfflineUri, mScreenshotUri, mCallback, mSourcePackageName);
+                    mOfflineUri, mScreenshotUri, mCallback);
         }
     }
 }

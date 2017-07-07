@@ -24,19 +24,15 @@ class WebString;
 
 class WebRemoteFrame : public WebFrame {
  public:
-  // Factory methods for creating a WebRemoteFrame. The WebRemoteFrameClient
-  // argument must be non-null for all creation methods.
   BLINK_EXPORT static WebRemoteFrame* Create(WebTreeScopeType,
                                              WebRemoteFrameClient*,
                                              WebFrame* opener = nullptr);
 
-  // Specialized factory methods to allow the embedder to replicate the frame
-  // tree between processes.
+  // Functions for the embedder replicate the frame tree between processes.
   // TODO(dcheng): The embedder currently does not replicate local frames in
-  // insertion order, so the local child version takes |previous_sibling| to
+  // insertion order, so the local child version takes a previous sibling to
   // ensure that it is inserted into the correct location in the list of
-  // children. If |previous_sibling| is null, the child is inserted at the
-  // beginning.
+  // children.
   virtual WebLocalFrame* CreateLocalChild(WebTreeScopeType,
                                           const WebString& name,
                                           WebSandboxFlags,

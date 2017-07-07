@@ -32,20 +32,18 @@
     </style>
     <div id="outer" class="layout vertical flex vertical-list">
       <div id="container" class="scroll-container" scrollable>
-        <iron-list items="[[startupPages_]]" scroll-target="container"
-            preserve-focus>
+        <iron-list items="[[startupPages_]]" scroll-target="container">
           <template>
             <settings-startup-url-entry model="[[item]]"
                 tabindex$="[[tabIndex]]" iron-list-tab-index="[[tabIndex]]"
                 last-focused="{{lastFocused_}}"
-                editable="[[shouldAllowUrlsEdit_(
-                    prefs.session.startup_urls.enforcement)]]">
+                editable="[[!prefs.session.startup_urls.controlledBy]]">
             </settings-startup-url-entry>
           </template>
         </iron-list>
       </div>
-      <template is="dom-if" if="[[shouldAllowUrlsEdit_(
-          prefs.session.startup_urls.enforcement)]]" restamp>
+      <template is="dom-if" if="[[!prefs.session.startup_urls.controlledBy]]"
+          restamp>
         <div class="list-item" id="addPage">
           <a is="action-link" class="list-button" on-tap="onAddPageTap_">
             $i18n{onStartupAddNewPage}

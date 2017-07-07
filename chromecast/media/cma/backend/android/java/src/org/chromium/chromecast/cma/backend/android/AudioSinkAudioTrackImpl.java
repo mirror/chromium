@@ -44,7 +44,7 @@ import java.nio.ByteOrder;
 @TargetApi(Build.VERSION_CODES.N)
 class AudioSinkAudioTrackImpl {
     private static final String TAG = "AudiotrackImpl";
-    private static final int DEBUG_LEVEL = 0;
+    private static final int DEBUG_LEVEL = 1;
 
     // hardcoded AudioTrack config parameters
     private static final int STREAM_TYPE = AudioManager.STREAM_MUSIC;
@@ -57,7 +57,6 @@ class AudioSinkAudioTrackImpl {
 
     private static final long SEC_IN_NSEC = 1000000000L;
     private static final long TIMESTAMP_UPDATE_PERIOD = 3 * SEC_IN_NSEC;
-    private static final long UNDERRUN_LOG_THROTTLE_PERIOD = SEC_IN_NSEC;
 
     private final long mNativeAudioSinkAudioTrackImpl;
 
@@ -74,7 +73,6 @@ class AudioSinkAudioTrackImpl {
     private boolean mTriggerTimestampUpdateNow; // Set to true to trigger an early update.
 
     private int mLastUnderrunCount;
-    private long mLastUnderrunLogNsec;
 
     // Statistics
     private long mTotalFramesWritten;
@@ -96,16 +94,16 @@ class AudioSinkAudioTrackImpl {
     @CalledByNative
     private static AudioSinkAudioTrackImpl createAudioSinkAudioTrackImpl(
             long nativeAudioSinkAudioTrackImpl) {
+        Log.i(TAG, "Creating new AudioSinkAudioTrackImpl instance");
         return new AudioSinkAudioTrackImpl(nativeAudioSinkAudioTrackImpl);
     }
 
     private AudioSinkAudioTrackImpl(long nativeAudioSinkAudioTrackImpl) {
+        Log.i(TAG, "Ctor called...");
         mNativeAudioSinkAudioTrackImpl = nativeAudioSinkAudioTrackImpl;
-        mIsInitialized = false;
         mLastTimestampUpdateNsec = NO_TIMESTAMP;
         mTriggerTimestampUpdateNow = false;
         mLastUnderrunCount = 0;
-        mLastUnderrunLogNsec = NO_TIMESTAMP;
         mTotalFramesWritten = 0;
     }
 
@@ -118,7 +116,7 @@ class AudioSinkAudioTrackImpl {
         Log.i(TAG,
                 "Init:"
                         + " sampleRateInHz=" + sampleRateInHz
-                        + " bytesPerBuffer=" + bytesPerBuffer);
+                        + " API-version=" + android.os.Build.VERSION.SDK_INT);
 
         if (mIsInitialized) {
             Log.w(TAG, "Init: already initialized.");
@@ -151,6 +149,9 @@ class AudioSinkAudioTrackImpl {
         nativeCacheDirectBufferAddress(
                 mNativeAudioSinkAudioTrackImpl, mPcmBuffer, mRenderingDelayBuffer);
 
+        // Put into PLAYING state so it starts playing right when data is fed in.
+        play();
+
         mIsInitialized = true;
     }
 
@@ -175,10 +176,6 @@ class AudioSinkAudioTrackImpl {
         if (ret != AudioTrack.SUCCESS) {
             Log.e(TAG, "Cannot set volume: ret=" + ret);
         }
-    }
-
-    private boolean isStopped() {
-        return mAudioTrack.getPlayState() == AudioTrack.PLAYSTATE_STOPPED;
     }
 
     private boolean isPlaying() {
@@ -248,32 +245,6 @@ class AudioSinkAudioTrackImpl {
         long beforeMsecs = SystemClock.elapsedRealtime();
         int bytesWritten = mAudioTrack.write(mPcmBuffer, sizeInBytes, AudioTrack.WRITE_BLOCKING);
 
-        if (bytesWritten < 0) {
-            int error = bytesWritten;
-            Log.e(TAG, "Couldn't write into AudioTrack (" + error + ")");
-            return error;
-        }
-
-        if (isStopped()) {
-            // Data was written, start playing now.
-            play();
-
-            // If not all data fit on the previous write() call (since we were not in PLAYING state
-            // it didn't block), do a second (now blocking) call to write().
-            int bytesLeft = sizeInBytes - bytesWritten;
-            if (bytesLeft > 0) {
-                mPcmBuffer.position(bytesWritten);
-                int moreBytesWritten =
-                        mAudioTrack.write(mPcmBuffer, bytesLeft, AudioTrack.WRITE_BLOCKING);
-                if (moreBytesWritten < 0) {
-                    int error = moreBytesWritten;
-                    Log.e(TAG, "Couldn't write into AudioTrack (" + error + ")");
-                    return error;
-                }
-                bytesWritten += moreBytesWritten;
-            }
-        }
-
         int framesWritten = bytesWritten / BYTES_PER_FRAME;
         mTotalFramesWritten += framesWritten;
 
@@ -284,9 +255,10 @@ class AudioSinkAudioTrackImpl {
                             + " took:" + (SystemClock.elapsedRealtime() - beforeMsecs) + "ms");
         }
 
-        if (bytesWritten < sizeInBytes && isPaused()) {
-            // We are in PAUSED state, in which case the write() is non-blocking. If not all data
-            // was written, we will come back here once we transition back into PLAYING state.
+        if (bytesWritten <= 0 || isPaused()) {
+            // Either hit an error or we are in PAUSED state, in which case the
+            // write() is non-blocking. If not all data was written, we will come
+            // back here once we transition back into PLAYING state.
             return bytesWritten;
         }
 
@@ -354,7 +326,9 @@ class AudioSinkAudioTrackImpl {
     private void updateTimestamp() {
         int underruns = getUnderrunCount();
         if (underruns != mLastUnderrunCount) {
-            logUnderruns(underruns);
+            Log.i(TAG,
+                    "Underrun detected (" + mLastUnderrunCount + "->" + underruns
+                            + ")! Resetting rendering delay logic.");
             mLastTimestampUpdateNsec = NO_TIMESTAMP;
             mLastUnderrunCount = underruns;
         }
@@ -374,18 +348,6 @@ class AudioSinkAudioTrackImpl {
             }
             mLastTimestampUpdateNsec = System.nanoTime();
             mTriggerTimestampUpdateNow = false;
-        }
-    }
-
-    /** Logs underruns in a throttled manner. */
-    private void logUnderruns(int newUnderruns) {
-        if (DEBUG_LEVEL >= 1
-                || (mLastUnderrunLogNsec == NO_TIMESTAMP
-                           || elapsedNsec(mLastUnderrunLogNsec) > UNDERRUN_LOG_THROTTLE_PERIOD)) {
-            Log.i(TAG,
-                    "Underrun detected (" + mLastUnderrunCount + "->" + newUnderruns
-                            + ")! Resetting rendering delay logic.");
-            mLastUnderrunLogNsec = System.nanoTime();
         }
     }
 

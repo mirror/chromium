@@ -57,8 +57,8 @@ CSSSyntaxType ParseSyntaxType(String type) {
     return CSSSyntaxType::kTime;
   if (type == "resolution")
     return CSSSyntaxType::kResolution;
-  if (type == "transform-list")
-    return CSSSyntaxType::kTransformList;
+  if (type == "transform-function")
+    return CSSSyntaxType::kTransformFunction;
   if (type == "custom-ident")
     return CSSSyntaxType::kCustomIdent;
   // Not an Ident, just used to indicate failure
@@ -122,12 +122,6 @@ CSSSyntaxDescriptor::CSSSyntaxDescriptor(String input) {
     }
 
     bool repeatable = ConsumeCharacterAndWhitespace(input, '+', offset);
-    // <transform-list> is already a space separated list,
-    // <transform-list>+ is invalid.
-    if (type == CSSSyntaxType::kTransformList && repeatable) {
-      syntax_components_.clear();
-      return;
-    }
     ConsumeWhitespace(input, offset);
     syntax_components_.push_back(CSSSyntaxComponent(type, ident, repeatable));
 
@@ -174,8 +168,8 @@ const CSSValue* ConsumeSingleType(const CSSSyntaxComponent& syntax,
       return ConsumeTime(range, ValueRange::kValueRangeAll);
     case CSSSyntaxType::kResolution:
       return ConsumeResolution(range);
-    case CSSSyntaxType::kTransformList:
-      return ConsumeTransformList(range, *context);
+    case CSSSyntaxType::kTransformFunction:
+      return nullptr;  // TODO(timloh): Implement this.
     case CSSSyntaxType::kCustomIdent:
       return ConsumeCustomIdent(range);
     default:

@@ -26,7 +26,6 @@
 #include "components/ntp_snippets/content_suggestion.h"
 #include "components/ntp_snippets/content_suggestions_provider.h"
 #include "components/ntp_snippets/remote/json_to_categories.h"
-#include "components/ntp_snippets/remote/prefetched_pages_tracker.h"
 #include "components/ntp_snippets/remote/remote_suggestion.h"
 #include "components/ntp_snippets/remote/remote_suggestions_fetcher.h"
 #include "components/ntp_snippets/remote/remote_suggestions_provider.h"
@@ -124,8 +123,7 @@ class RemoteSuggestionsProviderImpl final : public RemoteSuggestionsProvider {
       std::unique_ptr<RemoteSuggestionsFetcher> suggestions_fetcher,
       std::unique_ptr<image_fetcher::ImageFetcher> image_fetcher,
       std::unique_ptr<RemoteSuggestionsDatabase> database,
-      std::unique_ptr<RemoteSuggestionsStatusService> status_service,
-      std::unique_ptr<PrefetchedPagesTracker> prefetched_pages_tracker);
+      std::unique_ptr<RemoteSuggestionsStatusService> status_service);
 
   ~RemoteSuggestionsProviderImpl() override;
 
@@ -336,9 +334,8 @@ class RemoteSuggestionsProviderImpl final : public RemoteSuggestionsProvider {
   void SanitizeReceivedSuggestions(const RemoteSuggestion::PtrVector& dismissed,
                                    RemoteSuggestion::PtrVector* suggestions);
 
-  // Adds newly available suggestions to |content| corresponding to |category|.
-  void IntegrateSuggestions(Category category,
-                            CategoryContent* content,
+  // Adds newly available suggestions to |content|.
+  void IntegrateSuggestions(CategoryContent* content,
                             RemoteSuggestion::PtrVector new_suggestions);
 
   // Dismisses a suggestion within a given category content.
@@ -466,9 +463,6 @@ class RemoteSuggestionsProviderImpl final : public RemoteSuggestionsProvider {
 
   // A clock for getting the time. This allows to inject a clock in tests.
   std::unique_ptr<base::Clock> clock_;
-
-  // Prefetched pages tracker to query which urls have been prefetched.
-  std::unique_ptr<PrefetchedPagesTracker> prefetched_pages_tracker_;
 
   DISALLOW_COPY_AND_ASSIGN(RemoteSuggestionsProviderImpl);
 };

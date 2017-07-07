@@ -22,12 +22,8 @@ class V4L2Webcam : public Webcam {
  private:
   ~V4L2Webcam() override;
   bool EnsureLogitechCommandsMapped();
-  static bool SetWebcamParameter(int fd, uint32_t control_id, int value);
-  static bool GetWebcamParameter(int fd,
-                                 uint32_t control_id,
-                                 int* value,
-                                 int* min_value,
-                                 int* max_value);
+  bool SetWebcamParameter(int fd, uint32_t control_id, int value);
+  bool GetWebcamParameter(int fd, uint32_t control_id, int* value);
 
   // Webcam:
   void GetPan(const GetPTZCompleteCallback& callback) override;

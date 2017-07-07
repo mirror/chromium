@@ -7,8 +7,6 @@
 
 #include <stddef.h>
 
-#include <memory>
-
 #include "base/callback.h"
 #include "base/feature_list.h"
 #include "base/macros.h"
@@ -32,20 +30,12 @@ class RenderFrameImpl;
 class RenderWidgetHostLatencyTracker;
 }
 
-namespace resource_coordinator {
-class CoordinationUnitManager;
-}
-
 namespace translate {
 class TranslateRankerImpl;
 }
 
 namespace payments {
 class JourneyLogger;
-}
-
-namespace password_manager {
-class PasswordFormMetricsRecorder;
 }
 
 namespace ukm {
@@ -90,8 +80,6 @@ class UKM_EXPORT UkmRecorder {
   friend content::MediaInternals;
   friend content::RenderFrameImpl;
   friend content::RenderWidgetHostLatencyTracker;
-  friend password_manager::PasswordFormMetricsRecorder;
-  friend resource_coordinator::CoordinationUnitManager;
   FRIEND_TEST_ALL_PREFIXES(UkmServiceTest, AddEntryWithEmptyMetrics);
   FRIEND_TEST_ALL_PREFIXES(UkmServiceTest, EntryBuilderAndSerialization);
   FRIEND_TEST_ALL_PREFIXES(UkmServiceTest,

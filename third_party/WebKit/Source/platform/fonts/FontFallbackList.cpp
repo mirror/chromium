@@ -167,7 +167,7 @@ PassRefPtr<FontData> FontFallbackList::GetFontData(
         result = FontCache::GetFontCache()->GetFontData(font_description,
                                                         curr_family->Family());
       if (result)
-        return result;
+        return result.Release();
     }
   }
   family_index = kCAllFamiliesScanned;
@@ -176,7 +176,7 @@ PassRefPtr<FontData> FontFallbackList::GetFontData(
     // Try the user's preferred standard font.
     if (RefPtr<FontData> data = font_selector_->GetFontData(
             font_description, FontFamilyNames::webkit_standard))
-      return data;
+      return data.Release();
   }
 
   // Still no result. Hand back our last resort fallback font.

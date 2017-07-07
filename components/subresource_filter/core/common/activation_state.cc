@@ -17,7 +17,7 @@ std::unique_ptr<base::trace_event::TracedValue> ActivationState::ToTracedValue()
     const {
   auto value = base::MakeUnique<base::trace_event::TracedValue>();
   std::ostringstream level;
-  level << activation_level;
+  level << this;
   value->SetString("activation_level", level.str());
   value->SetBoolean("filtering_disabled_for_document",
                     filtering_disabled_for_document);

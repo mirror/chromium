@@ -25,7 +25,6 @@
 @interface SubresourceFilterBubbleController (ExposedForTesting)
 - (void)manageCheckboxChecked:(id)sender;
 - (id)messageLabel;
-- (id)learnMoreLink;
 - (id)manageCheckbox;
 - (id)doneButton;
 @end

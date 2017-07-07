@@ -651,9 +651,6 @@ void HistoryBackend::InitImpl(
       bool kill_db = scheduled_kill_db_;
       if (kill_db)
         KillHistoryDatabase();
-
-      // The frequency of this UMA will indicate how often history
-      // initialization fails.
       UMA_HISTOGRAM_BOOLEAN("History.AttemptedToFixProfileError", kill_db);
     }  // Falls through.
     case sql::INIT_TOO_NEW: {

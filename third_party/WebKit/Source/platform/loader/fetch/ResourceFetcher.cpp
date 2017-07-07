@@ -978,7 +978,6 @@ bool ResourceFetcher::IsReusableAlsoForPreloading(const FetchParameters& params,
 
   // Never reuse opaque responses from a service worker for requests that are
   // not no-cors. https://crbug.com/625575
-  // TODO(yhirano): Remove this.
   if (existing_resource->GetResponse().WasFetchedViaServiceWorker() &&
       existing_resource->GetResponse().ServiceWorkerResponseType() ==
           kWebServiceWorkerResponseTypeOpaque &&
@@ -1033,32 +1032,17 @@ bool ResourceFetcher::IsReusableAlsoForPreloading(const FetchParameters& params,
   //
   // TODO(tyoshino): Consider returning false when the credentials mode
   // differs.
+  if ((params.Options().cors_handling_by_resource_fetcher ==
+           kEnableCORSHandlingByResourceFetcher &&
+       params.GetResourceRequest().GetFetchRequestMode() ==
+           WebURLRequest::kFetchRequestModeCORS) ==
+      (existing_resource->Options().cors_handling_by_resource_fetcher ==
+           kEnableCORSHandlingByResourceFetcher &&
+       existing_resource->GetResourceRequest().GetFetchRequestMode() ==
+           WebURLRequest::kFetchRequestModeCORS))
+    return true;
 
-  bool new_is_with_fetcher_cors_suppressed =
-      params.Options().cors_handling_by_resource_fetcher ==
-      kDisableCORSHandlingByResourceFetcher;
-  bool existing_was_with_fetcher_cors_suppressed =
-      existing_resource->Options().cors_handling_by_resource_fetcher ==
-      kDisableCORSHandlingByResourceFetcher;
-
-  bool new_is_with_cors_mode =
-      params.GetResourceRequest().GetFetchRequestMode() ==
-      WebURLRequest::kFetchRequestModeCORS;
-  bool existing_was_with_cors_mode =
-      existing_resource->GetResourceRequest().GetFetchRequestMode() ==
-      WebURLRequest::kFetchRequestModeCORS;
-
-  if (new_is_with_fetcher_cors_suppressed) {
-    if (existing_was_with_fetcher_cors_suppressed)
-      return true;
-
-    return !existing_was_with_cors_mode;
-  }
-
-  if (existing_was_with_fetcher_cors_suppressed)
-    return !new_is_with_cors_mode;
-
-  return new_is_with_cors_mode == existing_was_with_cors_mode;
+  return false;
 }
 
 ResourceFetcher::RevalidationPolicy

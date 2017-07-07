@@ -1648,7 +1648,7 @@ void RenderProcessHostImpl::CreateOffscreenCanvasProvider(
     // The client id gets converted to a uint32_t in FrameSinkId.
     uint32_t renderer_client_id = base::checked_cast<uint32_t>(id_);
     offscreen_canvas_provider_ = base::MakeUnique<OffscreenCanvasProviderImpl>(
-        GetHostFrameSinkManager(), renderer_client_id);
+        GetFrameSinkManagerHost(), renderer_client_id);
   }
   offscreen_canvas_provider_->Add(std::move(request));
 }

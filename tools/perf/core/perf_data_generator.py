@@ -162,6 +162,10 @@ def get_waterfall_config():
   # build/scripts/slave/recipe_modules/chromium_tests and must be kept in sync
   # to generate the correct json for each tester
   waterfall = add_tester(
+    waterfall, 'Android One Perf', 'android-one',
+    'android', target_bits=32, num_device_shards=7, num_host_shards=3)
+
+  waterfall = add_tester(
     waterfall, 'Android Nexus5X Perf', 'android-nexus5X', 'android',
     swarming=[
       {
@@ -285,7 +289,7 @@ def get_waterfall_config():
        'perf_tests': [
          ('tracing_perftests', 'build17-b1--device2'),
          ('gpu_perftests', 'build18-b1--device2'),
-         # ('cc_perftests', 'build47-b1--device2'), https://crbug.com/736150
+         ('cc_perftests', 'build47-b1--device2'),
         ]
       }
     ])
@@ -787,7 +791,6 @@ BENCHMARK_SWARMING_TIMEOUTS = {
 # Devices which are broken right now. Tests will not be scheduled on them.
 # Please add a comment with a bug for replacing the device.
 BLACKLISTED_DEVICES = [
-    'build152-m1',  # crbug.com/736593
 ]
 
 

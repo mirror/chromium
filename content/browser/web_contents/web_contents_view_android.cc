@@ -47,7 +47,6 @@ void DisplayToScreenInfo(const display::Display& display, ScreenInfo* results) {
   results->depth = display.color_depth();
   results->depth_per_component = display.depth_per_component();
   results->is_monochrome = display.is_monochrome();
-  results->color_space = display.color_space();
 }
 }
 

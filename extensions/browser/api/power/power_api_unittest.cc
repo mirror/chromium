@@ -10,8 +10,9 @@
 
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "base/memory/weak_ptr.h"
 #include "base/single_thread_task_runner.h"
-#include "device/wake_lock/public/interfaces/wake_lock.mojom.h"
+#include "device/power_save_blocker/power_save_blocker.h"
 #include "extensions/browser/api_test_utils.h"
 #include "extensions/browser/api_unittest.h"
 #include "extensions/common/extension.h"
@@ -21,42 +22,65 @@ namespace extensions {
 
 namespace {
 
-// Args commonly passed to FakeWakeLockManager::CallFunction().
+// Args commonly passed to PowerSaveBlockerStubManager::CallFunction().
 const char kDisplayArgs[] = "[\"display\"]";
 const char kSystemArgs[] = "[\"system\"]";
 const char kEmptyArgs[] = "[]";
 
 // Different actions that can be performed as a result of a
-// wake lock being activated or cancelled.
+// PowerSaveBlocker being created or destroyed.
 enum Request {
   BLOCK_APP_SUSPENSION,
   UNBLOCK_APP_SUSPENSION,
   BLOCK_DISPLAY_SLEEP,
   UNBLOCK_DISPLAY_SLEEP,
-  // Returned by FakeWakeLockManager::PopFirstRequest() when no
+  // Returned by PowerSaveBlockerStubManager::PopFirstRequest() when no
   // requests are present.
   NONE,
 };
 
-// Tests instantiate this class to make PowerAPI's calls to simulate activate
-// and cancel the wake locks and record the actions that would've been performed
-// instead of actually blocking and unblocking power management.
-class FakeWakeLockManager {
+// Stub implementation of device::PowerSaveBlocker that just runs a callback on
+// destruction.
+class PowerSaveBlockerStub : public device::PowerSaveBlocker {
  public:
-  explicit FakeWakeLockManager(content::BrowserContext* context)
-      : browser_context_(context), is_active_(false) {
+  PowerSaveBlockerStub(
+      base::Closure unblock_callback,
+      scoped_refptr<base::SequencedTaskRunner> ui_task_runner,
+      scoped_refptr<base::SingleThreadTaskRunner> blocking_task_runner)
+      : PowerSaveBlocker(PowerSaveBlocker::kPowerSaveBlockPreventAppSuspension,
+                         PowerSaveBlocker::kReasonOther,
+                         "test",
+                         ui_task_runner,
+                         blocking_task_runner),
+        unblock_callback_(unblock_callback) {}
+
+  ~PowerSaveBlockerStub() override { unblock_callback_.Run(); }
+
+ private:
+  base::Closure unblock_callback_;
+
+  DISALLOW_COPY_AND_ASSIGN(PowerSaveBlockerStub);
+};
+
+// Manages PowerSaveBlockerStub objects.  Tests can instantiate this class
+// to make PowerAPI's calls to create PowerSaveBlockers record the
+// actions that would've been performed instead of actually blocking and
+// unblocking power management.
+class PowerSaveBlockerStubManager {
+ public:
+  explicit PowerSaveBlockerStubManager(content::BrowserContext* context)
+      : browser_context_(context),
+        weak_ptr_factory_(this) {
+    // Use base::Unretained since callbacks with return values can't use
+    // weak pointers.
     PowerAPI::Get(browser_context_)
-        ->SetWakeLockFunctionsForTesting(
-            base::Bind(&FakeWakeLockManager::ActivateWakeLock,
-                       base::Unretained(this)),
-            base::Bind(&FakeWakeLockManager::CancelWakeLock,
-                       base::Unretained(this)));
+        ->SetCreateBlockerFunctionForTesting(base::Bind(
+            &PowerSaveBlockerStubManager::CreateStub, base::Unretained(this)));
   }
 
-  ~FakeWakeLockManager() {
+  ~PowerSaveBlockerStubManager() {
     PowerAPI::Get(browser_context_)
-        ->SetWakeLockFunctionsForTesting(PowerAPI::ActivateWakeLockFunction(),
-                                         PowerAPI::CancelWakeLockFunction());
+        ->SetCreateBlockerFunctionForTesting(PowerAPI::CreateBlockerFunction());
   }
 
   // Removes and returns the first item from |requests_|.  Returns NONE if
@@ -71,67 +95,42 @@ class FakeWakeLockManager {
   }
 
  private:
-  // Activates a new fake wake lock with type |type|.
-  void ActivateWakeLock(device::mojom::WakeLockType type) {
-    if (is_active_) {
-      if (type == type_)
-        return;
-
-      // Has an active wake lock already, perform ChangeType:
-      switch (type) {
-        case device::mojom::WakeLockType::PreventAppSuspension:
-          requests_.push_back(BLOCK_APP_SUSPENSION);
-          requests_.push_back(UNBLOCK_DISPLAY_SLEEP);
-          break;
-        case device::mojom::WakeLockType::PreventDisplaySleep:
-          requests_.push_back(BLOCK_DISPLAY_SLEEP);
-          requests_.push_back(UNBLOCK_APP_SUSPENSION);
-          break;
-      }
-
-      type_ = type;
-      return;
+  // Creates a new PowerSaveBlockerStub of type |type|.
+  std::unique_ptr<device::PowerSaveBlocker> CreateStub(
+      device::PowerSaveBlocker::PowerSaveBlockerType type,
+      device::PowerSaveBlocker::Reason reason,
+      const std::string& description,
+      scoped_refptr<base::SequencedTaskRunner> ui_task_runner,
+      scoped_refptr<base::SingleThreadTaskRunner> blocking_task_runner) {
+    Request unblock_request = NONE;
+    switch (type) {
+      case device::PowerSaveBlocker::kPowerSaveBlockPreventAppSuspension:
+        requests_.push_back(BLOCK_APP_SUSPENSION);
+        unblock_request = UNBLOCK_APP_SUSPENSION;
+        break;
+      case device::PowerSaveBlocker::kPowerSaveBlockPreventDisplaySleep:
+        requests_.push_back(BLOCK_DISPLAY_SLEEP);
+        unblock_request = UNBLOCK_DISPLAY_SLEEP;
+        break;
     }
-
-    // Wake lock is not active, so activate it:
-    if (!is_active_) {
-      switch (type) {
-        case device::mojom::WakeLockType::PreventAppSuspension:
-          requests_.push_back(BLOCK_APP_SUSPENSION);
-          break;
-        case device::mojom::WakeLockType::PreventDisplaySleep:
-          requests_.push_back(BLOCK_DISPLAY_SLEEP);
-          break;
-      }
-
-      type_ = type;
-      is_active_ = true;
-    }
+    return std::unique_ptr<device::PowerSaveBlocker>(new PowerSaveBlockerStub(
+        base::Bind(&PowerSaveBlockerStubManager::AppendRequest,
+                   weak_ptr_factory_.GetWeakPtr(), unblock_request),
+        ui_task_runner, blocking_task_runner));
   }
 
-  void CancelWakeLock() {
-    if (!is_active_)
-      return;
-    switch (type_) {
-      case device::mojom::WakeLockType::PreventAppSuspension:
-        requests_.push_back(UNBLOCK_APP_SUSPENSION);
-        break;
-      case device::mojom::WakeLockType::PreventDisplaySleep:
-        requests_.push_back(UNBLOCK_DISPLAY_SLEEP);
-        break;
-    }
-    is_active_ = false;
+  void AppendRequest(Request request) {
+    requests_.push_back(request);
   }
 
   content::BrowserContext* browser_context_;
 
-  device::mojom::WakeLockType type_;
-  bool is_active_;
-
   // Requests in chronological order.
   std::deque<Request> requests_;
 
-  DISALLOW_COPY_AND_ASSIGN(FakeWakeLockManager);
+  base::WeakPtrFactory<PowerSaveBlockerStubManager> weak_ptr_factory_;
+
+  DISALLOW_COPY_AND_ASSIGN(PowerSaveBlockerStubManager);
 };
 
 }  // namespace
@@ -140,7 +139,7 @@ class PowerAPITest : public ApiUnitTest {
  public:
   void SetUp() override {
     ApiUnitTest::SetUp();
-    manager_.reset(new FakeWakeLockManager(browser_context()));
+    manager_.reset(new PowerSaveBlockerStubManager(browser_context()));
   }
 
   void TearDown() override {
@@ -179,7 +178,7 @@ class PowerAPITest : public ApiUnitTest {
                               UnloadedExtensionReason::UNINSTALL);
   }
 
-  std::unique_ptr<FakeWakeLockManager> manager_;
+  std::unique_ptr<PowerSaveBlockerStubManager> manager_;
 };
 
 TEST_F(PowerAPITest, RequestAndRelease) {
@@ -265,20 +264,20 @@ TEST_F(PowerAPITest, MultipleExtensions) {
   EXPECT_EQ(NONE, manager_->PopFirstRequest());
 
   // Create a second extension that blocks system suspend.  No additional
-  // wake lock is needed; the wake lock from the first extension
+  // PowerSaveBlocker is needed; the blocker from the first extension
   // already covers the behavior requested by the second extension.
   scoped_refptr<Extension> extension2(test_util::CreateEmptyExtension("id2"));
   ASSERT_TRUE(CallFunction(REQUEST, kSystemArgs, extension2.get()));
   EXPECT_EQ(NONE, manager_->PopFirstRequest());
 
-  // When the first extension is unloaded, a new app-suspension wake lock
-  // should be requested before the display-sleep wake lock is cancelled.
+  // When the first extension is unloaded, a new app-suspension blocker
+  // should be created before the display-sleep blocker is destroyed.
   UnloadExtension(extension());
   EXPECT_EQ(BLOCK_APP_SUSPENSION, manager_->PopFirstRequest());
   EXPECT_EQ(UNBLOCK_DISPLAY_SLEEP, manager_->PopFirstRequest());
   EXPECT_EQ(NONE, manager_->PopFirstRequest());
 
-  // Make the first extension request display-sleep wake lock again.
+  // Make the first extension block display-sleep again.
   ASSERT_TRUE(CallFunction(REQUEST, kDisplayArgs, extension()));
   EXPECT_EQ(BLOCK_DISPLAY_SLEEP, manager_->PopFirstRequest());
   EXPECT_EQ(UNBLOCK_APP_SUSPENSION, manager_->PopFirstRequest());

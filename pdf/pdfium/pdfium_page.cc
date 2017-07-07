@@ -264,7 +264,7 @@ PDFiumPage::Area PDFiumPage::GetCharIndex(const pp::Point& point,
     DCHECK_NE(control_z_order, link_z_order);
     if (control_z_order > link_z_order) {
       *form_type = control;
-      return FormTypeToArea(*form_type);
+      return PDFiumPage::NONSELECTABLE_AREA;
     }
 
     // We don't handle all possible link types of the PDF. For example,
@@ -283,24 +283,13 @@ PDFiumPage::Area PDFiumPage::GetCharIndex(const pp::Point& point,
       return area;
   } else if (control > FPDF_FORMFIELD_UNKNOWN) {
     *form_type = control;
-    return FormTypeToArea(*form_type);
+    return PDFiumPage::NONSELECTABLE_AREA;
   }
 
   if (rv < 0)
     return NONSELECTABLE_AREA;
 
   return GetLink(*char_index, target) != -1 ? WEBLINK_AREA : TEXT_AREA;
-}
-
-// static
-PDFiumPage::Area PDFiumPage::FormTypeToArea(int form_type) {
-  switch (form_type) {
-    case FPDF_FORMFIELD_COMBOBOX:
-    case FPDF_FORMFIELD_TEXTFIELD:
-      return PDFiumPage::FORM_TEXT_AREA;
-    default:
-      return PDFiumPage::NONSELECTABLE_AREA;
-  }
 }
 
 base::char16 PDFiumPage::GetCharAtIndex(int index) {

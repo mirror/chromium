@@ -77,29 +77,15 @@ class UiSceneManagerTest : public testing::Test {
     return element ? element->visible() : false;
   }
 
-  // Verify that only the elements in the set are visible.
   void VerifyElementsVisible(const std::string& debug_name,
-                             const std::set<UiElementDebugId>& debug_ids) {
+                             const std::set<UiElementDebugId>& elements) {
     SCOPED_TRACE(debug_name);
     for (const auto& element : scene_->GetUiElements()) {
       SCOPED_TRACE(element->debug_id());
       bool should_be_visible =
-          debug_ids.find(element->debug_id()) != debug_ids.end();
+          elements.find(element->debug_id()) != elements.end();
       EXPECT_EQ(should_be_visible, element->visible());
     }
-  }
-
-  // Return false if not all elements in the set match the specified visibility
-  // state. Other elements are ignored.
-  bool VerifyVisibility(const std::set<UiElementDebugId>& debug_ids,
-                        bool visible) {
-    for (const auto& element : scene_->GetUiElements()) {
-      if (debug_ids.find(element->debug_id()) != debug_ids.end() &&
-          element->visible() != visible) {
-        return false;
-      }
-    }
-    return true;
   }
 
   base::test::ScopedTaskEnvironment scoped_task_environment_;
@@ -148,32 +134,28 @@ TEST_F(UiSceneManagerTest, WebVrWarningsDoNotShowWhenInitiallyOutsideWebVr) {
   EXPECT_TRUE(IsVisible(kWebVrTransientHttpSecurityWarning));
 }
 
-TEST_F(UiSceneManagerTest, ToastVisibility) {
-  // Tests toast not showing when directly entering VR though WebVR
-  // presentation.
+// Tests toast not showing when directly entering VR though WebVR presentation.
+TEST_F(UiSceneManagerTest, WebVrToastNotShowingWhenInitiallyInWebVr) {
   MakeManager(kNotInCct, kInWebVr);
   EXPECT_FALSE(IsVisible(kPresentationToast));
+}
 
+// Tests toast visibility is controlled by show_toast parameter.
+TEST_F(UiSceneManagerTest, WebVrToastShowAndHide) {
   MakeManager(kNotInCct, kNotInWebVr);
   EXPECT_FALSE(IsVisible(kPresentationToast));
 
-  manager_->SetFullscreen(true);
-  EXPECT_TRUE(IsVisible(kPresentationToast));
-
   manager_->SetWebVrMode(true, false, true);
   EXPECT_TRUE(IsVisible(kPresentationToast));
-
-  manager_->SetWebVrMode(false, false, false);
-  EXPECT_FALSE(IsVisible(kPresentationToast));
-
-  manager_->SetFullscreen(false);
-  EXPECT_FALSE(IsVisible(kPresentationToast));
 
   manager_->SetWebVrMode(true, false, false);
   EXPECT_FALSE(IsVisible(kPresentationToast));
 
   manager_->SetWebVrMode(false, false, true);
   EXPECT_TRUE(IsVisible(kPresentationToast));
+
+  manager_->SetWebVrMode(false, false, false);
+  EXPECT_FALSE(IsVisible(kPresentationToast));
 }
 
 TEST_F(UiSceneManagerTest, CloseButtonVisibleInCctFullscreen) {
@@ -285,9 +267,7 @@ TEST_F(UiSceneManagerTest, WebVrAutopresented) {
 
 TEST_F(UiSceneManagerTest, UiUpdatesForFullscreenChanges) {
   std::set<UiElementDebugId> visible_in_fullscreen = {
-      kContentQuad, kCloseButton, kBackplane,
-      kCeiling,     kFloor,       kPresentationToast,
-  };
+      kContentQuad, kCloseButton, kBackplane, kCeiling, kFloor};
 
   MakeManager(kNotInCct, kNotInWebVr);
 
@@ -378,37 +358,42 @@ TEST_F(UiSceneManagerTest, UiUpdateTransitionToWebVR) {
 }
 
 TEST_F(UiSceneManagerTest, CaptureIndicatorsVisibility) {
-  const std::set<UiElementDebugId> indicators = {
-      kAudioCaptureIndicator, kVideoCaptureIndicator, kScreenCaptureIndicator,
-      kLocationAccessIndicator,
-  };
-
   MakeManager(kNotInCct, kNotInWebVr);
-  EXPECT_TRUE(VerifyVisibility(indicators, false));
+  EXPECT_FALSE(IsVisible(kAudioCaptureIndicator));
+  EXPECT_FALSE(IsVisible(kVideoCaptureIndicator));
+  EXPECT_FALSE(IsVisible(kScreenCaptureIndicator));
+  EXPECT_FALSE(IsVisible(kLocationAccessIndicator));
 
   manager_->SetAudioCapturingIndicator(true);
   manager_->SetVideoCapturingIndicator(true);
   manager_->SetScreenCapturingIndicator(true);
   manager_->SetLocationAccessIndicator(true);
-  EXPECT_TRUE(VerifyVisibility(indicators, true));
 
-  // Go into non-browser modes and make sure all indicators are hidden.
+  EXPECT_TRUE(IsVisible(kAudioCaptureIndicator));
+  EXPECT_TRUE(IsVisible(kVideoCaptureIndicator));
+  EXPECT_TRUE(IsVisible(kScreenCaptureIndicator));
+  EXPECT_TRUE(IsVisible(kLocationAccessIndicator));
+
   manager_->SetWebVrMode(true, false, false);
-  EXPECT_TRUE(VerifyVisibility(indicators, false));
+  EXPECT_FALSE(IsVisible(kAudioCaptureIndicator));
+  EXPECT_FALSE(IsVisible(kVideoCaptureIndicator));
+  EXPECT_FALSE(IsVisible(kScreenCaptureIndicator));
+  EXPECT_FALSE(IsVisible(kLocationAccessIndicator));
+
   manager_->SetWebVrMode(false, false, false);
-  manager_->SetFullscreen(true);
-  EXPECT_TRUE(VerifyVisibility(indicators, false));
-  manager_->SetFullscreen(false);
+  EXPECT_TRUE(IsVisible(kAudioCaptureIndicator));
+  EXPECT_TRUE(IsVisible(kVideoCaptureIndicator));
+  EXPECT_TRUE(IsVisible(kScreenCaptureIndicator));
+  EXPECT_TRUE(IsVisible(kLocationAccessIndicator));
 
-  // Back to browser, make sure the indicators reappear.
-  EXPECT_TRUE(VerifyVisibility(indicators, true));
-
-  // Ensure they can be turned off.
   manager_->SetAudioCapturingIndicator(false);
   manager_->SetVideoCapturingIndicator(false);
   manager_->SetScreenCapturingIndicator(false);
   manager_->SetLocationAccessIndicator(false);
-  EXPECT_TRUE(VerifyVisibility(indicators, false));
-}
 
+  EXPECT_FALSE(IsVisible(kAudioCaptureIndicator));
+  EXPECT_FALSE(IsVisible(kVideoCaptureIndicator));
+  EXPECT_FALSE(IsVisible(kScreenCaptureIndicator));
+  EXPECT_FALSE(IsVisible(kLocationAccessIndicator));
+}
 }  // namespace vr_shell

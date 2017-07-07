@@ -968,7 +968,7 @@ PassRefPtr<Uint8Array> ImageBitmap::CopyBitmapData(AlphaDisposition alpha_op,
                                       : kUnpremul_SkAlphaType);
   RefPtr<Uint8Array> dst_pixels =
       CopySkImageData(image_->ImageForCurrentFrame(), info);
-  return dst_pixels;
+  return dst_pixels.Release();
 }
 
 unsigned long ImageBitmap::width() const {

@@ -7,11 +7,15 @@
 #include <utility>
 #include <vector>
 
+#include "base/debug/stack_trace.h"
+
 #include "base/optional.h"
 #include "base/strings/stringprintf.h"
+#include "device/bluetooth/bluetooth_adapter.h"
+#include "device/bluetooth/bluetooth_device.h"
+#include "device/bluetooth/bluetooth_remote_gatt_service.h"
 #include "device/bluetooth/bluetooth_uuid.h"
 #include "device/bluetooth/public/interfaces/test/fake_bluetooth.mojom.h"
-#include "device/bluetooth/test/fake_read_response.h"
 
 namespace bluetooth {
 
@@ -77,8 +81,16 @@ void FakeRemoteGattCharacteristic::SetNextSubscribeToNotificationsResponse(
 
 void FakeRemoteGattCharacteristic::SetNextUnsubscribeFromNotificationsResponse(
     uint16_t gatt_code) {
+  LOG(ERROR) << "SETTING RESPONSE";
   DCHECK(!next_unsubscribe_response_);
   next_unsubscribe_response_ = gatt_code;
+}
+
+void FakeRemoteGattCharacteristic::SimulateNotification(
+    const std::vector<uint8_t>& value) {
+  value_ = value;
+  GetService()->GetDevice()->GetAdapter()->NotifyGattCharacteristicValueChanged(
+      this, value_);
 }
 
 std::string FakeRemoteGattCharacteristic::GetIdentifier() const {
@@ -159,6 +171,7 @@ void FakeRemoteGattCharacteristic::UnsubscribeFromNotifications(
     device::BluetoothRemoteGattDescriptor* ccc_descriptor,
     const base::Closure& callback,
     const ErrorCallback& error_callback) {
+  LOG(ERROR) << "Unsubscribing: \n" << base::debug::StackTrace().ToString();
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE,
       base::Bind(&FakeRemoteGattCharacteristic::
@@ -170,8 +183,9 @@ void FakeRemoteGattCharacteristic::DispatchReadResponse(
     const ValueCallback& callback,
     const ErrorCallback& error_callback) {
   DCHECK(next_read_response_);
-  uint16_t gatt_code = next_read_response_->gatt_code();
-  base::Optional<std::vector<uint8_t>> value = next_read_response_->value();
+  uint16_t gatt_code = next_read_response_->gatt_code;
+  base::Optional<std::vector<uint8_t>> value =
+      std::move(next_read_response_->value);
   next_read_response_.reset();
 
   if (gatt_code == mojom::kGATTSuccess) {
@@ -205,6 +219,7 @@ void FakeRemoteGattCharacteristic::DispatchSubscribeToNotificationsResponse(
 void FakeRemoteGattCharacteristic::DispatchUnsubscribeFromNotificationsResponse(
     const base::Closure& callback,
     const ErrorCallback& error_callback) {
+  LOG(ERROR) << "Unsubscribing" << base::debug::StackTrace().ToString();
   DCHECK(next_unsubscribe_response_);
   uint16_t gatt_code = next_unsubscribe_response_.value();
   next_unsubscribe_response_.reset();
@@ -217,5 +232,12 @@ void FakeRemoteGattCharacteristic::DispatchUnsubscribeFromNotificationsResponse(
     return;
   }
 }
+
+FakeRemoteGattCharacteristic::ReadResponse::ReadResponse(
+    uint16_t gatt_code,
+    const base::Optional<std::vector<uint8_t>>& value)
+    : gatt_code(gatt_code), value(value) {}
+
+FakeRemoteGattCharacteristic::ReadResponse::~ReadResponse() {}
 
 }  // namespace bluetooth

@@ -3,15 +3,16 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-"""Certificate chain where the intermediate has a valid signature, however uses
-MD5 in the signature algorithm."""
+"""Certificate chain with 1 intermediate and a trusted root. The intermediate
+however is signed using the MD5 hash. Verification is expected to fail because
+MD5 is too weak."""
 
 import sys
 sys.path += ['..']
 
 import common
 
-# Self-signed root certificate.
+# Self-signed root certificate (used as trust anchor).
 root = common.create_self_signed_root_certificate('Root')
 
 # Intermediate.

@@ -2,8 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "core/layout/LayoutTable.h"
-#include "core/layout/LayoutTableCell.h"
 #include "core/paint/PaintControllerPaintTest.h"
 #include "core/paint/PaintLayerPainter.h"
 
@@ -175,7 +173,7 @@ TEST_F(TablePainterTest, CollapsedBorderAndOverflow) {
       "</table>");
 
   LayoutView& layout_view = *GetDocument().GetLayoutView();
-  auto& cell = *ToLayoutTableCell(GetLayoutObjectByElementId("cell"));
+  LayoutObject& cell = *GetLayoutObjectByElementId("cell");
 
   RootPaintController().InvalidateAll();
   GetDocument().View()->UpdateAllLifecyclePhasesExceptPaint();
@@ -188,7 +186,7 @@ TEST_F(TablePainterTest, CollapsedBorderAndOverflow) {
       RootPaintController().GetDisplayItemList(), 4,
       TestDisplayItem(layout_view, DisplayItem::kDocumentBackground),
       TestDisplayItem(cell, DisplayItem::kBoxDecorationBackground),
-      TestDisplayItem(*cell.Row(), DisplayItem::kTableCollapsedBorders),
+      TestDisplayItem(cell, DisplayItem::kTableCollapsedBorders),
       TestDisplayItem(cell, DisplayItem::PaintPhaseToDrawingType(
                                 kPaintPhaseSelfOutlineOnly)));
 }

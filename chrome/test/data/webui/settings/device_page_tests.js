@@ -795,9 +795,9 @@ cr.define('device_page_tests', function() {
               settings.IdleBehavior.DISPLAY_ON,
               settings.DevicePageBrowserProxyImpl.getInstance().idleBehavior_);
 
-          selectValue(idleSelect, settings.IdleBehavior.DISPLAY_OFF);
+          selectValue(idleSelect, settings.IdleBehavior.DISPLAY_OFF_STAY_AWAKE);
           expectEquals(
-              settings.IdleBehavior.DISPLAY_OFF,
+              settings.IdleBehavior.DISPLAY_OFF_STAY_AWAKE,
               settings.DevicePageBrowserProxyImpl.getInstance().idleBehavior_);
         });
 
@@ -834,13 +834,14 @@ cr.define('device_page_tests', function() {
             expectEquals(null, powerPage.$$('#lidClosedControlledIndicator'));
           }).then(function() {
             sendPowerManagementSettings(
-                settings.IdleBehavior.DISPLAY_OFF,
+                settings.IdleBehavior.DISPLAY_OFF_STAY_AWAKE,
                 false /* idleControlled */, settings.LidClosedBehavior.SUSPEND,
                 false /* lidClosedControlled */, true /* hasLid */);
             return new Promise(function(resolve) { powerPage.async(resolve); });
           }).then(function() {
-            expectEquals(settings.IdleBehavior.DISPLAY_OFF.toString(),
-                         idleSelect.value);
+            expectEquals(
+                settings.IdleBehavior.DISPLAY_OFF_STAY_AWAKE.toString(),
+                idleSelect.value);
             expectFalse(idleSelect.disabled);
             expectEquals(null, powerPage.$$('#idleControlledIndicator'));
             expectEquals(

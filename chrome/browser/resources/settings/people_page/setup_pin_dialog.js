@@ -88,27 +88,12 @@ Polymer({
      * @private
      */
     quickUnlockPrivate_: {type: Object, value: chrome.quickUnlockPrivate},
-
-    /**
-     * |pinHasPassedMinimumLength_| tracks whether a user has passed the minimum
-     * length threshold at least once, and all subsequent PIN too short messages
-     * will be displayed as errors. They will be displayed as warnings prior to
-     * this.
-     * @private
-     */
-    pinHasPassedMinimumLength_: {type: Boolean, value: false},
   },
 
   /** @override */
   attached: function() {
     this.resetState_();
     this.$.dialog.showModal();
-
-    // Show the pin is too short error when first displaying the PIN dialog.
-    this.problemClass_ = ProblemType.WARNING;
-    this.quickUnlockPrivate_.getCredentialRequirements(
-        chrome.quickUnlockPrivate.QuickUnlockMode.PIN,
-        this.processPinRequirements_.bind(this, MessageType.TOO_SHORT));
   },
 
   close: function() {
@@ -185,7 +170,7 @@ Polymer({
     this.problemClass_ = problemClass;
     this.updateStyles();
     this.enableSubmit_ =
-        problemClass != ProblemType.ERROR && messageId != MessageType.TOO_SHORT;
+        problemClass != ProblemType.ERROR && messageId != MessageType.MISMATCH;
   },
 
   /** @private */
@@ -205,14 +190,7 @@ Polymer({
     if (!message.errors.length && !message.warnings.length) {
       this.hideProblem_();
       this.enableSubmit_ = true;
-      this.pinHasPassedMinimumLength_ = true;
       return;
-    }
-
-    if (!message.errors.length ||
-        message.errors[0] !=
-            chrome.quickUnlockPrivate.CredentialProblem.TOO_SHORT) {
-      this.pinHasPassedMinimumLength_ = true;
     }
 
     if (message.warnings.length) {
@@ -225,10 +203,7 @@ Polymer({
     if (message.errors.length) {
       switch (message.errors[0]) {
         case chrome.quickUnlockPrivate.CredentialProblem.TOO_SHORT:
-          this.showProblem_(
-              MessageType.TOO_SHORT,
-              this.pinHasPassedMinimumLength_ ? ProblemType.ERROR :
-                                                ProblemType.WARNING);
+          this.showProblem_(MessageType.TOO_SHORT, ProblemType.ERROR);
           break;
         case chrome.quickUnlockPrivate.CredentialProblem.TOO_LONG:
           this.showProblem_(MessageType.TOO_LONG, ProblemType.ERROR);
@@ -241,6 +216,7 @@ Polymer({
           break;
       }
     }
+
   },
 
   /** @private */
@@ -254,11 +230,13 @@ Polymer({
       return;
     }
 
-    this.hideProblem_();
     if (this.canSubmit_()) {
+      this.hideProblem_();
       this.enableSubmit_ = true;
       return;
     }
+
+    this.showProblem_(MessageType.MISMATCH, ProblemType.WARNING);
   },
 
   /** @private */

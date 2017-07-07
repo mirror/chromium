@@ -37,6 +37,10 @@ namespace aura {
 const char kWindowTreeHostForAcceleratedWidget[] =
     "__AURA_WINDOW_TREE_HOST_ACCELERATED_WIDGET__";
 
+float GetDeviceScaleFactorFromDisplay(Window* window) {
+  return ui::GetScaleFactorForNativeView(window);
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // WindowTreeHost, public:
 
@@ -274,12 +278,10 @@ void WindowTreeHost::CreateCompositor(const cc::FrameSinkId& frame_sink_id) {
 }
 
 void WindowTreeHost::InitCompositor() {
-  display::Display display =
-      display::Screen::GetScreen()->GetDisplayNearestWindow(window());
-  compositor_->SetScaleAndSize(display.device_scale_factor(),
+  compositor_->SetScaleAndSize(GetDeviceScaleFactorFromDisplay(window()),
                                GetBoundsInPixels().size());
   compositor_->SetRootLayer(window()->layer());
-  compositor_->SetDisplayColorSpace(display.color_space());
+  compositor_->SetDisplayColorProfile(GetICCProfileForCurrentDisplay());
 }
 
 void WindowTreeHost::OnAcceleratedWidgetAvailable() {
@@ -304,7 +306,7 @@ void WindowTreeHost::OnHostResizedInPixels(
                         output_surface_padding_in_pixels_.height());
   // The compositor should have the same size as the native root window host.
   // Get the latest scale from display because it might have been changed.
-  compositor_->SetScaleAndSize(ui::GetScaleFactorForNativeView(window()),
+  compositor_->SetScaleAndSize(GetDeviceScaleFactorFromDisplay(window()),
                                adjusted_size);
 
   gfx::Size layer_size = GetBoundsInPixels().size();
@@ -333,6 +335,12 @@ void WindowTreeHost::OnHostLostWindowCapture() {
   Window* capture_window = client::GetCaptureWindow(window());
   if (capture_window && capture_window->GetRootWindow() == window())
     capture_window->ReleaseCapture();
+}
+
+gfx::ICCProfile WindowTreeHost::GetICCProfileForCurrentDisplay() {
+  // TODO(hubbe): Get the color space from the *current* monitor and
+  // update it when window is moved or color space configuration changes.
+  return gfx::ICCProfile::FromBestMonitor();
 }
 
 ui::EventSink* WindowTreeHost::GetEventSink() {

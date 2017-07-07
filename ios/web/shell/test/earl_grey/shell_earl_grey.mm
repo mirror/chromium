@@ -21,6 +21,9 @@
 + (void)loadURL:(const GURL&)URL {
   web::shell_test_util::LoadUrl(URL);
 
+  // Make sure that the page started loading.
+  GREYAssert(web::shell_test_util::IsLoading(), @"Page did not start loading.");
+
   GREYCondition* condition =
       [GREYCondition conditionWithName:@"Wait for page to complete loading."
                                  block:^BOOL {

@@ -25,15 +25,12 @@ bool ContentSuggestion::ID::operator!=(const ID& rhs) const {
 }
 
 ContentSuggestion::ContentSuggestion(const ID& id, const GURL& url)
-    : id_(id), url_(url), score_(0), is_video_suggestion_(false) {}
+    : id_(id), url_(url), score_(0) {}
 
 ContentSuggestion::ContentSuggestion(Category category,
                                      const std::string& id_within_category,
                                      const GURL& url)
-    : id_(category, id_within_category),
-      url_(url),
-      score_(0),
-      is_video_suggestion_(false) {}
+    : id_(category, id_within_category), url_(url), score_(0) {}
 
 ContentSuggestion::ContentSuggestion(ContentSuggestion&&) = default;
 

@@ -319,11 +319,8 @@ void ArcSessionManager::OnProvisioningFinished(ProvisioningResult result) {
          AreArcAllOptInPreferencesManagedForProfile(profile_) &&
          !IsActiveDirectoryUserForProfile(profile_));
     if (!suppress_play_store_app) {
-      playstore_launcher_ = base::MakeUnique<ArcAppLauncher>(
-          profile_, kPlayStoreAppId,
-          GetLaunchIntent(kPlayStorePackage, kPlayStoreActivity,
-                          {kInitialStartParam}),
-          true, false);
+      playstore_launcher_.reset(
+          new ArcAppLauncher(profile_, kPlayStoreAppId, true, false));
     }
 
     for (auto& observer : observer_list_)

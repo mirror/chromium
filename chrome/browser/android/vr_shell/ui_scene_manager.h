@@ -59,11 +59,6 @@ class UiSceneManager {
   void OnExitPromptPrimaryButtonClickedForTesting();
 
  private:
-  enum ToastState {
-    UNCHANGED = 0,
-    SET_FOR_WEB_VR,
-    SET_FOR_FULLSCREEN,
-  };
   void CreateScreenDimmer();
   void CreateSecurityWarnings();
   void CreateSystemIndicators();
@@ -132,7 +127,6 @@ class UiSceneManager {
   bool video_capturing_ = false;
   bool screen_capturing_ = false;
   bool location_access_ = false;
-  ToastState toast_state_ = UNCHANGED;
 
   int next_available_id_ = 1;
 

@@ -588,7 +588,7 @@ PassRefPtr<ComputedStyle> DateTimeEditElement::CustomStyleForLayoutObject() {
   }
   style->SetWidth(Length(ceilf(width), kFixed));
   style->SetUnique();
-  return style;
+  return style.Release();
 }
 
 void DateTimeEditElement::DidBlurFromField(WebFocusType focus_type) {

@@ -63,7 +63,7 @@ class MessageLoopTaskRunner : public TaskQueueManagerDelegateForTest {
 
   // TaskQueueManagerDelegateForTest:
   bool IsNested() const override {
-    DCHECK(RunsTasksInCurrentSequence());
+    DCHECK(RunsTasksOnCurrentThread());
     return base::RunLoop::IsNestedOnCurrentThread();
   }
 
@@ -1021,9 +1021,9 @@ TEST_F(TaskQueueManagerTest, QueueTaskObserverRemovingInsideTask) {
 
 TEST_F(TaskQueueManagerTest, ThreadCheckAfterTermination) {
   Initialize(1u);
-  EXPECT_TRUE(runners_[0]->RunsTasksInCurrentSequence());
+  EXPECT_TRUE(runners_[0]->RunsTasksOnCurrentThread());
   manager_.reset();
-  EXPECT_TRUE(runners_[0]->RunsTasksInCurrentSequence());
+  EXPECT_TRUE(runners_[0]->RunsTasksOnCurrentThread());
 }
 
 TEST_F(TaskQueueManagerTest, TimeDomain_NextScheduledRunTime) {

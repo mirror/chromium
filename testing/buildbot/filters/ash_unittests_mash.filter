@@ -2,7 +2,7 @@
 -NativeCursorManagerAshTest.FractionalScale
 -NativeCursorManagerAshTest.LockCursor
 -NativeCursorManagerAshTest.SetCursor
--NativeCursorManagerAshTest.SetCursorSize
+-NativeCursorManagerAshTest.SetCursorSet
 -NativeCursorManagerAshTest.SetDeviceScaleFactorAndRotation
 -NativeCursorManagerAshTest.UIScaleShouldNotChangeCursor
 -CursorWindowControllerTest.DSF
