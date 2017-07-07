@@ -25,7 +25,7 @@
 #include "storage/common/database/database_connections.h"
 
 namespace base {
-class SingleThreadTaskRunner;
+class SequencedTaskRunner;
 }
 
 namespace content {
@@ -80,13 +80,9 @@ class STORAGE_EXPORT OriginInfo {
 // This class manages the main database and keeps track of open databases.
 //
 // The data in this class is not thread-safe, so all methods of this class
-// should be called on the same thread. The only exceptions are the ctor(),
-// the dtor() and the database_directory() and quota_manager_proxy() getters.
-//
-// Furthermore, some methods of this class have to read/write data from/to
-// the disk. Therefore, in a multi-threaded application, all methods of this
-// class should be called on the thread dedicated to file operations (file
-// thread in the browser process, for example), if such a thread exists.
+// should be called on the task runner returned by |task_runner()|. The only
+// exceptions are the ctor(), the dtor() and the database_directory() and
+// quota_manager_proxy() getters.
 class STORAGE_EXPORT DatabaseTracker
     : public base::RefCountedThreadSafe<DatabaseTracker> {
  public:
@@ -103,11 +99,12 @@ class STORAGE_EXPORT DatabaseTracker
     virtual ~Observer() {}
   };
 
-  DatabaseTracker(const base::FilePath& profile_path,
-                  bool is_incognito,
-                  storage::SpecialStoragePolicy* special_storage_policy,
-                  storage::QuotaManagerProxy* quota_manager_proxy,
-                  base::SingleThreadTaskRunner* db_tracker_thread);
+  DatabaseTracker(
+      const base::FilePath& profile_path,
+      bool is_incognito,
+      storage::SpecialStoragePolicy* special_storage_policy,
+      storage::QuotaManagerProxy* quota_manager_proxy,
+      scoped_refptr<base::SequencedTaskRunner> task_runner = nullptr);
 
   void DatabaseOpened(const std::string& origin_identifier,
                       const base::string16& database_name,
@@ -182,6 +179,8 @@ class STORAGE_EXPORT DatabaseTracker
   void Shutdown();
   // Disables the exit-time deletion of session-only data.
   void SetForceKeepSessionState();
+
+  base::SequencedTaskRunner* task_runner() const { return task_runner_.get(); }
 
  private:
   friend class base::RefCountedThreadSafe<DatabaseTracker>;
@@ -299,7 +298,7 @@ class STORAGE_EXPORT DatabaseTracker
   scoped_refptr<storage::QuotaManagerProxy> quota_manager_proxy_;
 
   // The database tracker thread we're supposed to run file IO on.
-  scoped_refptr<base::SingleThreadTaskRunner> db_tracker_thread_;
+  scoped_refptr<base::SequencedTaskRunner> task_runner_;
 
   // When in incognito mode, store a DELETE_ON_CLOSE handle to each
   // main DB and journal file that was accessed. When the incognito profile
