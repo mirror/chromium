@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "eb31cff4_939ba977",
+        "filename": "media/base/scoped_callback_runner.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-07-07T07:46:15Z",
+      "side": 1,
+      "message": "Hm, I don\u0027t have strong opinion on that. Both of them looks good to me. It\u0027s up to you.",
+      "parentUuid": "26b260eb_5f6bea93",
+      "range": {
+        "startLine": 23,
+        "startChar": 62,
+        "endLine": 23,
+        "endChar": 67
+      },
+      "revId": "2056f33ade5440eb4bc5c53931cd03a4bbefcc4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6d002ed1_6d5cc00d",
         "filename": "media/base/scoped_callback_runner.h",
         "patchSetId": 1
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "18598798_bced6d99",
+        "filename": "media/base/scoped_callback_runner.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-07-07T07:46:15Z",
+      "side": 1,
+      "message": "No longer needed, it\u0027s handled by BindOnce.",
+      "parentUuid": "2fc2c640_5406a0fb",
+      "range": {
+        "startLine": 35,
+        "startChar": 6,
+        "endLine": 35,
+        "endChar": 15
+      },
+      "revId": "2056f33ade5440eb4bc5c53931cd03a4bbefcc4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6b8d3da_ebf6194f",
         "filename": "media/base/scoped_callback_runner.h",
         "patchSetId": 1
@@ -116,6 +164,30 @@
       "revId": "2056f33ade5440eb4bc5c53931cd03a4bbefcc4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "668d06fb_9b2e3b05",
+        "filename": "media/base/scoped_callback_runner.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-07-07T07:46:15Z",
+      "side": 1,
+      "message": "Right, marking this as resolved.",
+      "parentUuid": "77efcd49_fdd383c4",
+      "range": {
+        "startLine": 71,
+        "startChar": 13,
+        "endLine": 71,
+        "endChar": 20
+      },
+      "revId": "2056f33ade5440eb4bc5c53931cd03a4bbefcc4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
