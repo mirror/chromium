@@ -29,6 +29,24 @@ enum CanvasPixelFormat {
   kF16CanvasPixelFormat,
 };
 
+// The values associated to the members of this enum cannot change as it breaks
+// the backward compatibility of V8ScriptValueDeserializer.
+enum CanvasColorSpaceForSerialization {
+  kLegacyCanvasColorSpaceForSerialization = 0,
+  kSRGBCanvasColorSpaceForSerialization = 1,
+  kRec2020CanvasColorSpaceForSerialization = 2,
+  kP3CanvasColorSpaceForSerialization = 3,
+};
+
+// The values associated to the members of this enum cannot change as it breaks
+// the backward compatibility of V8ScriptValueDeserializer.
+enum CanvasPixelFormatForSerialization {
+  kRGBA8CanvasPixelFormatForSerialization = 0,
+  kRGB10A2CanvasPixelFormatForSerialization = 1,
+  kRGBA12CanvasPixelFormatForSerialization = 2,
+  kF16CanvasPixelFormatForSerialization = 3,
+};
+
 class PLATFORM_EXPORT CanvasColorParams {
  public:
   // The default constructor will create an output-blended 8-bit surface.
@@ -36,6 +54,12 @@ class PLATFORM_EXPORT CanvasColorParams {
   CanvasColorParams(CanvasColorSpace, CanvasPixelFormat);
   CanvasColorSpace color_space() const { return color_space_; }
   CanvasPixelFormat pixel_format() const { return pixel_format_; }
+
+  CanvasColorSpaceForSerialization GetColorSpaceForSerialization();
+  CanvasPixelFormatForSerialization GetPixelFormatForSerialization();
+  static CanvasColorParams GetCanvasColorParamsForSerialization(
+      const uint32_t&,
+      const uint32_t&);
 
   void SetCanvasColorSpace(CanvasColorSpace);
   void SetCanvasPixelFormat(CanvasPixelFormat);

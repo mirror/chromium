@@ -66,6 +66,14 @@ enum ImageDataStorageFormat {
   kFloat32ArrayStorageFormat,
 };
 
+// The values associated to the members of this enum cannot change as it breaks
+// the backward compatibility of V8ScriptValueDeserializer.
+enum ImageDataStorageFormatForSerialization {
+  kUint8ClampedArrayStorageFormatForSerialization = 0,
+  kUint16ArrayStorageFormatForSerialization = 1,
+  kFloat32ArrayStorageFormatForSerialization = 2,
+};
+
 constexpr const char* kUint8ClampedArrayStorageFormatName = "uint8";
 constexpr const char* kUint16ArrayStorageFormatName = "uint16";
 constexpr const char* kFloat32ArrayStorageFormatName = "float32";
@@ -109,6 +117,9 @@ class CORE_EXPORT ImageData final : public GarbageCollectedFinalized<ImageData>,
   static ImageData* CreateForTest(const IntSize&,
                                   DOMArrayBufferView*,
                                   const ImageDataColorSettings* = nullptr);
+  static ImageData* CreateForV8Deserializer(const IntSize&,
+                                            const uint32_t&,
+                                            const uint32_t&);
 
   ImageData* CropRect(const IntRect&, bool = false);
 
@@ -133,8 +144,12 @@ class CORE_EXPORT ImageData final : public GarbageCollectedFinalized<ImageData>,
   void dataUnion(ImageDataArray& result) { result = data_union_; };
 
   DOMArrayBufferBase* BufferBase() const;
-
   CanvasColorParams GetCanvasColorParams();
+
+  ImageDataStorageFormatForSerialization
+  GetImageDataStorageFormatForSerialization();
+  static unsigned StorageFormatDataSizeForSerialization(const uint32_t&);
+
   bool ImageDataInCanvasColorSettings(const CanvasColorSpace&,
                                       const CanvasPixelFormat&,
                                       std::unique_ptr<uint8_t[]>&);
