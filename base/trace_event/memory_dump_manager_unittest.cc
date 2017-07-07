@@ -509,7 +509,7 @@ TEST_F(MemoryDumpManagerTest, RespectTaskRunnerAffinity) {
         .Times(i)
         .WillRepeatedly(Invoke(
             [task_runner](const MemoryDumpArgs&, ProcessMemoryDump*) -> bool {
-              EXPECT_TRUE(task_runner->RunsTasksOnCurrentThread());
+              EXPECT_TRUE(task_runner->RunsTasksInCurrentSequence());
               return true;
             }));
   }
