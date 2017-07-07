@@ -22,6 +22,30 @@
       "revId": "e7b83ea199bde2c188556bb7fbca090ee922a319",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9f4ff15_4cca3b37",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsSheetVisibilityChangeObserver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-07T17:21:08Z",
+      "side": 1,
+      "message": "I want to say that we call the event every time the home sheet is shown, but the flag is set to true only the first time that sheet is shown since pulling up the omnibox.\n\nSo basically, the ideal behaviour is\n\nTap omnibox -\u003e nothing\nTap home -\u003e onContentShown(true)\nTap downloads -\u003e nothing\nTab home -\u003e onContentShown(false)\npull down on toolbar -\u003e nothing\npull up on toolbar -\u003e onContentShown(true)\n\nDo you have a recommendation to express that more clearly?",
+      "parentUuid": "15cb7e9d_e5c3d218",
+      "range": {
+        "startLine": 60,
+        "startChar": 14,
+        "endLine": 60,
+        "endChar": 26
+      },
+      "revId": "e7b83ea199bde2c188556bb7fbca090ee922a319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
