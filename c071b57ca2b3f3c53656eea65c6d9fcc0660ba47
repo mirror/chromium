@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ebed21a9_5f002208",
+        "filename": "third_party/WebKit/Source/platform/wtf/HashTable.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1103784
+      },
+      "writtenOn": "2017-07-07T12:08:36Z",
+      "side": 1,
+      "message": "According to our current coding convention, this function name must be spelled as \"Create\".\n\nThe same applies to other functions, too.",
+      "range": {
+        "startLine": 149,
+        "startChar": 41,
+        "endLine": 149,
+        "endChar": 47
+      },
+      "revId": "c071b57ca2b3f3c53656eea65c6d9fcc0660ba47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ee9d2ad_f2c85936",
+        "filename": "third_party/WebKit/Source/platform/wtf/HashTable.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1103784
+      },
+      "writtenOn": "2017-07-07T12:08:36Z",
+      "side": 1,
+      "message": "Actually I don\u0027t understand why the old code did this complex allocation.\n\nI feel like you can remove this function and replace the call sites with simple \"new\" statements.\n\nAlso this pointer seems to leak. I don\u0027t care very much since this isn\u0027t in the production code, but if you can fix the leak, that would be better.",
+      "revId": "c071b57ca2b3f3c53656eea65c6d9fcc0660ba47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "085367ab_5a839d4f",
+        "filename": "third_party/WebKit/Source/platform/wtf/HashTable.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 2077,
+      "author": {
+        "id": 1103784
+      },
+      "writtenOn": "2017-07-07T12:08:36Z",
+      "side": 1,
+      "message": "\"TODO(yourname)\" is the preferred way to write this kind of comments.\n\nI have no idea about why this crashes.",
+      "range": {
+        "startLine": 2077,
+        "startChar": 3,
+        "endLine": 2077,
+        "endChar": 6
+      },
+      "revId": "c071b57ca2b3f3c53656eea65c6d9fcc0660ba47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
