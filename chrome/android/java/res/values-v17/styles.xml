@@ -737,7 +737,7 @@
 
     <!-- VR animations -->
     <style name="VrEntryAnimation">
-        <item name="android:windowEnterAnimation">@anim/stay_hidden</item>
+        <item name="android:windowEnterAnimation">@anim/stay_hidden1</item>
         <item name="android:windowExitAnimation">@null</item>
     </style>
 </resources>

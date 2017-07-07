@@ -236,6 +236,8 @@ public abstract class AsyncInitializationActivity extends AppCompatActivity impl
     }
 
     private final void onCreateInternal(Bundle savedInstanceState) {
+        getWindow().requestFeature(android.view.Window.FEATURE_CONTENT_TRANSITIONS);
+
         if (DocumentModeAssassin.getInstance().isMigrationNecessary()) {
             super.onCreate(null);
 

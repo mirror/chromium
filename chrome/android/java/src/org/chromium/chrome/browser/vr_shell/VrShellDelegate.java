@@ -136,6 +136,7 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
     private final Handler mEnterVrHandler;
     private final Handler mExpectPauseOrDonSucceeded;
     private boolean mProbablyInDon;
+    private boolean mInHack;
 
     // Whether or not the VR Device ON flow succeeded. If this is true it means the user has a VR
     // headset on, but we haven't switched into VR mode yet.
@@ -768,6 +769,23 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
         maybeSetPresentResult(true, donSuceeded);
         mVrShell.getContainer().setOnSystemUiVisibilityChangeListener(this);
         removeOverlayView();
+        try {
+            //            Method method =
+            //            ActivityOptions.class.getMethod("stopSharedElementAnimation",
+            //                    Window.class);
+            //            method.invoke(null, mActivity.getWindow());
+            //            mActivity.getWindow().getDecorView().setAlpha(1);
+            //            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) return;
+            //            TransitionManager.endTransitions((ViewGroup)
+            //            mActivity.getWindow().getDecorView()); Bundle options =
+            //                    ActivityOptions.makeCustomAnimation(mActivity, 0, 0).toBundle();
+            //            ((ActivityManager) mActivity.getSystemService(Context.ACTIVITY_SERVICE))
+            //                    .moveTaskToFront(mActivity.getTaskId(), 0, options);
+
+            Log.wtf(TAG, "WINDOW MAYBE");
+        } catch (Exception ex) {
+            Log.wtf(TAG, "WINDOW FAILED");
+        }
         if (!donSuceeded && !mAutopresentWebVr && isDaydreamCurrentViewer()) {
             // TODO(mthiesse): This is a VERY dirty hack. We need to know whether or not entering VR
             // will trigger the DON flow, so that we can wait for it to complete before we let the
@@ -784,6 +802,11 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
                     handleDonFlowSuccess();
                 }
             }, EXPECT_DON_TIMEOUT_MS);
+        } else {
+            Log.wtf(TAG, "WINDOW HMMM");
+            mInHack = true;
+            Bundle options = ActivityOptions.makeCustomAnimation(mActivity, 0, 0).toBundle();
+            mActivity.startActivity(new Intent(mActivity, NoDisplayActivity.class), options);
         }
     }
 
@@ -952,11 +975,12 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
 
         if (mDonSucceeded) {
             handleDonFlowSuccess();
-        } else if (mRestoreOrientation != null) {
+        } else if (mRestoreOrientation != null && !mInHack) {
             // This means the user backed out of the DON flow, and we won't be entering VR.
             maybeSetPresentResult(false, mDonSucceeded);
             shutdownVr(true, false, false);
         }
+        mInHack = false;
     }
 
     private void handleDonFlowSuccess() {
@@ -998,6 +1022,7 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
 
     private void onStop() {
         cancelPendingVrEntry();
+        assert !mInHack;
         // We defer pausing of VrShell until the app is stopped to keep head tracking working for
         // as long as possible while going to daydream home.
         if (mInVr) {
