@@ -30,6 +30,7 @@ class JSONObject;
 class PaintArtifact;
 class WebLayer;
 struct PaintChunk;
+class PropertyTreeManager;
 
 // Responsible for managing compositing in terms of a PaintArtifact.
 //
@@ -73,6 +74,7 @@ class PLATFORM_EXPORT PaintArtifactCompositor {
   // placeholder layers required.
   struct ExtraDataForTesting {
     Vector<scoped_refptr<cc::Layer>> content_layers;
+    Vector<scoped_refptr<cc::Layer>> scroll_layers;
   };
   void EnableExtraDataForTesting() { extra_data_for_testing_enabled_ = true; }
   ExtraDataForTesting* GetExtraDataForTesting() const {
@@ -158,16 +160,30 @@ class PLATFORM_EXPORT PaintArtifactCompositor {
           new_content_layer_clients,
       bool store_debug_info);
 
+  scoped_refptr<cc::Layer> CompositedLayerForScroll(
+      const TransformPaintPropertyNode* scroll_offset_transform,
+      Vector<scoped_refptr<cc::Layer>>& new_scroll_layers);
+
   // Finds a client among the current vector of clients that matches the paint
   // chunk's id, or otherwise allocates a new one.
   std::unique_ptr<ContentLayerClientImpl> ClientForPaintChunk(
       const PaintChunk&);
+
+  void AddScrollLayers(const TransformPaintPropertyNode* scroll_translation,
+                       int effect_id,
+                       PropertyTreeManager&,
+                       cc::LayerTreeHost*,
+                       Vector<scoped_refptr<cc::Layer>>& new_scroll_layers,
+                       HashMap<const TransformPaintPropertyNode*, cc::Layer*>&
+                           scroll_translation_to_scroll_layer);
 
   bool tracks_raster_invalidations_;
 
   scoped_refptr<cc::Layer> root_layer_;
   std::unique_ptr<WebLayer> web_layer_;
   Vector<std::unique_ptr<ContentLayerClientImpl>> content_layer_clients_;
+
+  Vector<scoped_refptr<cc::Layer>> scroll_layers_;
 
   bool extra_data_for_testing_enabled_ = false;
   std::unique_ptr<ExtraDataForTesting> extra_data_for_testing_;
