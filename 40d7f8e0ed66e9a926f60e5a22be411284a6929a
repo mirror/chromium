@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66656226_066f7609",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-07-07T17:59:31Z",
+      "side": 1,
+      "message": "Try to avoid I.. generally \"We\" is used.",
+      "range": {
+        "startLine": 179,
+        "startChar": 45,
+        "endLine": 179,
+        "endChar": 52
+      },
+      "revId": "40d7f8e0ed66e9a926f60e5a22be411284a6929a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "803b2a76_3ffb057b",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-07-07T17:59:31Z",
+      "side": 1,
+      "message": "Should this while listed touch action get reset on ResetTouchAction() ?",
+      "range": {
+        "startLine": 185,
+        "startChar": 2,
+        "endLine": 185,
+        "endChar": 28
+      },
+      "revId": "40d7f8e0ed66e9a926f60e5a22be411284a6929a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43591c6c_3259e94a",
+        "filename": "ui/events/blink/input_handler_proxy_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-07-07T17:59:31Z",
+      "side": 1,
+      "message": "I think we should MOCK this method out and add cases for when this is called.",
+      "range": {
+        "startLine": 322,
+        "startChar": 7,
+        "endLine": 322,
+        "endChar": 32
+      },
+      "revId": "40d7f8e0ed66e9a926f60e5a22be411284a6929a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
