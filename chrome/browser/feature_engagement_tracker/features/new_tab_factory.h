@@ -1,0 +1,51 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#ifndef CHROME_BROWSER_FEATURE_ENGAGEMENT_TRACKER_FEATURES_NEW_TAB_FACTORY_H_
+#define CHROME_BROWSER_FEATURE_ENGAGEMENT_TRACKER_FEATURES_NEW_TAB_FACTORY_H_
+
+#include "base/macros.h"
+#include "chrome/browser/profiles/profile.h"
+#include "components/keyed_service/content/browser_context_keyed_service_factory.h"
+
+namespace base {
+template <typename T>
+struct DefaultSingletonTraits;
+}  // namespace base
+
+namespace content {
+class BrowserContext;
+}  // namespace content
+
+namespace new_tab_iph {
+class NewTabTracker;
+
+// NewTabFactory is the main client class for
+// interaction with the NewTabTracker component.
+class NewTabFactory : public BrowserContextKeyedServiceFactory {
+ public:
+  // Returns singleton instance of NewTabFactory.
+  static NewTabFactory* GetInstance();
+
+  // Returns the FeatureEngagementTracker associated with the profile.
+  NewTabTracker* GetForProfile(Profile* profile);
+
+ private:
+  friend struct base::DefaultSingletonTraits<NewTabFactory>;
+
+  NewTabFactory();
+  ~NewTabFactory() override;
+
+  // BrowserContextKeyedServiceFactory overrides:
+  KeyedService* BuildServiceInstanceFor(
+      content::BrowserContext* context) const override;
+  content::BrowserContext* GetBrowserContextToUse(
+      content::BrowserContext* context) const override;
+
+  DISALLOW_COPY_AND_ASSIGN(NewTabFactory);
+};
+
+}  // namespace new_tab_iph
+
+#endif  // CHROME_BROWSER_FEATURE_ENGAGEMENT_TRACKER_FEATURES_NEW_TAB_FACTORY_H_
