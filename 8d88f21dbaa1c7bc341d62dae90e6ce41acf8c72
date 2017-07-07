@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f9850d2e_8a6f8515",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-07-07T09:05:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5383a992_621e4294",
+      "revId": "8d88f21dbaa1c7bc341d62dae90e6ce41acf8c72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8bccbcc2_b84f3f07",
         "filename": "components/subresource_filter/content/renderer/subresource_filter_agent.cc",
         "patchSetId": 4
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "5ea2822a_0e461da1",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2965,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-07-07T09:05:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc0a6f54_a449af66",
+      "revId": "8d88f21dbaa1c7bc341d62dae90e6ce41acf8c72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f76ae8a_520e0ebc",
         "filename": "third_party/WebKit/Source/core/exported/WebDataSourceImpl.cpp",
         "patchSetId": 4
@@ -64,6 +100,24 @@
       "writtenOn": "2017-07-07T07:56:18Z",
       "side": 1,
       "message": "I see this could be always non-null as this is called in the chain of DidInstallNewDocument. Are we sure that this document won\u0027t become invalid when we use this filter? (I think that\u0027s the case, but not 100% sure)",
+      "revId": "8d88f21dbaa1c7bc341d62dae90e6ce41acf8c72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd961362_0d0d294c",
+        "filename": "third_party/WebKit/Source/core/exported/WebDataSourceImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-07-07T09:05:11Z",
+      "side": 1,
+      "message": "ResourceFetcher::StopFetching() must be called before the document become invalid.\nAfter StopFetching() is called, the filter will not be used.",
+      "parentUuid": "1f76ae8a_520e0ebc",
       "revId": "8d88f21dbaa1c7bc341d62dae90e6ce41acf8c72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "48407d0d_59492d9c",
+        "filename": "third_party/WebKit/Source/core/loader/SubresourceFilter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-07-07T09:05:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b0b209f_066608d6",
+      "revId": "8d88f21dbaa1c7bc341d62dae90e6ce41acf8c72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "539e34fc_b97428c4",
         "filename": "third_party/WebKit/public/platform/WebWorkerFetchContext.h",
         "patchSetId": 4
@@ -101,6 +173,24 @@
       "revId": "8d88f21dbaa1c7bc341d62dae90e6ce41acf8c72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5094b48_75a26b49",
+        "filename": "third_party/WebKit/public/platform/WebWorkerFetchContext.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-07-07T09:05:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "539e34fc_b97428c4",
+      "revId": "8d88f21dbaa1c7bc341d62dae90e6ce41acf8c72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
