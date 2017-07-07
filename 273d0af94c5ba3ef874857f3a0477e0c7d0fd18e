@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "5c6c8ccb_75b0ba03",
+        "filename": "content/browser/service_worker/embedded_worker_instance.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-07T06:58:13Z",
+      "side": 1,
+      "message": "Thanks! Updated.",
+      "revId": "273d0af94c5ba3ef874857f3a0477e0c7d0fd18e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b68a7688_2a83c8c2",
         "filename": "content/common/service_worker/service_worker_installed_scripts_manager.mojom",
         "patchSetId": 8
@@ -33,6 +50,24 @@
       "revId": "273d0af94c5ba3ef874857f3a0477e0c7d0fd18e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6a0134e_7dcc9d87",
+        "filename": "content/common/service_worker/service_worker_installed_scripts_manager.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-07T06:58:13Z",
+      "side": 1,
+      "message": "Actually this is renderer-side interface. Updated the comment.",
+      "parentUuid": "b68a7688_2a83c8c2",
+      "revId": "273d0af94c5ba3ef874857f3a0477e0c7d0fd18e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
