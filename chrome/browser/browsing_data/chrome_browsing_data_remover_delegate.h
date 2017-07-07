@@ -277,7 +277,6 @@ class ChromeBrowsingDataRemoverDelegate
   SubTask clear_http_auth_cache_;
   SubTask clear_platform_keys_;
 #if defined(OS_ANDROID)
-  SubTask clear_precache_history_;
   SubTask clear_offline_page_data_;
 #endif
 #if BUILDFLAG(ENABLE_WEBRTC)
