@@ -33,7 +33,6 @@
 #include "platform/wtf/HashFunctions.h"
 #include "platform/wtf/HashSet.h"
 #include "platform/wtf/HashTableDeletedValueType.h"
-#include "platform/wtf/StringHasher.h"
 #include "platform/wtf/WeakPtr.h"
 
 namespace blink {
@@ -44,102 +43,66 @@ struct ShapeCacheEntry {
   RefPtr<const ShapeResult> shape_result_;
 };
 
+// Used to optimize small strings as hash table keys. Avoids malloc'ing an
+// out-of-line StringImpl.
+class SmallStringKey {
+  DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
+
+  void hashString();
+
+ public:
+  static unsigned Capacity() { return kCapacity; }
+
+  SmallStringKey()
+      : length_(kEmptyValueLength),
+        direction_(static_cast<unsigned>(TextDirection::kLtr)) {}
+
+  SmallStringKey(WTF::HashTableDeletedValueType)
+      : length_(kDeletedValueLength),
+        direction_(static_cast<unsigned>(TextDirection::kLtr)) {}
+
+  SmallStringKey(const UChar* characters, unsigned short length, TextDirection);
+  SmallStringKey(const LChar* characters, unsigned short length, TextDirection);
+
+  const UChar* Characters() const { return characters_; }
+  unsigned short length() const { return length_; }
+  TextDirection Direction() const {
+    return static_cast<TextDirection>(direction_);
+  }
+  unsigned GetHash() const { return hash_; }
+
+  bool IsHashTableDeletedValue() const {
+    return length_ == kDeletedValueLength;
+  }
+  bool IsHashTableEmptyValue() const { return length_ == kEmptyValueLength; }
+
+ private:
+  static const unsigned kCapacity = 15;
+  static const unsigned kEmptyValueLength = kCapacity + 1;
+  static const unsigned kDeletedValueLength = kCapacity + 2;
+
+  unsigned hash_;
+  unsigned length_ : 15;
+  unsigned direction_ : 1;
+  UChar characters_[kCapacity];
+};
+
+inline bool operator==(const SmallStringKey& a, const SmallStringKey& b) {
+  if (a.length() != b.length() || a.Direction() != b.Direction())
+    return false;
+  return WTF::Equal(a.Characters(), b.Characters(), a.length());
+}
+
 class ShapeCache {
   USING_FAST_MALLOC(ShapeCache);
   WTF_MAKE_NONCOPYABLE(ShapeCache);
 
- private:
-  // Used to optimize small strings as hash table keys. Avoids malloc'ing an
-  // out-of-line StringImpl.
-  class SmallStringKey {
-    DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
-
-   public:
-    static unsigned Capacity() { return kCapacity; }
-
-    SmallStringKey()
-        : length_(kEmptyValueLength),
-          direction_(static_cast<unsigned>(TextDirection::kLtr)) {}
-
-    SmallStringKey(WTF::HashTableDeletedValueType)
-        : length_(kDeletedValueLength),
-          direction_(static_cast<unsigned>(TextDirection::kLtr)) {}
-
-    template <typename CharacterType>
-    SmallStringKey(CharacterType* characters,
-                   unsigned short length,
-                   TextDirection direction)
-        : length_(length), direction_(static_cast<unsigned>(direction)) {
-      DCHECK(length <= kCapacity);
-
-      StringHasher hasher;
-
-      bool remainder = length & 1;
-      length >>= 1;
-
-      unsigned i = 0;
-      while (length--) {
-        characters_[i] = characters[i];
-        characters_[i + 1] = characters[i + 1];
-        hasher.AddCharactersAssumingAligned(characters[i], characters[i + 1]);
-        i += 2;
-      }
-
-      if (remainder) {
-        characters_[i] = characters[i];
-        hasher.AddCharacter(characters[i]);
-      }
-
-      hash_ = hasher.GetHash();
-    }
-
-    const UChar* Characters() const { return characters_; }
-    unsigned short length() const { return length_; }
-    TextDirection Direction() const {
-      return static_cast<TextDirection>(direction_);
-    }
-    unsigned GetHash() const { return hash_; }
-
-    bool IsHashTableDeletedValue() const {
-      return length_ == kDeletedValueLength;
-    }
-    bool IsHashTableEmptyValue() const { return length_ == kEmptyValueLength; }
-
-   private:
-    static const unsigned kCapacity = 15;
-    static const unsigned kEmptyValueLength = kCapacity + 1;
-    static const unsigned kDeletedValueLength = kCapacity + 2;
-
-    unsigned hash_;
-    unsigned length_ : 15;
-    unsigned direction_ : 1;
-    UChar characters_[kCapacity];
-  };
-
-  struct SmallStringKeyHash {
-    STATIC_ONLY(SmallStringKeyHash);
-    static unsigned GetHash(const SmallStringKey& key) { return key.GetHash(); }
-    static bool Equal(const SmallStringKey& a, const SmallStringKey& b) {
-      return a == b;
-    }
-    // Empty and deleted values have lengths that are not equal to any valid
-    // length.
-    static const bool safe_to_compare_to_empty_or_deleted = true;
-  };
-
-  struct SmallStringKeyHashTraits : WTF::SimpleClassHashTraits<SmallStringKey> {
-    STATIC_ONLY(SmallStringKeyHashTraits);
-    static const bool kHasIsEmptyValueFunction = true;
-    static bool IsEmptyValue(const SmallStringKey& key) {
-      return key.IsHashTableEmptyValue();
-    }
-    static const unsigned kMinimumTableSize = 16;
-  };
-
-  friend bool operator==(const SmallStringKey&, const SmallStringKey&);
-
  public:
-  ShapeCache() : weak_factory_(this), version_(0) {}
+  ShapeCache() : weak_factory_(this), version_(0) {
+    // We use 5% of the maximum word cache size as start value
+    // for the HashTable.
+    short_string_map_.ReserveCapacityForSize(500);
+  }
 
   ShapeCacheEntry* Add(const TextRun& run, ShapeCacheEntry entry) {
     if (run.length() > SmallStringKey::Capacity())
@@ -178,46 +141,28 @@ class ShapeCache {
   WeakPtr<ShapeCache> GetWeakPtr() { return weak_factory_.CreateWeakPtr(); }
 
  private:
-  ShapeCacheEntry* AddSlowCase(const TextRun& run, ShapeCacheEntry entry) {
-    unsigned length = run.length();
-    bool is_new_entry;
-    ShapeCacheEntry* value;
-    if (length == 1) {
-      uint32_t key = run[0];
-      // All current codepointsin UTF-32 are bewteen 0x0 and 0x10FFFF,
-      // as such use bit 32 to indicate direction.
-      if (run.Direction() == TextDirection::kRtl)
-        key |= (1u << 31);
-      SingleCharMap::AddResult add_result = single_char_map_.insert(key, entry);
-      is_new_entry = add_result.is_new_entry;
-      value = &add_result.stored_value->value;
-    } else {
-      SmallStringKey small_string_key;
-      if (run.Is8Bit())
-        small_string_key =
-            SmallStringKey(run.Characters8(), length, run.Direction());
-      else
-        small_string_key =
-            SmallStringKey(run.Characters16(), length, run.Direction());
-
-      SmallStringMap::AddResult add_result =
-          short_string_map_.insert(small_string_key, entry);
-      is_new_entry = add_result.is_new_entry;
-      value = &add_result.stored_value->value;
+  struct SmallStringKeyHash {
+    STATIC_ONLY(SmallStringKeyHash);
+    static unsigned GetHash(const SmallStringKey& key) { return key.GetHash(); }
+    static bool Equal(const SmallStringKey& a, const SmallStringKey& b) {
+      return a == b;
     }
+    // Empty and deleted values have lengths that are not equal to any valid
+    // length.
+    static const bool safe_to_compare_to_empty_or_deleted = true;
+  };
 
-    if (!is_new_entry)
-      return value;
+  struct SmallStringKeyHashTraits : WTF::SimpleClassHashTraits<SmallStringKey> {
+    STATIC_ONLY(SmallStringKeyHashTraits);
+    static const bool kHasIsEmptyValueFunction = true;
+    static bool IsEmptyValue(const SmallStringKey& key) {
+      return key.IsHashTableEmptyValue();
+    }
+    static const unsigned kMinimumTableSize = 16;
+  };
 
-    if (size() < kMaxSize)
-      return value;
-
-    // No need to be fancy: we're just trying to avoid pathological growth.
-    single_char_map_.clear();
-    short_string_map_.clear();
-
-    return 0;
-  }
+  friend bool operator==(const SmallStringKey&, const SmallStringKey&);
+  ShapeCacheEntry* AddSlowCase(const TextRun&, ShapeCacheEntry);
 
   typedef HashMap<SmallStringKey,
                   ShapeCacheEntry,
@@ -244,13 +189,6 @@ class ShapeCache {
   WeakPtrFactory<ShapeCache> weak_factory_;
   unsigned version_;
 };
-
-inline bool operator==(const ShapeCache::SmallStringKey& a,
-                       const ShapeCache::SmallStringKey& b) {
-  if (a.length() != b.length() || a.Direction() != b.Direction())
-    return false;
-  return WTF::Equal(a.Characters(), b.Characters(), a.length());
-}
 
 }  // namespace blink
 
