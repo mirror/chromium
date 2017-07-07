@@ -34,6 +34,24 @@
       "revId": "abc58c9a38ccf503df744cf854c3e7da1f120d33",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96096c0a_352b7102",
+        "filename": "infra/config/cq.cfg",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-07-07T17:53:48Z",
+      "side": 1,
+      "message": "(er, ignore the \"how the CQ is behaving\" bit, but from looking through the code, it does seem to require the underscore version)",
+      "parentUuid": "c3cadf6b_2d471107",
+      "revId": "abc58c9a38ccf503df744cf854c3e7da1f120d33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
