@@ -17,10 +17,6 @@
 #include "services/resource_coordinator/public/cpp/coordination_unit_types.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
 
-namespace ukm {
-class UkmEntryBuilder;
-}  // namespace ukm
-
 namespace resource_coordinator {
 
 CoordinationUnitManager::CoordinationUnitManager() = default;
@@ -53,13 +49,6 @@ void CoordinationUnitManager::OnCoordinationUnitCreated(
 void CoordinationUnitManager::OnBeforeCoordinationUnitDestroyed(
     CoordinationUnitImpl* coordination_unit) {
   coordination_unit->BeforeDestroyed();
-}
-
-std::unique_ptr<ukm::UkmEntryBuilder>
-CoordinationUnitManager::CreateUkmEntryBuilder(const char* event_name) {
-  DCHECK(ukm_recorder_ != nullptr);
-  return ukm_recorder_->GetEntryBuilder(ukm::UkmRecorder::GetNewSourceID(),
-                                        event_name);
 }
 
 }  // namespace resource_coordinator
