@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06386a72_9275cd39",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/DatabaseModel.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-07-07T23:45:20Z",
+      "side": 1,
+      "message": "While you\u0027re here, could you please remove get prefix. We tend to avoid it.",
+      "revId": "6f52b4fd6da700c81540bfd862175287b0f12297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff432b3a_701c3372",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/DatabaseModel.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-07-07T23:45:20Z",
+      "side": 1,
+      "message": "it can return null.",
+      "revId": "6f52b4fd6da700c81540bfd862175287b0f12297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6610912_79a3beb1",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/DatabaseModel.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-07-07T23:45:20Z",
+      "side": 1,
+      "message": "looks like a good place to use await.",
+      "revId": "6f52b4fd6da700c81540bfd862175287b0f12297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
