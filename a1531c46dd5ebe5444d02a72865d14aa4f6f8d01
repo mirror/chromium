@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ad87fd1f_db6a4a48",
+        "filename": "content/browser/blob_storage/blob_registry_wrapper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-07-07T19:30:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac8a8aae_9b2e5e80",
+      "revId": "a1531c46dd5ebe5444d02a72865d14aa4f6f8d01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b8ea73b_2b1396c2",
         "filename": "storage/browser/blob/blob_registry_impl.cc",
         "patchSetId": 6
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "03d7dffc_bcf78e58",
+        "filename": "storage/browser/blob/blob_registry_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-07-07T19:30:22Z",
+      "side": 1,
+      "message": "BlobDataItem initializes expected_modification_time with blink::InvalidFileTime, which is quiet_NaN. BlobTransportController than converts that double to a base::Time with FromDoubleT which treats NaN (and zero for that matter) as base::Time(). So yeah, I think this matches the existing code (for what it\u0027s worth, currently the blink-side mojo code already calls Time::FromDoubleT even on invalid/unknown times, so we\u0027re not actually ever passing nullopt over the mojo interface, but if/when that\u0027s changed this should still make sure we get the same behavior)",
+      "parentUuid": "2b8ea73b_2b1396c2",
+      "range": {
+        "startLine": 221,
+        "startChar": 0,
+        "endLine": 221,
+        "endChar": 80
+      },
+      "revId": "a1531c46dd5ebe5444d02a72865d14aa4f6f8d01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a79ae32_5480a56e",
         "filename": "storage/browser/blob/blob_registry_impl.cc",
         "patchSetId": 6
@@ -56,6 +98,24 @@
       "revId": "a1531c46dd5ebe5444d02a72865d14aa4f6f8d01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f506b22b_9d7c5852",
+        "filename": "storage/browser/blob/blob_registry_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-07-07T19:30:22Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2a79ae32_5480a56e",
+      "revId": "a1531c46dd5ebe5444d02a72865d14aa4f6f8d01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
