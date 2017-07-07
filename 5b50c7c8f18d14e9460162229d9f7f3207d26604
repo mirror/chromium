@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "51f36d15_9dbb0072",
+        "filename": "components/subresource_filter/content/renderer/subresource_filter_agent.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-07T14:47:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0cec960_d8fd67a0",
+      "revId": "5b50c7c8f18d14e9460162229d9f7f3207d26604",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26cbdb5e_08c1fba8",
         "filename": "components/subresource_filter/content/renderer/subresource_filter_agent.h",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "5b50c7c8f18d14e9460162229d9f7f3207d26604",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2781f526_6758f504",
+        "filename": "components/subresource_filter/content/renderer/subresource_filter_agent.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-07T14:47:55Z",
+      "side": 1,
+      "message": "\u003e Looks like this doesn\u0027t need to be a public API.\n\nRemoved",
+      "parentUuid": "26cbdb5e_08c1fba8",
+      "revId": "5b50c7c8f18d14e9460162229d9f7f3207d26604",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
