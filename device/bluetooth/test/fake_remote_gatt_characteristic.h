@@ -55,6 +55,16 @@ class FakeRemoteGattCharacteristic
     return last_written_value_;
   }
 
+  // If |gatt_code| is mojom::kGATTSuccess the next subscribe to notifications
+  // request will call its success callback. Otherwise it will call its error
+  // callback.
+  void SetNextSubscribeToNotificationsResponse(uint16_t gatt_code);
+
+  // If |gatt_code| is mojom::kGATTSuccess the next unsubscribe from
+  // notifications request will call its success callback. Otherwise it will
+  // call its error callback.
+  void SetNextUnsubscribeFromNotificationsResponse(uint16_t gatt_code);
+
   // device::BluetoothGattCharacteristic overrides:
   std::string GetIdentifier() const override;
   device::BluetoothUUID GetUUID() const override;
@@ -91,6 +101,12 @@ class FakeRemoteGattCharacteristic
   void DispatchWriteResponse(const base::Closure& callback,
                              const ErrorCallback& error_callback,
                              const std::vector<uint8_t>& value);
+  void DispatchSubscribeToNotificationsResponse(
+      const base::Closure& callback,
+      const ErrorCallback& error_callback);
+  void DispatchUnsubscribeFromNotificationsResponse(
+      const base::Closure& callback,
+      const ErrorCallback& error_callback);
 
   const std::string characteristic_id_;
   const device::BluetoothUUID characteristic_uuid_;
@@ -105,9 +121,16 @@ class FakeRemoteGattCharacteristic
   // ReadRemoteCharacteristic is called.
   base::Optional<FakeReadResponse> next_read_response_;
 
-  // Used to decide which callback should be called when
   // WriteRemoteCharacteristic is called.
   base::Optional<uint16_t> next_write_response_;
+
+  // Used to decide which callback should be called when
+  // SubscribeToNotifications is called.
+  base::Optional<uint16_t> next_subscribe_response_;
+
+  // Used to decide which callback should be called when
+  // UnsubscribeFromNotifications is called.
+  base::Optional<uint16_t> next_unsubscribe_response_;
 
   size_t last_descriptor_id_;
 
