@@ -6,6 +6,7 @@
 #define CHROME_BROWSER_ANDROID_VR_SHELL_VR_SHELL_GL_H_
 
 #include <chrome/browser/android/vr_shell/ui_input_manager.h>
+#include <chrome/browser/android/vr_shell/ui_renderer.h>
 #include <memory>
 #include <queue>
 #include <utility>
@@ -48,7 +49,6 @@ namespace vr_shell {
 class FPSMeter;
 class MailboxToSurfaceBridge;
 class SlidingAverage;
-class UiElement;
 class UiScene;
 class GlBrowserInterface;
 class VrController;
@@ -118,25 +118,6 @@ class VrShellGl : public device::mojom::VRPresentationProvider,
                                 gvr_frame* frame_ptr,
                                 const gfx::Transform& head_pose,
                                 std::unique_ptr<gl::GLFence> fence);
-  void DrawWorldElements(const gfx::Transform& head_pose);
-  void DrawOverlayElements(const gfx::Transform& head_pose);
-  void DrawHeadLockedElements();
-  void DrawUiView(const gfx::Transform& head_pose,
-                  const std::vector<const UiElement*>& elements,
-                  const gfx::Size& render_size,
-                  int viewport_offset,
-                  bool draw_cursor);
-  void DrawElements(const gfx::Transform& view_proj_matrix,
-                    const std::vector<const UiElement*>& elements,
-                    bool draw_cursor);
-  void DrawElement(const gfx::Transform& view_proj_matrix,
-                   const UiElement& element);
-  std::vector<const UiElement*> GetElementsInDrawOrder(
-      const gfx::Transform& view_matrix,
-      const std::vector<const UiElement*>& elements);
-  void DrawReticle(const gfx::Transform& view_proj_matrix);
-  void DrawLaser(const gfx::Transform& view_proj_matrix);
-  void DrawController(const gfx::Transform& view_proj_matrix);
   bool ShouldDrawWebVr();
   void DrawWebVr();
   bool WebVrPoseByteIsValid(int pose_index_byte);
@@ -177,6 +158,11 @@ class VrShellGl : public device::mojom::VRPresentationProvider,
   int64_t GetPredictedFrameTimeNanos();
 
   void OnVSync();
+
+  void UpdateEyeInfos(const gfx::Transform& head_pose,
+                      int viewport_offset,
+                      const gfx::Size& render_size,
+                      RenderInfo* out_render_info);
 
   // VRPresentationProvider
   void GetVSync(GetVSyncCallback callback) override;
@@ -232,9 +218,6 @@ class VrShellGl : public device::mojom::VRPresentationProvider,
   bool touch_pending_ = false;
   gfx::Quaternion controller_quat_;
 
-  gfx::Point3F target_point_;
-  UiElement* reticle_render_target_ = nullptr;
-
   int content_tex_css_width_ = 0;
   int content_tex_css_height_ = 0;
   gfx::Size content_tex_physical_size_ = {0, 0};
@@ -282,6 +265,11 @@ class VrShellGl : public device::mojom::VRPresentationProvider,
   gfx::Point3F pointer_start_;
 
   std::unique_ptr<UiInputManager> input_manager_;
+  std::unique_ptr<UiRenderer> ui_renderer_;
+
+  ControllerInfo controller_info_;
+  RenderInfo render_info_primary_;
+  RenderInfo render_info_headlocked_;
 
   base::WeakPtrFactory<VrShellGl> weak_ptr_factory_;
 
