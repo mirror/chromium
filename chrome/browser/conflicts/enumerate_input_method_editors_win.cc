@@ -11,14 +11,11 @@
 #include "base/bind.h"
 #include "base/callback.h"
 #include "base/files/file_path.h"
-#include "base/memory/ref_counted.h"
 #include "base/metrics/histogram_functions.h"
-#include "base/sequenced_task_runner.h"
 #include "base/strings/string16.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/task_scheduler/post_task.h"
-#include "base/task_scheduler/task_traits.h"
 #include "base/threading/sequenced_task_runner_handle.h"
 #include "base/win/registry.h"
 #include "chrome/browser/conflicts/module_info_util_win.h"
@@ -77,7 +74,8 @@ base::FilePath GetInprocServerDllPath(const wchar_t* guid) {
 
 void EnumerateImesOnBlockingSequence(
     scoped_refptr<base::SequencedTaskRunner> task_runner,
-    OnImeEnumeratedCallback callback) {
+    OnImeEnumeratedCallback on_ime_enumerated,
+    base::OnceClosure on_enumeration_finished) {
   int nb_imes = 0;
   for (base::win::RegistryKeyIterator iter(HKEY_LOCAL_MACHINE, kImeRegistryKey);
        iter.Valid(); ++iter) {
@@ -100,9 +98,11 @@ void EnumerateImesOnBlockingSequence(
 
     nb_imes++;
     task_runner->PostTask(FROM_HERE,
-                          base::BindRepeating(callback, dll_path, size_of_image,
-                                              time_date_stamp));
+                          base::BindRepeating(on_ime_enumerated, dll_path,
+                                              size_of_image, time_date_stamp));
   }
+
+  task_runner->PostTask(FROM_HERE, std::move(on_enumeration_finished));
 
   base::UmaHistogramCounts100("ThirdPartyModules.InputMethodEditorsCount",
                               nb_imes);
@@ -113,12 +113,14 @@ void EnumerateImesOnBlockingSequence(
 const wchar_t kImeRegistryKey[] = L"SOFTWARE\\Microsoft\\CTF\\TIP";
 const wchar_t kClassIdRegistryKeyFormat[] = L"CLSID\\%ls\\InProcServer32";
 
-void EnumerateInputMethodEditors(OnImeEnumeratedCallback callback) {
+void EnumerateInputMethodEditors(OnImeEnumeratedCallback on_ime_enumerated,
+                                 base::OnceClosure on_enumeration_finished) {
   base::PostTaskWithTraits(
       FROM_HERE,
       {base::MayBlock(), base::TaskPriority::BACKGROUND,
        base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
       base::BindOnce(&EnumerateImesOnBlockingSequence,
                      base::SequencedTaskRunnerHandle::Get(),
-                     std::move(callback)));
+                     std::move(on_ime_enumerated),
+                     std::move(on_enumeration_finished)));
 }

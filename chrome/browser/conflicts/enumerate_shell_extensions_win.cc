@@ -23,7 +23,7 @@ namespace {
 
 void ReadShellExtensions(
     HKEY parent,
-    const base::Callback<void(const base::FilePath&)>& callback,
+    const base::RepeatingCallback<void(const base::FilePath&)>& callback,
     int* nb_shell_extensions) {
   for (base::win::RegistryValueIterator iter(parent,
                                              kShellExtensionRegistryKey);
@@ -62,10 +62,13 @@ void OnShellExtensionPathEnumerated(
 
 void EnumerateShellExtensionsOnBlockingSequence(
     scoped_refptr<base::SequencedTaskRunner> task_runner,
-    OnShellExtensionEnumeratedCallback on_shell_extension_enumerated) {
-  EnumerateShellExtensionPaths(base::BindRepeating(
-      &OnShellExtensionPathEnumerated, std::move(task_runner),
-      std::move(on_shell_extension_enumerated)));
+    OnShellExtensionEnumeratedCallback on_shell_extension_enumerated,
+    base::OnceClosure on_enumeration_finished) {
+  EnumerateShellExtensionPaths(
+      base::BindRepeating(&OnShellExtensionPathEnumerated, task_runner,
+                          std::move(on_shell_extension_enumerated)));
+
+  task_runner->PostTask(FROM_HERE, std::move(on_enumeration_finished));
 }
 
 }  // namespace
@@ -75,7 +78,7 @@ const wchar_t kShellExtensionRegistryKey[] =
 const wchar_t kCLSIDRegistryKeyFormat[] = L"CLSID\\%ls\\InProcServer32";
 
 void EnumerateShellExtensionPaths(
-    const base::Callback<void(const base::FilePath&)>& callback) {
+    const base::RepeatingCallback<void(const base::FilePath&)>& callback) {
   base::ThreadRestrictions::AssertIOAllowed();
 
   int nb_shell_extensions = 0;
@@ -87,12 +90,14 @@ void EnumerateShellExtensionPaths(
 }
 
 void EnumerateShellExtensions(
-    OnShellExtensionEnumeratedCallback on_shell_extension_enumerated) {
+    OnShellExtensionEnumeratedCallback on_shell_extension_enumerated,
+    base::OnceClosure on_enumeration_finished) {
   base::PostTaskWithTraits(
       FROM_HERE,
       {base::MayBlock(), base::TaskPriority::BACKGROUND,
        base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
       base::BindOnce(&EnumerateShellExtensionsOnBlockingSequence,
                      base::SequencedTaskRunnerHandle::Get(),
-                     std::move(on_shell_extension_enumerated)));
+                     std::move(on_shell_extension_enumerated),
+                     std::move(on_enumeration_finished)));
 }
