@@ -114,7 +114,6 @@ class FakeWorkerGlobalScope : public WorkerGlobalScope {
       : WorkerGlobalScope(url,
                           user_agent,
                           thread,
-                          MonotonicallyIncreasingTime(),
                           std::move(starter_origin_privilege_data),
                           worker_clients) {}
 

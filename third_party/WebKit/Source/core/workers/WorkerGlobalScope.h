@@ -149,7 +149,6 @@ class CORE_EXPORT WorkerGlobalScope
   WorkerGlobalScope(const KURL&,
                     const String& user_agent,
                     WorkerThread*,
-                    double time_origin,
                     std::unique_ptr<SecurityOrigin::PrivilegeData>,
                     WorkerClients*);
   void SetWorkerSettings(std::unique_ptr<WorkerSettings>);

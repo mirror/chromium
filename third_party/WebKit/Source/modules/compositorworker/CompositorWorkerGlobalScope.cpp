@@ -20,12 +20,11 @@ namespace blink {
 
 CompositorWorkerGlobalScope* CompositorWorkerGlobalScope::Create(
     CompositorWorkerThread* thread,
-    std::unique_ptr<WorkerThreadStartupData> startup_data,
-    double time_origin) {
+    std::unique_ptr<WorkerThreadStartupData> startup_data) {
   // Note: startupData is finalized on return. After the relevant parts has been
   // passed along to the created 'context'.
   CompositorWorkerGlobalScope* context = new CompositorWorkerGlobalScope(
-      startup_data->script_url_, startup_data->user_agent_, thread, time_origin,
+      startup_data->script_url_, startup_data->user_agent_, thread,
       std::move(startup_data->starter_origin_privilege_data_),
       startup_data->worker_clients_);
   context->ApplyContentSecurityPolicyFromVector(
@@ -40,14 +39,12 @@ CompositorWorkerGlobalScope::CompositorWorkerGlobalScope(
     const KURL& url,
     const String& user_agent,
     CompositorWorkerThread* thread,
-    double time_origin,
     std::unique_ptr<SecurityOrigin::PrivilegeData>
         starter_origin_privilege_data,
     WorkerClients* worker_clients)
     : WorkerGlobalScope(url,
                         user_agent,
                         thread,
-                        time_origin,
                         std::move(starter_origin_privilege_data),
                         worker_clients),
       executing_animation_frame_callbacks_(false),

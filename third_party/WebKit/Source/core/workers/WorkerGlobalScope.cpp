@@ -299,7 +299,6 @@ WorkerGlobalScope::WorkerGlobalScope(
     const KURL& url,
     const String& user_agent,
     WorkerThread* thread,
-    double time_origin,
     std::unique_ptr<SecurityOrigin::PrivilegeData>
         starter_origin_privilage_data,
     WorkerClients* worker_clients)
@@ -310,7 +309,7 @@ WorkerGlobalScope::WorkerGlobalScope(
       thread_(thread),
       event_queue_(WorkerEventQueue::Create(this)),
       timers_(TaskRunnerHelper::Get(TaskType::kTimer, this)),
-      time_origin_(time_origin) {
+      time_origin_(MonotonicallyIncreasingTime()) {
   InstanceCounters::IncrementCounter(
       InstanceCounters::kWorkerGlobalScopeCounter);
   SetSecurityOrigin(SecurityOrigin::Create(url));

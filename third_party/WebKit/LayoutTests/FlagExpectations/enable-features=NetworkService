@@ -397,7 +397,7 @@ Bug(none) external/wpt/geolocation-API/getCurrentPosition_permission_allow.https
 Bug(none) external/wpt/geolocation-API/getCurrentPosition_permission_deny.https.html [ Failure Timeout ]
 Bug(none) external/wpt/geolocation-API/watchPosition_permission_deny.https.html [ Failure Timeout ]
 Bug(none) external/wpt/hr-time/test_cross_frame_start.html [ Failure Timeout ]
-Bug(none) external/wpt/hr-time/window-worker-time-origin.html [ Failure Timeout ]
+Bug(none) external/wpt/hr-time/window-worker-time-origin.html [ Timeout ]
 Bug(none) external/wpt/html/browsers/browsing-the-web/navigating-across-documents/012.html [ Failure Timeout ]
 Bug(none) external/wpt/html/browsers/browsing-the-web/read-media/pageload-video.html [ Crash Pass Failure Timeout ]
 Bug(none) external/wpt/html/browsers/browsing-the-web/unloading-documents/005.html [ Crash ]
