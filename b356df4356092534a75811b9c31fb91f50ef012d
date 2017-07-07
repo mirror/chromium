@@ -93,6 +93,30 @@
       "revId": "b356df4356092534a75811b9c31fb91f50ef012d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ade455e5_c3deea12",
+        "filename": "content/browser/cocoa/system_hotkey_helper_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-07T23:59:44Z",
+      "side": 1,
+      "message": "We prefer folks to be opinionated as to how their tasks should run when they have the context.\n\nLeaving the priority and shutdown behavior unspecified is basically another way of saying that we don\u0027t care and are fine with any changes to the API in the future. \n\nThe default behavior is currently SKIP_ON_SHUTDOWN, which means this task will block shutdown if the task execution has already started.",
+      "parentUuid": "ac0c4688_c2e6653b",
+      "range": {
+        "startLine": 37,
+        "startChar": 24,
+        "endLine": 37,
+        "endChar": 32
+      },
+      "revId": "b356df4356092534a75811b9c31fb91f50ef012d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
