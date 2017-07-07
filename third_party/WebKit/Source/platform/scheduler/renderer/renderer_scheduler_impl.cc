@@ -5,7 +5,6 @@
 #include "platform/scheduler/renderer/renderer_scheduler_impl.h"
 
 #include "base/bind.h"
-#include "base/debug/stack_trace.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram.h"
@@ -1748,7 +1747,8 @@ void RendererSchedulerImpl::DidStartProvisionalLoad(bool is_main_frame) {
 void RendererSchedulerImpl::DidCommitProvisionalLoad(
     bool is_web_history_inert_commit,
     bool is_reload,
-    bool is_main_frame) {
+    bool is_main_frame,
+    bool is_same_document) {
   TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("renderer.scheduler"),
                "RendererSchedulerImpl::OnDidCommitProvisionalLoad");
   // Initialize |max_queueing_time_metric| lazily so that
@@ -1764,7 +1764,8 @@ void RendererSchedulerImpl::DidCommitProvisionalLoad(
 
   // If this either isn't a history inert commit or it's a reload then we must
   // reset the task cost estimators.
-  if (is_main_frame && (!is_web_history_inert_commit || is_reload)) {
+  if (is_main_frame && (!is_web_history_inert_commit || is_reload) &&
+      !is_same_document) {
     base::AutoLock lock(any_thread_lock_);
     ResetForNavigationLocked();
   }

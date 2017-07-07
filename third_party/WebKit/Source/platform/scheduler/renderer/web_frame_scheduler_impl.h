@@ -57,7 +57,8 @@ class WebFrameSchedulerImpl : public WebFrameScheduler {
   void DidFailProvisionalLoad() override;
   void DidCommitProvisionalLoad(bool is_web_history_inert_commit,
                                 bool is_reload,
-                                bool is_main_frame) override;
+                                bool is_main_frame,
+                                bool is_same_document) override;
   void DidStartLoading(unsigned long identifier) override;
   void DidStopLoading(unsigned long identifier) override;
   void SetDocumentParsingInBackground(bool background_parser_active) override;
