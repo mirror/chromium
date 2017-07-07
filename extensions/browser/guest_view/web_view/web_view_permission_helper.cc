@@ -50,6 +50,8 @@ static std::string PermissionTypeToString(WebViewPermissionType type) {
       return webview::kPermissionTypeNewWindow;
     case WEB_VIEW_PERMISSION_TYPE_POINTER_LOCK:
       return webview::kPermissionTypePointerLock;
+    case WEB_VIEW_PERMISSION_TYPE_SSL_CERT_ERROR:
+      return webview::kPermissionTypeSslCertError;
     default:
       NOTREACHED();
       return std::string();
@@ -101,6 +103,10 @@ void RecordUserInitiatedUMA(
         base::RecordAction(
             UserMetricsAction("WebView.PermissionAllow.PointerLock"));
         break;
+      case WEB_VIEW_PERMISSION_TYPE_SSL_CERT_ERROR:
+        base::RecordAction(
+            UserMetricsAction("WebView.PermissionAllow.SslCertError"));
+        break;
       default:
         break;
     }
@@ -140,6 +146,10 @@ void RecordUserInitiatedUMA(
       case WEB_VIEW_PERMISSION_TYPE_POINTER_LOCK:
         base::RecordAction(
             UserMetricsAction("WebView.PermissionDeny.PointerLock"));
+        break;
+      case WEB_VIEW_PERMISSION_TYPE_SSL_CERT_ERROR:
+        base::RecordAction(
+            UserMetricsAction("WebView.PermissionDeny.SslCertError"));
         break;
       default:
         break;
@@ -409,6 +419,13 @@ WebViewPermissionHelper::PermissionResponseInfo::PermissionResponseInfo(
     const PermissionResponseInfo& other) = default;
 
 WebViewPermissionHelper::PermissionResponseInfo::~PermissionResponseInfo() {
+}
+
+void WebViewPermissionHelper::SSLCertErrorProceedPermission(
+    const GURL& url,
+    int cert_error,
+    const base::Callback<void(bool)>& callback) {
+  // Create support based on examples above.
 }
 
 }  // namespace extensions

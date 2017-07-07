@@ -685,6 +685,55 @@ class WebViewTestBase : public extensions::PlatformAppBrowserTest {
     return guest_web_contents;
   }
 
+  void SslCertErrorTestHelper(
+      bool allow,
+      net::EmbeddedTestServer::ServerCertificate server_cert_type) {
+    // Start a HTTPS server that will generate SSL cert errors.
+    net::EmbeddedTestServer https_server(net::EmbeddedTestServer::TYPE_HTTPS);
+    https_server.SetSSLConfig(server_cert_type);
+    https_server.ServeFilesFromSourceDirectory("chrome/test/data");
+    ASSERT_TRUE(https_server.Start());
+
+    LoadAndLaunchPlatformApp("web_view/ssl_cert_error", "EmbedderLoaded");
+
+    // Add guest, and setup sslCertError permission handler.
+    content::WebContents* embedder_web_contents =
+        GetFirstAppWindowWebContents();
+    ExtensionTestMessageListener guest_added("GuestAddedToDom", false);
+    EXPECT_TRUE(content::ExecuteScript(embedder_web_contents, "loadGuest()"));
+    ASSERT_TRUE(guest_added.WaitUntilSatisfied());
+
+    ExtensionTestMessageListener guest_navigated("GuestNavigated", false);
+    GURL guest_url = https_server.GetURL(
+        base::StringPrintf("/extensions/platform_apps/web_view/ssl_cert_error/"
+                           "https_page%s.html",
+                           allow ? "_allow" : ""));
+    EXPECT_TRUE(content::ExecuteScript(
+        embedder_web_contents,
+        base::StringPrintf("navigateWebView('%s')", guest_url.spec().c_str())));
+    ASSERT_TRUE(guest_navigated.WaitUntilSatisfied());
+    if (allow) {
+      // We expect the permission handler to allow in this case.
+      ExtensionTestMessageListener permission_granted("SslCertAllowed", false);
+      ASSERT_TRUE(permission_granted.WaitUntilSatisfied());
+
+      // Verify the guest page does in fact load.
+      ExtensionTestMessageListener guest_loaded("GuestLoaded", false);
+      ASSERT_TRUE(guest_loaded.WaitUntilSatisfied());
+    } else {
+      // We expect the permission handler to deny in this case.
+      ExtensionTestMessageListener permission_denied("SslCertDenied", false);
+      ASSERT_TRUE(permission_denied.WaitUntilSatisfied());
+
+      // Next, we expect an interstitial page to be shown.
+      content::WebContents* guest_web_contents =
+          GetGuestViewManager()->WaitForSingleGuestCreated();
+      ASSERT_TRUE(
+          guest_web_contents->GetRenderProcessHost()->IsForGuestsOnly());
+      content::WaitForInterstitialAttach(guest_web_contents);
+    }
+  }
+
   // Helper to load interstitial page in a <webview>.
   void InterstitialTestHelper() {
     // Start a HTTPS server so we can load an interstitial page inside guest.
@@ -1688,6 +1737,27 @@ IN_PROC_BROWSER_TEST_P(WebViewSizeTest, Shim_TestResizeWebviewResizesContent) {
   TestHelper("testResizeWebviewResizesContent",
              "web_view/shim",
              NO_TEST_SERVER);
+}
+
+// Test of permission request handler for ssl cert errors.
+IN_PROC_BROWSER_TEST_P(WebViewTest, SslCertErrorAllow_MismatchedName) {
+  bool allow = true;
+  SslCertErrorTestHelper(allow, net::EmbeddedTestServer::CERT_MISMATCHED_NAME);
+}
+
+IN_PROC_BROWSER_TEST_P(WebViewTest, SslCertErrorDeny_MismatchedName) {
+  bool allow = false;
+  SslCertErrorTestHelper(allow, net::EmbeddedTestServer::CERT_MISMATCHED_NAME);
+}
+
+IN_PROC_BROWSER_TEST_P(WebViewTest, SslCertErrorAllow_Expired) {
+  bool allow = true;
+  SslCertErrorTestHelper(allow, net::EmbeddedTestServer::CERT_EXPIRED);
+}
+
+IN_PROC_BROWSER_TEST_P(WebViewTest, SslCertErrorDeny_Expired) {
+  bool allow = false;
+  SslCertErrorTestHelper(allow, net::EmbeddedTestServer::CERT_EXPIRED);
 }
 
 // Test makes sure that interstitial pages renders in <webview>.

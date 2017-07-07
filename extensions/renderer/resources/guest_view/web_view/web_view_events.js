@@ -162,7 +162,8 @@ WebViewEvents.EVENTS = {
       'permission',
       'requestMethod',
       'url',
-      'userGesture'
+      'userGesture',
+      'sslCertErrorNumber'
     ],
     handler: 'handlePermissionEvent'
   },

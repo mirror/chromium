@@ -35,6 +35,7 @@
 #include "content/public/browser/notification_source.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
+#include "extensions/browser/guest_view/web_view/web_view_guest.h"
 #include "net/base/net_errors.h"
 #include "ui/base/resource/resource_bundle.h"
 
@@ -579,6 +580,9 @@ void SSLErrorHandler::StartHandlingError() {
 
   RecordSuperfishUMA(ssl_info_.cert);
 
+  if (WillHandleGuestCertErrorResponse())
+    return;
+
   if (ssl_errors::ErrorInfo::NetErrorToErrorType(cert_error_) ==
       ssl_errors::ErrorInfo::CERT_DATE_INVALID) {
     HandleCertDateInvalidError();
@@ -762,6 +766,41 @@ void SSLErrorHandler::DeleteSSLErrorHandler() {
   if (!callback_.is_null()) {
     base::ResetAndReturn(&callback_)
         .Run(content::CERTIFICATE_REQUEST_RESULT_TYPE_DENY);
+  }
+  delegate_.reset();
+  // Deletes |this| and also destroys the timer.
+  web_contents_->RemoveUserData(UserDataKey());
+}
+
+bool SSLErrorHandler::WillHandleGuestCertErrorResponse() {
+  // Start a timer request in case the embedder is too slow responding.
+  timer_.Start(FROM_HERE, g_config.Pointer()->interstitial_delay(),
+               base::Bind(&SSLErrorHandler::HandleGuestCertErrorResponse,
+                          base::Unretained(this), false, ""));
+
+  if (extensions::WebViewGuest* web_view_guest =
+          extensions::WebViewGuest::FromWebContents(web_contents_)) {
+    web_view_guest->SSLCertErrorProceedPermission(
+        cert_error_, request_url_,
+        base::Bind(&SSLErrorHandler::HandleGuestCertErrorResponse,
+                   weak_ptr_factory_.GetWeakPtr()));
+    return true;
+  }
+  return false;
+}
+
+void SSLErrorHandler::HandleGuestCertErrorResponse(
+    bool allow,
+    const std::string& user_response) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  if (!allow) {
+    ShowSSLInterstitial();
+    return;
+  }
+
+  if (!callback_.is_null()) {
+    base::ResetAndReturn(&callback_)
+        .Run(content::CERTIFICATE_REQUEST_RESULT_TYPE_CONTINUE);
   }
   delegate_.reset();
   // Deletes |this| and also destroys the timer.

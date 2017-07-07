@@ -1506,6 +1506,20 @@ void WebViewGuest::OnWebViewNewWindowResponse(
     guest->Destroy(true);
 }
 
+void WebViewGuest::SSLCertErrorProceedPermission(
+    int cert_error,
+    const GURL& url,
+    const base::Callback<void(bool, const std::string&)>& callback) {
+  base::DictionaryValue request_info;
+  request_info.SetInteger(webview::kSslCertErrorNumber, cert_error);
+  request_info.SetString(guest_view::kUrl, url.spec());
+
+  web_view_permission_helper_->RequestPermission(
+      WEB_VIEW_PERMISSION_TYPE_SSL_CERT_ERROR, request_info,
+      callback,  // Have embedder reply directly to error handler.
+      false /* allowed_by_default */);
+}
+
 void WebViewGuest::OnFullscreenPermissionDecided(
     bool allowed,
     const std::string& user_input) {

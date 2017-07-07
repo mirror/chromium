@@ -17,7 +17,8 @@ var PERMISSION_TYPES = ['media',
                         'download',
                         'loadplugin',
                         'filesystem',
-                        'fullscreen'];
+                        'fullscreen',
+                        'sslCertError'];
 
 // -----------------------------------------------------------------------------
 // WebViewActionRequest object.

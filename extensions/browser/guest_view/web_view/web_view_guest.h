@@ -146,6 +146,11 @@ class WebViewGuest : public guest_view::GuestView<WebViewGuest>,
 
   ScriptExecutor* script_executor() { return script_executor_.get(); }
 
+  void SSLCertErrorProceedPermission(
+      int cert_error,
+      const GURL& url,
+      const base::Callback<void(bool, const std::string&)>& callback);
+
  private:
   friend class WebViewPermissionHelper;
 

@@ -181,6 +181,9 @@ class SSLErrorHandler : public content::WebContentsUserData<SSLErrorHandler>,
 
   void HandleCertDateInvalidError();
   void HandleCertDateInvalidErrorImpl(base::TimeTicks started_handling_error);
+  bool WillHandleGuestCertErrorResponse();
+  void HandleGuestCertErrorResponse(bool allow,
+                                    const std::string& user_response);
 
   std::unique_ptr<Delegate> delegate_;
   content::WebContents* const web_contents_;

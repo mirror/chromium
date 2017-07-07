@@ -1,0 +1,13 @@
+{
+  "name": "<webview> ssl cert error permission handler test.",
+  "description": "Verify permissionrequest for ssl cert errors works.",
+  "version": "1",
+  "permissions": [
+    "webview"
+  ],
+  "app": {
+    "background": {
+      "scripts": ["test.js"]
+    }
+  }
+}

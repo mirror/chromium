@@ -70,6 +70,15 @@ class WebViewPermissionHelper
                                     bool last_unlocked_by_target,
                                     const base::Callback<void(bool)>& callback);
 
+  // Allows embedder to indicate what to do on receiving an SSL cert error.
+  // Valid options are 'deny', in which case the SSL interstitial is shown
+  // as usual (default case), or 'allow', in which case the navigation proceeds
+  // to the site.
+  void SSLCertErrorProceedPermission(
+      const GURL& url,
+      int cert_error,
+      const base::Callback<void(bool)>& callback);
+
   // Requests Geolocation Permission from the embedder.
   void RequestGeolocationPermission(int bridge_id,
                                     const GURL& requesting_frame,

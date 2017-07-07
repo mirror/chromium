@@ -17466,6 +17466,14 @@ should be able to be added at any place in this file.
   </description>
 </action>
 
+<action name="WebView.PermissionAllow.SslCertError">
+  <owner>wjmaclean@chromium.org</owner>
+  <description>
+    Tracks when the ssl cert error permission is explicitly allowed on a
+    webview.
+  </description>
+</action>
+
 <action name="WebView.PermissionDeny.Download">
   <owner>fsamuel@chromium.org</owner>
   <owner>lazyboy@chromium.org</owner>
@@ -17519,6 +17527,13 @@ should be able to be added at any place in this file.
   <owner>lazyboy@chromium.org</owner>
   <description>
     Tracks when the pointerLock permission is explicitly denied on a webview.
+  </description>
+</action>
+
+<action name="WebView.PermissionDeny.SslCertError">
+  <owner>wjmaclean@chromium.org</owner>
+  <description>
+    Tracks when the ssl cert error permission is explicitly denied on a webview.
   </description>
 </action>
 
