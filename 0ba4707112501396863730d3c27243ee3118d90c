@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3dff5088_64023fd7",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1129,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-07-07T09:54:24Z",
+      "side": 1,
+      "message": "Nit: This sentence is confusing. :) How about something like \"ignoring clamp detection if scroll state is not being restored, if load is complete, or if the navigation is same-document (as the new page may be smaller than the previous page)\"? Is that accurate?",
+      "revId": "0ba4707112501396863730d3c27243ee3118d90c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9699df78_fea880c2",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1135,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-07-07T09:54:24Z",
+      "side": 1,
+      "message": "Tiny nit: instead of \", but maybe ...\", try something like \", but layout might be necessary to ensure correct content size.\"",
+      "revId": "0ba4707112501396863730d3c27243ee3118d90c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
