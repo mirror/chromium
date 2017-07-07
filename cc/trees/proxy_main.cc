@@ -217,7 +217,8 @@ void ProxyMain::BeginMainFrame(
 
   current_pipeline_stage_ = UPDATE_LAYERS_PIPELINE_STAGE;
   bool should_update_layers =
-      final_pipeline_stage_ >= UPDATE_LAYERS_PIPELINE_STAGE;
+      final_pipeline_stage_ >= UPDATE_LAYERS_PIPELINE_STAGE ||
+      !can_cancel_this_commit;
   bool updated = should_update_layers && layer_tree_host_->UpdateLayers();
 
   layer_tree_host_->WillCommit();
