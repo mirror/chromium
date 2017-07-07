@@ -19,6 +19,58 @@
     },
     {
       "key": {
+        "uuid": "81cd20a8_f0cb4524",
+        "filename": "content/browser/devtools/render_frame_devtools_agent_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-07-07T18:30:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd32b12c_8e0873f6",
+      "revId": "d4247803e65b68bc059cf878577a4f2937dbda62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa4959a_74b26e62",
+        "filename": "third_party/WebKit/Source/core/inspector/DevToolsEmulator.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-07-07T18:30:47Z",
+      "side": 1,
+      "message": "while we are here, wanted to make sure you know that this is dead code.",
+      "revId": "d4247803e65b68bc059cf878577a4f2937dbda62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1eac059a_6fac0f83",
+        "filename": "third_party/WebKit/Source/core/inspector/DevToolsEmulator.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-07-07T18:30:47Z",
+      "side": 1,
+      "message": "... and this code does not run in responsive mode.",
+      "revId": "d4247803e65b68bc059cf878577a4f2937dbda62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2895065b_ddc3a9b6",
         "filename": "third_party/WebKit/Source/devtools/front_end/emulation/DeviceModeModel.js",
         "patchSetId": 3
@@ -36,6 +88,24 @@
     },
     {
       "key": {
+        "uuid": "5a592071_5d10c7d7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/emulation/DeviceModeModel.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-07-07T18:30:47Z",
+      "side": 1,
+      "message": "Everything works fine because we are emulating fullScreen here. I decided to make \"fullScreen\" a fancy mode that the caller would need to configure for via emulation.",
+      "parentUuid": "2895065b_ddc3a9b6",
+      "revId": "d4247803e65b68bc059cf878577a4f2937dbda62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "520a2cb6_4f8f5588",
         "filename": "third_party/WebKit/Source/devtools/front_end/emulation/DeviceModeView.js",
         "patchSetId": 3
@@ -47,6 +117,24 @@
       "writtenOn": "2017-07-07T04:38:21Z",
       "side": 1,
       "message": "Here you rely on fullSize screenshot being same width as device (basically, meta viewport\u003ddevice-width). This may be wrong for many websites.",
+      "revId": "d4247803e65b68bc059cf878577a4f2937dbda62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8b227e0_d6d35c3a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/emulation/DeviceModeView.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-07-07T18:30:47Z",
+      "side": 1,
+      "message": "Could you elaborate? All I\u0027m doing here is making sure that canvas gets scale and size based on the image arrived. Fullscreen has no frame, so the canvas would match the screenshot, no?",
+      "parentUuid": "520a2cb6_4f8f5588",
       "revId": "d4247803e65b68bc059cf878577a4f2937dbda62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
