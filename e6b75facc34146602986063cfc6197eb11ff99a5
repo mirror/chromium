@@ -1,0 +1,289 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32bd6297_a10125e0",
+        "filename": "ipc/ipc_mojo_perftest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-07T23:45:00Z",
+      "side": 1,
+      "message": "This std::move is not needed, right? |value| is a const\u0026, you cannot move its content anyway.",
+      "revId": "e6b75facc34146602986063cfc6197eb11ff99a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2336ebe5_8ba7accf",
+        "filename": "mojo/public/cpp/bindings/connector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-07T23:45:00Z",
+      "side": 1,
+      "message": "Please consider having \"ForTesting\" in the name.",
+      "range": {
+        "startLine": 77,
+        "startChar": 4,
+        "endLine": 77,
+        "endChar": 28
+      },
+      "revId": "e6b75facc34146602986063cfc6197eb11ff99a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ddfb273_5edde85b",
+        "filename": "mojo/public/cpp/bindings/connector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-07T23:45:00Z",
+      "side": 1,
+      "message": "Please consider having \"ForTesting\" in the name.",
+      "range": {
+        "startLine": 195,
+        "startChar": 14,
+        "endLine": 195,
+        "endChar": 50
+      },
+      "revId": "e6b75facc34146602986063cfc6197eb11ff99a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9876697_7151768c",
+        "filename": "mojo/public/cpp/bindings/lib/interface_endpoint_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-07T23:45:00Z",
+      "side": 1,
+      "message": "nit: you could use handle_.group_controller() instead.",
+      "revId": "e6b75facc34146602986063cfc6197eb11ff99a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e746a19_6c18550f",
+        "filename": "mojo/public/cpp/bindings/lib/message.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-07T23:45:00Z",
+      "side": 1,
+      "message": "Maybe I haven\u0027t understood, but it seems a little weird to let |context| calculate the payload size and then use ComputeTotalSize() to calculate the total size, and then set it back into |context|.\n\nI feel that this should happen all inside GetSerializeSize() of |context|.\n\nWDYT?",
+      "range": {
+        "startLine": 182,
+        "startChar": 11,
+        "endLine": 182,
+        "endChar": 28
+      },
+      "revId": "e6b75facc34146602986063cfc6197eb11ff99a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "779dde34_d6ef48db",
+        "filename": "mojo/public/cpp/bindings/lib/message.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-07T23:45:00Z",
+      "side": 1,
+      "message": "I think we need to set more fields than CreateSerializedMessageObject() because this function could be called after interface_id/request_id are set while the other is not, right?\n\nPlease consider making this more obvious by adding comment, or trying to unify the different code paths.",
+      "revId": "e6b75facc34146602986063cfc6197eb11ff99a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c190b02_723a949d",
+        "filename": "mojo/public/cpp/bindings/lib/message.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-07T23:45:00Z",
+      "side": 1,
+      "message": "Please comment on why this is set to V1.",
+      "revId": "e6b75facc34146602986063cfc6197eb11ff99a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "872871a8_edc51d62",
+        "filename": "mojo/public/cpp/bindings/lib/message_internal.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-07T23:45:00Z",
+      "side": 1,
+      "message": "Nit: it seems the function could be named IsUnserializedOrControlMessage.",
+      "revId": "e6b75facc34146602986063cfc6197eb11ff99a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4b5913d_46eb39db",
+        "filename": "mojo/public/cpp/bindings/lib/unserialized_message_context.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-07T23:45:00Z",
+      "side": 1,
+      "message": "Should this be 1?",
+      "revId": "e6b75facc34146602986063cfc6197eb11ff99a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3828bda6_aedca5d2",
+        "filename": "mojo/public/cpp/bindings/lib/unserialized_message_context.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-07T23:45:00Z",
+      "side": 1,
+      "message": "nit: If we want this to be a \"Safe\"Cast, maybe we should use CHECK?",
+      "revId": "e6b75facc34146602986063cfc6197eb11ff99a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "982dffb0_a33bf3eb",
+        "filename": "mojo/public/cpp/bindings/lib/unserialized_message_context.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-07T23:45:00Z",
+      "side": 1,
+      "message": "Please comment on what this is used for.",
+      "revId": "e6b75facc34146602986063cfc6197eb11ff99a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aaeefd6_0e3683ff",
+        "filename": "mojo/public/cpp/system/handle_signal_tracker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-07T23:45:00Z",
+      "side": 1,
+      "message": "I am confused: I thought MANUAL means the wather needs to be Arm()ed, but I don\u0027t see any Arm() calls in this class.",
+      "range": {
+        "startLine": 14,
+        "startChar": 58,
+        "endLine": 14,
+        "endChar": 59
+      },
+      "revId": "e6b75facc34146602986063cfc6197eb11ff99a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93f5ec7b_0b2358b0",
+        "filename": "mojo/public/cpp/system/handle_signal_tracker.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-07T23:45:00Z",
+      "side": 1,
+      "message": "Why it may only be armed when |low_wather_| is not? (I assume \"armed\" means calling Arm() on the object)",
+      "revId": "e6b75facc34146602986063cfc6197eb11ff99a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ed8fe0d_a8b82061",
+        "filename": "mojo/public/tools/bindings/generators/cpp_templates/interface_definition.tmpl",
+        "patchSetId": 2
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-07T23:45:00Z",
+      "side": 1,
+      "message": "response_message_typename ?",
+      "range": {
+        "startLine": 262,
+        "startChar": 8,
+        "endLine": 262,
+        "endChar": 59
+      },
+      "revId": "e6b75facc34146602986063cfc6197eb11ff99a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75c3294c_2fa8ab35",
+        "filename": "mojo/public/tools/bindings/pylib/mojom/generate/module.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 916,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-07T23:45:00Z",
+      "side": 1,
+      "message": "nit: now that this is generalized, whether we need to look at key_kind really depends on |predicate|.",
+      "revId": "e6b75facc34146602986063cfc6197eb11ff99a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
