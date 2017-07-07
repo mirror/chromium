@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4d3737d7_41c1524f",
+        "filename": "components/exo/sub_surface.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-07-07T19:58:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ed835cb_dd1c3710",
+      "revId": "87289dc026cc85b3131e83e19dc1c79a6ea446bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77ab7e51_4eb27d2a",
         "filename": "components/exo/surface.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-06T20:22:35Z",
       "side": 1,
       "message": "instead of if/else here, can you handle the sub_surfaces_reordered_ specific stuff first in if-only statement and then do the common code below? think that would make it a bit easier to read.",
+      "revId": "87289dc026cc85b3131e83e19dc1c79a6ea446bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d4c42d55_29bb6e54",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-07-07T19:58:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77ab7e51_4eb27d2a",
       "revId": "87289dc026cc85b3131e83e19dc1c79a6ea446bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d7605038_0f0c8d2e",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 712,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-07-07T19:58:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a95cdbf0_ef461171",
+      "revId": "87289dc026cc85b3131e83e19dc1c79a6ea446bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36a9b8b5_ccad9de0",
         "filename": "components/exo/surface.h",
         "patchSetId": 6
@@ -64,6 +118,24 @@
       "writtenOn": "2017-07-06T20:22:35Z",
       "side": 1,
       "message": "s/commit_if_necessary/needs_commit/ as I think needs_commit is already used for this",
+      "revId": "87289dc026cc85b3131e83e19dc1c79a6ea446bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "55ad0254_08a5857f",
+        "filename": "components/exo/surface.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-07-07T19:58:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36a9b8b5_ccad9de0",
       "revId": "87289dc026cc85b3131e83e19dc1c79a6ea446bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "d9fc94c1_9eb8f5fd",
+        "filename": "components/exo/surface.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-07-07T19:58:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2cdf64b_28aa9a49",
+      "revId": "87289dc026cc85b3131e83e19dc1c79a6ea446bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a33c53ee_5bdc30d6",
         "filename": "components/exo/surface.h",
         "patchSetId": 6
@@ -98,6 +188,24 @@
       "writtenOn": "2017-07-06T20:22:35Z",
       "side": 1,
       "message": "Composite is a somewhat overloaded word. How about using a more explicit name here? AppendContentsToFrame?",
+      "revId": "87289dc026cc85b3131e83e19dc1c79a6ea446bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a1b6e4b_4406e41c",
+        "filename": "components/exo/surface.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-07-07T19:58:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a33c53ee_5bdc30d6",
       "revId": "87289dc026cc85b3131e83e19dc1c79a6ea446bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "cda85fb2_8ec954a0",
+        "filename": "components/exo/surface.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-07-07T19:58:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93be2891_fa244a34",
+      "revId": "87289dc026cc85b3131e83e19dc1c79a6ea446bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f96bb29_b79a0d10",
         "filename": "components/exo/surface.h",
         "patchSetId": 6
@@ -132,6 +258,24 @@
       "writtenOn": "2017-07-06T20:22:35Z",
       "side": 1,
       "message": "this is also used for position changes, which I would not refer to as reordering. how about sub_surfaces_changed_?",
+      "revId": "87289dc026cc85b3131e83e19dc1c79a6ea446bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "888ca0b9_4be563f6",
+        "filename": "components/exo/surface.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-07-07T19:58:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f96bb29_b79a0d10",
       "revId": "87289dc026cc85b3131e83e19dc1c79a6ea446bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "bc6edd64_a047bc7c",
+        "filename": "components/exo/surface_tree_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-07-07T19:58:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9843ea85_b398b858",
+      "revId": "87289dc026cc85b3131e83e19dc1c79a6ea446bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c42baf69_3a22e259",
         "filename": "components/exo/surface_tree_host.h",
         "patchSetId": 6
@@ -166,6 +328,24 @@
       "writtenOn": "2017-07-06T20:22:35Z",
       "side": 1,
       "message": "s/commit_if_necessary/needs_commit/ as I think we already use that name elsewhere",
+      "revId": "87289dc026cc85b3131e83e19dc1c79a6ea446bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "be430b70_77d89349",
+        "filename": "components/exo/surface_tree_host.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-07-07T19:58:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c42baf69_3a22e259",
       "revId": "87289dc026cc85b3131e83e19dc1c79a6ea446bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
