@@ -93,7 +93,8 @@ content::WebContents* GetWebContentsFromJavaTab(
 
 void SavePageIfNotNavigatedAway(const GURL& url,
                                 const GURL& original_url,
-                                const ScopedJavaGlobalRef<jobject>& j_tab_ref) {
+                                const ScopedJavaGlobalRef<jobject>& j_tab_ref,
+                                const std::string& origin) {
   content::WebContents* web_contents = GetWebContentsFromJavaTab(j_tab_ref);
   if (!web_contents)
     return;
@@ -125,6 +126,7 @@ void SavePageIfNotNavigatedAway(const GURL& url,
       params.availability =
           RequestCoordinator::RequestAvailability::DISABLED_FOR_OFFLINER;
       params.original_url = original_url;
+      params.request_origin = origin;
       request_id = request_coordinator->SavePageLater(params);
     } else {
       DVLOG(1) << "SavePageIfNotNavigatedAway has no valid coordinator.";
@@ -158,9 +160,10 @@ void SavePageIfNotNavigatedAway(const GURL& url,
 void DuplicateCheckDone(const GURL& url,
                         const GURL& original_url,
                         const ScopedJavaGlobalRef<jobject>& j_tab_ref,
+                        const std::string& origin,
                         OfflinePageUtils::DuplicateCheckResult result) {
   if (result == OfflinePageUtils::DuplicateCheckResult::NOT_FOUND) {
-    SavePageIfNotNavigatedAway(url, original_url, j_tab_ref);
+    SavePageIfNotNavigatedAway(url, original_url, j_tab_ref, origin);
     return;
   }
 
@@ -171,7 +174,8 @@ void DuplicateCheckDone(const GURL& url,
   bool duplicate_request_exists =
       result == OfflinePageUtils::DuplicateCheckResult::DUPLICATE_REQUEST_FOUND;
   OfflinePageInfoBarDelegate::Create(
-      base::Bind(&SavePageIfNotNavigatedAway, url, original_url, j_tab_ref),
+      base::Bind(&SavePageIfNotNavigatedAway, url, original_url, j_tab_ref,
+                 origin),
       url, duplicate_request_exists, web_contents);
 }
 
@@ -331,7 +335,8 @@ jlong OfflinePageDownloadBridge::GetOfflineIdByGuid(
 void OfflinePageDownloadBridge::StartDownload(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj,
-    const JavaParamRef<jobject>& j_tab) {
+    const JavaParamRef<jobject>& j_tab,
+    const JavaParamRef<jstring>& j_origin) {
   TabAndroid* tab = TabAndroid::GetNativeTab(env, j_tab);
   if (!tab)
     return;
@@ -343,6 +348,7 @@ void OfflinePageDownloadBridge::StartDownload(
   GURL url = web_contents->GetLastCommittedURL();
   if (url.is_empty())
     return;
+  std::string origin = ConvertJavaStringToUTF8(env, j_origin);
 
   GURL original_url =
       offline_pages::OfflinePageUtils::GetOriginalURLFromWebContents(
@@ -376,7 +382,7 @@ void OfflinePageDownloadBridge::StartDownload(
 
   OfflinePageUtils::CheckDuplicateDownloads(
       tab->GetProfile()->GetOriginalProfile(), url,
-      base::Bind(&DuplicateCheckDone, url, original_url, j_tab_ref));
+      base::Bind(&DuplicateCheckDone, url, original_url, j_tab_ref, origin));
 }
 
 void OfflinePageDownloadBridge::CancelDownload(

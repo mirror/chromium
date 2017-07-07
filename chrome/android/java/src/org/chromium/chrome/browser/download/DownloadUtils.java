@@ -35,6 +35,7 @@ import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.ChromeTabbedActivity;
 import org.chromium.chrome.browser.IntentHandler;
 import org.chromium.chrome.browser.UrlConstants;
+import org.chromium.chrome.browser.customtabs.CustomTabActivity;
 import org.chromium.chrome.browser.customtabs.CustomTabIntentDataProvider;
 import org.chromium.chrome.browser.document.ChromeLauncherActivity;
 import org.chromium.chrome.browser.download.ui.BackendProvider;
@@ -230,17 +231,22 @@ public class DownloadUtils {
      * @param context Context to pull resources from.
      */
     public static void downloadOfflinePage(Context context, Tab tab) {
+        String origin = "";
+        if (context instanceof CustomTabActivity) {
+            CustomTabActivity cct = (CustomTabActivity) context;
+            origin = createOriginString(cct);
+        }
         if (tab.isShowingErrorPage()) {
             // The download needs to be scheduled to happen at later time due to current network
             // error.
             final OfflinePageBridge bridge = OfflinePageBridge.getForProfile(tab.getProfile());
             bridge.scheduleDownload(tab.getWebContents(), OfflinePageBridge.ASYNC_NAMESPACE,
-                    tab.getUrl(), DownloadUiActionFlags.PROMPT_DUPLICATE);
+                    tab.getUrl(), DownloadUiActionFlags.PROMPT_DUPLICATE, origin);
         } else {
             // Otherwise, the download can be started immediately.
             final OfflinePageDownloadBridge bridge =
                     new OfflinePageDownloadBridge(tab.getProfile());
-            bridge.startDownload(tab);
+            bridge.startDownload(tab, origin);
             bridge.destroy();
             DownloadUtils.recordDownloadPageMetrics(tab);
         }
@@ -249,6 +255,17 @@ public class DownloadUtils {
                 FeatureEngagementTrackerFactory.getFeatureEngagementTrackerForProfile(
                         tab.getProfile());
         tracker.notifyEvent(EventConstants.DOWNLOAD_PAGE_STARTED);
+    }
+
+    /**
+     * Create a json-like string using the package name and signature hash of an app.
+     */
+    public static String createOriginString(CustomTabActivity cct) {
+        String packageName = cct.getClientPackageName();
+        if (TextUtils.isEmpty(packageName)) {
+            return "";
+        }
+        return "[" + packageName + "," + cct.getClientSignatureHash() + "]";
     }
 
     /**

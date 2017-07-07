@@ -750,6 +750,11 @@ public class CustomTabsConnection {
         return mClientManager.getClientPackageNameForSession(session);
     }
 
+    /** See {@link ClientManager#getClientSignatureHashForSession(CustomTabsSessionToken)} */
+    public int getClientSignatureHashForSession(CustomTabsSessionToken session) {
+        return mClientManager.getClientSignatureHashForSession(session);
+    }
+
     @VisibleForTesting
     void setIgnoreUrlFragmentsForSession(CustomTabsSessionToken session, boolean value) {
         mClientManager.setIgnoreFragmentsForSession(session, value);
