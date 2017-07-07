@@ -148,7 +148,7 @@ struct WebPreferences;
 // the observer interfaces.)
 class CONTENT_EXPORT ContentBrowserClient {
  public:
-  virtual ~ContentBrowserClient() {}
+  virtual ~ContentBrowserClient();
 
   // Allows the embedder to set any number of custom BrowserMainParts
   // implementations for the browser startup code. See comments in

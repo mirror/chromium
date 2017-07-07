@@ -10,6 +10,7 @@
 #include "base/guid.h"
 #include "base/logging.h"
 #include "build/build_config.h"
+#include "content/common/content_client_shutdown_helper.h"
 #include "content/public/browser/client_certificate_delegate.h"
 #include "content/public/browser/memory_coordinator_delegate.h"
 #include "content/public/browser/navigation_ui_data.h"
@@ -25,6 +26,10 @@
 #include "url/gurl.h"
 
 namespace content {
+
+ContentBrowserClient::~ContentBrowserClient() {
+  ContentClientShutdownHelper::ContentClientPartDeleted(this);
+}
 
 BrowserMainParts* ContentBrowserClient::CreateBrowserMainParts(
     const MainFunctionParams& parameters) {

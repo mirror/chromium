@@ -4,7 +4,13 @@
 
 #include "content/public/gpu/content_gpu_client.h"
 
+#include "content/common/content_client_shutdown_helper.h"
+
 namespace content {
+
+ContentGpuClient::~ContentGpuClient() {
+  ContentClientShutdownHelper::ContentClientPartDeleted(this);
+}
 
 gpu::SyncPointManager* ContentGpuClient::GetSyncPointManager() {
   return nullptr;

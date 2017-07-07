@@ -199,6 +199,7 @@ class CONTENT_EXPORT ContentClient {
 
  private:
   friend class ContentClientInitializer;  // To set these pointers.
+  friend class ContentClientShutdownHelper;
   friend class InternalTestInitializer;
 
   // The embedder API for participating in browser logic.

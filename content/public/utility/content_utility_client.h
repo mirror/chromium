@@ -24,7 +24,7 @@ class CONTENT_EXPORT ContentUtilityClient {
  public:
   using StaticServiceMap = std::map<std::string, ServiceInfo>;
 
-  virtual ~ContentUtilityClient() {}
+  virtual ~ContentUtilityClient();
 
   // Notifies us that the UtilityThread has been created.
   virtual void UtilityThreadStarted() {}

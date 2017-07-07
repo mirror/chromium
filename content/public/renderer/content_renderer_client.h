@@ -71,7 +71,7 @@ class URLLoaderThrottle;
 // Embedder API for participating in renderer logic.
 class CONTENT_EXPORT ContentRendererClient {
  public:
-  virtual ~ContentRendererClient() {}
+  virtual ~ContentRendererClient();
 
   // Notifies us that the RenderThread has been created.
   virtual void RenderThreadStarted() {}

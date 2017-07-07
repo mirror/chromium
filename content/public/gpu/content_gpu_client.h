@@ -19,7 +19,7 @@ namespace content {
 // Embedder API for participating in gpu logic.
 class CONTENT_EXPORT ContentGpuClient {
  public:
-  virtual ~ContentGpuClient() {}
+  virtual ~ContentGpuClient();
 
   // Initializes the client. This sets up the field trial synchronization
   // mechanism, which will notify |observer| when a field trial is activated,

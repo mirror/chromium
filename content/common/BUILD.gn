@@ -77,6 +77,8 @@ source_set("common") {
     "clipboard_format.h",
     "clipboard_messages.h",
     "common_sandbox_support_linux.cc",
+    "content_client_shutdown_helper.cc",
+    "content_client_shutdown_helper.h",
     "content_constants_internal.cc",
     "content_constants_internal.h",
     "content_export.h",

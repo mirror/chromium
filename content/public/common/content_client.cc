@@ -71,6 +71,8 @@ ContentClient::ContentClient()
       utility_(NULL) {}
 
 ContentClient::~ContentClient() {
+  if (g_client == this)
+    g_client = nullptr;
 }
 
 bool ContentClient::CanSendWhileSwappedOut(const IPC::Message* message) {
