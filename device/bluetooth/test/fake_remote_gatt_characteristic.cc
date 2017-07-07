@@ -74,6 +74,18 @@ void FakeRemoteGattCharacteristic::SetNextWriteResponse(uint16_t gatt_code) {
   next_write_response_.emplace(gatt_code);
 }
 
+void FakeRemoteGattCharacteristic::SetNextSubscribeToNotificationsResponse(
+    uint16_t gatt_code) {
+  DCHECK(!next_subscribe_response_);
+  next_subscribe_response_ = gatt_code;
+}
+
+void FakeRemoteGattCharacteristic::SetNextUnsubscribeFromNotificationsResponse(
+    uint16_t gatt_code) {
+  DCHECK(!next_unsubscribe_response_);
+  next_unsubscribe_response_ = gatt_code;
+}
+
 std::string FakeRemoteGattCharacteristic::GetIdentifier() const {
   return characteristic_id_;
 }
@@ -154,14 +166,22 @@ void FakeRemoteGattCharacteristic::SubscribeToNotifications(
     device::BluetoothRemoteGattDescriptor* ccc_descriptor,
     const base::Closure& callback,
     const ErrorCallback& error_callback) {
-  NOTREACHED();
+  base::ThreadTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE,
+      base::Bind(&FakeRemoteGattCharacteristic::
+                     DispatchSubscribeToNotificationsResponse,
+                 weak_ptr_factory_.GetWeakPtr(), callback, error_callback));
 }
 
 void FakeRemoteGattCharacteristic::UnsubscribeFromNotifications(
     device::BluetoothRemoteGattDescriptor* ccc_descriptor,
     const base::Closure& callback,
     const ErrorCallback& error_callback) {
-  NOTREACHED();
+  base::ThreadTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE,
+      base::Bind(&FakeRemoteGattCharacteristic::
+                     DispatchUnsubscribeFromNotificationsResponse,
+                 weak_ptr_factory_.GetWeakPtr(), callback, error_callback));
 }
 
 void FakeRemoteGattCharacteristic::DispatchReadResponse(
@@ -194,6 +214,38 @@ void FakeRemoteGattCharacteristic::DispatchWriteResponse(
 
   if (gatt_code == mojom::kGATTSuccess) {
     last_written_value_ = value;
+    callback.Run();
+    return;
+  } else if (gatt_code == mojom::kGATTInvalidHandle) {
+    error_callback.Run(device::BluetoothGattService::GATT_ERROR_FAILED);
+    return;
+  }
+}
+
+void FakeRemoteGattCharacteristic::DispatchSubscribeToNotificationsResponse(
+    const base::Closure& callback,
+    const ErrorCallback& error_callback) {
+  DCHECK(next_subscribe_response_);
+  uint16_t gatt_code = next_subscribe_response_.value();
+  next_subscribe_response_.reset();
+
+  if (gatt_code == mojom::kGATTSuccess) {
+    callback.Run();
+    return;
+  } else if (gatt_code == mojom::kGATTInvalidHandle) {
+    error_callback.Run(device::BluetoothGattService::GATT_ERROR_FAILED);
+    return;
+  }
+}
+
+void FakeRemoteGattCharacteristic::DispatchUnsubscribeFromNotificationsResponse(
+    const base::Closure& callback,
+    const ErrorCallback& error_callback) {
+  DCHECK(next_unsubscribe_response_);
+  uint16_t gatt_code = next_unsubscribe_response_.value();
+  next_unsubscribe_response_.reset();
+
+  if (gatt_code == mojom::kGATTSuccess) {
     callback.Run();
     return;
   } else if (gatt_code == mojom::kGATTInvalidHandle) {
