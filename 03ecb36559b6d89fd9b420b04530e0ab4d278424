@@ -16,6 +16,24 @@
       "revId": "03ecb36559b6d89fd9b420b04530e0ab4d278424",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5705214_b84436eb",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/DatabaseModel.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-07-07T23:42:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ab7216a_52a8c2a2",
+      "revId": "03ecb36559b6d89fd9b420b04530e0ab4d278424",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
