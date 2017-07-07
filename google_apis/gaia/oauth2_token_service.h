@@ -186,6 +186,9 @@ class OAuth2TokenService {
   // |StartRequest| will result in a Consumer::OnGetTokenFailure callback.
   bool RefreshTokenIsAvailable(const std::string& account_id) const;
 
+  // Returns true if all refresh tokens have been loaded.
+  bool RefreshTokensAreLoaded() const;
+
   // This method cancels all token requests, revoke all refresh tokens and
   // cached access tokens.
   void RevokeAllCredentials();

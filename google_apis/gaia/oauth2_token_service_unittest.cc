@@ -669,3 +669,10 @@ TEST_F(OAuth2TokenServiceTest, UpdateClearsCache) {
   EXPECT_EQ("another token", consumer_.last_token_);
   EXPECT_EQ(1, (int)oauth2_service_->token_cache_.size());
 }
+
+TEST_F(OAuth2TokenServiceTest, LoadCredentials) {
+  EXPECT_FALSE(oauth2_service_->RefreshTokensAreLoaded());
+  oauth2_service_->GetFakeOAuth2TokenServiceDelegate()->LoadCredentials(
+      "dummy");
+  EXPECT_TRUE(oauth2_service_->RefreshTokensAreLoaded());
+}
