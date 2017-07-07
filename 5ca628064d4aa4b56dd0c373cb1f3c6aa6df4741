@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2d519cdc_8b48447a",
+        "filename": "chrome/browser/password_manager/native_backend_kwallet_x.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-07T12:48:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c922dbe3_11bc4b68",
+      "revId": "5ca628064d4aa4b56dd0c373cb1f3c6aa6df4741",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "550a4e88_2931e8b0",
         "filename": "chrome/browser/password_manager/native_backend_kwallet_x.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "215300e0_853865c9",
+        "filename": "chrome/browser/password_manager/native_backend_kwallet_x.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-07T12:48:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "550a4e88_2931e8b0",
+      "revId": "5ca628064d4aa4b56dd0c373cb1f3c6aa6df4741",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b3f64ec_971c928a",
         "filename": "chrome/browser/password_manager/password_store_x.cc",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-07T08:23:26Z",
       "side": 1,
       "message": "why don\u0027t you need to cache the result for repeated invocations?",
+      "revId": "5ca628064d4aa4b56dd0c373cb1f3c6aa6df4741",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9ed76e2_2695d39e",
+        "filename": "chrome/browser/password_manager/password_store_x.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-07T12:48:56Z",
+      "side": 1,
+      "message": "Because I only intend to call this during the construction of PasswordStoreX. I could even inline it there using a nested ternary operator ?:, but that would be ugly.",
+      "parentUuid": "2b3f64ec_971c928a",
       "revId": "5ca628064d4aa4b56dd0c373cb1f3c6aa6df4741",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
