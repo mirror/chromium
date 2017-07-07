@@ -287,12 +287,6 @@ class TokenPreloadScanner::StartTagScanner {
       SetDefer(FetchParameters::kLazyLoad);
     else if (Match(attribute_name, deferAttr))
       SetDefer(FetchParameters::kLazyLoad);
-    // Note that only scripts need to have the integrity metadata set on
-    // preloads. This is because script resources fetches, and only script
-    // resource fetches, need to re-request resources if a cached version has
-    // different metadata (including empty) from the metadata on the request.
-    // See the comment before the call to mustRefetchDueToIntegrityMismatch() in
-    // Source/core/fetch/ResourceFetcher.cpp for a more complete explanation.
     else if (Match(attribute_name, integrityAttr))
       SubresourceIntegrity::ParseIntegrityAttribute(attribute_value,
                                                     integrity_metadata_);
@@ -378,6 +372,9 @@ class TokenPreloadScanner::StartTagScanner {
       SecurityPolicy::ReferrerPolicyFromString(
           attribute_value, kDoNotSupportReferrerPolicyLegacyKeywords,
           &referrer_policy_);
+    } else if (Match(attribute_name, integrityAttr)) {
+      SubresourceIntegrity::ParseIntegrityAttribute(attribute_value,
+                                                    integrity_metadata_);
     }
   }
 
