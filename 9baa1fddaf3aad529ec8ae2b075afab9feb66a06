@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5bbfdd2_382e07c6",
+        "filename": "third_party/WebKit/Source/core/dom/ClientRect.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-07-07T12:38:26Z",
+      "side": 1,
+      "message": "Can you rewrite this one too? It redirects.\n\nThis file will be removed in https://chromium-review.googlesource.com/c/559978 but if you land first that\u0027s OK.",
+      "range": {
+        "startLine": 32,
+        "startChar": 15,
+        "endLine": 32,
+        "endChar": 17
+      },
+      "revId": "9baa1fddaf3aad529ec8ae2b075afab9feb66a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
