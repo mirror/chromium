@@ -275,6 +275,10 @@ class PasswordFormManager : public FormFetcher::Consumer {
   // adds itself as a consumer of the new one.
   void GrabFetcher(std::unique_ptr<FormFetcher> fetcher);
 
+  PasswordFormMetricsRecorder* metrics_recorder() {
+    return metrics_recorder_.get();
+  }
+
   // Create a copy of |*this| which can be passed to the code handling
   // save-password related UI. This omits some parts of the internal data, so
   // the result is not identical to the original.
