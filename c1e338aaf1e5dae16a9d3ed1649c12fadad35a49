@@ -22,6 +22,30 @@
       "revId": "c1e338aaf1e5dae16a9d3ed1649c12fadad35a49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f49e8433_7bef0913",
+        "filename": "content/browser/service_worker/service_worker_register_job.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-07T14:19:32Z",
+      "side": 1,
+      "message": "iterating over the job queue seems heavy too, and i\u0027d rather start the countdown on a job once it\u0027s started.\n\nthe way I thought this would work, though I didn\u0027t think of all the details is:\n- Once JobCoordinator starts a job, it also starts a timer that will fire in 30 min.\n- When the job is destructed, the timer is cancelled.\n- When the timer fires, it calls ServiceWorkerRegisterJobBase::Abort()",
+      "parentUuid": "b2b40801_a719d791",
+      "range": {
+        "startLine": 167,
+        "startChar": 23,
+        "endLine": 167,
+        "endChar": 41
+      },
+      "revId": "c1e338aaf1e5dae16a9d3ed1649c12fadad35a49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
