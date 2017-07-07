@@ -33,6 +33,24 @@
       "revId": "0ba4707112501396863730d3c27243ee3118d90c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c4b5c54_ee0b4bdc",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1135,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-07-07T13:31:22Z",
+      "side": 1,
+      "message": "sgtm as well. Also the comment is relevant to the next statement and not this one. So please\nmove it there.",
+      "parentUuid": "9699df78_fea880c2",
+      "revId": "0ba4707112501396863730d3c27243ee3118d90c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
