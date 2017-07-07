@@ -52,6 +52,24 @@
       "revId": "e86bf2f4c3d85448e8200d2c2683f6e9ab05f1c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c149883d_b362e7dc",
+        "filename": "services/ui/public/cpp/gpu/gpu.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-07T00:47:47Z",
+      "side": 1,
+      "message": "Correct. my counterargument was that |gpu_| is used as a marker to \nprevent several EstablishGpuChannel{Sync}() calls to be run before \nOnEstablishedGpuChannel() has been finalized.  I was just shy of\ntouching the rest of this file.\n\nIIUC, what you propose is to refactor the code to: \na) expect |gpu_| to be potentially initialized and to use it if so,\nb) to not use it as a marker.\n\nSince the path EstablishGpuChannelSync() - OnEstablished...() happens \nin a single thread, there\u0027s no need to use any marker: either the gpu \nchannel is established or not. \n\nFor the async EstablishGpuChannel() --\u003e OnEstablished...(), we can peek \nat the amount of request-gpu-channel-callbacks in flight as proxy of (a)\nEstablishGpuChannel() in flight or not.\n\nWill update the code based on these lines.",
+      "parentUuid": "98136d6c_a8e9b414",
+      "revId": "e86bf2f4c3d85448e8200d2c2683f6e9ab05f1c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
