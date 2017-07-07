@@ -142,11 +142,13 @@ class WPTGitHub(object):
             raise Exception('Non-200 status code (%s): %s' % (status_code, data))
 
     def make_pr_from_item(self, item):
+        labels = [label['name'] for label in item['labels']]
         return PullRequest(
             title=item['title'],
             number=item['number'],
             body=item['body'],
-            state=item['state'])
+            state=item['state'],
+            labels=labels)
 
     @memoized
     def all_pull_requests(self):
@@ -267,4 +269,4 @@ class GitHubError(Exception):
     pass
 
 
-PullRequest = namedtuple('PullRequest', ['title', 'number', 'body', 'state'])
+PullRequest = namedtuple('PullRequest', ['title', 'number', 'body', 'state', 'labels'])
