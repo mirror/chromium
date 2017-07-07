@@ -983,6 +983,8 @@ component("net") {
       "http2/tools/http2_bug_tracker.h",
       "log/file_net_log_observer.cc",
       "log/file_net_log_observer.h",
+      "log/log_urls_to_file.cc",
+      "log/log_urls_to_file.h",
       "log/net_log_util.cc",
       "log/net_log_util.h",
       "log/trace_net_log_observer.cc",
