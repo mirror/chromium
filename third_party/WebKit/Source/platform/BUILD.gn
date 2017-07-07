@@ -1584,6 +1584,7 @@ component("platform") {
     "//components/mime_util:mime_util",
     "//device/base/synchronization",
     "//gin",
+    "//mojo/common:common_custom_types_blink",
     "//mojo/public/cpp/bindings",
     "//mojo/public/cpp/bindings:wtf_support",
     "//services/service_manager/public/cpp",
