@@ -247,6 +247,10 @@ readingListCollectionViewController:
   }
 
   base::RecordAction(base::UserMetricsAction("MobileReadingListOpen"));
+  // Send the opened reading list item event when the user clicks on an item in
+  // their reading list.
+  FeatureEngagementTrackerFactory::GetForBrowserState(self.browserState)
+      ->NotifyEvent(feature_engagement_tracker::events::kOpenedReadingListItem);
 
   [readingListCollectionViewController willBeDismissed];
 
@@ -317,6 +321,11 @@ readingListCollectionViewController:
                           openNewTabWithURL:(const GURL&)URL
                                   incognito:(BOOL)incognito {
   base::RecordAction(base::UserMetricsAction("MobileReadingListOpen"));
+  // Send the opened reading list item event when the user long presses on a
+  // reading list item and selects when of the actions in the alert (open in
+  // new tab, open in new incognito tab, or open offline version in new tab).
+  FeatureEngagementTrackerFactory::GetForBrowserState(self.browserState)
+      ->NotifyEvent(feature_engagement_tracker::events::kOpenedReadingListItem);
 
   [readingListCollectionViewController willBeDismissed];
   [self.URLLoader webPageOrderedOpen:URL
