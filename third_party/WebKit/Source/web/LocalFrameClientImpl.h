@@ -209,7 +209,7 @@ class LocalFrameClientImpl final : public LocalFrameClient {
   unsigned BackForwardLength() override;
 
   void SuddenTerminationDisablerChanged(bool present,
-                                        SuddenTerminationDisablerType) override;
+                                        WebSuddenTerminationDisabler) override;
 
   BlameContext* GetFrameBlameContext() override;
 
