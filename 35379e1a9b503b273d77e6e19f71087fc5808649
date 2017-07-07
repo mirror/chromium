@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8d554095_9e0d4f49",
+        "filename": "base/synchronization/waitable_event_perftest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-07-07T00:39:54Z",
+      "side": 1,
+      "message": "\"MainThread\" makes me think of the test main thread, but switched to \"RequestStop\" and added a comment.",
+      "parentUuid": "978415af_35c7f82c",
+      "revId": "35379e1a9b503b273d77e6e19f71087fc5808649",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4eb1ead1_5590f59c",
         "filename": "base/synchronization/waitable_event_perftest.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-06T15:11:17Z",
       "side": 1,
       "message": "Does this improve at all if you eg\nthrow out the first N samples (warm up runs) ?\nthrow out the top and bottom M samples (outliers) ?",
+      "revId": "35379e1a9b503b273d77e6e19f71087fc5808649",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f19fcad_733ca1ef",
+        "filename": "base/synchronization/waitable_event_perftest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-07-07T00:39:54Z",
+      "side": 1,
+      "message": "There is no warmup bias. Certain data sets do have outliers, but I\u0027m not sure I want to toss those because: 1) the number of outliers changes depending on which test is being run, 2) the number of outliers changes when I switch implementations, and 3) it doesn\u0027t meaningfully affect the mean. I don\u0027t see other perf tests doing it either (though it doesn\u0027t mean we shouldn\u0027t have a stats package for perf tests to do that -- it\u0027d be kinda nice to have quartiles and stddev, but I don\u0027t want to write that code here).",
+      "parentUuid": "4eb1ead1_5590f59c",
       "revId": "35379e1a9b503b273d77e6e19f71087fc5808649",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "35379e1a9b503b273d77e6e19f71087fc5808649",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1af974c5_d90f7e72",
+        "filename": "base/synchronization/waitable_event_perftest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-07-07T00:39:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9208c066_e88cc486",
+      "revId": "35379e1a9b503b273d77e6e19f71087fc5808649",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
