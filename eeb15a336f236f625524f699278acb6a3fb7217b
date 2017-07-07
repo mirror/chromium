@@ -70,6 +70,30 @@
       "revId": "eeb15a336f236f625524f699278acb6a3fb7217b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26222941_341fbe04",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-07-07T16:06:04Z",
+      "side": 1,
+      "message": "If the user have clicked the edit button and the field became editable, currently we keep the corrected username upon losing focus by tab/enter/esc and set the new focus on Save button. If the username field isn\u0027t editable, esc just closes the bubble. \n\nShould I keep the old one and discard changes when user presses esc?",
+      "parentUuid": "7c7f8930_0c0c4546",
+      "range": {
+        "startLine": 440,
+        "startChar": 22,
+        "endLine": 440,
+        "endChar": 38
+      },
+      "revId": "eeb15a336f236f625524f699278acb6a3fb7217b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
