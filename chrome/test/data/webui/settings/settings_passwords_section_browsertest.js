@@ -84,8 +84,9 @@ TEST_F('SettingsPasswordSectionBrowserTest', 'uiTests', function() {
     for (var index = 0; index < exceptionList.length; ++index) {
       var node = nodes[index];
       var exception = exceptionList[index];
-      assertEquals(exception.urls.shown,
-          node.querySelector('#exception').textContent);
+      assertEquals(
+          exception.urls.shown,
+          node.querySelector('#exception').textContent.trim());
       assertEquals(exception.urls.link, node.querySelector('#exception').href);
     }
   }
