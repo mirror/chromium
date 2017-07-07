@@ -16,6 +16,24 @@
       "revId": "367700ecbc6f45a8c3bd6517b43a68ff42223dfb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbb86b80_bfdda13a",
+        "filename": "chrome/test/base/javascript_browser_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-07-07T19:28:26Z",
+      "side": 1,
+      "message": "Fair point. It looks like all those dependencies are in ChromeOS code. I\u0027ll expand the #if guard to include defined(OS_CHROMEOS).",
+      "parentUuid": "739a916a_01625af1",
+      "revId": "367700ecbc6f45a8c3bd6517b43a68ff42223dfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
