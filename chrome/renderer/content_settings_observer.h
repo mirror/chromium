@@ -77,6 +77,13 @@ class ContentSettingsObserver
   bool AllowScript(bool enabled_per_settings) override;
   bool AllowScriptFromSource(bool enabled_per_settings,
                              const blink::WebURL& script_url) override;
+  bool AllowClientHintFromSource(bool enabled_per_settings,
+                                 blink::WebClientHintsType type,
+                                 const blink::WebURL& url) override;
+  void SetAllowClientHintsFromSource(
+      const bool enabled_types[blink::kWebClientHintsTypeNumValues],
+      int64_t duration_seconds,
+      const blink::WebURL& url) override;
   bool AllowStorage(bool local) override;
   bool AllowReadFromClipboard(bool default_value) override;
   bool AllowWriteToClipboard(bool default_value) override;

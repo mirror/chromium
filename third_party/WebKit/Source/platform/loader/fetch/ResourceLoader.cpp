@@ -477,6 +477,15 @@ void ResourceLoader::DidReceiveResponse(
     }
   }
 
+  bool enabled_types[kWebClientHintsTypeNumValues] = {false};
+  int64_t persist_duration_seconds = -1;
+  ClientHintsPreferences::UpdatePersistentFromAcceptClientHintsHeader(
+      response.HttpHeaderField(HTTPNames::Accept_CH),
+      response.HttpHeaderField(HTTPNames::Accept_CH_Lifetime), response.Url(),
+      enabled_types, &persist_duration_seconds);
+  Context().UpdatePersistentClientHints(response.Url(), enabled_types,
+                                        persist_duration_seconds);
+
   Context().DispatchDidReceiveResponse(
       resource_->Identifier(), response,
       resource_->GetResourceRequest().GetFrameType(),

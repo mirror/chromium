@@ -10,6 +10,7 @@
 #include "core/CoreExport.h"
 #include "platform/heap/Heap.h"
 #include "platform/wtf/Forward.h"
+#include "public/platform/WebClientHintsType.h"
 
 namespace blink {
 
@@ -47,6 +48,18 @@ class CORE_EXPORT ContentSettingsClient {
 
   // Controls whether scripts loaded from the given URL are allowed to execute.
   bool AllowScriptFromSource(bool enabled_per_settings, const KURL&);
+
+  // Returns true if the client hint |type| should be sent when fetching |url|.
+  bool AllowClientHintFromSource(bool enabled_per_settings,
+                                 WebClientHintsType,
+                                 const KURL&);
+
+  // Called to persist the client hint preferences received when |url| was
+  // fetched. The preferences should be persisted for |duration_seconds|.
+  void SetAllowClientHintsFromSource(
+      const bool enabled_types[kWebClientHintsTypeNumValues],
+      int64_t duration_seconds,
+      const KURL&);
 
   // Controls whether images are allowed.
   bool AllowImage(bool enabled_per_settings, const KURL&);

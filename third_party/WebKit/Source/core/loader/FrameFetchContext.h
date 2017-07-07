@@ -185,6 +185,7 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
 
   // BaseFetchContext overrides:
   KURL GetFirstPartyForCookies() const override;
+  ContentSettingsClient* GetContentSettingsClient() const override;
   bool AllowScriptFromSource(const KURL&) const override;
   SubresourceFilter* GetSubresourceFilter() const override;
   bool ShouldBlockRequestByInspector(const ResourceRequest&) const override;
@@ -210,13 +211,13 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
   const ContentSecurityPolicy* GetContentSecurityPolicy() const override;
   void AddConsoleMessage(ConsoleMessage*) const override;
 
-  ContentSettingsClient* GetContentSettingsClient() const;
   Settings* GetSettings() const;
   String GetUserAgent() const;
   RefPtr<SecurityOrigin> GetRequestorOrigin();
   RefPtr<SecurityOrigin> GetRequestorOriginForFrameLoading();
   ClientHintsPreferences GetClientHintsPreferences() const;
   float GetDevicePixelRatio() const;
+  bool ShouldAddPersistentClientHint(WebClientHintsType, const KURL&) const;
 
   Member<DocumentLoader> document_loader_;
   Member<Document> document_;

@@ -93,6 +93,10 @@ KURL WorkerFetchContext::GetFirstPartyForCookies() const {
   return web_context_->FirstPartyForCookies();
 }
 
+ContentSettingsClient* WorkerFetchContext::GetContentSettingsClient() const {
+  return nullptr;
+}
+
 bool WorkerFetchContext::AllowScriptFromSource(const KURL&) const {
   // Currently we don't use WorkerFetchContext for loading scripts. So this
   // method must not be called.

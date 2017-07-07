@@ -786,17 +786,35 @@ void FrameFetchContext::AddClientHintsIfNecessary(
   if (!RuntimeEnabledFeatures::ClientHintsEnabled())
     return;
 
+  // This is probably called twice.
+
+  /*
+    LOG(WARNING) << "xxx FrameFetchContext AddClientHintsIfNecessary url="
+                 << request.Url().GetString() << " allow="
+                 << ;
+                        */
+
   bool should_send_device_ram =
-      GetClientHintsPreferences().ShouldSendDeviceRAM() ||
-      hints_preferences.ShouldSendDeviceRAM();
-  bool should_send_dpr = GetClientHintsPreferences().ShouldSendDPR() ||
-                         hints_preferences.ShouldSendDPR();
+      GetClientHintsPreferences().ShouldSend(kWebClientHintsTypeDeviceRam) ||
+      hints_preferences.ShouldSend(kWebClientHintsTypeDeviceRam) ||
+      ShouldAddPersistentClientHint(kWebClientHintsTypeDeviceRam,
+                                    request.Url());
+  bool should_send_dpr =
+      GetClientHintsPreferences().ShouldSend(kWebClientHintsTypeDPR) ||
+      hints_preferences.ShouldSend(kWebClientHintsTypeDPR) ||
+      ShouldAddPersistentClientHint(kWebClientHintsTypeDPR, request.Url());
   bool should_send_resource_width =
-      GetClientHintsPreferences().ShouldSendResourceWidth() ||
-      hints_preferences.ShouldSendResourceWidth();
+      GetClientHintsPreferences().ShouldSend(
+          kWebClientHintsTypeResourceWidth) ||
+      hints_preferences.ShouldSend(kWebClientHintsTypeResourceWidth) ||
+      ShouldAddPersistentClientHint(kWebClientHintsTypeResourceWidth,
+                                    request.Url());
   bool should_send_viewport_width =
-      GetClientHintsPreferences().ShouldSendViewportWidth() ||
-      hints_preferences.ShouldSendViewportWidth();
+      GetClientHintsPreferences().ShouldSend(
+          kWebClientHintsTypeViewportWidth) ||
+      hints_preferences.ShouldSend(kWebClientHintsTypeViewportWidth) ||
+      ShouldAddPersistentClientHint(kWebClientHintsTypeViewportWidth,
+                                    request.Url());
 
   if (should_send_device_ram) {
     int64_t physical_memory = MemoryCoordinator::GetPhysicalMemoryMB();
@@ -1093,6 +1111,17 @@ float FrameFetchContext::GetDevicePixelRatio() const {
   }
 
   return document_->DevicePixelRatio();
+}
+
+bool FrameFetchContext::ShouldAddPersistentClientHint(WebClientHintsType type,
+                                                      const KURL& url) const {
+  if (!RuntimeEnabledFeatures::ClientHintsPersistenceEnabled())
+    return false;
+
+  if (!GetContentSettingsClient())
+    return false;
+  return GetContentSettingsClient()->AllowClientHintFromSource(false, type,
+                                                               url);
 }
 
 std::unique_ptr<WebURLLoader> FrameFetchContext::CreateURLLoader(
