@@ -275,7 +275,7 @@ void OffscreenCanvasFrameDispatcherImpl::DispatchFrame(
 
   cc::TransferableResource resource;
   resource.id = next_resource_id_;
-  resource.format = cc::ResourceFormat::RGBA_8888;
+  resource.format = viz::ResourceFormat::RGBA_8888;
   resource.size = gfx::Size(width_, height_);
   // This indicates the filtering on the resource inherently, not the desired
   // filtering effect on the quad.
