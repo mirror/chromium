@@ -164,6 +164,10 @@ class ReparsePoint {
 
 #endif
 
+// Fuchsia doesn't support POSIX file permission bits, so helper functions
+// which use them are removed.
+#if !defined(OS_FUCHSIA)
+
 #if defined(OS_POSIX)
 // Provide a simple way to change the permissions bits on |path| in tests.
 // ASSERT failures will return, but not stop the test.  Caller should wrap
@@ -181,6 +185,48 @@ void ChangePosixFilePermissions(const FilePath& path,
   ASSERT_TRUE(SetPosixFilePermissions(path, mode));
 }
 #endif  // defined(OS_POSIX)
+
+// Sets the source file to read-only.
+void SetReadOnly(const FilePath& path, bool read_only) {
+#if defined(OS_WIN)
+  // On Windows, it involves setting/removing the 'readonly' bit.
+  DWORD attrs = GetFileAttributes(path.value().c_str());
+  ASSERT_NE(INVALID_FILE_ATTRIBUTES, attrs);
+  ASSERT_TRUE(SetFileAttributes(
+      path.value().c_str(), read_only ? (attrs | FILE_ATTRIBUTE_READONLY)
+                                      : (attrs & ~FILE_ATTRIBUTE_READONLY)));
+
+  DWORD expected =
+      read_only
+          ? ((attrs & (FILE_ATTRIBUTE_ARCHIVE | FILE_ATTRIBUTE_DIRECTORY)) |
+             FILE_ATTRIBUTE_READONLY)
+          : (attrs & (FILE_ATTRIBUTE_ARCHIVE | FILE_ATTRIBUTE_DIRECTORY));
+
+  // Ignore FILE_ATTRIBUTE_NOT_CONTENT_INDEXED if present.
+  attrs = GetFileAttributes(path.value().c_str()) &
+          ~FILE_ATTRIBUTE_NOT_CONTENT_INDEXED;
+  ASSERT_EQ(expected, attrs);
+#else
+  // On all other platforms, it involves removing/setting the write bit.
+  mode_t mode = read_only ? S_IRUSR : (S_IRUSR | S_IWUSR);
+  EXPECT_TRUE(SetPosixFilePermissions(
+      path, DirectoryExists(path) ? (mode | S_IXUSR) : mode));
+#endif  // defined(OS_WIN)
+}
+
+bool IsReadOnly(const FilePath& path) {
+#if defined(OS_WIN)
+  DWORD attrs = GetFileAttributes(path.value().c_str());
+  EXPECT_NE(INVALID_FILE_ATTRIBUTES, attrs);
+  return attrs & FILE_ATTRIBUTE_READONLY;
+#else
+  int mode = 0;
+  EXPECT_TRUE(GetPosixFilePermissions(path, &mode));
+  return !(mode & S_IWUSR);
+#endif  // defined(OS_WIN)
+}
+
+#endif  // defined(OS_FUCHSIA)
 
 const wchar_t bogus_content[] = L"I'm cannon fodder.";
 
@@ -576,7 +622,7 @@ TEST_F(FileUtilTest, CreateTemporaryFileInDirLongPathTest) {
 
 #endif  // defined(OS_WIN)
 
-#if defined(OS_POSIX)
+#if defined(OS_POSIX) && !defined(OS_FUCHSIA)
 
 TEST_F(FileUtilTest, CreateAndReadSymlinks) {
   FilePath link_from = temp_dir_.GetPath().Append(FPL("from_file"));
@@ -695,7 +741,7 @@ TEST_F(FileUtilTest, DeleteFile) {
   EXPECT_FALSE(PathExists(file_name));
 }
 
-#if defined(OS_POSIX)
+#if defined(OS_POSIX) && !defined(OS_FUCHSIA)
 TEST_F(FileUtilTest, DeleteSymlinkToExistentFile) {
   // Create a file.
   FilePath file_name = temp_dir_.GetPath().Append(FPL("Test DeleteFile 2.txt"));
@@ -735,6 +781,26 @@ TEST_F(FileUtilTest, DeleteSymlinkToNonExistentFile) {
 
   // Make sure the symbolic link is deleted.
   EXPECT_FALSE(IsLink(file_link));
+}
+TEST_F(FileUtilTest, CopyFileACL) {
+  // While FileUtilTest.CopyFile asserts the content is correctly copied over,
+  // this test case asserts the access control bits are meeting expectations in
+  // CopyFile().
+  FilePath src = temp_dir_.GetPath().Append(FILE_PATH_LITERAL("src.txt"));
+  const std::wstring file_contents(L"Gooooooooooooooooooooogle");
+  CreateTextFile(src, file_contents);
+
+  // Set the source file to read-only.
+  ASSERT_FALSE(IsReadOnly(src));
+  SetReadOnly(src, true);
+  ASSERT_TRUE(IsReadOnly(src));
+
+  // Copy the file.
+  FilePath dst = temp_dir_.GetPath().Append(FILE_PATH_LITERAL("dst.txt"));
+  ASSERT_TRUE(CopyFile(src, dst));
+  EXPECT_EQ(file_contents, ReadTextFile(dst));
+
+  ASSERT_FALSE(IsReadOnly(dst));
 }
 
 TEST_F(FileUtilTest, ChangeFilePermissionsAndRead) {
@@ -868,7 +934,6 @@ TEST_F(FileUtilTest, ChangeDirectoryPermissionsAndEnumerate) {
   EXPECT_TRUE(DeleteFile(subdir_path, true));
   EXPECT_FALSE(PathExists(subdir_path));
 }
-
 TEST_F(FileUtilTest, ExecutableExistsInPath) {
   // Create two directories that we will put in our PATH
   const char kPath[] = "PATH";
@@ -908,7 +973,7 @@ TEST_F(FileUtilTest, ExecutableExistsInPath) {
   EXPECT_FALSE(ExecutableExistsInPath(env.get(), kDneFileName));
 }
 
-#endif  // defined(OS_POSIX)
+#endif  // defined(OS_POSIX) && !defined(OS_FUCHSIA)
 
 #if defined(OS_WIN)
 // Tests that the Delete function works for wild cards, especially
@@ -1453,77 +1518,6 @@ TEST_F(FileUtilTest, CopyDirectoryWithTrailingSeparators) {
   EXPECT_TRUE(PathExists(file_name_to));
 }
 
-// Sets the source file to read-only.
-void SetReadOnly(const FilePath& path, bool read_only) {
-#if defined(OS_WIN)
-  // On Windows, it involves setting/removing the 'readonly' bit.
-  DWORD attrs = GetFileAttributes(path.value().c_str());
-  ASSERT_NE(INVALID_FILE_ATTRIBUTES, attrs);
-  ASSERT_TRUE(SetFileAttributes(
-      path.value().c_str(),
-      read_only ? (attrs | FILE_ATTRIBUTE_READONLY) :
-          (attrs & ~FILE_ATTRIBUTE_READONLY)));
-
-  DWORD expected = read_only ?
-      ((attrs & (FILE_ATTRIBUTE_ARCHIVE | FILE_ATTRIBUTE_DIRECTORY)) |
-          FILE_ATTRIBUTE_READONLY) :
-      (attrs & (FILE_ATTRIBUTE_ARCHIVE | FILE_ATTRIBUTE_DIRECTORY));
-
-  // Ignore FILE_ATTRIBUTE_NOT_CONTENT_INDEXED if present.
-  attrs = GetFileAttributes(path.value().c_str()) &
-          ~FILE_ATTRIBUTE_NOT_CONTENT_INDEXED;
-  ASSERT_EQ(expected, attrs);
-#else
-  // On all other platforms, it involves removing/setting the write bit.
-  mode_t mode = read_only ? S_IRUSR : (S_IRUSR | S_IWUSR);
-  EXPECT_TRUE(SetPosixFilePermissions(
-      path, DirectoryExists(path) ? (mode | S_IXUSR) : mode));
-#endif
-}
-
-bool IsReadOnly(const FilePath& path) {
-#if defined(OS_WIN)
-  DWORD attrs = GetFileAttributes(path.value().c_str());
-  EXPECT_NE(INVALID_FILE_ATTRIBUTES, attrs);
-  return attrs & FILE_ATTRIBUTE_READONLY;
-#else
-  int mode = 0;
-  EXPECT_TRUE(GetPosixFilePermissions(path, &mode));
-  return !(mode & S_IWUSR);
-#endif
-}
-
-TEST_F(FileUtilTest, CopyDirectoryACL) {
-  // Create source directories.
-  FilePath src = temp_dir_.GetPath().Append(FILE_PATH_LITERAL("src"));
-  FilePath src_subdir = src.Append(FILE_PATH_LITERAL("subdir"));
-  CreateDirectory(src_subdir);
-  ASSERT_TRUE(PathExists(src_subdir));
-
-  // Create a file under the directory.
-  FilePath src_file = src.Append(FILE_PATH_LITERAL("src.txt"));
-  CreateTextFile(src_file, L"Gooooooooooooooooooooogle");
-  SetReadOnly(src_file, true);
-  ASSERT_TRUE(IsReadOnly(src_file));
-
-  // Make directory read-only.
-  SetReadOnly(src_subdir, true);
-  ASSERT_TRUE(IsReadOnly(src_subdir));
-
-  // Copy the directory recursively.
-  FilePath dst = temp_dir_.GetPath().Append(FILE_PATH_LITERAL("dst"));
-  FilePath dst_file = dst.Append(FILE_PATH_LITERAL("src.txt"));
-  EXPECT_TRUE(CopyDirectory(src, dst, true));
-
-  FilePath dst_subdir = dst.Append(FILE_PATH_LITERAL("subdir"));
-  ASSERT_FALSE(IsReadOnly(dst_subdir));
-  ASSERT_FALSE(IsReadOnly(dst_file));
-
-  // Give write permissions to allow deletion.
-  SetReadOnly(src_subdir, false);
-  ASSERT_FALSE(IsReadOnly(src_subdir));
-}
-
 TEST_F(FileUtilTest, CopyFile) {
   // Create a directory
   FilePath dir_name_from =
@@ -1559,27 +1553,6 @@ TEST_F(FileUtilTest, CopyFile) {
   EXPECT_EQ(file_contents, read_contents);
   EXPECT_FALSE(PathExists(dest_file2_test));
   EXPECT_FALSE(PathExists(dest_file2));
-}
-
-TEST_F(FileUtilTest, CopyFileACL) {
-  // While FileUtilTest.CopyFile asserts the content is correctly copied over,
-  // this test case asserts the access control bits are meeting expectations in
-  // CopyFile().
-  FilePath src = temp_dir_.GetPath().Append(FILE_PATH_LITERAL("src.txt"));
-  const std::wstring file_contents(L"Gooooooooooooooooooooogle");
-  CreateTextFile(src, file_contents);
-
-  // Set the source file to read-only.
-  ASSERT_FALSE(IsReadOnly(src));
-  SetReadOnly(src, true);
-  ASSERT_TRUE(IsReadOnly(src));
-
-  // Copy the file.
-  FilePath dst = temp_dir_.GetPath().Append(FILE_PATH_LITERAL("dst.txt"));
-  ASSERT_TRUE(CopyFile(src, dst));
-  EXPECT_EQ(file_contents, ReadTextFile(dst));
-
-  ASSERT_FALSE(IsReadOnly(dst));
 }
 
 // file_util winds up using autoreleased objects on the Mac, so this needs
@@ -2282,6 +2255,38 @@ TEST_F(FileUtilTest, SetCloseOnExec) {
   EXPECT_TRUE(SetCloseOnExec(fd.get()));
 }
 
+#if !defined(OS_FUCHSIA)
+TEST_F(FileUtilTest, CopyDirectoryACL) {
+  // Create source directories.
+  FilePath src = temp_dir_.GetPath().Append(FILE_PATH_LITERAL("src"));
+  FilePath src_subdir = src.Append(FILE_PATH_LITERAL("subdir"));
+  CreateDirectory(src_subdir);
+  ASSERT_TRUE(PathExists(src_subdir));
+
+  // Create a file under the directory.
+  FilePath src_file = src.Append(FILE_PATH_LITERAL("src.txt"));
+  CreateTextFile(src_file, L"Gooooooooooooooooooooogle");
+  SetReadOnly(src_file, true);
+  ASSERT_TRUE(IsReadOnly(src_file));
+
+  // Make directory read-only.
+  SetReadOnly(src_subdir, true);
+  ASSERT_TRUE(IsReadOnly(src_subdir));
+
+  // Copy the directory recursively.
+  FilePath dst = temp_dir_.GetPath().Append(FILE_PATH_LITERAL("dst"));
+  FilePath dst_file = dst.Append(FILE_PATH_LITERAL("src.txt"));
+  EXPECT_TRUE(CopyDirectory(src, dst, true));
+
+  FilePath dst_subdir = dst.Append(FILE_PATH_LITERAL("subdir"));
+  ASSERT_FALSE(IsReadOnly(dst_subdir));
+  ASSERT_FALSE(IsReadOnly(dst_file));
+
+  // Give write permissions to allow deletion.
+  SetReadOnly(src_subdir, false);
+  ASSERT_FALSE(IsReadOnly(src_subdir));
+}
+
 // Testing VerifyPathControlledByAdmin() is hard, because there is no
 // way a test can make a file owned by root, or change file paths
 // at the root of the file system.  VerifyPathControlledByAdmin()
@@ -2563,6 +2568,7 @@ TEST_F(VerifyPathControlledByUserTest, WriteBitChecks) {
       VerifyPathControlledByUser(base_dir_, text_file_, uid_, ok_gids_));
   EXPECT_TRUE(VerifyPathControlledByUser(sub_dir_, text_file_, uid_, ok_gids_));
 }
+#endif  // !defined(OS_FUCHSIA)
 
 #if defined(OS_ANDROID)
 TEST_F(FileUtilTest, ValidContentUriTest) {

@@ -539,15 +539,14 @@ TEST_F(FilePathWatcherTest, RecursiveWatch) {
   ASSERT_TRUE(WaitForEvents());
 }
 
-#if defined(OS_POSIX)
-#if defined(OS_ANDROID)
+#if defined(OS_POSIX) && !defined(OS_ANDROID) && !defined(OS_FUCHSIA)
 // Apps cannot create symlinks on Android in /sdcard as /sdcard uses the
 // "fuse" file system, while /data uses "ext4".  Running these tests in /data
 // would be preferable and allow testing file attributes and symlinks.
 // TODO(pauljensen): Re-enable when crbug.com/475568 is fixed and SetUp() places
 // the |temp_dir_| in /data.
-#define RecursiveWithSymLink DISABLED_RecursiveWithSymLink
-#endif  // defined(OS_ANDROID)
+//
+// Fuchsia doesn't handle symlinks, so this test doesn't make sense for it.
 TEST_F(FilePathWatcherTest, RecursiveWithSymLink) {
   if (!FilePathWatcher::RecursiveWatchAvailable())
     return;
