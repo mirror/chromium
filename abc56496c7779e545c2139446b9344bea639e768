@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "dda9e005_09af6399",
+        "filename": "media/blink/watch_time_reporter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-07-07T23:05:02Z",
+      "side": 1,
+      "message": "You mean for remoting right? I think the initial configs are still provided via the usual path (demuxing is still done locally). At the moment we will not get updates from cast when the configs change, but I\u0027ve asked EricKung@ to update cast side after my CL (https://chromium-review.googlesource.com/c/541721/) lands.\n\nDefinitely right about HLS... though you can at least know video is h264 there. Audio either mp3 or aac.",
+      "parentUuid": "095cb953_efc8aa58",
+      "revId": "abc56496c7779e545c2139446b9344bea639e768",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "998f7dff_97eb5453",
         "filename": "media/mojo/interfaces/watch_time_recorder.mojom",
         "patchSetId": 5
