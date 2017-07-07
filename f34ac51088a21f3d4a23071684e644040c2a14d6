@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6eddcf22_8524ce9c",
+        "filename": "testing/buildbot/chromium.android.json",
+        "patchSetId": 12
+      },
+      "lineNbr": 2836,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-07-07T19:55:08Z",
+      "side": 1,
+      "message": "jbudorick@ or bpastene@ should confirm that we have the capacity on the android bots.",
+      "revId": "f34ac51088a21f3d4a23071684e644040c2a14d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
