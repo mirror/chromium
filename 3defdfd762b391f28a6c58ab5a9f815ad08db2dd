@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "49dc30f5_56e1f228",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/os_metrics_win.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-07-07T16:32:42Z",
+      "side": 1,
+      "message": "Done, thanks!",
+      "parentUuid": "af2db3d4_d94b3862",
+      "revId": "3defdfd762b391f28a6c58ab5a9f815ad08db2dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "133842a8_c0587aef",
         "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/process_metrics_memory_dump_provider.cc",
         "patchSetId": 11
@@ -39,6 +57,30 @@
       "revId": "3defdfd762b391f28a6c58ab5a9f815ad08db2dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c365b03_a87aa723",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/process_metrics_memory_dump_provider.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-07-07T16:32:42Z",
+      "side": 1,
+      "message": "Okay, I think I removed it for real this time...",
+      "parentUuid": "133842a8_c0587aef",
+      "range": {
+        "startLine": 645,
+        "startChar": 2,
+        "endLine": 646,
+        "endChar": 40
+      },
+      "revId": "3defdfd762b391f28a6c58ab5a9f815ad08db2dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
