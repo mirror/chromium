@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "13e8f523_a62a23a6",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptModuleResolverImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-07-07T03:57:35Z",
+      "side": 1,
+      "message": "Thanks for clarifying. I\u0027m now convinced that we really need nonce data.",
+      "parentUuid": "e28bdbe3_d0f06e02",
+      "revId": "ed884b13e7c142f6bbc6a8d8180499aa8d4bc13d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "91f8f1be_878c1a23",
         "filename": "third_party/WebKit/Source/core/dom/ScriptModuleResolverImpl.cpp",
         "patchSetId": 3
@@ -137,6 +155,24 @@
       "side": 1,
       "message": "It is used by CSP (Ctrl+F \"parser metadata\"): https://w3c.github.io/webappsec-csp/\n\nI don\u0027t understand this one at well but it appears to be related to helping enforce strict-dynamic. See some tests in https://github.com/w3c/web-platform-tests/tree/master/content-security-policy/script-src.",
       "parentUuid": "91f8f1be_878c1a23",
+      "revId": "ed884b13e7c142f6bbc6a8d8180499aa8d4bc13d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b19bdaad_049d9ab1",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptModuleResolverImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-07-07T03:57:35Z",
+      "side": 1,
+      "message": "Thanks for the info!",
+      "parentUuid": "92b78bd1_e0f9e194",
       "revId": "ed884b13e7c142f6bbc6a8d8180499aa8d4bc13d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
