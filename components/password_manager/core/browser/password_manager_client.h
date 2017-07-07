@@ -42,6 +42,12 @@ enum PasswordSyncState {
   SYNCING_WITH_CUSTOM_PASSPHRASE
 };
 
+enum class CredentialSourceType {
+  CREDENTIAL_SOURCE_PASSWORD_MANAGER = 0,
+  CREDENTIAL_SOURCE_API,
+  CREDENTIAL_SOURCE_LAST = CREDENTIAL_SOURCE_API
+};
+
 // An abstraction of operations that depend on the embedders (e.g. Chrome)
 // environment.
 class PasswordManagerClient {
@@ -94,6 +100,7 @@ class PasswordManagerClient {
   // that was overidden.
   virtual bool PromptUserToSaveOrUpdatePassword(
       std::unique_ptr<PasswordFormManager> form_to_save,
+      CredentialSourceType type,
       bool update_password) = 0;
 
   // Informs the embedder of a password forms that the user should choose from.

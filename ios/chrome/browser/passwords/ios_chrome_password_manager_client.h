@@ -48,6 +48,7 @@ class IOSChromePasswordManagerClient
   password_manager::PasswordSyncState GetPasswordSyncState() const override;
   bool PromptUserToSaveOrUpdatePassword(
       std::unique_ptr<password_manager::PasswordFormManager> form_to_save,
+      password_manager::CredentialSourceType type,
       bool update_password) override;
   bool PromptUserToChooseCredentials(
       std::vector<std::unique_ptr<autofill::PasswordForm>> local_forms,

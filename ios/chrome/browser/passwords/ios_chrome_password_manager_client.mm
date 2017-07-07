@@ -78,6 +78,7 @@ bool IOSChromePasswordManagerClient::PromptUserToChooseCredentials(
 
 bool IOSChromePasswordManagerClient::PromptUserToSaveOrUpdatePassword(
     std::unique_ptr<PasswordFormManager> form_to_save,
+    password_manager::CredentialSourceType type,
     bool update_password) {
   if (form_to_save->IsBlacklisted())
     return false;

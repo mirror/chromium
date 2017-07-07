@@ -66,7 +66,8 @@ class MockPasswordManagerClient : public StubPasswordManagerClient {
   MOCK_METHOD1(NotifyUserCouldBeAutoSignedInPtr,
                bool(autofill::PasswordForm* form));
   MOCK_METHOD0(NotifyStorePasswordCalled, void());
-  MOCK_METHOD1(PromptUserToSavePasswordPtr, void(PasswordFormManager*));
+  MOCK_METHOD2(PromptUserToSavePasswordPtr,
+               void(PasswordFormManager*, CredentialSourceType));
   MOCK_METHOD3(PromptUserToChooseCredentialsPtr,
                bool(const std::vector<autofill::PasswordForm*>& local_forms,
                     const GURL& origin,
@@ -82,9 +83,10 @@ class MockPasswordManagerClient : public StubPasswordManagerClient {
 
   bool PromptUserToSaveOrUpdatePassword(
       std::unique_ptr<PasswordFormManager> manager,
+      CredentialSourceType type,
       bool update_password) override {
     manager_.swap(manager);
-    PromptUserToSavePasswordPtr(manager_.get());
+    PromptUserToSavePasswordPtr(manager_.get(), type);
     return true;
   }
 
@@ -400,7 +402,8 @@ TEST_F(CredentialManagerImplTest, IsZeroClickAllowed) {
 
 TEST_F(CredentialManagerImplTest, CredentialManagerOnStore) {
   CredentialInfo info(form_, CredentialType::CREDENTIAL_TYPE_PASSWORD);
-  EXPECT_CALL(*client_, PromptUserToSavePasswordPtr(_))
+  EXPECT_CALL(*client_, PromptUserToSavePasswordPtr(
+                            _, CredentialSourceType::CREDENTIAL_SOURCE_API))
       .Times(testing::Exactly(1));
   EXPECT_CALL(*client_, NotifyStorePasswordCalled());
 
@@ -429,7 +432,8 @@ TEST_F(CredentialManagerImplTest, CredentialManagerOnStore) {
 }
 
 TEST_F(CredentialManagerImplTest, CredentialManagerOnStoreFederated) {
-  EXPECT_CALL(*client_, PromptUserToSavePasswordPtr(_))
+  EXPECT_CALL(*client_, PromptUserToSavePasswordPtr(
+                            _, CredentialSourceType::CREDENTIAL_SOURCE_API))
       .Times(testing::Exactly(1));
   EXPECT_CALL(*client_, NotifyStorePasswordCalled());
 
@@ -472,7 +476,8 @@ TEST_F(CredentialManagerImplTest, StoreFederatedAfterPassword) {
   federated.federation_origin = url::Origin(GURL("https://google.com/"));
   federated.signon_realm = "federation://example.com/google.com";
   CredentialInfo info(federated, CredentialType::CREDENTIAL_TYPE_FEDERATED);
-  EXPECT_CALL(*client_, PromptUserToSavePasswordPtr(_));
+  EXPECT_CALL(*client_, PromptUserToSavePasswordPtr(
+                            _, CredentialSourceType::CREDENTIAL_SOURCE_API));
   EXPECT_CALL(*client_, NotifyStorePasswordCalled());
 
   bool called = false;
@@ -505,7 +510,7 @@ TEST_F(CredentialManagerImplTest, CredentialManagerStoreOverwrite) {
   // the password without prompting the user.
   CredentialInfo info(form_, CredentialType::CREDENTIAL_TYPE_PASSWORD);
   info.password = base::ASCIIToUTF16("Totally new password.");
-  EXPECT_CALL(*client_, PromptUserToSavePasswordPtr(_)).Times(0);
+  EXPECT_CALL(*client_, PromptUserToSavePasswordPtr(_, _)).Times(0);
   EXPECT_CALL(*client_, NotifyStorePasswordCalled());
   bool called = false;
   CallStore(info, base::Bind(&RespondCallback, &called));
@@ -534,7 +539,7 @@ TEST_F(CredentialManagerImplTest,
   // credential with identical username and password should result in a silent
   // save without prompting the user.
   CredentialInfo info(form_, CredentialType::CREDENTIAL_TYPE_PASSWORD);
-  EXPECT_CALL(*client_, PromptUserToSavePasswordPtr(_))
+  EXPECT_CALL(*client_, PromptUserToSavePasswordPtr(_, _))
       .Times(testing::Exactly(0));
   EXPECT_CALL(*client_, NotifyStorePasswordCalled());
   bool called = false;
@@ -561,7 +566,7 @@ TEST_F(CredentialManagerImplTest,
   // credential but has a different username should prompt the user and not
   // result in a silent save.
   CredentialInfo info(form_, CredentialType::CREDENTIAL_TYPE_PASSWORD);
-  EXPECT_CALL(*client_, PromptUserToSavePasswordPtr(_))
+  EXPECT_CALL(*client_, PromptUserToSavePasswordPtr(_, _))
       .Times(testing::Exactly(1));
   EXPECT_CALL(*client_, NotifyStorePasswordCalled());
   bool called = false;
@@ -592,7 +597,7 @@ TEST_F(CredentialManagerImplTest,
   // credential but has a different password should prompt the user and not
   // result in a silent save.
   CredentialInfo info(form_, CredentialType::CREDENTIAL_TYPE_PASSWORD);
-  EXPECT_CALL(*client_, PromptUserToSavePasswordPtr(_))
+  EXPECT_CALL(*client_, PromptUserToSavePasswordPtr(_, _))
       .Times(testing::Exactly(1));
   EXPECT_CALL(*client_, NotifyStorePasswordCalled());
   bool called = false;
@@ -695,7 +700,7 @@ TEST_F(CredentialManagerImplTest,
   CredentialInfo info(form_, CredentialType::CREDENTIAL_TYPE_PASSWORD);
   EXPECT_CALL(*client_, IsSavingAndFillingEnabledForCurrentPage())
       .WillRepeatedly(testing::Return(false));
-  EXPECT_CALL(*client_, PromptUserToSavePasswordPtr(_))
+  EXPECT_CALL(*client_, PromptUserToSavePasswordPtr(_, _))
       .Times(testing::Exactly(0));
   EXPECT_CALL(*client_, NotifyStorePasswordCalled()).Times(0);
 
@@ -804,7 +809,7 @@ TEST_F(CredentialManagerImplTest,
 TEST_F(CredentialManagerImplTest,
        CredentialManagerOnRequestCredentialWithEmptyPasswordStore) {
   std::vector<GURL> federations;
-  EXPECT_CALL(*client_, PromptUserToSavePasswordPtr(_))
+  EXPECT_CALL(*client_, PromptUserToSavePasswordPtr(_, _))
       .Times(testing::Exactly(0));
   EXPECT_CALL(*client_, PromptUserToChooseCredentialsPtr(_, _, _))
       .Times(testing::Exactly(0));
@@ -923,7 +928,7 @@ TEST_F(CredentialManagerImplTest,
   store_->AddLogin(cross_origin_form_);
 
   std::vector<GURL> federations;
-  EXPECT_CALL(*client_, PromptUserToSavePasswordPtr(_))
+  EXPECT_CALL(*client_, PromptUserToSavePasswordPtr(_, _))
       .Times(testing::Exactly(0));
   EXPECT_CALL(*client_, PromptUserToChooseCredentialsPtr(_, _, _))
       .Times(testing::Exactly(0));
@@ -1530,7 +1535,8 @@ TEST_F(CredentialManagerImplTest, GetSynthesizedFormForOrigin) {
 }
 
 TEST_F(CredentialManagerImplTest, BlacklistPasswordCredential) {
-  EXPECT_CALL(*client_, PromptUserToSavePasswordPtr(_));
+  EXPECT_CALL(*client_, PromptUserToSavePasswordPtr(
+                            _, CredentialSourceType::CREDENTIAL_SOURCE_API));
 
   CredentialInfo info(form_, CredentialType::CREDENTIAL_TYPE_PASSWORD);
   bool called = false;
@@ -1559,7 +1565,8 @@ TEST_F(CredentialManagerImplTest, BlacklistFederatedCredential) {
   form_.password_value = base::string16();
   form_.signon_realm = "federation://example.com/example.com";
 
-  EXPECT_CALL(*client_, PromptUserToSavePasswordPtr(_));
+  EXPECT_CALL(*client_, PromptUserToSavePasswordPtr(
+                            _, CredentialSourceType::CREDENTIAL_SOURCE_API));
   CredentialInfo info(form_, CredentialType::CREDENTIAL_TYPE_FEDERATED);
   bool called = false;
   CallStore(info, base::Bind(&RespondCallback, &called));
@@ -1594,7 +1601,8 @@ TEST_F(CredentialManagerImplTest, RespectBlacklistingPasswordCredential) {
 
   CredentialInfo info(form_, CredentialType::CREDENTIAL_TYPE_PASSWORD);
   bool called = false;
-  EXPECT_CALL(*client_, PromptUserToSavePasswordPtr(_));
+  EXPECT_CALL(*client_, PromptUserToSavePasswordPtr(
+                            _, CredentialSourceType::CREDENTIAL_SOURCE_API));
   CallStore(info, base::Bind(&RespondCallback, &called));
   // Allow the PasswordFormManager to talk to the password store
   RunAllPendingTasks();
@@ -1615,7 +1623,8 @@ TEST_F(CredentialManagerImplTest, RespectBlacklistingFederatedCredential) {
   form_.signon_realm = "federation://example.com/example.com";
   CredentialInfo info(form_, CredentialType::CREDENTIAL_TYPE_FEDERATED);
   bool called = false;
-  EXPECT_CALL(*client_, PromptUserToSavePasswordPtr(_));
+  EXPECT_CALL(*client_, PromptUserToSavePasswordPtr(
+                            _, CredentialSourceType::CREDENTIAL_SOURCE_API));
   CallStore(info, base::Bind(&RespondCallback, &called));
   // Allow the PasswordFormManager to talk to the password store
   RunAllPendingTasks();
