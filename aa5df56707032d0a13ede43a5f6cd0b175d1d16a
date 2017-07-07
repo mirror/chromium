@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa546938_964dd8b9",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-07T00:26:11Z",
+      "side": 1,
+      "message": "If you want, it\u0027s possible to write \"nullptr\" here.\n\nI don\u0027t feel strongly (I actually think it\u0027s clearer to write out the typename when it\u0027s not an interface ptr / struct ptr)",
+      "range": {
+        "startLine": 204,
+        "startChar": 8,
+        "endLine": 204,
+        "endChar": 50
+      },
+      "revId": "aa5df56707032d0a13ede43a5f6cd0b175d1d16a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
