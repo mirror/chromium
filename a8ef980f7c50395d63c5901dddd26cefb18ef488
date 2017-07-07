@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09fd7248_dc611735",
+        "filename": "ash/laser/laser_pointer_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-07T19:15:28Z",
+      "side": 1,
+      "message": "Is there no DEPS change needed for viz/common/quads/? Looks like this needs to IWYU.",
+      "revId": "a8ef980f7c50395d63c5901dddd26cefb18ef488",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d50babbb_3b863fb8",
+        "filename": "cc/DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-07T19:15:28Z",
+      "side": 1,
+      "message": "can you specify quads and resources?",
+      "revId": "a8ef980f7c50395d63c5901dddd26cefb18ef488",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efaa6701_9ded68a6",
+        "filename": "components/exo/buffer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-07T19:15:28Z",
+      "side": 1,
+      "message": "is there no DEPS on viz/common/quads needed for this? looks like it should be IWYU",
+      "revId": "a8ef980f7c50395d63c5901dddd26cefb18ef488",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cac5ae8_0c6183bf",
+        "filename": "components/viz/common/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-07T19:15:28Z",
+      "side": 1,
+      "message": "Can you verify you have everything needed to DEPS in quads/ and resources/? I don\u0027t see base or skia but maybe they come for free? Not sure if anything else.\n\nI\u0027m deleting all inherited deps for them in https://chromium-review.googlesource.com/c/563522/.",
+      "revId": "a8ef980f7c50395d63c5901dddd26cefb18ef488",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d745a636_ad1b8e6c",
+        "filename": "components/viz/common/resources/DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-07T19:15:28Z",
+      "side": 1,
+      "message": "-whitespace",
+      "revId": "a8ef980f7c50395d63c5901dddd26cefb18ef488",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a677f716_f4be5285",
+        "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasFrameDispatcherImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-07T19:15:28Z",
+      "side": 1,
+      "message": "Is there no DEPS on viz/common/quads needed for this? looks like it should be IWYU",
+      "revId": "a8ef980f7c50395d63c5901dddd26cefb18ef488",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d13267a_663e4861",
+        "filename": "ui/compositor/compositor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-07T19:15:28Z",
+      "side": 1,
+      "message": "+DEPS on viz/common/quads/ and IWYU also",
+      "revId": "a8ef980f7c50395d63c5901dddd26cefb18ef488",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
