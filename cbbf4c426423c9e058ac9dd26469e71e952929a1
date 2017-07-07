@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49f7df60_905f96b9",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 80449,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-07-07T18:06:53Z",
+      "side": 1,
+      "message": "nit, usually like when the message mentions the month it was removed.",
+      "revId": "cbbf4c426423c9e058ac9dd26469e71e952929a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
