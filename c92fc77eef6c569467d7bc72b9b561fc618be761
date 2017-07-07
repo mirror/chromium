@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e6ecd9d_6959952e",
+        "filename": "components/variations/service/variations_seed_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-07T13:48:26Z",
+      "side": 1,
+      "message": "Please order functions in .cc in the same order as .h.",
+      "range": {
+        "startLine": 43,
+        "startChar": 12,
+        "endLine": 43,
+        "endChar": 33
+      },
+      "revId": "c92fc77eef6c569467d7bc72b9b561fc618be761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9af429e9_6dd81b35",
+        "filename": "components/variations/service/variations_seed_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-07T13:48:26Z",
+      "side": 1,
+      "message": "It doesn\u0027t seem that this class really manages the variations seed?\n\nMaybe VariationsFieldTrialCreator?",
+      "range": {
+        "startLine": 23,
+        "startChar": 6,
+        "endLine": 23,
+        "endChar": 27
+      },
+      "revId": "c92fc77eef6c569467d7bc72b9b561fc618be761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "943cb9cd_a3d6c22b",
+        "filename": "components/variations/service/variations_seed_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-07T13:48:26Z",
+      "side": 1,
+      "message": "Add a comment.",
+      "range": {
+        "startLine": 41,
+        "startChar": 15,
+        "endLine": 41,
+        "endChar": 25
+      },
+      "revId": "c92fc77eef6c569467d7bc72b9b561fc618be761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0c1b387_088f28c9",
+        "filename": "components/variations/service/variations_seed_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-07T13:48:26Z",
+      "side": 1,
+      "message": "Functions should come before fields.\n\nAlso, please add a private: section and DISALLOW_COPY_AND_ASSIGN().",
+      "range": {
+        "startLine": 68,
+        "startChar": 36,
+        "endLine": 68,
+        "endChar": 0
+      },
+      "revId": "c92fc77eef6c569467d7bc72b9b561fc618be761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c40e5f9_4e9ab712",
+        "filename": "components/variations/service/variations_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-07T13:48:26Z",
+      "side": 1,
+      "message": "If you\u0027re overriding a method, the comment should be in the base class and the class overriding it should just have comment:\n\n// BaseClassName:",
+      "range": {
+        "startLine": 179,
+        "startChar": 15,
+        "endLine": 179,
+        "endChar": 25
+      },
+      "revId": "c92fc77eef6c569467d7bc72b9b561fc618be761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
