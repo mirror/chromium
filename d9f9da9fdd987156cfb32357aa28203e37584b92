@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b6d04f99_c39aa9db",
+        "filename": "content/browser/service_worker/embedded_worker_instance.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-07T05:11:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea4be8f7_55144749",
+      "revId": "d9f9da9fdd987156cfb32357aa28203e37584b92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82722370_1065b9c2",
         "filename": "content/browser/service_worker/embedded_worker_instance.cc",
         "patchSetId": 2
@@ -42,6 +60,47 @@
     },
     {
       "key": {
+        "uuid": "80cfce6e_de7a02ad",
+        "filename": "content/browser/service_worker/embedded_worker_instance.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-07T05:11:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "82722370_1065b9c2",
+      "range": {
+        "startLine": 142,
+        "startChar": 2,
+        "endLine": 146,
+        "endChar": 46
+      },
+      "revId": "d9f9da9fdd987156cfb32357aa28203e37584b92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f6feb067_62a621e9",
+        "filename": "content/browser/service_worker/embedded_worker_instance.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-07T05:11:16Z",
+      "side": 1,
+      "message": "Removed this to simplify code as it\u0027s not really needed. It just checks that AllocateWorkerProcess() sets proc id -1 when it returns error, which we don\u0027t really need to guarantee.",
+      "revId": "d9f9da9fdd987156cfb32357aa28203e37584b92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ab152be5_1ac0629a",
         "filename": "content/browser/service_worker/service_worker_process_manager.h",
         "patchSetId": 2
@@ -56,6 +115,24 @@
       "revId": "d9f9da9fdd987156cfb32357aa28203e37584b92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b47c64ed_fa2d64f3",
+        "filename": "content/browser/service_worker/service_worker_process_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-07T05:11:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab152be5_1ac0629a",
+      "revId": "d9f9da9fdd987156cfb32357aa28203e37584b92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
