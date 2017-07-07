@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1ae3d1e5_37cf3539",
+        "filename": "components/cronet/ios/DEPS",
+        "patchSetId": 16
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-07-07T17:15:55Z",
+      "side": 1,
+      "message": "//ios/web:user_agent only has sources from ios/web/public, so this include_rule change shouldn\u0027t be an issue.\n\ntl;dr Yes! But not right now.\n\nUnfortunately, the BUILD.gn file at ios/web/BUILD.gn is in need of (a lot of) refactoring. There is currently no BUILD file at ios/web/public. I think this target at least (since it\u0027s so simple) should be moved into a new BUILD file inside of public, but I don\u0027t want to introduce such a non-trivial change into this CL. (There are 10 references to :user_agent just inside of the //ios/web/BUILD.gn file itself.) This is actually logged here: crbug.com/684616",
+      "parentUuid": "024321a8_b5490a84",
+      "range": {
+        "startLine": 3,
+        "startChar": 8,
+        "endLine": 3,
+        "endChar": 11
+      },
+      "revId": "294dd97eff7cfebd0f6c3024a86e795070f71ca2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ae57c75b_4d792917",
         "filename": "ios/web/public/global_state/ios_global_state.mm",
         "patchSetId": 16
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-07T16:55:41Z",
       "side": 1,
       "message": "I\u0027m a little confused now. Is ios/web/app/web_main_loop.mm used by Cronet?",
+      "range": {
+        "startLine": 55,
+        "startChar": 4,
+        "endLine": 55,
+        "endChar": 68
+      },
+      "revId": "294dd97eff7cfebd0f6c3024a86e795070f71ca2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ef83225_bd8759e9",
+        "filename": "ios/web/public/global_state/ios_global_state.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-07-07T17:15:55Z",
+      "side": 1,
+      "message": "Sorry Robert, there is probably some context missing.\n\nNo, it isn\u0027t used by Cronet. Cronet creates it\u0027s own environment right now in https://cs.chromium.org/chromium/src/components/cronet/ios/cronet_environment.mm\n\nThis CL aims to move the minimum required shared components such that Cronet and ChromeWebView can be used alone, but also will function together in the shared CronetChromeWebView framework without DCHECKing due to multiple objects being created where it is enforced that only one exists.\n\nI would be happy to provide more info here or feel free to ping me and I can explain further.",
+      "parentUuid": "ae57c75b_4d792917",
       "range": {
         "startLine": 55,
         "startChar": 4,
