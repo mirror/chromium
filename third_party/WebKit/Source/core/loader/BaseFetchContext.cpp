@@ -100,6 +100,18 @@ ResourceRequestBlockedReason BaseFetchContext::AllowResponse(
   return blocked_reason;
 }
 
+void BaseFetchContext::UpdatePersistentClientHints(
+    const KURL& url,
+    bool enabled_types[kWebClientHintsTypeNumValues],
+    int64_t persist_duration_seconds) {
+  if (persist_duration_seconds <= 0 || !GetContentSettingsClient()) {
+    return;
+  }
+
+  GetContentSettingsClient()->SetAllowClientHintsFromSource(
+      enabled_types, persist_duration_seconds, url);
+}
+
 void BaseFetchContext::PrintAccessDeniedMessage(const KURL& url) const {
   if (url.IsNull())
     return;

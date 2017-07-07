@@ -31,10 +31,12 @@ TEST_F(ClientHintsPreferencesTest, Basic) {
 
     preferences.UpdateFromAcceptClientHintsHeader(value, nullptr);
     EXPECT_EQ(test_case.expectation_resource_width,
-              preferences.ShouldSendResourceWidth());
-    EXPECT_EQ(test_case.expectation_dpr, preferences.ShouldSendDPR());
-    EXPECT_EQ(test_case.expectation_viewport_width,
-              preferences.ShouldSendViewportWidth());
+              preferences.ShouldSend(kWebClientHintsTypeResourceWidth));
+    EXPECT_EQ(test_case.expectation_dpr,
+              preferences.ShouldSend(kWebClientHintsTypeDPR));
+    EXPECT_EQ(
+        test_case.expectation_viewport_width,
+        preferences.ShouldSendViewportWidth(kWebClientHintsTypeViewportWidth));
   }
 }
 

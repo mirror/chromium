@@ -18,6 +18,7 @@
 namespace blink {
 
 class ConsoleMessage;
+class ContentSettingsClient;
 class KURL;
 class SecurityOrigin;
 class SubresourceFilter;
@@ -47,6 +48,10 @@ class CORE_EXPORT BaseFetchContext : public FetchContext {
       const ResourceRequest&,
       const KURL&,
       const ResourceLoaderOptions&) const override;
+  void UpdatePersistentClientHints(
+      const KURL&,
+      bool enabled_types[kWebClientHintsTypeNumValues],
+      int64_t persist_duration_seconds) override;
 
   DECLARE_VIRTUAL_TRACE();
 
@@ -55,7 +60,9 @@ class CORE_EXPORT BaseFetchContext : public FetchContext {
   virtual void CountDeprecation(WebFeature) const = 0;
 
  protected:
-  // Used for security checks.
+  // Used for security checks. It is valid that they return nullptr,
+  // while returning nullptr may result in disable some security checks.
+  virtual ContentSettingsClient* GetContentSettingsClient() const = 0;
   virtual bool AllowScriptFromSource(const KURL&) const = 0;
   virtual SubresourceFilter* GetSubresourceFilter() const = 0;
 

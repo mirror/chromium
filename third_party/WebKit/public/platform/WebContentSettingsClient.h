@@ -5,6 +5,7 @@
 #ifndef WebContentSettingsClient_h
 #define WebContentSettingsClient_h
 
+#include "public/platform/WebClientHintsType.h"
 #include "public/platform/WebContentSettingCallbacks.h"
 
 namespace blink {
@@ -55,6 +56,17 @@ class WebContentSettingsClient {
                                      const WebURL& script_url) {
     return enabled_per_settings;
   }
+
+  virtual bool AllowClientHintFromSource(bool enabled_per_settings,
+                                         WebClientHintsType type,
+                                         const blink::WebURL& url) {
+    return enabled_per_settings;
+  }
+
+  virtual void SetAllowClientHintsFromSource(
+      const bool enabled_types[kWebClientHintsTypeNumValues],
+      int64_t duration_seconds,
+      const blink::WebURL& url) {}
 
   // Controls whether insecure scripts are allowed to execute for this frame.
   virtual bool AllowRunningInsecureContent(bool enabled_per_settings,

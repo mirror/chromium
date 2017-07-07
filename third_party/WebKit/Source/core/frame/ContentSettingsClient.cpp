@@ -58,6 +58,24 @@ bool ContentSettingsClient::AllowScriptFromSource(bool enabled_per_settings,
   return enabled_per_settings;
 }
 
+bool ContentSettingsClient::AllowClientHintFromSource(bool enabled_per_settings,
+                                                      WebClientHintsType type,
+                                                      const KURL& url) {
+  if (client_)
+    return client_->AllowClientHintFromSource(enabled_per_settings, type, url);
+  return enabled_per_settings;
+}
+
+void ContentSettingsClient::SetAllowClientHintsFromSource(
+    const bool enabled_types[kWebClientHintsTypeNumValues],
+    int64_t duration_seconds,
+    const KURL& url) {
+  if (client_) {
+    return client_->SetAllowClientHintsFromSource(enabled_types,
+                                                  duration_seconds, url);
+  }
+}
+
 bool ContentSettingsClient::AllowImage(bool enabled_per_settings,
                                        const KURL& image_url) {
   if (client_)

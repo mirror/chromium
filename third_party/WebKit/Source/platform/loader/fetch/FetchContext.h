@@ -230,6 +230,11 @@ class PLATFORM_EXPORT FetchContext
   // Returns a "detached" fetch context which can be null.
   virtual FetchContext* Detach() { return nullptr; }
 
+  virtual void UpdatePersistentClientHints(
+      const KURL& url,
+      bool enabled_types[kWebClientHintsTypeNumValues],
+      int64_t persist_duration_seconds) {}
+
  protected:
   FetchContext();
 

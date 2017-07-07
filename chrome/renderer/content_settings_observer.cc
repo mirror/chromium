@@ -7,6 +7,10 @@
 #include "chrome/common/render_messages.h"
 #include "chrome/common/ssl_insecure_content.h"
 #include "components/content_settings/core/common/content_settings.h"
+#include "components/content_settings/core/common/content_settings.mojom.h"
+#include "components/content_settings/core/common/content_settings_pattern.h"
+#include "components/content_settings/core/common/content_settings_utils.h"
+#include "content/public/common/associated_interface_provider.h"
 #include "content/public/common/url_constants.h"
 #include "content/public/renderer/document_state.h"
 #include "content/public/renderer/render_frame.h"
@@ -22,6 +26,7 @@
 #include "third_party/WebKit/public/web/WebFrameClient.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
 #include "third_party/WebKit/public/web/WebView.h"
+#include "url/gurl.h"
 #include "url/origin.h"
 #include "url/url_constants.h"
 
@@ -103,6 +108,10 @@ ContentSettingsObserver::ContentSettingsObserver(
       is_interstitial_page_(false),
       current_request_id_(0),
       should_whitelist_(should_whitelist) {
+  // todo: how frequently is this created? once per ??
+  // When user blocks cookies, that should also block CH, but it is not
+  // clear how that info should be propagated down here.
+  // The answer depends on how frequently this is ctored.
   ClearBlockedContentSettings();
   render_frame->GetWebFrame()->SetContentSettingsClient(this);
 
@@ -341,6 +350,20 @@ bool ContentSettingsObserver::AllowScriptFromSource(
     allow = setting != CONTENT_SETTING_BLOCK;
   }
   return allow || IsWhitelistedForContentSettings();
+}
+
+bool ContentSettingsObserver::AllowClientHintFromSource(
+    bool enabled_per_settings,
+    blink::WebClientHintsType type,
+    const blink::WebURL& url) {
+  return false;
+}
+
+void ContentSettingsObserver::SetAllowClientHintsFromSource(
+    const bool enabled_types[blink::kWebClientHintsTypeNumValues],
+    int64_t duration_seconds,
+    const blink::WebURL& url) {
+  // TODO (tbansal): Send it back to browser.
 }
 
 bool ContentSettingsObserver::AllowStorage(bool local) {
