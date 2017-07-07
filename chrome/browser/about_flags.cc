@@ -3137,6 +3137,13 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kEnableNetworkServiceDescription, kOsAll,
      FEATURE_VALUE_TYPE(features::kNetworkService)},
 
+#if defined(OS_CHROMEOS)
+    {"hide-titlebars-for-tablet",
+     flag_descriptions::kHideTitlebarsForTabletName,
+     flag_descriptions::kHideTitlebarsForTabletDescription, kOsCrOS,
+     SINGLE_VALUE_TYPE(ash::switches::kAshHideTitlebarsForTablet)},
+#endif  // OS_CHROMEOS
+
     // NOTE: Adding new command-line switches requires adding corresponding
     // entries to enum "LoginCustomFlags" in histograms/enums.xml. See note in
     // enums.xml and don't forget to run AboutFlagsHistogramTest unit test.
