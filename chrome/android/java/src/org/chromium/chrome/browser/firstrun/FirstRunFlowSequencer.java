@@ -384,17 +384,10 @@ public abstract class FirstRunFlowSequencer  {
                 List<WeakReference<Activity>> activities = ApplicationStatus.getRunningActivities();
                 for (WeakReference<Activity> weakActivity : activities) {
                     Activity activity = weakActivity.get();
-                    if (activity == null) {
-                        continue;
-                    } else if (activity instanceof LightweightFirstRunActivity) {
-                        // A Generic or a new Lightweight First Run Experience will be launched
-                        // below, so finish the old Lightweight First Run Experience.
-                        activity.setResult(Activity.RESULT_CANCELED);
-                        activity.finish();
-                        continue;
-                    } else if (activity instanceof FirstRunActivity) {
+                    if (activity instanceof FirstRunActivity
+                            && !(activity instanceof LightweightFirstRunActivity)) {
                         isGenericFreActive = true;
-                        continue;
+                        break;
                     }
                 }
 
@@ -410,7 +403,6 @@ public abstract class FirstRunFlowSequencer  {
             addPendingIntent(caller, freIntent, intent, requiresBroadcast);
             freIntent.putExtra(FirstRunActivity.EXTRA_FINISH_ON_TOUCH_OUTSIDE, true);
 
-            if (!(caller instanceof Activity)) freIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             IntentUtils.safeStartActivity(caller, freIntent);
         } else {
             // First Run requires that the Intent contains NEW_TASK so that it doesn't sit on top
