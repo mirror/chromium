@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75785d56_d76d10ae",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 1600,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-07T22:22:24Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem to match the server-side config.  I\u0027m not comfortable testing the combined perf impact if the server-side configs are on track to potentially launch the features separately.",
+      "range": {
+        "startLine": 1600,
+        "startChar": 68,
+        "endLine": 1600,
+        "endChar": 0
+      },
+      "revId": "8ab692c8ea1921097ab771e27c22d830c1f647ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
