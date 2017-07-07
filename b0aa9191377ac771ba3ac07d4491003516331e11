@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3039c92_43c9d855",
+        "filename": "base/value_iterators.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-07T16:55:56Z",
+      "side": 1,
+      "message": "Can you explain what additional functionality this provides over just having\n\nusing dict_iterator \u003d DictStorage::iterator; type of alias?\n\nAlso, could you add brief class comments to say what each class does (although it\u0027s just an iterator)",
+      "revId": "b0aa9191377ac771ba3ac07d4491003516331e11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "445d515a_b12bac82",
+        "filename": "base/values.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-07T16:55:56Z",
+      "side": 1,
+      "message": "Can you add brief comments for the new functions describing what they do?",
+      "revId": "b0aa9191377ac771ba3ac07d4491003516331e11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6c43e7d_56b8d2af",
+        "filename": "base/values_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-07T16:55:56Z",
+      "side": 1,
+      "message": "It\u0027s not very intuitive that the return type of dict.FindKey would need to be compared against something nested (dict.DictItems().end()). Should Value provide an \"end\" top level function so that you could check whether dict.FindKey(\"foo\") \u003d\u003d dict.end() or something similar?\n\nOr alternatively, dict.DictItems() should have FindKey, not the top level dict?\n\n(sorry if I\u0027m missing something, it just seems to be a mispatch between what object returns the found iterator and what object returns the end iterator)",
+      "revId": "b0aa9191377ac771ba3ac07d4491003516331e11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
