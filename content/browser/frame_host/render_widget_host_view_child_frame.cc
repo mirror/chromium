@@ -152,7 +152,7 @@ void RenderWidgetHostViewChildFrame::SetCrossProcessFrameConnector(
 }
 
 void RenderWidgetHostViewChildFrame::OnManagerWillDestroy(
-    TouchSelectionControllerClientManager* manager) {
+    class TouchSelectionControllerClientManager* manager) {
   // We get the manager via the observer callback instead of through the
   // frame_connector_ since our connection to the root_view may disappear by
   // the time this function is called, but before frame_connector_ is reset.
