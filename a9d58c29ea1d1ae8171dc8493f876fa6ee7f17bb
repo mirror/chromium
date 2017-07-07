@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef8adfe8_be53a144",
+        "filename": "ios/clean/chrome/browser/ui/web_contents/web_contents_mediator_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-07T12:48:50Z",
+      "side": 1,
+      "message": "Missing associated change in ios/clean/chrome/browser/ui/tab/BUILD.gn (what breaks the bots).",
+      "revId": "a9d58c29ea1d1ae8171dc8493f876fa6ee7f17bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
