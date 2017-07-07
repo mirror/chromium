@@ -733,6 +733,17 @@ AutomationInternalCustomBindings::AutomationInternalCustomBindings(
       result.Set(v8::String::NewFromUtf8(isolate, checked_str.c_str()));
     }
   });
+  RouteNodeIDFunction("GetRestrictions", [](v8::Isolate* isolate,
+                                            v8::ReturnValue<v8::Value> result,
+                                            TreeCache* cache,
+                                            ui::AXNode* node) {
+    const ui::AXRestrictions restrictions = static_cast<ui::AXRestrictions>(
+        node->data().GetIntAttribute(ui::AX_ATTR_RESTRICTIONS));
+    if (restrictions) {
+      const std::string restrictions_str = ui::ToString(restrictions);
+      result.Set(v8::String::NewFromUtf8(isolate, restrictions_str.c_str()));
+    }
+  });
 }
 
 AutomationInternalCustomBindings::~AutomationInternalCustomBindings() {}
@@ -804,6 +815,10 @@ void AutomationInternalCustomBindings::GetSchemaAdditions(
   for (int i = ui::AX_NAME_FROM_NONE; i <= ui::AX_NAME_FROM_LAST; ++i)
     name_from_type.Set(i, ui::ToString(static_cast<ui::AXNameFrom>(i)));
 
+  gin::DataObjectBuilder restrictions(isolate);
+  for (int i = ui::AX_RESTRICTIONS_NONE; i <= ui::AX_RESTRICTIONS_LAST; ++i)
+    restrictions.Set(i, ui::ToString(static_cast<ui::AXRestrictions>(i)));
+
   gin::DataObjectBuilder description_from_type(isolate);
   for (int i = ui::AX_DESCRIPTION_FROM_NONE; i <= ui::AX_DESCRIPTION_FROM_LAST;
        ++i) {
@@ -814,6 +829,7 @@ void AutomationInternalCustomBindings::GetSchemaAdditions(
   args.GetReturnValue().Set(
       gin::DataObjectBuilder(isolate)
           .Set("NameFromType", name_from_type.Build())
+          .Set("Restrictions", restrictions.Build())
           .Set("DescriptionFromType", description_from_type.Build())
           .Build());
 }

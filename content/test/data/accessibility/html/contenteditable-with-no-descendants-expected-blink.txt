@@ -1,6 +1,6 @@
 rootWebArea
 ++genericContainer editable richlyEditable name='label'
-++genericContainer editable richlyEditable description='description' descriptionFrom=5
+++genericContainer editable richlyEditable description='description' descriptionFrom=relatedElement
 ++genericContainer editable richlyEditable name='title'
 ++paragraph
 ++++staticText name='description'
