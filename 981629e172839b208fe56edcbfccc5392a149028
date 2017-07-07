@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2428dbe6_f8cf7f28",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 62123,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-07T09:57:52Z",
+      "side": 1,
+      "message": "FYI, you may upload a patch set just after a rebase to make it obvious that these are not your changes, but rebase.",
+      "range": {
+        "startLine": 62123,
+        "startChar": 0,
+        "endLine": 62123,
+        "endChar": 1
+      },
+      "revId": "981629e172839b208fe56edcbfccc5392a149028",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

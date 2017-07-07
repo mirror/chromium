@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "43b8e162_9c4fef22",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 45155,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-07T09:57:52Z",
+      "side": 1,
+      "message": "Indeed.",
+      "parentUuid": "f418b1a5_59f389ed",
+      "range": {
+        "startLine": 45154,
+        "startChar": 23,
+        "endLine": 45155,
+        "endChar": 14
+      },
+      "revId": "76b3b28b78dfa88993bc8cd46607076e634ad5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6cf00e20_6b4f6326",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 4
@@ -328,6 +352,30 @@
       "revId": "76b3b28b78dfa88993bc8cd46607076e634ad5ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d526a6c1_dd0dcdb6",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 97304,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-07T09:57:52Z",
+      "side": 1,
+      "message": "Ack.\n\nHowever, I deprecated a metric recently without adding \u003cobsolete\u003e here and \nOWNER was (implicitly) fine with that.",
+      "parentUuid": "80cf4b6b_a6d61bcf",
+      "range": {
+        "startLine": 97302,
+        "startChar": 2,
+        "endLine": 97304,
+        "endChar": 14
+      },
+      "revId": "76b3b28b78dfa88993bc8cd46607076e634ad5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
