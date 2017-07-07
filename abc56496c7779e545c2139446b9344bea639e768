@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fae6a446_63830024",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2947,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-07T19:27:06Z",
+      "side": 1,
+      "message": "Yes, this seems the right way of doing it. MediaInterfaceProvider is only for OOP media playback services. Dan and I chat about this and maybe I should rename things to make it more clear.",
+      "parentUuid": "86f03b04_aba70d56",
+      "revId": "abc56496c7779e545c2139446b9344bea639e768",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "095cb953_efc8aa58",
         "filename": "media/blink/watch_time_reporter.h",
         "patchSetId": 5
@@ -47,6 +65,24 @@
       "writtenOn": "2017-07-07T19:09:47Z",
       "side": 1,
       "message": "Xiaohan, I wonder if instead we should put this in its own mojom as something like MediaMetricsProvider; which at the moment would only provide a WatchTimeRecorder. I.e., it would be our home for any future metrics interfaces we might add.",
+      "revId": "abc56496c7779e545c2139446b9344bea639e768",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0cb1492_fbc87b05",
+        "filename": "media/mojo/interfaces/watch_time_recorder.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-07T19:27:06Z",
+      "side": 1,
+      "message": "sg, but do you have anything planned in your mind?\n\nIn the future we\u0027ll also need to replace the current MediaLog IPC with mojo. Will that also go into MediaMetricsProvider? It\u0027s not metrics, but seems very close.",
+      "parentUuid": "998f7dff_97eb5453",
       "revId": "abc56496c7779e545c2139446b9344bea639e768",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
