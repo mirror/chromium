@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d99ba04b_9cb8939d",
+        "filename": "media/base/scoped_callback_runner.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-07T08:15:34Z",
+      "side": 1,
+      "message": "I see. I wondered why you needed BoundArgs :)\n\nDone. And added a test using base::Owned.",
+      "parentUuid": "3eee0d17_3ae259ce",
+      "range": {
+        "startLine": 41,
+        "startChar": 52,
+        "endLine": 41,
+        "endChar": 56
+      },
+      "revId": "a0576776e7106068ad9c8a9e8ca91dca108b8f1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "564791c3_3d4f95e2",
         "filename": "media/base/scoped_callback_runner.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "a0576776e7106068ad9c8a9e8ca91dca108b8f1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67eb31f4_e990e926",
+        "filename": "media/base/scoped_callback_runner.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-07T08:15:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "564791c3_3d4f95e2",
+      "range": {
+        "startLine": 61,
+        "startChar": 2,
+        "endLine": 61,
+        "endChar": 0
+      },
+      "revId": "a0576776e7106068ad9c8a9e8ca91dca108b8f1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
