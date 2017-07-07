@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ddb84b2_5c119e6b",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerGlobalScope.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-07T14:06:10Z",
+      "side": 1,
+      "message": "maybe DispatchExtendableEventWithRespondWith",
+      "range": {
+        "startLine": 213,
+        "startChar": 5,
+        "endLine": 213,
+        "endChar": 29
+      },
+      "revId": "ad10fa9d49dcb9293d556716afb15aafc61af2c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9832663_ef9b170a",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerGlobalScope.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-07T14:06:10Z",
+      "side": 1,
+      "message": "nit: this function is more generic than payment request now\n\n\"waitUntil() for events with respondWith()\" ?",
+      "revId": "ad10fa9d49dcb9293d556716afb15aafc61af2c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20c5c2f2_a64c461e",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerGlobalScope.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-07T14:06:10Z",
+      "side": 1,
+      "message": "Add some docu:\n// For ExtendableEvents that also have a respondWith() function.",
+      "revId": "ad10fa9d49dcb9293d556716afb15aafc61af2c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
