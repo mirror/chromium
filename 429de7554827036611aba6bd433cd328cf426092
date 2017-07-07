@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "751be6d2_dbd7f268",
+        "filename": "chrome/browser/password_manager/chrome_password_manager_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-07T10:50:12Z",
+      "side": 1,
+      "message": "Ack.",
+      "parentUuid": "28e11a39_b04924af",
+      "revId": "429de7554827036611aba6bd433cd328cf426092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec92dd41_bf422d3c",
         "filename": "chrome/browser/password_manager/chrome_password_manager_client.cc",
         "patchSetId": 4
@@ -104,6 +122,24 @@
       "revId": "429de7554827036611aba6bd433cd328cf426092",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bf7fb54_5e0f4c64",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-07T10:50:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e4bb8e08_903115bb",
+      "revId": "429de7554827036611aba6bd433cd328cf426092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
