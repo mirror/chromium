@@ -16,6 +16,24 @@
       "revId": "706d56c87a85b64f0b3fb7f3af4aaa41d0e3dcc5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c8346ba_e55ea5bb",
+        "filename": "components/offline_pages/core/offline_page_model_impl_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-07-07T00:42:35Z",
+      "side": 1,
+      "message": "Added more robust tests",
+      "parentUuid": "06131cae_1fcc43f4",
+      "revId": "706d56c87a85b64f0b3fb7f3af4aaa41d0e3dcc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
