@@ -183,6 +183,7 @@ SKIP_GN_ISOLATE_MAP_TARGETS = {
   'net_junit_tests',
   'net_junit_tests',
   'service_junit_tests',
+  'system_webview_shell_layout_test_apk',
   'ui_junit_tests',
   'vrcore_fps_test',
   'webapk_client_junit_tests',
