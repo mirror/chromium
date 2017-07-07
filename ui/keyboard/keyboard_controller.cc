@@ -274,9 +274,9 @@ void CallbackAnimationObserver::OnLayerAnimationAborted(
 // static
 KeyboardController* KeyboardController::instance_ = NULL;
 
-KeyboardController::KeyboardController(KeyboardUI* ui,
+KeyboardController::KeyboardController(std::unique_ptr<KeyboardUI> ui,
                                        KeyboardLayoutDelegate* delegate)
-    : ui_(ui),
+    : ui_(std::move(ui)),
       layout_delegate_(delegate),
       input_method_(NULL),
       keyboard_visible_(false),
@@ -285,7 +285,7 @@ KeyboardController::KeyboardController(KeyboardUI* ui,
       keyboard_mode_(FULL_WIDTH),
       state_(KeyboardControllerState::UNKNOWN),
       weak_factory_(this) {
-  CHECK(ui);
+  CHECK(ui_);
   input_method_ = ui_->GetInputMethod();
   input_method_->AddObserver(this);
   ui_->SetController(this);
