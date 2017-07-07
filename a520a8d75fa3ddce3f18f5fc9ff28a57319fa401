@@ -34,6 +34,24 @@
       "revId": "a520a8d75fa3ddce3f18f5fc9ff28a57319fa401",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0068db1a_d45c5f86",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwContents.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1629,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-07T20:54:40Z",
+      "side": 1,
+      "message": "\u003e If you\u0027re talking about NavigationControllerImpl::NavigateToPendingEntry, then yes, it appears to treat a second load of the pending entry as a reload in reload_type.  (I\u0027m a bit confused why we need the code here, since this path also goes through that logic and the conditions don\u0027t match.  Should we be updating the PageTransition in a consistent way as reload_type?)\n\nHa, I wrote that, 4.5 years ago https://chromiumcodereview.appspot.com/11567019#msg3\n\nMaybe at that time, that reload logic was in chrome code; at least this wasn\u0027t able to trigger the reload logic or some reason.\n\nDoes seem like should test if NavigationControllerImpl::NavigateToPendingEntry can just replace this and remove this altogether.\n\nBut yeah, this is fine for now",
+      "parentUuid": "ad3e466e_bfd0bd75",
+      "revId": "a520a8d75fa3ddce3f18f5fc9ff28a57319fa401",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
