@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "cdf9440f_ba1b3386",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 18
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-07-07T05:21:02Z",
+      "side": 1,
+      "message": "also for only one ResourceFetcher?",
+      "range": {
+        "startLine": 12,
+        "startChar": 43,
+        "endLine": 12,
+        "endChar": 59
+      },
+      "revId": "b2ea9b091f547142a679c8e48c5bc9a69ac950bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "622cbcd2_1b58ff0b",
         "filename": "third_party/WebKit/Source/core/html/parser/CSSPreloadScanner.cpp",
         "patchSetId": 18
@@ -93,6 +116,46 @@
       "revId": "b2ea9b091f547142a679c8e48c5bc9a69ac950bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f543cf74_7250751e",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ImageResource.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-07-07T05:21:02Z",
+      "side": 1,
+      "message": "(I\u0027m not so sure about what condition to be used here... hajimehoshi@?)",
+      "revId": "b2ea9b091f547142a679c8e48c5bc9a69ac950bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5dd4bab_399389bc",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-07-07T05:21:02Z",
+      "side": 1,
+      "message": "|!is_unused_preload|? (not so sure though)\n\nOr how about removing |this| unconditionally, i.e.\nif (IsMainThread())\n  GetMemoryCache()-\u003eRemove(this);\n\n(I originally thought this can be done independently (https://chromium-review.googlesource.com/c/544363/11/third_party%252FWebKit%252FSource%252Fplatform%252Floader%252Ffetch%252FResource.cpp#401), but now I feel that doing this one-line change and then committing this CL might be simple)",
+      "range": {
+        "startLine": 400,
+        "startChar": 34,
+        "endLine": 400,
+        "endChar": 52
+      },
+      "revId": "b2ea9b091f547142a679c8e48c5bc9a69ac950bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
