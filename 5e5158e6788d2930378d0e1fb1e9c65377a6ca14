@@ -34,6 +34,24 @@
       "revId": "5e5158e6788d2930378d0e1fb1e9c65377a6ca14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf2ceea7_7539ef21",
+        "filename": "third_party/WebKit/Source/core/layout/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1214,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-07-07T21:59:22Z",
+      "side": 1,
+      "message": "That all makes sense, but my question was, why isn\u0027t it zero when RLS is disabled?",
+      "parentUuid": "50487d63_d69dcac6",
+      "revId": "5e5158e6788d2930378d0e1fb1e9c65377a6ca14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
