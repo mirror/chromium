@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "28032e94_5360a3cd",
+        "filename": "chrome/browser/ntp_tiles/ntp_tiles_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-07T15:21:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee72f6a8_1c38035e",
+      "range": {
+        "startLine": 33,
+        "startChar": 72,
+        "endLine": 33,
+        "endChar": 0
+      },
+      "revId": "0363aa8113caa4823412ba71dc1b26e8d8a279b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62668d74_13d9c1d2",
         "filename": "chrome/browser/ntp_tiles/ntp_tiles_browsertest.cc",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-07T14:45:00Z",
       "side": 1,
       "message": "Optional: people are a big fan of this but me, I prefer less lines :-)",
+      "range": {
+        "startLine": 67,
+        "startChar": 41,
+        "endLine": 67,
+        "endChar": 0
+      },
+      "revId": "0363aa8113caa4823412ba71dc1b26e8d8a279b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be5d6568_e51d1db2",
+        "filename": "chrome/browser/ntp_tiles/ntp_tiles_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-07T15:21:23Z",
+      "side": 1,
+      "message": "I thought I got paid by the number of lines of code. :P\n\nDone.",
+      "parentUuid": "62668d74_13d9c1d2",
       "range": {
         "startLine": 67,
         "startChar": 41,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "387a3975_2f586e71",
+        "filename": "chrome/browser/ntp_tiles/ntp_tiles_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-07T15:21:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8de9f656_801b27c1",
+      "range": {
+        "startLine": 73,
+        "startChar": 66,
+        "endLine": 73,
+        "endChar": 0
+      },
+      "revId": "0363aa8113caa4823412ba71dc1b26e8d8a279b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b56a7a3d_40837f31",
         "filename": "chrome/browser/ntp_tiles/ntp_tiles_browsertest.cc",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "0363aa8113caa4823412ba71dc1b26e8d8a279b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f0919fd_18ee7700",
+        "filename": "chrome/browser/ntp_tiles/ntp_tiles_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-07T15:21:23Z",
+      "side": 1,
+      "message": "Done. I went with Contains(MatchesTile...",
+      "parentUuid": "b56a7a3d_40837f31",
+      "range": {
+        "startLine": 86,
+        "startChar": 33,
+        "endLine": 86,
+        "endChar": 0
+      },
+      "revId": "0363aa8113caa4823412ba71dc1b26e8d8a279b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
