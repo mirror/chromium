@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "620c88cf_7fafeb23",
+        "filename": "BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-07-07T18:35:38Z",
+      "side": 1,
+      "message": "Some dependency path from the top-level BUILD.gn to the one in //tools/perf/contrib/vr_benchmarks is necessary. Alternatively, we could have the build target be in //tools/perf/BUILD.gn, but my guess is that you want these tests as isolated from the normal Telemetry tests as possible.",
+      "range": {
+        "startLine": 299,
+        "startChar": 6,
+        "endLine": 299,
+        "endChar": 56
+      },
+      "revId": "478e209c802fcb51b3476edfaa1f972637534c25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
