@@ -9,6 +9,7 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.graphics.drawable.VectorDrawableCompat;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar.OnMenuItemClickListener;
 import android.view.LayoutInflater;
@@ -199,6 +200,23 @@ public class DownloadManagerUi implements OnMenuItemClickListener, SearchDelegat
 
         // Prevent every progress update from causing a transition animation.
         mRecyclerView.getItemAnimator().setChangeDuration(0);
+
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                LinearLayoutManager layoutManager =
+                        (LinearLayoutManager) recyclerView.getLayoutManager();
+                // Show info button if available if first visible position is close to info header;
+                // otherwise hide info button.
+                if (layoutManager.findFirstVisibleItemPosition() == 0) {
+                    mToolbar.updateInfoMenuItem(
+                            shouldShowInfoButton(), mHistoryAdapter.shouldShowStorageInfoHeader());
+                } else {
+                    mToolbar.updateInfoMenuItem(
+                            false, mHistoryAdapter.shouldShowStorageInfoHeader());
+                }
+            }
+        });
 
         mFilterAdapter = new FilterAdapter();
         mFilterAdapter.initialize(this);
@@ -452,6 +470,13 @@ public class DownloadManagerUi implements OnMenuItemClickListener, SearchDelegat
 
     private void dismissUndoDeletionSnackbars() {
         mSnackbarManager.dismissSnackbars(mUndoDeletionSnackbarController);
+    }
+
+    /**
+     * @return True if info menu item should be shown on download toolbar, false otherwise.
+     */
+    boolean shouldShowInfoButton() {
+        return mHistoryAdapter.getItemCount() > 0 && !mToolbar.isSearching();
     }
 
     @VisibleForTesting

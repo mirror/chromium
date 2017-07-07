@@ -34,6 +34,7 @@ import org.chromium.chrome.browser.preferences.PrefServiceBridge;
 import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.signin.SigninManager;
 import org.chromium.chrome.browser.signin.SigninManager.SignInStateObserver;
+import org.chromium.chrome.browser.widget.DateDividedAdapter;
 import org.chromium.chrome.browser.widget.TintedImageButton;
 import org.chromium.chrome.browser.widget.selection.SelectableItemView;
 import org.chromium.chrome.browser.widget.selection.SelectableItemViewHolder;
@@ -443,10 +444,8 @@ public class HistoryActivityTest extends BaseActivityInstrumentationTestCase<His
         ChromeSigninController signinController = ChromeSigninController.get();
         signinController.setSignedInAccountName(null);
         assertEquals(false, infoMenuItem.isVisible());
-        assertEquals(View.GONE, mAdapter.getSignedInNotSyncedViewForTests().getVisibility());
-        assertEquals(View.GONE, mAdapter.getSignedInSyncedViewForTests().getVisibility());
-        assertEquals(
-                View.GONE, mAdapter.getOtherFormsOfBrowsingHistoryViewForTests().getVisibility());
+        DateDividedAdapter.ItemGroup headerGroup = mAdapter.getHeaderGroupForTests();
+        assertEquals(1, headerGroup.size());
 
         // Signed in but not synced and history has items
         signinController.setSignedInAccountName("test@gmail.com");
@@ -463,7 +462,8 @@ public class HistoryActivityTest extends BaseActivityInstrumentationTestCase<His
         // Privacy disclaimers should be shown by default
         setHasOtherFormsOfBrowsingData(true, true);
         assertEquals(true, infoMenuItem.isVisible());
-        assertEquals(View.VISIBLE, mAdapter.getPrivacyDisclaimersForTests().getVisibility());
+        headerGroup = mAdapter.getHeaderGroupForTests();
+        assertEquals(2, headerGroup.size());
 
         // Toggle Info Menu Item
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
@@ -472,7 +472,40 @@ public class HistoryActivityTest extends BaseActivityInstrumentationTestCase<His
                 mHistoryManager.onMenuItemClick(infoMenuItem);
             }
         });
-        assertEquals(View.GONE, mAdapter.getPrivacyDisclaimersForTests().getVisibility());
+        headerGroup = mAdapter.getHeaderGroupForTests();
+        assertEquals(1, headerGroup.size());
+    }
+
+    @SmallTest
+    public void testInfoHeaderInSearchMode() throws Exception {
+        final HistoryManagerToolbar toolbar = mHistoryManager.getToolbarForTests();
+        final MenuItem infoMenuItem = toolbar.getItemById(R.id.info_menu_id);
+
+        // Sign in
+        ChromeSigninController signinController = ChromeSigninController.get();
+        signinController.setSignedInAccountName("test@gmail.com");
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                toolbar.onSignInStateChange();
+            }
+        });
+        assertEquals(true, infoMenuItem.isVisible());
+
+        // Enter search mode
+        int callCount = mTestObserver.onSelectionCallback.getCallCount();
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                toolbar.getMenu().performIdentifierAction(R.id.search_menu_id, 0);
+            }
+        });
+
+        mTestObserver.onSelectionCallback.waitForCallback(callCount, 1);
+        DateDividedAdapter.ItemGroup headerGroup = mAdapter.getHeaderGroupForTests();
+        assertEquals(false, infoMenuItem.isVisible());
+        // The headerGroup should be the history item group from SetUp()
+        assertEquals(3, headerGroup.size());
     }
 
     @SmallTest
