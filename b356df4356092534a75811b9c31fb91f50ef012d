@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06f8eac2_e3a016e5",
+        "filename": "content/browser/cocoa/system_hotkey_helper_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-07T23:14:24Z",
+      "side": 1,
+      "message": "Consider adding a priority (likely USER_BLOCKING or USER_VISIBLE, depending on how import it is to load these hotkeys) and a shutdown behavior (likely CONTINUE_ON_SHUTDOWN as if we\u0027re already shutting down, we don\u0027t care for this to run or complete).",
+      "range": {
+        "startLine": 37,
+        "startChar": 24,
+        "endLine": 37,
+        "endChar": 32
+      },
+      "revId": "b356df4356092534a75811b9c31fb91f50ef012d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
