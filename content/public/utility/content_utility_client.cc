@@ -4,7 +4,13 @@
 
 #include "content/public/utility/content_utility_client.h"
 
+#include "content/common/content_client_shutdown_helper.h"
+
 namespace content {
+
+ContentUtilityClient::~ContentUtilityClient() {
+  ContentClientShutdownHelper::ContentClientPartDeleted(this);
+}
 
 bool ContentUtilityClient::OnMessageReceived(const IPC::Message& message) {
   return false;

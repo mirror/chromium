@@ -256,6 +256,19 @@ class WebContentsImplTest : public RenderViewHostImplTestHarness {
     WebUIControllerFactory::UnregisterFactoryForTesting(
         ContentWebUIControllerFactory::GetInstance());
     RenderViewHostImplTestHarness::TearDown();
+    if (test_browser_client_)
+      SetBrowserClientForTesting(original_browser_client_);
+  }
+
+  void UseTestBrowserClient() {
+    ASSERT_FALSE(test_browser_client_);
+    test_browser_client_.reset(new WebContentsImplTestBrowserClient);
+    original_browser_client_ =
+        SetBrowserClientForTesting(test_browser_client_.get());
+  }
+
+  WebContentsImplTestBrowserClient* test_browser_client() {
+    return test_browser_client_.get();
   }
 
   bool has_audio_wake_lock() {
@@ -269,6 +282,10 @@ class WebContentsImplTest : public RenderViewHostImplTestHarness {
         ->media_web_contents_observer()
         ->has_video_wake_lock_for_testing();
   }
+
+ private:
+  std::unique_ptr<WebContentsImplTestBrowserClient> test_browser_client_;
+  ContentBrowserClient* original_browser_client_ = nullptr;
 };
 
 class TestWebContentsObserver : public WebContentsObserver {
@@ -739,15 +756,14 @@ TEST_F(WebContentsImplTest, NavigateTwoTabsCrossSite) {
 // allowing to reuse the renderer backing certain chrome urls for subsequent
 // navigation. The test verifies that the override is honored.
 TEST_F(WebContentsImplTest, NavigateFromSitelessUrl) {
-  WebContentsImplTestBrowserClient browser_client;
-  SetBrowserClientForTesting(&browser_client);
+  UseTestBrowserClient();
 
   TestRenderFrameHost* orig_rfh = main_test_rfh();
   int orig_rvh_delete_count = 0;
   orig_rfh->GetRenderViewHost()->set_delete_counter(&orig_rvh_delete_count);
   SiteInstanceImpl* orig_instance = contents()->GetSiteInstance();
 
-  browser_client.set_assign_site_for_url(false);
+  test_browser_client()->set_assign_site_for_url(false);
   // Navigate to an URL that will not assign a new SiteInstance.
   const GURL native_url("non-site-url://stuffandthings");
   controller().LoadURL(
@@ -765,7 +781,7 @@ TEST_F(WebContentsImplTest, NavigateFromSitelessUrl) {
   EXPECT_EQ(GURL(), contents()->GetSiteInstance()->GetSiteURL());
   EXPECT_FALSE(orig_instance->HasSite());
 
-  browser_client.set_assign_site_for_url(true);
+  test_browser_client()->set_assign_site_for_url(true);
   // Navigate to new site (should keep same site instance).
   const GURL url("http://www.google.com");
   controller().LoadURL(
@@ -832,23 +848,19 @@ TEST_F(WebContentsImplTest, NavigateFromSitelessUrl) {
   DeleteContents();
   EXPECT_EQ(orig_rvh_delete_count, 1);
   EXPECT_EQ(pending_rvh_delete_count, 1);
-  // Since the ChromeBlobStorageContext posts a task to the BrowserThread, we
-  // must run out the loop so the thread bundle is destroyed after this happens.
-  base::RunLoop().RunUntilIdle();
 }
 
 // Regression test for http://crbug.com/386542 - variation of
 // NavigateFromSitelessUrl in which the original navigation is a session
 // restore.
 TEST_F(WebContentsImplTest, NavigateFromRestoredSitelessUrl) {
-  WebContentsImplTestBrowserClient browser_client;
-  SetBrowserClientForTesting(&browser_client);
+  UseTestBrowserClient();
   SiteInstanceImpl* orig_instance = contents()->GetSiteInstance();
   TestRenderFrameHost* orig_rfh = main_test_rfh();
 
   // Restore a navigation entry for URL that should not assign site to the
   // SiteInstance.
-  browser_client.set_assign_site_for_url(false);
+  test_browser_client()->set_assign_site_for_url(false);
   const GURL native_url("non-site-url://stuffandthings");
   std::vector<std::unique_ptr<NavigationEntry>> entries;
   std::unique_ptr<NavigationEntry> new_entry =
@@ -870,7 +882,7 @@ TEST_F(WebContentsImplTest, NavigateFromRestoredSitelessUrl) {
   EXPECT_FALSE(orig_instance->HasSite());
 
   // Navigate to a regular site and verify that the SiteInstance was kept.
-  browser_client.set_assign_site_for_url(true);
+  test_browser_client()->set_assign_site_for_url(true);
   const GURL url("http://www.google.com");
   controller().LoadURL(
       url, Referrer(), ui::PAGE_TRANSITION_TYPED, std::string());
@@ -882,22 +894,18 @@ TEST_F(WebContentsImplTest, NavigateFromRestoredSitelessUrl) {
 
   // Cleanup.
   DeleteContents();
-  // Since the ChromeBlobStorageContext posts a task to the BrowserThread, we
-  // must run out the loop so the thread bundle is destroyed after this happens.
-  base::RunLoop().RunUntilIdle();
 }
 
 // Complement for NavigateFromRestoredSitelessUrl, verifying that when a regular
 // tab is restored, the SiteInstance will change upon navigation.
 TEST_F(WebContentsImplTest, NavigateFromRestoredRegularUrl) {
-  WebContentsImplTestBrowserClient browser_client;
-  SetBrowserClientForTesting(&browser_client);
+  UseTestBrowserClient();
   SiteInstanceImpl* orig_instance = contents()->GetSiteInstance();
   TestRenderFrameHost* orig_rfh = main_test_rfh();
 
   // Restore a navigation entry for a regular URL ensuring that the embedder
   // ShouldAssignSiteForUrl override is disabled (i.e. returns true).
-  browser_client.set_assign_site_for_url(true);
+  test_browser_client()->set_assign_site_for_url(true);
   const GURL regular_url("http://www.yahoo.com");
   std::vector<std::unique_ptr<NavigationEntry>> entries;
   std::unique_ptr<NavigationEntry> new_entry =
@@ -930,9 +938,6 @@ TEST_F(WebContentsImplTest, NavigateFromRestoredRegularUrl) {
 
   // Cleanup.
   DeleteContents();
-  // Since the ChromeBlobStorageContext posts a task to the BrowserThread, we
-  // must run out the loop so the thread bundle is destroyed after this happens.
-  base::RunLoop().RunUntilIdle();
 }
 
 // Test that we can find an opener RVH even if it's pending.
@@ -3457,8 +3462,7 @@ TEST_F(WebContentsImplTest, ThemeColorChangeDependingOnFirstVisiblePaint) {
 // does not mistakenly think it has seen a good certificate and thus forget any
 // user exceptions for that host. See https://crbug.com/516808.
 TEST_F(WebContentsImplTest, LoadResourceWithEmptySecurityInfo) {
-  WebContentsImplTestBrowserClient browser_client;
-  SetBrowserClientForTesting(&browser_client);
+  UseTestBrowserClient();
 
   scoped_refptr<net::X509Certificate> cert =
       net::ImportCertFromFile(net::GetTestCertsDirectory(), "ok_cert.pem");
