@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "170a98e9_73a79512",
+        "filename": "content/browser/service_worker/embedded_worker_instance.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-07T03:34:42Z",
+      "side": 1,
+      "message": "How about explicitly specifying the enum numbers and commenting out REGISTERING_TO_DEVTOOLS like this so that we don\u0027t have to handle it in switch-cases anymore?\n\nNOT_STARTING \u003d 0,\nALLOCATION_PROCESS \u003d 1,\n// REGISTERING_TO_DEVTOOLS \u003d 2,  // Obsolete\n...",
+      "range": {
+        "startLine": 60,
+        "startChar": 4,
+        "endLine": 60,
+        "endChar": 27
+      },
+      "revId": "0a5a08ae43a496a9b0b76038df434af9c077c862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
