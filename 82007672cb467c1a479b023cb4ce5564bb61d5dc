@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4c75a101_83d2ffe4",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/controllers/test_result_writer.py",
+        "patchSetId": 55
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-07-07T01:42:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "182467a1_f4841c6a",
+      "revId": "82007672cb467c1a479b023cb4ce5564bb61d5dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "863edced_aaa4ac8f",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/base.py",
         "patchSetId": 55
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "2b7994eb_084390c5",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/base.py",
+        "patchSetId": 55
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-07-07T01:42:05Z",
+      "side": 1,
+      "message": "Done. Updated docstring to add an Args and a Returns section including what you mentioned.",
+      "parentUuid": "863edced_aaa4ac8f",
+      "revId": "82007672cb467c1a479b023cb4ce5564bb61d5dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e9d0f79_8e8925b4",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/base.py",
         "patchSetId": 55
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-05T22:28:53Z",
       "side": 1,
       "message": "Still necessary to skip .svn?",
+      "revId": "82007672cb467c1a479b023cb4ce5564bb61d5dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75f613a4_d6345a01",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/base.py",
+        "patchSetId": 55
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-07-07T01:42:05Z",
+      "side": 1,
+      "message": "I\u0027m actually not sure how these made it in here. I checked and there are no directories in the tree named \u0027.svn\u0027 or \u0027_svn\u0027, so removing.",
+      "parentUuid": "7e9d0f79_8e8925b4",
       "revId": "82007672cb467c1a479b023cb4ce5564bb61d5dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "7865ac38_3b8a426d",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/base.py",
+        "patchSetId": 55
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-07-07T01:42:05Z",
+      "side": 1,
+      "message": "So... I\u0027m glad you brought this up because this method is actually never called.\n\nThere\u0027s a duplicate (static) method on line 1147. Its regex is \u0027(virtual/[^/]+/)?external/wpt/\u0027, so the definitive answer to your question is yes, virtual WPT tests should be considered WPT tests.\n\nI\u0027ll remove this method.",
+      "parentUuid": "b253e298_cbfd805f",
+      "revId": "82007672cb467c1a479b023cb4ce5564bb61d5dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5b17ef9a_ae13bf5b",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/tool/commands/rebaseline_cl_unittest.py",
         "patchSetId": 55
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "493aa212_77587fd9",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/tool/commands/rebaseline_cl_unittest.py",
+        "patchSetId": 55
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-07-07T01:42:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b17ef9a_ae13bf5b",
+      "revId": "82007672cb467c1a479b023cb4ce5564bb61d5dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7dd0610_ff3d288c",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_manifest.py",
         "patchSetId": 55
@@ -101,6 +191,24 @@
       "revId": "82007672cb467c1a479b023cb4ce5564bb61d5dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76e4ce58_d18008c6",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_manifest.py",
+        "patchSetId": 55
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-07-07T01:42:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7dd0610_ff3d288c",
+      "revId": "82007672cb467c1a479b023cb4ce5564bb61d5dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
