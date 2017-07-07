@@ -130,6 +130,10 @@ class FailingBackend : public PasswordStoreX::NativeBackend {
     *forms = CreateTrashForms();
     return false;
   }
+
+  scoped_refptr<base::SequencedTaskRunner> GetBackgroundTaskRunner() override {
+    return nullptr;
+  }
 };
 
 class MockBackend : public PasswordStoreX::NativeBackend {
@@ -229,6 +233,10 @@ class MockBackend : public PasswordStoreX::NativeBackend {
     for (size_t i = 0; i < all_forms_.size(); ++i)
       forms->push_back(base::MakeUnique<PasswordForm>(all_forms_[i]));
     return true;
+  }
+
+  scoped_refptr<base::SequencedTaskRunner> GetBackgroundTaskRunner() override {
+    return nullptr;
   }
 
  private:
