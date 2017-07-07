@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4c6f5b13_ec648822",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network_log/HAREntry.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-07-07T18:53:46Z",
+      "side": 1,
+      "message": "yes it should be safe. Each request\u0027s timing info is specific to that request.\n\noutput of a shared connection:\n\n0:{requestTime: 2160490.060181, proxyStart: 7.3250001296401, proxyEnd: 7.9950001090765, dnsStart: 8.02700035274029, dnsEnd: 9.31400014087558}\n1:{requestTime: 2160490.43445, proxyStart: 2.25999997928739, proxyEnd: 3.6740000359714, dnsStart: -1, dnsEnd: -1}\n2:{requestTime: 2160490.503038, proxyStart: 4.85499994829297, proxyEnd: 7.62700010091066, dnsStart: -1, dnsEnd: -1}\n3:{requestTime: 2160490.665105, proxyStart: 0.449999701231718, proxyEnd: 1.35699985548854, dnsStart: -1, dnsEnd: -1}",
+      "parentUuid": "d4663eb2_a49b4977",
+      "revId": "cd32e0328afb64bb55d05ebb481774a2d42f22ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "95ba5e93_1af497f1",
         "filename": "third_party/WebKit/Source/devtools/front_end/network_log/HAREntry.js",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "52566cef_76b8614a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network_log/HAREntry.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-07-07T18:53:46Z",
+      "side": 1,
+      "message": "HAR spec says that each entry in timing is relative to the previous entry. In this case blocked is the delta between Max(startTime, issueTime) and whatever the first event that shows that data is sent, received or being processed.",
+      "parentUuid": "95ba5e93_1af497f1",
+      "revId": "cd32e0328afb64bb55d05ebb481774a2d42f22ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f428ad6d_9753dcf2",
         "filename": "third_party/WebKit/Source/devtools/front_end/network_log/HAREntry.js",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-06T23:45:03Z",
       "side": 1,
       "message": "so you\u0027re comparing a time relative to startTime with a delta between issueTime and startTime -- I don\u0027t think it\u0027s fair.",
+      "revId": "cd32e0328afb64bb55d05ebb481774a2d42f22ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "579aa343_f6f6bd69",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network_log/HAREntry.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-07-07T18:53:46Z",
+      "side": 1,
+      "message": "I do this to make sure that there is always enough room for queuedTime inside \"blocked\" (mostly because of floating point stuff), since queuedTime is a subset of \"blocked\"",
+      "parentUuid": "f428ad6d_9753dcf2",
       "revId": "cd32e0328afb64bb55d05ebb481774a2d42f22ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
