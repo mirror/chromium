@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d92f645f_4543ecd7",
+        "filename": "extensions/browser/api/bluetooth_low_energy/bluetooth_low_energy_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-07T02:54:04Z",
+      "side": 1,
+      "message": "hm, I\u0027m not big fan of this approach, it\u0027s too dependent on implementation details of EXTENSION_FUNCTION_VALIDATE (and changes it\u0027s semantics in a subtle way).\n\nCould we do something more akin to how BLEPeripheralExtensionFunction implementations handled this problem: Do validation in |Run| and set params_ argument that can later be used in DoWork?\n\nIf you want to avoid using templates, you could add an abstract method alingside DoWork like:\nvirtual bool ParseParams() \u003d 0;\n\nImpl could be for example \n\nbool ParseParams() override {\n  params_ \u003d apibtle::RegisterAdvertisement::Params::Create(*args_);\n  return params_;\n}\n\nAnd do something like \nEXTENSION_FUNCTION_VALIDATE(ParseParams()); in Run()",
+      "revId": "404aea955a6afa4d079c53d60792939d42839148",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
