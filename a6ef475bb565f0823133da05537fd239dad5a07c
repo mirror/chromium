@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "523f2606_9bc72e6f",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2909,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-07T17:27:25Z",
+      "side": 1,
+      "message": "nit: happen",
+      "range": {
+        "startLine": 2909,
+        "startChar": 63,
+        "endLine": 2909,
+        "endChar": 71
+      },
+      "revId": "a6ef475bb565f0823133da05537fd239dad5a07c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2eaf2d54_e6d83e25",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2911,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-07T17:27:25Z",
+      "side": 1,
+      "message": "I\u0027m missing something here, since I don\u0027t see how this comment connects to the crash.\n\nMaybe we can rephrase the second part?  Something like:\n..., since the SetRWHViewForInnerContents call below may try to loop over all RenderWidgetHostViews in the tree (otherwise including the now-deleted view for the interstitial).",
+      "revId": "a6ef475bb565f0823133da05537fd239dad5a07c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
