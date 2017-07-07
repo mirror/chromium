@@ -45,6 +45,26 @@ Common.ResourceType = class {
   }
 
   /**
+   * @param {string} mimeType
+   * @return {?Common.ResourceType}
+   */
+  static fromMimeType(mimeType) {
+    if (mimeType.startsWith('image/'))
+      return Common.resourceTypes.Image;
+    if (mimeType.includes('font'))
+      return Common.resourceTypes.Font;
+    return Common.resourceTypes.Other;
+  }
+
+  /**
+   * @param {string} url
+   * @return {?Common.ResourceType}
+   */
+  static fromURL(url) {
+    return Common.ResourceType._resourceTypeByExtension.get(Common.ParsedURL.extractExtension(url)) || null;
+  }
+
+  /**
    * @param {string} url
    * @return {string|undefined}
    */
@@ -204,6 +224,21 @@ Common.resourceTypes = {
 Common.ResourceType._mimeTypeByName = new Map([
   // CoffeeScript
   ['Cakefile', 'text/x-coffeescript']
+]);
+
+Common.ResourceType._resourceTypeByExtension = new Map([
+  ['js', Common.resourceTypes.Script],
+
+  ['css', Common.resourceTypes.Stylesheet], ['xsl', Common.resourceTypes.Stylesheet],
+
+  ['jpeg', Common.resourceTypes.Image], ['jpg', Common.resourceTypes.Image], ['svg', Common.resourceTypes.Image],
+  ['gif', Common.resourceTypes.Image], ['png', Common.resourceTypes.Image], ['ico', Common.resourceTypes.Image],
+  ['tiff', Common.resourceTypes.Image], ['tif', Common.resourceTypes.Image], ['bmp', Common.resourceTypes.Image],
+
+  ['webp', Common.resourceTypes.Media],
+
+  ['ttf', Common.resourceTypes.Font], ['otf', Common.resourceTypes.Font], ['ttc', Common.resourceTypes.Font],
+  ['woff', Common.resourceTypes.Font]
 ]);
 
 Common.ResourceType._mimeTypeByExtension = new Map([
