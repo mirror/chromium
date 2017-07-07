@@ -39,6 +39,41 @@
       "revId": "f7134e9cd2bc13a20ea416f84a3748ecda19ef7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "515392e1_31da55f0",
+        "filename": "ash/frame/header_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-07-07T23:09:10Z",
+      "side": 1,
+      "message": "According to the split view mocks, the title bar is also removed.",
+      "parentUuid": "6f732331_4a926323",
+      "revId": "f7134e9cd2bc13a20ea416f84a3748ecda19ef7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e205c074_c6596f0d",
+        "filename": "ash/frame/header_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-07-07T23:09:10Z",
+      "side": 1,
+      "message": "I think these four override functions should have a early return if we should hide HeaderView.",
+      "revId": "f7134e9cd2bc13a20ea416f84a3748ecda19ef7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
