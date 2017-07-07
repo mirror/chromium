@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fa6dc5ff_19fb5a34",
+        "filename": "chrome/browser/media/media_engagement_score_details.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-07-07T10:52:43Z",
+      "side": 1,
+      "message": "No they do not, I don\u0027t think mojom can use int as it broke the build with \"invalid kind\"",
+      "parentUuid": "479fbf11_c8976013",
+      "range": {
+        "startLine": 14,
+        "startChar": 2,
+        "endLine": 14,
+        "endChar": 8
+      },
+      "revId": "9a7848aedc4acc462f8880bb30c108860449951f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e65a4836_cbace671",
         "filename": "chrome/browser/media/media_engagement_score_details.mojom",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "9a7848aedc4acc462f8880bb30c108860449951f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73f79c01_cc554c02",
+        "filename": "chrome/browser/media/media_engagement_score_details.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-07-07T10:52:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e65a4836_cbace671",
+      "range": {
+        "startLine": 16,
+        "startChar": 2,
+        "endLine": 16,
+        "endChar": 8
+      },
+      "revId": "9a7848aedc4acc462f8880bb30c108860449951f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
