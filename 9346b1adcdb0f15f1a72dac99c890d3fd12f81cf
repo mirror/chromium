@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "2330bf23_85947b0b",
+        "filename": "chrome/browser/ui/views/passwords/account_chooser_dialog_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-07T00:49:08Z",
+      "side": 1,
+      "message": "Do you have a screenshot of it pre-Harmony with no snapping?  I\u0027d prefer to just rip out the snapping but if it would really look awful maybe we just land like this and move on, as it\u0027s not worth fixing the pre-Harmony code if the Harmony code looks good.\n\nI mostly want to check because it might highlight other problems that we\u0027d see in Harmony if we changed the snap widths in the future.",
+      "parentUuid": "fcd76963_4a73d3a4",
+      "revId": "9346b1adcdb0f15f1a72dac99c890d3fd12f81cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c2b68285_22538432",
         "filename": "chrome/browser/ui/views/passwords/password_dialog_view_browsertest.cc",
         "patchSetId": 2
