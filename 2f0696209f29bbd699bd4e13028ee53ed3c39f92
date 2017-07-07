@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7b0082cd_1815089b",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/preload/reuse_sri.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-07T15:03:22Z",
+      "side": 1,
+      "message": ":D",
+      "parentUuid": "ec41987f_abd8dcf7",
+      "revId": "2f0696209f29bbd699bd4e13028ee53ed3c39f92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4bc61f7_f830fb87",
         "filename": "third_party/WebKit/Source/core/html/parser/HTMLPreloadScanner.cpp",
         "patchSetId": 2
@@ -30,6 +48,30 @@
       "writtenOn": "2017-07-07T14:43:48Z",
       "side": 1,
       "message": "That would enable the integrity attribute on any link, right? While that can be useful at times, I think we need to settle best way forward at https://bugs.chromium.org/p/chromium/issues/detail?id\u003d677022 before doing that. Could you add a check later on that nullifies the integrity_metadata when !link_is_style_sheet_ ?",
+      "range": {
+        "startLine": 377,
+        "startChar": 50,
+        "endLine": 377,
+        "endChar": 51
+      },
+      "revId": "2f0696209f29bbd699bd4e13028ee53ed3c39f92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4f0d469_7a0e34e2",
+        "filename": "third_party/WebKit/Source/core/html/parser/HTMLPreloadScanner.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-07T15:03:22Z",
+      "side": 1,
+      "message": "Great catch. I\u0027ve added a check later on in CreatePreloadRequest to only set the metadata on the PreloadRequest if it is a link stylesheet or some other tag.",
+      "parentUuid": "e4bc61f7_f830fb87",
       "range": {
         "startLine": 377,
         "startChar": 50,
