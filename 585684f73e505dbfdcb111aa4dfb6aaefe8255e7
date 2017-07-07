@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "002e579d_c26a48f9",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/ChildProcessLauncherTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-07-07T23:36:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30160f63_2a34e3c1",
+      "revId": "585684f73e505dbfdcb111aa4dfb6aaefe8255e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2570ebf7_98df4749",
         "filename": "content/public/android/javatests/src/org/chromium/content/browser/ChildProcessLauncherTest.java",
         "patchSetId": 10
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "55b74b07_ae7f66c4",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/ChildProcessLauncherTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-07-07T23:36:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2570ebf7_98df4749",
+      "revId": "585684f73e505dbfdcb111aa4dfb6aaefe8255e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b21ac435_13119f2b",
         "filename": "content/public/android/javatests/src/org/chromium/content/browser/ChildProcessLauncherTest.java",
         "patchSetId": 10
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-07T22:09:47Z",
       "side": 1,
       "message": "we usually use CallbackHelper in base instead of ConditionVariable. also handles if things are called multiple times",
+      "revId": "585684f73e505dbfdcb111aa4dfb6aaefe8255e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e1f506b_b4d065b9",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/ChildProcessLauncherTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-07-07T23:36:25Z",
+      "side": 1,
+      "message": "Nice, didn\u0027t know about it. Now using it.",
+      "parentUuid": "b21ac435_13119f2b",
       "revId": "585684f73e505dbfdcb111aa4dfb6aaefe8255e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "30b9de7b_1086de8b",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/ChildProcessLauncherTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-07-07T23:36:25Z",
+      "side": 1,
+      "message": "This should all be happening on one thread. But anyway, using CallbackHelper now.",
+      "parentUuid": "3fc9adf7_e880b343",
+      "revId": "585684f73e505dbfdcb111aa4dfb6aaefe8255e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8c15ca34_99e155d6",
         "filename": "content/public/android/javatests/src/org/chromium/content/browser/ChildProcessLauncherTest.java",
         "patchSetId": 10
@@ -84,6 +156,24 @@
       "revId": "585684f73e505dbfdcb111aa4dfb6aaefe8255e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a89cf11_dc5d8a40",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/ChildProcessLauncherTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-07-07T23:36:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c15ca34_99e155d6",
+      "revId": "585684f73e505dbfdcb111aa4dfb6aaefe8255e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "dfdb05f0_5c32aefc",
+        "filename": "content/shell/android/shell_apk/src/org/chromium/content_shell_apk/IChildProcessTest.aidl",
+        "patchSetId": 10
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-07-07T23:36:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3cb70583_cabd4e9b",
+      "revId": "585684f73e505dbfdcb111aa4dfb6aaefe8255e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "abf3fb68_1c15d3d3",
         "filename": "content/shell/android/shell_apk/src/org/chromium/content_shell_apk/TestChildProcessService.java",
         "patchSetId": 10
@@ -115,6 +223,24 @@
       "writtenOn": "2017-07-07T22:09:47Z",
       "side": 1,
       "message": "does this actually matter?",
+      "revId": "585684f73e505dbfdcb111aa4dfb6aaefe8255e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e3ad5d3_8d88b097",
+        "filename": "content/shell/android/shell_apk/src/org/chromium/content_shell_apk/TestChildProcessService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-07-07T23:36:25Z",
+      "side": 1,
+      "message": "Without it we can\u0027t test onDestroy gets called as the CPL exits natively once this method returns.",
+      "parentUuid": "abf3fb68_1c15d3d3",
       "revId": "585684f73e505dbfdcb111aa4dfb6aaefe8255e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
