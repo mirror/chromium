@@ -1169,7 +1169,7 @@ InputHandlerProxy::EventDisposition InputHandlerProxy::HandleTouchStart(
   cc::TouchAction white_listed_touch_action = cc::kTouchActionAuto;
   EventDisposition result = HitTestTouchEvent(
       touch_event, &is_touching_scrolling_layer, &white_listed_touch_action);
-  // TODO(hayleyferr) : Send |white_listed_touch_action| to browser.
+  client_->SetWhiteListedTouchAction(white_listed_touch_action);
 
   // If |result| is still DROP_EVENT look at the touch end handler as
   // we may not want to discard the entire touch sequence. Note this
