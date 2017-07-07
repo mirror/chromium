@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ab7216a_52a8c2a2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/DatabaseModel.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-07T23:02:38Z",
+      "side": 1,
+      "message": "We generally try to avoid methods that both return a promise and invoke a callback -- this is confusing. Can you promisify it further so that it just returns Promise\u003cArray\u003cstring\u003e\u003e\u003e?",
+      "revId": "03ecb36559b6d89fd9b420b04530e0ab4d278424",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
