@@ -2,6 +2,166 @@
   "comments": [
     {
       "key": {
+        "uuid": "f4b9d4d3_079484c0",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_database.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-07T10:46:21Z",
+      "side": 1,
+      "message": "Thanks for adding these comments!\n\nnit: Please add blank lines in-between definitions.\nnit: s/login/affiliation/",
+      "revId": "08623eab803e0a04c391d14d4c7f3bd03c517e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f085a5c3_cfc780d2",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_database.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-07T10:46:21Z",
+      "side": 1,
+      "message": "nit: This file should have included base/logging.h already, could you please add it now?",
+      "revId": "08623eab803e0a04c391d14d4c7f3bd03c517e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1183a7a4_1f5df98e",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_database.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-07T10:46:21Z",
+      "side": 1,
+      "message": "Please add unit tests for migration. This is especially important now for v1-\u003ev2, where we switch from manual SQL schema manipulation to using SQLTableBuilder.\n\nFor an example, see the migration tests we have for LoginDatabase, but please keep it simple -- we only have one version, no need to build the entire parameterized test infrastructure just now. :-)\n\n[1]: https://cs.chromium.org/chromium/src/components/test/data/password_manager/login_db_v19.sql\n\n[2]: https://cs.chromium.org/chromium/src/components/password_manager/core/browser/login_database_unittest.cc?rcl\u003d8e20442d9cfecf6a2fd56ef4ae777971c45cc021\u0026l\u003d1691",
+      "revId": "08623eab803e0a04c391d14d4c7f3bd03c517e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a25c5a9_68d4704b",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_database.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-07T10:46:21Z",
+      "side": 1,
+      "message": "Note that current version is 1, so this seems off by one.",
+      "range": {
+        "startLine": 256,
+        "startChar": 15,
+        "endLine": 256,
+        "endChar": 0
+      },
+      "revId": "08623eab803e0a04c391d14d4c7f3bd03c517e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "247ffbbe_ce27c192",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_database.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-07T10:46:21Z",
+      "side": 1,
+      "message": "Please use a more generic term for this. It might be Play Store names for now, but we might want to extend that going forward. Maybe facet(|_(human_)?readable|_display(ed)?)_name?",
+      "range": {
+        "startLine": 279,
+        "startChar": 45,
+        "endLine": 279,
+        "endChar": 49
+      },
+      "revId": "08623eab803e0a04c391d14d4c7f3bd03c517e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0416bf7_c7c6188a",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_database.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-07T10:46:21Z",
+      "side": 1,
+      "message": "nit: These don\u0027t seem to be used by anything other than the SQLTableBuilders below. To keep the header clean, consider moving them into an unnamed namespace in the .cc file. (This necessitates getting rid of the in-class member initializers, but I think that\u0027s actually for the better, it\u0027s a bit weird to have the table names specified here as well as in the .cc file.)",
+      "range": {
+        "startLine": 98,
+        "startChar": 2,
+        "endLine": 102,
+        "endChar": 72
+      },
+      "revId": "08623eab803e0a04c391d14d4c7f3bd03c517e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db187498_06f2a66f",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_database.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-07T10:46:21Z",
+      "side": 1,
+      "message": "nit: In fact, given that we only need these during initialization time, how about creating them on the stack and not having them around for the entire lifetime of this class?",
+      "range": {
+        "startLine": 104,
+        "startChar": 2,
+        "endLine": 108,
+        "endChar": 70
+      },
+      "revId": "08623eab803e0a04c391d14d4c7f3bd03c517e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f94395a_90c8ac85",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_fetcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-07T10:46:21Z",
+      "side": 1,
+      "message": "Thanks!",
+      "revId": "08623eab803e0a04c391d14d4c7f3bd03c517e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "19365e89_c223fe44",
         "filename": "components/password_manager/core/browser/android_affiliation/affiliation_fetcher.cc",
         "patchSetId": 1
@@ -13,6 +173,24 @@
       "writtenOn": "2017-07-06T14:05:50Z",
       "side": 1,
       "message": "When talking to battre@ yesterday, he suggested to also support localized Play names by providing the appropriate locale. While the Affiliation API supports setting a locale (https://codesearch.chromium.org/chromium/src/components/password_manager/core/browser/android_affiliation/affiliation_api.proto?l\u003d32), I actually don\u0027t know how to get hold of that information from within //components. The only API I could find is |GetApplicationLocale()|, however this is bound to the |g_browser_process| global variable and only available within //chrome. Do you happen to know how to solve this issue?",
+      "revId": "08623eab803e0a04c391d14d4c7f3bd03c517e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc6b279d_a0313821",
+        "filename": "components/password_manager/core/browser/android_affiliation/affiliation_fetcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-07T10:46:21Z",
+      "side": 1,
+      "message": "Yeah, that sounds like a nice touch!\n\nThe affiliation logic does not currently have a `Client` interface that would be implemented by embedders (e.g. chrome/ layer); so the only way is to plumb this information through the constructors/Create-calls starting from ToggleAffiliationBasedMatchingBasedOnPasswordSyncedState, which is finally called by the chrome/ layer.\n\nI\u0027d suggest doing that in a follow-up CL.",
+      "parentUuid": "19365e89_c223fe44",
       "revId": "08623eab803e0a04c391d14d4c7f3bd03c517e13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
