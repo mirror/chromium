@@ -16,6 +16,24 @@
       "revId": "80691f19cde8a41c2e3d8eaa6677615d753c705f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af582295_2316a4e8",
+        "filename": "content/browser/service_worker/service_worker_process_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-07T08:17:18Z",
+      "side": 0,
+      "message": "I\u0027ll do it one at a time since updating all the callsites may be a bit heavy. I just want to make Release() and Allocate() consistent here, and have smaller regression ranges by using multiple patches.",
+      "parentUuid": "f4be65c9_24541df5",
+      "revId": "80691f19cde8a41c2e3d8eaa6677615d753c705f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
