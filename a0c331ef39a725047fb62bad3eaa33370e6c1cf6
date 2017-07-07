@@ -22,6 +22,30 @@
       "revId": "a0c331ef39a725047fb62bad3eaa33370e6c1cf6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b69eca9f_a4b4c14d",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_window_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-07-07T20:39:48Z",
+      "side": 0,
+      "message": "It is.",
+      "parentUuid": "ae5c1728_0f4efcd4",
+      "range": {
+        "startLine": 475,
+        "startChar": 14,
+        "endLine": 475,
+        "endChar": 42
+      },
+      "revId": "a0c331ef39a725047fb62bad3eaa33370e6c1cf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
