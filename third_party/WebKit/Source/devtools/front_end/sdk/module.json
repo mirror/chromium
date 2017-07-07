@@ -274,7 +274,8 @@
         "PaintProfiler.js",
         "HeapProfilerModel.js",
         "../SupportedCSSProperties.js",
-        "FilmStripModel.js"
+        "FilmStripModel.js",
+	"StickyPositionConstraint.js"
     ],
     "skip_compilation": [
         "../SupportedCSSProperties.js"
