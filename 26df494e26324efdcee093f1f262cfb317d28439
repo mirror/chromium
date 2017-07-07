@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c75cf0e6_678a78e1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenu.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-07T20:26:07Z",
+      "side": 1,
+      "message": "If you get the padding from the app menu drawable itself, does it match this value? If so, let\u0027s use that instead of a hard-coded dimen.\n\nThis class gets the popup bg padding around line 202:\nRect bgPadding \u003d new Rect();\nmPopup.getBackground().getPadding(bgPadding);",
+      "range": {
+        "startLine": 101,
+        "startChar": 50,
+        "endLine": 101,
+        "endChar": 87
+      },
+      "revId": "26df494e26324efdcee093f1f262cfb317d28439",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
