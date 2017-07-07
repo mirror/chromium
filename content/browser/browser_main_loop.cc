@@ -431,10 +431,8 @@ GetDefaultTaskSchedulerInitParams() {
           StandbyThreadPolicy::ONE,
           base::RecommendedMaxNumberOfThreadsInPool(3, 8, 0.1, 0),
           base::TimeDelta::FromSeconds(30)),
-      base::SchedulerWorkerPoolParams(
-          StandbyThreadPolicy::ONE,
-          base::RecommendedMaxNumberOfThreadsInPool(3, 8, 0.1, 0),
-          base::TimeDelta::FromSeconds(40)),
+      base::SchedulerWorkerPoolParams(StandbyThreadPolicy::ONE, 2,
+                                      base::TimeDelta::FromSeconds(40)),
       base::SchedulerWorkerPoolParams(
           StandbyThreadPolicy::ONE,
           base::RecommendedMaxNumberOfThreadsInPool(8, 32, 0.3, 0),

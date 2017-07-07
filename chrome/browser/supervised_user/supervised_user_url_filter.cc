@@ -237,7 +237,7 @@ SupervisedUserURLFilter::SupervisedUserURLFilter()
       google_amp_viewer_path_regex_(kGoogleAmpViewerPathPattern),
       google_web_cache_query_regex_(kGoogleWebCacheQueryPattern),
       blocking_task_runner_(base::CreateTaskRunnerWithTraits(
-          {base::MayBlock(), base::TaskPriority::BACKGROUND,
+          {base::MayBlock(), base::TaskPriority::USER_VISIBLE,
            base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN})),
       weak_ptr_factory_(this) {
   DCHECK(amp_cache_path_regex_.ok());

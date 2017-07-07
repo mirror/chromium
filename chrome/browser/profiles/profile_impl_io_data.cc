@@ -481,7 +481,7 @@ void ProfileImplIOData::InitializeInternal(
   // Create a single task runner to use with the CookieStore and ChannelIDStore.
   scoped_refptr<base::SequencedTaskRunner> cookie_background_task_runner =
       base::CreateSequencedTaskRunnerWithTraits(
-          {base::MayBlock(), base::TaskPriority::BACKGROUND,
+          {base::MayBlock(), base::TaskPriority::USER_VISIBLE,
            base::TaskShutdownBehavior::BLOCK_SHUTDOWN});
 
   // Set up server bound cert service.
@@ -611,7 +611,7 @@ net::URLRequestContext* ProfileImplIOData::InitializeAppRequestContext(
   // Create a single task runner to use with the CookieStore and ChannelIDStore.
   scoped_refptr<base::SequencedTaskRunner> cookie_background_task_runner =
       base::CreateSequencedTaskRunnerWithTraits(
-          {base::MayBlock(), base::TaskPriority::BACKGROUND,
+          {base::MayBlock(), base::TaskPriority::USER_VISIBLE,
            base::TaskShutdownBehavior::BLOCK_SHUTDOWN});
   if (partition_descriptor.in_memory) {
     cookie_path = base::FilePath();
