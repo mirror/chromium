@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "40fa7464_e3797f3e",
+        "filename": "net/log/log_urls_to_file.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-07T18:09:56Z",
+      "side": 1,
+      "message": "Sure, but content/shell can modified to depend on it, as long as it has no dependencies on content/shell (And in this case, I don\u0027t think it even has any transitive dependencies on content/ at all).",
+      "parentUuid": "06648897_8569b61a",
+      "range": {
+        "startLine": 15,
+        "startChar": 19,
+        "endLine": 15,
+        "endChar": 0
+      },
+      "revId": "d7da1a9b69da38b89ad734cdae8d39fef069b0be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5c5e3b71_43f1d5b4",
         "filename": "net/log/log_urls_to_file.h",
         "patchSetId": 9
