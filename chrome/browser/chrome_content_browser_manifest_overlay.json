@@ -65,6 +65,7 @@
           "extensions::mime_handler::MimeHandlerService",
           "extensions::mojom::InlineInstall",
           "media_router::mojom::MediaRouter",
+	  "media::mojom::MediaEngagementScoreDetailsProvider",
           "page_load_metrics::mojom::PageLoadMetrics",
           "password_manager::mojom::CredentialManager",
           "translate::mojom::ContentTranslateDriver",
