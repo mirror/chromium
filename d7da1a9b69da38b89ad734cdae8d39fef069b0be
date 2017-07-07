@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0415f6aa_4558f114",
+        "filename": "content/shell/browser/shell_network_delegate.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-07T21:19:26Z",
+      "side": 1,
+      "message": "I\u0027ve changed it to `net_log::LogUrlsToFile::LogURL(request-\u003eurl());`. It\u0027s a bit weird to make LogUrlsToFile take a net::URLRequest. Also, it\u0027d require a dependency on the package `net`.",
+      "parentUuid": "0f8543b8_5caa736c",
+      "range": {
+        "startLine": 48,
+        "startChar": 40,
+        "endLine": 48,
+        "endChar": 41
+      },
+      "revId": "d7da1a9b69da38b89ad734cdae8d39fef069b0be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a31a14ed_08bee6a0",
         "filename": "net/log/log_urls_to_file.h",
         "patchSetId": 9
@@ -96,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "467b1b04_d84ff10f",
+        "filename": "net/log/log_urls_to_file.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-07T21:19:26Z",
+      "side": 1,
+      "message": "I started an email about this with Matt and Eric. I hope we can come to a solution soon.",
+      "parentUuid": "40fa7464_e3797f3e",
+      "range": {
+        "startLine": 15,
+        "startChar": 19,
+        "endLine": 15,
+        "endChar": 0
+      },
+      "revId": "d7da1a9b69da38b89ad734cdae8d39fef069b0be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5c5e3b71_43f1d5b4",
         "filename": "net/log/log_urls_to_file.h",
         "patchSetId": 9
@@ -119,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "84d5ed4e_fc82631f",
+        "filename": "net/log/log_urls_to_file.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-07T21:19:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c5e3b71_43f1d5b4",
+      "range": {
+        "startLine": 29,
+        "startChar": 21,
+        "endLine": 29,
+        "endChar": 29
+      },
+      "revId": "d7da1a9b69da38b89ad734cdae8d39fef069b0be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "637ea404_dfe6eefc",
         "filename": "net/log/log_urls_to_file.h",
         "patchSetId": 9
@@ -139,6 +211,30 @@
       "revId": "d7da1a9b69da38b89ad734cdae8d39fef069b0be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fc08df0_3c3be475",
+        "filename": "net/log/log_urls_to_file.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-07T21:19:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "637ea404_dfe6eefc",
+      "range": {
+        "startLine": 38,
+        "startChar": 25,
+        "endLine": 38,
+        "endChar": 0
+      },
+      "revId": "d7da1a9b69da38b89ad734cdae8d39fef069b0be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
