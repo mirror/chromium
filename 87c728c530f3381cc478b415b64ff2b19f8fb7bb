@@ -51,6 +51,24 @@
       "revId": "87c728c530f3381cc478b415b64ff2b19f8fb7bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50d51a0c_057d791b",
+        "filename": "components/viz/run_all_unittests.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-07-07T14:43:21Z",
+      "side": 1,
+      "message": "Hmm, on second thought, maybe this part of the change should be deferred to a follow up CL. I\u0027ll just add the tests to viz_unittests and not have the TestSuite touch a MessageLoop. That will make this change more mechanical.",
+      "parentUuid": "40b0fdb3_533dd4a4",
+      "revId": "87c728c530f3381cc478b415b64ff2b19f8fb7bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
