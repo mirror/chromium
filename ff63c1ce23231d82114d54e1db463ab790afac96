@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3d5ebd30_555849ef",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-07-07T15:44:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3071a675_6adea8c5",
+      "range": {
+        "startLine": 346,
+        "startChar": 20,
+        "endLine": 346,
+        "endChar": 34
+      },
+      "revId": "ff63c1ce23231d82114d54e1db463ab790afac96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea1c080e_6da68a19",
         "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.h",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "3f315be4_c0cc33bd",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-07-07T15:44:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea1c080e_6da68a19",
+      "range": {
+        "startLine": 51,
+        "startChar": 7,
+        "endLine": 51,
+        "endChar": 24
+      },
+      "revId": "ff63c1ce23231d82114d54e1db463ab790afac96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6eae5ca2_9167f6d3",
         "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "ff63c1ce23231d82114d54e1db463ab790afac96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0f5bf4e_72499c87",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-07-07T15:44:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6eae5ca2_9167f6d3",
+      "range": {
+        "startLine": 441,
+        "startChar": 0,
+        "endLine": 441,
+        "endChar": 54
+      },
+      "revId": "ff63c1ce23231d82114d54e1db463ab790afac96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
