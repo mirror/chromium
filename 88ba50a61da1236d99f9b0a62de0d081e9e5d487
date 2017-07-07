@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "76815d06_269b6df3",
+        "filename": "chrome/browser/ui/views/autofill/autofill_popup_base_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-07T01:43:16Z",
+      "side": 1,
+      "message": "Thanks for the background and possible solution avenues. I\u0027ll file a bug and investigate to try to get to the edge cases on Windows. Right now I will attempt to land this as is with the 10px which will allow me to see it on Canary on various configurations.",
+      "parentUuid": "5021845b_ef201863",
+      "revId": "88ba50a61da1236d99f9b0a62de0d081e9e5d487",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de4c14a7_0259eabc",
         "filename": "chrome/browser/ui/views/autofill/autofill_popup_base_view.cc",
         "patchSetId": 2
