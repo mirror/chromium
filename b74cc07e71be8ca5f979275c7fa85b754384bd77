@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f072badc_02595900",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-07T07:14:03Z",
+      "side": 1,
+      "message": "nit: also note that this is kept alive while the connection from the browser process is around.",
+      "revId": "b74cc07e71be8ca5f979275c7fa85b754384bd77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41415403_2322dd05",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-07T07:14:03Z",
+      "side": 1,
+      "message": "Wouldn\u0027t just returning install_scripts_manager work?",
+      "revId": "b74cc07e71be8ca5f979275c7fa85b754384bd77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
