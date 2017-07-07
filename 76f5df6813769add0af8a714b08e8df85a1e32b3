@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "8244083d_c2021dd2",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller_private.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-07-07T23:51:08Z",
+      "side": 1,
+      "message": "I just did a little bit of editing and restored some additional comments. Let me know if I missed others that are still useful!",
+      "parentUuid": "db9f2621_c5b646b3",
+      "range": {
+        "startLine": 64,
+        "startChar": 11,
+        "endLine": 64,
+        "endChar": 34
+      },
+      "revId": "76f5df6813769add0af8a714b08e8df85a1e32b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0cae4e10_a2851aed",
         "filename": "chrome/browser/ui/cocoa/framed_browser_window.mm",
         "patchSetId": 2
