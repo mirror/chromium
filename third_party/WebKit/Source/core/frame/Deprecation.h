@@ -57,6 +57,9 @@ class CORE_EXPORT Deprecation {
   // CSSPropertyIDs that aren't deprecated return an empty string.
   static String DeprecationMessage(CSSPropertyID unresolved_property);
 
+  // Send a deprecation report via the Reporting API.
+  static void GenerateReport(const LocalFrame*, String message);
+
   BitVector css_property_deprecation_bits_;
   unsigned mute_count_;
 };
