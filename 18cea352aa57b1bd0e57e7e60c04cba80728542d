@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64bbebf4_6d6e3962",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-07T09:50:58Z",
+      "side": 0,
+      "message": "You can delete more from here. Look for the places which check model_-\u003estate(). At least we should turn them into DCHECKs",
+      "revId": "18cea352aa57b1bd0e57e7e60c04cba80728542d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
