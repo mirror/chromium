@@ -29,6 +29,8 @@ include_rules = [
   "+components/url_formatter",
   "+components/user_prefs",
   "+components/visitedlink/browser",
+  "+components/viz/service/display",
+  "+components/viz/service/frame_sinks",
   "+components/webdata/common",
 
   "+content/public/browser",
