@@ -904,6 +904,15 @@ Resource* ResourceFetcher::MatchPreload(const FetchParameters& params,
 
   Resource* resource = it->value;
 
+  // A preload does not usually have integrity metadata. But if our current
+  // fetch does (& the preload doesn't), then we can simply make the preloaded
+  // resource "adopt" the fetch's integrity metadata. The actual integrity
+  // check will be performed as usual.
+  if (!params.IntegrityMetadata().IsEmpty() &&
+      resource->IntegrityMetadata().IsEmpty()) {
+    resource->SetIntegrityMetadata(params.IntegrityMetadata());
+  }
+
   RecordSriResourceIntegrityMismatchEvent(kCheckingForIntegrityMismatch);
   if (resource->MustRefetchDueToIntegrityMetadata(params))
     return nullptr;
