@@ -379,6 +379,17 @@ void TestWebContents::SetHttpResponseHeaders(
       ->set_response_headers_for_testing(response_headers);
 }
 
+void TestWebContents::SetLastCommittedURL(const GURL& url) {
+  last_committed_url_ = url;
+}
+
+const GURL& TestWebContents::GetLastCommittedURL() const {
+  if (last_committed_url_.is_valid()) {
+    return last_committed_url_;
+  }
+  return WebContentsImpl::GetLastCommittedURL();
+}
+
 void TestWebContents::CreateNewWindow(
     RenderFrameHost* opener,
     int32_t route_id,
