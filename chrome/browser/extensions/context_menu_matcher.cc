@@ -160,6 +160,13 @@ bool ContextMenuMatcher::IsCommandIdChecked(int command_id) const {
   return item->checked();
 }
 
+bool ContextMenuMatcher::IsCommandIdVisible(int command_id) const {
+  MenuItem* item = GetExtensionMenuItem(command_id);
+  if (!item)
+    return false;
+  return item->visible();
+}
+
 bool ContextMenuMatcher::IsCommandIdEnabled(int command_id) const {
   MenuItem* item = GetExtensionMenuItem(command_id);
   if (!item)
@@ -234,6 +241,9 @@ void ContextMenuMatcher::RecursivelyAppendExtensionItems(
 
   for (auto i = items.begin(); i != items.end(); ++i) {
     MenuItem* item = *i;
+
+    if (!item->visible())
+      continue;
 
     // If last item was of type radio but the current one isn't, auto-insert
     // a separator.  The converse case is handled below.
