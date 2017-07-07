@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0ccfcda_49a24eb8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkRequest.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 682,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-07T00:45:08Z",
+      "side": 1,
+      "message": "extract 682...685 into _filteredResponseProtocol() or something like that?",
+      "revId": "503bc07faa2af58b7aa550fc58766487b1516f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
