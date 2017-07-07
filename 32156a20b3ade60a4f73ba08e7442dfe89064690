@@ -45,6 +45,23 @@
       "revId": "32156a20b3ade60a4f73ba08e7442dfe89064690",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e7f9821_b24fcae1",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorker.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-07T05:05:24Z",
+      "side": 1,
+      "message": "Can you update the link to https://w3c.github.io/ServiceWorker/#serviceworker-interface ?",
+      "revId": "32156a20b3ade60a4f73ba08e7442dfe89064690",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
