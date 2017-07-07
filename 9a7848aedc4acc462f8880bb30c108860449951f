@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "479fbf11_c8976013",
+        "filename": "chrome/browser/media/media_engagement_score_details.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-07T00:14:19Z",
+      "side": 1,
+      "message": "Nit: int here and below (to match the width used in C++)\n\nOut of curiosity, do negative values have any meaning here?",
+      "range": {
+        "startLine": 14,
+        "startChar": 2,
+        "endLine": 14,
+        "endChar": 8
+      },
+      "revId": "9a7848aedc4acc462f8880bb30c108860449951f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e65a4836_cbace671",
+        "filename": "chrome/browser/media/media_engagement_score_details.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-07T00:14:19Z",
+      "side": 1,
+      "message": "Would it be troublesome to send this as a mojo.common.Time?",
+      "range": {
+        "startLine": 16,
+        "startChar": 2,
+        "endLine": 16,
+        "endChar": 8
+      },
+      "revId": "9a7848aedc4acc462f8880bb30c108860449951f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
