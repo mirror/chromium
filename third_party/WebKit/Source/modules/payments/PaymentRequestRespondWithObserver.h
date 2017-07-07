@@ -15,12 +15,14 @@ class ExecutionContext;
 class ScriptValue;
 class WaitUntilObserver;
 
-// This class observes the service worker's handling of a PaymentRequestEvent
-// and notifies the client.
+// This class is an actual implementation of the three behaviors(Please see
+// RespondWithObserver class) for PaymentRequestEvent.respondWith(). The method
+// is used by the payment handler to provide a payment response when the payment
+// successfully completes.
 class MODULES_EXPORT PaymentRequestRespondWithObserver final
     : public RespondWithObserver {
  public:
-  virtual ~PaymentRequestRespondWithObserver();
+  ~PaymentRequestRespondWithObserver() override = default;
 
   static PaymentRequestRespondWithObserver* Create(ExecutionContext*,
                                                    int event_id,
