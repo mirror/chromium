@@ -3247,7 +3247,7 @@ void WebContentsImpl::SaveFrameWithHeaders(const GURL& url,
     for (const base::StringPiece& key_value : base::SplitStringPiece(
              headers, "\r\n", base::TRIM_WHITESPACE, base::SPLIT_WANT_ALL)) {
       std::vector<std::string> pair = base::SplitString(
-          key_value, ":", base::TRIM_WHITESPACE, base::SPLIT_WANT_ALL);
+          key_value, ":", base::TRIM_WHITESPACE, base::SPLIT_WANT_NONEMPTY);
       DCHECK_EQ(2ul, pair.size());
       params->add_request_header(pair[0], pair[1]);
     }
