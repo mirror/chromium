@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a9856212_ff1baf5d",
+        "filename": "third_party/WebKit/Source/modules/payments/CanMakePaymentRespondWithObserver.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2017-07-07T10:05:34Z",
+      "side": 1,
+      "message": "Hmm.. I thought the client means SWGlobalScopeClient. (But I\u0027m not sure)\nThe comment was added in your first implementation:\n  https://codereview.chromium.org/180843003\nIt\u0027s too old but do you remember it?\n(Anyway, I replaced it with a new comment)",
+      "parentUuid": "defae6f7_7a88988a",
+      "revId": "d117262c8953aae791d8e7a3088ecd03229f7704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ce45a41_1f650539",
         "filename": "third_party/WebKit/Source/modules/payments/CanMakePaymentRespondWithObserver.h",
         "patchSetId": 6
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "4f9d3865_7b196a04",
+        "filename": "third_party/WebKit/Source/modules/payments/CanMakePaymentRespondWithObserver.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2017-07-07T10:05:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ce45a41_1f650539",
+      "range": {
+        "startLine": 23,
+        "startChar": 3,
+        "endLine": 23,
+        "endChar": 36
+      },
+      "revId": "d117262c8953aae791d8e7a3088ecd03229f7704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2f0380a_27cb9d52",
         "filename": "third_party/WebKit/Source/modules/payments/PaymentHandlerUtils.cpp",
         "patchSetId": 6
@@ -56,6 +98,24 @@
       "revId": "d117262c8953aae791d8e7a3088ecd03229f7704",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e78438e_caa91ca1",
+        "filename": "third_party/WebKit/Source/modules/payments/PaymentHandlerUtils.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2017-07-07T10:05:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2f0380a_27cb9d52",
+      "revId": "d117262c8953aae791d8e7a3088ecd03229f7704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "130604cf_cef4b95b",
+        "filename": "third_party/WebKit/Source/modules/payments/PaymentHandlerUtils.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2017-07-07T10:05:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b63f060_66b0e361",
+      "revId": "d117262c8953aae791d8e7a3088ecd03229f7704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "910ae325_5dea98e6",
         "filename": "third_party/WebKit/Source/modules/payments/PaymentHandlerUtils.cpp",
         "patchSetId": 6
@@ -87,6 +165,24 @@
       "writtenOn": "2017-07-07T05:35:29Z",
       "side": 1,
       "message": "\"the promise passed to respondWith() was resolved...\"",
+      "revId": "d117262c8953aae791d8e7a3088ecd03229f7704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33fbd7a9_06be1f35",
+        "filename": "third_party/WebKit/Source/modules/payments/PaymentHandlerUtils.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2017-07-07T10:05:34Z",
+      "side": 1,
+      "message": "Done.\n\nI removed it. The ResponseTypeError is unnecessary in payment related events.",
+      "parentUuid": "910ae325_5dea98e6",
       "revId": "d117262c8953aae791d8e7a3088ecd03229f7704",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
