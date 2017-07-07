@@ -9,6 +9,7 @@
 #include "content/public/common/content_switches.h"
 #include "net/base/net_errors.h"
 #include "net/base/static_cookie_policy.h"
+#include "net/log/log_urls_to_file.h"
 #include "net/url_request/url_request.h"
 
 namespace content {
@@ -37,6 +38,7 @@ int ShellNetworkDelegate::OnBeforeURLRequest(
     net::URLRequest* request,
     const net::CompletionCallback& callback,
     GURL* new_url) {
+  net_log::LogUrlsToFile::LogURL(request->url());
   return net::OK;
 }
 
