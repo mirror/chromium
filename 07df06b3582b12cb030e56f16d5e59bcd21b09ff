@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7930d900_d5b34bf3",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-07-07T12:20:51Z",
+      "side": 1,
+      "message": "is_same_document",
+      "range": {
+        "startLine": 321,
+        "startChar": 39,
+        "endLine": 321,
+        "endChar": 40
+      },
+      "revId": "07df06b3582b12cb030e56f16d5e59bcd21b09ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
