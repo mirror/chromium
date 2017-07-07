@@ -1308,7 +1308,6 @@ const CSSValue* CSSPropertyParser::ParseSingleValue(
     case CSSPropertyGridRowGap:
       return ConsumeLengthOrPercent(range_, context_->Mode(),
                                     kValueRangeNonNegative);
-    case CSSPropertyColor:
     case CSSPropertyBorderBottomColor:
     case CSSPropertyBorderLeftColor:
     case CSSPropertyBorderRightColor:
