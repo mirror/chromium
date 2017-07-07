@@ -15763,6 +15763,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="2050"
       label="CSSSelectorWebkitMediaControlsToggleClosedCaptionsButton"/>
   <int value="2051" label="LinearAccelerationSensorConstructor"/>
+  <int value="2052" label="ReportUriMultipleEndpoints"/>
 </enum>
 
 <enum name="FeedbackSource">

@@ -1116,6 +1116,11 @@ void CSPDirectiveList::ParseReportURI(const String& name, const String& value) {
       report_endpoints_.push_back(url);
     }
   }
+
+  if (report_endpoints_.size() > 1) {
+    UseCounter::Count(policy_->GetDocument(),
+                      WebFeature::kReportUriMultipleEndpoints);
+  }
 }
 
 template <class CSPDirectiveType>
