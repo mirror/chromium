@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "171a3020_87a5b2f5",
+        "filename": "headless/lib/browser/devtools_api/devtools_connection.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-07-07T09:56:10Z",
+      "side": 1,
+      "message": "Unfortunately this (or something similar) is needed to make it wrap to 80 columns",
+      "parentUuid": "c4d53da1_10264aed",
+      "range": {
+        "startLine": 47,
+        "startChar": 17,
+        "endLine": 47,
+        "endChar": 34
+      },
+      "revId": "e65fbf2096fe226d064f0c8d888134d1e5837c56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40cae9c8_3ac0e75b",
         "filename": "headless/lib/browser/devtools_api/domain_js.template",
         "patchSetId": 2
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "a8b1fab5_c8d5af6a",
+        "filename": "headless/lib/browser/devtools_api/domain_js.template",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-07-07T09:56:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40cae9c8_3ac0e75b",
+      "revId": "e65fbf2096fe226d064f0c8d888134d1e5837c56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4826ff9f_e6cedc13",
         "filename": "headless/lib/browser/devtools_api/domain_js.template",
         "patchSetId": 2
@@ -53,6 +95,30 @@
       "writtenOn": "2017-07-07T09:38:32Z",
       "side": 1,
       "message": "I don\u0027t think this is still true?",
+      "range": {
+        "startLine": 7,
+        "startChar": 17,
+        "endLine": 7,
+        "endChar": 71
+      },
+      "revId": "e65fbf2096fe226d064f0c8d888134d1e5837c56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a1dcc36_21198b93",
+        "filename": "headless/lib/browser/devtools_api/domain_js.template",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-07-07T09:56:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4826ff9f_e6cedc13",
       "range": {
         "startLine": 7,
         "startChar": 17,
