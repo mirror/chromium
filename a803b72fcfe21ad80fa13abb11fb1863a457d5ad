@@ -16,6 +16,29 @@
       "revId": "a803b72fcfe21ad80fa13abb11fb1863a457d5ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ba07e89_e1a4883c",
+        "filename": "chrome/browser/ntp_tiles/ntp_tiles_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-07T11:12:10Z",
+      "side": 1,
+      "message": "Is there a risk that Wait will get called after the observer notices the updated tiles? If so I could store the tiles seen.",
+      "range": {
+        "startLine": 95,
+        "startChar": 9,
+        "endLine": 95,
+        "endChar": 13
+      },
+      "revId": "a803b72fcfe21ad80fa13abb11fb1863a457d5ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
