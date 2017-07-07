@@ -168,7 +168,6 @@ class KEYBOARD_EXPORT KeyboardController : public ui::InputMethodObserver,
                              const gfx::Rect& new_bounds) override;
 
   // InputMethodObserver overrides
-  void OnTextInputTypeChanged(const ui::TextInputClient* client) override {}
   void OnFocus() override {}
   void OnBlur() override {}
   void OnCaretBoundsChanged(const ui::TextInputClient* client) override {}
