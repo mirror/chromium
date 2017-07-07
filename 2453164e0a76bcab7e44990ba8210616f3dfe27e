@@ -22,6 +22,30 @@
       "revId": "2453164e0a76bcab7e44990ba8210616f3dfe27e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a25f090_d4a31a3a",
+        "filename": "gpu/ipc/service/gpu_init.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-07-07T20:32:53Z",
+      "side": 1,
+      "message": "As discussed on IM, https://chromium-review.googlesource.com/c/563998/ makes Chrome fail to start when enable-drm-atomic flag is passed, but we can\u0027t initialize a drmdevice with drm atomic.\nIs this CL OK for you now? Should we add a note above this that clarifies Chrome would have failed to start if enabling DRM_CLIENT_CAP_ATOMIC failed at this point and the flag was passed?",
+      "parentUuid": "21f1de32_51847b9d",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 90,
+        "endChar": 57
+      },
+      "revId": "2453164e0a76bcab7e44990ba8210616f3dfe27e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
