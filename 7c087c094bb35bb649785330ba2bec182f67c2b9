@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd459d9d_3d3fe7ba",
+        "filename": "cc/trees/proxy_main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-07T22:52:47Z",
+      "side": 1,
+      "message": "It seems to me like you should be controlling what final_pipeline_stage_ lands on rather than ignoring it.",
+      "revId": "7c087c094bb35bb649785330ba2bec182f67c2b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
