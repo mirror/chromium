@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d950d907_d47f78fd",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2819,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-07-07T16:11:13Z",
+      "side": 1,
+      "message": "I had initially planned to do that. But then the approach we ended up with didn\u0027t have anything Android-specific about it. So I figured I\u0027d open this up so you could easily experiment on desktop if you wanted. Given that chrome://flags threatens you with nuclear annihilation or something if you use any of its options the risk seems low. And on iOS the signal method is a noop.\n\nBut if you definitely don\u0027t plan to try the service worker on desktop, I\u0027ll restrict this to Android.",
+      "parentUuid": "c8e7bdcc_c38c8a9d",
+      "revId": "90e7537212c2c13abb3bdafd5e655fe883935c5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c0563544_cf1bc384",
         "filename": "chrome/browser/autocomplete/chrome_autocomplete_provider_client.cc",
         "patchSetId": 2
@@ -39,6 +57,30 @@
       "revId": "90e7537212c2c13abb3bdafd5e655fe883935c5c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ab8ae28_78744351",
+        "filename": "chrome/browser/autocomplete/chrome_autocomplete_provider_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-07-07T16:11:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0563544_cf1bc384",
+      "range": {
+        "startLine": 66,
+        "startChar": 32,
+        "endLine": 66,
+        "endChar": 37
+      },
+      "revId": "90e7537212c2c13abb3bdafd5e655fe883935c5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "86777503_b87fdc0f",
+        "filename": "components/omnibox/browser/autocomplete_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-07-07T16:11:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8612d368_ea3d63c4",
+      "range": {
+        "startLine": 346,
+        "startChar": 38,
+        "endLine": 346,
+        "endChar": 40
+      },
+      "revId": "90e7537212c2c13abb3bdafd5e655fe883935c5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69ed2786_171fb9d6",
         "filename": "components/omnibox/browser/autocomplete_controller.cc",
         "patchSetId": 2
@@ -76,6 +142,30 @@
       "writtenOn": "2017-07-06T22:42:04Z",
       "side": 1,
       "message": "Add a LOG(INFO) or some form of debugging to verify my claim that, basically, we only assign an input to OmniboxInputType::QUERY when the user starts typing the beginning of a second word.\n\nAfter all, we\u0027re doing this because I _claim_ it\u0027s equivalent to that thing I did with logs analysis.  We should check my claim. :-)",
+      "range": {
+        "startLine": 355,
+        "startChar": 21,
+        "endLine": 355,
+        "endChar": 22
+      },
+      "revId": "90e7537212c2c13abb3bdafd5e655fe883935c5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c8ec7fa_7d5090d9",
+        "filename": "components/omnibox/browser/autocomplete_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-07-07T16:11:13Z",
+      "side": 1,
+      "message": "I\u0027ve already tested this pretty extensively on both Android and desktop. It does indeed become QUERY as soon as you enter \u003csome input\u003e\u003cwhitespace\u003e\u003ca character\u003e. Until that point it\u0027s UNKNOWN (unless there\u0027s a scheme or TLD and no whitespace in which case it of course it\u0027s URL).\n\nI haven\u0027t yet been able to find any edge cases where it doesn\u0027t seem to do the right thing.\n\n(Except maybe for CJK input. I think we should discuss special handling for this case that reflects the fact that this input makes it much more likely that the user is entering a query than a URL, even if no spaces have been entered.)\n\nEdit: verified this one more time after making the latest round of changes to satisfy my paranoia.",
+      "parentUuid": "69ed2786_171fb9d6",
       "range": {
         "startLine": 355,
         "startChar": 21,
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "8e44ccfb_4bf27aa7",
+        "filename": "components/omnibox/browser/autocomplete_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-07-07T16:11:13Z",
+      "side": 1,
+      "message": "Done. Also updated to reflect Matt\u0027s point below.",
+      "parentUuid": "40a71dc0_c2bc9c20",
+      "range": {
+        "startLine": 251,
+        "startChar": 63,
+        "endLine": 251,
+        "endChar": 64
+      },
+      "revId": "90e7537212c2c13abb3bdafd5e655fe883935c5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b59f5774_ad5c2d71",
         "filename": "components/omnibox/browser/autocomplete_controller.h",
         "patchSetId": 2
@@ -122,6 +236,24 @@
       "writtenOn": "2017-07-07T06:52:45Z",
       "side": 1,
       "message": "More precisely, the navigation hint was sent, but the service worker may not have been started, and there may not have been a service worker. So you might want to reflect that in the name or comments.\n\nsent_search_service_worker_navigation_hint_ or something?",
+      "revId": "90e7537212c2c13abb3bdafd5e655fe883935c5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb276df0_b8cd1c15",
+        "filename": "components/omnibox/browser/autocomplete_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-07-07T16:11:13Z",
+      "side": 1,
+      "message": "Good point. Going with search_service_worker_signal_sent_.",
+      "parentUuid": "b59f5774_ad5c2d71",
       "revId": "90e7537212c2c13abb3bdafd5e655fe883935c5c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -151,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "1d0dd933_c4007bbf",
+        "filename": "components/omnibox/browser/autocomplete_provider_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-07-07T16:11:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "768e18b5_3af953a6",
+      "range": {
+        "startLine": 115,
+        "startChar": 5,
+        "endLine": 115,
+        "endChar": 12
+      },
+      "revId": "90e7537212c2c13abb3bdafd5e655fe883935c5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e29bdc30_45f0482e",
         "filename": "components/omnibox/browser/omnibox_field_trial.cc",
         "patchSetId": 2
@@ -162,6 +318,30 @@
       "writtenOn": "2017-07-06T22:42:04Z",
       "side": 1,
       "message": "This comment doesn\u0027t jib with the name.  If you want to start it for queries only, please\n- make the feature variable name include query\n- ditto with the feature string name\n- ditto with flags variables name\n- ditto with command line part of about_flags.cc\n(I think that\u0027s all.)\n\nThat way we can add a feature flag for high-confidence URL navigations later without a ton of confusion.",
+      "range": {
+        "startLine": 136,
+        "startChar": 3,
+        "endLine": 136,
+        "endChar": 8
+      },
+      "revId": "90e7537212c2c13abb3bdafd5e655fe883935c5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1939a7c7_75ae0486",
+        "filename": "components/omnibox/browser/omnibox_field_trial.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-07-07T16:11:13Z",
+      "side": 1,
+      "message": "Good point, done. (OmniboxSpeculativeServiceWorkerStartOnQueryInput)",
+      "parentUuid": "e29bdc30_45f0482e",
       "range": {
         "startLine": 136,
         "startChar": 3,
