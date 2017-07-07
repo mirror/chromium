@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "538ab009_768e2151",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-07T05:09:31Z",
+      "side": 1,
+      "message": "Also, could you update your other CLs\u0027 titles, since most of them mention NotifyEvent?",
+      "parentUuid": "f183d3f9_40c91428",
+      "revId": "81237f89466f1c0c8aa60b01d8c66c3f5462a5fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "001f6b07_d083704c",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
