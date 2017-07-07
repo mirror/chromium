@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2012f63e_233f21be",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-07-07T17:11:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3e4bbfc_d112ea81",
+      "range": {
+        "startLine": 233,
+        "startChar": 22,
+        "endLine": 233,
+        "endChar": 27
+      },
+      "revId": "1c54238cec53ba42682d5eb93df916924ea7eafd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac928598_28bb6fcb",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_impl.h",
         "patchSetId": 13
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "fe6dd0db_f9f99fa7",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_impl.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-07-07T17:11:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac928598_28bb6fcb",
+      "range": {
+        "startLine": 168,
+        "startChar": 12,
+        "endLine": 168,
+        "endChar": 20
+      },
+      "revId": "1c54238cec53ba42682d5eb93df916924ea7eafd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4a72058_bc1fa658",
         "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_scheduler_helper.cc",
         "patchSetId": 13
@@ -68,6 +116,30 @@
       "revId": "1c54238cec53ba42682d5eb93df916924ea7eafd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fb51353_26017318",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/worker_scheduler_helper.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-07-07T17:11:07Z",
+      "side": 1,
+      "message": "Changed InitDefaultQueues not to use virtual functions.",
+      "parentUuid": "b4a72058_bc1fa658",
+      "range": {
+        "startLine": 20,
+        "startChar": 2,
+        "endLine": 20,
+        "endChar": 19
+      },
+      "revId": "1c54238cec53ba42682d5eb93df916924ea7eafd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
