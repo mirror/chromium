@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a70830d1_2efa1bd6",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountsChangeObserver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-07T11:08:21Z",
+      "side": 1,
+      "message": "s/the error condition/to the error condition",
+      "range": {
+        "startLine": 15,
+        "startChar": 59,
+        "endLine": 15,
+        "endChar": 68
+      },
+      "revId": "e4618309e73523a8beaa25520366d756e1684a9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c59a7fa5_5cbeed5f",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/SystemAccountManagerDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-07T11:08:21Z",
+      "side": 1,
+      "message": "Optional: I would rename this method name to fireOnAccountsChangedNotification (notifyObserver is too generic, especially if you add another notification in the future).",
+      "range": {
+        "startLine": 214,
+        "startChar": 17,
+        "endLine": 214,
+        "endChar": 32
+      },
+      "revId": "e4618309e73523a8beaa25520366d756e1684a9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
