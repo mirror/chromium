@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7807b8b7_e1971b96",
+        "filename": "content/browser/cocoa/system_hotkey_helper_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-07-07T23:33:47Z",
+      "side": 1,
+      "message": "I would assume it was to get out of the way of startup. Looking at the original CL, https://codereview.chromium.org/370293004 , I wasn\u0027t able to find any explicit explanation or rationale. Looking at https://bugs.chromium.org/p/chromium/issues/detail?id\u003d383558#c8 is the closest I can find,\n\n\u003e At startup or shortly thereafter...\n\nI\u0027m not exactly sure where you\u0027re going with this, but you could ask erikchen@ who is the original author.",
+      "parentUuid": "e9359783_3c84c350",
+      "range": {
+        "startLine": 36,
+        "startChar": 8,
+        "endLine": 36,
+        "endChar": 33
+      },
+      "revId": "b356df4356092534a75811b9c31fb91f50ef012d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "06f8eac2_e3a016e5",
         "filename": "content/browser/cocoa/system_hotkey_helper_mac.mm",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-07T23:14:24Z",
       "side": 1,
       "message": "Consider adding a priority (likely USER_BLOCKING or USER_VISIBLE, depending on how import it is to load these hotkeys) and a shutdown behavior (likely CONTINUE_ON_SHUTDOWN as if we\u0027re already shutting down, we don\u0027t care for this to run or complete).",
+      "range": {
+        "startLine": 37,
+        "startChar": 24,
+        "endLine": 37,
+        "endChar": 32
+      },
+      "revId": "b356df4356092534a75811b9c31fb91f50ef012d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac0c4688_c2e6653b",
+        "filename": "content/browser/cocoa/system_hotkey_helper_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-07-07T23:33:47Z",
+      "side": 1,
+      "message": "Given that we\u0027re delaying loading these things for 10 seconds, I\u0027m guessing priority is fairly low for this. Admittedly, I don\u0027t have any real experience of what this feature is doing.\n\nHowever, I\u0027m a bit confused about CONTINUE_ON_SHUTDOWN, I agree that this operation doesn\u0027t need to be performed if we\u0027re shutting down, but isn\u0027t CONTINUE_ON_SHUTDOWN the default?",
+      "parentUuid": "06f8eac2_e3a016e5",
       "range": {
         "startLine": 37,
         "startChar": 24,
