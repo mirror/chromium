@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c4d534aa_c08ac653",
+        "filename": "build/android/gyp/merge_manifest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1113224
+      },
+      "writtenOn": "2017-07-07T10:45:33Z",
+      "side": 1,
+      "message": "Done\n\nI took the liberty of moving the path to \"build_vars\" to build/android/config.gni, and pass the file path instead of the more generic \"--output-directory\" to the Python script. Unfortunately resource_sizes.py has to duplicate the constant (Catch 22: it would have to read the variable from the build_vars.txt).\n\nSo I did it a bit differently than you suggested. But If you think it\u0027s better to keep the changes minimal I\u0027m fine with using a \"--output-directory\".",
+      "parentUuid": "0f754e89_8d7ca257",
+      "range": {
+        "startLine": 19,
+        "startChar": 25,
+        "endLine": 19,
+        "endChar": 32
+      },
+      "revId": "906122c1a4c166aaaf981236fda030b48afda141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b6b307a_97f5d334",
         "filename": "build/android/gyp/merge_manifest.py",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "906122c1a4c166aaaf981236fda030b48afda141",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed1764da_cf73eeb8",
+        "filename": "build/android/gyp/merge_manifest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1113224
+      },
+      "writtenOn": "2017-07-07T10:45:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b6b307a_97f5d334",
+      "range": {
+        "startLine": 20,
+        "startChar": 43,
+        "endLine": 20,
+        "endChar": 59
+      },
+      "revId": "906122c1a4c166aaaf981236fda030b48afda141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "cb7cdc26_65405e00",
+        "filename": "build/android/gyp/merge_manifest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1113224
+      },
+      "writtenOn": "2017-07-07T10:45:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65279af1_55b1bd42",
+      "range": {
+        "startLine": 43,
+        "startChar": 28,
+        "endLine": 43,
+        "endChar": 32
+      },
+      "revId": "906122c1a4c166aaaf981236fda030b48afda141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b584b34b_0b0cd2d5",
         "filename": "build/android/gyp/write_build_config.py",
         "patchSetId": 1
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "bcba869d_ebfa95bc",
+        "filename": "build/android/gyp/write_build_config.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1113224
+      },
+      "writtenOn": "2017-07-07T10:45:33Z",
+      "side": 1,
+      "message": "Done\n\nI agree, it\u0027s a bit weird. But this is me following suit for how it\u0027s done for \u0027tested_apk_resource_jars\u0027 a few lines below. That\u0027s not a reason not do to it differently though, but isn\u0027t list comprehensions more \"pythonic\" than using \u0027filter\u0027? Also, \u0027filter\u0027 is moved to functools in Python3 so one could argue that using it is bad form.\n\nBut I\u0027m not here to argue, so I\u0027ll apply your suggestion 😊",
+      "parentUuid": "b584b34b_0b0cd2d5",
+      "range": {
+        "startLine": 710,
+        "startChar": 43,
+        "endLine": 710,
+        "endChar": 44
+      },
+      "revId": "906122c1a4c166aaaf981236fda030b48afda141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4daea33a_bb5c128d",
         "filename": "build/config/android/rules.gni",
         "patchSetId": 1
@@ -105,6 +201,30 @@
       "writtenOn": "2017-07-05T15:21:22Z",
       "side": 1,
       "message": "nit: prefix with _ (do so far all variables that are not parameters to a template)",
+      "range": {
+        "startLine": 1856,
+        "startChar": 4,
+        "endLine": 1856,
+        "endChar": 27
+      },
+      "revId": "906122c1a4c166aaaf981236fda030b48afda141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54a34fc4_80e55430",
+        "filename": "build/config/android/rules.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 1856,
+      "author": {
+        "id": 1113224
+      },
+      "writtenOn": "2017-07-07T10:45:33Z",
+      "side": 1,
+      "message": "Should I rename the other _target variables too, like \u0027final_dex_target_name\u0027, \u0027build_config_target\u0027 and so on? It\u0027s a little weird if only this target has a \u0027_\u0027 prefix..",
+      "parentUuid": "4daea33a_bb5c128d",
       "range": {
         "startLine": 1856,
         "startChar": 4,
