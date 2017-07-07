@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e52a11d_271e57b6",
+        "filename": "android_webview/browser/aw_browser_context.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-07T22:59:18Z",
+      "side": 1,
+      "message": "more idiomatic to have return type as unique_ptr and use MakeUnique instead of new",
+      "revId": "8433bde44065e308db3aeaa924bb7639facb22a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd3e674c_b13e2877",
+        "filename": "android_webview/browser/aw_contents_statics.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-07T22:59:18Z",
+      "side": 1,
+      "message": "std::vector is movable, make the function take std::vector\u003c\u003e\u0026\u0026 and then no need have it heap allocated",
+      "revId": "8433bde44065e308db3aeaa924bb7639facb22a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd2d03cb_820cec27",
+        "filename": "android_webview/browser/aw_safe_browsing_resource_throttle.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-07T22:59:18Z",
+      "side": 1,
+      "message": "no vector in this file?",
+      "revId": "8433bde44065e308db3aeaa924bb7639facb22a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3d63a86_bc6b740b",
+        "filename": "android_webview/browser/aw_safe_browsing_resource_throttle.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-07T22:59:18Z",
+      "side": 1,
+      "message": "ditto is this used?",
+      "revId": "8433bde44065e308db3aeaa924bb7639facb22a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d96fcc99_33bb6a58",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-07T22:59:18Z",
+      "side": 1,
+      "message": "Use RunsTasksInCurrentSequence everywhere",
+      "revId": "8433bde44065e308db3aeaa924bb7639facb22a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a445d0d_f4aefbf4",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-07T22:59:18Z",
+      "side": 1,
+      "message": "afaict, there is no need for this bounce on IO thread?",
+      "revId": "8433bde44065e308db3aeaa924bb7639facb22a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc26e911_ea43d7ec",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-07T22:59:18Z",
+      "side": 1,
+      "message": "never used",
+      "revId": "8433bde44065e308db3aeaa924bb7639facb22a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f728414_95899394",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-07T22:59:18Z",
+      "side": 1,
+      "message": "these things are not thread safe, you actually need to destroy the io one on the io thread. or are you just counting on this thing never being destroyed, in which case by bother at all with weakptrs?",
+      "revId": "8433bde44065e308db3aeaa924bb7639facb22a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "017d66f5_ea02c04c",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-07T22:59:18Z",
+      "side": 1,
+      "message": "no (c)",
+      "revId": "8433bde44065e308db3aeaa924bb7639facb22a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4de573e0_4e79f1ec",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-07T22:59:18Z",
+      "side": 1,
+      "message": "needed?",
+      "revId": "8433bde44065e308db3aeaa924bb7639facb22a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
