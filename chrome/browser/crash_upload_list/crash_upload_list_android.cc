@@ -11,28 +11,24 @@
 #include "base/files/file.h"
 #include "base/files/file_enumerator.h"
 #include "base/files/file_util.h"
-#include "base/task_runner.h"
 #include "jni/MinidumpUploadService_jni.h"
 #include "ui/base/text/bytes_formatting.h"
 
 CrashUploadListAndroid::CrashUploadListAndroid(
-    Delegate* delegate,
-    const base::FilePath& upload_log_path,
-    scoped_refptr<base::TaskRunner> task_runner)
-    : CrashUploadList(delegate, upload_log_path, std::move(task_runner)) {}
+    const base::FilePath& upload_log_path)
+    : TextLogUploadList(text_log_upload_list) {}
 
 CrashUploadListAndroid::~CrashUploadListAndroid() {}
 
-void CrashUploadListAndroid::LoadUploadList(
-    std::vector<UploadList::UploadInfo>* uploads) {
+std::vector<UploadList::UploadInfo> CrashUploadListAndroid::LoadUploadList() {
   // This will load the list of successfully uploaded logs.
-  CrashUploadList::LoadUploadList(uploads);
+  std::vector<UploadInfo> uploads = TextLogUploadList::LoadUploadList();
 
-  LoadUnsuccessfulUploadList(uploads);
+  LoadUnsuccessfulUploadList(&uploads);
+  return uploads;
 }
 
-void CrashUploadListAndroid::RequestSingleCrashUpload(
-    const std::string& local_id) {
+void CrashUploadListAndroid::PeformSingleUpload(const std::string& local_id) {
   JNIEnv* env = base::android::AttachCurrentThread();
   base::android::ScopedJavaLocalRef<jstring> j_local_id =
       base::android::ConvertUTF8ToJavaString(env, local_id);
