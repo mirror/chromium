@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23b77d41_2435238b",
+        "filename": "chrome/browser/password_manager/chrome_password_manager_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-07T08:39:49Z",
+      "side": 1,
+      "message": "Instead of plumbing the value of |trigger| to the chrome/ layer and back, have you considered relying on the return value of PromptUserToSaveOrUpdatePassword and calling RecordSavingPrompt from the call site of the former, i.e PasswordManager/CredentialManagerImpl? Seems like it would allow removing a lot of boilerplate.",
+      "revId": "429de7554827036611aba6bd433cd328cf426092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec92dd41_bf422d3c",
+        "filename": "chrome/browser/password_manager/chrome_password_manager_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-07T08:39:49Z",
+      "side": 1,
+      "message": "nit: Is this change intentional?",
+      "revId": "429de7554827036611aba6bd433cd328cf426092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69fa690f_0c10dd52",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-07T08:39:49Z",
+      "side": 1,
+      "message": "Did you verify if we can show a saving prompt multiple times for a form? Or are we fine with \u003e1 PromptTrigger samples?",
+      "revId": "429de7554827036611aba6bd433cd328cf426092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdd2769c_dc2f8b76",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-07T08:39:49Z",
+      "side": 1,
+      "message": "phrasing nit: ... a boolean value indicating ...\n\nSame below.",
+      "range": {
+        "startLine": 39,
+        "startChar": 23,
+        "endLine": 39,
+        "endChar": 41
+      },
+      "revId": "429de7554827036611aba6bd433cd328cf426092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c97921f_db2ad830",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-07T08:39:49Z",
+      "side": 1,
+      "message": "optional phrasing nit: ... was shown to ask the user for ...",
+      "range": {
+        "startLine": 43,
+        "startChar": 72,
+        "endLine": 44,
+        "endChar": 8
+      },
+      "revId": "429de7554827036611aba6bd433cd328cf426092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
