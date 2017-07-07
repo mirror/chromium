@@ -34,6 +34,24 @@
       "revId": "0b117803752810ec84376e6779ff380df3da0e94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "df545acf_63d693e6",
+        "filename": "chrome/browser/task_manager/providers/arc/arc_process_filter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-07T05:29:03Z",
+      "side": 1,
+      "message": "Sorry for the nitpicks, but then please add #include \"base/logging.h\" to this file.\n\nWhile you\u0027re at it, can you also add #include \"base/macros.h\" to the header side for DISALLOW_COPY_AND_ASSIGN?",
+      "parentUuid": "28ace34c_854c479d",
+      "revId": "0b117803752810ec84376e6779ff380df3da0e94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
