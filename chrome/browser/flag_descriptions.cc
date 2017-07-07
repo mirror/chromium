@@ -565,6 +565,13 @@ const char kWebrtcSrtpAesGcmName[] =
 const char kWebrtcSrtpAesGcmDescription[] =
     "When enabled, WebRTC will try to negotiate GCM cipher suites for SRTP.";
 
+const char kWebrtcSrtpEncryptedHeadersName[] =
+    "Negotiation with encrypted header extensions for SRTP in WebRTC";
+
+const char kWebrtcSrtpEncryptedHeadersDescription[] =
+    "When enabled, WebRTC will try to negotiate encrypted header extensions "
+    "for SRTP.";
+
 const char kWebrtcStunOriginName[] = "WebRTC Stun origin header";
 
 const char kWebrtcStunOriginDescription[] =
