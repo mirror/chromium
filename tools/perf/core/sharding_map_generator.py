@@ -24,18 +24,24 @@ execute all our tests.
 import argparse
 import json
 import os
+import subprocess
 
 from core import path_util
 path_util.AddTelemetryToPath()
 
 from telemetry.util import bot_utils
 
+from telemetry import decorators
 
 def get_sharding_map_path():
   return os.path.join(
       path_util.GetChromiumSrcDir(), 'tools', 'perf', 'core',
       'benchmark_sharding_map.json')
 
+def get_avg_times_path():
+  return os.path.join(
+      path_util.GetChromiumSrcDir(), 'tools', 'perf', 'core',
+      'desktop_benchmark_avg_times.json')
 
 def load_benchmark_sharding_map():
   with open(get_sharding_map_path()) as f:
@@ -87,6 +93,82 @@ def get_sorted_benchmark_list_by_time(all_benchmarks):
   # Return a reverse sorted list by runtime
   runtime_list.sort(key=lambda tup: tup[1], reverse=True)
   return runtime_list, new_benchmarks
+
+
+def ShouldBenchmarkBeScheduled(benchmark, platform):
+  disabled_tags = decorators.GetDisabledAttributes(benchmark)
+  enabled_tags = decorators.GetEnabledAttributes(benchmark)
+
+  # Don't run benchmarks which are disabled on all platforms.
+  if 'all' in disabled_tags:
+    return False
+
+  # If we're not on android, don't run mobile benchmarks.
+  if platform != 'android' and 'android' in enabled_tags:
+    return False
+
+  # If we're on android, don't run benchmarks disabled on mobile
+  if platform == 'android' and 'android' in disabled_tags:
+    return False
+
+  return True
+
+
+class Tmp(object):
+  def __getattr__(self, name):
+    return None
+
+def get_story_avg_times():
+  # Format is {} benchmark -> {} story name -> time (seconds)
+  with open(get_story_times_path()) as f:
+    return json.load(f)
+
+def shard_all_benchmarks(all_benchmarks, num_devices):
+  with open(get_avg_times_path()) as f:
+    times = json.load(f)
+  story_times = get_story_avg_times()
+  r_story_times = {}
+
+  executed_stories = []
+  for b in all_benchmarks:
+    if ShouldBenchmarkBeScheduled(b, 'android') or ShouldBenchmarkBeScheduled(
+        b, 'win'):
+      stories = b().CreateStorySet(Tmp()).stories
+      avg_time = times[b.Name()]/len(stories)
+      if times[b.Name()] > 500:
+        print '{:<70} has {:<10} stories, {} avg story time'.format(b.Name(), len(stories), times[b.Name()])
+      seen = False
+      for story in stories:
+        tup = (b.Name(), story.name)
+        time = avg_time
+        if story_times.get(tup[0]):
+          time = story_times[tup[0]][tup[1]]
+        r_story_times[tup] = time
+        executed_stories.append(tup)
+
+  total_time = sum(r_story_times[b] for b in executed_stories)
+  chunk_size = total_time / num_devices
+
+  sharded = []
+  so_far = 0
+  buildup = []
+  for name in executed_stories:
+    time = r_story_times[name]
+    if so_far > chunk_size:
+      sharded.append(buildup)
+      buildup = []
+      so_far = 0
+    so_far += time
+    buildup.append(name)
+  sharded.append(buildup)
+  for thing in sharded:
+    s = sum(r_story_times[x] for x in thing)
+    print s
+  for i, thing in enumerate(sharded):
+    print 'SHARD %d takes %d' % (i+1, sum(r_story_times[tup] for tup in thing))
+    for tup in thing:
+      print tup[0], tup[1], r_story_times[tup]
+  return sharded
 
 
 # Returns a map of benchmark name to shard it is on.
@@ -183,6 +265,10 @@ def get_args():
   parser.add_argument(
       '--verbose', action='store_true',
       help='Determines how verbose the script is.')
+  parser.add_argument('--refresh-times', action='store_true')
+  parser.add_argument('--platforms', action='append', default=None)
+  parser.add_argument('--swarming-py-path')
+  parser.add_argument('--buildnum-offset')
   return parser
 
 
@@ -195,5 +281,10 @@ def dumps_json(data):
   return json.dumps(data, indent=2, sort_keys=True, separators=(',', ': '))
 
 def main(args, benchmarks, configs):
+  if args.refresh_times:
+    return refresh_times(configs, args.platforms, args)
+
+  res = shard_all_benchmarks(benchmarks, 5)
+  return 0
   return regenerate(
       benchmarks, configs, args.dry_run, args.verbose, args.builder_names)

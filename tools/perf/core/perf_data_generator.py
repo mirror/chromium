@@ -28,6 +28,7 @@ from telemetry import decorators
 from py_utils import discover
 
 from core.sharding_map_generator import load_benchmark_sharding_map
+from core.sharding_map_generator import ShouldBenchmarkBeScheduled
 
 
 def add_builder(waterfall, name, additional_compile_targets=None):
@@ -674,24 +675,6 @@ def generate_cplusplus_isolate_script_test(dimension):
     for name, shard in dimension['perf_tests']
   ]
 
-
-def ShouldBenchmarkBeScheduled(benchmark, platform):
-  disabled_tags = decorators.GetDisabledAttributes(benchmark)
-  enabled_tags = decorators.GetEnabledAttributes(benchmark)
-
-  # Don't run benchmarks which are disabled on all platforms.
-  if 'all' in disabled_tags:
-    return False
-
-  # If we're not on android, don't run mobile benchmarks.
-  if platform != 'android' and 'android' in enabled_tags:
-    return False
-
-  # If we're on android, don't run benchmarks disabled on mobile
-  if platform == 'android' and 'android' in disabled_tags:
-    return False
-
-  return True
 
 def generate_telemetry_tests(name, tester_config, benchmarks,
                              benchmark_sharding_map,
