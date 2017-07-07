@@ -22,6 +22,30 @@
       "revId": "f4082cb13759309b6ab19cfbac8f40bd551b569c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a4aa263_6df42903",
+        "filename": "components/signin/core/browser/fake_signin_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-07-07T11:42:41Z",
+      "side": 1,
+      "message": "As discussed offline, going with 2 for now. In the fullness of time we\u0027ll get all of this fixed.",
+      "parentUuid": "186b4251_3072471c",
+      "range": {
+        "startLine": 76,
+        "startChar": 6,
+        "endLine": 76,
+        "endChar": 26
+      },
+      "revId": "f4082cb13759309b6ab19cfbac8f40bd551b569c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
