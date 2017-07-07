@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "482eead0_a6c391d8",
+        "filename": "chrome/installer/zucchini/crc32.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-07T19:03:17Z",
+      "side": 1,
+      "message": "I started going through this logic, and decided that I didn\u0027t hate myself this much. Can you add a link to the comment so I can just do a comparison and verify that the code is the same?",
+      "revId": "a21c4dffc58df67b26a390b70bd0c423bd1dfcc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ac15bf6_f370e968",
+        "filename": "chrome/installer/zucchini/crc32.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-07T19:03:17Z",
+      "side": 1,
+      "message": "wouldn\u0027t this make more sense with a (uint8_t* first, size_t size) interface?",
+      "revId": "a21c4dffc58df67b26a390b70bd0c423bd1dfcc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
