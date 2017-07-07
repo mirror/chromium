@@ -110,6 +110,7 @@
 #include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/url_request/url_request.h"
 #include "net/url_request/url_request_context.h"
+#include "net/url_request/url_request_context_getter.h"
 #include "net/url_request/url_request_job_factory.h"
 #include "ppapi/features/features.h"
 #include "storage/browser/blob/blob_data_handle.h"
@@ -1767,9 +1768,16 @@ ResourceRequestInfoImpl* ResourceDispatcherHostImpl::CreateRequestInfo(
       false);          // initiated_in_secure_context
 }
 
-void ResourceDispatcherHostImpl::OnRenderViewHostCreated(int child_id,
-                                                         int route_id) {
-  scheduler_->OnClientCreated(child_id, route_id);
+void ResourceDispatcherHostImpl::OnRenderViewHostCreated(
+    int child_id,
+    int route_id,
+    scoped_refptr<net::URLRequestContextGetter> url_request_context_getter) {
+  scheduler_->OnClientCreated(
+      child_id, route_id,
+      url_request_context_getter
+          ? url_request_context_getter->GetURLRequestContext()
+                ->network_quality_estimator()
+          : nullptr);
 }
 
 void ResourceDispatcherHostImpl::OnRenderViewHostDeleted(int child_id,
