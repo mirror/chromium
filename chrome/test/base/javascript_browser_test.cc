@@ -49,10 +49,13 @@ void JavaScriptBrowserTest::SetUpOnMainThread() {
   test_data_directory = test_data_directory.Append(kWebUITestFolder);
   library_search_paths_.push_back(test_data_directory);
 
+  // This directory is only guaranteed to exist in a subset of builds;
+  // currently, when the sanitizers are enabled, the associated tests
+  // are disabled.
   base::FilePath gen_test_data_directory;
-  ASSERT_TRUE(
-      PathService::Get(chrome::DIR_GEN_TEST_DATA, &gen_test_data_directory));
-  library_search_paths_.push_back(gen_test_data_directory);
+  if (PathService::Get(chrome::DIR_GEN_TEST_DATA, &gen_test_data_directory)) {
+    library_search_paths_.push_back(gen_test_data_directory);
+  }
 
   base::FilePath source_root_directory;
   ASSERT_TRUE(PathService::Get(base::DIR_SOURCE_ROOT, &source_root_directory));
