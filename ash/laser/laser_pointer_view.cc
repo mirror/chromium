@@ -685,7 +685,7 @@ void LaserPointerView::UpdateSurface() {
 
   cc::TransferableResource transferable_resource;
   transferable_resource.id = next_resource_id_++;
-  transferable_resource.format = cc::RGBA_8888;
+  transferable_resource.format = viz::RGBA_8888;
   transferable_resource.filter = GL_LINEAR;
   transferable_resource.size = buffer_size;
   transferable_resource.mailbox_holder =

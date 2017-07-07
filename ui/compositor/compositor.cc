@@ -141,7 +141,7 @@ Compositor::Compositor(const cc::FrameSinkId& frame_sink_id,
   settings.use_partial_raster = !settings.use_zero_copy;
 
   if (command_line->HasSwitch(switches::kUIEnableRGBA4444Textures))
-    settings.preferred_tile_format = cc::RGBA_4444;
+    settings.preferred_tile_format = viz::RGBA_4444;
   settings.resource_settings = context_factory_->GetResourceSettings();
 
   settings.gpu_memory_policy.bytes_limit_when_visible = 512 * 1024 * 1024;

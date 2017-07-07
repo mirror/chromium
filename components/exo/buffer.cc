@@ -439,7 +439,7 @@ bool Buffer::ProduceTransferableResource(
   }
 
   resource->id = resource_id;
-  resource->format = cc::RGBA_8888;
+  resource->format = viz::RGBA_8888;
   resource->filter = GL_LINEAR;
   resource->size = gpu_memory_buffer_->GetSize();
 
