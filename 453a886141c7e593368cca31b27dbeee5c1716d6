@@ -46,6 +46,30 @@
       "revId": "453a886141c7e593368cca31b27dbeee5c1716d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1165d648_aafdf1c3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-07-07T19:22:36Z",
+      "side": 1,
+      "message": "Is this being worked on?\nIf not, please file a bug and at least remove this assert for now. This is crashing the download home all the time.",
+      "parentUuid": "5b808eb5_7376d358",
+      "range": {
+        "startLine": 132,
+        "startChar": 12,
+        "endLine": 132,
+        "endChar": 18
+      },
+      "revId": "453a886141c7e593368cca31b27dbeee5c1716d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
