@@ -16,6 +16,24 @@
       "revId": "6bbbc8af11cb6fa10a4d8d6f1be8819631c3c5c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e174fdd8_f928334e",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-07T06:58:30Z",
+      "side": 1,
+      "message": "1. Clarified offline about this. TLDR; We don\u0027t want to say something is default if it was set by a non-user (e.g. if enterprise policy sets a new default for Flash, this should not show up as a default setting).\n\n2. Agreed, done. I used the existing chrome.settingsPrivate.Enforcement.RECOMMENDED enum to mean \u0027default\u0027 in this case (I think this is the field that\u0027s used to denote the default global setting for each content setting? Will ask dschuyler when the patch is ready.)\n\n3. Done, with the former option (using |source_string|). This involves hardcoding a \"default\" source string though - I don\u0027t really like it, but there\u0027s precedent for it already, so I figure it\u0027s not making it worse - I added a TODO in site_settings_prefs_browser_proxy.js to address it.",
+      "parentUuid": "58ff5bad_61950a13",
+      "revId": "6bbbc8af11cb6fa10a4d8d6f1be8819631c3c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
