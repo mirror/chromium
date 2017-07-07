@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "070c528a_24f205b1",
+        "filename": "content/browser/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-07-07T07:16:54Z",
+      "side": 0,
+      "message": "Moved this line into //services/device/wake_lock/power_save_blocker/OWNERS",
+      "revId": "e4e26b4c700ffeb98db0bc856f205251777d134c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caea2664_45d60c08",
+        "filename": "device/power_save_blocker/power_save_blocker_android.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-07-07T07:16:54Z",
+      "side": 0,
+      "message": "This file is totally useless, so I deleted it.",
+      "revId": "e4e26b4c700ffeb98db0bc856f205251777d134c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "929b1fdc_7ca59630",
+        "filename": "services/device/wake_lock/power_save_blocker/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-07-07T07:16:54Z",
+      "side": 0,
+      "message": "PowerSaveBlocker.java doesn\u0027t have dependency on ui_java, so I removed this item.",
+      "revId": "e4e26b4c700ffeb98db0bc856f205251777d134c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
