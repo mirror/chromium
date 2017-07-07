@@ -70,6 +70,30 @@
       "revId": "e65fc2a4ae2fa2d9e2f1050f4d5f4ec09addf610",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "261ac365_ad551efa",
+        "filename": "chrome/browser/media/cast_transport_host_filter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-07-07T13:29:58Z",
+      "side": 1,
+      "message": "I totally agree with you in general. Re: PS1, what I found cryptic is that it\u0027s a method called SetFoo() that doesn\u0027t have any argument, and the body of the method also doesn\u0027t really look like a setter but rather depends kind of invisibly on behavior of GetFoo().\n\nHow about if we go with the approach in PS1 and name the method InitializeNoOpWakeLockForTesting(), with a comment in the method body that initializing |wake_lock_| will cause GetWakeLock() to short-circuit out of its own lazy initialization process?",
+      "parentUuid": "59d81740_8e888452",
+      "range": {
+        "startLine": 110,
+        "startChar": 7,
+        "endLine": 110,
+        "endChar": 40
+      },
+      "revId": "e65fc2a4ae2fa2d9e2f1050f4d5f4ec09addf610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
