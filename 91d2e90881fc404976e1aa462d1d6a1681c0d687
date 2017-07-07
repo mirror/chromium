@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "0d65589a_32842d92",
+        "filename": "chrome/browser/chromeos/system/automatic_reboot_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-07T01:44:12Z",
+      "side": 0,
+      "message": "yes, it does, and yes, we do.\n\ni think that all of this code is in an essentially-ownerless state. c/b/chromeos is such a mess.",
+      "parentUuid": "fd0a713f_8a6d577b",
+      "revId": "91d2e90881fc404976e1aa462d1d6a1681c0d687",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "802ca55b_f7568803",
         "filename": "chrome/browser/chromeos/system/automatic_reboot_manager_unittest.cc",
         "patchSetId": 1
