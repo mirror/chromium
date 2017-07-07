@@ -50,7 +50,7 @@ class MEDIA_EXPORT CdmPromise {
     VOID_TYPE,
     INT_TYPE,
     STRING_TYPE,
-    KEY_IDS_VECTOR_TYPE
+    KEY_STATUS_TYPE
   };
 
   CdmPromise();
@@ -90,6 +90,12 @@ struct CdmPromiseTraits<int> {
 template <>
 struct CdmPromiseTraits<std::string> {
   static const CdmPromise::ResolveParameterType kType = CdmPromise::STRING_TYPE;
+};
+
+template <>
+struct CdmPromiseTraits<CdmKeyInformation::KeyStatus> {
+  static const CdmPromise::ResolveParameterType kType =
+      CdmPromise::KEY_STATUS_TYPE;
 };
 
 // This class adds the resolve(T) method. This class is still an interface, and
