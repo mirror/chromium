@@ -71,6 +71,14 @@ std::unique_ptr<base::DictionaryValue> LoadManifest(
     const base::FilePath::CharType* manifest_filename,
     std::string* error);
 
+// Indexes the |extension|'s json ruleset if it has specified the
+// kDeclarativeNetRequestRulesetLocation manifest key. Persists the indexed
+// ruleset at |indexed_ruleset_path|. Returns false and populates |error| in
+// case of an error.
+bool IndexAndPersistRulesetIfNeeded(const Extension* extension,
+                                    const base::FilePath& indexed_ruleset_path,
+                                    std::string* error);
+
 // Returns true if the given extension object is valid and consistent.
 // May also append a series of warning messages to |warnings|, but they
 // should not prevent the extension from running.
@@ -151,6 +159,9 @@ MessageBundle::SubstitutionMap* LoadMessageBundleSubstitutionMapFromPaths(
 base::FilePath GetVerifiedContentsPath(const base::FilePath& extension_path);
 base::FilePath GetComputedHashesPath(const base::FilePath& extension_path);
 
+// Helper function to get the path where the indexed ruleset file used for the
+// Declarative Net Request API is stored.
+base::FilePath GetIndexedRulesetPath(const base::FilePath& extension_path);
 }  // namespace file_util
 }  // namespace extensions
 

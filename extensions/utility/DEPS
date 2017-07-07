@@ -3,4 +3,8 @@ include_rules = [
   "+content/public/child",
   "+net",
   "+third_party/zlib/google",
+  "-extensions",
+  "+extensions/common",
+  "+extensions/test",
+  "+extensions/string",
 ]

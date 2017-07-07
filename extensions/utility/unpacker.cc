@@ -10,7 +10,6 @@
 #include <set>
 #include <tuple>
 #include <utility>
-
 #include "base/files/file_enumerator.h"
 #include "base/files/file_util.h"
 #include "base/files/scoped_temp_dir.h"
@@ -233,6 +232,21 @@ bool Unpacker::Run() {
   if (!LocaleInfo::GetDefaultLocale(extension.get()).empty()) {
     if (!ReadAllMessageCatalogs())
       return false;  // Error was already reported.
+  }
+
+  // Index the ruleset for the Declarative Net Request API if necessary.
+  // COMMENT: We don't want to parse untrusted JSON in the browser process, but
+  // even here we are trusting a file written by the utility process. What is
+  // the threat model? What all can we trust as the browser process, when
+  // communicating with another process?
+  // COMMENT:
+  // Alternative: we can just use safe_json_parser in sandboxed_unpacker, which
+  // parses json OOP or Have this return base::Value of json ruleset (like
+  // manifest) but passing a big Value object over IPC might be expensive.
+  if (!file_util::IndexAndPersistRulesetIfNeeded(
+          extension.get(), file_util::GetIndexedRulesetPath(extension_dir_),
+          &error)) {
+    return false;  // error should be populated by the above call.
   }
 
   return DumpImagesToFile() && DumpMessageCatalogsToFile();

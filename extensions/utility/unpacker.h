@@ -44,9 +44,12 @@ class Unpacker {
       std::string* error);
 
   // Runs the processing steps for the extension. On success, this returns true
-  // and the decoded images will be in a file at
-  // |working_dir|/kDecodedImagesFilename and the decoded messages will be in a
-  // file at |working_dir|/kDecodedMessageCatalogsFilename.
+  // with the:
+  //    -decoded images in a file at |working_dir|/kDecodedImagesFilename.
+  //    -decoded messages in a file at
+  //    |working_dir|/kDecodedMessageCatalogsFilename.
+  //    -indexed Declarative Net Request API ruleset at the path returned by
+  //     file_util::GetIndexedRulesetPath(|extension_dir|).
   bool Run();
 
   const base::string16& error_message() { return error_message_; }

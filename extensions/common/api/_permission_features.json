@@ -164,6 +164,12 @@
     "extension_types": ["platform_app"],
     "platforms": ["chromeos"]
   },
+  "declarativeNetRequest" : {
+    "channel" : "trunk",
+    // COMMENT: legacy packaged app vs platform app vs hosted_app.
+    "extension_types": ["extension", "legacy_packaged_app"],
+    "min_manifest_version" : 2
+  },
   "declarativeWebRequest": {
       "channel": "beta",
       "extension_types": ["extension", "legacy_packaged_app"]
