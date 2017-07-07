@@ -379,8 +379,13 @@ void InlineSigninHelper::ConfirmEmailAction(
 
 void InlineSigninHelper::OnClientOAuthFailure(
   const GoogleServiceAuthError& error) {
-  if (handler_)
+  if (handler_) {
     handler_->HandleLoginError(error.ToString(), base::string16());
+  } else {
+    Browser* browser = chrome::FindLastActiveWithProfile(profile_);
+    LoginUIServiceFactory::GetForProfile(profile_)->DisplayLoginResult(
+        browser, base::UTF8ToUTF16(error.ToString()), base::string16());
+  }
 
   AboutSigninInternals* about_signin_internals =
     AboutSigninInternalsFactory::GetForProfile(profile_);

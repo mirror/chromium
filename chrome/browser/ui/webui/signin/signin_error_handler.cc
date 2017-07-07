@@ -20,13 +20,11 @@ SigninErrorHandler::SigninErrorHandler(Browser* browser, bool is_system_profile)
   // |browser_| must not be null when this dialog is presented from the
   // user manager.
   DCHECK(browser_ || is_system_profile_);
-  if (!is_system_profile_)
-    BrowserList::AddObserver(this);
+  BrowserList::AddObserver(this);
 }
 
 SigninErrorHandler::~SigninErrorHandler() {
-  if (!is_system_profile_)
-    BrowserList::RemoveObserver(this);
+  BrowserList::RemoveObserver(this);
 }
 
 void SigninErrorHandler::OnBrowserRemoved(Browser* browser) {
@@ -105,9 +103,17 @@ void SigninErrorHandler::CloseDialog() {
   if (is_system_profile_) {
     // Avoid closing the user manager window when the error message is displayed
     // without browser window.
-    UserManagerProfileDialog::HideDialog();
+    CloseUserManagerProfileDialog();
   } else {
     if (browser_)
-      browser_->signin_view_controller()->CloseModalSignin();
+      CloseBrowserModalSigninDialog();
   }
+}
+
+void SigninErrorHandler::CloseBrowserModalSigninDialog() {
+  browser_->signin_view_controller()->CloseModalSignin();
+}
+
+void SigninErrorHandler::CloseUserManagerProfileDialog() {
+  UserManagerProfileDialog::HideDialog();
 }
