@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "3566403d_29b34de8",
+        "filename": "third_party/WebKit/Source/modules/payments/CanMakePaymentRespondWithObserver.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-07T14:30:20Z",
+      "side": 1,
+      "message": "Haha, so I did. I think it was meant to be SWGLobalScopeClient, but it\u0027d be better to be precise since so many things are called \"client\".",
+      "parentUuid": "a9856212_ff1baf5d",
+      "revId": "d117262c8953aae791d8e7a3088ecd03229f7704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ce45a41_1f650539",
         "filename": "third_party/WebKit/Source/modules/payments/CanMakePaymentRespondWithObserver.h",
         "patchSetId": 6

@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "bef42c88_87484c45",
+        "filename": "third_party/WebKit/Source/modules/payments/CanMakePaymentRespondWithObserver.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-07T14:30:20Z",
+      "side": 1,
+      "message": "You can trim the first sentence since it\u0027s clear this is a subclass of RespondWithObserver.\n\"Implementation for CanMakePaymentEvent.respondWith(), which is used by...\"",
+      "revId": "4c61bdd94856bda62f16fecc4f2a77740f5fd221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3eba6ded_dd195a28",
         "filename": "third_party/WebKit/Source/modules/payments/PaymentHandlerUtils.h",
         "patchSetId": 8
