@@ -695,7 +695,7 @@ group("gn_all") {
   }
 
   if (enable_vr) {
-    deps += [ "//chrome/browser/android/vr_shell:vr_common_unittests" ]
+    deps += [ "//chrome/browser/vr:vr_common_unittests" ]
   }
 }
 

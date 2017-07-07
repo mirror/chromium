@@ -12,8 +12,8 @@
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread.h"
 #include "chrome/browser/android/vr_shell/gl_browser_interface.h"
-#include "chrome/browser/android/vr_shell/ui_browser_interface.h"
-#include "chrome/browser/android/vr_shell/ui_interface.h"
+#include "chrome/browser/vr/ui_browser_interface.h"
+#include "chrome/browser/vr/ui_interface.h"
 #include "third_party/gvr-android-sdk/src/libraries/headers/vr/gvr/capi/include/gvr_types.h"
 
 namespace vr_shell {
