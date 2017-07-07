@@ -1,4 +1,6 @@
 include_rules = [
   "+gpu",
+  "+mojo/edk/embedder",
   "+mojo/public",
+  "+ui/gl",
 ]
