@@ -22,7 +22,6 @@ enum IPCMessageStart {
   UtilityMsgStart,
   GpuChannelMsgStart,
   MediaMsgStart,
-  ServiceMsgStart,
   PpapiMsgStart,
   FirefoxImporterUnittestMsgStart,
   FileUtilitiesMsgStart,
