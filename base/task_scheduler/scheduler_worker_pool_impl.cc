@@ -541,8 +541,8 @@ void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::OnDetach() {
 
 void SchedulerWorkerPoolImpl::WakeUpOneWorker() {
   SchedulerWorker* worker = nullptr;
-  {
-    AutoSchedulerLock workers_auto_lock(workers_lock_);
+
+  AutoSchedulerLock workers_auto_lock(workers_lock_);
 
 #if DCHECK_IS_ON()
     DCHECK_EQ(workers_.empty(), !workers_created_.IsSet());
@@ -556,7 +556,11 @@ void SchedulerWorkerPoolImpl::WakeUpOneWorker() {
         worker = AddNewWorker().get();
       else
         worker = idle_workers_stack_.Pop();
-    }
+
+      // Try to keep at least one idle worker at all times for better
+      // responsiveness.
+      if (idle_workers_stack_.IsEmpty() && workers_.size() < worker_capacity_)
+        idle_workers_stack_.Push(AddNewWorker().get());
   }
 
   if (worker)
