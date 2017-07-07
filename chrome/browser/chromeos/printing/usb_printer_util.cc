@@ -154,11 +154,14 @@ std::unique_ptr<Printer> UsbDeviceToPrinter(const device::UsbDevice& device) {
   }
 
   auto printer = base::MakeUnique<Printer>();
-  printer->set_manufacturer(base::UTF16ToUTF8(device.manufacturer_string()));
-  printer->set_model(base::UTF16ToUTF8(device.product_string()));
-  printer->set_display_name(base::StringPrintf("%s %s (USB)",
-                                               printer->manufacturer().c_str(),
-                                               printer->model().c_str()));
+  std::string manufacturer = base::UTF16ToUTF8(device.manufacturer_string());
+  std::string model = base::UTF16ToUTF8(device.product_string());
+  printer->set_manufacturer(manufacturer);
+  printer->set_model(model);
+  printer->set_make_and_model(
+      base::StringPrintf("%s %s", manufacturer.c_str(), model.c_str()));
+  printer->set_display_name(
+      base::StringPrintf("%s (USB)", printer->make_and_model().c_str()));
   printer->set_description(printer->display_name());
   printer->set_uri(UsbPrinterUri(device));
   printer->set_id(UsbPrinterId(device));
