@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cedece0b_35fd8e36",
+        "filename": "net/http/http_server_properties_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 935,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-07-07T22:24:00Z",
+      "side": 0,
+      "message": "This is storing all the nonbroken alternative services right? I think the check is still needed. If an alt svc is marked as broken, it shouldn\u0027t be saved to the nonbroken list. |alternative_service_map_| is used to get alternative service to use when we race TCP and QUIC in particular, thus we do require a nonbroken alt svc to be returned when we iterate the map. Why do we want to ignore the brokenness now? You might have context I missed I guess.",
+      "range": {
+        "startLine": 935,
+        "startChar": 60,
+        "endLine": 935,
+        "endChar": 0
+      },
+      "revId": "b040ffbbdf06588a82e77702ba782a927601445b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
