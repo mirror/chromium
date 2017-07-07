@@ -30,8 +30,10 @@ class FullCardRequest : public CardUnmaskDelegate {
   class ResultDelegate {
    public:
     virtual ~ResultDelegate() = default;
-    virtual void OnFullCardRequestSucceeded(const CreditCard& card,
-                                            const base::string16& cvc) = 0;
+    virtual void OnFullCardRequestSucceeded(
+        const CreditCard& card,
+        const base::string16& cvc,
+        const base::TimeTicks& form_parsed_timestamp) = 0;
     virtual void OnFullCardRequestFailed() = 0;
   };
 
@@ -72,6 +74,11 @@ class FullCardRequest : public CardUnmaskDelegate {
   // Called by the payments client when a card has been unmasked.
   void OnDidGetRealPan(AutofillClient::PaymentsRpcResult result,
                        const std::string& real_pan);
+
+  void SetFormParsedTimestamp(base::TimeTicks form_parsed_timestamp) {
+    form_parsed_timestamp_ = form_parsed_timestamp;
+  }
+
  private:
   // CardUnmaskDelegate:
   void OnUnmaskResponse(const UnmaskResponse& response) override;
@@ -107,6 +114,9 @@ class FullCardRequest : public CardUnmaskDelegate {
   // The timestamp when the full PAN was requested from a server. For
   // histograms.
   base::Time real_pan_request_timestamp_;
+
+  // The timestamp when the form is parsed. For histograms.
+  base::TimeTicks form_parsed_timestamp_;
 
   // Enables destroying FullCardRequest while CVC prompt is showing or a server
   // communication is pending.
