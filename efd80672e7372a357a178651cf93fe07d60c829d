@@ -16,6 +16,24 @@
       "revId": "efd80672e7372a357a178651cf93fe07d60c829d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9be33e7_1be3acc2",
+        "filename": "cc/paint/paint_shader.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-07T18:26:47Z",
+      "side": 1,
+      "message": "In some places, this looks to be straightforward (we use blink::Image to get the current frame, so we could use paint image calls instead). One case where this is harder is in the UI code that creates the image shader. We could use a dummy id there, but I think we should spend some time to see if we can get a proper id in there as well.",
+      "parentUuid": "0bf6a809_6c68b2f0",
+      "revId": "efd80672e7372a357a178651cf93fe07d60c829d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
