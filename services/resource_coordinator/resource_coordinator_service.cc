@@ -8,7 +8,6 @@
 
 #include "base/memory/ptr_util.h"
 #include "services/resource_coordinator/coordination_unit/tab_signal_generator.h"
-#include "services/resource_coordinator/service_callbacks_impl.h"
 #include "services/service_manager/public/cpp/service_context.h"
 
 namespace resource_coordinator {
@@ -34,10 +33,6 @@ void ResourceCoordinatorService::OnStart() {
       base::Bind(&service_manager::ServiceContext::RequestQuit,
                  base::Unretained(context()))));
 
-  registry_.AddInterface(base::Bind(ServiceCallbacksImpl::Create,
-                                    base::Unretained(ref_factory_.get()),
-                                    base::Unretained(this)));
-
   coordination_unit_manager_.OnStart(&registry_, ref_factory_.get());
 }
 
@@ -47,12 +42,6 @@ void ResourceCoordinatorService::OnBindInterface(
     mojo::ScopedMessagePipeHandle interface_pipe) {
   registry_.BindInterface(source_info, interface_name,
                           std::move(interface_pipe));
-}
-
-void ResourceCoordinatorService::SetUkmRecorder(
-    std::unique_ptr<ukm::MojoUkmRecorder> ukm_recorder) {
-  ukm_recorder_ = std::move(ukm_recorder);
-  coordination_unit_manager_.set_ukm_recorder(ukm_recorder_.get());
 }
 
 }  // namespace resource_coordinator
