@@ -11,6 +11,7 @@
 
 using base::android::AttachCurrentThread;
 using base::android::JavaParamRef;
+using base::android::ScopedJavaGlobalRef;
 using base::android::ScopedJavaLocalRef;
 
 namespace content {
@@ -40,7 +41,9 @@ DialogOverlayImpl::DialogOverlayImpl(const JavaParamRef<jobject>& obj,
 
   // If there's no CVC, then just post a null token immediately.
   if (!cvc_) {
-    Java_DialogOverlayImpl_onDismissed(env, obj.obj());
+    BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
+                            base::Bind(&Java_DialogOverlayImpl_onDismissed, env,
+                                       ScopedJavaGlobalRef<jobject>(env, obj)));
     return;
   }
 
@@ -48,9 +51,13 @@ DialogOverlayImpl::DialogOverlayImpl(const JavaParamRef<jobject>& obj,
 
   // Also send the initial token, since we'll only get changes.
   if (ui::WindowAndroid* window = cvc_->GetWindowAndroid()) {
-    ScopedJavaLocalRef<jobject> token = window->GetWindowToken();
-    if (!token.is_null())
-      Java_DialogOverlayImpl_onWindowToken(env, obj.obj(), token);
+    ScopedJavaGlobalRef<jobject> token(window->GetWindowToken());
+    if (!token.is_null()) {
+      BrowserThread::PostTask(
+          BrowserThread::UI, FROM_HERE,
+          base::Bind(&Java_DialogOverlayImpl_onWindowToken, env,
+                     ScopedJavaGlobalRef<jobject>(env, obj), token));
+    }
   }
 }
 
@@ -160,6 +167,15 @@ static void UnregisterSurface(
     jint surface_id) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   gpu::GpuSurfaceTracker::Get()->RemoveSurface(surface_id);
+}
+
+static ScopedJavaLocalRef<jobject> LookupSurfaceForTesting(
+    JNIEnv* env,
+    const base::android::JavaParamRef<jclass>& jcaller,
+    jint surfaceId) {
+  gl::ScopedJavaSurface surface =
+      gpu::GpuSurfaceTracker::Get()->AcquireJavaSurface(surfaceId);
+  return ScopedJavaLocalRef<jobject>(surface.j_surface());
 }
 
 }  // namespace content

@@ -54,9 +54,10 @@ public class DialogOverlayImpl implements AndroidOverlay, DialogOverlayCore.Host
      * @param handler handler that posts to the overlay thread.  This is the android UI thread that
      * the dialog uses, not the browser UI thread.
      * @param provider the overlay provider that owns us.
+     * @param asPanel the overlay should be a panel, above the compositor.  This is for testing.
      */
     public DialogOverlayImpl(AndroidOverlayClient client, final AndroidOverlayConfig config,
-            Handler overlayHandler, Runnable releasedRunnable) {
+            Handler overlayHandler, Runnable releasedRunnable, final boolean asPanel) {
         ThreadUtils.assertOnUiThread();
 
         mClient = client;
@@ -66,19 +67,22 @@ public class DialogOverlayImpl implements AndroidOverlay, DialogOverlayCore.Host
         mDialogCore = new DialogOverlayCore();
         mHoppingHost = new ThreadHoppingHost(this);
 
+        // Register to get token updates.  Note that this may not call us back directly, since
+        // |mDialogCore| hasn't been initialized yet.
+        mNativeHandle = nativeInit(config.routingToken.high, config.routingToken.low);
+        assert mNativeHandle != 0;
+
         // Post init to the overlay thread.
         final DialogOverlayCore dialogCore = mDialogCore;
         final Context context = ContextUtils.getApplicationContext();
+        nativeGetCompositorOffset(mNativeHandle, config.rect);
         mOverlayHandler.post(new Runnable() {
             @Override
             public void run() {
-                dialogCore.initialize(context, config, mHoppingHost);
+                dialogCore.initialize(context, config, mHoppingHost, asPanel);
             }
         });
 
-        // Register to get token updates.
-        mNativeHandle = nativeInit(config.routingToken.high, config.routingToken.low);
-        assert mNativeHandle != 0;
     }
 
     // AndroidOverlay impl.
@@ -298,4 +302,10 @@ public class DialogOverlayImpl implements AndroidOverlay, DialogOverlayCore.Host
      * @param surfaceId Id that was returned by registerSurface.
      */
     private static native void nativeUnregisterSurface(int surfaceId);
+
+    /**
+     * Look up and return a surface.
+     * @param surfaceId Id that was returned by registerSurface.
+     */
+    /* package */ static native Surface nativeLookupSurfaceForTesting(int surfaceId);
 }
