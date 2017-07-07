@@ -16,11 +16,14 @@
 #include "ui/app_list/app_list_folder_item.h"
 #include "ui/app_list/app_list_item.h"
 #include "ui/app_list/app_list_switches.h"
+#include "ui/app_list/app_list_view_delegate.h"
 #include "ui/app_list/pagination_controller.h"
 #include "ui/app_list/views/app_list_drag_and_drop_host.h"
 #include "ui/app_list/views/app_list_folder_view.h"
 #include "ui/app_list/views/app_list_item_view.h"
+#include "ui/app_list/views/app_list_main_view.h"
 #include "ui/app_list/views/apps_grid_view_delegate.h"
+#include "ui/app_list/views/contents_view.h"
 #include "ui/app_list/views/page_switcher_horizontal.h"
 #include "ui/app_list/views/page_switcher_vertical.h"
 #include "ui/app_list/views/pulsing_block_view.h"
@@ -45,44 +48,44 @@ namespace {
 // which point we rearrange the apps to their pre-drag configuration, as a drop
 // then would be canceled. We have a buffer to make it easier to drag apps to
 // other pages.
-const int kDragBufferPx = 20;
+constexpr int kDragBufferPx = 20;
 
 // Padding space in pixels between pages.
-const int kPagePadding = 40;
+constexpr int kPagePadding = 40;
 
 // Preferred tile size when showing in fixed layout.
-const int kPreferredTileWidth = 100;
-const int kPreferredTileHeight = 100;
+constexpr int kPreferredTileWidth = 100;
+constexpr int kPreferredTileHeight = 100;
 
 // Padding on each side of a tile.
-const int kTileLeftRightPadding = 10;
-const int kTileBottomPadding = 6;
-const int kTileTopPadding = 6;
-const int kTileLeftRightPaddingFullscreen = 12;
-const int kTileBottomPaddingFullscreen = 6;
-const int kTileTopPaddingFullscreen = 6;
+constexpr int kTileLeftRightPadding = 10;
+constexpr int kTileBottomPadding = 6;
+constexpr int kTileTopPadding = 6;
+constexpr int kTileLeftRightPaddingFullscreen = 12;
+constexpr int kTileBottomPaddingFullscreen = 6;
+constexpr int kTileTopPaddingFullscreen = 6;
 
 // Width in pixels of the area on the sides that triggers a page flip.
-const int kPageFlipZoneSize = 40;
+constexpr int kPageFlipZoneSize = 40;
 
 // Delay in milliseconds to do the page flip.
-const int kPageFlipDelayInMs = 1000;
+constexpr int kPageFlipDelayInMs = 1000;
 
 // The drag and drop proxy should get scaled by this factor.
-const float kDragAndDropProxyScale = 1.5f;
+constexpr float kDragAndDropProxyScale = 1.5f;
 
 // Delays in milliseconds to show folder dropping preview circle.
-const int kFolderDroppingDelay = 150;
+constexpr int kFolderDroppingDelay = 150;
 
 // Delays in milliseconds to show re-order preview.
-const int kReorderDelay = 120;
+constexpr int kReorderDelay = 120;
 
 // Delays in milliseconds to show folder item reparent UI.
-const int kFolderItemReparentDelay = 50;
+constexpr int kFolderItemReparentDelay = 50;
 
 // Radius of the circle, in which if entered, show folder dropping preview
 // UI.
-const int kFolderDroppingCircleRadius = 39;
+constexpr int kFolderDroppingCircleRadius = 39;
 
 // Returns the size of a tile view excluding its padding.
 gfx::Size GetTileViewSize() {
@@ -209,27 +212,14 @@ int ClampToRange(int value, int min, int max) {
 
 }  // namespace
 
-AppsGridView::AppsGridView(AppsGridViewDelegate* delegate)
-    : model_(NULL),
-      item_list_(NULL),
-      delegate_(delegate),
-      folder_delegate_(NULL),
-      page_switcher_view_(NULL),
-      cols_(0),
-      rows_per_page_(0),
-      selected_view_(NULL),
-      drag_view_(NULL),
-      drag_start_page_(-1),
-      drag_pointer_(NONE),
-      drop_attempt_(DROP_FOR_NONE),
-      drag_and_drop_host_(NULL),
-      forward_events_to_drag_and_drop_host_(false),
-      page_flip_target_(-1),
+AppsGridView::AppsGridView(ContentsView* contents_view)
+    : contents_view_(contents_view),
       page_flip_delay_in_ms_(kPageFlipDelayInMs),
       bounds_animator_(this),
-      activated_folder_item_view_(NULL),
-      dragging_for_reparent_item_(false),
       is_fullscreen_app_list_enabled_(features::IsFullscreenAppListEnabled()) {
+  if (contents_view_)
+    delegate_ = contents_view_->app_list_main_view();
+
   SetPaintToLayer();
   // Clip any icons that are outside the grid view's bounds. These icons would
   // otherwise be visible to the user when the grid view is off screen.

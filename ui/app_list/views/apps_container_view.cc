@@ -39,7 +39,7 @@ AppsContainerView::AppsContainerView(AppListMainView* app_list_main_view,
         l10n_util::GetStringUTF16(IDS_ALL_APPS_INDICATOR));
     AddChildView(all_apps_indicator_);
   }
-  apps_grid_view_ = new AppsGridView(app_list_main_view);
+  apps_grid_view_ = new AppsGridView(app_list_main_view->contents_view());
   if (is_fullscreen_app_list_enabled_) {
     apps_grid_view_->SetLayout(kPreferredColsFullscreen,
                                kPreferredRowsFullscreen);
