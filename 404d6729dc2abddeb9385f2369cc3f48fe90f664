@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c880201_0eb9151b",
+        "filename": "components/viz/service/frame_sinks/DEPS",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-07T18:25:34Z",
+      "side": 1,
+      "message": "This should be in a unittest-specific rule. I realized the parent includes all of +cc, but it should remove cc/blink and cc/test. Right now you wouldn\u0027t need to add either of these here to have it pass deps check",
+      "revId": "404d6729dc2abddeb9385f2369cc3f48fe90f664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36f04159_abc97b00",
+        "filename": "components/viz/service/frame_sinks/direct_layer_tree_frame_sink.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-07T18:25:34Z",
+      "side": 1,
+      "message": "Can you upload with lower --similarity so that this file is recognized as moving and we can look at the delta?",
+      "revId": "404d6729dc2abddeb9385f2369cc3f48fe90f664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04e8fdad_a253c901",
+        "filename": "components/viz/service/frame_sinks/direct_layer_tree_frame_sink.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-07T18:25:34Z",
+      "side": 1,
+      "message": "move the comment to the line above.",
+      "revId": "404d6729dc2abddeb9385f2369cc3f48fe90f664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f954d6b_0d653bae",
+        "filename": "components/viz/service/frame_sinks/direct_layer_tree_frame_sink_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-07T18:25:34Z",
+      "side": 1,
+      "message": "I just realized that https://chromium-review.googlesource.com/c/562216 also moves these files. It\u0027s cool if you wanna do this ahead of it, but it\u0027ll be a race (I had to move them to move Display). Sorry I didn\u0027t put this in the sheet.\n\nWhile I was renaming the namespaces here, I changed\nstd::unique_ptr\u003cT\u003e t(new T) to be auto t \u003d base::MakeUnique\u003cT\u003e();\n\nWould you mind doing the same?",
+      "revId": "404d6729dc2abddeb9385f2369cc3f48fe90f664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
