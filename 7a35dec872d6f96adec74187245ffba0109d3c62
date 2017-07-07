@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac83691_64544ddb",
+        "filename": "content/browser/android/android_overlay_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-07-07T15:36:42Z",
+      "side": 1,
+      "message": "i\u0027ve one more idea.  or maybe this is your idea... too many similar variants.  :)\n\nthis code looks very much like something that dialog_overlay_impl already does.  what if we move the whole \"close up when WC / RFH is hidden / destroyed\" thing there?  as in, have dialog_overlay_impl register a WCO and handle callbacks?  there are no maps needed anywhere then.  DialogOverlayImpl knows to destroy the overlay when its WC is hidden or its own RFH is destroyed etc.  the cleanup path is the same one we use for losing the window token today, which is a bonus.\n\nsure, WCOs are heavy, and we\u0027d now have one per overlay.  however, since we keep saying that we\u0027re likely only going to have one overlay anyway... we can always do the map thing later if it really becomes a problem.\n\nno changes to AOPI needed.  it can continue to count max overlays, for example.",
+      "revId": "7a35dec872d6f96adec74187245ffba0109d3c62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
