@@ -34,6 +34,24 @@
       "revId": "f6861b6945bda05ce7bdfcead2b3609105f20675",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baf1e21e_4415902e",
+        "filename": "cc/resources/video_resource_updater.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-07-07T04:01:28Z",
+      "side": 1,
+      "message": "I see, ok. LGTM then",
+      "parentUuid": "56d88c22_55cc0b4d",
+      "revId": "f6861b6945bda05ce7bdfcead2b3609105f20675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
