@@ -431,20 +431,9 @@ void ContentSuggestionsService::ReloadSuggestions() {
   }
 }
 
-void ContentSuggestionsService::SetRemoteSuggestionsEnabled(bool enabled) {
-  pref_service_->SetBoolean(prefs::kEnableSnippets, enabled);
-}
-
 bool ContentSuggestionsService::AreRemoteSuggestionsEnabled() const {
-  return pref_service_->GetBoolean(prefs::kEnableSnippets);
-}
-
-bool ContentSuggestionsService::AreRemoteSuggestionsManaged() const {
-  return pref_service_->IsManagedPreference(prefs::kEnableSnippets);
-}
-
-bool ContentSuggestionsService::AreRemoteSuggestionsManagedByCustodian() const {
-  return pref_service_->IsPreferenceManagedByCustodian(prefs::kEnableSnippets);
+  // TODO(dgn): Implement.
+  return true;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
