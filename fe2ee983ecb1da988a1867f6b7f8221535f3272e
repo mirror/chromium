@@ -46,6 +46,30 @@
       "revId": "fe2ee983ecb1da988a1867f6b7f8221535f3272e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5184e03b_bfaa4ba9",
+        "filename": "chromecast/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1211259
+      },
+      "writtenOn": "2017-07-07T18:37:07Z",
+      "side": 1,
+      "message": "There was a specific reason to do so, but my reason was wrong. :) Removed.\n\n(Also, you can\u0027t do string comparison in preprocessor conditions Mike, so that wouldn\u0027t work and why I created _PUBLIC.)",
+      "parentUuid": "3dc99a36_d5dc22f2",
+      "range": {
+        "startLine": 481,
+        "startChar": 0,
+        "endLine": 481,
+        "endChar": 61
+      },
+      "revId": "fe2ee983ecb1da988a1867f6b7f8221535f3272e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
