@@ -64,6 +64,11 @@ declare_args() {
 
   # Whether or not we should use position independent code.
   use_pic = true
+
+  # Whether we should compile with -O0 or -O2.  It may be useful to
+  # disable optimization on release builds when running Valgrind's
+  # memcheck.
+  no_optimize = false
 }
 
 # Determine whether to enable or disable frame pointers, based on the platform
