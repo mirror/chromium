@@ -52,6 +52,14 @@ constexpr char kAllTimeInStateContentNA[] =
     "60000\t\t90000\t\t91000\t\tN/A\t\t\n"
     "100000\t\t50000\t\t51000\t\tN/A\t\t\n";
 
+// The string content of the fake cpu frequency file for all cpus except one
+// that does not report freq as the cpu is turned off.
+constexpr char kAllTimeInStateContentOff[] =
+    "freq\t\tcpu0\t\tcpu1\t\tcpu2\t\t\n"
+    "20000\t\t30000000\t\t31000000\t\t\n"
+    "60000\t\t90000\t\t91000\t\t\n"
+    "100000\t\t50000\t\t51000\t\t\n";
+
 }  // namespace
 
 class CpuDataCollectorTest : public testing::Test {
@@ -167,6 +175,33 @@ TEST_F(CpuDataCollectorTest, ReadCpuFreqAllTimeInStateNA) {
 
   CpuDataCollector::ReadCpuFreqAllTimeInState(
       3, all_time_in_state_path_, &cpu_freq_state_names, &freq_samples);
+  EXPECT_EQ(kExpectedCpuFreqStateNames, cpu_freq_state_names);
+  EXPECT_EQ(kExpectedTimeInStateCpu0, freq_samples[0].time_in_state);
+  EXPECT_EQ(kExpectedTimeInStateCpu1, freq_samples[1].time_in_state);
+  EXPECT_TRUE(freq_samples[2].time_in_state.empty());
+}
+
+TEST_F(CpuDataCollectorTest, ReadCpuFreqAllTimeInStateOff) {
+  ASSERT_TRUE(base::CreateTemporaryFile(&all_time_in_state_path_));
+  ASSERT_TRUE(base::WriteFile(
+                  all_time_in_state_path_, kAllTimeInStateContentOff,
+                  static_cast<int>(strlen(kAllTimeInStateContentOff))) != -1);
+
+  std::vector<std::string> cpu_freq_state_names;
+  std::vector<CpuDataCollector::StateOccupancySample> freq_samples;
+  CpuDataCollector::StateOccupancySample freq_sample_cpu0;
+  CpuDataCollector::StateOccupancySample freq_sample_cpu1;
+  CpuDataCollector::StateOccupancySample freq_sample_cpu2;
+  // |ReadCpuFreqAllTimeInState| only completes sample for cpu that is online.
+  freq_sample_cpu0.cpu_online = true;
+  freq_sample_cpu1.cpu_online = true;
+  freq_sample_cpu2.cpu_online = false;
+  freq_samples.push_back(freq_sample_cpu0);
+  freq_samples.push_back(freq_sample_cpu1);
+  freq_samples.push_back(freq_sample_cpu2);
+
+  CpuDataCollector::ReadCpuFreqAllTimeInState(
+      2, all_time_in_state_path_, &cpu_freq_state_names, &freq_samples);
   EXPECT_EQ(kExpectedCpuFreqStateNames, cpu_freq_state_names);
   EXPECT_EQ(kExpectedTimeInStateCpu0, freq_samples[0].time_in_state);
   EXPECT_EQ(kExpectedTimeInStateCpu1, freq_samples[1].time_in_state);
