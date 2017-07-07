@@ -2,6 +2,98 @@
   "comments": [
     {
       "key": {
+        "uuid": "7df5782d_57473d5d",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-07T16:52:32Z",
+      "side": 1,
+      "message": "#include \"#include \"net/url_request/url_request_context_getter.h\"\n\nfwd declare: class NetworkQualityEstimator;",
+      "range": {
+        "startLine": 112,
+        "startChar": 14,
+        "endLine": 112,
+        "endChar": 25
+      },
+      "revId": "3c0292faae17fe9f6c7017fb66ea2aa1ce4f2546",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b356cfae_6185ffe7",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-07T16:52:32Z",
+      "side": 1,
+      "message": "rm this. No need to include the header file since we are not calling any methods on it. So, no need to define NQE class (declaration is enough).",
+      "range": {
+        "startLine": 44,
+        "startChar": 18,
+        "endLine": 44,
+        "endChar": 43
+      },
+      "revId": "3c0292faae17fe9f6c7017fb66ea2aa1ce4f2546",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7049e347_2450d8c4",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-07T16:52:32Z",
+      "side": 1,
+      "message": "Also, forward declare (no need to define, so no need to # include the file):\nclass URLRequestContextGetter;",
+      "range": {
+        "startLine": 55,
+        "startChar": 6,
+        "endLine": 55,
+        "endChar": 24
+      },
+      "revId": "3c0292faae17fe9f6c7017fb66ea2aa1ce4f2546",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8982411_48bc7abe",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 1069,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-07T16:52:32Z",
+      "side": 1,
+      "message": "Is network_quality_estimator_ guaranteed to be non-null?\nIf yes, add DCHECK(network_quality_estimator_) in the body of ctor.\nOtherwise, add a comment here that it may be null.",
+      "range": {
+        "startLine": 1069,
+        "startChar": 44,
+        "endLine": 1069,
+        "endChar": 70
+      },
+      "revId": "3c0292faae17fe9f6c7017fb66ea2aa1ce4f2546",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "86f9cf83_423cd3aa",
         "filename": "content/browser/renderer_host/render_view_host_impl.cc",
         "patchSetId": 36
