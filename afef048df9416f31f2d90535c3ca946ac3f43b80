@@ -16,6 +16,23 @@
       "revId": "afef048df9416f31f2d90535c3ca946ac3f43b80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f75303b_900979c0",
+        "filename": "cc/trees/layer_tree_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-07-07T22:30:49Z",
+      "side": 0,
+      "message": "Can you keep this check around?",
+      "revId": "afef048df9416f31f2d90535c3ca946ac3f43b80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
