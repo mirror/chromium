@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15cb7e9d_e5c3d218",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsSheetVisibilityChangeObserver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-07-07T16:34:20Z",
+      "side": 1,
+      "message": "This is a bit confusing to me. Do you mean that suggestions will show when the bottom sheet is opened?",
+      "range": {
+        "startLine": 60,
+        "startChar": 14,
+        "endLine": 60,
+        "endChar": 26
+      },
+      "revId": "e7b83ea199bde2c188556bb7fbca090ee922a319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
