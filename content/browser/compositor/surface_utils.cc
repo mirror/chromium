@@ -7,6 +7,7 @@
 #include "base/bind.h"
 #include "base/callback_helpers.h"
 #include "base/memory/ref_counted.h"
+#include "base/sequenced_task_runner.h"
 #include "build/build_config.h"
 #include "cc/output/copy_output_result.h"
 #include "cc/resources/single_release_callback.h"
@@ -19,6 +20,7 @@
 #include "third_party/skia/include/core/SkColorFilter.h"
 #include "third_party/skia/include/core/SkPaint.h"
 #include "third_party/skia/include/effects/SkLumaColorFilter.h"
+#include "ui/accelerated_widget_mac/window_resize_helper_mac.h"
 #include "ui/gfx/geometry/rect.h"
 
 #if defined(OS_ANDROID)
@@ -216,6 +218,17 @@ namespace surface_utils {
 
 void ConnectWithInProcessFrameSinkManager(viz::HostFrameSinkManager* host,
                                           viz::FrameSinkManagerImpl* manager) {
+#if defined(OS_MACOSX)
+  scoped_refptr<base::SequencedTaskRunner> task_runner =
+      ui::WindowResizeHelperMac::Get()->task_runner();
+  // In tests, WindowResizeHelperMac task runner might not be initialized.
+  if (!task_runner)
+    task_runner = base::SequencedTaskRunnerHandle::Get();
+#else
+  scoped_refptr<base::SequencedTaskRunner> task_runner =
+      base::SequencedTaskRunnerHandle::Get();
+#endif
+
   // A mojo pointer to |host| which is the FrameSinkManager's client.
   cc::mojom::FrameSinkManagerClientPtr host_mojo;
   // A mojo pointer to |manager|.
@@ -228,11 +241,11 @@ void ConnectWithInProcessFrameSinkManager(viz::HostFrameSinkManager* host,
       mojo::MakeRequest(&manager_mojo);
 
   // Sets |manager_mojo| which is given to the |host|.
-  manager->BindPtrAndSetClient(std::move(manager_mojo_request),
-                               std::move(host_mojo));
+  manager->BindAndSetClient(std::move(manager_mojo_request),
+                            std::move(host_mojo), task_runner);
   // Sets |host_mojo| which was given to the |manager|.
-  host->BindManagerClientAndSetManagerPtr(std::move(host_mojo_request),
-                                          std::move(manager_mojo));
+  host->BindAndSetManager(std::move(host_mojo_request), std::move(manager_mojo),
+                          task_runner);
 }
 
 }  // namespace surface_utils
