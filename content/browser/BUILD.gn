@@ -1020,6 +1020,8 @@ source_set("browser") {
     "media/session/media_session_uma_helper.h",
     "media/url_provision_fetcher.cc",
     "media/url_provision_fetcher.h",
+    "media/watch_time_recorder.cc",
+    "media/watch_time_recorder.h",
     "memory/memory_condition_observer.cc",
     "memory/memory_condition_observer.h",
     "memory/memory_coordinator_default_policy.cc",

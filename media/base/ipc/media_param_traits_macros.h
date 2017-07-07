@@ -24,6 +24,7 @@
 #include "media/base/video_codecs.h"
 #include "media/base/video_color_space.h"
 #include "media/base/video_types.h"
+#include "media/base/watch_time_keys.h"
 #include "ui/gfx/ipc/color/gfx_param_traits_macros.h"
 
 // Enum traits.
@@ -105,6 +106,11 @@ IPC_ENUM_TRAITS_VALIDATE(
     static_cast<int>(value) ==
         static_cast<int>(
             media::VideoColorSpace::GetMatrixID(static_cast<int>(value))));
+
+IPC_ENUM_TRAITS_VALIDATE(
+    media::WatchTimeKey,
+    !media::WatchTimeKeyToString(static_cast<media::WatchTimeKey>(value))
+         .empty());
 
 // Struct traits.
 

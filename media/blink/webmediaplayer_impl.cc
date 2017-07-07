@@ -260,7 +260,8 @@ WebMediaPlayerImpl::WebMediaPlayerImpl(
       embedded_media_experience_enabled_(
           params->embedded_media_experience_enabled()),
       request_routing_token_cb_(params->request_routing_token_cb()),
-      overlay_routing_token_(OverlayInfo::RoutingToken()) {
+      overlay_routing_token_(OverlayInfo::RoutingToken()),
+      watch_time_recorder_provider_(params->watch_time_recorder_provider()) {
   DVLOG(1) << __func__;
   DCHECK(!adjust_allocated_memory_cb_.is_null());
   DCHECK(renderer_factory_selector_);
@@ -338,8 +339,9 @@ void WebMediaPlayerImpl::Load(LoadType load_type,
   // Only URL or MSE blob URL is supported.
   DCHECK(source.IsURL());
   blink::WebURL url = source.GetAsURL();
-  DVLOG(1) << __func__ << "(" << load_type << ", " << url << ", " << cors_mode
-           << ")";
+  // DVLOG(1) << __func__ << "(" << load_type << ", " << url << ", " <<
+  // cors_mode
+  //          << ")";
   if (!defer_load_cb_.is_null()) {
     defer_load_cb_.Run(base::Bind(&WebMediaPlayerImpl::DoLoad, AsWeakPtr(),
                                   load_type, url, cors_mode));
@@ -2345,11 +2347,13 @@ void WebMediaPlayerImpl::CreateWatchTimeReporter() {
     return;
 
   // Create the watch time reporter and synchronize its initial state.
-  watch_time_reporter_.reset(
-      new WatchTimeReporter(HasAudio(), HasVideo(), !!chunk_demuxer_,
-                            is_encrypted_, embedded_media_experience_enabled_,
-                            media_log_.get(), pipeline_metadata_.natural_size,
-                            base::Bind(&GetCurrentTimeInternal, this)));
+  watch_time_reporter_.reset(new WatchTimeReporter(
+      pipeline_metadata_.audio_decoder_config.codec(),
+      pipeline_metadata_.video_decoder_config.codec(), !!chunk_demuxer_,
+      is_encrypted_, embedded_media_experience_enabled_,
+      pipeline_metadata_.natural_size,
+      base::BindRepeating(&GetCurrentTimeInternal, this),
+      watch_time_recorder_provider_));
   watch_time_reporter_->OnVolumeChange(volume_);
 
   if (delegate_->IsFrameHidden())

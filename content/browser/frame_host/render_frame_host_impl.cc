@@ -45,6 +45,7 @@
 #include "content/browser/loader/resource_dispatcher_host_impl.h"
 #include "content/browser/media/media_interface_proxy.h"
 #include "content/browser/media/session/media_session_service_impl.h"
+#include "content/browser/media/watch_time_recorder.h"
 #include "content/browser/payments/payment_app_context_impl.h"
 #include "content/browser/permissions/permission_service_context.h"
 #include "content/browser/permissions/permission_service_impl.h"
@@ -2942,6 +2943,9 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
     GetInterfaceRegistry()->AddInterface(
         base::Bind(&AuthenticatorImpl::Create, base::Unretained(this)));
   }
+
+  GetInterfaceRegistry()->AddInterface(
+      base::Bind(&WatchTimeRecorder::CreateWatchTimeRecorderProvider));
 }
 
 void RenderFrameHostImpl::ResetWaitingState() {
