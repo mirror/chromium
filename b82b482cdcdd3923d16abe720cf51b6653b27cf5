@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dda3b15f_cceb1409",
+        "filename": "third_party/WebKit/Source/modules/payments/CanMakePaymentRespondWithObserver.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2017-07-07T04:25:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc95786a_6d1a9f8d",
+      "revId": "b82b482cdcdd3923d16abe720cf51b6653b27cf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "91871a06_c6978ccb",
         "filename": "third_party/WebKit/Source/modules/payments/PaymentRespondWithObserverBase.cpp",
         "patchSetId": 4
@@ -47,6 +65,24 @@
       "writtenOn": "2017-07-04T03:34:36Z",
       "side": 1,
       "message": "After this change(CanMakePaymentEvent), I have a plan to add another thing(AbortPaymentEvent). But even if so, your idea is better I think. I\u0027ll apply your idea in follow-up patch set.\nThank you!",
+      "parentUuid": "91871a06_c6978ccb",
+      "revId": "b82b482cdcdd3923d16abe720cf51b6653b27cf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cffa6171_9ca30a96",
+        "filename": "third_party/WebKit/Source/modules/payments/PaymentRespondWithObserverBase.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2017-07-07T04:25:56Z",
+      "side": 1,
+      "message": "Done",
       "parentUuid": "91871a06_c6978ccb",
       "revId": "b82b482cdcdd3923d16abe720cf51b6653b27cf5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
