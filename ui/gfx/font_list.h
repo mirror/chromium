@@ -11,6 +11,7 @@
 #include "base/memory/ref_counted.h"
 #include "ui/gfx/font.h"
 #include "ui/gfx/gfx_export.h"
+#include "ui/gfx/text_constants.h"
 
 namespace gfx {
 
@@ -38,7 +39,7 @@ class FontListImpl;
 class GFX_EXPORT FontList {
  public:
   // Parses a FontList description string into |families_out|, |style_out| (a
-  // bitfield of gfx::Font::Style values), |size_pixels_out| and |weight_out|.
+  // bitfield of gfx::TextStyle values), |size_pixels_out| and |weight_out|.
   // Returns true if the string is properly-formed.
   static bool ParseDescription(const std::string& description,
                                std::vector<std::string>* families_out,
@@ -59,7 +60,7 @@ class GFX_EXPORT FontList {
 
   // Creates a font list from font names, styles, size and weight.
   FontList(const std::vector<std::string>& font_names,
-           int font_style,
+           int text_style,
            int font_size,
            Font::Weight font_weight);
 
@@ -90,9 +91,7 @@ class GFX_EXPORT FontList {
   // font size. |font_style| specifies the new style, which is a bitmask of the
   // values: Font::ITALIC and Font::UNDERLINE. |weight| is the requested font
   // weight.
-  FontList Derive(int size_delta,
-                  int font_style,
-                  Font::Weight weight) const;
+  FontList Derive(int size_delta, int text_style, Font::Weight weight) const;
 
   // Returns a new FontList with the same font names and style but resized.
   // |size_delta| is the size in pixels to add to the current font size.
@@ -101,7 +100,7 @@ class GFX_EXPORT FontList {
   // Returns a new FontList with the same font names, weight and size but the
   // given style. |font_style| specifies the new style, which is a bitmask of
   // the values: Font::ITALIC and Font::UNDERLINE.
-  FontList DeriveWithStyle(int font_style) const;
+  FontList DeriveWithStyle(int text_style) const;
 
   // Returns a new FontList with the same font name, size and style but with
   // the given weight.
@@ -149,7 +148,8 @@ class GFX_EXPORT FontList {
   // actual number.
   int GetExpectedTextWidth(int length) const;
 
-  // Returns the |Font::FontStyle| style flags for this font list.
+  // Returns the |gfx::TextStyle| style flags for this font list.
+  // TODO(uzair.jaleel) Change to GetTextStyle()
   int GetFontStyle() const;
 
   // Returns the font size in pixels.

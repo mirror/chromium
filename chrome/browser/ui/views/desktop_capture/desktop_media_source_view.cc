@@ -97,12 +97,12 @@ void DesktopMediaSourceView::SetSelected(bool selected) {
         ui::NativeTheme::kColorId_FocusedBorderColor);
     image_view_->SetBorder(views::CreateSolidBorder(
         style_.selection_border_thickness, border_color));
-    label_->SetFontList(label_->font_list().Derive(0, gfx::Font::NORMAL,
+    label_->SetFontList(label_->font_list().Derive(0, gfx::TextStyle::NORMAL,
                                                    gfx::Font::Weight::BOLD));
     parent_->OnSelectionChanged();
   } else {
     image_view_->SetBorder(views::NullBorder());
-    label_->SetFontList(label_->font_list().Derive(0, gfx::Font::NORMAL,
+    label_->SetFontList(label_->font_list().Derive(0, gfx::TextStyle::NORMAL,
                                                    gfx::Font::Weight::NORMAL));
   }
 

@@ -69,7 +69,7 @@ class FontListImpl : public base::RefCounted<FontListImpl> {
   // actual number.
   int GetExpectedTextWidth(int length) const;
 
-  // Returns the |Font::FontStyle| style flags for this font list.
+  // Returns the |gfx::TextStyle| style flags for this font list.
   int GetFontStyle() const;
 
   // Returns the font size in pixels.
@@ -93,7 +93,7 @@ class FontListImpl : public base::RefCounted<FontListImpl> {
   // |common_baseline_|.
   void CacheCommonFontHeightAndBaseline() const;
 
-  // Extracts font style and size into |font_style_| and |font_size_|.
+  // Extracts font style and size into |text_style_| and |font_size_|.
   void CacheFontStyleAndSize() const;
 
   // A vector of Font. If FontListImpl is constructed with font description
@@ -116,7 +116,7 @@ class FontListImpl : public base::RefCounted<FontListImpl> {
   mutable int common_baseline_;
 
   // Cached font style and size.
-  mutable int font_style_;
+  mutable int text_style_;
   mutable int font_size_;
   mutable Font::Weight font_weight_;
 };

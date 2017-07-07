@@ -339,7 +339,7 @@ TEST_F(StyledLabelTest, MAYBE_StyledRangeUnderlined) {
   const std::string underlined_text("and this should be undelined");
   InitStyledLabel(text + underlined_text);
   StyledLabel::RangeStyleInfo style_info;
-  style_info.font_style = gfx::Font::UNDERLINE;
+  style_info.text_style = gfx::TextStyle::UNDERLINE;
   styled()->AddStyleRange(
       gfx::Range(static_cast<uint32_t>(text.size()),
                  static_cast<uint32_t>(text.size() + underlined_text.size())),
@@ -352,7 +352,7 @@ TEST_F(StyledLabelTest, MAYBE_StyledRangeUnderlined) {
   ASSERT_EQ(std::string(Label::kViewClassName),
             styled()->child_at(1)->GetClassName());
   EXPECT_EQ(
-      gfx::Font::UNDERLINE,
+      gfx::TextStyle::UNDERLINE,
       static_cast<Label*>(styled()->child_at(1))->font_list().GetFontStyle());
 }
 
@@ -408,7 +408,7 @@ TEST_F(StyledLabelTest, StyledRangeBold) {
   ASSERT_EQ(std::string(Label::kViewClassName),
             styled()->child_at(2)->GetClassName());
   EXPECT_EQ(
-      gfx::Font::NORMAL,
+      gfx::TextStyle::NORMAL,
       static_cast<Label*>(styled()->child_at(2))->font_list().GetFontStyle());
 
   // The second bold part should start on a new line.

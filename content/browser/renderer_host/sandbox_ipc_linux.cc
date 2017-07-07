@@ -30,6 +30,7 @@
 #include "ui/gfx/font.h"
 #include "ui/gfx/font_fallback_linux.h"
 #include "ui/gfx/font_render_params.h"
+#include "ui/gfx/text_constants.h"
 
 namespace content {
 
@@ -294,7 +295,7 @@ void SandboxIPCHandler::HandleGetStyleForStrike(
   gfx::FontRenderParamsQuery query;
   query.families.push_back(family);
   query.pixel_size = pixel_size;
-  query.style = italic ? gfx::Font::ITALIC : 0;
+  query.style = italic ? gfx::TextStyle::ITALIC : 0;
   query.weight = bold ? gfx::Font::Weight::BOLD : gfx::Font::Weight::NORMAL;
   const gfx::FontRenderParams params = gfx::GetFontRenderParams(query, nullptr);
 

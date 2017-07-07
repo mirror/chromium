@@ -75,11 +75,11 @@ bool FontList::ParseDescription(const std::string& description,
     return false;
 
   // Font supports ITALIC and weights; underline is supported via RenderText.
-  *style_out = Font::NORMAL;
+  *style_out = TextStyle::NORMAL;
   *weight_out = Font::Weight::NORMAL;
   for (const auto& style_string : styles) {
     if (style_string == "Italic")
-      *style_out |= Font::ITALIC;
+      *style_out |= TextStyle::ITALIC;
     else if (style_string == "Thin")
       *weight_out = Font::Weight::THIN;
     else if (style_string == "Ultra-Light")
@@ -113,10 +113,10 @@ FontList::FontList(const std::string& font_description_string)
     : impl_(new FontListImpl(font_description_string)) {}
 
 FontList::FontList(const std::vector<std::string>& font_names,
-                   int font_style,
+                   int text_style,
                    int font_size,
                    Font::Weight font_weight)
-    : impl_(new FontListImpl(font_names, font_style, font_size, font_weight)) {}
+    : impl_(new FontListImpl(font_names, text_style, font_size, font_weight)) {}
 
 FontList::FontList(const std::vector<Font>& fonts)
     : impl_(new FontListImpl(fonts)) {}
@@ -142,17 +142,17 @@ void FontList::SetDefaultFontDescription(const std::string& font_description) {
 }
 
 FontList FontList::Derive(int size_delta,
-                          int font_style,
+                          int text_style,
                           Font::Weight weight) const {
-  return FontList(impl_->Derive(size_delta, font_style, weight));
+  return FontList(impl_->Derive(size_delta, text_style, weight));
 }
 
 FontList FontList::DeriveWithSizeDelta(int size_delta) const {
   return Derive(size_delta, GetFontStyle(), GetFontWeight());
 }
 
-FontList FontList::DeriveWithStyle(int font_style) const {
-  return Derive(0, font_style, GetFontWeight());
+FontList FontList::DeriveWithStyle(int text_style) const {
+  return Derive(0, text_style, GetFontWeight());
 }
 
 FontList FontList::DeriveWithWeight(Font::Weight weight) const {

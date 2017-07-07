@@ -14,8 +14,9 @@ void SetupLabelForTray(views::Label* label) {
   // The text is drawn on an transparent bg, so we must disable subpixel
   // rendering.
   label->SetSubpixelRenderingEnabled(false);
-  label->SetFontList(gfx::FontList().Derive(
-      kTrayTextFontSizeIncrease, gfx::Font::NORMAL, gfx::Font::Weight::MEDIUM));
+  label->SetFontList(gfx::FontList().Derive(kTrayTextFontSizeIncrease,
+                                            gfx::TextStyle::NORMAL,
+                                            gfx::Font::Weight::MEDIUM));
 }
 
 }  // namespace ash

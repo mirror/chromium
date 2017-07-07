@@ -741,7 +741,7 @@ void GtkUi::GetDefaultFontDescription(std::string* family_out,
                                       gfx::FontRenderParams* params_out) const {
   *family_out = default_font_family_;
   *size_pixels_out = default_font_size_pixels_;
-  *style_out = default_font_style_;
+  *style_out = default_text_style_;
   *weight_out = default_font_weight_;
   *params_out = default_font_render_params_;
 }
@@ -1013,16 +1013,16 @@ void GtkUi::UpdateDefaultFont() {
     query.point_size = static_cast<int>(size_points);
   }
 
-  query.style = gfx::Font::NORMAL;
+  query.style = gfx::TextStyle::NORMAL;
   query.weight =
       static_cast<gfx::Font::Weight>(pango_font_description_get_weight(desc));
   // TODO(davemoore): What about PANGO_STYLE_OBLIQUE?
   if (pango_font_description_get_style(desc) == PANGO_STYLE_ITALIC)
-    query.style |= gfx::Font::ITALIC;
+    query.style |= gfx::TextStyle::ITALIC;
 
   default_font_render_params_ =
       gfx::GetFontRenderParams(query, &default_font_family_);
-  default_font_style_ = query.style;
+  default_text_style_ = query.style;
 
   gtk_widget_destroy(fake_label);
   g_object_unref(fake_label);

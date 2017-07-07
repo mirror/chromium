@@ -85,9 +85,9 @@ void UpdateRenderText(const Rect& rect,
       (flags & Canvas::NO_SUBPIXEL_RENDERING) != 0);
 
   render_text->SetColor(color);
-  const int font_style = font_list.GetFontStyle();
-  render_text->SetStyle(ITALIC, (font_style & Font::ITALIC) != 0);
-  render_text->SetStyle(UNDERLINE, (font_style & Font::UNDERLINE) != 0);
+  const int text_style = font_list.GetFontStyle();
+  render_text->SetStyle(ITALIC, (text_style & TextStyle::ITALIC) != 0);
+  render_text->SetStyle(UNDERLINE, (text_style & TextStyle::UNDERLINE) != 0);
   render_text->SetWeight(font_list.GetFontWeight());
 }
 
