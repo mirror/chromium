@@ -322,6 +322,10 @@ GURL RemoteSuggestionsProviderImpl::GetUrlWithFavicon(
   return ContentSuggestion::GetFaviconDomain(suggestion->url());
 }
 
+bool RemoteSuggestionsProviderImpl::IsDisabled() const {
+  return state_ == State::DISABLED;
+}
+
 void RemoteSuggestionsProviderImpl::FetchSuggestions(
     bool interactive_request,
     const FetchStatusCallback& callback) {
