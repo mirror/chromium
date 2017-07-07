@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "45f15a49_6d8f701a",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/androidoverlay/DialogOverlayImplPixelTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-07-07T21:37:03Z",
+      "side": 1,
+      "message": "it\u0027s the character under the colorcolumn\u003d80 warning bar i\u0027ve got in vim... :(",
+      "parentUuid": "81f1e5c6_5b10d2f4",
+      "range": {
+        "startLine": 58,
+        "startChar": 74,
+        "endLine": 58,
+        "endChar": 82
+      },
+      "revId": "77215ce85b4aa4d400712ec3132aae243a3e2910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "df678d99_0ca3281f",
         "filename": "content/public/android/javatests/src/org/chromium/content/browser/androidoverlay/DialogOverlayImplPixelTest.java",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "78d1d927_1daba60e",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/androidoverlay/DialogOverlayImplPixelTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-07-07T21:37:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df678d99_0ca3281f",
+      "range": {
+        "startLine": 66,
+        "startChar": 11,
+        "endLine": 66,
+        "endChar": 28
+      },
+      "revId": "77215ce85b4aa4d400712ec3132aae243a3e2910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae26274b_102c557b",
         "filename": "content/public/android/javatests/src/org/chromium/content/browser/androidoverlay/DialogOverlayImplPixelTest.java",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-07-07T20:55:50Z",
       "side": 1,
       "message": "RootOfAllEvil/PrematureOptimization: 1st condition should be r \u003e 100",
+      "range": {
+        "startLine": 104,
+        "startChar": 21,
+        "endLine": 104,
+        "endChar": 25
+      },
+      "revId": "77215ce85b4aa4d400712ec3132aae243a3e2910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c19fde9a_d021a418",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/androidoverlay/DialogOverlayImplPixelTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-07-07T21:37:03Z",
+      "side": 1,
+      "message": "indeed.  but it also lets me put them in the order r, g, b, which is nice.  :)",
+      "parentUuid": "ae26274b_102c557b",
       "range": {
         "startLine": 104,
         "startChar": 21,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "da67f4d9_23700716",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/androidoverlay/DialogOverlayImplPixelTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-07-07T21:37:03Z",
+      "side": 1,
+      "message": "i went with overlayScreenshot.\n\na bigger problem is, how does it know that it\u0027s filled with blue?",
+      "parentUuid": "24a2560b_f285f136",
+      "range": {
+        "startLine": 147,
+        "startChar": 46,
+        "endLine": 147,
+        "endChar": 50
+      },
+      "revId": "77215ce85b4aa4d400712ec3132aae243a3e2910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0e090ac1_2615f425",
         "filename": "content/public/android/javatests/src/org/chromium/content/browser/androidoverlay/DialogOverlayImplPixelTest.java",
         "patchSetId": 2
@@ -105,6 +201,30 @@
       "writtenOn": "2017-07-07T20:55:50Z",
       "side": 1,
       "message": "RootOfAllEvil/PrematureOptimization: switch the two conditions because blue.getPixel involves no calculations and will fail the condition faster?",
+      "range": {
+        "startLine": 155,
+        "startChar": 32,
+        "endLine": 155,
+        "endChar": 40
+      },
+      "revId": "77215ce85b4aa4d400712ec3132aae243a3e2910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70848c28_153fabc3",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/androidoverlay/DialogOverlayImplPixelTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-07-07T21:37:03Z",
+      "side": 1,
+      "message": "that\u0027s unlikely to make any difference.",
+      "parentUuid": "0e090ac1_2615f425",
       "range": {
         "startLine": 155,
         "startChar": 32,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "c1c6100d_ae263efd",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/androidoverlay/DialogOverlayImplPixelTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-07-07T21:37:03Z",
+      "side": 1,
+      "message": "i meant \"a priori unlikely color\".  i ended up removing that sentence since it didn\u0027t add anything.  since we don\u0027t really know where the thing is supposed to be, it\u0027s not clear to me that the idea in the comment would have worked anyway.",
+      "parentUuid": "e92410ba_6e91e800",
+      "range": {
+        "startLine": 169,
+        "startChar": 50,
+        "endLine": 169,
+        "endChar": 75
+      },
+      "revId": "77215ce85b4aa4d400712ec3132aae243a3e2910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c9a2bcf7_c96bf2c6",
         "filename": "content/public/android/javatests/src/org/chromium/content/browser/androidoverlay/DialogOverlayImplPixelTest.java",
         "patchSetId": 2
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "f3f06dc2_07b4a48c",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/androidoverlay/DialogOverlayImplPixelTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-07-07T21:37:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9a2bcf7_c96bf2c6",
+      "range": {
+        "startLine": 174,
+        "startChar": 57,
+        "endLine": 174,
+        "endChar": 63
+      },
+      "revId": "77215ce85b4aa4d400712ec3132aae243a3e2910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f94ad3c9_77272838",
         "filename": "content/public/android/javatests/src/org/chromium/content/browser/androidoverlay/DialogOverlayImplPixelTest.java",
         "patchSetId": 2
@@ -183,6 +351,30 @@
       "revId": "77215ce85b4aa4d400712ec3132aae243a3e2910",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb1ef003_43d457ed",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/androidoverlay/DialogOverlayImplPixelTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-07-07T21:37:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f94ad3c9_77272838",
+      "range": {
+        "startLine": 176,
+        "startChar": 19,
+        "endLine": 176,
+        "endChar": 23
+      },
+      "revId": "77215ce85b4aa4d400712ec3132aae243a3e2910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
