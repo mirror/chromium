@@ -1,0 +1,231 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20ee96ef_35243e38",
+        "filename": "chrome/installer/zucchini/buffer_sink_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-07T19:50:34Z",
+      "side": 1,
+      "message": "can we get some tests that check that trying to put a range that is too large does not result in a partial trace?\n\ne.g. put ([1, 2, ,3, 4]) with remaining size \u003d 2 does not results in [1, 2] being put in the buffer.",
+      "revId": "2c271da265653c403676cf45307e94a0659aa0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfe41a8f_75c973a4",
+        "filename": "chrome/installer/zucchini/buffer_source.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-07T19:50:34Z",
+      "side": 1,
+      "message": "s/  / /",
+      "revId": "2c271da265653c403676cf45307e94a0659aa0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a7390b1_fa447147",
+        "filename": "chrome/installer/zucchini/buffer_source.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-07T19:50:34Z",
+      "side": 1,
+      "message": "what happens if n \u003e remaining?",
+      "revId": "2c271da265653c403676cf45307e94a0659aa0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbc83de2_a24eaf1d",
+        "filename": "chrome/installer/zucchini/buffer_source.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-07T19:50:34Z",
+      "side": 1,
+      "message": "chromium style disapproves of default parameters.\n\nAlso, maybe CheckNextValue() for the name of this function?\n\n// Returns |true| if the data at the cursor is |value|.",
+      "revId": "2c271da265653c403676cf45307e94a0659aa0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8856bbd_db33e50b",
+        "filename": "chrome/installer/zucchini/buffer_source.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-07T19:50:34Z",
+      "side": 1,
+      "message": "Update comment to indicate that this returns |true| if the next bytes.size() bytes at the cursor match those in |bytes|.",
+      "revId": "2c271da265653c403676cf45307e94a0659aa0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "463d3cc6_032efd9a",
+        "filename": "chrome/installer/zucchini/buffer_source.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-07T19:50:34Z",
+      "side": 1,
+      "message": "Is initializer_list preferred over vector*?",
+      "revId": "2c271da265653c403676cf45307e94a0659aa0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c9b9ebf_420fd1ad",
+        "filename": "chrome/installer/zucchini/buffer_source_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-07T19:50:34Z",
+      "side": 1,
+      "message": "add test that expecting more bytes than size of source_ works properly.",
+      "revId": "2c271da265653c403676cf45307e94a0659aa0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e469542_4a328583",
+        "filename": "chrome/installer/zucchini/buffer_source_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-07T19:50:34Z",
+      "side": 1,
+      "message": "add test for going off end of buffer",
+      "range": {
+        "startLine": 42,
+        "startChar": 37,
+        "endLine": 42,
+        "endChar": 41
+      },
+      "revId": "2c271da265653c403676cf45307e94a0659aa0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74203201_773afe7b",
+        "filename": "chrome/installer/zucchini/buffer_source_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-07T19:50:34Z",
+      "side": 1,
+      "message": "test with a non-primitive class?",
+      "revId": "2c271da265653c403676cf45307e94a0659aa0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00cbb4a1_8a586524",
+        "filename": "chrome/installer/zucchini/buffer_source_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-07T19:50:34Z",
+      "side": 1,
+      "message": "test with non-primitive class",
+      "revId": "2c271da265653c403676cf45307e94a0659aa0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6afcae1_e21e2dc2",
+        "filename": "chrome/installer/zucchini/buffer_source_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-07T19:50:34Z",
+      "side": 1,
+      "message": "test with a struct",
+      "revId": "2c271da265653c403676cf45307e94a0659aa0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b568c961_8a617caf",
+        "filename": "chrome/installer/zucchini/buffer_source_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-07T19:50:34Z",
+      "side": 1,
+      "message": "test with array of structs",
+      "revId": "2c271da265653c403676cf45307e94a0659aa0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9e0220d_7bdf4360",
+        "filename": "chrome/installer/zucchini/buffer_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-07T19:50:34Z",
+      "side": 1,
+      "message": "Why is this called remove_prefix, rather than advance_cursor()?",
+      "revId": "2c271da265653c403676cf45307e94a0659aa0e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
