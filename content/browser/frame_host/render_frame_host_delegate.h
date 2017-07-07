@@ -320,6 +320,12 @@ class CONTENT_EXPORT RenderFrameHostDelegate {
   // should not be asked to create a RenderFrame.
   virtual bool IsBeingDestroyed() const;
 
+  // Whether the RenderWidgetCompositor (if it exists) should wait for all
+  // compositing pipeline stages (main thread, commit, tiles, activation) before
+  // triggering a BeginFrame deadline and producing a CompositorFrame. False by
+  // default.
+  virtual bool ShouldWaitForAllPipelineStagesBeforeDraw();
+
  protected:
   virtual ~RenderFrameHostDelegate() {}
 };

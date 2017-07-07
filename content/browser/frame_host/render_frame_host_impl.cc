@@ -1138,6 +1138,8 @@ bool RenderFrameHostImpl::CreateRenderFrame(int proxy_routing_id,
     params->widget_params->routing_id = MSG_ROUTING_NONE;
     params->widget_params->hidden = true;
   }
+  params->widget_params->wait_for_all_pipeline_stages_before_draw =
+      delegate_->ShouldWaitForAllPipelineStagesBeforeDraw();
 
   GetProcess()->GetRendererInterface()->CreateFrame(std::move(params));
 

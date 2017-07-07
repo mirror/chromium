@@ -277,6 +277,12 @@ class CONTENT_EXPORT BrowserContext : public base::SupportsUserData {
   // Returns a random string by default.
   virtual std::string GetMediaDeviceIDSalt();
 
+  // Whether the RenderWidgetCompositor for the WebContents within this
+  // BrowserContext should wait for all compositing pipeline stages (main
+  // thread, commit, tiles, activation) before triggering a BeginFrame deadline
+  // and producing a CompositorFrame. False by default.
+  virtual bool ShouldWaitForAllPipelineStagesBeforeDraw();
+
   // Utility function useful for embedders. Only needs to be called if
   // 1) The embedder needs to use a new salt, and
   // 2) The embedder saves its salt across restarts.
