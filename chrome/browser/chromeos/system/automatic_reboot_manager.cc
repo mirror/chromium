@@ -24,12 +24,9 @@
 #include "base/message_loop/message_loop.h"
 #include "base/path_service.h"
 #include "base/posix/eintr_wrapper.h"
-#include "base/single_thread_task_runner.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/task_scheduler/post_task.h"
-#include "base/threading/sequenced_worker_pool.h"
 #include "base/threading/thread_restrictions.h"
-#include "base/threading/thread_task_runner_handle.h"
 #include "base/time/tick_clock.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chrome_notification_types.h"
@@ -40,7 +37,6 @@
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
 #include "components/user_manager/user_manager.h"
-#include "content/public/browser/browser_thread.h"
 #include "content/public/browser/notification_details.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/notification_source.h"
@@ -55,8 +51,6 @@ const int kMinRebootUptimeMs = 60 * 60 * 1000;     // 1 hour.
 const int kLoginManagerIdleTimeoutMs = 60 * 1000;  // 60 seconds.
 const int kGracePeriodMs = 24 * 60 * 60 * 1000;    // 24 hours.
 const int kOneKilobyte = 1 << 10;                  // 1 kB in bytes.
-
-const char kSequenceToken[] = "automatic-reboot-manager";
 
 base::TimeDelta ReadTimeDeltaFromFile(const base::FilePath& path) {
   base::ThreadRestrictions::AssertIOAllowed();
@@ -79,19 +73,15 @@ base::TimeDelta ReadTimeDeltaFromFile(const base::FilePath& path) {
   return base::TimeDelta::FromMilliseconds(seconds * 1000.0);
 }
 
-void GetSystemEventTimes(
-    scoped_refptr<base::SingleThreadTaskRunner> reply_task_runner,
-    base::Callback<void(
-        const AutomaticRebootManager::SystemEventTimes&)> reply) {
+AutomaticRebootManager::SystemEventTimes GetSystemEventTimes() {
   base::FilePath uptime_file;
   CHECK(PathService::Get(chromeos::FILE_UPTIME, &uptime_file));
   base::FilePath update_reboot_needed_uptime_file;
   CHECK(PathService::Get(chromeos::FILE_UPDATE_REBOOT_NEEDED_UPTIME,
                          &update_reboot_needed_uptime_file));
-  reply_task_runner->PostTask(FROM_HERE, base::Bind(reply,
-      AutomaticRebootManager::SystemEventTimes(
-          ReadTimeDeltaFromFile(uptime_file),
-          ReadTimeDeltaFromFile(update_reboot_needed_uptime_file))));
+  return AutomaticRebootManager::SystemEventTimes(
+      ReadTimeDeltaFromFile(uptime_file),
+      ReadTimeDeltaFromFile(update_reboot_needed_uptime_file));
 }
 
 void SaveUpdateRebootNeededUptime() {
@@ -184,20 +174,12 @@ AutomaticRebootManager::AutomaticRebootManager(
     OnUserActivity(NULL);
   }
 
-  // In a regular browser, base::ThreadTaskRunnerHandle::Get() and
-  // base::ThreadTaskRunnerHandle::Get() return pointers to the same object.
-  // In unit tests, using base::ThreadTaskRunnerHandle::Get() has the advantage
-  // that it allows a custom base::SingleThreadTaskRunner to be injected.
-  base::SequencedWorkerPool* worker_pool =
-      content::BrowserThread::GetBlockingPool();
-  worker_pool->PostSequencedWorkerTaskWithShutdownBehavior(
-      worker_pool->GetNamedSequenceToken(kSequenceToken),
+  base::PostTaskWithTraitsAndReplyWithResult(
       FROM_HERE,
-      base::Bind(&GetSystemEventTimes,
-                 base::ThreadTaskRunnerHandle::Get(),
-                 base::Bind(&AutomaticRebootManager::Init,
-                            weak_ptr_factory_.GetWeakPtr())),
-      base::SequencedWorkerPool::SKIP_ON_SHUTDOWN);
+      {base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN, base::MayBlock()},
+      base::BindOnce(&GetSystemEventTimes),
+      base::BindOnce(&AutomaticRebootManager::Init,
+                     weak_ptr_factory_.GetWeakPtr()));
 }
 
 AutomaticRebootManager::~AutomaticRebootManager() {
