@@ -13,6 +13,7 @@
 #include "base/memory/singleton.h"
 #include "base/memory/weak_ptr.h"
 #include "base/observer_list.h"
+#include "base/time/time.h"
 #include "chrome/browser/chromeos/base/locale_util.h"
 #include "chrome/browser/chromeos/eol_notification.h"
 #include "chrome/browser/chromeos/hats/hats_notification_controller.h"
@@ -20,6 +21,7 @@
 #include "chrome/browser/chromeos/login/quick_unlock/quick_unlock_notification_controller.h"
 #include "chrome/browser/chromeos/login/signin/oauth2_login_manager.h"
 #include "chrome/browser/chromeos/login/signin/token_handle_util.h"
+#include "chrome/browser/chromeos/login/ui/login_display_host_observer.h"
 #include "chromeos/dbus/session_manager_client.h"
 #include "chromeos/login/auth/authenticator.h"
 #include "chromeos/login/auth/user_context.h"
@@ -85,7 +87,8 @@ class UserSessionManager
       public net::NetworkChangeNotifier::ConnectionTypeObserver,
       public base::SupportsWeakPtr<UserSessionManager>,
       public UserSessionManagerDelegate,
-      public user_manager::UserManager::UserSessionStateObserver {
+      public user_manager::UserManager::UserSessionStateObserver,
+      public LoginDisplayHostObserver {
  public:
   // Context of StartSession calls.
   typedef enum {
@@ -250,6 +253,8 @@ class UserSessionManager
   const UserContext& user_context() const { return user_context_; }
   bool has_auth_cookies() const { return has_auth_cookies_; }
 
+  const base::Time& ui_shown_time() const { return ui_shown_time_; }
+
   void Shutdown();
 
  private:
@@ -273,6 +278,9 @@ class UserSessionManager
   // UserSessionManagerDelegate overrides:
   // Used when restoring user sessions after crash.
   void OnProfilePrepared(Profile* profile, bool browser_launched) override;
+
+  // LoginDisplayHostObserver:
+  void OnLoginDisplayHostClosed() override;
 
   void ChildAccountStatusReceivedCallback(Profile* profile);
 
@@ -511,6 +519,9 @@ class UserSessionManager
 
   // Child account status is necessary for InitializeStartUrls call.
   bool waiting_for_child_account_status_;
+
+  // Is set, contains the time when UI is shown.
+  base::Time ui_shown_time_;
 
   scoped_refptr<HatsNotificationController> hats_notification_controller_;
 

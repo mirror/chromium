@@ -490,6 +490,8 @@ LoginDisplayHostImpl::LoginDisplayHostImpl(const gfx::Rect& wallpaper_bounds)
 }
 
 LoginDisplayHostImpl::~LoginDisplayHostImpl() {
+  NotifyClosed();
+
   DBusThreadManager::Get()->GetSessionManagerClient()->RemoveObserver(this);
   CrasAudioHandler::Get()->RemoveAudioObserver(this);
   display::Screen::GetScreen()->RemoveObserver(this);
