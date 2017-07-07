@@ -125,15 +125,35 @@ TEST_F(HostConnectionMetricsLoggerTest,
 }
 
 TEST_F(HostConnectionMetricsLoggerTest,
-       RecordConnectionResultFailureClientConnection_CanceledByNewAttempt) {
+       RecordConnectionResultFailureClientConnection_CanceledByUser) {
   metrics_logger_->RecordConnectionToHostResult(
       HostConnectionMetricsLogger::ConnectionToHostResult::
-          CONNECTION_RESULT_FAILURE_CLIENT_CONNECTION_CANCELED_BY_NEW_ATTEMPT);
+          CONNECTION_RESULT_FAILURE_CLIENT_CONNECTION_CANCELED_BY_USER);
 
   VerifyFailure_ClientConnection(
       HostConnectionMetricsLogger::
           ConnectionToHostResult_FailureClientConnectionEventType::
-              CANCELED_BY_NEW_ATTEMPT);
+              CANCELED_BY_USER);
+  VerifyFailure(
+      HostConnectionMetricsLogger::ConnectionToHostResult_FailureEventType::
+          CLIENT_CONNECTION_ERROR);
+  VerifySuccess(HostConnectionMetricsLogger::
+                    ConnectionToHostResult_SuccessEventType::FAILURE);
+  VerifyProvisioningFailure(
+      HostConnectionMetricsLogger::
+          ConnectionToHostResult_ProvisioningFailureEventType::OTHER);
+}
+
+TEST_F(HostConnectionMetricsLoggerTest,
+       RecordConnectionResultFailureClientConnection_HostFetchFailure) {
+  metrics_logger_->RecordConnectionToHostResult(
+      HostConnectionMetricsLogger::ConnectionToHostResult::
+          CONNECTION_RESULT_FAILURE_CLIENT_CONNECTION_HOST_FETCH_FAILURE);
+
+  VerifyFailure_ClientConnection(
+      HostConnectionMetricsLogger::
+          ConnectionToHostResult_FailureClientConnectionEventType::
+              HOST_FETCH_FAILURE);
   VerifyFailure(
       HostConnectionMetricsLogger::ConnectionToHostResult_FailureEventType::
           CLIENT_CONNECTION_ERROR);
