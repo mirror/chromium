@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50e34821_7f60d639",
+        "filename": "ash/ash_switches.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-07T21:24:44Z",
+      "side": 1,
+      "message": "optional: \"InTablet\" may be better.",
+      "range": {
+        "startLine": 90,
+        "startChar": 11,
+        "endLine": 90,
+        "endChar": 37
+      },
+      "revId": "f7134e9cd2bc13a20ea416f84a3748ecda19ef7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f732331_4a926323",
+        "filename": "ash/frame/header_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-07T21:24:44Z",
+      "side": 1,
+      "message": "I believe we still want to show the title in split view? +xdai@\n\nAlways delegating the decision to the maximize_mode_controller may be better:\n\nmaximize_mode_controller()-\u003eShouldShowTitlebar(target_widget_);\n\nbut defer to xdai@/jamescook@",
+      "revId": "f7134e9cd2bc13a20ea416f84a3748ecda19ef7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
