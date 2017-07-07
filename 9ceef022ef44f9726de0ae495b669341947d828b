@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "f04884fa_1aeaefcf",
+        "filename": "chrome/browser/android/vr_shell/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-07T21:28:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7419735e_76613df9",
+      "range": {
+        "startLine": 17,
+        "startChar": 30,
+        "endLine": 17,
+        "endChar": 37
+      },
+      "revId": "9ceef022ef44f9726de0ae495b669341947d828b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "501575aa_1ccfe686",
         "filename": "chrome/browser/vr/BUILD.gn",
         "patchSetId": 2
@@ -66,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "3e5704eb_dcb1e144",
+        "filename": "chrome/browser/vr/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-07T21:28:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "501575aa_1ccfe686",
+      "revId": "9ceef022ef44f9726de0ae495b669341947d828b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98b723c5_fa853460",
         "filename": "chrome/browser/vr/elements/exclusive_screen_toast.h",
         "patchSetId": 2
@@ -77,6 +119,24 @@
       "writtenOn": "2017-07-07T20:27:58Z",
       "side": 1,
       "message": "Hmm, the copy detection didn\u0027t work for this file, maybe because the rename ended up being too much of a difference from the original on a small file?\n\nIt would be nice if gerrit had a way to override this.",
+      "revId": "9ceef022ef44f9726de0ae495b669341947d828b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2b4e5484_931e842d",
+        "filename": "chrome/browser/vr/elements/exclusive_screen_toast.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-07T21:28:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "98b723c5_fa853460",
       "revId": "9ceef022ef44f9726de0ae495b669341947d828b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -144,6 +204,24 @@
       "revId": "9ceef022ef44f9726de0ae495b669341947d828b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0988732d_8d7b7737",
+        "filename": "chrome/browser/vr/ui_input_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-07T21:28:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7d5549a_5f92ec85",
+      "revId": "9ceef022ef44f9726de0ae495b669341947d828b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
