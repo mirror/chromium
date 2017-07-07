@@ -93,7 +93,7 @@ AutofillPopupLayoutModel::~AutofillPopupLayoutModel() {}
 #if !defined(OS_ANDROID)
 int AutofillPopupLayoutModel::GetDesiredPopupHeight() const {
   std::vector<autofill::Suggestion> suggestions = delegate_->GetSuggestions();
-  int popup_height = 2 * kPopupBorderThickness;
+  int popup_height = 0;
 
   for (size_t i = 0; i < suggestions.size(); ++i) {
     popup_height += GetRowHeightFromId(suggestions[i].frontend_id);
@@ -138,9 +138,6 @@ int AutofillPopupLayoutModel::RowWidthWithoutText(int row,
 
   // Add the padding at the end.
   row_size += kEndPadding;
-
-  // Add room for the popup border.
-  row_size += 2 * kPopupBorderThickness;
 
   return row_size;
 }
@@ -239,7 +236,7 @@ gfx::ImageSkia AutofillPopupLayoutModel::GetIconImage(size_t index) const {
 
 int AutofillPopupLayoutModel::LineFromY(int y) const {
   std::vector<autofill::Suggestion> suggestions = delegate_->GetSuggestions();
-  int current_height = kPopupBorderThickness;
+  int current_height = 0;
 
   for (size_t i = 0; i < suggestions.size(); ++i) {
     current_height += GetRowHeightFromId(suggestions[i].frontend_id);
@@ -255,13 +252,11 @@ int AutofillPopupLayoutModel::LineFromY(int y) const {
 gfx::Rect AutofillPopupLayoutModel::GetRowBounds(size_t index) const {
   std::vector<autofill::Suggestion> suggestions = delegate_->GetSuggestions();
 
-  int top = kPopupBorderThickness;
-  for (size_t i = 0; i < index; ++i) {
+  int top = 0;
+  for (size_t i = 0; i < index; ++i)
     top += GetRowHeightFromId(suggestions[i].frontend_id);
-  }
 
-  return gfx::Rect(kPopupBorderThickness, top,
-                   popup_bounds_.width() - 2 * kPopupBorderThickness,
+  return gfx::Rect(0, top, popup_bounds_.width(),
                    GetRowHeightFromId(suggestions[index].frontend_id));
 }
 

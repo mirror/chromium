@@ -89,8 +89,7 @@ class AutofillPopupLayoutModelTest : public ChromeRenderViewHostTestHarness {
 
 #if !defined(OS_ANDROID)
 TEST_F(AutofillPopupLayoutModelTest, RowWidthWithoutText) {
-  int base_size =
-      AutofillPopupLayoutModel::kEndPadding * 2 + kPopupBorderThickness * 2;
+  int base_size = AutofillPopupLayoutModel::kEndPadding * 2;
   int subtext_increase = AutofillPopupLayoutModel::kNamePadding;
 
   // Refer to GetSuggestions() in TestAutofillPopupViewDelegate.
