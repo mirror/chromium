@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e467274_b6003a88",
+        "filename": "chrome/browser/chromeos/power/cpu_data_collector_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-07T21:48:50Z",
+      "side": 1,
+      "message": "nit: s/cpu/CPU/ throughout this comment",
+      "revId": "cc9ce35885afa53c711d4a63987d1cf72b07983c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e009682b_fcf6825d",
+        "filename": "chrome/browser/chromeos/power/cpu_data_collector_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-07T21:48:50Z",
+      "side": 1,
+      "message": "nit: \"... only collects samples for CPUs that are online.\"",
+      "range": {
+        "startLine": 195,
+        "startChar": 59,
+        "endLine": 195,
+        "endChar": 62
+      },
+      "revId": "cc9ce35885afa53c711d4a63987d1cf72b07983c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
