@@ -1644,32 +1644,24 @@ static void DiffTextDecorations(MutableStylePropertySet* style,
 }
 
 static bool FontWeightIsBold(const CSSValue* font_weight) {
-  if (!font_weight->IsIdentifierValue())
+  if (!font_weight->IsPrimitiveValue())
     return false;
 
   // Because b tag can only bold text, there are only two states in plain html:
   // bold and not bold. Collapse all other values to either one of these two
   // states for editing purposes.
+
   switch (ToCSSIdentifierValue(font_weight)->GetValueID()) {
-    case CSSValue100:
-    case CSSValue200:
-    case CSSValue300:
-    case CSSValue400:
-    case CSSValue500:
     case CSSValueNormal:
       return false;
     case CSSValueBold:
-    case CSSValue600:
-    case CSSValue700:
-    case CSSValue800:
-    case CSSValue900:
       return true;
     default:
       break;
   }
 
-  NOTREACHED();  // For CSSValueBolder and CSSValueLighter
-  return false;
+  CHECK(ToCSSPrimitiveValue(font_weight)->IsNumber());
+  return ToCSSPrimitiveValue(font_weight)->GetFloatValue() >= BoldThreshold();
 }
 
 static bool FontWeightNeedsResolving(const CSSValue* font_weight) {

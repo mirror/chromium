@@ -95,20 +95,40 @@ String CSSPropertyFontUtils::ConcatenateFamilyName(CSSParserTokenRange& range) {
   return builder.ToString();
 }
 
-CSSIdentifierValue* CSSPropertyFontUtils::ConsumeFontWeight(
-    CSSParserTokenRange& range) {
+// TODO(drott) crbug.com/739139: In stage 2, make these three methods understand
+// ranges.
+CSSValue* CSSPropertyFontUtils::ConsumeFontStyle(CSSParserTokenRange& range) {
+  const CSSParserToken& token = range.Peek();
+  if (token.Id() == CSSValueNormal || token.Id() == CSSValueItalic ||
+      token.Id() == CSSValueOblique)
+    return CSSPropertyParserHelpers::ConsumeIdent(range);
+  return nullptr;
+}
+
+CSSValue* CSSPropertyFontUtils::ConsumeFontStretch(CSSParserTokenRange& range) {
+  const CSSParserToken& token = range.Peek();
+  if (token.Id() == CSSValueNormal || (token.Id() >= CSSValueUltraCondensed &&
+                                       token.Id() <= CSSValueUltraExpanded))
+    return CSSPropertyParserHelpers::ConsumeIdent(range);
+  if (token.GetType() != kPercentageToken)
+    return nullptr;
+  if (token.NumericValue() <= 0)
+    return nullptr;
+  return CSSPropertyParserHelpers::ConsumePercent(range, kValueRangeAll);
+}
+
+CSSValue* CSSPropertyFontUtils::ConsumeFontWeight(CSSParserTokenRange& range) {
   const CSSParserToken& token = range.Peek();
   if (token.Id() >= CSSValueNormal && token.Id() <= CSSValueLighter)
     return CSSPropertyParserHelpers::ConsumeIdent(range);
-  if (token.GetType() != kNumberToken ||
-      token.GetNumericValueType() != kIntegerValueType)
+  if (token.GetType() != kNumberToken)
     return nullptr;
-  int weight = static_cast<int>(token.NumericValue());
-  if ((weight % 100) || weight < 100 || weight > 900)
+  float weight = token.NumericValue();
+  if (weight < 1 || weight > 1000)
     return nullptr;
   range.ConsumeIncludingWhitespace();
-  return CSSIdentifierValue::Create(
-      static_cast<CSSValueID>(CSSValue100 + weight / 100 - 1));
+  return CSSPrimitiveValue::Create(weight,
+                                   CSSPrimitiveValue::UnitType::kNumber);
 }
 
 // TODO(bugsnash): move this to the FontFeatureSettings API when it is no longer

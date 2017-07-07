@@ -1,0 +1,12 @@
+This test exercises the 'font-style' property in CSS computed styles.
+
+On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
+
+
+PASS computedFontStyle('normal') is 'normal'
+PASS computedFontStyle('oblique') is 'italic'
+PASS computedFontStyle('italic') is 'italic'
+PASS successfullyParsed is true
+
+TEST COMPLETE
+
