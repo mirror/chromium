@@ -34,6 +34,24 @@
       "revId": "b77f5b0a6c32cd8ca21ec14f00f49b879110d64c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47d5fea3_b28d9232",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-07-07T04:48:58Z",
+      "side": 1,
+      "message": "Updated. The other bug I found was probably intentional (\"www\" is dropped without replacing with an ellipsis). So I\u0027ve just added a test case for that to make it explicit.",
+      "parentUuid": "6fb05c8b_73e45934",
+      "revId": "b77f5b0a6c32cd8ca21ec14f00f49b879110d64c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
