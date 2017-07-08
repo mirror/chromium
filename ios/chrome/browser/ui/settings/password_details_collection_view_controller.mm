@@ -56,7 +56,18 @@ typedef NS_ENUM(NSInteger, ItemType) {
 
 }  // namespace
 
-@interface PasswordDetailsCollectionViewController () {
+// Puts methods used by the context menu in a protocol, so that selectors can be
+// created from them and passed to UIMenuItem.
+@protocol PasswordDetailsViewerProtocol<NSObject>
+- (void)copySite;
+- (void)copyUsername;
+- (void)copyPassword;
+- (void)showPassword;
+- (void)hidePassword;
+@end
+
+@interface PasswordDetailsCollectionViewController ()<
+    PasswordDetailsViewerProtocol> {
   // The username to which the saved password belongs.
   NSString* _username;
   // The saved password.
@@ -442,6 +453,74 @@ reauthenticationModule:(id<ReauthenticationProtocol>)reauthenticationModule
   [self presentViewController:_deleteConfirmation animated:YES completion:nil];
 }
 
+// Returns an array of UIMenuItems to display in a context menu on the site
+// cell.
+- (NSArray*)getSiteMenuItems {
+  UIMenuItem* copyOption = [[UIMenuItem alloc]
+      initWithTitle:l10n_util::GetNSString(IDS_IOS_SETTINGS_SITE_COPY_MENU_ITEM)
+             action:@selector(copySite)];
+  return @[ copyOption ];
+}
+
+// Returns an array of UIMenuItems to display in a context menu on the username
+// cell.
+- (NSArray*)getUsernameMenuItems {
+  UIMenuItem* copyOption = [[UIMenuItem alloc]
+      initWithTitle:l10n_util::GetNSString(
+                        IDS_IOS_SETTINGS_USERNAME_COPY_MENU_ITEM)
+             action:@selector(copyUsername)];
+  return @[ copyOption ];
+}
+
+// Returns an array of UIMenuItems to display in a context menu on the password
+// cell.
+- (NSArray*)getPasswordMenuItems {
+  UIMenuItem* copyOption = [[UIMenuItem alloc]
+      initWithTitle:l10n_util::GetNSString(
+                        IDS_IOS_SETTINGS_PASSWORD_COPY_MENU_ITEM)
+             action:@selector(copyPassword)];
+  UIMenuItem* showOption = [[UIMenuItem alloc]
+      initWithTitle:l10n_util::GetNSString(
+                        IDS_IOS_SETTINGS_PASSWORD_SHOW_MENU_ITEM)
+             action:@selector(showPassword)];
+  UIMenuItem* hideOption = [[UIMenuItem alloc]
+      initWithTitle:l10n_util::GetNSString(
+                        IDS_IOS_SETTINGS_PASSWORD_HIDE_MENU_ITEM)
+             action:@selector(hidePassword)];
+  return @[ copyOption, showOption, hideOption ];
+}
+
+// If the context menu is not shown for a givent item type, it constructs it and
+// shows it. This should only be called for item types representing the cells
+// with the site, username and password.
+- (void)ensureContextMenuShown:(NSInteger)forItemType
+                              :(UICollectionView*)collectionView
+                              :(NSIndexPath*)indexPath {
+  UIMenuController* menu = [UIMenuController sharedMenuController];
+  if (![menu isMenuVisible]) {
+    NSArray* options = nil;
+    switch (forItemType) {
+      case ItemTypeSite:
+        options = [self getSiteMenuItems];
+        break;
+      case ItemTypeUsername:
+        options = [self getUsernameMenuItems];
+        break;
+      case ItemTypePassword:
+        options = [self getPasswordMenuItems];
+        break;
+      default:
+        NOTREACHED();
+    }
+    [menu setMenuItems:options];
+    UICollectionViewLayoutAttributes* attributes =
+        [collectionView.collectionViewLayout
+            layoutAttributesForItemAtIndexPath:indexPath];
+    [menu setTargetRect:attributes.frame inView:collectionView];
+    [menu setMenuVisible:YES animated:YES];
+  }
+}
+
 #pragma mark - UICollectionViewDelegate
 
 - (void)collectionView:(UICollectionView*)collectionView
@@ -450,6 +529,11 @@ reauthenticationModule:(id<ReauthenticationProtocol>)reauthenticationModule
   NSInteger itemType =
       [self.collectionViewModel itemTypeForIndexPath:indexPath];
   switch (itemType) {
+    case ItemTypeSite:
+    case ItemTypeUsername:
+    case ItemTypePassword:
+      [self ensureContextMenuShown:itemType:collectionView:indexPath];
+      break;
     case ItemTypeCopySite:
       [self copySite];
       break;
@@ -496,6 +580,26 @@ reauthenticationModule:(id<ReauthenticationProtocol>)reauthenticationModule
 - (void)setReauthenticationModule:
     (id<ReauthenticationProtocol>)reauthenticationModule {
   _weakReauthenticationModule = reauthenticationModule;
+}
+
+#pragma mark - UIResponder
+
+- (BOOL)becomeFirstResponder {
+  return [super becomeFirstResponder];
+}
+
+- (BOOL)canBecomeFirstResponder {
+  return YES;
+}
+
+- (BOOL)canPerformAction:(SEL)action withSender:(id)sender {
+  if (action == @selector(copySite) || action == @selector(copyUsername) ||
+      action == @selector(copyPassword) ||
+      (_plainTextPasswordShown && action == @selector(hidePassword)) ||
+      (!_plainTextPasswordShown && action == @selector(showPassword))) {
+    return YES;
+  }
+  return NO;
 }
 
 @end
