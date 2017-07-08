@@ -34,6 +34,24 @@
       "revId": "a4b2446cffe1e99889f4593e63cba631969687d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c6d5954_75a4d340",
+        "filename": "chrome/browser/resources/settings/settings_page/settings_animated_pages.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-08T00:44:57Z",
+      "side": 1,
+      "message": "If we want to stay on the safe side and not mix \u003ccontent\u003e and \u003cslot\u003e in elements that we have not rolled to latest version yet, then the only simple cases left for this CL are controlled-radio-group and settings-subpage (see other similar comments).",
+      "parentUuid": "871881df_5df1cd91",
+      "revId": "a4b2446cffe1e99889f4593e63cba631969687d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

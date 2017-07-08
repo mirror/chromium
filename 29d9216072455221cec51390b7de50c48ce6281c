@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7083c52_4971aa60",
+        "filename": "chrome/browser/resources/settings/controls/settings_checkbox.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-08T00:44:57Z",
+      "side": 1,
+      "message": "Same issue here as with neon-animated-pages, see https://cs.chromium.org/chromium/src/third_party/polymer/v1_0/components-chromium/paper-checkbox/paper-checkbox.html?l\u003d233.",
+      "revId": "29d9216072455221cec51390b7de50c48ce6281c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb23f544_3ef59fe8",
+        "filename": "chrome/browser/resources/settings/controls/settings_radio_group.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-08T00:44:57Z",
+      "side": 1,
+      "message": "And same here, https://cs.chromium.org/chromium/src/third_party/polymer/v1_0/components-chromium/paper-radio-group/paper-radio-group.html?l\u003d67.",
+      "revId": "29d9216072455221cec51390b7de50c48ce6281c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
