@@ -1,9 +1,16 @@
 include_rules = [
   "+cc/base",
   "+cc/ipc",
+  "+cc/output",
   "+cc/surfaces",
   "+cc/scheduler",
   "+components/viz/display_embedder",
   "+gpu/ipc/common",
   "+mojo/public/cpp/bindings",
 ]
+
+specific_include_rules = {
+  ".*_unittest\.cc": [
+    "+cc/test",
+  ],
+}
