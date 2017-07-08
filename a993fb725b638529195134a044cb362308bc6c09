@@ -1,0 +1,372 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4983a07_fc0f55de",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_factory.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-08T00:38:02Z",
+      "side": 1,
+      "message": "Remove this include.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 33
+      },
+      "revId": "a993fb725b638529195134a044cb362308bc6c09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c91b0bf_da520c08",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_factory.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-08T00:38:02Z",
+      "side": 1,
+      "message": "\u003d default",
+      "range": {
+        "startLine": 35,
+        "startChar": 32,
+        "endLine": 35,
+        "endChar": 34
+      },
+      "revId": "a993fb725b638529195134a044cb362308bc6c09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ded0bf1f_b58e77cd",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_factory.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-08T00:38:02Z",
+      "side": 1,
+      "message": "Forward declare Profile and move this include to the cc file.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 44
+      },
+      "revId": "a993fb725b638529195134a044cb362308bc6c09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b93a523_bddd2483",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_factory.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-08T00:38:02Z",
+      "side": 1,
+      "message": "Avoid abbreviations here if possible.\n\nnew_tab_help might work.",
+      "range": {
+        "startLine": 21,
+        "startChar": 18,
+        "endLine": 21,
+        "endChar": 21
+      },
+      "revId": "a993fb725b638529195134a044cb362308bc6c09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9d71dd5_4f0ebc42",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_factory.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-08T00:38:02Z",
+      "side": 1,
+      "message": "We\u0027re creating NewTabTrackers, so use NewTabTrackerFactory.",
+      "range": {
+        "startLine": 26,
+        "startChar": 6,
+        "endLine": 26,
+        "endChar": 20
+      },
+      "revId": "a993fb725b638529195134a044cb362308bc6c09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8719849_04c0598f",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-08T00:38:02Z",
+      "side": 1,
+      "message": "Forward declare PrefService and move this include to the cc file.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 60
+      },
+      "revId": "a993fb725b638529195134a044cb362308bc6c09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6dc10a3_46202cf1",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-08T00:38:02Z",
+      "side": 1,
+      "message": "metrics::DesktopSessionDurationTracker* const",
+      "range": {
+        "startLine": 58,
+        "startChar": 2,
+        "endLine": 58,
+        "endChar": 41
+      },
+      "revId": "a993fb725b638529195134a044cb362308bc6c09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f70adc5_318822cd",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-08T00:38:02Z",
+      "side": 1,
+      "message": "Profile* const",
+      "range": {
+        "startLine": 60,
+        "startChar": 10,
+        "endLine": 60,
+        "endChar": 11
+      },
+      "revId": "a993fb725b638529195134a044cb362308bc6c09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d75cbef7_9a95e50c",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-08T00:38:02Z",
+      "side": 1,
+      "message": "Both FakeNewTabTracker and MockNewTabTracker seem like they can be combined.\nJust have the combined implementation accept and store a\nfeature_engagement_tracker::FeatureEngagementTracker* instead of the specific type.",
+      "range": {
+        "startLine": 71,
+        "startChar": 6,
+        "endLine": 71,
+        "endChar": 24
+      },
+      "revId": "a993fb725b638529195134a044cb362308bc6c09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fced50cd_efc475f5",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-08T00:38:02Z",
+      "side": 1,
+      "message": "To keep things clean, I would split this class into...\n\nclass NewTabTrackerEventTest : public testing::Test\n  [Do the minimum amount necessary to test the events]\n\nclass NewTabTrackerFeatureEngagementTrackerTest : public testing::Test\n  [Do the minimum amount necessary to test integration with the feature engagement tracker]",
+      "range": {
+        "startLine": 146,
+        "startChar": 6,
+        "endLine": 146,
+        "endChar": 23
+      },
+      "revId": "a993fb725b638529195134a044cb362308bc6c09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa58a65c_0a57939d",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-08T00:38:02Z",
+      "side": 1,
+      "message": "If this is critical for the test, use ASSERT_EQ.",
+      "range": {
+        "startLine": 159,
+        "startChar": 4,
+        "endLine": 159,
+        "endChar": 13
+      },
+      "revId": "a993fb725b638529195134a044cb362308bc6c09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b9923d5_fe339072",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-08T00:38:02Z",
+      "side": 1,
+      "message": "Move everything here into SetUp(). IIRC, a new object is used for each test case, so putting everything in SetUp is sufficient.",
+      "range": {
+        "startLine": 148,
+        "startChar": 1,
+        "endLine": 162,
+        "endChar": 3
+      },
+      "revId": "a993fb725b638529195134a044cb362308bc6c09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "723680da_319b14c7",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-08T00:38:02Z",
+      "side": 1,
+      "message": "base::MakeUnique\u003cTestingProfileManager\u003e(...)",
+      "range": {
+        "startLine": 168,
+        "startChar": 7,
+        "endLine": 168,
+        "endChar": 33
+      },
+      "revId": "a993fb725b638529195134a044cb362308bc6c09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20e77793_5fffbd16",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-08T00:38:02Z",
+      "side": 1,
+      "message": "Use StrictMock\u003cMockFeatureEngagementTracker\u003e(). You will likely have to adjust some of the types to get this to work.\n\nThis can probably be base::MakeUnique\u003cStrictMock\u003cMockFeatureEngagementTracker\u003e\u003e()",
+      "range": {
+        "startLine": 174,
+        "startChar": 32,
+        "endLine": 174,
+        "endChar": 60
+      },
+      "revId": "a993fb725b638529195134a044cb362308bc6c09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57ef250a_8c750c0a",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-08T00:38:02Z",
+      "side": 1,
+      "message": "Instead of placing this here, put this in the FeatureEngagementTracker code. This will maintain the internal nature of the include files above.",
+      "range": {
+        "startLine": 218,
+        "startChar": 2,
+        "endLine": 220,
+        "endChar": 50
+      },
+      "revId": "a993fb725b638529195134a044cb362308bc6c09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d50005d_456c6672",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab_tracker_unittest.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-08T00:38:02Z",
+      "side": 1,
+      "message": "This should be a std::unique_ptr\u003cMockFeatureEngagementTracker\u003e",
+      "range": {
+        "startLine": 267,
+        "startChar": 2,
+        "endLine": 267,
+        "endChar": 31
+      },
+      "revId": "a993fb725b638529195134a044cb362308bc6c09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
