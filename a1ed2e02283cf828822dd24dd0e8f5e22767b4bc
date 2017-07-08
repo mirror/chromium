@@ -22,6 +22,30 @@
       "revId": "a1ed2e02283cf828822dd24dd0e8f5e22767b4bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58ebbd5f_6cf84aca",
+        "filename": "chrome/test/data/webui/settings/on_startup_browsertest.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-08T00:58:39Z",
+      "side": 0,
+      "message": "The new tests are not connected to the settings-prefs, so I don\u0027t think it\u0027s necessary.",
+      "parentUuid": "1d2f1ac9_99b4464d",
+      "range": {
+        "startLine": 62,
+        "startChar": 13,
+        "endLine": 62,
+        "endChar": 41
+      },
+      "revId": "a1ed2e02283cf828822dd24dd0e8f5e22767b4bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

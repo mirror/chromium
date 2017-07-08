@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8a92e09e_662ab70b",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1642,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-08T00:58:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5cfcb1f_d38215d7",
+      "range": {
+        "startLine": 1642,
+        "startChar": 55,
+        "endLine": 1642,
+        "endChar": 103
+      },
+      "revId": "1a3b338894c82be054d978e4688cfcf43e0c3b25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be366508_ed469bb6",
         "filename": "chrome/browser/resources/settings/on_startup_page/on_startup_page.html",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "0415a8c5_6c33f3ab",
+        "filename": "chrome/browser/resources/settings/on_startup_page/on_startup_page.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-08T00:58:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be366508_ed469bb6",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 54
+      },
+      "revId": "1a3b338894c82be054d978e4688cfcf43e0c3b25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "663e7240_5185d917",
         "filename": "chrome/browser/resources/settings/on_startup_page/startup_urls_page.html",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2017-07-08T00:26:04Z",
       "side": 1,
       "message": "cats? Consider renaming to something that conveys the meaning better or remove if not used.",
+      "range": {
+        "startLine": 39,
+        "startChar": 40,
+        "endLine": 39,
+        "endChar": 44
+      },
+      "revId": "1a3b338894c82be054d978e4688cfcf43e0c3b25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a8d6e50_1ba6661d",
+        "filename": "chrome/browser/resources/settings/on_startup_page/startup_urls_page.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-08T00:58:39Z",
+      "side": 1,
+      "message": "That\u0027s a whoops. I\u0027d intentionally chosen a silly id name to help avoid checking it in. Sadly, I missed it, but on the plus side you caught it - so the silly name had some value.\n\nDone",
+      "parentUuid": "663e7240_5185d917",
       "range": {
         "startLine": 39,
         "startChar": 40,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "58d1a8f4_a0ee8eaa",
+        "filename": "chrome/browser/resources/settings/on_startup_page/startup_urls_page.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-08T00:58:39Z",
+      "side": 1,
+      "message": "I think I agree on both points, that it should change and that it should be separate from this CL.",
+      "parentUuid": "3d56b90b_dd21e1f8",
+      "range": {
+        "startLine": 71,
+        "startChar": 35,
+        "endLine": 71,
+        "endChar": 51
+      },
+      "revId": "1a3b338894c82be054d978e4688cfcf43e0c3b25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "359e11d7_e8c41fdf",
         "filename": "chrome/test/data/webui/settings/on_startup_browsertest.js",
         "patchSetId": 4
@@ -105,6 +201,30 @@
       "writtenOn": "2017-07-08T00:26:04Z",
       "side": 1,
       "message": "What is this test testing? Consider adding a comment to clarify.",
+      "range": {
+        "startLine": 39,
+        "startChar": 10,
+        "endLine": 39,
+        "endChar": 27
+      },
+      "revId": "1a3b338894c82be054d978e4688cfcf43e0c3b25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb05cd85_b8a06a94",
+        "filename": "chrome/test/data/webui/settings/on_startup_browsertest.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-08T00:58:39Z",
+      "side": 1,
+      "message": "There\u0027s only a button on this page. We could consider removing the whole test file, but there is a small amount of merit in testing that the button is present.",
+      "parentUuid": "359e11d7_e8c41fdf",
       "range": {
         "startLine": 39,
         "startChar": 10,
@@ -137,6 +257,30 @@
       "revId": "1a3b338894c82be054d978e4688cfcf43e0c3b25",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "526d3b55_3858c959",
+        "filename": "chrome/test/data/webui/settings/startup_urls_page_test.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-08T00:58:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d13dc094_2d4a946f",
+      "range": {
+        "startLine": 244,
+        "startChar": 4,
+        "endLine": 244,
+        "endChar": 37
+      },
+      "revId": "1a3b338894c82be054d978e4688cfcf43e0c3b25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
