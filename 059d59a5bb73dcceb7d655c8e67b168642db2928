@@ -16,6 +16,24 @@
       "revId": "059d59a5bb73dcceb7d655c8e67b168642db2928",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3de2c49c_fa8215d1",
+        "filename": "chrome/browser/android/vr_shell/ui_elements/url_bar.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-07-08T16:33:39Z",
+      "side": 0,
+      "message": "Agreed.",
+      "parentUuid": "9fdacbba_25867eee",
+      "revId": "059d59a5bb73dcceb7d655c8e67b168642db2928",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

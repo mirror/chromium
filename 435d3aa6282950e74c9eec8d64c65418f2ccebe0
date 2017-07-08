@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e9ed8204_9137d653",
+        "filename": "chrome/browser/android/vr_shell/ui_elements/url_bar.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-07-08T16:33:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2eee02a1_96dd0ca5",
+      "revId": "435d3aa6282950e74c9eec8d64c65418f2ccebe0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd631b29_8ccd8a9b",
         "filename": "chrome/browser/android/vr_shell/ui_elements/url_bar.cc",
         "patchSetId": 1
@@ -30,6 +48,30 @@
       "writtenOn": "2017-07-07T21:46:40Z",
       "side": 1,
       "message": "In another review, I think it was suggested that UpdateTexture() should bail if not initialized, or not dirty, or not visible.  It looks like that wasn\u0027t incorporated, but if we do it now, then OnBeginFrame can call UpdateTexture unconditionally.",
+      "range": {
+        "startLine": 68,
+        "startChar": 4,
+        "endLine": 68,
+        "endChar": 17
+      },
+      "revId": "435d3aa6282950e74c9eec8d64c65418f2ccebe0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "026390d2_2efa5d1b",
+        "filename": "chrome/browser/android/vr_shell/ui_elements/url_bar.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-07-08T16:33:39Z",
+      "side": 1,
+      "message": "Good thought. I\u0027ve added a visibility check to UpdateTexture. This lead to some more cleanup.",
+      "parentUuid": "bd631b29_8ccd8a9b",
       "range": {
         "startLine": 68,
         "startChar": 4,
