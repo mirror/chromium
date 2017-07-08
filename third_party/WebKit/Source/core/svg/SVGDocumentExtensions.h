@@ -51,6 +51,7 @@ class SVGDocumentExtensions
 
   static void ServiceOnAnimationFrame(Document&);
 
+  bool HasAnimations() const;
   void StartAnimations();
   void PauseAnimations();
   void ServiceAnimations();

@@ -136,9 +136,6 @@ PaintLayer::PaintLayer(LayoutBoxModelObject& layout_object)
       has_visible_content_(false),
       needs_descendant_dependent_flags_update_(true),
       has_visible_descendant_(false),
-#if DCHECK_IS_ON()
-      needs_position_update_(true),
-#endif
       has3d_transformed_descendant_(false),
       contains_dirty_overlay_scrollbars_(false),
       needs_ancestor_dependent_compositing_inputs_update_(true),
@@ -845,10 +842,6 @@ void PaintLayer::UpdateLayerPosition() {
   }
 
   location_ = local_point;
-
-#if DCHECK_IS_ON()
-  needs_position_update_ = false;
-#endif
 }
 
 bool PaintLayer::UpdateSize() {
@@ -1280,6 +1273,9 @@ void PaintLayer::AddChild(PaintLayer* child, PaintLayer* before_child) {
   }
 
   child->parent_ = this;
+
+  if (LocalFrameView* frame_view = child->GetLayoutObject().GetFrameView())
+    frame_view->SetNeedsLayout();
 
   // The ancestor overflow layer is calculated during compositing inputs update
   // and should not be set yet.
