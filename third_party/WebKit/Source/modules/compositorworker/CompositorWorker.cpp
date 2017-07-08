@@ -13,7 +13,6 @@
 #include "core/workers/WorkerClients.h"
 #include "modules/EventTargetModules.h"
 #include "modules/compositorworker/CompositorWorkerMessagingProxy.h"
-#include "modules/compositorworker/CompositorWorkerProxyClientImpl.h"
 #include "modules/compositorworker/CompositorWorkerThread.h"
 
 namespace blink {
@@ -57,7 +56,8 @@ CompositorWorker::CreateInProcessWorkerMessagingProxy(
   Document* document = ToDocument(context);
   WorkerClients* worker_clients = WorkerClients::Create();
   CompositorWorkerProxyClient* client =
-      CompositorWorkerProxyClientImpl::FromDocument(document);
+      document->GetFrame()->GetChromeClient().CreateCompositorWorkerProxyClient(
+          document->GetFrame());
   ProvideCompositorWorkerProxyClientTo(worker_clients, client);
   return new CompositorWorkerMessagingProxy(this, worker_clients);
 }

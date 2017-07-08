@@ -4,8 +4,6 @@
 
 #include "chromeos/dbus/fake_shill_ipconfig_client.h"
 
-#include <utility>
-
 #include "base/bind.h"
 #include "base/location.h"
 #include "base/memory/ptr_util.h"
@@ -43,7 +41,8 @@ void FakeShillIPConfigClient::RemovePropertyChangedObserver(
 }
 
 void FakeShillIPConfigClient::Refresh(const dbus::ObjectPath& ipconfig_path,
-                                      VoidDBusMethodCallback callback) {}
+                                      const VoidDBusMethodCallback& callback) {
+}
 
 void FakeShillIPConfigClient::GetProperties(
     const dbus::ObjectPath& ipconfig_path,
@@ -57,10 +56,11 @@ void FakeShillIPConfigClient::GetProperties(
                             weak_ptr_factory_.GetWeakPtr(), dict, callback));
 }
 
-void FakeShillIPConfigClient::SetProperty(const dbus::ObjectPath& ipconfig_path,
-                                          const std::string& name,
-                                          const base::Value& value,
-                                          VoidDBusMethodCallback callback) {
+void FakeShillIPConfigClient::SetProperty(
+    const dbus::ObjectPath& ipconfig_path,
+    const std::string& name,
+    const base::Value& value,
+    const VoidDBusMethodCallback& callback) {
   base::DictionaryValue* dict = NULL;
   if (!ipconfigs_.GetDictionaryWithoutPathExpansion(ipconfig_path.value(),
                                                     &dict)) {
@@ -70,21 +70,21 @@ void FakeShillIPConfigClient::SetProperty(const dbus::ObjectPath& ipconfig_path,
   // Update existing ip config stub object's properties.
   dict->SetWithoutPathExpansion(name, base::MakeUnique<base::Value>(value));
   base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::BindOnce(std::move(callback), DBUS_METHOD_CALL_SUCCESS));
+      FROM_HERE, base::Bind(callback, DBUS_METHOD_CALL_SUCCESS));
 }
 
 void FakeShillIPConfigClient::ClearProperty(
     const dbus::ObjectPath& ipconfig_path,
     const std::string& name,
-    VoidDBusMethodCallback callback) {
+    const VoidDBusMethodCallback& callback) {
   base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::BindOnce(std::move(callback), DBUS_METHOD_CALL_SUCCESS));
+      FROM_HERE, base::Bind(callback, DBUS_METHOD_CALL_SUCCESS));
 }
 
 void FakeShillIPConfigClient::Remove(const dbus::ObjectPath& ipconfig_path,
-                                     VoidDBusMethodCallback callback) {
+                                     const VoidDBusMethodCallback& callback) {
   base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::BindOnce(std::move(callback), DBUS_METHOD_CALL_SUCCESS));
+      FROM_HERE, base::Bind(callback, DBUS_METHOD_CALL_SUCCESS));
 }
 
 ShillIPConfigClient::TestInterface*

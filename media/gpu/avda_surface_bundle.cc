@@ -24,16 +24,9 @@ AVDASurfaceBundle::~AVDASurfaceBundle() {
   surface_texture_surface = gl::ScopedJavaSurface();
 
   // Also release the back buffers.
-  if (surface_texture) {
-    auto task_runner = surface_texture->task_runner();
-    if (task_runner->RunsTasksOnCurrentThread()) {
-      surface_texture->ReleaseBackBuffers();
-    } else {
-      task_runner->PostTask(
-          FROM_HERE, base::Bind(&SurfaceTextureGLOwner::ReleaseBackBuffers,
-                                surface_texture));
-    }
-  }
+  if (surface_texture)
+    surface_texture->ReleaseBackBuffers();
+  surface_texture = nullptr;
 }
 
 const base::android::JavaRef<jobject>& AVDASurfaceBundle::GetJavaSurface()

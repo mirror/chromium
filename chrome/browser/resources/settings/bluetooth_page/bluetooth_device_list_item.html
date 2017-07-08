@@ -8,16 +8,16 @@
 <link rel="import" href="../settings_shared_css.html">
 
 <dom-module id="bluetooth-device-list-item">
-  <template>
-    <style include="settings-shared">
-      .name[connected] {
-        font-weight: 500;
-      }
+  <style include="settings-shared">
+    .name[connected] {
+      font-weight: 500;
+    }
 
-      .state[connected] {
-        color: var(--google-green-500);
-      }
-    </style>
+    .state[connected] {
+      color: var(--google-green-500);
+    }
+  </style>
+  <template>
     <div class="list-item">
       <iron-icon id="deviceIcon" icon="[[getDeviceIcon_(device)]]">
       </iron-icon>

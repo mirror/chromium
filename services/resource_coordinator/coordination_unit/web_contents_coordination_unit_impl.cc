@@ -4,7 +4,15 @@
 
 #include "services/resource_coordinator/coordination_unit/web_contents_coordination_unit_impl.h"
 
+#include <utility>
+
+namespace service_manager {
+class ServiceContextRef;
+}
+
 namespace resource_coordinator {
+
+struct CoordinationUnitID;
 
 WebContentsCoordinationUnitImpl::WebContentsCoordinationUnitImpl(
     const CoordinationUnitID& id,
@@ -66,13 +74,10 @@ double WebContentsCoordinationUnitImpl::CalculateCPUUsage() {
 }
 
 void WebContentsCoordinationUnitImpl::RecalculateProperty(
-    const mojom::PropertyType property_type) {
+    mojom::PropertyType property_type) {
   if (property_type == mojom::PropertyType::kCPUUsage) {
     double cpu_usage = CalculateCPUUsage();
-    mojom::PropertyPtr property =
-        mojom::Property::New(mojom::PropertyType::kCPUUsage,
-                             base::MakeUnique<base::Value>(cpu_usage));
-    SetProperty(std::move(property));
+    SetProperty(mojom::PropertyType::kCPUUsage, base::Value(cpu_usage));
   }
 }
 

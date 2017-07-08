@@ -9,8 +9,7 @@ from page_sets.system_health import platforms
 from page_sets.system_health import system_health_story
 
 from telemetry import story
-
-from py_utils import discover
+from telemetry.core import discover
 
 
 class SystemHealthStorySet(story.StorySet):

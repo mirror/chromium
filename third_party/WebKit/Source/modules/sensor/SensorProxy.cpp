@@ -113,7 +113,7 @@ const SensorConfiguration* SensorProxy::DefaultConfig() const {
 }
 
 void SensorProxy::UpdateSensorReading() {
-  DCHECK(ShouldProcessReadings());
+  DCHECK(IsInitialized());
   int read_attempts = 0;
   const int kMaxReadAttemptsCount = 10;
   device::SensorReading reading_data;
@@ -139,8 +139,7 @@ void SensorProxy::RaiseError() {
 
 void SensorProxy::SensorReadingChanged() {
   DCHECK_EQ(ReportingMode::ON_CHANGE, mode_);
-  if (ShouldProcessReadings())
-    UpdateSensorReading();
+  UpdateSensorReading();
 }
 
 void SensorProxy::PageVisibilityChanged() {
@@ -271,15 +270,11 @@ void SensorProxy::OnPollingTimer(TimerBase*) {
   UpdateSensorReading();
 }
 
-bool SensorProxy::ShouldProcessReadings() const {
-  return IsInitialized() && !suspended_ && !frequencies_used_.IsEmpty();
-}
-
 void SensorProxy::UpdatePollingStatus() {
-  if (mode_ != ReportingMode::CONTINUOUS)
-    return;
-
-  if (ShouldProcessReadings()) {
+  bool start_polling = (mode_ == ReportingMode::CONTINUOUS) &&
+                       IsInitialized() && !suspended_ &&
+                       !frequencies_used_.IsEmpty();
+  if (start_polling) {
     // TODO(crbug/721297) : We need to find out an algorithm for resulting
     // polling frequency.
     polling_timer_.StartRepeating(1 / frequencies_used_.back(),

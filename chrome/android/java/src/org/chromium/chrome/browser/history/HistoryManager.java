@@ -61,7 +61,6 @@ public class HistoryManager implements OnMenuItemClickListener, SignInStateObser
     private static HistoryProvider sProviderForTests;
 
     private final Activity mActivity;
-    private final boolean mIsIncognito;
     private final boolean mIsSeparateActivity;
     private final SelectableListLayout<HistoryItem> mSelectableListLayout;
     private final HistoryAdapter mHistoryAdapter;
@@ -74,29 +73,27 @@ public class HistoryManager implements OnMenuItemClickListener, SignInStateObser
 
     private boolean mIsSearching;
     private boolean mShouldShowInfoHeader;
+
     /**
      * Creates a new HistoryManager.
      * @param activity The Activity associated with the HistoryManager.
      * @param isSeparateActivity Whether the history UI will be shown in a separate activity than
      *                           the main Chrome activity.
      * @param snackbarManager The {@link SnackbarManager} used to display snackbars.
-     * @param isIncognito Whether the incognito tab model is currently selected.
      */
     @SuppressWarnings("unchecked") // mSelectableListLayout
-    public HistoryManager(Activity activity, boolean isSeparateActivity,
-            SnackbarManager snackbarManager, boolean isIncognito) {
+    public HistoryManager(
+            Activity activity, boolean isSeparateActivity, SnackbarManager snackbarManager) {
         mShouldShowInfoHeader =
                 ContextUtils.getAppSharedPreferences().getBoolean(PREF_SHOW_HISTORY_INFO, true);
         mActivity = activity;
         mIsSeparateActivity = isSeparateActivity;
         mSnackbarManager = snackbarManager;
-        mIsIncognito = isIncognito;
 
         mSelectionDelegate = new SelectionDelegate<>();
         mSelectionDelegate.addObserver(this);
         mHistoryAdapter = new HistoryAdapter(mSelectionDelegate, this,
-                sProviderForTests != null ? sProviderForTests
-                                          : new BrowsingHistoryBridge(isIncognito));
+                sProviderForTests != null ? sProviderForTests : new BrowsingHistoryBridge());
 
         // 1. Create SelectableListLayout.
         mSelectableListLayout =
@@ -110,7 +107,7 @@ public class HistoryManager implements OnMenuItemClickListener, SignInStateObser
         mToolbar = (HistoryManagerToolbar) mSelectableListLayout.initializeToolbar(
                 R.layout.history_toolbar, mSelectionDelegate, R.string.menu_history, null,
                 R.id.normal_menu_group, R.id.selection_mode_menu_group,
-                R.color.default_primary_color, this, true);
+                R.color.default_primary_color, this);
         mToolbar.setManager(this);
         mToolbar.initializeSearchView(this, R.string.history_manager_search, R.id.search_menu_id);
         mToolbar.setInfoMenuItem(R.id.info_menu_id);
@@ -273,13 +270,6 @@ public class HistoryManager implements OnMenuItemClickListener, SignInStateObser
     public void openUrl(String url, Boolean isIncognito, boolean createNewTab) {
         IntentHandler.startActivityForTrustedIntent(
                 getOpenUrlIntent(url, isIncognito, createNewTab));
-    }
-
-    /**
-     * @return Whether the HistoryManager is displaying history for the incognito profile.
-     */
-    public boolean isIncognito() {
-        return mIsIncognito;
     }
 
     @VisibleForTesting

@@ -455,29 +455,22 @@ void TaskManagerImpl::TaskUnresponsive(Task* task) {
 }
 
 // static
-void TaskManagerImpl::OnMultipleBytesTransferredUI(BytesTransferredMap params) {
+void TaskManagerImpl::OnMultipleBytesTransferredUI(
+    std::vector<BytesTransferredParam>* params) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  for (const auto& entry : params) {
-    const BytesTransferredKey& process_info = entry.first;
-    const BytesTransferredParam& bytes_transferred = entry.second;
+  DCHECK(params);
 
-    if (!GetInstance()->UpdateTasksWithBytesTransferred(process_info,
-                                                        bytes_transferred)) {
+  for (BytesTransferredParam& param : *params) {
+    if (!GetInstance()->UpdateTasksWithBytesTransferred(param)) {
       // We can't match a task to the notification.  That might mean the
       // tab that started a download was closed, or the request may have had
       // no originating task associated with it in the first place.
       // We attribute orphaned/unaccounted activity to the Browser process.
-      DCHECK(process_info.origin_pid || (process_info.child_id != -1));
-      // Since the key is meant to be immutable we create a fake key for the
-      // purpose of attributing the orphaned/unaccounted activity to the Browser
-      // process.
-      int dummy_origin_pid = 0;
-      int dummy_child_id = -1;
-      int dummy_route_id = -1;
-      BytesTransferredKey dummy_key = {dummy_origin_pid, dummy_child_id,
-                                       dummy_route_id};
-      GetInstance()->UpdateTasksWithBytesTransferred(dummy_key,
-                                                     bytes_transferred);
+      DCHECK(param.origin_pid || (param.child_id != -1));
+
+      param.origin_pid = 0;
+      param.child_id = param.route_id = -1;
+      GetInstance()->UpdateTasksWithBytesTransferred(param);
     }
   }
 }
@@ -514,8 +507,7 @@ void TaskManagerImpl::StartUpdating() {
   for (const auto& provider : task_providers_)
     provider->SetObserver(this);
 
-  io_thread_helper_manager_.reset(new IoThreadHelperManager(
-      base::BindRepeating(&TaskManagerImpl::OnMultipleBytesTransferredUI)));
+  io_thread_helper_manager_.reset(new IoThreadHelperManager);
 }
 
 void TaskManagerImpl::StopUpdating() {
@@ -547,11 +539,11 @@ Task* TaskManagerImpl::GetTaskByPidOrRoute(int origin_pid,
 }
 
 bool TaskManagerImpl::UpdateTasksWithBytesTransferred(
-    const BytesTransferredKey& key,
     const BytesTransferredParam& param) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
-  Task* task = GetTaskByPidOrRoute(key.origin_pid, key.child_id, key.route_id);
+  Task* task =
+      GetTaskByPidOrRoute(param.origin_pid, param.child_id, param.route_id);
   if (task) {
     task->OnNetworkBytesRead(param.byte_read_count);
     task->OnNetworkBytesSent(param.byte_sent_count);

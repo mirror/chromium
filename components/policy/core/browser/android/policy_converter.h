@@ -75,6 +75,9 @@ class POLICY_EXPORT PolicyConverter {
       JNIEnv* env,
       const base::android::JavaRef<jobjectArray>& array);
 
+  // Register native methods
+  static bool Register(JNIEnv* env);
+
  private:
   const Schema* const policy_schema_;
 

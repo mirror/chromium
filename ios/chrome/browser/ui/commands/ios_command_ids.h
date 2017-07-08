@@ -18,6 +18,7 @@
 #define IDC_RELOAD                                     33002
 #define IDC_STOP                                       33006
 #define IDC_NEW_TAB                                    34014
+#define IDC_CLOSE_TAB                                  34015
 #define IDC_FULLSCREEN                                 34030
 #define IDC_BOOKMARK_PAGE                              35000
 #define IDC_VIEW_SOURCE                                35002

@@ -952,7 +952,7 @@ typedef NS_ENUM(NSInteger, ItemType) {
 
 #pragma mark - ChromeIdentityServiceObserver
 
-- (void)profileUpdate:(ChromeIdentity*)identity {
+- (void)onProfileUpdate:(ChromeIdentity*)identity {
   CollectionViewAccountItem* item =
       base::mac::ObjCCastStrict<CollectionViewAccountItem>(
           [_identityMap objectForKey:identity.gaiaID]);
@@ -964,7 +964,7 @@ typedef NS_ENUM(NSInteger, ItemType) {
   [self reconfigureCellsForItems:@[ item ]];
 }
 
-- (void)chromeIdentityServiceWillBeDestroyed {
+- (void)onChromeIdentityServiceWillBeDestroyed {
   _identityServiceObserver.reset();
 }
 

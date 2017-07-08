@@ -20,7 +20,7 @@ ArcNotificationSurfaceImpl::ArcNotificationSurfaceImpl(
 }
 
 gfx::Size ArcNotificationSurfaceImpl::GetSize() const {
-  return surface_->GetContentSize();
+  return surface_->GetSize();
 }
 
 void ArcNotificationSurfaceImpl::Attach(

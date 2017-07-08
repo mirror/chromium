@@ -26,6 +26,8 @@ import org.chromium.base.BaseSwitches;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.library_loader.LibraryLoader;
 import org.chromium.base.library_loader.LibraryProcessType;
+import org.chromium.base.process_launcher.ChildConnectionAllocator;
+import org.chromium.base.process_launcher.ChildProcessConnection;
 import org.chromium.base.process_launcher.ChildProcessCreationParams;
 import org.chromium.base.process_launcher.FileDescriptorInfo;
 import org.chromium.base.test.util.Feature;
@@ -59,6 +61,12 @@ public class ChildProcessLauncherHelperTest {
     @Before
     public void setUp() throws Exception {
         LibraryLoader.get(LibraryProcessType.PROCESS_CHILD).ensureInitialized();
+        ChildProcessLauncherTestUtils.runOnLauncherThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                ChildProcessLauncherHelper.initLinker();
+            }
+        });
     }
 
     /**

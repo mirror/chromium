@@ -16,8 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface CWVTranslationLanguage ()
 
 - (instancetype)initWithLanguageCode:(const std::string&)languageCode
-                       localizedName:(const base::string16&)localizedName
-                          nativeName:(const base::string16&)nativeName
+                        languageName:(const base::string16&)languageName
     NS_DESIGNATED_INITIALIZER;
 
 @end

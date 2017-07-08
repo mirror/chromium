@@ -39,8 +39,6 @@ public class HistoryManagerUtils {
             Intent intent = new Intent();
             intent.setClass(appContext, HistoryActivity.class);
             intent.putExtra(IntentHandler.EXTRA_PARENT_COMPONENT, activity.getComponentName());
-            intent.putExtra(IntentHandler.EXTRA_INCOGNITO_MODE,
-                    activity.getTabModelSelector().isIncognitoSelected());
             activity.startActivity(intent);
         }
     }

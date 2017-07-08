@@ -1,4 +1,3 @@
-
 Started worker
 Paused on 'debugger;'
 Worker created

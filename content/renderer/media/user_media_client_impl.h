@@ -114,8 +114,7 @@ class CONTENT_EXPORT UserMediaClientImpl
   virtual MediaStreamAudioSource* CreateAudioSource(
       const StreamDeviceInfo& device,
       const blink::WebMediaConstraints& constraints,
-      const MediaStreamSource::ConstraintsCallback& source_ready,
-      bool* has_sw_echo_cancellation);
+      const MediaStreamSource::ConstraintsCallback& source_ready);
   virtual MediaStreamVideoSource* CreateVideoSource(
       const StreamDeviceInfo& device,
       const MediaStreamSource::SourceStoppedCallback& stop_callback);

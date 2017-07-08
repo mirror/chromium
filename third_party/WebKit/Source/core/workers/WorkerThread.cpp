@@ -46,7 +46,6 @@
 #include "core/workers/WorkerThreadStartupData.h"
 #include "platform/CrossThreadFunctional.h"
 #include "platform/Histogram.h"
-#include "platform/RuntimeEnabledFeatures.h"
 #include "platform/WaitableEvent.h"
 #include "platform/WebThreadSupportingGC.h"
 #include "platform/bindings/Microtask.h"
@@ -60,25 +59,14 @@
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/Threading.h"
 #include "platform/wtf/text/WTFString.h"
-#include "public/platform/InterfaceProvider.h"
 #include "public/platform/Platform.h"
 
 namespace blink {
 
 using ExitCode = WorkerThread::ExitCode;
 
-namespace {
-
 // TODO(nhiroki): Adjust the delay based on UMA.
 constexpr TimeDelta kForcibleTerminationDelay = TimeDelta::FromSeconds(2);
-
-void ForwardInterfaceRequest(const std::string& name,
-                             mojo::ScopedMessagePipeHandle handle) {
-  Platform::Current()->GetInterfaceProvider()->GetInterface(name.c_str(),
-                                                            std::move(handle));
-}
-
-}  // namespace
 
 static Mutex& ThreadSetMutex() {
   DEFINE_THREAD_SAFE_STATIC_LOCAL(Mutex, mutex, ());
@@ -316,11 +304,12 @@ ExitCode WorkerThread::GetExitCodeForTesting() {
   return exit_code_;
 }
 
-service_manager::InterfaceProvider& WorkerThread::GetInterfaceProvider() {
-  // TODO(https://crbug.com/734210): Instead of forwarding to the process-wide
-  // interface provider a worker-specific interface provider pipe should be
-  // passed in as part of the WorkerThreadStartupData.
-  return interface_provider_;
+InterfaceProvider* WorkerThread::GetInterfaceProvider() {
+  // TODO(https://crbug.com/734210): Instead of returning this interface
+  // provider, which maps to a RenderProcessHost in the browser process, this
+  // method should return an interface provider which maps to a specific worker
+  // context such as a SharedWorkerHost or EmbeddedWorkerInstance.
+  return Platform::Current()->GetInterfaceProvider();
 }
 
 WorkerThread::WorkerThread(ThreadableLoadingContext* loading_context,
@@ -337,8 +326,6 @@ WorkerThread::WorkerThread(ThreadableLoadingContext* loading_context,
   DCHECK(IsMainThread());
   MutexLocker lock(ThreadSetMutex());
   WorkerThreads().insert(this);
-  interface_provider_.Forward(
-      ConvertToBaseCallback(WTF::Bind(&ForwardInterfaceRequest)));
 }
 
 bool WorkerThread::ShouldScheduleToTerminateExecution(const MutexLocker& lock) {
@@ -460,8 +447,7 @@ void WorkerThread::InitializeOnWorkerThread(
 
   String source_code;
   std::unique_ptr<Vector<char>> cached_meta_data;
-  if (RuntimeEnabledFeatures::ServiceWorkerScriptStreamingEnabled() &&
-      GetInstalledScriptsManager() &&
+  if (GetInstalledScriptsManager() &&
       GetInstalledScriptsManager()->IsScriptInstalled(script_url)) {
     // TODO(shimazu): Set ContentSecurityPolicy, ReferrerPolicy and
     // OriginTrialTokens to |startup_data|.

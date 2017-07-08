@@ -291,10 +291,13 @@ const CGFloat kAnimationDuration = 0.2;
   if (!ui::MaterialDesignController::IsSecondaryUiMaterial())
     return [self arrowAnchorPointForDecoration:decoration];
 
-  // Under MD, dialogs have no arrow and anchor to corner of the location bar
+  // Under MD, dialogs have no arrow and anchor to corner of the decoration
   // frame, not a specific point within it. See http://crbug.com/566115.
-  BOOL isLeftDecoration = [[self cell] isLeftDecoration:decoration];
-  const NSRect frame = [self bounds];
+  BOOL isLeftDecoration;
+  const NSRect frame =
+      [[self cell] backgroundFrameForDecoration:decoration
+                                        inFrame:[self bounds]
+                               isLeftDecoration:&isLeftDecoration];
   NSPoint point = NSMakePoint(isLeftDecoration ? NSMinX(frame) : NSMaxX(frame),
                               NSMaxY(frame));
   return [self convertPoint:point toView:nil];

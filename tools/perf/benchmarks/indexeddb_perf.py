@@ -88,6 +88,7 @@ class _IndexedDbMeasurement(legacy_page_test.LegacyPageTest):
     power.PowerMetric.CustomizeBrowserOptions(options)
 
 
+@benchmark.Disabled('linux') # crbug.com/677972
 @benchmark.Owner(emails=['cmumford@chromium.org'])
 class IndexedDbOriginalSectioned(perf_benchmark.PerfBenchmark):
   """Chromium's IndexedDB Performance tests."""
@@ -102,6 +103,7 @@ class IndexedDbOriginalSectioned(perf_benchmark.PerfBenchmark):
     return page_sets.IndexedDBEndureStoryExpectations()
 
 
+@benchmark.Disabled('linux') # crbug.com/677972
 @benchmark.Owner(emails=['cmumford@chromium.org'])
 class IndexedDbTracing(perf_benchmark.PerfBenchmark):
   """IndexedDB Performance tests that use tracing."""

@@ -236,14 +236,12 @@ BrowserProcessImpl::BrowserProcessImpl(
   print_job_manager_.reset(new printing::PrintJobManager);
 #endif
 
-  net_log_ = base::MakeUnique<net_log::ChromeNetLog>();
-
-  if (command_line.HasSwitch(switches::kLogNetLog)) {
-    net_log_->StartWritingToFile(
-        command_line.GetSwitchValuePath(switches::kLogNetLog),
-        GetNetCaptureModeFromCommandLine(command_line),
-        command_line.GetCommandLineString(), chrome::GetChannelString());
-  }
+  base::FilePath net_log_path;
+  if (command_line.HasSwitch(switches::kLogNetLog))
+    net_log_path = command_line.GetSwitchValuePath(switches::kLogNetLog);
+  net_log_.reset(new net_log::ChromeNetLog(
+      net_log_path, GetNetCaptureModeFromCommandLine(command_line),
+      command_line.GetCommandLineString(), chrome::GetChannelString()));
 
   ChildProcessSecurityPolicy::GetInstance()->RegisterWebSafeScheme(
       chrome::kChromeSearchScheme);
@@ -442,9 +440,9 @@ RundownTaskCounter::RundownTaskCounter()
 void RundownTaskCounter::Post(base::SequencedTaskRunner* task_runner) {
   // As the count starts off at one, it should never get to zero unless
   // TimedWait has been called.
-  DCHECK(!count_.IsZero());
+  DCHECK(!base::AtomicRefCountIsZero(&count_));
 
-  count_.Increment();
+  base::AtomicRefCountInc(&count_);
 
   // The task must be non-nestable to guarantee that it runs after all tasks
   // currently scheduled on |task_runner| have completed.
@@ -453,7 +451,7 @@ void RundownTaskCounter::Post(base::SequencedTaskRunner* task_runner) {
 }
 
 void RundownTaskCounter::Decrement() {
-  if (!count_.Decrement())
+  if (!base::AtomicRefCountDec(&count_))
     waitable_event_.Signal();
 }
 
@@ -1302,11 +1300,11 @@ void BrowserProcessImpl::ApplyAllowCrossOriginAuthPromptPolicy() {
 
 void BrowserProcessImpl::ApplyMetricsReportingPolicy() {
 #if !defined(OS_ANDROID)
-  GoogleUpdateSettings::CollectStatsConsentTaskRunner()->PostTask(
-      FROM_HERE,
+  CHECK(BrowserThread::PostTask(
+      BrowserThread::FILE, FROM_HERE,
       base::BindOnce(
           base::IgnoreResult(&GoogleUpdateSettings::SetCollectStatsConsent),
-          ChromeMetricsServiceAccessor::IsMetricsAndCrashReportingEnabled()));
+          ChromeMetricsServiceAccessor::IsMetricsAndCrashReportingEnabled())));
 #endif
 }
 

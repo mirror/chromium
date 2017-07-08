@@ -500,13 +500,13 @@
                 "title": "Nokia N9",
                 "screen": {
                     "horizontal": {
-                        "width": 854,
-                        "height": 480
+                        "width": 640,
+                        "height": 360
                     },
                     "device-pixel-ratio": 1,
                     "vertical": {
-                        "width": 480,
-                        "height": 854
+                        "width": 360,
+                        "height": 640
                     }
                 },
                 "capabilities": [
@@ -717,13 +717,13 @@
                 "title": "Kindle Fire HDX",
                 "screen": {
                     "horizontal": {
-                        "width": 1280,
-                        "height": 800
+                        "width": 2560,
+                        "height": 1600
                     },
                     "device-pixel-ratio": 2,
                     "vertical": {
-                        "width": 800,
-                        "height": 1280
+                        "width": 1600,
+                        "height": 2560
                     }
                 },
                 "capabilities": [

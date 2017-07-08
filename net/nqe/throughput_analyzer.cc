@@ -263,7 +263,8 @@ bool ThroughputAnalyzer::DegradesAccuracy(const URLRequest& request) const {
 
   bool private_network_request = nqe::internal::IsPrivateHost(
       request.context()->host_resolver(),
-      HostPortPair(request.url().host(), request.url().EffectiveIntPort()));
+      HostPortPair(request.url().host(), request.url().EffectiveIntPort()),
+      net_log_);
 
   return !(use_localhost_requests_for_tests_ || !private_network_request) ||
          request.creation_time() < last_connection_change_;

@@ -12,8 +12,6 @@
 #include "base/test/scoped_task_environment.h"
 #include "components/autofill/core/browser/credit_card.h"
 #include "components/autofill/core/browser/test_personal_data_manager.h"
-#include "components/payments/core/autofill_payment_instrument.h"
-#include "components/payments/core/payment_instrument.h"
 #include "ios/chrome/browser/payments/payment_request_test_util.h"
 #include "ios/chrome/browser/payments/test_payment_request.h"
 #import "ios/chrome/browser/ui/autofill/autofill_ui_type.h"
@@ -37,15 +35,13 @@ class MockTestPersonalDataManager : public autofill::TestPersonalDataManager {
   MOCK_METHOD1(UpdateCreditCard, void(const autofill::CreditCard&));
 };
 
-class MockPaymentRequest : public payments::TestPaymentRequest {
+class MockPaymentRequest : public TestPaymentRequest {
  public:
   MockPaymentRequest(web::PaymentRequest web_payment_request,
                      autofill::PersonalDataManager* personal_data_manager)
-      : payments::TestPaymentRequest(web_payment_request,
-                                     personal_data_manager) {}
-  MOCK_METHOD1(
-      AddAutofillPaymentInstrument,
-      payments::AutofillPaymentInstrument*(const autofill::CreditCard&));
+      : TestPaymentRequest(web_payment_request, personal_data_manager) {}
+  MOCK_METHOD1(AddCreditCard,
+               autofill::CreditCard*(const autofill::CreditCard&));
 };
 
 MATCHER_P5(CreditCardMatches,
@@ -155,10 +151,10 @@ TEST_F(PaymentRequestCreditCardEditCoordinatorTest, StartAndStop) {
 }
 
 // Tests that calling the view controller delegate method which signals that the
-// user has finished creating a new payment method, causes the payment method to
-// be added to the PaymentRequest instance and the corresponding coordinator
-// delegate method to get called. The new payment method is expected to get
-// added to the PersonalDataManager if user chooses to save it locally.
+// user has finished creating a new credit card, causes the credit card to be
+// added to the PaymentRequest instance and the corresponding coordinator
+// delegate method to get called. The new credit card is expected to get added
+// to the PersonalDataManager if user chooses to save it locally.
 TEST_F(PaymentRequestCreditCardEditCoordinatorTest, DidFinishCreatingWithSave) {
   UIViewController* base_view_controller = [[UIViewController alloc] init];
   ScopedKeyWindow scoped_key_window_;
@@ -172,10 +168,9 @@ TEST_F(PaymentRequestCreditCardEditCoordinatorTest, DidFinishCreatingWithSave) {
   id delegate = [OCMockObject
       mockForProtocol:@protocol(CreditCardEditCoordinatorDelegate)];
   [[delegate expect]
-          creditCardEditCoordinator:coordinator
-      didFinishEditingPaymentMethod:static_cast<
-                                        payments::AutofillPaymentInstrument*>(
-                                        [OCMArg anyPointer])];
+       creditCardEditCoordinator:coordinator
+      didFinishEditingCreditCard:static_cast<autofill::CreditCard*>(
+                                     [OCMArg anyPointer])];
   [coordinator setDelegate:delegate];
 
   EXPECT_EQ(nil, base_view_controller.presentedViewController);
@@ -185,17 +180,17 @@ TEST_F(PaymentRequestCreditCardEditCoordinatorTest, DidFinishCreatingWithSave) {
   base::test::ios::SpinRunLoopWithMaxDelay(base::TimeDelta::FromSecondsD(1.0));
   EXPECT_NE(nil, base_view_controller.presentedViewController);
 
-  // Expect a payment method to be added to the PaymentRequest.
+  // Expect a credit card to be added to the PaymentRequest.
   EXPECT_CALL(*payment_request_,
-              AddAutofillPaymentInstrument(CreditCardMatches(
-                  "4111111111111111", "John Doe", "12", "2090", "12345")))
+              AddCreditCard(CreditCardMatches("4111111111111111", "John Doe",
+                                              "12", "2090", "12345")))
       .Times(1);
-  // Expect a payment method to be added to the PersonalDataManager.
+  // Expect a credit card to be added to the PersonalDataManager.
   EXPECT_CALL(personal_data_manager_,
               AddCreditCard(CreditCardMatches("4111111111111111", "John Doe",
                                               "12", "2090", "12345")))
       .Times(1);
-  // No payment method should get updated in the PersonalDataManager.
+  // No credit card should get updated in the PersonalDataManager.
   EXPECT_CALL(personal_data_manager_, UpdateCreditCard(_)).Times(0);
 
   // Call the controller delegate method.
@@ -214,9 +209,9 @@ TEST_F(PaymentRequestCreditCardEditCoordinatorTest, DidFinishCreatingWithSave) {
 }
 
 // Tests that calling the view controller delegate method which signals that the
-// user has finished creating a new payment method, causes the payment method to
-// be added to the PaymentRequest instance and the corresponding coordinator
-// delegate method to get called. The new payment method should not get added to
+// user has finished creating a new credit card, causes the credit card to be
+// added to the PaymentRequest instance and the corresponding coordinator
+// delegate method to get called. The new credit card should not get added to
 // the PersonalDataManager if user chooses to not to save it locally.
 TEST_F(PaymentRequestCreditCardEditCoordinatorTest, DidFinishCreatingNoSave) {
   UIViewController* base_view_controller = [[UIViewController alloc] init];
@@ -231,10 +226,9 @@ TEST_F(PaymentRequestCreditCardEditCoordinatorTest, DidFinishCreatingNoSave) {
   id delegate = [OCMockObject
       mockForProtocol:@protocol(CreditCardEditCoordinatorDelegate)];
   [[delegate expect]
-          creditCardEditCoordinator:coordinator
-      didFinishEditingPaymentMethod:static_cast<
-                                        payments::AutofillPaymentInstrument*>(
-                                        [OCMArg anyPointer])];
+       creditCardEditCoordinator:coordinator
+      didFinishEditingCreditCard:static_cast<autofill::CreditCard*>(
+                                     [OCMArg anyPointer])];
   [coordinator setDelegate:delegate];
 
   EXPECT_EQ(nil, base_view_controller.presentedViewController);
@@ -244,14 +238,14 @@ TEST_F(PaymentRequestCreditCardEditCoordinatorTest, DidFinishCreatingNoSave) {
   base::test::ios::SpinRunLoopWithMaxDelay(base::TimeDelta::FromSecondsD(1.0));
   EXPECT_NE(nil, base_view_controller.presentedViewController);
 
-  // Expect a payment method to be added to the PaymentRequest.
+  // Expect a credit card to be added to the PaymentRequest.
   EXPECT_CALL(*payment_request_,
-              AddAutofillPaymentInstrument(CreditCardMatches(
-                  "4111111111111111", "John Doe", "12", "2090", "12345")))
+              AddCreditCard(CreditCardMatches("4111111111111111", "John Doe",
+                                              "12", "2090", "12345")))
       .Times(1);
-  // No payment method should get added to the PersonalDataManager.
+  // No credit card should get added to the PersonalDataManager.
   EXPECT_CALL(personal_data_manager_, AddCreditCard(_)).Times(0);
-  // No payment method should get updated in the PersonalDataManager.
+  // No credit card should get updated in the PersonalDataManager.
   EXPECT_CALL(personal_data_manager_, UpdateCreditCard(_)).Times(0);
 
   // Call the controller delegate method.
@@ -270,9 +264,9 @@ TEST_F(PaymentRequestCreditCardEditCoordinatorTest, DidFinishCreatingNoSave) {
 }
 
 // Tests that calling the view controller delegate method which signals that the
-// user has finished editing a payment method, causes the corresponding
-// coordinator delegate method to get called. The payment method should not get
-// re-added to the PaymentRequest nor the PersonalDataManager.
+// user has finished editing a credit card, causes the corresponding coordinator
+// delegate method to get called. The credit card should not get re-added to the
+// PaymentRequest nor the PersonalDataManager.
 TEST_F(PaymentRequestCreditCardEditCoordinatorTest, DidFinishEditing) {
   UIViewController* base_view_controller = [[UIViewController alloc] init];
   ScopedKeyWindow scoped_key_window_;
@@ -282,20 +276,17 @@ TEST_F(PaymentRequestCreditCardEditCoordinatorTest, DidFinishEditing) {
       initWithBaseViewController:base_view_controller];
   [coordinator setPaymentRequest:payment_request_.get()];
 
-  // Set the payment method to be edited.
+  // Set the credit card to be edited.
   autofill::CreditCard credit_card;
-  payments::AutofillPaymentInstrument payment_method(
-      "", credit_card, false, payment_request_->billing_profiles(), "", nil);
-  [coordinator setPaymentMethod:&payment_method];
+  [coordinator setCreditCard:&credit_card];
 
   // Mock the coordinator delegate.
   id delegate = [OCMockObject
       mockForProtocol:@protocol(CreditCardEditCoordinatorDelegate)];
   [[delegate expect]
-          creditCardEditCoordinator:coordinator
-      didFinishEditingPaymentMethod:static_cast<
-                                        payments::AutofillPaymentInstrument*>(
-                                        [OCMArg anyPointer])];
+       creditCardEditCoordinator:coordinator
+      didFinishEditingCreditCard:static_cast<autofill::CreditCard*>(
+                                     [OCMArg anyPointer])];
   [coordinator setDelegate:delegate];
 
   EXPECT_EQ(nil, base_view_controller.presentedViewController);
@@ -305,11 +296,11 @@ TEST_F(PaymentRequestCreditCardEditCoordinatorTest, DidFinishEditing) {
   base::test::ios::SpinRunLoopWithMaxDelay(base::TimeDelta::FromSecondsD(1.0));
   EXPECT_NE(nil, base_view_controller.presentedViewController);
 
-  // No payment method should get added to the PaymentRequest.
-  EXPECT_CALL(*payment_request_, AddAutofillPaymentInstrument(_)).Times(0);
-  // No payment method should get added to the PersonalDataManager.
+  // No credit card should get added to the PaymentRequest.
+  EXPECT_CALL(*payment_request_, AddCreditCard(_)).Times(0);
+  // No credit card should get added to the PersonalDataManager.
   EXPECT_CALL(personal_data_manager_, AddCreditCard(_)).Times(0);
-  // Expect a payment method to be updated in the PersonalDataManager.
+  // Expect a credit card to be updated in the PersonalDataManager.
   EXPECT_CALL(personal_data_manager_,
               UpdateCreditCard(CreditCardMatches("4111111111111111", "John Doe",
                                                  "12", "2090", "12345")))
@@ -331,7 +322,7 @@ TEST_F(PaymentRequestCreditCardEditCoordinatorTest, DidFinishEditing) {
 }
 
 // Tests that calling the view controller delegate method which signals that the
-// user has chosen to cancel creating/editing a payment method, causes the
+// user has chosen to cancel creating/editing a credit card, causes the
 // corresponding coordinator delegate method to get called.
 TEST_F(PaymentRequestCreditCardEditCoordinatorTest, DidCancel) {
   UIViewController* base_view_controller = [[UIViewController alloc] init];

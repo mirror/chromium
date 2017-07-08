@@ -1,7 +1,6 @@
 // Copyright 2014 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
-
 /**
  * @unrestricted
  * @implements {SDK.SDKModelObserver<!SDK.DebuggerModel>}
@@ -382,6 +381,9 @@ Bindings.DebuggerWorkspaceBinding.Location = class extends Bindings.LiveLocation
   }
 };
 
+/**
+ * @unrestricted
+ */
 Bindings.DebuggerWorkspaceBinding.StackTraceTopFrameLocation = class extends Bindings.LiveLocationWithPool {
   /**
    * @param {!Array<!SDK.DebuggerModel.Location>} rawLocations
@@ -391,10 +393,12 @@ Bindings.DebuggerWorkspaceBinding.StackTraceTopFrameLocation = class extends Bin
    */
   constructor(rawLocations, binding, updateDelegate, locationPool) {
     super(updateDelegate, locationPool);
+
     this._updateScheduled = true;
-    this._current = null;
-    this._locations = rawLocations.map(
-        location => binding.createLiveLocation(location, this._scheduleUpdate.bind(this), locationPool));
+    /** @type {!Set<!Bindings.LiveLocation>} */
+    this._locations = new Set();
+    for (var location of rawLocations)
+      this._locations.add(binding.createLiveLocation(location, this._scheduleUpdate.bind(this), locationPool));
     this._updateLocation();
   }
 
@@ -421,22 +425,24 @@ Bindings.DebuggerWorkspaceBinding.StackTraceTopFrameLocation = class extends Bin
     super.dispose();
     for (var location of this._locations)
       location.dispose();
-    this._locations = null;
-    this._current = null;
   }
 
   _scheduleUpdate() {
-    if (this._updateScheduled)
-      return;
-    this._updateScheduled = true;
-    setImmediate(this._updateLocation.bind(this));
+    if (!this._updateScheduled) {
+      this._updateScheduled = true;
+      setImmediate(this._updateLocation.bind(this));
+    }
   }
 
   _updateLocation() {
     this._updateScheduled = false;
-    if (!this._locations)
-      return;
-    this._current = this._locations.find(location => !location.isBlackboxed()) || this._locations[0];
+    this._current = this._locations.values().next().value;
+    for (var current of this._locations) {
+      if (!current.isBlackboxed()) {
+        this._current = current;
+        break;
+      }
+    }
     this.update();
   }
 };

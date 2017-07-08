@@ -35,7 +35,6 @@
 #include "content/public/common/service_manager_connection.h"
 #include "content/public/common/service_names.mojom.h"
 #include "media/mojo/features.h"
-#include "media/mojo/interfaces/constants.mojom.h"
 #include "mojo/edk/embedder/embedder.h"
 #include "mojo/edk/embedder/incoming_broker_client_invitation.h"
 #include "services/catalog/manifest_provider.h"
@@ -372,8 +371,9 @@ ServiceManagerContext::ServiceManagerContext() {
   // TODO(xhwang): This is only used for test/experiment for now so it's okay
   // to run it in an unsandboxed utility process. Fix CDM loading so that we can
   // run it in the sandboxed utility process. See http://crbug.com/510604
-  unsandboxed_services.insert(std::make_pair(
-      media::mojom::kMediaServiceName, base::ASCIIToUTF16("Media Service")));
+  // TODO(xhwang): Replace the service name "media" with a constant string.
+  unsandboxed_services.insert(
+      std::make_pair("media", base::ASCIIToUTF16("Media Service")));
 #endif
 
   for (const auto& service : unsandboxed_services) {
@@ -384,8 +384,7 @@ ServiceManagerContext::ServiceManagerContext() {
 
 #if BUILDFLAG(ENABLE_MOJO_MEDIA_IN_GPU_PROCESS)
   packaged_services_connection_->AddServiceRequestHandler(
-      media::mojom::kMediaServiceName,
-      base::Bind(&StartServiceInGpuProcess, media::mojom::kMediaServiceName));
+      "media", base::Bind(&StartServiceInGpuProcess, "media"));
 #endif
 
   packaged_services_connection_->AddServiceRequestHandler(

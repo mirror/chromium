@@ -48,10 +48,18 @@ class CONTENT_EXPORT MediaStreamVideoCapturerSource
   void RequestRefreshFrame() override;
   void OnHasConsumers(bool has_consumers) override;
   void OnCapturingLinkSecured(bool is_secure) override;
+  void GetCurrentSupportedFormats(
+      int max_requested_width,
+      int max_requested_height,
+      double max_requested_frame_rate,
+      const VideoCaptureDeviceFormatsCB& callback) override;
   void StartSourceImpl(
+      const media::VideoCaptureFormat& format,
+      const blink::WebMediaConstraints& constraints,
       const VideoCaptureDeliverFrameCB& frame_callback) override;
   void StopSourceImpl() override;
-  base::Optional<media::VideoCaptureFormat> GetCurrentFormat() const override;
+  base::Optional<media::VideoCaptureFormat> GetCurrentFormatImpl()
+      const override;
 
   // RenderFrameObserver implementation.
   void OnDestruct() final {}

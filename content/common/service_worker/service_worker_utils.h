@@ -12,7 +12,6 @@
 #include "content/common/service_worker/service_worker_types.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/resource_type.h"
-#include "content/public/common/service_worker_modes.h"
 #include "url/gurl.h"
 
 namespace content {
@@ -43,7 +42,7 @@ class ServiceWorkerUtils {
                                           const GURL& script_url,
                                           std::string* error_message);
 
-  static bool IsScriptStreamingEnabled();
+  static bool IsMojoForServiceWorkerEnabled();
 
   // Returns true if all members of |urls| have the same origin, and
   // OriginCanAccessServiceWorkers is true for this origin.

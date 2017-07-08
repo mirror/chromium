@@ -59,8 +59,8 @@ AwSafeBrowsingBlockingPage::AwSafeBrowsingBlockingPage(
     threat_details_in_progress_ =
         aw_browser_context->GetSafeBrowsingTriggerManager()
             ->StartCollectingThreatDetails(
-                safe_browsing::TriggerType::SECURITY_INTERSTITIAL, web_contents,
-                unsafe_resources[0],
+                safe_browsing::SafeBrowsingTriggerType::SECURITY_INTERSTITIAL,
+                web_contents, unsafe_resources[0],
                 aw_browser_context->GetAwURLRequestContext(),
                 /*history_service*/ nullptr,
                 sb_error_ui()->get_error_display_options());
@@ -70,8 +70,7 @@ AwSafeBrowsingBlockingPage::AwSafeBrowsingBlockingPage(
 // static
 void AwSafeBrowsingBlockingPage::ShowBlockingPage(
     AwSafeBrowsingUIManager* ui_manager,
-    const UnsafeResource& unsafe_resource,
-    bool extended_reporting_allowed) {
+    const UnsafeResource& unsafe_resource) {
   DVLOG(1) << __func__ << " " << unsafe_resource.url.spec();
   WebContents* web_contents = unsafe_resource.web_contents_getter.Run();
 
@@ -89,12 +88,13 @@ void AwSafeBrowsingBlockingPage::ShowBlockingPage(
     const UnsafeResourceList unsafe_resources{unsafe_resource};
     BaseSafeBrowsingErrorUI::SBErrorDisplayOptions display_options =
         BaseSafeBrowsingErrorUI::SBErrorDisplayOptions(
-            IsMainPageLoadBlocked(unsafe_resources), extended_reporting_allowed,
-            false,                    // is_off_the_record
-            false,                    // is_extended_reporting
-            false,                    // is_scout
-            false,                    // kSafeBrowsingProceedAnywayDisabled
-            false,                    // should_open_links_in_new_tab
+            IsMainPageLoadBlocked(unsafe_resources),
+            false,  // kSafeBrowsingExtendedReportingOptInAllowed
+            false,  // is_off_the_record
+            false,  // is_extended_reporting
+            false,  // is_scout
+            false,  // kSafeBrowsingProceedAnywayDisabled
+            false,  // should_open_links_in_new_tab
             "cpn_safe_browsing_wv");  // help_center_article_link
 
     ErrorUiType errorType =
@@ -121,11 +121,12 @@ void AwSafeBrowsingBlockingPage::FinishThreatDetails(
   // to send the report.
   AwBrowserContext* aw_browser_context =
       AwBrowserContext::FromWebContents(web_contents());
-  bool report_sent = aw_browser_context->GetSafeBrowsingTriggerManager()
-                         ->FinishCollectingThreatDetails(
-                             safe_browsing::TriggerType::SECURITY_INTERSTITIAL,
-                             web_contents(), delay, did_proceed, num_visits,
-                             sb_error_ui()->get_error_display_options());
+  bool report_sent =
+      aw_browser_context->GetSafeBrowsingTriggerManager()
+          ->FinishCollectingThreatDetails(
+              safe_browsing::SafeBrowsingTriggerType::SECURITY_INTERSTITIAL,
+              web_contents(), delay, did_proceed, num_visits,
+              sb_error_ui()->get_error_display_options());
 
   if (report_sent) {
     controller()->metrics_helper()->RecordUserInteraction(

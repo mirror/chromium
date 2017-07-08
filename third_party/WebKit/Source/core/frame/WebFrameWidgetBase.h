@@ -17,8 +17,9 @@
 
 namespace blink {
 
+class AnimationWorkletProxyClient;
 class CompositorAnimationHost;
-class CompositorMutatorImpl;
+class CompositorWorkerProxyClient;
 class GraphicsLayer;
 class WebImage;
 class WebLayer;
@@ -35,8 +36,8 @@ class CORE_EXPORT WebFrameWidgetBase
 
   virtual bool ForSubframe() const = 0;
   virtual void ScheduleAnimation() = 0;
-  virtual CompositorMutatorImpl* CompositorMutator() = 0;
-
+  virtual CompositorWorkerProxyClient* CreateCompositorWorkerProxyClient() = 0;
+  virtual AnimationWorkletProxyClient* CreateAnimationWorkletProxyClient() = 0;
   virtual WebWidgetClient* Client() const = 0;
 
   // Sets the root graphics layer. |GraphicsLayer| can be null when detaching

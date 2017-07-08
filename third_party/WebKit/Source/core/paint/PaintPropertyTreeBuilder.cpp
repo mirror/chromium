@@ -979,11 +979,7 @@ void PaintPropertyTreeBuilder::UpdateScrollAndScrollTranslation(
       auto* scrollable_area = box.GetScrollableArea();
       IntSize scroll_offset = box.ScrolledContentOffset();
 
-      auto clip_rect = box.OverflowClipRect(context.current.paint_offset);
-      // The container bounds are snapped to integers to match the equivalent
-      // bounds on cc::ScrollNode.
-      IntSize container_bounds = PixelSnappedIntRect(clip_rect).Size();
-
+      IntSize scroll_clip = scrollable_area->VisibleContentRect().Size();
       IntSize scroll_bounds = scrollable_area->ContentsSize();
       bool user_scrollable_horizontal =
           scrollable_area->UserInputScrollable(kHorizontalScrollbar);
@@ -1011,7 +1007,7 @@ void PaintPropertyTreeBuilder::UpdateScrollAndScrollTranslation(
           CompositorElementIdFromLayoutObjectId(
               object.UniqueId(),
               CompositorElementIdNamespace::kScrollTranslation),
-          context.current.scroll, container_bounds, scroll_bounds,
+          context.current.scroll, scroll_clip, scroll_bounds,
           user_scrollable_horizontal, user_scrollable_vertical, reasons,
           scrollable_area);
       force_subtree_update |= result.NewNodeCreated();

@@ -21,6 +21,7 @@
 #include "content/common/service_worker/embedded_worker_settings.h"
 #include "content/common/service_worker/embedded_worker_start_params.h"
 #include "content/common/service_worker/service_worker_types.h"
+#include "content/common/service_worker/service_worker_utils.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/render_process_host.h"
@@ -108,8 +109,10 @@ void CallDetach(EmbeddedWorkerInstance* instance) {
   // This could be called on the UI thread if |client_| still be valid when the
   // message loop on the UI thread gets destructed.
   // TODO(shimazu): Remove this after https://crbug.com/604762 is fixed
-  if (!BrowserThread::CurrentlyOn(BrowserThread::IO))
+  if (!BrowserThread::CurrentlyOn(BrowserThread::IO)) {
+    DCHECK(ServiceWorkerUtils::IsMojoForServiceWorkerEnabled());
     return;
+  }
   instance->Detach();
 }
 

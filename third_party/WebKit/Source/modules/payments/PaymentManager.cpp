@@ -47,7 +47,8 @@ PaymentManager::PaymentManager(ServiceWorkerRegistration* registration)
       frame->GetInterfaceProvider()->GetInterface(std::move(request));
   } else if (context && context->IsWorkerGlobalScope()) {
     WorkerThread* thread = ToWorkerGlobalScope(context)->GetThread();
-    thread->GetInterfaceProvider().GetInterface(std::move(request));
+    if (thread)
+      thread->GetInterfaceProvider()->GetInterface(std::move(request));
   }
 
   manager_.set_connection_error_handler(ConvertToBaseCallback(WTF::Bind(

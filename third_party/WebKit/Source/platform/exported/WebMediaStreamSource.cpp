@@ -31,8 +31,6 @@
 #include "public/platform/WebMediaStreamSource.h"
 
 #include <memory>
-#include <utility>
-
 #include "platform/audio/AudioBus.h"
 #include "platform/mediastream/MediaStreamSource.h"
 #include "platform/wtf/PtrUtil.h"
@@ -152,11 +150,6 @@ void WebMediaStreamSource::SetExtraData(ExtraData* extra_data) {
 
   private_->SetExtraData(
       WTF::WrapUnique(new ExtraDataContainer(WTF::WrapUnique(extra_data))));
-}
-
-void WebMediaStreamSource::SetEchoCancellation(bool echo_cancellation) {
-  DCHECK(!private_.IsNull());
-  private_->SetEchoCancellation(echo_cancellation);
 }
 
 WebMediaConstraints WebMediaStreamSource::Constraints() {

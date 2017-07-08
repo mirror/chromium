@@ -124,9 +124,10 @@ class JumpList : public sessions::TabRestoreServiceObserver,
   // quiet period, thus avoiding update storms.
   void InitializeTimerForUpdate();
 
-  // Processes update notifications. Calls APIs ProcessTopSitesNotification and
-  // ProcessTabRestoreNotification on demand to do the actual work.
-  void ProcessNotifications();
+  // Called on a timer after requests storms have subsided. Calls APIs
+  // ProcessTopSitesNotification and ProcessTabRestoreNotification on
+  // demand to do the actual work.
+  void OnDelayTimer();
 
   // Processes notifications from TopSites service.
   void ProcessTopSitesNotification();
@@ -280,9 +281,6 @@ class JumpList : public sessions::TabRestoreServiceObserver,
 
   // A flag indicating if a session has at least one tab closed.
   bool has_tab_closed_ = false;
-
-  // A flag indicating if a session has at least one top sites sync.
-  bool has_topsites_sync = false;
 
   // Number of updates to skip to alleviate the machine when a previous update
   // was too slow. Updates will be resumed when this reaches 0 again.

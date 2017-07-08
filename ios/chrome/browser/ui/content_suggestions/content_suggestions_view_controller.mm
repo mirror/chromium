@@ -195,7 +195,6 @@ BOOL ShouldCellsBeFullWidth(UITraitCollection* collection) {
 - (void)viewWillTransitionToSize:(CGSize)size
        withTransitionCoordinator:
            (id<UIViewControllerTransitionCoordinator>)coordinator {
-  [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
   // Change the margin, in case -willTransitionToTraitCollection: is called
   // after this method.
   self.cardStyleMargin = MAX(0, (size.width - kMaxCardWidth) / 2);
@@ -210,8 +209,6 @@ BOOL ShouldCellsBeFullWidth(UITraitCollection* collection) {
 - (void)willTransitionToTraitCollection:(UITraitCollection*)newCollection
               withTransitionCoordinator:
                   (id<UIViewControllerTransitionCoordinator>)coordinator {
-  [super willTransitionToTraitCollection:newCollection
-               withTransitionCoordinator:coordinator];
   if (ShouldCellsBeFullWidth(newCollection)) {
     self.collectionView.contentInset = UIEdgeInsetsZero;
     self.styler.cellStyle = MDCCollectionViewCellStyleGrouped;

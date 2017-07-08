@@ -17,10 +17,6 @@
 #include "components/os_crypt/key_storage_linux.h"
 #endif  // defined(OS_LINUX) && !defined(OS_CHROMEOS)
 
-namespace base {
-class FilePath;
-}
-
 // The OSCrypt class gives access to simple encryption and decryption of
 // strings. Note that on Mac, access to the system Keychain is required and
 // these calls can block the current thread to collect user input. The same is
@@ -42,13 +38,6 @@ class OSCrypt {
   // this when we stop supporting keyring.
   static void SetMainThreadRunner(
       scoped_refptr<base::SingleThreadTaskRunner> main_thread_runner);
-
-  // Enable the feature where we determine if we should try a backend via a
-  // preference file.
-  static void ShouldUsePreference(bool should_use_preference);
-
-  // Set the folder, where OSCrypt will check for its preference file.
-  static void SetUserDataPath(const base::FilePath& path);
 
   // Returns true iff the real secret key (not hardcoded one) is available.
   static bool IsEncryptionAvailable();

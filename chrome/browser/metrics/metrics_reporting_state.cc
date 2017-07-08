@@ -6,7 +6,6 @@
 
 #include "base/callback.h"
 #include "base/metrics/histogram_macros.h"
-#include "base/task_runner_util.h"
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/metrics/chrome_metrics_service_accessor.h"
@@ -96,8 +95,10 @@ void ChangeMetricsReportingStateWithReply(
     return;
   }
 #endif
-  base::PostTaskAndReplyWithResult(
-      GoogleUpdateSettings::CollectStatsConsentTaskRunner(), FROM_HERE,
+  // Posts to FILE thread as SetGoogleUpdateSettings does IO operations.
+  content::BrowserThread::PostTaskAndReplyWithResult(
+      content::BrowserThread::FILE,
+      FROM_HERE,
       base::Bind(&SetGoogleUpdateSettings, enabled),
       base::Bind(&SetMetricsReporting, enabled, callback_fn));
 }

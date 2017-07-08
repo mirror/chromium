@@ -37,7 +37,6 @@
 #include "components/prefs/pref_service.h"
 #include "components/signin/core/browser/signin_manager.h"
 #include "components/signin/core/browser/signin_metrics.h"
-#include "components/signin/core/common/profile_management_switches.h"
 #include "components/sync/base/sync_prefs.h"
 #include "net/base/url_util.h"
 #include "net/url_request/url_request_context_getter.h"
@@ -99,7 +98,6 @@ OneClickSigninSyncStarter::OneClickSigninSyncStarter(
   BrowserList::AddObserver(this);
   Initialize(profile, browser);
 
-  DCHECK(!refresh_token.empty() || switches::IsAccountConsistencyDiceEnabled());
   SigninManagerFactory::GetForProfile(profile_)->StartSignInWithRefreshToken(
       refresh_token, gaia_id, email, password,
       base::Bind(&OneClickSigninSyncStarter::ConfirmSignin,
@@ -143,6 +141,7 @@ void OneClickSigninSyncStarter::Initialize(Profile* profile, Browser* browser) {
 
 void OneClickSigninSyncStarter::ConfirmSignin(ProfileMode profile_mode,
                                               const std::string& oauth_token) {
+  DCHECK(!oauth_token.empty());
   SigninManager* signin = SigninManagerFactory::GetForProfile(profile_);
   if (signin->IsAuthenticated()) {
     // The user is already signed in - just tell SigninManager to continue
@@ -159,19 +158,10 @@ void OneClickSigninSyncStarter::ConfirmSignin(ProfileMode profile_mode,
       // initialized.
       policy::UserPolicySigninService* policy_service =
           policy::UserPolicySigninServiceFactory::GetForProfile(profile_);
-      if (oauth_token.empty()) {
-        DCHECK(switches::IsAccountConsistencyDiceEnabled());
-        policy_service->RegisterForPolicyWithAccountId(
-            signin->GetUsernameForAuthInProgress(),
-            signin->GetAccountIdForAuthInProgress(),
-            base::Bind(&OneClickSigninSyncStarter::OnRegisteredForPolicy,
-                       weak_pointer_factory_.GetWeakPtr()));
-      } else {
-        policy_service->RegisterForPolicyWithLoginToken(
-            signin->GetUsernameForAuthInProgress(), oauth_token,
-            base::Bind(&OneClickSigninSyncStarter::OnRegisteredForPolicy,
-                       weak_pointer_factory_.GetWeakPtr()));
-      }
+      policy_service->RegisterForPolicy(
+          signin->GetUsernameForAuthInProgress(), oauth_token,
+          base::Bind(&OneClickSigninSyncStarter::OnRegisteredForPolicy,
+                     weak_pointer_factory_.GetWeakPtr()));
       break;
     }
     case NEW_PROFILE:

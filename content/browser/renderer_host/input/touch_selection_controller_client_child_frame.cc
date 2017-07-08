@@ -86,10 +86,9 @@ void TouchSelectionControllerClientChildFrame::SetNeedsAnimate() {
 
 void TouchSelectionControllerClientChildFrame::MoveCaret(
     const gfx::PointF& position) {
-  RenderWidgetHostDelegate* host_delegate =
-      RenderWidgetHostImpl::From(rwhv_->GetRenderWidgetHost())->delegate();
-  if (host_delegate)
-    host_delegate->MoveCaret(ConvertFromRoot(position));
+  RenderWidgetHostImpl* host =
+      RenderWidgetHostImpl::From(rwhv_->GetRenderWidgetHost());
+  host->MoveCaret(ConvertFromRoot(position));
 }
 
 void TouchSelectionControllerClientChildFrame::MoveRangeSelectionExtent(

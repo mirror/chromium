@@ -18,13 +18,11 @@ namespace blink {
 PerformanceNavigationTiming::PerformanceNavigationTiming(
     LocalFrame* frame,
     ResourceTimingInfo* info,
-    double time_origin,
-    PerformanceServerTimingVector& serverTiming)
+    double time_origin)
     : PerformanceResourceTiming(info ? info->InitialURL().GetString() : "",
                                 "navigation",
                                 0.0,
-                                0.0,
-                                serverTiming),
+                                0.0),
       ContextClient(frame),
       time_origin_(time_origin),
       resource_timing_info_(info) {
@@ -36,7 +34,7 @@ PerformanceNavigationTiming::~PerformanceNavigationTiming() {}
 
 DEFINE_TRACE(PerformanceNavigationTiming) {
   ContextClient::Trace(visitor);
-  PerformanceResourceTiming::Trace(visitor);
+  PerformanceEntry::Trace(visitor);
 }
 
 DocumentLoadTiming* PerformanceNavigationTiming::GetDocumentLoadTiming() const {
@@ -266,9 +264,8 @@ DOMHighResTimeStamp PerformanceNavigationTiming::duration() const {
 }
 
 void PerformanceNavigationTiming::BuildJSONValue(
-    ScriptState* script_state,
     V8ObjectBuilder& builder) const {
-  PerformanceResourceTiming::BuildJSONValue(script_state, builder);
+  PerformanceResourceTiming::BuildJSONValue(builder);
   builder.AddNumber("unloadEventStart", unloadEventStart());
   builder.AddNumber("unloadEventEnd", unloadEventEnd());
   builder.AddNumber("domInteractive", domInteractive());

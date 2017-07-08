@@ -11,7 +11,6 @@
 #include "components/cryptauth/cryptauth_api_call_flow.h"
 #include "components/cryptauth/cryptauth_client.h"
 #include "components/cryptauth/proto/cryptauth_api.pb.h"
-#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/url_request/url_request_context_getter.h"
 
 class OAuth2TokenService;
@@ -40,18 +39,15 @@ class CryptAuthClientImpl : public CryptAuthClient {
   // CryptAuthClient:
   void GetMyDevices(const GetMyDevicesRequest& request,
                     const GetMyDevicesCallback& callback,
-                    const ErrorCallback& error_callback,
-                    const net::PartialNetworkTrafficAnnotationTag&
-                        partial_traffic_annotation) override;
+                    const ErrorCallback& error_callback) override;
   void FindEligibleUnlockDevices(
       const FindEligibleUnlockDevicesRequest& request,
       const FindEligibleUnlockDevicesCallback& callback,
       const ErrorCallback& error_callback) override;
-  void SendDeviceSyncTickle(const SendDeviceSyncTickleRequest& request,
-                            const SendDeviceSyncTickleCallback& callback,
-                            const ErrorCallback& error_callback,
-                            const net::PartialNetworkTrafficAnnotationTag&
-                                partial_traffic_annotation) override;
+  void SendDeviceSyncTickle(
+      const SendDeviceSyncTickleRequest& request,
+      const SendDeviceSyncTickleCallback& callback,
+      const ErrorCallback& error_callback) override;
   void ToggleEasyUnlock(const ToggleEasyUnlockRequest& request,
                         const ToggleEasyUnlockCallback& callback,
                         const ErrorCallback& error_callback) override;
@@ -72,9 +68,7 @@ class CryptAuthClientImpl : public CryptAuthClient {
       const std::string& request_path,
       const RequestProto& request_proto,
       const base::Callback<void(const ResponseProto&)>& response_callback,
-      const ErrorCallback& error_callback,
-      const net::PartialNetworkTrafficAnnotationTag&
-          partial_traffic_annotation);
+      const ErrorCallback& error_callback);
 
   // Called when the access token is obtained so the API request can be made.
   template <class ResponseProto>

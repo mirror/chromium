@@ -121,8 +121,7 @@ class ExtensionInfoGeneratorUnitTest : public ExtensionServiceTestBase {
 
   const scoped_refptr<const Extension> CreateExtension(
       const std::string& name,
-      std::unique_ptr<base::ListValue> permissions,
-      Manifest::Location location) {
+      std::unique_ptr<base::ListValue> permissions) {
     const std::string kId = crx_file::id_util::GenerateId(name);
     scoped_refptr<const Extension> extension =
         ExtensionBuilder()
@@ -133,7 +132,7 @@ class ExtensionInfoGeneratorUnitTest : public ExtensionServiceTestBase {
                              .Set("version", "1.0.0")
                              .Set("permissions", std::move(permissions))
                              .Build())
-            .SetLocation(location)
+            .SetLocation(Manifest::INTERNAL)
             .SetID(kId)
             .Build();
 
@@ -384,10 +383,9 @@ TEST_F(ExtensionInfoGeneratorUnitTest, ExtensionInfoRunOnAllUrls) {
                                         true));
   // Two extensions - one with all urls, one without.
   scoped_refptr<const Extension> all_urls_extension = CreateExtension(
-      "all_urls", ListBuilder().Append(kAllHostsPermission).Build(),
-      Manifest::INTERNAL);
+      "all_urls", ListBuilder().Append(kAllHostsPermission).Build());
   scoped_refptr<const Extension> no_urls_extension =
-      CreateExtension("no urls", ListBuilder().Build(), Manifest::INTERNAL);
+      CreateExtension("no urls", ListBuilder().Build());
 
   std::unique_ptr<developer::ExtensionInfo> info =
       GenerateExtensionInfo(all_urls_extension->id());
@@ -433,8 +431,7 @@ TEST_F(ExtensionInfoGeneratorUnitTest, ExtensionInfoRunOnAllUrls) {
 
   // Load another extension with all urls (so permissions get re-init'd).
   all_urls_extension = CreateExtension(
-      "all_urls_II", ListBuilder().Append(kAllHostsPermission).Build(),
-      Manifest::INTERNAL);
+      "all_urls_II", ListBuilder().Append(kAllHostsPermission).Build());
 
   // Even though the extension has all_urls permission, the checkbox shouldn't
   // show up without the switch.
@@ -443,30 +440,12 @@ TEST_F(ExtensionInfoGeneratorUnitTest, ExtensionInfoRunOnAllUrls) {
   EXPECT_TRUE(info->run_on_all_urls.is_active);
 }
 
-// Test that file:// access checkbox does not show up when the user can't
-// modify an extension's settings. https://crbug.com/173640.
-TEST_F(ExtensionInfoGeneratorUnitTest, ExtensionInfoLockedAllUrls) {
-  // Force installed extensions aren't user modifyable.
-  scoped_refptr<const Extension> locked_extension =
-      CreateExtension("locked", ListBuilder().Append("file://*/*").Build(),
-                      Manifest::EXTERNAL_POLICY_DOWNLOAD);
-
-  std::unique_ptr<developer::ExtensionInfo> info =
-      GenerateExtensionInfo(locked_extension->id());
-
-  // Extension wants file:// access but the checkbox will not appear
-  // in chrome://extensions.
-  EXPECT_TRUE(locked_extension->wants_file_access());
-  EXPECT_FALSE(info->file_access.is_enabled);
-  EXPECT_FALSE(info->file_access.is_active);
-}
-
 // Tests that blacklisted extensions are returned by the ExtensionInfoGenerator.
 TEST_F(ExtensionInfoGeneratorUnitTest, Blacklisted) {
-  const scoped_refptr<const Extension> extension1 = CreateExtension(
-      "test1", base::WrapUnique(new base::ListValue()), Manifest::INTERNAL);
-  const scoped_refptr<const Extension> extension2 = CreateExtension(
-      "test2", base::WrapUnique(new base::ListValue()), Manifest::INTERNAL);
+  const scoped_refptr<const Extension> extension1 =
+      CreateExtension("test1", base::WrapUnique(new base::ListValue()));
+  const scoped_refptr<const Extension> extension2 =
+      CreateExtension("test2", base::WrapUnique(new base::ListValue()));
 
   std::string id1 = extension1->id();
   std::string id2 = extension2->id();

@@ -214,6 +214,16 @@ class CORE_EXPORT EmptyChromeClient : public ChromeClient {
 
   String AcceptLanguages() override;
 
+  CompositorWorkerProxyClient* CreateCompositorWorkerProxyClient(
+      LocalFrame*) override {
+    return nullptr;
+  }
+
+  AnimationWorkletProxyClient* CreateAnimationWorkletProxyClient(
+      LocalFrame*) override {
+    return nullptr;
+  }
+
   void RegisterPopupOpeningObserver(PopupOpeningObserver*) override {}
   void UnregisterPopupOpeningObserver(PopupOpeningObserver*) override {}
   void NotifyPopupOpeningObservers() const {}

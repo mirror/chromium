@@ -391,7 +391,7 @@ void TestRunnerForSpecificView::EnableUseZoomForDSF(
 void TestRunnerForSpecificView::SetColorProfile(
     const std::string& name,
     v8::Local<v8::Function> callback) {
-  delegate()->SetDeviceColorSpace(name);
+  delegate()->SetDeviceColorProfile(name);
   PostV8Callback(callback);
 }
 

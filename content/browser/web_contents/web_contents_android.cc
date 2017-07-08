@@ -415,10 +415,11 @@ void WebContentsAndroid::UpdateBrowserControlsState(
 void WebContentsAndroid::ScrollFocusedEditableNodeIntoView(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj) {
-  RenderFrameHostImpl* frame = web_contents_->GetFocusedFrame();
-  if (!frame)
+  RenderViewHost* host = web_contents_->GetRenderViewHost();
+  if (!host)
     return;
-  frame->GetFrameInputHandler()->ScrollFocusedEditableNodeIntoRect(gfx::Rect());
+  host->Send(new InputMsg_ScrollFocusedEditableNodeIntoRect(
+      host->GetRoutingID(), gfx::Rect()));
 }
 
 void WebContentsAndroid::SelectWordAroundCaret(

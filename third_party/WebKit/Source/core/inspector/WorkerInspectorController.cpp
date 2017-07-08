@@ -76,7 +76,7 @@ void WorkerInspectorController::ConnectFrontend(int session_id) {
       new InspectorLogAgent(thread_->GetConsoleMessageStorage(), nullptr));
   if (thread_->GlobalScope()->IsWorkerGlobalScope() &&
       RuntimeEnabledFeatures::OffMainThreadFetchEnabled()) {
-    DCHECK(ToWorkerGlobalScope(thread_->GlobalScope())->GetResourceFetcher());
+    DCHECK(ToWorkerGlobalScope(thread_->GlobalScope())->GetFetchContext());
     session->Append(InspectorNetworkAgent::CreateForWorker(
         ToWorkerGlobalScope(thread_->GlobalScope())));
   }

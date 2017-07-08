@@ -10,7 +10,6 @@
 
 #include "base/callback_forward.h"
 #include "base/macros.h"
-#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace cryptauth {
 class GetMyDevicesRequest;
@@ -46,9 +45,7 @@ class CryptAuthClient {
       GetMyDevicesCallback;
   virtual void GetMyDevices(const GetMyDevicesRequest& request,
                             const GetMyDevicesCallback& callback,
-                            const ErrorCallback& error_callback,
-                            const net::PartialNetworkTrafficAnnotationTag&
-                                partial_traffic_annotation) = 0;
+                            const ErrorCallback& error_callback) = 0;
 
   // FindEligibleUnlockDevices
   typedef base::Callback<void(
@@ -65,9 +62,7 @@ class CryptAuthClient {
   virtual void SendDeviceSyncTickle(
       const SendDeviceSyncTickleRequest& request,
       const SendDeviceSyncTickleCallback& callback,
-      const ErrorCallback& error_callback,
-      const net::PartialNetworkTrafficAnnotationTag&
-          partial_traffic_annotation) = 0;
+      const ErrorCallback& error_callback) = 0;
 
   // ToggleEasyUnlock
   typedef base::Callback<void(const ToggleEasyUnlockResponse&)>

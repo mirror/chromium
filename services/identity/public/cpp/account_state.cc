@@ -6,8 +6,7 @@
 
 namespace identity {
 
-AccountState::AccountState()
-    : has_refresh_token(false), is_primary_account(false) {}
+AccountState::AccountState() : has_refresh_token(false) {}
 
 AccountState::AccountState(const AccountState& other) = default;
 AccountState::~AccountState() {}

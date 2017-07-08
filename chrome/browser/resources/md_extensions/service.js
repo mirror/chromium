@@ -6,26 +6,22 @@ cr.define('extensions', function() {
   'use strict';
 
   /**
+   * @constructor
    * @implements {extensions.ErrorPageDelegate}
    * @implements {extensions.ItemDelegate}
    * @implements {extensions.LoadErrorDelegate}
    * @implements {extensions.PackDialogDelegate}
    * @implements {extensions.ToolbarDelegate}
    */
-  class Service {
-    constructor() {
-      /** @private {boolean} */
-      this.isDeleting_ = false;
+  function Service() {}
 
-      /** @private {extensions.Manager} */
-      this.manager_;
-
-      /** @private {Array<chrome.developerPrivate.ExtensionInfo>} */
-      this.extensions_;
-    }
+  Service.prototype = {
+    /** @private {boolean} */
+    isDeleting_: false,
 
     /** @param {extensions.Manager} manager */
-    managerReady(manager) {
+    managerReady: function(manager) {
+      /** @private {extensions.Manager} */
       this.manager_ = manager;
       this.manager_.toolbar.setDelegate(this);
       this.manager_.set('itemDelegate', this);
@@ -48,6 +44,7 @@ cr.define('extensions', function() {
       chrome.developerPrivate.getExtensionsInfo(
           {includeDisabled: true, includeTerminated: true},
           function(extensions) {
+            /** @private {Array<chrome.developerPrivate.ExtensionInfo>} */
             this.extensions_ = extensions;
             for (let extension of extensions)
               this.manager_.addItem(extension);
@@ -56,21 +53,21 @@ cr.define('extensions', function() {
           }.bind(this));
       chrome.developerPrivate.getProfileConfiguration(
           this.onProfileStateChanged_.bind(this));
-    }
+    },
 
     /**
      * @param {chrome.developerPrivate.ProfileInfo} profileInfo
      * @private
      */
-    onProfileStateChanged_(profileInfo) {
+    onProfileStateChanged_: function(profileInfo) {
       this.manager_.set('inDevMode', profileInfo.inDeveloperMode);
-    }
+    },
 
     /**
      * @param {chrome.developerPrivate.EventData} eventData
      * @private
      */
-    onItemStateChanged_(eventData) {
+    onItemStateChanged_: function(eventData) {
       var currentIndex = this.extensions_.findIndex(function(extension) {
         return extension.id == eventData.item_id;
       });
@@ -106,7 +103,7 @@ cr.define('extensions', function() {
         default:
           assertNotReached();
       }
-    }
+    },
 
     /**
      * Opens a file browser dialog for the user to select a file (or directory).
@@ -115,7 +112,7 @@ cr.define('extensions', function() {
      * @return {Promise<string>} The promise to be resolved with the selected
      *     path.
      */
-    chooseFilePath_(selectType, fileType) {
+    chooseFilePath_: function(selectType, fileType) {
       return new Promise(function(resolve, reject) {
         chrome.developerPrivate.choosePath(
             selectType, fileType, function(path) {
@@ -127,20 +124,20 @@ cr.define('extensions', function() {
               }
             });
       });
-    }
+    },
 
     /**
      * Updates an extension command.
      * @param {!CustomEvent} e
      * @private
      */
-    onExtensionCommandUpdated_(e) {
+    onExtensionCommandUpdated_: function(e) {
       chrome.developerPrivate.updateExtensionCommand({
         extensionId: e.detail.item,
         commandName: e.detail.commandName,
         keybinding: e.detail.keybinding,
       });
-    }
+    },
 
     /**
      * Called when shortcut capturing changes in order to suspend or re-enable
@@ -153,9 +150,9 @@ cr.define('extensions', function() {
      * @param {!CustomEvent} e
      * @private
      */
-    onShortcutCaptureChanged_(isCapturing, e) {
+    onShortcutCaptureChanged_: function(isCapturing, e) {
       chrome.developerPrivate.setShortcutHandlingSuspended(isCapturing);
-    }
+    },
 
     /**
      * Attempts to load an unpacked extension, optionally as another attempt at
@@ -163,7 +160,7 @@ cr.define('extensions', function() {
      * @param {string=} opt_retryGuid
      * @private
      */
-    loadUnpackedHelper_(opt_retryGuid) {
+    loadUnpackedHelper_: function(opt_retryGuid) {
       chrome.developerPrivate.loadUnpacked(
           {failQuietly: true, populateError: true, retryGuid: opt_retryGuid},
           (loadError) => {
@@ -177,10 +174,10 @@ cr.define('extensions', function() {
               this.manager_.loadError.show();
             }
           });
-    }
+    },
 
     /** @override */
-    deleteItem(id) {
+    deleteItem: function(id) {
       if (this.isDeleting_)
         return;
       this.isDeleting_ = true;
@@ -191,67 +188,67 @@ cr.define('extensions', function() {
         chrome.runtime.lastError;
         this.isDeleting_ = false;
       }.bind(this));
-    }
+    },
 
     /** @override */
-    setItemEnabled(id, isEnabled) {
+    setItemEnabled: function(id, isEnabled) {
       chrome.management.setEnabled(id, isEnabled);
-    }
+    },
 
     /** @override */
-    setItemAllowedIncognito(id, isAllowedIncognito) {
+    setItemAllowedIncognito: function(id, isAllowedIncognito) {
       chrome.developerPrivate.updateExtensionConfiguration({
         extensionId: id,
         incognitoAccess: isAllowedIncognito,
       });
-    }
+    },
 
     /** @override */
-    setItemAllowedOnFileUrls(id, isAllowedOnFileUrls) {
+    setItemAllowedOnFileUrls: function(id, isAllowedOnFileUrls) {
       chrome.developerPrivate.updateExtensionConfiguration({
         extensionId: id,
         fileAccess: isAllowedOnFileUrls,
       });
-    }
+    },
 
     /** @override */
-    setItemAllowedOnAllSites(id, isAllowedOnAllSites) {
+    setItemAllowedOnAllSites: function(id, isAllowedOnAllSites) {
       chrome.developerPrivate.updateExtensionConfiguration({
         extensionId: id,
         runOnAllUrls: isAllowedOnAllSites,
       });
-    }
+    },
 
     /** @override */
-    setItemCollectsErrors(id, collectsErrors) {
+    setItemCollectsErrors: function(id, collectsErrors) {
       chrome.developerPrivate.updateExtensionConfiguration({
         extensionId: id,
         errorCollection: collectsErrors,
       });
-    }
+    },
 
     /** @override */
-    inspectItemView(id, view) {
+    inspectItemView: function(id, view) {
       chrome.developerPrivate.openDevTools({
         extensionId: id,
         renderProcessId: view.renderProcessId,
         renderViewId: view.renderViewId,
         incognito: view.incognito,
       });
-    }
+    },
 
     /** @override */
-    reloadItem(id) {
+    reloadItem: function(id) {
       chrome.developerPrivate.reload(id, {failQuietly: false});
-    }
+    },
 
     /** @override */
-    repairItem(id) {
+    repairItem: function(id) {
       chrome.developerPrivate.repairExtension(id);
-    }
+    },
 
     /** @override */
-    showItemOptionsPage(id) {
+    showItemOptionsPage: function(id) {
       var extension = this.extensions_.find(function(e) {
         return e.id == id;
       });
@@ -262,66 +259,66 @@ cr.define('extensions', function() {
         this.manager_.changePage(
             {page: Page.DETAILS, subpage: Dialog.OPTIONS, extensionId: id});
       }
-    }
+    },
 
     /** @override */
-    setProfileInDevMode(inDevMode) {
+    setProfileInDevMode: function(inDevMode) {
       chrome.developerPrivate.updateProfileConfiguration(
           {inDeveloperMode: inDevMode});
-    }
+    },
 
     /** @override */
-    loadUnpacked() {
+    loadUnpacked: function() {
       this.loadUnpackedHelper_();
-    }
+    },
 
     /** @override */
-    retryLoadUnpacked(retryGuid) {
+    retryLoadUnpacked: function(retryGuid) {
       this.loadUnpackedHelper_(retryGuid);
-    }
+    },
 
     /** @override */
-    choosePackRootDirectory() {
+    choosePackRootDirectory: function() {
       return this.chooseFilePath_(
           chrome.developerPrivate.SelectType.FOLDER,
           chrome.developerPrivate.FileType.LOAD);
-    }
+    },
 
     /** @override */
-    choosePrivateKeyPath() {
+    choosePrivateKeyPath: function() {
       return this.chooseFilePath_(
           chrome.developerPrivate.SelectType.FILE,
           chrome.developerPrivate.FileType.PEM);
-    }
+    },
 
     /** @override */
-    packExtension(rootPath, keyPath) {
+    packExtension: function(rootPath, keyPath) {
       chrome.developerPrivate.packDirectory(rootPath, keyPath);
-    }
+    },
 
     /** @override */
-    updateAllExtensions() {
+    updateAllExtensions: function() {
       chrome.developerPrivate.autoUpdate();
-    }
+    },
 
     /** @override */
-    deleteErrors(extensionId, errorIds, type) {
+    deleteErrors: function(extensionId, errorIds, type) {
       chrome.developerPrivate.deleteExtensionErrors({
         extensionId: extensionId,
         errorIds: errorIds,
         type: type,
       });
-    }
+    },
 
     /** @override */
-    requestFileSource(args) {
+    requestFileSource: function(args) {
       return new Promise(function(resolve, reject) {
         chrome.developerPrivate.requestFileSource(args, function(code) {
           resolve(code);
         });
       });
-    }
-  }
+    },
+  };
 
   cr.addSingletonGetter(Service);
 

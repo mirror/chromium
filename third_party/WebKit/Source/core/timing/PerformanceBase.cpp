@@ -42,6 +42,7 @@
 #include "core/timing/PerformanceLongTaskTiming.h"
 #include "core/timing/PerformanceObserver.h"
 #include "core/timing/PerformanceResourceTiming.h"
+#include "core/timing/PerformanceServerTiming.h"
 #include "core/timing/PerformanceUserTiming.h"
 #include "platform/RuntimeEnabledFeatures.h"
 #include "platform/loader/fetch/ResourceResponse.h"
@@ -65,6 +66,7 @@ using PerformanceObserverVector = HeapVector<Member<PerformanceObserver>>;
 
 static const size_t kDefaultResourceTimingBufferSize = 150;
 static const size_t kDefaultFrameTimingBufferSize = 150;
+static const size_t kServerTimingBufferSize = 150;
 
 PerformanceBase::PerformanceBase(double time_origin,
                                  RefPtr<WebTaskRunner> task_runner)
@@ -105,6 +107,7 @@ PerformanceEntryVector PerformanceBase::getEntries() {
     entries.AppendVector(user_timing_->GetMeasures());
   }
 
+  entries.AppendVector(server_timing_buffer_);
   if (first_paint_timing_)
     entries.push_back(first_paint_timing_);
   if (first_contentful_paint_timing_)
@@ -147,6 +150,9 @@ PerformanceEntryVector PerformanceBase::getEntriesByType(
     case PerformanceEntry::kMeasure:
       if (user_timing_)
         entries.AppendVector(user_timing_->GetMeasures());
+      break;
+    case PerformanceEntry::kServer:
+      entries.AppendVector(server_timing_buffer_);
       break;
     case PerformanceEntry::kPaint:
       if (first_paint_timing_)
@@ -208,6 +214,15 @@ PerformanceEntryVector PerformanceBase::getEntriesByName(
       entries.AppendVector(user_timing_->GetMarks(name));
     if (entry_type.IsNull() || type == PerformanceEntry::kMeasure)
       entries.AppendVector(user_timing_->GetMeasures(name));
+  }
+
+  if (entry_type.IsNull() || type == PerformanceEntry::kServer) {
+    // This is inefficient, but this buffer has a max size of
+    // 150 entries (controlled by kServerTimingBufferSize).
+    for (const auto& entry : server_timing_buffer_) {
+      if (entry->name() == name)
+        entries.push_back(entry);
+    }
   }
 
   std::sort(entries.begin(), entries.end(),
@@ -291,6 +306,45 @@ bool PerformanceBase::AllowsTimingRedirect(
   return true;
 }
 
+void PerformanceBase::AddServerTiming(const ResourceResponse& response,
+                                      ShouldAddToBuffer shouldAddToBuffer) {
+  if (shouldAddToBuffer == ShouldAddToBuffer::Never &&
+      !HasObserverFor(PerformanceEntry::kServer)) {
+    return;
+  }
+
+  ExecutionContext* context = GetExecutionContext();
+  SecurityOrigin* securityOrigin = GetSecurityOrigin(context);
+  if (!securityOrigin) {
+    return;
+  }
+  bool allowTimingDetails = PassesTimingAllowCheck(
+      response, *securityOrigin,
+      response.HttpHeaderField(HTTPNames::Timing_Allow_Origin), context);
+
+  std::unique_ptr<ServerTimingHeaderVector> headers = ParseServerTimingHeader(
+      response.HttpHeaderField(HTTPNames::Server_Timing));
+  if ((*headers).size() == 0) {
+    return;
+  }
+
+  PerformanceEntryVector entries;
+  for (const auto& header : *headers) {
+    PerformanceEntry* entry = PerformanceServerTiming::create(
+        response.Url().GetString(), header->metric,
+        allowTimingDetails ? header->duration : 0.0,
+        allowTimingDetails ? header->description : "");
+    entries.push_back(*entry);
+  }
+
+  NotifyObserversOfEntries(entries);
+  if (shouldAddToBuffer == ShouldAddToBuffer::Always &&
+      server_timing_buffer_.size() + entries.size() <=
+          kServerTimingBufferSize) {
+    server_timing_buffer_.AppendVector(entries);
+  }
+}
+
 void PerformanceBase::AddResourceTiming(const ResourceTimingInfo& info) {
   if (IsResourceTimingBufferFull() &&
       !HasObserverFor(PerformanceEntry::kResource))
@@ -306,15 +360,9 @@ void PerformanceBase::AddResourceTiming(const ResourceTimingInfo& info) {
                              info.OriginalTimingAllowOrigin(), context);
   double start_time = info.InitialTime();
 
-  PerformanceServerTimingVector serverTiming =
-      PerformanceServerTiming::ParseServerTiming(
-          info, allow_timing_details
-                    ? PerformanceServerTiming::ShouldAllowTimingDetails::Yes
-                    : PerformanceServerTiming::ShouldAllowTimingDetails::No);
-
   if (info.RedirectChain().IsEmpty()) {
     PerformanceEntry* entry = PerformanceResourceTiming::Create(
-        info, TimeOrigin(), start_time, allow_timing_details, serverTiming);
+        info, TimeOrigin(), start_time, allow_timing_details);
     NotifyObserversOfEntry(*entry);
     if (!IsResourceTimingBufferFull())
       AddResourceTimingBuffer(*entry);
@@ -339,7 +387,7 @@ void PerformanceBase::AddResourceTiming(const ResourceTimingInfo& info) {
 
   PerformanceEntry* entry = PerformanceResourceTiming::Create(
       info, TimeOrigin(), start_time, last_redirect_end_time,
-      allow_timing_details, allow_redirect_details, serverTiming);
+      allow_timing_details, allow_redirect_details);
   NotifyObserversOfEntry(*entry);
   if (!IsResourceTimingBufferFull())
     AddResourceTimingBuffer(*entry);
@@ -564,6 +612,7 @@ DEFINE_TRACE(PerformanceBase) {
   visitor->Trace(resource_timing_buffer_);
   visitor->Trace(navigation_timing_);
   visitor->Trace(user_timing_);
+  visitor->Trace(server_timing_buffer_);
   visitor->Trace(first_paint_timing_);
   visitor->Trace(first_contentful_paint_timing_);
   visitor->Trace(observers_);

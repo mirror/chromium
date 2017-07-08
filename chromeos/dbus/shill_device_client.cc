@@ -4,8 +4,6 @@
 
 #include "chromeos/dbus/shill_device_client.h"
 
-#include <utility>
-
 #include "base/bind.h"
 #include "base/macros.h"
 #include "base/message_loop/message_loop.h"
@@ -66,10 +64,10 @@ class ShillDeviceClientImpl : public ShillDeviceClient {
   }
 
   void ProposeScan(const dbus::ObjectPath& device_path,
-                   VoidDBusMethodCallback callback) override {
+                   const VoidDBusMethodCallback& callback) override {
     dbus::MethodCall method_call(shill::kFlimflamDeviceInterface,
                                  shill::kProposeScanFunction);
-    GetHelper(device_path)->CallVoidMethod(&method_call, std::move(callback));
+    GetHelper(device_path)->CallVoidMethod(&method_call, callback);
   }
 
   void SetProperty(const dbus::ObjectPath& device_path,
@@ -89,12 +87,12 @@ class ShillDeviceClientImpl : public ShillDeviceClient {
 
   void ClearProperty(const dbus::ObjectPath& device_path,
                      const std::string& name,
-                     VoidDBusMethodCallback callback) override {
+                     const VoidDBusMethodCallback& callback) override {
     dbus::MethodCall method_call(shill::kFlimflamDeviceInterface,
                                  shill::kClearPropertyFunction);
     dbus::MessageWriter writer(&method_call);
     writer.AppendString(name);
-    GetHelper(device_path)->CallVoidMethod(&method_call, std::move(callback));
+    GetHelper(device_path)->CallVoidMethod(&method_call, callback);
   }
 
   void AddIPConfig(const dbus::ObjectPath& device_path,

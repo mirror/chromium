@@ -73,7 +73,6 @@ class RequestCoordinator : public KeyedService,
   struct SavePageLaterParams {
     SavePageLaterParams();
     SavePageLaterParams(const SavePageLaterParams& other);
-    ~SavePageLaterParams();
 
     // The last committed URL of the page to save.
     GURL url;
@@ -89,9 +88,6 @@ class RequestCoordinator : public KeyedService,
 
     // The original URL of the page to save. Empty if no redirect occurs.
     GURL original_url;
-
-    // The origin of the request, if any.
-    std::string request_origin;
   };
 
   // Callback specifying which request IDs were actually removed.

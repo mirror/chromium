@@ -8,11 +8,9 @@
 #include "core/dom/AnimationWorkletProxyClient.h"
 #include "core/dom/Document.h"
 #include "core/frame/LocalFrame.h"
-#include "core/frame/WebLocalFrameBase.h"
 #include "core/page/ChromeClient.h"
 #include "core/workers/WorkerClients.h"
 #include "modules/compositorworker/AnimationWorkletMessagingProxy.h"
-#include "modules/compositorworker/AnimationWorkletProxyClientImpl.h"
 #include "modules/compositorworker/AnimationWorkletThread.h"
 
 namespace blink {
@@ -38,7 +36,8 @@ WorkletGlobalScopeProxy* AnimationWorklet::CreateGlobalScope() {
 
   Document* document = ToDocument(GetExecutionContext());
   AnimationWorkletProxyClient* proxy_client =
-      AnimationWorkletProxyClientImpl::FromDocument(document);
+      document->GetFrame()->GetChromeClient().CreateAnimationWorkletProxyClient(
+          document->GetFrame());
 
   WorkerClients* worker_clients = WorkerClients::Create();
   ProvideAnimationWorkletProxyClientTo(worker_clients, proxy_client);

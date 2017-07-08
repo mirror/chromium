@@ -31,28 +31,26 @@ cr.define('extensions', function() {
    * A helper object to manage in-page navigations. Since the extensions page
    * needs to support different urls for different subpages (like the details
    * page), we use this object to manage the history and url conversions.
-   */
-  class NavigationHelper {
-    /**
-     * @param {!function(!PageState):void} onHistoryChange A function to call
-     *     when the page has changed as a result of the user going back or
-     *     forward in history; called with the new active page.
-     */
-    constructor(onHistoryChange) {
-      this.onHistoryChange_ = onHistoryChange;
-      window.addEventListener('popstate', this.onPopState_.bind(this));
-    }
+   * @param {!function(!PageState):void} onHistoryChange A function to call when
+   *     the page has changed as a result of the user going back or forward in
+   *     history; called with the new active page.
+   * @constructor */
+  function NavigationHelper(onHistoryChange) {
+    this.onHistoryChange_ = onHistoryChange;
+    window.addEventListener('popstate', this.onPopState_.bind(this));
+  }
 
+  NavigationHelper.prototype = {
     /** @private */
-    onPopState_() {
+    onPopState_: function() {
       this.onHistoryChange_(this.getCurrentPage());
-    }
+    },
 
     /**
-     * @return {!PageState} The page that should be displayed for the current
-     *     URL.
+     * Returns the page that should be displayed for the current URL.
+     * @return {!PageState}
      */
-    getCurrentPage() {
+    getCurrentPage: function() {
       var search = new URLSearchParams(location.search);
       var id = search.get('id');
       if (id)
@@ -68,13 +66,13 @@ cr.define('extensions', function() {
         return {page: Page.SHORTCUTS};
 
       return {page: Page.LIST};
-    }
+    },
 
     /**
      * Called when a page changes, and pushes state to history to reflect it.
      * @param {!PageState} entry
      */
-    updateHistory(entry) {
+    updateHistory: function(entry) {
       var path;
       switch (entry.page) {
         case Page.LIST:
@@ -108,8 +106,8 @@ cr.define('extensions', function() {
         history.replaceState(state, '', path);
       else
         history.pushState(state, '', path);
-    }
-  }
+    },
+  };
 
   return {NavigationHelper: NavigationHelper};
 });

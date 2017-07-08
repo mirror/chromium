@@ -15,8 +15,6 @@
 #include "components/autofill/core/common/autofill_clock.h"
 #include "components/autofill/core/common/autofill_constants.h"
 #import "components/autofill/ios/browser/credit_card_util.h"
-#include "components/payments/core/autofill_payment_instrument.h"
-#include "components/payments/core/payment_instrument.h"
 #include "components/strings/grit/components_strings.h"
 #include "ios/chrome/browser/application_context.h"
 #include "ios/chrome/browser/payments/payment_request.h"
@@ -38,7 +36,7 @@ using ::AutofillTypeFromAutofillUIType;
 // |error_message| can't be null and will be filled with the appropriate error
 // message iff the return value is false.
 bool IsValidCreditCardNumber(const base::string16& card_number,
-                             payments::PaymentRequest* payment_request,
+                             PaymentRequest* payment_request,
                              const autofill::CreditCard* credit_card_to_edit,
                              base::string16* error_message) {
   std::set<std::string> supported_card_networks(
@@ -71,8 +69,6 @@ bool IsValidCreditCardNumber(const base::string16& card_number,
 
 @interface CreditCardEditCoordinator ()
 
-@property(nonatomic, assign) autofill::CreditCard* creditCard;
-
 @property(nonatomic, strong)
     BillingAddressSelectionCoordinator* billingAddressSelectionCoordinator;
 
@@ -89,10 +85,9 @@ bool IsValidCreditCardNumber(const base::string16& card_number,
 
 @implementation CreditCardEditCoordinator
 
-@synthesize paymentMethod = _paymentMethod;
+@synthesize creditCard = _creditCard;
 @synthesize paymentRequest = _paymentRequest;
 @synthesize delegate = _delegate;
-@synthesize creditCard = _creditCard;
 @synthesize billingAddressSelectionCoordinator =
     _billingAddressSelectionCoordinator;
 @synthesize addressEditCoordinator = _addressEditCoordinator;
@@ -101,8 +96,6 @@ bool IsValidCreditCardNumber(const base::string16& card_number,
 @synthesize mediator = _mediator;
 
 - (void)start {
-  _creditCard = _paymentMethod ? _paymentMethod->credit_card() : nil;
-
   _editViewController = [[PaymentRequestEditViewController alloc] init];
   // TODO(crbug.com/602666): Title varies depending on the missing fields.
   NSString* title = _creditCard
@@ -245,8 +238,8 @@ bool IsValidCreditCardNumber(const base::string16& card_number,
     if (saveCreditCard)
       _paymentRequest->GetPersonalDataManager()->AddCreditCard(creditCard);
 
-    // Add the credit card to the list of payment methods in |_paymentRequest|.
-    _paymentMethod = _paymentRequest->AddAutofillPaymentInstrument(creditCard);
+    // Add the credit card to the list of credit cards in |_paymentRequest|.
+    _creditCard = _paymentRequest->AddCreditCard(creditCard);
   } else {
     // Override the origin.
     creditCard.set_origin(autofill::kSettingsOrigin);
@@ -264,7 +257,7 @@ bool IsValidCreditCardNumber(const base::string16& card_number,
   }
 
   [_delegate creditCardEditCoordinator:self
-         didFinishEditingPaymentMethod:_paymentMethod];
+            didFinishEditingCreditCard:_creditCard];
 }
 
 - (void)paymentRequestEditViewControllerDidCancel:

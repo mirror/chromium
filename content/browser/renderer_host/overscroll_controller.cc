@@ -4,8 +4,6 @@
 
 #include "content/browser/renderer_host/overscroll_controller.h"
 
-#include <algorithm>
-
 #include "base/command_line.h"
 #include "base/logging.h"
 #include "content/browser/renderer_host/overscroll_controller_delegate.h"
@@ -14,8 +12,6 @@
 #include "third_party/WebKit/public/platform/WebMouseWheelEvent.h"
 
 using blink::WebInputEvent;
-
-namespace content {
 
 namespace {
 
@@ -31,12 +27,9 @@ bool IsGestureEventFromTouchpad(const blink::WebInputEvent& event) {
   return gesture.source_device == blink::kWebGestureDeviceTouchpad;
 }
 
-float ClampAbsoluteValue(float value, float max_abs) {
-  DCHECK_LT(0.f, max_abs);
-  return std::max(-max_abs, std::min(value, max_abs));
-}
-
 }  // namespace
+
+namespace content {
 
 OverscrollController::OverscrollController() {}
 
@@ -355,35 +348,15 @@ bool OverscrollController::ProcessOverscroll(float delta_x,
     overscroll_delta_x_ += delta_x;
   overscroll_delta_y_ += delta_y;
 
-  const float horiz_threshold = GetOverscrollConfig(
+  float horiz_threshold = GetOverscrollConfig(
       is_touchpad ? OVERSCROLL_CONFIG_HORIZ_THRESHOLD_START_TOUCHPAD
                   : OVERSCROLL_CONFIG_HORIZ_THRESHOLD_START_TOUCHSCREEN);
-  const float vert_threshold =
-      GetOverscrollConfig(OVERSCROLL_CONFIG_VERT_THRESHOLD_START);
+  float vert_threshold = GetOverscrollConfig(
+      OVERSCROLL_CONFIG_VERT_THRESHOLD_START);
   if (fabs(overscroll_delta_x_) <= horiz_threshold &&
       fabs(overscroll_delta_y_) <= vert_threshold) {
     SetOverscrollMode(OVERSCROLL_NONE, OverscrollSource::NONE);
     return true;
-  }
-
-  if (delegate_) {
-    base::Optional<float> cap = delegate_->GetMaxOverscrollDelta();
-    if (cap) {
-      switch (overscroll_mode_) {
-        case OVERSCROLL_WEST:
-        case OVERSCROLL_EAST:
-          overscroll_delta_x_ = ClampAbsoluteValue(
-              overscroll_delta_x_, cap.value() + horiz_threshold);
-          break;
-        case OVERSCROLL_NORTH:
-        case OVERSCROLL_SOUTH:
-          overscroll_delta_y_ = ClampAbsoluteValue(
-              overscroll_delta_y_, cap.value() + vert_threshold);
-          break;
-        case OVERSCROLL_NONE:
-          break;
-      }
-    }
   }
 
   // Compute the current overscroll direction. If the direction is different

@@ -2504,12 +2504,6 @@ const char kOfflinePagesCtName[] = "Enable Offline Pages CT features.";
 
 const char kOfflinePagesCtDescription[] = "Enable Offline Pages CT features.";
 
-const char kOfflinePagesCtV2Name[] = "Enable Offline Pages CT V2 features.";
-
-const char kOfflinePagesCtV2Description[] =
-    "V2 features include attributing pages to the app that initiated the "
-    "custom tabs, and being able to query for pages by page attribution.";
-
 #endif  // defined(OS_ANDROID)
 
 #if defined(OS_ANDROID)
@@ -2958,12 +2952,6 @@ const char kDisplayColorCalibrationDescription[] =
     "Allow color calibration of the display if the display supports the "
     "feature.";
 
-const char kEnableFullscreenAppListName[] = "Enable The Peeking Launcher";
-
-const char kEnableFullscreenAppListDescription[] =
-    "The peeking launcher UI supports touch and provides more space for upcoming "
-    "features.";
-
 const char kMemoryPressureThresholdName[] =
     "Memory discard strategy for advanced pressure handling";
 
@@ -3189,11 +3177,10 @@ const char kOmniboxDisplayTitleForCurrentUrlDescription[] =
     "the current page is provided as the first suggestion without a title. "
     "Enabling this flag causes the title to be displayed.";
 
-const char kOmniboxUIElideSuggestionUrlAfterHostName[] =
-    "Omnibox UI Elide Suggestion URL After Host";
-const char kOmniboxUIElideSuggestionUrlAfterHostDescription[] =
-    "Elides the path, query, and ref of suggested URLs in the Omnibox "
-    "dropdown.";
+const char kOmniboxUIHideSuggestionUrlPathName[] =
+    "Omnibox UI Hide Suggestion URL Path";
+const char kOmniboxUIHideSuggestionUrlPathDescription[] =
+    "Elides the paths of suggested URLs in the Omnibox dropdown.";
 
 const char kOmniboxUIHideSuggestionUrlSchemeName[] =
     "Omnibox UI Hide Suggestion URL Scheme";

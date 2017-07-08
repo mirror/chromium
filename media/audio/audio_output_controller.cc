@@ -279,8 +279,8 @@ int AudioOutputController::OnMoreData(base::TimeDelta delay,
   // may have already fired if OnMoreData() took an abnormal amount of time).
   // Since this thread is the only writer of |on_more_io_data_called_| once the
   // thread starts, its safe to compare and then increment.
-  if (on_more_io_data_called_.IsZero())
-    on_more_io_data_called_.Increment();
+  if (base::AtomicRefCountIsZero(&on_more_io_data_called_))
+    base::AtomicRefCountInc(&on_more_io_data_called_);
 
   sync_reader_->Read(dest);
 
@@ -289,7 +289,7 @@ int AudioOutputController::OnMoreData(base::TimeDelta delay,
 
   sync_reader_->RequestMoreData(delay, delay_timestamp, prior_frames_skipped);
 
-  if (should_duplicate_.IsOne()) {
+  if (base::AtomicRefCountIsOne(&should_duplicate_)) {
     const base::TimeTicks reference_time = delay_timestamp + delay;
     std::unique_ptr<AudioBus> copy(AudioBus::Create(params_));
     dest->CopyTo(copy.get());
@@ -492,7 +492,7 @@ void AudioOutputController::DoStartDuplicating(AudioPushSink* to_stream) {
     return;
 
   if (duplication_targets_.empty())
-    should_duplicate_.Increment();
+    base::AtomicRefCountInc(&should_duplicate_);
 
   duplication_targets_.insert(to_stream);
 }
@@ -503,7 +503,7 @@ void AudioOutputController::DoStopDuplicating(AudioPushSink* to_stream) {
 
   duplication_targets_.erase(to_stream);
   if (duplication_targets_.empty()) {
-    const bool is_nonzero = should_duplicate_.Decrement();
+    const bool is_nonzero = base::AtomicRefCountDec(&should_duplicate_);
     DCHECK(!is_nonzero);
   }
 }
@@ -519,7 +519,7 @@ void AudioOutputController::WedgeCheck() {
   // If we should be playing and we haven't, that's a wedge.
   if (state_ == kPlaying) {
     UMA_HISTOGRAM_BOOLEAN("Media.AudioOutputControllerPlaybackStartupSuccess",
-                          on_more_io_data_called_.IsOne());
+                          base::AtomicRefCountIsOne(&on_more_io_data_called_));
   }
 }
 

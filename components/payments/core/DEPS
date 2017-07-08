@@ -7,14 +7,8 @@ include_rules = [
   "+components/prefs",
   "+components/pref_registry",
   "+components/strings",
-  "+services/metrics/public",
+  "+components/ukm",
   "+third_party/libaddressinput",
   "+third_party/libphonenumber",
   "+ui/base",
 ]
-
-specific_include_rules = {
-  "journey_logger_unittest\.cc": [
-    "+components/ukm",
-  ],
-}

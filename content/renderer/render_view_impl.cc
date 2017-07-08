@@ -1149,6 +1149,10 @@ bool RenderViewImpl::OnMessageReceived(const IPC::Message& message) {
 
   bool handled = true;
   IPC_BEGIN_MESSAGE_MAP(RenderViewImpl, message)
+    IPC_MESSAGE_HANDLER(InputMsg_ExecuteEditCommand, OnExecuteEditCommand)
+    IPC_MESSAGE_HANDLER(InputMsg_MoveCaret, OnMoveCaret)
+    IPC_MESSAGE_HANDLER(InputMsg_ScrollFocusedEditableNodeIntoRect,
+                        OnScrollFocusedEditableNodeIntoRect)
     IPC_MESSAGE_HANDLER(ViewMsg_SetPageScale, OnSetPageScale)
     IPC_MESSAGE_HANDLER(ViewMsg_SetInitialFocus, OnSetInitialFocus)
     IPC_MESSAGE_HANDLER(ViewMsg_UpdateTargetURL_ACK, OnUpdateTargetURLAck)
@@ -1239,7 +1243,26 @@ void RenderViewImpl::OnUpdateTargetURLAck() {
   target_url_status_ = TARGET_NONE;
 }
 
-void RenderViewImpl::ScrollFocusedEditableNodeIntoRect(const gfx::Rect& rect) {
+void RenderViewImpl::OnExecuteEditCommand(const std::string& name,
+    const std::string& value) {
+  if (!webview() || !webview()->FocusedFrame())
+    return;
+
+  webview()->FocusedFrame()->ExecuteCommand(WebString::FromUTF8(name),
+                                            WebString::FromUTF8(value));
+}
+
+void RenderViewImpl::OnMoveCaret(const gfx::Point& point) {
+  if (!webview())
+    return;
+
+  Send(new InputHostMsg_MoveCaret_ACK(GetRoutingID()));
+  webview()->FocusedFrame()->MoveCaretSelection(
+      ConvertWindowPointToViewport(point));
+}
+
+void RenderViewImpl::OnScrollFocusedEditableNodeIntoRect(
+    const gfx::Rect& rect) {
   blink::WebAutofillClient* autofill_client = nullptr;
   if (auto* focused_frame = GetWebView()->FocusedFrame())
     autofill_client = focused_frame->AutofillClient();
@@ -2444,11 +2467,11 @@ void RenderViewImpl::SetDeviceScaleFactorForTesting(float factor) {
   OnResize(params);
 }
 
-void RenderViewImpl::SetDeviceColorSpaceForTesting(
-    const gfx::ColorSpace& color_space) {
+void RenderViewImpl::SetDeviceColorProfileForTesting(
+    const gfx::ICCProfile& icc_profile) {
   ResizeParams params;
   params.screen_info = screen_info_;
-  params.screen_info.color_space = color_space;
+  params.screen_info.color_space = icc_profile.GetColorSpace();
   params.new_size = size();
   params.visible_viewport_size = visible_viewport_size_;
   params.physical_backing_size = physical_backing_size_;

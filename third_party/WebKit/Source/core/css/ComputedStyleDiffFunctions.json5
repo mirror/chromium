@@ -352,14 +352,11 @@
     },
     {
         name: "UpdatePropertySpecificDifferencesFilter",
+        fields_to_diff: ["filter"],
         predicates_to_test: [
           {
             predicate: "a.ReflectionDataEquivalent(b)",
             field_dependencies: ["-webkit-box-reflect"]
-          },
-          {
-            predicate: "a.FilterDataEquivalent(b)",
-            field_dependencies: ["filter"]
           },
         ]
     },
@@ -382,12 +379,7 @@
     },
     {
         name: "UpdatePropertySpecificDifferencesBackdropFilter",
-        predicates_to_test: [
-          {
-            predicate: "a.BackdropFilterDataEquivalent(b)",
-            field_dependencies: ["backdrop-filter"]
-          },
-        ]
+        fields_to_diff: ["backdrop-filter"],
     },
     {
         name: "UpdatePropertySpecificDifferencesTextDecorationOrColor",

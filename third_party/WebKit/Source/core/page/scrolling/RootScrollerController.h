@@ -85,8 +85,6 @@ class CORE_EXPORT RootScrollerController
   // document.scrollingElement in general.
   bool ScrollsViewport(const Element&) const;
 
-  void ElementRemoved(const Element&);
-
  private:
   RootScrollerController(Document&);
 

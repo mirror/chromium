@@ -76,7 +76,7 @@ class AXSystemCaretWinTest : public test::WidgetTest {
 
 }  // namespace
 
-TEST_F(AXSystemCaretWinTest, DISABLED_TestOnCaretBoundsChangeInTextField) {
+TEST_F(AXSystemCaretWinTest, TestOnCaretBoundsChangeInTextField) {
   TextfieldTestApi textfield_test_api(textfield_);
   base::win::ScopedComPtr<IAccessible> caret_accessible;
   gfx::NativeWindow native_window = widget_->GetNativeWindow();
@@ -107,7 +107,7 @@ TEST_F(AXSystemCaretWinTest, DISABLED_TestOnCaretBoundsChangeInTextField) {
   EXPECT_EQ(1, width);
 }
 
-TEST_F(AXSystemCaretWinTest, DISABLED_TestOnInputTypeChangeInTextField) {
+TEST_F(AXSystemCaretWinTest, TestOnInputTypeChangeInTextField) {
   base::win::ScopedComPtr<IAccessible> caret_accessible;
   gfx::NativeWindow native_window = widget_->GetNativeWindow();
   ASSERT_NE(nullptr, native_window);

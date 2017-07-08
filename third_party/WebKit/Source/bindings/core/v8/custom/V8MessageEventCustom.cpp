@@ -66,12 +66,12 @@ void V8MessageEvent::dataAttributeGetterCustom(
       break;
 
     case MessageEvent::kDataTypeSerializedScriptValue:
-      if (UnpackedSerializedScriptValue* unpacked_value =
-              event->DataAsUnpackedSerializedScriptValue()) {
+      if (SerializedScriptValue* serialized_value =
+              event->DataAsSerializedScriptValue()) {
         MessagePortArray ports = event->ports();
         SerializedScriptValue::DeserializeOptions options;
         options.message_ports = &ports;
-        result = unpacked_value->Deserialize(isolate, options);
+        result = serialized_value->Deserialize(isolate, options);
       } else {
         result = v8::Null(isolate);
       }

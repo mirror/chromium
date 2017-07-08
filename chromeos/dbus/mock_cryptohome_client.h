@@ -82,8 +82,10 @@ class MockCryptohomeClient : public CryptohomeClient {
   MOCK_METHOD1(CallTpmIsOwnedAndBlock, bool(bool* owned));
   MOCK_METHOD1(TpmIsBeingOwned, void(const BoolDBusMethodCallback& callback));
   MOCK_METHOD1(CallTpmIsBeingOwnedAndBlock, bool(bool* owning));
-  void TpmCanAttemptOwnership(VoidDBusMethodCallback callback) override;
-  void TpmClearStoredPassword(VoidDBusMethodCallback callback) override;
+  MOCK_METHOD1(TpmCanAttemptOwnership,
+               void(const VoidDBusMethodCallback& callback));
+  MOCK_METHOD1(TpmClearStoredPassword,
+               void(const VoidDBusMethodCallback& callback));
   MOCK_METHOD0(CallTpmClearStoredPasswordAndBlock, bool());
   MOCK_METHOD1(Pkcs11IsTpmTokenReady,
                void(const BoolDBusMethodCallback& callback));
@@ -220,8 +222,9 @@ class MockCryptohomeClient : public CryptohomeClient {
       FlushAndSignBootAttributes,
       void(const cryptohome::FlushAndSignBootAttributesRequest& request,
            const ProtobufMethodCallback& callback));
-  void MigrateToDircrypto(const cryptohome::Identification& cryptohome_id,
-                          VoidDBusMethodCallback callback) override;
+  MOCK_METHOD2(MigrateToDircrypto,
+               void(const cryptohome::Identification& cryptohome_id,
+                    const VoidDBusMethodCallback& callback));
   MOCK_METHOD1(SetDircryptoMigrationProgressHandler,
                void(const DircryptoMigrationProgessHandler& handler));
   MOCK_METHOD2(

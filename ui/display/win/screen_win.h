@@ -14,7 +14,6 @@
 #include "ui/display/display_change_notifier.h"
 #include "ui/display/display_export.h"
 #include "ui/display/screen.h"
-#include "ui/display/win/color_profile_reader.h"
 #include "ui/gfx/native_widget_types.h"
 #include "ui/gfx/win/singleton_hwnd_observer.h"
 
@@ -31,8 +30,7 @@ namespace win {
 class DisplayInfo;
 class ScreenWinDisplay;
 
-class DISPLAY_EXPORT ScreenWin : public Screen,
-                                 public ColorProfileReader::Client {
+class DISPLAY_EXPORT ScreenWin : public Screen {
  public:
   ScreenWin();
   ~ScreenWin() override;
@@ -118,8 +116,6 @@ class DISPLAY_EXPORT ScreenWin : public Screen,
   virtual gfx::NativeWindow GetNativeWindowFromHWND(HWND hwnd) const;
 
  protected:
-  ScreenWin(bool initialize);
-
   // Screen:
   gfx::Point GetCursorScreenPoint() override;
   bool IsWindowUnderCursor(gfx::NativeWindow window) override;
@@ -137,12 +133,10 @@ class DISPLAY_EXPORT ScreenWin : public Screen,
   gfx::Rect DIPToScreenRectInWindow(
       gfx::NativeView view, const gfx::Rect& dip_rect) const override;
 
-  // ColorProfileReader::Client:
-  void OnColorProfilesChanged() override;
-
   void UpdateFromDisplayInfos(const std::vector<DisplayInfo>& display_infos);
 
   // Virtual to support mocking by unit tests.
+  virtual void Initialize();
   virtual MONITORINFOEX MonitorInfoFromScreenPoint(
       const gfx::Point& screen_point) const;
   virtual MONITORINFOEX MonitorInfoFromScreenRect(const gfx::Rect& screen_rect)
@@ -153,7 +147,6 @@ class DISPLAY_EXPORT ScreenWin : public Screen,
   virtual int GetSystemMetrics(int metric) const;
 
  private:
-  void Initialize();
   void OnWndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam);
 
   // Returns the ScreenWinDisplay closest to or enclosing |hwnd|.
@@ -199,9 +192,6 @@ class DISPLAY_EXPORT ScreenWin : public Screen,
   // The Displays corresponding to |screen_win_displays_| for GetAllDisplays().
   // This must be updated anytime |screen_win_displays_| is updated.
   std::vector<Display> displays_;
-
-  // A helper to read color profiles from the filesystem.
-  std::unique_ptr<ColorProfileReader> color_profile_reader_;
 
   DISALLOW_COPY_AND_ASSIGN(ScreenWin);
 };

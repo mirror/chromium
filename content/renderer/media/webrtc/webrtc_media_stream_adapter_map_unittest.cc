@@ -5,7 +5,6 @@
 #include "content/renderer/media/webrtc/webrtc_media_stream_adapter_map.h"
 
 #include <memory>
-#include <string>
 
 #include "base/memory/ref_counted.h"
 #include "base/message_loop/message_loop.h"
@@ -51,7 +50,8 @@ class WebRtcMediaStreamAdapterMapTest : public ::testing::Test {
     video_source.Initialize("video_source",
                             blink::WebMediaStreamSource::kTypeVideo,
                             "video_source", false /* remote */);
-    MediaStreamVideoSource* native_source = new MockMediaStreamVideoSource();
+    MediaStreamVideoSource* native_source =
+        new MockMediaStreamVideoSource(false);
     video_source.SetExtraData(native_source);
     web_video_tracks[0] = MediaStreamVideoTrack::CreateVideoTrack(
         native_source, MediaStreamVideoSource::ConstraintsCallback(), true);

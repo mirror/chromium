@@ -12,7 +12,6 @@
 #include "components/autofill/core/browser/autofill_profile.h"
 #include "components/autofill/core/browser/credit_card.h"
 #include "components/autofill/core/browser/field_types.h"
-#include "components/payments/core/autofill_payment_instrument.h"
 #include "components/payments/core/currency_formatter.h"
 #include "components/payments/core/payment_prefs.h"
 #include "components/payments/core/strings_util.h"
@@ -54,7 +53,7 @@ using ::payment_request_util::GetShippingSectionTitle;
 // The PaymentRequest object owning an instance of web::PaymentRequest as
 // provided by the page invoking the Payment Request API. This is a weak
 // pointer and should outlive this class.
-@property(nonatomic, assign) payments::PaymentRequest* paymentRequest;
+@property(nonatomic, assign) PaymentRequest* paymentRequest;
 
 @end
 
@@ -63,8 +62,7 @@ using ::payment_request_util::GetShippingSectionTitle;
 @synthesize totalValueChanged = _totalValueChanged;
 @synthesize paymentRequest = _paymentRequest;
 
-- (instancetype)initWithPaymentRequest:
-    (payments::PaymentRequest*)paymentRequest {
+- (instancetype)initWithPaymentRequest:(PaymentRequest*)paymentRequest {
   self = [super init];
   if (self) {
     _paymentRequest = paymentRequest;
@@ -75,7 +73,7 @@ using ::payment_request_util::GetShippingSectionTitle;
 #pragma mark - PaymentRequestViewControllerDataSource
 
 - (BOOL)canPay {
-  return self.paymentRequest->selected_payment_method() != nullptr &&
+  return self.paymentRequest->selected_credit_card() != nullptr &&
          (self.paymentRequest->selected_shipping_option() != nullptr ||
           ![self requestShipping]) &&
          (self.paymentRequest->selected_shipping_profile() != nullptr ||
@@ -176,7 +174,7 @@ using ::payment_request_util::GetShippingSectionTitle;
 }
 
 - (CollectionViewItem*)paymentMethodSectionHeaderItem {
-  if (!self.paymentRequest->selected_payment_method())
+  if (!self.paymentRequest->selected_credit_card())
     return nil;
   PaymentsTextItem* item = [[PaymentsTextItem alloc] init];
   item.text =
@@ -185,13 +183,18 @@ using ::payment_request_util::GetShippingSectionTitle;
 }
 
 - (CollectionViewItem*)paymentMethodItem {
-  const payments::PaymentInstrument* paymentMethod =
-      self.paymentRequest->selected_payment_method();
-  if (paymentMethod) {
+  const autofill::CreditCard* creditCard =
+      self.paymentRequest->selected_credit_card();
+  if (creditCard) {
     PaymentMethodItem* item = [[PaymentMethodItem alloc] init];
-    item.methodID = base::SysUTF16ToNSString(paymentMethod->GetLabel());
-    item.methodDetail = base::SysUTF16ToNSString(paymentMethod->GetSublabel());
-    item.methodTypeIcon = NativeImage(paymentMethod->icon_resource_id());
+    item.methodID =
+        base::SysUTF16ToNSString(creditCard->NetworkAndLastFourDigits());
+    item.methodDetail = base::SysUTF16ToNSString(
+        creditCard->GetRawInfo(autofill::CREDIT_CARD_NAME_FULL));
+    int issuerNetworkIconID =
+        autofill::data_util::GetPaymentRequestData(creditCard->network())
+            .icon_resource_id;
+    item.methodTypeIcon = NativeImage(issuerNetworkIconID);
     item.accessoryType = MDCCollectionViewCellAccessoryDisclosureIndicator;
     return item;
   }
@@ -199,7 +202,7 @@ using ::payment_request_util::GetShippingSectionTitle;
   CollectionViewDetailItem* item = [[CollectionViewDetailItem alloc] init];
   item.text =
       l10n_util::GetNSString(IDS_PAYMENT_REQUEST_PAYMENT_METHOD_SECTION_NAME);
-  if (self.paymentRequest->payment_methods().empty()) {
+  if (self.paymentRequest->credit_cards().empty()) {
     item.detailText = [l10n_util::GetNSString(IDS_ADD)
         uppercaseStringWithLocale:[NSLocale currentLocale]];
   } else {

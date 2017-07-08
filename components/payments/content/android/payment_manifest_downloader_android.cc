@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "components/payments/content/android/payment_manifest_downloader_android.h"
+
 #include <memory>
 #include <utility>
 
@@ -106,6 +108,10 @@ SelfDeletingDownloadDelegate* BuildSelfDeletingDownloadDelegate(
 }
 
 }  // namespace
+
+bool RegisterPaymentManifestDownloader(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}
 
 void DownloadPaymentMethodManifest(
     JNIEnv* env,

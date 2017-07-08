@@ -28,8 +28,9 @@ class ToolsMediatorTest : public PlatformTest {
   ToolsMediatorTest()
       : consumer_(OCMProtocolMock(@protocol(ToolsConsumer))),
         configuration_(
-            [[ToolsMenuConfiguration alloc] initWithDisplayView:nil]) {
-    auto navigation_manager = base::MakeUnique<ToolbarTestNavigationManager>();
+            [[ToolsMenuConfiguration alloc] initWithDisplayView:nil]),
+        navigation_manager(base::MakeUnique<ToolbarTestNavigationManager>()) {
+    navigation_manager_ = navigation_manager.get();
     test_web_state_.SetNavigationManager(std::move(navigation_manager));
   }
 
@@ -38,6 +39,10 @@ class ToolsMediatorTest : public PlatformTest {
   id consumer_;
   ToolsMenuConfiguration* configuration_;
   ToolbarTestWebState test_web_state_;
+  ToolbarTestNavigationManager* navigation_manager_;
+
+ private:
+  std::unique_ptr<ToolbarTestNavigationManager> navigation_manager;
 };
 
 TEST_F(ToolsMediatorTest, TestShowOverFlowControls) {

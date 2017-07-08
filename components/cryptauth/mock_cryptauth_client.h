@@ -19,22 +19,18 @@ class MockCryptAuthClient : public CryptAuthClient {
   ~MockCryptAuthClient() override;
 
   // CryptAuthClient:
-  MOCK_METHOD4(GetMyDevices,
+  MOCK_METHOD3(GetMyDevices,
                void(const GetMyDevicesRequest& request,
                     const GetMyDevicesCallback& callback,
-                    const ErrorCallback& error_callback,
-                    const net::PartialNetworkTrafficAnnotationTag&
-                        partial_traffic_annotation));
+                    const ErrorCallback& error_callback));
   MOCK_METHOD3(FindEligibleUnlockDevices,
                void(const FindEligibleUnlockDevicesRequest& request,
                     const FindEligibleUnlockDevicesCallback& callback,
                     const ErrorCallback& error_callback));
-  MOCK_METHOD4(SendDeviceSyncTickle,
+  MOCK_METHOD3(SendDeviceSyncTickle,
                void(const SendDeviceSyncTickleRequest& request,
                     const SendDeviceSyncTickleCallback& callback,
-                    const ErrorCallback& error_callback,
-                    const net::PartialNetworkTrafficAnnotationTag&
-                        partial_traffic_annotation));
+                    const ErrorCallback& error_callback));
   MOCK_METHOD3(ToggleEasyUnlock,
                void(const ToggleEasyUnlockRequest& request,
                     const ToggleEasyUnlockCallback& callback,

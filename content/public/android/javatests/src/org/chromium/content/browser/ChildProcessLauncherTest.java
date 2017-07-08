@@ -7,6 +7,7 @@ package org.chromium.content.browser;
 import android.content.ComponentName;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.ConditionVariable;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.support.test.InstrumentationRegistry;
@@ -18,8 +19,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.chromium.base.process_launcher.ChildConnectionAllocator;
+import org.chromium.base.process_launcher.ChildProcessConnection;
+import org.chromium.base.process_launcher.ChildProcessLauncher;
 import org.chromium.base.process_launcher.FileDescriptorInfo;
-import org.chromium.base.test.util.CallbackHelper;
 import org.chromium.base.test.util.Feature;
 import org.chromium.content.browser.test.ContentJUnit4ClassRunner;
 import org.chromium.content.browser.test.util.Criteria;
@@ -28,7 +31,6 @@ import org.chromium.content_shell_apk.ChildProcessLauncherTestUtils;
 import org.chromium.content_shell_apk.IChildProcessTest;
 
 import java.util.concurrent.Callable;
-import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -37,14 +39,6 @@ import java.util.concurrent.atomic.AtomicReference;
 @RunWith(ContentJUnit4ClassRunner.class)
 public class ChildProcessLauncherTest {
     private static final long CONDITION_WAIT_TIMEOUT_MS = 5000;
-
-    private static final String SERVICE_PACKAGE_NAME = "org.chromium.content_shell_apk";
-    private static final String SERVICE_NAME_META_DATA_KEY =
-            "org.chromium.content.browser.TEST_SERVICES_NAME";
-    private static final String SERVICE_COUNT_META_DATA_KEY =
-            "org.chromium.content.browser.NUM_TEST_SERVICES";
-    private static final String SERVICE0_FULL_NAME =
-            "org.chromium.content_shell_apk.TestChildProcessService0";
 
     private static final String EXTRA_SERVICE_PARAM = "org.chromium.content.browser.SERVICE_EXTRA";
     private static final String EXTRA_SERVICE_PARAM_VALUE = "SERVICE_EXTRA";
@@ -60,7 +54,7 @@ public class ChildProcessLauncherTest {
      * A factory used to create a ChildProcessLauncher with a bound connection or with a connection
      * connection allocator so that the test code can be reused for both scenarios.
      */
-    private abstract static class ChildProcessLauncherFactory {
+    private abstract class ChildProcessLauncherFactory {
         private final boolean mConnectionProvided;
 
         public ChildProcessLauncherFactory(boolean connectionProvided) {
@@ -102,19 +96,20 @@ public class ChildProcessLauncherTest {
                         Context context =
                                 InstrumentationRegistry.getInstrumentation().getTargetContext();
                         return ChildConnectionAllocator.create(context, null /* creationParams */,
-                                SERVICE_PACKAGE_NAME, SERVICE_NAME_META_DATA_KEY,
-                                SERVICE_COUNT_META_DATA_KEY, false /* bindAsExternalService */,
-                                false /* useStrongBinding */);
+                                "org.chromium.content_shell_apk",
+                                "org.chromium.content.browser.TEST_SERVICES_NAME",
+                                "org.chromium.content.browser.NUM_TEST_SERVICES",
+                                false /* bindAsExternalService */, false /* useStrongBinding */);
                     }
                 });
     }
 
     private static class IChildProcessBinder extends IChildProcessTest.Stub {
-        private final CallbackHelper mOnConnectionSetupHelper = new CallbackHelper();
-        private final CallbackHelper mOnLoadNativeHelper = new CallbackHelper();
-        private final CallbackHelper mOnBeforeMainHelper = new CallbackHelper();
-        private final CallbackHelper mOnRunMainHelper = new CallbackHelper();
-        private final CallbackHelper mOnDestroyHelper = new CallbackHelper();
+        private final ConditionVariable mOnConnectionSetupCalled = new ConditionVariable();
+        private final ConditionVariable mOnLoadNativeCalled = new ConditionVariable();
+        private final ConditionVariable mOnBeforeMainCalled = new ConditionVariable();
+        private final ConditionVariable mOnRunMainCalled = new ConditionVariable();
+        private final ConditionVariable mOnDestroyCalled = new ConditionVariable();
 
         // Can be accessed after mOnConnectionSetupCalled is signaled.
         private boolean mServiceCreated;
@@ -133,54 +128,49 @@ public class ChildProcessLauncherTest {
             mServiceCreated = serviceCreatedCalled;
             mServiceBundle = serviceBundle;
             mConnectionBundle = connectionBundle;
-            Assert.assertEquals(0, mOnConnectionSetupHelper.getCallCount());
-            mOnConnectionSetupHelper.notifyCalled();
+            mOnConnectionSetupCalled.open();
         }
 
         @Override
         public void onLoadNativeLibrary(boolean loadedSuccessfully) {
             mNativeLibraryLoaded = loadedSuccessfully;
-            Assert.assertEquals(0, mOnLoadNativeHelper.getCallCount());
-            mOnLoadNativeHelper.notifyCalled();
+            mOnLoadNativeCalled.open();
         }
 
         @Override
         public void onBeforeMain(String[] commandLine) {
             mCommandLine = commandLine;
-            Assert.assertEquals(0, mOnBeforeMainHelper.getCallCount());
-            mOnBeforeMainHelper.notifyCalled();
+            mOnBeforeMainCalled.open();
         }
 
         @Override
         public void onRunMain() {
-            Assert.assertEquals(0, mOnRunMainHelper.getCallCount());
-            mOnRunMainHelper.notifyCalled();
+            mOnRunMainCalled.open();
         }
 
         @Override
         public void onDestroy() {
-            Assert.assertEquals(0, mOnDestroyHelper.getCallCount());
-            mOnDestroyHelper.notifyCalled();
+            mOnDestroyCalled.open();
         }
 
-        public void waitForOnConnectionSetupCalled() throws InterruptedException, TimeoutException {
-            mOnConnectionSetupHelper.waitForCallback(0 /* currentCallCount */);
+        public boolean waitForOnConnectionSetupCalled() {
+            return mOnConnectionSetupCalled.block(CONDITION_WAIT_TIMEOUT_MS);
         }
 
-        public void waitForOnNativeLibraryCalled() throws InterruptedException, TimeoutException {
-            mOnLoadNativeHelper.waitForCallback(0 /* currentCallCount */);
+        public boolean waitForOnNativeLibraryCalled() {
+            return mOnLoadNativeCalled.block(CONDITION_WAIT_TIMEOUT_MS);
         }
 
-        public void waitOnBeforeMainCalled() throws InterruptedException, TimeoutException {
-            mOnBeforeMainHelper.waitForCallback(0 /* currentCallCount */);
+        public boolean waitOnBeforeMainCalled() {
+            return mOnBeforeMainCalled.block(CONDITION_WAIT_TIMEOUT_MS);
         }
 
-        public void waitOnRunMainCalled() throws InterruptedException, TimeoutException {
-            mOnRunMainHelper.waitForCallback(0 /* currentCallCount */);
+        public boolean waitOnRunMainCalled() {
+            return mOnRunMainCalled.block(CONDITION_WAIT_TIMEOUT_MS);
         }
 
-        public void waitOnDestroyCalled() throws InterruptedException, TimeoutException {
-            mOnDestroyHelper.waitForCallback(0 /* currentCallCount */);
+        public boolean waitOnDestroyCalled() {
+            return mOnDestroyCalled.block(CONDITION_WAIT_TIMEOUT_MS);
         }
     };
 
@@ -190,41 +180,36 @@ public class ChildProcessLauncherTest {
      * The service echos back the delegate calls through the IBinder callback so that the test can
      * validate them.
      */
-    private void testProcessLauncher(final ChildProcessLauncherFactory launcherFactory)
-            throws InterruptedException, TimeoutException {
+    private void testProcessLauncher(final ChildProcessLauncherFactory launcherFactory) {
         // ConditionVariables used to check the ChildProcessLauncher.Delegate methods get called.
-        final CallbackHelper onBeforeConnectionAllocatedHelper = new CallbackHelper();
-        final CallbackHelper onBeforeConnectionSetupHelper = new CallbackHelper();
-        final CallbackHelper onConnectionEstablishedHelper = new CallbackHelper();
-        final CallbackHelper onConnectionLostHelper = new CallbackHelper();
+        final ConditionVariable onBeforeConnectionAllocatedCalled = new ConditionVariable();
+        final ConditionVariable onBeforeConnectionSetupCalled = new ConditionVariable();
+        final ConditionVariable onConnectionEstablishedCalled = new ConditionVariable();
+        final ConditionVariable onConnectionLostCalled = new ConditionVariable();
 
         final ChildProcessLauncher.Delegate delegate = new ChildProcessLauncher.Delegate() {
             @Override
             public void onBeforeConnectionAllocated(Bundle serviceBundle) {
                 // Should only be called when the ChildProcessLauncher creates the connection.
                 Assert.assertFalse(launcherFactory.isConnectionProvided());
-                Assert.assertEquals(0, onBeforeConnectionAllocatedHelper.getCallCount());
                 serviceBundle.putString(EXTRA_SERVICE_PARAM, EXTRA_SERVICE_PARAM_VALUE);
-                onBeforeConnectionAllocatedHelper.notifyCalled();
+                onBeforeConnectionAllocatedCalled.open();
             }
 
             @Override
             public void onBeforeConnectionSetup(Bundle connectionBundle) {
                 connectionBundle.putString(EXTRA_CONNECTION_PARAM, EXTRA_CONNECTION_PARAM_VALUE);
-                Assert.assertEquals(0, onBeforeConnectionSetupHelper.getCallCount());
-                onBeforeConnectionSetupHelper.notifyCalled();
+                onBeforeConnectionSetupCalled.open();
             }
 
             @Override
             public void onConnectionEstablished(ChildProcessConnection connection) {
-                Assert.assertEquals(0, onConnectionEstablishedHelper.getCallCount());
-                onConnectionEstablishedHelper.notifyCalled();
+                onConnectionEstablishedCalled.open();
             }
 
             @Override
             public void onConnectionLost(ChildProcessConnection connection) {
-                Assert.assertEquals(0, onConnectionLostHelper.getCallCount());
-                onConnectionLostHelper.notifyCalled();
+                onConnectionLostCalled.open();
             }
         };
 
@@ -250,13 +235,13 @@ public class ChildProcessLauncherTest {
         Assert.assertNotNull(processLauncher);
 
         if (!launcherFactory.isConnectionProvided()) {
-            onBeforeConnectionAllocatedHelper.waitForCallback(0 /* currentCallback */);
+            Assert.assertTrue(onBeforeConnectionAllocatedCalled.block(CONDITION_WAIT_TIMEOUT_MS));
         }
 
-        onBeforeConnectionSetupHelper.waitForCallback(0 /* currentCallback */);
+        Assert.assertTrue(onBeforeConnectionSetupCalled.block(CONDITION_WAIT_TIMEOUT_MS));
 
         // Wait for the service to notify its onConnectionSetup was called.
-        childProcessBinder.waitForOnConnectionSetupCalled();
+        Assert.assertTrue(childProcessBinder.waitForOnConnectionSetupCalled());
         Assert.assertTrue(childProcessBinder.mServiceCreated);
         Assert.assertNotNull(childProcessBinder.mServiceBundle);
         Assert.assertNotNull(childProcessBinder.mConnectionBundle);
@@ -268,18 +253,18 @@ public class ChildProcessLauncherTest {
                 childProcessBinder.mConnectionBundle.getString(EXTRA_CONNECTION_PARAM));
 
         // Wait for the client onConnectionEstablished call.
-        onConnectionEstablishedHelper.waitForCallback(0 /* currentCallback */);
+        Assert.assertTrue(onConnectionEstablishedCalled.block(CONDITION_WAIT_TIMEOUT_MS));
 
         // Wait for the service to notify its library got loaded.
-        childProcessBinder.waitForOnNativeLibraryCalled();
+        Assert.assertTrue(childProcessBinder.waitForOnNativeLibraryCalled());
         Assert.assertTrue(childProcessBinder.mNativeLibraryLoaded);
 
         // Wait for the service to notify its onBeforeMain was called.
-        childProcessBinder.waitOnBeforeMainCalled();
+        Assert.assertTrue(childProcessBinder.waitOnBeforeMainCalled());
         Assert.assertArrayEquals(commandLine, childProcessBinder.mCommandLine);
 
         // Wait for the service to notify its onRunMain was called.
-        childProcessBinder.waitOnRunMainCalled();
+        Assert.assertTrue(childProcessBinder.waitOnRunMainCalled());
 
         // Stop the launcher.
         ChildProcessLauncherTestUtils.runOnLauncherThreadBlocking(new Runnable() {
@@ -289,15 +274,15 @@ public class ChildProcessLauncherTest {
             }
         });
         // Wait for service to notify its onDestroy was called.
-        childProcessBinder.waitOnDestroyCalled();
+        // Assert.assertTrue(childProcessBinder.waitOnDestroyCalled());
         // The client should also get a notification that the connection was lost.
-        onConnectionLostHelper.waitForCallback(0 /* currentCallback */);
+        Assert.assertTrue(onConnectionLostCalled.block(CONDITION_WAIT_TIMEOUT_MS));
     }
 
     @Test
     @LargeTest
     @Feature({"ProcessManagement"})
-    public void testLaunchServiceCreatedWithConnectionAllocator() throws Exception {
+    public void testLaunchServiceCreatedWithConnectionAllocator() {
         final ChildProcessLauncherFactory childProcessLauncherFactory =
                 new ChildProcessLauncherFactory(false /* providesConnection */) {
                     @Override
@@ -315,7 +300,7 @@ public class ChildProcessLauncherTest {
     @Test
     @LargeTest
     @Feature({"ProcessManagement"})
-    public void testLaunchServiceCreatedWithBoundConnection() throws Exception {
+    public void testLaunchServiceCreatedWithBoundConnection() {
         // Wraps the serviceCallback provided by the ChildProcessLauncher so that the
         // ChildProcessConnection can forward to them appropriately.
         final AtomicReference<ChildProcessConnection.ServiceCallback> serviceCallbackWrapper =
@@ -329,7 +314,8 @@ public class ChildProcessLauncherTest {
                         Context context =
                                 InstrumentationRegistry.getInstrumentation().getTargetContext();
                         ComponentName serviceName =
-                                new ComponentName(SERVICE_PACKAGE_NAME, SERVICE0_FULL_NAME);
+                                new ComponentName("org.chromium.content_shell_apk",
+                                        "org.chromium.content_shell_apk.TestChildProcessService0");
                         ChildProcessConnection connection = new ChildProcessConnection(context,
                                 serviceName, false /* bindAsExternalService */,
                                 new Bundle() /* serviceBundle */, null /* creationParams */);

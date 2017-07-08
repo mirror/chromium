@@ -33,7 +33,7 @@ using ::payment_request_util::GetShippingAddressLabelFromAutofillProfile;
 // The PaymentRequest object owning an instance of web::PaymentRequest as
 // provided by the page invoking the Payment Request API. This is a weak
 // pointer and should outlive this class.
-@property(nonatomic, assign) payments::PaymentRequest* paymentRequest;
+@property(nonatomic, assign) PaymentRequest* paymentRequest;
 
 // The selectable items to display in the collection.
 @property(nonatomic, strong) NSMutableArray<AutofillProfileItem*>* items;
@@ -48,8 +48,7 @@ using ::payment_request_util::GetShippingAddressLabelFromAutofillProfile;
 @synthesize paymentRequest = _paymentRequest;
 @synthesize items = _items;
 
-- (instancetype)initWithPaymentRequest:
-    (payments::PaymentRequest*)paymentRequest {
+- (instancetype)initWithPaymentRequest:(PaymentRequest*)paymentRequest {
   self = [super init];
   if (self) {
     _paymentRequest = paymentRequest;

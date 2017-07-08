@@ -205,11 +205,11 @@ void Scheduler::ClearUnknownGeneratedInputsAndWrittenFiles() {
 }
 
 void Scheduler::IncrementWorkCount() {
-  work_count_.Increment();
+  base::AtomicRefCountInc(&work_count_);
 }
 
 void Scheduler::DecrementWorkCount() {
-  if (!work_count_.Decrement()) {
+  if (!base::AtomicRefCountDec(&work_count_)) {
     if (task_runner()->BelongsToCurrentThread()) {
       OnComplete();
     } else {

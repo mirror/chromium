@@ -59,21 +59,24 @@ function getCookieDataCategoryText(dataType, totalUsage) {
 cr.define('settings', function() {
   'use strict';
 
-  class CookieTreeNode {
-    constructor(data) {
-      /**
-       * The data for this cookie node.
-       * @type {CookieDetails}
-       */
-      this.data = data;
+  /**
+   * @constructor
+   */
+  function CookieTreeNode(data) {
+    /**
+     * The data for this cookie node.
+     * @type {CookieDetails}
+     */
+    this.data = data;
 
-      /**
-       * The child cookie nodes.
-       * @private {!Array<!settings.CookieTreeNode>}
-       */
-      this.children_ = [];
-    }
+    /**
+     * The child cookie nodes.
+     * @private {!Array<!settings.CookieTreeNode>}
+     */
+    this.children_ = [];
+  }
 
+  CookieTreeNode.prototype = {
     /**
      * Converts a list of cookies and add them as CookieTreeNode children to
      * the given parent node.
@@ -82,12 +85,12 @@ cr.define('settings', function() {
      * @param {!Array<!CookieDetails>} newNodes The list containing the data to
      *     add.
      */
-    addChildNodes(parentNode, newNodes) {
+    addChildNodes: function(parentNode, newNodes) {
       var nodes = newNodes.map(function(x) {
         return new settings.CookieTreeNode(x);
       });
       parentNode.children_ = nodes;
-    }
+    },
 
     /**
      * Looks up a parent node and adds a list of CookieTreeNodes to them.
@@ -98,7 +101,7 @@ cr.define('settings', function() {
          add.
      * @return {boolean} True if the parent node was found.
      */
-    populateChildNodes(parentId, startingNode, newNodes) {
+    populateChildNodes: function(parentId, startingNode, newNodes) {
       for (var i = 0; i < startingNode.children_.length; ++i) {
         if (startingNode.children_[i].data.id == parentId) {
           this.addChildNodes(startingNode.children_[i], newNodes);
@@ -111,7 +114,7 @@ cr.define('settings', function() {
         }
       }
       return false;
-    }
+    },
 
     /**
      * Removes child nodes from a node with a given id.
@@ -120,16 +123,16 @@ cr.define('settings', function() {
      *     from.
      * @param {number} count The number of children to delete.
      */
-    removeByParentId(id, firstChild, count) {
+    removeByParentId: function(id, firstChild, count) {
       var node = id == null ? this : this.fetchNodeById(id, true);
       node.children_.splice(firstChild, count);
-    }
+    },
 
     /**
      * Returns an array of cookies from the current node within the cookie tree.
      * @return {!Array<!CookieDataItem>} The Cookie List.
      */
-    getCookieList() {
+    getCookieList: function() {
       var list = [];
       for (var i = 0; i < this.children_.length; i++) {
         var child = this.children_[i];
@@ -144,13 +147,13 @@ cr.define('settings', function() {
       }
 
       return list;
-    }
+    },
 
     /**
      * Get a summary list of all sites and their stored data.
      * @return {!Array<!CookieDataSummaryItem>} The summary list.
      */
-    getSummaryList() {
+    getSummaryList: function() {
       var list = [];
       for (var i = 0; i < this.children_.length; ++i) {
         var siteEntry = this.children_[i];
@@ -191,7 +194,7 @@ cr.define('settings', function() {
         return a.site.localeCompare(b.site);
       });
       return list;
-    }
+    },
 
     /**
      * Fetch a CookieTreeNode by ID.
@@ -199,7 +202,7 @@ cr.define('settings', function() {
      * @param {boolean} recursive Whether to search the children also.
      * @return {settings.CookieTreeNode} The node found, if any.
      */
-    fetchNodeById(id, recursive) {
+    fetchNodeById: function(id, recursive) {
       for (var i = 0; i < this.children_.length; ++i) {
         if (this.children_[i] == null)
           return null;
@@ -212,21 +215,21 @@ cr.define('settings', function() {
         }
       }
       return null;
-    }
+    },
 
     /**
      * Fetch a CookieTreeNode by site.
      * @param {string} site The web site to look up.
      * @return {?settings.CookieTreeNode} The node found, if any.
      */
-    fetchNodeBySite(site) {
+    fetchNodeBySite: function(site) {
       for (var i = 0; i < this.children_.length; ++i) {
         if (this.children_[i].data.title == site)
           return this.children_[i];
       }
       return null;
-    }
-  }
+    },
+  };
 
   return {
     CookieTreeNode: CookieTreeNode,

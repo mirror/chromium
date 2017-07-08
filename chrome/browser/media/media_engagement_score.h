@@ -55,13 +55,7 @@ class MediaEngagementScore final {
     return last_media_playback_time_;
   }
 
-  void SetVisits(int visits) { visits_ = visits; }
-  void SetMediaPlaybacks(int media_playbacks) {
-    media_playbacks_ = media_playbacks;
-  }
-
  private:
-  friend class MediaEngagementServiceTest;
   friend class MediaEngagementScoreTest;
 
   // Used for tests.

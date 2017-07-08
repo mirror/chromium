@@ -14,18 +14,18 @@ namespace blink {
 class HTMLImportChild;
 class KURL;
 
-class HTMLImportTreeRoot final : public HTMLImport {
+class HTMLImportTreeRoot : public HTMLImport {
  public:
   static HTMLImportTreeRoot* Create(Document*);
 
-  ~HTMLImportTreeRoot() final;
+  ~HTMLImportTreeRoot() override;
   void Dispose();
 
-  // HTMLImport overrides:
-  Document* GetDocument() const final;
-  bool HasFinishedLoading() const final;
-  void StateWillChange() final;
-  void StateDidChange() final;
+  // HTMLImport
+  Document* GetDocument() const override;
+  bool HasFinishedLoading() const override;
+  void StateWillChange() override;
+  void StateDidChange() override;
 
   void ScheduleRecalcState();
 

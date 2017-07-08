@@ -53,8 +53,8 @@ class AppShimInteractiveTest : public extensions::PlatformAppBrowserTest {
 
   // testing::Test:
   void SetUp() override {
-    scoped_feature_list_.InitAndEnableFeature(features::kBookmarkApps);
     PlatformAppBrowserTest::SetUp();
+    scoped_feature_list_.InitAndEnableFeature(features::kBookmarkApps);
   }
 
   // Install a test app of |type| and reliably wait for its app shim to be

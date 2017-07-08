@@ -7,6 +7,5 @@
 [
     RuntimeEnabled=PaymentApp
 ] partial interface ServiceWorkerGlobalScope {
-    attribute EventHandler oncanmakepayment;
     attribute EventHandler onpaymentrequest;
 };

@@ -4,7 +4,9 @@
 
 #include "services/resource_coordinator/coordination_unit/coordination_unit_impl.h"
 
+#include <memory>
 #include <unordered_map>
+#include <utility>
 
 #include "base/strings/string_number_conversions.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
@@ -12,11 +14,6 @@
 #include "services/resource_coordinator/public/cpp/coordination_unit_id.h"
 
 namespace resource_coordinator {
-
-#define NOTIFY_OBSERVERS(observers, Method, ...) \
-  for (auto& observer : observers) {             \
-    observer.Method(__VA_ARGS__);                \
-  }
 
 namespace {
 
@@ -162,7 +159,9 @@ bool CoordinationUnitImpl::AddChild(CoordinationUnitImpl* child) {
       children_.count(child) ? false : children_.insert(child).second;
 
   if (success) {
-    NOTIFY_OBSERVERS(observers_, OnChildAdded, this, child);
+    for (auto& observer : observers_) {
+      observer.OnChildAdded(this, child);
+    }
   }
 
   return success;
@@ -192,7 +191,9 @@ bool CoordinationUnitImpl::RemoveChild(CoordinationUnitImpl* child) {
   bool success = children_removed > 0;
 
   if (success) {
-    NOTIFY_OBSERVERS(observers_, OnChildRemoved, this, child);
+    for (auto& observer : observers_) {
+      observer.OnChildRemoved(this, child);
+    }
   }
 
   return success;
@@ -202,7 +203,9 @@ void CoordinationUnitImpl::AddParent(CoordinationUnitImpl* parent) {
   DCHECK_EQ(0u, parents_.count(parent));
   parents_.insert(parent);
 
-  NOTIFY_OBSERVERS(observers_, OnParentAdded, this, parent);
+  for (auto& observer : observers_) {
+    observer.OnParentAdded(this, parent);
+  }
 
   RecalcCoordinationPolicy();
 }
@@ -213,7 +216,9 @@ void CoordinationUnitImpl::RemoveParent(CoordinationUnitImpl* parent) {
 
   // TODO(matthalp, oysteine) should this go before or
   // after RecalcCoordinationPolicy?
-  NOTIFY_OBSERVERS(observers_, OnParentRemoved, this, parent);
+  for (auto& observer : observers_) {
+    observer.OnParentRemoved(this, parent);
+  }
 
   RecalcCoordinationPolicy();
 }
@@ -300,37 +305,40 @@ CoordinationUnitImpl::GetAssociatedCoordinationUnitsOfType(
 }
 
 base::Value CoordinationUnitImpl::GetProperty(
-    const mojom::PropertyType property_type) const {
-  auto value_it = properties_.find(property_type);
+    mojom::PropertyType property) const {
+  auto value_it = property_store_.find(property);
 
-  return value_it != properties_.end() ? value_it->second : base::Value();
+  return value_it != property_store_.end() ? value_it->second : base::Value();
 }
 
-void CoordinationUnitImpl::ClearProperty(
-    const mojom::PropertyType property_type) {
-  properties_.erase(property_type);
+void CoordinationUnitImpl::ClearProperty(mojom::PropertyType property) {
+  property_store_.erase(property);
 }
 
 void CoordinationUnitImpl::SetProperty(mojom::PropertyPtr property) {
-  SetProperty(property->property_type, *property->value);
-  PropagateProperty(property);
-  NOTIFY_OBSERVERS(observers_, OnPropertyChanged, this, property);
+  SetProperty(property->property, *property->value);
 }
 
-void CoordinationUnitImpl::SetProperty(mojom::PropertyType property_type,
+void CoordinationUnitImpl::SetProperty(mojom::PropertyType property,
                                        base::Value value) {
   // setting a property with an empty value is effectively clearing the
   // value from storage
   if (value.IsType(base::Value::Type::NONE)) {
-    ClearProperty(property_type);
+    ClearProperty(property);
     return;
   }
 
-  properties_[property_type] = value;
+  property_store_[property] = value;
+
+  for (auto& observer : observers_) {
+    observer.OnPropertyChanged(this, property);
+  }
 }
 
-void CoordinationUnitImpl::BeforeDestroyed() {
-  NOTIFY_OBSERVERS(observers_, OnBeforeCoordinationUnitDestroyed, this);
+void CoordinationUnitImpl::WillBeDestroyed() {
+  for (auto& observer : observers_) {
+    observer.OnCoordinationUnitWillBeDestroyed(this);
+  }
 }
 
 void CoordinationUnitImpl::AddObserver(
@@ -341,6 +349,34 @@ void CoordinationUnitImpl::AddObserver(
 void CoordinationUnitImpl::RemoveObserver(
     CoordinationUnitGraphObserver* observer) {
   observers_.RemoveObserver(observer);
+}
+
+// static
+bool CoordinationUnitImpl::IsCoordinationUnitType(
+    const CoordinationUnitImpl* coordination_unit,
+    CoordinationUnitType type) {
+  return coordination_unit->id().type == type;
+}
+
+// static
+bool CoordinationUnitImpl::IsFrameCoordinationUnit(
+    const CoordinationUnitImpl* coordination_unit) {
+  return IsCoordinationUnitType(coordination_unit,
+                                CoordinationUnitType::kFrame);
+}
+
+// static
+bool CoordinationUnitImpl::IsProcessCoordinationUnit(
+    const CoordinationUnitImpl* coordination_unit) {
+  return IsCoordinationUnitType(coordination_unit,
+                                CoordinationUnitType::kProcess);
+}
+
+// static
+bool CoordinationUnitImpl::IsWebContentsCoordinationUnit(
+    const CoordinationUnitImpl* coordination_unit) {
+  return IsCoordinationUnitType(coordination_unit,
+                                CoordinationUnitType::kWebContents);
 }
 
 }  // namespace resource_coordinator

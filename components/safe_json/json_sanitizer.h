@@ -36,6 +36,10 @@ class JsonSanitizer {
                        const StringCallback& success_callback,
                        const StringCallback& error_callback);
 
+#if defined(OS_ANDROID)
+  static bool Register(JNIEnv* env);
+#endif
+
  protected:
   JsonSanitizer() {}
   ~JsonSanitizer() {}

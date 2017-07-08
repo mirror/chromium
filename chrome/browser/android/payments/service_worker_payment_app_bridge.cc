@@ -12,6 +12,7 @@
 #include "chrome/browser/profiles/profile_manager.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/payment_app_provider.h"
+#include "content/public/browser/stored_payment_instrument.h"
 #include "content/public/browser/web_contents.h"
 #include "jni/ServiceWorkerPaymentAppBridge_jni.h"
 #include "third_party/WebKit/public/platform/modules/payments/payment_app.mojom.h"
@@ -41,19 +42,24 @@ void OnGotAllPaymentApps(const JavaRef<jobject>& jweb_contents,
                          content::PaymentAppProvider::PaymentApps apps) {
   JNIEnv* env = AttachCurrentThread();
 
+  // TODO(gogerald): Present payment app instead of instruments to user,
+  // crbug.com/735063.
   for (const auto& app_info : apps) {
+    ScopedJavaLocalRef<jobject> java_instruments =
+        Java_ServiceWorkerPaymentAppBridge_createInstrumentList(env);
+    for (const auto& instrument : app_info.second->instruments) {
+      Java_ServiceWorkerPaymentAppBridge_addInstrument(
+          env, java_instruments, jweb_contents,
+          app_info.second->registration_id,
+          ConvertUTF8ToJavaString(env, instrument->instrument_key),
+          ConvertUTF8ToJavaString(env, instrument->name),
+          ToJavaArrayOfStrings(env, instrument->enabled_methods),
+          instrument->icon == nullptr
+              ? nullptr
+              : gfx::ConvertToJavaBitmap(instrument->icon.get()));
+    }
     Java_ServiceWorkerPaymentAppBridge_onPaymentAppCreated(
-        env, app_info.second->registration_id,
-        ConvertUTF8ToJavaString(env, app_info.second->name),
-        // Do not show duplicate information.
-        app_info.second->name.compare(app_info.second->origin.Serialize()) == 0
-            ? nullptr
-            : ConvertUTF8ToJavaString(env, app_info.second->origin.Serialize()),
-        app_info.second->icon == nullptr
-            ? nullptr
-            : gfx::ConvertToJavaBitmap(app_info.second->icon.get()),
-        ToJavaArrayOfStrings(env, app_info.second->enabled_methods),
-        jweb_contents, jcallback);
+        env, java_instruments, jweb_contents, jcallback);
   }
   Java_ServiceWorkerPaymentAppBridge_onAllPaymentAppsCreated(env, jcallback);
 }
@@ -97,6 +103,7 @@ static void InvokePaymentApp(
     const JavaParamRef<jobjectArray>& jmethod_data,
     const JavaParamRef<jobject>& jtotal,
     const JavaParamRef<jobjectArray>& jmodifiers,
+    const JavaParamRef<jstring>& jinstrument_key,
     const JavaParamRef<jobject>& jcallback) {
   content::WebContents* web_contents =
       content::WebContents::FromJavaWebContents(jweb_contents);
@@ -175,6 +182,8 @@ static void InvokePaymentApp(
 
     event_data->modifiers.push_back(std::move(modifier));
   }
+
+  event_data->instrument_key = ConvertJavaStringToUTF8(env, jinstrument_key);
 
   content::PaymentAppProvider::GetInstance()->InvokePaymentApp(
       web_contents->GetBrowserContext(), registration_id, std::move(event_data),

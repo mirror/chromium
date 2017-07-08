@@ -397,7 +397,7 @@ bool Builder::AddActionValuesDep(BuilderRecord* record,
   if (action_values.pool().label.is_null())
     return true;
 
-  BuilderRecord* pool_record = GetOrCreateRecordOfType(
+  BuilderRecord* pool_record = GetResolvedRecordOfType(
       action_values.pool().label, action_values.pool().origin,
       BuilderRecord::ITEM_POOL, err);
   if (!pool_record)

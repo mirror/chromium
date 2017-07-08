@@ -766,7 +766,8 @@ bool NetworkQualityEstimator::RequestProvidesRTTObservation(
 
   bool private_network_request = nqe::internal::IsPrivateHost(
       request.context()->host_resolver(),
-      HostPortPair(request.url().host(), request.url().EffectiveIntPort()));
+      HostPortPair(request.url().host(), request.url().EffectiveIntPort()),
+      net_log_);
 
   return (use_localhost_requests_ || !private_network_request) &&
          // Verify that response headers are received, so it can be ensured that

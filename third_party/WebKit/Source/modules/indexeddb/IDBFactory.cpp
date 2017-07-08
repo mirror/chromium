@@ -66,7 +66,8 @@ static bool IsContextValid(ExecutionContext* context) {
 IDBRequest* IDBFactory::GetDatabaseNames(ScriptState* script_state,
                                          ExceptionState& exception_state) {
   IDB_TRACE("IDBFactory::getDatabaseNamesRequestSetup");
-  IDBRequest::AsyncTraceState metrics("IDBFactory::getDatabaseNames");
+  IDBRequest::AsyncTraceState metrics("IDBFactory::getDatabaseNames", this,
+                                      ++next_tracing_id_);
   IDBRequest* request = IDBRequest::Create(script_state, IDBAny::CreateNull(),
                                            nullptr, std::move(metrics));
   // TODO(jsbell): Used only by inspector; remove unneeded checks/exceptions?
@@ -111,7 +112,8 @@ IDBOpenDBRequest* IDBFactory::OpenInternal(ScriptState* script_state,
                                            int64_t version,
                                            ExceptionState& exception_state) {
   IDB_TRACE1("IDBFactory::open", "name", name.Utf8());
-  IDBRequest::AsyncTraceState metrics("IDBFactory::open");
+  IDBRequest::AsyncTraceState metrics("IDBFactory::open", this,
+                                      ++next_tracing_id_);
   IDBDatabase::RecordApiCallsHistogram(kIDBOpenCall);
   DCHECK(version >= 1 || version == IDBDatabaseMetadata::kNoVersion);
   if (!IsContextValid(ExecutionContext::From(script_state)))
@@ -174,7 +176,8 @@ IDBOpenDBRequest* IDBFactory::DeleteDatabaseInternal(
     ExceptionState& exception_state,
     bool force_close) {
   IDB_TRACE1("IDBFactory::deleteDatabase", "name", name.Utf8());
-  IDBRequest::AsyncTraceState metrics("IDBFactory::deleteDatabase");
+  IDBRequest::AsyncTraceState metrics("IDBFactory::deleteDatabase", this,
+                                      ++next_tracing_id_);
   IDBDatabase::RecordApiCallsHistogram(kIDBDeleteDatabaseCall);
   if (!IsContextValid(ExecutionContext::From(script_state)))
     return nullptr;

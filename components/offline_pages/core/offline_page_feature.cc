@@ -52,9 +52,6 @@ const base::Feature kNewBackgroundLoaderFeature {
     "BackgroundLoader", base::FEATURE_DISABLED_BY_DEFAULT
 };
 
-const base::Feature kOfflinePagesCTV2Feature{"OfflinePagesCTV2",
-                                             base::FEATURE_DISABLED_BY_DEFAULT};
-
 bool IsOfflineBookmarksEnabled() {
   return base::FeatureList::IsEnabled(kOfflineBookmarksFeature);
 }
@@ -99,10 +96,6 @@ bool ShouldUseNewBackgroundLoader() {
 bool ShouldUseTestingSnapshotDelay() {
   base::CommandLine* cl = base::CommandLine::ForCurrentProcess();
   return cl->HasSwitch(switches::kOfflinePagesUseTestingSnapshotDelay);
-}
-
-bool IsOfflinePagesCTV2Enabled() {
-  return base::FeatureList::IsEnabled(kOfflinePagesCTV2Feature);
 }
 
 }  // namespace offline_pages

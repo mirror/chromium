@@ -216,15 +216,16 @@ KURL UrlWithoutFragment(const KURL& url) {
 String MixedContentTypeForContextType(WebMixedContentContextType context_type) {
   switch (context_type) {
     case WebMixedContentContextType::kNotMixedContent:
-      return protocol::Security::MixedContentTypeEnum::None;
+      return protocol::Network::Request::MixedContentTypeEnum::None;
     case WebMixedContentContextType::kBlockable:
-      return protocol::Security::MixedContentTypeEnum::Blockable;
+      return protocol::Network::Request::MixedContentTypeEnum::Blockable;
     case WebMixedContentContextType::kOptionallyBlockable:
     case WebMixedContentContextType::kShouldBeBlockable:
-      return protocol::Security::MixedContentTypeEnum::OptionallyBlockable;
+      return protocol::Network::Request::MixedContentTypeEnum::
+          OptionallyBlockable;
   }
 
-  return protocol::Security::MixedContentTypeEnum::None;
+  return protocol::Network::Request::MixedContentTypeEnum::None;
 }
 
 String ResourcePriorityJSON(ResourceLoadPriority priority) {

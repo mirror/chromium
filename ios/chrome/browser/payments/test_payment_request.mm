@@ -14,8 +14,6 @@
 #error "This file requires ARC support."
 #endif
 
-namespace payments {
-
 void TestPaymentRequest::ClearShippingProfiles() {
   shipping_profiles_.clear();
 }
@@ -24,8 +22,8 @@ void TestPaymentRequest::ClearContactProfiles() {
   contact_profiles_.clear();
 }
 
-void TestPaymentRequest::ClearPaymentMethods() {
-  payment_methods_.clear();
+void TestPaymentRequest::ClearCreditCards() {
+  credit_cards_.clear();
 }
 
 autofill::RegionDataLoader* TestPaymentRequest::GetRegionDataLoader() {
@@ -40,10 +38,8 @@ PrefService* TestPaymentRequest::GetPrefService() {
   return PaymentRequest::GetPrefService();
 }
 
-PaymentsProfileComparator* TestPaymentRequest::profile_comparator() {
+payments::PaymentsProfileComparator* TestPaymentRequest::profile_comparator() {
   if (profile_comparator_)
     return profile_comparator_;
   return PaymentRequest::profile_comparator();
 }
-
-}  // namespace payments

@@ -4,26 +4,26 @@
 
 cr.exportPath('settings');
 
-cr.define('settings', function() {
-  /** @interface */
-  class DirectionDelegate {
-    /**
-     * @return {boolean} Whether the direction of the settings UI is
-     *     right-to-left.
-     */
-    isRtl() {}
-  }
+/** @interface */
+settings.DirectionDelegate = function() {};
 
-  /** @implements {settings.DirectionDelegate} */
-  class DirectionDelegateImpl {
-    /** @override */
-    isRtl() {
-      return loadTimeData.getString('textdirection') == 'rtl';
-    }
-  }
+settings.DirectionDelegate.prototype = {
+  /**
+   * @return {boolean} Whether the direction of the settings UI is
+   *     right-to-left.
+   */
+  isRtl: assertNotReached,
+};
 
-  return {
-    DirectionDelegate: DirectionDelegate,
-    DirectionDelegateImpl: DirectionDelegateImpl,
-  };
-});
+/**
+ * @implements {settings.DirectionDelegate}
+ * @constructor
+ */
+settings.DirectionDelegateImpl = function() {};
+
+settings.DirectionDelegateImpl.prototype = {
+  /** @override */
+  isRtl: function() {
+    return loadTimeData.getString('textdirection') == 'rtl';
+  },
+};

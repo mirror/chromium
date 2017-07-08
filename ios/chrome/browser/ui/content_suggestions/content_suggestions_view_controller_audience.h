@@ -11,8 +11,6 @@
 // Notifies the audience that the content suggestions collection has been
 // scrolled.
 - (void)contentSuggestionsDidScroll;
-// Notifies the audience that the promo has been shown.
-- (void)promoShown;
 
 @end
 

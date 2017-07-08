@@ -55,5 +55,9 @@ jlong DomDistillerServiceAndroid::GetDistilledPagePrefsPtr(
   return reinterpret_cast<intptr_t>(service_->GetDistilledPagePrefs());
 }
 
+bool DomDistillerServiceAndroid::Register(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}
+
 }  // namespace android
 }  // namespace dom_distiller

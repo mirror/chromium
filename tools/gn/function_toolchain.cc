@@ -496,7 +496,7 @@ Value RunToolchain(Scope* scope,
     *err = Err(function, "Can't define a toolchain in this context.");
     return Value();
   }
-  collector->push_back(std::move(toolchain));
+  collector->push_back(toolchain.release());
   return Value();
 }
 

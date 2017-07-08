@@ -57,21 +57,17 @@ class ReportingGarbageCollectorImpl : public ReportingGarbageCollector,
     std::vector<const ReportingReport*> all_reports;
     context_->cache()->GetReports(&all_reports);
 
-    std::vector<const ReportingReport*> failed_reports;
-    std::vector<const ReportingReport*> expired_reports;
+    std::vector<const ReportingReport*> reports_to_remove;
     for (const ReportingReport* report : all_reports) {
-      if (report->attempts >= policy.max_report_attempts)
-        failed_reports.push_back(report);
-      else if (now - report->queued >= policy.max_report_age)
-        expired_reports.push_back(report);
+      if (now - report->queued >= policy.max_report_age ||
+          report->attempts >= policy.max_report_attempts) {
+        reports_to_remove.push_back(report);
+      }
     }
 
     // Don't restart the timer on the garbage collector's own updates.
     context_->RemoveObserver(this);
-    context_->cache()->RemoveReports(failed_reports,
-                                     ReportingReport::Outcome::ERASED_FAILED);
-    context_->cache()->RemoveReports(expired_reports,
-                                     ReportingReport::Outcome::ERASED_EXPIRED);
+    context_->cache()->RemoveReports(reports_to_remove);
     context_->AddObserver(this);
   }
 

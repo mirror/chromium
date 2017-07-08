@@ -4,8 +4,6 @@
 
 #include "base/files/file_util.h"
 #include "base/strings/stringprintf.h"
-#include "base/strings/utf_string_conversions.h"
-#include "build/build_config.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "third_party/protobuf/src/google/protobuf/text_format.h"
@@ -65,14 +63,7 @@ int main(int argc, char* argv[]) {
   bool full_run = command_line.HasSwitch("full-run");
   base::FilePath summary_file = command_line.GetSwitchValuePath("summary-file");
   base::FilePath ids_file = command_line.GetSwitchValuePath("ids-file");
-  std::vector<std::string> path_filters;
-
-#if defined(OS_WIN)
-  for (const auto& path : command_line.GetArgs())
-    path_filters.push_back(base::UTF16ToASCII(path));
-#else
-  path_filters = command_line.GetArgs();
-#endif
+  base::CommandLine::StringVector path_filters = command_line.GetArgs();
 
   // If source path is not provided, guess it using build path or current
   // directory.
@@ -84,9 +75,8 @@ int main(int argc, char* argv[]) {
                         .Append(base::FilePath::kParentDirectory);
   }
 
-  TrafficAnnotationAuditor auditor(source_path, build_path);
-
   // Extract annotations.
+  std::string raw_output;
   if (extractor_input.empty()) {
     // Get build directory, if it is empty issue an error.
     if (build_path.empty()) {
@@ -96,37 +86,35 @@ int main(int argc, char* argv[]) {
              "extracted annotations already exist.\n";
       return 1;
     }
-    if (!auditor.RunClangTool(path_filters, full_run))
-      return 1;
 
-    // Write extractor output if requested.
-    if (!extractor_output.empty()) {
-      std::string raw_output = auditor.clang_tool_raw_output();
-      base::WriteFile(extractor_output, raw_output.c_str(),
-                      raw_output.length());
-    }
+    raw_output = traffic_annotation_auditor::RunClangTool(
+        source_path, build_path, path_filters, full_run);
   } else {
-    std::string raw_output;
     if (!base::ReadFileToString(extractor_input, &raw_output)) {
       LOG(ERROR) << "Could not read input file: "
                  << extractor_input.value().c_str();
       return 1;
-    } else {
-      auditor.set_clang_tool_raw_output(raw_output);
     }
   }
 
+  // Write extractor output if requested.
+  if (!extractor_output.empty() && extractor_input.empty()) {
+    base::WriteFile(extractor_output, raw_output.c_str(), raw_output.length());
+  }
+
   // Process extractor output.
-  if (!auditor.ParseClangToolRawOutput())
+  std::vector<traffic_annotation_auditor::AnnotationInstance>
+      annotation_instances;
+  std::vector<traffic_annotation_auditor::CallInstance> call_instances;
+  std::vector<traffic_annotation_auditor::AuditorResult> errors;
+
+  if (!traffic_annotation_auditor::ParseClangToolRawOutput(
+          raw_output, &annotation_instances, &call_instances, &errors)) {
     return 1;
+  }
 
   // Write the summary file.
   if (!summary_file.empty()) {
-    const std::vector<AnnotationInstance>& annotation_instances =
-        auditor.extracted_annotations();
-    const std::vector<CallInstance>& call_instances = auditor.extracted_calls();
-    const std::vector<AuditorResult>& errors = auditor.errors();
-
     std::string report;
     std::vector<std::string> items;
 
@@ -171,10 +159,8 @@ int main(int argc, char* argv[]) {
   if (!ids_file.empty()) {
     std::string report;
     std::vector<std::pair<int, std::string>> items;
-    const std::vector<AnnotationInstance>& annotation_instances =
-        auditor.extracted_annotations();
     for (auto& instance : annotation_instances) {
-      items.push_back(make_pair(TrafficAnnotationAuditor::ComputeHashValue(
+      items.push_back(make_pair(traffic_annotation_auditor::ComputeHashValue(
                                     instance.proto.unique_id()),
                                 instance.proto.unique_id()));
     }
@@ -204,10 +190,11 @@ int main(int argc, char* argv[]) {
   // Dump Errors and Warnings to stdout.
   // TODO(rhalavati@): The outputs are now limited to syntax errors. Will be
   // expanded when repository is full compatible.
-  const std::vector<AuditorResult>& errors = auditor.errors();
   for (const auto& error : errors) {
-    if (error.type() == AuditorResult::ResultType::ERROR_SYNTAX)
+    if (error.type() ==
+        traffic_annotation_auditor::AuditorResult::ResultType::ERROR_SYNTAX) {
       printf("Error: %s\n", error.ToText().c_str());
+    }
   }
 
   return 0;

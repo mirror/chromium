@@ -141,10 +141,6 @@ initWithCollectionController:
       }];
 }
 
-- (void)invalidateLayout {
-  [self.collectionView.collectionViewLayout invalidateLayout];
-}
-
 #pragma mark - ContentSuggestionsHeaderSynchronizing
 
 - (void)updateFakeOmniboxForScrollView:(UIScrollView*)scrollView {

@@ -14,6 +14,7 @@
 #include "modules/serviceworkers/ServiceWorkerGlobalScopeClient.h"
 #include "platform/bindings/ScriptState.h"
 #include "platform/wtf/RefPtr.h"
+#include "public/platform/WebFeature.h"
 #include "public/platform/WebString.h"
 
 namespace blink {

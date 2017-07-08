@@ -40,11 +40,11 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling Skia
   # and whatever else without interference from each other.
-  'skia_revision': 'c867a89b012c07e7e5cb719a31ed90e61f4a4901',
+  'skia_revision': 'cdb9a6de0a6da5b4ed2fe606b5c28818306b22ad',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling V8
   # and whatever else without interference from each other.
-  'v8_revision': 'd4cbe5ee89a184263c5cb373c8380eb6126f56aa',
+  'v8_revision': 'ddebefb50ab52b968fed0f9957c419e7acd2326f',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling swarming_client
   # and whatever else without interference from each other.
@@ -52,7 +52,7 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling ANGLE
   # and whatever else without interference from each other.
-  'angle_revision': '27a606316e1ec4ee7cd45178de40ae1a05235f45',
+  'angle_revision': 'e145def0fc48ed4b1c3ae1dd3ea2e6969e56bd45',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling build tools
   # and whatever else without interference from each other.
@@ -60,11 +60,11 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling SwiftShader
   # and whatever else without interference from each other.
-  'swiftshader_revision': '83a6bb93fd825b975161546ff92d6fb77a7a9c22',
+  'swiftshader_revision': '81aa97bd20033674ba28d779c05fbcee1539ebf7',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling PDFium
   # and whatever else without interference from each other.
-  'pdfium_revision': '2e1a32bc49f2b7b871cf0d04f25ec45b337f06fb',
+  'pdfium_revision': 'd7403971a25c317671e92ccc676a5f600ed223eb',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling openmax_dl
   # and whatever else without interference from each other.
@@ -92,11 +92,11 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling freetype
   # and whatever else without interference from each other.
-  'freetype_revision': 'c56d8851ea987023cc73981a70d261b3f6427545',
+  'freetype_revision': '7819aeb622a94be0d89caf8382f290d0266c4aed',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling catapult
   # and whatever else without interference from each other.
-  'catapult_revision': '6539cc70d9e1b8b9c67a3b7ff6a1a0da7a5a961d',
+  'catapult_revision': '34ef95cb09ce13d370163e36179981f566356c68',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling libFuzzer
   # and whatever else without interference from each other.
@@ -235,7 +235,7 @@ deps = {
     Var('chromium_git') + '/native_client/src/third_party/scons-2.0.1.git' + '@' + '1c1550e17fc26355d08627fbdec13d8291227067',
 
   'src/third_party/webrtc':
-    Var('chromium_git') + '/external/webrtc/trunk/webrtc.git' + '@' + '74848bb39b933921ca73a3ac9a0ef897b86aed94', # commit position 18908
+    Var('chromium_git') + '/external/webrtc/trunk/webrtc.git' + '@' + 'eb8eec46f7c57ab1bc38111c70ae08eb16b8793d', # commit position 18901
 
   'src/third_party/openmax_dl':
     Var('chromium_git') + '/external/webrtc/deps/third_party/openmax.git' + '@' +  Var('openmax_dl_revision'),
@@ -363,7 +363,7 @@ deps_os = {
       Var('chromium_git') + '/external/github.com/swisspol/GCDWebServer.git' + '@' + '43555c66627f6ed44817855a0f6d465f559d30e0',
 
     'src/ios/third_party/material_components_ios/src':
-      Var('chromium_git') + '/external/github.com/material-components/material-components-ios.git' + '@' + 'd08f9c0c1926fce2964cffbc163385896c86798a',
+      Var('chromium_git') + '/external/github.com/material-components/material-components-ios.git' + '@' + '3bb89d580683b81001fcfac3dc47651bd2c36bf9',
 
     'src/ios/third_party/material_font_disk_loader_ios/src':
       Var('chromium_git') + '/external/github.com/material-foundation/material-font-disk-loader-ios.git' + '@' + '8e30188777b016182658fbaa0a4a020a48183224',
@@ -426,7 +426,7 @@ deps_os = {
 
     # Graphics buffer allocator for Chrome OS.
     'src/third_party/minigbm/src':
-      Var('chromium_git') + '/chromiumos/platform/minigbm.git' + '@' + '3909dc011bf32c13858fb80c33a3cce68769cb26',
+      Var('chromium_git') + '/chromiumos/platform/minigbm.git' + '@' + '878fed4088662309dc57689650fa4648cc4b480b',
 
     # Userspace interface to kernel DRM services.
     'src/third_party/libdrm/src':
@@ -932,7 +932,7 @@ hooks = [
                 '--no_resume',
                 '--no_auth',
                 '--bucket', 'chromium-android-tools/checkstyle',
-                '-s', 'src/third_party/checkstyle/checkstyle-8.0-all.jar.sha1'
+                '-s', 'src/third_party/checkstyle/checkstyle-7.6.1-all.jar.sha1'
     ],
   },
 ]

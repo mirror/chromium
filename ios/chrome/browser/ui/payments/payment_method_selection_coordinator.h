@@ -12,10 +12,11 @@
 #import "ios/chrome/browser/ui/payments/credit_card_edit_coordinator.h"
 #import "ios/chrome/browser/ui/payments/payment_request_selector_view_controller.h"
 
-namespace payments {
-class PaymentInstrument;
 class PaymentRequest;
-}  // namespace payments
+
+namespace autofill {
+class CreditCard;
+}  // namespace autofill
 
 @class PaymentMethodSelectionCoordinator;
 
@@ -25,8 +26,7 @@ class PaymentRequest;
 // Notifies the delegate that the user has selected a payment method.
 - (void)paymentMethodSelectionCoordinator:
             (PaymentMethodSelectionCoordinator*)coordinator
-                   didSelectPaymentMethod:
-                       (payments::PaymentInstrument*)paymentMethod;
+                   didSelectPaymentMethod:(autofill::CreditCard*)paymentMethod;
 
 // Notifies the delegate that the user has chosen to return to the previous
 // screen without making a selection.
@@ -45,7 +45,7 @@ class PaymentRequest;
 // The PaymentRequest object having a copy of web::PaymentRequest as provided by
 // the page invoking the Payment Request API. This pointer is not owned by this
 // class and should outlive it.
-@property(nonatomic, assign) payments::PaymentRequest* paymentRequest;
+@property(nonatomic, assign) PaymentRequest* paymentRequest;
 
 // The delegate to be notified when the user selects a payment method or returns
 // without selecting a payment method.

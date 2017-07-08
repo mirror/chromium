@@ -39,6 +39,11 @@ InstanceIDAndroid::ScopedBlockOnAsyncTasksForTesting::
 }
 
 // static
+bool InstanceIDAndroid::RegisterJni(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}
+
+// static
 std::unique_ptr<InstanceID> InstanceID::CreateInternal(
     const std::string& app_id,
     gcm::GCMDriver* gcm_driver) {

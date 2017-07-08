@@ -36,7 +36,8 @@ static const SkColor kIncognitoEmphasizedColor = 0xFFEDEDED;
 static const SkColor kIncognitoSecureColor = 0xFFEDEDED;
 static const SkColor kIncognitoWarningColor = 0xFFEDEDED;
 
-static constexpr int kUrlWidthPixels = 1024;
+static constexpr int kUrlWidth = 400;
+static constexpr int kUrlHeight = 30;
 
 class TestUrlBarTexture : public UrlBarTexture {
  public:
@@ -45,15 +46,14 @@ class TestUrlBarTexture : public UrlBarTexture {
 
   void DrawURL(const GURL& gurl) {
     unsupported_mode_ = UiUnsupportedMode::kCount;
-    ToolbarState state(gurl, SecurityLevel::DANGEROUS,
+    ToolbarState state(gurl, SecurityLevel::HTTP_SHOW_WARNING,
                        &toolbar::kHttpsInvalidIcon,
                        base::UTF8ToUTF16("Not secure"), true);
     ASSERT_TRUE(state.should_display_url);
     SetToolbarState(state);
-    gfx::Size texture_size = GetPreferredTextureSize(kUrlWidthPixels);
     sk_sp<SkSurface> surface = SkSurface::MakeRasterN32Premul(
-        texture_size.width(), texture_size.height());
-    DrawAndLayout(surface->getCanvas(), texture_size);
+        texture_size_.width(), texture_size_.height());
+    DrawAndLayout(surface->getCanvas(), texture_size_);
   }
 
   static void TestUrlStyling(const base::string16& formatted_url,
@@ -75,9 +75,8 @@ class TestUrlBarTexture : public UrlBarTexture {
         gurl, url_formatter::kFormatUrlOmitAll, net::UnescapeRule::NORMAL,
         &parsed, nullptr, nullptr);
 
-    gfx::Size texture_size = GetPreferredTextureSize(kUrlWidthPixels);
     gfx::FontList font_list;
-    if (!GetFontList(texture_size.height(), text, &font_list))
+    if (!GetFontList(kUrlHeight, text, &font_list))
       return 0;
 
     return font_list.GetFonts().size();
@@ -95,13 +94,17 @@ class TestUrlBarTexture : public UrlBarTexture {
     unsupported_mode_ = mode;
   }
 
+  gfx::Size texture_size_;
+  gfx::Rect bounds_;
   UiUnsupportedMode unsupported_mode_ = UiUnsupportedMode::kCount;
 };
 
 TestUrlBarTexture::TestUrlBarTexture()
     : UrlBarTexture(false,
                     base::Bind(&TestUrlBarTexture::OnUnsupportedFeature,
-                               base::Unretained(this))) {
+                               base::Unretained(this))),
+      texture_size_(kUrlWidth, kUrlHeight),
+      bounds_(kUrlWidth, kUrlHeight) {
   gfx::FontList::SetDefaultFontDescription("Arial, Times New Roman, 15px");
 }
 
@@ -115,7 +118,6 @@ class MockRenderText : public RenderTextWrapper {
   MOCK_METHOD2(SetStyle, void(gfx::TextStyle style, bool value));
   MOCK_METHOD3(ApplyStyle,
                void(gfx::TextStyle style, bool value, const gfx::Range& range));
-  MOCK_METHOD1(SetStrikeThicknessFactor, void(SkScalar));
 
  private:
   DISALLOW_COPY_AND_ASSIGN(MockRenderText);
@@ -186,13 +188,11 @@ TEST_F(UrlEmphasisTest, DangerousHttpsHost) {
   EXPECT_CALL(mock_, SetColor(kDeemphasizedColor));
   EXPECT_CALL(mock_, ApplyColor(kEmphasizedColor, gfx::Range(8, 16)));
   EXPECT_CALL(mock_, ApplyColor(kWarningColor, gfx::Range(0, 5)));
-  EXPECT_CALL(mock_, SetStrikeThicknessFactor(testing::_));
   EXPECT_CALL(mock_,
               ApplyStyle(gfx::TextStyle::STRIKE, true, gfx::Range(0, 5)));
   EXPECT_CALL(mock_, SetColor(kIncognitoDeemphasizedColor));
   EXPECT_CALL(mock_, ApplyColor(kIncognitoEmphasizedColor, gfx::Range(8, 16)));
   EXPECT_CALL(mock_, ApplyColor(kIncognitoWarningColor, gfx::Range(0, 5)));
-  EXPECT_CALL(mock_, SetStrikeThicknessFactor(testing::_));
   EXPECT_CALL(mock_,
               ApplyStyle(gfx::TextStyle::STRIKE, true, gfx::Range(0, 5)));
   Verify("https://host.com/page", SecurityLevel::DANGEROUS,

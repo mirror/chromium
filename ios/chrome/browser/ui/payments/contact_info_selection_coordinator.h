@@ -12,13 +12,11 @@
 #import "ios/chrome/browser/ui/payments/contact_info_edit_coordinator.h"
 #import "ios/chrome/browser/ui/payments/payment_request_selector_view_controller.h"
 
+class PaymentRequest;
+
 namespace autofill {
 class AutofillProfile;
 }  // namespace autofill
-
-namespace payments {
-class PaymentRequest;
-}  // namespace payments
 
 @class ContactInfoSelectionCoordinator;
 
@@ -47,7 +45,7 @@ contactInfoSelectionCoordinator:(ContactInfoSelectionCoordinator*)coordinator
 // The PaymentRequest object having a copy of web::PaymentRequest as provided by
 // the page invoking the Payment Request API. This pointer is not owned by this
 // class and should outlive it.
-@property(nonatomic, assign) payments::PaymentRequest* paymentRequest;
+@property(nonatomic, assign) PaymentRequest* paymentRequest;
 
 // The delegate to be notified when the user selects a contact profile or
 // returns without selecting one.

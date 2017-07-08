@@ -241,7 +241,6 @@ class CONTENT_EXPORT VideoCaptureController
 
   // True if the controller has received a video frame from the device.
   bool has_received_frames_;
-  base::TimeTicks time_of_start_request_;
 
   base::Optional<media::VideoCaptureFormat> video_capture_format_;
 

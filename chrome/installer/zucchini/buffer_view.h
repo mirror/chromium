@@ -14,8 +14,10 @@
 namespace zucchini {
 namespace internal {
 
-// BufferViewBase should not be used directly; it is an implementation used for
-// both BufferView and MutableBufferView.
+// A class that encapsulates a contiguous sequence of raw data.
+// It does not own the memory region it encapsulates.
+// BufferViewBase should not be used directly; it is an implementation
+// used for both BufferView and MutableBufferView.
 template <class T>
 class BufferViewBase {
  public:
@@ -38,10 +40,7 @@ class BufferViewBase {
   BufferViewBase() = default;
 
   BufferViewBase(iterator first, size_type size)
-      : first_(first), last_(first_ + size) {
-    DCHECK(last_ >= first_);
-  }
-
+      : first_(first), last_(first_ + size) {}
   BufferViewBase(const BufferViewBase&) = default;
   BufferViewBase& operator=(const BufferViewBase&) = default;
 
@@ -54,10 +53,9 @@ class BufferViewBase {
 
   // Element access
 
-  // Returns the raw value at specified location |pos|.
-  // If |pos| is not within the range of the buffer, the process is terminated.
+  // Returns the raw value at specified location pos.
   reference operator[](size_type pos) const {
-    CHECK(first_ + pos < last_);
+    DCHECK(first_ + pos < last_);
     return first_[pos];
   }
 
@@ -80,10 +78,12 @@ class BufferViewBase {
 
 }  // namespace internal
 
-// Classes to encapsulate a contiguous sequence of raw data, without owning the
-// encapsulated memory regions. These are intended to be used as value types.
+// A class that encapsulates a constant contiguous sequence of raw data.
+// It does not own the memory region it refers to.
+using BufferView = internal::BufferViewBase<const uint8_t>;
 
-using ConstBufferView = internal::BufferViewBase<const uint8_t>;
+// A class that encapsulates a mutable contiguous sequence of raw data.
+// It does not own the memory region it refers to.
 using MutableBufferView = internal::BufferViewBase<uint8_t>;
 
 }  // namespace zucchini

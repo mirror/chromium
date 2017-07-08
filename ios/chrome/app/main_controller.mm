@@ -46,7 +46,6 @@
 #include "ios/chrome/app/startup/background_upload_alert.h"
 #include "ios/chrome/app/startup/chrome_main_starter.h"
 #include "ios/chrome/app/startup/client_registration.h"
-#import "ios/chrome/app/startup/content_suggestions_scheduler_notifications.h"
 #include "ios/chrome/app/startup/ios_chrome_main.h"
 #include "ios/chrome/app/startup/network_stack_setup.h"
 #include "ios/chrome/app/startup/provider_registration.h"
@@ -713,12 +712,6 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
   [self scheduleStartupCleanupTasks];
   [MetricsMediator logLaunchMetricsWithStartupInformation:self
                                    browserViewInformation:_browserViewWrangler];
-  if (self.isColdStart) {
-    [ContentSuggestionsSchedulerNotifications
-        notifyColdStart:_mainBrowserState];
-    [ContentSuggestionsSchedulerNotifications
-        notifyForeground:_mainBrowserState];
-  }
 
   [self scheduleLowPriorityStartupTasks];
 
@@ -1433,7 +1426,6 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
     } break;
 
     case IDC_PRELOAD_VOICE_SEARCH:
-    case IDC_SHOW_MAIL_COMPOSER:
       [self.currentBVC chromeExecuteCommand:sender];
       break;
     case IDC_VOICE_SEARCH: {

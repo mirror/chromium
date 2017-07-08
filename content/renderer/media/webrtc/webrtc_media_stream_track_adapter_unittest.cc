@@ -65,7 +65,8 @@ class WebRtcMediaStreamTrackAdapterTest : public ::testing::Test {
                           blink::WebMediaStreamSource::kTypeVideo,
                           blink::WebString::FromUTF8("local_video_track"),
                           false);
-    MockMediaStreamVideoSource* video_source = new MockMediaStreamVideoSource();
+    MockMediaStreamVideoSource* video_source =
+        new MockMediaStreamVideoSource(true);
     // Takes ownership of |video_source|.
     web_source.SetExtraData(video_source);
 

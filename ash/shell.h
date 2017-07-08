@@ -145,7 +145,6 @@ class ShellObserver;
 class ShutdownController;
 class ShutdownObserver;
 class SmsObserver;
-class SplitViewController;
 class StickyKeysController;
 class SystemGestureEventFilter;
 class SystemModalContainerEventFilter;
@@ -531,13 +530,6 @@ class ASH_EXPORT Shell : public SessionObserver,
 
   GPUSupport* gpu_support() { return gpu_support_.get(); }
 
-  SplitViewController* split_view_controller() {
-    return split_view_controller_.get();
-  }
-
-  // Returns true if split view mode is active.
-  bool IsSplitViewModeActive() const;
-
   void AddShellObserver(ShellObserver* observer);
   void RemoveShellObserver(ShellObserver* observer);
 
@@ -578,13 +570,6 @@ class ASH_EXPORT Shell : public SessionObserver,
 
   // Notifies observers that overview mode has ended.
   void NotifyOverviewModeEnded();
-
-  // Notifies observers that split view mode is about to be started (before the
-  // window gets snapped and activated).
-  void NotifySplitViewModeStarting();
-
-  // Notifies observers that split view mode has ended.
-  void NotifySplitViewModeEnded();
 
   // Notifies observers that fullscreen mode has changed for |root_window|.
   void NotifyFullscreenStateChanged(bool is_fullscreen,
@@ -809,9 +794,6 @@ class ASH_EXPORT Shell : public SessionObserver,
   std::unique_ptr<LaserPointerController> laser_pointer_controller_;
   std::unique_ptr<PartialMagnificationController>
       partial_magnification_controller_;
-
-  // The split view controller for Chrome OS in tablet mode.
-  std::unique_ptr<SplitViewController> split_view_controller_;
 
   // |native_cursor_manager_| is owned by |cursor_manager_|, but we keep a
   // pointer to vend to test code.

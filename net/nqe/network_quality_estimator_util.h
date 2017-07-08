@@ -11,6 +11,7 @@ namespace net {
 
 class HostPortPair;
 class HostResolver;
+class NetLogWithSource;
 
 namespace nqe {
 
@@ -27,7 +28,8 @@ namespace internal {
 // |host_port_pair|. The method is synchronous.
 // |host_resolver| must not be null.
 NET_EXPORT_PRIVATE bool IsPrivateHost(HostResolver* host_resolver,
-                                      const HostPortPair& host_port_pair);
+                                      const HostPortPair& host_port_pair,
+                                      const NetLogWithSource& net_log);
 
 }  // namespace internal
 

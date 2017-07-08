@@ -32,8 +32,7 @@ class CORE_EXPORT PerformanceNavigationTiming final
  public:
   PerformanceNavigationTiming(LocalFrame*,
                               ResourceTimingInfo*,
-                              double time_origin,
-                              PerformanceServerTimingVector&);
+                              double time_origin);
 
   // Attributes inheritted from PerformanceEntry.
   DOMHighResTimeStamp duration() const override;
@@ -61,7 +60,7 @@ class CORE_EXPORT PerformanceNavigationTiming final
   DECLARE_VIRTUAL_TRACE();
 
  protected:
-  void BuildJSONValue(ScriptState*, V8ObjectBuilder&) const override;
+  void BuildJSONValue(V8ObjectBuilder&) const override;
 
  private:
   ~PerformanceNavigationTiming() override;

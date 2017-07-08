@@ -22,29 +22,30 @@ ChromeIdentityServiceObserverBridge::ChromeIdentityServiceObserverBridge(
 ChromeIdentityServiceObserverBridge::~ChromeIdentityServiceObserverBridge() {}
 
 void ChromeIdentityServiceObserverBridge::OnIdentityListChanged() {
-  if ([observer_ respondsToSelector:@selector(identityListChanged)])
-    [observer_ identityListChanged];
+  if ([observer_ respondsToSelector:@selector(onIdentityListChanged)])
+    [observer_ onIdentityListChanged];
 }
 
 void ChromeIdentityServiceObserverBridge::OnAccessTokenRefreshFailed(
     ChromeIdentity* identity,
     NSDictionary* user_info) {
   if ([observer_
-          respondsToSelector:@selector(accessTokenRefreshFailed:userInfo:)]) {
-    [observer_ accessTokenRefreshFailed:identity userInfo:user_info];
+          respondsToSelector:@selector(onAccessTokenRefreshFailed:userInfo:)]) {
+    [observer_ onAccessTokenRefreshFailed:identity userInfo:user_info];
   }
 }
 
 void ChromeIdentityServiceObserverBridge::OnProfileUpdate(
     ChromeIdentity* identity) {
-  if ([observer_ respondsToSelector:@selector(profileUpdate:)])
-    [observer_ profileUpdate:identity];
+  if ([observer_ respondsToSelector:@selector(onProfileUpdate:)])
+    [observer_ onProfileUpdate:identity];
 }
 
 void ChromeIdentityServiceObserverBridge::
     OnChromeIdentityServiceWillBeDestroyed() {
   if ([observer_
-          respondsToSelector:@selector(chromeIdentityServiceWillBeDestroyed)]) {
-    [observer_ chromeIdentityServiceWillBeDestroyed];
+          respondsToSelector:@selector(
+                                 onChromeIdentityServiceWillBeDestroyed)]) {
+    [observer_ onChromeIdentityServiceWillBeDestroyed];
   }
 }

@@ -4,10 +4,7 @@
 
 #include "chromeos/dbus/arc_obb_mounter_client.h"
 
-#include <utility>
-
 #include "base/bind.h"
-#include "base/bind_helpers.h"
 #include "base/callback.h"
 #include "dbus/bus.h"
 #include "dbus/message.h"
@@ -36,7 +33,7 @@ class ArcObbMounterClientImpl : public ArcObbMounterClient {
   void MountObb(const std::string& obb_file,
                 const std::string& mount_path,
                 int32_t owner_gid,
-                VoidDBusMethodCallback callback) override {
+                const VoidDBusMethodCallback& callback) override {
     dbus::MethodCall method_call(kArcObbMounterInterface, kMountObbMethod);
     dbus::MessageWriter writer(&method_call);
     writer.AppendString(obb_file);
@@ -44,19 +41,17 @@ class ArcObbMounterClientImpl : public ArcObbMounterClient {
     writer.AppendInt32(owner_gid);
     proxy_->CallMethod(&method_call, dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
                        base::Bind(&ArcObbMounterClientImpl::OnVoidDBusMethod,
-                                  weak_ptr_factory_.GetWeakPtr(),
-                                  base::Passed(std::move(callback))));
+                                  weak_ptr_factory_.GetWeakPtr(), callback));
   }
 
   void UnmountObb(const std::string& mount_path,
-                  VoidDBusMethodCallback callback) override {
+                  const VoidDBusMethodCallback& callback) override {
     dbus::MethodCall method_call(kArcObbMounterInterface, kUnmountObbMethod);
     dbus::MessageWriter writer(&method_call);
     writer.AppendString(mount_path);
     proxy_->CallMethod(&method_call, dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
                        base::Bind(&ArcObbMounterClientImpl::OnVoidDBusMethod,
-                                  weak_ptr_factory_.GetWeakPtr(),
-                                  base::Passed(std::move(callback))));
+                                  weak_ptr_factory_.GetWeakPtr(), callback));
   }
 
  protected:
@@ -68,10 +63,10 @@ class ArcObbMounterClientImpl : public ArcObbMounterClient {
 
  private:
   // Runs the callback with the method call result.
-  void OnVoidDBusMethod(VoidDBusMethodCallback callback,
+  void OnVoidDBusMethod(const VoidDBusMethodCallback& callback,
                         dbus::Response* response) {
-    std::move(callback).Run(response ? DBUS_METHOD_CALL_SUCCESS
-                                     : DBUS_METHOD_CALL_FAILURE);
+    callback.Run(response ? DBUS_METHOD_CALL_SUCCESS
+                          : DBUS_METHOD_CALL_FAILURE);
   }
 
   dbus::ObjectProxy* proxy_ = nullptr;

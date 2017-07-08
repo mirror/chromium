@@ -54,8 +54,6 @@ std::string SigninManager::SigninTypeToString(SigninManager::SigninType type) {
       return "No Signin";
     case SIGNIN_TYPE_WITH_REFRESH_TOKEN:
       return "With refresh token";
-    case SIGNIN_TYPE_WITHOUT_REFRESH_TOKEN:
-      return "Without refresh token";
   }
 
   NOTREACHED();
@@ -103,21 +101,19 @@ void SigninManager::StartSignInWithRefreshToken(
     const std::string& password,
     const OAuthTokenFetchedCallback& callback) {
   DCHECK(!IsAuthenticated());
-  SigninType signin_type = refresh_token.empty()
-                               ? SIGNIN_TYPE_WITHOUT_REFRESH_TOKEN
-                               : SIGNIN_TYPE_WITH_REFRESH_TOKEN;
-  if (!PrepareForSignin(signin_type, gaia_id, username, password)) {
+
+  if (!PrepareForSignin(SIGNIN_TYPE_WITH_REFRESH_TOKEN, gaia_id, username,
+                        password)) {
     return;
   }
 
-  // Store the refresh token.
+  // Store our token.
   temp_refresh_token_ = refresh_token;
 
-  if (!callback.is_null()) {
-    // Callback present, let the caller complete the pending sign-in.
+  if (!callback.is_null() && !temp_refresh_token_.empty()) {
     callback.Run(temp_refresh_token_);
   } else {
-    // No callback, so just complete the pending signin.
+    // No oauth token or callback, so just complete our pending signin.
     CompletePendingSignin();
   }
 }
@@ -354,13 +350,13 @@ void SigninManager::CompletePendingSignin() {
   DCHECK(!possibly_invalid_account_id_.empty());
   OnSignedIn();
 
+  DCHECK(!temp_refresh_token_.empty());
   DCHECK(IsAuthenticated());
 
-  if (!temp_refresh_token_.empty()) {
-    std::string account_id = GetAuthenticatedAccountId();
-    token_service_->UpdateCredentials(account_id, temp_refresh_token_);
-    temp_refresh_token_.clear();
-  }
+  std::string account_id = GetAuthenticatedAccountId();
+  token_service_->UpdateCredentials(account_id, temp_refresh_token_);
+  temp_refresh_token_.clear();
+
   MergeSigninCredentialIntoCookieJar();
 }
 

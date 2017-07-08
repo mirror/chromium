@@ -19,7 +19,6 @@
 #include "components/wallpaper/wallpaper_layout.h"
 #include "components/wallpaper/wallpaper_resizer_observer.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
-#include "mojo/public/cpp/bindings/interface_ptr_set.h"
 #include "ui/compositor/compositor_lock.h"
 
 namespace base {
@@ -123,11 +122,9 @@ class ASH_EXPORT WallpaperController
   void OpenSetWallpaperPage();
 
   // mojom::WallpaperController overrides:
-  void AddObserver(mojom::WallpaperObserverAssociatedPtrInfo observer) override;
   void SetWallpaperPicker(mojom::WallpaperPickerPtr picker) override;
   void SetWallpaper(const SkBitmap& wallpaper,
                     wallpaper::WallpaperLayout layout) override;
-  void GetWallpaperColors(GetWallpaperColorsCallback callback) override;
 
   // WallpaperResizerObserver:
   void OnWallpaperResized() override;
@@ -197,8 +194,6 @@ class ASH_EXPORT WallpaperController
   mojo::BindingSet<mojom::WallpaperController> bindings_;
 
   base::ObserverList<WallpaperControllerObserver> observers_;
-
-  mojo::AssociatedInterfacePtrSet<mojom::WallpaperObserver> mojo_observers_;
 
   std::unique_ptr<wallpaper::WallpaperResizer> current_wallpaper_;
 

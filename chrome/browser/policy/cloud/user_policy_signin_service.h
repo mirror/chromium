@@ -47,18 +47,9 @@ class UserPolicySigninService : public UserPolicySigninServiceBase,
   // the user is not signed in yet (ProfileOAuth2TokenService does not have
   // any tokens yet to prevent services from using it until after we've fetched
   // policy).
-  void RegisterForPolicyWithLoginToken(
-      const std::string& username,
-      const std::string& oauth2_login_token,
-      const PolicyRegistrationCallback& callback);
-
-  // Registers a CloudPolicyClient for fetching policy for a user. |username| is
-  // explicitly passed because the user is not yet authenticated, but the token
-  // service has a refresh token available for |account_id|.
-  void RegisterForPolicyWithAccountId(
-      const std::string& username,
-      const std::string& account_id,
-      const PolicyRegistrationCallback& callback);
+  void RegisterForPolicy(const std::string& username,
+                         const std::string& oauth2_login_token,
+                         const PolicyRegistrationCallback& callback);
 
   // OAuth2TokenService::Observer implementation:
   void OnRefreshTokenAvailable(const std::string& account_id) override;

@@ -61,5 +61,9 @@ bool AndroidCombinedPolicyProvider::IsInitializationComplete(
   return initialized_;
 }
 
+bool AndroidCombinedPolicyProvider::Register(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}
+
 }  // namespace android
 }  // namespace policy

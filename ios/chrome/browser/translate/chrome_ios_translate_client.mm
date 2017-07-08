@@ -23,7 +23,6 @@
 #include "components/translate/core/browser/translate_prefs.h"
 #include "components/translate/core/browser/translate_step.h"
 #include "components/translate/core/common/language_detection_details.h"
-#include "components/translate/core/common/language_detection_logging_helper.h"
 #include "components/translate/core/common/translation_logging_helper.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #include "ios/chrome/browser/infobars/infobar.h"
@@ -194,25 +193,7 @@ int ChromeIOSTranslateClient::GetInfobarIconID() const {
 
 void ChromeIOSTranslateClient::RecordLanguageDetectionEvent(
     const translate::LanguageDetectionDetails& details) const {
-  if (!base::FeatureList::IsEnabled(switches::kSyncUserLanguageDetectionEvents))
-    return;
-
-  syncer::UserEventService* const user_event_service =
-      IOSUserEventServiceFactory::GetForBrowserState(
-          ios::ChromeBrowserState::FromBrowserState(
-              web_state()->GetBrowserState()));
-  const auto* const item =
-      web_state()->GetNavigationManager()->GetLastCommittedItem();
-
-  // If entry is null, we don't record the page.
-  // The navigation entry can be null in situations like download or initial
-  // blank page.
-  if (item != nullptr &&
-      TranslateServiceIOS::IsTranslatableURL(item->GetVirtualURL())) {
-    user_event_service->RecordUserEvent(
-        translate::ConstructLanguageDetectionEvent(
-            item->GetTimestamp().ToInternalValue(), details));
-  }
+  // TODO(crbug.com/728491): Implement this.
 }
 
 bool ChromeIOSTranslateClient::IsTranslatableURL(const GURL& url) {

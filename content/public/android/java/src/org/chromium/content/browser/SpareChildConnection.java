@@ -10,6 +10,8 @@ import android.support.annotation.NonNull;
 
 import org.chromium.base.Log;
 import org.chromium.base.VisibleForTesting;
+import org.chromium.base.process_launcher.ChildConnectionAllocator;
+import org.chromium.base.process_launcher.ChildProcessConnection;
 
 /**
  * This class is used to create a single spare ChildProcessConnection (usually early on during
@@ -110,10 +112,7 @@ public class SpareChildConnection {
 
     /** Returns true if no connection is available (so getConnection will always return null), */
     public boolean isEmpty() {
-        // Note that if the connection was retrieved but was not yet ready mConnection is non null
-        // but that connection is already used and will be cleared when it becomes ready. In that
-        // case mConnectionServiceCallback is non null.
-        return mConnection == null || mConnectionServiceCallback != null;
+        return mConnection == null;
     }
 
     /** Returns true if this spare connection uses {@param allocator}. */

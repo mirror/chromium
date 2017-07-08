@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
 
-import org.chromium.base.BuildInfo;
 import org.chromium.base.Callback;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.VisibleForTesting;
@@ -284,7 +283,7 @@ public abstract class AppHooks {
      */
     @CalledByNative
     public boolean shouldDetectVideoFullscreen() {
-        return BuildInfo.isAtLeastO();
+        return false;
     }
 
     /**

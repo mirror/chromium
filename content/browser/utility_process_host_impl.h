@@ -7,7 +7,10 @@
 
 #include <memory>
 #include <string>
+#include <vector>
 
+#include "base/compiler_specific.h"
+#include "base/files/file_path.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
@@ -16,7 +19,6 @@
 #include "content/public/browser/utility_process_host.h"
 
 namespace base {
-class FilePath;
 class SequencedTaskRunner;
 class Thread;
 }
@@ -40,9 +42,11 @@ class CONTENT_EXPORT UtilityProcessHostImpl
       const scoped_refptr<base::SequencedTaskRunner>& client_task_runner);
   ~UtilityProcessHostImpl() override;
 
-  // UtilityProcessHost:
+  // UtilityProcessHost implementation:
   base::WeakPtr<UtilityProcessHost> AsWeakPtr() override;
   bool Send(IPC::Message* message) override;
+  bool StartBatchMode() override;
+  void EndBatchMode() override;
   void SetExposedDir(const base::FilePath& dir) override;
   void DisableSandbox() override;
 #if defined(OS_WIN)
@@ -60,7 +64,8 @@ class CONTENT_EXPORT UtilityProcessHostImpl
   void set_child_flags(int flags) { child_flags_ = flags; }
 
  private:
-  // Starts the child process if needed, returns true on success.
+  // Starts a process if necessary.  Returns true if it succeeded or a process
+  // has already been started via StartBatchMode().
   bool StartProcess();
 
   // BrowserChildProcessHost:
@@ -76,37 +81,35 @@ class CONTENT_EXPORT UtilityProcessHostImpl
       base::WeakPtr<UtilityProcessHostImpl> host,
       int error_code);
 
-  // Pointer to our client interface used for progress notifications.
+  // A pointer to our client interface, who will be informed of progress.
   scoped_refptr<UtilityProcessHostClient> client_;
-
-  // Task runner used for posting progess notifications to |client_|.
   scoped_refptr<base::SequencedTaskRunner> client_task_runner_;
+  // True when running in batch mode, i.e., StartBatchMode() has been called
+  // and the utility process will run until EndBatchMode().
+  bool is_batch_mode_;
 
-  // Directory opened through the child process sandbox if needed.
   base::FilePath exposed_dir_;
 
-  // Whether to launch the child process with switches::kNoSandbox.
+  // Whether to pass switches::kNoSandbox to the child.
   bool no_sandbox_;
 
-  // Whether to launch the child process with elevated privileges.
+  // Whether to launch the process with elevated privileges.
   bool run_elevated_;
 
-  // ChildProcessHost flags to use when starting the child process.
+  // Flags defined in ChildProcessHost with which to start the process.
   int child_flags_;
 
-  // Map of environment variables to values.
   base::EnvironmentMap env_;
 
-  // True if StartProcess() has been called.
   bool started_;
 
-  // The process name used to identify the process in task manager.
+  // A user-visible name identifying this process. Used to indentify this
+  // process in the task manager.
   base::string16 name_;
 
-  // Child process host implementation.
   std::unique_ptr<BrowserChildProcessHostImpl> process_;
 
-  // Used in single-process mode instead of |process_|.
+  // Used in single-process mode instead of process_.
   std::unique_ptr<base::Thread> in_process_thread_;
 
   // Used to vend weak pointers, and should always be declared last.

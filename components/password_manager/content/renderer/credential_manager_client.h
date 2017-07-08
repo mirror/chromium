@@ -58,9 +58,8 @@ class CredentialManagerClient : public blink::WebCredentialManagerClient,
   void OnDestruct() override;
 
   void ConnectToMojoCMIfNeeded();
-  void OnMojoConnectionError();
 
-  mojom::CredentialManagerAssociatedPtr mojo_cm_service_;
+  mojom::CredentialManagerPtr mojo_cm_service_;
 
   DISALLOW_COPY_AND_ASSIGN(CredentialManagerClient);
 };

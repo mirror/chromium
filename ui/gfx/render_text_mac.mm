@@ -259,11 +259,8 @@ void RenderTextMac::DrawVisualText(internal::SkiaTextRenderer* renderer) {
 
     renderer->DrawPosText(&run.glyph_positions[0], &run.glyphs[0],
                           run.glyphs.size());
-    if (run.underline)
-      renderer->DrawUnderline(run.origin.x(), run.origin.y(), run.width);
-    if (run.strike)
-      renderer->DrawStrike(run.origin.x(), run.origin.y(), run.width,
-                           strike_thickness_factor());
+    renderer->DrawDecorations(run.origin.x(), run.origin.y(), run.width,
+                              run.underline, run.strike);
   }
 }
 

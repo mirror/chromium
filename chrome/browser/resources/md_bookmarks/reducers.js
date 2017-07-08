@@ -118,7 +118,7 @@ cr.define('bookmarks', function() {
     return {
       term: action.term,
       inProgress: true,
-      results: search.results,
+      results: [],
     };
   };
 
@@ -139,7 +139,7 @@ cr.define('bookmarks', function() {
     return {
       term: '',
       inProgress: false,
-      results: null,
+      results: [],
     };
   };
 
@@ -149,9 +149,6 @@ cr.define('bookmarks', function() {
    * @return {SearchState}
    */
   SearchState.removeDeletedResults = function(search, deletedIds) {
-    if (!search.results)
-      return search;
-
     var newResults = [];
     search.results.forEach(function(id) {
       if (!deletedIds.has(id))

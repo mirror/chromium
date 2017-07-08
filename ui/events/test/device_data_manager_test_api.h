@@ -13,7 +13,6 @@
 namespace ui {
 
 class DeviceDataManager;
-enum class StylusState;
 
 namespace test {
 
@@ -31,7 +30,6 @@ class DeviceDataManagerTestAPI {
   void NotifyObserversMouseDeviceConfigurationChanged();
   void NotifyObserversTouchpadDeviceConfigurationChanged();
   void NotifyObserversDeviceListsComplete();
-  void NotifyObserversStylusStateChanged(StylusState stylus_state);
   void OnDeviceListsComplete();
 
  private:

@@ -51,22 +51,27 @@ FullCardRequester::FullCardRequester(id<FullCardRequesterConsumer> consumer,
                          browser_state->IsOffTheRecord()) {}
 
 void FullCardRequester::GetFullCard(
-    const autofill::CreditCard& card,
-    autofill::AutofillManager* autofill_manager,
-    base::WeakPtr<autofill::payments::FullCardRequest::ResultDelegate>
-        result_delegate) {
+    autofill::CreditCard* card,
+    autofill::AutofillManager* autofill_manager) {
+  DCHECK(card);
   DCHECK(autofill_manager);
-  DCHECK(result_delegate);
   autofill_manager->GetOrCreateFullCardRequest()->GetFullCard(
-      card, autofill::AutofillClient::UNMASK_FOR_PAYMENT_REQUEST,
-      result_delegate, AsWeakPtr());
+      *card, autofill::AutofillClient::UNMASK_FOR_PAYMENT_REQUEST, AsWeakPtr(),
+      AsWeakPtr());
 }
 
-void FullCardRequester::OnInstrumentDetailsReady(
-    const std::string& method_name,
-    const std::string& stringified_details) {
-  [consumer_ fullCardRequestDidSucceedWithMethodName:method_name
-                                  stringifiedDetails:stringified_details];
+void FullCardRequester::OnFullCardRequestSucceeded(
+    const autofill::CreditCard& card,
+    const base::string16& verificationCode) {
+  [consumer_ fullCardRequestDidSucceedWithCard:card
+                              verificationCode:verificationCode];
+}
+
+void FullCardRequester::OnFullCardRequestFailed() {
+  // No action is required here. PRCardUnmaskPromptViewBridge manages its own
+  // life cycle. When the prompt is explicitly dismissed via tapping the close
+  // button (either in presence or absence of an error), the unmask prompt
+  // dialog pops itself and the user is back to the Payment Request UI.
 }
 
 void FullCardRequester::ShowUnmaskPrompt(

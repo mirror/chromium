@@ -1313,7 +1313,7 @@ aura::Window* ShellSurface::GetDragWindow() {
       return widget_->GetNativeWindow();
 
     case BoundsMode::CLIENT:
-      return root_surface() ? root_surface()->window() : nullptr;
+      return host_window();
 
     case BoundsMode::FIXED:
       return nullptr;

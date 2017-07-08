@@ -48,10 +48,8 @@ LevelDBDatabaseImpl::LevelDBDatabaseImpl(
       cache_(std::move(cache)),
       db_(std::move(db)),
       memory_dump_id_(memory_dump_id) {
-  base::trace_event::MemoryDumpManager::GetInstance()
-      ->RegisterDumpProviderWithSequencedTaskRunner(
-          this, "MojoLevelDB", base::SequencedTaskRunnerHandle::Get(),
-          MemoryDumpProvider::Options());
+  base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
+      this, "MojoLevelDB", base::ThreadTaskRunnerHandle::Get());
 }
 
 LevelDBDatabaseImpl::~LevelDBDatabaseImpl() {

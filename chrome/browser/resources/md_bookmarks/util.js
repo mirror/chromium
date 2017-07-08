@@ -14,10 +14,10 @@ cr.define('bookmarks.util', function() {
    * @return {!Array<string>}
    */
   function getDisplayedList(state) {
-    if (isShowingSearch(state))
-      return assert(state.search.results);
+    if (!isShowingSearch(state))
+      return assert(state.nodes[state.selectedFolder].children);
 
-    return assert(state.nodes[state.selectedFolder].children);
+    return state.search.results;
   }
 
   /**
@@ -68,7 +68,7 @@ cr.define('bookmarks.util', function() {
   function createEmptyState() {
     return {
       nodes: {},
-      selectedFolder: BOOKMARKS_BAR_ID,
+      selectedFolder: '0',
       closedFolders: new Set(),
       prefs: {
         canEdit: true,
@@ -77,7 +77,7 @@ cr.define('bookmarks.util', function() {
       search: {
         term: '',
         inProgress: false,
-        results: null,
+        results: [],
       },
       selection: {
         items: new Set(),
@@ -91,7 +91,7 @@ cr.define('bookmarks.util', function() {
    * @return {boolean}
    */
   function isShowingSearch(state) {
-    return state.search.results != null;
+    return !!state.search.term && !state.search.inProgress;
   }
 
   /**

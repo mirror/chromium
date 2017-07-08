@@ -173,8 +173,7 @@ TEST_F(NativeWidgetMacAccessibilityTest, Lifetime) {
 
   // The following is also "not implemented", but the informal protocol category
   // provides a default implementation.
-  EXPECT_EQ(NSNotFound, static_cast<NSInteger>(
-                            [ax_node accessibilityIndexOfChild:ax_node]));
+  EXPECT_EQ(NSNotFound, [ax_node accessibilityIndexOfChild:nil]);
 
   // The only usually available array attribute is AXChildren, so go up a level
   // to the Widget to test that a bit. The default implementation just gets the
@@ -215,8 +214,7 @@ TEST_F(NativeWidgetMacAccessibilityTest, Lifetime) {
                                            forParameter:range]);
 
   // Test the attributes with default implementations provided.
-  EXPECT_EQ(NSNotFound, static_cast<NSInteger>(
-                            [ax_node accessibilityIndexOfChild:ax_node]));
+  EXPECT_EQ(NSNotFound, [ax_node accessibilityIndexOfChild:nil]);
 
   // The Widget is currently still around, but the child should be gone.
   EXPECT_EQ(0u, [ax_parent accessibilityArrayAttributeCount:kChildren]);

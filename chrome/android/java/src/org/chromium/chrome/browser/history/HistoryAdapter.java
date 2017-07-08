@@ -388,8 +388,7 @@ public class HistoryAdapter extends DateDividedAdapter implements BrowsingHistor
      */
     boolean hasPrivacyDisclaimers() {
         boolean isSignedIn = ChromeSigninController.get().isSignedIn();
-        return !mHistoryManager.isIncognito()
-                && (isSignedIn || mHasSyncedData || mHasOtherFormsOfBrowsingData);
+        return isSignedIn || mHasSyncedData || mHasOtherFormsOfBrowsingData;
     }
 
     /**

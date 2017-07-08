@@ -22,7 +22,6 @@
 #import "ios/chrome/browser/ui/content_suggestions/content_suggestions_data_source.h"
 #import "ios/chrome/browser/ui/content_suggestions/content_suggestions_image_fetcher.h"
 #import "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller.h"
-#import "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller_audience.h"
 #import "ios/chrome/browser/ui/content_suggestions/identifier/content_suggestion_identifier.h"
 #import "ios/chrome/browser/ui/content_suggestions/identifier/content_suggestions_section_information.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -124,8 +123,6 @@ const CGFloat kNumberOfMostVisitedLines = 2;
         sectionInfoBySectionIdentifier;
 // Width of the collection. Upon size change, it reflects the new size.
 @property(nonatomic, assign) CGFloat collectionWidth;
-// Whether an item of type ItemTypePromo has already been added to the model.
-@property(nonatomic, assign) BOOL promoAdded;
 
 @end
 
@@ -135,13 +132,11 @@ const CGFloat kNumberOfMostVisitedLines = 2;
 @synthesize dataSource = _dataSource;
 @synthesize sectionInfoBySectionIdentifier = _sectionInfoBySectionIdentifier;
 @synthesize collectionWidth = _collectionWidth;
-@synthesize promoAdded = _promoAdded;
 
 - (instancetype)initWithDataSource:
     (id<ContentSuggestionsDataSource>)dataSource {
   self = [super init];
   if (self) {
-    _promoAdded = NO;
     _dataSource = dataSource;
     _dataSource.dataSink = self;
   }
@@ -334,10 +329,6 @@ addSuggestionsToModel:(NSArray<CSCollectionViewItem*>*)suggestions
       return;
     }
     ItemType type = ItemTypeForInfo(sectionInfo);
-    if (type == ItemTypePromo && !self.promoAdded) {
-      self.promoAdded = YES;
-      [self.collectionViewController.audience promoShown];
-    }
     item.type = type;
     NSIndexPath* addedIndexPath =
         [self addItem:item toSectionWithIdentifier:sectionIdentifier];

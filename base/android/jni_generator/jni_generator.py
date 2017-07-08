@@ -876,7 +876,7 @@ ${KMETHODS}
     return """
 // TODO(agrieve): Remove these empty registration functions and functions
 // calling them. https://crbug.com/683256.
-inline bool RegisterNativesImpl(JNIEnv* env) {
+static bool RegisterNativesImpl(JNIEnv* env) {
   return true;
 }
 """

@@ -133,12 +133,6 @@ NSUInteger GetRegisteredKeyCommandsCount() {
   return mainBVC.keyCommands.count;
 }
 
-id<BrowserCommands> BrowserCommandDispatcherForMainBVC() {
-  BrowserViewController* mainBVC =
-      GetMainController().browserViewInformation.mainBVC;
-  return mainBVC.dispatcher;
-}
-
 void RunCommandWithActiveViewController(GenericChromeCommand* command) {
   [GetActiveViewController() chromeExecuteCommand:command];
 }

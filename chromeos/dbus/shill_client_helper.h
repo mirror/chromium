@@ -90,7 +90,7 @@ class ShillClientHelper {
 
   // Calls a method without results.
   void CallVoidMethod(dbus::MethodCall* method_call,
-                      VoidDBusMethodCallback callback);
+                      const VoidDBusMethodCallback& callback);
 
   // Calls a method with an object path result.
   void CallObjectPathMethod(dbus::MethodCall* method_call,

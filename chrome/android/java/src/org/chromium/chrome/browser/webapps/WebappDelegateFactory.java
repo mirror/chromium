@@ -9,13 +9,9 @@ import android.text.TextUtils;
 
 import org.chromium.base.ContextUtils;
 import org.chromium.chrome.browser.ShortcutHelper;
-import org.chromium.chrome.browser.SingleTabActivity;
-import org.chromium.chrome.browser.contextmenu.ChromeContextMenuPopulator;
-import org.chromium.chrome.browser.contextmenu.ContextMenuPopulator;
 import org.chromium.chrome.browser.tab.BrowserControlsVisibilityDelegate;
 import org.chromium.chrome.browser.tab.InterceptNavigationDelegateImpl;
 import org.chromium.chrome.browser.tab.Tab;
-import org.chromium.chrome.browser.tab.TabContextMenuItemDelegate;
 import org.chromium.chrome.browser.tab.TabDelegateFactory;
 import org.chromium.chrome.browser.tab.TabWebContentsDelegateAndroid;
 import org.chromium.chrome.browser.util.IntentUtils;
@@ -23,9 +19,9 @@ import org.chromium.webapk.lib.client.WebApkNavigationClient;
 
 /**
  * A {@link TabDelegateFactory} class to be used in all {@link Tab} instances owned by a
- * {@link SingleTabActivity}.
+ * {@link FullScreenActivity}.
  */
-public class WebappDelegateFactory extends TabDelegateFactory {
+public class WebappDelegateFactory extends FullScreenDelegateFactory {
     private static class WebappWebContentsDelegateAndroid extends TabWebContentsDelegateAndroid {
         private final WebappActivity mActivity;
 
@@ -66,12 +62,6 @@ public class WebappDelegateFactory extends TabDelegateFactory {
 
     public WebappDelegateFactory(WebappActivity activity) {
         mActivity = activity;
-    }
-
-    @Override
-    public ContextMenuPopulator createContextMenuPopulator(Tab tab) {
-        return new ChromeContextMenuPopulator(
-                new TabContextMenuItemDelegate(tab), ChromeContextMenuPopulator.WEB_APP_MODE);
     }
 
     @Override

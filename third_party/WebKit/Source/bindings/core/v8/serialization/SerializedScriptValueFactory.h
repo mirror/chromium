@@ -26,7 +26,6 @@ class CORE_EXPORT SerializedScriptValueFactory {
 
  protected:
   friend class SerializedScriptValue;
-  friend class UnpackedSerializedScriptValue;
 
   // Following 2 methods are expected to be called by SerializedScriptValue.
 
@@ -42,12 +41,7 @@ class CORE_EXPORT SerializedScriptValueFactory {
       ExceptionState&);
 
   virtual v8::Local<v8::Value> Deserialize(
-      RefPtr<SerializedScriptValue>,
-      v8::Isolate*,
-      const SerializedScriptValue::DeserializeOptions&);
-
-  virtual v8::Local<v8::Value> Deserialize(
-      UnpackedSerializedScriptValue*,
+      SerializedScriptValue*,
       v8::Isolate*,
       const SerializedScriptValue::DeserializeOptions&);
 

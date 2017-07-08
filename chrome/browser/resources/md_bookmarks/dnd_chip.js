@@ -14,31 +14,27 @@ Polymer({
 
     /** @private */
     isFolder_: Boolean,
-
-    /** @private */
-    isMultiItem_: Boolean,
   },
 
   /**
    * @param {number} x
    * @param {number} y
    * @param {!Array<BookmarkNode>} items
-   * @param {!BookmarkNode} dragItem
    */
-  showForItems: function(x, y, items, dragItem) {
+  showForItems: function(x, y, items) {
     this.style.setProperty('--mouse-x', x + 'px');
     this.style.setProperty('--mouse-y', y + 'px');
 
     if (this.showing_)
       return;
 
-    this.isFolder_ = !dragItem.url;
-    this.isMultiItem_ = items.length > 1;
-    if (dragItem.url)
-      this.$.icon.style.backgroundImage = cr.icon.getFavicon(dragItem.url);
+    var firstItem = items[0];
+    this.isFolder_ = !firstItem.url;
+    // TODO(calamity): handle multi-item UI.
+    if (firstItem.url)
+      this.$.icon.style.backgroundImage = cr.icon.getFavicon(firstItem.url);
 
-    this.$.title.textContent = dragItem.title;
-    this.$.count.textContent = items.length;
+    this.$.title.textContent = firstItem.title;
     this.showing_ = true;
   },
 

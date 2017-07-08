@@ -50,20 +50,7 @@ class ReportingCacheImpl : public ReportingCache {
     DCHECK(context_);
   }
 
-  ~ReportingCacheImpl() override {
-    base::TimeTicks now = tick_clock()->NowTicks();
-
-    // Mark all undoomed reports as erased at shutdown, and record outcomes of
-    // all remaining reports (doomed or not).
-    for (auto it = reports_.begin(); it != reports_.end(); ++it) {
-      ReportingReport* report = it->second.get();
-      if (!base::ContainsKey(doomed_reports_, report))
-        report->outcome = ReportingReport::Outcome::ERASED_REPORTING_SHUT_DOWN;
-      report->RecordOutcome(now);
-    }
-
-    reports_.clear();
-  }
+  ~ReportingCacheImpl() override {}
 
   void AddReport(const GURL& url,
                  const std::string& group,
@@ -86,8 +73,8 @@ class ReportingCacheImpl : public ReportingCache {
       // The newly-added report isn't pending, so even if all other reports are
       // pending, the cache should have a report to evict.
       DCHECK(!base::ContainsKey(pending_reports_, to_evict));
-      reports_[to_evict]->outcome = ReportingReport::Outcome::ERASED_EVICTED;
-      RemoveReportInternal(to_evict);
+      size_t erased = reports_.erase(to_evict);
+      DCHECK_EQ(1u, erased);
     }
 
     context_->NotifyCacheUpdated();
@@ -123,8 +110,7 @@ class ReportingCacheImpl : public ReportingCache {
       }
     }
 
-    for (const ReportingReport* report : reports_to_remove)
-      RemoveReportInternal(report);
+    RemoveReports(reports_to_remove);
   }
 
   void IncrementReportsAttempts(
@@ -137,34 +123,35 @@ class ReportingCacheImpl : public ReportingCache {
     context_->NotifyCacheUpdated();
   }
 
-  void RemoveReports(const std::vector<const ReportingReport*>& reports,
-                     ReportingReport::Outcome outcome) override {
+  void RemoveReports(
+      const std::vector<const ReportingReport*>& reports) override {
     for (const ReportingReport* report : reports) {
-      reports_[report]->outcome = outcome;
       if (base::ContainsKey(pending_reports_, report)) {
         doomed_reports_.insert(report);
       } else {
         DCHECK(!base::ContainsKey(doomed_reports_, report));
-        RemoveReportInternal(report);
+        size_t erased = reports_.erase(report);
+        DCHECK_EQ(1u, erased);
       }
     }
 
     context_->NotifyCacheUpdated();
   }
 
-  void RemoveAllReports(ReportingReport::Outcome outcome) override {
-    std::vector<const ReportingReport*> reports_to_remove;
+  void RemoveAllReports() override {
+    std::vector<std::unordered_map<const ReportingReport*,
+                                   std::unique_ptr<ReportingReport>>::iterator>
+        reports_to_remove;
     for (auto it = reports_.begin(); it != reports_.end(); ++it) {
       ReportingReport* report = it->second.get();
-      report->outcome = outcome;
       if (!base::ContainsKey(pending_reports_, report))
-        reports_to_remove.push_back(report);
+        reports_to_remove.push_back(it);
       else
         doomed_reports_.insert(report);
     }
 
-    for (const ReportingReport* report : reports_to_remove)
-      RemoveReportInternal(report);
+    for (auto& it : reports_to_remove)
+      reports_.erase(it);
 
     context_->NotifyCacheUpdated();
   }
@@ -326,12 +313,6 @@ class ReportingCacheImpl : public ReportingCache {
   std::unordered_map<const ReportingClient*, base::TimeTicks> client_last_used_;
 
   base::TickClock* tick_clock() { return context_->tick_clock(); }
-
-  void RemoveReportInternal(const ReportingReport* report) {
-    reports_[report]->RecordOutcome(tick_clock()->NowTicks());
-    size_t erased = reports_.erase(report);
-    DCHECK_EQ(1u, erased);
-  }
 
   const ReportingReport* FindReportToEvict() const {
     const ReportingReport* earliest_queued = nullptr;

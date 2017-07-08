@@ -22,7 +22,7 @@ namespace NewTabPage {
 
 enum PanelIdentifier {
   kNone,
-  kHomePanel,
+  kMostVisitedPanel,
   kBookmarksPanel,
   kOpenTabsPanel,
   kIncognitoPanel,

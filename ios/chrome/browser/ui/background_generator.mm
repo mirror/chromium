@@ -52,7 +52,7 @@ UIImage* GetRadialGradient(CGRect backgroundRect,
 
 void InstallBackgroundInView(UIView* view) {
   UIImageView* imageView = [[UIImageView alloc] initWithFrame:view.bounds];
-  imageView.image = [UIImage imageNamed:@"stack_view_background_noise"];
+  imageView.image = [UIImage imageNamed:@"stack_view_background_noise.jpg"];
   imageView.contentMode = UIViewContentModeScaleAspectFill;
   imageView.autoresizingMask =
       UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;

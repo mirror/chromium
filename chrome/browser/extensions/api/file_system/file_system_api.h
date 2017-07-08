@@ -25,10 +25,6 @@
 #include "chrome/browser/extensions/api/file_system/consent_provider.h"
 #endif
 
-namespace content {
-class WebContents;
-}  // namespace content
-
 namespace extensions {
 class ExtensionPrefs;
 
@@ -159,6 +155,8 @@ class FileSystemChooseEntryFunction : public FileSystemEntryFunction {
                               base::FilePath::StringType* suggested_extension);
 
  protected:
+  class FilePicker;
+
   ~FileSystemChooseEntryFunction() override {}
   bool RunAsync() override;
   void ShowPicker(const ui::SelectFileDialog::FileTypeInfo& file_type_info,
@@ -173,7 +171,7 @@ class FileSystemChooseEntryFunction : public FileSystemEntryFunction {
       bool is_path_non_native_directory);
 
   // FilesSelected and FileSelectionCanceled are called by the file picker.
-  void FilesSelected(const std::vector<base::FilePath>& paths);
+  void FilesSelected(const std::vector<base::FilePath>& path);
   void FileSelectionCanceled();
 
   // Check if the chosen directory is or is an ancestor of a sensitive

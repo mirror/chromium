@@ -43,12 +43,6 @@ void DeviceDataManagerTestAPI::NotifyObserversDeviceListsComplete() {
   DeviceDataManager::GetInstance()->NotifyObserversDeviceListsComplete();
 }
 
-void DeviceDataManagerTestAPI::NotifyObserversStylusStateChanged(
-    StylusState stylus_state) {
-  DeviceDataManager::GetInstance()->NotifyObserversStylusStateChanged(
-      stylus_state);
-}
-
 void DeviceDataManagerTestAPI::OnDeviceListsComplete() {
   DeviceDataManager::GetInstance()->OnDeviceListsComplete();
 }

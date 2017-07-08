@@ -29,6 +29,9 @@ namespace android {
 class OfflineContentAggregatorBridge : public OfflineContentProvider::Observer,
                                        public base::SupportsUserData::Data {
  public:
+  // Helper method to initialize the JNI hooks between Java and C++.
+  static bool Register(JNIEnv* env);
+
   // Returns a Java OfflineContentAggregatorBridge for |aggregator|.  There will
   // be only one bridge per OfflineContentAggregator.
   static base::android::ScopedJavaLocalRef<jobject>

@@ -14,12 +14,10 @@
 
 namespace autofill {
 class AutofillProfile;
+class CreditCard;
 }  // namespace autofill
 
-namespace payments {
-class PaymentInstrument;
 class PaymentRequest;
-}  // namespace payments
 
 namespace payment_request_util {
 
@@ -51,13 +49,19 @@ NSString* GetEmailLabelFromAutofillProfile(
 // Helper function to create a notification label for an address cell from an
 // autofill profile. Returns nil if the resulting label is empty.
 NSString* GetAddressNotificationLabelFromAutofillProfile(
-    payments::PaymentRequest& payment_request,
+    PaymentRequest& payment_request,
     const autofill::AutofillProfile& profile);
 
+// Returns whether the credit card is complete to be used as a payment method
+// without further editing.
+BOOL IsCreditCardCompleteForPayment(
+    const autofill::CreditCard& credit_card,
+    const std::vector<autofill::AutofillProfile*>& billing_profiles);
+
 // Helper function to create a notification label for what's missing from a
-// payment method. Returns nil if the resulting label is empty.
-NSString* GetPaymentMethodNotificationLabelFromPaymentMethod(
-    payments::PaymentInstrument& payment_method,
+// credit card. Returns nil if the resulting label is empty.
+NSString* GetPaymentMethodNotificationLabelFromCreditCard(
+    const autofill::CreditCard& credit_card,
     const std::vector<autofill::AutofillProfile*>& billing_profiles);
 
 // Returns the title for the shipping section of the payment summary view given
@@ -67,12 +71,12 @@ NSString* GetShippingSectionTitle(payments::PaymentShippingType shipping_type);
 // Returns the error message to be displayed in the shipping address selection
 // view given the shipping type specified in |payment_request|.
 NSString* GetShippingAddressSelectorErrorMessage(
-    const payments::PaymentRequest& payment_request);
+    const PaymentRequest& payment_request);
 
 // Returns the error message to be displayed in the shipping option selection
 // view given the shipping type specified in |payment_request|.
 NSString* GetShippingOptionSelectorErrorMessage(
-    const payments::PaymentRequest& payment_request);
+    const PaymentRequest& payment_request);
 
 }  // namespace payment_request_util
 

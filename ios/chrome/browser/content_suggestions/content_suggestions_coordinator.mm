@@ -18,8 +18,8 @@
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #import "ios/chrome/browser/content_suggestions/content_suggestions_alert_commands.h"
 #import "ios/chrome/browser/content_suggestions/content_suggestions_alert_factory.h"
-#import "ios/chrome/browser/content_suggestions/content_suggestions_header_view_controller.h"
-#import "ios/chrome/browser/content_suggestions/content_suggestions_header_view_controller_delegate.h"
+#import "ios/chrome/browser/content_suggestions/content_suggestions_header_controller.h"
+#import "ios/chrome/browser/content_suggestions/content_suggestions_header_controller_delegate.h"
 #import "ios/chrome/browser/content_suggestions/content_suggestions_mediator.h"
 #include "ios/chrome/browser/favicon/ios_chrome_large_icon_service_factory.h"
 #import "ios/chrome/browser/metrics/new_tab_page_uma.h"
@@ -28,7 +28,6 @@
 #include "ios/chrome/browser/reading_list/reading_list_model_factory.h"
 #import "ios/chrome/browser/ui/alert_coordinator/alert_coordinator.h"
 #import "ios/chrome/browser/ui/commands/UIKit+ChromeExecuteCommand.h"
-#import "ios/chrome/browser/ui/commands/browser_commands.h"
 #import "ios/chrome/browser/ui/commands/generic_chrome_command.h"
 #include "ios/chrome/browser/ui/commands/ios_command_ids.h"
 #import "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_item.h"
@@ -59,7 +58,7 @@
 @interface ContentSuggestionsCoordinator ()<
     ContentSuggestionsAlertCommands,
     ContentSuggestionsCommands,
-    ContentSuggestionsHeaderViewControllerCommandHandler,
+    ContentSuggestionsHeaderControllerCommandHandler,
     ContentSuggestionsViewControllerAudience,
     ContentSuggestionsViewControllerDelegate,
     OverscrollActionsControllerDelegate>
@@ -75,7 +74,7 @@
 
 // Redefined as readwrite.
 @property(nonatomic, strong, readwrite)
-    ContentSuggestionsHeaderViewController* headerController;
+    ContentSuggestionsHeaderController* headerController;
 
 @end
 
@@ -109,7 +108,7 @@
           self.browserState);
   contentSuggestionsService->remote_suggestions_scheduler()->OnNTPOpened();
 
-  self.headerController = [[ContentSuggestionsHeaderViewController alloc] init];
+  self.headerController = [[ContentSuggestionsHeaderController alloc] init];
   self.headerController.dispatcher = self.dispatcher;
   self.headerController.readingListModel =
       ReadingListModelFactory::GetForBrowserState(self.browserState);
@@ -135,10 +134,6 @@
   self.suggestionsViewController.suggestionsDelegate = self;
   self.suggestionsViewController.audience = self;
   self.suggestionsViewController.overscrollDelegate = self;
-
-  [self.suggestionsViewController addChildViewController:self.headerController];
-  [self.headerController
-      didMoveToParentViewController:self.suggestionsViewController];
 
   self.headerCollectionInteractionHandler =
       [[ContentSuggestionsHeaderSynchronizer alloc]
@@ -324,13 +319,6 @@
   [self.delegate updateNtpBarShadowForPanelController:self];
 }
 
-- (void)promoShown {
-  NotificationPromoWhatsNew* notificationPromo =
-      [self.contentSuggestionsMediator notificationPromo];
-  notificationPromo->HandleViewed();
-  [self.headerController setPromoCanShow:notificationPromo->CanShow()];
-}
-
 #pragma mark - OverscrollActionsControllerDelegate
 
 - (void)overscrollActionsController:(OverscrollActionsController*)controller
@@ -342,7 +330,9 @@
       [self.suggestionsViewController chromeExecuteCommand:command];
     } break;
     case OverscrollAction::CLOSE_TAB: {
-      [_dispatcher closeCurrentTab];
+      base::scoped_nsobject<GenericChromeCommand> command(
+          [[GenericChromeCommand alloc] initWithTag:IDC_CLOSE_TAB]);
+      [self.suggestionsViewController chromeExecuteCommand:command];
     } break;
     case OverscrollAction::REFRESH:
       [self reload];

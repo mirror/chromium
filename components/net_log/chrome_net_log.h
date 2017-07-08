@@ -24,27 +24,31 @@ class TraceNetLogObserver;
 
 namespace net_log {
 
-class NetExportFileWriter;
+class NetLogFileWriter;
 
-// ChromeNetLog is an implementation of NetLog that manages common observers
-// (for --log-net-log, chrome://net-export/, tracing), as well as acting as the
-// entry point for other consumers.
+// ChromeNetLog is an implementation of NetLog that adds file loggers
+// as its observers.
 class ChromeNetLog : public net::NetLog {
  public:
-  ChromeNetLog();
+  // The parameters to the constructor are only used for command-line based
+  // NetLog writing (which starts immediately after construction).
+  //
+  // TODO(eroman): This would be clearer as a separate method to configure and
+  //               start this logging mode.
+  //
+  // The log is saved to |log_file|.
+  // |log_file_mode| is the mode used to log in |log_file|.
+  // If |log_file| is empty, only a temporary log is created, and
+  // |log_file_mode| is not used.
+  ChromeNetLog(const base::FilePath& log_file,
+               net::NetLogCaptureMode log_file_mode,
+               const base::CommandLine::StringType& command_line_string,
+               const std::string& channel_string);
   ~ChromeNetLog() override;
 
-  // Starts streaming the NetLog events to a file on disk. This will continue
-  // until the application shuts down.
-  // * |log_file| - path to write the file.
-  // * |log_file_mode| - capture mode for event granularity.
-  void StartWritingToFile(
-      const base::FilePath& log_file,
-      net::NetLogCaptureMode log_file_mode,
-      const base::CommandLine::StringType& command_line_string,
-      const std::string& channel_string);
-
-  NetExportFileWriter* net_export_file_writer();
+  // TODO(eroman): Rename this to something clearer. Perhaps
+  //               |net_export_file_writer()|.
+  NetLogFileWriter* net_log_file_writer();
 
   // Returns a Value containing constants needed to load a log file.
   // Safe to call on any thread.
@@ -54,7 +58,7 @@ class ChromeNetLog : public net::NetLog {
 
  private:
   std::unique_ptr<net::WriteToFileNetLogObserver> write_to_file_observer_;
-  std::unique_ptr<NetExportFileWriter> net_export_file_writer_;
+  std::unique_ptr<NetLogFileWriter> net_log_file_writer_;
   std::unique_ptr<net::TraceNetLogObserver> trace_net_log_observer_;
 
   DISALLOW_COPY_AND_ASSIGN(ChromeNetLog);

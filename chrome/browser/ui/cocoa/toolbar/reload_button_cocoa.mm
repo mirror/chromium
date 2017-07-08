@@ -154,7 +154,6 @@ const int kReloadMenuCommands[]  = {
 
 - (void)setMenuEnabled:(BOOL)enabled {
   [self setOpenMenuOnRightClick:enabled];
-  [self setOpenMenuOnClickHold:enabled];
 }
 
 - (void)setCommandUpdater:(CommandUpdater*)commandUpdater {

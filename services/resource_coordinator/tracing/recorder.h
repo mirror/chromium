@@ -43,13 +43,13 @@ class Recorder : public mojom::Recorder {
 
   const std::string& data() const {
     // All access to |data_| should be done on the background thread.
-    DCHECK(background_task_runner_->RunsTasksInCurrentSequence());
+    DCHECK(background_task_runner_->RunsTasksOnCurrentThread());
     return data_;
   }
 
   void clear_data() {
     // All access to |data_| should be done on the background thread.
-    DCHECK(background_task_runner_->RunsTasksInCurrentSequence());
+    DCHECK(background_task_runner_->RunsTasksOnCurrentThread());
     data_.clear();
   }
 

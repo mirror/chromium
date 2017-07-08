@@ -107,7 +107,6 @@ public class SelectableListLayout<E>
     private ItemAnimator mItemAnimator;
     SelectableListToolbar<E> mToolbar;
     private FadingShadowView mToolbarShadow;
-    boolean mShowShadowOnSelection;
 
     private int mEmptyStringResId;
     private int mSearchEmptyStringResId;
@@ -225,14 +224,13 @@ public class SelectableListLayout<E>
      *                                   when selection is not enabled. If null the default appbar
      *                                   background color will be used.
      * @param listener The OnMenuItemClickListener to set on the toolbar.
-     * @param showShadowOnSelection Whether to show the toolbar shadow on selection.
      * @return The initialized SelectionToolbar.
      */
     public SelectableListToolbar<E> initializeToolbar(int toolbarLayoutId,
             SelectionDelegate<E> delegate, int titleResId, @Nullable DrawerLayout drawerLayout,
             int normalGroupResId, int selectedGroupResId,
             @Nullable Integer normalBackgroundColorResId,
-            @Nullable OnMenuItemClickListener listener, boolean showShadowOnSelection) {
+            @Nullable OnMenuItemClickListener listener) {
         mToolbarStub.setLayoutResource(toolbarLayoutId);
         @SuppressWarnings("unchecked")
         SelectableListToolbar<E> toolbar = (SelectableListToolbar<E>) mToolbarStub.inflate();
@@ -248,7 +246,6 @@ public class SelectableListLayout<E>
         mToolbarShadow.init(
                 ApiCompatibilityUtils.getColor(getResources(), R.color.toolbar_shadow_color),
                 FadingShadow.POSITION_TOP);
-        mShowShadowOnSelection = showShadowOnSelection;
         delegate.addObserver(this);
         setToolbarShadowVisibility();
 
@@ -388,7 +385,7 @@ public class SelectableListLayout<E>
         if (mToolbar == null || mRecyclerView == null) return;
 
         boolean showShadow = mRecyclerView.canScrollVertically(-1) || mToolbar.isSearching()
-                || (mToolbar.getSelectionDelegate().isSelectionEnabled() && mShowShadowOnSelection);
+                || mToolbar.getSelectionDelegate().isSelectionEnabled();
         mToolbarShadow.setVisibility(showShadow ? View.VISIBLE : View.GONE);
     }
 

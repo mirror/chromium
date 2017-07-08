@@ -8,11 +8,10 @@
 
 #include "base/strings/string16.h"
 #include "base/strings/sys_string_conversions.h"
+#include "components/autofill/core/browser/autofill_data_util.h"
 #include "components/autofill/core/browser/autofill_profile.h"
 #include "components/autofill/core/browser/credit_card.h"
 #include "components/autofill/core/browser/personal_data_manager.h"
-#include "components/payments/core/autofill_payment_instrument.h"
-#include "components/payments/core/payment_instrument.h"
 #include "components/payments/core/strings_util.h"
 #include "components/strings/grit/components_strings.h"
 #include "ios/chrome/browser/payments/payment_request.h"
@@ -29,8 +28,6 @@
 
 namespace {
 using ::payment_request_util::GetBillingAddressLabelFromAutofillProfile;
-using ::payment_request_util::
-    GetPaymentMethodNotificationLabelFromPaymentMethod;
 }  // namespace
 
 @interface PaymentMethodSelectionMediator ()
@@ -38,7 +35,7 @@ using ::payment_request_util::
 // The PaymentRequest object owning an instance of web::PaymentRequest as
 // provided by the page invoking the Payment Request API. This is a weak
 // pointer and should outlive this class.
-@property(nonatomic, assign) payments::PaymentRequest* paymentRequest;
+@property(nonatomic, assign) PaymentRequest* paymentRequest;
 
 // The selectable items to display in the collection.
 @property(nonatomic, strong) NSMutableArray<PaymentMethodItem*>* items;
@@ -52,8 +49,7 @@ using ::payment_request_util::
 @synthesize paymentRequest = _paymentRequest;
 @synthesize items = _items;
 
-- (instancetype)initWithPaymentRequest:
-    (payments::PaymentRequest*)paymentRequest {
+- (instancetype)initWithPaymentRequest:(PaymentRequest*)paymentRequest {
   self = [super init];
   if (self) {
     _paymentRequest = paymentRequest;
@@ -94,36 +90,39 @@ using ::payment_request_util::
 #pragma mark - Public methods
 
 - (void)loadItems {
-  const std::vector<payments::PaymentInstrument*>& paymentMethods =
-      _paymentRequest->payment_methods();
+  const std::vector<autofill::CreditCard*>& paymentMethods =
+      _paymentRequest->credit_cards();
   _items = [NSMutableArray arrayWithCapacity:paymentMethods.size()];
   for (size_t index = 0; index < paymentMethods.size(); ++index) {
-    payments::PaymentInstrument* paymentMethod = paymentMethods[index];
+    autofill::CreditCard* paymentMethod = paymentMethods[index];
     DCHECK(paymentMethod);
     PaymentMethodItem* item = [[PaymentMethodItem alloc] init];
-    item.methodID = base::SysUTF16ToNSString(paymentMethod->GetLabel());
-    item.methodDetail = base::SysUTF16ToNSString(paymentMethod->GetSublabel());
-    item.notification = GetPaymentMethodNotificationLabelFromPaymentMethod(
+    item.methodID =
+        base::SysUTF16ToNSString(paymentMethod->NetworkAndLastFourDigits());
+    item.methodDetail = base::SysUTF16ToNSString(
+        paymentMethod->GetRawInfo(autofill::CREDIT_CARD_NAME_FULL));
+    item.notification =
+        payment_request_util::GetPaymentMethodNotificationLabelFromCreditCard(
+            *paymentMethod, _paymentRequest->billing_profiles());
+    item.complete = payment_request_util::IsCreditCardCompleteForPayment(
         *paymentMethod, _paymentRequest->billing_profiles());
-    item.complete = paymentMethod->IsCompleteForPayment();
 
-    if (paymentMethod->type() == payments::PaymentInstrument::Type::AUTOFILL) {
-      payments::AutofillPaymentInstrument* autofillInstrument =
-          static_cast<payments::AutofillPaymentInstrument*>(paymentMethod);
-      autofill::AutofillProfile* billingAddress =
-          autofill::PersonalDataManager::GetProfileFromProfilesByGUID(
-              autofillInstrument->credit_card()->billing_address_id(),
-              _paymentRequest->billing_profiles());
-      if (billingAddress) {
-        item.methodAddress =
-            GetBillingAddressLabelFromAutofillProfile(*billingAddress);
-      }
+    autofill::AutofillProfile* billingAddress =
+        autofill::PersonalDataManager::GetProfileFromProfilesByGUID(
+            paymentMethod->billing_address_id(),
+            _paymentRequest->billing_profiles());
+    if (billingAddress) {
+      item.methodAddress =
+          GetBillingAddressLabelFromAutofillProfile(*billingAddress);
     }
 
-    item.methodTypeIcon = NativeImage(paymentMethod->icon_resource_id());
+    int methodTypeIconID =
+        autofill::data_util::GetPaymentRequestData(paymentMethod->network())
+            .icon_resource_id;
+    item.methodTypeIcon = NativeImage(methodTypeIconID);
 
     item.reserveRoomForAccessoryType = YES;
-    if (_paymentRequest->selected_payment_method() == paymentMethod)
+    if (_paymentRequest->selected_credit_card() == paymentMethod)
       _selectedItemIndex = index;
 
     [_items addObject:item];

@@ -10,7 +10,7 @@ namespace base {
 namespace {
 
 #if DCHECK_IS_ON()
-std::atomic_int g_cross_thread_ref_count_access_allow_count(0);
+AtomicRefCount g_cross_thread_ref_count_access_allow_count(0);
 #endif
 
 }  // namespace
@@ -18,7 +18,7 @@ std::atomic_int g_cross_thread_ref_count_access_allow_count(0);
 namespace subtle {
 
 bool RefCountedThreadSafeBase::HasOneRef() const {
-  return ref_count_.IsOne();
+  return AtomicRefCountIsOne(&ref_count_);
 }
 
 RefCountedThreadSafeBase::~RefCountedThreadSafeBase() {
@@ -40,7 +40,7 @@ void RefCountedThreadSafeBase::AddRef() const {
 #if DCHECK_IS_ON()
 bool RefCountedBase::CalledOnValidSequence() const {
   return sequence_checker_.CalledOnValidSequence() ||
-         g_cross_thread_ref_count_access_allow_count.load() != 0;
+         !AtomicRefCountIsZero(&g_cross_thread_ref_count_access_allow_count);
 }
 #endif
 
@@ -48,11 +48,11 @@ bool RefCountedBase::CalledOnValidSequence() const {
 
 #if DCHECK_IS_ON()
 ScopedAllowCrossThreadRefCountAccess::ScopedAllowCrossThreadRefCountAccess() {
-  ++g_cross_thread_ref_count_access_allow_count;
+  AtomicRefCountInc(&g_cross_thread_ref_count_access_allow_count);
 }
 
 ScopedAllowCrossThreadRefCountAccess::~ScopedAllowCrossThreadRefCountAccess() {
-  --g_cross_thread_ref_count_access_allow_count;
+  AtomicRefCountDec(&g_cross_thread_ref_count_access_allow_count);
 }
 #endif
 

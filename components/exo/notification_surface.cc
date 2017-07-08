@@ -88,8 +88,8 @@ NotificationSurface::~NotificationSurface() {
     root_surface()->RemoveSurfaceObserver(this);
 }
 
-const gfx::Size& NotificationSurface::GetContentSize() const {
-  return root_surface()->content_size();
+const gfx::Size& NotificationSurface::GetSize() const {
+  return host_window()->bounds().size();
 }
 
 void NotificationSurface::OnSurfaceCommit() {

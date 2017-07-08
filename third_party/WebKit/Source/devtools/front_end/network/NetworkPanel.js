@@ -187,10 +187,8 @@ Network.NetworkPanel = class extends UI.Panel {
     this._panelToolbar.appendToolbarItem(this._disableCacheCheckbox);
 
     this._panelToolbar.appendSeparator();
-    this._offlineCheckbox = MobileThrottling.throttlingManager().createOfflineToolbarCheckbox();
-    this._panelToolbar.appendToolbarItem(this._offlineCheckbox);
-    this._throttlingSelect = this._createThrottlingConditionsSelect();
-    this._panelToolbar.appendToolbarItem(this._throttlingSelect);
+    this._panelToolbar.appendToolbarItem(MobileThrottling.NetworkConditionsSelector.createOfflineToolbarCheckbox());
+    this._panelToolbar.appendToolbarItem(this._createNetworkConditionsSelect());
 
     this._panelToolbar.appendToolbarItem(new UI.ToolbarItem(this._progressBarContainer));
   }
@@ -198,10 +196,10 @@ Network.NetworkPanel = class extends UI.Panel {
   /**
    * @return {!UI.ToolbarComboBox}
    */
-  _createThrottlingConditionsSelect() {
+  _createNetworkConditionsSelect() {
     var toolbarItem = new UI.ToolbarComboBox(null);
-    toolbarItem.setMaxWidth(160);
-    MobileThrottling.throttlingManager().decorateSelectWithNetworkThrottling(toolbarItem.selectElement());
+    toolbarItem.setMaxWidth(140);
+    MobileThrottling.NetworkConditionsSelector.decorateSelect(toolbarItem.selectElement());
     return toolbarItem;
   }
 

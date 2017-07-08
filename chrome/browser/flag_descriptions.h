@@ -513,8 +513,8 @@ extern const char kOffMainThreadFetchDescription[];
 extern const char kOmniboxDisplayTitleForCurrentUrlName[];
 extern const char kOmniboxDisplayTitleForCurrentUrlDescription[];
 
-extern const char kOmniboxUIElideSuggestionUrlAfterHostName[];
-extern const char kOmniboxUIElideSuggestionUrlAfterHostDescription[];
+extern const char kOmniboxUIHideSuggestionUrlPathName[];
+extern const char kOmniboxUIHideSuggestionUrlPathDescription[];
 
 extern const char kOmniboxUIHideSuggestionUrlSchemeName[];
 extern const char kOmniboxUIHideSuggestionUrlSchemeDescription[];
@@ -1067,9 +1067,6 @@ extern const char kOfflinePagesAsyncDownloadDescription[];
 extern const char kOfflinePagesCtName[];
 extern const char kOfflinePagesCtDescription[];
 
-extern const char kOfflinePagesCtV2Name[];
-extern const char kOfflinePagesCtV2Description[];
-
 extern const char kOfflinePagesLoadSignalCollectingName[];
 extern const char kOfflinePagesLoadSignalCollectingDescription[];
 
@@ -1295,9 +1292,6 @@ extern const char kDisableSystemTimezoneAutomaticDetectionDescription[];
 
 extern const char kDisplayColorCalibrationName[];
 extern const char kDisplayColorCalibrationDescription[];
-
-extern const char kEnableFullscreenAppListName[];
-extern const char kEnableFullscreenAppListDescription[];
 
 extern const char kEnableAndroidWallpapersAppName[];
 extern const char kEnableAndroidWallpapersAppDescription[];

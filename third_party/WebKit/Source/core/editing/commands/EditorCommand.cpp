@@ -393,7 +393,7 @@ static bool ExecuteInsertElement(LocalFrame& frame, HTMLElement* content) {
 
 static bool ExpandSelectionToGranularity(LocalFrame& frame,
                                          TextGranularity granularity) {
-  const VisibleSelection& selection = CreateVisibleSelectionWithGranularity(
+  const VisibleSelection& selection = CreateVisibleSelection(
       SelectionInDOMTree::Builder()
           .SetBaseAndExtent(frame.Selection()
                                 .ComputeVisibleSelectionInDOMTreeDeprecated()
@@ -401,8 +401,8 @@ static bool ExpandSelectionToGranularity(LocalFrame& frame,
                             frame.Selection()
                                 .ComputeVisibleSelectionInDOMTreeDeprecated()
                                 .Extent())
-          .Build(),
-      granularity);
+          .SetGranularity(granularity)
+          .Build());
   const EphemeralRange new_range = selection.ToNormalizedEphemeralRange();
   if (new_range.IsNull())
     return false;

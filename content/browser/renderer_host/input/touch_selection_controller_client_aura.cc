@@ -323,10 +323,9 @@ void TouchSelectionControllerClientAura::MoveCaret(
 
 void TouchSelectionControllerClientAura::InternalClient::MoveCaret(
     const gfx::PointF& position) {
-  RenderWidgetHostDelegate* host_delegate =
-      RenderWidgetHostImpl::From(rwhva_->GetRenderWidgetHost())->delegate();
-  if (host_delegate)
-    host_delegate->MoveCaret(gfx::ToRoundedPoint(position));
+  RenderWidgetHostImpl* host =
+      RenderWidgetHostImpl::From(rwhva_->GetRenderWidgetHost());
+  host->MoveCaret(gfx::ToRoundedPoint(position));
 }
 
 void TouchSelectionControllerClientAura::MoveRangeSelectionExtent(

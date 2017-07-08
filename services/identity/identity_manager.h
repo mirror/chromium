@@ -18,8 +18,7 @@ class SigninManagerBase;
 
 namespace identity {
 
-class IdentityManager : public mojom::IdentityManager,
-                        public OAuth2TokenService::Observer {
+class IdentityManager : public mojom::IdentityManager {
  public:
   static void Create(mojom::IdentityManagerRequest request,
                      AccountTrackerService* account_tracker,
@@ -69,8 +68,6 @@ class IdentityManager : public mojom::IdentityManager,
 
   // mojom::IdentityManager:
   void GetPrimaryAccountInfo(GetPrimaryAccountInfoCallback callback) override;
-  void GetPrimaryAccountWhenAvailable(
-      GetPrimaryAccountWhenAvailableCallback callback) override;
   void GetAccountInfoFromGaiaId(
       const std::string& gaia_id,
       GetAccountInfoFromGaiaIdCallback callback) override;
@@ -78,9 +75,6 @@ class IdentityManager : public mojom::IdentityManager,
                       const ScopeSet& scopes,
                       const std::string& consumer_id,
                       GetAccessTokenCallback callback) override;
-
-  // OAuth2TokenService::Observer:
-  void OnRefreshTokenAvailable(const std::string& account_id) override;
 
   // Deletes |request|.
   void AccessTokenRequestCompleted(AccessTokenRequest* request);
@@ -108,11 +102,6 @@ class IdentityManager : public mojom::IdentityManager,
 
   // The set of pending requests for access tokens.
   AccessTokenRequests access_token_requests_;
-
-  // List of callbacks that will be notified when the primary account is
-  // available.
-  std::vector<GetPrimaryAccountWhenAvailableCallback>
-      primary_account_available_callbacks_;
 };
 
 }  // namespace identity

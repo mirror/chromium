@@ -307,9 +307,7 @@ void SearchEngineObserver::OnTemplateURLServiceChanged() {
       UIImage* favicon = [UIImage
           imageWithData:[NSData dataWithBytes:data->front() length:data->size()]
                   scale:[UIScreen mainScreen].scale];
-      if (imageCallback) {
-        imageCallback(favicon);
-      }
+      imageCallback(favicon);
       tileType = ntp_tiles::TileVisualType::ICON_REAL;
     } else if (result.fallback_icon_style) {
       UIColor* backgroundColor = skia::UIColorFromSkColor(
@@ -318,19 +316,16 @@ void SearchEngineObserver::OnTemplateURLServiceChanged() {
           skia::UIColorFromSkColor(result.fallback_icon_style->text_color);
       BOOL isDefaultColor =
           result.fallback_icon_style->is_default_background_color;
-      if (fallbackCallback) {
-        fallbackCallback(textColor, backgroundColor, isDefaultColor);
-      }
+      fallbackCallback(textColor, backgroundColor, isDefaultColor);
+      fallbackCallback(backgroundColor, textColor, isDefaultColor);
       tileType = isDefaultColor ? ntp_tiles::TileVisualType::ICON_DEFAULT
                                 : ntp_tiles::TileVisualType::ICON_COLOR;
     }
 
     GoogleLandingMediator* strongSelf = weakSelf;
-    if (strongSelf) {
-      if (result.bitmap.is_valid() || result.fallback_icon_style) {
-        [strongSelf largeIconCache]->SetCachedResult(URL, result);
-      }
-      [strongSelf faviconOfType:tileType fetchedForURL:URL];
+    if (strongSelf &&
+        (result.bitmap.is_valid() || result.fallback_icon_style)) {
+      [strongSelf largeIconCache]->SetCachedResult(URL, result);
     }
   };
 

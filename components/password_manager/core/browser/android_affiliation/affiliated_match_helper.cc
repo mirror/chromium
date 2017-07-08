@@ -114,10 +114,9 @@ void AffiliatedMatchHelper::CompleteInjectAffiliatedWebRealm(
     bool success) {
   // If there is a number of realms, choose the first in the list.
   if (success) {
-    for (const Facet& affiliated_facet : results) {
-      if (affiliated_facet.uri.IsValidWebFacetURI()) {
-        form->affiliated_web_realm =
-            affiliated_facet.uri.canonical_spec() + "/";
+    for (const FacetURI& affiliated_facet : results) {
+      if (affiliated_facet.IsValidWebFacetURI()) {
+        form->affiliated_web_realm = affiliated_facet.canonical_spec() + "/";
         break;
       }
     }
@@ -155,12 +154,11 @@ void AffiliatedMatchHelper::CompleteGetAffiliatedAndroidRealms(
     bool success) {
   std::vector<std::string> affiliated_realms;
   if (success) {
-    for (const Facet& affiliated_facet : results) {
-      if (affiliated_facet.uri != original_facet_uri &&
-          affiliated_facet.uri.IsValidAndroidFacetURI())
+    for (const FacetURI& affiliated_facet : results) {
+      if (affiliated_facet != original_facet_uri &&
+          affiliated_facet.IsValidAndroidFacetURI())
         // Facet URIs have no trailing slash, whereas realms do.
-        affiliated_realms.push_back(affiliated_facet.uri.canonical_spec() +
-                                    "/");
+        affiliated_realms.push_back(affiliated_facet.canonical_spec() + "/");
     }
   }
   result_callback.Run(affiliated_realms);
@@ -172,11 +170,10 @@ void AffiliatedMatchHelper::CompleteGetAffiliatedWebRealms(
     bool success) {
   std::vector<std::string> affiliated_realms;
   if (success) {
-    for (const Facet& affiliated_facet : results) {
-      if (affiliated_facet.uri.IsValidWebFacetURI())
+    for (const FacetURI& affiliated_facet : results) {
+      if (affiliated_facet.IsValidWebFacetURI())
         // Facet URIs have no trailing slash, whereas realms do.
-        affiliated_realms.push_back(affiliated_facet.uri.canonical_spec() +
-                                    "/");
+        affiliated_realms.push_back(affiliated_facet.canonical_spec() + "/");
     }
   }
   result_callback.Run(affiliated_realms);
@@ -202,11 +199,11 @@ void AffiliatedMatchHelper::OnLoginsChanged(
 
   // When the primary key for a login is updated, |changes| will contain both a
   // REMOVE and ADD change for that login. Cached affiliation data should not be
-  // deleted in this case. A simple solution is to call TrimCacheForFacetURI()
+  // deleted in this case. A simple solution is to call TrimCacheForFacet()
   // always after Prefetch() calls -- the trimming logic will detect that there
   // is an active prefetch and not delete the corresponding data.
   for (const FacetURI& facet_uri : facet_uris_to_trim)
-    affiliation_service_->TrimCacheForFacetURI(facet_uri);
+    affiliation_service_->TrimCacheForFacet(facet_uri);
 }
 
 void AffiliatedMatchHelper::OnGetPasswordStoreResults(

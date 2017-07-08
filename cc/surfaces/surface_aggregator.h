@@ -21,7 +21,6 @@
 
 namespace cc {
 
-class BlockingTaskRunner;
 class CompositorFrame;
 class ResourceProvider;
 class Surface;
@@ -138,10 +137,6 @@ class CC_SURFACES_EXPORT SurfaceAggregator {
   gfx::Rect DamageRectForSurface(const Surface* surface,
                                  const RenderPass& source,
                                  const gfx::Rect& full_rect) const;
-
-  void UnrefResources(const SurfaceId& surface_id,
-                      const std::vector<ReturnedResource>& resources,
-                      BlockingTaskRunner* main_thread_task_runner);
 
   SurfaceManager* manager_;
   ResourceProvider* provider_;

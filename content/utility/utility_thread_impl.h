@@ -6,10 +6,14 @@
 #define CONTENT_UTILITY_UTILITY_THREAD_IMPL_H_
 
 #include <memory>
+#include <string>
+#include <vector>
 
 #include "base/compiler_specific.h"
 #include "base/macros.h"
+#include "build/build_config.h"
 #include "content/child/child_thread_impl.h"
+#include "content/common/content_export.h"
 #include "content/public/utility/utility_thread.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
 #include "services/service_manager/public/interfaces/service_factory.mojom.h"
@@ -33,27 +37,31 @@ class UtilityThreadImpl : public UtilityThread,
                           public ChildThreadImpl {
  public:
   UtilityThreadImpl();
-  // Constructor used when running in single process mode.
+  // Constructor that's used when running in single process mode.
   explicit UtilityThreadImpl(const InProcessChildThreadParams& params);
   ~UtilityThreadImpl() override;
   void Shutdown() override;
 
-  // UtilityThread:
   void ReleaseProcessIfNeeded() override;
   void EnsureBlinkInitialized() override;
 
  private:
   void Init();
 
-  // ChildThread:
+  // ChildThread implementation.
   bool OnControlMessageReceived(const IPC::Message& msg) override;
 
-  // Binds requests to our |service factory_|.
+  // IPC message handlers.
+  void OnBatchModeStarted();
+  void OnBatchModeFinished();
+
   void BindServiceFactoryRequest(
       const service_manager::BindSourceInfo& source_info,
       service_manager::mojom::ServiceFactoryRequest request);
 
-  // blink::Platform implementation if needed.
+  // True when we're running in batch mode.
+  bool batch_mode_;
+
   std::unique_ptr<UtilityBlinkPlatformImpl> blink_platform_impl_;
 
   // service_manager::mojom::ServiceFactory for service_manager::Service

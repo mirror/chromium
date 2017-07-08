@@ -6,8 +6,6 @@ import("//third_party/WebKit/Source/modules/modules.gni")
 
 blink_modules_sources("payments") {
   sources = [
-    "CanMakePaymentEvent.cpp",
-    "CanMakePaymentEvent.h",
     "HTMLIFrameElementPayments.cpp",
     "HTMLIFrameElementPayments.h",
     "PaymentAddress.cpp",
@@ -16,8 +14,6 @@ blink_modules_sources("payments") {
     "PaymentAppServiceWorkerRegistration.cpp",
     "PaymentAppServiceWorkerRegistration.h",
     "PaymentCompleter.h",
-    "PaymentEventDataConversion.cpp",
-    "PaymentEventDataConversion.h",
     "PaymentInstruments.cpp",
     "PaymentInstruments.h",
     "PaymentManager.cpp",
@@ -26,6 +22,8 @@ blink_modules_sources("payments") {
     "PaymentRequest.h",
     "PaymentRequestEvent.cpp",
     "PaymentRequestEvent.h",
+    "PaymentRequestEventDataConversion.cpp",
+    "PaymentRequestEventDataConversion.h",
     "PaymentRequestRespondWithObserver.cpp",
     "PaymentRequestRespondWithObserver.h",
     "PaymentRequestUpdateEvent.cpp",

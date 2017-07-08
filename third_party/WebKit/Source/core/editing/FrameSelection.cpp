@@ -1128,28 +1128,14 @@ void FrameSelection::MoveRangeSelection(const VisiblePosition& base_position,
           .SetBaseAndExtentDeprecated(base_position.DeepEquivalent(),
                                       extent_position.DeepEquivalent())
           .SetAffinity(base_position.Affinity())
+          .SetGranularity(granularity)
           .SetIsHandleVisible(IsHandleVisible())
           .Build();
 
   if (new_selection.IsNone())
     return;
 
-  const VisibleSelection& visible_selection =
-      CreateVisibleSelectionWithGranularity(new_selection, granularity);
-  if (visible_selection.IsNone())
-    return;
-
-  SelectionInDOMTree::Builder builder;
-  if (visible_selection.IsBaseFirst()) {
-    builder.SetBaseAndExtent(visible_selection.Start(),
-                             visible_selection.End());
-  } else {
-    builder.SetBaseAndExtent(visible_selection.End(),
-                             visible_selection.Start());
-  }
-  builder.SetAffinity(visible_selection.Affinity());
-  builder.SetIsHandleVisible(IsHandleVisible());
-  SetSelection(builder.Build(), kCloseTyping | kClearTypingStyle,
+  SetSelection(new_selection, kCloseTyping | kClearTypingStyle,
                CursorAlignOnScroll::kIfNeeded, granularity);
 }
 

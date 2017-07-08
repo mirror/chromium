@@ -499,25 +499,25 @@ std::unique_ptr<blink::WebInputEvent> TransformScreenToWidgetCoordinates(
   return ui::TranslateAndScaleWebInputEvent(event, delta, scale);
 }
 
-gfx::ColorSpace GetTestingColorSpace(const std::string& name) {
+gfx::ICCProfile GetTestingICCProfile(const std::string& name) {
   if (name == "genericRGB") {
-    return gfx::ICCProfileForTestingGenericRGB().GetColorSpace();
+    return gfx::ICCProfileForTestingGenericRGB();
   } else if (name == "sRGB") {
-    return gfx::ColorSpace::CreateSRGB();
+    return gfx::ICCProfileForTestingSRGB();
   } else if (name == "test" || name == "colorSpin") {
-    return gfx::ICCProfileForTestingColorSpin().GetColorSpace();
+    return gfx::ICCProfileForTestingColorSpin();
   } else if (name == "adobeRGB") {
-    return gfx::ICCProfileForTestingAdobeRGB().GetColorSpace();
+    return gfx::ICCProfileForTestingAdobeRGB();
   } else if (name == "reset") {
-    return gfx::ICCProfileForLayoutTests().GetColorSpace();
+    return gfx::ICCProfileForLayoutTests();
   }
-  return gfx::ColorSpace();
+  return gfx::ICCProfile();
 }
 
-void SetDeviceColorSpace(RenderView* render_view,
-                         const gfx::ColorSpace& color_space) {
-  static_cast<RenderViewImpl*>(render_view)
-      ->SetDeviceColorSpaceForTesting(color_space);
+void SetDeviceColorProfile(
+    RenderView* render_view, const gfx::ICCProfile& icc_profile) {
+  static_cast<RenderViewImpl*>(render_view)->
+      SetDeviceColorProfileForTesting(icc_profile);
 }
 
 void SetTestBluetoothScanDuration() {

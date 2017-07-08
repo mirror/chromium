@@ -426,10 +426,4 @@ void GestureNavSimple::OnOverscrollModeChange(OverscrollMode old_mode,
   parent->StackAtTop(affordance_->root_layer());
 }
 
-base::Optional<float> GestureNavSimple::GetMaxOverscrollDelta() const {
-  if (affordance_)
-    return completion_threshold_;
-  return base::nullopt;
-}
-
 }  // namespace content

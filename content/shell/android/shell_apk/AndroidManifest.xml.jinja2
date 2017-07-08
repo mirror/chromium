@@ -78,7 +78,7 @@
         {% for i in range(num_test_services) %}
         <service android:name="org.chromium.content_shell_apk.TestChildProcessService{{ i }}"
                  android:process=":test_child_service_process{{ i }}"
-                 android:isolatedProcess="true"
+                 android:isolatedProcess="false"
                  android:exported="false" />
         {% endfor %}
 

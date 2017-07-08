@@ -1316,11 +1316,8 @@ void RenderTextHarfBuzz::DrawVisualText(internal::SkiaTextRenderer* renderer) {
                 ? (SkFloatToScalar(segment.width()) + preceding_segment_widths +
                    SkIntToScalar(origin.x()))
                 : positions[colored_glyphs.end() - glyphs_range.start()].x());
-        if (run.underline)
-          renderer->DrawUnderline(start_x, origin.y(), end_x - start_x);
-        if (run.strike)
-          renderer->DrawStrike(start_x, origin.y(), end_x - start_x,
-                               strike_thickness_factor());
+        renderer->DrawDecorations(start_x, origin.y(), end_x - start_x,
+                                  run.underline, run.strike);
       }
       preceding_segment_widths += SkFloatToScalar(segment.width());
     }

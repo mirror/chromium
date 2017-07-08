@@ -14,6 +14,8 @@ template <typename T>
 class Persistent;
 template <typename T>
 class Member;
+template <typename T>
+class DataPersistent;
 
 template <typename T>
 bool DataEquivalent(const T* a, const T* b) {
@@ -42,6 +44,11 @@ bool DataEquivalent(const Member<T>& a, const Member<T>& b) {
 template <typename T>
 bool DataEquivalent(const std::unique_ptr<T>& a, const std::unique_ptr<T>& b) {
   return DataEquivalent(a.get(), b.get());
+}
+
+template <typename T>
+bool DataEquivalent(const DataPersistent<T>& a, const DataPersistent<T>& b) {
+  return DataEquivalent(a.Get(), b.Get());
 }
 
 }  // namespace blink

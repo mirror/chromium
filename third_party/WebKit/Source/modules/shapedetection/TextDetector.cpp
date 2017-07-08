@@ -6,11 +6,13 @@
 
 #include "core/dom/DOMException.h"
 #include "core/frame/LocalFrame.h"
+#include "core/frame/LocalFrameClient.h"
 #include "core/geometry/DOMRect.h"
 #include "core/html/canvas/CanvasImageSource.h"
 #include "core/workers/WorkerThread.h"
 #include "modules/shapedetection/DetectedText.h"
 #include "public/platform/InterfaceProvider.h"
+#include "public/platform/Platform.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
 
 namespace blink {
@@ -24,10 +26,11 @@ TextDetector::TextDetector(ExecutionContext* context) : ShapeDetector() {
   if (context->IsDocument()) {
     LocalFrame* frame = ToDocument(context)->GetFrame();
     if (frame)
-      frame->GetInterfaceProvider()->GetInterface(std::move(request));
-  } else {
+      frame->Client()->GetInterfaceProvider()->GetInterface(std::move(request));
+  } else if (context->IsWorkerGlobalScope()) {
     WorkerThread* thread = ToWorkerGlobalScope(context)->GetThread();
-    thread->GetInterfaceProvider().GetInterface(std::move(request));
+    if (thread)
+      thread->GetInterfaceProvider()->GetInterface(std::move(request));
   }
 
   text_service_.set_connection_error_handler(ConvertToBaseCallback(WTF::Bind(

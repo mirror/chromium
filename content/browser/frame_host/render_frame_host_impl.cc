@@ -786,7 +786,11 @@ blink::WebPageVisibilityState RenderFrameHostImpl::GetVisibilityState() {
 }
 
 bool RenderFrameHostImpl::Send(IPC::Message* message) {
-  DCHECK(IPC_MESSAGE_ID_CLASS(message->type()) != InputMsgStart);
+  if (IPC_MESSAGE_ID_CLASS(message->type()) == InputMsgStart) {
+    return GetRenderWidgetHost()->input_router()->SendInput(
+        base::WrapUnique(message));
+  }
+
   return GetProcess()->Send(message);
 }
 
@@ -920,11 +924,9 @@ bool RenderFrameHostImpl::OnMessageReceived(const IPC::Message &msg) {
 void RenderFrameHostImpl::OnAssociatedInterfaceRequest(
     const std::string& interface_name,
     mojo::ScopedInterfaceEndpointHandle handle) {
-  ContentBrowserClient* browser_client = GetContentClient()->browser();
   if (associated_registry_->CanBindRequest(interface_name)) {
     associated_registry_->BindRequest(interface_name, std::move(handle));
-  } else if (!browser_client->BindAssociatedInterfaceRequestFromFrame(
-                 this, interface_name, &handle)) {
+  } else {
     delegate_->OnAssociatedInterfaceRequest(this, interface_name,
                                             std::move(handle));
   }
@@ -3329,7 +3331,8 @@ void RenderFrameHostImpl::SetUpMojoIfNeeded() {
   if (base::FeatureList::IsEnabled(features::kMojoInputMessages)) {
     GetRemoteInterfaces()->GetInterface(&frame_input_handler_);
   } else {
-    legacy_frame_input_handler_.reset(new LegacyIPCFrameInputHandler(this));
+    legacy_frame_input_handler_.reset(
+        new LegacyIPCFrameInputHandler(this, routing_id_));
   }
 }
 
@@ -3457,10 +3460,6 @@ RenderFrameHostImpl::GetFrameResourceCoordinator() {
         base::MakeUnique<resource_coordinator::ResourceCoordinatorInterface>(
             ServiceManagerConnection::GetForProcess()->GetConnector(),
             resource_coordinator::CoordinationUnitType::kFrame);
-    if (parent_) {
-      parent_->GetFrameResourceCoordinator()->AddChild(
-          *frame_resource_coordinator_);
-    }
   }
   return frame_resource_coordinator_.get();
 }

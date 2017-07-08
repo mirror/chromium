@@ -82,7 +82,7 @@ class TriggerManagerTest : public ::testing::Test {
     SBErrorOptions options =
         TriggerManager::GetSBErrorDisplayOptions(pref_service_, *web_contents);
     return trigger_manager_.StartCollectingThreatDetails(
-        TriggerType::SECURITY_INTERSTITIAL, web_contents,
+        SafeBrowsingTriggerType::SECURITY_INTERSTITIAL, web_contents,
         security_interstitials::UnsafeResource(), nullptr, nullptr, options);
   }
 
@@ -97,8 +97,8 @@ class TriggerManagerTest : public ::testing::Test {
     SBErrorOptions options =
         TriggerManager::GetSBErrorDisplayOptions(pref_service_, *web_contents);
     return trigger_manager_.FinishCollectingThreatDetails(
-        TriggerType::SECURITY_INTERSTITIAL, web_contents, base::TimeDelta(),
-        false, 0, options);
+        SafeBrowsingTriggerType::SECURITY_INTERSTITIAL, web_contents,
+        base::TimeDelta(), false, 0, options);
   }
 
   const DataCollectorsMap& data_collectors_map() {

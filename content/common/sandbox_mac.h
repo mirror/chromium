@@ -52,7 +52,6 @@ class CONTENT_EXPORT Sandbox {
   static const char* kSandboxDisableDenialLogging;
   static const char* kSandboxHomedirAsLiteral;
   static const char* kSandboxElCapOrLater;
-  static const char* kSandboxMavericks;
   static const char* kSandboxPermittedDir;
   static const char* kSandboxBundlePath;
   static const char* kSandboxLoggingPathAsLiteral;

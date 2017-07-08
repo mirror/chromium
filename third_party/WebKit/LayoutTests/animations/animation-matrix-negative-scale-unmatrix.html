@@ -13,10 +13,10 @@
                 width: 100px;
                 height: 100px;
                 background-color: blue;
-                animation-duration: 10s;
+                -webkit-animation-duration: 10s;
             }
 
-            @keyframes anim {
+            @-webkit-keyframes anim {
                 from { transform: matrix(1, 0, 0, -1, 0, 0); }
                 to { transform: matrix(1, 0, 0, 1, 0, 0); }
             }
@@ -32,7 +32,7 @@
             function snapshot()
             {
                 var boxComputedStyle = window.getComputedStyle(document.getElementById('box'));
-                var matrix = new WebKitCSSMatrix(boxComputedStyle.transform);
+                var matrix = new WebKitCSSMatrix(boxComputedStyle.webkitTransform);
 
                 // "d" component (scaleY) should be negative.
                 if (matrix["d"] > 0)
@@ -45,7 +45,7 @@
 
             function startAnimation()
             {
-                document.getElementById("box").style.animationName = "anim";
+                document.getElementById("box").style.webkitAnimationName = "anim";
             }
 
             document.addEventListener('webkitAnimationStart', snapshot, false);

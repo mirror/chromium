@@ -878,9 +878,6 @@ const char kNtpSwitchToExistingTab[] = "ntp-switch-to-existing-tab";
 // Specifies Android phone page loading progress bar animation.
 const char kProgressBarAnimation[]          = "progress-bar-animation";
 
-// Use a static URL for the logo of the default search engine.
-const char kSearchProviderLogoURL[] = "search-provider-logo-url";
-
 // Specifies a particular tab management experiment to enable.
 const char kTabManagementExperimentTypeDisabled[] =
     "tab-management-experiment-type-disabled";
@@ -925,10 +922,6 @@ const char kHelpShort[]                     = "h";
 // rely on it keeping large amounts of testing passwords out of their Keyrings
 // or KWallets.
 const char kPasswordStore[]                 = "password-store";
-
-// Enables the feature of allowing the user to disable the backend via a
-// setting.
-const char kEnableEncryptionSelection[] = "enable-encryption-selection";
 
 // The same as the --class argument in X applications.  Overrides the WM_CLASS
 // window property with the given value.

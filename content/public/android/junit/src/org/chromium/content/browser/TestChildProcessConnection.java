@@ -7,6 +7,7 @@ package org.chromium.content.browser;
 import android.content.ComponentName;
 import android.os.Bundle;
 
+import org.chromium.base.process_launcher.ChildProcessConnection;
 import org.chromium.base.process_launcher.ChildProcessCreationParams;
 
 /** An implementation of ChildProcessConnection that does not connect to a real service. */

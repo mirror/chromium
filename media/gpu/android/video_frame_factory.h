@@ -29,11 +29,7 @@ class MEDIA_GPU_EXPORT VideoFrameFactory {
  public:
   using GetStubCb = base::Callback<gpu::GpuCommandBufferStub*()>;
   using InitCb = base::Callback<void(scoped_refptr<SurfaceTextureGLOwner>)>;
-
-  // These mirror types from MojoVideoDecoderService.
-  using ReleaseMailboxCB = base::Callback<void(const gpu::SyncToken&)>;
-  using OutputWithReleaseMailboxCB =
-      base::Callback<void(ReleaseMailboxCB, const scoped_refptr<VideoFrame>&)>;
+  using FrameCreatedCb = base::Callback<void(const scoped_refptr<VideoFrame>&)>;
 
   VideoFrameFactory() = default;
   virtual ~VideoFrameFactory() = default;
@@ -54,7 +50,7 @@ class MEDIA_GPU_EXPORT VideoFrameFactory {
       scoped_refptr<SurfaceTextureGLOwner> surface_texture,
       base::TimeDelta timestamp,
       gfx::Size natural_size,
-      OutputWithReleaseMailboxCB output_cb) = 0;
+      FrameCreatedCb frame_created_cb) = 0;
 };
 
 }  // namespace media

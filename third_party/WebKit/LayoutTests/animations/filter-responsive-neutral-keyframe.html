@@ -7,14 +7,14 @@ div {
 }
 #target {
   background: red;
-  filter: opacity(1);
+  -webkit-filter: opacity(1);
   animation: test 1e8s;
 }
 #green {
   background: green;
 }
 @keyframes test {
-  to { filter: opacity(0); }
+  to { -webkit-filter: opacity(0); }
 }
 </style>
 <div id="green"></div>
@@ -28,7 +28,7 @@ function waitForCompositor() {
 }
 
 waitForCompositor().then(() => {
-  target.style.filter = 'opacity(0)';
+  target.style.webkitFilter = 'opacity(0)';
 }).then(() => waitForCompositor()).then(() => {
   if (window.testRunner)
     testRunner.notifyDone();

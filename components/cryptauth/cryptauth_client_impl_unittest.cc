@@ -13,7 +13,6 @@
 #include "components/cryptauth/proto/cryptauth_api.pb.h"
 #include "components/cryptauth/switches.h"
 #include "google_apis/gaia/fake_oauth2_token_service.h"
-#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "net/url_request/test_url_fetcher_factory.h"
 #include "net/url_request/url_request_test_util.h"
 #include "testing/gmock/include/gmock/gmock.h"
@@ -64,9 +63,7 @@ class FakeCryptAuthAccessTokenFetcher : public CryptAuthAccessTokenFetcher {
 // Mock CryptAuthApiCallFlow, which handles the HTTP requests to CryptAuth.
 class MockCryptAuthApiCallFlow : public CryptAuthApiCallFlow {
  public:
-  MockCryptAuthApiCallFlow() : CryptAuthApiCallFlow() {
-    SetPartialNetworkTrafficAnnotation(PARTIAL_TRAFFIC_ANNOTATION_FOR_TESTS);
-  }
+  MockCryptAuthApiCallFlow() : CryptAuthApiCallFlow() {}
   virtual ~MockCryptAuthApiCallFlow() {}
 
   MOCK_METHOD6(Start,
@@ -169,8 +166,7 @@ TEST_F(CryptAuthClientTest, GetMyDevicesSuccess) {
   client_->GetMyDevices(
       request_proto,
       base::Bind(&SaveResult<GetMyDevicesResponse>, &result_proto),
-      base::Bind(&NotCalled<std::string>),
-      PARTIAL_TRAFFIC_ANNOTATION_FOR_TESTS);
+      base::Bind(&NotCalled<std::string>));
 
   GetMyDevicesRequest expected_request;
   EXPECT_TRUE(expected_request.ParseFromString(serialized_request_));
@@ -207,8 +203,7 @@ TEST_F(CryptAuthClientTest, GetMyDevicesFailure) {
   std::string error_message;
   client_->GetMyDevices(GetMyDevicesRequest(),
                         base::Bind(&NotCalled<GetMyDevicesResponse>),
-                        base::Bind(&SaveResult<std::string>, &error_message),
-                        PARTIAL_TRAFFIC_ANNOTATION_FOR_TESTS);
+                        base::Bind(&SaveResult<std::string>, &error_message));
 
   std::string kStatus500Error("HTTP status: 500");
   FailApiCallFlow(kStatus500Error);
@@ -284,9 +279,9 @@ TEST_F(CryptAuthClientTest, SendDeviceSyncTickleSuccess) {
   SendDeviceSyncTickleResponse result_proto;
   client_->SendDeviceSyncTickle(
       SendDeviceSyncTickleRequest(),
-      base::Bind(&SaveResult<SendDeviceSyncTickleResponse>, &result_proto),
-      base::Bind(&NotCalled<std::string>),
-      PARTIAL_TRAFFIC_ANNOTATION_FOR_TESTS);
+      base::Bind(&SaveResult<SendDeviceSyncTickleResponse>,
+                 &result_proto),
+      base::Bind(&NotCalled<std::string>));
 
   SendDeviceSyncTickleRequest expected_request;
   EXPECT_TRUE(expected_request.ParseFromString(serialized_request_));
@@ -406,8 +401,7 @@ TEST_F(CryptAuthClientTest, FetchAccessTokenFailure) {
   std::string error_message;
   client_->GetMyDevices(GetMyDevicesRequest(),
                         base::Bind(&NotCalled<GetMyDevicesResponse>),
-                        base::Bind(&SaveResult<std::string>, &error_message),
-                        PARTIAL_TRAFFIC_ANNOTATION_FOR_TESTS);
+                        base::Bind(&SaveResult<std::string>, &error_message));
 
   EXPECT_EQ("Failed to get a valid access token.", error_message);
 }
@@ -420,8 +414,7 @@ TEST_F(CryptAuthClientTest, ParseResponseProtoFailure) {
   std::string error_message;
   client_->GetMyDevices(GetMyDevicesRequest(),
                         base::Bind(&NotCalled<GetMyDevicesResponse>),
-                        base::Bind(&SaveResult<std::string>, &error_message),
-                        PARTIAL_TRAFFIC_ANNOTATION_FOR_TESTS);
+                        base::Bind(&SaveResult<std::string>, &error_message));
 
   flow_result_callback_.Run("Not a valid serialized response message.");
   EXPECT_EQ("Failed to parse response proto.", error_message);
@@ -438,8 +431,7 @@ TEST_F(CryptAuthClientTest,
   client_->GetMyDevices(
       GetMyDevicesRequest(),
       base::Bind(&SaveResult<GetMyDevicesResponse>, &result_proto),
-      base::Bind(&NotCalled<std::string>),
-      PARTIAL_TRAFFIC_ANNOTATION_FOR_TESTS);
+      base::Bind(&NotCalled<std::string>));
 
   // With request pending, make second request.
   {
@@ -474,8 +466,7 @@ TEST_F(CryptAuthClientTest,
   std::string error_message;
   client_->GetMyDevices(GetMyDevicesRequest(),
                         base::Bind(&NotCalled<GetMyDevicesResponse>),
-                        base::Bind(&SaveResult<std::string>, &error_message),
-                        PARTIAL_TRAFFIC_ANNOTATION_FOR_TESTS);
+                        base::Bind(&SaveResult<std::string>, &error_message));
 
   // With request pending, make second request.
   {
@@ -505,8 +496,7 @@ TEST_F(CryptAuthClientTest,
     client_->GetMyDevices(
         GetMyDevicesRequest(),
         base::Bind(&SaveResult<GetMyDevicesResponse>, &result_proto),
-        base::Bind(&NotCalled<std::string>),
-        PARTIAL_TRAFFIC_ANNOTATION_FOR_TESTS);
+        base::Bind(&NotCalled<std::string>));
 
     GetMyDevicesResponse response_proto;
     response_proto.add_devices();
@@ -539,8 +529,7 @@ TEST_F(CryptAuthClientTest, DeviceClassifierIsSet) {
   client_->GetMyDevices(
       request_proto,
       base::Bind(&SaveResult<GetMyDevicesResponse>, &result_proto),
-      base::Bind(&NotCalled<std::string>),
-      PARTIAL_TRAFFIC_ANNOTATION_FOR_TESTS);
+      base::Bind(&NotCalled<std::string>));
   GetMyDevicesRequest expected_request;
   EXPECT_TRUE(expected_request.ParseFromString(serialized_request_));
 
@@ -566,8 +555,7 @@ TEST_F(CryptAuthClientTest, GetAccessTokenUsed) {
   client_->GetMyDevices(
       request_proto,
       base::Bind(&SaveResult<GetMyDevicesResponse>, &result_proto),
-      base::Bind(&NotCalled<std::string>),
-      PARTIAL_TRAFFIC_ANNOTATION_FOR_TESTS);
+      base::Bind(&NotCalled<std::string>));
   EXPECT_EQ(kAccessToken, client_->GetAccessTokenUsed());
 }
 

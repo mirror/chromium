@@ -313,7 +313,7 @@ class RTCPeerConnectionHandlerTest : public ::testing::Test {
                             blink::WebString::FromUTF8("video_track"),
                             false /* remote */);
     MockMediaStreamVideoSource* native_video_source =
-        new MockMediaStreamVideoSource();
+        new MockMediaStreamVideoSource(false);
     video_source.SetExtraData(native_video_source);
 
     blink::WebVector<blink::WebMediaStreamTrack> audio_tracks(

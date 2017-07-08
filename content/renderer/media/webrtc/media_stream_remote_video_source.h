@@ -5,8 +5,6 @@
 #ifndef CONTENT_RENDERER_MEDIA_WEBRTC_MEDIA_STREAM_REMOTE_VIDEO_SOURCE_H_
 #define CONTENT_RENDERER_MEDIA_WEBRTC_MEDIA_STREAM_REMOTE_VIDEO_SOURCE_H_
 
-#include <memory>
-
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/single_thread_task_runner.h"
@@ -26,8 +24,7 @@ class TrackObserver;
 class CONTENT_EXPORT MediaStreamRemoteVideoSource
      : public MediaStreamVideoSource {
  public:
-  explicit MediaStreamRemoteVideoSource(
-      std::unique_ptr<TrackObserver> observer);
+  MediaStreamRemoteVideoSource(std::unique_ptr<TrackObserver> observer);
   ~MediaStreamRemoteVideoSource() override;
 
   // Should be called when the remote video track this source originates from is
@@ -37,7 +34,15 @@ class CONTENT_EXPORT MediaStreamRemoteVideoSource
 
  protected:
   // Implements MediaStreamVideoSource.
+  void GetCurrentSupportedFormats(
+      int max_requested_width,
+      int max_requested_height,
+      double max_requested_frame_rate,
+      const VideoCaptureDeviceFormatsCB& callback) override;
+
   void StartSourceImpl(
+      const media::VideoCaptureFormat& format,
+      const blink::WebMediaConstraints& constraints,
       const VideoCaptureDeliverFrameCB& frame_callback) override;
 
   void StopSourceImpl() override;

@@ -11,6 +11,7 @@
 #include "cc/base/switches.h"
 #include "cc/scheduler/begin_frame_source.h"
 #include "cc/surfaces/display.h"
+#include "cc/surfaces/surface_dependency_tracker.h"
 #include "components/viz/service/display_embedder/display_provider.h"
 #include "components/viz/service/frame_sinks/gpu_compositor_frame_sink.h"
 #include "components/viz/service/frame_sinks/gpu_root_compositor_frame_sink.h"
@@ -25,10 +26,15 @@ FrameSinkManagerImpl::FrameSinkManagerImpl(bool use_surface_references,
       display_provider_(display_provider),
       binding_(this) {
   manager_.AddObserver(this);
+  dependency_tracker_ = base::MakeUnique<cc::SurfaceDependencyTracker>(
+      &manager_, manager_.GetPrimaryBeginFrameSource());
+  manager_.SetDependencyTracker(dependency_tracker_.get());
 }
 
 FrameSinkManagerImpl::~FrameSinkManagerImpl() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  manager_.SetDependencyTracker(nullptr);
+  dependency_tracker_.reset();
   manager_.RemoveObserver(this);
 }
 

@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "chrome/browser/android/download/items/offline_content_aggregator_factory_android.h"
+
 #include "base/android/jni_android.h"
 #include "base/android/scoped_java_ref.h"
 #include "chrome/browser/offline_items_collection/offline_content_aggregator_factory.h"
@@ -25,4 +27,8 @@ GetOfflineContentAggregatorForProfile(JNIEnv* env,
           ->GetForBrowserContext(profile);
   return offline_items_collection::android::OfflineContentAggregatorBridge::
       GetBridgeForOfflineContentAggregator(aggregator);
+}
+
+bool RegisterOfflineContentAggregatorFactoryJni(JNIEnv* env) {
+  return RegisterNativesImpl(env);
 }

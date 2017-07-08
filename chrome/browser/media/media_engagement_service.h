@@ -5,34 +5,19 @@
 #ifndef CHROME_BROWSER_MEDIA_MEDIA_ENGAGEMENT_SERVICE_H_
 #define CHROME_BROWSER_MEDIA_MEDIA_ENGAGEMENT_SERVICE_H_
 
-#include <map>
 #include <set>
 
 #include "base/macros.h"
-#include "base/values.h"
-#include "chrome/browser/media/media_engagement_score.h"
-#include "components/history/core/browser/history_service_observer.h"
 #include "components/keyed_service/core/keyed_service.h"
 
-class GURL;
 class MediaEngagementContentsObserver;
-class MediaEngagementScore;
 class Profile;
-
-namespace base {
-class Clock;
-}
 
 namespace content {
 class WebContents;
 }  // namespace content
 
-namespace history {
-class HistoryService;
-}
-
-class MediaEngagementService : public KeyedService,
-                               public history::HistoryServiceObserver {
+class MediaEngagementService : public KeyedService {
  public:
   // Returns the instance attached to the given |profile|.
   static MediaEngagementService* Get(Profile* profile);
@@ -47,55 +32,10 @@ class MediaEngagementService : public KeyedService,
   explicit MediaEngagementService(Profile* profile);
   ~MediaEngagementService() override;
 
-  // Returns the engagement score of |url|.
-  double GetEngagementScore(const GURL& url) const;
-
-  // Returns a map of all stored origins and their engagement levels.
-  std::map<GURL, double> GetScoreMapForTesting() const;
-
-  // Record a visit of a |url|.
-  void RecordVisit(const GURL& url);
-
-  // Record a media playback on a |url|.
-  void RecordPlayback(const GURL& url);
-
-  // Overridden from history::HistoryServiceObserver:
-  void OnURLsDeleted(history::HistoryService* history_service,
-                     bool all_history,
-                     bool expired,
-                     const history::URLRows& deleted_rows,
-                     const std::set<GURL>& favicon_urls) override;
-
-  // KeyedService support:
-  void Shutdown() override;
-
-  // Clear data if the last playback time is between these two time points.
-  void ClearDataBetweenTime(const base::Time& delete_begin,
-                            const base::Time& delete_end);
-
-  // Retrieves the MediaEngagementScore for |url|.
-  MediaEngagementScore* CreateEngagementScore(const GURL& url) const;
-
  private:
-  friend class MediaEngagementServiceTest;
-  friend class MediaEngagementContentsObserverTest;
   friend MediaEngagementContentsObserver;
 
-  MediaEngagementService(Profile* profile, std::unique_ptr<base::Clock> clock);
-
-  // Returns true if we should record engagement for this url. Currently,
-  // engagement is only earned for HTTP and HTTPS.
-  bool ShouldRecordEngagement(const GURL& url) const;
-
   std::set<MediaEngagementContentsObserver*> contents_observers_;
-
-  Profile* profile_;
-
-  // Clear any data for a specific origin.
-  void Clear(const GURL& url);
-
-  // An internal clock for testing.
-  std::unique_ptr<base::Clock> clock_;
 
   DISALLOW_COPY_AND_ASSIGN(MediaEngagementService);
 };

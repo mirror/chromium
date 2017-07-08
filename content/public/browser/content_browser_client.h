@@ -67,10 +67,6 @@ class AudioManager;
 class CdmFactory;
 }
 
-namespace mojo {
-class ScopedInterfaceEndpointHandle;
-}
-
 namespace service_manager {
 class Service;
 struct BindSourceInfo;
@@ -659,14 +655,6 @@ class CONTENT_EXPORT ContentBrowserClient {
       const service_manager::BindSourceInfo& source_info,
       const std::string& interface_name,
       mojo::ScopedMessagePipeHandle interface_pipe) {}
-
-  // Content was unable to bind a request for this associated interface, so the
-  // embedder should try. Returns true if the |handle| was actually taken and
-  // bound; false otherwise.
-  virtual bool BindAssociatedInterfaceRequestFromFrame(
-      RenderFrameHost* render_frame_host,
-      const std::string& interface_name,
-      mojo::ScopedInterfaceEndpointHandle* handle);
 
   // (Currently called only from GPUProcessHost, move somewhere more central).
   // Called when a request to bind |interface_name| on |interface_pipe| is

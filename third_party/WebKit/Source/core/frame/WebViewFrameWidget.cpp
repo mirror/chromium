@@ -221,8 +221,14 @@ void WebViewFrameWidget::ScheduleAnimation() {
   web_view_->ScheduleAnimationForWidget();
 }
 
-CompositorMutatorImpl* WebViewFrameWidget::CompositorMutator() {
-  return web_view_->CompositorMutator();
+CompositorWorkerProxyClient*
+WebViewFrameWidget::CreateCompositorWorkerProxyClient() {
+  return web_view_->CreateCompositorWorkerProxyClient();
+}
+
+AnimationWorkletProxyClient*
+WebViewFrameWidget::CreateAnimationWorkletProxyClient() {
+  return web_view_->CreateAnimationWorkletProxyClient();
 }
 
 void WebViewFrameWidget::SetRootGraphicsLayer(GraphicsLayer* layer) {

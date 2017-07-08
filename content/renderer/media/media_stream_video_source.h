@@ -37,6 +37,13 @@ struct VideoTrackAdapterSettings;
 // MediaStreaVideoSources such as local video capture, video sources received
 // on a PeerConnection or a source created in NaCl.
 // All methods calls will be done from the main render thread.
+//
+// When the first track is added to the source by calling AddTrack, the
+// MediaStreamVideoSource implementation calls GetCurrentSupportedFormats.
+// The source implementation must call OnSupportedFormats.
+// MediaStreamVideoSource then match the constraints provided in AddTrack with
+// the formats and call StartSourceImpl. The source implementation must call
+// OnStartDone when the underlying source has been started or failed to start.
 class CONTENT_EXPORT MediaStreamVideoSource : public MediaStreamSource {
  public:
   enum {
@@ -78,8 +85,7 @@ class CONTENT_EXPORT MediaStreamVideoSource : public MediaStreamSource {
   // Returns the task runner where video frames will be delivered on.
   base::SingleThreadTaskRunner* io_task_runner() const;
 
-  // Implementations must return the capture format if available.
-  virtual base::Optional<media::VideoCaptureFormat> GetCurrentFormat() const;
+  base::Optional<media::VideoCaptureFormat> GetCurrentFormat() const;
 
   base::WeakPtr<MediaStreamVideoSource> GetWeakPtr() {
     return weak_factory_.GetWeakPtr();
@@ -94,11 +100,35 @@ class CONTENT_EXPORT MediaStreamVideoSource : public MediaStreamSource {
   // Sets muted state and notifies it to all registered tracks.
   virtual void SetMutedState(bool state);
 
-  // An implementation must start capturing frames after this method is called.
-  // When the source has started or failed to start OnStartDone must be called.
-  // An implementation must call |frame_callback| on the IO thread with the
+  // An implementation must fetch the formats that can currently be used by
+  // the source and call OnSupportedFormats when done.
+  // |max_requested_height| and |max_requested_width| is the max height and
+  // width set as a mandatory constraint if set when calling
+  // MediaStreamVideoSource::AddTrack. If max height and max width is not set
+  // |max_requested_height| and |max_requested_width| are 0.
+  // TODO(guidou): Remove when the standard constraints code stabilizes.
+  // http://crbug.com/706408
+  virtual void GetCurrentSupportedFormats(
+      int max_requested_width,
+      int max_requested_height,
+      double max_requested_frame_rate,
+      const VideoCaptureDeviceFormatsCB& callback) = 0;
+
+  // TODO(guidou): Rename to GetCurrentFormat. http://crbug.com/706804
+  virtual base::Optional<media::VideoCaptureFormat> GetCurrentFormatImpl()
+      const;
+
+  // An implementation must start capturing frames using the requested
+  // |format|. The fulfilled |constraints| are provided as additional context,
+  // and may be used to modify the behavior of the source. When the source has
+  // started or the source failed to start OnStartDone must be called. An
+  // implementation must call |frame_callback| on the IO thread with the
   // captured frames.
+  // TODO(guidou): Remove |format| and |constraints| parameters.
+  // http://crbug.com/706408
   virtual void StartSourceImpl(
+      const media::VideoCaptureFormat& format,
+      const blink::WebMediaConstraints& constraints,
       const VideoCaptureDeliverFrameCB& frame_callback) = 0;
   void OnStartDone(MediaStreamRequestResult result);
 

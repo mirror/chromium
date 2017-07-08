@@ -933,9 +933,6 @@
       status: "stable",
     },
     {
-      name: "ServiceWorkerScriptStreaming",
-    },
-    {
       name: "SetRootScroller",
       status: "experimental",
     },
@@ -1041,7 +1038,6 @@
     },
     {
       name: "ValidationBubbleInRenderer",
-      status: "experimental",
     },
     {
       name: "VibrateRequiresUserGesture",

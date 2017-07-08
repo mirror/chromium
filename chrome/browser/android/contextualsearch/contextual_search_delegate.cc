@@ -34,6 +34,7 @@
 #include "net/url_request/url_fetcher.h"
 #include "url/gurl.h"
 
+using content::ContentViewCore;
 using content::RenderFrameHost;
 
 namespace {

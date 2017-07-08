@@ -449,8 +449,6 @@ class WEB_EXPORT WebLocalFrameImpl final
       const WebURLRequest&,
       base::SingleThreadTaskRunner*) override;
 
-  WebFrameWidgetBase* LocalRootFrameWidget() override;
-
   DECLARE_VIRTUAL_TRACE();
 
  private:

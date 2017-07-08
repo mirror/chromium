@@ -429,12 +429,7 @@ public class AddressEditor
 
         @Override
         public boolean isValid(@Nullable CharSequence value) {
-            // TODO(gogerald): Warn users when the phone number is a possible number but may be
-            // invalid, crbug.com/736387.
-            // Note that isPossibleNumber is used since the metadata in libphonenumber has to be
-            // updated frequently (daily) to do more strict validation.
-            return value != null
-                    && PhoneNumberUtil.isPossibleNumber(value.toString(), mCountryCode);
+            return value != null && PhoneNumberUtil.isValidNumber(value.toString(), mCountryCode);
         }
 
         @Override

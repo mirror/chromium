@@ -62,16 +62,17 @@ class CC_SURFACES_EXPORT SurfaceManager {
   std::string SurfaceReferencesToString();
 #endif
 
-  void RequestSurfaceResolution(Surface* surface,
-                                SurfaceDependencyDeadline* deadline);
+  void SetDependencyTracker(SurfaceDependencyTracker* dependency_tracker);
+  SurfaceDependencyTracker* dependency_tracker() { return dependency_tracker_; }
 
-  // Creates a Surface for the given SurfaceClient. The surface will be
-  // destroyed when DestroySurface is called, all of its destruction
+  void RequestSurfaceResolution(Surface* pending_surface);
+
+  // Creates a Surface for the given CompositorFrameSinkSupport. The surface
+  // will be destroyed when DestroySurface is called, all of its destruction
   // dependencies are satisfied, and it is not reachable from the root surface.
-  Surface* CreateSurface(base::WeakPtr<SurfaceClient> surface_client,
-                         const SurfaceInfo& surface_info,
-                         BeginFrameSource* begin_frame_source,
-                         bool needs_sync_tokens);
+  Surface* CreateSurface(
+      base::WeakPtr<CompositorFrameSinkSupport> compositor_frame_sink_support,
+      const SurfaceInfo& surface_info);
 
   // Destroy the Surface once a set of sequence numbers has been satisfied.
   void DestroySurface(const SurfaceId& surface_id);
@@ -95,7 +96,7 @@ class CC_SURFACES_EXPORT SurfaceManager {
   // |ack.sequence_number| is only valid if called in response to a BeginFrame.
   bool SurfaceModified(const SurfaceId& surface_id, const BeginFrameAck& ack);
 
-  // Called when a CompositorFrame is submitted to a SurfaceClient
+  // Called when a CompositorFrame is submitted to a CompositorFrameSinkSupport
   // for a given |surface_id| for the first time.
   void SurfaceCreated(const SurfaceInfo& surface_info);
 
@@ -132,8 +133,8 @@ class CC_SURFACES_EXPORT SurfaceManager {
   // possibly because a renderer process has crashed.
   void InvalidateFrameSinkId(const FrameSinkId& frame_sink_id);
 
-  // SurfaceClient, hierarchy, and BeginFrameSource can be registered and
-  // unregistered in any order with respect to each other.
+  // CompositorFrameSinkSupport, hierarchy, and BeginFrameSource can be
+  // registered and unregistered in any order with respect to each other.
   //
   // This happens in practice, e.g. the relationship to between ui::Compositor /
   // DelegatedFrameHost is known before ui::Compositor has a surface/client).
@@ -281,10 +282,6 @@ class CC_SURFACES_EXPORT SurfaceManager {
 
   FrameSinkManager framesink_manager_;
 
-  // SurfaceDependencyTracker needs to be destroyed after Surfaces are destroyed
-  // because they will call back into the dependency tracker.
-  SurfaceDependencyTracker dependency_tracker_;
-
   base::flat_map<SurfaceId, std::unique_ptr<Surface>> surface_map_;
   base::ObserverList<SurfaceObserver> observer_list_;
   base::ThreadChecker thread_checker_;
@@ -330,6 +327,8 @@ class CC_SURFACES_EXPORT SurfaceManager {
   // the embedding client can use them.
   std::unordered_map<FrameSinkId, std::vector<LocalSurfaceId>, FrameSinkIdHash>
       temporary_reference_ranges_;
+
+  SurfaceDependencyTracker* dependency_tracker_ = nullptr;
 
   base::WeakPtrFactory<SurfaceManager> weak_factory_;
 

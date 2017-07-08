@@ -15,7 +15,6 @@
 namespace blink {
 
 class CompositorMutatorImpl;
-class Document;
 class WorkletGlobalScope;
 
 // Mediates between one Animator and the associated CompositorMutatorImpl. There
@@ -42,8 +41,6 @@ class MODULES_EXPORT AnimationWorkletProxyClientImpl final
   // CompositorAnimator:
   // This method is invoked in compositor thread
   bool Mutate(double monotonic_time_now) override;
-
-  static AnimationWorkletProxyClientImpl* FromDocument(Document*);
 
  private:
   CrossThreadPersistent<CompositorMutatorImpl> mutator_;

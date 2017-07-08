@@ -237,9 +237,6 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
         VrClassesWrapper wrapper = getVrClassesWrapper();
         if (wrapper == null) return;
         nativeOnLibraryAvailable();
-        if (sInstance != null && sInstance.mAutopresentWebVr) {
-            sInstance.enterVr(false);
-        }
     }
 
     @VisibleForTesting

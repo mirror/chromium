@@ -11,6 +11,7 @@
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
+#include "base/strings/utf_string_conversions.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "third_party/protobuf/src/google/protobuf/io/tokenizer.h"
@@ -66,6 +67,8 @@ class SimpleErrorCollector : public google::protobuf::io::ErrorCollector {
 };
 
 }  // namespace
+
+namespace traffic_annotation_auditor {
 
 const int AuditorResult::kNoCodeLineSpecified = -1;
 
@@ -161,7 +164,7 @@ AuditorResult AnnotationInstance::Deserialize(
   }
 
   // Process test tags.
-  unique_id_hash_code = TrafficAnnotationAuditor::ComputeHashValue(unique_id);
+  unique_id_hash_code = ComputeHashValue(unique_id);
   if (unique_id_hash_code == TRAFFIC_ANNOTATION_FOR_TESTS.unique_id_hash_code ||
       unique_id_hash_code ==
           PARTIAL_TRAFFIC_ANNOTATION_FOR_TESTS.unique_id_hash_code) {
@@ -204,7 +207,7 @@ AuditorResult AnnotationInstance::Deserialize(
   src->set_function(function_context);
   src->set_line(line_number);
   proto.set_unique_id(unique_id);
-  extra_id_hash_code = TrafficAnnotationAuditor::ComputeHashValue(extra_id);
+  extra_id_hash_code = ComputeHashValue(extra_id);
 
   return AuditorResult(AuditorResult::ResultType::RESULT_OK);
 }
@@ -239,73 +242,68 @@ AuditorResult CallInstance::Deserialize(
   return AuditorResult(AuditorResult::ResultType::RESULT_OK);
 }
 
-int TrafficAnnotationAuditor::ComputeHashValue(const std::string& unique_id) {
+int ComputeHashValue(const std::string& unique_id) {
   return unique_id.length() ? static_cast<int>(recursive_hash(
                                   unique_id.c_str(), unique_id.length()))
                             : -1;
 }
 
-TrafficAnnotationAuditor::TrafficAnnotationAuditor(
-    const base::FilePath& source_path,
-    const base::FilePath& build_path)
-    : source_path_(source_path), build_path_(build_path) {
-  LoadWhiteList();
-};
-
-TrafficAnnotationAuditor::~TrafficAnnotationAuditor(){};
-
-bool TrafficAnnotationAuditor::RunClangTool(
-    const std::vector<std::string>& path_filters,
-    const bool full_run) {
+std::string RunClangTool(const base::FilePath& source_path,
+                         const base::FilePath& build_path,
+                         const base::CommandLine::StringVector& path_filters,
+                         const bool full_run) {
   base::FilePath options_filepath;
   if (!base::CreateTemporaryFile(&options_filepath)) {
     LOG(ERROR) << "Could not create temporary options file.";
-    return false;
+    return std::string();
   }
   FILE* options_file = base::OpenFile(options_filepath, "wt");
   if (!options_file) {
     LOG(ERROR) << "Could not create temporary options file.";
-    return false;
+    return std::string();
   }
   fprintf(options_file,
           "--generate-compdb --tool=traffic_annotation_extractor -p=%s ",
-          build_path_.MaybeAsASCII().c_str());
+          build_path.MaybeAsASCII().c_str());
 
-  // |ignore_list_[ALL]| is not passed when |full_run| is happening as there is
-  // no way to pass it to run_tools.py except enumerating all alternatives.
-  // The paths in |ignore_list_[ALL]| are removed later from the results.
   if (full_run) {
-    for (const std::string& file_path : path_filters)
-      fprintf(options_file, "%s ", file_path.c_str());
+    for (const auto& file_path : path_filters)
+      fprintf(options_file, "%s ",
+#if defined(OS_WIN)
+              base::WideToUTF8(file_path).c_str()
+#else
+              file_path.c_str()
+#endif
+                  );
   } else {
     TrafficAnnotationFileFilter filter;
     std::vector<std::string> file_paths;
 
     if (path_filters.size()) {
       for (const auto& path_filter : path_filters) {
-        filter.GetRelevantFiles(source_path_,
-                                ignore_list_[static_cast<int>(
-                                    AuditorException::ExceptionType::ALL)],
-                                path_filter, &file_paths);
+        filter.GetRelevantFiles(source_path,
+#if defined(OS_WIN)
+                                base::UTF16ToASCII(path_filter),
+#else
+                                path_filter,
+#endif
+                                &file_paths);
       }
     } else {
-      filter.GetRelevantFiles(
-          source_path_,
-          ignore_list_[static_cast<int>(AuditorException::ExceptionType::ALL)],
-          "", &file_paths);
+      filter.GetRelevantFiles(source_path, "", &file_paths);
     }
 
     if (!file_paths.size()) {
       base::CloseFile(options_file);
       base::DeleteFile(options_filepath, false);
-      return false;
+      return std::string();
     }
     for (const auto& file_path : file_paths)
       fprintf(options_file, "%s ", file_path.c_str());
   }
   base::CloseFile(options_file);
 
-  base::CommandLine cmdline(source_path_.Append(FILE_PATH_LITERAL("tools"))
+  base::CommandLine cmdline(source_path.Append(FILE_PATH_LITERAL("tools"))
                                 .Append(FILE_PATH_LITERAL("clang"))
                                 .Append(FILE_PATH_LITERAL("scripts"))
                                 .Append(FILE_PATH_LITERAL("run_tool.py")));
@@ -317,29 +315,24 @@ bool TrafficAnnotationAuditor::RunClangTool(
   cmdline.AppendArg(base::StringPrintf(
       "--options-file=%s", options_filepath.MaybeAsASCII().c_str()));
 
-  bool result = base::GetAppOutput(cmdline, &clang_tool_raw_output_);
+  std::string results;
+  if (!base::GetAppOutput(cmdline, &results))
+    results = std::string();
 
   base::DeleteFile(options_filepath, false);
 
-  return result;
+  return results;
 }
 
-bool TrafficAnnotationAuditor::IsWhitelisted(
-    const std::string file_path,
-    const std::vector<std::string>& whitelist) {
-  for (const std::string& ignore_path : whitelist) {
-    if (!strncmp(file_path.c_str(), ignore_path.c_str(), ignore_path.length()))
-      return true;
-  }
-  return false;
-}
-
-bool TrafficAnnotationAuditor::ParseClangToolRawOutput() {
+bool ParseClangToolRawOutput(const std::string& clang_output,
+                             std::vector<AnnotationInstance>* annotations,
+                             std::vector<CallInstance>* calls,
+                             std::vector<AuditorResult>* errors) {
   // Remove possible carriage return characters before splitting lines.
-  base::RemoveChars(clang_tool_raw_output_, "\r", &clang_tool_raw_output_);
-  std::vector<std::string> lines =
-      base::SplitString(clang_tool_raw_output_, "\n", base::KEEP_WHITESPACE,
-                        base::SPLIT_WANT_ALL);
+  std::string trimmed_input;
+  base::RemoveChars(clang_output, "\r", &trimmed_input);
+  std::vector<std::string> lines = base::SplitString(
+      trimmed_input, "\n", base::KEEP_WHITESPACE, base::SPLIT_WANT_ALL);
 
   for (unsigned int current = 0; current < lines.size(); current++) {
     bool annotation_block;
@@ -376,31 +369,23 @@ bool TrafficAnnotationAuditor::ParseClangToolRawOutput() {
                  ? new_annotation.Deserialize(lines, current, end_line)
                  : new_call.Deserialize(lines, current, end_line);
 
-    if (!IsWhitelisted(result.file_path(),
-                       ignore_list_[static_cast<int>(
-                           AuditorException::ExceptionType::ALL)]) &&
-        (result.type() != AuditorResult::ResultType::ERROR_MISSING ||
-         !IsWhitelisted(result.file_path(),
-                        ignore_list_[static_cast<int>(
-                            AuditorException::ExceptionType::MISSING)]))) {
-      switch (result.type()) {
-        case AuditorResult::ResultType::RESULT_OK: {
-          if (annotation_block)
-            extracted_annotations_.push_back(new_annotation);
-          else
-            extracted_calls_.push_back(new_call);
-          break;
-        }
-        case AuditorResult::ResultType::RESULT_IGNORE:
-          break;
-        case AuditorResult::ResultType::ERROR_FATAL: {
-          LOG(ERROR) << "Aborting after line " << current
-                     << " because: " << result.ToText().c_str();
-          return false;
-        }
-        default:
-          errors_.push_back(result);
+    switch (result.type()) {
+      case AuditorResult::ResultType::RESULT_OK: {
+        if (annotation_block)
+          annotations->push_back(new_annotation);
+        else
+          calls->push_back(new_call);
+        break;
       }
+      case AuditorResult::ResultType::RESULT_IGNORE:
+        break;
+      case AuditorResult::ResultType::ERROR_FATAL: {
+        LOG(ERROR) << "Aborting after line " << current
+                   << " because: " << result.ToText().c_str();
+        return false;
+      }
+      default:
+        errors->push_back(result);
     }
 
     current = end_line;
@@ -409,41 +394,4 @@ bool TrafficAnnotationAuditor::ParseClangToolRawOutput() {
   return true;
 }
 
-bool TrafficAnnotationAuditor::LoadWhiteList() {
-  base::FilePath white_list_file = base::MakeAbsoluteFilePath(
-      source_path_.Append(FILE_PATH_LITERAL("tools"))
-          .Append(FILE_PATH_LITERAL("traffic_annotation"))
-          .Append(FILE_PATH_LITERAL("auditor"))
-          .Append(FILE_PATH_LITERAL("white_list.txt")));
-  std::string file_content;
-  if (base::ReadFileToString(white_list_file, &file_content)) {
-    base::RemoveChars(file_content, "\r", &file_content);
-    std::vector<std::string> lines = base::SplitString(
-        file_content, "\n", base::KEEP_WHITESPACE, base::SPLIT_WANT_ALL);
-    for (const std::string& line : lines) {
-      // Ignore comments.
-      if (line.length() && line[0] == '#')
-        continue;
-      size_t comma = line.find(',');
-      if (comma == std::string::npos) {
-        LOG(ERROR) << "Unexpected syntax in white_list.txt, line: " << line;
-        return false;
-      }
-
-      AuditorException::ExceptionType exception_type;
-      if (AuditorException::TypeFromString(line.substr(0, comma),
-                                           &exception_type)) {
-        ignore_list_[static_cast<int>(exception_type)].push_back(
-            line.substr(comma + 1, line.length() - comma - 1));
-      } else {
-        LOG(ERROR) << "Unexpected type in white_list.txt line: " << line;
-        return false;
-      }
-    }
-    return true;
-  }
-
-  LOG(ERROR)
-      << "Could not read tools/traffic_annotation/auditor/white_list.txt";
-  return false;
-}
+}  // namespace traffic_annotation_auditor

@@ -312,7 +312,7 @@ TestRunner.Session = class {
         var eventName = match[3];
         eventName = eventName.charAt(0).toLowerCase() + eventName.slice(1);
         if (match[1] === 'once')
-          return eventMatcher => this._waitForEvent(`${agentName}.${eventName}`, eventMatcher);
+          return () => this._waitForEvent(`${agentName}.${eventName}`);
         if (match[1] === 'off')
           return listener => this._removeEventHandler(`${agentName}.${eventName}`, listener);
         return listener => this._addEventHandler(`${agentName}.${eventName}`, listener);
@@ -335,11 +335,9 @@ TestRunner.Session = class {
     this._eventHandlers.set(eventName, handlers);
   }
 
-  _waitForEvent(eventName, eventMatcher) {
+  _waitForEvent(eventName) {
     return new Promise(callback => {
       var handler = result => {
-        if (eventMatcher && !eventMatcher(result))
-          return;
         this._removeEventHandler(eventName, handler);
         callback(result);
       };

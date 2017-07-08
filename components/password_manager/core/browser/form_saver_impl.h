@@ -41,7 +41,6 @@ class FormSaverImpl : public FormSaver {
       const autofill::PasswordForm& pending,
       std::map<base::string16, const autofill::PasswordForm*>* best_matches,
       const autofill::PasswordForm** preferred_match) override;
-  std::unique_ptr<FormSaver> Clone() override;
 
  private:
   // Implements both Save and Update, because those methods share most of the
@@ -54,23 +53,24 @@ class FormSaverImpl : public FormSaver {
       const std::vector<autofill::PasswordForm>* credentials_to_update,
       const autofill::PasswordForm* old_primary_key);
 
-  // Marks all of |best_matches| as not preferred unless the username is
+  // Marks all of |best_matches_| as not preferred unless the username is
   // |preferred_username| or the credential is PSL matched.
-  void UpdatePreferredLoginState(
-      const base::string16& preferred_username,
-      const std::map<base::string16, const autofill::PasswordForm*>&
-          best_matches);
+  void UpdatePreferredLoginState();
 
   // Iterates over all |best_matches| and deletes from the password store all
   // which are not PSL-matched, have an empty username, and a password equal to
-  // |pending.password_value|.
-  void DeleteEmptyUsernameCredentials(
-      const autofill::PasswordForm& pending,
-      const std::map<base::string16, const autofill::PasswordForm*>&
-          best_matches);
+  // |pending_->password_value|.
+  void DeleteEmptyUsernameCredentials();
 
   // Cached pointer to the PasswordStore.
   PasswordStore* const store_;
+
+  // Caches the best matches during a call to Save() or Update().
+  const std::map<base::string16, const autofill::PasswordForm*>* best_matches_ =
+      nullptr;
+
+  // Caches the pending credential during a call to Save() or Update().
+  const autofill::PasswordForm* pending_ = nullptr;
 
   // Stores the pre-saved credential (happens during password generation).
   std::unique_ptr<autofill::PasswordForm> presaved_;

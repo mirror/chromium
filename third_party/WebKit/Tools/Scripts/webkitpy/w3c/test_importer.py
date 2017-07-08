@@ -83,7 +83,7 @@ class TestImporter(object):
                 for commit in commits:
                     _log.info('Commit: %s', commit.url())
                     _log.info('Subject: %s', commit.subject().strip())
-                    pull_request = self.wpt_github.pr_for_chromium_commit(commit)
+                    pull_request = self.wpt_github.pr_with_position(commit.position)
                     if pull_request:
                         _log.info('PR: https://github.com/w3c/web-platform-tests/pull/%d', pull_request.number)
                     else:
@@ -260,7 +260,7 @@ class TestImporter(object):
     def _commit_message(self, chromium_commit, import_commit):
         return ('Import %s\n\n'
                 'Using wpt-import in Chromium %s.\n\n'
-                'No-Export: true' %
+                'NOEXPORT=true' %
                 (import_commit, chromium_commit))
 
     def _delete_orphaned_baselines(self, dest_path):
@@ -360,7 +360,7 @@ class TestImporter(object):
 
         if try_results and all(s == TryJobStatus('COMPLETED', 'SUCCESS') for _, s in try_results.iteritems()):
             _log.info('CQ appears to have passed; trying to commit.')
-            self.git_cl.run(['upload', '-f', '--send-mail'])  # Turn off WIP mode.
+            self.git_cl.run(['upload', '--send-mail'])  # Turn off WIP mode.
             self.git_cl.run(['set-commit'])
             _log.info('Update completed.')
             return True
@@ -420,12 +420,12 @@ class TestImporter(object):
 
         if directory_owners:
             description += self._format_directory_owners(directory_owners) + '\n\n'
-        description += 'TBR: qyearsley@chromium.org\n'
+        description += 'TBR=qyearsley@chromium.org\n'
 
-        # Move any No-Export tag to the end of the description.
-        description = description.replace('No-Export: true', '')
+        # Move any NOEXPORT tag to the end of the description.
+        description = description.replace('NOEXPORT=true', '')
         description = description.replace('\n\n\n\n', '\n\n')
-        description += 'No-Export: true'
+        description += 'NOEXPORT=true'
         return description
 
     @staticmethod

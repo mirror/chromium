@@ -313,7 +313,6 @@ Bug(none) compositing/overflow/body-switch-composited-scrolling.html [ Failure ]
 Bug(none) compositing/overflow/clear-scroll-parent.html [ Failure ]
 Bug(none) compositing/overflow/clip-descendents.html [ Failure ]
 # puts the 'scroller' layer after 'overlap' and 'target'
-Bug(none) compositing/overflow/composited-layer-under-border-radius-under-composited-layer.html [ Failure ]
 Bug(none) compositing/overflow/composited-scroll-overlap-test.html [ Failure ]
 Bug(none) compositing/overflow/composited-scrolling-paint-phases.html [ Failure ]
 Bug(none) compositing/overflow/content-loses-scrollbars.html [ Failure ]
@@ -1076,6 +1075,7 @@ Bug(none) paint/invalidation/compositing/should-not-repaint-scrolling-contents-o
 Bug(none) paint/invalidation/compositing/squash-partial-repaint-inside-squashed-layer.html [ Failure ]
 Bug(none) paint/invalidation/compositing/squashing-inside-preserve-3d-element.html [ Failure ]
 Bug(none) paint/invalidation/compositing/stacked-float-under-composited-inline.html [ Failure ]
+Bug(none) paint/invalidation/compositing/subpixel-offset-scaled-transform-composited.html [ Failure ]
 Bug(none) paint/invalidation/compositing/tricky-element-removal-crash.html [ Failure ]
 Bug(none) paint/invalidation/compositing/updating-scrolling-content.html [ Failure ]
 Bug(none) paint/invalidation/create-layer-repaint.html [ Failure ]
@@ -1741,8 +1741,3 @@ Bug(none) paint/invalidation/trailing-floats-root-line-box-overflow.html [ Failu
 
 Bug(none) compositing/overflow/ancestor-overflow-layer-of-sticky-child-of-compositing-container.html [ Failure ]
 Bug(none) fast/block/float/float-change-composited-scrolling.html [ Failure ]
-
-# See comment regarding this test in NeverFixTests. It also fails for other
-# reasons, in particular that the composited layerization algorithm provides
-# different results.
-Bug(none) paint/invalidation/compositing/subpixel-offset-scaled-transform-composited.html [ Failure ]

@@ -115,7 +115,7 @@ static void ChangeMetricsReportingConsent(JNIEnv*,
   // created, or deleted, depending on consent. Starting up metrics services
   // will ensure that the consent file contains the ClientID. The ID is passed
   // to the renderer for crash reporting when things go wrong.
-  GoogleUpdateSettings::CollectStatsConsentTaskRunner()->PostTask(
+  content::BrowserThread::GetBlockingPool()->PostTask(
       FROM_HERE, base::Bind(base::IgnoreResult(
                                 GoogleUpdateSettings::SetCollectStatsConsent),
                             consent));

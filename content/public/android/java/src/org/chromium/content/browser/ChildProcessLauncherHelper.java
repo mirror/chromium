@@ -20,8 +20,11 @@ import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.base.annotations.SuppressFBWarnings;
 import org.chromium.base.library_loader.Linker;
+import org.chromium.base.process_launcher.ChildConnectionAllocator;
+import org.chromium.base.process_launcher.ChildProcessConnection;
 import org.chromium.base.process_launcher.ChildProcessConstants;
 import org.chromium.base.process_launcher.ChildProcessCreationParams;
+import org.chromium.base.process_launcher.ChildProcessLauncher;
 import org.chromium.base.process_launcher.FileDescriptorInfo;
 import org.chromium.content.app.ChromiumLinkerParams;
 import org.chromium.content.app.SandboxedProcessService;
@@ -211,6 +214,7 @@ public class ChildProcessLauncherHelper {
         }
 
         ChildProcessCreationParams creationParams = ChildProcessCreationParams.getDefault();
+        initLinker();
         Bundle serviceBundle = populateServiceBundle(new Bundle(), creationParams);
         ChildConnectionAllocator allocator =
                 getConnectionAllocator(context, creationParams, true /* sandboxed */);
@@ -410,6 +414,8 @@ public class ChildProcessLauncherHelper {
             mLauncher = ChildProcessLauncher.createWithConnectionAllocator(mLauncherDelegate,
                     commandLine, filesToBeMapped, connectionAllocator, binderCallback);
         }
+
+        initLinker();
     }
 
     public int getPid() {
@@ -479,7 +485,8 @@ public class ChildProcessLauncherHelper {
 
     private static boolean sLinkerInitialized;
     private static long sLinkerLoadAddress;
-    private static void initLinker() {
+    @VisibleForTesting
+    static void initLinker() {
         assert LauncherThread.runningOnLauncherThread();
         if (sLinkerInitialized) return;
         if (Linker.isUsed()) {
@@ -493,9 +500,8 @@ public class ChildProcessLauncherHelper {
 
     private static ChromiumLinkerParams getLinkerParamsForNewConnection() {
         assert LauncherThread.runningOnLauncherThread();
-
-        initLinker();
         assert sLinkerInitialized;
+
         if (sLinkerLoadAddress == 0) return null;
 
         // Always wait for the shared RELROs in service processes.

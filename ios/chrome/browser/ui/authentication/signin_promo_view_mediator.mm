@@ -274,7 +274,7 @@ enum class SigninPromoViewState {
 
 #pragma mark - ChromeIdentityServiceObserver
 
-- (void)identityListChanged {
+- (void)onIdentityListChanged {
   ChromeIdentity* newIdentity = nil;
   NSArray* identities = ios::GetChromeBrowserProvider()
                             ->GetChromeIdentityService()
@@ -288,7 +288,7 @@ enum class SigninPromoViewState {
   }
 }
 
-- (void)profileUpdate:(ChromeIdentity*)identity {
+- (void)onProfileUpdate:(ChromeIdentity*)identity {
   if (identity == _defaultIdentity) {
     [self sendConsumerNotificationWithIdentityChanged:NO];
   }

@@ -3129,7 +3129,6 @@ test("unit_tests") {
     "../browser/media/cast_remoting_connector_unittest.cc",
     "../browser/media/media_engagement_contents_observer_unittest.cc",
     "../browser/media/media_engagement_score_unittest.cc",
-    "../browser/media/media_engagement_service_unittest.cc",
     "../browser/media/midi_permission_context_unittest.cc",
     "../browser/media/midi_sysex_permission_context_unittest.cc",
     "../browser/media/router/browser_presentation_connection_proxy_unittest.cc",
@@ -3307,8 +3306,8 @@ test("unit_tests") {
     "../browser/sync/sessions/sync_sessions_web_contents_router_unittest.cc",
     "../browser/sync/sync_startup_tracker_unittest.cc",
     "../browser/task_profiler/task_profiler_data_serializer_unittest.cc",
+    "../browser/thumbnails/simple_thumbnail_crop_unittest.cc",
     "../browser/thumbnails/thumbnail_service_unittest.cc",
-    "../browser/thumbnails/thumbnail_utils_unittest.cc",
     "../browser/translate/chrome_translate_client_unittest.cc",
     "../browser/translate/language_model_factory_unittest.cc",
     "../browser/translate/translate_service_unittest.cc",
@@ -3635,7 +3634,6 @@ test("unit_tests") {
       "../browser/task_manager/sampling/shared_sampler_win_unittest.cc",
       "../browser/task_manager/sampling/task_group_unittest.cc",
       "../browser/task_manager/sampling/task_manager_impl_unittest.cc",
-      "../browser/task_manager/sampling/task_manager_io_thread_helper_unittest.cc",
       "../browser/task_manager/task_manager_observer_unittest.cc",
       "../browser/task_manager/test_task_manager.cc",
       "../browser/task_manager/test_task_manager.h",
@@ -3758,7 +3756,6 @@ test("unit_tests") {
 
   if (!is_android) {
     sources += [
-      "../browser/devtools/devtools_file_system_indexer_unittest.cc",
       "../browser/devtools/devtools_file_watcher_unittest.cc",
       "../browser/devtools/devtools_ui_bindings_unittest.cc",
       "../browser/devtools/serialize_host_descriptions_unittest.cc",
@@ -3773,7 +3770,6 @@ test("unit_tests") {
       "../browser/media/router/discovery/dial/dial_service_unittest.cc",
       "../browser/media/router/discovery/mdns/dns_sd_registry_unittest.cc",
       "../browser/media/router/discovery/media_sink_service_base_unittest.cc",
-      "../browser/media/router/event_page_request_manager_unittest.cc",
 
       # TODO(crbug.com/646627):
       # Move media_router_ui_service_factory_unittest.cc to chrome/browser/ui.

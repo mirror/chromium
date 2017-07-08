@@ -120,19 +120,21 @@ class UserPolicySigninServiceTest : public testing::Test {
     // Policy client registration on Android depends on Token Service having
     // a valid login token, while on other platforms, the login refresh token
     // is specified directly.
-    UserPolicySigninServiceBase::PolicyRegistrationCallback callback =
-        base::Bind(&UserPolicySigninServiceTest::OnRegisterCompleted,
-                   base::Unretained(this));
 #if defined(OS_ANDROID)
     GetTokenService()->UpdateCredentials(
         AccountTrackerService::PickAccountIdForAccount(
             profile_.get()->GetPrefs(), kTestGaiaId, kTestUser),
         "oauth2_login_refresh_token");
-    service->RegisterForPolicyWithAccountId(kTestUser, kTestGaiaId, callback);
-#else
-    service->RegisterForPolicyWithLoginToken(kTestUser, "mock_oauth_token",
-                                             callback);
 #endif
+    service->RegisterForPolicy(
+        kTestUser,
+#if defined(OS_ANDROID)
+        kTestGaiaId,
+#else
+        "mock_oauth_token",
+#endif
+        base::Bind(&UserPolicySigninServiceTest::OnRegisterCompleted,
+                   base::Unretained(this)));
     ASSERT_TRUE(IsRequestActive());
   }
 

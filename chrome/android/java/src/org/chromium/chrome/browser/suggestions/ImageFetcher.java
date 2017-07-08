@@ -9,7 +9,6 @@ import android.graphics.Bitmap;
 import android.os.SystemClock;
 
 import org.chromium.base.Callback;
-import org.chromium.base.Promise;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.browser.NativePageHost;
 import org.chromium.chrome.browser.download.ui.ThumbnailProvider;
@@ -35,7 +34,7 @@ import java.net.URISyntaxException;
  * To fetch an image, the caller should create a request which is done in the following way:
  *   - for favicons: {@link #makeFaviconRequest(SnippetArticle, int, Callback)}
  *   - for article thumbnails: {@link #makeArticleThumbnailRequest(SnippetArticle, Callback)}
- *   - for article downloads: {@link #makeDownloadThumbnailRequest(SnippetArticle, int)}
+ *   - for article downloads: {@link #makeDownloadThumbnailRequest(SnippetArticle, int, Callback)}
  *   - for large icons: {@link #makeLargeIconRequest(String, int,
  * LargeIconBridge.LargeIconCallback)}
  *
@@ -72,15 +71,16 @@ public class ImageFetcher {
      *
      * If there is an error while fetching the thumbnail, the callback will not be called.
      *
-     * @param suggestion The suggestion for which we need a thumbnail.
+     * @param suggestion The suggestion for which a thumbnail is needed.
      * @param thumbnailSizePx The required size for the thumbnail.
-     * @return The request which will be used to fetch the thumbnail.
+     * @param imageCallback The callback where the bitmap will be returned when fetched.
+     * @return The request which will be used to fetch the image.
      */
     public DownloadThumbnailRequest makeDownloadThumbnailRequest(
-            SnippetArticle suggestion, int thumbnailSizePx) {
+            SnippetArticle suggestion, int thumbnailSizePx, Callback<Bitmap> imageCallback) {
         assert !mIsDestroyed;
 
-        return new DownloadThumbnailRequest(suggestion, thumbnailSizePx);
+        return new DownloadThumbnailRequest(suggestion, imageCallback, thumbnailSizePx);
     }
 
     /**
@@ -253,7 +253,7 @@ public class ImageFetcher {
      */
     private void ensureIconIsAvailable(String pageUrl, String iconUrl, boolean isLargeIcon,
             boolean isTemporary, FaviconHelper.IconAvailabilityCallback callback) {
-        if (mHost.getActiveTab() != null && mHost.getActiveTab().getWebContents() != null) {
+        if (mHost.getActiveTab().getWebContents() != null) {
             getFaviconHelper().ensureIconIsAvailable(mProfile,
                     mHost.getActiveTab().getWebContents(), pageUrl, iconUrl, isLargeIcon,
                     isTemporary, callback);
@@ -320,26 +320,20 @@ public class ImageFetcher {
     /**
      * Request for a download thumbnail.
      *
-     * The request uses a {@link Promise<Bitmap>}, which will be fulfilled once the thumbnail is
-     * received.
-     *
      * Cancellation of the request is available through {@link #cancel(), which will remove the
      * request from the ThumbnailProvider queue}.
      */
     public class DownloadThumbnailRequest implements ThumbnailProvider.ThumbnailRequest {
-        private final Promise<Bitmap> mThumbnailReceivedPromise;
         private final SnippetArticle mSuggestion;
+        private final Callback<Bitmap> mCallback;
         private final int mSize;
 
-        /**
-         * @param suggestion The suggestion whose thumbnail will be fetched.
-         * @param size The required size for the thumbnail.
-         */
-        DownloadThumbnailRequest(SnippetArticle suggestion, int size) {
-            mThumbnailReceivedPromise = new Promise<>();
+        DownloadThumbnailRequest(SnippetArticle suggestion, Callback<Bitmap> callback, int size) {
             mSuggestion = suggestion;
+            mCallback = callback;
             mSize = size;
 
+            // Fetch the download thumbnail.
             getThumbnailProvider().getThumbnail(this);
         }
 
@@ -350,7 +344,7 @@ public class ImageFetcher {
 
         @Override
         public void onThumbnailRetrieved(String filePath, Bitmap thumbnail) {
-            mThumbnailReceivedPromise.fulfill(thumbnail);
+            mCallback.onResult(thumbnail);
         }
 
         @Override
@@ -361,10 +355,6 @@ public class ImageFetcher {
         public void cancel() {
             if (mIsDestroyed) return;
             getThumbnailProvider().cancelRetrieval(this);
-        }
-
-        public Promise<Bitmap> getPromise() {
-            return mThumbnailReceivedPromise;
         }
     }
 }

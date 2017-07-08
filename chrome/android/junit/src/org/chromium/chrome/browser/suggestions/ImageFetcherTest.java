@@ -95,8 +95,8 @@ public class ImageFetcherTest {
 
         SnippetArticle suggestion = createDummySuggestion(KnownCategories.DOWNLOADS);
 
-        DownloadThumbnailRequest request =
-                imageFetcher.makeDownloadThumbnailRequest(suggestion, IMAGE_SIZE_PX);
+        DownloadThumbnailRequest request = imageFetcher.makeDownloadThumbnailRequest(
+                suggestion, IMAGE_SIZE_PX, mock(Callback.class));
         verify(mThumbnailProvider).getThumbnail(eq(request));
 
         request.cancel();

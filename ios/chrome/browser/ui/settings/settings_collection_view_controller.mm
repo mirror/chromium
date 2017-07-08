@@ -1083,13 +1083,13 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
 
 #pragma mark ChromeIdentityServiceObserver
 
-- (void)profileUpdate:(ChromeIdentity*)identity {
+- (void)onProfileUpdate:(ChromeIdentity*)identity {
   if (identity == _identity) {
     [self reloadAccountCell];
   }
 }
 
-- (void)chromeIdentityServiceWillBeDestroyed {
+- (void)onChromeIdentityServiceWillBeDestroyed {
   _identityServiceObserver.reset();
 }
 

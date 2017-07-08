@@ -99,11 +99,7 @@ class DirectoryUpdateHandler : public UpdateHandler {
   scoped_refptr<ModelSafeWorker> worker_;
   DataTypeDebugInfoEmitter* debug_info_emitter_;
 
-  // The version which directory already ran garbage collection against on.
-  int64_t cached_gc_directive_version_;
-
-  // The day which directory already ran garbage collection against on.
-  base::Time cached_gc_directive_aged_out_day_;
+  std::unique_ptr<sync_pb::GarbageCollectionDirective> cached_gc_directive_;
 
   DISALLOW_COPY_AND_ASSIGN(DirectoryUpdateHandler);
 };

@@ -50,6 +50,11 @@ ChildAccountInfoFetcherAndroid::~ChildAccountInfoFetcherAndroid() {
                                        j_child_account_info_fetcher_.obj());
 }
 
+// static
+bool ChildAccountInfoFetcherAndroid::Register(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}
+
 void SetIsChildAccount(JNIEnv* env,
                        const JavaParamRef<jclass>& caller,
                        jlong native_service,

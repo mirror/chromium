@@ -141,6 +141,10 @@ void PaymentManifestParserAndroid::StopUtilityProcess(
   delete this;
 }
 
+bool RegisterPaymentManifestParser(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}
+
 // Caller owns the result.
 jlong CreatePaymentManifestParserAndroid(
     JNIEnv* env,

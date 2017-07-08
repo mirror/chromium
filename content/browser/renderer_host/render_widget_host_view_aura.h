@@ -332,8 +332,6 @@ class CONTENT_EXPORT RenderWidgetHostViewAura
     return event_handler_.get();
   }
 
-  void ScrollFocusedEditableNodeIntoRect(const gfx::Rect& rect);
-
  protected:
   ~RenderWidgetHostViewAura() override;
 

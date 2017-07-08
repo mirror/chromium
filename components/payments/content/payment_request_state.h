@@ -26,7 +26,6 @@ class RegionDataLoader;
 
 namespace payments {
 
-class JourneyLogger;
 class PaymentInstrument;
 class PaymentRequestDelegate;
 
@@ -71,8 +70,7 @@ class PaymentRequestState : public PaymentResponseHelper::Delegate,
                       Delegate* delegate,
                       const std::string& app_locale,
                       autofill::PersonalDataManager* personal_data_manager,
-                      PaymentRequestDelegate* payment_request_delegate,
-                      JourneyLogger* journey_logger);
+                      PaymentRequestDelegate* payment_request_delegate);
   ~PaymentRequestState() override;
 
   // PaymentResponseHelper::Delegate
@@ -217,11 +215,10 @@ class PaymentRequestState : public PaymentResponseHelper::Delegate,
 
   const std::string app_locale_;
 
-  // Not owned. Never null. Will outlive this object.
+  // Not owned. Never null. Both outlive this object.
   PaymentRequestSpec* spec_;
   Delegate* delegate_;
   autofill::PersonalDataManager* personal_data_manager_;
-  JourneyLogger* journey_logger_;
 
   autofill::AutofillProfile* selected_shipping_profile_;
   autofill::AutofillProfile* selected_shipping_option_error_profile_;

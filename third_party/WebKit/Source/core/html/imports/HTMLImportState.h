@@ -36,7 +36,7 @@
 
 namespace blink {
 
-class HTMLImportState final {
+class HTMLImportState {
   DISALLOW_NEW();
 
  public:

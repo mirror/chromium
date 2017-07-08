@@ -45,6 +45,11 @@ void GetVisualsForItemHelperCallback(ScopedJavaGlobalRef<jobject> j_callback,
 
 }  // namespace
 
+// static.
+bool OfflineContentAggregatorBridge::Register(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}
+
 // static
 base::android::ScopedJavaLocalRef<jobject>
 OfflineContentAggregatorBridge::GetBridgeForOfflineContentAggregator(

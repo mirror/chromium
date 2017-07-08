@@ -7,14 +7,11 @@
 
 #include <memory>
 
+#include "base/threading/thread.h"
 #include "components/leveldb/public/interfaces/leveldb.mojom.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
 #include "services/service_manager/public/cpp/service.h"
-
-namespace base {
-class SequencedTaskRunner;
-}
 
 namespace leveldb {
 
@@ -37,7 +34,7 @@ class LevelDBApp : public service_manager::Service {
   service_manager::BinderRegistry registry_;
   mojo::BindingSet<mojom::LevelDBService> bindings_;
 
-  scoped_refptr<base::SequencedTaskRunner> file_task_runner_;
+  base::Thread file_thread_;
 
   DISALLOW_COPY_AND_ASSIGN(LevelDBApp);
 };

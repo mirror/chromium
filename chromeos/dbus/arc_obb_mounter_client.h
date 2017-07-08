@@ -35,11 +35,11 @@ class CHROMEOS_EXPORT ArcObbMounterClient : public DBusClient {
   virtual void MountObb(const std::string& obb_file,
                         const std::string& mount_path,
                         int32_t owner_gid,
-                        VoidDBusMethodCallback callback) = 0;
+                        const VoidDBusMethodCallback& callback) = 0;
 
   // Unmounts the OBB mounted at the specified path.
   virtual void UnmountObb(const std::string& mount_path,
-                          VoidDBusMethodCallback callback) = 0;
+                          const VoidDBusMethodCallback& callback) = 0;
 };
 
 }  // namespace chromeos

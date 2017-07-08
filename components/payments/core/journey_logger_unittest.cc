@@ -439,16 +439,8 @@ TEST(JourneyLoggerTest,
   JourneyLogger logger(/*is_incognito=*/false, /*url=*/GURL(""),
                        /*ukm_recorder=*/nullptr);
 
-  // The merchant only requests payment information.
-  logger.SetRequestedInformation(
-      /*requested_shipping=*/false, /*requested_email=*/false,
-      /*requested_phone=*/false, /*requested_name=*/false);
-
   // Simulate that the user had suggestions for all the requested sections.
   logger.SetNumberOfSuggestionsShown(JourneyLogger::SECTION_CREDIT_CARDS, 1);
-
-  // Simulate that the Payment Request was shown to the user.
-  logger.SetShowCalled();
 
   // Simulate that the user completes the checkout.
   logger.SetCompleted();
@@ -471,16 +463,8 @@ TEST(JourneyLoggerTest,
   JourneyLogger logger(/*is_incognito=*/false, /*url=*/GURL(""),
                        /*ukm_recorder=*/nullptr);
 
-  // The merchant only requests payment information.
-  logger.SetRequestedInformation(
-      /*requested_shipping=*/false, /*requested_email=*/false,
-      /*requested_phone=*/false, /*requested_name=*/false);
-
   // Simulate that the user had suggestions for all the requested sections.
   logger.SetNumberOfSuggestionsShown(JourneyLogger::SECTION_CREDIT_CARDS, 1);
-
-  // Simulate that the Payment Request was shown to the user.
-  logger.SetShowCalled();
 
   // Simulate that the user aborts the checkout.
   logger.SetAborted(JourneyLogger::ABORT_REASON_ABORTED_BY_USER);
@@ -503,16 +487,8 @@ TEST(JourneyLoggerTest,
   JourneyLogger logger(/*is_incognito=*/false, /*url=*/GURL(""),
                        /*ukm_recorder=*/nullptr);
 
-  // The merchant only requests payment information.
-  logger.SetRequestedInformation(
-      /*requested_shipping=*/false, /*requested_email=*/false,
-      /*requested_phone=*/false, /*requested_name=*/false);
-
   // Simulate that the user had suggestions for all the requested sections.
   logger.SetNumberOfSuggestionsShown(JourneyLogger::SECTION_CREDIT_CARDS, 1);
-
-  // Simulate that the Payment Request was shown to the user.
-  logger.SetShowCalled();
 
   // Simulate that the checkout is aborted.
   logger.SetAborted(JourneyLogger::ABORT_REASON_OTHER);
@@ -536,16 +512,8 @@ TEST(JourneyLoggerTest,
   JourneyLogger logger(/*is_incognito=*/true, /*url=*/GURL(""),
                        /*ukm_recorder=*/nullptr);
 
-  // The merchant only requests payment information.
-  logger.SetRequestedInformation(
-      /*requested_shipping=*/false, /*requested_email=*/false,
-      /*requested_phone=*/false, /*requested_name=*/false);
-
   // Simulate that the user had suggestions for all the requested sections.
   logger.SetNumberOfSuggestionsShown(JourneyLogger::SECTION_CREDIT_CARDS, 1);
-
-  // Simulate that the Payment Request was shown to the user.
-  logger.SetShowCalled();
 
   // Simulate that the user completes the checkout.
   logger.SetCompleted();
@@ -568,16 +536,8 @@ TEST(JourneyLoggerTest,
   JourneyLogger logger(/*is_incognito=*/false, /*url=*/GURL(""),
                        /*ukm_recorder=*/nullptr);
 
-  // The merchant only requests payment information.
-  logger.SetRequestedInformation(
-      /*requested_shipping=*/false, /*requested_email=*/false,
-      /*requested_phone=*/false, /*requested_name=*/false);
-
-  // Simulate that the user had suggestions for none of the requested sections.
+  // Simulate that the user had suggestions for all the requested sections.
   logger.SetNumberOfSuggestionsShown(JourneyLogger::SECTION_CREDIT_CARDS, 0);
-
-  // Simulate that the Payment Request was shown to the user.
-  logger.SetShowCalled();
 
   // Simulate that the user completes the checkout.
   logger.SetCompleted();
@@ -601,16 +561,8 @@ TEST(JourneyLoggerTest,
   JourneyLogger logger(/*is_incognito=*/false, /*url=*/GURL(""),
                        /*ukm_recorder=*/nullptr);
 
-  // The merchant only requests payment information.
-  logger.SetRequestedInformation(
-      /*requested_shipping=*/false, /*requested_email=*/false,
-      /*requested_phone=*/false, /*requested_name=*/false);
-
-  // Simulate that the user had suggestions for none of the requested sections.
+  // Simulate that the user had suggestions for all the requested sections.
   logger.SetNumberOfSuggestionsShown(JourneyLogger::SECTION_CREDIT_CARDS, 0);
-
-  // Simulate that the Payment Request was shown to the user.
-  logger.SetShowCalled();
 
   // Simulate that the user aborts the checkout.
   logger.SetAborted(JourneyLogger::ABORT_REASON_ABORTED_BY_USER);
@@ -634,16 +586,8 @@ TEST(JourneyLoggerTest,
   JourneyLogger logger(/*is_incognito=*/false, /*url=*/GURL(""),
                        /*ukm_recorder=*/nullptr);
 
-  // The merchant only requests payment information.
-  logger.SetRequestedInformation(
-      /*requested_shipping=*/false, /*requested_email=*/false,
-      /*requested_phone=*/false, /*requested_name=*/false);
-
-  // Simulate that the user had suggestions for none of the requested sections.
+  // Simulate that the user had suggestions for all the requested sections.
   logger.SetNumberOfSuggestionsShown(JourneyLogger::SECTION_CREDIT_CARDS, 0);
-
-  // Simulate that the Payment Request was shown to the user.
-  logger.SetShowCalled();
 
   // Simulate that the the checkout is aborted.
   logger.SetAborted(JourneyLogger::ABORT_REASON_OTHER);
@@ -668,16 +612,8 @@ TEST(JourneyLoggerTest,
   JourneyLogger logger(/*is_incognito=*/true, /*url=*/GURL(""),
                        /*ukm_recorder=*/nullptr);
 
-  // The merchant only requests payment information.
-  logger.SetRequestedInformation(
-      /*requested_shipping=*/false, /*requested_email=*/false,
-      /*requested_phone=*/false, /*requested_name=*/false);
-
-  // Simulate that the user had suggestions for none of the requested sections.
+  // Simulate that the user had suggestions for all the requested sections.
   logger.SetNumberOfSuggestionsShown(JourneyLogger::SECTION_CREDIT_CARDS, 0);
-
-  // Simulate that the Payment Request was shown to the user.
-  logger.SetShowCalled();
 
   // Simulate that the user aborts the checkout.
   logger.SetAborted(JourneyLogger::ABORT_REASON_ABORTED_BY_USER);
@@ -704,13 +640,9 @@ TEST(JourneyLoggerTest, RecordJourneyStatsHistograms_TwoPaymentRequests) {
 
   // Make the two loggers have different data.
   logger1.SetShowCalled();
-  logger1.SetRequestedInformation(
-      /*requested_shipping=*/true, /*requested_email=*/true,
-      /*requested_phone=*/false, /*requested_name=*/false);
+  logger1.SetRequestedInformation(true, true, false, false);
   logger2.SetShowCalled();
-  logger2.SetRequestedInformation(
-      /*requested_shipping=*/true, /*requested_email=*/false,
-      /*requested_phone=*/false, /*requested_name=*/false);
+  logger2.SetRequestedInformation(true, false, false, false);
 
   logger1.SetCanMakePaymentValue(true);
 

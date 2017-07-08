@@ -10,7 +10,6 @@ import android.os.StrictMode;
 import android.support.test.filters.SmallTest;
 
 import org.chromium.base.Log;
-import org.chromium.base.test.util.DisabledTest;
 import org.chromium.base.test.util.Feature;
 import org.chromium.net.TestUrlRequestCallback.FailureType;
 import org.chromium.net.TestUrlRequestCallback.ResponseStep;
@@ -650,7 +649,6 @@ public class CronetUrlRequestTest extends CronetTestBase {
         assertEquals(ResponseStep.ON_FAILED, callback.mResponseStep);
     }
 
-    @DisabledTest(message = "crbug.com/738183")
     @SmallTest
     @Feature({"Cronet"})
     @OnlyRunNativeCronet // Java impl doesn't support MockUrlRequestJobFactory

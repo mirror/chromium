@@ -5,8 +5,6 @@
 #ifndef CHROME_BROWSER_ANDROID_WEBAPPS_ADD_TO_HOMESCREEN_MANAGER_H_
 #define CHROME_BROWSER_ANDROID_WEBAPPS_ADD_TO_HOMESCREEN_MANAGER_H_
 
-#include <memory>
-
 #include "base/android/jni_android.h"
 #include "base/android/scoped_java_ref.h"
 #include "base/macros.h"
@@ -16,6 +14,7 @@ namespace content {
 class WebContents;
 }
 
+class GURL;
 class SkBitmap;
 struct ShortcutInfo;
 
@@ -61,6 +60,9 @@ class AddToHomescreenManager : public AddToHomescreenDataFetcher::Observer {
   void OnDataAvailable(const ShortcutInfo& info,
                        const SkBitmap& primary_icon,
                        const SkBitmap& badge_icon) override;
+  SkBitmap FinalizeLauncherIconInBackground(const SkBitmap& icon,
+                                            const GURL& url,
+                                            bool* is_generated) override;
 
   // Points to the Java object.
   base::android::ScopedJavaGlobalRef<jobject> java_ref_;
@@ -69,7 +71,7 @@ class AddToHomescreenManager : public AddToHomescreenDataFetcher::Observer {
   bool is_webapk_compatible_;
 
   // Fetches data required to add a shortcut.
-  std::unique_ptr<AddToHomescreenDataFetcher> data_fetcher_;
+  scoped_refptr<AddToHomescreenDataFetcher> data_fetcher_;
 
   DISALLOW_COPY_AND_ASSIGN(AddToHomescreenManager);
 };

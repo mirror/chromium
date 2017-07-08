@@ -301,13 +301,13 @@ typedef NS_ENUM(NSInteger, ItemType) {
 
 #pragma mark - ChromeIdentityServiceObserver
 
-- (void)profileUpdate:(ChromeIdentity*)identity {
+- (void)onProfileUpdate:(ChromeIdentity*)identity {
   if (identity == _identity) {
     [self updateViewWithIdentity:identity];
   }
 }
 
-- (void)chromeIdentityServiceWillBeDestroyed {
+- (void)onChromeIdentityServiceWillBeDestroyed {
   _identityServiceObserver.reset();
 }
 

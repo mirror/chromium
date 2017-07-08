@@ -35,10 +35,6 @@ extern const char kPhysicalWeb[];
 // Description for the flag to enable Physical Web in the omnibox.
 extern const char kPhysicalWebDescription[];
 
-// Title and description for the flag to enable Web Payments.
-extern const char kWebPaymentsName[];
-extern const char kWebPaymentsDescription[];
-
 }  // namespace flag_descriptions
 
 #endif  // IOS_CHROME_BROWSER_IOS_CHROME_FLAG_DESCRIPTIONS_H_

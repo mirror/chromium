@@ -4,14 +4,10 @@
 
 #import "ios/chrome/browser/ui/payments/payment_request_coordinator.h"
 
-#include "base/json/json_reader.h"
 #include "base/memory/ptr_util.h"
 #include "components/autofill/core/browser/autofill_profile.h"
 #include "components/autofill/core/browser/credit_card.h"
-#include "components/payments/core/autofill_payment_instrument.h"
 #include "components/payments/core/payment_address.h"
-#include "components/payments/core/payment_instrument.h"
-#include "components/payments/core/payment_request_data_util.h"
 #include "components/strings/grit/components_strings.h"
 #include "ios/chrome/browser/application_context.h"
 #include "ios/chrome/browser/payments/payment_request.h"
@@ -84,9 +80,6 @@ const NSTimeInterval kUpdatePaymentSummaryItemIntervalSeconds = 10.0;
       setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
   [_navigationController setNavigationBarHidden:YES];
 
-  _fullCardRequester = base::MakeUnique<FullCardRequester>(
-      self, _navigationController, _browserState);
-
   [[self baseViewController] presentViewController:_navigationController
                                           animated:YES
                                         completion:nil];
@@ -120,27 +113,27 @@ const NSTimeInterval kUpdatePaymentSummaryItemIntervalSeconds = 10.0;
   _navigationController = nil;
 }
 
-- (void)
-requestFullCreditCard:(const autofill::CreditCard&)card
-       resultDelegate:
-           (base::WeakPtr<autofill::payments::FullCardRequest::ResultDelegate>)
-               resultDelegate {
-  _fullCardRequester->GetFullCard(card, _autofillManager, resultDelegate);
+- (void)sendPaymentResponse {
+  DCHECK(_paymentRequest->selected_credit_card());
+  autofill::CreditCard* card = _paymentRequest->selected_credit_card();
+  _fullCardRequester = base::MakeUnique<FullCardRequester>(
+      self, _navigationController, _browserState);
+  _fullCardRequester->GetFullCard(card, _autofillManager);
 }
 
 #pragma mark - FullCardRequesterConsumer
 
-- (void)fullCardRequestDidSucceedWithMethodName:(const std::string&)methodName
-                             stringifiedDetails:
-                                 (const std::string&)stringifiedDetails {
+- (void)fullCardRequestDidSucceedWithCard:(const autofill::CreditCard&)card
+                         verificationCode:
+                             (const base::string16&)verificationCode {
   _viewController.view.userInteractionEnabled = NO;
   [_viewController setPending:YES];
   [_viewController loadModel];
   [[_viewController collectionView] reloadData];
 
   [_delegate paymentRequestCoordinator:self
-              didReceiveFullMethodName:methodName
-                    stringifiedDetails:stringifiedDetails];
+      didCompletePaymentRequestWithCard:card
+                       verificationCode:verificationCode];
 }
 
 #pragma mark - Public methods
@@ -217,9 +210,7 @@ requestFullCreditCard:(const autofill::CreditCard&)card
 
 - (void)paymentRequestViewControllerDidConfirm:
     (PaymentRequestViewController*)controller {
-  DCHECK(_paymentRequest->selected_payment_method());
-  _paymentRequest->selected_payment_method()->InvokePaymentApp(
-      _fullCardRequester.get());
+  [self sendPaymentResponse];
 }
 
 - (void)paymentRequestViewControllerDidSelectSettings:
@@ -295,7 +286,7 @@ requestFullCreditCard:(const autofill::CreditCard&)card
 
 - (void)paymentRequestViewControllerDidSelectPaymentMethodItem:
     (PaymentRequestViewController*)controller {
-  if (_paymentRequest->payment_methods().empty()) {
+  if (_paymentRequest->credit_cards().empty()) {
     _creditCardEditCoordinator = [[CreditCardEditCoordinator alloc]
         initWithBaseViewController:_viewController];
     [_creditCardEditCoordinator setPaymentRequest:_paymentRequest];
@@ -336,9 +327,7 @@ requestFullCreditCard:(const autofill::CreditCard&)card
 
 - (void)paymentItemsDisplayCoordinatorDidConfirm:
     (PaymentItemsDisplayCoordinator*)coordinator {
-  DCHECK(_paymentRequest->selected_payment_method());
-  _paymentRequest->selected_payment_method()->InvokePaymentApp(
-      _fullCardRequester.get());
+  [self sendPaymentResponse];
 }
 
 #pragma mark - ContactInfoSelectionCoordinatorDelegate
@@ -432,11 +421,11 @@ contactInfoSelectionCoordinator:(ContactInfoSelectionCoordinator*)coordinator
 
 - (void)paymentMethodSelectionCoordinator:
             (PaymentMethodSelectionCoordinator*)coordinator
-                   didSelectPaymentMethod:
-                       (payments::PaymentInstrument*)paymentMethod {
-  DCHECK(paymentMethod);
-  DCHECK(paymentMethod->IsCompleteForPayment());
-  _paymentRequest->set_selected_payment_method(paymentMethod);
+                   didSelectPaymentMethod:(autofill::CreditCard*)creditCard {
+  DCHECK(creditCard);
+  DCHECK(payment_request_util::IsCreditCardCompleteForPayment(
+      *creditCard, _paymentRequest->billing_profiles()));
+  _paymentRequest->set_selected_credit_card(creditCard);
   [_viewController updatePaymentMethodSection];
 
   [_methodSelectionCoordinator stop];
@@ -452,11 +441,9 @@ contactInfoSelectionCoordinator:(ContactInfoSelectionCoordinator*)coordinator
 #pragma mark - CreditCardEditCoordinatorDelegate
 
 - (void)creditCardEditCoordinator:(CreditCardEditCoordinator*)coordinator
-    didFinishEditingPaymentMethod:
-        (payments::AutofillPaymentInstrument*)paymentMethod {
-  DCHECK(paymentMethod);
-  DCHECK(paymentMethod->IsCompleteForPayment());
-  _paymentRequest->set_selected_payment_method(paymentMethod);
+       didFinishEditingCreditCard:(autofill::CreditCard*)creditCard {
+  DCHECK(creditCard);
+  _paymentRequest->set_selected_credit_card(creditCard);
   [_viewController updatePaymentMethodSection];
 
   [_creditCardEditCoordinator stop];

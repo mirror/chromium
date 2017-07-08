@@ -10,7 +10,6 @@
 #include "base/callback_forward.h"
 #include "base/files/file_path.h"
 #include "base/macros.h"
-#include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
@@ -137,6 +136,13 @@ class ObserverWaiter : public AddToHomescreenDataFetcher::Observer {
     title_ = title;
   }
 
+  SkBitmap FinalizeLauncherIconInBackground(const SkBitmap& icon,
+                                            const GURL& url,
+                                            bool* is_generated) override {
+    *is_generated = false;
+    return icon;
+  }
+
   void OnDataAvailable(const ShortcutInfo& info,
                        const SkBitmap& primary_icon,
                        const SkBitmap& badge_icon) override {
@@ -225,11 +231,11 @@ class AddToHomescreenDataFetcherTest : public ChromeRenderViewHostTestHarness {
     ChromeRenderViewHostTestHarness::TearDown();
   }
 
-  std::unique_ptr<AddToHomescreenDataFetcher> BuildFetcher(
+  scoped_refptr<AddToHomescreenDataFetcher> BuildFetcher(
       bool check_webapk_compatible,
       AddToHomescreenDataFetcher::Observer* observer) {
-    return base::MakeUnique<AddToHomescreenDataFetcher>(
-        web_contents(), 1, 1, 1, 1, 1, 500, check_webapk_compatible, observer);
+    return new AddToHomescreenDataFetcher(web_contents(), 1, 1, 1, 1, 1, 500,
+                                          check_webapk_compatible, observer);
   }
 
   // Set the manifest to be returned as a result of WebContents::GetManifest().
@@ -289,7 +295,7 @@ class AddToHomescreenDataFetcherTestCommon
   AddToHomescreenDataFetcherTestCommon() {}
   ~AddToHomescreenDataFetcherTestCommon() override {}
 
-  std::unique_ptr<AddToHomescreenDataFetcher> BuildFetcher(
+  scoped_refptr<AddToHomescreenDataFetcher> BuildFetcher(
       AddToHomescreenDataFetcher::Observer* observer) {
     return AddToHomescreenDataFetcherTest::BuildFetcher(
         check_webapk_compatibility(), observer);
@@ -313,7 +319,7 @@ TEST_P(AddToHomescreenDataFetcherTestCommon, EmptyManifest) {
   SetManifest(GURL(kDefaultManifestUrl), BuildEmptyManifest());
 
   ObserverWaiter waiter;
-  std::unique_ptr<AddToHomescreenDataFetcher> fetcher = BuildFetcher(&waiter);
+  scoped_refptr<AddToHomescreenDataFetcher> fetcher(BuildFetcher(&waiter));
   fetcher->OnDidGetWebApplicationInfo(web_application_info);
   waiter.WaitForDataAvailable();
 
@@ -322,6 +328,8 @@ TEST_P(AddToHomescreenDataFetcherTestCommon, EmptyManifest) {
   EXPECT_FALSE(waiter.is_webapk_compatible());
   EXPECT_TRUE(waiter.title_available());
   EXPECT_TRUE(base::EqualsASCII(waiter.title(), kWebApplicationInfoTitle));
+
+  fetcher->set_weak_observer(nullptr);
 }
 
 // Test that when the manifest provides Manifest::short_name but not
@@ -339,13 +347,15 @@ TEST_P(AddToHomescreenDataFetcherTestCommon,
   SetManifest(GURL(kDefaultManifestUrl), manifest);
 
   ObserverWaiter waiter;
-  std::unique_ptr<AddToHomescreenDataFetcher> fetcher = BuildFetcher(&waiter);
+  scoped_refptr<AddToHomescreenDataFetcher> fetcher(BuildFetcher(&waiter));
   fetcher->OnDidGetWebApplicationInfo(web_application_info);
   waiter.WaitForDataAvailable();
 
   EXPECT_TRUE(base::EqualsASCII(waiter.title(), kDefaultManifestShortName));
   EXPECT_TRUE(base::EqualsASCII(fetcher->shortcut_info().name,
                                 kDefaultManifestShortName));
+
+  fetcher->set_weak_observer(nullptr);
 }
 
 // Test that when the manifest does not provide either Manifest::short_name nor
@@ -364,7 +374,7 @@ TEST_P(AddToHomescreenDataFetcherTestCommon, ManifestNoNameNoShortName) {
   SetManifest(GURL(kDefaultManifestUrl), manifest);
 
   ObserverWaiter waiter;
-  std::unique_ptr<AddToHomescreenDataFetcher> fetcher = BuildFetcher(&waiter);
+  scoped_refptr<AddToHomescreenDataFetcher> fetcher(BuildFetcher(&waiter));
   fetcher->OnDidGetWebApplicationInfo(web_application_info);
   waiter.WaitForDataAvailable();
 
@@ -374,6 +384,8 @@ TEST_P(AddToHomescreenDataFetcherTestCommon, ManifestNoNameNoShortName) {
   EXPECT_TRUE(base::EqualsASCII(waiter.title(), kWebApplicationInfoTitle));
   EXPECT_TRUE(base::EqualsASCII(fetcher->shortcut_info().name,
                                 kWebApplicationInfoTitle));
+
+  fetcher->set_weak_observer(nullptr);
 }
 
 // Checks that the AddToHomescreenDataFetcher::Observer callbacks are called
@@ -388,7 +400,7 @@ TEST_P(AddToHomescreenDataFetcherTestCommon, ManifestFetchTimesOut) {
   SetShouldImageTimeOut(false);
 
   ObserverWaiter waiter;
-  std::unique_ptr<AddToHomescreenDataFetcher> fetcher = BuildFetcher(&waiter);
+  scoped_refptr<AddToHomescreenDataFetcher> fetcher(BuildFetcher(&waiter));
   fetcher->OnDidGetWebApplicationInfo(web_application_info);
   waiter.WaitForDataAvailable();
 
@@ -397,6 +409,8 @@ TEST_P(AddToHomescreenDataFetcherTestCommon, ManifestFetchTimesOut) {
   EXPECT_FALSE(waiter.is_webapk_compatible());
   EXPECT_TRUE(base::EqualsASCII(waiter.title(), kWebApplicationInfoTitle));
   EXPECT_TRUE(waiter.title_available());
+
+  fetcher->set_weak_observer(nullptr);
 }
 
 // Checks that the AddToHomescreenDataFetcher::Observer callbacks are called
@@ -411,7 +425,7 @@ TEST_P(AddToHomescreenDataFetcherTestCommon, ImageFetchTimesOut) {
   SetShouldImageTimeOut(true);
 
   ObserverWaiter waiter;
-  std::unique_ptr<AddToHomescreenDataFetcher> fetcher = BuildFetcher(&waiter);
+  scoped_refptr<AddToHomescreenDataFetcher> fetcher(BuildFetcher(&waiter));
   fetcher->OnDidGetWebApplicationInfo(web_application_info);
   waiter.WaitForDataAvailable();
 
@@ -420,6 +434,8 @@ TEST_P(AddToHomescreenDataFetcherTestCommon, ImageFetchTimesOut) {
   EXPECT_FALSE(waiter.is_webapk_compatible());
   EXPECT_TRUE(waiter.title_available());
   EXPECT_TRUE(base::EqualsASCII(waiter.title(), kWebApplicationInfoTitle));
+
+  fetcher->set_weak_observer(nullptr);
 }
 
 // Checks that the AddToHomescreenDataFetcher::Observer callbacks are called
@@ -435,7 +451,7 @@ TEST_P(AddToHomescreenDataFetcherTestCommon, ServiceWorkerCheckTimesOut) {
   SetShouldImageTimeOut(false);
 
   ObserverWaiter waiter;
-  std::unique_ptr<AddToHomescreenDataFetcher> fetcher = BuildFetcher(&waiter);
+  scoped_refptr<AddToHomescreenDataFetcher> fetcher(BuildFetcher(&waiter));
   fetcher->OnDidGetWebApplicationInfo(web_application_info);
   waiter.WaitForDataAvailable();
 
@@ -446,6 +462,8 @@ TEST_P(AddToHomescreenDataFetcherTestCommon, ServiceWorkerCheckTimesOut) {
   EXPECT_TRUE(base::EqualsASCII(waiter.title(), kDefaultManifestShortName));
   EXPECT_TRUE(base::EqualsASCII(fetcher->shortcut_info().user_title,
                                 kDefaultManifestShortName));
+
+  fetcher->set_weak_observer(nullptr);
 }
 
 INSTANTIATE_TEST_CASE_P(CheckWebApkCompatibility,

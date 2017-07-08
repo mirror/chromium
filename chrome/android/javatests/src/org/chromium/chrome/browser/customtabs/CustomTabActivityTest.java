@@ -2933,7 +2933,7 @@ public class CustomTabActivityTest {
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {
-                BrowsingHistoryBridge historyService = new BrowsingHistoryBridge(false);
+                BrowsingHistoryBridge historyService = new BrowsingHistoryBridge();
                 historyService.setObserver(historyObserver);
                 String historyQueryFilter = "";
                 int historyQueryTimeout = 0;

@@ -103,6 +103,8 @@
 #include "core/paint/PaintLayer.h"
 #include "core/timing/DOMWindowPerformance.h"
 #include "core/timing/Performance.h"
+#include "modules/compositorworker/AnimationWorkletProxyClientImpl.h"
+#include "modules/compositorworker/CompositorWorkerProxyClientImpl.h"
 #include "modules/credentialmanager/CredentialManagerClient.h"
 #include "modules/encryptedmedia/MediaKeysController.h"
 #include "modules/quota/StorageQuotaClient.h"
@@ -4095,10 +4097,6 @@ void WebViewImpl::ForceNextDrawingBufferCreationToFail() {
 }
 
 CompositorMutatorImpl& WebViewImpl::Mutator() {
-  return *CompositorMutator();
-}
-
-CompositorMutatorImpl* WebViewImpl::CompositorMutator() {
   if (!mutator_) {
     std::unique_ptr<CompositorMutatorClient> mutator_client =
         CompositorMutatorImpl::CreateClient();
@@ -4106,7 +4104,15 @@ CompositorMutatorImpl* WebViewImpl::CompositorMutator() {
     layer_tree_view_->SetMutatorClient(std::move(mutator_client));
   }
 
-  return mutator_;
+  return *mutator_;
+}
+
+CompositorWorkerProxyClient* WebViewImpl::CreateCompositorWorkerProxyClient() {
+  return new CompositorWorkerProxyClientImpl(&Mutator());
+}
+
+AnimationWorkletProxyClient* WebViewImpl::CreateAnimationWorkletProxyClient() {
+  return new AnimationWorkletProxyClientImpl(&Mutator());
 }
 
 void WebViewImpl::UpdatePageOverlays() {

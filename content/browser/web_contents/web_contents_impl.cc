@@ -35,6 +35,7 @@
 #include "build/build_config.h"
 #include "components/mime_util/mime_util.h"
 #include "components/rappor/public/rappor_utils.h"
+#include "components/ukm/public/ukm_recorder.h"
 #include "components/url_formatter/url_formatter.h"
 #include "content/browser/accessibility/browser_accessibility_state_impl.h"
 #include "content/browser/bad_message.h"
@@ -130,7 +131,6 @@
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_getter.h"
 #include "ppapi/features/features.h"
-#include "services/metrics/public/cpp/ukm_recorder.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
 #include "third_party/WebKit/public/platform/WebSecurityStyle.h"
 #include "third_party/WebKit/public/web/WebSandboxFlags.h"
@@ -2753,18 +2753,8 @@ BrowserAccessibilityManager*
   return rfh ? rfh->GetOrCreateBrowserAccessibilityManager() : nullptr;
 }
 
-void WebContentsImpl::ExecuteEditCommand(
-    const std::string& command,
-    const base::Optional<base::string16>& value) {
-  RenderFrameHostImpl* focused_frame = GetFocusedFrame();
-  if (!focused_frame)
-    return;
-
-  focused_frame->GetFrameInputHandler()->ExecuteEditCommand(command, value);
-}
-
 void WebContentsImpl::MoveRangeSelectionExtent(const gfx::Point& extent) {
-  RenderFrameHostImpl* focused_frame = GetFocusedFrame();
+  RenderFrameHost* focused_frame = GetFocusedFrame();
   if (!focused_frame)
     return;
 
@@ -2773,24 +2763,16 @@ void WebContentsImpl::MoveRangeSelectionExtent(const gfx::Point& extent) {
 
 void WebContentsImpl::SelectRange(const gfx::Point& base,
                                   const gfx::Point& extent) {
-  RenderFrameHostImpl* focused_frame = GetFocusedFrame();
+  RenderFrameHost* focused_frame = GetFocusedFrame();
   if (!focused_frame)
     return;
 
   focused_frame->GetFrameInputHandler()->SelectRange(base, extent);
 }
 
-void WebContentsImpl::MoveCaret(const gfx::Point& extent) {
-  RenderFrameHostImpl* focused_frame = GetFocusedFrame();
-  if (!focused_frame)
-    return;
-
-  focused_frame->GetFrameInputHandler()->MoveCaret(extent);
-}
-
 void WebContentsImpl::AdjustSelectionByCharacterOffset(int start_adjust,
                                                        int end_adjust) {
-  RenderFrameHostImpl* focused_frame = GetFocusedFrame();
+  RenderFrameHost* focused_frame = GetFocusedFrame();
   if (!focused_frame)
     return;
 
@@ -2971,7 +2953,7 @@ void WebContentsImpl::ReloadLoFiImages() {
 }
 
 void WebContentsImpl::Undo() {
-  RenderFrameHostImpl* focused_frame = GetFocusedFrame();
+  RenderFrameHost* focused_frame = GetFocusedFrame();
   if (!focused_frame)
     return;
 
@@ -2980,7 +2962,7 @@ void WebContentsImpl::Undo() {
 }
 
 void WebContentsImpl::Redo() {
-  RenderFrameHostImpl* focused_frame = GetFocusedFrame();
+  RenderFrameHost* focused_frame = GetFocusedFrame();
   if (!focused_frame)
     return;
   focused_frame->GetFrameInputHandler()->Redo();
@@ -2988,7 +2970,7 @@ void WebContentsImpl::Redo() {
 }
 
 void WebContentsImpl::Cut() {
-  RenderFrameHostImpl* focused_frame = GetFocusedFrame();
+  RenderFrameHost* focused_frame = GetFocusedFrame();
   if (!focused_frame)
     return;
 
@@ -2997,7 +2979,7 @@ void WebContentsImpl::Cut() {
 }
 
 void WebContentsImpl::Copy() {
-  RenderFrameHostImpl* focused_frame = GetFocusedFrame();
+  RenderFrameHost* focused_frame = GetFocusedFrame();
   if (!focused_frame)
     return;
 
@@ -3007,7 +2989,7 @@ void WebContentsImpl::Copy() {
 
 void WebContentsImpl::CopyToFindPboard() {
 #if defined(OS_MACOSX)
-  RenderFrameHostImpl* focused_frame = GetFocusedFrame();
+  RenderFrameHost* focused_frame = GetFocusedFrame();
   if (!focused_frame)
     return;
 
@@ -3018,7 +3000,7 @@ void WebContentsImpl::CopyToFindPboard() {
 }
 
 void WebContentsImpl::Paste() {
-  RenderFrameHostImpl* focused_frame = GetFocusedFrame();
+  RenderFrameHost* focused_frame = GetFocusedFrame();
   if (!focused_frame)
     return;
 
@@ -3027,7 +3009,7 @@ void WebContentsImpl::Paste() {
 }
 
 void WebContentsImpl::PasteAndMatchStyle() {
-  RenderFrameHostImpl* focused_frame = GetFocusedFrame();
+  RenderFrameHost* focused_frame = GetFocusedFrame();
   if (!focused_frame)
     return;
 
@@ -3036,7 +3018,7 @@ void WebContentsImpl::PasteAndMatchStyle() {
 }
 
 void WebContentsImpl::Delete() {
-  RenderFrameHostImpl* focused_frame = GetFocusedFrame();
+  RenderFrameHost* focused_frame = GetFocusedFrame();
   if (!focused_frame)
     return;
 
@@ -3045,7 +3027,7 @@ void WebContentsImpl::Delete() {
 }
 
 void WebContentsImpl::SelectAll() {
-  RenderFrameHostImpl* focused_frame = GetFocusedFrame();
+  RenderFrameHost* focused_frame = GetFocusedFrame();
   if (!focused_frame)
     return;
 
@@ -3054,7 +3036,7 @@ void WebContentsImpl::SelectAll() {
 }
 
 void WebContentsImpl::CollapseSelection() {
-  RenderFrameHostImpl* focused_frame = GetFocusedFrame();
+  RenderFrameHost* focused_frame = GetFocusedFrame();
   if (!focused_frame)
     return;
 
@@ -3062,7 +3044,7 @@ void WebContentsImpl::CollapseSelection() {
 }
 
 void WebContentsImpl::Replace(const base::string16& word) {
-  RenderFrameHostImpl* focused_frame = GetFocusedFrame();
+  RenderFrameHost* focused_frame = GetFocusedFrame();
   if (!focused_frame)
     return;
 
@@ -3070,7 +3052,7 @@ void WebContentsImpl::Replace(const base::string16& word) {
 }
 
 void WebContentsImpl::ReplaceMisspelling(const base::string16& word) {
-  RenderFrameHostImpl* focused_frame = GetFocusedFrame();
+  RenderFrameHost* focused_frame = GetFocusedFrame();
   if (!focused_frame)
     return;
 

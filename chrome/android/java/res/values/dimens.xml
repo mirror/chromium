@@ -332,10 +332,6 @@
     <dimen name="snippets_publisher_margin_top_without_article_snippet">8dp</dimen>
     <!-- This is in sp because we want the icon to scale with the TextView it sits alongside. -->
     <dimen name="snippets_offline_icon_size">18sp</dimen>
-    <dimen name="ntp_suggestions_footer_padding_top">40dp</dimen>
-    <dimen name="ntp_suggestions_footer_padding_bottom">18dp</dimen>
-    <dimen name="chrome_home_suggestions_footer_padding_top">24dp</dimen>
-    <dimen name="chrome_home_suggestions_footer_padding_bottom">24dp</dimen>
 
     <!-- Recent tabs page -->
     <dimen name="recent_tabs_visible_separator_padding">8dp</dimen>
@@ -477,7 +473,6 @@
     <dimen name="context_menu_header_image_min_size">56dp</dimen>
     <dimen name="context_menu_header_image_max_size">56dp</dimen>
     <dimen name="context_menu_max_width">500dp</dimen>
-    <dimen name="context_menu_min_padding">20dp</dimen>
 
     <!-- Divider Dimensions -->
     <dimen name="divider_height">1dp</dimen>

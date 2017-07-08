@@ -97,6 +97,7 @@
     *   [code_signing_sources: [file list] Sources for code signing step.](#code_signing_sources)
     *   [complete_static_lib: [boolean] Links all deps into a static library.](#complete_static_lib)
     *   [configs: [label list] Configs applying to this target or config.](#configs)
+    *   [console: [label] Console pool object.](#console)
     *   [data: [file list] Runtime data file dependencies.](#data)
     *   [data_deps: [label list] Non-linked dependencies.](#data_deps)
     *   [defines: [string list] C preprocessor defines.](#defines)
@@ -1040,7 +1041,7 @@
 #### **Variables**
 
 ```
-  args, data, data_deps, depfile, deps, inputs, outputs*, pool,
+  args, console, data, data_deps, depfile, deps, inputs, outputs*,
   response_file_contents, script*, sources
   * = required
 ```
@@ -1118,7 +1119,7 @@
 #### **Variables**
 
 ```
-  args, data, data_deps, depfile, deps, inputs, outputs*, pool,
+  args, console, data, data_deps, depfile, deps, inputs, outputs*,
   response_file_contents, script*, sources*
   * = required
 ```
@@ -2145,9 +2146,7 @@
              variable_to_ignore_list = [])
 
   Mark the variables in the current or given scope as not needed, which means
-  you will not get an error about unused variables for these. The
-  variable_to_ignore_list allows excluding variables from "all matches" if
-  variable_list_or_star is "*".
+  you will not get an error about unused variables for these.
 ```
 
 #### **Example**
@@ -4326,6 +4325,27 @@
     } else {
       configs = [ ":no_optimization" ]
     }
+  }
+```
+### <a name="console"></a>**console**: Console pool objects.
+
+```
+  Console pool is a special pool object that uses the built-in ninja "console"
+  pool. Target using this pool will have access to real stdin and stdout, and
+  output will not be buffered by ninja. This can be useful for long-running
+  actions with progress logs, or actions that require user input.
+
+  Only one console pool target can run at any one time in Ninja. Refer to the
+  Ninja documentation on the console pool for more info.
+```
+
+#### **Example**
+
+```
+  action("my_action") {
+    ...
+    pool = console
+    ...
   }
 ```
 ### <a name="data"></a>**data**: Runtime data file dependencies.

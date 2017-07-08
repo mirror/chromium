@@ -27,7 +27,7 @@
 #include "jni/ImeAdapter_jni.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
 #include "third_party/WebKit/public/platform/WebTextInputType.h"
-#include "ui/base/ime/composition_underline.h"
+#include "third_party/WebKit/public/web/WebCompositionUnderline.h"
 
 using base::android::AttachCurrentThread;
 using base::android::ConvertJavaStringToUTF16;
@@ -77,7 +77,7 @@ jlong Init(JNIEnv* env,
 }
 
 // Callback from Java to convert BackgroundColorSpan data to a
-// ui::CompositionUnderline instance, and append it to |underlines_ptr|.
+// blink::WebCompositionUnderline instance, and append it to |underlines_ptr|.
 void AppendBackgroundColorSpan(JNIEnv*,
                                const JavaParamRef<jclass>&,
                                jlong underlines_ptr,
@@ -87,15 +87,16 @@ void AppendBackgroundColorSpan(JNIEnv*,
   DCHECK_GE(start, 0);
   DCHECK_GE(end, 0);
   // Do not check |background_color|.
-  std::vector<ui::CompositionUnderline>* underlines =
-      reinterpret_cast<std::vector<ui::CompositionUnderline>*>(underlines_ptr);
-  underlines->push_back(ui::CompositionUnderline(
+  std::vector<blink::WebCompositionUnderline>* underlines =
+      reinterpret_cast<std::vector<blink::WebCompositionUnderline>*>(
+          underlines_ptr);
+  underlines->push_back(blink::WebCompositionUnderline(
       static_cast<unsigned>(start), static_cast<unsigned>(end),
       SK_ColorTRANSPARENT, false, static_cast<unsigned>(background_color)));
 }
 
 // Callback from Java to convert UnderlineSpan data to a
-// ui::CompositionUnderline instance, and append it to |underlines_ptr|.
+// blink::WebCompositionUnderline instance, and append it to |underlines_ptr|.
 void AppendUnderlineSpan(JNIEnv*,
                          const JavaParamRef<jclass>&,
                          jlong underlines_ptr,
@@ -103,9 +104,10 @@ void AppendUnderlineSpan(JNIEnv*,
                          jint end) {
   DCHECK_GE(start, 0);
   DCHECK_GE(end, 0);
-  std::vector<ui::CompositionUnderline>* underlines =
-      reinterpret_cast<std::vector<ui::CompositionUnderline>*>(underlines_ptr);
-  underlines->push_back(ui::CompositionUnderline(
+  std::vector<blink::WebCompositionUnderline>* underlines =
+      reinterpret_cast<std::vector<blink::WebCompositionUnderline>*>(
+          underlines_ptr);
+  underlines->push_back(blink::WebCompositionUnderline(
       static_cast<unsigned>(start), static_cast<unsigned>(end), SK_ColorBLACK,
       false, SK_ColorTRANSPARENT));
 }
@@ -214,12 +216,12 @@ void ImeAdapterAndroid::SetComposingText(JNIEnv* env,
 
   base::string16 text16 = ConvertJavaStringToUTF16(env, text_str);
 
-  std::vector<ui::CompositionUnderline> underlines =
+  std::vector<blink::WebCompositionUnderline> underlines =
       GetUnderlinesFromSpans(env, obj, text, text16);
 
   // Default to plain underline if we didn't find any span that we care about.
   if (underlines.empty()) {
-    underlines.push_back(ui::CompositionUnderline(
+    underlines.push_back(blink::WebCompositionUnderline(
         0, text16.length(), SK_ColorBLACK, false, SK_ColorTRANSPARENT));
   }
 
@@ -244,7 +246,7 @@ void ImeAdapterAndroid::CommitText(JNIEnv* env,
 
   base::string16 text16 = ConvertJavaStringToUTF16(env, text_str);
 
-  std::vector<ui::CompositionUnderline> underlines =
+  std::vector<blink::WebCompositionUnderline> underlines =
       GetUnderlinesFromSpans(env, obj, text, text16);
 
   // relative_cursor_pos is as described in the Android API for
@@ -286,8 +288,7 @@ void ImeAdapterAndroid::FocusedNodeChanged(bool is_editable_node) {
 void ImeAdapterAndroid::AdvanceFocusInForm(JNIEnv* env,
                                            const JavaParamRef<jobject>& obj,
                                            jint focus_type) {
-  RenderFrameHostImpl* rfh =
-      static_cast<RenderFrameHostImpl*>(GetFocusedFrame());
+  RenderFrameHost* rfh = GetFocusedFrame();
   if (!rfh)
     return;
 
@@ -300,8 +301,7 @@ void ImeAdapterAndroid::SetEditableSelectionOffsets(
     const JavaParamRef<jobject>&,
     int start,
     int end) {
-  RenderFrameHostImpl* rfh =
-      static_cast<RenderFrameHostImpl*>(GetFocusedFrame());
+  RenderFrameHost* rfh = GetFocusedFrame();
   if (!rfh)
     return;
 
@@ -335,8 +335,7 @@ void ImeAdapterAndroid::SetComposingRegion(JNIEnv*,
                                            const JavaParamRef<jobject>&,
                                            int start,
                                            int end) {
-  RenderFrameHostImpl* rfh =
-      static_cast<RenderFrameHostImpl*>(GetFocusedFrame());
+  RenderFrameHost* rfh = GetFocusedFrame();
   if (!rfh)
     return;
 
@@ -377,7 +376,7 @@ bool ImeAdapterAndroid::RequestTextInputStateUpdate(
   RenderWidgetHostImpl* rwhi = GetFocusedWidget();
   if (!rwhi)
     return false;
-  rwhi->GetWidgetInputHandler()->RequestTextInputStateUpdate();
+  rwhi->Send(new InputMsg_RequestTextInputStateUpdate(rwhi->GetRoutingID()));
   return true;
 }
 
@@ -389,8 +388,8 @@ void ImeAdapterAndroid::RequestCursorUpdate(
   RenderWidgetHostImpl* rwhi = GetFocusedWidget();
   if (!rwhi)
     return;
-  rwhi->GetWidgetInputHandler()->RequestCompositionUpdates(immediate_request,
-                                                           monitor_request);
+  rwhi->Send(new InputMsg_RequestCompositionUpdates(
+      rwhi->GetRoutingID(), immediate_request, monitor_request));
 }
 
 RenderWidgetHostImpl* ImeAdapterAndroid::GetFocusedWidget() {
@@ -416,12 +415,13 @@ RenderFrameHost* ImeAdapterAndroid::GetFocusedFrame() {
   return nullptr;
 }
 
-std::vector<ui::CompositionUnderline> ImeAdapterAndroid::GetUnderlinesFromSpans(
+std::vector<blink::WebCompositionUnderline>
+ImeAdapterAndroid::GetUnderlinesFromSpans(
     JNIEnv* env,
     const base::android::JavaParamRef<jobject>& obj,
     const base::android::JavaParamRef<jobject>& text,
     const base::string16& text16) {
-  std::vector<ui::CompositionUnderline> underlines;
+  std::vector<blink::WebCompositionUnderline> underlines;
   // Iterate over spans in |text|, dispatch those that we care about (e.g.,
   // BackgroundColorSpan) to a matching callback (e.g.,
   // AppendBackgroundColorSpan()), and populate |underlines|.

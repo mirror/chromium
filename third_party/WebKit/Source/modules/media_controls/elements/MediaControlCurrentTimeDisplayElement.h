@@ -5,7 +5,7 @@
 #ifndef MediaControlCurrentTimeDisplayElement_h
 #define MediaControlCurrentTimeDisplayElement_h
 
-#include "modules/media_controls/elements/MediaControlTimeDisplayElement.h"
+#include "core/html/shadow/MediaControlElementTypes.h"
 
 namespace blink {
 

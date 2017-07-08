@@ -278,8 +278,10 @@ void LoaderImpl::BackgroundLoadFile(const Settings* settings,
 
 
   // Pass all of the items that were defined off to the builder.
-  for (auto& item : collected_items)
-    settings->build_settings()->ItemDefined(std::move(item));
+  for (auto*& item : collected_items) {
+    settings->build_settings()->ItemDefined(base::WrapUnique(item));
+    item = nullptr;
+  }
 
   trace.Done();
 

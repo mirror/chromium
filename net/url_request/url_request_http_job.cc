@@ -75,7 +75,6 @@
 #endif
 
 #if BUILDFLAG(ENABLE_REPORTING)
-#include "net/reporting/reporting_header_parser.h"
 #include "net/reporting/reporting_service.h"
 #endif  // BUILDFLAG(ENABLE_REPORTING)
 
@@ -859,29 +858,21 @@ void URLRequestHttpJob::ProcessReportToHeader() {
   DCHECK(response_info_);
 
 #if BUILDFLAG(ENABLE_REPORTING)
-  HttpResponseHeaders* headers = GetResponseHeaders();
-  std::string value;
-  if (!headers->GetNormalizedHeader("Report-To", &value))
-    return;
-
   ReportingService* service = request_->context()->reporting_service();
-  if (!service) {
-    ReportingHeaderParser::RecordHeaderDiscardedForNoReportingService();
+  if (!service)
     return;
-  }
 
   // Only accept Report-To headers on HTTPS connections that have no
   // certificate errors.
   // TODO(juliatuttle): Do we need to check cert status?
   const SSLInfo& ssl_info = response_info_->ssl_info;
-  if (!ssl_info.is_valid()) {
-    ReportingHeaderParser::RecordHeaderDiscardedForInvalidSSLInfo();
+  if (!ssl_info.is_valid() || IsCertStatusError(ssl_info.cert_status))
     return;
-  }
-  if (IsCertStatusError(ssl_info.cert_status)) {
-    ReportingHeaderParser::RecordHeaderDiscardedForCertStatusError();
+
+  HttpResponseHeaders* headers = GetResponseHeaders();
+  std::string value;
+  if (!headers->GetNormalizedHeader("Report-To", &value))
     return;
-  }
 
   service->ProcessHeader(request_info_.url.GetOrigin(), value);
 #endif  // BUILDFLAG(ENABLE_REPORTING)

@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.os.Looper;
 import android.os.RemoteException;
 import android.util.SparseArray;
 
@@ -20,8 +19,6 @@ import org.chromium.base.library_loader.ProcessInitException;
 import org.chromium.base.process_launcher.ChildProcessService;
 import org.chromium.base.process_launcher.ChildProcessServiceDelegate;
 
-import javax.annotation.concurrent.GuardedBy;
-
 /**
  * Child service started by ChildProcessLauncherTest.
  */
@@ -31,14 +28,16 @@ public class TestChildProcessService extends ChildProcessService {
     private static final long MAIN_BLOCKING_DURATION_MS = 5000;
 
     private static class TestChildProcessServiceDelegate implements ChildProcessServiceDelegate {
-        private final Object mConnectionSetupLock = new Object();
-        @GuardedBy("mConnectionSetupLock")
-        private boolean mConnectionSetup;
+        private final Object mIChildProcessTestLock = new Object();
+        // Note that we are not guarding mIChildProcessTest with mIChildProcessTestLock as the lock
+        // is only used to wait for mIChildProcessTest to be set in loadNativeLibrary (accessing it
+        // when loading the library only happens in this test). For the other delegate callbacks,
+        // mIChildProcessTest is guaranteed to be set.
+        private IChildProcessTest mIChildProcessTest;
 
         private boolean mServiceCreated;
         private Bundle mServiceBundle;
         private String[] mCommandLine;
-        private IChildProcessTest mIChildProcessTest;
 
         @Override
         public void onServiceCreated() {
@@ -52,26 +51,21 @@ public class TestChildProcessService extends ChildProcessService {
 
         @Override
         public void onConnectionSetup(Bundle connectionBundle, IBinder callback) {
-            if (callback != null) {
+            assert callback != null;
+            synchronized (mIChildProcessTestLock) {
                 mIChildProcessTest = IChildProcessTest.Stub.asInterface(callback);
+                mIChildProcessTestLock.notifyAll();
             }
-            if (mIChildProcessTest != null) {
-                try {
-                    mIChildProcessTest.onConnectionSetup(
-                            mServiceCreated, mServiceBundle, connectionBundle);
-                } catch (RemoteException re) {
-                    Log.e(TAG, "Failed to call IChildProcessTest.onConnectionSetup.", re);
-                }
-            }
-            synchronized (mConnectionSetupLock) {
-                mConnectionSetup = true;
-                mConnectionSetupLock.notifyAll();
+            try {
+                mIChildProcessTest.onConnectionSetup(
+                        mServiceCreated, mServiceBundle, connectionBundle);
+            } catch (RemoteException re) {
+                Log.e(TAG, "Failed to call IChildProcessTest.onConnectionSetup.", re);
             }
         }
 
         @Override
         public void onDestroy() {
-            if (mIChildProcessTest == null) return;
             try {
                 mIChildProcessTest.onDestroy();
             } catch (RemoteException re) {
@@ -97,22 +91,19 @@ public class TestChildProcessService extends ChildProcessService {
 
             // Loading the library happen on the main thread and onConnectionSetup is called from
             // the client. Wait for onConnectionSetup so mIChildProcessTest is set.
-            synchronized (mConnectionSetupLock) {
-                while (!mConnectionSetup) {
+            synchronized (mIChildProcessTestLock) {
+                while (mIChildProcessTest == null) {
                     try {
-                        mConnectionSetupLock.wait();
+                        mIChildProcessTestLock.wait();
                     } catch (InterruptedException e) {
                         // Ignore.
                     }
                 }
             }
-
-            if (mIChildProcessTest != null) {
-                try {
-                    mIChildProcessTest.onLoadNativeLibrary(isLoaded);
-                } catch (RemoteException re) {
-                    Log.e(TAG, "Failed to call IChildProcessTest.onLoadNativeLibrary.", re);
-                }
+            try {
+                mIChildProcessTest.onLoadNativeLibrary(isLoaded);
+            } catch (RemoteException re) {
+                Log.e(TAG, "Failed to call IChildProcessTest.onLoadNativeLibrary.", re);
             }
             return true;
         }
@@ -124,7 +115,6 @@ public class TestChildProcessService extends ChildProcessService {
 
         @Override
         public void onBeforeMain() {
-            if (mIChildProcessTest == null) return;
             try {
                 mIChildProcessTest.onBeforeMain(mCommandLine);
             } catch (RemoteException re) {
@@ -134,16 +124,11 @@ public class TestChildProcessService extends ChildProcessService {
 
         @Override
         public void runMain() {
-            if (mIChildProcessTest != null) {
-                try {
-                    mIChildProcessTest.onRunMain();
-                } catch (RemoteException re) {
-                    Log.e(TAG, "Failed to call IChildProcessTest.onRunMain.", re);
-                }
+            try {
+                mIChildProcessTest.onRunMain();
+            } catch (RemoteException re) {
+                Log.e(TAG, "Failed to call IChildProcessTest.onRunMain.", re);
             }
-            // Run a message loop to keep the service from exiting.
-            Looper.prepare();
-            Looper.loop();
         }
     };
 

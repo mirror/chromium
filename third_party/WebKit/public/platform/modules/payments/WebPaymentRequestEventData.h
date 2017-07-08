@@ -6,14 +6,21 @@
 #define WebPaymentRequestEventData_h
 
 #include "public/platform/WebString.h"
-#include "public/platform/modules/payments/WebCanMakePaymentEventData.h"
+#include "public/platform/WebVector.h"
+#include "public/platform/modules/payments/WebPaymentDetailsModifier.h"
+#include "public/platform/modules/payments/WebPaymentItem.h"
+#include "public/platform/modules/payments/WebPaymentMethodData.h"
 
 namespace blink {
 
-struct WebPaymentRequestEventData : public WebCanMakePaymentEventData {
+struct WebPaymentRequestEventData {
+  WebString top_level_origin;
+  WebString payment_request_origin;
   WebString payment_request_id;
-  WebString instrument_key;
+  WebVector<WebPaymentMethodData> method_data;
   WebPaymentItem total;
+  WebVector<WebPaymentDetailsModifier> modifiers;
+  WebString instrument_key;
 };
 
 }  // namespace blink

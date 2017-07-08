@@ -11,7 +11,6 @@
 #include "base/macros.h"
 #include "base/run_loop.h"
 #include "base/strings/utf_string_conversions.h"
-#include "base/test/scoped_feature_list.h"
 #include "base/threading/sequenced_worker_pool.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/chromeos/login/login_manager_test.h"
@@ -27,7 +26,6 @@
 #include "chrome/browser/supervised_user/legacy/supervised_user_registration_utility.h"
 #include "chrome/browser/supervised_user/legacy/supervised_user_registration_utility_stub.h"
 #include "chrome/browser/supervised_user/supervised_user_constants.h"
-#include "chrome/common/chrome_features.h"
 #include "chromeos/cryptohome/mock_async_method_caller.h"
 #include "chromeos/cryptohome/mock_homedir_methods.h"
 #include "components/sync/model/attachments/attachment_service_proxy_for_test.h"
@@ -60,15 +58,7 @@ class SupervisedUserCreationTest : public SupervisedUserTestBase {
  public:
   SupervisedUserCreationTest() : SupervisedUserTestBase() {}
 
-  void SetUpInProcessBrowserTestFixture() override {
-    SupervisedUserTestBase::SetUpInProcessBrowserTestFixture();
-    scoped_feature_list_.InitAndEnableFeature(
-        features::kSupervisedUserCreation);
-  }
-
  private:
-  base::test::ScopedFeatureList scoped_feature_list_;
-
   DISALLOW_COPY_AND_ASSIGN(SupervisedUserCreationTest);
 };
 
@@ -76,15 +66,7 @@ class SupervisedUserTransactionCleanupTest : public SupervisedUserTestBase {
  public:
   SupervisedUserTransactionCleanupTest() : SupervisedUserTestBase() {}
 
-  void SetUpInProcessBrowserTestFixture() override {
-    SupervisedUserTestBase::SetUpInProcessBrowserTestFixture();
-    scoped_feature_list_.InitAndEnableFeature(
-        features::kSupervisedUserCreation);
-  }
-
  private:
-  base::test::ScopedFeatureList scoped_feature_list_;
-
   DISALLOW_COPY_AND_ASSIGN(SupervisedUserTransactionCleanupTest);
 };
 
@@ -94,16 +76,12 @@ class SupervisedUserOwnerCreationTest : public SupervisedUserTestBase {
 
   void SetUpInProcessBrowserTestFixture() override {
     SupervisedUserTestBase::SetUpInProcessBrowserTestFixture();
-    scoped_feature_list_.InitAndEnableFeature(
-        features::kSupervisedUserCreation);
     cros_settings_provider_.reset(new StubCrosSettingsProvider());
     cros_settings_provider_->Set(kDeviceOwner, base::Value(kTestManager));
   }
 
  private:
   std::unique_ptr<StubCrosSettingsProvider> cros_settings_provider_;
-  base::test::ScopedFeatureList scoped_feature_list_;
-
   DISALLOW_COPY_AND_ASSIGN(SupervisedUserOwnerCreationTest);
 };
 

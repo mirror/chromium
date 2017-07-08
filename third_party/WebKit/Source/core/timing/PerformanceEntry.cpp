@@ -83,18 +83,19 @@ PerformanceEntry::EntryType PerformanceEntry::ToEntryTypeEnum(
     return kTaskAttribution;
   if (entry_type == "paint")
     return kPaint;
+  if (entry_type == "server")
+    return kServer;
   return kInvalid;
 }
 
 ScriptValue PerformanceEntry::toJSONForBinding(
     ScriptState* script_state) const {
   V8ObjectBuilder result(script_state);
-  BuildJSONValue(script_state, result);
+  BuildJSONValue(result);
   return result.GetScriptValue();
 }
 
-void PerformanceEntry::BuildJSONValue(ScriptState* script_state,
-                                      V8ObjectBuilder& builder) const {
+void PerformanceEntry::BuildJSONValue(V8ObjectBuilder& builder) const {
   builder.AddString("name", name());
   builder.AddString("entryType", entryType());
   builder.AddNumber("startTime", startTime());

@@ -12,11 +12,11 @@
 #include <utility>
 
 #include "base/logging.h"
+#include "cc/surfaces/compositor_frame_sink_support.h"
 #include "cc/surfaces/direct_surface_reference_factory.h"
 #include "cc/surfaces/local_surface_id_allocator.h"
 #include "cc/surfaces/stub_surface_reference_factory.h"
 #include "cc/surfaces/surface.h"
-#include "cc/surfaces/surface_client.h"
 #include "cc/surfaces/surface_info.h"
 
 #if DCHECK_IS_ON()
@@ -31,7 +31,6 @@ SurfaceManager::SurfaceReferenceInfo::~SurfaceReferenceInfo() {}
 
 SurfaceManager::SurfaceManager(LifetimeType lifetime_type)
     : lifetime_type_(lifetime_type),
-      dependency_tracker_(this),
       root_surface_id_(FrameSinkId(0u, 0u),
                        LocalSurfaceId(1u, base::UnguessableToken::Create())),
       weak_factory_(this) {
@@ -45,7 +44,7 @@ SurfaceManager::SurfaceManager(LifetimeType lifetime_type)
 }
 
 SurfaceManager::~SurfaceManager() {
-  // All SurfaceClients and their surfaces are supposed to be
+  // All CompositorFrameSinkSupports and their surfaces are supposed to be
   // destroyed before SurfaceManager.
   DCHECK_EQ(surfaces_to_destroy_.size(), surface_map_.size());
 }
@@ -62,28 +61,31 @@ std::string SurfaceManager::SurfaceReferencesToString() {
 }
 #endif
 
-void SurfaceManager::RequestSurfaceResolution(
-    Surface* surface,
-    SurfaceDependencyDeadline* deadline) {
-  dependency_tracker_.RequestSurfaceResolution(surface, deadline);
+void SurfaceManager::SetDependencyTracker(
+    SurfaceDependencyTracker* dependency_tracker) {
+  dependency_tracker_ = dependency_tracker;
+}
+
+void SurfaceManager::RequestSurfaceResolution(Surface* pending_surface) {
+  if (dependency_tracker_)
+    dependency_tracker_->RequestSurfaceResolution(pending_surface);
 }
 
 Surface* SurfaceManager::CreateSurface(
-    base::WeakPtr<SurfaceClient> surface_client,
-    const SurfaceInfo& surface_info,
-    BeginFrameSource* begin_frame_source,
-    bool needs_sync_tokens) {
+    base::WeakPtr<CompositorFrameSinkSupport> compositor_frame_sink_support,
+    const SurfaceInfo& surface_info) {
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(surface_info.is_valid());
-  DCHECK(surface_client);
+  DCHECK(compositor_frame_sink_support);
+  DCHECK_EQ(surface_info.id().frame_sink_id(),
+            compositor_frame_sink_support->frame_sink_id());
 
   // If no surface with this SurfaceId exists, simply create the surface and
   // return.
   auto it = surface_map_.find(surface_info.id());
   if (it == surface_map_.end()) {
     surface_map_[surface_info.id()] =
-        base::MakeUnique<Surface>(surface_info, this, surface_client,
-                                  begin_frame_source, needs_sync_tokens);
+        base::MakeUnique<Surface>(surface_info, compositor_frame_sink_support);
     return surface_map_[surface_info.id()].get();
   }
 
@@ -93,6 +95,8 @@ Surface* SurfaceManager::CreateSurface(
   Surface* surface = it->second.get();
   DCHECK(IsMarkedForDestruction(surface_info.id()));
   surfaces_to_destroy_.erase(surface_info.id());
+  DCHECK_EQ(compositor_frame_sink_support.get(),
+            surface->compositor_frame_sink_support().get());
   return surface;
 }
 
@@ -476,21 +480,25 @@ void SurfaceManager::SurfaceCreated(const SurfaceInfo& surface_info) {
 }
 
 void SurfaceManager::SurfaceActivated(Surface* surface) {
-  dependency_tracker_.OnSurfaceActivated(surface);
+  if (dependency_tracker_)
+    dependency_tracker_->OnSurfaceActivated(surface);
 }
 
 void SurfaceManager::SurfaceDependenciesChanged(
     Surface* surface,
     const base::flat_set<SurfaceId>& added_dependencies,
     const base::flat_set<SurfaceId>& removed_dependencies) {
-  dependency_tracker_.OnSurfaceDependenciesChanged(surface, added_dependencies,
-                                                   removed_dependencies);
+  if (dependency_tracker_) {
+    dependency_tracker_->OnSurfaceDependenciesChanged(
+        surface, added_dependencies, removed_dependencies);
+  }
 }
 
 void SurfaceManager::SurfaceDiscarded(Surface* surface) {
   for (auto& observer : observer_list_)
     observer.OnSurfaceDiscarded(surface->surface_id());
-  dependency_tracker_.OnSurfaceDiscarded(surface);
+  if (dependency_tracker_)
+    dependency_tracker_->OnSurfaceDiscarded(surface);
 }
 
 void SurfaceManager::SurfaceDamageExpected(const SurfaceId& surface_id,

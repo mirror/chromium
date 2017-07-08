@@ -33,6 +33,7 @@ blink_core_sources("rendering") {
     "CursorData.h",
     "CursorList.h",
     "DataEquivalency.h",
+    "DataPersistent.h",
     "DataRef.h",
     "FillLayer.cpp",
     "FillLayer.h",

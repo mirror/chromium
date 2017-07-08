@@ -374,7 +374,7 @@ void HideButton(UIButton* button) {
           return;
         }
         strongSelf->_addedAccount = YES;
-        [strongSelf identityListChanged];
+        [strongSelf onIdentityListChanged];
         [strongSelf setSelectedIdentity:identity];
         [strongSelf changeToState:SIGNIN_PENDING_STATE];
       };
@@ -773,7 +773,7 @@ void HideButton(UIButton* button) {
 
 #pragma mark - ChromeIdentityServiceObserver
 
-- (void)identityListChanged {
+- (void)onIdentityListChanged {
   switch (_currentState) {
     case NULL_STATE:
     case DONE_STATE:
@@ -790,7 +790,7 @@ void HideButton(UIButton* button) {
   }
 }
 
-- (void)chromeIdentityServiceWillBeDestroyed {
+- (void)onChromeIdentityServiceWillBeDestroyed {
   _identityServiceObserver.reset();
 }
 

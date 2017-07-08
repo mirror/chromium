@@ -29,7 +29,6 @@ namespace blink {
 
 class InterfaceProvider;
 class InterfaceRegistry;
-class WebAssociatedURLLoader;
 class WebAutofillClient;
 class WebContentSettingsClient;
 class WebData;
@@ -53,7 +52,6 @@ class WebURL;
 class WebURLLoader;
 class WebView;
 enum class WebTreeScopeType;
-struct WebAssociatedURLLoaderOptions;
 struct WebConsoleMessage;
 struct WebContentSecurityPolicyViolation;
 struct WebFindOptions;
@@ -705,14 +703,6 @@ class WebLocalFrame : public WebFrame {
   virtual std::unique_ptr<WebURLLoader> CreateURLLoader(
       const WebURLRequest&,
       base::SingleThreadTaskRunner*) = 0;
-
-  // Returns an AssociatedURLLoader that is associated with this frame.  The
-  // loader will, for example, be cancelled when WebFrame::stopLoading is
-  // called.
-  //
-  // FIXME: stopLoading does not yet cancel an associated loader!!
-  virtual WebAssociatedURLLoader* CreateAssociatedURLLoader(
-      const WebAssociatedURLLoaderOptions&) = 0;
 
   // Reload the current document.
   // Note: reload() and reloadWithOverrideURL() will be deprecated.

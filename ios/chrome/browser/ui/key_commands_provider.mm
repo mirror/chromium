@@ -20,10 +20,8 @@
 @implementation KeyCommandsProvider
 
 - (NSArray*)keyCommandsForConsumer:(id<KeyCommandsPlumbing>)consumer
-                        dispatcher:(id<BrowserCommands>)dispatcher
                        editingText:(BOOL)editingText {
   __weak id<KeyCommandsPlumbing> weakConsumer = consumer;
-  __weak id<BrowserCommands> weakDispatcher = dispatcher;
 
   // Block to execute a command from the |tag|.
   void (^execute)(NSInteger) = ^(NSInteger tag) {
@@ -107,7 +105,7 @@
                                      title:l10n_util::GetNSStringWithFixup(
                                                IDS_IOS_TOOLS_MENU_CLOSE_TAB)
                                     action:^{
-                                      [weakDispatcher closeCurrentTab];
+                                      execute(IDC_CLOSE_TAB);
                                     }],
       [UIKeyCommand
           cr_keyCommandWithInput:@"d"

@@ -30,10 +30,7 @@ class CryptAuthApiCallFlowTest
  protected:
   CryptAuthApiCallFlowTest()
       : url_request_context_getter_(new net::TestURLRequestContextGetter(
-            new base::TestSimpleTaskRunner())) {
-    flow_.SetPartialNetworkTrafficAnnotation(
-        PARTIAL_TRAFFIC_ANNOTATION_FOR_TESTS);
-  }
+            new base::TestSimpleTaskRunner())) {}
 
   void SetUp() override {
     // The TestURLFetcherFactory will override the global URLFetcherFactory for

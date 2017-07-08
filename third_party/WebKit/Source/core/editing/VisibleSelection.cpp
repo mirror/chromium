@@ -50,21 +50,20 @@ VisibleSelectionTemplate<Strategy>::VisibleSelectionTemplate()
 
 template <typename Strategy>
 VisibleSelectionTemplate<Strategy>::VisibleSelectionTemplate(
-    const SelectionTemplate<Strategy>& selection,
-    TextGranularity granularity)
+    const SelectionTemplate<Strategy>& selection)
     : base_(selection.Base()),
       extent_(selection.Extent()),
       affinity_(selection.Affinity()),
       selection_type_(kNoSelection),
       is_directional_(selection.IsDirectional()),
-      granularity_(granularity) {
+      granularity_(selection.Granularity()) {
   Validate(granularity_);
 }
 
 template <typename Strategy>
 VisibleSelectionTemplate<Strategy> VisibleSelectionTemplate<Strategy>::Create(
     const SelectionTemplate<Strategy>& selection) {
-  return VisibleSelectionTemplate(selection, selection.Granularity());
+  return VisibleSelectionTemplate(selection);
 }
 
 VisibleSelection CreateVisibleSelection(const SelectionInDOMTree& selection) {
@@ -74,27 +73,6 @@ VisibleSelection CreateVisibleSelection(const SelectionInDOMTree& selection) {
 VisibleSelectionInFlatTree CreateVisibleSelection(
     const SelectionInFlatTree& selection) {
   return VisibleSelectionInFlatTree::Create(selection);
-}
-
-template <typename Strategy>
-VisibleSelectionTemplate<Strategy>
-VisibleSelectionTemplate<Strategy>::CreateWithGranularity(
-    const SelectionTemplate<Strategy>& selection,
-    TextGranularity granularity) {
-  return VisibleSelectionTemplate(selection, granularity);
-}
-
-VisibleSelection CreateVisibleSelectionWithGranularity(
-    const SelectionInDOMTree& selection,
-    TextGranularity granularity) {
-  return VisibleSelection::CreateWithGranularity(selection, granularity);
-}
-
-VisibleSelectionInFlatTree CreateVisibleSelectionWithGranularity(
-    const SelectionInFlatTree& selection,
-    TextGranularity granularity) {
-  return VisibleSelectionInFlatTree::CreateWithGranularity(selection,
-                                                           granularity);
 }
 
 template <typename Strategy>

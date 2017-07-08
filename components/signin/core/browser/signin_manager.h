@@ -74,10 +74,8 @@ class SigninManager : public SigninManagerBase,
                                         const std::string& policy);
 
   // Attempt to sign in this user with a refresh token.
-  // If |refresh_token| is not empty, then SigninManager will add it to the
-  // |token_service_| when the sign-in flow is completed.
   // If non-null, the passed |oauth_fetched_callback| callback is invoked once
-  // sign-in has been completed.
+  // signin has been completed.
   // The callback should invoke SignOut() or CompletePendingSignin() to either
   // continue or cancel the in-process signin.
   virtual void StartSignInWithRefreshToken(
@@ -154,11 +152,7 @@ class SigninManager : public SigninManagerBase,
                          signin_metrics::SignoutDelete signout_delete_metric);
 
  private:
-  enum SigninType {
-    SIGNIN_TYPE_NONE,
-    SIGNIN_TYPE_WITH_REFRESH_TOKEN,
-    SIGNIN_TYPE_WITHOUT_REFRESH_TOKEN
-  };
+  enum SigninType { SIGNIN_TYPE_NONE, SIGNIN_TYPE_WITH_REFRESH_TOKEN };
 
   std::string SigninTypeToString(SigninType type);
   friend class FakeSigninManager;

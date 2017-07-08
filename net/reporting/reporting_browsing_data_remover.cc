@@ -23,10 +23,8 @@ void ReportingBrowsingDataRemover::RemoveBrowsingData(
   bool remove_clients = (data_type_mask & DATA_TYPE_CLIENTS) != 0;
 
   if (origin_filter.is_null()) {
-    if (remove_reports) {
-      cache->RemoveAllReports(
-          ReportingReport::Outcome::ERASED_BROWSING_DATA_REMOVED);
-    }
+    if (remove_reports)
+      cache->RemoveAllReports();
     if (remove_clients)
       cache->RemoveAllClients();
     return;
@@ -42,9 +40,7 @@ void ReportingBrowsingDataRemover::RemoveBrowsingData(
         reports_to_remove.push_back(report);
     }
 
-    cache->RemoveReports(
-        reports_to_remove,
-        ReportingReport::Outcome::ERASED_BROWSING_DATA_REMOVED);
+    cache->RemoveReports(reports_to_remove);
   }
 
   if (remove_clients) {

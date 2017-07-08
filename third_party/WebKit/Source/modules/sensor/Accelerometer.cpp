@@ -11,8 +11,7 @@ namespace blink {
 Accelerometer* Accelerometer::Create(ExecutionContext* execution_context,
                                      const SensorOptions& options,
                                      ExceptionState& exception_state) {
-  return new Accelerometer(execution_context, options, exception_state,
-                           SensorType::ACCELEROMETER);
+  return new Accelerometer(execution_context, options, exception_state);
 }
 
 // static
@@ -23,9 +22,11 @@ Accelerometer* Accelerometer::Create(ExecutionContext* execution_context,
 
 Accelerometer::Accelerometer(ExecutionContext* execution_context,
                              const SensorOptions& options,
-                             ExceptionState& exception_state,
-                             SensorType sensor_type)
-    : Sensor(execution_context, options, exception_state, sensor_type) {}
+                             ExceptionState& exception_state)
+    : Sensor(execution_context,
+             options,
+             exception_state,
+             SensorType::ACCELEROMETER) {}
 
 double Accelerometer::x(bool& is_null) const {
   return ReadingValue(0, is_null);

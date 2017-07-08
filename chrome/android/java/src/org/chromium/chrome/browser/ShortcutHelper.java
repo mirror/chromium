@@ -37,6 +37,7 @@ import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.blink_public.platform.WebDisplayMode;
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.webapps.ChromeWebApkHost;
 import org.chromium.chrome.browser.webapps.WebApkInfo;
 import org.chromium.chrome.browser.webapps.WebappActivity;
 import org.chromium.chrome.browser.webapps.WebappAuthenticator;
@@ -530,6 +531,7 @@ public class ShortcutHelper {
      */
     @CalledByNative
     private static String queryWebApkPackage(String url) {
+        if (!ChromeWebApkHost.isEnabled()) return null;
         return WebApkValidator.queryWebApkPackage(ContextUtils.getApplicationContext(), url);
     }
 

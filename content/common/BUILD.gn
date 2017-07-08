@@ -20,10 +20,7 @@ if (is_mac) {
 buildflag_header("features") {
   header = "features.h"
 
-  flags = [
-    "USE_EXTERNAL_POPUP_MENU=$use_external_popup_menu",
-    "ALLOW_CRITICAL_MEMORY_PRESSURE_HANDLING_IN_FOREGROUND=$allow_critical_memory_pressure_handling_in_foreground",
-  ]
+  flags = [ "USE_EXTERNAL_POPUP_MENU=$use_external_popup_menu" ]
 }
 
 source_set("common") {
@@ -232,6 +229,7 @@ source_set("common") {
     "media/video_capture.h",
     "message_port.cc",
     "message_port.h",
+    "mutable_network_traffic_annotation_tag_struct_traits.h",
     "navigation_gesture.h",
     "navigation_params.cc",
     "navigation_params.h",
@@ -280,6 +278,10 @@ source_set("common") {
     "resize_params.h",
     "resource_messages.cc",
     "resource_messages.h",
+    "resource_request.cc",
+    "resource_request.h",
+    "resource_request_completion_status.cc",
+    "resource_request_completion_status.h",
     "sandbox_init_mac.cc",
     "sandbox_init_mac.h",
     "sandbox_init_win.cc",
@@ -346,6 +348,7 @@ source_set("common") {
     "url_schemes.cc",
     "url_schemes.h",
     "user_agent.cc",
+    "utility_messages.h",
     "view_message_enums.h",
     "view_messages.h",
     "worker_messages.h",
@@ -378,7 +381,6 @@ source_set("common") {
     "//components/tracing:startup_tracing",
     "//content:resources",
     "//content/app/resources",
-    "//content/public/common:interfaces",
     "//content/public/common:service_names",
     "//device/base/synchronization",
     "//device/bluetooth",
@@ -445,10 +447,7 @@ source_set("common") {
   libs = []
   ldflags = []
 
-  allow_circular_includes_from = [
-    ":mojo_bindings",
-    "//content/public/common:interfaces",
-  ]
+  allow_circular_includes_from = [ ":mojo_bindings" ]
 
   if (is_android && use_seccomp_bpf) {
     set_sources_assignment_filter([])
@@ -611,7 +610,9 @@ mojom("mojo_bindings") {
     "media/media_devices.mojom",
     "media/renderer_audio_output_stream_factory.mojom",
     "memory_coordinator.mojom",
+    "mutable_network_traffic_annotation_tag.mojom",
     "native_types.mojom",
+    "network_service.mojom",
     "push_messaging.mojom",
     "render_frame_message_filter.mojom",
     "render_message_filter.mojom",
@@ -625,6 +626,8 @@ mojom("mojo_bindings") {
     "service_worker/service_worker_provider_interfaces.mojom",
     "service_worker/service_worker_types.mojom",
     "storage_partition_service.mojom",
+    "url_loader.mojom",
+    "url_loader_factory.mojom",
     "video_capture.mojom",
     "worker_url_loader_factory_provider.mojom",
   ]

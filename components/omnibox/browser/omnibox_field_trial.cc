@@ -103,10 +103,9 @@ const base::Feature kUIExperimentMaxAutocompleteMatches{
     "OmniboxUIExperimentMaxAutocompleteMatches",
     base::FEATURE_DISABLED_BY_DEFAULT};
 
-// Feature used for eliding the suggestion URL after the host as a UI
-// experiment.
-const base::Feature kUIExperimentElideSuggestionUrlAfterHost{
-    "OmniboxUIExperimentElideSuggestionUrlAfterHost",
+// Feature used for hiding the suggestion URL path as a UI experiment.
+const base::Feature kUIExperimentHideSuggestionUrlPath{
+    "OmniboxUIExperimentHideSuggestionUrlPath",
     base::FEATURE_DISABLED_BY_DEFAULT};
 
 // Feature used for hiding the suggestion URL scheme as a UI experiment.

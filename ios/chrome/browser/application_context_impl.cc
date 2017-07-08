@@ -31,6 +31,7 @@
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
 #include "components/translate/core/browser/translate_download_manager.h"
+#include "components/ukm/public/ukm_recorder.h"
 #include "components/ukm/ukm_service.h"
 #include "components/update_client/configurator.h"
 #include "components/update_client/update_query_params.h"
@@ -55,7 +56,6 @@
 #include "net/log/net_log_capture_mode.h"
 #include "net/socket/client_socket_pool_manager.h"
 #include "net/url_request/url_request_context_getter.h"
-#include "services/metrics/public/cpp/ukm_recorder.h"
 
 ApplicationContextImpl::ApplicationContextImpl(
     base::SequencedTaskRunner* local_state_task_runner,
@@ -67,7 +67,9 @@ ApplicationContextImpl::ApplicationContextImpl(
   DCHECK(!GetApplicationContext());
   SetApplicationContext(this);
 
-  net_log_.reset(new net_log::ChromeNetLog());
+  net_log_.reset(new net_log::ChromeNetLog(
+      base::FilePath(), net::NetLogCaptureMode::Default(),
+      command_line.GetCommandLineString(), GetChannelString()));
 
   SetApplicationLocale(locale);
 

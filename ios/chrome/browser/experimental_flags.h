@@ -66,6 +66,9 @@ bool IsPageIconForDowngradedHTTPSEnabled();
 // Whether password generation is enabled.
 bool IsPasswordGenerationEnabled();
 
+// Whether the Payment Request API is enabled or not.
+bool IsPaymentRequestEnabled();
+
 // Whether the Physical Web feature is enabled.
 bool IsPhysicalWebEnabled();
 

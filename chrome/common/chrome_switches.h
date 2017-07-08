@@ -252,7 +252,6 @@ extern const char kForceShowUpdateMenuItemCustomSummary[];
 extern const char kMarketUrlForTesting[];
 extern const char kNtpSwitchToExistingTab[];
 extern const char kProgressBarAnimation[];
-extern const char kSearchProviderLogoURL[];
 extern const char kTabManagementExperimentTypeDisabled[];
 extern const char kTabManagementExperimentTypeElderberry[];
 extern const char kWebApkServerUrl[];
@@ -273,7 +272,6 @@ extern const char kOpenAsh[];
 extern const char kHelp[];
 extern const char kHelpShort[];
 extern const char kPasswordStore[];
-extern const char kEnableEncryptionSelection[];
 extern const char kWmClass[];
 #endif
 

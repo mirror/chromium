@@ -2,11 +2,5 @@ include_rules = [
   "+components/keyed_service/core",
   "+components/metrics",
   "+components/machine_intelligence",
-  "+services/metrics/public",
+  "+components/ukm",
 ]
-
-specific_include_rules = {
-  "translate_ranker_impl_unittest\.cc": [
-    "+components/ukm",
-  ]
-}

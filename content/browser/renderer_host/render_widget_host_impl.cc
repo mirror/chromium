@@ -336,8 +336,6 @@ RenderWidgetHostImpl::RenderWidgetHostImpl(RenderWidgetHostDelegate* delegate,
 
   input_router_.reset(new LegacyInputRouterImpl(
       process_, this, this, routing_id_, GetInputRouterConfigForPlatform()));
-  legacy_widget_input_handler_ = base::MakeUnique<LegacyIPCWidgetInputHandler>(
-      static_cast<LegacyInputRouterImpl*>(input_router_.get()));
 
   touch_emulator_.reset();
 
@@ -593,7 +591,9 @@ bool RenderWidgetHostImpl::OnMessageReceived(const IPC::Message &msg) {
 }
 
 bool RenderWidgetHostImpl::Send(IPC::Message* msg) {
-  DCHECK(IPC_MESSAGE_ID_CLASS(msg->type()) != InputMsgStart);
+  if (IPC_MESSAGE_ID_CLASS(msg->type()) == InputMsgStart)
+    return input_router_->SendInput(base::WrapUnique(msg));
+
   return process_->Send(msg);
 }
 
@@ -814,7 +814,7 @@ void RenderWidgetHostImpl::SetPageFocus(bool focused) {
       touch_emulator_->CancelTouch();
   }
 
-  GetWidgetInputHandler()->SetFocus(focused);
+  Send(new InputMsg_SetFocus(routing_id_, focused));
 
   // Also send page-level focus state to other SiteInstances involved in
   // rendering the current FrameTree.
@@ -826,7 +826,7 @@ void RenderWidgetHostImpl::LostCapture() {
   if (touch_emulator_)
     touch_emulator_->CancelTouch();
 
-  GetWidgetInputHandler()->MouseCaptureLost();
+  Send(new InputMsg_MouseCaptureLost(routing_id_));
 
   if (delegate_)
     delegate_->LostCapture(this);
@@ -1303,7 +1303,8 @@ void RenderWidgetHostImpl::ForwardKeyboardEventWithCommands(
   // InputMsg_HandleInputEvent is, but has to be sent first.
   // https://crbug.com/684298
   if (commands && !commands->empty()) {
-    GetWidgetInputHandler()->SetEditCommandsForNextKeyEvent(*commands);
+    Send(
+        new InputMsg_SetEditCommandsForNextKeyEvent(GetRoutingID(), *commands));
   }
   input_router_->SendKeyboardEvent(key_event_with_latency);
 }
@@ -1335,7 +1336,7 @@ void RenderWidgetHostImpl::ShowContextMenuAtPoint(
 }
 
 void RenderWidgetHostImpl::SendCursorVisibilityState(bool is_visible) {
-  GetWidgetInputHandler()->CursorVisibilityChanged(is_visible);
+  Send(new InputMsg_CursorVisibilityChange(GetRoutingID(), is_visible));
 }
 
 int64_t RenderWidgetHostImpl::GetLatencyComponentId() const {
@@ -1477,10 +1478,6 @@ void RenderWidgetHostImpl::SetCursor(const CursorInfo& cursor_info) {
   WebCursor cursor;
   cursor.InitFromCursorInfo(cursor_info);
   SetCursor(cursor);
-}
-
-mojom::WidgetInputHandler* RenderWidgetHostImpl::GetWidgetInputHandler() {
-  return legacy_widget_input_handler_.get();
 }
 
 void RenderWidgetHostImpl::NotifyScreenInfoChanged() {
@@ -1693,8 +1690,6 @@ void RenderWidgetHostImpl::RendererExited(base::TerminationStatus status,
   // destroy the aura window, which may dispatch a synthetic mouse move.)
   input_router_.reset(new LegacyInputRouterImpl(
       process_, this, this, routing_id_, GetInputRouterConfigForPlatform()));
-  legacy_widget_input_handler_ = base::MakeUnique<LegacyIPCWidgetInputHandler>(
-      static_cast<LegacyInputRouterImpl*>(input_router_.get()));
 
   synthetic_gesture_controller_.reset();
 
@@ -1723,31 +1718,32 @@ void RenderWidgetHostImpl::NotifyTextDirection() {
 
 void RenderWidgetHostImpl::ImeSetComposition(
     const base::string16& text,
-    const std::vector<ui::CompositionUnderline>& underlines,
+    const std::vector<blink::WebCompositionUnderline>& underlines,
     const gfx::Range& replacement_range,
     int selection_start,
     int selection_end) {
-  GetWidgetInputHandler()->ImeSetComposition(
-      text, underlines, replacement_range, selection_start, selection_end);
+  Send(new InputMsg_ImeSetComposition(
+            GetRoutingID(), text, underlines, replacement_range,
+            selection_start, selection_end));
 }
 
 void RenderWidgetHostImpl::ImeCommitText(
     const base::string16& text,
-    const std::vector<ui::CompositionUnderline>& underlines,
+    const std::vector<blink::WebCompositionUnderline>& underlines,
     const gfx::Range& replacement_range,
     int relative_cursor_pos) {
-  GetWidgetInputHandler()->ImeCommitText(text, underlines, replacement_range,
-                                         relative_cursor_pos);
+  Send(new InputMsg_ImeCommitText(GetRoutingID(), text, underlines,
+                                  replacement_range, relative_cursor_pos));
 }
 
 void RenderWidgetHostImpl::ImeFinishComposingText(bool keep_selection) {
-  GetWidgetInputHandler()->ImeFinishComposingText(keep_selection);
+  Send(new InputMsg_ImeFinishComposingText(GetRoutingID(), keep_selection));
 }
 
 void RenderWidgetHostImpl::ImeCancelComposition() {
-  GetWidgetInputHandler()->ImeSetComposition(
-      base::string16(), std::vector<ui::CompositionUnderline>(),
-      gfx::Range::InvalidRange(), 0, 0);
+  Send(new InputMsg_ImeSetComposition(GetRoutingID(), base::string16(),
+            std::vector<blink::WebCompositionUnderline>(),
+            gfx::Range::InvalidRange(), 0, 0));
 }
 
 void RenderWidgetHostImpl::RejectMouseLockOrUnlockIfNecessary() {
@@ -2358,9 +2354,7 @@ void RenderWidgetHostImpl::OnUnexpectedEventAck(UnexpectedEventAckType type) {
 
 void RenderWidgetHostImpl::OnSyntheticGestureCompleted(
     SyntheticGesture::Result result) {
-  // TODO(dtapuska): Define mojo interface for InputHostMsg's and this will be a
-  // callback for completing InputHostMsg_QueueSyntheticGesture.
-  process_->Send(new InputMsg_SyntheticGestureCompleted(GetRoutingID()));
+  Send(new InputMsg_SyntheticGestureCompleted(GetRoutingID()));
 }
 
 bool RenderWidgetHostImpl::ShouldDropInputEvents() const {
@@ -2369,6 +2363,20 @@ bool RenderWidgetHostImpl::ShouldDropInputEvents() const {
 
 void RenderWidgetHostImpl::SetBackgroundOpaque(bool opaque) {
   Send(new ViewMsg_SetBackgroundOpaque(GetRoutingID(), opaque));
+}
+
+void RenderWidgetHostImpl::ExecuteEditCommand(const std::string& command,
+                                              const std::string& value) {
+  Send(new InputMsg_ExecuteEditCommand(GetRoutingID(), command, value));
+}
+
+void RenderWidgetHostImpl::ScrollFocusedEditableNodeIntoRect(
+    const gfx::Rect& rect) {
+  Send(new InputMsg_ScrollFocusedEditableNodeIntoRect(GetRoutingID(), rect));
+}
+
+void RenderWidgetHostImpl::MoveCaret(const gfx::Point& point) {
+  Send(new InputMsg_MoveCaret(GetRoutingID(), point));
 }
 
 bool RenderWidgetHostImpl::GotResponseToLockMouseRequest(bool allowed) {
@@ -2549,8 +2557,8 @@ void RenderWidgetHostImpl::RequestCompositionUpdates(bool immediate_request,
   if (!immediate_request && monitor_updates == monitoring_composition_info_)
     return;
   monitoring_composition_info_ = monitor_updates;
-  GetWidgetInputHandler()->RequestCompositionUpdates(immediate_request,
-                                                     monitor_updates);
+  Send(new InputMsg_RequestCompositionUpdates(routing_id_, immediate_request,
+                                              monitor_updates));
 }
 
 void RenderWidgetHostImpl::RequestCompositorFrameSink(

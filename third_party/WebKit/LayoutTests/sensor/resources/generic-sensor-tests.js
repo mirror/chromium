@@ -385,10 +385,7 @@ function runGenericSensorTests(sensorType, updateReading, verifyReading) {
                 // next time, the fast sensor (30 Hz) has been notified
                 // for int(30/9) = 3 times.
                 let elapsedUpdates = mockSensor.reading_updates_count() - readingUpdatesCounter;
-                // Approximation because 'slowSensor.onreading' is sometimes
-                // called before 'fastSensor.onreading', in this case
-                // 'fastSensorNotifiedCounter == elapsedUpdates - 1'.
-                assert_approx_equals(fastSensorNotifiedCounter, elapsedUpdates, 1);
+                assert_equals(fastSensorNotifiedCounter, elapsedUpdates);
                 fastSensor.stop();
                 slowSensor.stop();
                 resolve(mockSensor);

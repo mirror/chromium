@@ -11,6 +11,7 @@
 #include "base/command_line.h"
 #include "base/logging.h"
 #include "components/web_restrictions/browser/web_restrictions_mojo_implementation.h"
+#include "content/public/browser/android/content_view_core.h"
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"

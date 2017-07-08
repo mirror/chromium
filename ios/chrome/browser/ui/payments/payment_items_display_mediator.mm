@@ -24,7 +24,7 @@
 // The PaymentRequest object owning an instance of web::PaymentRequest as
 // provided by the page invoking the Payment Request API. This is a weak
 // pointer and should outlive this class.
-@property(nonatomic, assign) payments::PaymentRequest* paymentRequest;
+@property(nonatomic, assign) PaymentRequest* paymentRequest;
 
 @end
 
@@ -32,8 +32,7 @@
 
 @synthesize paymentRequest = _paymentRequest;
 
-- (instancetype)initWithPaymentRequest:
-    (payments::PaymentRequest*)paymentRequest {
+- (instancetype)initWithPaymentRequest:(PaymentRequest*)paymentRequest {
   self = [super init];
   if (self) {
     _paymentRequest = paymentRequest;

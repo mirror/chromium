@@ -145,10 +145,6 @@ views::View* JavaScriptAppModalDialogViews::GetInitiallyFocusedView() {
   return views::DialogDelegate::GetInitiallyFocusedView();
 }
 
-bool JavaScriptAppModalDialogViews::ShouldShowCloseButton() const {
-  return false;
-}
-
 void JavaScriptAppModalDialogViews::WindowClosing() {
   parent_->OnClose();
 }

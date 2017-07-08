@@ -10,7 +10,6 @@
 #include <vector>
 
 #include "base/bind_helpers.h"
-#include "base/command_line.h"
 #include "base/memory/ptr_util.h"
 #include "content/browser/bad_message.h"
 #include "content/browser/media/media_devices_util.h"
@@ -23,7 +22,6 @@
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/common/media_stream_request.h"
 #include "media/audio/audio_system.h"
-#include "media/base/media_switches.h"
 #include "media/base/video_facing.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
@@ -500,21 +498,17 @@ void MediaDevicesDispatcherHost::GotAudioInputEnumeration(
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK_GT(pending_audio_input_capabilities_requests_.size(), 0U);
   DCHECK(current_audio_input_capabilities_.empty());
-  DCHECK_EQ(num_pending_audio_input_parameters_, 0U);
   for (const auto& device_info : enumeration[MEDIA_DEVICE_TYPE_AUDIO_INPUT]) {
     ::mojom::AudioInputDeviceCapabilities capabilities(
-        device_info.device_id,
-        media::AudioParameters::UnavailableDeviceParams());
+        device_info.device_id, media::AudioParameters());
     if (device_info.device_id == default_device_id)
       current_audio_input_capabilities_.insert(
           current_audio_input_capabilities_.begin(), std::move(capabilities));
     else
       current_audio_input_capabilities_.push_back(std::move(capabilities));
   }
-  // No devices or fake devices, no need to read audio parameters.
-  if (current_audio_input_capabilities_.empty() ||
-      base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kUseFakeDeviceForMediaStream)) {
+  // No devices, no need to read audio parameters.
+  if (current_audio_input_capabilities_.empty()) {
     FinalizeGetAudioInputCapabilities();
     return;
   }
@@ -537,10 +531,9 @@ void MediaDevicesDispatcherHost::GotAudioInputParameters(
   DCHECK_GT(current_audio_input_capabilities_.size(), index);
   DCHECK_GT(num_pending_audio_input_parameters_, 0U);
 
-  if (parameters.IsValid())
-    current_audio_input_capabilities_[index].parameters = parameters;
-
-  DCHECK(current_audio_input_capabilities_[index].parameters.IsValid());
+  current_audio_input_capabilities_[index].parameters =
+      parameters.IsValid() ? parameters
+                           : media::AudioParameters::UnavailableDeviceParams();
   if (--num_pending_audio_input_parameters_ == 0U)
     FinalizeGetAudioInputCapabilities();
 }
@@ -548,7 +541,7 @@ void MediaDevicesDispatcherHost::GotAudioInputParameters(
 void MediaDevicesDispatcherHost::FinalizeGetAudioInputCapabilities() {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK_GT(pending_audio_input_capabilities_requests_.size(), 0U);
-  DCHECK_EQ(num_pending_audio_input_parameters_, 0U);
+  DCHECK_EQ(0U, num_pending_audio_input_parameters_);
 
   for (auto& request : pending_audio_input_capabilities_requests_) {
     std::move(request.client_callback)

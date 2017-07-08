@@ -145,6 +145,12 @@ bool WebRemoteFrameImpl::IsViewSourceModeEnabled() const {
   return false;
 }
 
+WebAssociatedURLLoader* WebRemoteFrameImpl::CreateAssociatedURLLoader(
+    const WebAssociatedURLLoaderOptions&) {
+  NOTREACHED();
+  return nullptr;
+}
+
 WebLocalFrame* WebRemoteFrameImpl::CreateLocalChild(
     WebTreeScopeType scope,
     const WebString& name,

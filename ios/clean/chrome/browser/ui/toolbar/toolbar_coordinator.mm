@@ -14,6 +14,8 @@
 #import "ios/shared/chrome/browser/ui/commands/command_dispatcher.h"
 #import "ios/shared/chrome/browser/ui/coordinators/browser_coordinator+internal.h"
 #import "ios/shared/chrome/browser/ui/tools_menu/tools_menu_configuration.h"
+#import "ios/web/public/navigation_manager.h"
+#include "ios/web/public/web_state/web_state.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -54,6 +56,11 @@
                            forSelector:@selector(showToolsMenu)];
   [dispatcher startDispatchingToTarget:self
                            forSelector:@selector(closeToolsMenu)];
+  [dispatcher startDispatchingToTarget:self forSelector:@selector(goBack)];
+  [dispatcher startDispatchingToTarget:self forSelector:@selector(goForward)];
+  [dispatcher startDispatchingToTarget:self forSelector:@selector(reloadPage)];
+  [dispatcher startDispatchingToTarget:self
+                           forSelector:@selector(stopLoadingPage)];
 
   self.mediator.consumer = self.viewController;
   self.mediator.webStateList = &self.browser->web_state_list();
@@ -114,6 +121,30 @@
 - (void)closeToolsMenu {
   [self.toolsMenuCoordinator stop];
   [self removeChildCoordinator:self.toolsMenuCoordinator];
+}
+
+// PLACEHOLDER: These will move to an object that handles navigation.
+#pragma mark - NavigationCommands
+
+- (void)goBack {
+  if (self.webState->GetNavigationManager()->CanGoBack()) {
+    self.webState->GetNavigationManager()->GoBack();
+  }
+}
+
+- (void)goForward {
+  if (self.webState->GetNavigationManager()->CanGoForward()) {
+    self.webState->GetNavigationManager()->GoForward();
+  }
+}
+
+- (void)stopLoadingPage {
+  self.webState->Stop();
+}
+
+- (void)reloadPage {
+  self.webState->GetNavigationManager()->Reload(web::ReloadType::NORMAL,
+                                                false /*check_for_repost*/);
 }
 
 @end

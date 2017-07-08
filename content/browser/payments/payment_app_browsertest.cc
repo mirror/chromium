@@ -84,7 +84,7 @@ class PaymentAppBrowserTest : public ContentBrowserTest {
     ASSERT_EQ("registered", script_result);
   }
 
-  std::vector<int64_t> GetAllPaymentAppRegistrationIDs() {
+  std::map<std::string, int64_t> GetAllPaymentInstrumentRegistrationIDs() {
     base::RunLoop run_loop;
     PaymentAppProvider::PaymentApps apps;
     PaymentAppProvider::GetInstance()->GetAllPaymentApps(
@@ -93,9 +93,12 @@ class PaymentAppBrowserTest : public ContentBrowserTest {
                        &apps));
     run_loop.Run();
 
-    std::vector<int64_t> registrationIds;
+    std::map<std::string, int64_t> registrationIds;
     for (const auto& app_info : apps) {
-      registrationIds.push_back(app_info.second->registration_id);
+      for (const auto& instrument : app_info.second->instruments) {
+        registrationIds.insert(std::pair<std::string, int64_t>(
+            instrument->instrument_key, app_info.second->registration_id));
+      }
     }
 
     return registrationIds;
@@ -167,16 +170,18 @@ class PaymentAppBrowserTest : public ContentBrowserTest {
 IN_PROC_BROWSER_TEST_F(PaymentAppBrowserTest, PaymentAppInvocation) {
   RegisterPaymentApp();
 
-  std::vector<int64_t> registrationIds = GetAllPaymentAppRegistrationIDs();
-  ASSERT_EQ(1U, registrationIds.size());
+  std::map<std::string, int64_t> registrationIds =
+      GetAllPaymentInstrumentRegistrationIDs();
+  ASSERT_EQ(2U, registrationIds.size());
 
   PaymentAppResponsePtr response(InvokePaymentAppWithTestData(
-      registrationIds[0], "basic-card", "basic-card-payment-app-id"));
+      registrationIds.at("basic-card-payment-app-id"), "basic-card",
+      "basic-card-payment-app-id"));
   ASSERT_EQ("test", response->method_name);
 
   ClearStoragePartitionData();
 
-  registrationIds = GetAllPaymentAppRegistrationIDs();
+  registrationIds = GetAllPaymentInstrumentRegistrationIDs();
   ASSERT_EQ(0U, registrationIds.size());
 
   EXPECT_EQ("https://example.com/", PopConsoleString() /* topLevelOrigin */);
@@ -201,18 +206,20 @@ IN_PROC_BROWSER_TEST_F(PaymentAppBrowserTest, PaymentAppInvocation) {
 IN_PROC_BROWSER_TEST_F(PaymentAppBrowserTest, PaymentAppOpenWindowFailed) {
   RegisterPaymentApp();
 
-  std::vector<int64_t> registrationIds = GetAllPaymentAppRegistrationIDs();
-  ASSERT_EQ(1U, registrationIds.size());
+  std::map<std::string, int64_t> registrationIds =
+      GetAllPaymentInstrumentRegistrationIDs();
+  ASSERT_EQ(2U, registrationIds.size());
 
   PaymentAppResponsePtr response(InvokePaymentAppWithTestData(
-      registrationIds[0], "https://bobpay.com", "bobpay-payment-app-id"));
+      registrationIds.at("bobpay-payment-app-id"), "https://bobpay.com",
+      "bobpay-payment-app-id"));
   // InvokePaymentAppCallback returns empty method_name in case of failure, like
   // in PaymentRequestRespondWithObserver::OnResponseRejected.
   ASSERT_EQ("", response->method_name);
 
   ClearStoragePartitionData();
 
-  registrationIds = GetAllPaymentAppRegistrationIDs();
+  registrationIds = GetAllPaymentInstrumentRegistrationIDs();
   ASSERT_EQ(0U, registrationIds.size());
 
   EXPECT_EQ("https://example.com/", PopConsoleString() /* topLevelOrigin */);

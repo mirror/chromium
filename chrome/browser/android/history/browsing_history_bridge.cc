@@ -14,20 +14,18 @@
 #include "base/macros.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/time/time.h"
-#include "chrome/browser/profiles/profile_manager.h"
+#include "chrome/browser/profiles/profile_android.h"
 #include "components/url_formatter/url_formatter.h"
 #include "jni/BrowsingHistoryBridge_jni.h"
 
 const int kMaxQueryCount = 150;
 
-BrowsingHistoryBridge::BrowsingHistoryBridge(JNIEnv* env,
-                                             const JavaParamRef<jobject>& obj,
-                                             bool is_incognito) {
-  Profile* profile = ProfileManager::GetLastUsedProfile();
-  browsing_history_service_.reset(new BrowsingHistoryService(
-      is_incognito ? profile->GetOffTheRecordProfile()
-                   : profile->GetOriginalProfile(),
-      this));
+BrowsingHistoryBridge::BrowsingHistoryBridge(
+    JNIEnv* env,
+    const JavaParamRef<jobject>& obj,
+    jobject j_profile) {
+  Profile* profile = ProfileAndroid::FromProfileAndroid(j_profile);
+  browsing_history_service_.reset(new BrowsingHistoryService(profile, this));
   j_history_service_obj_.Reset(env, obj);
 }
 
@@ -151,8 +149,8 @@ bool RegisterBrowsingHistoryBridge(JNIEnv* env) {
 
 static jlong Init(JNIEnv* env,
                   const JavaParamRef<jobject>& obj,
-                  jboolean is_incognito) {
+                  const JavaParamRef<jobject>& j_profile) {
   BrowsingHistoryBridge* bridge =
-      new BrowsingHistoryBridge(env, obj, is_incognito);
+      new BrowsingHistoryBridge(env, obj, j_profile);
   return reinterpret_cast<intptr_t>(bridge);
 }

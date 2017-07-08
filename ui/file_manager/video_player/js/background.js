@@ -79,10 +79,6 @@ function openVideoPlayerWindow(urls) {
   }.wrap()).then(function(videoPlayer) {
     var appWindow = videoPlayer.rawAppWindow;
 
-    appWindow.onClosed.addListener(function() {
-      chrome.power.releaseKeepAwake();
-    });
-
     if (chrome.test)
       appWindow.contentWindow.loadMockCastExtensionForTest = true;
 

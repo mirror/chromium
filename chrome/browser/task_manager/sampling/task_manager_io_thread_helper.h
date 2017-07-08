@@ -7,10 +7,8 @@
 
 #include <stdint.h>
 
-#include <unordered_map>
+#include <vector>
 
-#include "base/callback.h"
-#include "base/hash.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 
@@ -20,10 +18,9 @@ class URLRequest;
 
 namespace task_manager {
 
-// Identifies the initiator of a network request, either by a (child_id,
-// route_id) tuple, and/or via an OS process id.
-// BytesTransferredKey supports hashing and may be used as an unordered_map key.
-struct BytesTransferredKey {
+// Defines a wrapper of values that will be sent from IO to UI thread upon
+// reception and transmission of bytes notifications.
+struct BytesTransferredParam {
   // The PID of the originating process of the URLRequest, if the request is
   // sent on behalf of another process. Otherwise it's 0.
   int origin_pid;
@@ -36,37 +33,29 @@ struct BytesTransferredKey {
   // to).
   int route_id;
 
-  struct Hasher {
-    size_t operator()(const BytesTransferredKey& key) const;
-  };
-
-  bool operator==(const BytesTransferredKey& other) const;
-};
-
-// This is the entry of the unordered map that tracks bytes transfered by task.
-struct BytesTransferredParam {
   // The number of bytes read.
-  int64_t byte_read_count = 0;
+  int64_t byte_read_count;
 
   // The number of bytes sent.
-  int64_t byte_sent_count = 0;
+  int64_t byte_sent_count;
+
+  BytesTransferredParam(int origin_pid,
+                        int child_id,
+                        int route_id,
+                        int64_t byte_read_count,
+                        int64_t byte_sent_count)
+      : origin_pid(origin_pid),
+        child_id(child_id),
+        route_id(route_id),
+        byte_read_count(byte_read_count),
+        byte_sent_count(byte_sent_count) {}
 };
-
-using BytesTransferredMap = std::unordered_map<BytesTransferredKey,
-                                               BytesTransferredParam,
-                                               BytesTransferredKey::Hasher>;
-
-using BytesTransferredCallback =
-    base::RepeatingCallback<void(BytesTransferredMap)>;
 
 // Defines a utility class used to schedule the creation and removal of the
 // TaskManagerIoThreadHelper on the IO thread.
 class IoThreadHelperManager {
  public:
-  // A callback that executes whenever there is activity that registers that
-  // bytes have been transferred. It is called from task_manager_impl.cc binding
-  // |OnMultipleBytesTranferred|.
-  explicit IoThreadHelperManager(BytesTransferredCallback result_callback);
+  IoThreadHelperManager();
   ~IoThreadHelperManager();
 
  private:
@@ -80,17 +69,21 @@ class TaskManagerIoThreadHelper {
  public:
   // Create and delete the instance of this class. They must be called on the IO
   // thread.
-  static void CreateInstance(BytesTransferredCallback result_callback);
+  static void CreateInstance();
   static void DeleteInstance();
 
-  // This is used to forward the call to update the network bytes with
-  // transferred bytes from the TaskManagerInterface.
-  static void OnRawBytesTransferred(BytesTransferredKey key,
-                                    int64_t bytes_read,
-                                    int64_t bytes_sent);
+  // This is used to forward the call to update the network bytes with read
+  // bytes from the TaskManagerInterface if the new task manager is enabled.
+  static void OnRawBytesRead(const net::URLRequest& request,
+                             int64_t bytes_read);
+
+  // This is used to forward the call to update the network bytes with sent
+  // bytes from the TaskManagerInterface if the new task manager is enabled.
+  static void OnRawBytesSent(const net::URLRequest& request,
+                             int64_t bytes_sent);
 
  private:
-  explicit TaskManagerIoThreadHelper(BytesTransferredCallback result_callback);
+  TaskManagerIoThreadHelper();
   ~TaskManagerIoThreadHelper();
 
   // We gather multiple notifications on the IO thread in one second before a
@@ -99,15 +92,13 @@ class TaskManagerIoThreadHelper {
   void OnMultipleBytesTransferredIO();
 
   // This will update the task manager with the network bytes read.
-  void OnNetworkBytesTransferred(BytesTransferredKey key,
+  void OnNetworkBytesTransferred(const net::URLRequest& request,
                                  int64_t bytes_read,
                                  int64_t bytes_sent);
 
-  // This unordered_map will be filled on IO thread with information about the
-  // number of bytes transferred from URLRequests.
-  BytesTransferredMap bytes_transferred_unordered_map_;
-
-  BytesTransferredCallback result_callback_;
+  // This buffer will be filled on IO thread with information about the number
+  // of bytes transferred from URLRequests.
+  std::vector<BytesTransferredParam> bytes_transferred_buffer_;
 
   base::WeakPtrFactory<TaskManagerIoThreadHelper> weak_factory_;
 

@@ -712,10 +712,8 @@ void OwnerSettingsServiceChromeOS::StorePendingChanges() {
                      &settings);
   has_pending_fixups_ = false;
 
-  scoped_refptr<base::TaskRunner> task_runner =
-      base::CreateTaskRunnerWithTraits({base::MayBlock()});
   bool rv = AssembleAndSignPolicyAsync(
-      task_runner.get(), std::move(policy),
+      content::BrowserThread::GetBlockingPool(), std::move(policy),
       base::Bind(&OwnerSettingsServiceChromeOS::OnPolicyAssembledAndSigned,
                  store_settings_factory_.GetWeakPtr()));
   if (!rv)

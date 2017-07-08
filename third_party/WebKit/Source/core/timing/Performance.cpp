@@ -146,11 +146,7 @@ PerformanceNavigationTiming* Performance::CreateNavigationTimingInstance() {
   ResourceTimingInfo* info = document_loader->GetNavigationTimingInfo();
   if (!info)
     return nullptr;
-  PerformanceServerTimingVector serverTiming =
-      PerformanceServerTiming::ParseServerTiming(
-          *info, PerformanceServerTiming::ShouldAllowTimingDetails::Yes);
-  return new PerformanceNavigationTiming(GetFrame(), info, TimeOrigin(),
-                                         serverTiming);
+  return new PerformanceNavigationTiming(GetFrame(), info, TimeOrigin());
 }
 
 void Performance::UpdateLongTaskInstrumentation() {

@@ -7,9 +7,7 @@ package org.chromium.chrome.browser.history;
 import android.os.Bundle;
 
 import org.chromium.base.VisibleForTesting;
-import org.chromium.chrome.browser.IntentHandler;
 import org.chromium.chrome.browser.SnackbarActivity;
-import org.chromium.chrome.browser.util.IntentUtils;
 
 /**
  * Activity for displaying the browsing history manager.
@@ -21,9 +19,7 @@ public class HistoryActivity extends SnackbarActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        boolean isIncognito = IntentUtils.safeGetBooleanExtra(
-                getIntent(), IntentHandler.EXTRA_INCOGNITO_MODE, false);
-        mHistoryManager = new HistoryManager(this, true, getSnackbarManager(), isIncognito);
+        mHistoryManager = new HistoryManager(this, true, getSnackbarManager());
         setContentView(mHistoryManager.getView());
     }
 

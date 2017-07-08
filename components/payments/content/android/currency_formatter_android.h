@@ -18,6 +18,9 @@ class CurrencyFormatter;
 // Forwarding calls to payments::CurrencyFormatter.
 class CurrencyFormatterAndroid {
  public:
+  // Registers the JNI bindings for this class.
+  static bool Register(JNIEnv* env);
+
   CurrencyFormatterAndroid(
       JNIEnv* env,
       jobject jcaller,

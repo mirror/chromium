@@ -8,7 +8,6 @@
 
 #include "base/ios/block_types.h"
 #include "base/ios/ios_util.h"
-#include "base/json/json_reader.h"
 #import "base/mac/bind_objc_block.h"
 #include "base/mac/foundation_util.h"
 #include "base/memory/ptr_util.h"
@@ -78,8 +77,9 @@ NSString* kAbortMessage = @"The payment request was aborted.";
 NSString* kCancelMessage = @"The payment request was canceled.";
 
 struct PendingPaymentResponse {
-  std::string methodName;
-  std::string stringifiedDetails;
+  autofill::CreditCard creditCard;
+  base::string16 verificationCode;
+  autofill::AutofillProfile billingAddress;
   autofill::AutofillProfile shippingAddress;
   autofill::AutofillProfile contactAddress;
 };
@@ -99,7 +99,7 @@ struct PendingPaymentResponse {
   // invoking the PaymentRequest API. Also caches credit cards and addresses
   // provided by the _personalDataManager and manages selected ones for the
   // current PaymentRequest flow.
-  std::unique_ptr<payments::PaymentRequest> _paymentRequest;
+  std::unique_ptr<PaymentRequest> _paymentRequest;
 
   // WebState for the tab this object is attached to.
   web::WebState* _webState;
@@ -409,7 +409,7 @@ struct PendingPaymentResponse {
     return YES;
   }
 
-  _paymentRequest = base::MakeUnique<payments::PaymentRequest>(
+  _paymentRequest = base::MakeUnique<PaymentRequest>(
       webPaymentRequest, _browserState, _personalDataManager, self);
 
   return YES;
@@ -658,13 +658,8 @@ struct PendingPaymentResponse {
 
 #pragma mark - PaymentRequestUIDelegate
 
-- (void)
-requestFullCreditCard:(const autofill::CreditCard&)creditCard
-       resultDelegate:
-           (base::WeakPtr<autofill::payments::FullCardRequest::ResultDelegate>)
-               resultDelegate {
-  [_paymentRequestCoordinator requestFullCreditCard:creditCard
-                                     resultDelegate:resultDelegate];
+- (void)openFullCardRequestUI {
+  [_paymentRequestCoordinator sendPaymentResponse];
 }
 
 #pragma mark - PaymentRequestCoordinatorDelegate methods
@@ -688,10 +683,19 @@ requestFullCreditCard:(const autofill::CreditCard&)creditCard
 }
 
 - (void)paymentRequestCoordinator:(PaymentRequestCoordinator*)coordinator
-         didReceiveFullMethodName:(const std::string&)methodName
-               stringifiedDetails:(const std::string&)stringifiedDetails {
-  _pendingPaymentResponse.methodName = methodName;
-  _pendingPaymentResponse.stringifiedDetails = stringifiedDetails;
+    didCompletePaymentRequestWithCard:(const autofill::CreditCard&)card
+                     verificationCode:(const base::string16&)verificationCode {
+  _pendingPaymentResponse.creditCard = card;
+  _pendingPaymentResponse.verificationCode = verificationCode;
+
+  DCHECK(!card.billing_address_id().empty());
+  autofill::AutofillProfile* billingAddress =
+      autofill::PersonalDataManager::GetProfileFromProfilesByGUID(
+          card.billing_address_id(), _paymentRequest->billing_profiles());
+  DCHECK(billingAddress);
+  _pendingPaymentResponse.billingAddress = *billingAddress;
+  _addressNormalizationManager->StartNormalizingAddress(
+      &_pendingPaymentResponse.billingAddress);
 
   if (_paymentRequest->request_shipping()) {
     // TODO(crbug.com/602666): User should get here only if they have selected
@@ -725,10 +729,24 @@ requestFullCreditCard:(const autofill::CreditCard&)creditCard
 - (void)paymentRequestAddressNormalizationDidComplete {
   web::PaymentResponse paymentResponse;
 
+  // If the merchant specified the card network as part of the "basic-card"
+  // payment method, return "basic-card" as the method_name. Otherwise, return
+  // the name of the network directly.
+  std::string issuer_network = autofill::data_util::GetPaymentRequestData(
+                                   _pendingPaymentResponse.creditCard.network())
+                                   .basic_card_issuer_network;
   paymentResponse.method_name =
-      base::ASCIIToUTF16(_pendingPaymentResponse.methodName);
+      _paymentRequest->basic_card_specified_networks().find(issuer_network) !=
+              _paymentRequest->basic_card_specified_networks().end()
+          ? base::ASCIIToUTF16("basic-card")
+          : base::ASCIIToUTF16(issuer_network);
 
-  paymentResponse.details = _pendingPaymentResponse.stringifiedDetails;
+  paymentResponse.details =
+      payments::data_util::GetBasicCardResponseFromAutofillCreditCard(
+          _pendingPaymentResponse.creditCard,
+          _pendingPaymentResponse.verificationCode,
+          _pendingPaymentResponse.billingAddress,
+          GetApplicationContext()->GetApplicationLocale());
 
   if (_paymentRequest->request_shipping()) {
     paymentResponse.shipping_address =

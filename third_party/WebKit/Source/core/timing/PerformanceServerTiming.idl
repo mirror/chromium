@@ -6,8 +6,7 @@
 
 [
     RuntimeEnabled=ServerTiming
-] interface PerformanceServerTiming {
+] interface PerformanceServerTiming : PerformanceEntry {
     readonly attribute DOMString metric;
-    readonly attribute double value;
     readonly attribute DOMString description;
 };

@@ -13,13 +13,13 @@ import android.os.Bundle;
 interface IChildProcessTest {
   // Called by the service when onConnectionSetup is received. Echos back the parameters received
   // so far.
-  oneway void onConnectionSetup(boolean serviceCreatedCalled, in Bundle serviceBundle, in Bundle connectionBundle);
+  void onConnectionSetup(boolean serviceCreatedCalled, in Bundle serviceBundle, in Bundle connectionBundle);
 
-  oneway void onLoadNativeLibrary(boolean loadedSuccessfully);
+  void onLoadNativeLibrary(boolean loadedSuccessfully);
 
-  oneway void onBeforeMain(in String[] commandLine);
+  void onBeforeMain(in String[] commandLine);
 
-  oneway void onRunMain();
+  void onRunMain();
 
-  oneway void onDestroy();
+  void onDestroy();
 }

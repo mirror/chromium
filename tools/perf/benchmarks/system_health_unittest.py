@@ -11,8 +11,7 @@ from page_sets.system_health import system_health_stories
 from page_sets.system_health import system_health_story
 
 from telemetry import benchmark as benchmark_module
-
-from py_utils import discover
+from telemetry.core import discover
 
 
 def _GetAllSystemHealthBenchmarks():

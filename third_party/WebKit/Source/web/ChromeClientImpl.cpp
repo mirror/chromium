@@ -798,16 +798,6 @@ DOMWindow* ChromeClientImpl::PagePopupWindowForTesting() const {
   return web_view_->PagePopupWindow();
 }
 
-void ChromeClientImpl::SetBrowserControlsState(float height,
-                                               bool shrinks_layout) {
-  WebSize size = web_view_->Size();
-  if (shrinks_layout)
-    size.height -= height;
-
-  web_view_->ResizeWithBrowserControls(
-      size, height, shrinks_layout);
-}
-
 bool ChromeClientImpl::ShouldOpenModalDialogDuringPageDismissal(
     LocalFrame& frame,
     DialogType dialog_type,
@@ -1077,6 +1067,22 @@ void ChromeClientImpl::RegisterViewportLayers() const {
 
 void ChromeClientImpl::DidUpdateBrowserControls() const {
   web_view_->DidUpdateBrowserControls();
+}
+
+CompositorWorkerProxyClient*
+ChromeClientImpl::CreateCompositorWorkerProxyClient(LocalFrame* frame) {
+  WebLocalFrameImpl* web_frame = WebLocalFrameImpl::FromFrame(frame);
+  return web_frame->LocalRoot()
+      ->FrameWidget()
+      ->CreateCompositorWorkerProxyClient();
+}
+
+AnimationWorkletProxyClient*
+ChromeClientImpl::CreateAnimationWorkletProxyClient(LocalFrame* frame) {
+  WebLocalFrameImpl* web_frame = WebLocalFrameImpl::FromFrame(frame);
+  return web_frame->LocalRoot()
+      ->FrameWidget()
+      ->CreateAnimationWorkletProxyClient();
 }
 
 void ChromeClientImpl::RegisterPopupOpeningObserver(

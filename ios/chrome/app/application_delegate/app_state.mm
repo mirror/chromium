@@ -23,7 +23,6 @@
 #import "ios/chrome/app/main_application_delegate.h"
 #import "ios/chrome/app/safe_mode/safe_mode_coordinator.h"
 #import "ios/chrome/app/safe_mode_crashing_modules_config.h"
-#import "ios/chrome/app/startup/content_suggestions_scheduler_notifications.h"
 #include "ios/chrome/browser/application_context.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #include "ios/chrome/browser/chrome_constants.h"
@@ -308,9 +307,6 @@ initWithBrowserLauncher:(id<BrowserLauncher>)browserLauncher
     [appNavigation presentSignedInAccountsViewControllerForBrowserState:
                        currentBrowserState];
   }
-
-  [ContentSuggestionsSchedulerNotifications
-      notifyForeground:currentBrowserState];
 
   // If the current browser state is not OTR, check for cookie loss.
   if (currentBrowserState && !currentBrowserState->IsOffTheRecord() &&

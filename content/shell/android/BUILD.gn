@@ -41,6 +41,7 @@ shared_library("libcontent_shell_content_view") {
   if (is_component_build) {
     deps += [
       "//device/gamepad",
+      "//device/generic_sensor",
       "//device/sensors",
       "//media/midi",
     ]
@@ -110,7 +111,6 @@ android_library("content_shell_apk_java") {
     "//content/public/android:content_java",
     "//media/capture/video/android:capture_java",
     "//net/android:net_java",
-    "//third_party/jsr-305:jsr_305_javalib",
     "//ui/android:ui_java",
   ]
 
@@ -290,6 +290,7 @@ if (current_cpu != "x64") {
     if (is_component_build) {
       deps += [
         "//device/gamepad",
+        "//device/generic_sensor",
         "//device/sensors",
         "//media/midi",
       ]

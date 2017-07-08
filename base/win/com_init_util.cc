@@ -14,8 +14,6 @@ namespace win {
 
 namespace {
 
-const char kComNotInitialized[] = "COM is not initialized on this thread.";
-
 // Derived from combase.dll.
 struct OleTlsData {
   enum ApartmentFlags {
@@ -56,7 +54,7 @@ ComApartmentType GetComApartmentTypeForThread() {
 
 }  // namespace
 
-void AssertComInitialized(const char* message) {
+void AssertComInitialized() {
   if (GetComApartmentTypeForThread() != ComApartmentType::NONE)
     return;
 
@@ -68,7 +66,7 @@ void AssertComInitialized(const char* message) {
     return;
   }
 
-  NOTREACHED() << (message ? message : kComNotInitialized);
+  NOTREACHED();
 }
 
 void AssertComApartmentType(ComApartmentType apartment_type) {

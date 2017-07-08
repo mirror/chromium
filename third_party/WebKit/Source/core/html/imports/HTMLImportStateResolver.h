@@ -38,7 +38,7 @@ namespace blink {
 
 class HTMLImport;
 
-class HTMLImportStateResolver final {
+class HTMLImportStateResolver {
   STACK_ALLOCATED();
 
  public:

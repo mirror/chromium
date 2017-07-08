@@ -96,8 +96,8 @@ Polymer({
         // "Allowed" vs "Blocked".
         this.browserProxy.setDefaultValueForContentType(
             this.category,
-            this.categoryEnabled ? settings.ContentSetting.ALLOW :
-                                   settings.ContentSetting.BLOCK);
+            this.categoryEnabled ? settings.PermissionValues.ALLOW :
+                                   settings.PermissionValues.BLOCK);
         break;
       case settings.ContentSettingsTypes.AUTOMATIC_DOWNLOADS:
       case settings.ContentSettingsTypes.CAMERA:
@@ -109,27 +109,27 @@ Polymer({
         // "Ask" vs "Blocked".
         this.browserProxy.setDefaultValueForContentType(
             this.category,
-            this.categoryEnabled ? settings.ContentSetting.ASK :
-                                   settings.ContentSetting.BLOCK);
+            this.categoryEnabled ? settings.PermissionValues.ASK :
+                                   settings.PermissionValues.BLOCK);
         break;
       case settings.ContentSettingsTypes.COOKIES:
         // This category is tri-state: "Allow", "Block", "Keep data until
         // browser quits".
-        var value = settings.ContentSetting.BLOCK;
+        var value = settings.PermissionValues.BLOCK;
         if (this.categoryEnabled) {
           value = this.subControlParams_.value ?
-              settings.ContentSetting.SESSION_ONLY :
-              settings.ContentSetting.ALLOW;
+              settings.PermissionValues.SESSION_ONLY :
+              settings.PermissionValues.ALLOW;
         }
         this.browserProxy.setDefaultValueForContentType(this.category, value);
         break;
       case settings.ContentSettingsTypes.PLUGINS:
         // This category is tri-state: "Allow", "Block", "Ask before running".
-        var value = settings.ContentSetting.BLOCK;
+        var value = settings.PermissionValues.BLOCK;
         if (this.categoryEnabled) {
           value = this.subControlParams_.value ?
-              settings.ContentSetting.IMPORTANT_CONTENT :
-              settings.ContentSetting.ALLOW;
+              settings.PermissionValues.IMPORTANT_CONTENT :
+              settings.PermissionValues.ALLOW;
         }
         this.browserProxy.setDefaultValueForContentType(this.category, value);
         break;
@@ -174,11 +174,11 @@ Polymer({
     if (this.category == settings.ContentSettingsTypes.PLUGINS ||
         this.category == settings.ContentSettingsTypes.COOKIES) {
       if (this.category == settings.ContentSettingsTypes.PLUGINS &&
-          update.setting == settings.ContentSetting.IMPORTANT_CONTENT) {
+          update.setting == settings.PermissionValues.IMPORTANT_CONTENT) {
         subPrefValue = true;
       } else if (
           this.category == settings.ContentSettingsTypes.COOKIES &&
-          update.setting == settings.ContentSetting.SESSION_ONLY) {
+          update.setting == settings.PermissionValues.SESSION_ONLY) {
         subPrefValue = true;
       }
     }
@@ -200,14 +200,14 @@ Polymer({
           // Flash only shows ALLOW or BLOCK descriptions on the toggle.
           var setting = defaultValue.setting;
           if (this.category == settings.ContentSettingsTypes.PLUGINS &&
-              setting == settings.ContentSetting.IMPORTANT_CONTENT) {
-            setting = settings.ContentSetting.ALLOW;
+              setting == settings.PermissionValues.IMPORTANT_CONTENT) {
+            setting = settings.PermissionValues.ALLOW;
           } else if (
               this.category == settings.ContentSettingsTypes.COOKIES &&
-              setting == settings.ContentSetting.SESSION_ONLY) {
-            setting = settings.ContentSetting.ALLOW;
+              setting == settings.PermissionValues.SESSION_ONLY) {
+            setting = settings.PermissionValues.ALLOW;
           }
-          var categoryEnabled = setting != settings.ContentSetting.BLOCK;
+          var categoryEnabled = setting != settings.PermissionValues.BLOCK;
           this.optionLabel_ =
               categoryEnabled ? this.toggleOnLabel : this.toggleOffLabel;
         }.bind(this));

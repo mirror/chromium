@@ -95,14 +95,12 @@ PendingDecode::~PendingDecode() = default;
 MediaCodecVideoDecoder::MediaCodecVideoDecoder(
     scoped_refptr<base::SingleThreadTaskRunner> gpu_task_runner,
     base::Callback<gpu::GpuCommandBufferStub*()> get_stub_cb,
-    VideoFrameFactory::OutputWithReleaseMailboxCB output_cb,
     DeviceInfo* device_info,
     AVDACodecAllocator* codec_allocator,
     std::unique_ptr<AndroidVideoSurfaceChooser> surface_chooser,
     std::unique_ptr<VideoFrameFactory> video_frame_factory)
     : state_(State::kBeforeSurfaceInit),
       lazy_init_pending_(true),
-      output_cb_(output_cb),
       gpu_task_runner_(gpu_task_runner),
       get_stub_cb_(get_stub_cb),
       codec_allocator_(codec_allocator),
@@ -147,6 +145,8 @@ void MediaCodecVideoDecoder::Initialize(const VideoDecoderConfig& config,
 
   codec_config_->initial_expected_coded_size = config.coded_size();
   // TODO(watk): Parse config.extra_data().
+
+  output_cb_ = output_cb;
 
   // We defer initialization of the Surface and MediaCodec until we
   // receive a Decode() call to avoid consuming those resources  in cases where

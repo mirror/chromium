@@ -10,7 +10,6 @@
 
 #include "base/base64.h"
 #include "base/stl_util.h"
-#include "base/strings/string_piece.h"
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
 #include "net/base/escape.h"
@@ -40,13 +39,14 @@ bool DataURL::Parse(const GURL& url, std::string* mime_type,
   if (comma == end)
     return false;
 
-  std::vector<base::StringPiece> meta_data =
-      base::SplitStringPiece(base::StringPiece(after_colon, comma), ";",
-                             base::TRIM_WHITESPACE, base::SPLIT_WANT_ALL);
+  std::vector<std::string> meta_data =
+      base::SplitString(base::StringPiece(after_colon, comma), ";",
+                        base::TRIM_WHITESPACE, base::SPLIT_WANT_ALL);
 
-  auto iter = meta_data.cbegin();
-  if (iter != meta_data.cend()) {
-    *mime_type = base::ToLowerASCII(*iter);
+  std::vector<std::string>::iterator iter = meta_data.begin();
+  if (iter != meta_data.end()) {
+    mime_type->swap(*iter);
+    *mime_type = base::ToLowerASCII(*mime_type);
     ++iter;
   }
 
@@ -55,13 +55,12 @@ bool DataURL::Parse(const GURL& url, std::string* mime_type,
   const size_t kCharsetTagLength = arraysize(kCharsetTag) - 1;
 
   bool base64_encoded = false;
-  for (; iter != meta_data.cend(); ++iter) {
+  for (; iter != meta_data.end(); ++iter) {
     if (!base64_encoded && *iter == kBase64Tag) {
       base64_encoded = true;
     } else if (charset->empty() &&
-               base::StartsWith(*iter, kCharsetTag,
-                                base::CompareCase::SENSITIVE)) {
-      *charset = std::string(iter->substr(kCharsetTagLength));
+               iter->compare(0, kCharsetTagLength, kCharsetTag) == 0) {
+      charset->assign(iter->substr(kCharsetTagLength));
       // The grammar for charset is not specially defined in RFC2045 and
       // RFC2397. It just needs to be a token.
       if (!HttpUtil::IsToken(*charset))

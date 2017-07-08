@@ -49,6 +49,8 @@ class PaymentManifestParserAndroid {
   DISALLOW_COPY_AND_ASSIGN(PaymentManifestParserAndroid);
 };
 
+bool RegisterPaymentManifestParser(JNIEnv* env);
+
 }  // namespace payments
 
 #endif  // COMPONENTS_PAYMENTS_CONTENT_ANDROID_PAYMENT_MANIFEST_PARSER_ANDROID_H_

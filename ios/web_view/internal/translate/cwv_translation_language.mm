@@ -14,25 +14,21 @@
 @implementation CWVTranslationLanguage
 
 @synthesize languageCode = _languageCode;
-@synthesize localizedName = _localizedName;
-@synthesize nativeName = _nativeName;
+@synthesize languageName = _languageName;
 
 - (instancetype)initWithLanguageCode:(const std::string&)languageCode
-                       localizedName:(const base::string16&)localizedName
-                          nativeName:(const base::string16&)nativeName {
+                        languageName:(const base::string16&)languageName {
   self = [super init];
   if (self) {
     _languageCode = base::SysUTF8ToNSString(languageCode);
-    _localizedName = base::SysUTF16ToNSString(localizedName);
-    _nativeName = base::SysUTF16ToNSString(nativeName);
+    _languageName = base::SysUTF16ToNSString(languageName);
   }
   return self;
 }
 
 - (NSString*)description {
-  return
-      [NSString stringWithFormat:@"%@ name:%@(%@) code:%@", [super description],
-                                 _localizedName, _nativeName, _languageCode];
+  return [NSString stringWithFormat:@"%@ name:%@ code:%@", [super description],
+                                    _languageName, _languageCode];
 }
 
 @end

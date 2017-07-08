@@ -140,19 +140,6 @@ void BackdropController::OnOverviewModeStarting() {
 }
 
 void BackdropController::OnOverviewModeEnded() {
-  if (Shell::Get()->IsSplitViewModeActive())
-    return;
-
-  force_hidden_ = false;
-  UpdateBackdrop();
-}
-
-void BackdropController::OnSplitViewModeStarting() {
-  force_hidden_ = true;
-  Hide();
-}
-
-void BackdropController::OnSplitViewModeEnded() {
   force_hidden_ = false;
   UpdateBackdrop();
 }

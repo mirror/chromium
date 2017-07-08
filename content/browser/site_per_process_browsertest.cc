@@ -5692,16 +5692,10 @@ class SitePerProcessMouseWheelBrowserTest : public SitePerProcessBrowserTest {
 
     SendMouseWheel(pos);
 
-    // If async_wheel_events is disabled, this time only the wheel handler
-    // fires, since even numbered scrolls are prevent-defaulted. If it is
-    // enabled, then this wheel event will be sent non-blockingly and won't be
-    // cancellable.
+    // This time only the wheel handler fires, since it prevent defaults on
+    // even numbered scrolls.
     EXPECT_TRUE(msg_queue.WaitForMessage(&reply));
     EXPECT_EQ("\"wheel: 2\"", reply);
-    if (base::FeatureList::IsEnabled(features::kAsyncWheelEvents)) {
-      EXPECT_TRUE(msg_queue.WaitForMessage(&reply));
-      EXPECT_EQ("\"scroll: 2\"", reply);
-    }
 
     SendMouseWheel(pos);
 
@@ -5914,9 +5908,14 @@ void OnSyntheticGestureCompleted(scoped_refptr<MessageLoopRunner> runner,
 
 }  // namespace anonymous
 
-// https://crbug.com/592320
+// Flaky under TSan. https://crbug.com/592320
+#if defined(THREAD_SANITIZER)
+#define MAYBE_SubframeGestureEventRouting DISABLED_SubframeGestureEventRouting
+#else
+#define MAYBE_SubframeGestureEventRouting SubframeGestureEventRouting
+#endif
 IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
-                       DISABLED_SubframeGestureEventRouting) {
+                       MAYBE_SubframeGestureEventRouting) {
   GURL main_url(embedded_test_server()->GetURL(
       "/frame_tree/page_with_positioned_nested_frames.html"));
   EXPECT_TRUE(NavigateToURL(shell(), main_url));

@@ -2491,14 +2491,7 @@ IN_PROC_BROWSER_TEST_F(DownloadTest, DownloadErrorsServer) {
   DownloadFilesCheckErrors(arraysize(download_info), download_info);
 }
 
-#if defined(OS_MACOSX)
-// https://crbug.com/739766
-#define MAYBE_DownloadErrorsFile DISABLED_DownloadErrorsFile
-#else
-#define MAYBE_DownloadErrorsFile DownloadErrorsFile
-#endif
-
-IN_PROC_BROWSER_TEST_F(DownloadTest, MAYBE_DownloadErrorsFile) {
+IN_PROC_BROWSER_TEST_F(DownloadTest, DownloadErrorsFile) {
   FileErrorInjectInfo error_info[] = {
       {// Navigated download with injected "Disk full" error in Initialize().
        {"a_zip_file.zip", "a_zip_file.zip", DOWNLOAD_NAVIGATE,

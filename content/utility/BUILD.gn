@@ -60,7 +60,6 @@ source_set("utility") {
     deps += [
       "//media",
       "//media/mojo:features",
-      "//media/mojo/interfaces:constants",
       "//media/mojo/services",
     ]
   }

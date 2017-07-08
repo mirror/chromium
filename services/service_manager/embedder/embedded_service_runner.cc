@@ -64,7 +64,7 @@ class EmbeddedServiceRunner::InstanceManager
     if (!service_task_runner_)
       return;
     // Any extant ServiceContexts must be destroyed on the application thread.
-    if (service_task_runner_->RunsTasksInCurrentSequence()) {
+    if (service_task_runner_->RunsTasksOnCurrentThread()) {
       QuitOnServiceSequence();
     } else {
       service_task_runner_->PostTask(
@@ -83,7 +83,7 @@ class EmbeddedServiceRunner::InstanceManager
 
   void BindServiceRequestOnServiceSequence(
       service_manager::mojom::ServiceRequest request) {
-    DCHECK(service_task_runner_->RunsTasksInCurrentSequence());
+    DCHECK(service_task_runner_->RunsTasksOnCurrentThread());
 
     int instance_id = next_instance_id_++;
 
@@ -99,7 +99,7 @@ class EmbeddedServiceRunner::InstanceManager
   }
 
   void OnInstanceLost(int instance_id) {
-    DCHECK(service_task_runner_->RunsTasksInCurrentSequence());
+    DCHECK(service_task_runner_->RunsTasksOnCurrentThread());
 
     auto id_iter = id_to_context_map_.find(instance_id);
     CHECK(id_iter != id_to_context_map_.end());
@@ -115,10 +115,10 @@ class EmbeddedServiceRunner::InstanceManager
   }
 
   void QuitOnServiceSequence() {
-    DCHECK(service_task_runner_->RunsTasksInCurrentSequence());
+    DCHECK(service_task_runner_->RunsTasksOnCurrentThread());
 
     contexts_.clear();
-    if (quit_task_runner_->RunsTasksInCurrentSequence()) {
+    if (quit_task_runner_->RunsTasksOnCurrentThread()) {
       QuitOnRunnerThread();
     } else {
       quit_task_runner_->PostTask(

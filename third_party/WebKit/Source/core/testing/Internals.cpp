@@ -250,7 +250,7 @@ void Internals::ResetToConsistentState(Page* page) {
       ->View()
       ->LayoutViewportScrollableArea()
       ->SetScrollOffset(ScrollOffset(), kProgrammaticScroll);
-  OverrideUserPreferredLanguagesForTesting(Vector<AtomicString>());
+  OverrideUserPreferredLanguages(Vector<AtomicString>());
   if (!page->DeprecatedLocalMainFrame()
            ->GetSpellChecker()
            .IsSpellCheckingEnabled())
@@ -731,11 +731,6 @@ CSSStyleDeclaration* Internals::computedStyleIncludingVisitedInfo(
 ShadowRoot* Internals::createUserAgentShadowRoot(Element* host) {
   DCHECK(host);
   return &host->EnsureUserAgentShadowRoot();
-}
-
-void Internals::setBrowserControlsState(float height, bool shrinks_layout) {
-  document_->GetPage()->GetChromeClient().SetBrowserControlsState(
-      height, shrinks_layout);
 }
 
 ShadowRoot* Internals::shadowRoot(Element* host) {
@@ -1625,7 +1620,7 @@ void Internals::setUserPreferredLanguages(const Vector<String>& languages) {
   Vector<AtomicString> atomic_languages;
   for (size_t i = 0; i < languages.size(); ++i)
     atomic_languages.push_back(AtomicString(languages[i]));
-  OverrideUserPreferredLanguagesForTesting(atomic_languages);
+  OverrideUserPreferredLanguages(atomic_languages);
 }
 
 unsigned Internals::mediaKeysCount() {

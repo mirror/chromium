@@ -64,7 +64,7 @@ MediaEngagementScore::MediaEngagementScore(
 MediaEngagementScore::~MediaEngagementScore() = default;
 
 double MediaEngagementScore::GetTotalScore() const {
-  if (visits() < kScoreMinVisits)
+  if (visits_ < kScoreMinVisits)
     return 0;
   return static_cast<double>(media_playbacks_) / static_cast<double>(visits_);
 }

@@ -1348,6 +1348,8 @@ split_static_library("browser") {
     "task_profiler/task_profiler_data_serializer.h",
     "themes/theme_service_win.cc",
     "themes/theme_service_win.h",
+    "thumbnails/simple_thumbnail_crop.cc",
+    "thumbnails/simple_thumbnail_crop.h",
     "thumbnails/thumbnail_list_source.cc",
     "thumbnails/thumbnail_list_source.h",
     "thumbnails/thumbnail_service.h",
@@ -1357,8 +1359,7 @@ split_static_library("browser") {
     "thumbnails/thumbnail_service_impl.h",
     "thumbnails/thumbnail_tab_helper.cc",
     "thumbnails/thumbnail_tab_helper.h",
-    "thumbnails/thumbnail_utils.cc",
-    "thumbnails/thumbnail_utils.h",
+    "thumbnails/thumbnailing_algorithm.h",
     "thumbnails/thumbnailing_context.cc",
     "thumbnails/thumbnailing_context.h",
     "tracing/background_tracing_field_trial.cc",
@@ -2724,6 +2725,7 @@ split_static_library("browser") {
       "android/download/intercept_download_resource_throttle.cc",
       "android/download/intercept_download_resource_throttle.h",
       "android/download/items/offline_content_aggregator_factory_android.cc",
+      "android/download/items/offline_content_aggregator_factory_android.h",
       "android/download/service/download_background_task.cc",
       "android/download/service/download_background_task.h",
       "android/download/service/download_task_scheduler.cc",
@@ -3181,8 +3183,6 @@ split_static_library("browser") {
       "feedback/system_logs/log_sources/memory_details_log_source.h",
       "feedback/system_logs/system_logs_fetcher.cc",
       "feedback/system_logs/system_logs_fetcher.h",
-      "feedback/system_logs/system_logs_source.cc",
-      "feedback/system_logs/system_logs_source.h",
       "first_run/first_run.cc",
       "first_run/first_run.h",
       "first_run/first_run_dialog.h",
@@ -3923,10 +3923,7 @@ split_static_library("browser") {
     ]
     deps += [ "//media/mojo/interfaces" ]
     if (mojo_media_host == "browser") {
-      deps += [
-        "//media/mojo/interfaces:constants",
-        "//media/mojo/services",
-      ]
+      deps += [ "//media/mojo/services" ]
     }
   }
 

@@ -10,7 +10,6 @@
 #include "net/base/ip_endpoint.h"
 #include "net/base/net_errors.h"
 #include "net/dns/host_resolver.h"
-#include "net/log/net_log_with_source.h"
 
 namespace net {
 
@@ -19,14 +18,14 @@ namespace nqe {
 namespace internal {
 
 bool IsPrivateHost(HostResolver* host_resolver,
-                   const HostPortPair& host_port_pair) {
+                   const HostPortPair& host_port_pair,
+                   const NetLogWithSource& net_log) {
   // Try resolving |host_port_pair.host()| synchronously.
   HostResolver::RequestInfo resolve_info(host_port_pair);
   resolve_info.set_allow_cached_response(true);
   AddressList addresses;
   // Resolve synchronously using the resolver's cache.
-  int rv = host_resolver->ResolveFromCache(resolve_info, &addresses,
-                                           NetLogWithSource());
+  int rv = host_resolver->ResolveFromCache(resolve_info, &addresses, net_log);
 
   DCHECK_NE(rv, ERR_IO_PENDING);
   if (rv == OK && !addresses.empty()) {

@@ -6,6 +6,7 @@
 
 #include "core/dom/DOMException.h"
 #include "core/frame/LocalFrame.h"
+#include "core/frame/LocalFrameClient.h"
 #include "core/geometry/DOMRect.h"
 #include "core/html/canvas/CanvasImageSource.h"
 #include "core/workers/WorkerThread.h"
@@ -38,10 +39,11 @@ FaceDetector::FaceDetector(ExecutionContext* context,
   if (context->IsDocument()) {
     LocalFrame* frame = ToDocument(context)->GetFrame();
     if (frame)
-      frame->GetInterfaceProvider()->GetInterface(std::move(request));
-  } else {
+      frame->Client()->GetInterfaceProvider()->GetInterface(std::move(request));
+  } else if (context->IsWorkerGlobalScope()) {
     WorkerThread* thread = ToWorkerGlobalScope(context)->GetThread();
-    thread->GetInterfaceProvider().GetInterface(std::move(request));
+    if (thread)
+      thread->GetInterfaceProvider()->GetInterface(std::move(request));
   }
   provider->CreateFaceDetection(mojo::MakeRequest(&face_service_),
                                 std::move(face_detector_options));

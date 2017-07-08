@@ -8,10 +8,8 @@
 #include <stdint.h>
 
 #include <memory>
-#include <utility>
 
 #include "base/bind.h"
-#include "base/bind_helpers.h"
 #include "base/callback.h"
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
@@ -186,7 +184,7 @@ class SessionManagerClientImpl : public SessionManagerClient {
 
   void RestartJob(int socket_fd,
                   const std::vector<std::string>& argv,
-                  VoidDBusMethodCallback callback) override {
+                  const VoidDBusMethodCallback& callback) override {
     dbus::MethodCall method_call(login_manager::kSessionManagerInterface,
                                  login_manager::kSessionManagerRestartJob);
     dbus::MessageWriter writer(&method_call);
@@ -195,8 +193,7 @@ class SessionManagerClientImpl : public SessionManagerClient {
     session_manager_proxy_->CallMethod(
         &method_call, dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
         base::Bind(&SessionManagerClientImpl::OnRestartJob,
-                   weak_ptr_factory_.GetWeakPtr(),
-                   base::Passed(std::move(callback))));
+                   weak_ptr_factory_.GetWeakPtr(), callback));
   }
 
   void StartSession(const cryptohome::Identification& cryptohome_id) override {
@@ -624,12 +621,13 @@ class SessionManagerClientImpl : public SessionManagerClient {
   }
 
   // Called when kSessionManagerRestartJob method is complete.
-  void OnRestartJob(VoidDBusMethodCallback callback, dbus::Response* response) {
+  void OnRestartJob(const VoidDBusMethodCallback& callback,
+                    dbus::Response* response) {
     LOG_IF(ERROR, !response)
         << "Failed to call "
         << login_manager::kSessionManagerRestartJob;
-    std::move(callback).Run(response ? DBUS_METHOD_CALL_SUCCESS
-                                     : DBUS_METHOD_CALL_FAILURE);
+    callback.Run(response ? DBUS_METHOD_CALL_SUCCESS
+                          : DBUS_METHOD_CALL_FAILURE);
   }
 
   // Called when kSessionManagerRetrieveActiveSessions method is complete.
@@ -895,7 +893,7 @@ class SessionManagerClientStubImpl : public SessionManagerClient {
   void EmitLoginPromptVisible() override {}
   void RestartJob(int socket_fd,
                   const std::vector<std::string>& argv,
-                  VoidDBusMethodCallback callback) override {}
+                  const VoidDBusMethodCallback& callback) override {}
   void StartSession(const cryptohome::Identification& cryptohome_id) override {}
   void StopSession() override {}
   void NotifySupervisedUserCreationStarted() override {}

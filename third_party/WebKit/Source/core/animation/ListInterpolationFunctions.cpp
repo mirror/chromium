@@ -13,8 +13,6 @@ namespace blink {
 
 DEFINE_NON_INTERPOLABLE_VALUE_TYPE(NonInterpolableList);
 
-const size_t kRepeatableListMaxLength = 1000;
-
 bool ListInterpolationFunctions::EqualValues(
     const InterpolationValue& a,
     const InterpolationValue& b,
@@ -57,14 +55,7 @@ static size_t MatchLengths(size_t start_length,
   if (length_matching_strategy ==
       ListInterpolationFunctions::LengthMatchingStrategy::
           kLowestCommonMultiple) {
-    // Combining the length expansion of lowestCommonMultiple with CSS
-    // transitions has the potential to create pathological cases where this
-    // algorithm compounds upon itself as the user starts transitions on already
-    // animating values multiple times. This maximum limit is to avoid locking
-    // up users' systems with memory consumption in the event that this occurs.
-    // See crbug.com/739197 for more context.
-    return std::min(kRepeatableListMaxLength,
-                    lowestCommonMultiple(start_length, end_length));
+    return lowestCommonMultiple(start_length, end_length);
   }
   DCHECK_EQ(length_matching_strategy,
             ListInterpolationFunctions::LengthMatchingStrategy::kPadToLargest);

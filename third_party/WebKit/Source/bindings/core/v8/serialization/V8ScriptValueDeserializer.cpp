@@ -5,7 +5,6 @@
 #include "bindings/core/v8/serialization/V8ScriptValueDeserializer.h"
 
 #include "bindings/core/v8/ToV8ForCore.h"
-#include "bindings/core/v8/serialization/UnpackedSerializedScriptValue.h"
 #include "core/dom/DOMArrayBuffer.h"
 #include "core/dom/DOMSharedArrayBuffer.h"
 #include "core/dom/ExecutionContext.h"
@@ -87,35 +86,10 @@ size_t ReadVersionEnvelope(SerializedScriptValue* serialized_script_value,
 
 V8ScriptValueDeserializer::V8ScriptValueDeserializer(
     RefPtr<ScriptState> script_state,
-    UnpackedSerializedScriptValue* unpacked_value,
-    const Options& options)
-    : V8ScriptValueDeserializer(std::move(script_state),
-                                unpacked_value,
-                                unpacked_value->Value(),
-                                options) {}
-
-V8ScriptValueDeserializer::V8ScriptValueDeserializer(
-    RefPtr<ScriptState> script_state,
-    RefPtr<SerializedScriptValue> value,
-    const Options& options)
-    : V8ScriptValueDeserializer(std::move(script_state),
-                                nullptr,
-                                std::move(value),
-                                options) {
-  DCHECK(!serialized_script_value_->HasPackedContents())
-      << "If the provided SerializedScriptValue could contain packed contents "
-         "due to transfer, then it must be unpacked before deserialization. "
-         "See SerializedScriptValue::Unpack.";
-}
-
-V8ScriptValueDeserializer::V8ScriptValueDeserializer(
-    RefPtr<ScriptState> script_state,
-    UnpackedSerializedScriptValue* unpacked_value,
-    RefPtr<SerializedScriptValue> value,
+    RefPtr<SerializedScriptValue> serialized_script_value,
     const Options& options)
     : script_state_(std::move(script_state)),
-      unpacked_value_(unpacked_value),
-      serialized_script_value_(value),
+      serialized_script_value_(std::move(serialized_script_value)),
       deserializer_(script_state_->GetIsolate(),
                     serialized_script_value_->Data(),
                     serialized_script_value_->DataLengthInBytes(),
@@ -168,17 +142,15 @@ v8::Local<v8::Value> V8ScriptValueDeserializer::Deserialize() {
 }
 
 void V8ScriptValueDeserializer::Transfer() {
-  // Thre's nothing to transfer if the deserializer was not given an unpacked
-  // value.
-  if (!unpacked_value_)
-    return;
-
   v8::Isolate* isolate = script_state_->GetIsolate();
   v8::Local<v8::Context> context = script_state_->GetContext();
   v8::Local<v8::Object> creation_context = context->Global();
 
+  // Receive the transfer, making the received objects available.
+  serialized_script_value_->ReceiveTransfer();
+
   // Transfer array buffers.
-  const auto& array_buffers = unpacked_value_->ArrayBuffers();
+  const auto& array_buffers = serialized_script_value_->ReceivedArrayBuffers();
   for (unsigned i = 0; i < array_buffers.size(); i++) {
     DOMArrayBufferBase* array_buffer = array_buffers.at(i);
     v8::Local<v8::Value> wrapper =
@@ -282,9 +254,8 @@ ScriptWrappable* V8ScriptValueDeserializer::ReadDOMObject(
     }
     case kImageBitmapTransferTag: {
       uint32_t index = 0;
-      if (!unpacked_value_)
-        return nullptr;
-      const auto& transferred_image_bitmaps = unpacked_value_->ImageBitmaps();
+      const auto& transferred_image_bitmaps =
+          serialized_script_value_->ReceivedImageBitmaps();
       if (!ReadUint32(&index) || index >= transferred_image_bitmaps.size())
         return nullptr;
       return transferred_image_bitmaps[index].Get();

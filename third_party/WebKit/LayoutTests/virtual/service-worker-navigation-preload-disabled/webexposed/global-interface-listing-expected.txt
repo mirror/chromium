@@ -3893,9 +3893,6 @@ interface KeyframeEffect : KeyframeEffectReadOnly
 interface KeyframeEffectReadOnly : AnimationEffectReadOnly
     attribute @@toStringTag
     method constructor
-interface LinearAccelerationSensor : Accelerometer
-    attribute @@toStringTag
-    method constructor
 interface Location
     attribute @@toStringTag
     method constructor
@@ -4875,15 +4872,13 @@ interface PerformanceResourceTiming : PerformanceEntry
     getter responseEnd
     getter responseStart
     getter secureConnectionStart
-    getter serverTiming
     getter transferSize
     getter workerStart
     method constructor
-interface PerformanceServerTiming
+interface PerformanceServerTiming : PerformanceEntry
     attribute @@toStringTag
     getter description
     getter metric
-    getter value
     method constructor
 interface PerformanceTiming
     attribute @@toStringTag

@@ -57,12 +57,12 @@
 #include "components/autofill/core/browser/autofill_manager.h"
 #include "components/autofill/core/browser/webdata/autofill_webdata_service.h"
 #include "components/navigation_interception/intercept_navigation_delegate.h"
+#include "content/public/browser/android/content_view_core.h"
 #include "content/public/browser/android/synchronous_compositor.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/browsing_data_remover.h"
 #include "content/public/browser/child_process_security_policy.h"
 #include "content/public/browser/favicon_status.h"
-#include "content/public/browser/gpu_data_manager.h"
 #include "content/public/browser/interstitial_page.h"
 #include "content/public/browser/navigation_entry.h"
 #include "content/public/browser/render_frame_host.h"
@@ -74,7 +74,6 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/mhtml_generation_params.h"
 #include "content/public/common/renderer_preferences.h"
-#include "gpu/config/gpu_info.h"
 #include "jni/AwContents_jni.h"
 #include "net/base/auth.h"
 #include "net/cert/x509_certificate.h"
@@ -98,6 +97,7 @@ using base::android::ScopedJavaGlobalRef;
 using base::android::ScopedJavaLocalRef;
 using navigation_interception::InterceptNavigationDelegate;
 using content::BrowserThread;
+using content::ContentViewCore;
 using content::RenderFrameHost;
 using content::WebContents;
 
@@ -106,6 +106,8 @@ namespace android_webview {
 namespace {
 
 bool g_should_download_favicons = false;
+
+bool g_force_auxiliary_bitmap_rendering = false;
 
 std::string g_locale;
 
@@ -410,11 +412,11 @@ static jlong Init(JNIEnv* env,
   return reinterpret_cast<intptr_t>(new AwContents(std::move(web_contents)));
 }
 
-static jboolean HasRequiredHardwareExtensions(JNIEnv* env,
-                                              const JavaParamRef<jclass>&) {
-  return content::GpuDataManager::GetInstance()
-      ->GetGPUInfo()
-      .can_support_threaded_texture_mailbox;
+static void SetForceAuxiliaryBitmapRendering(
+    JNIEnv* env,
+    const JavaParamRef<jclass>&,
+    jboolean force_auxiliary_bitmap_rendering) {
+  g_force_auxiliary_bitmap_rendering = force_auxiliary_bitmap_rendering;
 }
 
 static void SetAwDrawSWFunctionTable(JNIEnv* env,
@@ -989,15 +991,14 @@ bool AwContents::OnDraw(JNIEnv* env,
                         jint visible_left,
                         jint visible_top,
                         jint visible_right,
-                        jint visible_bottom,
-                        jboolean force_auxiliary_bitmap_rendering) {
+                        jint visible_bottom) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   gfx::Vector2d scroll(scroll_x, scroll_y);
   browser_view_renderer_.PrepareToDraw(
       scroll, gfx::Rect(visible_left, visible_top, visible_right - visible_left,
                         visible_bottom - visible_top));
   if (is_hardware_accelerated && browser_view_renderer_.attached_to_window() &&
-      !force_auxiliary_bitmap_rendering) {
+      !g_force_auxiliary_bitmap_rendering) {
     return browser_view_renderer_.OnDrawHardware();
   }
 
@@ -1015,7 +1016,7 @@ bool AwContents::OnDraw(JNIEnv* env,
   // viewspace.  Use the resulting rect as the auxiliary bitmap.
   std::unique_ptr<SoftwareCanvasHolder> canvas_holder =
       SoftwareCanvasHolder::Create(canvas, scroll, view_size,
-                                   force_auxiliary_bitmap_rendering);
+                                   g_force_auxiliary_bitmap_rendering);
   if (!canvas_holder || !canvas_holder->GetCanvas()) {
     TRACE_EVENT_INSTANT0("android_webview", "EarlyOut_NoSoftwareCanvas",
                          TRACE_EVENT_SCOPE_THREAD);

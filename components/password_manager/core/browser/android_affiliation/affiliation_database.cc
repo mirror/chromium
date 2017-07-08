@@ -61,7 +61,7 @@ bool AffiliationDatabase::Init(const base::FilePath& path) {
   return true;
 }
 
-bool AffiliationDatabase::GetAffiliationsForFacetURI(
+bool AffiliationDatabase::GetAffiliationsForFacet(
     const FacetURI& facet_uri,
     AffiliatedFacetsWithUpdateTime* result) const {
   DCHECK(result);
@@ -76,7 +76,7 @@ bool AffiliationDatabase::GetAffiliationsForFacetURI(
 
   while (statement.Step()) {
     result->facets.push_back(
-        {FacetURI::FromCanonicalSpec(statement.ColumnString(0))});
+        FacetURI::FromCanonicalSpec(statement.ColumnString(0)));
     result->last_update_time =
         base::Time::FromInternalValue(statement.ColumnInt64(1));
   }
@@ -104,13 +104,13 @@ void AffiliationDatabase::GetAllAffiliations(
       last_eq_class_id = eq_class_id;
     }
     results->back().facets.push_back(
-        {FacetURI::FromCanonicalSpec(statement.ColumnString(0))});
+        FacetURI::FromCanonicalSpec(statement.ColumnString(0)));
     results->back().last_update_time =
         base::Time::FromInternalValue(statement.ColumnInt64(1));
   }
 }
 
-void AffiliationDatabase::DeleteAffiliationsForFacetURI(
+void AffiliationDatabase::DeleteAffiliationsForFacet(
     const FacetURI& facet_uri) {
   sql::Transaction transaction(sql_connection_.get());
   if (!transaction.Begin())
@@ -177,9 +177,9 @@ bool AffiliationDatabase::Store(
     return false;
 
   int64_t eq_class_id = sql_connection_->GetLastInsertRowId();
-  for (const Facet& facet : affiliated_facets.facets) {
+  for (const FacetURI& uri : affiliated_facets.facets) {
     statement_child.Reset(true);
-    statement_child.BindString(0, facet.uri.canonical_spec());
+    statement_child.BindString(0, uri.canonical_spec());
     statement_child.BindInt64(1, eq_class_id);
     if (!statement_child.Run())
       return false;
@@ -199,14 +199,14 @@ void AffiliationDatabase::StoreAndRemoveConflicting(
   if (!transaction.Begin())
     return;
 
-  for (const Facet& facet : affiliation.facets) {
+  for (const FacetURI& uri : affiliation.facets) {
     AffiliatedFacetsWithUpdateTime old_affiliation;
-    if (GetAffiliationsForFacetURI(facet.uri, &old_affiliation)) {
+    if (GetAffiliationsForFacet(uri, &old_affiliation)) {
       if (!AreEquivalenceClassesEqual(old_affiliation.facets,
                                       affiliation.facets)) {
         removed_affiliations->push_back(old_affiliation);
       }
-      DeleteAffiliationsForFacetURI(facet.uri);
+      DeleteAffiliationsForFacet(uri);
     }
   }
 

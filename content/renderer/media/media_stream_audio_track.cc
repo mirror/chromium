@@ -4,8 +4,6 @@
 
 #include "content/renderer/media/media_stream_audio_track.h"
 
-#include <vector>
-
 #include "base/callback_helpers.h"
 #include "base/logging.h"
 #include "content/public/renderer/media_stream_audio_sink.h"
@@ -141,6 +139,12 @@ void MediaStreamAudioTrack::OnData(const media::AudioBus& audio_bus,
     }
     deliverer_.OnData(*silent_bus_, reference_time);
   }
+}
+
+void MediaStreamAudioTrack::GetSettings(
+    blink::WebMediaStreamTrack::Settings& settings) {
+  // TODO(hta): Extract the real value.
+  settings.device_id = blink::WebString("audio device ID");
 }
 
 }  // namespace content

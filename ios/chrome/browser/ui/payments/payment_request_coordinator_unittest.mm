@@ -4,21 +4,15 @@
 
 #import "ios/chrome/browser/ui/payments/payment_request_coordinator.h"
 
-#include "base/json/json_reader.h"
-#include "base/json/json_writer.h"
 #include "base/mac/foundation_util.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/ios/wait_util.h"
-#include "base/test/scoped_task_environment.h"
 #include "components/autofill/core/browser/autofill_profile.h"
 #include "components/autofill/core/browser/autofill_test_utils.h"
 #include "components/autofill/core/browser/credit_card.h"
 #include "components/autofill/core/browser/test_personal_data_manager.h"
-#include "components/payments/core/autofill_payment_instrument.h"
 #include "components/payments/core/payment_address.h"
-#include "components/payments/core/payment_instrument.h"
-#include "components/payments/core/payment_request_data_util.h"
 #include "components/payments/core/payments_test_util.h"
 #include "components/prefs/pref_service.h"
 #include "ios/chrome/browser/browser_state/test_chrome_browser_state.h"
@@ -49,8 +43,8 @@
 
 typedef void (^mock_coordinator_cancel)(PaymentRequestCoordinator*);
 typedef void (^mock_coordinator_complete)(PaymentRequestCoordinator*,
-                                          const std::string&,
-                                          const std::string&);
+                                          const autofill::CreditCard&,
+                                          const base::string16&);
 typedef void (^mock_coordinator_select_shipping_address)(
     PaymentRequestCoordinator*,
     const autofill::AutofillProfile&);
@@ -65,10 +59,10 @@ typedef void (^mock_coordinator_select_shipping_option)(
 }
 
 - (void)paymentRequestCoordinator:(PaymentRequestCoordinator*)coordinator
-         didReceiveFullMethodName:(const std::string&)methodName
-               stringifiedDetails:(const std::string&)stringifiedDetails {
+    didCompletePaymentRequestWithCard:(const autofill::CreditCard&)card
+                     verificationCode:(const base::string16&)verificationCode {
   return static_cast<mock_coordinator_complete>([self blockForSelector:_cmd])(
-      coordinator, methodName, stringifiedDetails);
+      coordinator, card, verificationCode);
 }
 
 - (void)paymentRequestCoordinator:(PaymentRequestCoordinator*)coordinator
@@ -102,19 +96,17 @@ class PaymentRequestCoordinatorTest : public PlatformTest {
                                        &ios::BuildFakeSigninManager);
     browser_state_ = test_cbs_builder.Build();
 
-    payment_request_ = base::MakeUnique<payments::TestPaymentRequest>(
+    payment_request_ = base::MakeUnique<TestPaymentRequest>(
         payment_request_test_util::CreateTestWebPaymentRequest(),
         browser_state_.get(), &personal_data_manager_);
     payment_request_->SetPrefService(pref_service_.get());
   }
 
-  base::test::ScopedTaskEnvironment scoped_task_evironment_;
-
   autofill::AutofillProfile autofill_profile_;
   autofill::CreditCard credit_card_;
   std::unique_ptr<PrefService> pref_service_;
   autofill::TestPersonalDataManager personal_data_manager_;
-  std::unique_ptr<payments::TestPaymentRequest> payment_request_;
+  std::unique_ptr<TestPaymentRequest> payment_request_;
   std::unique_ptr<ios::ChromeBrowserState> browser_state_;
 };
 
@@ -155,7 +147,7 @@ TEST_F(PaymentRequestCoordinatorTest, StartAndStop) {
 // Tests that calling the FullCardRequesterConsumer delegate method which
 // notifies the coordinator about successful unmasking of a credit card invokes
 // the appropriate coordinator delegate method with the expected information.
-TEST_F(PaymentRequestCoordinatorTest, FullCardRequestDidSucceedWithMethodName) {
+TEST_F(PaymentRequestCoordinatorTest, FullCardRequestDidSucceed) {
   UIViewController* base_view_controller = [[UIViewController alloc] init];
   ScopedKeyWindow scoped_key_window_;
   [scoped_key_window_.Get() setRootViewController:base_view_controller];
@@ -168,38 +160,22 @@ TEST_F(PaymentRequestCoordinatorTest, FullCardRequestDidSucceedWithMethodName) {
       mockForProtocol:@protocol(PaymentMethodSelectionCoordinatorDelegate)];
   id delegate_mock([[PaymentRequestCoordinatorDelegateMock alloc]
       initWithRepresentedObject:delegate]);
-  SEL selector = @selector
-      (paymentRequestCoordinator:didReceiveFullMethodName:stringifiedDetails:);
+  SEL selector =
+      @selector(paymentRequestCoordinator:didCompletePaymentRequestWithCard
+                                         :verificationCode:);
   [delegate_mock onSelector:selector
        callBlockExpectation:^(PaymentRequestCoordinator* callerCoordinator,
-                              const std::string& methodName,
-                              const std::string& stringifiedDetails) {
-         EXPECT_EQ("visa", methodName);
-
-         std::string cvc;
-         std::unique_ptr<base::DictionaryValue> detailsDict =
-             base::DictionaryValue::From(
-                 base::JSONReader::Read(stringifiedDetails));
-         detailsDict->GetString("cardSecurityCode", &cvc);
-         EXPECT_EQ("123", cvc);
-
+                              const autofill::CreditCard& card,
+                              const base::string16& verificationCode) {
+         EXPECT_EQ(credit_card_, card);
+         EXPECT_EQ(base::ASCIIToUTF16("123"), verificationCode);
          EXPECT_EQ(coordinator, callerCoordinator);
        }];
   [coordinator setDelegate:delegate_mock];
 
-  std::string methodName = "visa";
-  std::string appLocale = "";
-
-  std::unique_ptr<base::DictionaryValue> response_value =
-      payments::data_util::GetBasicCardResponseFromAutofillCreditCard(
-          credit_card_, base::ASCIIToUTF16("123"), autofill_profile_, appLocale)
-          .ToDictionaryValue();
-  std::string stringifiedDetails;
-  base::JSONWriter::Write(*response_value, &stringifiedDetails);
-
   // Call the card unmasking delegate method.
-  [coordinator fullCardRequestDidSucceedWithMethodName:methodName
-                                    stringifiedDetails:stringifiedDetails];
+  [coordinator fullCardRequestDidSucceedWithCard:credit_card_
+                                verificationCode:base::ASCIIToUTF16("123")];
 }
 
 // Tests that calling the ShippingAddressSelectionCoordinator delegate method

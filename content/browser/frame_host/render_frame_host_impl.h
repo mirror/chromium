@@ -40,12 +40,11 @@
 #include "content/common/frame_message_enums.h"
 #include "content/common/frame_replication_state.h"
 #include "content/common/image_downloader/image_downloader.mojom.h"
-#include "content/common/input/input_handler.mojom.h"
 #include "content/common/navigation_params.h"
+#include "content/common/url_loader_factory.mojom.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/common/javascript_dialog_type.h"
 #include "content/public/common/previews_state.h"
-#include "content/public/common/url_loader_factory.mojom.h"
 #include "device/wake_lock/public/interfaces/wake_lock_context.mojom.h"
 #include "media/mojo/interfaces/interface_factory.mojom.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
@@ -232,7 +231,7 @@ class CONTENT_EXPORT RenderFrameHostImpl
       GURL* blocked_url,
       SourceLocation* source_location) const override;
 
-  mojom::FrameInputHandler* GetFrameInputHandler();
+  mojom::FrameInputHandler* GetFrameInputHandler() override;
 
   // Creates a RenderFrame in the renderer process.
   bool CreateRenderFrame(int proxy_routing_id,

@@ -23,17 +23,7 @@ SerializedScriptValueForModulesFactory::Create(
 }
 
 v8::Local<v8::Value> SerializedScriptValueForModulesFactory::Deserialize(
-    RefPtr<SerializedScriptValue> value,
-    v8::Isolate* isolate,
-    const SerializedScriptValue::DeserializeOptions& options) {
-  TRACE_EVENT0("blink", "SerializedScriptValueFactory::deserialize");
-  V8ScriptValueDeserializerForModules deserializer(
-      ScriptState::Current(isolate), std::move(value), options);
-  return deserializer.Deserialize();
-}
-
-v8::Local<v8::Value> SerializedScriptValueForModulesFactory::Deserialize(
-    UnpackedSerializedScriptValue* value,
+    SerializedScriptValue* value,
     v8::Isolate* isolate,
     const SerializedScriptValue::DeserializeOptions& options) {
   TRACE_EVENT0("blink", "SerializedScriptValueFactory::deserialize");

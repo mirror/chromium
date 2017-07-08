@@ -37,6 +37,9 @@ const char kDisableLRUSnapshotCache[] = "disable-lru-snapshot-cache";
 // Disable auto-reload of error pages if offline.
 const char kDisableOfflineAutoReload[] = "disable-offline-auto-reload";
 
+// Disable the Payment Request API.
+const char kDisablePaymentRequest[] = "disable-payment-request";
+
 // Disables the tab strip auto scroll new tabs.
 const char kDisableTabStripAutoScrollNewTabs[] =
     "disable-tab-strip-autoscroll-new-tabs";
@@ -84,6 +87,9 @@ const char kEnableLRUSnapshotCache[] = "enable-lru-snapshot-cache";
 
 // Enable auto-reload of error pages if offline.
 const char kEnableOfflineAutoReload[] = "enable-offline-auto-reload";
+
+// Enable the Payment Request API.
+const char kEnablePaymentRequest[] = "enable-payment-request";
 
 // Enables context-sensitive reader mode button in the toolbar.
 const char kEnableReaderModeToolbarIcon[] = "enable-reader-mode-toolbar-icon";

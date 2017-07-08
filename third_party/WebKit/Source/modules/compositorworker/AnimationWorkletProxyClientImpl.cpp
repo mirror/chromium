@@ -5,9 +5,6 @@
 #include "modules/compositorworker/AnimationWorkletProxyClientImpl.h"
 
 #include "core/animation/CompositorMutatorImpl.h"
-#include "core/dom/Document.h"
-#include "core/frame/LocalFrame.h"
-#include "core/frame/WebLocalFrameBase.h"
 
 namespace blink {
 
@@ -47,15 +44,6 @@ bool AnimationWorkletProxyClientImpl::Mutate(double monotonic_time_now) {
 
   // Always request another rAF for now.
   return true;
-}
-
-// static
-AnimationWorkletProxyClientImpl* AnimationWorkletProxyClientImpl::FromDocument(
-    Document* document) {
-  WebLocalFrameBase* local_frame_base =
-      WebLocalFrameBase::FromFrame(document->GetFrame());
-  return new AnimationWorkletProxyClientImpl(
-      local_frame_base->LocalRootFrameWidget()->CompositorMutator());
 }
 
 }  // namespace blink

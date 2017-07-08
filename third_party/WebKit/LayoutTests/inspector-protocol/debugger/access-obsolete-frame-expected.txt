@@ -1,4 +1,3 @@
-
 Paused on 'debugger;'
 resume
 restartFrame
