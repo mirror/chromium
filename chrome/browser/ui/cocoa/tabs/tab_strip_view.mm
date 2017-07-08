@@ -103,7 +103,8 @@
                            NSCompositeSourceOver);
 }
 
-- (void)drawRect:(NSRect)dirtyRect {
+- (void)drawRect:(NSRect)dirtyRect
+    __attribute__((availability(macos, introduced = 10.10))) {
   const ui::ThemeProvider* themeProvider = [[self window] themeProvider];
   bool hasCustomThemeImage = themeProvider &&
       themeProvider->HasCustomImage(IDR_THEME_FRAME);
@@ -353,12 +354,14 @@
   newTabButton_.reset([button retain]);
 }
 
-- (NSVisualEffectView*)visualEffectView {
+- (NSVisualEffectView*)visualEffectView
+    __attribute__((availability(macos, introduced = 10.10))) {
   return [[BrowserWindowController
       browserWindowControllerForWindow:[self window]] visualEffectView];
 }
 
-- (void)setController:(TabStripController*)controller {
+- (void)setController:(TabStripController*)controller
+    __attribute__((availability(macos, introduced = 10.10))) {
   controller_ = controller;
   // If tearing down the browser window, there's nothing more to do.
   if (!controller_) {
@@ -387,7 +390,8 @@
 
 // ThemedWindowDrawing implementation.
 
-- (void)windowDidChangeTheme {
+- (void)windowDidChangeTheme
+    __attribute__((availability(macos, introduced = 10.10))) {
   [self setNeedsDisplay:YES];
   [self updateVisualEffectState];
 }
@@ -396,12 +400,14 @@
   [self setNeedsDisplay:YES];
 }
 
-- (void)setVisualEffectsDisabledForFullscreen:(BOOL)disabled {
+- (void)setVisualEffectsDisabledForFullscreen:(BOOL)disabled
+    __attribute__((availability(macos, introduced = 10.10))) {
   visualEffectsDisabledForFullscreen_ = disabled;
   [self updateVisualEffectState];
 }
 
-- (void)updateVisualEffectState {
+- (void)updateVisualEffectState
+    __attribute__((availability(macos, introduced = 10.10))) {
   // Configure the NSVisualEffectView so that it does nothing if the user has
   // switched to a custom theme, or uses vibrancy if the user has switched back
   // to the default theme.
