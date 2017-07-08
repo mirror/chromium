@@ -6,10 +6,12 @@
 #define COMPONENTS_FEEDBACK_FEEDBACK_UPLOADER_FACTORY_H_
 
 #include "base/macros.h"
+#include "base/memory/ref_counted.h"
 #include "components/keyed_service/content/browser_context_keyed_service_factory.h"
 
 namespace base {
 template<typename T> struct DefaultSingletonTraits;
+class SingleThreadTaskRunner;
 }
 
 namespace content {
@@ -41,6 +43,11 @@ class FeedbackUploaderFactory : public BrowserContextKeyedServiceFactory {
       content::BrowserContext* context) const override;
   content::BrowserContext* GetBrowserContextToUse(
       content::BrowserContext* context) const override;
+
+  // The task runner used to handle all background blocking feedback reports
+  // work. It involves reading / writing reports from / to disk. Those
+  // operations must not interleave and thread affinity is required.
+  scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
 
   DISALLOW_COPY_AND_ASSIGN(FeedbackUploaderFactory);
 };
