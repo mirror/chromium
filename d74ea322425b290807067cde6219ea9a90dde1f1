@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c054a4b6_5f015b8d",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-07-08T05:12:42Z",
+      "side": 1,
+      "message": "It probably should be.  If I\u0027m changing that I\u0027d rather do it all in one patch though.  I added crbug.com/740202 for this.",
+      "parentUuid": "b5b4d5a5_a3cc5457",
+      "revId": "d74ea322425b290807067cde6219ea9a90dde1f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d1d4646_e9632aea",
         "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "d74ea322425b290807067cde6219ea9a90dde1f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac77e99d_0bc49b95",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-07-08T05:12:42Z",
+      "side": 1,
+      "message": "Yes.  As operator\u003c it can\u0027t but as a functor it can.  Done.",
+      "parentUuid": "4d1d4646_e9632aea",
+      "revId": "d74ea322425b290807067cde6219ea9a90dde1f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +112,48 @@
     },
     {
       "key": {
+        "uuid": "44015d7b_f30e0319",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-07-08T05:12:42Z",
+      "side": 1,
+      "message": "Done.  It doesn\u0027t create this same order but is still consistent so it works for std::map.",
+      "parentUuid": "e3064a59_615079ac",
+      "range": {
+        "startLine": 25,
+        "startChar": 66,
+        "endLine": 25,
+        "endChar": 0
+      },
+      "revId": "d74ea322425b290807067cde6219ea9a90dde1f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b6823c1c_d2f8ad9d",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-07-08T05:12:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec4f83a5_df8914e1",
+      "revId": "d74ea322425b290807067cde6219ea9a90dde1f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "051b65b6_3c346dc9",
         "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
         "patchSetId": 4
@@ -96,6 +174,30 @@
       "revId": "d74ea322425b290807067cde6219ea9a90dde1f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d5cd10f_7b1c24a3",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-07-08T05:12:42Z",
+      "side": 1,
+      "message": "Yes, but this was replace with std::string per Kevin\u0027s comments.",
+      "parentUuid": "051b65b6_3c346dc9",
+      "range": {
+        "startLine": 53,
+        "startChar": 68,
+        "endLine": 53,
+        "endChar": 69
+      },
+      "revId": "d74ea322425b290807067cde6219ea9a90dde1f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "213ee251_6d40e2c7",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-07-08T05:12:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07c3da97_27f95c3c",
+      "range": {
+        "startLine": 58,
+        "startChar": 6,
+        "endLine": 58,
+        "endChar": 22
+      },
+      "revId": "d74ea322425b290807067cde6219ea9a90dde1f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ae769e8_7d8f7e51",
         "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
         "patchSetId": 4
@@ -136,6 +262,24 @@
       "revId": "d74ea322425b290807067cde6219ea9a90dde1f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb59db53_dec7c84c",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-07-08T05:12:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ae769e8_7d8f7e51",
+      "revId": "d74ea322425b290807067cde6219ea9a90dde1f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -156,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "a3c2959e_7cf8d184",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-07-08T05:12:42Z",
+      "side": 1,
+      "message": "Done. FWIW this is only true if we compile with -fno-elide-constructors for some bizarre reason.",
+      "parentUuid": "2a667f33_575f2a8b",
+      "revId": "d74ea322425b290807067cde6219ea9a90dde1f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb2b27de_355f03e4",
         "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
         "patchSetId": 4
@@ -173,6 +335,24 @@
     },
     {
       "key": {
+        "uuid": "9a04733d_599494d7",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-07-08T05:12:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb2b27de_355f03e4",
+      "revId": "d74ea322425b290807067cde6219ea9a90dde1f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58eced8e_8803b785",
         "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
         "patchSetId": 4
@@ -187,6 +367,24 @@
       "revId": "d74ea322425b290807067cde6219ea9a90dde1f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d15efa4d_ae71fa2c",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-07-08T05:12:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58eced8e_8803b785",
+      "revId": "d74ea322425b290807067cde6219ea9a90dde1f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -213,6 +411,30 @@
     },
     {
       "key": {
+        "uuid": "9200eb78_c77ac0ef",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-07-08T05:12:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8834929a_b5f432db",
+      "range": {
+        "startLine": 164,
+        "startChar": 39,
+        "endLine": 164,
+        "endChar": 52
+      },
+      "revId": "d74ea322425b290807067cde6219ea9a90dde1f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33adc7d3_e8c48cca",
         "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
         "patchSetId": 4
@@ -236,6 +458,30 @@
     },
     {
       "key": {
+        "uuid": "44cee7cc_2ee0ae64",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-07-08T05:12:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33adc7d3_e8c48cca",
+      "range": {
+        "startLine": 174,
+        "startChar": 15,
+        "endLine": 174,
+        "endChar": 24
+      },
+      "revId": "d74ea322425b290807067cde6219ea9a90dde1f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91f56686_d083f9de",
         "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
         "patchSetId": 4
@@ -250,6 +496,24 @@
       "revId": "d74ea322425b290807067cde6219ea9a90dde1f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ac21561_b5f4d1b2",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-07-08T05:12:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91f56686_d083f9de",
+      "revId": "d74ea322425b290807067cde6219ea9a90dde1f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -270,6 +534,24 @@
     },
     {
       "key": {
+        "uuid": "654c9356_4387a64d",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-07-08T05:12:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce2aef55_860f69c2",
+      "revId": "d74ea322425b290807067cde6219ea9a90dde1f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0332cdc2_c70b656c",
         "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
         "patchSetId": 4
@@ -287,6 +569,24 @@
     },
     {
       "key": {
+        "uuid": "3ea9c39b_1a90caf9",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-07-08T05:12:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0332cdc2_c70b656c",
+      "revId": "d74ea322425b290807067cde6219ea9a90dde1f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f63cec9_ffad4348",
         "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
         "patchSetId": 4
@@ -301,6 +601,24 @@
       "revId": "d74ea322425b290807067cde6219ea9a90dde1f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38e4d7e0_699ed44e",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-07-08T05:12:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f63cec9_ffad4348",
+      "revId": "d74ea322425b290807067cde6219ea9a90dde1f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -324,6 +642,30 @@
       "revId": "d74ea322425b290807067cde6219ea9a90dde1f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fcf9927_c973a1fc",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-07-08T05:12:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82703397_a1e53391",
+      "range": {
+        "startLine": 210,
+        "startChar": 47,
+        "endLine": 210,
+        "endChar": 0
+      },
+      "revId": "d74ea322425b290807067cde6219ea9a90dde1f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
