@@ -181,7 +181,7 @@ Polymer({
    *           key: (string|undefined)}} e
    */
   onInputMethodTap_: function(e) {
-    // Taps on the paper-icon-button are handled in onInputMethodOptionsTap_.
+    // Taps on the button are handled in onInputMethodOptionsTap_.
     if (e.target.tagName == 'PAPER-ICON-BUTTON')
       return;
 
