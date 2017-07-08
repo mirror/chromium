@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9e85165_2b2f3b2c",
+        "filename": "chrome/browser/resources/options/autofill_options.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-08T00:12:58Z",
+      "side": 1,
+      "message": "I wonder... do hrefs really need i18nRaw? Or does i18n escape things that are needed for URLs? In this case it\u0027s a fixed URL so we can double-check right?",
+      "revId": "853cbd5d05e51141662038af3326b06875f9561f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c33d496_a4a4465d",
+        "filename": "chrome/browser/resources/options/automatic_settings_reset_banner.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-08T00:12:58Z",
+      "side": 1,
+      "message": "same",
+      "revId": "853cbd5d05e51141662038af3326b06875f9561f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
