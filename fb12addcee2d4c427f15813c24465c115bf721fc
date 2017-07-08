@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69cd75b1_34adda74",
+        "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-07-08T22:49:52Z",
+      "side": 1,
+      "message": "add const to Get methods.",
+      "range": {
+        "startLine": 125,
+        "startChar": 44,
+        "endLine": 125,
+        "endChar": 49
+      },
+      "revId": "fb12addcee2d4c427f15813c24465c115bf721fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8dae5bb_ba8fd59f",
+        "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-07-08T22:49:52Z",
+      "side": 1,
+      "message": "This test is problematic in the new test setup. I think in this test we should track the dragging location of apps 1. That means, for each new dragging direction, we update \"from\" as top_right + last_drag_vector, and \"to\" as top_right + drag_vector. This will make sure we are always dragging apps 1.",
+      "revId": "fb12addcee2d4c427f15813c24465c115bf721fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20137ace_478a6a51",
+        "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-07-08T22:49:52Z",
+      "side": 1,
+      "message": "updated to 4*6 layout",
+      "revId": "fb12addcee2d4c427f15813c24465c115bf721fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f41496f2_c220184d",
+        "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 702,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-07-08T22:49:52Z",
+      "side": 1,
+      "message": "this really should be cols, not rows.",
+      "range": {
+        "startLine": 702,
+        "startChar": 47,
+        "endLine": 702,
+        "endChar": 51
+      },
+      "revId": "fb12addcee2d4c427f15813c24465c115bf721fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
