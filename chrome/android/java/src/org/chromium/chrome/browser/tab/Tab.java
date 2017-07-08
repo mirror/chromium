@@ -832,18 +832,18 @@ public class Tab
      *
      * @return Whether the printing process is started successfully.
      **/
-    public boolean print() {
+    public boolean print(int renderProcessID, int renderFrameID) {
         assert mNativeTabAndroid != 0;
-        return nativePrint(mNativeTabAndroid);
+        return nativePrint(mNativeTabAndroid, renderProcessID, renderFrameID);
     }
 
     @CalledByNative
-    public void setPendingPrint() {
+    public void setPendingPrint(int renderProcessID, int renderFrameID) {
         PrintingController printingController = PrintingControllerImpl.getInstance();
         if (printingController == null) return;
 
         printingController.setPendingPrint(new TabPrinter(this),
-                new PrintManagerDelegateImpl(getActivity()));
+                new PrintManagerDelegateImpl(getActivity()), renderProcessID, renderFrameID);
     }
 
     /**
@@ -3122,7 +3122,8 @@ public class Tab
             long intentReceivedTimestamp, boolean hasUserGesture);
     private native void nativeSetActiveNavigationEntryTitleForUrl(long nativeTabAndroid, String url,
             String title);
-    private native boolean nativePrint(long nativeTabAndroid);
+    private native boolean nativePrint(
+            long nativeTabAndroid, int renderProcessID, int renderFrameID);
     private native Bitmap nativeGetFavicon(long nativeTabAndroid);
     private native void nativeCreateHistoricalTab(long nativeTabAndroid);
     private native void nativeUpdateBrowserControlsState(
