@@ -22,6 +22,30 @@
       "revId": "b040ffbbdf06588a82e77702ba782a927601445b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27d6f391_40eb6634",
+        "filename": "net/http/http_server_properties_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 935,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-07-08T00:00:44Z",
+      "side": 0,
+      "message": "Interesting. Ryan mentioned a while ago that all alternative services should now be persisted as part of this change. I assume because now that we store which ones are broken, when chrome restarts, we\u0027ll still be able to tell which alt svcs are broken or nonbroken.\n\nrch@, is this the behavior we want?",
+      "parentUuid": "cedece0b_35fd8e36",
+      "range": {
+        "startLine": 935,
+        "startChar": 60,
+        "endLine": 935,
+        "endChar": 0
+      },
+      "revId": "b040ffbbdf06588a82e77702ba782a927601445b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
