@@ -46,6 +46,10 @@ void TexturedElement::UpdateElementSize() {
   set_size({size().x(), y, 1});
 }
 
+void TexturedElement::OnBeginFrame(const base::TimeTicks& begin_frame_time) {
+  UpdateTexture();
+}
+
 void TexturedElement::Render(UiElementRenderer* renderer,
                              gfx::Transform view_proj_matrix) const {
   if (!initialized_)

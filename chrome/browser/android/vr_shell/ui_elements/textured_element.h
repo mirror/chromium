@@ -33,9 +33,12 @@ class TexturedElement : public UiElement {
   void OnBeginFrame(const base::TimeTicks& begin_frame_time) override;
 
  protected:
+  void UpdateTexture();
+
   virtual UiTexture* GetTexture() const = 0;
-  virtual void UpdateTexture();
   virtual void UpdateElementSize();
+
+  void OnBeginFrame(const base::TimeTicks& begin_frame_time) final;
 
  private:
   void Flush(SkSurface* surface);
