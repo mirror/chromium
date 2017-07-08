@@ -81,14 +81,11 @@ Resources.Database = class {
   }
 
   /**
-   * @param {function(!Array.<string>)} callback
+   * @return {!Promise<!Array<string>>}
    */
-  getTableNames(callback) {
-    function sortingCallback(error, names) {
-      if (!error)
-        callback(names.sort());
-    }
-    this._model._agent.getDatabaseTableNames(this._id, sortingCallback);
+  async tableNames() {
+    var names = await this._model._agent.getDatabaseTableNames(this._id);
+    return names ? names.sort() : [];
   }
 
   /**
@@ -97,17 +94,12 @@ Resources.Database = class {
    * @param {function(string)} onError
    */
   executeSql(query, onSuccess, onError) {
-    /**
-     * @param {?Protocol.Error} error
-     * @param {!Array.<string>=} columnNames
-     * @param {!Array.<*>=} values
-     * @param {!Protocol.Database.Error=} errorObj
-     */
-    function callback(error, columnNames, values, errorObj) {
-      if (error) {
-        onError(error);
+    function callback(response) {
+      if (response.error) {
+        onError(response.error);
         return;
       }
+      var errorObj = response.sqlError;
       if (errorObj) {
         var message;
         if (errorObj.message)
@@ -119,9 +111,9 @@ Resources.Database = class {
         onError(message);
         return;
       }
-      onSuccess(columnNames, values);
+      onSuccess(response.columnNames, response.values);
     }
-    this._model._agent.executeSQL(this._id, query, callback);
+    this._model._agent.invoke_executeSQL({'databaseId': this._id, 'query': query}).then(callback);
   }
 };
 
