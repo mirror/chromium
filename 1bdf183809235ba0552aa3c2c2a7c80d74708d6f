@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99281b32_3f485687",
+        "filename": "ui/keyboard/content/keyboard_ui_content_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-07-08T00:21:32Z",
+      "side": 0,
+      "message": "Could you move this too as chrome_keyboard_ui_unittest.cc ?\nThen add the file name as a unit test target, around here\nhttps://cs.chromium.org/chromium/src/chrome/test/BUILD.gn?q\u003dchrome_screenshot_grabber_unittest.cc\u0026dr\u003dC\u0026l\u003d4209\n\nYou should be able to run the test with something like the following command:\nninja -C out/Debug unit_tests \u0026\u0026 out/Debug/unit_tests --gtest_filter\u003d\"*ChromeKeyboardUITest*\"",
+      "revId": "1bdf183809235ba0552aa3c2c2a7c80d74708d6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ad28049_197a30d5",
+        "filename": "ui/keyboard/content/keyboard_ui_content_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-07-08T00:21:32Z",
+      "side": 0,
+      "message": "Rename to ChromeKeyboardUI.",
+      "revId": "1bdf183809235ba0552aa3c2c2a7c80d74708d6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
