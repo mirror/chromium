@@ -198,6 +198,10 @@ const int kNumNetworkImages = 5;
 // Number of discrete images to use for alpha fade animation
 const int kNumFadeImages = 10;
 
+// Divide tether signal strength that ranges from 0 - 100 by this value,
+// and round up to obtain signal strength icon to use.
+const double signalStrengthLevelImageDivisor = 25.0;
+
 SkColor GetDefaultColorForIconType(IconType icon_type) {
   return icon_type == ICON_TYPE_TRAY ? kTrayIconColor : kMenuIconColor;
 }
@@ -813,6 +817,16 @@ gfx::ImageSkia GetImageForNewWifiNetwork(SkColor icon_color,
   Badges badges;
   badges.bottom_right = {&kNetworkBadgeAddOtherIcon, badge_color};
   return NetworkIconImageSource::CreateImage(icon, badges);
+}
+
+gfx::ImageSkia GetImageForNewTetherNetwork(
+    const chromeos::NetworkState* network) {
+  SignalStrengthImageSource* source = new SignalStrengthImageSource(
+      ImageTypeForNetworkType(chromeos::kTypeTether), ICON_TYPE_LIST,
+      ceil(network->signal_strength() / signalStrengthLevelImageDivisor));
+  source->set_color(blueIconColor);
+  gfx::ImageSkia icon = gfx::ImageSkia(source, source->size());
+  return icon;
 }
 
 base::string16 GetLabelForNetwork(const chromeos::NetworkState* network,
