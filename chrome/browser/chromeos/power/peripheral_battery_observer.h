@@ -49,9 +49,10 @@ class PeripheralBatteryObserver : public PowerManagerClient::Observer,
   FRIEND_TEST_ALL_PREFIXES(PeripheralBatteryObserverTest, Basic);
   FRIEND_TEST_ALL_PREFIXES(PeripheralBatteryObserverTest, InvalidBatteryInfo);
   FRIEND_TEST_ALL_PREFIXES(PeripheralBatteryObserverTest, DeviceRemove);
+  FRIEND_TEST_ALL_PREFIXES(PeripheralBatteryObserverTest, Stylus);
 
   struct BatteryInfo {
-    BatteryInfo() : level(-1) {}
+    BatteryInfo() {}
     BatteryInfo(const std::string& name,
                 int level,
                 base::TimeTicks notification_timestamp)
@@ -63,7 +64,7 @@ class PeripheralBatteryObserver : public PowerManagerClient::Observer,
     // Human readable name for the device. It is changeable.
     std::string name;
     // Battery level within range [0, 100], and -1 for unknown level.
-    int level;
+    int level = -1;
     base::TimeTicks last_notification_timestamp;
   };
 

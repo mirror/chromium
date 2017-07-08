@@ -16,6 +16,8 @@
 #include "content/public/test/test_utils.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "ui/message_center/message_center.h"
+#include "ui/message_center/notification.h"
 
 using ::testing::_;
 using ::testing::InSequence;
@@ -27,6 +29,11 @@ namespace {
 const char kTestBatteryPath[] = "/sys/class/power_supply/hid-AA:BB:CC-battery";
 const char kTestBatteryAddress[] = "cc:bb:aa";
 const char kTestDeviceName[] = "test device";
+constexpr char kTestStylusPath[] = "test-stylus";
+constexpr char kTestStylusName[] = "test";
+// Keep in sync with kStylusNotificationId in peripheral_battery_observer.cc.
+// That is the address that gets assigned to stylus notifications.
+constexpr char kTestStylusAddress[] = "stylus_battery";
 
 }  // namespace
 
@@ -166,6 +173,46 @@ IN_PROC_BROWSER_TEST_F(PeripheralBatteryObserverTest, DeviceRemove) {
                    kTestBatteryAddress,
                    NotificationUIManager::GetProfileID(
                        ProfileManager::GetPrimaryUserProfile())) != NULL);
+}
+
+IN_PROC_BROWSER_TEST_F(PeripheralBatteryObserverTest, Stylus) {
+  base::SimpleTestTickClock clock;
+  observer_->set_testing_clock(&clock);
+
+  message_center::MessageCenter* message_center =
+      message_center::MessageCenter::Get();
+
+  // Level 50 at time 100, no low-battery notification.
+  clock.Advance(base::TimeDelta::FromSeconds(100));
+  observer_->PeripheralBatteryStatusReceived(kTestStylusPath, kTestStylusName,
+                                             50);
+  EXPECT_EQ(observer_->batteries_.count(kTestStylusAddress), 1u);
+
+  const PeripheralBatteryObserver::BatteryInfo& info =
+      observer_->batteries_[kTestStylusAddress];
+
+  EXPECT_EQ(info.name, kTestStylusName);
+  EXPECT_EQ(info.level, 50);
+  EXPECT_EQ(info.last_notification_timestamp, base::TimeTicks());
+  EXPECT_TRUE(!message_center->FindVisibleNotificationById(kTestStylusAddress));
+
+  // Level 5 at time 110, low-battery notification.
+  clock.Advance(base::TimeDelta::FromSeconds(10));
+  observer_->PeripheralBatteryStatusReceived(kTestStylusPath, kTestStylusName,
+                                             5);
+  EXPECT_EQ(info.level, 5);
+  EXPECT_EQ(info.last_notification_timestamp, clock.NowTicks());
+  EXPECT_TRUE(
+      !!message_center->FindVisibleNotificationById(kTestStylusAddress));
+
+  // Level -1 at time 115, cancel previous notification
+  clock.Advance(base::TimeDelta::FromSeconds(5));
+  observer_->PeripheralBatteryStatusReceived(kTestStylusPath, kTestStylusName,
+                                             -1);
+  EXPECT_EQ(info.level, 5);
+  EXPECT_EQ(info.last_notification_timestamp,
+            clock.NowTicks() - base::TimeDelta::FromSeconds(5));
+  EXPECT_TRUE(!message_center->FindVisibleNotificationById(kTestStylusAddress));
 }
 
 }  // namespace chromeos
