@@ -8,6 +8,7 @@
 #include "platform/PlatformExport.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/text/WTFString.h"
+#include "public/platform/WebClientHintsType.h"
 
 namespace blink {
 
@@ -31,27 +32,26 @@ class PLATFORM_EXPORT ClientHintsPreferences {
   void UpdateFrom(const ClientHintsPreferences&);
   void UpdateFromAcceptClientHintsHeader(const String& header_value, Context*);
 
-  bool ShouldSendDeviceRAM() const { return should_send_device_ram_; }
-  void SetShouldSendDeviceRAM(bool should) { should_send_device_ram_ = should; }
+  // Parses the client hints headers, and populates |enabled_types| with the
+  // client hint prefernces that should be persisted for duration
+  // |persist_duration_seconds|. |persist_duration_seconds| should be non-null.
+  // |persist_duration_seconds| will be set to -1 if no client hint needs to be
+  // persisted.
+  static void UpdatePersistentHintsFromHeaders(
+      const String& accept_ch_header_value,
+      const String& accept_ch_lifetime_header_value,
+      bool enabled_types[kWebClientHintsTypeNumValues],
+      int64_t* persist_duration_seconds);
 
-  bool ShouldSendDPR() const { return should_send_dpr_; }
-  void SetShouldSendDPR(bool should) { should_send_dpr_ = should; }
-
-  bool ShouldSendResourceWidth() const { return should_send_resource_width_; }
-  void SetShouldSendResourceWidth(bool should) {
-    should_send_resource_width_ = should;
+  bool ShouldSend(WebClientHintsType type) const {
+    return enabled_types_[type];
   }
-
-  bool ShouldSendViewportWidth() const { return should_send_viewport_width_; }
-  void SetShouldSendViewportWidth(bool should) {
-    should_send_viewport_width_ = should;
+  void SetShouldSend(WebClientHintsType type, bool should) {
+    enabled_types_[type] = should;
   }
 
  private:
-  bool should_send_device_ram_;
-  bool should_send_dpr_;
-  bool should_send_resource_width_;
-  bool should_send_viewport_width_;
+  bool enabled_types_[kWebClientHintsTypeNumValues];
 };
 
 }  // namespace blink
