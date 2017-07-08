@@ -1442,6 +1442,8 @@ TEST_P(NavigationManagerTest, GetIndexOfItem) {
 INSTANTIATE_TEST_CASE_P(
     ProgrammaticNavigationManagerTest,
     NavigationManagerTest,
-    ::testing::Values(NavigationManagerChoice::TEST_LEGACY_NAVIGATION_MANAGER));
+    ::testing::Values(
+        NavigationManagerChoice::TEST_LEGACY_NAVIGATION_MANAGER,
+        NavigationManagerChoice::TEST_WK_BASED_NAVIGATION_MANAGER));
 
 }  // namespace web
