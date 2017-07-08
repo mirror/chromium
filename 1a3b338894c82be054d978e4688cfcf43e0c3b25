@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "bb228dc6_7203b941",
+        "filename": "chrome/browser/resources/settings/on_startup_page/startup_urls_page.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-08T01:19:58Z",
+      "side": 1,
+      "message": "That\u0027s a good strategy, I\u0027ll keep it in mind when I need a temp ID",
+      "parentUuid": "4a8d6e50_1ba6661d",
+      "range": {
+        "startLine": 39,
+        "startChar": 40,
+        "endLine": 39,
+        "endChar": 44
+      },
+      "revId": "1a3b338894c82be054d978e4688cfcf43e0c3b25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3d56b90b_dd21e1f8",
         "filename": "chrome/browser/resources/settings/on_startup_page/startup_urls_page.html",
         "patchSetId": 4
@@ -225,6 +249,30 @@
       "side": 1,
       "message": "There\u0027s only a button on this page. We could consider removing the whole test file, but there is a small amount of merit in testing that the button is present.",
       "parentUuid": "359e11d7_e8c41fdf",
+      "range": {
+        "startLine": 39,
+        "startChar": 10,
+        "endLine": 39,
+        "endChar": 27
+      },
+      "revId": "1a3b338894c82be054d978e4688cfcf43e0c3b25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f9f59af_54d056a8",
+        "filename": "chrome/test/data/webui/settings/on_startup_browsertest.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-08T01:19:58Z",
+      "side": 1,
+      "message": "Based on conversation: we should remove the test in a followup CL",
+      "parentUuid": "cb05cd85_b8a06a94",
       "range": {
         "startLine": 39,
         "startChar": 10,
