@@ -7,12 +7,14 @@
 #include "base/memory/ptr_util.h"
 #include "base/scoped_observer.h"
 #include "base/strings/sys_string_conversions.h"
+#include "components/strings/grit/components_strings.h"
 #import "ios/chrome/browser/web/tab_id_tab_helper.h"
 #import "ios/chrome/browser/web_state_list/web_state_list.h"
 #import "ios/clean/chrome/browser/ui/tab_collection/tab_collection_consumer.h"
 #import "ios/clean/chrome/browser/ui/tab_collection/tab_collection_item.h"
 #include "ios/web/public/web_state/web_state.h"
 #import "ios/web/public/web_state/web_state_observer_bridge.h"
+#include "ui/base/l10n/l10n_util.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -139,18 +141,16 @@
 
 // Constructs a TabCollectionItem from a |webState|.
 - (TabCollectionItem*)tabCollectionItemFromWebState:(web::WebState*)webState {
-  // PLACEHOLDER: Use real webstate title in the future.
   DCHECK(webState);
-  GURL url = webState->GetVisibleURL();
-  NSString* urlText = @"<New Tab>";
-  if (url.is_valid()) {
-    urlText = base::SysUTF8ToNSString(url.spec());
+  base::string16 title = webState->GetTitle();
+  if (title.empty()) {
+    title = l10n_util::GetStringUTF16(IDS_DEFAULT_TAB_TITLE);
   }
   TabIdTabHelper* tabHelper = TabIdTabHelper::FromWebState(webState);
   DCHECK(tabHelper);
   TabCollectionItem* item = [[TabCollectionItem alloc] init];
   item.tabID = tabHelper->tab_id();
-  item.title = urlText;
+  item.title = base::SysUTF16ToNSString(title);
   return item;
 }
 
