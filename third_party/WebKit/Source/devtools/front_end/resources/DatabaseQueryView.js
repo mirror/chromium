@@ -89,7 +89,7 @@ Resources.DatabaseQueryView = class extends UI.VBox {
 
       fulfill(results.map(completion => ({text: completion})));
     }
-    this.database.getTableNames(tableNamesCallback);
+    this.database.tableNames().then(tableNamesCallback);
     return promise;
   }
 
