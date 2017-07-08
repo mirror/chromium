@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "842f14bf_e252c808",
+        "filename": "chrome/installer/zucchini/buffer_sink.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-08T00:14:09Z",
+      "side": 1,
+      "message": "2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 18
+      },
+      "revId": "418b76cda225f46d5c2104f4cbfba7c0348df153",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12c18976_65b248f3",
+        "filename": "chrome/installer/zucchini/buffer_view.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-08T00:14:09Z",
+      "side": 1,
+      "message": "DCHECK_LE(n, size());",
+      "range": {
+        "startLine": 78,
+        "startChar": 4,
+        "endLine": 78,
+        "endChar": 10
+      },
+      "revId": "418b76cda225f46d5c2104f4cbfba7c0348df153",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
