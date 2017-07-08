@@ -145,8 +145,11 @@ static inline InlineTextBox* CreateInlineBoxForText(BidiRun& run,
   // We only treat a box as text for a <br> if we are on a line by ourself or in
   // strict mode (Note the use of strict mode.  In "almost strict" mode, we
   // don't treat the box for <br> as text.)
-  if (text.IsBR())
+  if (text.IsBR()) {
     text_box->SetIsText(is_only_run || text.GetDocument().InNoQuirksMode());
+    if (is_only_run)
+      text_box->SetLogicalWidth(LayoutUnit(1));
+  }
   text_box->SetDirOverride(
       run.DirOverride(text.Style()->RtlOrdering() == EOrder::kVisual));
   if (run.has_hyphen_)
