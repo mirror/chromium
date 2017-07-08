@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "a3fbd6e9_68da8341",
+        "filename": "third_party/WebKit/Source/devtools/front_end/emulation/DeviceModeModel.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 658,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-08T01:58:20Z",
+      "side": 1,
+      "message": "Should this go after next call?",
+      "revId": "1d41f90e3ad5606b75f6dde90bfd72b87bdb4d1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "459bd4a3_63158817",
         "filename": "third_party/WebKit/Source/devtools/front_end/emulation/DeviceModeModel.js",
         "patchSetId": 4
@@ -31,6 +48,24 @@
       "side": 1,
       "message": "I don\u0027t want to call emulateDevice here because page handler will do that. But in alternative clients, they would only be doing emulateDevice once...",
       "parentUuid": "459bd4a3_63158817",
+      "revId": "1d41f90e3ad5606b75f6dde90bfd72b87bdb4d1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59ee3b04_c2eb04a5",
+        "filename": "third_party/WebKit/Source/devtools/front_end/emulation/DeviceModeModel.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-08T01:58:20Z",
+      "side": 1,
+      "message": "What\u0027s the difference? This way you set visible size twice (here and in page handler later). That way you emulate twice. Perhaps, second emulation will be noop in some circumstances.",
+      "parentUuid": "bde87f32_ca6f2f95",
       "revId": "1d41f90e3ad5606b75f6dde90bfd72b87bdb4d1b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
