@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d385568c_a5443c47",
+        "filename": "cc/trees/layer_tree_host_common_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 8663,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-07-08T03:58:48Z",
+      "side": 1,
+      "message": "This test previously did not have a scrollable scroll_parent and therefore did not scroll at all. The test would still pass with the SetCurrentScrollOffset call on line 8677 removed.\n\nThe original test (https://codereview.chromium.org/1106013002) was checking that the visible_layer_rect was not updated without rebuilding property trees. A later patch (https://codereview.chromium.org/1870513002) mistakenly made scroll layer unscrollable (stopped setting scroll clip layer) and added a forced property tree rebuild. The test has been updated to check the original case (before-update) as well as the after-update visible layer rect.",
+      "revId": "34548806542f4fdceac403699f00d4d54f8e2c9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
