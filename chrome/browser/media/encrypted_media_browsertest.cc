@@ -298,7 +298,9 @@ class EncryptedMediaTestBase : public MediaBrowserTest {
                         media::kClearKeyCdmPepperMimeType);
       if (cdm_host_type == CdmHostType::kMojo) {
         scoped_feature_list_.InitWithFeatures(
-            {media::kExternalClearKeyForTesting, media::kMojoCdm}, {});
+            {media::kExternalClearKeyForTesting, media::kMojoCdm,
+             media::kSupportExperimentalCdmInterface},
+            {});
       } else {
         scoped_feature_list_.InitWithFeatures(
             {media::kExternalClearKeyForTesting}, {});

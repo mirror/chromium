@@ -33,6 +33,10 @@ CdmFileAdapter::CdmFileAdapter(cdm::ContentDecryptionModule_8::Host* host) {
   file_io_ = host->CreateFileIO(this);
 }
 
+CdmFileAdapter::CdmFileAdapter(cdm::ContentDecryptionModule_9::Host* host) {
+  file_io_ = host->CreateFileIO(this);
+}
+
 CdmFileAdapter::~CdmFileAdapter() {
   DCHECK(open_cb_.is_null());
   DCHECK(read_cb_.is_null());
