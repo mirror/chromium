@@ -106,8 +106,8 @@ void TestRenderFrame::SetAccessibilityMode(AccessibilityMode new_mode) {
 void TestRenderFrame::SetCompositionFromExistingText(
     int start,
     int end,
-    const std::vector<blink::WebCompositionUnderline>& underlines) {
-  OnSetCompositionFromExistingText(start, end, underlines);
+    const blink::WebTextCompositionData& text_composition_data) {
+  OnSetCompositionFromExistingText(start, end, text_composition_data);
 }
 
 blink::WebNavigationPolicy TestRenderFrame::DecidePolicyForNavigation(

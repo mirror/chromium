@@ -103,16 +103,18 @@ void ExtractCompositionTextFromGtkPreedit(const gchar* utf8_text,
           else if (type == PANGO_UNDERLINE_ERROR)
             underline.color = SK_ColorRED;
         }
-        composition->underlines.push_back(underline);
+        composition->text_composition_data.composition_underlines.push_back(
+            underline);
       }
     } while (pango_attr_iterator_next(iter));
     pango_attr_iterator_destroy(iter);
   }
 
   // Use a black thin underline by default.
-  if (composition->underlines.empty()) {
-    composition->underlines.push_back(CompositionUnderline(
-        0, length, SK_ColorBLACK, false, SK_ColorTRANSPARENT));
+  if (composition->text_composition_data.composition_underlines.empty()) {
+    composition->text_composition_data.composition_underlines.push_back(
+        CompositionUnderline(0, length, SK_ColorBLACK, false,
+                             SK_ColorTRANSPARENT));
   }
 }
 

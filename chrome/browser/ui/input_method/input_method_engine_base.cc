@@ -229,7 +229,8 @@ bool InputMethodEngineBase::SetComposition(
 
     underline.start_offset = segment->start;
     underline.end_offset = segment->end;
-    composition_text_->underlines.push_back(underline);
+    composition_text_->text_composition_data.composition_underlines.push_back(
+        underline);
   }
 
   // TODO(nona): Makes focus out mode configuable, if necessary.
