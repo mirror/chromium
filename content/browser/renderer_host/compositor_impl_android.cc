@@ -40,7 +40,6 @@
 #include "cc/output/vulkan_in_process_context_provider.h"
 #include "cc/raster/single_thread_task_graph_runner.h"
 #include "cc/resources/ui_resource_manager.h"
-#include "cc/surfaces/direct_layer_tree_frame_sink.h"
 #include "cc/surfaces/display.h"
 #include "cc/surfaces/display_scheduler.h"
 #include "cc/surfaces/frame_sink_id_allocator.h"
@@ -50,6 +49,7 @@
 #include "components/viz/host/host_frame_sink_manager.h"
 #include "components/viz/service/display_embedder/compositor_overlay_candidate_validator_android.h"
 #include "components/viz/service/display_embedder/server_shared_bitmap_manager.h"
+#include "components/viz/service/frame_sinks/direct_layer_tree_frame_sink.h"
 #include "components/viz/service/frame_sinks/frame_sink_manager_impl.h"
 #include "content/browser/browser_main_loop.h"
 #include "content/browser/compositor/surface_utils.h"
@@ -811,10 +811,10 @@ void CompositorImpl::InitializeDisplay(
 
   auto layer_tree_frame_sink =
       vulkan_context_provider
-          ? base::MakeUnique<cc::DirectLayerTreeFrameSink>(
+          ? base::MakeUnique<viz::DirectLayerTreeFrameSink>(
                 frame_sink_id_, manager, display_.get(),
                 vulkan_context_provider)
-          : base::MakeUnique<cc::DirectLayerTreeFrameSink>(
+          : base::MakeUnique<viz::DirectLayerTreeFrameSink>(
                 frame_sink_id_, manager, display_.get(), context_provider,
                 nullptr, BrowserGpuMemoryBufferManager::current(),
                 viz::ServerSharedBitmapManager::current());

@@ -18,12 +18,12 @@
 #include "cc/output/texture_mailbox_deleter.h"
 #include "cc/scheduler/begin_frame_source.h"
 #include "cc/scheduler/delay_based_time_source.h"
-#include "cc/surfaces/direct_layer_tree_frame_sink.h"
 #include "cc/surfaces/display.h"
 #include "cc/surfaces/display_scheduler.h"
 #include "cc/surfaces/local_surface_id_allocator.h"
 #include "cc/test/pixel_test_output_surface.h"
 #include "components/viz/host/host_frame_sink_manager.h"
+#include "components/viz/service/frame_sinks/direct_layer_tree_frame_sink.h"
 #include "gpu/command_buffer/client/context_support.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "gpu/command_buffer/common/gles2_cmd_utils.h"
@@ -251,7 +251,7 @@ void InProcessContextFactory::CreateLayerTreeFrameSink(
   data->begin_frame_source = std::move(begin_frame_source);
 
   auto* display = per_compositor_data_[compositor.get()]->display.get();
-  auto layer_tree_frame_sink = base::MakeUnique<cc::DirectLayerTreeFrameSink>(
+  auto layer_tree_frame_sink = base::MakeUnique<viz::DirectLayerTreeFrameSink>(
       compositor->frame_sink_id(), GetSurfaceManager(), display,
       context_provider, shared_worker_context_provider_,
       &gpu_memory_buffer_manager_, &shared_bitmap_manager_);
