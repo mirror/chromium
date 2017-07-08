@@ -60,6 +60,9 @@ extern const char kHistogramSubresourceFilterCount[];
 extern const char kHistogramSubresourceFilterActivationDecision[];
 extern const char kHistogramSubresourceFilterActivationDecisionReload[];
 
+extern const char kUkmSubresourceFilterName[];
+extern const char kUkmSubresourceFilterActivationDecision[];
+
 }  // namespace internal
 
 class SubresourceFilterMetricsObserver

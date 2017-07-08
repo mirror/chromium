@@ -3,7 +3,9 @@
 // found in the LICENSE file.
 
 #include "chrome/browser/page_load_metrics/observers/document_write_page_load_metrics_observer.h"
+#include "chrome/browser/browser_process.h"
 #include "chrome/browser/page_load_metrics/page_load_metrics_util.h"
+#include "services/metrics/public/cpp/ukm_recorder.h"
 #include "third_party/WebKit/public/platform/WebLoadingBehaviorFlag.h"
 
 namespace internal {
@@ -74,6 +76,12 @@ const char kHistogramDocWriteBlockReloadCount[] =
 const char kHistogramDocWriteBlockLoadingBehavior[] =
     "PageLoad.Clients.DocWrite.Block.DocumentWriteLoadingBehavior";
 
+const char kUkmDocWriteBlockName[] = "DocumentWrite.ScriptBlock";
+const char kUkmParseBlockedOnScriptLoadDocumentWrite[] =
+    "ParseTiming.ParseBlockedOnScriptLoadFromDocumentWrite";
+const char kUkmParseBlockedOnScriptExecutionDocumentWrite[] =
+    "ParseTiming.ParseBlockedOnScriptExecutionFromDocumentWrite";
+
 }  // namespace internal
 
 void DocumentWritePageLoadMetricsObserver::OnFirstContentfulPaintInPage(
@@ -137,6 +145,8 @@ void DocumentWritePageLoadMetricsObserver::OnLoadingBehaviorObserved(
         blink::WebLoadingBehaviorFlag::kWebLoadingBehaviorDocumentWriteBlock));
     UMA_HISTOGRAM_COUNTS(internal::kHistogramDocWriteBlockReloadCount, 1);
     LogLoadingBehaviorMetrics(LOADING_BEHAVIOR_RELOAD);
+    // TODO(bmcquade): do we need to log the reload, or are existing signals
+    // sufficient?
     doc_write_block_reload_observed_ = true;
   }
   if ((info.main_frame_metadata.behavior_flags &
@@ -144,6 +154,11 @@ void DocumentWritePageLoadMetricsObserver::OnLoadingBehaviorObserved(
       !doc_write_block_observed_) {
     UMA_HISTOGRAM_BOOLEAN(internal::kHistogramDocWriteBlockCount, true);
     LogLoadingBehaviorMetrics(LOADING_BEHAVIOR_BLOCK);
+    ukm::UkmRecorder* ukm_recorder = g_browser_process->ukm_recorder();
+    if (ukm_recorder) {
+      ukm_recorder->GetEntryBuilder(info.source_id,
+                                    internal::kUkmDocWriteBlockName);
+    }
     doc_write_block_observed_ = true;
   }
   if ((info.main_frame_metadata.behavior_flags &
@@ -291,6 +306,24 @@ void DocumentWritePageLoadMetricsObserver::LogDocumentWriteBlockParseStop(
         timing.parse_timing
             ->parse_blocked_on_script_execution_from_document_write_duration
             .value());
+
+    ukm::UkmRecorder* ukm_recorder = g_browser_process->ukm_recorder();
+    if (ukm_recorder) {
+      std::unique_ptr<ukm::UkmEntryBuilder> builder =
+          ukm_recorder->GetEntryBuilder(info.source_id,
+                                        internal::kUkmDocWriteBlockName);
+      builder->AddMetric(
+          internal::kUkmParseBlockedOnScriptLoadDocumentWrite,
+          timing.parse_timing
+              ->parse_blocked_on_script_load_from_document_write_duration
+              ->InMilliseconds());
+      builder->AddMetric(
+          internal::kUkmParseBlockedOnScriptExecutionDocumentWrite,
+          timing.parse_timing
+              ->parse_blocked_on_script_execution_from_document_write_duration
+              ->InMilliseconds());
+    }
+
   } else {
     PAGE_LOAD_HISTOGRAM(
         internal::kBackgroundHistogramDocWriteBlockParseDuration,
