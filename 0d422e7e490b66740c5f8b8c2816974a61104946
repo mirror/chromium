@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1fafce53_bbfd1080",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-07-08T00:10:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2ca53a4_698adf94",
+      "range": {
+        "startLine": 444,
+        "startChar": 5,
+        "endLine": 444,
+        "endChar": 12
+      },
+      "revId": "0d422e7e490b66740c5f8b8c2816974a61104946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9edf39f0_4b52259e",
         "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "0d422e7e490b66740c5f8b8c2816974a61104946",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d362527e_b04c0194",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-07-08T00:10:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9edf39f0_4b52259e",
+      "range": {
+        "startLine": 471,
+        "startChar": 12,
+        "endLine": 471,
+        "endChar": 36
+      },
+      "revId": "0d422e7e490b66740c5f8b8c2816974a61104946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "be5b2ab8_81c84201",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-07-08T00:10:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3af45de_7fe20e23",
+      "range": {
+        "startLine": 479,
+        "startChar": 31,
+        "endLine": 479,
+        "endChar": 37
+      },
+      "revId": "0d422e7e490b66740c5f8b8c2816974a61104946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24da4bbc_0230e371",
         "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2017-07-05T14:18:36Z",
       "side": 1,
       "message": "If there\u0027s no render frame should this default to false? Under what conditions can that occur? If it\u0027s not expected, we should DCHECK. Otherwise, we should explicitly handle and document the case.",
+      "range": {
+        "startLine": 652,
+        "startChar": 14,
+        "endLine": 652,
+        "endChar": 38
+      },
+      "revId": "0d422e7e490b66740c5f8b8c2816974a61104946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53d6b2e3_2f614df4",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 652,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-07-08T00:10:29Z",
+      "side": 1,
+      "message": "Moved it to a DCHECK",
+      "parentUuid": "24da4bbc_0230e371",
       "range": {
         "startLine": 652,
         "startChar": 14,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "3ab12f6a_c3ad4d07",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 728,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-07-08T00:10:29Z",
+      "side": 1,
+      "message": "Yes, Removed.",
+      "parentUuid": "6fc4e1fa_80905194",
+      "range": {
+        "startLine": 728,
+        "startChar": 19,
+        "endLine": 728,
+        "endChar": 25
+      },
+      "revId": "0d422e7e490b66740c5f8b8c2816974a61104946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "13c24113_b2693b41",
         "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
         "patchSetId": 3
@@ -128,6 +248,30 @@
       "writtenOn": "2017-07-05T14:18:36Z",
       "side": 1,
       "message": "I thought we had decided to *always* fast shutdown in kUrgentShutdown mode on ChromeOS, even if there\u0027s a beforeunload handler, as the kernel process killer will effectively have that behaviour anyways?",
+      "range": {
+        "startLine": 776,
+        "startChar": 20,
+        "endLine": 776,
+        "endChar": 35
+      },
+      "revId": "0d422e7e490b66740c5f8b8c2816974a61104946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6692507_a61862fe",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-07-08T00:10:29Z",
+      "side": 1,
+      "message": "According to the PSA: https://groups.google.com/a/chromium.org/forum/#!msg/Blink-dev/5pejN-0Tl5s/VPP_ZbWfBAAJ, the logic for beforeunload is unchanged.\n\n\"Note that the behavior of beforeunload will remain unchanged: beforeunload, if present, will still be run on critical memory pressure.\"\n\nI would rather leave it as is, and revisit if needed?",
+      "parentUuid": "13c24113_b2693b41",
       "range": {
         "startLine": 776,
         "startChar": 20,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "0a00c717_b272d988",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-07-08T00:10:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84758fe7_4b55291c",
+      "range": {
+        "startLine": 101,
+        "startChar": 18,
+        "endLine": 101,
+        "endChar": 37
+      },
+      "revId": "0d422e7e490b66740c5f8b8c2816974a61104946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9043e3db_1a30a6ee",
         "filename": "chrome/browser/resource_coordinator/tab_manager_browsertest.cc",
         "patchSetId": 3
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "460a7e64_b3daabf9",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-07-08T00:10:29Z",
+      "side": 1,
+      "message": "Refactored, the new code preserves the condition in the test name.",
+      "parentUuid": "9043e3db_1a30a6ee",
+      "range": {
+        "startLine": 630,
+        "startChar": 39,
+        "endLine": 630,
+        "endChar": 73
+      },
+      "revId": "0d422e7e490b66740c5f8b8c2816974a61104946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3548b703_abacc0bc",
         "filename": "chrome/browser/resource_coordinator/tab_manager_browsertest.cc",
         "patchSetId": 3
@@ -197,6 +389,30 @@
       "writtenOn": "2017-07-05T14:18:36Z",
       "side": 1,
       "message": "Can you document whether or not unload handlers interact with this test at all?",
+      "range": {
+        "startLine": 704,
+        "startChar": 37,
+        "endLine": 704,
+        "endChar": 38
+      },
+      "revId": "0d422e7e490b66740c5f8b8c2816974a61104946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf2de73c_6ee0bfce",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-07-08T00:10:29Z",
+      "side": 1,
+      "message": "I refactored that test, I added an explicit unload and beforeunload handler tests, removed this one. and fixed the comments in all of them to describe the expected behavior.",
+      "parentUuid": "3548b703_abacc0bc",
       "range": {
         "startLine": 704,
         "startChar": 37,
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "55d5a4be_309b6333",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 723,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-07-08T00:10:29Z",
+      "side": 1,
+      "message": "I refactored the tests into 2 conditions and 3 use cases.\nConditions: Urgent, Proactive\nUse cases: single process per tab vs shared process, with unload handler, with before unload handler, resulting in a total of 8 test cases.",
+      "parentUuid": "7ac07ae7_dfa5f97a",
+      "range": {
+        "startLine": 723,
+        "startChar": 39,
+        "endLine": 723,
+        "endChar": 74
+      },
+      "revId": "0d422e7e490b66740c5f8b8c2816974a61104946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6a56dc7d_3083a19f",
         "filename": "content/browser/memory/memory_coordinator_impl.h",
         "patchSetId": 3
@@ -243,6 +483,30 @@
       "writtenOn": "2017-07-05T14:18:36Z",
       "side": 1,
       "message": "Can this use the enum as well?",
+      "range": {
+        "startLine": 140,
+        "startChar": 23,
+        "endLine": 140,
+        "endChar": 40
+      },
+      "revId": "0d422e7e490b66740c5f8b8c2816974a61104946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c14dfdcb_9d76e03f",
+        "filename": "content/browser/memory/memory_coordinator_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-07-08T00:10:29Z",
+      "side": 1,
+      "message": "This class is in content/, while the enum is in chrome/. We will need to find a better spot for the enum.",
+      "parentUuid": "6a56dc7d_3083a19f",
       "range": {
         "startLine": 140,
         "startChar": 23,
@@ -278,6 +542,30 @@
     },
     {
       "key": {
+        "uuid": "79417a29_0e244c5a",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2991,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-07-08T00:10:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ce68d39_bb50b1bc",
+      "range": {
+        "startLine": 2991,
+        "startChar": 8,
+        "endLine": 2991,
+        "endChar": 20
+      },
+      "revId": "0d422e7e490b66740c5f8b8c2816974a61104946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6931357_3c5ff7b1",
         "filename": "content/browser/renderer_host/render_process_host_impl.cc",
         "patchSetId": 3
@@ -298,6 +586,30 @@
       "revId": "0d422e7e490b66740c5f8b8c2816974a61104946",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "762b7266_3a67c756",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2992,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-07-08T00:10:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6931357_3c5ff7b1",
+      "range": {
+        "startLine": 2992,
+        "startChar": 23,
+        "endLine": 2992,
+        "endChar": 32
+      },
+      "revId": "0d422e7e490b66740c5f8b8c2816974a61104946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -324,6 +636,30 @@
     },
     {
       "key": {
+        "uuid": "a3c11dbd_bd9254f2",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2993,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-07-08T00:10:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9566410_c5312d38",
+      "range": {
+        "startLine": 2993,
+        "startChar": 55,
+        "endLine": 2993,
+        "endChar": 61
+      },
+      "revId": "0d422e7e490b66740c5f8b8c2816974a61104946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a63fd0b5_b0da6971",
         "filename": "content/public/browser/render_process_host.h",
         "patchSetId": 3
@@ -344,6 +680,30 @@
       "revId": "0d422e7e490b66740c5f8b8c2816974a61104946",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56a772cb_3f5ed895",
+        "filename": "content/public/browser/render_process_host.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-07-08T00:10:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a63fd0b5_b0da6971",
+      "range": {
+        "startLine": 209,
+        "startChar": 15,
+        "endLine": 209,
+        "endChar": 50
+      },
+      "revId": "0d422e7e490b66740c5f8b8c2816974a61104946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
