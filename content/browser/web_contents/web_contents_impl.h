@@ -307,6 +307,7 @@ class CONTENT_EXPORT WebContentsImpl
   RenderProcessHost* GetRenderProcessHost() const override;
   RenderFrameHostImpl* GetMainFrame() override;
   RenderFrameHostImpl* GetFocusedFrame() override;
+  RenderFrameHostImpl* GetScriptedPrintFrame() override;
   RenderFrameHostImpl* FindFrameByFrameTreeNodeId(int frame_tree_node_id,
                                                   int process_id) override;
   RenderFrameHostImpl* UnsafeFindFrameByFrameTreeNodeId(
@@ -538,6 +539,7 @@ class CONTENT_EXPORT WebContentsImpl
       const GURL& url) override;
   void SetFocusedFrame(FrameTreeNode* node, SiteInstance* source) override;
   RenderFrameHost* GetFocusedFrameIncludingInnerWebContents() override;
+  void SetScriptedPrintFrame(FrameTreeNode* node) override;
   void OnFocusedElementChangedInFrame(
       RenderFrameHostImpl* frame,
       const gfx::Rect& bounds_in_root_view) override;

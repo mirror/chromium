@@ -32,6 +32,8 @@
 #include "printing/printing_utils.h"
 #include "ui/base/l10n/l10n_util.h"
 
+#include "base/logging.h"
+
 #if defined(OS_ANDROID)
 #include "chrome/browser/android/tab_android.h"
 #endif
@@ -114,7 +116,11 @@ void PostOnOwnerThread(const scoped_refptr<PrintJobWorkerOwner>& owner,
 PrintJobWorker::PrintJobWorker(int render_process_id,
                                int render_frame_id,
                                PrintJobWorkerOwner* owner)
-    : owner_(owner), thread_("Printing_Worker"), weak_factory_(this) {
+    : render_process_id_(render_process_id),
+      render_frame_id_(render_frame_id),
+      owner_(owner),
+      thread_("Printing_Worker"),
+      weak_factory_(this) {
   // The object is created in the IO thread.
   DCHECK(owner_->RunsTasksInCurrentSequence());
 
@@ -229,8 +235,10 @@ void PrintJobWorker::GetSettingsWithUI(
     // Regardless of whether the following call fails or not, the javascript
     // call will return since startPendingPrint will make it return immediately
     // in case of error.
+    LOG(WARNING) << "render_process_id_ = " << render_process_id_;
+    LOG(WARNING) << "render_frame_id_ = " << render_frame_id_;
     if (tab)
-      tab->SetPendingPrint();
+      tab->SetPendingPrint(render_process_id_, render_frame_id_);
   }
 #endif
 

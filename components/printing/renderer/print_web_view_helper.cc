@@ -999,6 +999,8 @@ void PrintWebViewHelper::ScriptedPrint(bool user_initiated) {
   if (delegate_->OverridePrint(web_frame))
     return;
 
+  LOG(WARNING) << "ScriptedPrint routing_id = " << routing_id();
+
   if (g_is_preview_enabled) {
 #if BUILDFLAG(ENABLE_PRINT_PREVIEW)
     print_preview_context_.InitWithFrame(web_frame);
@@ -1504,6 +1506,7 @@ void PrintWebViewHelper::Print(blink::WebLocalFrame* frame,
                                const blink::WebNode& node,
                                bool is_scripted) {
   // If still not finished with earlier print request simply ignore.
+  LOG(WARNING) << "Print routing_id = " << routing_id();
   if (prep_frame_view_)
     return;
 

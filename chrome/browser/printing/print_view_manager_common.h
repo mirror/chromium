@@ -28,6 +28,11 @@ void StartBasicPrint(content::WebContents* contents);
 // frame (this makes print selection work for multiple frames).
 content::RenderFrameHost* GetFrameToPrint(content::WebContents* contents);
 
+// Similar functionality with above function but only used for Android. It
+// considers recent window.print() as well.
+content::RenderFrameHost* GetRenderFrameHostToPrint(
+    content::WebContents* contents);
+
 }  // namespace printing
 
 #endif  // CHROME_BROWSER_PRINTING_PRINT_VIEW_MANAGER_COMMON_H_

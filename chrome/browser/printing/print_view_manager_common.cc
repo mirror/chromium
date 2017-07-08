@@ -122,4 +122,15 @@ content::RenderFrameHost* GetFrameToPrint(content::WebContents* contents) {
              : contents->GetMainFrame();
 }
 
+content::RenderFrameHost* GetRenderFrameHostToPrint(
+    content::WebContents* contents) {
+  auto* scripted_print_frame = contents->GetScriptedPrintFrame();
+  if (scripted_print_frame)
+    return scripted_print_frame;
+  auto* focused_frame = contents->GetFocusedFrame();
+  if (focused_frame && focused_frame->HasSelection())
+    return focused_frame;
+  return contents->GetMainFrame();
+}
+
 }  // namespace printing
