@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d2f1ac9_99b4464d",
+        "filename": "chrome/test/data/webui/settings/on_startup_browsertest.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-08T00:26:04Z",
+      "side": 0,
+      "message": "Do we need to wait for this to be initialized in the setup step of the StartupUrlsPage tests?",
+      "range": {
+        "startLine": 62,
+        "startChar": 13,
+        "endLine": 62,
+        "endChar": 41
+      },
+      "revId": "a1ed2e02283cf828822dd24dd0e8f5e22767b4bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
