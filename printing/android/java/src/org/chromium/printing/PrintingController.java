@@ -83,7 +83,8 @@ public interface PrintingController {
      *     a Tab.
      * @param printManager The print manager that manages the print job.
      */
-    void setPendingPrint(final Printable printable, final PrintManagerDelegate printManager);
+    void setPendingPrint(final Printable printable, final PrintManagerDelegate printManager,
+            final int renderProcessID, final int renderFrameID);
 
     /**
      * Starts printing, provided that the current object already has sufficient data to start the
