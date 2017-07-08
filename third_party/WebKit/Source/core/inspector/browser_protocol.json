@@ -213,6 +213,18 @@
                     { "name": "clientHeight", "type": "number", "description": "Height (CSS pixels), excludes scrollbar if present." },
                     { "name": "scale", "type": "number", "description": "Scale relative to the ideal viewport (size at width=device-width)." }
                 ]
+            },
+            {
+                "id": "Rectangle",
+                "type": "object",
+                "description": "Rectangle.",
+                "experimental": true,
+                "properties": [
+                    { "name": "x", "type": "number", "description": "X offset" },
+                    { "name": "y", "type": "number", "description": "Y offset" },
+                    { "name": "width", "type": "number", "description": "Rectangle width" },
+                    { "name": "height", "type": "number", "description": "Rectangle height" }
+                ]
             }
         ],
         "commands": [
@@ -430,6 +442,7 @@
                 "parameters": [
                     { "name": "format", "type": "string", "optional": true, "enum": ["jpeg", "png"], "description": "Image compression format (defaults to png)." },
                     { "name": "quality", "type": "integer", "optional": true, "description": "Compression quality from range [0..100] (jpeg only)." },
+                    { "name": "clip", "$ref": "Rectangle", "optional": true, "description": "Capture the screenshot of a given region only.", "experimental": true },
                     { "name": "fromSurface", "type": "boolean", "optional": true, "description": "Capture the screenshot from the surface, rather than the view. Defaults to true.", "experimental": true }
                 ],
                 "returns": [

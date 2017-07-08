@@ -355,6 +355,7 @@ Response PageHandler::NavigateToHistoryEntry(int entry_id) {
 void PageHandler::CaptureScreenshot(
     Maybe<std::string> format,
     Maybe<int> quality,
+    Maybe<Page::Rectangle> clip,
     Maybe<bool> from_surface,
     std::unique_ptr<CaptureScreenshotCallback> callback) {
   if (!host_ || !host_->GetRenderWidgetHost()) {
@@ -381,9 +382,20 @@ void PageHandler::CaptureScreenshot(
     modified_params.scale = dpfactor;
     modified_params.view_size.width = emulated_view_size.width();
     modified_params.view_size.height = emulated_view_size.height();
+    if (clip.isJust()) {
+      modified_params.viewport_offset.x = clip.fromJust()->GetX() * dpfactor;
+      modified_params.viewport_offset.y = clip.fromJust()->GetY() * dpfactor;
+    }
     emulation_handler_->SetDeviceEmulationParams(modified_params);
-    widget_host->GetView()->SetSize(
-        gfx::ScaleToFlooredSize(emulated_view_size, dpfactor));
+
+    if (clip.isJust()) {
+      widget_host->GetView()->SetSize(gfx::ScaleToFlooredSize(
+          gfx::Size(clip.fromJust()->GetWidth(), clip.fromJust()->GetHeight()),
+          dpfactor));
+    } else {
+      widget_host->GetView()->SetSize(
+          gfx::ScaleToFlooredSize(emulated_view_size, dpfactor));
+    }
   }
 
   std::string screenshot_format = format.fromMaybe(kPng);
