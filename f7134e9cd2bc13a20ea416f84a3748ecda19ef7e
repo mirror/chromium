@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cebfccee_151f2774",
+        "filename": "ash/ash_switches.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-08T00:30:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50e34821_7f60d639",
+      "range": {
+        "startLine": 90,
+        "startChar": 11,
+        "endLine": 90,
+        "endChar": 37
+      },
+      "revId": "f7134e9cd2bc13a20ea416f84a3748ecda19ef7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f732331_4a926323",
         "filename": "ash/frame/header_view.cc",
         "patchSetId": 5
@@ -60,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "19227968_80045948",
+        "filename": "ash/frame/header_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-08T00:30:37Z",
+      "side": 1,
+      "message": "Moved decision to maximize_mode_controller.",
+      "parentUuid": "515392e1_31da55f0",
+      "revId": "f7134e9cd2bc13a20ea416f84a3748ecda19ef7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e205c074_c6596f0d",
         "filename": "ash/frame/header_view.cc",
         "patchSetId": 5
@@ -74,6 +116,24 @@
       "revId": "f7134e9cd2bc13a20ea416f84a3748ecda19ef7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3060445_71b9d258",
+        "filename": "ash/frame/header_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-08T00:30:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e205c074_c6596f0d",
+      "revId": "f7134e9cd2bc13a20ea416f84a3748ecda19ef7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
