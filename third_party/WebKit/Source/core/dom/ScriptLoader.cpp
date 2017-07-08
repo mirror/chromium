@@ -676,8 +676,9 @@ bool ScriptLoader::PrepareScript(const TextPosition& script_start_position,
                         ? element_document.Url()
                         : KURL();
 
-  return ExecuteScriptBlock(ClassicPendingScript::Create(element_, position),
-                            script_url);
+  ExecuteScriptBlock(ClassicPendingScript::Create(element_, position),
+                     script_url);
+  return true;
 }
 
 bool ScriptLoader::FetchClassicScript(
@@ -904,7 +905,7 @@ void ScriptLoader::Execute() {
 }
 
 // https://html.spec.whatwg.org/#execute-the-script-block
-bool ScriptLoader::ExecuteScriptBlock(PendingScript* pending_script,
+void ScriptLoader::ExecuteScriptBlock(PendingScript* pending_script,
                                       const KURL& document_url) {
   DCHECK(pending_script);
   DCHECK_EQ(pending_script->IsExternal(), is_external_script_);
@@ -919,11 +920,11 @@ bool ScriptLoader::ExecuteScriptBlock(PendingScript* pending_script,
   //     element, and abort these steps."
   if (error_occurred) {
     DispatchErrorEvent();
-    return false;
+    return;
   }
 
   if (was_canceled)
-    return false;
+    return;
 
   // Steps 3--7 are in ExecuteScript().
   switch (ExecuteScript(script)) {
@@ -932,20 +933,17 @@ bool ScriptLoader::ExecuteScriptBlock(PendingScript* pending_script,
       //     load at the script element."
       if (is_external)
         DispatchLoadEvent();
-      return true;
+      break;
 
     case ExecuteScriptResult::kShouldFireErrorEvent:
       // Consider as if "the script's script is null" retrospectively,
       // due to CSP check failures etc., which are considered as load failure.
       DispatchErrorEvent();
-      return false;
+      break;
 
     case ExecuteScriptResult::kShouldFireNone:
-      return true;
+      break;
   }
-
-  NOTREACHED();
-  return false;
 }
 
 void ScriptLoader::PendingScriptFinished(PendingScript* pending_script) {
