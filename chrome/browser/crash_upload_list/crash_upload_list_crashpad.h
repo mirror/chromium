@@ -6,26 +6,20 @@
 #define CHROME_BROWSER_CRASH_UPLOAD_LIST_CRASH_UPLOAD_LIST_CRASHPAD_H_
 
 #include "base/macros.h"
-#include "components/upload_list/crash_upload_list.h"
-
-namespace base {
-class TaskRunner;
-}
+#include "components/upload_list/upload_list.h"
 
 // A CrashUploadList that retrieves the list of uploaded reports from the
 // Crashpad database.
-class CrashUploadListCrashpad : public CrashUploadList {
+class CrashUploadListCrashpad : public UploadList {
  public:
-  CrashUploadListCrashpad(Delegate* delegate,
-                          scoped_refptr<base::TaskRunner> task_runner);
+  CrashUploadListCrashpad();
 
  protected:
   ~CrashUploadListCrashpad() override;
 
-  // Called on a blocking pool thread.
-  void LoadUploadList(std::vector<UploadInfo>* uploads) override;
-
-  void RequestSingleCrashUpload(const std::string& local_id) override;
+  base::TaskTraits LoadingTaskTraits() override;
+  std::vector<UploadInfo> LoadUploadList() override;
+  void PerformSingleUpload(const std::string& local_id) override;
 
   DISALLOW_COPY_AND_ASSIGN(CrashUploadListCrashpad);
 };
