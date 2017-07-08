@@ -104,9 +104,9 @@ public class ChildProcessLauncherTest {
                     public ChildConnectionAllocator call() {
                         Context context =
                                 InstrumentationRegistry.getInstrumentation().getTargetContext();
-                        return ChildConnectionAllocator.create(context, null /* creationParams */,
-                                SERVICE_PACKAGE_NAME, SERVICE_NAME_META_DATA_KEY,
-                                SERVICE_COUNT_META_DATA_KEY, false /* bindAsExternalService */,
+                        return ChildConnectionAllocator.create(context, SERVICE_PACKAGE_NAME,
+                                SERVICE_NAME_META_DATA_KEY, SERVICE_COUNT_META_DATA_KEY,
+                                false /* bindToCaller */, false /* bindAsExternalService */,
                                 false /* useStrongBinding */);
                     }
                 });
@@ -333,9 +333,10 @@ public class ChildProcessLauncherTest {
                                 InstrumentationRegistry.getInstrumentation().getTargetContext();
                         ComponentName serviceName =
                                 new ComponentName(SERVICE_PACKAGE_NAME, SERVICE0_FULL_NAME);
-                        ChildProcessConnection connection = new ChildProcessConnection(context,
-                                serviceName, false /* bindAsExternalService */,
-                                new Bundle() /* serviceBundle */, null /* creationParams */);
+                        ChildProcessConnection connection =
+                                new ChildProcessConnection(context, serviceName,
+                                        false /* bindToCaller */, false /* bindAsExternalService */,
+                                        new Bundle() /* serviceBundle */);
                         connection.start(false /* useStrongBinding */,
                                 new ChildProcessConnection.ServiceCallback() {
                                     @Override
@@ -411,8 +412,8 @@ public class ChildProcessLauncherTest {
                             @Override
                             public ChildConnectionAllocator call() {
                                 return ChildConnectionAllocator.createForTest(
-                                        null /* creationParams */, "org.chromium.wrong_package",
-                                        "WrongService", 2 /* serviceCount */,
+                                        "org.chromium.wrong_package", "WrongService",
+                                        2 /* serviceCount */, false /* bindToCaller */,
                                         false /* bindAsExternalService */,
                                         false /* useStrongBinding */);
                             }
