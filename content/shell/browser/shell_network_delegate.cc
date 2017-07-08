@@ -6,6 +6,7 @@
 
 #include "base/command_line.h"
 #include "base/strings/string_util.h"
+#include "components/url_log/url_log.h"
 #include "content/public/common/content_switches.h"
 #include "net/base/net_errors.h"
 #include "net/base/static_cookie_policy.h"
@@ -37,6 +38,7 @@ int ShellNetworkDelegate::OnBeforeURLRequest(
     net::URLRequest* request,
     const net::CompletionCallback& callback,
     GURL* new_url) {
+  url_log::UrlLog::AddEntry(request->url());
   return net::OK;
 }
 
