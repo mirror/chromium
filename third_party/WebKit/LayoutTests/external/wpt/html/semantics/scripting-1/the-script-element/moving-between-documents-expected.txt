@@ -1,0 +1,11 @@
+This is a testharness.js-based test.
+FAIL text/javascript: moving to another document during parsing, inline script assert_false: The script must not have executed in this window expected false got true
+FAIL text/javascript: moving to another document during parsing, external script assert_false: The script must not have executed in this window expected false got true
+PASS text/javascript: moving to another Window's document during fetching 
+PASS text/javascript: moving to a document where scripting is disabled during fetching 
+PASS module: moving to another document during parsing, inline script 
+FAIL module: moving to another document during parsing, external script assert_unreached: onload Reached unreachable code
+PASS module: moving to another Window's document during fetching 
+PASS module: moving to a document where scripting is disabled during fetching 
+Harness: the test ran to completion.
+
