@@ -78,6 +78,8 @@ blink_core_sources("editing") {
     "SurroundingText.h",
     "TextAffinity.cpp",
     "TextAffinity.h",
+    "TextCompositionData.cpp",
+    "TextCompositionData.h",
     "TextFinder.cpp",
     "TextFinder.h",
     "TextGranularity.h",

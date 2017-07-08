@@ -20,9 +20,9 @@ LegacyIPCFrameInputHandler::~LegacyIPCFrameInputHandler() {}
 void LegacyIPCFrameInputHandler::SetCompositionFromExistingText(
     int32_t start,
     int32_t end,
-    const std::vector<ui::CompositionUnderline>& ui_underlines) {
+    const ui::TextCompositionData& text_composition_data) {
   std::vector<blink::WebCompositionUnderline> underlines;
-  for (const auto& underline : ui_underlines) {
+  for (const auto& underline : text_composition_data.composition_underlines) {
     blink::WebCompositionUnderline blink_underline(
         underline.start_offset, underline.end_offset, underline.color,
         underline.thick, underline.background_color);
@@ -30,7 +30,7 @@ void LegacyIPCFrameInputHandler::SetCompositionFromExistingText(
   }
 
   SendInput(base::MakeUnique<InputMsg_SetCompositionFromExistingText>(
-      routing_id_, start, end, underlines));
+      routing_id_, start, end, blink::WebTextCompositionData(underlines)));
 }
 
 void LegacyIPCFrameInputHandler::ExtendSelectionAndDelete(int32_t before,

@@ -1614,16 +1614,17 @@ void RenderWidget::OnShowContextMenu(ui::MenuSourceType source_type,
 
 void RenderWidget::OnImeSetComposition(
     const base::string16& text,
-    const std::vector<WebCompositionUnderline>& underlines,
+    const blink::WebTextCompositionData& text_composition_data,
     const gfx::Range& replacement_range,
-    int selection_start, int selection_end) {
+    int selection_start,
+    int selection_end) {
   if (!ShouldHandleImeEvents())
     return;
 
 #if BUILDFLAG(ENABLE_PLUGINS)
   if (focused_pepper_plugin_) {
     focused_pepper_plugin_->render_frame()->OnImeSetComposition(
-        text, underlines, selection_start, selection_end);
+        text, text_composition_data, selection_start, selection_end);
     return;
   }
 #endif
@@ -1631,8 +1632,7 @@ void RenderWidget::OnImeSetComposition(
   blink::WebInputMethodController* controller = GetInputMethodController();
   if (!controller ||
       !controller->SetComposition(
-          WebString::FromUTF16(text),
-          WebVector<WebCompositionUnderline>(underlines),
+          WebString::FromUTF16(text), text_composition_data,
           replacement_range.IsValid()
               ? WebRange(replacement_range.start(), replacement_range.length())
               : WebRange(),
@@ -1647,7 +1647,7 @@ void RenderWidget::OnImeSetComposition(
 
 void RenderWidget::OnImeCommitText(
     const base::string16& text,
-    const std::vector<WebCompositionUnderline>& underlines,
+    const blink::WebTextCompositionData& text_composition_data,
     const gfx::Range& replacement_range,
     int relative_cursor_pos) {
   if (!ShouldHandleImeEvents())
@@ -1664,8 +1664,7 @@ void RenderWidget::OnImeCommitText(
   input_handler_->set_handling_input_event(true);
   if (auto* controller = GetInputMethodController()) {
     controller->CommitText(
-        WebString::FromUTF16(text),
-        WebVector<WebCompositionUnderline>(underlines),
+        WebString::FromUTF16(text), text_composition_data,
         replacement_range.IsValid()
             ? WebRange(replacement_range.start(), replacement_range.length())
             : WebRange(),

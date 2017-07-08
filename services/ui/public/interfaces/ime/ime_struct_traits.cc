@@ -58,8 +58,16 @@ bool StructTraits<ui::mojom::CompositionUnderlineDataView,
 bool StructTraits<ui::mojom::CompositionTextDataView, ui::CompositionText>::
     Read(ui::mojom::CompositionTextDataView data, ui::CompositionText* out) {
   return !data.is_null() && data.ReadText(&out->text) &&
-         data.ReadUnderlines(&out->underlines) &&
+         data.ReadTextCompositionData(&out->text_composition_data) &&
          data.ReadSelection(&out->selection);
+}
+
+bool StructTraits<
+    ui::mojom::TextCompositionDataDataView,
+    ui::TextCompositionData>::Read(ui::mojom::TextCompositionDataDataView data,
+                                   ui::TextCompositionData* out) {
+  return !data.is_null() &&
+         data.ReadCompositionUnderlines(&out->composition_underlines);
 }
 
 // static

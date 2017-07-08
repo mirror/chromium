@@ -14,8 +14,7 @@ namespace blink {
 
 class WebRange;
 class WebString;
-template <typename T>
-class WebVector;
+struct WebTextCompositionData;
 
 class WebInputMethodController {
  public:
@@ -32,19 +31,18 @@ class WebInputMethodController {
   // text will be canceled. |replacementRange| (when not null) is the range in
   // current text which should be replaced by |text|. Returns true if the
   // composition text was set successfully.
-  virtual bool SetComposition(
-      const WebString& text,
-      const WebVector<WebCompositionUnderline>& underlines,
-      const WebRange& replacement_range,
-      int selection_start,
-      int selection_end) = 0;
+  virtual bool SetComposition(const WebString& text,
+                              const WebTextCompositionData&,
+                              const WebRange& replacement_range,
+                              int selection_start,
+                              int selection_end) = 0;
 
   // Called to inform the controller to delete the ongoing composition if any,
   // insert |text|, and move the caret according to |relativeCaretPosition|.
   // |replacementRange| (when not null) is the range in current text which
   // should be replaced by |text|.
   virtual bool CommitText(const WebString& text,
-                          const WebVector<WebCompositionUnderline>& underlines,
+                          const WebTextCompositionData&,
                           const WebRange& replacement_range,
                           int relative_caret_position) = 0;
 

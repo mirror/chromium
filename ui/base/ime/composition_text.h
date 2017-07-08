@@ -8,7 +8,7 @@
 #include <stddef.h>
 
 #include "base/strings/string16.h"
-#include "ui/base/ime/composition_underline.h"
+#include "ui/base/ime/text_composition_data.h"
 #include "ui/base/ime/ui_base_ime_export.h"
 #include "ui/gfx/range/range.h"
 
@@ -21,15 +21,8 @@ struct UI_BASE_IME_EXPORT CompositionText {
   ~CompositionText();
 
   bool operator==(const CompositionText& rhs) const {
-    if ((this->text != rhs.text) ||
-        (this->selection != rhs.selection) ||
-        (this->underlines.size() != rhs.underlines.size()))
-      return false;
-    for (size_t i = 0; i < this->underlines.size(); ++i) {
-      if (this->underlines[i] != rhs.underlines[i])
-        return false;
-    }
-    return true;
+    return this->text == rhs.text && this->selection == rhs.selection &&
+           this->text_composition_data == rhs.text_composition_data;
   }
 
   bool operator!=(const CompositionText& rhs) const {
@@ -43,10 +36,8 @@ struct UI_BASE_IME_EXPORT CompositionText {
   // Content of the composition text.
   base::string16 text;
 
-  // Underline information of the composition text.
-  // They must be sorted in ascending order by their start_offset and cannot be
-  // overlapped with each other.
-  CompositionUnderlines underlines;
+  // Other information, such as composition underlines.
+  TextCompositionData text_composition_data;
 
   // Selection range in the composition text. It represents the caret position
   // if the range length is zero. Usually it's used for representing the target

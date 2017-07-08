@@ -31,12 +31,12 @@ class CORE_EXPORT WebInputMethodControllerImpl
 
   // WebInputMethodController overrides.
   bool SetComposition(const WebString& text,
-                      const WebVector<WebCompositionUnderline>& underlines,
+                      const WebTextCompositionData&,
                       const WebRange& replacement_range,
                       int selection_start,
                       int selection_end) override;
   bool CommitText(const WebString& text,
-                  const WebVector<WebCompositionUnderline>& underlines,
+                  const WebTextCompositionData&,
                   const WebRange& replacement_range,
                   int relative_caret_position) override;
   bool FinishComposingText(

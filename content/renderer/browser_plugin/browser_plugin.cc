@@ -552,7 +552,7 @@ bool BrowserPlugin::ExecuteEditCommand(const blink::WebString& name,
 
 bool BrowserPlugin::SetComposition(
     const blink::WebString& text,
-    const blink::WebVector<blink::WebCompositionUnderline>& underlines,
+    const blink::WebTextCompositionData& text_composition_data,
     const blink::WebRange& replacementRange,
     int selectionStart,
     int selectionEnd) {
@@ -561,8 +561,10 @@ bool BrowserPlugin::SetComposition(
 
   BrowserPluginHostMsg_SetComposition_Params params;
   params.text = text.Utf16();
-  for (size_t i = 0; i < underlines.size(); ++i) {
-    params.underlines.push_back(underlines[i]);
+  for (size_t i = 0; i < text_composition_data.composition_underlines.size();
+       ++i) {
+    params.underlines.push_back(
+        text_composition_data.composition_underlines[i]);
   }
 
   params.replacement_range =
@@ -581,15 +583,16 @@ bool BrowserPlugin::SetComposition(
 
 bool BrowserPlugin::CommitText(
     const blink::WebString& text,
-    const blink::WebVector<blink::WebCompositionUnderline>& underlines,
+    const blink::WebTextCompositionData& text_composition_data,
     const blink::WebRange& replacementRange,
     int relative_cursor_pos) {
   if (!attached())
     return false;
 
   std::vector<blink::WebCompositionUnderline> std_underlines;
-  for (size_t i = 0; i < underlines.size(); ++i) {
-    std_underlines.push_back(std_underlines[i]);
+  for (size_t i = 0; i < text_composition_data.composition_underlines.size();
+       ++i) {
+    std_underlines.push_back(text_composition_data.composition_underlines[i]);
   }
   gfx::Range replacement_range =
       replacementRange.IsNull()

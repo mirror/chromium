@@ -13,15 +13,16 @@
 namespace content {
 
 namespace {
-std::vector<blink::WebCompositionUnderline> ConvertToBlinkUnderline(
-    const std::vector<ui::CompositionUnderline>& ui_underlines) {
+blink::WebTextCompositionData ConvertToBlink(
+    const ui::TextCompositionData& ui_text_composition_data) {
   std::vector<blink::WebCompositionUnderline> underlines;
-  for (const auto& underline : ui_underlines) {
+  for (const auto& underline :
+       ui_text_composition_data.composition_underlines) {
     underlines.emplace_back(blink::WebCompositionUnderline(
         underline.start_offset, underline.end_offset, underline.color,
         underline.thick, underline.background_color));
   }
-  return underlines;
+  return blink::WebTextCompositionData(underlines);
 }
 
 }  // namespace
@@ -52,25 +53,26 @@ void LegacyIPCWidgetInputHandler::CursorVisibilityChanged(bool visible) {
 
 void LegacyIPCWidgetInputHandler::ImeSetComposition(
     const base::string16& text,
-    const std::vector<ui::CompositionUnderline>& ui_underlines,
+    const ui::TextCompositionData& ui_text_composition_data,
     const gfx::Range& range,
     int32_t start,
     int32_t end) {
-  std::vector<blink::WebCompositionUnderline> underlines =
-      ConvertToBlinkUnderline(ui_underlines);
+  const blink::WebTextCompositionData& text_composition_data =
+      ConvertToBlink(ui_text_composition_data);
   SendInput(base::MakeUnique<InputMsg_ImeSetComposition>(
-      input_router_->routing_id(), text, underlines, range, start, end));
+      input_router_->routing_id(), text, text_composition_data, range, start,
+      end));
 }
 
 void LegacyIPCWidgetInputHandler::ImeCommitText(
     const base::string16& text,
-    const std::vector<ui::CompositionUnderline>& ui_underlines,
+    const ui::TextCompositionData& ui_text_composition_data,
     const gfx::Range& range,
     int32_t relative_cursor_position) {
-  std::vector<blink::WebCompositionUnderline> underlines =
-      ConvertToBlinkUnderline(ui_underlines);
+  const blink::WebTextCompositionData& text_composition_data =
+      ConvertToBlink(ui_text_composition_data);
   SendInput(base::MakeUnique<InputMsg_ImeCommitText>(
-      input_router_->routing_id(), text, underlines, range,
+      input_router_->routing_id(), text, text_composition_data, range,
       relative_cursor_position));
 }
 

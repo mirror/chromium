@@ -49,7 +49,6 @@
 #include "third_party/WebKit/public/platform/WebRect.h"
 #include "third_party/WebKit/public/platform/WebReferrerPolicy.h"
 #include "third_party/WebKit/public/platform/WebTextInputInfo.h"
-#include "third_party/WebKit/public/web/WebCompositionUnderline.h"
 #include "third_party/WebKit/public/web/WebPopupType.h"
 #include "third_party/WebKit/public/web/WebTextDirection.h"
 #include "third_party/WebKit/public/web/WebWidget.h"
@@ -84,6 +83,7 @@ class WebLocalFrame;
 class WebMouseEvent;
 class WebNode;
 struct WebPoint;
+struct WebTextCompositionData;
 }  // namespace blink
 
 namespace cc {
@@ -509,13 +509,13 @@ class CONTENT_EXPORT RenderWidget
                                  const gfx::Point& location);
   virtual void OnImeSetComposition(
       const base::string16& text,
-      const std::vector<blink::WebCompositionUnderline>& underlines,
+      const blink::WebTextCompositionData& text_composition_data,
       const gfx::Range& replacement_range,
       int selection_start,
       int selection_end);
   virtual void OnImeCommitText(
       const base::string16& text,
-      const std::vector<blink::WebCompositionUnderline>& underlines,
+      const blink::WebTextCompositionData& text_composition_data,
       const gfx::Range& replacement_range,
       int relative_cursor_pos);
   virtual void OnImeFinishComposingText(bool keep_selection);

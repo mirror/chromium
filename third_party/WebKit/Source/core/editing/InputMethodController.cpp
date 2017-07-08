@@ -34,6 +34,7 @@
 #include "core/dom/Text.h"
 #include "core/editing/EditingUtilities.h"
 #include "core/editing/Editor.h"
+#include "core/editing/TextCompositionData.h"
 #include "core/editing/commands/TypingCommand.h"
 #include "core/editing/markers/DocumentMarkerController.h"
 #include "core/editing/state_machines/BackwardCodePointStateMachine.h"
@@ -403,14 +404,15 @@ bool InputMethodController::FinishComposingText(
 
 bool InputMethodController::CommitText(
     const String& text,
-    const Vector<CompositionUnderline>& underlines,
+    const TextCompositionData& text_composition_data,
     int relative_caret_position) {
   if (HasComposition()) {
     return ReplaceCompositionAndMoveCaret(text, relative_caret_position,
-                                          underlines);
+                                          text_composition_data);
   }
 
-  return InsertTextAndMoveCaret(text, relative_caret_position, underlines);
+  return InsertTextAndMoveCaret(text, relative_caret_position,
+                                text_composition_data);
 }
 
 bool InputMethodController::ReplaceComposition(const String& text) {
@@ -452,10 +454,10 @@ static int ComputeAbsoluteCaretPosition(size_t text_start,
 }
 
 void InputMethodController::AddCompositionUnderlines(
-    const Vector<CompositionUnderline>& underlines,
+    const TextCompositionData& text_composition_data,
     ContainerNode* base_element,
     unsigned offset_in_plain_chars) {
-  for (const auto& underline : underlines) {
+  for (const auto& underline : text_composition_data.CompositionUnderlines()) {
     unsigned underline_start = offset_in_plain_chars + underline.StartOffset();
     unsigned underline_end = offset_in_plain_chars + underline.EndOffset();
 
@@ -476,7 +478,7 @@ void InputMethodController::AddCompositionUnderlines(
 bool InputMethodController::ReplaceCompositionAndMoveCaret(
     const String& text,
     int relative_caret_position,
-    const Vector<CompositionUnderline>& underlines) {
+    const TextCompositionData& text_composition_data) {
   Element* root_editable_element =
       GetFrame()
           .Selection()
@@ -498,7 +500,8 @@ bool InputMethodController::ReplaceCompositionAndMoveCaret(
   // needs to be audited. see http://crbug.com/590369 for more details.
   GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
 
-  AddCompositionUnderlines(underlines, root_editable_element, text_start);
+  AddCompositionUnderlines(text_composition_data, root_editable_element,
+                           text_start);
 
   int absolute_caret_position = ComputeAbsoluteCaretPosition(
       text_start, text.length(), relative_caret_position);
@@ -516,7 +519,7 @@ bool InputMethodController::InsertText(const String& text) {
 bool InputMethodController::InsertTextAndMoveCaret(
     const String& text,
     int relative_caret_position,
-    const Vector<CompositionUnderline>& underlines) {
+    const TextCompositionData& text_composition_data) {
   PlainTextRange selection_range = GetSelectionOffsets();
   if (selection_range.IsNull())
     return false;
@@ -530,7 +533,8 @@ bool InputMethodController::InsertTextAndMoveCaret(
           .ComputeVisibleSelectionInDOMTreeDeprecated()
           .RootEditableElement();
   if (root_editable_element) {
-    AddCompositionUnderlines(underlines, root_editable_element, text_start);
+    AddCompositionUnderlines(text_composition_data, root_editable_element,
+                             text_start);
   }
 
   int absolute_caret_position = ComputeAbsoluteCaretPosition(
@@ -569,7 +573,7 @@ void InputMethodController::CancelComposition() {
 
 void InputMethodController::SetComposition(
     const String& text,
-    const Vector<CompositionUnderline>& underlines,
+    const TextCompositionData& text_composition_data,
     int selection_start,
     int selection_end) {
   Editor::RevealSelectionScope reveal_selection_scope(&GetEditor());
@@ -690,7 +694,7 @@ void InputMethodController::SetComposition(
   // We shouldn't close typing in the middle of setComposition.
   SetEditableSelectionOffsets(selected_range, kNotUserTriggered);
 
-  if (underlines.IsEmpty()) {
+  if (text_composition_data.CompositionUnderlines().IsEmpty()) {
     GetDocument().Markers().AddCompositionMarker(
         EphemeralRange(composition_range_), Color::kBlack,
         StyleableMarker::Thickness::kThin,
@@ -700,7 +704,7 @@ void InputMethodController::SetComposition(
 
   const PlainTextRange composition_plain_text_range =
       PlainTextRange::Create(*base_node->parentNode(), *composition_range_);
-  AddCompositionUnderlines(underlines, base_node->parentNode(),
+  AddCompositionUnderlines(text_composition_data, base_node->parentNode(),
                            composition_plain_text_range.Start());
 }
 
@@ -716,7 +720,7 @@ PlainTextRange InputMethodController::CreateSelectionRangeForSetComposition(
 }
 
 void InputMethodController::SetCompositionFromExistingText(
-    const Vector<CompositionUnderline>& underlines,
+    const TextCompositionData& text_composition_data,
     unsigned composition_start,
     unsigned composition_end) {
   Element* editable = GetFrame()
@@ -743,7 +747,7 @@ void InputMethodController::SetCompositionFromExistingText(
 
   Clear();
 
-  AddCompositionUnderlines(underlines, editable, composition_start);
+  AddCompositionUnderlines(text_composition_data, editable, composition_start);
 
   has_composition_ = true;
   if (!composition_range_)

@@ -61,7 +61,7 @@ struct CompositionUnderline {
   SkColor background_color;
 };
 
-typedef std::vector<CompositionUnderline> CompositionUnderlines;
+typedef std::vector<CompositionUnderline> underlines;
 
 }  // namespace ui
 

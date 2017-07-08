@@ -107,7 +107,8 @@ void TestRenderFrame::SetCompositionFromExistingText(
     int start,
     int end,
     const std::vector<blink::WebCompositionUnderline>& underlines) {
-  OnSetCompositionFromExistingText(start, end, underlines);
+  OnSetCompositionFromExistingText(start, end,
+                                   blink::WebTextCompositionData(underlines));
 }
 
 blink::WebNavigationPolicy TestRenderFrame::DecidePolicyForNavigation(

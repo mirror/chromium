@@ -42,6 +42,7 @@ namespace blink {
 class Editor;
 class LocalFrame;
 class Range;
+class TextCompositionData;
 
 class CORE_EXPORT InputMethodController final
     : public GarbageCollectedFinalized<InputMethodController>,
@@ -62,10 +63,10 @@ class CORE_EXPORT InputMethodController final
   // international text input composition
   bool HasComposition() const;
   void SetComposition(const String& text,
-                      const Vector<CompositionUnderline>& underlines,
+                      const TextCompositionData&,
                       int selection_start,
                       int selection_end);
-  void SetCompositionFromExistingText(const Vector<CompositionUnderline>& text,
+  void SetCompositionFromExistingText(const TextCompositionData&,
                                       unsigned composition_start,
                                       unsigned composition_end);
 
@@ -73,7 +74,7 @@ class CORE_EXPORT InputMethodController final
   // changes the selection according to relativeCaretPosition, which is
   // relative to the end of the inserting text.
   bool CommitText(const String& text,
-                  const Vector<CompositionUnderline>& underlines,
+                  const TextCompositionData&,
                   int relative_caret_position);
 
   // Inserts ongoing composing text; changes the selection to the end of
@@ -133,24 +134,23 @@ class CORE_EXPORT InputMethodController final
       const PlainTextRange&,
       FrameSelection::SetSelectionOptions = FrameSelection::kCloseTyping);
 
-  void AddCompositionUnderlines(const Vector<CompositionUnderline>& underlines,
+  void AddCompositionUnderlines(const TextCompositionData&,
                                 ContainerNode* base_element,
                                 unsigned offset_in_plain_chars);
 
   bool InsertText(const String&);
   bool InsertTextAndMoveCaret(const String&,
                               int relative_caret_position,
-                              const Vector<CompositionUnderline>& underlines);
+                              const TextCompositionData&);
 
   // Inserts the given text string in the place of the existing composition.
   // Returns true if did replace.
   bool ReplaceComposition(const String& text);
   // Inserts the given text string in the place of the existing composition
   // and moves caret. Returns true if did replace and moved caret successfully.
-  bool ReplaceCompositionAndMoveCaret(
-      const String&,
-      int relative_caret_position,
-      const Vector<CompositionUnderline>& underlines);
+  bool ReplaceCompositionAndMoveCaret(const String&,
+                                      int relative_caret_position,
+                                      const TextCompositionData&);
 
   // Returns true if moved caret successfully.
   bool MoveCaret(int new_caret_position);

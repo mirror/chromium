@@ -23,6 +23,7 @@
 #include "third_party/WebKit/public/platform/WebPageVisibilityState.h"
 #include "third_party/WebKit/public/web/WebCompositionUnderline.h"
 #include "third_party/WebKit/public/web/WebSharedWorkerCreationContextType.h"
+#include "third_party/WebKit/public/web/WebTextCompositionData.h"
 #include "ui/gfx/gpu_memory_buffer.h"
 #include "ui/gfx/ipc/geometry/gfx_param_traits.h"
 
@@ -58,6 +59,10 @@ IPC_STRUCT_TRAITS_BEGIN(blink::WebCompositionUnderline)
   IPC_STRUCT_TRAITS_MEMBER(color)
   IPC_STRUCT_TRAITS_MEMBER(thick)
   IPC_STRUCT_TRAITS_MEMBER(background_color)
+IPC_STRUCT_TRAITS_END()
+
+IPC_STRUCT_TRAITS_BEGIN(blink::WebTextCompositionData)
+  IPC_STRUCT_TRAITS_MEMBER(composition_underlines)
 IPC_STRUCT_TRAITS_END()
 
 IPC_STRUCT_TRAITS_BEGIN(content::RenderWidgetSurfaceProperties)

@@ -62,6 +62,7 @@ class TextFinder;
 class WebAssociatedURLLoader;
 struct WebAssociatedURLLoaderOptions;
 class WebAutofillClient;
+struct WebTextCompositionData;
 class WebDataSourceImpl;
 class WebDevToolsAgentImpl;
 class WebDevToolsFrontendImpl;
@@ -201,10 +202,9 @@ class WEB_EXPORT WebLocalFrameImpl final
       WebFrame::TextGranularity = kCharacterGranularity) override;
   void MoveCaretSelection(const WebPoint&) override;
   bool SetEditableSelectionOffsets(int start, int end) override;
-  bool SetCompositionFromExistingText(
-      int composition_start,
-      int composition_end,
-      const WebVector<WebCompositionUnderline>& underlines) override;
+  bool SetCompositionFromExistingText(int composition_start,
+                                      int composition_end,
+                                      const WebTextCompositionData&) override;
   void ExtendSelectionAndDelete(int before, int after) override;
   void DeleteSurroundingText(int before, int after) override;
   void DeleteSurroundingTextInCodePoints(int before, int after) override;

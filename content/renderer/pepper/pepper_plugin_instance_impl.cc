@@ -121,6 +121,7 @@
 #include "third_party/WebKit/public/web/WebPrintScalingOption.h"
 #include "third_party/WebKit/public/web/WebScopedUserGesture.h"
 #include "third_party/WebKit/public/web/WebScriptSource.h"
+#include "third_party/WebKit/public/web/WebTextCompositionData.h"
 #include "third_party/WebKit/public/web/WebUserGestureIndicator.h"
 #include "third_party/WebKit/public/web/WebView.h"
 #include "third_party/khronos/GLES2/gl2.h"
@@ -2286,7 +2287,7 @@ bool PepperPluginInstanceImpl::SimulateIMEEvent(
         return false;
       render_frame_->SimulateImeCommitText(
           base::UTF8ToUTF16(input_event.character_text),
-          std::vector<blink::WebCompositionUnderline>(), gfx::Range());
+          blink::WebTextCompositionData(), gfx::Range());
       break;
     default:
       return false;
@@ -2320,7 +2321,8 @@ void PepperPluginInstanceImpl::SimulateImeSetCompositionEvent(
   }
 
   render_frame_->SimulateImeSetComposition(
-      utf16_text, underlines, offsets[0], offsets[1]);
+      utf16_text, blink::WebTextCompositionData(underlines), offsets[0],
+      offsets[1]);
 }
 
 ContentDecryptorDelegate*

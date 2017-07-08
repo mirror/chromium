@@ -70,8 +70,15 @@ struct CompositionUnderline {
 // ui::CompositionText.
 struct CompositionText {
   string text;
-  array<CompositionUnderline> underlines;
+  TextCompositionData text_composition_data;
   gfx.mojom.Range selection;
+};
+
+// Information associated with a piece of text being composed/committed by an
+// IME. Does not include the text itself or selection information. Corresponds to
+// ui::TextCompositionData.
+struct TextCompositionData {
+  array<CompositionUnderline> composition_underlines;
 };
 
 // See comments for ui::TextInputType for more details.

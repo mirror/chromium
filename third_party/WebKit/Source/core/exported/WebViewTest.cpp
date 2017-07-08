@@ -43,6 +43,7 @@
 #include "core/dom/UserGestureIndicator.h"
 #include "core/editing/FrameSelection.h"
 #include "core/editing/InputMethodController.h"
+#include "core/editing/TextCompositionData.h"
 #include "core/editing/markers/DocumentMarkerController.h"
 #include "core/exported/WebSettingsImpl.h"
 #include "core/exported/WebViewBase.h"
@@ -107,6 +108,7 @@
 #include "public/web/WebPrintParams.h"
 #include "public/web/WebScriptSource.h"
 #include "public/web/WebSettings.h"
+#include "public/web/WebTextCompositionData.h"
 #include "public/web/WebTreeScopeType.h"
 #include "public/web/WebViewClient.h"
 #include "public/web/WebWidget.h"
@@ -954,9 +956,8 @@ TEST_P(WebViewTest, FinishComposingTextDoesNotAssert) {
 
   // The test requires non-empty composition.
   std::string composition_text("hello");
-  WebVector<WebCompositionUnderline> empty_underlines;
   active_input_method_controller->SetComposition(
-      WebString::FromUTF8(composition_text.c_str()), empty_underlines,
+      WebString::FromUTF8(composition_text.c_str()), WebTextCompositionData(),
       WebRange(), 5, 5);
 
   // Do arbitrary change to make layout dirty.
@@ -984,9 +985,8 @@ TEST_P(WebViewTest, FinishComposingTextCursorPositionChange) {
       web_view->MainFrameImpl()
           ->FrameWidget()
           ->GetActiveWebInputMethodController();
-  WebVector<WebCompositionUnderline> empty_underlines;
   active_input_method_controller->SetComposition(
-      WebString::FromUTF8(composition_text.c_str()), empty_underlines,
+      WebString::FromUTF8(composition_text.c_str()), WebTextCompositionData(),
       WebRange(), 3, 3);
 
   WebTextInputInfo info = active_input_method_controller->TextInputInfo();
@@ -1005,7 +1005,7 @@ TEST_P(WebViewTest, FinishComposingTextCursorPositionChange) {
   EXPECT_EQ(-1, info.composition_end);
 
   active_input_method_controller->SetComposition(
-      WebString::FromUTF8(composition_text.c_str()), empty_underlines,
+      WebString::FromUTF8(composition_text.c_str()), WebTextCompositionData(),
       WebRange(), 3, 3);
   info = active_input_method_controller->TextInputInfo();
   EXPECT_EQ("helhellolo", std::string(info.value.Utf8().data()));
@@ -1033,11 +1033,9 @@ TEST_P(WebViewTest, SetCompositionForNewCaretPositions) {
           ->FrameWidget()
           ->GetActiveWebInputMethodController();
 
-  WebVector<WebCompositionUnderline> empty_underlines;
-
-  active_input_method_controller->CommitText("hello", empty_underlines,
+  active_input_method_controller->CommitText("hello", WebTextCompositionData(),
                                              WebRange(), 0);
-  active_input_method_controller->CommitText("world", empty_underlines,
+  active_input_method_controller->CommitText("world", WebTextCompositionData(),
                                              WebRange(), -5);
   WebTextInputInfo info = active_input_method_controller->TextInputInfo();
 
@@ -1052,7 +1050,7 @@ TEST_P(WebViewTest, SetCompositionForNewCaretPositions) {
 
   // Caret is on the left of composing text.
   active_input_method_controller->SetComposition(
-      WebString::FromUTF8(composition_text.c_str()), empty_underlines,
+      WebString::FromUTF8(composition_text.c_str()), WebTextCompositionData(),
       WebRange(), 0, 0);
   info = active_input_method_controller->TextInputInfo();
   EXPECT_EQ("helloABCworld", std::string(info.value.Utf8().data()));
@@ -1063,7 +1061,7 @@ TEST_P(WebViewTest, SetCompositionForNewCaretPositions) {
 
   // Caret is on the right of composing text.
   active_input_method_controller->SetComposition(
-      WebString::FromUTF8(composition_text.c_str()), empty_underlines,
+      WebString::FromUTF8(composition_text.c_str()), WebTextCompositionData(),
       WebRange(), 3, 3);
   info = active_input_method_controller->TextInputInfo();
   EXPECT_EQ("helloABCworld", std::string(info.value.Utf8().data()));
@@ -1074,7 +1072,7 @@ TEST_P(WebViewTest, SetCompositionForNewCaretPositions) {
 
   // Caret is between composing text and left boundary.
   active_input_method_controller->SetComposition(
-      WebString::FromUTF8(composition_text.c_str()), empty_underlines,
+      WebString::FromUTF8(composition_text.c_str()), WebTextCompositionData(),
       WebRange(), -2, -2);
   info = active_input_method_controller->TextInputInfo();
   EXPECT_EQ("helloABCworld", std::string(info.value.Utf8().data()));
@@ -1085,7 +1083,7 @@ TEST_P(WebViewTest, SetCompositionForNewCaretPositions) {
 
   // Caret is between composing text and right boundary.
   active_input_method_controller->SetComposition(
-      WebString::FromUTF8(composition_text.c_str()), empty_underlines,
+      WebString::FromUTF8(composition_text.c_str()), WebTextCompositionData(),
       WebRange(), 5, 5);
   info = active_input_method_controller->TextInputInfo();
   EXPECT_EQ("helloABCworld", std::string(info.value.Utf8().data()));
@@ -1096,7 +1094,7 @@ TEST_P(WebViewTest, SetCompositionForNewCaretPositions) {
 
   // Caret is on the left boundary.
   active_input_method_controller->SetComposition(
-      WebString::FromUTF8(composition_text.c_str()), empty_underlines,
+      WebString::FromUTF8(composition_text.c_str()), WebTextCompositionData(),
       WebRange(), -5, -5);
   info = active_input_method_controller->TextInputInfo();
   EXPECT_EQ("helloABCworld", std::string(info.value.Utf8().data()));
@@ -1107,7 +1105,7 @@ TEST_P(WebViewTest, SetCompositionForNewCaretPositions) {
 
   // Caret is on the right boundary.
   active_input_method_controller->SetComposition(
-      WebString::FromUTF8(composition_text.c_str()), empty_underlines,
+      WebString::FromUTF8(composition_text.c_str()), WebTextCompositionData(),
       WebRange(), 8, 8);
   info = active_input_method_controller->TextInputInfo();
   EXPECT_EQ("helloABCworld", std::string(info.value.Utf8().data()));
@@ -1118,7 +1116,7 @@ TEST_P(WebViewTest, SetCompositionForNewCaretPositions) {
 
   // Caret exceeds the left boundary.
   active_input_method_controller->SetComposition(
-      WebString::FromUTF8(composition_text.c_str()), empty_underlines,
+      WebString::FromUTF8(composition_text.c_str()), WebTextCompositionData(),
       WebRange(), -100, -100);
   info = active_input_method_controller->TextInputInfo();
   EXPECT_EQ("helloABCworld", std::string(info.value.Utf8().data()));
@@ -1129,7 +1127,7 @@ TEST_P(WebViewTest, SetCompositionForNewCaretPositions) {
 
   // Caret exceeds the right boundary.
   active_input_method_controller->SetComposition(
-      WebString::FromUTF8(composition_text.c_str()), empty_underlines,
+      WebString::FromUTF8(composition_text.c_str()), WebTextCompositionData(),
       WebRange(), 100, 100);
   info = active_input_method_controller->TextInputInfo();
   EXPECT_EQ("helloABCworld", std::string(info.value.Utf8().data()));
@@ -1149,9 +1147,7 @@ TEST_P(WebViewTest, SetCompositionWithEmptyText) {
           ->FrameWidget()
           ->GetActiveWebInputMethodController();
 
-  WebVector<WebCompositionUnderline> empty_underlines;
-
-  active_input_method_controller->CommitText("hello", empty_underlines,
+  active_input_method_controller->CommitText("hello", WebTextCompositionData(),
                                              WebRange(), 0);
   WebTextInputInfo info = active_input_method_controller->TextInputInfo();
 
@@ -1162,7 +1158,7 @@ TEST_P(WebViewTest, SetCompositionWithEmptyText) {
   EXPECT_EQ(-1, info.composition_end);
 
   active_input_method_controller->SetComposition(
-      WebString::FromUTF8(""), empty_underlines, WebRange(), 0, 0);
+      WebString::FromUTF8(""), WebTextCompositionData(), WebRange(), 0, 0);
   info = active_input_method_controller->TextInputInfo();
   EXPECT_EQ("hello", std::string(info.value.Utf8().data()));
   EXPECT_EQ(5, info.selection_start);
@@ -1171,7 +1167,7 @@ TEST_P(WebViewTest, SetCompositionWithEmptyText) {
   EXPECT_EQ(-1, info.composition_end);
 
   active_input_method_controller->SetComposition(
-      WebString::FromUTF8(""), empty_underlines, WebRange(), -2, -2);
+      WebString::FromUTF8(""), WebTextCompositionData(), WebRange(), -2, -2);
   info = active_input_method_controller->TextInputInfo();
   EXPECT_EQ("hello", std::string(info.value.Utf8().data()));
   EXPECT_EQ(3, info.selection_start);
@@ -1190,11 +1186,10 @@ TEST_P(WebViewTest, CommitTextForNewCaretPositions) {
           ->FrameWidget()
           ->GetActiveWebInputMethodController();
 
-  WebVector<WebCompositionUnderline> empty_underlines;
 
   // Caret is on the left of composing text.
-  active_input_method_controller->CommitText("ab", empty_underlines, WebRange(),
-                                             -2);
+  active_input_method_controller->CommitText("ab", WebTextCompositionData(),
+                                             WebRange(), -2);
   WebTextInputInfo info = active_input_method_controller->TextInputInfo();
   EXPECT_EQ("ab", std::string(info.value.Utf8().data()));
   EXPECT_EQ(0, info.selection_start);
@@ -1203,8 +1198,8 @@ TEST_P(WebViewTest, CommitTextForNewCaretPositions) {
   EXPECT_EQ(-1, info.composition_end);
 
   // Caret is on the right of composing text.
-  active_input_method_controller->CommitText("c", empty_underlines, WebRange(),
-                                             1);
+  active_input_method_controller->CommitText("c", WebTextCompositionData(),
+                                             WebRange(), 1);
   info = active_input_method_controller->TextInputInfo();
   EXPECT_EQ("cab", std::string(info.value.Utf8().data()));
   EXPECT_EQ(2, info.selection_start);
@@ -1213,7 +1208,7 @@ TEST_P(WebViewTest, CommitTextForNewCaretPositions) {
   EXPECT_EQ(-1, info.composition_end);
 
   // Caret is on the left boundary.
-  active_input_method_controller->CommitText("def", empty_underlines,
+  active_input_method_controller->CommitText("def", WebTextCompositionData(),
                                              WebRange(), -5);
   info = active_input_method_controller->TextInputInfo();
   EXPECT_EQ("cadefb", std::string(info.value.Utf8().data()));
@@ -1223,8 +1218,8 @@ TEST_P(WebViewTest, CommitTextForNewCaretPositions) {
   EXPECT_EQ(-1, info.composition_end);
 
   // Caret is on the right boundary.
-  active_input_method_controller->CommitText("g", empty_underlines, WebRange(),
-                                             6);
+  active_input_method_controller->CommitText("g", WebTextCompositionData(),
+                                             WebRange(), 6);
   info = active_input_method_controller->TextInputInfo();
   EXPECT_EQ("gcadefb", std::string(info.value.Utf8().data()));
   EXPECT_EQ(7, info.selection_start);
@@ -1233,8 +1228,8 @@ TEST_P(WebViewTest, CommitTextForNewCaretPositions) {
   EXPECT_EQ(-1, info.composition_end);
 
   // Caret exceeds the left boundary.
-  active_input_method_controller->CommitText("hi", empty_underlines, WebRange(),
-                                             -100);
+  active_input_method_controller->CommitText("hi", WebTextCompositionData(),
+                                             WebRange(), -100);
   info = active_input_method_controller->TextInputInfo();
   EXPECT_EQ("gcadefbhi", std::string(info.value.Utf8().data()));
   EXPECT_EQ(0, info.selection_start);
@@ -1243,8 +1238,8 @@ TEST_P(WebViewTest, CommitTextForNewCaretPositions) {
   EXPECT_EQ(-1, info.composition_end);
 
   // Caret exceeds the right boundary.
-  active_input_method_controller->CommitText("jk", empty_underlines, WebRange(),
-                                             100);
+  active_input_method_controller->CommitText("jk", WebTextCompositionData(),
+                                             WebRange(), 100);
   info = active_input_method_controller->TextInputInfo();
   EXPECT_EQ("jkgcadefbhi", std::string(info.value.Utf8().data()));
   EXPECT_EQ(11, info.selection_start);
@@ -1263,9 +1258,8 @@ TEST_P(WebViewTest, CommitTextWhileComposing) {
           ->FrameWidget()
           ->GetActiveWebInputMethodController();
 
-  WebVector<WebCompositionUnderline> empty_underlines;
   active_input_method_controller->SetComposition(
-      WebString::FromUTF8("abc"), empty_underlines, WebRange(), 0, 0);
+      WebString::FromUTF8("abc"), WebTextCompositionData(), WebRange(), 0, 0);
   WebTextInputInfo info = active_input_method_controller->TextInputInfo();
   EXPECT_EQ("abc", std::string(info.value.Utf8().data()));
   EXPECT_EQ(0, info.selection_start);
@@ -1275,7 +1269,7 @@ TEST_P(WebViewTest, CommitTextWhileComposing) {
 
   // Deletes ongoing composition, inserts the specified text and moves the
   // caret.
-  active_input_method_controller->CommitText("hello", empty_underlines,
+  active_input_method_controller->CommitText("hello", WebTextCompositionData(),
                                              WebRange(), -2);
   info = active_input_method_controller->TextInputInfo();
   EXPECT_EQ("hello", std::string(info.value.Utf8().data()));
@@ -1285,7 +1279,7 @@ TEST_P(WebViewTest, CommitTextWhileComposing) {
   EXPECT_EQ(-1, info.composition_end);
 
   active_input_method_controller->SetComposition(
-      WebString::FromUTF8("abc"), empty_underlines, WebRange(), 0, 0);
+      WebString::FromUTF8("abc"), WebTextCompositionData(), WebRange(), 0, 0);
   info = active_input_method_controller->TextInputInfo();
   EXPECT_EQ("helabclo", std::string(info.value.Utf8().data()));
   EXPECT_EQ(3, info.selection_start);
@@ -1294,8 +1288,8 @@ TEST_P(WebViewTest, CommitTextWhileComposing) {
   EXPECT_EQ(6, info.composition_end);
 
   // Deletes ongoing composition and moves the caret.
-  active_input_method_controller->CommitText("", empty_underlines, WebRange(),
-                                             2);
+  active_input_method_controller->CommitText("", WebTextCompositionData(),
+                                             WebRange(), 2);
   info = active_input_method_controller->TextInputInfo();
   EXPECT_EQ("hello", std::string(info.value.Utf8().data()));
   EXPECT_EQ(5, info.selection_start);
@@ -1304,7 +1298,7 @@ TEST_P(WebViewTest, CommitTextWhileComposing) {
   EXPECT_EQ(-1, info.composition_end);
 
   // Inserts the specified text and moves the caret.
-  active_input_method_controller->CommitText("world", empty_underlines,
+  active_input_method_controller->CommitText("world", WebTextCompositionData(),
                                              WebRange(), -5);
   info = active_input_method_controller->TextInputInfo();
   EXPECT_EQ("helloworld", std::string(info.value.Utf8().data()));
@@ -1314,8 +1308,8 @@ TEST_P(WebViewTest, CommitTextWhileComposing) {
   EXPECT_EQ(-1, info.composition_end);
 
   // Only moves the caret.
-  active_input_method_controller->CommitText("", empty_underlines, WebRange(),
-                                             5);
+  active_input_method_controller->CommitText("", WebTextCompositionData(),
+                                             WebRange(), 5);
   info = active_input_method_controller->TextInputInfo();
   EXPECT_EQ("helloworld", std::string(info.value.Utf8().data()));
   EXPECT_EQ(10, info.selection_start);
@@ -1337,7 +1331,7 @@ TEST_P(WebViewTest, FinishCompositionDoesNotRevealSelection) {
   Vector<CompositionUnderline> empty_underlines;
   WebLocalFrameBase* frame = web_view->MainFrameImpl();
   frame->GetFrame()->GetInputMethodController().SetCompositionFromExistingText(
-      empty_underlines, 0, 3);
+      TextCompositionData(WebTextCompositionData()), 0, 3);
 
   // Scroll the input field out of the viewport.
   Element* element = static_cast<Element*>(
@@ -1364,13 +1358,12 @@ TEST_P(WebViewTest, InsertNewLinePlacementAfterFinishComposingText) {
       base_url_ + "text_area_populated.html");
   web_view->SetInitialFocus(false);
 
-  WebVector<WebCompositionUnderline> empty_underlines;
 
   WebLocalFrameBase* frame = web_view->MainFrameImpl();
   WebInputMethodController* active_input_method_controller =
       frame->GetInputMethodController();
   frame->SetEditableSelectionOffsets(4, 4);
-  frame->SetCompositionFromExistingText(8, 12, empty_underlines);
+  frame->SetCompositionFromExistingText(8, 12, WebTextCompositionData());
 
   WebTextInputInfo info = active_input_method_controller->TextInputInfo();
   EXPECT_EQ("0123456789abcdefghijklmnopqrstuvwxyz",
@@ -1390,7 +1383,7 @@ TEST_P(WebViewTest, InsertNewLinePlacementAfterFinishComposingText) {
 
   std::string composition_text("\n");
   active_input_method_controller->CommitText(
-      WebString::FromUTF8(composition_text.c_str()), empty_underlines,
+      WebString::FromUTF8(composition_text.c_str()), WebTextCompositionData(),
       WebRange(), 0);
   info = active_input_method_controller->TextInputInfo();
   EXPECT_EQ(5, info.selection_start);
@@ -1474,14 +1467,14 @@ TEST_P(WebViewTest, SetCompositionFromExistingText) {
   WebInputMethodController* active_input_method_controller =
       frame->GetInputMethodController();
   frame->SetEditableSelectionOffsets(4, 10);
-  frame->SetCompositionFromExistingText(8, 12, underlines);
+  frame->SetCompositionFromExistingText(8, 12,
+                                        WebTextCompositionData(underlines));
   WebTextInputInfo info = active_input_method_controller->TextInputInfo();
   EXPECT_EQ(4, info.selection_start);
   EXPECT_EQ(10, info.selection_end);
   EXPECT_EQ(8, info.composition_start);
   EXPECT_EQ(12, info.composition_end);
-  WebVector<WebCompositionUnderline> empty_underlines;
-  frame->SetCompositionFromExistingText(0, 0, empty_underlines);
+  frame->SetCompositionFromExistingText(0, 0, WebTextCompositionData());
   info = active_input_method_controller->TextInputInfo();
   EXPECT_EQ(4, info.selection_start);
   EXPECT_EQ(10, info.selection_end);
@@ -1501,16 +1494,16 @@ TEST_P(WebViewTest, SetCompositionFromExistingTextInTextArea) {
       frame->FrameWidget()->GetActiveWebInputMethodController();
   frame->SetEditableSelectionOffsets(27, 27);
   std::string new_line_text("\n");
-  WebVector<WebCompositionUnderline> empty_underlines;
   active_input_method_controller->CommitText(
-      WebString::FromUTF8(new_line_text.c_str()), empty_underlines, WebRange(),
-      0);
+      WebString::FromUTF8(new_line_text.c_str()), WebTextCompositionData(),
+      WebRange(), 0);
   WebTextInputInfo info = active_input_method_controller->TextInputInfo();
   EXPECT_EQ("0123456789abcdefghijklmnopq\nrstuvwxyz",
             std::string(info.value.Utf8().data()));
 
   frame->SetEditableSelectionOffsets(31, 31);
-  frame->SetCompositionFromExistingText(30, 34, underlines);
+  frame->SetCompositionFromExistingText(30, 34,
+                                        WebTextCompositionData(underlines));
   info = active_input_method_controller->TextInputInfo();
   EXPECT_EQ("0123456789abcdefghijklmnopq\nrstuvwxyz",
             std::string(info.value.Utf8().data()));
@@ -1521,7 +1514,7 @@ TEST_P(WebViewTest, SetCompositionFromExistingTextInTextArea) {
 
   std::string composition_text("yolo");
   active_input_method_controller->CommitText(
-      WebString::FromUTF8(composition_text.c_str()), empty_underlines,
+      WebString::FromUTF8(composition_text.c_str()), WebTextCompositionData(),
       WebRange(), 0);
   info = active_input_method_controller->TextInputInfo();
   EXPECT_EQ("0123456789abcdefghijklmnopq\nrsyoloxyz",
@@ -1543,7 +1536,8 @@ TEST_P(WebViewTest, SetCompositionFromExistingTextInRichText) {
   frame->SetEditableSelectionOffsets(1, 1);
   WebDocument document = web_view->MainFrameImpl()->GetDocument();
   EXPECT_FALSE(document.GetElementById("bold").IsNull());
-  frame->SetCompositionFromExistingText(0, 4, underlines);
+  frame->SetCompositionFromExistingText(0, 4,
+                                        WebTextCompositionData(underlines));
   EXPECT_FALSE(document.GetElementById("bold").IsNull());
 }
 
@@ -1555,17 +1549,16 @@ TEST_P(WebViewTest, SetEditableSelectionOffsetsKeepsComposition) {
 
   std::string composition_text_first("hello ");
   std::string composition_text_second("world");
-  WebVector<WebCompositionUnderline> empty_underlines;
   WebInputMethodController* active_input_method_controller =
       web_view->MainFrameImpl()
           ->FrameWidget()
           ->GetActiveWebInputMethodController();
   active_input_method_controller->CommitText(
-      WebString::FromUTF8(composition_text_first.c_str()), empty_underlines,
-      WebRange(), 0);
+      WebString::FromUTF8(composition_text_first.c_str()),
+      WebTextCompositionData(), WebRange(), 0);
   active_input_method_controller->SetComposition(
-      WebString::FromUTF8(composition_text_second.c_str()), empty_underlines,
-      WebRange(), 5, 5);
+      WebString::FromUTF8(composition_text_second.c_str()),
+      WebTextCompositionData(), WebRange(), 5, 5);
 
   WebTextInputInfo info = active_input_method_controller->TextInputInfo();
   EXPECT_EQ("hello world", std::string(info.value.Utf8().data()));
@@ -2333,10 +2326,9 @@ TEST_P(WebViewTest, FinishComposingTextDoesNotDismissHandles) {
   WebInputMethodController* active_input_method_controller =
       frame->FrameWidget()->GetActiveWebInputMethodController();
   EXPECT_TRUE(TapElementById(WebInputEvent::kGestureTap, target));
-  WebVector<WebCompositionUnderline> empty_underlines;
   frame->SetEditableSelectionOffsets(8, 8);
   EXPECT_TRUE(active_input_method_controller->SetComposition(
-      "12345", empty_underlines, WebRange(), 8, 13));
+      "12345", WebTextCompositionData(), WebRange(), 8, 13));
   EXPECT_TRUE(frame->GetFrame()->GetInputMethodController().HasComposition());
   EXPECT_EQ("", std::string(frame->SelectionAsText().Utf8().data()));
   EXPECT_FALSE(frame->GetFrame()->Selection().IsHandleVisible());
@@ -2713,9 +2705,8 @@ TEST_P(WebViewTest, LosingFocusDoesNotTriggerAutofillTextChange) {
   web_view->SetInitialFocus(false);
 
   // Set up a composition that needs to be committed.
-  WebVector<WebCompositionUnderline> empty_underlines;
   frame->SetEditableSelectionOffsets(4, 10);
-  frame->SetCompositionFromExistingText(8, 12, empty_underlines);
+  frame->SetCompositionFromExistingText(8, 12, WebTextCompositionData());
   WebTextInputInfo info = frame->GetInputMethodController()->TextInputInfo();
   EXPECT_EQ(4, info.selection_start);
   EXPECT_EQ(10, info.selection_end);
@@ -2757,12 +2748,11 @@ TEST_P(WebViewTest, CompositionNotCancelledByBackspace) {
   // Test both input elements.
   for (int i = 0; i < 2; ++i) {
     // Select composition and do sanity check.
-    WebVector<WebCompositionUnderline> empty_underlines;
     frame->SetEditableSelectionOffsets(6, 6);
     WebInputMethodController* active_input_method_controller =
         frame->FrameWidget()->GetActiveWebInputMethodController();
     EXPECT_TRUE(active_input_method_controller->SetComposition(
-        "fghij", empty_underlines, WebRange(), 0, 5));
+        "fghij", WebTextCompositionData(), WebRange(), 0, 5));
     frame->SetEditableSelectionOffsets(11, 11);
     VerifySelectionAndComposition(web_view, 11, 11, 6, 11, "initial case");
 
@@ -2777,7 +2767,7 @@ TEST_P(WebViewTest, CompositionNotCancelledByBackspace) {
 
     frame->SetEditableSelectionOffsets(6, 6);
     EXPECT_TRUE(active_input_method_controller->SetComposition(
-        "fghi", empty_underlines, WebRange(), 0, 4));
+        "fghi", WebTextCompositionData(), WebRange(), 0, 4));
     frame->SetEditableSelectionOffsets(10, 10);
     VerifySelectionAndComposition(web_view, 10, 10, 6, 10,
                                   "after pressing Backspace");
@@ -2809,9 +2799,8 @@ TEST_P(WebViewTest, FinishComposingTextDoesntTriggerAutofillTextChange) {
   // Set up a composition that needs to be committed.
   std::string composition_text("testingtext");
 
-  WebVector<WebCompositionUnderline> empty_underlines;
   active_input_method_controller->SetComposition(
-      WebString::FromUTF8(composition_text.c_str()), empty_underlines,
+      WebString::FromUTF8(composition_text.c_str()), WebTextCompositionData(),
       WebRange(), 0, composition_text.length());
 
   WebTextInputInfo info = active_input_method_controller->TextInputInfo();
@@ -2842,10 +2831,8 @@ TEST_P(WebViewTest,
   frame->SetAutofillClient(&client);
   web_view->SetInitialFocus(false);
 
-  WebVector<WebCompositionUnderline> empty_underlines;
-
   client.ClearChangeCounts();
-  frame->SetCompositionFromExistingText(8, 12, empty_underlines);
+  frame->SetCompositionFromExistingText(8, 12, WebTextCompositionData());
 
   WebTextInputInfo info = frame->GetInputMethodController()->TextInputInfo();
   EXPECT_EQ("0123456789abcdefghijklmnopqrstuvwxyz",
@@ -3583,7 +3570,7 @@ TEST_P(WebViewTest, CompositionIsUserGesture) {
   EXPECT_TRUE(
       frame->FrameWidget()->GetActiveWebInputMethodController()->SetComposition(
           WebString::FromUTF8(std::string("hello").c_str()),
-          WebVector<WebCompositionUnderline>(), WebRange(), 3, 3));
+          WebTextCompositionData(), WebRange(), 3, 3));
   EXPECT_EQ(1, client.TextChangesFromUserGesture());
   EXPECT_FALSE(UserGestureIndicator::ProcessingUserGesture());
   EXPECT_TRUE(frame->HasMarkedText());
@@ -3986,12 +3973,10 @@ TEST_P(WebViewTest, PasswordFieldEditingIsUserGesture) {
   frame->SetAutofillClient(&client);
   web_view->SetInitialFocus(false);
 
-  WebVector<WebCompositionUnderline> empty_underlines;
-
   EXPECT_TRUE(
       frame->FrameWidget()->GetActiveWebInputMethodController()->CommitText(
-          WebString::FromUTF8(std::string("hello").c_str()), empty_underlines,
-          WebRange(), 0));
+          WebString::FromUTF8(std::string("hello").c_str()),
+          WebTextCompositionData(), WebRange(), 0));
   EXPECT_EQ(1, client.TextChangesFromUserGesture());
   EXPECT_FALSE(UserGestureIndicator::ProcessingUserGesture());
   frame->SetAutofillClient(0);

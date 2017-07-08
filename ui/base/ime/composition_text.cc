@@ -16,16 +16,14 @@ CompositionText::~CompositionText() {
 
 void CompositionText::Clear() {
   text.clear();
-  underlines.clear();
+  text_composition_data = TextCompositionData();
   selection = gfx::Range();
 }
 
 void CompositionText::CopyFrom(const CompositionText& obj) {
   Clear();
   text = obj.text;
-  for (size_t i = 0; i < obj.underlines.size(); i++) {
-    underlines.push_back(obj.underlines[i]);
-  }
+  text_composition_data = obj.text_composition_data;
   selection = obj.selection;
 }
 

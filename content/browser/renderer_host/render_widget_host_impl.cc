@@ -1723,21 +1723,22 @@ void RenderWidgetHostImpl::NotifyTextDirection() {
 
 void RenderWidgetHostImpl::ImeSetComposition(
     const base::string16& text,
-    const std::vector<ui::CompositionUnderline>& underlines,
+    const ui::TextCompositionData& text_composition_data,
     const gfx::Range& replacement_range,
     int selection_start,
     int selection_end) {
-  GetWidgetInputHandler()->ImeSetComposition(
-      text, underlines, replacement_range, selection_start, selection_end);
+  GetWidgetInputHandler()->ImeSetComposition(text, text_composition_data,
+                                             replacement_range, selection_start,
+                                             selection_end);
 }
 
 void RenderWidgetHostImpl::ImeCommitText(
     const base::string16& text,
-    const std::vector<ui::CompositionUnderline>& underlines,
+    const ui::TextCompositionData& text_composition_data,
     const gfx::Range& replacement_range,
     int relative_cursor_pos) {
-  GetWidgetInputHandler()->ImeCommitText(text, underlines, replacement_range,
-                                         relative_cursor_pos);
+  GetWidgetInputHandler()->ImeCommitText(
+      text, text_composition_data, replacement_range, relative_cursor_pos);
 }
 
 void RenderWidgetHostImpl::ImeFinishComposingText(bool keep_selection) {
@@ -1745,9 +1746,9 @@ void RenderWidgetHostImpl::ImeFinishComposingText(bool keep_selection) {
 }
 
 void RenderWidgetHostImpl::ImeCancelComposition() {
-  GetWidgetInputHandler()->ImeSetComposition(
-      base::string16(), std::vector<ui::CompositionUnderline>(),
-      gfx::Range::InvalidRange(), 0, 0);
+  GetWidgetInputHandler()->ImeSetComposition(base::string16(),
+                                             ui::TextCompositionData(),
+                                             gfx::Range::InvalidRange(), 0, 0);
 }
 
 void RenderWidgetHostImpl::RejectMouseLockOrUnlockIfNecessary() {

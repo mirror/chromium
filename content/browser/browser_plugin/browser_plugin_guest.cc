@@ -941,8 +941,9 @@ void BrowserPluginGuest::OnImeSetComposition(
       ->GetRenderViewHost()
       ->GetWidget()
       ->GetWidgetInputHandler()
-      ->ImeSetComposition(params.text, ui_underlines, params.replacement_range,
-                          params.selection_start, params.selection_end);
+      ->ImeSetComposition(params.text, ui::TextCompositionData(ui_underlines),
+                          params.replacement_range, params.selection_start,
+                          params.selection_end);
 }
 
 void BrowserPluginGuest::OnImeCommitText(
@@ -957,8 +958,8 @@ void BrowserPluginGuest::OnImeCommitText(
       ->GetRenderViewHost()
       ->GetWidget()
       ->GetWidgetInputHandler()
-      ->ImeCommitText(text, ui_underlines, replacement_range,
-                      relative_cursor_pos);
+      ->ImeCommitText(text, ui::TextCompositionData(ui_underlines),
+                      replacement_range, relative_cursor_pos);
 }
 
 void BrowserPluginGuest::OnImeFinishComposingText(

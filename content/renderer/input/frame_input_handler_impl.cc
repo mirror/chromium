@@ -14,6 +14,7 @@
 #include "content/renderer/render_view_impl.h"
 #include "content/renderer/render_widget.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
+#include "third_party/WebKit/public/web/WebTextCompositionData.h"
 
 namespace content {
 
@@ -65,11 +66,11 @@ void FrameInputHandlerImpl::RunOnMainThread(const base::Closure& closure) {
 void FrameInputHandlerImpl::SetCompositionFromExistingText(
     int32_t start,
     int32_t end,
-    const std::vector<ui::CompositionUnderline>& ui_underlines) {
+    const ui::TextCompositionData& ui_text_composition_data) {
   if (!main_thread_task_runner_->BelongsToCurrentThread()) {
     RunOnMainThread(
         base::Bind(&FrameInputHandlerImpl::SetCompositionFromExistingText,
-                   weak_this_, start, end, ui_underlines));
+                   weak_this_, start, end, ui_text_composition_data));
     return;
   }
 
@@ -78,15 +79,16 @@ void FrameInputHandlerImpl::SetCompositionFromExistingText(
 
   ImeEventGuard guard(render_frame_->GetRenderWidget());
   std::vector<blink::WebCompositionUnderline> underlines;
-  for (const auto& underline : ui_underlines) {
+  for (const auto& underline :
+       ui_text_composition_data.composition_underlines) {
     blink::WebCompositionUnderline blink_underline(
         underline.start_offset, underline.end_offset, underline.color,
         underline.thick, underline.background_color);
     underlines.push_back(blink_underline);
   }
 
-  render_frame_->GetWebFrame()->SetCompositionFromExistingText(start, end,
-                                                               underlines);
+  render_frame_->GetWebFrame()->SetCompositionFromExistingText(
+      start, end, blink::WebTextCompositionData(underlines));
 }
 
 void FrameInputHandlerImpl::ExtendSelectionAndDelete(int32_t before,

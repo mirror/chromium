@@ -8,7 +8,6 @@
 #include <memory>
 #include <set>
 
-#include "WebCompositionUnderline.h"
 #include "WebFrame.h"
 #include "WebFrameLoadType.h"
 #include "WebHistoryItem.h"
@@ -62,6 +61,7 @@ struct WebPrintParams;
 struct WebPrintPresetOptions;
 struct WebScriptSource;
 struct WebSourceLocation;
+struct WebTextCompositionData;
 
 // Interface for interacting with in process frames. This contains methods that
 // require interacting with a frame's document.
@@ -507,7 +507,7 @@ class WebLocalFrame : public WebFrame {
   virtual bool SetCompositionFromExistingText(
       int composition_start,
       int composition_end,
-      const WebVector<WebCompositionUnderline>& underlines) = 0;
+      const WebTextCompositionData&) = 0;
   virtual void ExtendSelectionAndDelete(int before, int after) = 0;
 
   virtual void SetCaretVisible(bool) = 0;

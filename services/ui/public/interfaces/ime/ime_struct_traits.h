@@ -96,14 +96,26 @@ struct StructTraits<ui::mojom::CompositionTextDataView, ui::CompositionText> {
   static std::string text(const ui::CompositionText& c) {
     return base::UTF16ToUTF8(c.text);
   }
-  static ui::CompositionUnderlines underlines(const ui::CompositionText& c) {
-    return c.underlines;
+  static ui::TextCompositionData text_composition_data(
+      const ui::CompositionText& c) {
+    return c.text_composition_data;
   }
   static gfx::Range selection(const ui::CompositionText& c) {
     return c.selection;
   }
   static bool Read(ui::mojom::CompositionTextDataView data,
                    ui::CompositionText* out);
+};
+
+template <>
+struct StructTraits<ui::mojom::TextCompositionDataDataView,
+                    ui::TextCompositionData> {
+  static std::vector<ui::CompositionUnderline> composition_underlines(
+      const ui::TextCompositionData& c) {
+    return c.composition_underlines;
+  }
+  static bool Read(ui::mojom::TextCompositionDataDataView data,
+                   ui::TextCompositionData* out);
 };
 
 template <>
