@@ -3115,21 +3115,6 @@ void Document::ImplicitClose() {
     return;
   }
 
-  // We used to force a synchronous display and flush here.  This really isn't
-  // necessary and can in fact be actively harmful if pages are loading at a
-  // rate of > 60fps
-  // (if your platform is syncing flushes and limiting them to 60fps).
-  if (!LocalOwner() || (LocalOwner()->GetLayoutObject() &&
-                        !LocalOwner()->GetLayoutObject()->NeedsLayout())) {
-    UpdateStyleAndLayoutTree();
-
-    // Always do a layout after loading if needed.
-    if (View() && !GetLayoutViewItem().IsNull() &&
-        (!GetLayoutViewItem().FirstChild() ||
-         GetLayoutViewItem().NeedsLayout()))
-      View()->UpdateLayout();
-  }
-
   load_event_progress_ = kLoadEventCompleted;
 
   if (GetFrame() && !GetLayoutViewItem().IsNull() &&
@@ -3142,8 +3127,17 @@ void Document::ImplicitClose() {
     }
   }
 
-  if (SvgExtensions())
+  if (SvgExtensions() && AccessSVGExtensions().HasAnimations()) {
+    // StartAnimations executes the first frame of SVG animations, which
+    // depend on style & layout being clean.
+    // TODO(chrishtr): find a way to disentangle this. It's hard to make
+    // SVG tests pass without this forced layout, since SVG files can't have
+    // script and therefore request the test to wait for an extra frame after
+    // loading.
+    if (View())
+      View()->UpdateLifecycleToLayoutClean();
     AccessSVGExtensions().StartAnimations();
+  }
 }
 
 static bool AllDescendantsAreComplete(Frame* frame) {

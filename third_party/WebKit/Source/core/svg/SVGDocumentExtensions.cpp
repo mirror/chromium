@@ -53,6 +53,10 @@ void SVGDocumentExtensions::ServiceOnAnimationFrame(Document& document) {
   document.AccessSVGExtensions().ServiceAnimations();
 }
 
+bool SVGDocumentExtensions::HasAnimations() const {
+  return !time_containers_.IsEmpty();
+}
+
 void SVGDocumentExtensions::ServiceAnimations() {
   if (RuntimeEnabledFeatures::SMILEnabled()) {
     HeapVector<Member<SVGSVGElement>> time_containers;
