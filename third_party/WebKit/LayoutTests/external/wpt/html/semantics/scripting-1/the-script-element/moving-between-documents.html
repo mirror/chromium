@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>Moving script elements between documents</title>
+<link rel="author" href="mailto:d@domenic.me" title="Domenic Denicola">
+<link rel="help" href="https://html.spec.whatwg.org/multipage/#execute-the-script-block">
+
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+
+<!-- Background:
+
+- https://www.w3.org/Bugs/Public/show_bug.cgi?id=11323
+- https://github.com/whatwg/html/issues/2137
+- https://github.com/whatwg/html/issues/2469
+- https://github.com/whatwg/html/pull/2673
+
+-->
+
+<body>
+<script>
+"use strict";
+window.didExecute = false;
+var count = 0;
+
+for (const type of ["text/javascript", "module"]) {
+  async_test(t => {
+    t.add_cleanup(() => {
+      window.didExecute = false;
+    });
+
+    const iframe = document.createElement("iframe");
+    iframe.onload = t.step_func_done(() => {
+      iframe.contentDocument.write("<streaming-element>");
+      document.body.appendChild(iframe.contentDocument.querySelector("streaming-element"));
+      iframe.contentDocument.write(`<script id="s1" type="${type}">window.didExecute = true;<` + "/script>");
+      iframe.contentDocument.write("</streaming-element>");
+
+      const s = document.querySelector("#s1");
+      s.onload = t.unreached_func("onload");
+      s.onerror = t.unreached_func("onerror");
+
+      iframe.contentDocument.close();
+
+      assert_false(window.didExecute, "The script must not have executed in this window");
+      assert_equals(iframe.contentWindow.didExecute, undefined,
+        "The script must not have executed in the iframe window");
+    });
+
+    document.body.appendChild(iframe);
+  }, `${type}: moving to another document during parsing, inline script`);
+
+ for (const attr of ['', 'async', 'defer']) {
+  async_test(t => {
+    t.add_cleanup(() => {
+      window.didExecute = false;
+    });
+
+    const iframe = document.createElement("iframe");
+    iframe.onload = t.step_func(() => {
+      var id = 's2' + count;
+      count += 1;
+      iframe.contentDocument.write("<streaming-element>");
+      document.body.appendChild(iframe.contentDocument.querySelector("streaming-element"));
+      iframe.contentDocument.write(`<script id="${id}" type="${type}" src="resources/flag-setter.js" ${attr}><` + "/script>");
+      iframe.contentDocument.write("</streaming-element>");
+
+      const s = document.querySelector(`#${id}`);
+      s.onload = t.unreached_func("onload");
+      s.onerror = t.unreached_func("onerror");
+
+      iframe.contentDocument.close();
+
+      t.step_timeout(() => {
+        assert_false(window.didExecute, "The script must not have executed in this window");
+        assert_equals(iframe.contentWindow.didExecute, undefined,
+          "The script must not have executed in the iframe window");
+        t.done();
+      }, 3000);
+    });
+
+    document.body.appendChild(iframe);
+  }, `${type}: moving to another document during parsing, external script (${attr})`);
+ }
+
+ for (const async of [undefined, true, false]) {
+ for (const defer of [undefined, true, false]) {
+ for (const url of ['slow-flag-setter', 'slow-flag-setter-404']) {
+  async_test(t => {
+    t.add_cleanup(() => {
+      window.didExecute = false;
+    });
+
+    const iframe = document.createElement("iframe");
+    iframe.onload = t.step_func(() => {
+      const s = document.createElement("script");
+      s.type = type;
+      s.src = "resources/" + url + ".py?" + Math.random();
+      s.async = async;
+      s.defer = defer;
+      s.onload = t.unreached_func("onload");
+      s.onerror = t.unreached_func("onerror");
+
+      // Start the fetch
+      document.body.appendChild(s);
+
+      // Need to delay since the "prepare a script" algorithm also contains related checks; we want to
+      // test the "execute a script block" algorithm for when the fetch comes back.
+      t.step_timeout(() => {
+        iframe.contentDocument.body.appendChild(s);
+      }, 0);
+
+      t.step_timeout(() => {
+        assert_false(window.didExecute, "The script must not have executed in this window");
+        assert_equals(iframe.contentWindow.didExecute, undefined,
+          "The script must not have executed in the iframe window");
+        t.done();
+      }, 3000);
+    });
+
+    document.body.appendChild(iframe);
+  }, `${type}: moving to another Window's document during fetching async=${async} defer=${defer} url=${url}`);
+
+  async_test(t => {
+    t.add_cleanup(() => {
+      window.didExecute = false;
+    });
+
+    const s = document.createElement("script");
+    s.type = type;
+    s.src = "resources/" + url + ".py?" + Math.random();
+    s.async = async;
+    s.defer = defer;
+    s.onload = t.unreached_func("onload");
+    s.onerror = t.unreached_func("onerror");
+
+    // Start the fetch
+    document.body.appendChild(s);
+
+    // Need to delay since the "prepare a script" algorithm also contains related checks; we want to
+    // test the "execute a script block" algorithm for when the fetch comes back.
+    t.step_timeout(() => {
+      const doc2 = document.implementation.createHTMLDocument("title");
+      doc2.body.appendChild(s);
+    }, 0);
+
+    t.step_timeout(() => {
+        assert_false(window.didExecute, "The script must not have executed in this window");
+      t.done();
+    }, 3000);
+  }, `${type}: moving to a document where scripting is disabled during fetching async=${async} defer=${defer} url=${url}`);
+ }}}
+}
+</script>
