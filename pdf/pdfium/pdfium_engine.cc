@@ -1764,6 +1764,11 @@ bool PDFiumEngine::OnMouseDown(const pp::MouseInputEvent& event) {
       is_valid_control |= (form_type == FPDF_FORMFIELD_XFA);
 #endif
       SetInFormTextArea(is_valid_control);
+
+      // Clear form text selection when left mouse button pressed within form
+      // text area.
+      if (in_form_text_area_)
+        SetFormSelectedText(form_, pages_[last_page_mouse_down_]->GetPage());
       return true;  // Return now before we get into the selection code.
     }
   }
@@ -3310,6 +3315,7 @@ PDFiumEngine::SelectionChangeInvalidator::~SelectionChangeInvalidator() {
       selection_changed = true;
     }
   }
+
   if (selection_changed)
     engine_->OnSelectionChanged();
 }

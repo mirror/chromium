@@ -426,6 +426,8 @@ RenderWidgetHostViewAura::RenderWidgetHostViewAura(RenderWidgetHost* host,
     // first to rebaseline some unreliable layout tests.
     ignore_result(rvh->GetWebkitPreferences());
   }
+
+  LOG(ERROR) << "RWHVA ctor " << this;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -2369,9 +2371,11 @@ void RenderWidgetHostViewAura::OnTextSelectionChanged(
 #if defined(USE_X11) && !defined(OS_CHROMEOS)
   const TextInputManager::TextSelection* selection =
       GetTextInputManager()->GetTextSelection(focused_view);
-  if (selection->selected_text().length()) {
+  if (selection->selected_text().length() && updated_view == this) {
     // Set the CLIPBOARD_TYPE_SELECTION to the ui::Clipboard.
     ui::ScopedClipboardWriter clipboard_writer(ui::CLIPBOARD_TYPE_SELECTION);
+    LOG(ERROR) << "Linux selection clipboard received: " << this << ' '
+               << selection->selected_text();
     clipboard_writer.WriteText(selection->selected_text());
   }
 
