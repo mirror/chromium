@@ -52,12 +52,10 @@ const CGFloat kAnimationDuration = 0.2;
                          : NSLeftTextAlignment];
 
   // Disable Force Touch in the Omnibox. Note that this API is defined in
-  // 10.10.3 and higher so have to check more than just isYosmiteOrLater().
-  // Also, because NSPressureConfiguration is not in the original 10.10 SDK,
-  // use NSClassFromString() to instantiate it (otherwise there's a
-  // linker error).
-  if (base::mac::IsAtLeastOS10_10() &&
-      [self respondsToSelector:@selector(setPressureConfiguration:)]) {
+  // 10.11 and higher. Also, because NSPressureConfiguration is not in the
+  // original 10.10 SDK, use NSClassFromString() to instantiate it (otherwise
+  // there's a linker error).
+  if (@available(macOS 10.11, *)) {
     NSPressureConfiguration* pressureConfiguration =
         [[[NSClassFromString(@"NSPressureConfiguration") alloc]
             initWithPressureBehavior:NSPressureBehaviorPrimaryClick]
