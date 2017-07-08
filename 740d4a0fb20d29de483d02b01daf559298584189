@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2cf91db0_cc389b2d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ApplicationPanelSidebar.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 743,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-07-08T00:42:18Z",
+      "side": 1,
+      "message": "Looks like a great place to use await! :-)",
+      "revId": "740d4a0fb20d29de483d02b01daf559298584189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77d26b76_f7e92092",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/DatabaseModel.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-07-08T00:42:18Z",
+      "side": 1,
+      "message": "response[Protocol.Error]",
+      "revId": "740d4a0fb20d29de483d02b01daf559298584189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b3e2686_bdc8690a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/DatabaseQueryView.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-07-08T00:42:18Z",
+      "side": 1,
+      "message": "await ?",
+      "revId": "740d4a0fb20d29de483d02b01daf559298584189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
