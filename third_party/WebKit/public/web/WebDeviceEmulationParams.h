@@ -15,23 +15,24 @@ namespace blink {
 
 // All sizes are measured in device independent pixels.
 struct WebDeviceEmulationParams {
-  // For mobile, |screenSize| and |viewPosition| are used.
-  // For desktop, screen size and view position are preserved.
+  // For mobile, |screen_size| and |view_position| are used.
+  // For desktop, |screen_size| and |view_position| are preserved.
   enum ScreenPosition { kDesktop, kMobile, kScreenPositionLast = kMobile };
 
   ScreenPosition screen_position;
 
-  // Emulated screen size. Used with |screenPosition == Mobile|.
+  // Emulated screen size. Typically full / physical size of the device screen
+  // in DIP. Used with |screen_position == Mobile|.
   WebSize screen_size;
 
-  // Position of view on the screen. Used with |screenPosition == Mobile|.
+  // Position of view on the screen. Used with |screen_position == Mobile|.
   WebPoint view_position;
-
-  // If zero, the original device scale factor is preserved.
-  float device_scale_factor;
 
   // Emulated view size. Empty size means no override.
   WebSize view_size;
+
+  // If zero, the original device scale factor is preserved.
+  float device_scale_factor;
 
   // Whether emulated view should be scaled down if necessary to fit into
   // available space.
@@ -42,6 +43,10 @@ struct WebDeviceEmulationParams {
 
   // Scale of emulated view inside available space, not in fit to view mode.
   float scale;
+
+  // Forced viewport offset for screenshots during emulation, (-1, -1) for
+  // disabled.
+  WebFloatPoint viewport_offset;
 
   // Optional screen orientation type, with WebScreenOrientationUndefined
   // value meaning no emulation necessary.
@@ -55,6 +60,7 @@ struct WebDeviceEmulationParams {
         device_scale_factor(0),
         fit_to_view(false),
         scale(1),
+        viewport_offset(-1, -1),
         screen_orientation_type(kWebScreenOrientationUndefined),
         screen_orientation_angle(0) {}
 };
@@ -67,7 +73,8 @@ inline bool operator==(const WebDeviceEmulationParams& a,
          a.view_size == b.view_size && a.fit_to_view == b.fit_to_view &&
          a.offset == b.offset && a.scale == b.scale &&
          a.screen_orientation_type == b.screen_orientation_type &&
-         a.screen_orientation_angle == b.screen_orientation_angle;
+         a.screen_orientation_angle == b.screen_orientation_angle &&
+         a.viewport_offset == b.viewport_offset;
 }
 
 inline bool operator!=(const WebDeviceEmulationParams& a,
