@@ -49,6 +49,9 @@ ASH_EXPORT gfx::ImageSkia GetImageForDisconnectedCellNetwork();
 ASH_EXPORT gfx::ImageSkia GetImageForNewWifiNetwork(SkColor icon_color,
                                                     SkColor badge_color);
 
+ASH_EXPORT gfx::ImageSkia GetImageForNewTetherNetwork(
+    const chromeos::NetworkState* network);
+
 // Returns the label for |network| based on |icon_type|. |network| cannot be
 // nullptr.
 ASH_EXPORT base::string16 GetLabelForNetwork(

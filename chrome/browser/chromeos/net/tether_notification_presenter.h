@@ -8,12 +8,14 @@
 #include <memory>
 #include <string>
 
+#include "ash/system/network/network_icon.h"
 #include "base/callback.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/strings/string16.h"
 #include "chromeos/components/tether/notification_presenter.h"
 #include "chromeos/network/network_connect.h"
+#include "chromeos/network/network_state.h"
 #include "components/cryptauth/remote_device.h"
 #include "ui/message_center/message_center_observer.h"
 #include "ui/message_center/notification.h"
@@ -45,6 +47,9 @@ class TetherNotificationPresenter
   // NotificationPresenter:
   void NotifyPotentialHotspotNearby(
       const cryptauth::RemoteDevice& remote_device) override;
+  void NotifyPotentialHotspotNearby(
+      const cryptauth::RemoteDevice& remote_device,
+      const chromeos::NetworkState* network);
   void NotifyMultiplePotentialHotspotsNearby() override;
   void RemovePotentialHotspotNotification() override;
   void NotifySetupRequired(const std::string& device_name) override;
@@ -82,6 +87,12 @@ class TetherNotificationPresenter
       const base::string16& title,
       const base::string16& message,
       const message_center::RichNotificationData rich_notification_data);
+  static std::unique_ptr<message_center::Notification> CreateNotification(
+      const std::string& id,
+      const base::string16& title,
+      const base::string16& message,
+      const message_center::RichNotificationData rich_notification_data,
+      const chromeos::NetworkState* network_state_ptr);
 
   friend class TetherNotificationPresenterTest;
 
