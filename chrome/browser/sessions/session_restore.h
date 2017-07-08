@@ -50,6 +50,9 @@ class SessionRestore {
   // Notification callback list.
   using CallbackList = base::CallbackList<void(int)>;
 
+  // Session restore observer list.
+  using SessionRestoreObserverList = base::ObserverList<SessionRestoreObserver>;
+
   // Used by objects calling RegisterOnSessionRestoredCallback() to de-register
   // themselves when they are destroyed.
   using CallbackSubscription =
@@ -112,13 +115,8 @@ class SessionRestore {
   static void AddObserver(SessionRestoreObserver* observer);
   static void RemoveObserver(SessionRestoreObserver* observer);
 
-  // Accessor for the observer list. Create the list the first time to always
-  // return a valid reference.
-  static base::ObserverList<SessionRestoreObserver>& observers() {
-    if (!observers_)
-      observers_ = new base::ObserverList<SessionRestoreObserver>();
-    return *observers_;
-  }
+  // Got called when the tab loader finishes loading tabs in tab restore.
+  static void OnTabLoaderFinishedLoadingTabs();
 
  private:
   SessionRestore();
@@ -134,8 +132,16 @@ class SessionRestore {
   // Contains all registered callbacks for session restore notifications.
   static CallbackList* on_session_restored_callbacks_;
 
+  // Accessor for the observer list. Create the list the first time to always
+  // return a valid reference.
+  static SessionRestoreObserverList* observers() {
+    if (!observers_)
+      observers_ = new base::ObserverList<SessionRestoreObserver>();
+    return observers_;
+  }
+
   // Contains all registered observers for session restore events.
-  static base::ObserverList<SessionRestoreObserver>* observers_;
+  static SessionRestoreObserverList* observers_;
 
   DISALLOW_COPY_AND_ASSIGN(SessionRestore);
 };

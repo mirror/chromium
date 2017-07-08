@@ -10,11 +10,13 @@ class SessionRestoreObserver {
  public:
   // OnSessionRestoreStartedLoadingTabs is triggered when the browser starts
   // loading tabs in session restore.
+  // Called on the first session restore when multiple session restores occur.
   virtual void OnSessionRestoreStartedLoadingTabs() {}
 
   // OnSessionRestoreFinishedLoadingTabs is triggered when the browser finishes
   // loading tabs in session restore. In case of memory pressure, not all
   // WebContents may have been created (i.e., some are deferred).
+  // Called on the last session restore when multiple session restores occur.
   virtual void OnSessionRestoreFinishedLoadingTabs() {}
 };
 
