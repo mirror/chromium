@@ -138,8 +138,8 @@ void InputMethodEngine::UpdateComposition(
   composition_.CopyFrom(composition_text);
 
   // Use a black thin underline by default.
-  if (composition_.underlines.empty()) {
-    composition_.underlines.push_back(
+  if (composition_.text_composition_data.composition_underlines.empty()) {
+    composition_.text_composition_data.composition_underlines.push_back(
         ui::CompositionUnderline(0, composition_.text.length(), SK_ColorBLACK,
                                  false /* thick */, SK_ColorTRANSPARENT));
   }

@@ -1629,14 +1629,15 @@ TEST_F(RenderWidgetHostViewAuraTest, SetCompositionText) {
   composition_text.text = base::ASCIIToUTF16("|a|b");
 
   // Focused segment
-  composition_text.underlines.push_back(
+  composition_text.text_composition_data.composition_underlines.push_back(
       ui::CompositionUnderline(0, 3, 0xff000000, true, 0x78563412));
 
   // Non-focused segment, with different background color.
-  composition_text.underlines.push_back(
+  composition_text.text_composition_data.composition_underlines.push_back(
       ui::CompositionUnderline(3, 4, 0xff000000, false, 0xefcdab90));
 
-  const ui::CompositionUnderlines& underlines = composition_text.underlines;
+  const std::vector<ui::CompositionUnderline>& underlines =
+      composition_text.text_composition_data.composition_underlines;
 
   // Caret is at the end. (This emulates Japanese MSIME 2007 and later)
   composition_text.selection = gfx::Range(4);
@@ -1654,15 +1655,19 @@ TEST_F(RenderWidgetHostViewAuraTest, SetCompositionText) {
     // composition text
     EXPECT_EQ(composition_text.text, std::get<0>(params));
     // underlines
-    ASSERT_EQ(underlines.size(), std::get<1>(params).size());
+    ASSERT_EQ(underlines.size(),
+              std::get<1>(params).composition_underlines.size());
     for (size_t i = 0; i < underlines.size(); ++i) {
       EXPECT_EQ(underlines[i].start_offset,
-                std::get<1>(params)[i].start_offset);
-      EXPECT_EQ(underlines[i].end_offset, std::get<1>(params)[i].end_offset);
-      EXPECT_EQ(underlines[i].color, std::get<1>(params)[i].color);
-      EXPECT_EQ(underlines[i].thick, std::get<1>(params)[i].thick);
+                std::get<1>(params).composition_underlines[i].start_offset);
+      EXPECT_EQ(underlines[i].end_offset,
+                std::get<1>(params).composition_underlines[i].end_offset);
+      EXPECT_EQ(underlines[i].color,
+                std::get<1>(params).composition_underlines[i].color);
+      EXPECT_EQ(underlines[i].thick,
+                std::get<1>(params).composition_underlines[i].thick);
       EXPECT_EQ(underlines[i].background_color,
-                std::get<1>(params)[i].background_color);
+                std::get<1>(params).composition_underlines[i].background_color);
     }
     EXPECT_EQ(gfx::Range::InvalidRange(), std::get<2>(params));
     // highlighted range
@@ -1685,11 +1690,11 @@ TEST_F(RenderWidgetHostViewAuraTest, FinishCompositionByMouse) {
   composition_text.text = base::ASCIIToUTF16("|a|b");
 
   // Focused segment
-  composition_text.underlines.push_back(
+  composition_text.text_composition_data.composition_underlines.push_back(
       ui::CompositionUnderline(0, 3, 0xff000000, true, 0x78563412));
 
   // Non-focused segment, with different background color.
-  composition_text.underlines.push_back(
+  composition_text.text_composition_data.composition_underlines.push_back(
       ui::CompositionUnderline(3, 4, 0xff000000, false, 0xefcdab90));
 
   // Caret is at the end. (This emulates Japanese MSIME 2007 and later)

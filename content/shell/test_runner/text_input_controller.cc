@@ -20,6 +20,7 @@
 #include "third_party/WebKit/public/web/WebKit.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
 #include "third_party/WebKit/public/web/WebRange.h"
+#include "third_party/WebKit/public/web/WebTextCompositionData.h"
 #include "third_party/WebKit/public/web/WebView.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/events/base_event_utils.h"
@@ -173,8 +174,8 @@ void TextInputController::Install(blink::WebLocalFrame* frame) {
 void TextInputController::InsertText(const std::string& text) {
   if (auto* controller = GetInputMethodController()) {
     controller->CommitText(blink::WebString::FromUTF8(text),
-                           std::vector<blink::WebCompositionUnderline>(),
-                           blink::WebRange(), 0);
+                           blink::WebTextCompositionData(), blink::WebRange(),
+                           0);
   }
 }
 
@@ -222,8 +223,9 @@ void TextInputController::SetMarkedText(const std::string& text,
   }
 
   if (auto* controller = GetInputMethodController()) {
-    controller->SetComposition(web_text, underlines, blink::WebRange(), start,
-                               start + length);
+    controller->SetComposition(web_text,
+                               blink::WebTextCompositionData(underlines),
+                               blink::WebRange(), start, start + length);
   }
 }
 
@@ -315,9 +317,9 @@ void TextInputController::SetComposition(const std::string& text) {
   underlines.push_back(blink::WebCompositionUnderline(
       0, textLength, SK_ColorBLACK, false, SK_ColorTRANSPARENT));
   if (auto* controller = GetInputMethodController()) {
-    controller->SetComposition(
-        newText, blink::WebVector<blink::WebCompositionUnderline>(underlines),
-        blink::WebRange(), textLength, textLength);
+    controller->SetComposition(newText,
+                               blink::WebTextCompositionData(underlines),
+                               blink::WebRange(), textLength, textLength);
   }
 }
 

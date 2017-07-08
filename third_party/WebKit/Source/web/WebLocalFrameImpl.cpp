@@ -117,6 +117,7 @@
 #include "core/editing/InputMethodController.h"
 #include "core/editing/PlainTextRange.h"
 #include "core/editing/TextAffinity.h"
+#include "core/editing/TextCompositionData.h"
 #include "core/editing/TextFinder.h"
 #include "core/editing/iterators/TextIterator.h"
 #include "core/editing/markers/DocumentMarkerController.h"
@@ -952,9 +953,9 @@ void WebLocalFrameImpl::ReplaceSelection(const WebString& text) {
 void WebLocalFrameImpl::SetMarkedText(const WebString& text,
                                       unsigned location,
                                       unsigned length) {
-  Vector<CompositionUnderline> decorations;
-  GetFrame()->GetInputMethodController().SetComposition(text, decorations,
-                                                        location, length);
+  TextCompositionData text_composition_data;
+  GetFrame()->GetInputMethodController().SetComposition(
+      text, text_composition_data, location, length);
 }
 
 void WebLocalFrameImpl::UnmarkText() {
@@ -1284,7 +1285,7 @@ bool WebLocalFrameImpl::SetEditableSelectionOffsets(int start, int end) {
 bool WebLocalFrameImpl::SetCompositionFromExistingText(
     int composition_start,
     int composition_end,
-    const WebVector<WebCompositionUnderline>& underlines) {
+    const WebTextCompositionData& text_composition_data) {
   TRACE_EVENT0("blink", "WebLocalFrameImpl::setCompositionFromExistingText");
   if (!GetFrame()->GetEditor().CanEdit())
     return false;
@@ -1297,8 +1298,7 @@ bool WebLocalFrameImpl::SetCompositionFromExistingText(
   GetFrame()->GetDocument()->UpdateStyleAndLayoutIgnorePendingStylesheets();
 
   input_method_controller.SetCompositionFromExistingText(
-      CompositionUnderlineVectorBuilder::Build(underlines), composition_start,
-      composition_end);
+      text_composition_data, composition_start, composition_end);
 
   return true;
 }

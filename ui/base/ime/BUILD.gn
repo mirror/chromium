@@ -91,6 +91,8 @@ component("ime") {
     "mock_ime_input_context_handler.h",
     "mock_input_method.cc",
     "mock_input_method.h",
+    "text_composition_data.cc",
+    "text_composition_data.h",
     "text_edit_commands.h",
     "text_input_client.cc",
     "text_input_client.h",
