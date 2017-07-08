@@ -4,9 +4,11 @@
 
 #include "ash/frame/header_view.h"
 
+#include "ash/ash_switches.h"
 #include "ash/frame/caption_buttons/frame_caption_button_container_view.h"
 #include "ash/frame/default_header_painter.h"
 #include "ash/shell.h"
+#include "ash/wm/maximize_mode/maximize_mode_controller.h"
 #include "ui/views/controls/image_view.h"
 #include "ui/views/widget/widget.h"
 
@@ -53,7 +55,10 @@ int HeaderView::GetPreferredHeight() {
   // Calculating the preferred height requires at least one Layout().
   if (!did_layout_)
     Layout();
-  return header_painter_->GetHeaderHeightForPainting();
+
+  return Shell::Get()->maximize_mode_controller()->ShouldHideTitlebars()
+             ? 0
+             : header_painter_->GetHeaderHeightForPainting();
 }
 
 int HeaderView::GetMinimumWidth() const {
@@ -131,20 +136,30 @@ void HeaderView::ChildPreferredSizeChanged(views::View* child) {
 // HeaderView, ShellObserver overrides:
 
 void HeaderView::OnOverviewModeStarting() {
+  if (Shell::Get()->maximize_mode_controller()->ShouldHideTitlebars())
+    return;
+
   caption_button_container_->SetVisible(false);
 }
 
 void HeaderView::OnOverviewModeEnded() {
+  if (Shell::Get()->maximize_mode_controller()->ShouldHideTitlebars())
+    return;
+
   caption_button_container_->SetVisible(true);
 }
 
 void HeaderView::OnMaximizeModeStarted() {
-  caption_button_container_->UpdateSizeButtonVisibility();
+  if (!Shell::Get()->maximize_mode_controller()->ShouldHideTitlebars())
+    caption_button_container_->UpdateSizeButtonVisibility();
+
   parent()->Layout();
 }
 
 void HeaderView::OnMaximizeModeEnded() {
-  caption_button_container_->UpdateSizeButtonVisibility();
+  if (!Shell::Get()->maximize_mode_controller()->ShouldHideTitlebars())
+    caption_button_container_->UpdateSizeButtonVisibility();
+
   parent()->Layout();
 }
 

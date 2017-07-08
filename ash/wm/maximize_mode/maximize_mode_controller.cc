@@ -119,6 +119,11 @@ CreateScopedDisableInternalMouseAndKeyboard() {
   return nullptr;
 }
 
+bool IsHideTitlebarsInTabletModeSwitchOn() {
+  return base::CommandLine::ForCurrentProcess()->HasSwitch(
+      switches::kAshHideTitlebarsInTabletMode);
+}
+
 }  // namespace
 
 MaximizeModeController::MaximizeModeController()
@@ -298,6 +303,11 @@ void MaximizeModeController::SuspendDone(
     const base::TimeDelta& sleep_duration) {
   // We do not want TouchView usage metrics to include time spent in suspend.
   touchview_usage_interval_start_time_ = base::Time::Now();
+}
+
+bool MaximizeModeController::ShouldHideTitlebars() {
+  return IsMaximizeModeWindowManagerEnabled() &&
+         IsHideTitlebarsInTabletModeSwitchOn();
 }
 
 void MaximizeModeController::HandleHingeRotation(

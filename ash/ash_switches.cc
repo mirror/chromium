@@ -86,6 +86,10 @@ const char kAshForceTabletModeTouchView[] = "touch_view";
 const char kAshHideNotificationsForFactory[] =
     "ash-hide-notifications-for-factory";
 
+// Hides the title bars when we are in tablet mode.
+const char kAshHideTitlebarsInTabletMode[] =
+    "ash-hide-titlebars-in-tablet-mode";
+
 // Enables the shelf color to be derived from the wallpaper.
 const char kAshShelfColor[] = "ash-shelf-color";
 const char kAshShelfColorEnabled[] = "enabled";

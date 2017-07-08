@@ -116,6 +116,8 @@ class ASH_EXPORT MaximizeModeController
   void SuspendImminent() override;
   void SuspendDone(const base::TimeDelta& sleep_duration) override;
 
+  bool ShouldHideTitlebars();
+
  private:
   friend class MaximizeModeControllerTest;
   friend class MaximizeModeWindowManagerTest;
