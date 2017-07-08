@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "be9ba60d_3bb75075",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/DatabaseModel.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-07-08T00:11:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06386a72_9275cd39",
+      "revId": "6f52b4fd6da700c81540bfd862175287b0f12297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff432b3a_701c3372",
         "filename": "third_party/WebKit/Source/devtools/front_end/resources/DatabaseModel.js",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "93c067b5_a07a672a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/DatabaseModel.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-07-08T00:11:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff432b3a_701c3372",
+      "revId": "6f52b4fd6da700c81540bfd862175287b0f12297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6610912_79a3beb1",
         "filename": "third_party/WebKit/Source/devtools/front_end/resources/DatabaseModel.js",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-07T23:45:20Z",
       "side": 1,
       "message": "looks like a good place to use await.",
+      "revId": "6f52b4fd6da700c81540bfd862175287b0f12297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7f813c8_aee353cd",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/DatabaseModel.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-07-08T00:11:16Z",
+      "side": 1,
+      "message": "I was told not to use async in methods with the callback.",
+      "parentUuid": "a6610912_79a3beb1",
       "revId": "6f52b4fd6da700c81540bfd862175287b0f12297",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
