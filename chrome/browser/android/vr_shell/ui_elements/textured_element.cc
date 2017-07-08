@@ -29,7 +29,7 @@ void TexturedElement::Initialize() {
 }
 
 void TexturedElement::UpdateTexture() {
-  if (!initialized_ || !GetTexture()->dirty())
+  if (!initialized_ || !visible() || !GetTexture()->dirty())
     return;
   sk_sp<SkSurface> surface = SkSurface::MakeRasterN32Premul(
       texture_size_.width(), texture_size_.height());
@@ -44,6 +44,10 @@ void TexturedElement::UpdateElementSize() {
   gfx::SizeF drawn_size = GetTexture()->GetDrawnSize();
   float y = drawn_size.height() / drawn_size.width() * size().x();
   set_size({size().x(), y, 1});
+}
+
+void TexturedElement::OnBeginFrame(const base::TimeTicks& begin_frame_time) {
+  UpdateTexture();
 }
 
 void TexturedElement::Render(UiElementRenderer* renderer,
