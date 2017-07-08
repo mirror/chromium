@@ -49,7 +49,7 @@ class TestRenderFrame : public RenderFrameImpl {
   void SetCompositionFromExistingText(
       int start,
       int end,
-      const std::vector<blink::WebCompositionUnderline>& underlines);
+      const blink::WebTextCompositionData& text_composition_data);
 
   blink::WebNavigationPolicy DecidePolicyForNavigation(
       const blink::WebFrameClient::NavigationPolicyInfo& info) override;

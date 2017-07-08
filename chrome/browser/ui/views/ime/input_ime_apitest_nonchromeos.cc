@@ -90,7 +90,7 @@ IN_PROC_BROWSER_TEST_F(InputImeApiTest, BasicApiTest) {
   // Test the input.ime.setComposition API.
   ui::CompositionText composition;
   composition.text = base::UTF8ToUTF16("test_set_composition");
-  composition.underlines.push_back(
+  composition.text_composition_data.composition_underlines.push_back(
       ui::CompositionUnderline(0, composition.text.length(), SK_ColorBLACK,
                                false /* thick */, SK_ColorTRANSPARENT));
   composition.selection = gfx::Range(2, 2);

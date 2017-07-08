@@ -136,10 +136,13 @@ TEST(CompositionTextUtilPangoTest, ExtractCompositionText) {
     ui::ExtractCompositionTextFromGtkPreedit(text, pango_attrs, 0, &result);
 
     const Underline* underlines = kTestData[i].underlines;
-    for (size_t u = 0; underlines[u].color &&
-         u < result.underlines.size(); ++u) {
+    for (size_t u = 0;
+         underlines[u].color &&
+         u < result.text_composition_data.composition_underlines.size();
+         ++u) {
       SCOPED_TRACE(testing::Message() << "Underline:" << u);
-      CompareUnderline(underlines[u], result.underlines[u]);
+      CompareUnderline(underlines[u],
+                       result.text_composition_data.composition_underlines[u]);
     }
 
     pango_attr_list_unref(pango_attrs);

@@ -13,6 +13,7 @@
 #include "core/editing/FrameSelection.h"
 #include "core/editing/InputMethodController.h"
 #include "core/editing/PlainTextRange.h"
+#include "core/editing/TextCompositionData.h"
 #include "core/exported/WebPluginContainerBase.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/WebLocalFrameBase.h"
@@ -21,6 +22,7 @@
 #include "public/platform/WebString.h"
 #include "public/web/WebPlugin.h"
 #include "public/web/WebRange.h"
+#include "public/web/WebTextCompositionData.h"
 
 namespace blink {
 
@@ -36,13 +38,14 @@ DEFINE_TRACE(WebInputMethodControllerImpl) {
 
 bool WebInputMethodControllerImpl::SetComposition(
     const WebString& text,
-    const WebVector<WebCompositionUnderline>& underlines,
+    const WebTextCompositionData& text_composition_data,
     const WebRange& replacement_range,
     int selection_start,
     int selection_end) {
   if (WebPlugin* plugin = FocusedPluginIfInputMethodSupported()) {
-    return plugin->SetComposition(text, underlines, replacement_range,
-                                  selection_start, selection_end);
+    return plugin->SetComposition(text, text_composition_data,
+                                  replacement_range, selection_start,
+                                  selection_end);
   }
 
   // We should use this |editor| object only to complete the ongoing
@@ -76,8 +79,8 @@ bool WebInputMethodControllerImpl::SetComposition(
   // at all (see InlineTextBox::paint() function in InlineTextBox.cpp).
   // But the selection range actually takes effect.
   GetInputMethodController().SetComposition(
-      String(text), CompositionUnderlineVectorBuilder::Build(underlines),
-      selection_start, selection_end);
+      String(text), TextCompositionData(text_composition_data), selection_start,
+      selection_end);
 
   return text.IsEmpty() || GetInputMethodController().HasComposition();
 }
@@ -106,14 +109,14 @@ bool WebInputMethodControllerImpl::FinishComposingText(
 
 bool WebInputMethodControllerImpl::CommitText(
     const WebString& text,
-    const WebVector<WebCompositionUnderline>& underlines,
+    const WebTextCompositionData& text_composition_data,
     const WebRange& replacement_range,
     int relative_caret_position) {
   UserGestureIndicator gesture_indicator(UserGestureToken::Create(
       GetFrame()->GetDocument(), UserGestureToken::kNewGesture));
 
   if (WebPlugin* plugin = FocusedPluginIfInputMethodSupported()) {
-    return plugin->CommitText(text, underlines, replacement_range,
+    return plugin->CommitText(text, text_composition_data, replacement_range,
                               relative_caret_position);
   }
 
@@ -125,9 +128,8 @@ bool WebInputMethodControllerImpl::CommitText(
   // needs to be audited.  See http://crbug.com/590369 for more details.
   GetFrame()->GetDocument()->UpdateStyleAndLayoutIgnorePendingStylesheets();
 
-  return GetInputMethodController().CommitText(
-      text, CompositionUnderlineVectorBuilder::Build(underlines),
-      relative_caret_position);
+  return GetInputMethodController().CommitText(text, text_composition_data,
+                                               relative_caret_position);
 }
 
 WebTextInputInfo WebInputMethodControllerImpl::TextInputInfo() {

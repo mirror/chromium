@@ -10,6 +10,7 @@
 #include "core/dom/Range.h"
 #include "core/editing/Editor.h"
 #include "core/editing/FrameSelection.h"
+#include "core/editing/TextCompositionData.h"
 #include "core/editing/markers/DocumentMarkerController.h"
 #include "core/events/MouseEvent.h"
 #include "core/frame/LocalFrame.h"
@@ -173,7 +174,8 @@ TEST_F(InputMethodControllerTest, SetCompositionFromExistingText) {
 
   Vector<CompositionUnderline> underlines;
   underlines.push_back(CompositionUnderline(0, 5, Color(255, 0, 0), false, 0));
-  Controller().SetCompositionFromExistingText(underlines, 0, 5);
+  Controller().SetCompositionFromExistingText(TextCompositionData(underlines),
+                                              0, 5);
 
   Range* range = Controller().CompositionRange();
   EXPECT_EQ(0u, range->startOffset());
@@ -205,10 +207,12 @@ TEST_F(InputMethodControllerTest, SetCompositionAfterEmoji) {
                    .End()
                    .ComputeOffsetInContainerNode());
 
-  Controller().SetComposition(String("a"), underlines, 1, 1);
+  Controller().SetComposition(String("a"), TextCompositionData(underlines), 1,
+                              1);
   EXPECT_STREQ("\xF0\x9F\x8F\x86\x61", div->innerText().Utf8().data());
 
-  Controller().SetComposition(String("ab"), underlines, 2, 2);
+  Controller().SetComposition(String("ab"), TextCompositionData(underlines), 2,
+                              2);
   EXPECT_STREQ("\xF0\x9F\x8F\x86\x61\x62", div->innerText().Utf8().data());
 }
 
@@ -253,7 +257,8 @@ TEST_F(InputMethodControllerTest,
                        "\xA4\xB2\xE0\xA5\x8B"),
       underlines, 1);
   Controller().CommitText("\nab ", underlines, 1);
-  Controller().SetComposition(String("c"), underlines, 1, 1);
+  Controller().SetComposition(String("c"), TextCompositionData(underlines), 1,
+                              1);
   EXPECT_STREQ(
       "\xE0\xA4\xB9\xE0\xA5\x87\xE0\xA4\xB2\xE0\xA5\x8D\xE0\xA4\xB2\xE0\xA5"
       "\x8B\nab c",
@@ -261,7 +266,8 @@ TEST_F(InputMethodControllerTest,
   EXPECT_EQ(11u, Controller().GetSelectionOffsets().Start());
   EXPECT_EQ(11u, Controller().GetSelectionOffsets().End());
 
-  Controller().SetComposition(String("cd"), underlines, 2, 2);
+  Controller().SetComposition(String("cd"), TextCompositionData(underlines), 2,
+                              2);
   EXPECT_STREQ(
       "\xE0\xA4\xB9\xE0\xA5\x87\xE0\xA4\xB2\xE0\xA5\x8D\xE0\xA4\xB2\xE0\xA5"
       "\x8B\nab cd",
@@ -278,7 +284,8 @@ TEST_F(InputMethodControllerTest, SetCompositionKeepingStyle) {
 
   Vector<CompositionUnderline> underlines;
   underlines.push_back(CompositionUnderline(3, 12, Color(255, 0, 0), false, 0));
-  Controller().SetCompositionFromExistingText(underlines, 3, 12);
+  Controller().SetCompositionFromExistingText(TextCompositionData(underlines),
+                                              3, 12);
 
   // Subtract a character.
   Controller().SetComposition(String("12345789"), underlines, 8, 8);
@@ -308,7 +315,8 @@ TEST_F(InputMethodControllerTest, SetCompositionWithEmojiKeepingStyle) {
   Vector<CompositionUnderline> underlines;
   underlines.push_back(CompositionUnderline(0, 2, Color(255, 0, 0), false, 0));
 
-  Controller().SetCompositionFromExistingText(underlines, 0, 2);
+  Controller().SetCompositionFromExistingText(TextCompositionData(underlines),
+                                              0, 2);
 
   // 0xF0 0x9F 0x8F 0xAB is also an emoji character, with the same leading
   // surrogate pair to the previous one.
@@ -331,17 +339,18 @@ TEST_F(InputMethodControllerTest,
 
   Vector<CompositionUnderline> underlines;
   underlines.push_back(CompositionUnderline(0, 2, Color(255, 0, 0), false, 0));
-  Controller().SetCompositionFromExistingText(underlines, 0, 1);
+  Controller().SetCompositionFromExistingText(TextCompositionData(underlines),
+                                              0, 1);
 
   // 0xE0 0xB0 0x83 0xE0 0xB0 0x83, a telugu character with 2 code points in
   // 1 grapheme cluster.
   Controller().SetComposition(String::FromUTF8("\xE0\xB0\x83\xE0\xB0\x83"),
-                              underlines, 2, 2);
+                              TextCompositionData(underlines), 2, 2);
   EXPECT_STREQ("<b>\xE0\xB0\x83\xE0\xB0\x83</b>",
                div->innerHTML().Utf8().data());
 
-  Controller().SetComposition(String::FromUTF8("\xE0\xB0\x83"), underlines, 1,
-                              1);
+  Controller().SetComposition(String::FromUTF8("\xE0\xB0\x83"),
+                              TextCompositionData(underlines), 1, 1);
   EXPECT_STREQ("<b>\xE0\xB0\x83</b>", div->innerHTML().Utf8().data());
 }
 
@@ -353,7 +362,8 @@ TEST_F(InputMethodControllerTest, FinishComposingTextKeepingStyle) {
 
   Vector<CompositionUnderline> underlines;
   underlines.push_back(CompositionUnderline(3, 12, Color(255, 0, 0), false, 0));
-  Controller().SetCompositionFromExistingText(underlines, 3, 12);
+  Controller().SetCompositionFromExistingText(TextCompositionData(underlines),
+                                              3, 12);
 
   Controller().SetComposition(String("123hello789"), underlines, 11, 11);
   EXPECT_STREQ("abc1<b>2</b>3hello7<b>8</b>9", div->innerHTML().Utf8().data());
@@ -370,7 +380,8 @@ TEST_F(InputMethodControllerTest, CommitTextKeepingStyle) {
 
   Vector<CompositionUnderline> underlines;
   underlines.push_back(CompositionUnderline(3, 12, Color(255, 0, 0), false, 0));
-  Controller().SetCompositionFromExistingText(underlines, 3, 12);
+  Controller().SetCompositionFromExistingText(TextCompositionData(underlines),
+                                              3, 12);
 
   Controller().CommitText(String("123789"), underlines, 0);
   EXPECT_STREQ("abc1<b>2</b>37<b>8</b>9", div->innerHTML().Utf8().data());
@@ -405,7 +416,8 @@ TEST_F(InputMethodControllerTest, SelectionOnConfirmExistingText) {
 
   Vector<CompositionUnderline> underlines;
   underlines.push_back(CompositionUnderline(0, 5, Color(255, 0, 0), false, 0));
-  Controller().SetCompositionFromExistingText(underlines, 0, 5);
+  Controller().SetCompositionFromExistingText(TextCompositionData(underlines),
+                                              0, 5);
 
   Controller().FinishComposingText(InputMethodController::kKeepSelection);
   EXPECT_EQ(0, GetFrame()
@@ -440,7 +452,8 @@ TEST_F(InputMethodControllerTest, DeleteBySettingEmptyComposition) {
 
   Vector<CompositionUnderline> underlines;
   underlines.push_back(CompositionUnderline(0, 3, Color(255, 0, 0), false, 0));
-  Controller().SetCompositionFromExistingText(underlines, 0, 3);
+  Controller().SetCompositionFromExistingText(TextCompositionData(underlines),
+                                              0, 3);
 
   Controller().SetComposition(String(""), underlines, 0, 3);
 
@@ -456,7 +469,8 @@ TEST_F(InputMethodControllerTest,
 
   Vector<CompositionUnderline> underlines;
   underlines.push_back(CompositionUnderline(0, 5, Color(255, 0, 0), false, 0));
-  Controller().SetCompositionFromExistingText(underlines, 0, 5);
+  Controller().SetCompositionFromExistingText(TextCompositionData(underlines),
+                                              0, 5);
 
   Range* range = Controller().CompositionRange();
   EXPECT_EQ(1u, range->startOffset());
@@ -473,7 +487,8 @@ TEST_F(InputMethodControllerTest,
 
   Vector<CompositionUnderline> underlines;
   underlines.push_back(CompositionUnderline(7, 8, Color(255, 0, 0), false, 0));
-  Controller().SetCompositionFromExistingText(underlines, 7, 8);
+  Controller().SetCompositionFromExistingText(TextCompositionData(underlines),
+                                              7, 8);
 
   EXPECT_FALSE(Controller().CompositionRange());
 }
@@ -961,7 +976,7 @@ TEST_F(InputMethodControllerTest, SetCompositionForInputWithNewCaretPositions) {
 
   // The caret is after the composing text.
   // "heAB*llo".
-  Controller().SetComposition("AB", underlines, 2, 2);
+  Controller().SetComposition("AB", TextCompositionData(underlines), 2, 2);
   EXPECT_STREQ("heABllo", input->value().Utf8().data());
   EXPECT_EQ(4u, Controller().GetSelectionOffsets().Start());
   EXPECT_EQ(4u, Controller().GetSelectionOffsets().End());
@@ -1060,7 +1075,7 @@ TEST_F(InputMethodControllerTest,
 
   // The caret is after the composing text.
   // "hello\nworld\n01234AB*56789".
-  Controller().SetComposition("AB", underlines, 2, 2);
+  Controller().SetComposition("AB", TextCompositionData(underlines), 2, 2);
   EXPECT_STREQ("hello\nworld\n01234AB56789", div->innerText().Utf8().data());
   EXPECT_EQ(19u, Controller().GetSelectionOffsets().Start());
   EXPECT_EQ(19u, Controller().GetSelectionOffsets().End());
@@ -1248,7 +1263,7 @@ TEST_F(InputMethodControllerTest, CompositionInputEventForInsert) {
                GetDocument().title().Utf8().data());
 
   GetDocument().setTitle(g_empty_string);
-  Controller().SetComposition("n", underlines, 1, 1);
+  Controller().SetComposition("n", TextCompositionData(underlines), 1, 1);
   EXPECT_STREQ("beforeinput.data:n;input.data:n;",
                GetDocument().title().Utf8().data());
 
@@ -1275,7 +1290,7 @@ TEST_F(InputMethodControllerTest, CompositionInputEventForInsertEmptyText) {
   EXPECT_STREQ("beforeinput.data:;", GetDocument().title().Utf8().data());
 
   GetDocument().setTitle(g_empty_string);
-  Controller().SetComposition("n", underlines, 1, 1);
+  Controller().SetComposition("n", TextCompositionData(underlines), 1, 1);
   EXPECT_STREQ("beforeinput.data:n;input.data:n;",
                GetDocument().title().Utf8().data());
 
@@ -1294,7 +1309,7 @@ TEST_F(InputMethodControllerTest, CompositionEndEventWithNoSelection) {
   Vector<CompositionUnderline> underlines;
   underlines.push_back(CompositionUnderline(0, 5, Color(255, 0, 0), false, 0));
 
-  Controller().SetComposition("hello", underlines, 1, 1);
+  Controller().SetComposition("hello", TextCompositionData(underlines), 1, 1);
   GetDocument().UpdateStyleAndLayout();
   EXPECT_EQ(1u, Controller().GetSelectionOffsets().Start());
   EXPECT_EQ(1u, Controller().GetSelectionOffsets().End());
@@ -1347,7 +1362,7 @@ TEST_F(InputMethodControllerTest, SetCompositionPlainTextWithUnderline) {
   Vector<CompositionUnderline> underlines;
   underlines.push_back(CompositionUnderline(0, 1, Color(255, 0, 0), false, 0));
 
-  Controller().SetComposition(" ", underlines, 1, 1);
+  Controller().SetComposition(" ", TextCompositionData(underlines), 1, 1);
 
   ASSERT_EQ(1u, GetDocument().Markers().Markers().size());
 
@@ -1379,7 +1394,8 @@ TEST_F(InputMethodControllerTest, CommitPlainTextWithUnderlineReplace) {
 
   Vector<CompositionUnderline> underlines;
 
-  Controller().SetCompositionFromExistingText(underlines, 8, 12);
+  Controller().SetCompositionFromExistingText(TextCompositionData(underlines),
+                                              8, 12);
 
   underlines.push_back(CompositionUnderline(1, 11, Color(255, 0, 0), false, 0));
 
@@ -1401,7 +1417,8 @@ TEST_F(InputMethodControllerTest,
   Controller().FinishComposingText(InputMethodController::kKeepSelection);
   GetFrame().GetEditor().InsertLineBreak();
 
-  Controller().SetCompositionFromExistingText(underlines, 8, 8);
+  Controller().SetCompositionFromExistingText(TextCompositionData(underlines),
+                                              8, 8);
 
   underlines.push_back(CompositionUnderline(0, 5, Color(255, 0, 0), false, 0));
   Controller().SetComposition(String("world"), underlines, 0, 0);
@@ -1488,7 +1505,8 @@ TEST_F(InputMethodControllerTest, WhitespaceFixup) {
 
   // Delete "Initial"
   Vector<CompositionUnderline> empty_underlines;
-  Controller().SetCompositionFromExistingText(empty_underlines, 0, 7);
+  Controller().SetCompositionFromExistingText(
+      TextCompositionData(empty_underlines), 0, 7);
   Controller().CommitText(String(""), empty_underlines, 0);
 
   // The space at the beginning of the string should have been converted to an
@@ -1496,7 +1514,8 @@ TEST_F(InputMethodControllerTest, WhitespaceFixup) {
   EXPECT_STREQ("&nbsp;text blah", div->innerHTML().Utf8().data());
 
   // Delete "blah"
-  Controller().SetCompositionFromExistingText(empty_underlines, 6, 10);
+  Controller().SetCompositionFromExistingText(
+      TextCompositionData(empty_underlines), 6, 10);
   Controller().CommitText(String(""), empty_underlines, 0);
 
   // The space at the end of the string should have been converted to an nbsp
@@ -1541,11 +1560,13 @@ TEST_F(InputMethodControllerTest,
       Color::kBlack);
   // Delete "Initial"
   Vector<CompositionUnderline> empty_underlines;
-  Controller().SetCompositionFromExistingText(empty_underlines, 0, 7);
+  Controller().SetCompositionFromExistingText(
+      TextCompositionData(empty_underlines), 0, 7);
   Controller().CommitText(String(""), empty_underlines, 0);
 
   // Delete "blah"
-  Controller().SetCompositionFromExistingText(empty_underlines, 6, 10);
+  Controller().SetCompositionFromExistingText(
+      TextCompositionData(empty_underlines), 6, 10);
   Controller().CommitText(String(""), empty_underlines, 0);
 
   // Check that the marker is still attached to "text" and doesn't include
@@ -1570,11 +1591,13 @@ TEST_F(InputMethodControllerTest,
       Color::kBlack);
   // Delete "Initial"
   Vector<CompositionUnderline> empty_underlines;
-  Controller().SetCompositionFromExistingText(empty_underlines, 0, 7);
+  Controller().SetCompositionFromExistingText(
+      TextCompositionData(empty_underlines), 0, 7);
   Controller().CommitText(String(""), empty_underlines, 0);
 
   // Delete "blah"
-  Controller().SetCompositionFromExistingText(empty_underlines, 6, 10);
+  Controller().SetCompositionFromExistingText(
+      TextCompositionData(empty_underlines), 6, 10);
   Controller().CommitText(String(""), empty_underlines, 0);
 
   // Check that the marker is still attached to " text" and includes the space
@@ -1599,11 +1622,13 @@ TEST_F(InputMethodControllerTest,
       Color::kBlack);
   // Delete "Initial"
   Vector<CompositionUnderline> empty_underlines;
-  Controller().SetCompositionFromExistingText(empty_underlines, 0, 7);
+  Controller().SetCompositionFromExistingText(
+      TextCompositionData(empty_underlines), 0, 7);
   Controller().CommitText(String(""), empty_underlines, 0);
 
   // Delete "blah"
-  Controller().SetCompositionFromExistingText(empty_underlines, 6, 10);
+  Controller().SetCompositionFromExistingText(
+      TextCompositionData(empty_underlines), 6, 10);
   Controller().CommitText(String(""), empty_underlines, 0);
 
   // Check that the marker is still attached to "text " and includes the space
@@ -1630,11 +1655,13 @@ TEST_F(
 
   // Delete "Initial"
   Vector<CompositionUnderline> empty_underlines;
-  Controller().SetCompositionFromExistingText(empty_underlines, 0, 7);
+  Controller().SetCompositionFromExistingText(
+      TextCompositionData(empty_underlines), 0, 7);
   Controller().CommitText(String(""), empty_underlines, 0);
 
   // Delete "blah"
-  Controller().SetCompositionFromExistingText(empty_underlines, 6, 10);
+  Controller().SetCompositionFromExistingText(
+      TextCompositionData(empty_underlines), 6, 10);
   Controller().CommitText(String(""), empty_underlines, 0);
 
   // Check that the marker is still attached to " text " and includes both the
@@ -1657,7 +1684,8 @@ TEST_F(InputMethodControllerTest, ContentDependentMarker_ReplaceStartOfMarker) {
 
   // Replace "Initial" with "Original"
   Vector<CompositionUnderline> empty_underlines;
-  Controller().SetCompositionFromExistingText(empty_underlines, 0, 7);
+  Controller().SetCompositionFromExistingText(
+      TextCompositionData(empty_underlines), 0, 7);
   Controller().CommitText(String("Original"), empty_underlines, 0);
 
   // Verify marker was removed
@@ -1677,7 +1705,8 @@ TEST_F(InputMethodControllerTest,
 
   // Replace "Initial" with "Original"
   Vector<CompositionUnderline> empty_underlines;
-  Controller().SetCompositionFromExistingText(empty_underlines, 0, 7);
+  Controller().SetCompositionFromExistingText(
+      TextCompositionData(empty_underlines), 0, 7);
   Controller().CommitText(String("Original"), empty_underlines, 0);
 
   // Verify marker is under "Original text"
@@ -1701,7 +1730,8 @@ TEST_F(InputMethodControllerTest,
 
   // Replace "some initial" with "boring"
   Vector<CompositionUnderline> empty_underlines;
-  Controller().SetCompositionFromExistingText(empty_underlines, 8, 20);
+  Controller().SetCompositionFromExistingText(
+      TextCompositionData(empty_underlines), 8, 20);
   Controller().CommitText(String("boring"), empty_underlines, 0);
 
   // Verify marker was removed
@@ -1722,7 +1752,8 @@ TEST_F(InputMethodControllerTest,
 
   // Replace "some initial" with "boring"
   Vector<CompositionUnderline> empty_underlines;
-  Controller().SetCompositionFromExistingText(empty_underlines, 8, 20);
+  Controller().SetCompositionFromExistingText(
+      TextCompositionData(empty_underlines), 8, 20);
   Controller().CommitText(String("boring"), empty_underlines, 0);
 
   // Verify marker is under " text"
@@ -1744,7 +1775,8 @@ TEST_F(InputMethodControllerTest, ContentDependentMarker_ReplaceEndOfMarker) {
 
   // Replace "text" with "string"
   Vector<CompositionUnderline> empty_underlines;
-  Controller().SetCompositionFromExistingText(empty_underlines, 8, 12);
+  Controller().SetCompositionFromExistingText(
+      TextCompositionData(empty_underlines), 8, 12);
   Controller().CommitText(String("string"), empty_underlines, 0);
 
   // Verify marker was removed
@@ -1763,7 +1795,8 @@ TEST_F(InputMethodControllerTest, ContentIndependentMarker_ReplaceEndOfMarker) {
 
   // Replace "text" with "string"
   Vector<CompositionUnderline> empty_underlines;
-  Controller().SetCompositionFromExistingText(empty_underlines, 8, 12);
+  Controller().SetCompositionFromExistingText(
+      TextCompositionData(empty_underlines), 8, 12);
   Controller().CommitText(String("string"), empty_underlines, 0);
 
   // Verify marker is under "Initial string"
@@ -1787,7 +1820,8 @@ TEST_F(InputMethodControllerTest,
 
   // Replace "initial text" with "content"
   Vector<CompositionUnderline> empty_underlines;
-  Controller().SetCompositionFromExistingText(empty_underlines, 13, 25);
+  Controller().SetCompositionFromExistingText(
+      TextCompositionData(empty_underlines), 13, 25);
   Controller().CommitText(String("content"), empty_underlines, 0);
 
   EXPECT_STREQ("This is some content", div->innerHTML().Utf8().data());
@@ -1810,7 +1844,8 @@ TEST_F(InputMethodControllerTest,
 
   // Replace "initial text" with "content"
   Vector<CompositionUnderline> empty_underlines;
-  Controller().SetCompositionFromExistingText(empty_underlines, 13, 25);
+  Controller().SetCompositionFromExistingText(
+      TextCompositionData(empty_underlines), 13, 25);
   Controller().CommitText(String("content"), empty_underlines, 0);
 
   EXPECT_STREQ("This is some content", div->innerHTML().Utf8().data());
@@ -1834,7 +1869,8 @@ TEST_F(InputMethodControllerTest, ContentDependentMarker_ReplaceEntireMarker) {
 
   // Replace "text" with "string"
   Vector<CompositionUnderline> empty_underlines;
-  Controller().SetCompositionFromExistingText(empty_underlines, 8, 12);
+  Controller().SetCompositionFromExistingText(
+      TextCompositionData(empty_underlines), 8, 12);
   Controller().CommitText(String("string"), empty_underlines, 0);
 
   // Verify marker was removed
@@ -1854,7 +1890,8 @@ TEST_F(InputMethodControllerTest,
 
   // Replace "text" with "string"
   Vector<CompositionUnderline> empty_underlines;
-  Controller().SetCompositionFromExistingText(empty_underlines, 8, 12);
+  Controller().SetCompositionFromExistingText(
+      TextCompositionData(empty_underlines), 8, 12);
   Controller().CommitText(String("string"), empty_underlines, 0);
 
   // Verify marker is under "string"
@@ -1879,7 +1916,8 @@ TEST_F(InputMethodControllerTest,
 
   // Replace "Initial text" with "New string"
   Vector<CompositionUnderline> empty_underlines;
-  Controller().SetCompositionFromExistingText(empty_underlines, 0, 12);
+  Controller().SetCompositionFromExistingText(
+      TextCompositionData(empty_underlines), 0, 12);
   Controller().CommitText(String("New string"), empty_underlines, 0);
 
   // Verify marker was removed
@@ -1901,7 +1939,8 @@ TEST_F(InputMethodControllerTest,
 
   // Replace "Initial text" with "New string"
   Vector<CompositionUnderline> empty_underlines;
-  Controller().SetCompositionFromExistingText(empty_underlines, 0, 12);
+  Controller().SetCompositionFromExistingText(
+      TextCompositionData(empty_underlines), 0, 12);
   Controller().CommitText(String("New string"), empty_underlines, 0);
 
   // Verify marker was removed
@@ -1922,7 +1961,8 @@ TEST_F(InputMethodControllerTest,
 
   // Replace "Initial text" with "New string"
   Vector<CompositionUnderline> empty_underlines;
-  Controller().SetCompositionFromExistingText(empty_underlines, 0, 12);
+  Controller().SetCompositionFromExistingText(
+      TextCompositionData(empty_underlines), 0, 12);
   Controller().CommitText(String("New string"), empty_underlines, 0);
 
   // Verify marker was removed
@@ -1944,7 +1984,8 @@ TEST_F(InputMethodControllerTest,
 
   // Replace "Initial text" with "New string"
   Vector<CompositionUnderline> empty_underlines;
-  Controller().SetCompositionFromExistingText(empty_underlines, 0, 12);
+  Controller().SetCompositionFromExistingText(
+      TextCompositionData(empty_underlines), 0, 12);
   Controller().CommitText(String("New string"), empty_underlines, 0);
 
   // Verify marker was removed
@@ -1980,7 +2021,8 @@ TEST_F(InputMethodControllerTest, ContentDependentMarker_Deletions) {
 
   // Delete third marker and portions of second and fourth
   Vector<CompositionUnderline> empty_underlines;
-  Controller().SetCompositionFromExistingText(empty_underlines, 8, 17);
+  Controller().SetCompositionFromExistingText(
+      TextCompositionData(empty_underlines), 8, 17);
   Controller().CommitText(String(""), empty_underlines, 0);
 
   // Verify markers were updated correctly
@@ -2027,7 +2069,8 @@ TEST_F(InputMethodControllerTest, ContentIndependentMarker_Deletions) {
 
   // Delete third marker and portions of second and fourth
   Vector<CompositionUnderline> empty_underlines;
-  Controller().SetCompositionFromExistingText(empty_underlines, 8, 17);
+  Controller().SetCompositionFromExistingText(
+      TextCompositionData(empty_underlines), 8, 17);
   Controller().CommitText(String(""), empty_underlines, 0);
 
   // Verify markers were updated correctly
@@ -2060,7 +2103,8 @@ TEST_F(InputMethodControllerTest,
 
   // Delete exactly on the marker
   Vector<CompositionUnderline> empty_underlines;
-  Controller().SetCompositionFromExistingText(empty_underlines, 5, 10);
+  Controller().SetCompositionFromExistingText(
+      TextCompositionData(empty_underlines), 5, 10);
   Controller().CommitText(String(""), empty_underlines, 0);
   EXPECT_EQ(0u, GetDocument().Markers().Markers().size());
 }
@@ -2080,7 +2124,8 @@ TEST_F(InputMethodControllerTest,
 
   // Delete exactly on the marker
   Vector<CompositionUnderline> empty_underlines;
-  Controller().SetCompositionFromExistingText(empty_underlines, 5, 10);
+  Controller().SetCompositionFromExistingText(
+      TextCompositionData(empty_underlines), 5, 10);
   Controller().CommitText(String(""), empty_underlines, 0);
   EXPECT_EQ(0u, GetDocument().Markers().Markers().size());
 }
@@ -2096,7 +2141,8 @@ TEST_F(InputMethodControllerTest, ContentDependentMarker_DeleteMiddleOfMarker) {
 
   // Delete middle of marker
   Vector<CompositionUnderline> empty_underlines;
-  Controller().SetCompositionFromExistingText(empty_underlines, 6, 9);
+  Controller().SetCompositionFromExistingText(
+      TextCompositionData(empty_underlines), 6, 9);
   Controller().CommitText(String(""), empty_underlines, 0);
 
   // Verify marker was removed
@@ -2116,7 +2162,8 @@ TEST_F(InputMethodControllerTest,
 
   // Delete middle of marker
   Vector<CompositionUnderline> empty_underlines;
-  Controller().SetCompositionFromExistingText(empty_underlines, 6, 9);
+  Controller().SetCompositionFromExistingText(
+      TextCompositionData(empty_underlines), 6, 9);
   Controller().CommitText(String(""), empty_underlines, 0);
 
   EXPECT_EQ(1u, GetDocument().Markers().Markers().size());

@@ -21,10 +21,9 @@ class CONTENT_EXPORT LegacyIPCFrameInputHandler
   ~LegacyIPCFrameInputHandler() override;
 
   // mojom::FrameInputHandler overrides.
-  void SetCompositionFromExistingText(
-      int32_t start,
-      int32_t end,
-      const std::vector<ui::CompositionUnderline>& underlines) override;
+  void SetCompositionFromExistingText(int32_t start,
+                                      int32_t end,
+                                      const ui::TextCompositionData&) override;
   void ExtendSelectionAndDelete(int32_t before, int32_t after) override;
   void DeleteSurroundingText(int32_t before, int32_t after) override;
   void DeleteSurroundingTextInCodePoints(int32_t before,

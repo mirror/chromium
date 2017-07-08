@@ -25,9 +25,12 @@ TEST(CompositionTextTest, CopyTest) {
   // Make CompositionText
   CompositionText text;
   text.text = kSampleText;
-  text.underlines.push_back(kSampleUnderline1);
-  text.underlines.push_back(kSampleUnderline2);
-  text.underlines.push_back(kSampleUnderline3);
+  text.text_composition_data.composition_underlines.push_back(
+      kSampleUnderline1);
+  text.text_composition_data.composition_underlines.push_back(
+      kSampleUnderline2);
+  text.text_composition_data.composition_underlines.push_back(
+      kSampleUnderline3);
   text.selection.set_start(30);
   text.selection.set_end(40);
 
@@ -35,15 +38,22 @@ TEST(CompositionTextTest, CopyTest) {
   text2.CopyFrom(text);
 
   EXPECT_EQ(text.text, text2.text);
-  EXPECT_EQ(text.underlines.size(), text2.underlines.size());
-  for (size_t i = 0; i < text.underlines.size(); ++i) {
-    EXPECT_EQ(text.underlines[i].start_offset,
-              text2.underlines[i].start_offset);
-    EXPECT_EQ(text.underlines[i].end_offset, text2.underlines[i].end_offset);
-    EXPECT_EQ(text.underlines[i].color, text2.underlines[i].color);
-    EXPECT_EQ(text.underlines[i].thick, text2.underlines[i].thick);
-    EXPECT_EQ(text.underlines[i].background_color,
-              text2.underlines[i].background_color);
+  EXPECT_EQ(text.text_composition_data.composition_underlines.size(),
+            text2.text_composition_data.composition_underlines.size());
+  for (size_t i = 0;
+       i < text.text_composition_data.composition_underlines.size(); ++i) {
+    EXPECT_EQ(
+        text.text_composition_data.composition_underlines[i].start_offset,
+        text2.text_composition_data.composition_underlines[i].start_offset);
+    EXPECT_EQ(text.text_composition_data.composition_underlines[i].end_offset,
+              text2.text_composition_data.composition_underlines[i].end_offset);
+    EXPECT_EQ(text.text_composition_data.composition_underlines[i].color,
+              text2.text_composition_data.composition_underlines[i].color);
+    EXPECT_EQ(text.text_composition_data.composition_underlines[i].thick,
+              text2.text_composition_data.composition_underlines[i].thick);
+    EXPECT_EQ(
+        text.text_composition_data.composition_underlines[i].background_color,
+        text2.text_composition_data.composition_underlines[i].background_color);
   }
 
   EXPECT_EQ(text.selection.start(), text2.selection.start());
