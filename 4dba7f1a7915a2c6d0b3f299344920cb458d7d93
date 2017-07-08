@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1df8991_25eaad20",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/AddToHomescreenManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-07-08T00:08:30Z",
+      "side": 1,
+      "message": "This file tests the non-WebAPK path and tests specifics of using the add-to-homescreen dialog. See TestAddToHomescreenManager which overrides showDialog(). None of the tests should create WebAPKs. It is likely that some of the tests are redundant with those introduced by Dominick in https://codereview.chromium.org/2960103002/",
+      "revId": "4dba7f1a7915a2c6d0b3f299344920cb458d7d93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
