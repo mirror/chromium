@@ -156,6 +156,10 @@
       status: "stable",
     },
     {
+      name: "ClientHintsPersistence",
+      status: "stable",
+    },
+    {
       name: "CoalescedEvents",
       status: "stable",
     },
