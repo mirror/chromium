@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3357a7f_2b3471b7",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 2037,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-08T02:07:53Z",
+      "side": 1,
+      "message": "\"Entry content, base64-encoded\"?",
+      "revId": "87bfb8237ed0503740d7c0fd78a8d1c370e66757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1b64752_92d65747",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 2089,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-08T02:07:53Z",
+      "side": 1,
+      "message": "nit: \"Fetches cache entry.\" (i.e. it\u0027s not just body)",
+      "revId": "87bfb8237ed0503740d7c0fd78a8d1c370e66757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbe6edca_42dd1900",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/ResourceType.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-08T02:07:53Z",
+      "side": 1,
+      "message": "Looks like we never do lookup over the complete mime type, is that right? The map looks like we would also perform lookup for complete type/subtype string.\nI don\u0027t think we really need a map there. Let\u0027s have something like\n\nreturn Common.ResourceType._resourceTypeByMimeType.find(entry \u003d\u003e mimeType.startsWith(entry.mimeTypePrefix)).resourceType;",
+      "revId": "87bfb8237ed0503740d7c0fd78a8d1c370e66757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4918844f_32294613",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/module.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-08T02:07:53Z",
+      "side": 1,
+      "message": "Are you sure it\u0027s needed?",
+      "revId": "87bfb8237ed0503740d7c0fd78a8d1c370e66757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "618845ee_598be5ca",
+        "filename": "third_party/WebKit/Source/modules/cachestorage/InspectorCacheStorageAgent.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-08T02:07:53Z",
+      "side": 1,
+      "message": "do we leak it?",
+      "revId": "87bfb8237ed0503740d7c0fd78a8d1c370e66757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f96c07a_6048d1a0",
+        "filename": "third_party/WebKit/Source/modules/cachestorage/InspectorCacheStorageAgent.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-08T02:07:53Z",
+      "side": 1,
+      "message": "unused?",
+      "revId": "87bfb8237ed0503740d7c0fd78a8d1c370e66757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f4ee3ab_a2616ce7",
+        "filename": "third_party/WebKit/Source/modules/cachestorage/InspectorCacheStorageAgent.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-08T02:07:53Z",
+      "side": 1,
+      "message": "So the cache will be released right after this call and before the callbacks are invoked, is that ok?",
+      "revId": "87bfb8237ed0503740d7c0fd78a8d1c370e66757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f59ba16c_11de3a47",
+        "filename": "third_party/WebKit/Source/web/WebDevToolsAgentImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-08T02:07:53Z",
+      "side": 1,
+      "message": "is this needed?",
+      "revId": "87bfb8237ed0503740d7c0fd78a8d1c370e66757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
