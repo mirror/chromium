@@ -16,6 +16,24 @@
       "revId": "a4b2446cffe1e99889f4593e63cba631969687d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "871881df_5df1cd91",
+        "filename": "chrome/browser/resources/settings/settings_page/settings_animated_pages.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-08T00:19:13Z",
+      "side": 1,
+      "message": "Ah. It does still work. Though my objective for this CL was to convert the simple cases. Since this isn\u0027t super simple, I\u0027m reverting it so it can be dealt with separate from this CL.",
+      "parentUuid": "bf60a70b_13a1d5a4",
+      "revId": "a4b2446cffe1e99889f4593e63cba631969687d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
