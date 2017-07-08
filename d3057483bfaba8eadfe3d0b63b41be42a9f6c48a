@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19dfc586_864762b6",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/DatabaseModel.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-07-08T00:21:39Z",
+      "side": 1,
+      "message": "nit: || [];",
+      "revId": "d3057483bfaba8eadfe3d0b63b41be42a9f6c48a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
