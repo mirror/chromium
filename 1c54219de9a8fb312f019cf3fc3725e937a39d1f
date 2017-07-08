@@ -69,6 +69,24 @@
       "revId": "1c54219de9a8fb312f019cf3fc3725e937a39d1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d55560eb_bd7da34e",
+        "filename": "testing/buildbot/manage.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-07-08T14:15:47Z",
+      "side": 1,
+      "message": "It\u0027s already based on it.",
+      "parentUuid": "7a432fa2_ea2d6785",
+      "revId": "1c54219de9a8fb312f019cf3fc3725e937a39d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
