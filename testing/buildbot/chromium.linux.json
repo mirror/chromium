@@ -481,11 +481,12 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "4",
+              "android_devices": "1",
               "device_os": "KTU84P",
               "device_type": "hammerhead"
             }
           ],
+          "hard_timeout": 900,
           "output_links": [
             {
               "link": [
@@ -495,7 +496,8 @@
               ],
               "name": "shard #${SHARD_INDEX} logcats"
             }
-          ]
+          ],
+          "shards": 2
         },
         "test": "components_unittests"
       },
@@ -520,7 +522,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "6",
+              "android_devices": "1",
               "device_os": "KTU84P",
               "device_type": "hammerhead"
             }
@@ -535,7 +537,8 @@
               ],
               "name": "shard #${SHARD_INDEX} logcats"
             }
-          ]
+          ],
+          "shards": 6
         },
         "test": "content_browsertests"
       },
@@ -1196,11 +1199,12 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "4",
+              "android_devices": "1",
               "device_os": "KTU84P",
               "device_type": "hammerhead"
             }
           ],
+          "hard_timeout": 900,
           "output_links": [
             {
               "link": [
@@ -1210,7 +1214,8 @@
               ],
               "name": "shard #${SHARD_INDEX} logcats"
             }
-          ]
+          ],
+          "shards": 3
         },
         "test": "net_unittests"
       },
@@ -1510,11 +1515,12 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "4",
+              "android_devices": "1",
               "device_os": "KTU84P",
               "device_type": "hammerhead"
             }
           ],
+          "hard_timeout": 900,
           "output_links": [
             {
               "link": [
@@ -2085,11 +2091,12 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "4",
+              "android_devices": "1",
               "device_os": "KTU84P",
               "device_type": "hammerhead"
             }
           ],
+          "hard_timeout": 900,
           "output_links": [
             {
               "link": [
@@ -2099,7 +2106,8 @@
               ],
               "name": "shard #${SHARD_INDEX} logcats"
             }
-          ]
+          ],
+          "shards": 2
         },
         "test": "components_unittests"
       },
@@ -2124,7 +2132,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "6",
+              "android_devices": "1",
               "device_os": "KTU84P",
               "device_type": "hammerhead"
             }
@@ -2139,7 +2147,8 @@
               ],
               "name": "shard #${SHARD_INDEX} logcats"
             }
-          ]
+          ],
+          "shards": 6
         },
         "test": "content_browsertests"
       },
@@ -2800,11 +2809,12 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "4",
+              "android_devices": "1",
               "device_os": "KTU84P",
               "device_type": "hammerhead"
             }
           ],
+          "hard_timeout": 900,
           "output_links": [
             {
               "link": [
@@ -2814,7 +2824,8 @@
               ],
               "name": "shard #${SHARD_INDEX} logcats"
             }
-          ]
+          ],
+          "shards": 3
         },
         "test": "net_unittests"
       },
@@ -3114,11 +3125,12 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "4",
+              "android_devices": "1",
               "device_os": "KTU84P",
               "device_type": "hammerhead"
             }
           ],
+          "hard_timeout": 900,
           "output_links": [
             {
               "link": [
