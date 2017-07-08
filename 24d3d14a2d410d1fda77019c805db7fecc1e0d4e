@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "187011be_b1c711e6",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/RequestTimingView.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-07-08T00:40:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5720597b_416db674",
+      "revId": "24d3d14a2d410d1fda77019c805db7fecc1e0d4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ea97522_809771c3",
         "filename": "third_party/WebKit/Source/devtools/front_end/network/RequestTimingView.js",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "26ac06f5_602e2a26",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/RequestTimingView.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-07-08T00:40:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ea97522_809771c3",
+      "revId": "24d3d14a2d410d1fda77019c805db7fecc1e0d4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff3e77f5_966f4cb9",
         "filename": "third_party/WebKit/Source/devtools/front_end/network/RequestTimingView.js",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-07T22:31:10Z",
       "side": 1,
       "message": "timing.sendEnd is duplicated.\n\n\ndo you know of a case where connect/dns/proxy(END)/blocking ends after sendEnd?",
+      "revId": "24d3d14a2d410d1fda77019c805db7fecc1e0d4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1503c84c_88eeb0cf",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/RequestTimingView.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-07-08T00:40:42Z",
+      "side": 1,
+      "message": "Done.\n\nNo... it\u0027s just a nice one-liner to use Math.max() and it removes all -1\u0027s quick and easy.",
+      "parentUuid": "ff3e77f5_966f4cb9",
       "revId": "24d3d14a2d410d1fda77019c805db7fecc1e0d4e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
