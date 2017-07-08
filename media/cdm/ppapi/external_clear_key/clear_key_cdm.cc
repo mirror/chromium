@@ -128,23 +128,17 @@ static std::string GetUnitTestResultMessage(bool success) {
 static cdm::Error ConvertException(
     media::CdmPromise::Exception exception_code) {
   switch (exception_code) {
-    case media::CdmPromise::NOT_SUPPORTED_ERROR:
+    case media::CdmPromise::Exception::NOT_SUPPORTED_ERROR:
       return cdm::kNotSupportedError;
-    case media::CdmPromise::INVALID_STATE_ERROR:
+    case media::CdmPromise::Exception::INVALID_STATE_ERROR:
       return cdm::kInvalidStateError;
-    case media::CdmPromise::INVALID_ACCESS_ERROR:
+    case media::CdmPromise::Exception::TYPE_ERROR:
       return cdm::kInvalidAccessError;
-    case media::CdmPromise::QUOTA_EXCEEDED_ERROR:
+    case media::CdmPromise::Exception::QUOTA_EXCEEDED_ERROR:
       return cdm::kQuotaExceededError;
-    case media::CdmPromise::UNKNOWN_ERROR:
-      return cdm::kUnknownError;
-    case media::CdmPromise::CLIENT_ERROR:
-      return cdm::kClientError;
-    case media::CdmPromise::OUTPUT_ERROR:
-      return cdm::kOutputError;
   }
   NOTREACHED();
-  return cdm::kUnknownError;
+  return cdm::kInvalidStateError;
 }
 
 static media::CdmSessionType ConvertSessionType(cdm::SessionType session_type) {
@@ -360,7 +354,7 @@ void ClearKeyCdm::CreateSessionAndGenerateRequest(
   DVLOG(1) << __func__;
 
   if (session_type != cdm::kTemporary && !allow_persistent_state_) {
-    OnPromiseFailed(promise_id, CdmPromise::INVALID_STATE_ERROR, 0,
+    OnPromiseFailed(promise_id, CdmPromise::Exception::INVALID_STATE_ERROR, 0,
                     "Persistent state not allowed.");
     return;
   }
