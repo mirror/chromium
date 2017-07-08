@@ -88,6 +88,22 @@ class SubresourceFilterMetricsObserverTest
     simulator->Commit();
   }
 
+  void ExpectActivationDecision(
+      const char* url,
+      subresource_filter::ActivationDecision decision) {
+    histogram_tester().ExpectBucketCount(
+        internal::kHistogramSubresourceFilterActivationDecision,
+        static_cast<int>(decision), 1);
+
+    ASSERT_EQ(1ul, ukm_tester().entries_count());
+    const ukm::UkmSource* source = ukm_tester().GetSourceForUrl(url);
+    EXPECT_TRUE(
+        ukm_tester().HasEntry(*source, internal::kUkmSubresourceFilterName));
+    ukm_tester().ExpectMetric(*source, internal::kUkmSubresourceFilterName,
+                              internal::kUkmSubresourceFilterActivationDecision,
+                              static_cast<int64_t>(decision));
+  }
+
  private:
   // Owned by the WebContents.
   subresource_filter::SubresourceFilterObserverManager* observer_manager_ =
@@ -109,11 +125,9 @@ TEST_F(SubresourceFilterMetricsObserverTest,
   NavigateToUntrackedUrl();
 
   EXPECT_EQ(1u, TotalMetricsRecorded());
-  histogram_tester().ExpectBucketCount(
-      internal::kHistogramSubresourceFilterActivationDecision,
-      static_cast<int>(subresource_filter::ActivationDecision::
-                           ACTIVATION_CONDITIONS_NOT_MET),
-      1);
+  ExpectActivationDecision(
+      kDefaultTestUrl,
+      subresource_filter::ActivationDecision::ACTIVATION_CONDITIONS_NOT_MET);
 }
 
 TEST_F(SubresourceFilterMetricsObserverTest, Basic) {
@@ -130,6 +144,8 @@ TEST_F(SubresourceFilterMetricsObserverTest, Basic) {
   NavigateToUntrackedUrl();
 
   EXPECT_GT(TotalMetricsRecorded(), 0u);
+  ExpectActivationDecision(kDefaultTestUrlWithActivation,
+                           subresource_filter::ActivationDecision::ACTIVATED);
 
   histogram_tester().ExpectTotalCount(
       internal::kHistogramSubresourceFilterCount, 1);
@@ -239,6 +255,8 @@ TEST_F(SubresourceFilterMetricsObserverTest, Subresources) {
                           nullptr /* data_reduction_proxy_data */,
                           content::ResourceType::RESOURCE_TYPE_SCRIPT, 0});
 
+  ExpectActivationDecision(kDefaultTestUrlWithActivation,
+                           subresource_filter::ActivationDecision::ACTIVATED);
   histogram_tester().ExpectTotalCount(
       internal::kHistogramSubresourceFilterCount, 1);
 
@@ -342,6 +360,8 @@ TEST_F(SubresourceFilterMetricsObserverTest, SubresourcesWithMedia) {
                           nullptr /* data_reduction_proxy_data */,
                           content::ResourceType::RESOURCE_TYPE_SCRIPT, 0});
 
+  ExpectActivationDecision(kDefaultTestUrlWithActivation,
+                           subresource_filter::ActivationDecision::ACTIVATED);
   histogram_tester().ExpectTotalCount(
       internal::kHistogramSubresourceFilterCount, 1);
 
