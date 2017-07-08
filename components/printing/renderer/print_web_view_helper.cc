@@ -581,15 +581,7 @@ void PrintWebViewHelper::PrintHeaderAndFooter(
       blink::WebView::Create(nullptr, blink::kWebPageVisibilityStateVisible);
   web_view->GetSettings()->SetJavaScriptEnabled(true);
 
-  class HeaderAndFooterClient final : public blink::WebFrameClient {
-   public:
-    void FrameDetached(blink::WebLocalFrame* frame,
-                       DetachType detach_type) override {
-      frame->FrameWidget()->Close();
-      frame->Close();
-    }
-  };
-  HeaderAndFooterClient frame_client;
+  blink::WebFrameClient frame_client;
   blink::WebLocalFrame* frame = blink::WebLocalFrame::CreateMainFrame(
       web_view, &frame_client, nullptr, nullptr);
   blink::WebWidgetClient web_widget_client;
@@ -687,8 +679,6 @@ class PrepareFrameAndViewForPrint : public blink::WebViewClient,
       blink::WebSandboxFlags sandbox_flags,
       const blink::WebParsedFeaturePolicy& container_policy,
       const blink::WebFrameOwnerProperties& frame_owner_properties) override;
-  void FrameDetached(blink::WebLocalFrame* frame,
-                     DetachType detach_type) override;
   std::unique_ptr<blink::WebURLLoader> CreateURLLoader(
       const blink::WebURLRequest& request,
       base::SingleThreadTaskRunner* task_runner) override;
@@ -856,12 +846,6 @@ blink::WebLocalFrame* PrepareFrameAndViewForPrint::CreateChildFrame(
   // instead.
   // Please see: https://crbug.com/732780.
   return nullptr;
-}
-
-void PrepareFrameAndViewForPrint::FrameDetached(blink::WebLocalFrame* frame,
-                                                DetachType detach_type) {
-  frame->FrameWidget()->Close();
-  frame->Close();
 }
 
 std::unique_ptr<blink::WebURLLoader>

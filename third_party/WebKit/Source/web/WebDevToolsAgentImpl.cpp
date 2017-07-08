@@ -42,6 +42,7 @@
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
+#include "core/frame/WebFrameWidgetBase.h"
 #include "core/frame/WebLocalFrameBase.h"
 #include "core/inspector/DevToolsEmulator.h"
 #include "core/inspector/InspectedFrames.h"
@@ -236,7 +237,8 @@ WebDevToolsAgentImpl* WebDevToolsAgentImpl::Create(
     WebDevToolsAgentImpl* agent =
         new WebDevToolsAgentImpl(frame, client, false);
     if (frame->FrameWidget())
-      agent->LayerTreeViewChanged(frame->FrameWidget()->GetLayerTreeView());
+      agent->LayerTreeViewChanged(
+          ToWebFrameWidgetBase(frame->FrameWidget())->GetLayerTreeView());
     return agent;
   }
 

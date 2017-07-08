@@ -181,7 +181,6 @@ class WebViewPlugin : public blink::WebPlugin,
 
     // WebFrameClient methods:
     void DidClearWindowObject() override;
-    void FrameDetached(blink::WebLocalFrame*, DetachType) override;
 
    private:
     WebViewPlugin* plugin_;

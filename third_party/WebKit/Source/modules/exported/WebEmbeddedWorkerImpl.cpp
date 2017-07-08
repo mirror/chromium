@@ -139,7 +139,6 @@ WebEmbeddedWorkerImpl::~WebEmbeddedWorkerImpl() {
   }
 
   web_view_->Close();
-  main_frame_->Close();
 }
 
 void WebEmbeddedWorkerImpl::StartWorkerContext(
@@ -321,13 +320,6 @@ void WebEmbeddedWorkerImpl::LoadShadowPage() {
   main_frame_->GetFrame()->Loader().Load(FrameLoadRequest(
       0, ResourceRequest(worker_start_data_.script_url),
       SubstituteData(buffer, "text/html", "UTF-8", NullURL())));
-}
-
-void WebEmbeddedWorkerImpl::FrameDetached(WebLocalFrame* frame,
-                                          DetachType type) {
-  DCHECK(type == DetachType::kRemove && frame->Parent());
-  DCHECK(frame->FrameWidget());
-  frame->Close();
 }
 
 void WebEmbeddedWorkerImpl::DidFinishDocumentLoad() {

@@ -98,11 +98,11 @@ WebRemoteFrame* WebRemoteFrameImpl::ToWebRemoteFrame() {
   return this;
 }
 
+#if 0
 void WebRemoteFrameImpl::Close() {
   WebRemoteFrame::Close();
-
-  self_keep_alive_.Clear();
 }
+#endif
 
 WebString WebRemoteFrameImpl::AssignedName() const {
   NOTREACHED();
@@ -355,8 +355,7 @@ WebRemoteFrameImpl::WebRemoteFrameImpl(WebTreeScopeType scope,
                                        WebRemoteFrameClient* client)
     : WebRemoteFrameBase(scope),
       frame_client_(RemoteFrameClientImpl::Create(this)),
-      client_(client),
-      self_keep_alive_(this) {
+      client_(client) {
   DCHECK(client);
 }
 

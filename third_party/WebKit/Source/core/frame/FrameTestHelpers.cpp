@@ -379,13 +379,10 @@ void TestWebFrameClient::BindWidgetClient(
 }
 
 void TestWebFrameClient::FrameDetached(WebLocalFrame* frame, DetachType type) {
-  if (frame_->FrameWidget()) {
+  if (frame_->FrameWidget())
     frame_->FrameWidget()->WillCloseLayerTreeView();
-    frame_->FrameWidget()->Close();
-  }
 
   owned_widget_client_.reset();
-  frame_->Close();
   self_owned_.reset();
 }
 
@@ -421,7 +418,6 @@ void TestWebRemoteFrameClient::Bind(
 }
 
 void TestWebRemoteFrameClient::FrameDetached(DetachType type) {
-  frame_->Close();
   self_owned_.reset();
 }
 

@@ -75,7 +75,6 @@ class CORE_EXPORT WebSharedWorkerImpl final
   // WebFrameClient methods to support resource loading thru the 'shadow page'.
   std::unique_ptr<WebApplicationCacheHost> CreateApplicationCacheHost(
       WebApplicationCacheHostClient*) override;
-  void FrameDetached(WebLocalFrame*, DetachType) override;
   void DidFinishDocumentLoad() override;
 
   // WebDevToolsAgentClient overrides.

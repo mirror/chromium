@@ -516,6 +516,7 @@ source_set("blink_headers") {
     "web/WebFrame.h",
     "web/WebFrameClient.h",
     "web/WebFrameContentDumper.h",
+    "web/WebFrameHandle.h",
     "web/WebFrameLoadType.h",
     "web/WebFrameOwnerProperties.h",
     "web/WebFrameSerializer.h",

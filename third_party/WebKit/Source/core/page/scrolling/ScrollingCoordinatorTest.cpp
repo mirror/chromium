@@ -31,6 +31,7 @@
 #include "core/frame/FrameTestHelpers.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/VisualViewport.h"
+#include "core/frame/WebFrameWidgetBase.h"
 #include "core/frame/WebLocalFrameBase.h"
 #include "core/html/HTMLIFrameElement.h"
 #include "core/layout/LayoutEmbeddedContent.h"
@@ -50,6 +51,7 @@
 #include "public/platform/WebLayerPositionConstraint.h"
 #include "public/platform/WebLayerTreeView.h"
 #include "public/platform/WebURLLoaderMockFactory.h"
+#include "public/web/WebFrameWidget.h"
 #include "public/web/WebSettings.h"
 #include "public/web/WebViewClient.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -70,7 +72,7 @@ class ScrollingCoordinatorTest : public ::testing::Test,
     // VisualViewport layers need to be initialized.
     GetWebView()->UpdateAllLifecyclePhases();
     WebFrameWidgetBase* main_frame_widget =
-        GetWebView()->MainFrameImpl()->FrameWidget();
+        ToWebFrameWidgetBase(GetWebView()->MainFrameImpl()->FrameWidget());
     main_frame_widget->SetRootGraphicsLayer(GetWebView()
                                                 ->MainFrameImpl()
                                                 ->GetFrame()
