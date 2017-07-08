@@ -22,7 +22,6 @@ namespace chromeos {
 namespace tether {
 
 namespace {
-
 const char kTetherSettingsSubpage[] = "networks?type=Tether";
 
 class SettingsUiDelegateImpl
@@ -73,12 +72,25 @@ TetherNotificationPresenter::CreateNotification(
     const base::string16& title,
     const base::string16& message,
     const message_center::RichNotificationData rich_notification_data) {
+  return CreateNotification(id, title, message, rich_notification_data, NULL);
+}
+
+// static
+std::unique_ptr<message_center::Notification>
+TetherNotificationPresenter::CreateNotification(
+    const std::string& id,
+    const base::string16& title,
+    const base::string16& message,
+    const message_center::RichNotificationData rich_notification_data,
+    const chromeos::NetworkState* network) {
   return base::MakeUnique<message_center::Notification>(
       message_center::NotificationType::NOTIFICATION_TYPE_SIMPLE, id, title,
       message,
       // TODO(khorimoto): Add tether icon.
-      gfx::Image() /* icon */, base::string16() /* display_source */,
-      GURL() /* origin_url */,
+      network == NULL
+          ? gfx::Image()
+          : gfx::Image(ash::network_icon::GetImageForNewTetherNetwork(network)),
+      base::string16() /* display_source */, GURL() /* origin_url */,
       message_center::NotifierId(
           message_center::NotifierId::NotifierType::SYSTEM_COMPONENT,
           kTetherNotifierId),
@@ -122,6 +134,30 @@ void TetherNotificationPresenter::NotifyPotentialHotspotNearby(
           IDS_TETHER_NOTIFICATION_WIFI_AVAILABLE_ONE_DEVICE_MESSAGE,
           base::ASCIIToUTF16(hotspot_nearby_device_.name)),
       rich_notification_data));
+}
+
+void TetherNotificationPresenter::NotifyPotentialHotspotNearby(
+    const cryptauth::RemoteDevice& remote_device,
+    const chromeos::NetworkState* network_state) {
+  PA_LOG(INFO) << "Displaying \"potential hotspot nearby\" notification for "
+               << "device with name \"" << remote_device.name << "\". "
+               << "Notification ID = " << kPotentialHotspotNotificationId;
+
+  hotspot_nearby_device_ = remote_device;
+
+  message_center::RichNotificationData rich_notification_data;
+  rich_notification_data.buttons.push_back(
+      message_center::ButtonInfo(l10n_util::GetStringUTF16(
+          IDS_TETHER_NOTIFICATION_WIFI_AVAILABLE_ONE_DEVICE_CONNECT)));
+
+  ShowNotification(CreateNotification(
+      std::string(kPotentialHotspotNotificationId),
+      l10n_util::GetStringUTF16(
+          IDS_TETHER_NOTIFICATION_WIFI_AVAILABLE_ONE_DEVICE_TITLE),
+      l10n_util::GetStringFUTF16(
+          IDS_TETHER_NOTIFICATION_WIFI_AVAILABLE_ONE_DEVICE_MESSAGE,
+          base::ASCIIToUTF16(hotspot_nearby_device_.name)),
+      rich_notification_data, network_state));
 }
 
 void TetherNotificationPresenter::NotifyMultiplePotentialHotspotsNearby() {
