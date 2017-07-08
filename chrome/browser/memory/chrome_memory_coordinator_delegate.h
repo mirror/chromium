@@ -19,7 +19,7 @@ class ChromeMemoryCoordinatorDelegate
   ~ChromeMemoryCoordinatorDelegate() override;
 
   // MemoryCoordinatorDelegate implementation.
-  void DiscardTab() override;
+  void DiscardTab(bool discard_is_urgent) override;
 
  private:
   ChromeMemoryCoordinatorDelegate();

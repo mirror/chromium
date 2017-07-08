@@ -330,9 +330,9 @@ void MemoryCoordinatorImpl::UpdateConditionIfNeeded(
   memory_condition_ = next_condition;
 }
 
-void MemoryCoordinatorImpl::DiscardTab() {
+void MemoryCoordinatorImpl::DiscardTab(bool discard_is_urgent) {
   if (delegate_)
-    delegate_->DiscardTab();
+    delegate_->DiscardTab(discard_is_urgent);
 }
 
 RenderProcessHost* MemoryCoordinatorImpl::GetRenderProcessHost(
