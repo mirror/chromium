@@ -26,7 +26,6 @@
 #import "chrome/browser/ui/cocoa/browser_window_fullscreen_transition.h"
 #import "chrome/browser/ui/cocoa/browser_window_layout.h"
 #import "chrome/browser/ui/cocoa/constrained_window/constrained_window_sheet_controller.h"
-#import "chrome/browser/ui/cocoa/custom_frame_view.h"
 #import "chrome/browser/ui/cocoa/dev_tools_controller.h"
 #import "chrome/browser/ui/cocoa/fast_resize_view.h"
 #import "chrome/browser/ui/cocoa/find_bar/find_bar_cocoa_controller.h"
@@ -60,6 +59,15 @@
 
 using content::RenderWidgetHostView;
 using content::WebContents;
+
+@interface NSView (Private)
+// Returns where the fullscreen button's origin should be positioned in window
+// coordinates. This method is only available on the root view.
+// FramedBrowserWindow's root view centers it vertically in the tabstrip (if
+// there is a tabstrip), and shifts it to the left of the old-style avatar icon
+// if necessary.
+- (NSPoint)_fullScreenButtonOrigin;
+@end
 
 namespace {
 
