@@ -23,11 +23,12 @@ ServerGpuMemoryBufferManager::BufferInfo::~BufferInfo() = default;
 
 ServerGpuMemoryBufferManager::ServerGpuMemoryBufferManager(
     ui::mojom::GpuService* gpu_service,
-    int client_id)
+    int client_id,
+    scoped_refptr<base::SequencedTaskRunner> task_runner)
     : gpu_service_(gpu_service),
       client_id_(client_id),
       native_configurations_(gpu::GetNativeGpuMemoryBufferConfigurations()),
-      task_runner_(base::SequencedTaskRunnerHandle::Get()),
+      task_runner_(std::move(task_runner)),
       weak_factory_(this) {}
 
 ServerGpuMemoryBufferManager::~ServerGpuMemoryBufferManager() {}
