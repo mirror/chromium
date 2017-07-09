@@ -52,6 +52,24 @@
       "revId": "5e5158e6788d2930378d0e1fb1e9c65377a6ca14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9282789b_0dfcbb62",
+        "filename": "third_party/WebKit/Source/core/layout/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1214,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-07-09T04:55:57Z",
+      "side": 1,
+      "message": "Here\u0027s the graphics layer tree for the non-RLS frame scroll example:\n\nhttps://paste.googleplex.com/5431515685060608\n\nIt appears that the position of the scrolling content layer is offset by the position of the root content layer.",
+      "parentUuid": "bf2ceea7_7539ef21",
+      "revId": "5e5158e6788d2930378d0e1fb1e9c65377a6ca14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
