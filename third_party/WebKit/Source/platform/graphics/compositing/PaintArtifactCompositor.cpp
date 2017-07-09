@@ -24,6 +24,7 @@
 #include "public/platform/Platform.h"
 #include "public/platform/WebCompositorSupport.h"
 #include "public/platform/WebLayer.h"
+#include "public/platform/WebLayerScrollClient.h"
 #include "ui/gfx/geometry/rect.h"
 
 namespace blink {
@@ -129,6 +130,19 @@ PaintArtifactCompositor::CompositedLayerForPendingLayer(
       pending_layer.property_tree_state, store_debug_info);
   new_content_layer_clients.push_back(std::move(content_layer_client));
   return cc_layer;
+}
+
+scoped_refptr<cc::Layer> PaintArtifactCompositor::CompositedLayerForScroll(
+    CompositorElementId scroll_element_id,
+    Vector<scoped_refptr<cc::Layer>>& new_scroll_layers) {
+  for (auto& scroll_layer : scroll_layers_) {
+    if (scroll_layer && scroll_layer->element_id() == scroll_element_id)
+      return scroll_layer;
+  }
+
+  auto scroll_layer = cc::Layer::Create();
+  scroll_layer->SetElementId(scroll_element_id);
+  return scroll_layer;
 }
 
 PaintArtifactCompositor::PendingLayer::PendingLayer(
@@ -415,6 +429,88 @@ void PaintArtifactCompositor::CollectPendingLayers(
   DCHECK_EQ(paint_artifact.PaintChunks().end(), cursor);
 }
 
+// This is a mess and sould be properly factored to not share so much state.
+void PaintArtifactCompositor::AddScrollLayers(
+    PropertyTreeState property_tree_state,
+    PropertyTreeManager& property_tree_manager,
+    cc::LayerTreeHost* host,
+    Vector<scoped_refptr<cc::Layer>>& new_scroll_layers,
+    HashMap<const TransformPaintPropertyNode*, cc::Layer*>&
+        scroll_translation_to_scroll_layer,
+    CompositorElementIdSet& composited_element_ids) {
+  const auto* scroll_translation =
+      property_tree_state.Transform()->NearestScrollTranslationNode();
+  if (scroll_translation_to_scroll_layer.Contains(scroll_translation))
+    return;
+
+  // Walk up to the first property tree state with a transform equal to the
+  // scroll translation.
+  PropertyTreeStateIterator iterator(property_tree_state);
+  while (property_tree_state.Transform() != scroll_translation)
+    property_tree_state = *iterator.Next();
+  const auto* ancestor_state = iterator.Next();
+  while (ancestor_state && ancestor_state->Transform() == scroll_translation) {
+    property_tree_state = *ancestor_state;
+    ancestor_state = iterator.Next();
+  }
+
+  // Recursively create scroll layers.
+  if (ancestor_state) {
+    if (const auto* ancestor_scroll_translation_node =
+            ancestor_state->Transform()->NearestScrollTranslationNode()) {
+      AddScrollLayers(*ancestor_state, property_tree_manager, host,
+                      new_scroll_layers, scroll_translation_to_scroll_layer,
+                      composited_element_ids);
+    }
+  }
+
+  // TODO(pdr): We should DCHECK that layers are only created for composited
+  // scrollers.
+  auto scroll_element_id = scroll_translation->GetCompositorElementId();
+  if (!scroll_element_id)
+    return;
+  auto layer = CompositedLayerForScroll(scroll_element_id, new_scroll_layers);
+
+  int transform_id =
+      property_tree_manager.EnsureCompositorTransformNode(scroll_translation);
+  int scroll_id = property_tree_manager.CompositorScrollNode(
+      scroll_translation->ScrollNode());
+  int clip_id = property_tree_manager.EnsureCompositorClipNode(
+      property_tree_state.Clip());
+  int effect_id =
+      property_tree_manager.SwitchToEffectNode(*property_tree_state.Effect());
+
+  root_layer_->AddChild(layer);
+
+  layer->set_property_tree_sequence_number(g_s_property_tree_sequence_number);
+  layer->SetTransformTreeIndex(transform_id);
+  layer->SetScrollTreeIndex(scroll_id);
+  layer->SetClipTreeIndex(clip_id);
+  layer->SetEffectTreeIndex(effect_id);
+
+  host->RegisterElement(scroll_element_id, cc::ElementListType::ACTIVE,
+                        layer.get());
+  composited_element_ids.insert(scroll_element_id);
+
+  layer->SetScrollable(scroll_translation->ScrollNode()->ContainerBounds());
+  layer->SetBounds(scroll_translation->ScrollNode()->Bounds());
+
+  // TODO(pdr): Should the offset_to_transform_parent always be zero?
+
+  if (auto* scroll_client = scroll_translation->ScrollNode()->ScrollClient()) {
+    layer->set_did_scroll_callback(
+        base::Bind(&blink::WebLayerScrollClient::DidScroll,
+                   base::Unretained(scroll_client)));
+  }
+
+  if (extra_data_for_testing_enabled_)
+    extra_data_for_testing_->scroll_layers.push_back(layer);
+
+  new_scroll_layers.push_back(std::move(layer));
+
+  scroll_translation_to_scroll_layer.Set(scroll_translation, layer.get());
+}
+
 void PaintArtifactCompositor::Update(
     const PaintArtifact& paint_artifact,
     CompositorElementIdSet& composited_element_ids) {
@@ -450,6 +546,11 @@ void PaintArtifactCompositor::Update(
   Vector<PendingLayer, 0> pending_layers;
   CollectPendingLayers(paint_artifact, pending_layers);
 
+  HashMap<const TransformPaintPropertyNode*, cc::Layer*>
+      scroll_translation_to_scroll_layer;
+
+  Vector<scoped_refptr<cc::Layer>> new_scroll_layers;
+
   Vector<std::unique_ptr<ContentLayerClientImpl>> new_content_layer_clients;
   new_content_layer_clients.ReserveCapacity(pending_layers.size());
 
@@ -464,9 +565,17 @@ void PaintArtifactCompositor::Update(
         paint_artifact, pending_layer, layer_offset, new_content_layer_clients,
         store_debug_info);
 
+    // Insert scroll layers before inserting the content layer.
+    // FIXME: Cleanup how this is created to share less state.
+    AddScrollLayers(pending_layer.property_tree_state, property_tree_manager,
+                    host, new_scroll_layers, scroll_translation_to_scroll_layer,
+                    composited_element_ids);
+
     const auto* transform = pending_layer.property_tree_state.Transform();
     int transform_id =
         property_tree_manager.EnsureCompositorTransformNode(transform);
+    int scroll_id = property_tree_manager.CompositorScrollNode(
+        transform->NearestScrollTranslationNode()->ScrollNode());
     int clip_id = property_tree_manager.EnsureCompositorClipNode(
         pending_layer.property_tree_state.Clip());
     int effect_id = property_tree_manager.SwitchToEffectNode(
@@ -483,8 +592,6 @@ void PaintArtifactCompositor::Update(
       layer->SetElementId(element_id);
       composited_element_ids.insert(element_id);
     }
-
-    root_layer_->AddChild(layer);
     // TODO(wkorman): Once we've removed all uses of
     // LayerTreeHost::{LayerByElementId,element_layers_map} we can
     // revise element register/unregister to cease passing layer and
@@ -494,11 +601,13 @@ void PaintArtifactCompositor::Update(
                             layer.get());
     }
 
+    root_layer_->AddChild(layer);
+
     layer->set_property_tree_sequence_number(g_s_property_tree_sequence_number);
     layer->SetTransformTreeIndex(transform_id);
+    layer->SetScrollTreeIndex(scroll_id);
     layer->SetClipTreeIndex(clip_id);
     layer->SetEffectTreeIndex(effect_id);
-    property_tree_manager.UpdateLayerScrollMapping(layer.get(), transform);
 
     layer->SetContentsOpaque(pending_layer.known_to_be_opaque);
     layer->SetShouldCheckBackfaceVisibility(pending_layer.backface_hidden);
@@ -506,8 +615,12 @@ void PaintArtifactCompositor::Update(
     if (extra_data_for_testing_enabled_)
       extra_data_for_testing_->content_layers.push_back(layer);
   }
+
   content_layer_clients_.clear();
   content_layer_clients_.swap(new_content_layer_clients);
+
+  scroll_layers_.clear();
+  scroll_layers_.swap(new_scroll_layers);
 
   // Mark the property trees as having been rebuilt.
   host->property_trees()->sequence_number = g_s_property_tree_sequence_number;
