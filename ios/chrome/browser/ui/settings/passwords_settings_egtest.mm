@@ -268,6 +268,14 @@ id<GREYMatcher> DeleteButton() {
       ServiceAccessType::EXPLICIT_ACCESS);
 }
 
+// Saves |form| to the password store and waits until the async processing is
+// done.
+- (void)savePasswordFormToStore:(const PasswordForm&)form {
+  [self passwordStore]->AddLogin(form);
+  // Allow the PasswordStore to process this on the DB thread.
+  [[GREYUIThreadExecutor sharedInstance] drainUntilIdle];
+}
+
 // Saves an example form in the store.
 - (void)saveExamplePasswordForm {
   PasswordForm example;
@@ -275,10 +283,7 @@ id<GREYMatcher> DeleteButton() {
   example.password_value = base::ASCIIToUTF16("password");
   example.origin = GURL("https://example.com");
   example.signon_realm = example.origin.spec();
-
-  [self passwordStore]->AddLogin(example);
-  // Allow the PasswordStore to process this on the DB thread.
-  [[GREYUIThreadExecutor sharedInstance] drainUntilIdle];
+  [self savePasswordFormToStore:example];
 }
 
 // Removes all credentials stored.
@@ -591,6 +596,39 @@ id<GREYMatcher> DeleteButton() {
   [[EarlGrey selectElementWithMatcher:CopyPasswordButton()]
       assertWithMatcher:grey_nil()];
 
+  [self tapBackArrow];
+  [self tapDone];
+  [self clearPasswordStore];
+}
+
+// Checks that blacklisted credentials only have the Site section.
+- (void)testBlacklisted {
+  [self scopedEnablePasswordManagementAndViewingUI];
+
+  PasswordForm blacklisted;
+  blacklisted.origin = GURL("https://example.com");
+  blacklisted.signon_realm = blacklisted.origin.spec();
+  blacklisted.blacklisted_by_user = true;
+  [self savePasswordFormToStore:blacklisted];
+
+  [self openPasswordSettings];
+
+  [[EarlGrey selectElementWithMatcher:Entry(@"https://example.com")]
+      performAction:grey_tap()];
+
+  // Check that the Site section is there.
+  [[EarlGrey selectElementWithMatcher:SiteHeader()]
+      assertWithMatcher:grey_sufficientlyVisible()];
+
+  // Check that the rest is not present.
+  [[EarlGrey selectElementWithMatcher:UsernameHeader()]
+      assertWithMatcher:grey_nil()];
+  [[EarlGrey selectElementWithMatcher:PasswordHeader()]
+      assertWithMatcher:grey_nil()];
+  [[EarlGrey selectElementWithMatcher:DeleteButton()]
+      assertWithMatcher:grey_nil()];
+
+  [self tapBackArrow];
   [self tapBackArrow];
   [self tapDone];
   [self clearPasswordStore];

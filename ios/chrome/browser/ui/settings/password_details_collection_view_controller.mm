@@ -88,13 +88,10 @@ typedef NS_ENUM(NSInteger, ItemType) {
 @synthesize deleteConfirmation = _deleteConfirmation;
 
 - (instancetype)
-  initWithPasswordForm:(autofill::PasswordForm)passwordForm
+  initWithPasswordForm:(const autofill::PasswordForm&)passwordForm
               delegate:
                   (id<PasswordDetailsCollectionViewControllerDelegate>)delegate
-reauthenticationModule:(id<ReauthenticationProtocol>)reauthenticationModule
-              username:(NSString*)username
-              password:(NSString*)password
-                origin:(NSString*)origin {
+reauthenticationModule:(id<ReauthenticationProtocol>)reauthenticationModule {
   DCHECK(delegate);
   DCHECK(reauthenticationModule);
   UICollectionViewLayout* layout = [[MDCCollectionViewFlowLayout alloc] init];
@@ -103,12 +100,17 @@ reauthenticationModule:(id<ReauthenticationProtocol>)reauthenticationModule
   if (self) {
     _weakDelegate = delegate;
     _weakReauthenticationModule = reauthenticationModule;
+
     _passwordForm = passwordForm;
-    _username = [username copy];
-    _password = [password copy];
+    if (!_passwordForm.blacklisted_by_user) {
+      _username = base::SysUTF16ToNSString(_passwordForm.username_value);
+      _password = base::SysUTF16ToNSString(_passwordForm.password_value);
+    }
     _site = base::SysUTF8ToNSString(_passwordForm.origin.spec());
-    self.title =
-        [PasswordDetailsCollectionViewController simplifyOrigin:origin];
+    self.title = [PasswordDetailsCollectionViewController
+        simplifyOrigin:base::SysUTF8ToNSString(
+                           password_manager::GetHumanReadableOrigin(
+                               _passwordForm))];
     self.collectionViewAccessibilityIdentifier =
         @"PasswordDetailsCollectionViewController";
     NSNotificationCenter* defaultCenter = [NSNotificationCenter defaultCenter];
@@ -153,6 +155,10 @@ reauthenticationModule:(id<ReauthenticationProtocol>)reauthenticationModule
   [model addItem:siteItem toSectionWithIdentifier:SectionIdentifierSite];
   [model addItem:[self siteCopyButtonItem]
       toSectionWithIdentifier:SectionIdentifierSite];
+
+  // Blacklisted forms do not carry any of the metadata presented below.
+  if (_passwordForm.blacklisted_by_user)
+    return;
 
   [model addSectionWithIdentifier:SectionIdentifierUsername];
   CollectionViewTextItem* usernameHeader =

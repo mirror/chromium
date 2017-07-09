@@ -102,10 +102,7 @@ class PasswordDetailsCollectionViewControllerTest
     return [[PasswordDetailsCollectionViewController alloc]
           initWithPasswordForm:form
                       delegate:delegate_
-        reauthenticationModule:reauthenticationModule_
-                      username:kUsername
-                      password:kPassword
-                        origin:origin_];
+        reauthenticationModule:reauthenticationModule_];
   }
 
   void CreateControllerWithOrigin(NSString* test_origin) {
