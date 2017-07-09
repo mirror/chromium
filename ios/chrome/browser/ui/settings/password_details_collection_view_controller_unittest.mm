@@ -16,6 +16,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #import "testing/gtest_mac.h"
 #include "ui/base/l10n/l10n_util.h"
+#include "url/gurl.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -102,10 +103,7 @@ class PasswordDetailsCollectionViewControllerTest
     return [[PasswordDetailsCollectionViewController alloc]
           initWithPasswordForm:form
                       delegate:delegate_
-        reauthenticationModule:reauthenticationModule_
-                      username:kUsername
-                      password:kPassword
-                        origin:origin_];
+        reauthenticationModule:reauthenticationModule_];
   }
 
   void CreateControllerWithOrigin(NSString* test_origin) {
@@ -161,21 +159,23 @@ TEST_F(PasswordDetailsCollectionViewControllerTest, TestInitialization) {
 }
 
 struct SimplifyOriginTestData {
-  NSString* origin;
+  GURL origin;
   NSString* expectedSimplifiedOrigin;
 };
 
 TEST_F(PasswordDetailsCollectionViewControllerTest, SimplifyOrigin) {
   SimplifyOriginTestData test_data[] = {
-      {@"http://test.com/index.php", @"test.com"},
-      {@"test.com/index.php", @"test.com"},
-      {@"test.com", @"test.com"}};
+      {GURL("http://test.com/index.php"), @"test.com"},
+      {GURL("https://example.com/index.php"), @"example.com"},
+      {GURL("android://"
+            "Qllt1FacrB0NYCeSFvmudHvssWBPFfC54EbtHTpFxukvw2wClI1rafcVB3kQOMxfJg"
+            "xbVAkGXvC_A52kbPL1EQ==@com.parkingpanda.mobile/"),
+       @"com.parkingpanda.mobile"}};
 
-  for (size_t i = 0; i < arraysize(test_data); i++) {
-    SimplifyOriginTestData& data = test_data[i];
-    CreateControllerWithOrigin(data.origin);
+  for (const auto& data : test_data) {
+    CreateControllerWithOrigin(base::SysUTF8ToNSString(data.origin.spec()));
     EXPECT_NSEQ(data.expectedSimplifiedOrigin, controller().title)
-        << " for origin " << base::SysNSStringToUTF8(test_data[i].origin);
+        << " for origin " << data.origin;
     ResetController();
   }
 }
