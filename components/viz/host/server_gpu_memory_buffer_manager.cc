@@ -23,11 +23,12 @@ ServerGpuMemoryBufferManager::BufferInfo::~BufferInfo() = default;
 
 ServerGpuMemoryBufferManager::ServerGpuMemoryBufferManager(
     ui::mojom::GpuService* gpu_service,
-    int client_id)
+    int client_id,
+    scoped_refptr<base::SequencedTaskRunner> task_runner)
     : gpu_service_(gpu_service),
       client_id_(client_id),
       native_configurations_(gpu::GetNativeGpuMemoryBufferConfigurations()),
-      task_runner_(base::SequencedTaskRunnerHandle::Get()),
+      task_runner_(std::move(task_runner)),
       weak_factory_(this) {}
 
 ServerGpuMemoryBufferManager::~ServerGpuMemoryBufferManager() {}
@@ -41,6 +42,8 @@ void ServerGpuMemoryBufferManager::AllocateGpuMemoryBuffer(
     gpu::SurfaceHandle surface_handle,
     base::OnceCallback<void(const gfx::GpuMemoryBufferHandle&)> callback) {
   DCHECK(task_runner_->RunsTasksInCurrentSequence());
+  if (!weak_ptr_)
+    weak_ptr_ = weak_factory_.GetWeakPtr();
   if (gpu::GetNativeGpuMemoryBufferType() != gfx::EMPTY_BUFFER) {
     const bool is_native = native_configurations_.find(std::make_pair(
                                format, usage)) != native_configurations_.end();
@@ -108,10 +111,21 @@ ServerGpuMemoryBufferManager::CreateGpuMemoryBuffer(
   wait_event.Wait();
   if (handle.is_null())
     return nullptr;
+  // The destruction callback can be called on any thread. So have an
+  // intermediate callback here to bounce off onto the |task_runner_| thread as
+  // the destruction callback.
+  auto destroy_callback =
+      base::Bind(&ServerGpuMemoryBufferManager::DestroyGpuMemoryBuffer,
+                 weak_ptr_, id, client_id_);
   return gpu::GpuMemoryBufferImpl::CreateFromHandle(
       handle, size, format, usage,
-      base::Bind(&ServerGpuMemoryBufferManager::DestroyGpuMemoryBuffer,
-                 weak_factory_.GetWeakPtr(), id, client_id_));
+      base::Bind(
+          [](scoped_refptr<base::SequencedTaskRunner> task_runner,
+             const gpu::GpuMemoryBufferImpl::DestructionCallback callback,
+             const gpu::SyncToken& sync_token) {
+            task_runner->PostTask(FROM_HERE, base::Bind(callback, sync_token));
+          },
+          task_runner_, destroy_callback));
 }
 
 void ServerGpuMemoryBufferManager::SetDestructionSyncToken(
