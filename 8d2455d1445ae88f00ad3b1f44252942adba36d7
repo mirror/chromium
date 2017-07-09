@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16d2ead1_f4d12f4d",
+        "filename": "components/cronet/ios/test/cronet_http_test.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-09T19:31:51Z",
+      "side": 1,
+      "message": "nit: -setBrotliEnabled: parameter type is BOOL, so maybe use YES here instead of true.",
+      "range": {
+        "startLine": 378,
+        "startChar": 27,
+        "endLine": 378,
+        "endChar": 31
+      },
+      "revId": "8d2455d1445ae88f00ad3b1f44252942adba36d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84fa2daa_75574d34",
+        "filename": "components/cronet/ios/test/cronet_http_test.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-09T19:31:51Z",
+      "side": 1,
+      "message": "ditto, NO instead of false",
+      "range": {
+        "startLine": 393,
+        "startChar": 27,
+        "endLine": 393,
+        "endChar": 32
+      },
+      "revId": "8d2455d1445ae88f00ad3b1f44252942adba36d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58dbfdaf_3676d0e9",
+        "filename": "components/cronet/ios/test/cronet_http_test.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-09T19:31:51Z",
+      "side": 1,
+      "message": "ditto, YES instead of true",
+      "range": {
+        "startLine": 408,
+        "startChar": 27,
+        "endLine": 408,
+        "endChar": 31
+      },
+      "revId": "8d2455d1445ae88f00ad3b1f44252942adba36d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
