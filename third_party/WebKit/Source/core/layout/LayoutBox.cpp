@@ -649,7 +649,8 @@ void LayoutBox::ScrollRectToVisible(const LayoutRect& rect,
                                     const ScrollAlignment& align_y,
                                     ScrollType scroll_type,
                                     bool make_visible_in_visual_viewport,
-                                    ScrollBehavior scroll_behavior) {
+                                    ScrollBehavior scroll_behavior,
+                                    bool is_for_scroll_sequence) {
   DCHECK(scroll_type == kProgrammaticScroll || scroll_type == kUserScroll);
   // Presumably the same issue as in setScrollTop. See crbug.com/343132.
   DisableCompositingQueryAsserts disabler;
@@ -670,9 +671,10 @@ void LayoutBox::ScrollRectToVisible(const LayoutRect& rect,
         !ContainingBlock()->Style()->LineClamp().IsNone();
   }
 
-  bool is_smooth = scroll_behavior == kScrollBehaviorSmooth ||
-                   (scroll_behavior == kScrollBehaviorAuto &&
-                    Style()->GetScrollBehavior() == kScrollBehaviorSmooth);
+  bool is_smooth =
+      scroll_behavior == kScrollBehaviorSmooth ||
+      (is_for_scroll_sequence && scroll_behavior == kScrollBehaviorAuto &&
+       Style()->GetScrollBehavior() == kScrollBehaviorSmooth);
 
   if (!IsLayoutView() && HasOverflowClip() && !restricted_by_line_clamp) {
     // Don't scroll to reveal an overflow layer that is restricted by the
@@ -681,7 +683,8 @@ void LayoutBox::ScrollRectToVisible(const LayoutRect& rect,
     // TODO(eae): We probably don't need this any more as we don't share any
     //            code with the Safari RSS reeder.
     new_rect = GetScrollableArea()->ScrollIntoView(
-        rect_to_scroll, align_x, align_y, is_smooth, scroll_type);
+        rect_to_scroll, align_x, align_y, is_smooth, scroll_type,
+        is_for_scroll_sequence);
     if (new_rect.IsEmpty())
       return;
   } else if (!parent_box && CanBeProgramaticallyScrolled()) {
@@ -694,11 +697,13 @@ void LayoutBox::ScrollRectToVisible(const LayoutRect& rect,
             rect_to_scroll.Move(
                 LayoutSize(GetScrollableArea()->GetScrollOffset()));
           }
-          frame_view->GetScrollableArea()->ScrollIntoView(
-              rect_to_scroll, align_x, align_y, is_smooth, scroll_type);
+          new_rect = frame_view->GetScrollableArea()->ScrollIntoView(
+              rect_to_scroll, align_x, align_y, is_smooth, scroll_type,
+              is_for_scroll_sequence);
         } else {
-          frame_view->LayoutViewportScrollableArea()->ScrollIntoView(
-              rect_to_scroll, align_x, align_y, is_smooth, scroll_type);
+          new_rect = frame_view->LayoutViewportScrollableArea()->ScrollIntoView(
+              rect_to_scroll, align_x, align_y, is_smooth, scroll_type,
+              is_for_scroll_sequence);
         }
         if (owner_element && owner_element->GetLayoutObject()) {
           if (frame_view->SafeToPropagateScrollToParent()) {
@@ -707,7 +712,7 @@ void LayoutBox::ScrollRectToVisible(const LayoutRect& rect,
             new_rect = EnclosingLayoutRect(
                 View()
                     ->LocalToAncestorQuad(
-                        FloatRect(rect_to_scroll), parent_view,
+                        FloatRect(new_rect), parent_view,
                         kUseTransforms | kTraverseDocumentBoundaries)
                     .BoundingBox());
           } else {
@@ -734,7 +739,7 @@ void LayoutBox::ScrollRectToVisible(const LayoutRect& rect,
   if (parent_box) {
     parent_box->ScrollRectToVisible(new_rect, align_x, align_y, scroll_type,
                                     make_visible_in_visual_viewport,
-                                    scroll_behavior);
+                                    scroll_behavior, is_for_scroll_sequence);
   }
 }
 
