@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a4f65643_37d4c2fe",
+        "filename": "remoting/host/DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-07-09T04:24:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0aadd652_a5be6260",
+      "revId": "f459874e216f23e25a59f37d7ff38b53970fe7da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc64ac21_f199e861",
         "filename": "services/device/wake_lock/power_save_blocker/BUILD.gn",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "f459874e216f23e25a59f37d7ff38b53970fe7da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3134565_7cc1e42a",
+        "filename": "services/device/wake_lock/power_save_blocker/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-07-09T04:24:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc64ac21_f199e861",
+      "revId": "f459874e216f23e25a59f37d7ff38b53970fe7da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
