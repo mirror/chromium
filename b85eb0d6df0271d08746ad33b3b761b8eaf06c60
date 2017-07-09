@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "89019702_9891ecff",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_container_view_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-09T09:01:26Z",
+      "side": 1,
+      "message": "I\u0027m convinced this is correct to use here.",
+      "parentUuid": "8df6357b_700faeb4",
+      "range": {
+        "startLine": 140,
+        "startChar": 7,
+        "endLine": 140,
+        "endChar": 44
+      },
+      "revId": "b85eb0d6df0271d08746ad33b3b761b8eaf06c60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c2454577_80baa026",
         "filename": "ios/clean/chrome/browser/ui/transitions/containment_transition_context.mm",
         "patchSetId": 6
