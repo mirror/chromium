@@ -29,6 +29,7 @@ if (window.testRunner)
 
 function loaded() {
     document.documentElement.setCurrentTime(3);
+    document.documentElement.pauseAnimations();
     if (window.testRunner)
         testRunner.notifyDone();
 }
