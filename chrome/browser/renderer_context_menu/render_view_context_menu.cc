@@ -1503,9 +1503,9 @@ bool RenderViewContextMenu::IsCommandIdEnabled(int id) const {
 
     case IDC_CONTENT_CONTEXT_TRANSLATE:
       return IsTranslateEnabled();
-
-    case IDC_CONTENT_CONTEXT_OPENLINKNEWTAB:
     case IDC_CONTENT_CONTEXT_OPENLINKNEWWINDOW:
+      return !browser_context_->IsOffTheRecord() && params_.link_url.is_valid();
+    case IDC_CONTENT_CONTEXT_OPENLINKNEWTAB:
     case IDC_CONTENT_CONTEXT_OPENLINKINPROFILE:
       return params_.link_url.is_valid();
 
@@ -2117,7 +2117,7 @@ bool RenderViewContextMenu::IsRouteMediaEnabled() const {
 }
 
 bool RenderViewContextMenu::IsOpenLinkOTREnabled() const {
-  if (browser_context_->IsOffTheRecord() || !params_.link_url.is_valid())
+  if (!params_.link_url.is_valid())
     return false;
 
   if (!chrome::IsURLAllowedInIncognito(params_.link_url, browser_context_))
