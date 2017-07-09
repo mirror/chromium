@@ -270,13 +270,8 @@ class CORE_EXPORT PaintLayer : public DisplayItemClient {
   }
 
   const LayoutPoint& Location() const {
-#if DCHECK_IS_ON()
-    DCHECK(!needs_position_update_);
-#endif
     return location_;
   }
-  // FIXME: size() should DCHECK(!needs_position_update_) as well, but that
-  // fails in some tests, for example, fast/repaint/clipped-relative.html.
   const IntSize& size() const { return size_; }
   void SetSizeHackForLayoutTreeAsText(const IntSize& size) { size_ = size; }
 
@@ -1176,10 +1171,6 @@ class CORE_EXPORT PaintLayer : public DisplayItemClient {
   unsigned has_visible_content_ : 1;
   unsigned needs_descendant_dependent_flags_update_ : 1;
   unsigned has_visible_descendant_ : 1;
-
-#if DCHECK_IS_ON()
-  unsigned needs_position_update_ : 1;
-#endif
 
   // Set on a stacking context layer that has 3D descendants anywhere
   // in a preserves3D hierarchy. Hint to do 3D-aware hit testing.

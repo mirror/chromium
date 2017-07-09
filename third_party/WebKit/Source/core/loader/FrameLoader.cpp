@@ -476,6 +476,20 @@ void FrameLoader::DidFinishNavigation() {
     progress_tracker_->ProgressCompleted();
     // Retry restoring scroll offset since finishing loading disables content
     // size clamping.
+
+    // LOG(ERROR) << "finished loading";
+    // if (document_loader_) {
+    //   HistoryItem* history_item = document_loader_->GetHistoryItem();
+    //   bool should_restore_scroll =
+    //       history_item &&
+    //       history_item->ScrollRestorationType() != kScrollRestorationManual;
+    //   if (should_restore_scroll) {
+    //     if (LocalFrameView* view = frame_->View())
+    //       LOG(ERROR) << "was going to force lifecycle";
+    //     //  view->UpdateLifecycleToLayoutClean();
+    //   }
+    // }
+
     RestoreScrollPositionAndViewState();
     if (document_loader_)
       document_loader_->SetLoadType(kFrameLoadTypeStandard);
@@ -1103,6 +1117,7 @@ void FrameLoader::RestoreScrollPositionAndViewStateForLoadType(
     FrameLoadType load_type,
     HistoryLoadType history_load_type) {
   LocalFrameView* view = frame_->View();
+  //  LOG(ERROR) << "here0";
   if (!view || !view->LayoutViewportScrollableArea() ||
       !state_machine_.CommittedFirstRealDocumentLoad() ||
       !frame_->IsAttached()) {
@@ -1113,7 +1128,7 @@ void FrameLoader::RestoreScrollPositionAndViewStateForLoadType(
   HistoryItem* history_item = document_loader_->GetHistoryItem();
   if (!history_item || !history_item->DidSaveScrollOrScaleState())
     return;
-
+  // LOG(ERROR) << "here";
   bool should_restore_scroll =
       history_item->ScrollRestorationType() != kScrollRestorationManual;
   bool should_restore_scale = history_item->PageScaleFactor();
@@ -1146,6 +1161,7 @@ void FrameLoader::RestoreScrollPositionAndViewStateForLoadType(
     return;
 
   if (should_restore_scroll) {
+    // LOG(ERROR) << "set scroll";
     view->LayoutViewportScrollableArea()->SetScrollOffset(
         history_item->GetScrollOffset(), kProgrammaticScroll);
   }
