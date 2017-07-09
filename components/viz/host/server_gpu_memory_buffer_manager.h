@@ -32,8 +32,10 @@ class VIZ_HOST_EXPORT ServerGpuMemoryBufferManager
     : public gpu::GpuMemoryBufferManager,
       public base::trace_event::MemoryDumpProvider {
  public:
-  ServerGpuMemoryBufferManager(ui::mojom::GpuService* gpu_service,
-                               int client_id);
+  ServerGpuMemoryBufferManager(
+      ui::mojom::GpuService* gpu_service,
+      int client_id,
+      scoped_refptr<base::SequencedTaskRunner> task_runner);
   ~ServerGpuMemoryBufferManager() override;
 
   void DestroyGpuMemoryBuffer(gfx::GpuMemoryBufferId id,
@@ -93,6 +95,7 @@ class VIZ_HOST_EXPORT ServerGpuMemoryBufferManager
 
   const gpu::GpuMemoryBufferConfigurationSet native_configurations_;
   scoped_refptr<base::SequencedTaskRunner> task_runner_;
+  base::WeakPtr<ServerGpuMemoryBufferManager> weak_ptr_;
   base::WeakPtrFactory<ServerGpuMemoryBufferManager> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(ServerGpuMemoryBufferManager);

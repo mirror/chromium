@@ -78,7 +78,6 @@
 #include "content/browser/field_trial_recorder.h"
 #include "content/browser/fileapi/fileapi_message_filter.h"
 #include "content/browser/frame_host/render_frame_message_filter.h"
-#include "content/browser/gpu/browser_gpu_memory_buffer_manager.h"
 #include "content/browser/gpu/compositor_util.h"
 #include "content/browser/gpu/gpu_client.h"
 #include "content/browser/gpu/gpu_data_manager_impl.h"
@@ -1662,8 +1661,9 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
                  make_scoped_refptr(
                      storage_partition_impl_->GetBackgroundFetchContext())));
 
-  registry->AddInterface(base::Bind(&RenderProcessHostImpl::CreateMusGpuRequest,
-                                    base::Unretained(this)));
+  registry->AddInterface(base::Bind(
+      &RenderProcessHostImpl::CreateGpuRequest, base::Unretained(this),
+      BrowserMainLoop::GetInstance()->gpu_memory_buffer_manager()));
 
   registry->AddInterface(
       base::Bind(&VideoCaptureHost::Create,
@@ -1766,12 +1766,13 @@ void RenderProcessHostImpl::GetBlobURLLoaderFactory(
       std::move(request));
 }
 
-void RenderProcessHostImpl::CreateMusGpuRequest(
+void RenderProcessHostImpl::CreateGpuRequest(
+    viz::ServerGpuMemoryBufferManager* gmb_manager,
     const service_manager::BindSourceInfo& source_info,
     ui::mojom::GpuRequest request) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   if (!gpu_client_)
-    gpu_client_.reset(new GpuClient(GetID()));
+    gpu_client_.reset(new GpuClient(GetID(), gmb_manager));
   gpu_client_->Add(std::move(request));
 }
 

@@ -8,6 +8,7 @@
 #include "base/memory/shared_memory.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
+#include "base/threading/sequenced_task_runner_handle.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "components/viz/host/server_gpu_memory_buffer_manager.h"
 #include "gpu/ipc/client/gpu_channel_host.h"
@@ -51,8 +52,9 @@ DefaultGpuHost::DefaultGpuHost(GpuHostDelegate* delegate)
                               std::move(gpu_host_proxy), preferences,
                               mojo::ScopedSharedBufferHandle());
   gpu_memory_buffer_manager_ =
-      base::MakeUnique<viz::ServerGpuMemoryBufferManager>(gpu_service_.get(),
-                                                          next_client_id_++);
+      base::MakeUnique<viz::ServerGpuMemoryBufferManager>(
+          gpu_service_.get(), next_client_id_++,
+          base::SequencedTaskRunnerHandle::Get());
 }
 
 DefaultGpuHost::~DefaultGpuHost() {}
