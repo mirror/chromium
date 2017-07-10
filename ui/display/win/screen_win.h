@@ -111,6 +111,8 @@ class DISPLAY_EXPORT ScreenWin : public Screen,
   // you are targeting.
   static float GetSystemScaleFactor();
 
+  static void OnGPUInfoChanged(bool hdr);
+
   // Returns the HWND associated with the NativeView.
   virtual HWND GetHWNDFromNativeView(gfx::NativeView view) const;
 
@@ -180,6 +182,8 @@ class DISPLAY_EXPORT ScreenWin : public Screen,
 
   ScreenWinDisplay GetScreenWinDisplay(const MONITORINFOEX& monitor_info) const;
 
+  void SetHDR(bool hdr);
+
   // Returns the result of calling |getter| with |value| on the global
   // ScreenWin if it exists, otherwise return the default ScreenWinDisplay.
   template <typename Getter, typename GetterType>
@@ -187,6 +191,7 @@ class DISPLAY_EXPORT ScreenWin : public Screen,
                                                  GetterType value);
 
   void RecordDisplayScaleFactors() const;
+  std::vector<DisplayInfo> GetDisplayInfosFromSystem();
 
   // Helper implementing the DisplayObserver handling.
   DisplayChangeNotifier change_notifier_;
@@ -202,6 +207,8 @@ class DISPLAY_EXPORT ScreenWin : public Screen,
 
   // A helper to read color profiles from the filesystem.
   std::unique_ptr<ColorProfileReader> color_profile_reader_;
+
+  bool hdr_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(ScreenWin);
 };

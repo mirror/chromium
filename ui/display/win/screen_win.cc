@@ -17,6 +17,7 @@
 #include "ui/display/display.h"
 #include "ui/display/display_layout.h"
 #include "ui/display/display_layout_builder.h"
+#include "ui/display/display_switches.h"
 #include "ui/display/win/display_info.h"
 #include "ui/display/win/dpi.h"
 #include "ui/display/win/scaling_util.h"
@@ -93,7 +94,11 @@ Display CreateDisplayFromDisplayInfo(const DisplayInfo& display_info) {
 
   // TODO(ccameron): Populate this based on this specific display.
   // http://crbug.com/735613
-  display.set_color_space(gfx::ICCProfile::FromBestMonitor().GetColorSpace());
+  if (display_info.hdr()) {
+    display.set_color_space(gfx::ColorSpace::CreateSCRGBLinear());
+  } else {
+    display.set_color_space(gfx::ICCProfile::FromBestMonitor().GetColorSpace());
+  }
 
   return display;
 }
@@ -185,15 +190,6 @@ BOOL CALLBACK EnumMonitorCallback(HMONITOR monitor,
   display_infos->push_back(DisplayInfo(MonitorInfoFromHMONITOR(monitor),
                                        GetMonitorScaleFactor(monitor)));
   return TRUE;
-}
-
-std::vector<DisplayInfo> GetDisplayInfosFromSystem() {
-  std::vector<DisplayInfo> display_infos;
-  EnumDisplayMonitors(nullptr, nullptr, EnumMonitorCallback,
-                      reinterpret_cast<LPARAM>(&display_infos));
-  DCHECK_EQ(static_cast<size_t>(::GetSystemMetrics(SM_CMONITORS)),
-            display_infos.size());
-  return display_infos;
 }
 
 // Returns a point in |to_origin|'s coordinates and position scaled by
@@ -365,6 +361,40 @@ float ScreenWin::GetScaleFactorForHWND(HWND hwnd) {
 // static
 float ScreenWin::GetSystemScaleFactor() {
   return GetUnforcedDeviceScaleFactor();
+}
+
+// static
+void ScreenWin::OnGPUInfoChanged(bool hdr) {
+  if (!g_screen_win_instance)
+    return;
+  if (!base::FeatureList::IsEnabled(features::kAutoEnableHDR))
+    return;
+  g_screen_win_instance->SetHDR(hdr);
+}
+
+std::vector<DisplayInfo> ScreenWin::GetDisplayInfosFromSystem() {
+  std::vector<DisplayInfo> display_infos;
+  EnumDisplayMonitors(nullptr, nullptr, EnumMonitorCallback,
+                      reinterpret_cast<LPARAM>(&display_infos));
+  DCHECK_EQ(static_cast<size_t>(::GetSystemMetrics(SM_CMONITORS)),
+            display_infos.size());
+  // If "HDR and advanced color" is active in windows, we make all
+  // monitors HDR monitors and let windows sort out which ones can
+  // and cannot show HDR.
+  if (hdr_) {
+    for (size_t i = 0; i < display_infos.size(); i++)
+      display_infos[i].set_hdr(true);
+  }
+  return display_infos;
+}
+
+void ScreenWin::SetHDR(bool hdr) {
+  if (hdr != hdr_) {
+    hdr_ = hdr;
+    std::vector<Display> old_displays = std::move(displays_);
+    UpdateFromDisplayInfos(GetDisplayInfosFromSystem());
+    change_notifier_.NotifyDisplaysChanged(old_displays, displays_);
+  }
 }
 
 HWND ScreenWin::GetHWNDFromNativeView(gfx::NativeView window) const {
