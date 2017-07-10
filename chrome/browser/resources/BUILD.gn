@@ -109,6 +109,7 @@ if (!is_android) {
   grit("settings_resources") {
     if (use_vulcanize) {
       source = "settings/settings_resources_vulcanized.grd"
+      source_is_generated = true
       deps = [
         "//chrome/browser/resources/settings:build",
       ]

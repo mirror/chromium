@@ -280,6 +280,7 @@ grit("generate_aw_strings") {
 
 grit("generate_webui_resources") {
   source = "../ui/webui/resources/webui_resources.grd"
+  source_is_generated = true
 
   # webui/resources has way too many resources. The whitelist is trim this down
   # to a reasonable size
