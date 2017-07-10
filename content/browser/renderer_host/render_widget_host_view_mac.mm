@@ -2776,7 +2776,7 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
   if (!renderWidgetHostView_->render_widget_host_)
     return NO;
 
-  renderWidgetHostView_->render_widget_host_->GotFocus();
+  renderWidgetHostView_->render_widget_host_->Focus();
   renderWidgetHostView_->SetTextInputActive(true);
 
   // Cancel any onging composition text which was left before we lost focus.

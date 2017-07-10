@@ -1750,7 +1750,7 @@ void RenderWidgetHostViewAura::OnWindowFocused(aura::Window* gained_focus,
     if (host_->ignore_input_events())
       return;
 
-    host_->GotFocus();
+    host_->Focus();
     host_->SetActive(true);
 
     ui::InputMethod* input_method = GetInputMethod();
