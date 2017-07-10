@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f4b63dd_e2cd35db",
+        "filename": "chrome/browser/renderer_context_menu/render_view_context_menu.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1696,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-10T17:52:43Z",
+      "side": 1,
+      "message": "perhaps you can re-order this to be before OPENLINKNEWWINDOW and fall through in the OTR case so that you don\u0027t have to duplicate this long and complicated function call.",
+      "range": {
+        "startLine": 1696,
+        "startChar": 9,
+        "endLine": 1696,
+        "endChar": 44
+      },
+      "revId": "243b582f9ef36d3ade691cfb34304448d51b0bb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
