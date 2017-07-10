@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7af117c_b27ec6fe",
+        "filename": "cc/tiles/gpu_image_decode_cache.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1257,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-10T21:10:17Z",
+      "side": 1,
+      "message": "Can you add a TODO here for a follow-up investigation to see why this might be nullptr? Also, could you file a bug to that effect and reference it in the todo?",
+      "revId": "ef873c05fabd82782a15313f8354a0820f810dd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
