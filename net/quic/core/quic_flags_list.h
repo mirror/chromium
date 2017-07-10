@@ -198,3 +198,9 @@ QUIC_FLAG(bool,
 
 // If true, disables support for QUIC version 36.
 QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_disable_version_36, false)
+
+// If true, disables support for the packets-based QUIC congestion control
+// algorithms.
+QUIC_FLAG(bool,
+          FLAGS_quic_reloadable_flag_quic_disable_packets_based_cc,
+          false);
