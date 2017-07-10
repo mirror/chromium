@@ -65,6 +65,14 @@ struct PPP_Pdf_1_1 {
       PP_PdfPrintPresetOptions_Dev* options);
 
   void (*EnableAccessibility)(PP_Instance instance);
+
+  void (*SetSelectionLeftCoordinates)(PP_Instance instance,
+                                      struct PP_FloatPoint pt);
+  void (*SetSelectionRightCoordinates)(PP_Instance instance,
+                                       struct PP_FloatPoint pt);
+  void (*SetSelectionCoordinates)(PP_Instance instance,
+                                  struct PP_FloatPoint left,
+                                  struct PP_FloatPoint right);
 };
 
 typedef PPP_Pdf_1_1 PPP_Pdf;

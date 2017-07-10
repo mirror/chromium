@@ -116,6 +116,11 @@ class PDFiumEngine : public PDFEngine,
   void OnDocumentFailed() override;
   void OnDocumentComplete() override;
 
+  void SetSelectionLeftCoordinates(const pp::FloatPoint& point) override;
+  void SetSelectionRightCoordinates(const pp::FloatPoint& point) override;
+  void SetSelectionCoordinates(const pp::FloatPoint& left,
+                               const pp::FloatPoint& right) override;
+
   void UnsupportedFeature(int type);
   void FontSubstituted();
 

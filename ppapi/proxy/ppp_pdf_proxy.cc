@@ -41,11 +41,36 @@ void EnableAccessibility(PP_Instance instance) {
       new PpapiMsg_PPPPdf_EnableAccessibility(API_ID_PPP_PDF, instance));
 }
 
+void SetSelectionLeftCoordinates(PP_Instance instance,
+                                 struct PP_FloatPoint point) {
+  HostDispatcher::GetForInstance(instance)->Send(
+      new PpapiMsg_PPPPdf_SetSelectionLeftCoordinates(API_ID_PPP_PDF, instance,
+                                                      point));
+}
+
+void SetSelectionRightCoordinates(PP_Instance instance,
+                                  struct PP_FloatPoint point) {
+  HostDispatcher::GetForInstance(instance)->Send(
+      new PpapiMsg_PPPPdf_SetSelectionRightCoordinates(API_ID_PPP_PDF, instance,
+                                                       point));
+}
+
+void SetSelectionCoordinates(PP_Instance instance,
+                             struct PP_FloatPoint left,
+                             struct PP_FloatPoint right) {
+  HostDispatcher::GetForInstance(instance)->Send(
+      new PpapiMsg_PPPPdf_SetSelectionCoordinates(API_ID_PPP_PDF, instance,
+                                                  left, right));
+}
+
 const PPP_Pdf ppp_pdf_interface = {
-  &GetLinkAtPosition,
-  &Transform,
-  &GetPrintPresetOptionsFromDocument,
-  &EnableAccessibility,
+    &GetLinkAtPosition,
+    &Transform,
+    &GetPrintPresetOptionsFromDocument,
+    &EnableAccessibility,
+    &SetSelectionLeftCoordinates,
+    &SetSelectionRightCoordinates,
+    &SetSelectionCoordinates,
 };
 #else
 // The NaCl plugin doesn't need the host side interface - stub it out.
@@ -82,6 +107,12 @@ bool PPP_Pdf_Proxy::OnMessageReceived(const IPC::Message& msg) {
                         OnPluginMsgPrintPresetOptions)
     IPC_MESSAGE_HANDLER(PpapiMsg_PPPPdf_EnableAccessibility,
                         OnPluginMsgEnableAccessibility)
+    IPC_MESSAGE_HANDLER(PpapiMsg_PPPPdf_SetSelectionLeftCoordinates,
+                        OnPluginMsgSetSelectionLeftCoordinates)
+    IPC_MESSAGE_HANDLER(PpapiMsg_PPPPdf_SetSelectionRightCoordinates,
+                        OnPluginMsgSetSelectionRightCoordinates)
+    IPC_MESSAGE_HANDLER(PpapiMsg_PPPPdf_SetSelectionCoordinates,
+                        OnPluginMsgSetSelectionCoordinates)
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
   return handled;
@@ -108,6 +139,27 @@ void PPP_Pdf_Proxy::OnPluginMsgPrintPresetOptions(
 void PPP_Pdf_Proxy::OnPluginMsgEnableAccessibility(PP_Instance instance) {
   if (ppp_pdf_)
     CallWhileUnlocked(ppp_pdf_->EnableAccessibility, instance);
+}
+
+void PPP_Pdf_Proxy::OnPluginMsgSetSelectionLeftCoordinates(
+    PP_Instance instance,
+    PP_FloatPoint point) {
+  if (ppp_pdf_)
+    CallWhileUnlocked(ppp_pdf_->SetSelectionLeftCoordinates, instance, point);
+}
+
+void PPP_Pdf_Proxy::OnPluginMsgSetSelectionRightCoordinates(
+    PP_Instance instance,
+    PP_FloatPoint point) {
+  if (ppp_pdf_)
+    CallWhileUnlocked(ppp_pdf_->SetSelectionRightCoordinates, instance, point);
+}
+
+void PPP_Pdf_Proxy::OnPluginMsgSetSelectionCoordinates(PP_Instance instance,
+                                                       PP_FloatPoint left,
+                                                       PP_FloatPoint right) {
+  if (ppp_pdf_)
+    CallWhileUnlocked(ppp_pdf_->SetSelectionCoordinates, instance, left, right);
 }
 
 }  // namespace proxy

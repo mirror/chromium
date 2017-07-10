@@ -416,6 +416,10 @@ class CONTENT_EXPORT PepperPluginInstanceImpl
   void SetLinkUnderCursor(const std::string& url) override;
   void SetTextInputType(ui::TextInputType type) override;
   void PostMessageToJavaScript(PP_Var message) override;
+  void SetSelectionLeftCoordinates(const gfx::PointF& point) override;
+  void SetSelectionRightCoordinates(const gfx::PointF& point) override;
+  void SetSelectionCoordinates(const gfx::PointF& left,
+                               const gfx::PointF& right) override;
 
   // PPB_Instance_API implementation.
   PP_Bool BindGraphics(PP_Instance instance, PP_Resource device) override;

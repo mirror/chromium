@@ -1465,6 +1465,44 @@ base::string16 PepperPluginInstanceImpl::GetLinkAtPosition(
   return link;
 }
 
+void PepperPluginInstanceImpl::SetSelectionLeftCoordinates(
+    const gfx::PointF& point) {
+  if (!LoadPdfInterface())
+    return;
+
+  struct PP_FloatPoint p;
+  p.x = point.x();
+  p.y = point.y();
+  plugin_pdf_interface_->SetSelectionLeftCoordinates(pp_instance(), p);
+}
+
+void PepperPluginInstanceImpl::SetSelectionRightCoordinates(
+    const gfx::PointF& point) {
+  if (!LoadPdfInterface())
+    return;
+
+  struct PP_FloatPoint p;
+  p.x = point.x();
+  p.y = point.y();
+  plugin_pdf_interface_->SetSelectionRightCoordinates(pp_instance(), p);
+}
+
+void PepperPluginInstanceImpl::SetSelectionCoordinates(
+    const gfx::PointF& left,
+    const gfx::PointF& right) {
+  if (!LoadPdfInterface())
+    return;
+
+  struct PP_FloatPoint p_l;
+  p_l.x = left.x();
+  p_l.y = left.y();
+
+  struct PP_FloatPoint p_r;
+  p_r.x = right.x();
+  p_r.y = right.y();
+  plugin_pdf_interface_->SetSelectionCoordinates(pp_instance(), p_l, p_r);
+}
+
 void PepperPluginInstanceImpl::RequestSurroundingText(
     size_t desired_number_of_characters) {
   // Keep a reference on the stack. See NOTE above.
