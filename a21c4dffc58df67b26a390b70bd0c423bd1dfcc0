@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7195c70c_f2e96742",
+        "filename": "chrome/installer/zucchini/crc32.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-10T20:12:54Z",
+      "side": 1,
+      "message": "I found lzma in third_party/lzma_sdk/7zCrc.c and linked it, but you might still hate yourself reading the code.",
+      "parentUuid": "482eead0_a6c391d8",
+      "revId": "a21c4dffc58df67b26a390b70bd0c423bd1dfcc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3ac15bf6_f370e968",
         "filename": "chrome/installer/zucchini/crc32.h",
         "patchSetId": 3
@@ -30,6 +48,47 @@
       "writtenOn": "2017-07-07T19:03:17Z",
       "side": 1,
       "message": "wouldn\u0027t this make more sense with a (uint8_t* first, size_t size) interface?",
+      "revId": "a21c4dffc58df67b26a390b70bd0c423bd1dfcc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b7dc9f8_7cdc81dd",
+        "filename": "chrome/installer/zucchini/crc32.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-10T20:12:54Z",
+      "side": 1,
+      "message": "I like [first, last) semantic, which follows stl algorithms interface. It can be used as; \nCalculateCrc32(buffer.begin(), buffer.end())",
+      "parentUuid": "3ac15bf6_f370e968",
+      "revId": "a21c4dffc58df67b26a390b70bd0c423bd1dfcc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8adb82d_9eb04358",
+        "filename": "chrome/installer/zucchini/crc32_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-10T20:12:54Z",
+      "side": 1,
+      "message": "Crc32Test",
+      "range": {
+        "startLine": 18,
+        "startChar": 5,
+        "endLine": 18,
+        "endChar": 10
+      },
       "revId": "a21c4dffc58df67b26a390b70bd0c423bd1dfcc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
