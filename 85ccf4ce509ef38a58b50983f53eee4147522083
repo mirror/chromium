@@ -22,6 +22,30 @@
       "revId": "85ccf4ce509ef38a58b50983f53eee4147522083",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64d5d357_2713f26f",
+        "filename": "android_webview/browser/aw_metrics_service_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-07-10T20:16:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "090d911f_288fe560",
+      "range": {
+        "startLine": 47,
+        "startChar": 12,
+        "endLine": 47,
+        "endChar": 28
+      },
+      "revId": "85ccf4ce509ef38a58b50983f53eee4147522083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
