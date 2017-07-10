@@ -124,7 +124,8 @@ base::string16 AutofillPaymentInstrument::GetSublabel() const {
 
 void AutofillPaymentInstrument::OnFullCardRequestSucceeded(
     const autofill::CreditCard& card,
-    const base::string16& cvc) {
+    const base::string16& cvc,
+    const base::TimeTicks& form_parsed_timestamp) {
   DCHECK(delegate_);
   credit_card_ = card;
   cvc_ = cvc;

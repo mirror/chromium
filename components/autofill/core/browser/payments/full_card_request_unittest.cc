@@ -30,8 +30,10 @@ using testing::_;
 class MockResultDelegate : public FullCardRequest::ResultDelegate,
                            public base::SupportsWeakPtr<MockResultDelegate> {
  public:
-  MOCK_METHOD2(OnFullCardRequestSucceeded,
-               void(const CreditCard&, const base::string16&));
+  MOCK_METHOD3(OnFullCardRequestSucceeded,
+               void(const CreditCard&,
+                    const base::string16&,
+                    const base::TimeTicks&));
   MOCK_METHOD0(OnFullCardRequestFailed, void());
 };
 
@@ -140,7 +142,7 @@ TEST_F(FullCardRequestTest, GetFullCardPanAndCvcForMaskedServerCard) {
   EXPECT_CALL(*result_delegate(),
               OnFullCardRequestSucceeded(
                   CardMatches(CreditCard::FULL_SERVER_CARD, "4111"),
-                  base::ASCIIToUTF16("123")));
+                  base::ASCIIToUTF16("123"), base::TimeTicks()));
   EXPECT_CALL(*ui_delegate(), ShowUnmaskPrompt(_, _, _));
   EXPECT_CALL(*ui_delegate(),
               OnUnmaskVerificationResult(AutofillClient::SUCCESS));
@@ -161,7 +163,7 @@ TEST_F(FullCardRequestTest, GetFullCardPanAndCvcForLocalCard) {
   EXPECT_CALL(
       *result_delegate(),
       OnFullCardRequestSucceeded(CardMatches(CreditCard::LOCAL_CARD, "4111"),
-                                 base::ASCIIToUTF16("123")));
+                                 base::ASCIIToUTF16("123"), base::TimeTicks()));
   EXPECT_CALL(*ui_delegate(), ShowUnmaskPrompt(_, _, _));
   EXPECT_CALL(*ui_delegate(),
               OnUnmaskVerificationResult(AutofillClient::SUCCESS));
@@ -182,7 +184,7 @@ TEST_F(FullCardRequestTest, GetFullCardPanAndCvcForFullServerCard) {
   EXPECT_CALL(*result_delegate(),
               OnFullCardRequestSucceeded(
                   CardMatches(CreditCard::FULL_SERVER_CARD, "4111"),
-                  base::ASCIIToUTF16("123")));
+                  base::ASCIIToUTF16("123"), base::TimeTicks()));
   EXPECT_CALL(*ui_delegate(), ShowUnmaskPrompt(_, _, _));
   EXPECT_CALL(*ui_delegate(),
               OnUnmaskVerificationResult(AutofillClient::SUCCESS));
@@ -203,10 +205,11 @@ TEST_F(FullCardRequestTest, GetFullCardPanAndCvcForFullServerCard) {
 // status.
 TEST_F(FullCardRequestTest,
        GetFullCardPanAndCvcForFullServerCardInExpiredStatus) {
-  EXPECT_CALL(*result_delegate(), OnFullCardRequestSucceeded(
-                                      CardMatches(CreditCard::FULL_SERVER_CARD,
-                                                  "4111", "12", "2051"),
-                                      base::ASCIIToUTF16("123")));
+  EXPECT_CALL(
+      *result_delegate(),
+      OnFullCardRequestSucceeded(
+          CardMatches(CreditCard::FULL_SERVER_CARD, "4111", "12", "2051"),
+          base::ASCIIToUTF16("123"), base::TimeTicks()));
   EXPECT_CALL(*ui_delegate(), ShowUnmaskPrompt(_, _, _));
   EXPECT_CALL(*personal_data(), UpdateServerCreditCard(_)).Times(0);
   EXPECT_CALL(*ui_delegate(),
@@ -231,10 +234,11 @@ TEST_F(FullCardRequestTest,
 // Verify getting the CVC for an unmasked server card with OK status, but
 // expiration date in the past.
 TEST_F(FullCardRequestTest, GetFullCardPanAndCvcForExpiredFullServerCard) {
-  EXPECT_CALL(*result_delegate(), OnFullCardRequestSucceeded(
-                                      CardMatches(CreditCard::FULL_SERVER_CARD,
-                                                  "4111", "12", "2051"),
-                                      base::ASCIIToUTF16("123")));
+  EXPECT_CALL(
+      *result_delegate(),
+      OnFullCardRequestSucceeded(
+          CardMatches(CreditCard::FULL_SERVER_CARD, "4111", "12", "2051"),
+          base::ASCIIToUTF16("123"), base::TimeTicks()));
   EXPECT_CALL(*ui_delegate(), ShowUnmaskPrompt(_, _, _));
   EXPECT_CALL(*personal_data(), UpdateServerCreditCard(_)).Times(0);
   EXPECT_CALL(*ui_delegate(),
@@ -281,7 +285,7 @@ TEST_F(FullCardRequestTest, SecondRequestOkAfterFirstFinished) {
   EXPECT_CALL(
       *result_delegate(),
       OnFullCardRequestSucceeded(CardMatches(CreditCard::LOCAL_CARD, "4111"),
-                                 base::ASCIIToUTF16("123")))
+                                 base::ASCIIToUTF16("123"), base::TimeTicks()))
       .Times(2);
   EXPECT_CALL(*ui_delegate(), ShowUnmaskPrompt(_, _, _)).Times(2);
   EXPECT_CALL(*ui_delegate(),
@@ -383,7 +387,7 @@ TEST_F(FullCardRequestTest, TryAgainFailureRetry) {
   EXPECT_CALL(*result_delegate(),
               OnFullCardRequestSucceeded(
                   CardMatches(CreditCard::FULL_SERVER_CARD, "4111"),
-                  base::ASCIIToUTF16("123")));
+                  base::ASCIIToUTF16("123"), base::TimeTicks()));
   EXPECT_CALL(*ui_delegate(), ShowUnmaskPrompt(_, _, _));
   EXPECT_CALL(*ui_delegate(),
               OnUnmaskVerificationResult(AutofillClient::TRY_AGAIN_FAILURE));
@@ -406,10 +410,11 @@ TEST_F(FullCardRequestTest, TryAgainFailureRetry) {
 
 // Verify updating expiration date for a masked server card.
 TEST_F(FullCardRequestTest, UpdateExpDateForMaskedServerCard) {
-  EXPECT_CALL(*result_delegate(), OnFullCardRequestSucceeded(
-                                      CardMatches(CreditCard::FULL_SERVER_CARD,
-                                                  "4111", "12", "2050"),
-                                      base::ASCIIToUTF16("123")));
+  EXPECT_CALL(
+      *result_delegate(),
+      OnFullCardRequestSucceeded(
+          CardMatches(CreditCard::FULL_SERVER_CARD, "4111", "12", "2050"),
+          base::ASCIIToUTF16("123"), base::TimeTicks()));
   EXPECT_CALL(*ui_delegate(), ShowUnmaskPrompt(_, _, _));
   EXPECT_CALL(*ui_delegate(),
               OnUnmaskVerificationResult(AutofillClient::SUCCESS));
@@ -429,10 +434,11 @@ TEST_F(FullCardRequestTest, UpdateExpDateForMaskedServerCard) {
 
 // Verify updating expiration date for an unmasked server card.
 TEST_F(FullCardRequestTest, UpdateExpDateForFullServerCard) {
-  EXPECT_CALL(*result_delegate(), OnFullCardRequestSucceeded(
-                                      CardMatches(CreditCard::FULL_SERVER_CARD,
-                                                  "4111", "12", "2050"),
-                                      base::ASCIIToUTF16("123")));
+  EXPECT_CALL(
+      *result_delegate(),
+      OnFullCardRequestSucceeded(
+          CardMatches(CreditCard::FULL_SERVER_CARD, "4111", "12", "2050"),
+          base::ASCIIToUTF16("123"), base::TimeTicks()));
   EXPECT_CALL(*ui_delegate(), ShowUnmaskPrompt(_, _, _));
   EXPECT_CALL(*ui_delegate(),
               OnUnmaskVerificationResult(AutofillClient::SUCCESS));
@@ -457,7 +463,7 @@ TEST_F(FullCardRequestTest, UpdateExpDateForLocalCard) {
   EXPECT_CALL(*result_delegate(),
               OnFullCardRequestSucceeded(
                   CardMatches(CreditCard::LOCAL_CARD, "4111", "12", "2051"),
-                  base::ASCIIToUTF16("123")));
+                  base::ASCIIToUTF16("123"), base::TimeTicks()));
   EXPECT_CALL(*ui_delegate(), ShowUnmaskPrompt(_, _, _));
   EXPECT_CALL(*personal_data(),
               UpdateCreditCard(
@@ -484,10 +490,11 @@ TEST_F(FullCardRequestTest, UpdateExpDateForLocalCard) {
 
 // Verify saving full PAN on disk.
 TEST_F(FullCardRequestTest, SaveRealPan) {
-  EXPECT_CALL(*result_delegate(), OnFullCardRequestSucceeded(
-                                      CardMatches(CreditCard::FULL_SERVER_CARD,
-                                                  "4111", "12", "2050"),
-                                      base::ASCIIToUTF16("123")));
+  EXPECT_CALL(
+      *result_delegate(),
+      OnFullCardRequestSucceeded(
+          CardMatches(CreditCard::FULL_SERVER_CARD, "4111", "12", "2050"),
+          base::ASCIIToUTF16("123"), base::TimeTicks()));
   EXPECT_CALL(*ui_delegate(), ShowUnmaskPrompt(_, _, _));
   EXPECT_CALL(*personal_data(),
               UpdateServerCreditCard(CardMatches(CreditCard::FULL_SERVER_CARD,
@@ -514,7 +521,7 @@ TEST_F(FullCardRequestTest, UnmaskForPaymentRequest) {
   EXPECT_CALL(*result_delegate(),
               OnFullCardRequestSucceeded(
                   CardMatches(CreditCard::FULL_SERVER_CARD, "4111"),
-                  base::ASCIIToUTF16("123")));
+                  base::ASCIIToUTF16("123"), base::TimeTicks()));
   EXPECT_CALL(*ui_delegate(), ShowUnmaskPrompt(_, _, _));
   EXPECT_CALL(*ui_delegate(),
               OnUnmaskVerificationResult(AutofillClient::SUCCESS));
@@ -536,7 +543,7 @@ TEST_F(FullCardRequestTest, IsGettingFullCardForMaskedServerCard) {
   EXPECT_CALL(*result_delegate(),
               OnFullCardRequestSucceeded(
                   CardMatches(CreditCard::FULL_SERVER_CARD, "4111"),
-                  base::ASCIIToUTF16("123")));
+                  base::ASCIIToUTF16("123"), base::TimeTicks()));
   EXPECT_CALL(*ui_delegate(), ShowUnmaskPrompt(_, _, _));
   EXPECT_CALL(*ui_delegate(),
               OnUnmaskVerificationResult(AutofillClient::SUCCESS));
@@ -571,7 +578,7 @@ TEST_F(FullCardRequestTest, IsGettingFullCardForLocalCard) {
   EXPECT_CALL(
       *result_delegate(),
       OnFullCardRequestSucceeded(CardMatches(CreditCard::LOCAL_CARD, "4111"),
-                                 base::ASCIIToUTF16("123")));
+                                 base::ASCIIToUTF16("123"), base::TimeTicks()));
   EXPECT_CALL(*ui_delegate(), ShowUnmaskPrompt(_, _, _));
   EXPECT_CALL(*ui_delegate(),
               OnUnmaskVerificationResult(AutofillClient::SUCCESS));
