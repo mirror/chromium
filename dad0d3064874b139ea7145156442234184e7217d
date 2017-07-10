@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d07874f2_47c57b59",
+        "filename": "build/config/ios/imageset.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-07-10T13:13:34Z",
+      "side": 1,
+      "message": "The images you converted last week should be safe to use as loose images, but that\u0027s not guaranteed for previously-converted images, right?  Is there any chance that we\u0027re doing something weird in one of those imagesets?",
+      "revId": "dad0d3064874b139ea7145156442234184e7217d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da438c26_c3d37299",
+        "filename": "build/config/ios/imageset.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-07-10T13:13:34Z",
+      "side": 1,
+      "message": "Should these two variables get more generic names, since in one of the cases we\u0027re not actually using xcassets?",
+      "revId": "dad0d3064874b139ea7145156442234184e7217d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf062e7d_6dbfc3da",
+        "filename": "build/config/ios/imageset.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-07-10T13:13:34Z",
+      "side": 1,
+      "message": "Which GN file actually invokes actool?  I don\u0027t see that in here.",
+      "revId": "dad0d3064874b139ea7145156442234184e7217d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
