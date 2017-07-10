@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "3a589449_bcb845c3",
+        "filename": "chrome/browser/chromeos/printing/printer_info.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-10T22:10:05Z",
+      "side": 1,
+      "message": "Update comments?",
+      "revId": "5aa701203362376573b192c88fb5e490dcc3d34c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "92a8d774_94b5b09e",
         "filename": "chrome/browser/chromeos/printing/usb_printer_util.cc",
         "patchSetId": 1
@@ -48,6 +65,52 @@
       "writtenOn": "2017-07-10T22:04:35Z",
       "side": 1,
       "message": "Here too. USB may need to be translated and the order may change.",
+      "revId": "5aa701203362376573b192c88fb5e490dcc3d34c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0f18d47_2ee4dfa7",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_printers_browser_proxy.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-10T22:10:05Z",
+      "side": 1,
+      "message": "For whoever is a JS style expert - should this be makeAndModel?",
+      "range": {
+        "startLine": 57,
+        "startChar": 5,
+        "endLine": 57,
+        "endChar": 19
+      },
+      "revId": "5aa701203362376573b192c88fb5e490dcc3d34c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27ffc1b3_73125f76",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-10T22:10:05Z",
+      "side": 1,
+      "message": "Missing a period.",
+      "range": {
+        "startLine": 63,
+        "startChar": 5,
+        "endLine": 63,
+        "endChar": 12
+      },
       "revId": "5aa701203362376573b192c88fb5e490dcc3d34c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
