@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38d15242_bbdd3eb4",
+        "filename": "chrome/browser/ui/exclusive_access/exclusive_access_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-07-10T14:19:27Z",
+      "side": 1,
+      "message": "This is confusing having two methods named the same. What is the desire of these methods?\n\nFrom looking at the callers it is called when you transition states. So if the state is just being updated will it destroy the previous callback listener because you end up updating it to a null ptr callback?\n\nWould it make sense to leave an update but add a AddObserver or something like that explicitly?",
+      "revId": "9844fe27e15a01010690b1569ed9313434e6b12f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
