@@ -176,6 +176,7 @@ Bluetooth och Plats måste vara aktiverade om du vill använda Physical Web-tjä
 <translation id="2762000892062317888">nyss</translation>
 <translation id="2777555524387840389"><ph name="SECONDS" /> sekunder kvar</translation>
 <translation id="2781151931089541271">1 sekund kvar</translation>
+<translation id="2810645512293415242">Förenklad sida visades för att spara data och minska inläsningstiden.</translation>
 <translation id="2836148919159985482">Tryck på bakåtknappen för att lämna helskärmsläget.</translation>
 <translation id="2842985007712546952">Överordnad mapp</translation>
 <translation id="2870560284913253234">Webbplats</translation>
@@ -273,7 +274,6 @@ Om du vill ändra söktermen trycker du länge för att välja. Om du vill förf
 <translation id="3744111561329211289">Synkronisera i bakgrunden</translation>
 <translation id="3773755127849930740"><ph name="BEGIN_LINK" />Aktivera Bluetooth<ph name="END_LINK" /> om du vill tillåta koppling</translation>
 <translation id="3789841737615482174">Installera</translation>
-<translation id="380076759404194828">{NUM_SELECTED,plural, =1{1 objekt har valts}other{# objekt har valts}}</translation>
 <translation id="3810838688059735925">Video</translation>
 <translation id="3810973564298564668">Hantera</translation>
 <translation id="3819178904835489326"><ph name="NUMBER_OF_DOWNLOADS" /> nedladdningar har raderats</translation>
@@ -452,6 +452,7 @@ Om du vill ändra söktermen trycker du länge för att välja. Om du vill förf
 <translation id="5568069709869097550">Kan inte logga in</translation>
 <translation id="557283862590186398">Du behöver ge Chrome behörighet att använda mikrofonen på den här webbplatsen.</translation>
 <translation id="5578795271662203820">Sök på <ph name="SEARCH_ENGINE" /> efter denna bild</translation>
+<translation id="5585019845078534178">Kort</translation>
 <translation id="5595485650161345191">Redigera adress</translation>
 <translation id="5596627076506792578">Fler alternativ</translation>
 <translation id="5620928963363755975">Du hittar filerna och sidorna i Nedladdningar via knappen Fler alternativ</translation>
@@ -558,6 +559,7 @@ Vissa webbplatser kan till exempel svara på begäran genom att visa annonser so
 <translation id="654446541061731451">Välj en flik som du vill överföra</translation>
 <translation id="6545017243486555795">Rensa all data</translation>
 <translation id="6550675742724504774">Alternativ</translation>
+<translation id="6556716549745717622">Blockera om påträngande annonser brukar visas på webbplatsen (rekommenderas)</translation>
 <translation id="6560414384669816528">Sök med Sogou</translation>
 <translation id="6566259936974865419">Du har sparat <ph name="GIGABYTES" /> GB med Chrome</translation>
 <translation id="656628257199996201">Översätt alltid <ph name="SOURCE_LANGUAGE" /></translation>
@@ -592,6 +594,7 @@ Vissa webbplatser kan till exempel svara på begäran genom att visa annonser so
 <translation id="6831043979455480757">Översätt</translation>
 <translation id="6846298663435243399">Läser in…</translation>
 <translation id="6850830437481525139"><ph name="TAB_COUNT" /> flikar har stängts</translation>
+<translation id="6856477143496886355">Kort och adresser som används med Google Payments</translation>
 <translation id="6864459304226931083">Ladda ned bild</translation>
 <translation id="6865313869410766144">Formuläruppgifter för Autofyll</translation>
 <translation id="6868088497967843822">Logga in om du vill att bokmärken, historik, lösenord och andra inställningar ska vara tillgängliga på alla dina enheter.</translation>

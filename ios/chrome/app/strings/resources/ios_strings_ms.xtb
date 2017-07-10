@@ -37,6 +37,7 @@
 <translation id="1540800554400757039">Alamat 1</translation>
 <translation id="1545749641540134597">Imbas Kod QR</translation>
 <translation id="1580783302095112590">Mel dihantar.</translation>
+<translation id="1612730193129642006">Tunjukkan Grid Tab</translation>
 <translation id="1646446875146297738">Mendayakan ‘Jangan Kesan’ bermakna permintaan akan dimasukkan dengan trafik penyemakan imbas anda. Sebarang kesan bergantung pada sama ada tapak web menyambut permintaan tersebut dan cara permintaan tersebut ditafsirkan.
 
 Contohnya, sesetengah tapak web mungkin menyambut permintaan ini dengan memaparkan kepada anda iklan yang tidak berdasarkan tapak web lain yang pernah anda lawati. Sebahagian besar tapak web tetap akan mengumpul dan menggunakan data penyemakan imbas anda - contohnya, untuk meningkatkan keselamatan, untuk menyediakan kandungan, perkhidmatan, iklan dan cadangan pada tapak web mereka dan untuk menghasilkan perangkaan pelaporan. <ph name="BEGIN_LINK" />Ketahui lebih lanjut<ph name="END_LINK" /></translation>
@@ -388,6 +389,7 @@ Data anda disulitkan dengan ungkapan laluan segerak anda pada <ph name="TIME" />
 <translation id="8775144690796719618">URL tidak sah</translation>
 <translation id="8820817407110198400">Penanda buku</translation>
 <translation id="8840513115188359703">Anda tidak akan dilog keluar daripada Akaun Google anda.</translation>
+<translation id="8881801611828450202">Cari Imej Ini di <ph name="SEARCH_ENGINE" /></translation>
 <translation id="8904976895050290827">Penyegerakan Chrome</translation>
 <translation id="895541991026785598">Laporkan Isu</translation>
 <translation id="8971089644512329999">Ok, Faham</translation>
@@ -406,6 +408,7 @@ Data anda disulitkan dengan ungkapan laluan segerak anda pada <ph name="TIME" />
 <translation id="9188680907066685419">Log keluar daripada akaun terurus</translation>
 <translation id="9203116392574189331">Serah</translation>
 <translation id="9223358826628549784">Laporan ranap sistem dihantar.</translation>
+<translation id="932327136139879170">Laman Utama</translation>
 <translation id="935490618240037774">Penanda halaman, sejarah, kata laluan dan tetapan anda yang lain akan disegerakkan ke Akaun Google supaya anda dapat menggunakannya pada semua peranti anda.</translation>
 <translation id="939598580284253335">Masukkan frasa laluan</translation>
 <translation id="976982866697960176">Urus Data yang Disegerakkan...</translation>

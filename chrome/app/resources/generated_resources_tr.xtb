@@ -3394,7 +3394,6 @@ Hassas bilgileri vermediğinizden emin olun.</translation>
 <translation id="6138680304137685902">SHA-384 ile X9.62 ECDSA İmzası</translation>
 <translation id="614161640521680948">Dil:</translation>
 <translation id="6143186082490678276">Yardım Alın</translation>
-<translation id="6144697279259829572">{NUM_ITEMS,plural, =1{Bu işlem en az $1 öğeyi bu cihazdan kalıcı olarak silecektir.}other{Bu işlem en az $1 öğeyi bu cihazdan kalıcı olarak silecektir.}}</translation>
 <translation id="6144890426075165477"><ph name="PRODUCT_NAME" />, şu anda varsayılan tarayıcınız değil.</translation>
 <translation id="6146563240635539929">Videolar</translation>
 <translation id="6147020289383635445">Yazdırma önizleme başarısız oldu.</translation>
@@ -4210,7 +4209,6 @@ Bu özelliği sadece güvendiğiniz hesaplarda kullanın.</translation>
 <translation id="7388044238629873883">Neredeyse bitti!</translation>
 <translation id="7392118418926456391">Virüs taraması başarısız oldu</translation>
 <translation id="7392915005464253525">Kapatılan p&amp;encereyi yeniden aç</translation>
-<translation id="7393449708074241536">Bu işlem, bu cihazdan <ph name="TOTAL_COUNT" /> öğeyi kalıcı olarak silecektir.</translation>
 <translation id="7396845648024431313"><ph name="APP_NAME" />, sistem açıldığında başlayacak ve diğer tüm <ph name="PRODUCT_NAME" /> pencerelerini kapatsanız da arka planda çalışmaya devam edecektir.</translation>
 <translation id="7400418766976504921">URL</translation>
 <translation id="740083207982962331">Chromebox'unuz tekrar başlatılırken lütfen bekleyin...</translation>
@@ -5418,7 +5416,6 @@ Pencereler taşındıktan sonra gelen bildirimler, pencereler ve iletişim kutul
 <translation id="974555521953189084">Senkronizasyonu başlatmak için parolanızı girin</translation>
 <translation id="981121421437150478">Çevrimdışı</translation>
 <translation id="98515147261107953">Yatay</translation>
-<translation id="987267091708560486">{NUM_ITEMS,plural, =1{Bu işlem, bu cihazdan $1 öğeyi kalıcı olarak silecektir.}other{Bu işlem, bu cihazdan $1 öğeyi kalıcı olarak silecektir.}}</translation>
 <translation id="988978206646512040">Boş parolaya izin verilmez</translation>
 <translation id="992032470292211616">Uzantılar, uygulamalar ve temalar cihazınıza zarar verebilir. Devam etmek istediğinizden emin misiniz?</translation>
 <translation id="992592832486024913">ChromeVox'u (sesli geri bildirim) devre dışı bırak</translation>

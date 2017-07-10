@@ -176,6 +176,7 @@ Per poter utilizzare il Physical Web, devi attivare il Bluetooth e la geolocaliz
 <translation id="2762000892062317888">in questo istante</translation>
 <translation id="2777555524387840389"><ph name="SECONDS" /> sec rimanenti</translation>
 <translation id="2781151931089541271">1 sec rimanente</translation>
+<translation id="2810645512293415242">Pagina semplificata per risparmiare dati e caricarla più velocemente.</translation>
 <translation id="2836148919159985482">Tocca il pulsante Indietro per uscire dalla modalità a schermo intero.</translation>
 <translation id="2842985007712546952">Cartella principale</translation>
 <translation id="2870560284913253234">Sito</translation>
@@ -273,7 +274,6 @@ Per modificare il termine di ricerca, premi a lungo per selezionarlo. Per perfez
 <translation id="3744111561329211289">Sincronizzazione in background</translation>
 <translation id="3773755127849930740"><ph name="BEGIN_LINK" />Attiva il Bluetooth<ph name="END_LINK" /> per consentire l'accoppiamento</translation>
 <translation id="3789841737615482174">Installa</translation>
-<translation id="380076759404194828">{NUM_SELECTED,plural, =1{1 elemento selezionato}other{# elementi selezionati}}</translation>
 <translation id="3810838688059735925">Video</translation>
 <translation id="3810973564298564668">Gestisci</translation>
 <translation id="3819178904835489326"><ph name="NUMBER_OF_DOWNLOADS" /> download eliminati</translation>
@@ -452,6 +452,7 @@ Per modificare il termine di ricerca, premi a lungo per selezionarlo. Per perfez
 <translation id="5568069709869097550">Non riesco a effettuare l'accesso</translation>
 <translation id="557283862590186398">Per questo sito Chrome ha bisogno dell'autorizzazione ad accedere al microfono.</translation>
 <translation id="5578795271662203820">Cerca questa immagine su <ph name="SEARCH_ENGINE" /></translation>
+<translation id="5585019845078534178">Carte</translation>
 <translation id="5595485650161345191">Modifica indirizzo</translation>
 <translation id="5596627076506792578">Altre opzioni</translation>
 <translation id="5620928963363755975">Usa il pulsante Altre opzioni per trovare i tuoi file e le tue pagine nella cartella Download</translation>
@@ -558,6 +559,7 @@ Ad esempio, alcuni siti web potrebbero rispondere alla richiesta mostrando annun
 <translation id="654446541061731451">Seleziona una scheda da trasmettere</translation>
 <translation id="6545017243486555795">Cancella tutti i dati</translation>
 <translation id="6550675742724504774">Opzioni</translation>
+<translation id="6556716549745717622">Blocca se il sito tende a mostrare annunci invasivi (opzione consigliata)</translation>
 <translation id="6560414384669816528">Ricerche con Sogou</translation>
 <translation id="6566259936974865419">Chrome ti ha fatto risparmiare <ph name="GIGABYTES" /> GB</translation>
 <translation id="656628257199996201">Traduci sempre da <ph name="SOURCE_LANGUAGE" /></translation>
@@ -592,6 +594,7 @@ Ad esempio, alcuni siti web potrebbero rispondere alla richiesta mostrando annun
 <translation id="6831043979455480757">Traduci</translation>
 <translation id="6846298663435243399">Caricamento in corso…</translation>
 <translation id="6850830437481525139"><ph name="TAB_COUNT" /> schede chiuse</translation>
+<translation id="6856477143496886355">Carte e indirizzi che utilizzano Google Payments</translation>
 <translation id="6864459304226931083">Scarica immagine</translation>
 <translation id="6865313869410766144">Dati della Compilazione automatica dei moduli</translation>
 <translation id="6868088497967843822">Accedi per visualizzare i tuoi Preferiti, la cronologia, le password e altre impostazioni su tutti i tuoi dispositivi</translation>

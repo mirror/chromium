@@ -176,6 +176,7 @@ Lai izmantotu fizisko tīmekli, ir jābūt ieslēgtam Bluetooth savienojumam un 
 <translation id="2762000892062317888">tikko</translation>
 <translation id="2777555524387840389">Atlikušas <ph name="SECONDS" /> s</translation>
 <translation id="2781151931089541271">Atlikusi 1 s</translation>
+<translation id="2810645512293415242">Lapa tika vienkāršota, lai samazinātu datu lietojumu un paātrinātu ielādi.</translation>
 <translation id="2836148919159985482">Lai izietu no pilnekrāna režīma, pieskarieties pogai Atpakaļ.</translation>
 <translation id="2842985007712546952">Vecākmape</translation>
 <translation id="2870560284913253234">Vietne</translation>
@@ -273,7 +274,6 @@ Lai pielāgotu meklēšanas vienumu, nospiediet un turiet to. Lai veiktu precīz
 <translation id="3744111561329211289">Sinhronizācija fonā</translation>
 <translation id="3773755127849930740">Lai atļautu savienošanu pārī, <ph name="BEGIN_LINK" />ieslēdziet Bluetooth<ph name="END_LINK" />.</translation>
 <translation id="3789841737615482174">Instalēt</translation>
-<translation id="380076759404194828">{NUM_SELECTED,plural, =1{Atlasīts 1 vienums}zero{Atlasīti # vienumi}one{Atlasīts # vienums}other{Atlasīti # vienumi}}</translation>
 <translation id="3810838688059735925">Video</translation>
 <translation id="3810973564298564668">Pārvaldīt</translation>
 <translation id="3819178904835489326">Izdzēsti <ph name="NUMBER_OF_DOWNLOADS" /> lejupielādētie vienumi</translation>
@@ -452,6 +452,7 @@ Lai pielāgotu meklēšanas vienumu, nospiediet un turiet to. Lai veiktu precīz
 <translation id="5568069709869097550">Nevarat pieteikties</translation>
 <translation id="557283862590186398">Pārlūkam Chrome ir nepieciešama atļauja piekļūt jūsu mikrofonam šajā vietnē.</translation>
 <translation id="5578795271662203820">Meklēt šo attēlu ar <ph name="SEARCH_ENGINE" /></translation>
+<translation id="5585019845078534178">Kartes</translation>
 <translation id="5595485650161345191">Rediģēt adresi</translation>
 <translation id="5596627076506792578">Citas opcijas</translation>
 <translation id="5620928963363755975">Atrodiet savus failus un lapas sadaļā Lejupielādes, nospiežot pogu Vairāk opciju</translation>
@@ -558,6 +559,7 @@ Piemēram, dažas vietnes, reaģējot uz šo pieprasījumu, var rādīt jums rek
 <translation id="654446541061731451">Atlasiet cilni, ko kopīgot.</translation>
 <translation id="6545017243486555795">Notīrīt visus datus</translation>
 <translation id="6550675742724504774">Opcijas</translation>
+<translation id="6556716549745717622">Bloķēt, ja vietnē parasti tiek rādītas traucējošas reklāmas (ieteicams)</translation>
 <translation id="6560414384669816528">Meklēšana, izmantojot Sogou</translation>
 <translation id="6566259936974865419">Pārlūkā Chrome esat ietaupījis <ph name="GIGABYTES" /> GB.</translation>
 <translation id="656628257199996201">Vienmēr tulkot no šādas valodas: <ph name="SOURCE_LANGUAGE" /></translation>
@@ -592,6 +594,7 @@ Piemēram, dažas vietnes, reaģējot uz šo pieprasījumu, var rādīt jums rek
 <translation id="6831043979455480757">Tulkot</translation>
 <translation id="6846298663435243399">Notiek ielāde…</translation>
 <translation id="6850830437481525139">Aizvērtas <ph name="TAB_COUNT" /> cilnes</translation>
+<translation id="6856477143496886355">Kartes un adreses no pakalpojuma Google Payments</translation>
 <translation id="6864459304226931083">Lejupielādēt attēlu</translation>
 <translation id="6865313869410766144">Automātiskās aizpildes veidlapas dati</translation>
 <translation id="6868088497967843822">Pierakstieties, lai jūsu grāmatzīmes, vēsture, paroles un citi iestatījumi būtu pieejami visās jūsu ierīcēs.</translation>

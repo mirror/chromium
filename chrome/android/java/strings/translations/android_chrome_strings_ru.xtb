@@ -176,6 +176,7 @@
 <translation id="2762000892062317888">только что</translation>
 <translation id="2777555524387840389">Осталось <ph name="SECONDS" /> сек.</translation>
 <translation id="2781151931089541271">Осталась 1 сек.</translation>
+<translation id="2810645512293415242">Страница была открыта в упрощенном виде, чтобы уменьшить объем трафика и время загрузки.</translation>
 <translation id="2836148919159985482">Чтобы выйти из полноэкранного режима, нажмите кнопку "Назад".</translation>
 <translation id="2842985007712546952">Родительская папка</translation>
 <translation id="2870560284913253234">Сайт</translation>
@@ -273,7 +274,6 @@
 <translation id="3744111561329211289">Фоновая синхронизация</translation>
 <translation id="3773755127849930740">Чтобы разрешить соединение, <ph name="BEGIN_LINK" />включите Bluetooth<ph name="END_LINK" /></translation>
 <translation id="3789841737615482174">Установить</translation>
-<translation id="380076759404194828">{NUM_SELECTED,plural, =1{Выбран 1 объект}one{Выбран # объект}few{Выбрано # объекта}many{Выбрано # объектов}other{Выбрано # объекта}}</translation>
 <translation id="3810838688059735925">Видео</translation>
 <translation id="3810973564298564668">Настроить</translation>
 <translation id="3819178904835489326">Удаленные скачивания: <ph name="NUMBER_OF_DOWNLOADS" /></translation>
@@ -452,6 +452,7 @@
 <translation id="5568069709869097550">Не удается войти</translation>
 <translation id="557283862590186398">Для этого сайта Chrome запрашивает разрешение на доступ к микрофону.</translation>
 <translation id="5578795271662203820">Найти это изображение в <ph name="SEARCH_ENGINE" /></translation>
+<translation id="5585019845078534178">Подсказки</translation>
 <translation id="5595485650161345191">Изменить адрес</translation>
 <translation id="5596627076506792578">Ещё</translation>
 <translation id="5620928963363755975">Чтобы найти скачанные файлы и веб-страницы, нажмите кнопку "Ещё" и выберите соответствующий пункт</translation>
@@ -558,6 +559,7 @@
 <translation id="654446541061731451">Выберите вкладку для передачи</translation>
 <translation id="6545017243486555795">Удалить все данные</translation>
 <translation id="6550675742724504774">Параметры</translation>
+<translation id="6556716549745717622">Блокировать, если на сайте много навязчивой рекламы (рекомендуется)</translation>
 <translation id="6560414384669816528">Поиск в Sogou</translation>
 <translation id="6566259936974865419">Благодаря Chrome вы сэкономили <ph name="GIGABYTES" /> ГБ свободного места</translation>
 <translation id="656628257199996201">Всегда переводить <ph name="SOURCE_LANGUAGE" /></translation>
@@ -592,6 +594,7 @@
 <translation id="6831043979455480757">Перевести</translation>
 <translation id="6846298663435243399">Загрузка…</translation>
 <translation id="6850830437481525139">Закрыто вкладок: <ph name="TAB_COUNT" /></translation>
+<translation id="6856477143496886355">Банковские карты и адреса из Google Payments</translation>
 <translation id="6864459304226931083">Скачать изображение</translation>
 <translation id="6865313869410766144">Данные для автозаполнения</translation>
 <translation id="6868088497967843822">Войдите в аккаунт, чтобы синхронизировать закладки, историю, пароли и другие настройки на всех устройствах.</translation>

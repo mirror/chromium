@@ -159,8 +159,10 @@ Lai atceltu tā funkcionalitāti, nospiediet Meklēt vai Shift.</translation>
 <translation id="5744083938413354016">Vilkšana pieskaroties</translation>
 <translation id="5777841717266010279">Vai apturēt ekrāna koplietošanu?</translation>
 <translation id="57838592816432529">Izslēgt skaņu</translation>
+<translation id="5860033963881614850">Izsl.</translation>
 <translation id="5895138241574237353">Restartēt</translation>
 <translation id="5901316534475909376">Shift+Esc</translation>
+<translation id="5916664084637901428">Iesl.</translation>
 <translation id="5927132638760172455">Apraide uz nezināmu saņēmēju</translation>
 <translation id="5932901536148835538">Chromebit</translation>
 <translation id="5947494881799873997">Atjaunot</translation>
@@ -170,7 +172,6 @@ Lai atceltu tā funkcionalitāti, nospiediet Meklēt vai Shift.</translation>
 <translation id="5978382165065462689">Ekrāna pārvaldības koplietošana, izmantojot attālo palīdzību.</translation>
 <translation id="5980301590375426705">Aizvērt viesa sesiju</translation>
 <translation id="6018164090099858612">Notiek iziešana no spoguļošanas režīma</translation>
-<translation id="6041154455840261787">Augsta kontrasta režīms iespējots. Vēlreiz nospiediet Meklēt+Shift+H, lai izslēgtu to.</translation>
 <translation id="6043212731627905357">Šis monitors nav saderīgs ar jūsu ierīci <ph name="DEVICE_TYPE" /> (monitors netiek atbalstīts).</translation>
 <translation id="6043994281159824495">Izrakstīties tagad</translation>
 <translation id="6047696787498798094">Pārslēdzoties uz citu lietotāju, ekrāna koplietošana tiks apturēta. Vai vēlaties turpināt?</translation>
@@ -214,6 +215,7 @@ Lai atceltu tā funkcionalitāti, nospiediet Meklēt vai Shift.</translation>
 <translation id="714034171374937760">Chromebase</translation>
 <translation id="7165278925115064263">Alt+Shift+K</translation>
 <translation id="7168224885072002358">Iepriekšējā izšķirtspēja tiks atgriezta pēc <ph name="TIMEOUT_SECONDS" /></translation>
+<translation id="7199454189089571166">Asistenta režīms</translation>
 <translation id="7209101170223508707">Ir ieslēgts BURTSLĒGS.
 Lai atceltu tā funkcionalitāti, nospiediet Alt+Meklēt vai Shift.</translation>
 <translation id="7246339268451149667">Vai iespējot atbloķēšanu, izmantojot pirksta nospiedumu?</translation>
@@ -236,7 +238,6 @@ Lai atceltu tā funkcionalitāti, nospiediet Alt+Meklēt vai Shift.</translation
 <translation id="7814236020522506259"><ph name="HOUR" /> un <ph name="MINUTE" /></translation>
 <translation id="7823564328645135659">Pēc jūsu iestatījumu sinhronizēšanas valoda ir mainīta no <ph name="FROM_LOCALE" /> uz <ph name="TO_LOCALE" />.</translation>
 <translation id="7904094684485781019">Šī konta administrators nav atļāvis vairākkārtēju pierakstīšanos.</translation>
-<translation id="7951523953736115461">Nakts režīms</translation>
 <translation id="7977927628060636163">Notiek mobilo tīklu meklēšana...</translation>
 <translation id="7982789257301363584">Tīkls</translation>
 <translation id="8000066093800657092">Nav tīkla</translation>

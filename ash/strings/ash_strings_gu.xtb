@@ -26,6 +26,7 @@
 <translation id="1677472565718498478"><ph name="TIME" /> બાકી</translation>
 <translation id="1698760176351776263">IPv6 સરનામું: <ph name="ADDRESS" /></translation>
 <translation id="1734367976349034509">આ ઉપકરણ એન્ટરપ્રાઇઝ દ્વારા સંચાલિત થાય છે</translation>
+<translation id="1746730358044914197">ઇનપુટ પદ્ધતિઓને તમારા વ્યવસ્થાપક દ્વારા ગોઠવવામાં આવી છે.</translation>
 <translation id="1747827819627189109">ઓન-સ્ક્રીન કીબોર્ડ સક્ષમ કર્યું</translation>
 <translation id="1823873187264960516">ઇથરનેટ: <ph name="ADDRESS" /></translation>
 <translation id="1850504506766569011">Wi-Fi બંધ છે.</translation>
@@ -159,8 +160,10 @@
 <translation id="5744083938413354016">ખેંચવાને ટૅપ કરો</translation>
 <translation id="5777841717266010279">સ્ક્રીન શેરિંગ રોકીએ?</translation>
 <translation id="57838592816432529">અવાજ બંધ કરો</translation>
+<translation id="5860033963881614850">બંધ</translation>
 <translation id="5895138241574237353">પુનઃપ્રારંભ કરો</translation>
 <translation id="5901316534475909376">Shift + Esc</translation>
+<translation id="5916664084637901428">ચાલુ</translation>
 <translation id="5927132638760172455">અજાણ્યાં પ્રાપ્તકર્તા પર કાસ્ટ કરી રહ્યાં છે</translation>
 <translation id="5932901536148835538">Chromebit</translation>
 <translation id="5947494881799873997">પાછા ફરો</translation>
@@ -170,7 +173,6 @@
 <translation id="5978382165065462689">દૂરસ્થ સહાય વડે તમારી સ્ક્રીનનું નિયંત્રણ શેર કરવું.</translation>
 <translation id="5980301590375426705">અતિથિથી બહાર નીકળો</translation>
 <translation id="6018164090099858612">મીરર મોડથી બહાર નીકળે છે</translation>
-<translation id="6041154455840261787">ઉચ્ચ કોન્ટ્રાસ્ટ મોડ સક્ષમ કર્યો. તેને બંધ કરવા માટે Search+Shift+H ફરી દબાવો.</translation>
 <translation id="6043212731627905357">આ મૉનિટર તમારા <ph name="DEVICE_TYPE" /> સાથે કામ કરી રહ્યું નથી (મૉનિટર સમર્થિત નથી).</translation>
 <translation id="6043994281159824495">હવે સાઇન આઉટ કરો</translation>
 <translation id="6047696787498798094">જ્યારે તમે બીજા વપરાશકર્તા પર સ્વિચ કરો ત્યારે સ્ક્રીન શેરિંગ રોકવામાં આવશે. શું તમે ચાલુ રાખવા માંગો છો?</translation>
@@ -214,6 +216,7 @@
 <translation id="714034171374937760">Chromebase</translation>
 <translation id="7165278925115064263">Alt+Shift+K</translation>
 <translation id="7168224885072002358">જૂના રિઝોલ્યુશન પર પાછા ફરી રહ્યાં છે <ph name="TIMEOUT_SECONDS" /></translation>
+<translation id="7199454189089571166">સહાયક મોડ</translation>
 <translation id="7209101170223508707">CAPS LOCK ચાલુ છે.
 રદ કરવા માટે Alt+Search અથવા Shift દબાવો.</translation>
 <translation id="7246339268451149667">ફિંગરપ્રિન્ટ અનલૉક સક્ષમ કરીએ?</translation>
@@ -223,7 +226,7 @@
 <translation id="742594950370306541">કૅમેરો ઉપયોગમાં છે.</translation>
 <translation id="743058460480092004">કૅમેરો અને માઇક્રોફોન ઉપયોગમાં છે.</translation>
 <translation id="7510334386202674593">ctrl + shift + L</translation>
-<translation id="7526573455193969409">નેટવર્ક મોનિટર કરવામાં આવી શકે છે</translation>
+<translation id="7526573455193969409">નેટવર્કને મોનિટર કરવામાં આવી શકે છે</translation>
 <translation id="7536035074519304529">IP સરનામું: <ph name="ADDRESS" /></translation>
 <translation id="7561014039265304140"><ph name="DISPLAY_NAME" />, <ph name="SPECIFIED_RESOLUTION" /> ને સમર્થન આપતું નથી. રિઝોલ્યુશન <ph name="FALLBACK_RESOLUTION" /> પર બદલાયું હતું</translation>
 <translation id="7562368315689366235">ઇમોજી પૅલેટ</translation>
@@ -236,7 +239,6 @@
 <translation id="7814236020522506259"><ph name="HOUR" /> અને <ph name="MINUTE" /></translation>
 <translation id="7823564328645135659">તમારી સેટિંગ્સ સમન્વયિત કર્યા પછી ભાષા "<ph name="FROM_LOCALE" />" થી "<ph name="TO_LOCALE" />" માં બદલાઈ ગઈ છે.</translation>
 <translation id="7904094684485781019">આ એકાઉન્ટ માટે વ્યસ્થાપકે બહુવિધ સાઇન-ઇનને નામંજૂર કર્યું છે.</translation>
-<translation id="7951523953736115461">રાત્રિ પ્રકાશ</translation>
 <translation id="7977927628060636163">મોબાઇલ નેટવર્કની શોધ કરી રહ્યું છે...</translation>
 <translation id="7982789257301363584">નેટવર્ક</translation>
 <translation id="8000066093800657092">નેટવર્ક નથી</translation>

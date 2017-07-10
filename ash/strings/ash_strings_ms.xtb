@@ -158,8 +158,10 @@
 <translation id="5744083938413354016">Penyeretan ketik</translation>
 <translation id="5777841717266010279">Hentikan perkongsian skrin?</translation>
 <translation id="57838592816432529">Redam</translation>
+<translation id="5860033963881614850">Dimatikan</translation>
 <translation id="5895138241574237353">Mulakan Semula</translation>
 <translation id="5901316534475909376">Shift+Esc</translation>
+<translation id="5916664084637901428">Hidupkan</translation>
 <translation id="5927132638760172455">Menghantar ke penerima yang tidak diketahui</translation>
 <translation id="5932901536148835538">Chromebit</translation>
 <translation id="5947494881799873997">Berbalik</translation>
@@ -169,7 +171,6 @@
 <translation id="5978382165065462689">Berkongsi kawalan skrin anda melalui Bantuan Jauh.</translation>
 <translation id="5980301590375426705">Keluar dari tetamu</translation>
 <translation id="6018164090099858612">Keluar daripada mod cermin</translation>
-<translation id="6041154455840261787">Mod Kontras Tinggi didayakan. Tekan Search+Shift+H semula untuk menogolnya kepada mati.</translation>
 <translation id="6043212731627905357">Monitor ini tidak serasi dengan <ph name="DEVICE_TYPE" /> anda (monitor tidak disokong).</translation>
 <translation id="6043994281159824495">Log keluar sekarang</translation>
 <translation id="6047696787498798094">Perkongsian skrin akan berhenti apabila anda beralih kepada pengguna lain. Adakah anda ingin meneruskan?</translation>
@@ -213,6 +214,7 @@
 <translation id="714034171374937760">Chromebase</translation>
 <translation id="7165278925115064263">Alt+Shift+K</translation>
 <translation id="7168224885072002358">Kembali kepada peleraian lama dalam <ph name="TIMEOUT_SECONDS" /></translation>
+<translation id="7199454189089571166">Mod pembantu</translation>
 <translation id="7209101170223508707">CAPS LOCK dihidupkan.
 Tekan Alt+Search atau Shift untuk membatalkan.</translation>
 <translation id="7246339268451149667">Dayakan buka kunci menggunakan Cap Jari?</translation>
@@ -235,7 +237,6 @@ Tekan Alt+Search atau Shift untuk membatalkan.</translation>
 <translation id="7814236020522506259"><ph name="HOUR" /> dan <ph name="MINUTE" /></translation>
 <translation id="7823564328645135659">Bahasa telah ditukar daripada "<ph name="FROM_LOCALE" />" kepada "<ph name="TO_LOCALE" />" selepas menyegerakkan tetapan anda.</translation>
 <translation id="7904094684485781019">Pentadbir akaun ini tidak membenarkan berbilang log masuk.</translation>
-<translation id="7951523953736115461">Cahaya malam</translation>
 <translation id="7977927628060636163">Mencari rangkaian mudah alih...</translation>
 <translation id="7982789257301363584">Rangkaian</translation>
 <translation id="8000066093800657092">Tiada rangkaian</translation>

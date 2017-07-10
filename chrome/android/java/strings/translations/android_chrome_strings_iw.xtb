@@ -176,6 +176,7 @@
 <translation id="2762000892062317888">ברגע זה</translation>
 <translation id="2777555524387840389">נותרו <ph name="SECONDS" /> שניות</translation>
 <translation id="2781151931089541271">נותרה שניה אחת</translation>
+<translation id="2810645512293415242">דף פשוט יותר שחוסך בנתונים ונטען מהר יותר.</translation>
 <translation id="2836148919159985482">כדי לצאת ממסך מלא, גע בלחצן 'הקודם'.</translation>
 <translation id="2842985007712546952">תיקיית אב</translation>
 <translation id="2870560284913253234">אתר</translation>
@@ -273,7 +274,6 @@
 <translation id="3744111561329211289">סינכרון ברקע</translation>
 <translation id="3773755127849930740">‏<ph name="BEGIN_LINK" />הפעל את Bluetooth<ph name="END_LINK" /> כדי לאפשר התאמה</translation>
 <translation id="3789841737615482174">התקן</translation>
-<translation id="380076759404194828">{NUM_SELECTED,plural, =1{נבחר פריט אחד}two{נבחרו # פריטים}many{נבחרו # פריטים}other{נבחרו # פריטים}}</translation>
 <translation id="3810838688059735925">וידאו</translation>
 <translation id="3810973564298564668">נהל</translation>
 <translation id="3819178904835489326"><ph name="NUMBER_OF_DOWNLOADS" /> הורדות נמחקו</translation>
@@ -452,6 +452,7 @@
 <translation id="5568069709869097550">אי אפשר להיכנס</translation>
 <translation id="557283862590186398">‏Chrome זקוק להרשאת גישה אל המיקרופון בשביל האתר הזה.</translation>
 <translation id="5578795271662203820">חפש את התמונה הזו ב-<ph name="SEARCH_ENGINE" /></translation>
+<translation id="5585019845078534178">כרטיסיות</translation>
 <translation id="5595485650161345191">ערוך כתובת</translation>
 <translation id="5596627076506792578">אפשרויות נוספות</translation>
 <translation id="5620928963363755975">איתור הקבצים והדפים שלך ב'הורדות' דרך הלחצן 'אפשרויות נוספות'</translation>
@@ -558,6 +559,7 @@
 <translation id="654446541061731451">בחר כרטיסייה להעברת התוכן שלה</translation>
 <translation id="6545017243486555795">נקה את כל הנתונים</translation>
 <translation id="6550675742724504774">אפשרויות</translation>
+<translation id="6556716549745717622">חסום אם האתר נוטה להציג מודעות שמפריעות (מומלץ)</translation>
 <translation id="6560414384669816528">‏השתמש ב-Sogou לחיפוש</translation>
 <translation id="6566259936974865419">‏Chrome חסך לך ‎<ph name="GIGABYTES" /> GB</translation>
 <translation id="656628257199996201">תרגם <ph name="SOURCE_LANGUAGE" /> תמיד</translation>
@@ -592,6 +594,7 @@
 <translation id="6831043979455480757">תרגם</translation>
 <translation id="6846298663435243399">טוען…</translation>
 <translation id="6850830437481525139"><ph name="TAB_COUNT" /> כרטיסיות נסגרו</translation>
+<translation id="6856477143496886355">‏שימוש בכרטיסים ובכתובות באמצעות Google Payments</translation>
 <translation id="6864459304226931083">הורד תמונה</translation>
 <translation id="6865313869410766144">נתוני טפסים למילוי אוטומטי</translation>
 <translation id="6868088497967843822">היכנס כדי לקבל גישה אל הסימניות, ההיסטוריה, הסיסמאות והגדרות נוספות בכל המכשירים שברשותך</translation>
