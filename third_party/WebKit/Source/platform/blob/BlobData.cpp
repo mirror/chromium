@@ -31,6 +31,7 @@
 #include "platform/blob/BlobData.h"
 
 #include <memory>
+#include "base/task_scheduler/lazy_task_runner.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "platform/RuntimeEnabledFeatures.h"
 #include "platform/UUID.h"
@@ -50,6 +51,7 @@
 using storage::mojom::blink::BlobPtr;
 using storage::mojom::blink::BlobRegistryPtr;
 using storage::mojom::blink::BytesProviderPtr;
+using storage::mojom::blink::BytesProviderRequest;
 using storage::mojom::blink::DataElement;
 using storage::mojom::blink::DataElementBlob;
 using storage::mojom::blink::DataElementPtr;
@@ -74,6 +76,14 @@ bool IsValidBlobType(const String& type) {
       return false;
   }
   return true;
+}
+
+base::LazySequencedTaskRunner g_bytes_provider_task_runner =
+    LAZY_SEQUENCED_TASK_RUNNER_INITIALIZER({base::MayBlock()});
+
+void BindBytesProvider(std::unique_ptr<BlobBytesProvider> provider,
+                       BytesProviderRequest request) {
+  mojo::MakeStrongBinding(std::move(provider), std::move(request));
 }
 
 }  // namespace
@@ -330,14 +340,12 @@ BlobDataHandle::BlobDataHandle(std::unique_ptr<BlobData> data, long long size)
             last_bytes_provider->AppendData(item.data);
           } else {
             BytesProviderPtr bytes_provider;
-            // TODO(mek): BytesProvider should be bound on a thread that doesn't
-            // run javascript to prevent deadlock if javascript starts trying to
-            // synchronously read the blob before all data has been transported
-            // to the browser process.
-            last_bytes_provider = static_cast<BlobBytesProvider*>(
-                MakeStrongBinding(WTF::MakeUnique<BlobBytesProvider>(item.data),
-                                  MakeRequest(&bytes_provider))
-                    ->impl());
+            auto provider = WTF::MakeUnique<BlobBytesProvider>(item.data);
+            last_bytes_provider = provider.get();
+            g_bytes_provider_task_runner.Get()->PostTask(
+                FROM_HERE,
+                base::BindOnce(&BindBytesProvider, std::move(provider),
+                               MakeRequest(&bytes_provider)));
             DataElementBytesPtr bytes_element = DataElementBytes::New(
                 item.data->length(), WTF::nullopt, std::move(bytes_provider));
             if (should_embed_bytes) {

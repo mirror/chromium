@@ -565,7 +565,8 @@ std::unique_ptr<StoragePartitionImpl> StoragePartitionImpl::Create(
 
   if (base::FeatureList::IsEnabled(features::kMojoBlobs)) {
     partition->blob_registry_ =
-        new BlobRegistryWrapper(blob_context, partition->filesystem_context_);
+        new BlobRegistryWrapper(ChromeBlobStorageContext::GetFor(context),
+                                partition->filesystem_context_);
   }
 
   return partition;
