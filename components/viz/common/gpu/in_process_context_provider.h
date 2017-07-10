@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CC_OUTPUT_IN_PROCESS_CONTEXT_PROVIDER_H_
-#define CC_OUTPUT_IN_PROCESS_CONTEXT_PROVIDER_H_
+#ifndef COMPONENTS_VIZ_COMMON_GPU_IN_PROCESS_CONTEXT_PROVIDER_H_
+#define COMPONENTS_VIZ_COMMON_GPU_IN_PROCESS_CONTEXT_PROVIDER_H_
 
 #include <stdint.h>
 
@@ -11,7 +11,6 @@
 
 #include "base/compiler_specific.h"
 #include "base/synchronization/lock.h"
-#include "cc/cc_export.h"
 #include "cc/output/context_cache_controller.h"
 #include "cc/output/context_provider.h"
 #include "gpu/command_buffer/common/gles2_cmd_utils.h"
@@ -25,16 +24,15 @@ class GLInProcessContext;
 class GpuMemoryBufferManager;
 class ImageFactory;
 struct SharedMemoryLimits;
-}
+}  // namespace gpu
 
 namespace skia_bindings {
 class GrContextForGLES2Interface;
 }
 
-namespace cc {
+namespace viz {
 
-class CC_EXPORT InProcessContextProvider
-    : public NON_EXPORTED_BASE(ContextProvider) {
+class InProcessContextProvider : public NON_EXPORTED_BASE(cc::ContextProvider) {
  public:
   InProcessContextProvider(
       scoped_refptr<gpu::InProcessCommandBuffer::Service> service,
@@ -48,7 +46,7 @@ class CC_EXPORT InProcessContextProvider
   gpu::gles2::GLES2Interface* ContextGL() override;
   gpu::ContextSupport* ContextSupport() override;
   class GrContext* GrContext() override;
-  ContextCacheController* CacheController() override;
+  cc::ContextCacheController* CacheController() override;
   void InvalidateGrContext(uint32_t state) override;
   base::Lock* GetLock() override;
   gpu::Capabilities ContextCapabilities() override;
@@ -75,9 +73,9 @@ class CC_EXPORT InProcessContextProvider
   base::Lock context_lock_;
   std::unique_ptr<gpu::GLInProcessContext> context_;
   std::unique_ptr<skia_bindings::GrContextForGLES2Interface> gr_context_;
-  std::unique_ptr<ContextCacheController> cache_controller_;
+  std::unique_ptr<cc::ContextCacheController> cache_controller_;
 };
 
-}  // namespace cc
+}  // namespace viz
 
-#endif  // CC_OUTPUT_IN_PROCESS_CONTEXT_PROVIDER_H_
+#endif  // COMPONENTS_VIZ_COMMON_GPU_IN_PROCESS_CONTEXT_PROVIDER_H_

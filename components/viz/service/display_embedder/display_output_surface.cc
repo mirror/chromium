@@ -19,7 +19,7 @@
 namespace viz {
 
 DisplayOutputSurface::DisplayOutputSurface(
-    scoped_refptr<cc::InProcessContextProvider> context_provider,
+    scoped_refptr<InProcessContextProvider> context_provider,
     cc::SyntheticBeginFrameSource* synthetic_begin_frame_source)
     : cc::OutputSurface(context_provider),
       synthetic_begin_frame_source_(synthetic_begin_frame_source),
@@ -94,7 +94,7 @@ void DisplayOutputSurface::SwapBuffers(cc::OutputSurfaceFrame frame) {
 
 uint32_t DisplayOutputSurface::GetFramebufferCopyTextureFormat() {
   // TODO(danakj): What attributes are used for the default framebuffer here?
-  // Can it have alpha? cc::InProcessContextProvider doesn't take any
+  // Can it have alpha? InProcessContextProvider doesn't take any
   // attributes.
   return GL_RGB;
 }
