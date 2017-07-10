@@ -22,6 +22,30 @@
       "revId": "a89fb4569bed90513b982639c48d2b8c72fd6593",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b8b079a_9a9fe346",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-10T13:09:09Z",
+      "side": 1,
+      "message": "Done.\n\nI\u0027ve replaced the ones I\u0027ve added in this CL and added a TODO to replace all other ones.",
+      "parentUuid": "5255bfe2_75f1cf6e",
+      "range": {
+        "startLine": 119,
+        "startChar": 9,
+        "endLine": 119,
+        "endChar": 52
+      },
+      "revId": "a89fb4569bed90513b982639c48d2b8c72fd6593",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
