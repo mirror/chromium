@@ -16,6 +16,24 @@
       "revId": "4cc015810abd68db2d8e352f3c9053d32fbda3d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2282e8bd_9b1ff850",
+        "filename": "base/sys_info_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-07-10T21:45:37Z",
+      "side": 1,
+      "message": "1. We could do that (with a pragma), but does it really matter in this case? If Gestalt returns the correct result on 10.9.2 we can just use it. Presumably when we drop support for 10.9 we would be dropping support for all patch versions at the same time, so that wouldn\u0027t affect when we can remove the deprecated code.\n2. The function [1] returns whether the version is at least what you ask for, not what the version actually is, so I don\u0027t think that would help.\n\n[1] http://llvm-cs.pcc.me.uk/projects/compiler-rt/lib/builtins/os_version_check.c#163",
+      "parentUuid": "2060653e_2ddeb566",
+      "revId": "4cc015810abd68db2d8e352f3c9053d32fbda3d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
