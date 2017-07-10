@@ -22,6 +22,30 @@
       "revId": "8810def591d4e350ba570441afd8078dc0fe4290",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65f3da9c_08f563e5",
+        "filename": "components/history/core/browser/history_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-10T17:01:34Z",
+      "side": 1,
+      "message": "Gone. Absolutely correct.",
+      "parentUuid": "b58c2bfd_429a9b33",
+      "range": {
+        "startLine": 681,
+        "startChar": 34,
+        "endLine": 681,
+        "endChar": 61
+      },
+      "revId": "8810def591d4e350ba570441afd8078dc0fe4290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
