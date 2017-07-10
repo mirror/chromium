@@ -89,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4b227c76_3f5b87e7",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_grc_tab_signal_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-10T20:03:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d79b1d4_b7933f03",
+      "revId": "c590e2552571212b5086bb4fb3948462df3bd507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ecab369f_bcae5193",
         "filename": "chrome/browser/resource_coordinator/tab_manager_web_contents_data.h",
         "patchSetId": 3
@@ -212,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "6dd29e04_36196ca3",
+        "filename": "services/resource_coordinator/public/interfaces/tab_signal_generator.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-10T20:03:37Z",
+      "side": 1,
+      "message": "Done\n\nRight, the page load metrics one is similar to observer. I think it\u0027s not rule, it\u0027s just a coding preference.",
+      "parentUuid": "1af0bc91_050bb73c",
+      "revId": "c590e2552571212b5086bb4fb3948462df3bd507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf3336cc_d469d7b3",
         "filename": "services/resource_coordinator/public/interfaces/tab_signal_generator.mojom",
         "patchSetId": 3
@@ -226,6 +262,24 @@
       "revId": "c590e2552571212b5086bb4fb3948462df3bd507",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b3724f1_ab24faab",
+        "filename": "services/resource_coordinator/public/interfaces/tab_signal_generator.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-10T20:03:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf3336cc_d469d7b3",
+      "revId": "c590e2552571212b5086bb4fb3948462df3bd507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
