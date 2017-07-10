@@ -9,6 +9,8 @@ include_rules = [
   "+components/url_formatter",
   "+components/variations",
   "+components/viz/client",
+  "+components/viz/common/quads",
+  "+components/viz/common/resources",
 
   "+cc/blink",
   "+content/public/child",
