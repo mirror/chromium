@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8534fa9_a39aa042",
+        "filename": "content/browser/sandbox_parameters_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-07-10T17:06:25Z",
+      "side": 1,
+      "message": "You can remove the temporary final_os_version and just use std::to_string(os_verison.ValueOrDie());",
+      "revId": "f038d6035d170388ee341dbbd949154f5ad83752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
