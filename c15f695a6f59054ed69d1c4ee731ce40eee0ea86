@@ -46,6 +46,30 @@
       "revId": "c15f695a6f59054ed69d1c4ee731ce40eee0ea86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53652610_f79092a2",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-10T19:54:09Z",
+      "side": 1,
+      "message": "With the snippet you wrote, it should be bound as a const ref.\n\nHowever, if you wanted to separate the assignments for clarity, then that would require a mutable ref.",
+      "parentUuid": "8141a701_a172e4a4",
+      "range": {
+        "startLine": 316,
+        "startChar": 2,
+        "endLine": 316,
+        "endChar": 28
+      },
+      "revId": "c15f695a6f59054ed69d1c4ee731ce40eee0ea86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
