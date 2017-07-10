@@ -41,9 +41,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.reflect.Field;
 import java.util.HashMap;
-import java.util.Iterator;
+import java.util.HashSet;
 import java.util.Map;
-import java.util.Map.Entry;
+import java.util.Set;
 
 /**
  * Displays and controls a {@link BottomNavigationView} fixed to the bottom of the
@@ -102,20 +102,9 @@ public class BottomSheetContentController extends BottomNavigationView
         public void onSheetClosed() {
             if (mSelectedItemId != 0 && mSelectedItemId != R.id.action_home) {
                 showBottomSheetContent(R.id.action_home);
+            } else {
+                clearBottomSheetContents();
             }
-
-            Iterator<Entry<Integer, BottomSheetContent>> contentIterator =
-                    mBottomSheetContents.entrySet().iterator();
-            while (contentIterator.hasNext()) {
-                Entry<Integer, BottomSheetContent> entry = contentIterator.next();
-                if (entry.getKey() == R.id.action_home || entry.getKey() == INCOGNITO_HOME_ID) {
-                    continue;
-                }
-
-                entry.getValue().destroy();
-                contentIterator.remove();
-            }
-
             // TODO(twellington): determine a policy for destroying the
             //                    SuggestionsBottomSheetContent.
         }
@@ -124,11 +113,16 @@ public class BottomSheetContentController extends BottomNavigationView
         public void onSheetContentChanged(BottomSheetContent newContent) {
             if (mBottomSheet.isSheetOpen()) announceBottomSheetContentSelected();
 
-            if (!mShouldOpenSheetOnNextContentChange) return;
+            if (mShouldOpenSheetOnNextContentChange) {
+                mShouldOpenSheetOnNextContentChange = false;
+                if (!mBottomSheet.isSheetOpen()) {
+                    mBottomSheet.setSheetState(BottomSheet.SHEET_STATE_FULL, true);
+                }
+                return;
+            }
 
-            mShouldOpenSheetOnNextContentChange = false;
-            if (!mBottomSheet.isSheetOpen()) {
-                mBottomSheet.setSheetState(BottomSheet.SHEET_STATE_FULL, true);
+            if (mBottomSheet.getSheetState() == BottomSheet.SHEET_STATE_PEEK) {
+                clearBottomSheetContents();
             }
         }
 
@@ -353,5 +347,21 @@ public class BottomSheetContentController extends BottomNavigationView
         //                    recently. Replace this custom implementation with that method after
         //                    the support library is rolled.
         return mSelectedItemId;
+    }
+
+    public void clearBottomSheetContents() {
+        if (mBottomSheetContents.keySet().size() == 1
+                && mBottomSheetContents.get(R.id.action_home) != null) {
+            return;
+        }
+        Set<Integer> toRemove = new HashSet<>();
+        for (Integer bottomSheetTab : mBottomSheetContents.keySet()) {
+            if (bottomSheetTab == R.id.action_home || bottomSheetTab == INCOGNITO_HOME_ID) {
+                continue;
+            }
+            mBottomSheetContents.get(bottomSheetTab).destroy();
+            toRemove.add(bottomSheetTab);
+        }
+        mBottomSheetContents.keySet().removeAll(toRemove);
     }
 }
