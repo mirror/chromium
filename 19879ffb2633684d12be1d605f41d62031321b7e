@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "eb1f46e1_6991e4e4",
+        "filename": "components/password_manager/core/browser/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-07-10T11:30:41Z",
+      "side": 1,
+      "message": "Password reuse detection is used on CrOS, but anything related to hash of sync password is not used.",
+      "parentUuid": "9b8b5e97_a7fd423c",
+      "range": {
+        "startLine": 142,
+        "startChar": 6,
+        "endLine": 142,
+        "endChar": 38
+      },
+      "revId": "19879ffb2633684d12be1d605f41d62031321b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "492a9464_b3724485",
         "filename": "components/password_manager/core/browser/password_store.h",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-10T11:13:57Z",
       "side": 1,
       "message": "Can we have a readable define somewhere for this feature? I\u0027m concerned that this complex condition is repeated many times while it\u0027s not very clear what it\u0027s guarding.",
+      "range": {
+        "startLine": 603,
+        "startChar": 4,
+        "endLine": 603,
+        "endChar": 11
+      },
+      "revId": "19879ffb2633684d12be1d605f41d62031321b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d7826ce_dc56b075",
+        "filename": "components/password_manager/core/browser/password_store.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 603,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-07-10T11:30:41Z",
+      "side": 1,
+      "message": "I don\u0027t know any place for this define I\u0027ve spent some time a while ago, bud I didn\u0027t find appropriate place. \n\nSuch define should be available in both component and browser part and in all test targets.\nIn root build file build/config/BUILD.gn it\u0027s prohibited to include new defines https://cs.chromium.org/chromium/src/build/config/BUILD.gn?type\u003dcs\u0026l\u003d31\nIf you have any ideas please advice.",
+      "parentUuid": "492a9464_b3724485",
       "range": {
         "startLine": 603,
         "startChar": 4,
