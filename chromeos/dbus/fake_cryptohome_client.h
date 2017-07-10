@@ -236,6 +236,12 @@ class CHROMEOS_EXPORT FakeCryptohomeClient : public CryptohomeClient {
     needs_dircrypto_migration_ = needs_migration;
   }
 
+  // If this is called with false, GetSanitizedUsername() and
+  // BlockingGetSanitizedUsername() will fail.
+  void SetUsernameSanitizationReady(bool ready) {
+    username_sanitization_ready_ = ready;
+  }
+
  private:
   void ReturnProtobufMethodCallback(
       const cryptohome::BaseReply& reply,
@@ -281,6 +287,7 @@ class CHROMEOS_EXPORT FakeCryptohomeClient : public CryptohomeClient {
   uint64_t dircrypto_migration_progress_;
 
   bool needs_dircrypto_migration_ = false;
+  bool username_sanitization_ready_ = true;
 
   base::WeakPtrFactory<FakeCryptohomeClient> weak_ptr_factory_;
 
