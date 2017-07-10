@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a3c90bd_5f41f7a8",
+        "filename": "ios/chrome/browser/ntp_tiles/ntp_tiles_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-10T13:11:18Z",
+      "side": 1,
+      "message": "This isn\u0027t perfectly reliable to get the tiles updated, if I run the test in succession. Here are some options, but I\u0027m open to other suggestions (especially if things are done differently on iOS):\n1. Create an observer like https://chromium-review.googlesource.com/c/559540\nThis will make the tests more similar.\n2. Find some user action that will 100% cause the tiles to be updated, which would be more of a user facing test.\n3. Explicitly call top_sites::SyncWithHistory. More directly does what we need, but may short-circuit what the test is verifying.",
+      "revId": "fb377bd316b52447992f98ed23d2da910b8d99e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
