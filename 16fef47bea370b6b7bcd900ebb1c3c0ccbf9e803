@@ -439,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "b179245b_6cc44195",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkerCacheViews.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-07-10T21:03:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb7aac17_194d20b8",
+      "revId": "16fef47bea370b6b7bcd900ebb1c3c0ccbf9e803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60db25d2_ea0a9661",
         "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkerCacheViews.js",
         "patchSetId": 2
@@ -450,6 +468,24 @@
       "writtenOn": "2017-07-06T18:18:06Z",
       "side": 1,
       "message": "So we only need headers for the mime type? Should we perhaps make it a part of the DataEntry struct so that we have it in advance?",
+      "revId": "16fef47bea370b6b7bcd900ebb1c3c0ccbf9e803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a180a171_ec2425d0",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkerCacheViews.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-07-10T21:03:35Z",
+      "side": 1,
+      "message": "There is value in previewing the headers.",
+      "parentUuid": "60db25d2_ea0a9661",
       "revId": "16fef47bea370b6b7bcd900ebb1c3c0ccbf9e803",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -473,6 +509,24 @@
     },
     {
       "key": {
+        "uuid": "46f7bb5b_8578bc9d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkerCacheViews.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-07-10T21:03:35Z",
+      "side": 1,
+      "message": "As discussed offline, let\u0027s see if users encounter any issues with this functionality.",
+      "parentUuid": "a9e91f6b_82124f27",
+      "revId": "16fef47bea370b6b7bcd900ebb1c3c0ccbf9e803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1b5deb0d_7ac96398",
         "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkerCacheViews.js",
         "patchSetId": 2
@@ -487,6 +541,24 @@
       "revId": "16fef47bea370b6b7bcd900ebb1c3c0ccbf9e803",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e56c3479_6c2b5c1b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkerCacheViews.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-07-10T21:03:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b5deb0d_7ac96398",
+      "revId": "16fef47bea370b6b7bcd900ebb1c3c0ccbf9e803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
