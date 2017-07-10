@@ -599,10 +599,11 @@ class PasswordStore : protected PasswordStoreSync,
 // TODO(crbug.com/706392): Fix password reuse detection for Android.
 #if !defined(OS_ANDROID) && !defined(OS_IOS)
   std::unique_ptr<PasswordReuseDetector> reuse_detector_;
-  HashPasswordManager hash_password_manager_;
-#if !defined(OS_CHROMEOS)
-  std::unique_ptr<PasswordStoreSigninNotifier> notifier_;
 #endif
+#if defined(OS_WIN) || (defined(OS_MACOSX) && !defined(OS_IOS)) || \
+    (defined(OS_LINUX) && !defined(OS_CHROMEOS))
+  std::unique_ptr<PasswordStoreSigninNotifier> notifier_;
+  HashPasswordManager hash_password_manager_;
 #endif
 
   bool is_propagating_password_changes_to_web_credentials_enabled_;
