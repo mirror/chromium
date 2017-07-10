@@ -49,6 +49,53 @@
     },
     {
       "key": {
+        "uuid": "95767dde_de079bac",
+        "filename": "chrome/browser/signin/dice_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-10T15:28:44Z",
+      "side": 1,
+      "message": "yes, that is what I had in mind. In production today, all sessions are being logged out when the user signs out.",
+      "parentUuid": "551a915c_af608cd0",
+      "range": {
+        "startLine": 86,
+        "startChar": 17,
+        "endLine": 86,
+        "endChar": 32
+      },
+      "revId": "60c8f88560b71ca16d1992767b36699a2761c049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2895e2f4_22259922",
+        "filename": "chrome/browser/signin/dice_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-10T15:28:44Z",
+      "side": 1,
+      "message": "I think you should also seed this account before. Consider calling SeedAccount here.",
+      "range": {
+        "startLine": 241,
+        "startChar": 21,
+        "endLine": 241,
+        "endChar": 38
+      },
+      "revId": "60c8f88560b71ca16d1992767b36699a2761c049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "548a5201_8a0eff25",
         "filename": "chrome/browser/signin/dice_browsertest.cc",
         "patchSetId": 4
@@ -84,6 +131,30 @@
       "side": 1,
       "message": "Yeah, this is a bit awkward because the accounts details are hardcoded in HandleSignoutURL() and various other places. I can probably factor more code as you suggest, but at the expense of introducing a bit of complexity to make the test more generic. I\u0027ll see what I can do here.",
       "parentUuid": "548a5201_8a0eff25",
+      "range": {
+        "startLine": 256,
+        "startChar": 25,
+        "endLine": 256,
+        "endChar": 27
+      },
+      "revId": "60c8f88560b71ca16d1992767b36699a2761c049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eceffb86_b37225d9",
+        "filename": "chrome/browser/signin/dice_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-10T15:28:44Z",
+      "side": 1,
+      "message": "oh, i see now. it is fine if you leave it like it is now.",
+      "parentUuid": "a910b8bd_71fb1131",
       "range": {
         "startLine": 256,
         "startChar": 25,
