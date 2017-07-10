@@ -70,6 +70,30 @@
       "revId": "b040ffbbdf06588a82e77702ba782a927601445b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5551702e_5eca2ba7",
+        "filename": "net/http/http_server_properties_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 935,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-07-10T17:40:21Z",
+      "side": 0,
+      "message": "That\u0027s the good point. The reason that led me to conclude we should ignore persisting broken ones comes from the fact that we always remove the borken alt svc entry from |alternative_service_map_| when its brokenness fires. Now I believe it\u0027s a bug elsewhere.\n\nThe |altenative_service_map_| should contain all the alt svcs regardless of brokenness. |broken_alternativer_service_| will listing broken alt svcs and their brokenness. |recently_broken_alternative_services_| will track the broken count. When we request a alt svc, we will iterate the |altenative_service_map_| while keep asking is this entry broken. The broken list only needs to main the brokenness of alt svc vs time while recently broken list should be tracking the broken count and generate correct expiration time for broken list. \n\nThe code here has the correct logic, but to have things work together, I think the logic when we expire alt svc\u0027s brokenness should be fixed: https://cs.chromium.org/chromium/src/net/http/http_server_properties_impl.cc?sq\u003dpackage:chromium\u0026l\u003d675.",
+      "parentUuid": "b08e0371_93ce58f9",
+      "range": {
+        "startLine": 935,
+        "startChar": 60,
+        "endLine": 935,
+        "endChar": 0
+      },
+      "revId": "b040ffbbdf06588a82e77702ba782a927601445b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
