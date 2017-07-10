@@ -11,9 +11,6 @@
 
 #include "base/logging.h"
 #include "base/macros.h"
-// TODO(xhwang): Remove this include after http://crbug.com/656706 is fixed.
-#include "media/base/content_decryption_module.h"
-#include "media/base/media_export.h"
 
 namespace media {
 
@@ -31,7 +28,7 @@ namespace media {
 // resolve(T) method that is dependent on the type of promise. This base class
 // is specified so that the promises can be easily saved before passing across
 // the pepper interface.
-class MEDIA_EXPORT CdmPromise {
+class CdmPromise {
  public:
   // TODO(jrummell): Remove deprecated errors. See
   // http://crbug.com/570216
@@ -53,8 +50,8 @@ class MEDIA_EXPORT CdmPromise {
     KEY_IDS_VECTOR_TYPE
   };
 
-  CdmPromise();
-  virtual ~CdmPromise();
+  CdmPromise() = default;
+  virtual ~CdmPromise() = default;
 
   // Used to indicate that the operation failed. |exception_code| must be
   // specified. |system_code| is a Key System-specific value for the error
@@ -95,7 +92,7 @@ struct CdmPromiseTraits<std::string> {
 // This class adds the resolve(T) method. This class is still an interface, and
 // is used as the type of promise that gets passed around.
 template <typename... T>
-class MEDIA_EXPORT CdmPromiseTemplate : public CdmPromise {
+class CdmPromiseTemplate : public CdmPromise {
  public:
   CdmPromiseTemplate() : is_settled_(false) {}
 
