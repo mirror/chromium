@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "263692b7_fbbdf610",
+        "filename": "components/favicon_base/favicon_types.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-07-10T05:37:28Z",
+      "side": 1,
+      "message": "recevied -\u003e received",
+      "revId": "0a39cadb935267229f8fc04b8bc8ce31bfc39f2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
