@@ -16,6 +16,24 @@
       "revId": "ade2626afcab894e78e9bf50e3a651919732dfb3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b52b6b8a_16a0f4a0",
+        "filename": "third_party/WebKit/Source/platform/exported/WebHTTPBody.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-10T20:55:14Z",
+      "side": 1,
+      "message": "Done.\n\nThe non-symmetry with copy constructor is annoying... since you can still write private_(other.private_.Get()) to get around it. I would argue that writing that is arguably worse than just supporting the copy constructor.",
+      "parentUuid": "962184cb_38160758",
+      "revId": "ade2626afcab894e78e9bf50e3a651919732dfb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
