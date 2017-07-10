@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "94a4da74_9f64b175",
+        "filename": "components/network_session_configurator/browser/network_session_configurator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-07-10T22:18:27Z",
+      "side": 1,
+      "message": "Yeah, the reason I erase those already supported version is to make sure if finch or command line configuration happens to specify the same version multiple times, we are able to detect and treat as a single QUIC version.",
+      "parentUuid": "afbc2f7f_15a4a015",
+      "range": {
+        "startLine": 340,
+        "startChar": 5,
+        "endLine": 340,
+        "endChar": 0
+      },
+      "revId": "5e21bc7ad8b57185e7cb2ebf2929a1c944791652",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7fafd653_7c681270",
         "filename": "components/network_session_configurator/browser/network_session_configurator_unittest.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "5e21bc7ad8b57185e7cb2ebf2929a1c944791652",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d225d75d_36da1cac",
+        "filename": "components/network_session_configurator/browser/network_session_configurator_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-07-10T22:18:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7fafd653_7c681270",
+      "range": {
+        "startLine": 339,
+        "startChar": 39,
+        "endLine": 339,
+        "endChar": 75
+      },
+      "revId": "5e21bc7ad8b57185e7cb2ebf2929a1c944791652",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
