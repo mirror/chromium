@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "11945149_3da54d0a",
+        "filename": "chrome/browser/chromeos/login/session/user_session_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 968,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-10T05:18:47Z",
+      "side": 1,
+      "message": "drive-by: Maybe, then the check should be in the ARC code?\nASM::sign_in_start_time_ is NOT null in this example scenario, while it is null in the case which we want to record. (Later, probably we should clean the semantics up, I think, though)\nThen, we can avoid additional dependency from here to ARC.",
+      "parentUuid": "a6618f06_b204a03b",
+      "revId": "86cf30db576b6de418e8a3a74a710def86986692",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c421f517_848ca1d9",
         "filename": "chrome/browser/chromeos/login/session/user_session_manager.h",
         "patchSetId": 3
