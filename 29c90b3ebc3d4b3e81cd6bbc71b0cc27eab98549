@@ -160,6 +160,24 @@
       "revId": "29c90b3ebc3d4b3e81cd6bbc71b0cc27eab98549",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ee54be7_f681a866",
+        "filename": "content/public/browser/android/motion_event_synthesizer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-10T17:14:46Z",
+      "side": 1,
+      "message": "Please mind your tone Bo, nobody here has bad intent. If there\u0027s an issue with our implementation please file a bug with some suggestions, or otherwise reach out to the team.\n\nNot only did we have no idea this was a \u0027shortcut\u0027, or \u0027bad code\u0027, but our non-\u0027VR people\u0027 reviewers also apparently didn\u0027t realize that was the case. We did what we thought was the correct way to do it.\n\nI\u0027m not sure why MES is in the content layer to begin with, that sounds like an issue in itself.",
+      "parentUuid": "f245a510_489c182d",
+      "revId": "29c90b3ebc3d4b3e81cd6bbc71b0cc27eab98549",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
