@@ -8,7 +8,6 @@
 #include <utility>
 
 #include "base/memory/ptr_util.h"
-#include "base/numerics/safe_math.h"
 #include "net/cert/internal/cert_error_params.h"
 #include "net/cert/internal/cert_errors.h"
 #include "net/der/input.h"
@@ -441,11 +440,9 @@ WARN_UNUSED_RESULT bool ReadOptionalContextSpecificUint32(der::Parser* parser,
     if (number_parser.HasMore())
       return false;
 
-    // Cast the number to a uint32_t
-    base::CheckedNumeric<uint32_t> casted(uint64_value);
-    if (!casted.IsValid())
+    if (uint64_value > std::numeric_limits<uint32_t>::max())
       return false;
-    *out = casted.ValueOrDie();
+    *out = static_cast<uint32_t>(uint64_value);
   }
 
   *present = has_value;

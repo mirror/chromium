@@ -4,9 +4,10 @@
 
 #include "net/cert/internal/verify_signed_data.h"
 
+#include <limits.h>
+
 #include "base/compiler_specific.h"
 #include "base/logging.h"
-#include "base/numerics/safe_math.h"
 #include "crypto/openssl_util.h"
 #include "net/cert/internal/cert_errors.h"
 #include "net/cert/internal/signature_algorithm.h"
@@ -65,10 +66,7 @@ WARN_UNUSED_RESULT bool GetDigest(DigestAlgorithm digest, const EVP_MD** out) {
 // Sets the RSASSA-PSS parameters on |pctx|. Returns true on success.
 WARN_UNUSED_RESULT bool ApplyRsaPssOptions(const RsaPssParameters* params,
                                            EVP_PKEY_CTX* pctx) {
-  // BoringSSL takes a signed int for the salt length, and interprets
-  // negative values in a special manner. Make sure not to silently underflow.
-  base::CheckedNumeric<int> salt_length_bytes_int(params->salt_length());
-  if (!salt_length_bytes_int.IsValid())
+  if (params->salt_length() > INT_MAX)
     return false;
 
   const EVP_MD* mgf1_hash;
@@ -77,8 +75,7 @@ WARN_UNUSED_RESULT bool ApplyRsaPssOptions(const RsaPssParameters* params,
 
   return EVP_PKEY_CTX_set_rsa_padding(pctx, RSA_PKCS1_PSS_PADDING) &&
          EVP_PKEY_CTX_set_rsa_mgf1_md(pctx, mgf1_hash) &&
-         EVP_PKEY_CTX_set_rsa_pss_saltlen(pctx,
-                                          salt_length_bytes_int.ValueOrDie());
+         EVP_PKEY_CTX_set_rsa_pss_saltlen(pctx, params->salt_length());
 }
 
 // TODO(eroman): This function is not strict enough. It accepts BER, other RSA

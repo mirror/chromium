@@ -25,24 +25,24 @@ namespace {
 // If the conversion is successful, returns true and stores the result in
 // |out|. Otherwise it returns false and leaves |out| unmodified.
 bool ConvertBmpStringValue(const der::Input& in, std::string* out) {
-  if (in.Length() % 2 != 0)
+  const size_t len = in.Length();
+  if (len % 2 != 0)
     return false;
 
-  base::string16 in_16bit;
-  if (in.Length()) {
-    memcpy(base::WriteInto(&in_16bit, in.Length() / 2 + 1), in.UnsafeData(),
-           in.Length());
-  }
-  for (base::char16& c : in_16bit) {
-    // BMPString is UCS-2 in big-endian order.
-    c = base::NetToHost16(c);
+  std::unique_ptr<uint16_t[]> data16_storage(new uint16_t[len / 2]);
+  const uint8_t* const data = in.UnsafeData();
+  uint16_t* const data16 = data16_storage.get();
 
-    // BMPString only supports codepoints in the Basic Multilingual Plane;
-    // surrogates are not allowed.
-    if (CBU_IS_SURROGATE(c))
+  for (size_t i = 0; i < len; i += 2) {
+    uint16_t v;
+    memcpy(&v, data + i, sizeof(v));
+    v = base::NetToHost16(v);
+    if (CBU_IS_SURROGATE(v))
       return false;
+    data16[i / 2] = v;
   }
-  return base::UTF16ToUTF8(in_16bit.data(), in_16bit.size(), out);
+
+  return base::UTF16ToUTF8(data16, len / 2, out);
 }
 
 // Converts a UniversalString value in Input |in| to UTF-8.
