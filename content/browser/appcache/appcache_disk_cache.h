@@ -16,10 +16,6 @@
 #include "content/common/content_export.h"
 #include "net/disk_cache/disk_cache.h"
 
-namespace base {
-class SingleThreadTaskRunner;
-}  // namespace base
-
 namespace content {
 
 // An implementation of AppCacheDiskCacheInterface that
@@ -35,7 +31,6 @@ class CONTENT_EXPORT AppCacheDiskCache
       const base::FilePath& disk_cache_directory,
       int disk_cache_size,
       bool force,
-      const scoped_refptr<base::SingleThreadTaskRunner>& cache_thread,
       const net::CompletionCallback& callback);
 
   // Initializes the object to use memory only storage.
@@ -107,7 +102,6 @@ class CONTENT_EXPORT AppCacheDiskCache
            const base::FilePath& directory,
            int cache_size,
            bool force,
-           const scoped_refptr<base::SingleThreadTaskRunner>& cache_thread,
            const net::CompletionCallback& callback);
   void OnCreateBackendComplete(int rv);
   void AddOpenEntry(EntryImpl* entry) { open_entries_.insert(entry); }

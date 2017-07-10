@@ -1438,8 +1438,7 @@ AppCacheStorageImpl::~AppCacheStorageImpl() {
 
 void AppCacheStorageImpl::Initialize(
     const base::FilePath& cache_directory,
-    const scoped_refptr<base::SingleThreadTaskRunner>& db_thread,
-    const scoped_refptr<base::SingleThreadTaskRunner>& cache_thread) {
+    const scoped_refptr<base::SingleThreadTaskRunner>& db_thread) {
   DCHECK(db_thread.get());
 
   cache_directory_ = cache_directory;
@@ -1451,7 +1450,6 @@ void AppCacheStorageImpl::Initialize(
   database_ = new AppCacheDatabase(db_file_path);
 
   db_thread_ = db_thread;
-  cache_thread_ = cache_thread;
 
   scoped_refptr<InitTask> task(new InitTask(this));
   task->Schedule();
@@ -1920,7 +1918,6 @@ AppCacheDiskCache* AppCacheStorageImpl::disk_cache() {
           cache_directory_.Append(kDiskCacheDirectoryName),
           kMaxDiskCacheSize,
           false,
-          cache_thread_.get(),
           base::Bind(&AppCacheStorageImpl::OnDiskCacheInitialized,
                      base::Unretained(this)));
     }
@@ -1932,6 +1929,7 @@ AppCacheDiskCache* AppCacheStorageImpl::disk_cache() {
 }
 
 void AppCacheStorageImpl::OnDiskCacheInitialized(int rv) {
+  // ### initialize cache_thread_ here.
   if (rv != net::OK) {
     LOG(ERROR) << "Failed to open the appcache diskcache.";
     AppCacheHistograms::CountInitResult(AppCacheHistograms::DISK_CACHE_ERROR);

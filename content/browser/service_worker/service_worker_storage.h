@@ -83,7 +83,6 @@ class CONTENT_EXPORT ServiceWorkerStorage
       const base::FilePath& path,
       const base::WeakPtr<ServiceWorkerContextCore>& context,
       std::unique_ptr<ServiceWorkerDatabaseTaskManager> database_task_manager,
-      const scoped_refptr<base::SingleThreadTaskRunner>& disk_cache_thread,
       storage::QuotaManagerProxy* quota_manager_proxy,
       storage::SpecialStoragePolicy* special_storage_policy);
 
@@ -354,7 +353,6 @@ class CONTENT_EXPORT ServiceWorkerStorage
       const base::FilePath& path,
       base::WeakPtr<ServiceWorkerContextCore> context,
       std::unique_ptr<ServiceWorkerDatabaseTaskManager> database_task_manager,
-      const scoped_refptr<base::SingleThreadTaskRunner>& disk_cache_thread,
       storage::QuotaManagerProxy* quota_manager_proxy,
       storage::SpecialStoragePolicy* special_storage_policy);
 
