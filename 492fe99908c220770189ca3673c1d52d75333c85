@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa130edf_68dad64a",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 791,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-07-10T14:12:37Z",
+      "side": 1,
+      "message": "This used to be after OnKillFocus(). Some reason to move it? I only care because it makes diff\u0027ing harder.",
+      "range": {
+        "startLine": 791,
+        "startChar": 25,
+        "endLine": 791,
+        "endChar": 26
+      },
+      "revId": "492fe99908c220770189ca3673c1d52d75333c85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
