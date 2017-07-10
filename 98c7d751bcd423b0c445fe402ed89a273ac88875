@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d31d26f1_fd64f85b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-07-10T21:38:50Z",
+      "side": 1,
+      "message": "The change is permitting invalid UTF-16 escape sequences.",
+      "range": {
+        "startLine": 7,
+        "startChar": 8,
+        "endLine": 7,
+        "endChar": 33
+      },
+      "revId": "98c7d751bcd423b0c445fe402ed89a273ac88875",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78a54441_66095d5b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-07-10T21:38:50Z",
+      "side": 1,
+      "message": "Please wrap the description to 72 or 80 columns.",
+      "revId": "98c7d751bcd423b0c445fe402ed89a273ac88875",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
