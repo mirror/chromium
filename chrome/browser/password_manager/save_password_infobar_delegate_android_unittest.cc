@@ -9,6 +9,7 @@
 
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
+#include "base/metrics/metrics_hashes.h"
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/test/base/chrome_render_view_host_test_harness.h"
@@ -21,6 +22,8 @@
 #include "components/password_manager/core/browser/stub_password_manager_driver.h"
 #include "components/password_manager/core/common/password_manager_pref_names.h"
 #include "components/prefs/pref_service.h"
+#include "components/ukm/test_ukm_recorder.h"
+#include "components/ukm/ukm_source.h"
 #include "content/public/browser/web_contents.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -63,6 +66,25 @@ class TestSavePasswordInfobarDelegate : public SavePasswordInfoBarDelegate {
   ~TestSavePasswordInfobarDelegate() override {}
 };
 
+// TODO(crbug.com/738921) Replace this with generalized infrastructure.
+// Verifies that the metric |metric_name| was recorded with value |value| in the
+// single entry of |test_ukm_recorder_| exactly |expected_count| times.
+void ExpectUkmValueCount(ukm::TestUkmRecorder* test_ukm_recorder,
+                         const char* metric_name,
+                         int64_t value,
+                         int64_t expected_count) {
+  ASSERT_EQ(1U, test_ukm_recorder->entries_count());
+  const ukm::mojom::UkmEntry* entry = test_ukm_recorder->GetEntry(0);
+
+  int64_t occurrences = 0;
+  for (const ukm::mojom::UkmMetricPtr& metric : entry->metrics) {
+    if (metric->metric_hash == base::HashMetricName(metric_name) &&
+        metric->value == value)
+      ++occurrences;
+  }
+  EXPECT_EQ(expected_count, occurrences) << metric_name << ": " << value;
+}
+
 }  // namespace
 
 class SavePasswordInfoBarDelegateTest : public ChromeRenderViewHostTestHarness {
@@ -75,7 +97,9 @@ class SavePasswordInfoBarDelegateTest : public ChromeRenderViewHostTestHarness {
 
   PrefService* prefs();
   const autofill::PasswordForm& test_form() { return test_form_; }
-  std::unique_ptr<MockPasswordFormManager> CreateMockFormManager();
+  std::unique_ptr<MockPasswordFormManager> CreateMockFormManager(
+      scoped_refptr<password_manager::PasswordFormMetricsRecorder>
+          metrics_recorder);
 
  protected:
   std::unique_ptr<ConfirmInfoBarDelegate> CreateDelegate(
@@ -109,11 +133,13 @@ PrefService* SavePasswordInfoBarDelegateTest::prefs() {
 }
 
 std::unique_ptr<MockPasswordFormManager>
-SavePasswordInfoBarDelegateTest::CreateMockFormManager() {
+SavePasswordInfoBarDelegateTest::CreateMockFormManager(
+    scoped_refptr<password_manager::PasswordFormMetricsRecorder>
+        metrics_recorder) {
   auto manager = base::MakeUnique<MockPasswordFormManager>(
       &password_manager_, &client_, driver_.AsWeakPtr(), test_form(),
       &fetcher_);
-  manager->Init(nullptr);
+  manager->Init(metrics_recorder);
   return manager;
 }
 
@@ -137,7 +163,7 @@ void SavePasswordInfoBarDelegateTest::TearDown() {
 
 TEST_F(SavePasswordInfoBarDelegateTest, CancelTestCredentialSourceAPI) {
   std::unique_ptr<MockPasswordFormManager> password_form_manager(
-      CreateMockFormManager());
+      CreateMockFormManager(nullptr));
   EXPECT_CALL(*password_form_manager.get(), PermanentlyBlacklist());
   std::unique_ptr<ConfirmInfoBarDelegate> infobar(
       CreateDelegate(std::move(password_form_manager)));
@@ -147,9 +173,47 @@ TEST_F(SavePasswordInfoBarDelegateTest, CancelTestCredentialSourceAPI) {
 TEST_F(SavePasswordInfoBarDelegateTest,
        CancelTestCredentialSourcePasswordManager) {
   std::unique_ptr<MockPasswordFormManager> password_form_manager(
-      CreateMockFormManager());
+      CreateMockFormManager(nullptr));
   EXPECT_CALL(*password_form_manager.get(), PermanentlyBlacklist());
   std::unique_ptr<ConfirmInfoBarDelegate> infobar(
       CreateDelegate(std::move(password_form_manager)));
   EXPECT_TRUE(infobar->Cancel());
+}
+
+TEST_F(SavePasswordInfoBarDelegateTest, VerifyUKMRecording) {
+  using SaveBubbleTrigger =
+      password_manager::PasswordFormMetricsRecorder::SaveBubbleTrigger;
+  using DismissalReason =
+      password_manager::PasswordFormMetricsRecorder::DismissalReason;
+
+  ukm::TestUkmRecorder test_ukm_recorder;
+  {
+    // Setup metrics recorder
+    ukm::SourceId source_id = test_ukm_recorder.GetNewSourceID();
+    static_cast<ukm::UkmRecorder*>(&test_ukm_recorder)
+        ->UpdateSourceURL(source_id, GURL("https://www.example.com"));
+    auto recorder = base::MakeRefCounted<
+        password_manager::PasswordFormMetricsRecorder>(
+        true /*is_main_frame_secure*/,
+        password_manager::PasswordFormMetricsRecorder::CreateUkmEntryBuilder(
+            &test_ukm_recorder, source_id));
+
+    // Exercise delegate.
+    std::unique_ptr<MockPasswordFormManager> password_form_manager(
+        CreateMockFormManager(recorder));
+    EXPECT_CALL(*password_form_manager.get(), PermanentlyBlacklist());
+    std::unique_ptr<ConfirmInfoBarDelegate> infobar(
+        CreateDelegate(std::move(password_form_manager)));
+    EXPECT_TRUE(infobar->Cancel());
+  }
+
+  // Verify metrics.
+  ExpectUkmValueCount(&test_ukm_recorder, "Saving.Prompt.Shown", 1, 1);
+  ExpectUkmValueCount(
+      &test_ukm_recorder, "Saving.Prompt.Trigger",
+      static_cast<int64_t>(
+          SaveBubbleTrigger::kPasswordManagerSuggestionAutomatic),
+      1);
+  ExpectUkmValueCount(&test_ukm_recorder, "Saving.Prompt.Interaction",
+                      static_cast<int64_t>(DismissalReason::kDeclined), 1);
 }
