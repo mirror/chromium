@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "fe618fa4_7344e81a",
+        "filename": "base/json/json_parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-07-10T17:03:33Z",
+      "side": 1,
+      "message": "HexStringToInt is not the right function, since kUnicodeReplancementString isn\u0027t a hex string. You could have another string const with literal value \"FFFD\", though it seems easier and more efficient to do\n    dest_string-\u003eappend(kUnicodeReplancementString);\n    return true;",
+      "range": {
+        "startLine": 675,
+        "startChar": 6,
+        "endLine": 675,
+        "endChar": 20
+      },
+      "revId": "59a37833a27384713051e6723a18d295be1f93a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "981b4895_a177c2ff",
+        "filename": "chrome/test/chromedriver/chrome_launcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-07-10T17:03:33Z",
+      "side": 1,
+      "message": "I think it\u0027s better not to allow invalid characters in this case. Having invalid characters in an extension manifest seems to be bad. We\u0027re probably better off reporting an error in this case.",
+      "revId": "59a37833a27384713051e6723a18d295be1f93a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "50b4d1ff_1087af21",
         "filename": "chrome/test/chromedriver/chrome_launcher.cc",
         "patchSetId": 1
@@ -13,6 +53,23 @@
       "writtenOn": "2017-07-10T16:49:06Z",
       "side": 1,
       "message": "Nit: add a comment explaining why we want to support \"invalid\" characters (eg. that these might come from valid EcmaScript strings which, for example, web-platform-tests might be using explicitly to test string handling behavior).",
+      "revId": "59a37833a27384713051e6723a18d295be1f93a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98494bd1_a8c24a07",
+        "filename": "chrome/test/chromedriver/server/http_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-07-10T17:03:33Z",
+      "side": 1,
+      "message": "Let\u0027s don\u0027t change this one for now. This string comes from the client. I think it\u0027s better to be more careful with error checking in this case.",
       "revId": "59a37833a27384713051e6723a18d295be1f93a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
