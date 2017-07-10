@@ -9,15 +9,30 @@
 
 @class UserInfo;
 
+extern NSString* const kKeychainPairingId;
+extern NSString* const kKeychainPairingSecret;
+
+typedef void (^PairingCredentialsCallback)(NSString* pairingId,
+                                           NSString* secret);
+
 // Class to abstract the details from how iOS wants to write to the keychain.
 // TODO(nicholss): This will have to be futher refactored when we integrate
 // with the private Google auth.
 @interface KeychainWrapper : NSObject
 
+// Access to the singleton shared instance from this method.
++ (KeychainWrapper*)instance;
+
 // Save a refresh token to the keychain.
 - (void)setRefreshToken:(NSString*)refreshToken;
 // Get the refresh token from the keychain, if there is one.
 - (NSString*)refreshToken;
+// Save the pairing credentials for the given host id.
+- (void)commitPairingCredentialsForHost:(NSString*)host
+                                     id:(NSString*)pairingId
+                                 secret:(NSString*)secret;
+// Get the pairing credentials for the given host id.
+- (NSDictionary*)pairingCredentialsForHost:(NSString*)host;
 // Reset the keychain and the cache.
 - (void)resetKeychainItem;
 
