@@ -5,6 +5,8 @@
 import("//build/util/branding.gni")
 import("//ui/vector_icons/vector_icons.gni")
 
+# Note: icon files belong in components/vector_icons, not here. All of these
+# files should eventually be moved there.
 aggregate_vector_icons("ui_vector_icons") {
   icon_directory = "."
 
