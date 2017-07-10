@@ -48,7 +48,7 @@ TEST_F(RemoteSuggestionsStatusServiceTest, NoSigninNeeded) {
             service->GetStatusFromDeps());
 
   // One can still sign in.
-  utils_.fake_signin_manager()->SignIn("foo@bar.com");
+  utils_.fake_signin_manager()->SignIn("foo@bar.com", "user", "pass");
   EXPECT_EQ(RemoteSuggestionsStatus::ENABLED_AND_SIGNED_IN,
             service->GetStatusFromDeps());
 }
@@ -66,7 +66,7 @@ TEST_F(RemoteSuggestionsStatusServiceTest, DisabledViaPref) {
             service->GetStatusFromDeps());
 
   // The other dependencies shouldn't matter anymore.
-  utils_.fake_signin_manager()->SignIn("foo@bar.com");
+  utils_.fake_signin_manager()->SignIn("foo@bar.com", "user", "pass");
   EXPECT_EQ(RemoteSuggestionsStatus::EXPLICITLY_DISABLED,
             service->GetStatusFromDeps());
 }

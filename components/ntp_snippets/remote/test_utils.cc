@@ -10,6 +10,7 @@
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/testing_pref_service.h"
 #include "components/signin/core/browser/account_tracker_service.h"
+#include "components/signin/core/browser/fake_profile_oauth2_token_service.h"
 #include "components/signin/core/browser/fake_signin_manager.h"
 #include "components/signin/core/browser/test_signin_client.h"
 #include "components/signin/core/common/signin_pref_names.h"
@@ -55,17 +56,30 @@ RemoteSuggestionsTestUtils::RemoteSuggestionsTestUtils()
       prefs::kGoogleServicesLastAccountId, std::string());
   pref_service_->registry()->RegisterStringPref(
       prefs::kGoogleServicesLastUsername, std::string());
+  pref_service_->registry()->RegisterStringPref(
+      prefs::kGoogleServicesUserAccountId, std::string());
+
+  pref_service_->registry()->RegisterListPref(
+      AccountTrackerService::kAccountInfoPref);
+  pref_service_->registry()->RegisterIntegerPref(
+      prefs::kAccountIdMigrationState,
+      AccountTrackerService::MIGRATION_NOT_STARTED);
+
+  token_service_ = base::MakeUnique<FakeProfileOAuth2TokenService>();
   signin_client_ = base::MakeUnique<TestSigninClient>(pref_service_.get());
   account_tracker_ = base::MakeUnique<AccountTrackerService>();
+  account_tracker_->Initialize(signin_client_.get());
   fake_sync_service_ = base::MakeUnique<FakeSyncService>();
+
   ResetSigninManager();
 }
 
 RemoteSuggestionsTestUtils::~RemoteSuggestionsTestUtils() = default;
 
 void RemoteSuggestionsTestUtils::ResetSigninManager() {
-  fake_signin_manager_ = base::MakeUnique<FakeSigninManagerBase>(
-      signin_client_.get(), account_tracker_.get());
+  fake_signin_manager_ = base::MakeUnique<FakeSigninManager>(
+      signin_client_.get(), token_service_.get(), account_tracker_.get(),
+      nullptr);
 }
 
 }  // namespace test

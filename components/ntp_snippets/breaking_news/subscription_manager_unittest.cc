@@ -6,29 +6,47 @@
 
 #include "base/message_loop/message_loop.h"
 #include "components/ntp_snippets/pref_names.h"
+#include "components/ntp_snippets/remote/test_utils.h"
 #include "components/prefs/testing_pref_service.h"
+#include "components/signin/core/browser/fake_profile_oauth2_token_service.h"
+#include "components/signin/core/browser/fake_signin_manager.h"
+#include "components/signin/core/browser/test_signin_client.h"
+#include "google_apis/gaia/fake_oauth2_token_service_delegate.h"
 #include "net/url_request/test_url_fetcher_factory.h"
 #include "net/url_request/url_request_test_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace ntp_snippets {
 
+const char kTestEmail[] = "foo@bar.com";
+const std::string kSubUrl = "http://valid-url.test/subscribe";
+const std::string kUnsubUrl = "http://valid-url.test/unsubscribe";
+
 class SubscriptionManagerTest : public testing::Test {
  public:
   SubscriptionManagerTest()
       : request_context_getter_(
             new net::TestURLRequestContextGetter(message_loop_.task_runner())),
-        pref_service_(base::MakeUnique<TestingPrefServiceSimple>()) {}
+        fake_token_service_(base::MakeUnique<FakeProfileOAuth2TokenService>(
+            base::MakeUnique<FakeOAuth2TokenServiceDelegate>(
+                request_context_getter_.get()))) {}
 
   void SetUp() override {
-    SubscriptionManager::RegisterProfilePrefs(pref_service_->registry());
+    SubscriptionManager::RegisterProfilePrefs(
+        utils_.pref_service()->registry());
   }
 
   scoped_refptr<net::URLRequestContextGetter> GetRequestContext() {
     return request_context_getter_.get();
   }
 
-  PrefService* GetPrefService() { return pref_service_.get(); }
+  PrefService* GetPrefService() { return utils_.pref_service(); }
+
+  OAuth2TokenService* GetOAuth2TokenService() {
+    return fake_token_service_.get();
+  }
+
+  SigninManagerBase* GetSigninManager() { return utils_.fake_signin_manager(); }
 
   net::TestURLFetcher* GetRunningFetcher() {
     // All created TestURLFetchers have ID 0 by default.
@@ -37,11 +55,56 @@ class SubscriptionManagerTest : public testing::Test {
     return url_fetcher;
   }
 
-  void RespondWithData(const std::string& data) {
+  void RespondToSubscriptionRequestSuccessfully() {
+    net::TestURLFetcher* url_fetcher = GetRunningFetcher();
+    EXPECT_EQ(GURL(kSubUrl), url_fetcher->GetOriginalURL());
+    RespondSuccessfully();
+  }
+
+  void RespondToUnsubscriptionRequestSuccessfully() {
+    net::TestURLFetcher* url_fetcher = GetRunningFetcher();
+    EXPECT_EQ(GURL(kUnsubUrl), url_fetcher->GetOriginalURL());
+    RespondSuccessfully();
+  }
+
+  void RespondToSubscriptionWithError(int error_code) {
+    net::TestURLFetcher* url_fetcher = GetRunningFetcher();
+    EXPECT_EQ(GURL(kSubUrl), url_fetcher->GetOriginalURL());
+    RespondWithError(error_code);
+  }
+
+  void RespondToUnsubscriptionWithError(int error_code) {
+    net::TestURLFetcher* url_fetcher = GetRunningFetcher();
+    EXPECT_EQ(GURL(kUnsubUrl), url_fetcher->GetOriginalURL());
+    RespondWithError(error_code);
+  }
+
+  void SignIn() {
+    utils_.fake_signin_manager()->SignIn(kTestEmail, "user", "pass");
+  }
+
+  void SignOut() { utils_.fake_signin_manager()->ForceSignOut(); }
+  void IssueRefreshToken() {
+    fake_token_service_->GetDelegate()->UpdateCredentials(kTestEmail, "token");
+  }
+
+  void IssueAccessToken() {
+    fake_token_service_->IssueAllTokensForAccount(kTestEmail, "access_token",
+                                                  base::Time::Max());
+  }
+
+  void CancelAccessTokenRequests() {
+    fake_token_service_->IssueErrorForAllPendingRequestsForAccount(
+        kTestEmail, GoogleServiceAuthError(
+                        GoogleServiceAuthError::State::REQUEST_CANCELED));
+  }
+
+ private:
+  void RespondSuccessfully() {
     net::TestURLFetcher* url_fetcher = GetRunningFetcher();
     url_fetcher->set_status(net::URLRequestStatus());
     url_fetcher->set_response_code(net::HTTP_OK);
-    url_fetcher->SetResponseString(data);
+    url_fetcher->SetResponseString(std::string());
     // Call the URLFetcher delegate to continue the test.
     url_fetcher->delegate()->OnURLFetchComplete(url_fetcher);
   }
@@ -54,63 +117,125 @@ class SubscriptionManagerTest : public testing::Test {
     url_fetcher->delegate()->OnURLFetchComplete(url_fetcher);
   }
 
-  const std::string url{"http://valid-url.test"};
 
- private:
   base::MessageLoop message_loop_;
+  test::RemoteSuggestionsTestUtils utils_;
   scoped_refptr<net::TestURLRequestContextGetter> request_context_getter_;
   net::TestURLFetcherFactory url_fetcher_factory_;
-  std::unique_ptr<TestingPrefServiceSimple> pref_service_;
+  std::unique_ptr<FakeProfileOAuth2TokenService> fake_token_service_;
 };
 
 TEST_F(SubscriptionManagerTest, SubscribeSuccessfully) {
   std::string token = "1234567890";
-  SubscriptionManager manager(GetRequestContext(), GetPrefService(), GURL(url),
-                              GURL(url));
+  SubscriptionManager manager(GetRequestContext(), GetPrefService(),
+                              GetSigninManager(), GetOAuth2TokenService(),
+                              GURL(kSubUrl), GURL(kUnsubUrl));
   manager.Subscribe(token);
-  RespondWithData("");
+  RespondToSubscriptionRequestSuccessfully();
   EXPECT_TRUE(manager.IsSubscribed());
-  EXPECT_EQ(GetPrefService()->GetString(
-                ntp_snippets::prefs::kBreakingNewsSubscriptionDataToken),
-            token);
+  EXPECT_EQ(
+      GetPrefService()->GetString(prefs::kBreakingNewsSubscriptionDataToken),
+      token);
+  EXPECT_FALSE(GetPrefService()->GetBoolean(
+      prefs::kBreakingNewsSubscriptionDataIsAuthenticated));
+}
+
+TEST_F(SubscriptionManagerTest, SubscribeAuthSuccessfully) {
+  SignIn();
+  IssueRefreshToken();
+
+  std::string token = "1234567890";
+  SubscriptionManager manager(GetRequestContext(), GetPrefService(),
+                              GetSigninManager(), GetOAuth2TokenService(),
+                              GURL(kSubUrl), GURL(kUnsubUrl));
+  manager.Subscribe(token);
+  EXPECT_FALSE(manager.IsSubscribed());
+  IssueAccessToken();
+  EXPECT_FALSE(manager.IsSubscribed());
+  RespondToSubscriptionRequestSuccessfully();
+  EXPECT_TRUE(manager.IsSubscribed());
+  EXPECT_EQ(
+      GetPrefService()->GetString(prefs::kBreakingNewsSubscriptionDataToken),
+      token);
+  EXPECT_TRUE(GetPrefService()->GetBoolean(
+      prefs::kBreakingNewsSubscriptionDataIsAuthenticated));
 }
 
 TEST_F(SubscriptionManagerTest, SubscribeWithErrors) {
   std::string token = "1234567890";
-  SubscriptionManager manager(GetRequestContext(), GetPrefService(), GURL(url),
-                              GURL(url));
+  SubscriptionManager manager(GetRequestContext(), GetPrefService(),
+                              GetSigninManager(), GetOAuth2TokenService(),
+                              GURL(kSubUrl), GURL(kUnsubUrl));
+
   manager.Subscribe(token);
-  RespondWithError(net::ERR_TIMED_OUT);
+  RespondToSubscriptionWithError(net::ERR_TIMED_OUT);
   EXPECT_FALSE(manager.IsSubscribed());
-  EXPECT_FALSE(GetPrefService()->HasPrefPath(
-      ntp_snippets::prefs::kBreakingNewsSubscriptionDataToken));
+  EXPECT_FALSE(
+      GetPrefService()->HasPrefPath(prefs::kBreakingNewsSubscriptionDataToken));
 }
 
 TEST_F(SubscriptionManagerTest, UnsubscribeSuccessfully) {
   std::string token = "1234567890";
-  GetPrefService()->SetString(
-      ntp_snippets::prefs::kBreakingNewsSubscriptionDataToken, token);
-  SubscriptionManager manager(GetRequestContext(), GetPrefService(), GURL(url),
-                              GURL(url));
-  manager.Unsubscribe(token);
-  RespondWithData("");
+  GetPrefService()->SetString(prefs::kBreakingNewsSubscriptionDataToken, token);
+  SubscriptionManager manager(GetRequestContext(), GetPrefService(),
+                              GetSigninManager(), GetOAuth2TokenService(),
+                              GURL(kSubUrl), GURL(kUnsubUrl));
+  manager.Unsubscribe(token, false);
+  RespondToUnsubscriptionRequestSuccessfully();
   EXPECT_FALSE(manager.IsSubscribed());
-  EXPECT_FALSE(GetPrefService()->HasPrefPath(
-      ntp_snippets::prefs::kBreakingNewsSubscriptionDataToken));
+  EXPECT_FALSE(
+      GetPrefService()->HasPrefPath(prefs::kBreakingNewsSubscriptionDataToken));
 }
 
 TEST_F(SubscriptionManagerTest, UnsubscribeWithErrors) {
   std::string token = "1234567890";
-  GetPrefService()->SetString(
-      ntp_snippets::prefs::kBreakingNewsSubscriptionDataToken, token);
-  SubscriptionManager manager(GetRequestContext(), GetPrefService(), GURL(url),
-                              GURL(url));
-  manager.Unsubscribe(token);
-  RespondWithError(net::ERR_TIMED_OUT);
+  GetPrefService()->SetString(prefs::kBreakingNewsSubscriptionDataToken, token);
+  SubscriptionManager manager(GetRequestContext(), GetPrefService(),
+                              GetSigninManager(), GetOAuth2TokenService(),
+                              GURL(kSubUrl), GURL(kUnsubUrl));
+  manager.Unsubscribe(token, false);
+  RespondToUnsubscriptionWithError(net::ERR_TIMED_OUT);
   EXPECT_TRUE(manager.IsSubscribed());
-  EXPECT_EQ(GetPrefService()->GetString(
-                ntp_snippets::prefs::kBreakingNewsSubscriptionDataToken),
-            token);
+  EXPECT_EQ(
+      GetPrefService()->GetString(prefs::kBreakingNewsSubscriptionDataToken),
+      token);
+}
+
+TEST_F(SubscriptionManagerTest, ShouldResubscribeIfSignInAfterSubscription) {
+  std::string token = "1234567890";
+  SubscriptionManager manager(GetRequestContext(), GetPrefService(),
+                              GetSigninManager(), GetOAuth2TokenService(),
+                              GURL(kSubUrl), GURL(kUnsubUrl));
+  manager.Subscribe(token);
+  RespondToSubscriptionRequestSuccessfully();
+  EXPECT_FALSE(manager.NeedsResubscribe());
+  SignIn();
+  IssueRefreshToken();
+  EXPECT_TRUE(manager.NeedsResubscribe());
+  RespondToUnsubscriptionRequestSuccessfully();
+  IssueAccessToken();
+  RespondToSubscriptionRequestSuccessfully();
+  EXPECT_TRUE(GetPrefService()->GetBoolean(
+      prefs::kBreakingNewsSubscriptionDataIsAuthenticated));
+}
+
+TEST_F(SubscriptionManagerTest, ShouldResubscribeIfSignOutAfterSubscription) {
+  SignIn();
+  IssueRefreshToken();
+
+  std::string token = "1234567890";
+  SubscriptionManager manager(GetRequestContext(), GetPrefService(),
+                              GetSigninManager(), GetOAuth2TokenService(),
+                              GURL(kSubUrl), GURL(kUnsubUrl));
+  manager.Subscribe(token);
+  IssueAccessToken();
+  RespondToSubscriptionRequestSuccessfully();
+  SignOut();
+  EXPECT_TRUE(manager.NeedsResubscribe());
+  RespondToUnsubscriptionRequestSuccessfully();
+  RespondToSubscriptionRequestSuccessfully();
+  EXPECT_FALSE(GetPrefService()->GetBoolean(
+      prefs::kBreakingNewsSubscriptionDataIsAuthenticated));
 }
 
 }  // namespace ntp_snippets
