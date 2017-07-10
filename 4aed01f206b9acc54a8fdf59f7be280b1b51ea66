@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c7ae915_072a4824",
+        "filename": "build/config/jumbo.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-07-10T20:42:47Z",
+      "side": 1,
+      "message": "Does this work as just\n\n  assert(invoker.sources - excluded_sources !\u003d [])\n\n?",
+      "revId": "4aed01f206b9acc54a8fdf59f7be280b1b51ea66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
