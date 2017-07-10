@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "680eaaba_84e12044",
+        "filename": "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-07-10T12:57:51Z",
+      "side": 1,
+      "message": "Suggestion: kKrb5CCFile and kKrb5ConfFile for consistency with authpolicyd.",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 36
+      },
+      "revId": "77149cb96e9a0ac395f7b710ae177cc735c8e08c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a2cb59f_4d42a941",
+        "filename": "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-07-10T12:57:51Z",
+      "side": 1,
+      "message": "This log is going to be useless without context. Please add\n\"Failed to create directory \u0027\" \u003c\u003c dir \u003c\u003c \"\u0027\".",
+      "range": {
+        "startLine": 82,
+        "startChar": 3,
+        "endLine": 82,
+        "endChar": 51
+      },
+      "revId": "77149cb96e9a0ac395f7b710ae177cc735c8e08c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f836e48_c3ff212d",
+        "filename": "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-07-10T12:57:51Z",
+      "side": 1,
+      "message": "base::WriteFile returns the number of bytes written, not a bool. Must check \u003d\u003d static_cast\u003cint\u003e(blob.size()).",
+      "range": {
+        "startLine": 90,
+        "startChar": 1,
+        "endLine": 90,
+        "endChar": 60
+      },
+      "revId": "77149cb96e9a0ac395f7b710ae177cc735c8e08c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d5189ac_dbf96a3a",
+        "filename": "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-07-10T12:57:51Z",
+      "side": 1,
+      "message": "Remove debug line.",
+      "range": {
+        "startLine": 206,
+        "startChar": 2,
+        "endLine": 206,
+        "endChar": 30
+      },
+      "revId": "77149cb96e9a0ac395f7b710ae177cc735c8e08c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccdd561e_687f0589",
+        "filename": "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-07-10T12:57:51Z",
+      "side": 1,
+      "message": "Remove debug line.",
+      "range": {
+        "startLine": 214,
+        "startChar": 0,
+        "endLine": 214,
+        "endChar": 30
+      },
+      "revId": "77149cb96e9a0ac395f7b710ae177cc735c8e08c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ae75ba5_e4fafab4",
+        "filename": "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-07-10T12:57:51Z",
+      "side": 1,
+      "message": "_",
+      "range": {
+        "startLine": 90,
+        "startChar": 32,
+        "endLine": 90,
+        "endChar": 33
+      },
+      "revId": "77149cb96e9a0ac395f7b710ae177cc735c8e08c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc4d3856_07c9dd78",
+        "filename": "chromeos/dbus/fake_auth_policy_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-07-10T12:57:51Z",
+      "side": 1,
+      "message": "Preved?",
+      "range": {
+        "startLine": 156,
+        "startChar": 2,
+        "endLine": 156,
+        "endChar": 29
+      },
+      "revId": "77149cb96e9a0ac395f7b710ae177cc735c8e08c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
