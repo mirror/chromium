@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2533a8aa_50f0dd5b",
+        "filename": "chrome/browser/ui/browser_command_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-07-10T20:05:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9d92eb8_960a5115",
+      "revId": "94ce45b4cbb5f50ddd473513c30865fd973a45d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2536aa7d_05c3d52c",
         "filename": "chrome/browser/ui/browser_command_controller.cc",
         "patchSetId": 14
@@ -33,6 +51,24 @@
       "revId": "94ce45b4cbb5f50ddd473513c30865fd973a45d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0765d368_94e351ca",
+        "filename": "chrome/browser/ui/browser_command_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-07-10T20:05:38Z",
+      "side": 1,
+      "message": "Done, I\u0027ve renamed the namespace to new_tab_help, and shortened the class names. The namespace is necessary to avoid naming collisions.",
+      "parentUuid": "2536aa7d_05c3d52c",
+      "revId": "94ce45b4cbb5f50ddd473513c30865fd973a45d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "28d649be_befccccd",
+        "filename": "chrome/browser/ui/browser_command_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-07-10T20:05:38Z",
+      "side": 1,
+      "message": "Ack,the new tab button is covered by BrowserTabStripController::CreateNewTab().\nCtrl-T, window frame context menu, app menu are covered by BrowserCommandController::ExecuteCommandWithDisposition().\nThe tabstrip context menu is covered by the TapStripModel::ExecuteContextMenuCommand().\n\nProgrammatic creation by extensions is not included in any case.",
+      "parentUuid": "d4b0a5e4_7d52f207",
+      "revId": "94ce45b4cbb5f50ddd473513c30865fd973a45d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e8e286a_e8e6c7ad",
         "filename": "chrome/browser/ui/omnibox/chrome_omnibox_client.cc",
         "patchSetId": 14
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "5db35547_53b7face",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_client.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-07-10T20:05:38Z",
+      "side": 1,
+      "message": "Ack, I realize my previous comments were unclear. The reason why we want to make sure the previous URL was not the NTP is because the NTP is expected to be \"clobbered.\" This means that when the user is on the NTP, they should immediately navigate away from it since that\u0027s the purpose of the NTP. As a result, the user is expected to use the omnibox in this case. However, for new tab help tracking, we\u0027re measuring to see if the user has navigated in the omnibox at least one time. Because of this metric, it was decided in the design process that we would avoid recording omnibox usage from the NTP. \n\nIn this case, I think that the current implementation is appropriate. What do you think?",
+      "parentUuid": "4e8e286a_e8e6c7ad",
+      "revId": "94ce45b4cbb5f50ddd473513c30865fd973a45d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d990e2a_dcf12a39",
         "filename": "components/omnibox/browser/omnibox_edit_model.cc",
         "patchSetId": 14
@@ -84,6 +156,24 @@
       "revId": "94ce45b4cbb5f50ddd473513c30865fd973a45d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ea7201e_3feb1a7e",
+        "filename": "components/omnibox/browser/omnibox_edit_model.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1354,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-07-10T20:05:38Z",
+      "side": 1,
+      "message": "Done, changed it back to the old behavior. Do you think it\u0027s necessary to have a unittest?",
+      "parentUuid": "4d990e2a_dcf12a39",
+      "revId": "94ce45b4cbb5f50ddd473513c30865fd973a45d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
