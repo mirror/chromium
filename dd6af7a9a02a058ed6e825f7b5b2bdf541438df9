@@ -16,6 +16,24 @@
       "revId": "dd6af7a9a02a058ed6e825f7b5b2bdf541438df9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4439d618_e5d7b91a",
+        "filename": "chrome/browser/resources/settings/people_page/change_picture.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-10T21:14:18Z",
+      "side": 1,
+      "message": "This allows us to type pictureList_ so we don\u0027t have to do the following everywhere that we need to invoke a CrPictureListElement method, e.g.:\n\n/** @type {CrPictureListElement} */ (this.$.pictureList).setSelectedImageUrl(image);",
+      "parentUuid": "4cf2b0c4_87e09e58",
+      "revId": "dd6af7a9a02a058ed6e825f7b5b2bdf541438df9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
