@@ -2,6 +2,8 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//media/media_options.gni")
+
 source_set("audio") {
   sources = [
     "cast_audio_manager.cc",
@@ -22,4 +24,13 @@ source_set("audio") {
     "//media",
     "//media:shared_memory_support",
   ]
+
+  if (use_alsa) {
+    sources += [
+      "cast_audio_manager_alsa.cc",
+      "cast_audio_manager_alsa.h",
+    ]
+  }
+
+  configs += [ "//media/audio:platform_config" ]
 }
