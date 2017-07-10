@@ -11,11 +11,16 @@
 #include "mojo/public/cpp/bindings/binding_set.h"
 #include "services/ui/public/interfaces/gpu.mojom.h"
 
+namespace viz {
+class ServerGpuMemoryBufferManager;
+}
+
 namespace content {
 
 class GpuClient : public ui::mojom::Gpu {
  public:
-  explicit GpuClient(int render_process_id);
+  GpuClient(int render_process_id,
+            viz::ServerGpuMemoryBufferManager* gmb_manager);
   ~GpuClient() override;
 
   void Add(ui::mojom::GpuRequest request);
@@ -43,6 +48,7 @@ class GpuClient : public ui::mojom::Gpu {
 
   const int render_process_id_;
   mojo::BindingSet<ui::mojom::Gpu> bindings_;
+  viz::ServerGpuMemoryBufferManager* const gmb_manager_;
   base::WeakPtrFactory<GpuClient> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(GpuClient);
