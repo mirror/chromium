@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6270c35c_871541e8",
+        "filename": "content/browser/renderer_host/render_process_host_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-07-10T09:44:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fda1f123_123948f3",
+      "revId": "966d30353f7ae798dcd74b4897ecce61f7409880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3c19e14_3a960f59",
         "filename": "content/browser/service_worker/embedded_worker_instance.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "966d30353f7ae798dcd74b4897ecce61f7409880",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab68b111_b01800dc",
+        "filename": "content/browser/service_worker/embedded_worker_instance.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-07-10T09:44:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3c19e14_3a960f59",
+      "revId": "966d30353f7ae798dcd74b4897ecce61f7409880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a573168e_48a73b06",
+        "filename": "content/browser/service_worker/service_worker_metrics.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-07-10T09:44:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d970187_824d45ce",
+      "revId": "966d30353f7ae798dcd74b4897ecce61f7409880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ec123de_3f0ad51e",
         "filename": "content/browser/service_worker/service_worker_process_manager.h",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2017-07-10T08:28:52Z",
       "side": 1,
       "message": "Can you move these comments to ServiceWorkerMetrics::StartSituation?\n\nBTW I\u0027m not sure we can claim 100% that using an existing RenderProcessHost means a new renderer process was not created. RenderProcessHost can be reused for a new process, or it might not yet have a process yet for some reason.",
+      "revId": "966d30353f7ae798dcd74b4897ecce61f7409880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dc38348_16c1f067",
+        "filename": "content/browser/service_worker/service_worker_process_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-07-10T09:44:30Z",
+      "side": 1,
+      "message": "\u003e Can you move these comments to ServiceWorkerMetrics::StartSituation?\n\nDone\n\n\n\u003e BTW I\u0027m not sure we can claim 100% that using an existing RenderProcessHost means a new renderer process was not created. RenderProcessHost can be reused for a new process, or it might not yet have a process yet for some reason.\n\nShall I rename \"PROCESS\" to \"PROCESS_HOST\"?",
+      "parentUuid": "3ec123de_3f0ad51e",
       "revId": "966d30353f7ae798dcd74b4897ecce61f7409880",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
