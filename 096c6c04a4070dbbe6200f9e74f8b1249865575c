@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4a42384_798f453e",
+        "filename": "ash/mus/shell_delegate_mus.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-10T23:06:29Z",
+      "side": 1,
+      "message": "did you need this?",
+      "revId": "096c6c04a4070dbbe6200f9e74f8b1249865575c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3186675e_9e089f7a",
+        "filename": "ash/shell_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-10T23:06:29Z",
+      "side": 1,
+      "message": "I think you don\u0027t have to explain who will own the object here. (as it\u0027s obvious now)",
+      "revId": "096c6c04a4070dbbe6200f9e74f8b1249865575c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e41db1e_350dd8ab",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-10T23:06:29Z",
+      "side": 1,
+      "message": "this isn\u0027t necessary. It\u0027ll crash in next line, and the stack will be in crash report.",
+      "revId": "096c6c04a4070dbbe6200f9e74f8b1249865575c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
