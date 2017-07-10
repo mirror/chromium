@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5255bfe2_75f1cf6e",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-10T11:56:57Z",
+      "side": 1,
+      "message": "We should use the new API in base/metrics/field_trial_params.h:\n\nbase::GetFieldTrialParamByFeatureAsInt() - the signature and functionality stays the same.\n\nPlease either do it in this CL or add a TODO for this whole file to switch.",
+      "range": {
+        "startLine": 119,
+        "startChar": 9,
+        "endLine": 119,
+        "endChar": 52
+      },
+      "revId": "a89fb4569bed90513b982639c48d2b8c72fd6593",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
