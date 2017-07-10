@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "517a1f06_a6864b55",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-07-10T02:48:10Z",
+      "side": 1,
+      "message": "Description updated.",
+      "parentUuid": "82d38011_37c0bf6f",
+      "range": {
+        "startLine": 16,
+        "startChar": 12,
+        "endLine": 16,
+        "endChar": 20
+      },
+      "revId": "10e1a3cde64cedf4d5e57f93c6a0ffb1be89ade7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4ea8f17_d12fa1f3",
         "filename": "third_party/WebKit/Source/core/frame/EmbeddedContentView.h",
         "patchSetId": 12
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-07T07:16:17Z",
       "side": 1,
       "message": "Any chance we can add a comment that describes the purpose of this method?",
+      "range": {
+        "startLine": 34,
+        "startChar": 2,
+        "endLine": 34,
+        "endChar": 36
+      },
+      "revId": "10e1a3cde64cedf4d5e57f93c6a0ffb1be89ade7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdb32b8b_e9c11c14",
+        "filename": "third_party/WebKit/Source/core/frame/EmbeddedContentView.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-07-10T02:48:10Z",
+      "side": 1,
+      "message": "Done.  This is my best go at a useful comment - feel free to suggest an alternative.",
+      "parentUuid": "e4ea8f17_d12fa1f3",
       "range": {
         "startLine": 34,
         "startChar": 2,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "6b6955d4_d3224798",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 965,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-07-10T02:48:10Z",
+      "side": 1,
+      "message": "I will follow up with another CL.\n\nThe current methods with *UpdateGeometries* (plural) apply to children rather than self, so they can be changed to *UpdateChildGeometries*\n\nUpdateGeometries \u003d\u003e UpdateChildGeometries\nUpdateGeometriesIfNeeded \u003d\u003e UpdateChildGeometriesIfNeeded\nSetNeedsUpdateGeometries \u003d\u003e SetNeedsUpdateChildGeometries\nneeds_update_geometries \u003d\u003e needs_update_child_geometries",
+      "parentUuid": "2b500f0e_f530a843",
+      "range": {
+        "startLine": 965,
+        "startChar": 7,
+        "endLine": 965,
+        "endChar": 23
+      },
+      "revId": "10e1a3cde64cedf4d5e57f93c6a0ffb1be89ade7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bdb3ee45_89b65301",
         "filename": "third_party/WebKit/Source/core/page/scrolling/RootScrollerController.cpp",
         "patchSetId": 12
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "a9b05d7b_5fb7f558",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/RootScrollerController.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-07-10T02:48:10Z",
+      "side": 1,
+      "message": "that is true - I can get rid of 2 lines of code without this.",
+      "parentUuid": "bdb3ee45_89b65301",
+      "range": {
+        "startLine": 187,
+        "startChar": 30,
+        "endLine": 187,
+        "endChar": 75
+      },
+      "revId": "10e1a3cde64cedf4d5e57f93c6a0ffb1be89ade7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f4d6bb5_8626ddf6",
         "filename": "third_party/WebKit/Source/core/page/scrolling/RootScrollerController.cpp",
         "patchSetId": 12
@@ -105,6 +201,30 @@
       "writtenOn": "2017-07-07T07:16:17Z",
       "side": 1,
       "message": "It\u0027s unclear to me why the code can assume this now.",
+      "range": {
+        "startLine": 191,
+        "startChar": 2,
+        "endLine": 191,
+        "endChar": 65
+      },
+      "revId": "10e1a3cde64cedf4d5e57f93c6a0ffb1be89ade7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2730fd11_7579c5af",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/RootScrollerController.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-07-10T02:48:10Z",
+      "side": 1,
+      "message": "I\u0027m happy to put the previous checks for document_-\u003eGetFrame()-\u003eView() back.  But I quite dislike unnecessary null checks and try to remove them when possible.\n\nFrom what I can tell, this code can only be called if document_-\u003eGetFrame() or a child frame is attached and is being resized.  In that case, the document, frame and view must always be valid here.\n\nThis code is called either from LocalFrameView::ViewportSizeChanged, or internally from ApplyRootScrollerProperties which already checks document_-\u003eGetFrame()-\u003eView()\n\nI have thought about changing this method to take all fields that get used as inputs, or even inlining the 2 lines of code (view-\u003eUpdateGeometry, view-\u003eSetLayoutSize) at the 2 call sites.",
+      "parentUuid": "0f4d6bb5_8626ddf6",
       "range": {
         "startLine": 191,
         "startChar": 2,
