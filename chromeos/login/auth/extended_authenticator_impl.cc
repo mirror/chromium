@@ -294,7 +294,8 @@ void ExtendedAuthenticatorImpl::OnMountComplete(
     const ResultCallback& success_callback,
     bool success,
     cryptohome::MountError return_code,
-    const std::string& mount_hash) {
+    const std::string& mount_hash,
+    const std::string& temporary_mount_path) {
   RecordEndMarker(time_marker);
   UserContext copy = user_context;
   copy.SetUserIDHash(mount_hash);

@@ -134,7 +134,8 @@ void OnMount(const base::WeakPtr<AuthAttemptState>& attempt,
              scoped_refptr<CryptohomeAuthenticator> resolver,
              bool success,
              cryptohome::MountError return_code,
-             const std::string& mount_hash) {
+             const std::string& mount_hash,
+             const std::string& temporary_mount_path) {
   const bool public_mount = attempt->user_context.GetUserType() ==
                                 user_manager::USER_TYPE_KIOSK_APP ||
                             attempt->user_context.GetUserType() ==

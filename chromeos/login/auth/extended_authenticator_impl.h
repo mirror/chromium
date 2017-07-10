@@ -80,7 +80,8 @@ class CHROMEOS_EXPORT ExtendedAuthenticatorImpl : public ExtendedAuthenticator {
                        const ResultCallback& success_callback,
                        bool success,
                        cryptohome::MountError return_code,
-                       const std::string& mount_hash);
+                       const std::string& mount_hash,
+                       const std::string& temporary_mount_path);
   void OnOperationComplete(const std::string& time_marker,
                            const UserContext& context,
                            const base::Closure& success_callback,
