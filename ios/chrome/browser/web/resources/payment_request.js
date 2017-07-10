@@ -220,6 +220,19 @@ var SerializedPaymentResponse;
   };
 
   /**
+   * Sets the id property of the PaymentRequest object to |id|.
+   * @param {string} id
+   */
+  __gCrWeb['paymentRequestManager'].setPaymentRequestID = function(id) {
+    if (!__gCrWeb['paymentRequestManager'].pendingRequest) {
+      __gCrWeb['paymentRequestManager'].rejectRequestPromise(
+          'Internal PaymentRequest error: No pending request.');
+    }
+
+    __gCrWeb['paymentRequestManager'].pendingRequest.id = id;
+  };
+
+  /**
    * The event that enables the web page to update the details of the payment
    * request in response to a user interaction.
    * @type {Event}
@@ -675,6 +688,7 @@ window.PaymentCurrencyAmount;
 
 /**
  * @typedef {{
+ *   id: (string|undefined),
  *   total: (window.PaymentItem|undefined),
  *   displayItems: (!Array<!window.PaymentItem>|undefined),
  *   shippingOptions: (!Array<!window.PaymentShippingOption>|undefined),

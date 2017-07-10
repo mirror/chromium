@@ -393,11 +393,17 @@ struct PendingPaymentResponse {
       itr->second.begin(), itr->second.end(),
       [webPaymentRequest](
           const std::unique_ptr<payments::PaymentRequest>& paymentRequest) {
-        return paymentRequest->web_payment_request() == webPaymentRequest;
+        return paymentRequest->web_payment_request().payment_request_id ==
+               webPaymentRequest.payment_request_id;
       });
   if (found != itr->second.end()) {
     return (*found).get();
   }
+
+  // Set the id property on the PaymentRequest JavaScript object.
+  [_paymentRequestJsManager
+      setPaymentRequestIDToValue:webPaymentRequest.payment_request_id
+               completionHandler:nil];
 
   itr->second.push_back(base::MakeUnique<payments::PaymentRequest>(
       webPaymentRequest, _browserState, _activeWebState, _personalDataManager,
@@ -575,7 +581,8 @@ struct PendingPaymentResponse {
     DLOG(ERROR) << "JS message parameter 'payment_details' is missing";
     return NO;
   }
-  if (!paymentDetails.FromDictionaryValue(*paymentDetailsData)) {
+  if (!paymentDetails.FromDictionaryValue(*paymentDetailsData,
+                                          false /* requries_total */)) {
     DLOG(ERROR) << "JS message parameter 'payment_details' is invalid";
     return NO;
   }
@@ -721,6 +728,9 @@ requestFullCreditCard:(const autofill::CreditCard&)creditCard
 - (void)paymentRequestAddressNormalizationDidCompleteForPaymentRequest:
     (payments::PaymentRequest*)paymentRequest {
   web::PaymentResponse paymentResponse;
+
+  paymentResponse.payment_request_id =
+      paymentRequest->web_payment_request().payment_request_id;
 
   paymentResponse.method_name =
       base::ASCIIToUTF16(_pendingPaymentResponse.methodName);
