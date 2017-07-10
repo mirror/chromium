@@ -29580,6 +29580,26 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Media.Engagement.SignificantNotAdded"
+    enum="InsignificantPlaybackReason">
+  <owner>beccahughes@chromium.org</owner>
+  <owner>media-dev@chromium.org</owner>
+  <summary>
+    Recorded when the Media Engagement service does not mark a player as
+    significant.
+  </summary>
+</histogram>
+
+<histogram name="Media.Engagement.SignificantRemoved"
+    enum="InsignificantPlaybackReason">
+  <owner>beccahughes@chromium.org</owner>
+  <owner>media-dev@chromium.org</owner>
+  <summary>
+    Recorded when the Media Engagement service no longer determines a player to
+    be significant.
+  </summary>
+</histogram>
+
 <histogram name="Media.FallbackHardwareAudioBitsPerChannel">
   <owner>dalecurtis@chromium.org</owner>
   <summary>

@@ -4,6 +4,7 @@
 
 #include "chrome/browser/media/media_engagement_contents_observer.h"
 
+#include "base/test/histogram_tester.h"
 #include "base/test/scoped_feature_list.h"
 #include "base/timer/mock_timer.h"
 #include "chrome/browser/media/media_engagement_score.h"
@@ -48,10 +49,12 @@ class MediaEngagementContentsObserverTest
     return contents_observer_->player_states_.size();
   }
 
-  void SimulatePlaybackStarted(int id) {
-    content::WebContentsObserver::MediaPlayerInfo player_info(true, true);
+  void SimulatePlaybackStarted(int id, bool has_audio) {
+    content::WebContentsObserver::MediaPlayerInfo player_info(true, has_audio);
     SimulatePlaybackStarted(player_info, id);
   }
+
+  void SimulatePlaybackStarted(int id) { SimulatePlaybackStarted(id, true); }
 
   void SimulateResizeEvent(int id, int size) {
     content::WebContentsObserver::MediaPlayerId player_id =
@@ -123,6 +126,19 @@ class MediaEngagementContentsObserverTest
     contents_observer_->committed_origin_ = url::Origin(url);
   }
 
+  void ExpectNotAddedBucketCount(InsignificantPlaybackReason reason,
+                                 int count) {
+    histogram_tester_.ExpectBucketCount(
+        MediaEngagementContentsObserver::kHistogramSignificantNotAddedName,
+        static_cast<int>(reason), count);
+  }
+
+  void ExpectRemovedBucketCount(InsignificantPlaybackReason reason, int count) {
+    histogram_tester_.ExpectBucketCount(
+        MediaEngagementContentsObserver::kHistogramSignificantRemovedName,
+        static_cast<int>(reason), count);
+  }
+
  private:
   // contents_observer_ auto-destroys when WebContents is destroyed.
   MediaEngagementContentsObserver* contents_observer_;
@@ -130,6 +146,8 @@ class MediaEngagementContentsObserverTest
   base::test::ScopedFeatureList scoped_feature_list_;
 
   base::MockTimer* playback_timer_;
+
+  base::HistogramTester histogram_tester_;
 };
 
 // TODO(mlamouri): test that visits are not recorded multiple times when a
@@ -162,37 +180,78 @@ TEST_F(MediaEngagementContentsObserverTest, SignificantActivePlayerCount) {
 
 TEST_F(MediaEngagementContentsObserverTest, AreConditionsMet) {
   EXPECT_FALSE(AreConditionsMet());
+  ExpectNotAddedBucketCount(InsignificantPlaybackReason::FRAME_SIZE_TOO_SMALL,
+                            0);
+  ExpectNotAddedBucketCount(InsignificantPlaybackReason::AUDIO_MUTED, 0);
+  ExpectNotAddedBucketCount(InsignificantPlaybackReason::MEDIA_IS_NOT_PLAYING,
+                            0);
+  ExpectNotAddedBucketCount(InsignificantPlaybackReason::NO_AUDIO_TRACK, 0);
 
+  // Start playing some media, since we haven't recieved frame size or volume
+  // data yet, we won't make it significant because of those reasons.
   SimulatePlaybackStarted(0);
+  ExpectNotAddedBucketCount(InsignificantPlaybackReason::FRAME_SIZE_TOO_SMALL,
+                            2);
+  ExpectNotAddedBucketCount(InsignificantPlaybackReason::AUDIO_MUTED, 1);
+
+  // Resize the video, unmuted the tab and make it visible. Now we should meet
+  // the conditions.
   SimulateIsVisible();
   web_contents()->SetAudioMuted(false);
   SimulateResizeEvent(0, MediaEngagementContentsObserver::kSignificantSize);
   EXPECT_TRUE(AreConditionsMet());
 
+  // Resize the frame size to make it too small to be significant. The
+  // conditions should no longer be met and we should log the reason why.
+  ExpectRemovedBucketCount(InsignificantPlaybackReason::FRAME_SIZE_TOO_SMALL,
+                           0);
   SimulateResizeEvent(0, 1);
   EXPECT_FALSE(AreConditionsMet());
   SimulateResizeEvent(0, MediaEngagementContentsObserver::kSignificantSize);
+  ExpectRemovedBucketCount(InsignificantPlaybackReason::FRAME_SIZE_TOO_SMALL,
+                           1);
 
+  // Mute the tab and the conditions should no longer be met.
   web_contents()->SetAudioMuted(true);
   EXPECT_FALSE(AreConditionsMet());
 
+  // Unmute the audio, but hide the tab and the conditions should no longer be
+  // met.
   web_contents()->SetAudioMuted(false);
   SimulateIsHidden();
   EXPECT_FALSE(AreConditionsMet());
 
+  // Now stop the media. The conditions should no longer be met and we
+  // should see the correct reason logged.
+  ExpectRemovedBucketCount(InsignificantPlaybackReason::MEDIA_IS_NOT_PLAYING,
+                           0);
   SimulateIsVisible();
   SimulatePlaybackStopped(0);
   EXPECT_FALSE(AreConditionsMet());
+  ExpectRemovedBucketCount(InsignificantPlaybackReason::MEDIA_IS_NOT_PLAYING,
+                           1);
 
+  // Restart playing and the conditions are now met.
   SimulatePlaybackStarted(0);
   EXPECT_TRUE(AreConditionsMet());
 
+  // Now mute the audio. The conditions should no longer be met and we should
+  // see a reason logged.
+  ExpectRemovedBucketCount(InsignificantPlaybackReason::AUDIO_MUTED, 0);
   SimulateMutedStateChange(0, true);
   EXPECT_FALSE(AreConditionsMet());
+  ExpectRemovedBucketCount(InsignificantPlaybackReason::AUDIO_MUTED, 1);
 
+  // Start another player which is significant so the conditions are now met
+  // again.
   SimulatePlaybackStarted(1);
   SimulateResizeEvent(1, MediaEngagementContentsObserver::kSignificantSize);
   EXPECT_TRUE(AreConditionsMet());
+
+  // Start another player which doesn't have an audio track.
+  ExpectNotAddedBucketCount(InsignificantPlaybackReason::NO_AUDIO_TRACK, 0);
+  SimulatePlaybackStarted(2, false);
+  ExpectNotAddedBucketCount(InsignificantPlaybackReason::NO_AUDIO_TRACK, 2);
 }
 
 TEST_F(MediaEngagementContentsObserverTest, EnsureCleanupAfterNavigation) {
