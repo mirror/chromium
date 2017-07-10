@@ -148,4 +148,11 @@ message CertLoggerRequest {
   // False when the report is attempted to be uploaded for the first time. True
   // in all other uploads.
   optional bool is_retry_upload = 11;
+
+  // True if the Windows platform flag indicating that this computer is a
+  // managed machine in an enterprise setting is set.
+  // TODO(sperigo): Look into heuristics we can use to check whether or not
+  // machines running other OS (Chrome OS, OS X, Linux) are in an enterprise
+  // setting.
+  optional bool windows_enterprise_setting = 12;
 };

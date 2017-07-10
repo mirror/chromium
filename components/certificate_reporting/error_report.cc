@@ -174,12 +174,20 @@ void ErrorReport::AddNetworkTimeInfo(
   network_time_info->set_network_time_query_behavior(report_behavior);
 }
 
+void ErrorReport::AddWindowsEnterpriseSetting(bool windows_enterprise_setting) {
+  cert_report_->set_windows_enterprise_setting(windows_enterprise_setting);
+}
+
 void ErrorReport::SetIsRetryUpload(bool is_retry_upload) {
   cert_report_->set_is_retry_upload(is_retry_upload);
 }
 
 const std::string& ErrorReport::hostname() const {
   return cert_report_->hostname();
+}
+
+bool ErrorReport::windows_enterprise_setting() const {
+  return cert_report_->windows_enterprise_setting();
 }
 
 bool ErrorReport::is_retry_upload() const {
