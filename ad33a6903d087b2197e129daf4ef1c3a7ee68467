@@ -22,6 +22,30 @@
       "revId": "ad33a6903d087b2197e129daf4ef1c3a7ee68467",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5bf9a036_246327b5",
+        "filename": "chrome/browser/browsing_data/browsing_data_important_sites_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-07-10T13:17:19Z",
+      "side": 1,
+      "message": "I noticed that my change has a different behavior for empty remove_mask, so I changed it to your suggested approach. Less lines and the same behavior with empty mask \n(no BrowsingDataRemover calls are executed)",
+      "parentUuid": "17bb02a0_0166be77",
+      "range": {
+        "startLine": 69,
+        "startChar": 5,
+        "endLine": 69,
+        "endChar": 41
+      },
+      "revId": "ad33a6903d087b2197e129daf4ef1c3a7ee68467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
