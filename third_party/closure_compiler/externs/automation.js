@@ -534,6 +534,14 @@ chrome.automation.AutomationNode.prototype.labelledBy;
 chrome.automation.AutomationNode.prototype.activeDescendant;
 
 /**
+ * If this node is inside a text field or a content editable, returns the node
+ * at the root of the text field or content editable.
+ * @type {(!chrome.automation.AutomationNode|undefined)}
+ * @see https://developer.chrome.com/extensions/automation#type-editableRoot
+ */
+chrome.automation.AutomationNode.prototype.editableRoot;
+
+/**
  * The target of an in-page link.
  * @type {(!chrome.automation.AutomationNode|undefined)}
  * @see https://developer.chrome.com/extensions/automation#type-inPageLinkTarget

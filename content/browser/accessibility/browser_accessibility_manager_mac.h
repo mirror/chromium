@@ -9,6 +9,7 @@
 #include <stdint.h>
 
 #include <map>
+#include <utility>
 #include <vector>
 
 #include "base/macros.h"
@@ -90,8 +91,10 @@ class CONTENT_EXPORT BrowserAccessibilityManagerMac
 
   // Keeps track of any edits that have been made by the user during a tree
   // update. Used by NSAccessibilityValueChangedNotification.
-  // Maps AXNode IDs to name or value attribute changes.
-  std::map<int32_t, base::string16> text_edits_;
+  // Maps AXNode IDs to value attribute changes.
+  // Each edit includes the text that changed and a boolean indicating whether
+  // the text has been inserted |true| or deleted |false|.
+  std::map<int32_t, std::pair<base::string16, bool>> text_edits_;
 
   DISALLOW_COPY_AND_ASSIGN(BrowserAccessibilityManagerMac);
 };
