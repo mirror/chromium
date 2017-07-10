@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "551a915c_af608cd0",
+        "filename": "chrome/browser/signin/dice_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-07-10T15:07:58Z",
+      "side": 1,
+      "message": "I am not sure I understand.\nAre you asking for an additional test where we have two accounts and signout from both at the same time?",
+      "parentUuid": "3b49d424_0401e1f6",
+      "range": {
+        "startLine": 86,
+        "startChar": 17,
+        "endLine": 86,
+        "endChar": 32
+      },
+      "revId": "60c8f88560b71ca16d1992767b36699a2761c049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "548a5201_8a0eff25",
         "filename": "chrome/browser/signin/dice_browsertest.cc",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-10T12:00:23Z",
       "side": 1,
       "message": "I think this test and the one above can use the same code to add 2 accounts. That way you do not need 3 accounts in this test.",
+      "range": {
+        "startLine": 256,
+        "startChar": 25,
+        "endLine": 256,
+        "endChar": 27
+      },
+      "revId": "60c8f88560b71ca16d1992767b36699a2761c049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a910b8bd_71fb1131",
+        "filename": "chrome/browser/signin/dice_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-07-10T15:07:58Z",
+      "side": 1,
+      "message": "Yeah, this is a bit awkward because the accounts details are hardcoded in HandleSignoutURL() and various other places. I can probably factor more code as you suggest, but at the expense of introducing a bit of complexity to make the test more generic. I\u0027ll see what I can do here.",
+      "parentUuid": "548a5201_8a0eff25",
       "range": {
         "startLine": 256,
         "startChar": 25,
