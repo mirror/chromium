@@ -16,6 +16,24 @@
       "revId": "9a4cddb0e2ebcf3fd4c4ffa2a07d0121658ff69a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b31ab365_71565fd8",
+        "filename": "chrome/browser/ui/views/frame/global_menu_bar_x11.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-10T18:12:29Z",
+      "side": 1,
+      "message": "Updated comments.\n\nUnit tests would be nice, but this class doesn\u0027t have existing test coverage and neither does AvatarMenu - so it would take some time to figure out how to set all of it up and there\u0027s a bunch of other stuff on my plate. :\\",
+      "parentUuid": "db9cd2f2_a14f7da8",
+      "revId": "9a4cddb0e2ebcf3fd4c4ffa2a07d0121658ff69a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
