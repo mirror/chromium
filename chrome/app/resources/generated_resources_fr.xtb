@@ -97,6 +97,7 @@
 <translation id="1149401351239820326">Mois d'expiration</translation>
 <translation id="1153356358378277386">Appareils associés</translation>
 <translation id="1154228249304313899">Ouvrir cette page :</translation>
+<translation id="1155299938244572888">Impossible de caster <ph name="FILE_NAME" /> : le fichier ne contient pas de contenu multimédia.</translation>
 <translation id="1156185823432343624">Volume : désactivé</translation>
 <translation id="1156689104822061371">Disposition du clavier :</translation>
 <translation id="1161575384898972166">Connectez-vous à <ph name="TOKEN_NAME" /> pour exporter le certificat client.</translation>
@@ -166,6 +167,7 @@
 <translation id="1244147615850840081">Opérateur</translation>
 <translation id="1244303850296295656">Erreur au niveau des extensions.</translation>
 <translation id="1245907074925860695">Supprimer un utilisateur</translation>
+<translation id="1247269511160259896">Impossible de caster <ph name="FILE_NAME" /> : le type de fichier n'est pas compatible.</translation>
 <translation id="1248269069727746712"><ph name="PRODUCT_NAME" /> utilise les paramètres du serveur proxy de votre appareil pour se connecter au réseau.</translation>
 <translation id="1249250836236328755">Genre</translation>
 <translation id="1252987234827889034">Erreur au niveau du profil</translation>
@@ -212,6 +214,7 @@
 <translation id="1326317727527857210">Connectez-vous à Chrome pour accéder à vos onglets sur vos autres appareils.</translation>
 <translation id="1327074568633507428">Imprimante connectée à Google Cloud Print</translation>
 <translation id="1327977588028644528">Passerelle</translation>
+<translation id="1329584516321524826">Mise à jour à l'instant</translation>
 <translation id="1330145147221172764">Activer le clavier à l'écran</translation>
 <translation id="1331977651797684645">C'était moi.</translation>
 <translation id="1338950911836659113">Suppression en cours...</translation>
@@ -596,6 +599,7 @@
 <translation id="1858585891038687145">Considérer ce certificat comme fiable pour identifier les développeurs de logiciels</translation>
 <translation id="1859234291848436338">Sens de l'écriture</translation>
 <translation id="1864111464094315414">Connexion</translation>
+<translation id="1864400682872660285">Plus froid</translation>
 <translation id="1864676585353837027">Modifiez le mode de partage de ces fichiers.</translation>
 <translation id="1864756863218646478">Fichier introuvable.</translation>
 <translation id="1865678028973512614">Supprimer les fichiers</translation>
@@ -1304,6 +1308,7 @@ Je ne pense pas que ce site devrait être bloqué.</translation>
 <translation id="2897878306272793870">Voulez-vous vraiment ouvrir <ph name="TAB_COUNT" /> onglets ?</translation>
 <translation id="290105521672621980">Ce fichier utilise des fonctionnalités non compatibles</translation>
 <translation id="2902127500170292085">Communication impossible entre l'extension "<ph name="EXTENSION_NAME" />" et cette imprimante. Veuillez vous assurer que l'imprimante est branchée, puis réessayer.</translation>
+<translation id="2903457445916429186">Ouvrir les éléments sélectionnés</translation>
 <translation id="2903493209154104877">Adresses</translation>
 <translation id="290444763029043472"><ph name="DOWNLOADED_AMOUNT_MB" /> Mo/<ph name="TOTAL_AMOUNT_MB" /> Mo téléchargés</translation>
 <translation id="2904456025988372123">Me demander lorsqu'un site tente de télécharger des fichiers automatiquement après le premier fichier</translation>
@@ -1484,6 +1489,7 @@ Pour vérifier ce point et en savoir plus, veuillez consulter votre compte de me
 <translation id="3151562827395986343">Effacer l'historique, les cookies, vider le cache, etc.</translation>
 <translation id="3151786313568798007">Orientation</translation>
 <translation id="3153177132960373163">Autoriser tous les sites à utiliser un plug-in pour accéder à mon ordinateur</translation>
+<translation id="3153862085237805241">Enregistrer la carte</translation>
 <translation id="3154351730702813399">L'administrateur de cet appareil peut contrôler votre activité de navigation.</translation>
 <translation id="3154429428035006212">Hors connexion pendant plus d'un mois</translation>
 <translation id="3157931365184549694">Restaurer</translation>
@@ -1896,6 +1902,7 @@ Domaine d'origine : <ph name="DOWNLOAD_DOMAIN" /></translation>
 <translation id="3776796446459804932">Cette extension ne respecte pas les règles du Chrome Web Store.</translation>
 <translation id="3778152852029592020">Le téléchargement a été annulé.</translation>
 <translation id="3778740492972734840">Outils de &amp;développement</translation>
+<translation id="3778868487658107119">Posez-lui des questions et donnez-lui des choses à faire. L'Assistant Google sera toujours là pour vous aider.</translation>
 <translation id="3780663724044634171">Sélectionnez un compte pour gérer l'utilisateur supervisé.</translation>
 <translation id="378312418865624974">Accéder à un identifiant unique pour cet ordinateur</translation>
 <translation id="3783640748446814672">alt</translation>
@@ -1906,6 +1913,7 @@ Domaine d'origine : <ph name="DOWNLOAD_DOMAIN" /></translation>
 <translation id="3789841737615482174">Installer</translation>
 <translation id="3790146417033334899"><ph name="PLUGIN_NAME" /> fonctionne uniquement sur le bureau.</translation>
 <translation id="3790358761803015466">Impossible d'accéder à Google Play. Veuillez réessayer maintenant.</translation>
+<translation id="379082410132524484">Votre carte est arrivée à expiration</translation>
 <translation id="3790909017043401679">Saisir le code PIN de la carte SIM</translation>
 <translation id="3792890930871100565">Déconnecter des imprimantes</translation>
 <translation id="3796648294839530037">Réseaux favoris :</translation>
@@ -2086,6 +2094,7 @@ Souhaitez-vous lancer <ph name="CONTROL_PANEL_APPLET_NAME" /> ?</translation>
 <translation id="4074900173531346617">Certificat du signataire de courrier électronique</translation>
 <translation id="407520071244661467">Mise à l'échelle</translation>
 <translation id="4077917118009885966">Annonces bloquées sur ce site</translation>
+<translation id="4081242589061676262">Impossible de caster le fichier.</translation>
 <translation id="4084682180776658562">Favori</translation>
 <translation id="4084835346725913160">Fermer <ph name="TAB_NAME" /></translation>
 <translation id="4085298594534903246">JavaScript a été bloqué sur cette page.</translation>
@@ -2368,6 +2377,7 @@ Pour poursuivre l'exploration, veuillez appuyer sur n'importe quelle touche.</tr
 <translation id="4565377596337484307">Masquer le mot de passe</translation>
 <translation id="4567772783389002344">Ajouter le mot</translation>
 <translation id="4568213207643490790">Désolé, les comptes Google ne sont pas autorisés sur cet appareil.</translation>
+<translation id="4569747168316751899">Au repos</translation>
 <translation id="4572659312570518089">Annulation de l'authentification lors de la connexion à l'appareil "<ph name="DEVICE_NAME" />".</translation>
 <translation id="4572815280350369984">Fichier <ph name="FILE_TYPE" /></translation>
 <translation id="457386861538956877">Autres...</translation>
@@ -2989,6 +2999,7 @@ Pour poursuivre l'exploration, appuyez sur n'importe quelle touche.</translation
 <translation id="5494362494988149300">Ouvrir une fois le téléchargement &amp;terminé</translation>
 <translation id="5494920125229734069">Tout sélectionner</translation>
 <translation id="5495466433285976480">Cette option a pour effet de supprimer tous les utilisateurs, les fichiers, les données et les autres paramètres en local au prochain redémarrage. Tous les utilisateurs devront se reconnecter.</translation>
+<translation id="5495597166260341369">Laisser l'écran activé</translation>
 <translation id="5496587651328244253">Organiser</translation>
 <translation id="549673810209994709">Impossible de traduire cette page.</translation>
 <translation id="5499313591153584299">Ce fichier peut être néfaste pour votre ordinateur.</translation>
@@ -2997,6 +3008,7 @@ Pour poursuivre l'exploration, appuyez sur n'importe quelle touche.</translation
 <translation id="5509693895992845810">Enregistrer &amp;sous...</translation>
 <translation id="5509914365760201064">Émetteur : <ph name="CERTIFICATE_AUTHORITY" /></translation>
 <translation id="5511823366942919280">Voulez-vous vraiment configurer cet appareil en tant que "requin" ?</translation>
+<translation id="5512224233441179309">Impossible de caster <ph name="FILE_NAME" /> : le fichier est illisible.</translation>
 <translation id="5512653252560939721">Le certificat utilisateur doit être intégré à l'ordinateur.</translation>
 <translation id="5513242761114685513">Menu contextuel</translation>
 <translation id="5516183516694518900">Connectez-vous à Chrome avec votre compte Google pour synchroniser vos favoris, votre historique, vos mots de passe et d'autres paramètres sur tous vos appareils.</translation>
@@ -3042,6 +3054,7 @@ Pour poursuivre l'exploration, appuyez sur n'importe quelle touche.</translation
 <translation id="5567989639534621706">Caches des applications</translation>
 <translation id="5568069709869097550">Impossible de se connecter</translation>
 <translation id="5568144734023334204">Taille de stockage Android</translation>
+<translation id="556815770919928470">Désactiver l'écran et passer en veille</translation>
 <translation id="5569544776448152862">Inscription au domaine <ph name="BEGIN_BOLD" /><ph name="DOMAIN_NAME" /><ph name="END_BOLD" /> en cours…</translation>
 <translation id="5575473780076478375">Extension en mode navigation privée :<ph name="EXTENSION_NAME" /></translation>
 <translation id="557722062034137776">La réinitialisation de votre appareil n'a aucune incidence sur vos comptes Google ni sur leurs données synchronisées. Toutefois, tous les fichiers enregistrés en local sur votre appareil vont être supprimés.</translation>
@@ -3051,6 +3064,7 @@ Pour poursuivre l'exploration, appuyez sur n'importe quelle touche.</translation
 <translation id="5582839680698949063">Menu principal</translation>
 <translation id="5583370583559395927">Temps restant : <ph name="TIME_REMAINING" /></translation>
 <translation id="5583640892426849032">Retour</translation>
+<translation id="5585019845078534178">Cartes</translation>
 <translation id="5585118885427931890">Impossible de créer le dossier de favoris.</translation>
 <translation id="558563010977877295">Ouvrir une page ou un ensemble de pages spécifiques</translation>
 <translation id="5585912436068747822">Échec du formatage</translation>
@@ -3086,6 +3100,7 @@ Assurez-vous de ne pas dévoiler d'informations sensibles.</translation>
 <translation id="5636996382092289526">Pour utiliser <ph name="NETWORK_ID" />, vous devez d'abord <ph name="LINK_START" />accéder à la page de connexion du réseau<ph name="LINK_END" />, qui s'ouvrira automatiquement dans quelques secondes. Dans le cas contraire, ce réseau ne pourra pas être utilisé pour la connexion Internet.</translation>
 <translation id="5637380810526272785">Mode de saisie</translation>
 <translation id="5637476008227280525">Activation des données mobiles</translation>
+<translation id="5638497698949808140">Mise à jour il y a <ph name="HOURS" /> heures</translation>
 <translation id="5639549361331209298">Actualiser cette page, patienter pour voir plus d'options</translation>
 <translation id="5642508497713047">Signataire de la liste de révocation de certificats</translation>
 <translation id="5646376287012673985">Localisation</translation>
@@ -3334,6 +3349,7 @@ Assurez-vous de ne pas dévoiler d'informations sensibles.</translation>
 <translation id="6040143037577758943">Fermer</translation>
 <translation id="6040852767465482106">Authentification anonyme</translation>
 <translation id="604124094241169006">Automatique</translation>
+<translation id="6042169520002885235">Sélectionner un fabricant et un modèle d'imprimante</translation>
 <translation id="6042308850641462728">Plus</translation>
 <translation id="6043317578411397101"><ph name="APP_NAME" /> partage un onglet Chrome avec <ph name="TAB_NAME" />.</translation>
 <translation id="6044805581023976844"><ph name="APP_NAME" /> partage un onglet Chrome et un contenu audio avec <ph name="TAB_NAME" />.</translation>
@@ -3392,7 +3408,6 @@ Assurez-vous de ne pas dévoiler d'informations sensibles.</translation>
 <translation id="6138680304137685902">Signature X9.62 ECDSA avec SHA-384</translation>
 <translation id="614161640521680948">Langue :</translation>
 <translation id="6143186082490678276">Aide</translation>
-<translation id="6144697279259829572">{NUM_ITEMS,plural, =1{Cette action aura pour effet de supprimer définitivement au moins $1 élément de cet appareil.}one{Cette action aura pour effet de supprimer définitivement au moins $1 élément de cet appareil.}other{Cette action aura pour effet de supprimer définitivement au moins $1 éléments de cet appareil.}}</translation>
 <translation id="6144890426075165477"><ph name="PRODUCT_NAME" /> n'est pas votre navigateur par défaut.</translation>
 <translation id="6146563240635539929">Vidéos</translation>
 <translation id="6147020289383635445">Échec de l'aperçu avant impression.</translation>
@@ -3434,6 +3449,7 @@ Assurez-vous de ne pas dévoiler d'informations sensibles.</translation>
 <translation id="6207200176136643843">Réinitialiser le niveau de zoom par défaut</translation>
 <translation id="6207937957461833379">Pays/Région</translation>
 <translation id="6212039847102026977">Afficher les propriétés de réseau avancées</translation>
+<translation id="6212168817037875041">Désactiver l'écran</translation>
 <translation id="6219616557885484178">Sur Google Play, faites votre choix parmi plus d'un million d'applications et de jeux, à installer et à utiliser sur votre <ph name="DEVICE_TYPE" />.</translation>
 <translation id="6220413761270491930">Erreur lors du chargement de l'extension</translation>
 <translation id="6223447490656896591">Image personnalisée :</translation>
@@ -3700,6 +3716,7 @@ Assurez-vous de ne pas dévoiler d'informations sensibles.</translation>
 
 N'utilisez cette fonctionnalité qu'avec des comptes fiables.</translation>
 <translation id="6581162200855843583">Lien Google Drive</translation>
+<translation id="6583851739559471707">Bloqué sur les sites qui ont tendance à afficher des annonces intrusives (recommandé)</translation>
 <translation id="6584878029876017575">Signature permanente Microsoft</translation>
 <translation id="6585234750898046415">Choisissez une image à associer à votre compte. Celle-ci s'affichera sur l'écran de connexion.</translation>
 <translation id="6585283250473596934">Ouverture d'une session publique en cours…</translation>
@@ -3867,6 +3884,7 @@ N'utilisez cette fonctionnalité qu'avec des comptes fiables.</translation>
 <translation id="6845038076637626672">Ouvrir la version agrandie</translation>
 <translation id="6853388645642883916">Processus de mise à jour en veille</translation>
 <translation id="68541483639528434">Fermer les autres onglets</translation>
+<translation id="6856477143496886355">Cartes et adresses utilisant Google Payments</translation>
 <translation id="6856623341093082836">Configurer votre écran tactile et régler sa précision</translation>
 <translation id="6860097299815761905">Paramètres du proxy...</translation>
 <translation id="6860427144121307915">Ouvrir dans un onglet</translation>
@@ -3892,6 +3910,7 @@ N'utilisez cette fonctionnalité qu'avec des comptes fiables.</translation>
 <translation id="6900284862687837908">Application en arrière-plan : <ph name="BACKGROUND_APP_URL" /></translation>
 <translation id="6902837902700739466">Associer l'appareil au domaine</translation>
 <translation id="6904344821472985372">Révoquer l'accès aux fichiers</translation>
+<translation id="6904655473976120856">Appuyer sur le bouton de l'application pour sortir</translation>
 <translation id="6904713658985136356"><ph name="HOST" /> souhaite partager votre écran.</translation>
 <translation id="6906268095242253962">Veuillez vous connecter à Internet pour continuer.</translation>
 <translation id="6909461304779452601">Les applications, les extensions et les scripts d'utilisateur ne peuvent pas être ajoutés à partir de ce site Web.</translation>
@@ -3923,6 +3942,7 @@ N'utilisez cette fonctionnalité qu'avec des comptes fiables.</translation>
 <translation id="6968288415730398122">Saisissez votre mot de passe pour configurer le verrouillage de l'écran</translation>
 <translation id="6970480684834282392">Type de démarrage</translation>
 <translation id="6970856801391541997">Imprimer des pages spécifiques</translation>
+<translation id="6972180789171089114">Audio/Vidéo</translation>
 <translation id="6972754398087986839">Démarrer</translation>
 <translation id="6972929256216826630">Autoriser le téléchargement automatique de plusieurs fichiers pour tous les sites</translation>
 <translation id="6973630695168034713">Dossiers</translation>
@@ -4039,6 +4059,7 @@ N'utilisez cette fonctionnalité qu'avec des comptes fiables.</translation>
 <translation id="711902386174337313">Accéder à la liste de vos appareils connectés</translation>
 <translation id="7119389851461848805">marche/arrêt</translation>
 <translation id="7120865473764644444">Impossible de se connecter au serveur de synchronisation. Nouvelle tentative…</translation>
+<translation id="71243390042171582">Mise à jour il y a <ph name="MINUTES" /> min</translation>
 <translation id="7124929488592184705">Erreur lors de l'impression de "<ph name="DOCUMENT_NAME" />"</translation>
 <translation id="7126604456862387217">&lt;b&gt;<ph name="SEARCH_STRING" />&lt;/b&gt; : &lt;em&gt;rechercher dans Google Drive&lt;/em&gt;</translation>
 <translation id="7127980134843952133">Historique des téléchargements</translation>
@@ -4208,7 +4229,6 @@ N'utilisez cette fonctionnalité qu'avec des comptes fiables.</translation>
 <translation id="7388044238629873883">Vous avez presque terminé !</translation>
 <translation id="7392118418926456391">Échec de l'analyse antivirus.</translation>
 <translation id="7392915005464253525">&amp;Rouvrir la fenêtre fermée</translation>
-<translation id="7393449708074241536">Cette action aura pour effet de supprimer définitivement <ph name="TOTAL_COUNT" /> éléments de cet appareil.</translation>
 <translation id="7396845648024431313"><ph name="APP_NAME" /> sera lancé au démarrage du système et continuera de s'exécuter en arrière-plan, même si toutes les fenêtres de <ph name="PRODUCT_NAME" /> sont fermées.</translation>
 <translation id="7400418766976504921">URL</translation>
 <translation id="740083207982962331">Veuillez patienter pendant que votre Chromebox redémarre…</translation>
@@ -4773,6 +4793,7 @@ Calcul de la durée restante</translation>
 <translation id="8251578425305135684">Miniature supprimée</translation>
 <translation id="8253198102038551905">Cliquez sur "+" pour accéder aux propriétés réseau.</translation>
 <translation id="825483282309623688">Pour restaurer vos données, vous devez disposer d'une connexion Internet.</translation>
+<translation id="8256082362852841519">Impossible de caster <ph name="FILE_NAME" /> : le fichier n'existe pas.</translation>
 <translation id="8256319818471787266">Médor</translation>
 <translation id="8257950718085972371">Continuer à bloquer l'accès à la caméra</translation>
 <translation id="8259239505248583312">Accéder</translation>
@@ -4919,6 +4940,7 @@ Calcul de la durée restante</translation>
 <translation id="8495193314787127784">Activer "Ok Google"</translation>
 <translation id="8496717697661868878">Exécuter ce plug-in</translation>
 <translation id="8497392509610708671">Vous pouvez modifier cette option à tout moment dans les <ph name="BEGIN_LINK" />Paramètres de Chrome<ph name="END_LINK" />.</translation>
+<translation id="8498214519255567734">Facilite la lecture à l'écran lorsque l'éclairage est faible</translation>
 <translation id="8498716162437226120">Ajouter un appareil Bluetooth</translation>
 <translation id="8503813439785031346">Nom d'utilisateur</translation>
 <translation id="8506101089619487946">Désactiver Smart Lock pour Chromebook ?</translation>
@@ -5014,6 +5036,7 @@ Calcul de la durée restante</translation>
 <translation id="8658595122208653918">Modifier les options de l'imprimante…</translation>
 <translation id="8658645149275195032"><ph name="APP_NAME" /> partage votre écran et un contenu audio avec <ph name="TAB_NAME" />.</translation>
 <translation id="8659716501582523573">Adresse IP :</translation>
+<translation id="8659875081143553823">Une petite seconde…</translation>
 <translation id="8661290697478713397">Ouvrir le lien dans la fenêtre de navi&amp;gation privée</translation>
 <translation id="8662795692588422978">Personnes</translation>
 <translation id="8662911384982557515">Utiliser <ph name="HOME_PAGE" /> comme page d'accueil ?</translation>
@@ -5022,8 +5045,9 @@ Calcul de la durée restante</translation>
 <translation id="8664389313780386848">&amp;Afficher le code source de la page</translation>
 <translation id="866611985033792019">Considérer ce certificat comme fiable pour identifier les utilisateurs de messageries</translation>
 <translation id="8667328578593601900"><ph name="FULLSCREEN_ORIGIN" /> est maintenant en mode plein écran et a désactivé le curseur de votre souris.</translation>
+<translation id="8669284339312441707">Plus chaud</translation>
 <translation id="8669949407341943408">Déplacement en cours…</translation>
-<translation id="8670737526251003256">Recherche d'appareils en cours…</translation>
+<translation id="8670737526251003256">Recherche d'appareils…</translation>
 <translation id="8671210955687109937">Commentateur</translation>
 <translation id="8673026256276578048">Rechercher sur le Web...</translation>
 <translation id="8673383193459449849">Problème avec le serveur.</translation>
@@ -5075,6 +5099,7 @@ Calcul de la durée restante</translation>
 <translation id="8737354914281742249">Gestionnaire d'interface système</translation>
 <translation id="8737685506611670901">Ouvrir les liens "<ph name="PROTOCOL" />" à la place de "<ph name="REPLACED_HANDLER_TITLE" />"</translation>
 <translation id="8737709691285775803">Shill</translation>
+<translation id="8743864605301774756">Mise à jour il y a 1 heure</translation>
 <translation id="8744525654891896746">Sélectionner un avatar pour cet utilisateur supervisé</translation>
 <translation id="8749863574775030885">Accéder à des appareils USB d'un fournisseur inconnu</translation>
 <translation id="8754200782896249056">&lt;p&gt;Lorsque vous exécutez <ph name="PRODUCT_NAME" /> dans un environnement de bureau compatible, les paramètres proxy du système sont utilisés. Cependant, soit votre système n'est pas compatible, soit un problème est survenu lors du lancement de votre configuration système.&lt;/p&gt;
@@ -5415,7 +5440,6 @@ Suite à cette opération, les notifications, les fenêtres et les boîtes de di
 <translation id="974555521953189084">Saisissez votre phrase secrète pour lancer la synchronisation.</translation>
 <translation id="981121421437150478">Hors connexion</translation>
 <translation id="98515147261107953">Paysage</translation>
-<translation id="987267091708560486">{NUM_ITEMS,plural, =1{Cette action aura pour effet de supprimer définitivement $1 élément de cet appareil.}one{Cette action aura pour effet de supprimer définitivement $1 élément de cet appareil.}other{Cette action aura pour effet de supprimer définitivement $1 éléments de cet appareil.}}</translation>
 <translation id="988978206646512040">Phrase secrète obligatoire</translation>
 <translation id="992032470292211616">Les extensions, les applications et les thèmes peuvent endommager votre appareil. Voulez-vous vraiment continuer ?</translation>
 <translation id="992592832486024913">Désactiver ChromeVox (commentaires audio)</translation>

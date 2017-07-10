@@ -159,8 +159,10 @@ Pritisnite tipke Pretraživanje ili Shift da biste ju isključili.</translation>
 <translation id="5744083938413354016">Povlačenje dodirom</translation>
 <translation id="5777841717266010279">Prekinuti dijeljenje zaslona?</translation>
 <translation id="57838592816432529">Isključi zvuk</translation>
+<translation id="5860033963881614850">Isključeno</translation>
 <translation id="5895138241574237353">Ponovno pokreni</translation>
 <translation id="5901316534475909376">Shift + Esc</translation>
+<translation id="5916664084637901428">Uključi</translation>
 <translation id="5927132638760172455">Emitiranje na nepoznati prijamnik</translation>
 <translation id="5932901536148835538">Chromebit</translation>
 <translation id="5947494881799873997">Vrati</translation>
@@ -170,7 +172,6 @@ Pritisnite tipke Pretraživanje ili Shift da biste ju isključili.</translation>
 <translation id="5978382165065462689">Dijelite kontrolu nad zaslonom putem Daljinske pomoći.</translation>
 <translation id="5980301590375426705">Izlazak iz sesije gosta</translation>
 <translation id="6018164090099858612">Izlaz iz zrcalnog načina</translation>
-<translation id="6041154455840261787">Način visokog kontrasta omogućen je. Ponovo pritisnite Search + Shift + H da biste ga isključili.</translation>
 <translation id="6043212731627905357">Ovaj se monitor ne podudara s vašim uređajem <ph name="DEVICE_TYPE" /> (monitor nije podržan).</translation>
 <translation id="6043994281159824495">Odjavi se odmah</translation>
 <translation id="6047696787498798094">Dijeljenje zaslona prekinut će se kad se prebacite na drugog korisnika. Želite li nastaviti?</translation>
@@ -214,6 +215,7 @@ Pritisnite tipke Pretraživanje ili Shift da biste ju isključili.</translation>
 <translation id="714034171374937760">Chromebase</translation>
 <translation id="7165278925115064263">Alt + Shift + K</translation>
 <translation id="7168224885072002358">Vraćanje na staru razlučivost za <ph name="TIMEOUT_SECONDS" /></translation>
+<translation id="7199454189089571166">Način Asistenta</translation>
 <translation id="7209101170223508707">Uključena je opcija CAPS LOCK.
 Pritisnite tipke Alt + Pretraživanje ili Shift da biste ju isključili.</translation>
 <translation id="7246339268451149667">Želite li omogućiti otključavanje otiskom prsta?</translation>
@@ -236,7 +238,6 @@ Pritisnite tipke Alt + Pretraživanje ili Shift da biste ju isključili.</transl
 <translation id="7814236020522506259"><ph name="HOUR" /> i <ph name="MINUTE" /></translation>
 <translation id="7823564328645135659">Jezik je promijenjen iz: "<ph name="FROM_LOCALE" />" u: "<ph name="TO_LOCALE" />" nakon sinkronizacije vaših postavki.</translation>
 <translation id="7904094684485781019">Administrator ovog računa onemogućio je višestruku prijavu.</translation>
-<translation id="7951523953736115461">Noćno svjetlo</translation>
 <translation id="7977927628060636163">Traženje mobilnih mreža...</translation>
 <translation id="7982789257301363584">Mreža</translation>
 <translation id="8000066093800657092">Nema mreže</translation>

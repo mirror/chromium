@@ -504,6 +504,11 @@
 
       未設定這項政策則等同於啟用這項功能，請見上方說明。</translation>
 <translation id="285480231336205327">啟用高反差模式</translation>
+<translation id="2854919890879212089">讓 <ph name="PRODUCT_NAME" /> 使用系統預設印表機做為列印預覽中的預設選擇，取代最近使用的印表機。
+
+      如果停用這項設定或未設定值，列印預覽會以最近使用的印表機做為預設目的地選擇。
+
+      如果啟用這項設定，列印預覽會使用作業系統預設印表機做為預設目的地選擇。</translation>
 <translation id="2872961005593481000">關閉</translation>
 <translation id="2874209944580848064">支援 Android 裝置的 <ph name="PRODUCT_OS_NAME" />裝置注意事項：</translation>
 <translation id="2877225735001246144">在交涉 Kerberos 驗證時，停用 CNAME 查詢</translation>
@@ -1479,6 +1484,13 @@
 <translation id="6943577887654905793">Mac/Linux 偏好設定名稱：</translation>
 <translation id="69525503251220566">為預設搜尋引擎提供圖片搜尋功能的參數</translation>
 <translation id="6956272732789158625">不允許任何網站使用金鑰產生功能</translation>
+<translation id="6994082778848658360">如果你安裝的安全元素硬體和雙重驗證功能相容，就可以使用這項政策來指定如何使用該硬體提供雙重驗證功能。裝置的電源鍵會用來偵測使用者是否真實存在。
+
+      如果選取 [已停用]，系統就不會提供雙重驗證功能。
+
+      如果選取 [U2F]，整合式雙重驗證將依照 FIDO U2F 規格運作。
+
+      如果選取 [U2F_EXTENDED]，整合式雙重驗證會為個人認證提供 U2F 功能和一些擴充功能。</translation>
 <translation id="6997592395211691850">是否需要為本機信任錨點執行線上 OCSP/CRL 檢查。</translation>
 <translation id="7003334574344702284">如果啟用這項政策，則會強制從之前的預設瀏覽器匯入儲存的密碼，並影響匯入對話方塊。如果停用這項政策，則不會匯入儲存的密碼。如果未設定這項政策，系統會自動匯入儲存的密碼，或詢問使用者是否要匯入儲存的密碼。</translation>
 <translation id="7003746348783715221"><ph name="PRODUCT_NAME" /> 偏好設定</translation>
@@ -1666,7 +1678,6 @@
 <translation id="7713608076604149344">下載限制</translation>
 <translation id="7715711044277116530">簡報模式中的螢幕調暗延遲時間延長百分比</translation>
 <translation id="7717938661004793600">設定 <ph name="PRODUCT_OS_NAME" /> 協助工具功能。</translation>
-<translation id="7719251660743813569">控制是否要將使用計量回報給 Google。如果設為 True，<ph name="PRODUCT_OS_NAME" /> 會回報使用計量。如未設定或設為 False，計量回報就會遭到停用。</translation>
 <translation id="7724994675283793633">這項政策可讓你在 80 (HTTP) 和 443 (HTTPS) 以外的通訊埠啟用 HTTP/0.9。
 
       這項政策預設為停用，啟用後使用者可能會遇到安全性問題 https://crbug.com/600352。
@@ -1973,6 +1984,7 @@
 <translation id="8970205333161758602">隱藏停止支援 <ph name="PRODUCT_FRAME_NAME" />的提示</translation>
 <translation id="8971221018777092728">公開工作階段自動登入計時器</translation>
 <translation id="8976248126101463034">允許針對遠端存取主機進行 gnubby 驗證機制</translation>
+<translation id="8976531594979650914">使用系統預設印表機做為預設值</translation>
 <translation id="8992176907758534924">不允許任何網站顯示圖片</translation>
 <translation id="9035964157729712237">要從黑名單上移除的擴充功能 ID</translation>
 <translation id="9042911395677044526">允許將網路設定按照使用者套用至安裝了 <ph name="PRODUCT_OS_NAME" /> 的裝置。本網路設定是由開放網路設定格式 (網址為：<ph name="ONC_SPEC_URL" />) 所定義的 JSON 格式字串。</translation>

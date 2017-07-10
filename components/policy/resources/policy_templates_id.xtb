@@ -504,6 +504,11 @@
 
       Jika kebijakan ini tidak disetel, hal ini setara dengan diaktifkan, lihat deskripsi di atas.</translation>
 <translation id="285480231336205327">Aktifkan mode kontras tinggi</translation>
+<translation id="2854919890879212089">Membuat <ph name="PRODUCT_NAME" /> menggunakan printer default sistem sebagai pilihan default pada Pratinjau Cetak, bukan printer yang terakhir kali digunakan.
+
+      Jika setelan ini dinonaktifkan atau nilai tidak ditetapkan, Pratinjau Cetak akan menggunakan printer yang terakhir kali digunakan sebagai pilihan tujuan default.
+
+      Jika setelan ini diaktifkan, Pratinjau Cetak akan menggunakan printer default sistem OS sebagai pilihan tujuan default.</translation>
 <translation id="2872961005593481000">Matikan</translation>
 <translation id="2874209944580848064">Catatan untuk perangkat <ph name="PRODUCT_OS_NAME" /> yang mendukung aplikasi Android:</translation>
 <translation id="2877225735001246144">Nonaktifkan pencarian CNAME saat menegosiasikan autentikasi Kerberos</translation>
@@ -1483,6 +1488,13 @@
 <translation id="6943577887654905793">Nama preferensi Mac/Linux:</translation>
 <translation id="69525503251220566">Parameter menyediakan fitur telusuri pakai gambar untuk penyedia penelusuran default</translation>
 <translation id="6956272732789158625">Jangan izinkan situs apa pun menggunakan pembuatan kunci</translation>
+<translation id="6994082778848658360">Menetapkan bagaimana hardware elemen pengaman on-board digunakan untuk memberikan autentikasi faktor kedua jika kompatibel dengan fitur ini. Tombol power mesin digunakan untuk mendeteksi keberadaan pengguna.
+
+      Jika 'Dinonaktifkan' dipilih, tidak ada faktor kedua yang diberikan.
+
+      Jika 'U2F' dipilih, faktor kedua yang diintegrasikan akan melakukan proses sesuai spesifikasi FIDO U2F.
+
+      Jika 'U2F_EXTENDED' dipilih, faktor kedua yang diintegrasikan akan memberikan fungsi U2F, ditambah beberapa ekstensi untuk masing-masing pengesahan.</translation>
 <translation id="6997592395211691850">Meskipun OCSP/CRL sedang online dibutuhkan tautan lokal yang dipercaya ataupun tidak</translation>
 <translation id="7003334574344702284">Kebijakan ini memaksa sandi tersimpan untuk diimpor dari browser default sebelumnya, jika diaktifkan. Jika diaktifkan, kebijakan ini juga memengaruhi dialog impor. Jika dinonaktifkan, sandi yang disimpan tidak diimpor. Jika tidak disetel, pengguna mungkin ditanya apakah akan mengimpor, atau pengimporan dapat terjadi secara otomatis.</translation>
 <translation id="7003746348783715221">Preferensi <ph name="PRODUCT_NAME" /></translation>
@@ -1670,7 +1682,6 @@
 <translation id="7713608076604149344">Batasan download</translation>
 <translation id="7715711044277116530">Persentase yang digunakan untuk menskalakan penundaan layar redup dalam mode presentasi</translation>
 <translation id="7717938661004793600">Mengonfigurasikan fitur aksesibilitas <ph name="PRODUCT_OS_NAME" />.</translation>
-<translation id="7719251660743813569">Mengontrol apakah metrik penggunaan dilaporkan kembali ke Google. Jika disetel ke true, <ph name="PRODUCT_OS_NAME" /> akan melaporkan metrik penggunaan. Jika tidak dikonfigurasi atau disetel ke false, pelaporan metrik akan dinonaktifkan.</translation>
 <translation id="7724994675283793633">Kebijakan ini memungkinkan HTTP/0.9 di port selain 80 untuk HTTP dan 443 untuk HTTPS.
 
       Kebijakan ini dinonaktifkan secara default dan jika diaktifkan akan membuat pengguna rentan terhadap masalah keamanan https://crbug.com/600352.
@@ -1986,6 +1997,7 @@
 <translation id="8970205333161758602">Tindas permintaan penghentian <ph name="PRODUCT_FRAME_NAME" /></translation>
 <translation id="8971221018777092728">Timer masuk otomatis sesi publik</translation>
 <translation id="8976248126101463034">Izinkan autentikasi gnubby untuk host akses jarak jauh</translation>
+<translation id="8976531594979650914">Menggunakan Printer Default Sistem sebagai Default</translation>
 <translation id="8992176907758534924">Jangan izinkan situs apa pun menampilkan gambar</translation>
 <translation id="9035964157729712237">ID Ekstensi yang dikeluarkan dari daftar hitam</translation>
 <translation id="9042911395677044526">Memungkinkan konfigurasi jaringan dorongan untuk diterapkan per pengguna ke perangkat <ph name="PRODUCT_OS_NAME" />. Konfigurasi jaringan adalah string berformat JSON seperti yang didefinisikan oleh format Konfigurasi Jaringan Terbuka yang diuraikan di <ph name="ONC_SPEC_URL" /></translation>

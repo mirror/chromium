@@ -32,7 +32,6 @@ Kai kurios funkcijos gali būti nepasiekiamos ir nuostatų pakeitimai nebus išs
 <translation id="1966382378801805537">„Chromium“ nepavyko aptikti arba nustatyti numatytosios naršyklės</translation>
 <translation id="1967743265616885482">Modulis tokiu pačiu pavadinimu žinomas kaip prieštaraujantis „Chromium“.</translation>
 <translation id="2008474315282236005">Atlikus šį veiksmą iš šio įrenginio bus ištrintas 1 elementas. Jei vėliau norėsite gauti duomenis, prisijunkite prie „Chromium“ kaip <ph name="USER_EMAIL" />.</translation>
-<translation id="2061399003623151192">{NUM_ITEMS,plural, =1{Atlikus šį veiksmą bus visam laikui ištrintas mažiausiai $1 elementas iš šio įrenginio. Jei vėliau norėsite gauti duomenis, prisijunkite prie „Chromium“ kaip $2.}one{Atlikus šį veiksmą bus visam laikui ištrintas mažiausiai $1 elementas iš šio įrenginio. Jei vėliau norėsite gauti duomenis, prisijunkite prie „Chromium“ kaip $2.}few{Atlikus šį veiksmą bus visam laikui ištrinti mažiausiai $1 elementai iš šio įrenginio. Jei vėliau norėsite gauti duomenis, prisijunkite prie „Chromium“ kaip $2.}many{Atlikus šį veiksmą bus visam laikui ištrinta mažiausiai $1 elemento iš šio įrenginio. Jei vėliau norėsite gauti duomenis, prisijunkite prie „Chromium“ kaip $2.}other{Atlikus šį veiksmą bus visam laikui ištrinta mažiausiai $1 elementų iš šio įrenginio. Jei vėliau norėsite gauti duomenis, prisijunkite prie „Chromium“ kaip $2.}}</translation>
 <translation id="2077129598763517140">Kai galima, naudoti aparatinės įrangos paspartinimą</translation>
 <translation id="2119636228670142020">Apie &amp;„Chromium“ OS</translation>
 <translation id="2158734852934720349">„Chromium“ OS atvirojo šaltinio licencijos</translation>
@@ -83,7 +82,6 @@ Kai kurios funkcijos gali būti nepasiekiamos ir nuostatų pakeitimai nebus išs
 <translation id="3549345495227188780">Darbo su „Chromium“ OS pradžia</translation>
 <translation id="3582788516608077514">Atnaujinama „Chromium“...</translation>
 <translation id="358997566136285270">„Chromium“ logotipas</translation>
-<translation id="3645040538872234961">Atlikus šį veiksmą bus visam laikui ištrinti naršymo duomenys iš šio įrenginio. Jei vėliau norėsite gauti duomenis, prisijunkite prie „Chromium“ kaip $2.</translation>
 <translation id="3738139272394829648">Paieška palietus</translation>
 <translation id="3762167353400286894">„Chromium“ OS pateikiama šia kalba</translation>
 <translation id="378917192836375108">Naudodami „Chromium“ galite spustelėti telefono numerį žiniatinklyje ir skambinti juo naudodami „Skype“!</translation>
@@ -155,7 +153,6 @@ Kai kurios funkcijos gali būti nepasiekiamos ir nuostatų pakeitimai nebus išs
 <translation id="59625444380784159">Turėdami išsamią kontaktų informaciją galite greičiau užpildyti formas „Chromium“.</translation>
 <translation id="5987687638152509985">Atnaujinkite „Chromium“, kad galėtumėte pradėti sinchronizuoti</translation>
 <translation id="6055895534982063517">Pasiekiama nauja „Chromium“ versija, kuri greitesnė nei bet kada.</translation>
-<translation id="6077017812234345835">Atlikus šį veiksmą, iš įrenginio bus visam laikui ištrinta mažiausiai tiek elementų: <ph name="TOTAL_COUNT" />. Jei vėliau norėsite atgauti duomenis, prisijunkite prie „Chromium“ kaip $2.</translation>
 <translation id="608189560609172163">„Chromium“ negali sinchronizuoti duomenų, nes prisijungiant įvyko klaida.</translation>
 <translation id="6129621093834146363">Failas „<ph name="FILE_NAME" />“ pavojingas, todėl „Chromium“ jį užblokavo.</translation>
 <translation id="6212496753309875659">Šiame kompiuteryje jau yra naujesnės versijos „Chromium“. Jei programinė įranga neveikia, pašalinkite „Chromium“ ir bandykite dar kartą.</translation>
@@ -192,7 +189,6 @@ Kai kurios funkcijos gali būti nepasiekiamos. Nurodykite kitą profilio katalog
 <translation id="705851970750939768">Atnaujinti „Chromium“</translation>
 <translation id="7066436765290594559">„Chromium“ OS negali sinchronizuoti duomenų. Atnaujinkite sinchronizavimo slaptafrazę.</translation>
 <translation id="707471633328071618">„Google Payments“ (nukopijuota į „Chromium“)</translation>
-<translation id="7114836556269756734">{NUM_ITEMS,plural, =1{Atlikus šį veiksmą bus visam laikui ištrintas $1 elementas iš šio įrenginio. Jei vėliau norėsite gauti duomenis, prisijunkite prie „Chromium“ kaip $2.}one{Atlikus šį veiksmą bus visam laikui ištrintas $1 elementas iš šio įrenginio. Jei vėliau norėsite atgauti duomenis, prisijunkite prie „Chromium“ kaip $2.}few{Atlikus šį veiksmą bus visam laikui ištrinti $1 elementai iš šio įrenginio. Jei vėliau norėsite atgauti duomenis, prisijunkite prie „Chromium“ kaip $2.}many{Atlikus šį veiksmą bus visam laikui ištrinta $1 elemento iš šio įrenginio. Jei vėliau norėsite atgauti duomenis, prisijunkite prie „Chromium“ kaip $2.}other{Atlikus šį veiksmą bus visam laikui ištrinta $1 elementų iš šio įrenginio. Jei vėliau norėsite atgauti duomenis, prisijunkite prie „Chromium“ kaip $2.}}</translation>
 <translation id="7138853919861947730">„Chromium“ gali naudoti žiniatinklio paslaugas naršymo kokybei pagerinti.</translation>
 <translation id="7162152143154757523">„Chromium“ gali teikti išmanesnę rašybos tikrinimo funkciją, siųsdama tai, ką įvedate naršyklėje, „Google“ serveriams. Tai suteikia galimybę naudoti tą pačią rašybos tikrinimo technologiją, kuri naudojama „Google“ paieškoje.</translation>
 <translation id="7196020411877309443">Kodėl tai matau?</translation>

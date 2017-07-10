@@ -37,6 +37,7 @@
 <translation id="1540800554400757039">Naslov 1</translation>
 <translation id="1545749641540134597">Scan QR Code</translation>
 <translation id="1580783302095112590">Pošta je poslana.</translation>
+<translation id="1612730193129642006">Prikaz mreže zavihkov</translation>
 <translation id="1646446875146297738">Omogočena možnost »Ne sledi« pomeni, da bo v vaš promet brskanja vključena zahteva. Morebiten učinek je odvisen od tega, ali se spletno mesto odzove na zahtevo in kako si jo razlaga.
 
 Nekatera spletna mesta se bodo na primer odzvala na to zahtevo s prikazom oglasov, ki niso povezani z drugimi spletnimi mesti, ki ste jih obiskali. Mnoga spletna mesta bodo še vedno zbirala in uporabljala vaše podatke o brskanju – na primer za izboljšanje varnosti, zagotavljanje vsebine, storitev, oglasov in priporočil na svojih spletnih mestih ter za pripravo statističnih podatkov za poročanje. <ph name="BEGIN_LINK" />Več o tem<ph name="END_LINK" /></translation>
@@ -388,6 +389,7 @@ Podatki so bili šifrirani z vašim geslom za sinhronizacijo <ph name="TIME" />.
 <translation id="8775144690796719618">Neveljaven URL</translation>
 <translation id="8820817407110198400">Zaznamki</translation>
 <translation id="8840513115188359703">Iz Google Računa ne boste odjavljeni.</translation>
+<translation id="8881801611828450202">Uporabi <ph name="SEARCH_ENGINE" /> za iskanje te slike</translation>
 <translation id="8904976895050290827">Sinhronizacija za Chrome</translation>
 <translation id="895541991026785598">Prijavite težavo</translation>
 <translation id="8971089644512329999">Ok, Got it</translation>
@@ -406,6 +408,7 @@ Podatki so bili šifrirani z vašim geslom za sinhronizacijo <ph name="TIME" />.
 <translation id="9188680907066685419">Odjava iz upravljanega računa</translation>
 <translation id="9203116392574189331">Handoff</translation>
 <translation id="9223358826628549784">Poročilo o zrušitvi poslano.</translation>
+<translation id="932327136139879170">Domov</translation>
 <translation id="935490618240037774">Vaši zaznamki, zgodovina, gesla in druge nastavitve bodo sinhronizirani z Google Računom, tako da jih boste lahko uporabljali v vseh svojih napravah.</translation>
 <translation id="939598580284253335">Vnesite geslo</translation>
 <translation id="976982866697960176">Upravljanje sinhroniziranih podatkov …</translation>

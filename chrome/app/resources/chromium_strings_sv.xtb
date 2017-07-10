@@ -32,7 +32,6 @@ Vissa funktioner kanske inte är tillgängliga och ändringar i inställningarna
 <translation id="1966382378801805537">Chromium kan inte fastställa eller ange standardwebbläsaren</translation>
 <translation id="1967743265616885482">En modul med samma namn har tidigare varit i konflikt med Chromium.</translation>
 <translation id="2008474315282236005">Ett objekt tas bort från enheten. Logga in i Chromium som <ph name="USER_EMAIL" /> om du vill kunna återställa datan senare.</translation>
-<translation id="2061399003623151192">{NUM_ITEMS,plural, =1{Det här innebär att minst $1 objekt raderas permanent från enheten. Logga in i Chromium som $2 om du vill kunna återställa data senare.}other{Det här innebär att minst $1 objekt raderas permanent från enheten. Logga in i Chromium som $2 om du vill kunna återställa data senare.}}</translation>
 <translation id="2077129598763517140">Använd maskinvaruacceleration när det är tillgängligt</translation>
 <translation id="2119636228670142020">Om &amp;Chromium OS</translation>
 <translation id="2158734852934720349">Licenser för öppen källkod för Chromium OS</translation>
@@ -83,7 +82,6 @@ Vissa funktioner kanske inte är tillgängliga och ändringar i inställningarna
 <translation id="3549345495227188780">Komma igång med Chromium OS</translation>
 <translation id="3582788516608077514">Uppdaterar Chromium ...</translation>
 <translation id="358997566136285270">Chromium-logotyp</translation>
-<translation id="3645040538872234961">All webbinformation raderas permanent från enheten. Logga in i Chromium som $2 om du vill kunna återställa data senare.</translation>
 <translation id="3738139272394829648">Tryck för att söka</translation>
 <translation id="3762167353400286894">Chromium OS visas på det här språket</translation>
 <translation id="378917192836375108">I Chromium kan du klicka på ett telefonnummer på nätet och ringa det med Skype!</translation>
@@ -155,7 +153,6 @@ Vissa funktioner kanske inte är tillgängliga och ändringar i inställningarna
 <translation id="59625444380784159">Du kan fylla i formulär snabbare i Chromium med hjälp av uppgifter från dina kontakter.</translation>
 <translation id="5987687638152509985">Du måste uppdatera Chromium innan synkroniseringen kan starta</translation>
 <translation id="6055895534982063517">Det finns en ny version av Chromium och den är snabbare än någonsin.</translation>
-<translation id="6077017812234345835">Det här innebär att minst <ph name="TOTAL_COUNT" /> objekt raderas från enheten. Logga in i Chromium som $2 om du vill kunna återställa data senare.</translation>
 <translation id="608189560609172163">Chromium kunde inte synkronisera data på grund av ett fel vid inloggningen.</translation>
 <translation id="6129621093834146363"><ph name="FILE_NAME" /> är skadlig och har blockerats av Chromium.</translation>
 <translation id="6212496753309875659">Det finns redan en nyare version av Chromium på den här datorn. Avinstallera Chromium och försök igen om programvaran inte fungerar.</translation>
@@ -192,7 +189,6 @@ Vissa funktioner är kanske inte tillgängliga. Ange en annan profilkatalog elle
 <translation id="705851970750939768">Uppdatera Chromium</translation>
 <translation id="7066436765290594559">Det gick inte att synkronisera data med Chromium. Uppdatera lösenfrasen för synkronisering.</translation>
 <translation id="707471633328071618">Google Payments (har kopierats till Chromium)</translation>
-<translation id="7114836556269756734">{NUM_ITEMS,plural, =1{Det här innebär att minst $1 objekt raderas permanent från enheten. Logga in i Chromium som $2 om du vill kunna återställa data senare.}other{Det här innebär att minst $1 objekt raderas permanent från enheten. Logga in i Chromium som $2 om du vill kunna återställa data senare.}}</translation>
 <translation id="7138853919861947730">Chromium kan använda webbtjänster för att förbättra din upplevelse när du surfar.</translation>
 <translation id="7162152143154757523">Med Chromiums stavningskontroll skickas det du skriver i webbläsaren till Googles servrar så att du kan använda samma stavningsteknik som används i Googles webbsökning.</translation>
 <translation id="7196020411877309443">Varför visas det här?</translation>

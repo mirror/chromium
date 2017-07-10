@@ -1660,7 +1660,6 @@ Kun hvis allowCorporateKeyUsage er angivet som "sand" for en udvidelse, kan den 
 <translation id="7713608076604149344">Begrænsninger af download</translation>
 <translation id="7715711044277116530">Procentdel, som nedtoningsforsinkelsen på skærmen skaleres i præsentationstilstand</translation>
 <translation id="7717938661004793600">Konfigurer hjælpefunktioner for <ph name="PRODUCT_OS_NAME" />.</translation>
-<translation id="7719251660743813569">Kontrollerer, om metrics over brug rapporteres tilbage til Google. Hvis den er indstillet til sand, vil <ph name="PRODUCT_OS_NAME" /> rapportere metrics over brug. Hvis den ikke er konfigureret eller er angivet til falsk, deaktiveres metrics-rapportering.</translation>
 <translation id="7724994675283793633">Denne politik aktiverer HTTP/0.9 på andre porte end 80 for HTTP og 443 for HTTPS.
 
       Denne politik er som standard deaktiveret. Hvis den aktiveres, kan brugerne blive udsat for sikkerhedsproblemet https://crbug.com/600352.

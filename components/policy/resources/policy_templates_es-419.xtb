@@ -1659,7 +1659,6 @@
 <translation id="7713608076604149344">Restricciones de descarga</translation>
 <translation id="7715711044277116530">Indica el porcentaje en el que debe ajustarse la demora de inactividad de la pantalla en el modo de presentación.</translation>
 <translation id="7717938661004793600">Permite configurar las funciones de accesibilidad de <ph name="PRODUCT_OS_NAME" />.</translation>
-<translation id="7719251660743813569">Controla el envío de informes sobre estadísticas de uso a Google. Si el valor se establece en "true", <ph name="PRODUCT_OS_NAME" /> enviará informes sobre estadísticas de uso. Si no se configura o se establece en "false", se desactivarán los informes estadísticos.</translation>
 <translation id="7724994675283793633">Esta política habilita el protocolo HTTP/0.9 en otros puertos además del puerto 80 para HTTP y el 443 para HTTPS.
 
       De forma predeterminada, esta política está inhabilitada. Si se habilita, los usuarios quedan expuestos ante el problema de seguridad https://crbug.com/600352.

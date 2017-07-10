@@ -159,8 +159,10 @@ Apăsați Căutare sau Shift pentru a anula.</translation>
 <translation id="5744083938413354016">Tragere prin atingere</translation>
 <translation id="5777841717266010279">Oprești permiterea accesului la ecran?</translation>
 <translation id="57838592816432529">Dezactivează sunetul</translation>
+<translation id="5860033963881614850">Dezactivat</translation>
 <translation id="5895138241574237353">Reîncepe</translation>
 <translation id="5901316534475909376">Shift + Esc</translation>
+<translation id="5916664084637901428">Activat</translation>
 <translation id="5927132638760172455">Se proiectează pe un receiver necunoscut</translation>
 <translation id="5932901536148835538">Chromebit</translation>
 <translation id="5947494881799873997">Reveniți</translation>
@@ -170,7 +172,6 @@ Apăsați Căutare sau Shift pentru a anula.</translation>
 <translation id="5978382165065462689">În prezent, permiți controlul la ecran prin Asistență la distanță.</translation>
 <translation id="5980301590375426705">Ieșiți din modul pentru invitați</translation>
 <translation id="6018164090099858612">Se iese din modul oglindă</translation>
-<translation id="6041154455840261787">Modul Contrast ridicat este activat. Apasă din nou pe tasta de căutare + Shift + H pentru a-l dezactiva.</translation>
 <translation id="6043212731627905357">Monitorul nu funcționează cu <ph name="DEVICE_TYPE" /> (monitorul nu este compatibil).</translation>
 <translation id="6043994281159824495">Deconectați-vă acum</translation>
 <translation id="6047696787498798094">Permiterea accesului la ecran încetează când comuți la alt utilizator. Dorești să continui?</translation>
@@ -214,6 +215,7 @@ Apăsați Căutare sau Shift pentru a anula.</translation>
 <translation id="714034171374937760">Chromebase</translation>
 <translation id="7165278925115064263">Alt + Shift + K</translation>
 <translation id="7168224885072002358">Se revine la rezoluția anterioară în <ph name="TIMEOUT_SECONDS" /></translation>
+<translation id="7199454189089571166">Modul Asistent</translation>
 <translation id="7209101170223508707">Tasta CAPS LOCK este activată.
 Apăsați Alt+Căutare sau Shift pentru a anula.</translation>
 <translation id="7246339268451149667">Activezi Deblocarea prin amprentă?</translation>
@@ -236,7 +238,6 @@ Apăsați Alt+Căutare sau Shift pentru a anula.</translation>
 <translation id="7814236020522506259"><ph name="HOUR" />:<ph name="MINUTE" /></translation>
 <translation id="7823564328645135659">După sincronizarea setărilor, limba a fost modificată de la „<ph name="FROM_LOCALE" />” la „<ph name="TO_LOCALE" />”.</translation>
 <translation id="7904094684485781019">Administratorul acestui cont a dezactivat conectarea multiplă.</translation>
-<translation id="7951523953736115461">Lumină de noapte</translation>
 <translation id="7977927628060636163">Se caută rețele mobile…</translation>
 <translation id="7982789257301363584">Rețea</translation>
 <translation id="8000066093800657092">Nicio rețea</translation>

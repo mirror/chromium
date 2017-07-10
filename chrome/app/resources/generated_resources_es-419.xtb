@@ -3389,7 +3389,6 @@ Presiona cualquier tecla para seguir con navegando.</translation>
 <translation id="6138680304137685902">Firma X9.62 ECDSA con SHA-384</translation>
 <translation id="614161640521680948">Idioma:</translation>
 <translation id="6143186082490678276">Obtener ayuda</translation>
-<translation id="6144697279259829572">{NUM_ITEMS,plural, =1{Esta acción borrará permanentemente, al menos, $1 elemento de este dispositivo.}other{Esta acción borrará permanentemente, al menos, $1 elementos de este dispositivo.}}</translation>
 <translation id="6144890426075165477"><ph name="PRODUCT_NAME" /> no es actualmente tu navegador predeterminado.</translation>
 <translation id="6146563240635539929">Videos</translation>
 <translation id="6147020289383635445">Error al imprimir vista previa</translation>
@@ -4205,7 +4204,6 @@ Usa esta función solo con cuentas de confianza.</translation>
 <translation id="7388044238629873883">Falta muy poco</translation>
 <translation id="7392118418926456391">Error en el análisis antivirus</translation>
 <translation id="7392915005464253525">Volver a abrir una ventana cerrada</translation>
-<translation id="7393449708074241536">Esta acción borrará permanentemente <ph name="TOTAL_COUNT" /> elementos de este dispositivo.</translation>
 <translation id="7396845648024431313"><ph name="APP_NAME" /> empezará a ejecutarse cuando se inicie el sistema y seguirá ejecutándose en segundo plano aunque cierres todas las demás ventanas de <ph name="PRODUCT_NAME" />.</translation>
 <translation id="7400418766976504921">URL</translation>
 <translation id="740083207982962331">Espera mientras se reinicia la Chromebox.</translation>
@@ -5410,7 +5408,6 @@ Es posible que las notificaciones, las ventanas y los diálogos posteriores se d
 <translation id="974555521953189084">Ingresa tu frase de contraseña para iniciar la sincronización</translation>
 <translation id="981121421437150478">Sin conexión</translation>
 <translation id="98515147261107953">Horizontal</translation>
-<translation id="987267091708560486">{NUM_ITEMS,plural, =1{Esta acción borrará permanentemente $1 elemento de este dispositivo.}other{Esta acción borrará permanentemente $1 elementos de este dispositivo.}}</translation>
 <translation id="988978206646512040">No se permite una frase de contraseña vacía</translation>
 <translation id="992032470292211616">Las extensiones, las aplicaciones y los temas pueden dañar tu dispositivo. ¿Confirmas que quieres continuar?</translation>
 <translation id="992592832486024913">Inhabilitar ChromeVox (comentarios por voz)</translation>
