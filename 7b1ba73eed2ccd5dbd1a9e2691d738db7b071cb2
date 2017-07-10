@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "505f5f90_3c16f9e2",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-07-10T08:40:24Z",
+      "side": 1,
+      "message": "Could you comment using actual characters like \"foo ^bar| ba*z\" ?",
+      "revId": "7b1ba73eed2ccd5dbd1a9e2691d738db7b071cb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7d014902_6b708eb6",
         "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
         "patchSetId": 7
