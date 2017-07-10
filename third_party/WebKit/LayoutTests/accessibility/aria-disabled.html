@@ -27,34 +27,34 @@
     if (window.accessibilityController) {
 
           var textField = accessibilityController.accessibleElementById("text1");
-          shouldBe("textField.isEnabled", "false");
+          shouldBeEqualToString("textField.restrictions", "disabled");
 
           textField = accessibilityController.accessibleElementById("text2");
-          shouldBe("textField.isEnabled", "true");
+          shouldBeEqualToString("textField.restrictions", "none");
 
           var group = accessibilityController.accessibleElementById("group1");
-          shouldBe("group.isEnabled", "false");
+          shouldBeEqualToString("group.restrictions", "disabled");
 
           var link = accessibilityController.accessibleElementById("link1");
-          shouldBe("link.isEnabled", "false");
+          shouldBeEqualToString("link.restrictions", "disabled");
 
           var button = accessibilityController.accessibleElementById("button1");
-          shouldBe("button.isEnabled", "true");
+          shouldBeEqualToString("button.restrictions", "none");
 
           var treeitem = accessibilityController.accessibleElementById("treeitem1");
-          shouldBe("treeitem.isEnabled", "false");
+          shouldBeEqualToString("treeitem.restrictions", "disabled");
 
           var option = accessibilityController.accessibleElementById("option1");
-          shouldBe("option.isEnabled", "false");
+          shouldBeEqualToString("option.restrictions", "disabled");
 
           var tab = accessibilityController.accessibleElementById("tab1");
-          shouldBe("tab.isEnabled", "false");
+          shouldBeEqualToString("tab.restrictions", "disabled");
 
           var gridcell = accessibilityController.accessibleElementById("gridcell1");
-          shouldBe("gridcell.isEnabled", "false");
+          shouldBeEqualToString("gridcell.restrictions", "disabled");
 
           var checkbox = accessibilityController.accessibleElementById("checkbox1");
-          shouldBe("checkbox.isEnabled", "false");
+          shouldBeEqualToString("checkbox.restrictions", "disabled");
 
       }
 </script>
