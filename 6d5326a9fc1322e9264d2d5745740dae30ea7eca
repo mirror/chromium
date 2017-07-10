@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "413adb39_43c57a49",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabsConnectionService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-07-10T21:47:48Z",
+      "side": 1,
+      "message": "Yes, this change is intended. The goal of the CL is to make the lightweight FRE trigger for unbound WebAPKs only. Unbound WebAPKs use WebApkActivity\n\nWe might add more ways of triggering the lightweight FRE in the future :)",
+      "parentUuid": "84bd6533_cd074ceb",
+      "range": {
+        "startLine": 100,
+        "startChar": 82,
+        "endLine": 100,
+        "endChar": 87
+      },
+      "revId": "6d5326a9fc1322e9264d2d5745740dae30ea7eca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bf45a2df_e32ee4f8",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/document/ChromeLauncherActivity.java",
         "patchSetId": 3
@@ -59,6 +83,30 @@
       "writtenOn": "2017-07-10T15:46:07Z",
       "side": 1,
       "message": "This looks should be true or simply remove this flag. It was used to indicate whether the FRE is launched by ChromeLauncherActivity.",
+      "range": {
+        "startLine": 200,
+        "startChar": 29,
+        "endLine": 200,
+        "endChar": 34
+      },
+      "revId": "6d5326a9fc1322e9264d2d5745740dae30ea7eca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e26344cc_0e0d22eb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/document/ChromeLauncherActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-07-10T21:47:48Z",
+      "side": 1,
+      "message": "Done in https://chromium-review.googlesource.com/c/565843/",
+      "parentUuid": "bf45a2df_e32ee4f8",
       "range": {
         "startLine": 200,
         "startChar": 29,
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "90f787a1_08f324cd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/FirstRunFlowSequencer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-07-10T21:47:48Z",
+      "side": 1,
+      "message": "I want to keep the command line flag for now. I don\u0027t want to enable the Lightweight FRE quite yet (though I likely will be asked to enable it in few weeks time)",
+      "parentUuid": "230ad94f_c484f6cb",
+      "range": {
+        "startLine": 292,
+        "startChar": 46,
+        "endLine": 292,
+        "endChar": 85
+      },
+      "revId": "6d5326a9fc1322e9264d2d5745740dae30ea7eca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "999a7941_1cf8a999",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/FirstRunSignInProcessor.java",
         "patchSetId": 3
@@ -105,6 +177,30 @@
       "writtenOn": "2017-07-10T15:59:51Z",
       "side": 1,
       "message": "A dumb question: are these checks not necessary?",
+      "range": {
+        "startLine": 70,
+        "startChar": 33,
+        "endLine": 70,
+        "endChar": 36
+      },
+      "revId": "6d5326a9fc1322e9264d2d5745740dae30ea7eca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4c3ce8a_b3709c87",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/FirstRunSignInProcessor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-07-10T21:47:48Z",
+      "side": 1,
+      "message": "FirstRunSignInProcessor#start() is run from ChromeTabbedActivity and CustomTabActivity. WebApkActivity does not inherit from either. Thus the checks are unnecessary.",
+      "parentUuid": "999a7941_1cf8a999",
       "range": {
         "startLine": 70,
         "startChar": 33,
