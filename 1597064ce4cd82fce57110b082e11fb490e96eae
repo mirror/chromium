@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "17b7d012_4398e63b",
+        "filename": "ui/gfx/platform_font.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2017-07-10T23:08:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2aa2258_28134921",
+      "revId": "1597064ce4cd82fce57110b082e11fb490e96eae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30216e5a_eb224d0d",
         "filename": "ui/gfx/platform_font_linux.cc",
         "patchSetId": 1
@@ -48,6 +66,24 @@
       "writtenOn": "2017-07-10T21:30:31Z",
       "side": 1,
       "message": "CHECK()?",
+      "revId": "1597064ce4cd82fce57110b082e11fb490e96eae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7bd74e7_b5b58645",
+        "filename": "ui/gfx/platform_font_linux.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2017-07-10T23:08:06Z",
+      "side": 1,
+      "message": "oops, missed that one",
+      "parentUuid": "30216e5a_eb224d0d",
       "revId": "1597064ce4cd82fce57110b082e11fb490e96eae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -77,6 +113,30 @@
     },
     {
       "key": {
+        "uuid": "abbbb0bd_12c4dc9e",
+        "filename": "ui/gfx/platform_font_linux.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2017-07-10T23:08:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f07710d2_687fe19f",
+      "range": {
+        "startLine": 94,
+        "startChar": 64,
+        "endLine": 94,
+        "endChar": 68
+      },
+      "revId": "1597064ce4cd82fce57110b082e11fb490e96eae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5264ab6_57212949",
         "filename": "ui/gfx/platform_font_linux.cc",
         "patchSetId": 1
@@ -91,6 +151,24 @@
       "revId": "1597064ce4cd82fce57110b082e11fb490e96eae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fba5577_97156b43",
+        "filename": "ui/gfx/platform_font_linux.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2017-07-10T23:08:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5264ab6_57212949",
+      "revId": "1597064ce4cd82fce57110b082e11fb490e96eae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
