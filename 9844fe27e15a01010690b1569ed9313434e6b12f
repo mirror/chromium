@@ -16,6 +16,24 @@
       "revId": "9844fe27e15a01010690b1569ed9313434e6b12f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43a08784_ee417ff7",
+        "filename": "chrome/browser/ui/exclusive_access/exclusive_access_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-07-10T14:52:31Z",
+      "side": 1,
+      "message": "Sorry for the confusion. This is just a simply overload for callers who doesn\u0027t care about the callback. (Essentially |UpdateExclusiveAccessExitBubbleContent(callback \u003d nullptr)|, or do you want me to let callers pass in null callback?)\n\nEach call to |UpdateExclusiveAccessExitBubbleContent()| will dismiss the old bubble (if exists) and create a new one (if |bubble_type| is not none).\n\nThe internal logic for callbacks is the same: Every time |UpdateExclusiveAccessExitBubbleContent| was called, the previous stored callback will get triggered (if not null and not triggered before), and being replaced with the new one (null or not null).\n\nFor |AddObserver()| do you mean we should separate the update and callback methods, so callers would:\n1. Call |AddObserverForExclusiveAccessExitBubble(callback)| to store a pending callback\n2. Call |UpdateExclusiveAccessExitBubbleContent()| to replace bubble, trigger previous callback, and replace it with the pending callback?",
+      "parentUuid": "38d15242_bbdd3eb4",
+      "revId": "9844fe27e15a01010690b1569ed9313434e6b12f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
