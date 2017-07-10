@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96fb9fef_2cf57790",
+        "filename": "google_apis/gaia/oauth2_token_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-10T08:51:08Z",
+      "side": 1,
+      "message": "OAuth2TokenService does not have a notion of loading tokens - this method is only defined in https://cs.chromium.org/chromium/src/components/signin/core/browser/profile_oauth2_token_service.h?rcl\u003d578cc29af195c7df169bb0f261379cc44b47a7f5\u0026l\u003d48\n\nI think we should move RefreshTokensAreLoaded to PO2TS.",
+      "range": {
+        "startLine": 190,
+        "startChar": 7,
+        "endLine": 190,
+        "endChar": 29
+      },
+      "revId": "f10d65bd3574e18c9d02544ce9e6cbf43ff77d00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f29ca63_f37d9836",
+        "filename": "google_apis/gaia/oauth2_token_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-10T08:51:08Z",
+      "side": 1,
+      "message": "I would also like to add a new public method to the PO2TS (I\u0027m afraid of its success and of the fact that folks will start using it). Should we make it protected and make IdentityService as a friend class (or is that bad from an architecture perspective)?",
+      "revId": "f10d65bd3574e18c9d02544ce9e6cbf43ff77d00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caf08408_eac75f7b",
+        "filename": "google_apis/gaia/oauth2_token_service_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-10T08:51:08Z",
+      "side": 1,
+      "message": "Note that PO2TS is already a listener of OAuth2TS, so it can listen for OnRefreshTokensLoaded - so you would not need to change OAuth2TokenServiceDelegate.",
+      "range": {
+        "startLine": 43,
+        "startChar": 7,
+        "endLine": 43,
+        "endChar": 29
+      },
+      "revId": "f10d65bd3574e18c9d02544ce9e6cbf43ff77d00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
