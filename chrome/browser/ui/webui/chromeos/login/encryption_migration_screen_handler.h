@@ -79,7 +79,8 @@ class EncryptionMigrationScreenHandler : public EncryptionMigrationScreenView,
   void StartMigration();
   void OnMountExistingVault(bool success,
                             cryptohome::MountError return_code,
-                            const std::string& mount_hash);
+                            const std::string& mount_hash,
+                            const std::string& temporary_mount_path);
   // Removes cryptohome and shows the error screen after the removal finishes.
   void RemoveCryptohome();
   void OnRemoveCryptohome(bool success, cryptohome::MountError return_code);

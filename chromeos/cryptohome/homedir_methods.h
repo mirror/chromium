@@ -29,8 +29,10 @@ class CHROMEOS_EXPORT HomedirMethods {
       bool success,
       MountError return_code,
       const std::vector<KeyDefinition>& key_definitions)> GetKeyDataCallback;
-  typedef base::Callback<
-      void(bool success, MountError return_code, const std::string& mount_hash)>
+  typedef base::Callback<void(bool success,
+                              MountError return_code,
+                              const std::string& mount_hash,
+                              const std::string& temporary_mount_path)>
       MountCallback;
   typedef base::Callback<void(bool success, int64_t size)>
       GetAccountDiskUsageCallback;

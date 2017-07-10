@@ -228,6 +228,9 @@ class HomedirMethodsImpl : public HomedirMethods {
     if (request.public_mount)
       request_proto.set_public_mount(true);
 
+    if (request.temporary_mount)
+      request_proto.set_temporary_mount(true);
+
     DBusThreadManager::Get()->GetCryptohomeClient()->MountEx(
         id, auth_proto, request_proto,
         base::Bind(&HomedirMethodsImpl::OnMountExCallback,
@@ -409,7 +412,7 @@ class HomedirMethodsImpl : public HomedirMethods {
                          bool result,
                          const BaseReply& reply) {
     if (call_status != chromeos::DBUS_METHOD_CALL_SUCCESS) {
-      callback.Run(false, MOUNT_ERROR_FATAL, std::string());
+      callback.Run(false, MOUNT_ERROR_FATAL, std::string(), std::string());
       return;
     }
     if (reply.has_error()) {
@@ -417,18 +420,22 @@ class HomedirMethodsImpl : public HomedirMethods {
         LOGIN_LOG(ERROR)
             << "HomedirMethods MountEx error (CryptohomeErrorCode): "
             << reply.error();
-        callback.Run(false, MapError(reply.error()), std::string());
+        callback.Run(false, MapError(reply.error()), std::string(),
+                     std::string());
         return;
       }
     }
     if (!reply.HasExtension(MountReply::reply)) {
-      callback.Run(false, MOUNT_ERROR_FATAL, std::string());
+      callback.Run(false, MOUNT_ERROR_FATAL, std::string(), std::string());
       return;
     }
 
     std::string mount_hash;
     mount_hash = reply.GetExtension(MountReply::reply).sanitized_username();
-    callback.Run(true, MOUNT_ERROR_NONE, mount_hash);
+    std::string temporary_mount_path;
+    temporary_mount_path =
+        reply.GetExtension(MountReply::reply).temporary_mount_path();
+    callback.Run(true, MOUNT_ERROR_NONE, mount_hash, temporary_mount_path);
   }
 
   void OnGetAccountDiskUsageCallback(

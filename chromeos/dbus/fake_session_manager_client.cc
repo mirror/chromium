@@ -162,6 +162,13 @@ FakeSessionManagerClient::BlockingRetrievePolicyForUser(
   return RetrievePolicyResponseType::SUCCESS;
 }
 
+void FakeSessionManagerClient::RetrievePolicyForUserWithoutSession(
+    const cryptohome::Identification& cryptohome_id,
+    const std::string& temporary_mount_path,
+    const RetrievePolicyCallback& callback) {
+  // TOOD not supported yet
+}
+
 void FakeSessionManagerClient::RetrieveDeviceLocalAccountPolicy(
     const std::string& account_id,
     const RetrievePolicyCallback& callback) {

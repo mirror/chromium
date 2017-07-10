@@ -517,7 +517,8 @@ void EncryptionMigrationScreenHandler::StartMigration() {
 void EncryptionMigrationScreenHandler::OnMountExistingVault(
     bool success,
     cryptohome::MountError return_code,
-    const std::string& mount_hash) {
+    const std::string& mount_hash,
+    const std::string& temporary_mount_path) {
   if (!success || return_code != cryptohome::MOUNT_ERROR_NONE) {
     RecordMigrationResultMountFailure(should_resume_, IsArcKiosk());
     UpdateUIState(UIState::MIGRATION_FAILED);
