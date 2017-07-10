@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9df25d8b_76148906",
+        "filename": "ui/events/blink/input_handler_proxy.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1100,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-07-10T13:44:25Z",
+      "side": 1,
+      "message": "This can likely be simplified to just checking\n\ntouch_start_or_first_touch_move....",
+      "range": {
+        "startLine": 1100,
+        "startChar": 33,
+        "endLine": 1100,
+        "endChar": 46
+      },
+      "revId": "abfddb9c3523327eebbd8b8718f4f8da92595f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25bb862e_b4d0820a",
+        "filename": "ui/events/blink/input_handler_proxy_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2549,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-07-10T13:44:25Z",
+      "side": 1,
+      "message": "Is it possible to be more restrictive in what the MOCK will get called with?\n\nThese assert that the interface is called once. But no notion of what it is called with.",
+      "revId": "abfddb9c3523327eebbd8b8718f4f8da92595f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
