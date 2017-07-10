@@ -36,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "b198b7fc_8c5cb6fb",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ClientHintsPreferences.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-10T03:34:59Z",
+      "side": 1,
+      "message": "prefernces -\u003e preferences",
+      "revId": "ec5bc23195c9c7b5738c5d3e49f4a5bf35a8ed86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a391896a_b2f7eb45",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ClientHintsPreferences.h",
         "patchSetId": 7
@@ -121,6 +138,23 @@
       "writtenOn": "2017-07-10T02:43:13Z",
       "side": 1,
       "message": "Please use the new, shorter copyright format.",
+      "revId": "ec5bc23195c9c7b5738c5d3e49f4a5bf35a8ed86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ccd8706_34930da2",
+        "filename": "third_party/WebKit/public/platform/WebClientHintsType.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-10T03:34:59Z",
+      "side": 1,
+      "message": "Have you changed RAM to Ram to follow the style guide at https://google.github.io/styleguide/cppguide.html#Type_Names? Then it\u0027s fine but how about changing also DPR to Dpr for consistency?",
       "revId": "ec5bc23195c9c7b5738c5d3e49f4a5bf35a8ed86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
