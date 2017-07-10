@@ -59,6 +59,7 @@ class UrlHandlersParser : public ManifestHandler {
   ~UrlHandlersParser() override;
 
   // ManifestHandler API
+  bool AlwaysParseForType(Manifest::Type type) const override;
   bool Parse(Extension* extension, base::string16* error) override;
 
  private:

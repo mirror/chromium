@@ -67,12 +67,16 @@ const UrlHandlerInfo* UrlHandlers::FindMatchingUrlHandler(
     const Extension* extension,
     const GURL& url) {
   const std::vector<UrlHandlerInfo>* handlers = GetUrlHandlers(extension);
-  if (!handlers)
+  if (!handlers) {
+    LOG(ERROR) << "NO HANDLER";
     return NULL;
+  }
 
   if (NetworkChangeNotifier::IsOffline() &&
-      !OfflineEnabledInfo::IsOfflineEnabled(extension))
+      !OfflineEnabledInfo::IsOfflineEnabled(extension)) {
+    LOG(ERROR) << "OFFLINE";
     return NULL;
+  }
 
   for (std::vector<extensions::UrlHandlerInfo>::const_iterator it =
        handlers->begin(); it != handlers->end(); it++) {
@@ -133,16 +137,24 @@ bool ParseUrlHandler(const std::string& handler_id,
   return true;
 }
 
+bool UrlHandlersParser::AlwaysParseForType(Manifest::Type type) const {
+  return true;
+}
+
 bool UrlHandlersParser::Parse(Extension* extension, base::string16* error) {
   std::unique_ptr<UrlHandlers> info(new UrlHandlers);
   const base::DictionaryValue* all_handlers = NULL;
+  LOG(ERROR) << "Parsing for: " << extension->name() << "(" << extension->id()
+             << "):";
   if (!extension->manifest()->GetDictionary(
         mkeys::kUrlHandlers, &all_handlers)) {
     *error = base::ASCIIToUTF16(merrors::kInvalidURLHandlers);
     return false;
   }
 
-  DCHECK(extension->is_platform_app());
+  if (!extension->is_platform_app() && !extension->from_bookmark()) {
+    return false;
+  }
 
   for (base::DictionaryValue::Iterator iter(*all_handlers); !iter.IsAtEnd();
        iter.Advance()) {
@@ -165,6 +177,7 @@ bool UrlHandlersParser::Parse(Extension* extension, base::string16* error) {
 }
 
 const std::vector<std::string> UrlHandlersParser::Keys() const {
+  LOG(ERROR) << "Registering";
   return SingleKey(mkeys::kUrlHandlers);
 }
 

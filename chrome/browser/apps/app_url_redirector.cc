@@ -9,6 +9,8 @@
 #include "base/logging.h"
 #include "chrome/browser/prerender/prerender_contents.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/ui/extensions/app_launch_params.h"
+#include "chrome/browser/ui/extensions/application_launch.h"
 #include "chrome/common/extensions/api/url_handlers/url_handlers_parser.h"
 #include "components/navigation_interception/intercept_navigation_throttle.h"
 #include "components/navigation_interception/navigation_params.h"
@@ -57,9 +59,21 @@ bool LaunchAppWithUrl(
   Profile* profile =
       Profile::FromBrowserContext(source->GetBrowserContext());
 
-  DVLOG(1) << "Launching app handler with URL: "
-           << params.url().spec() << " -> "
-           << app->name() << "(" << app->id() << "):" << handler_id;
+  LOG(ERROR) << "Launching app handler with URL: " << params.url().spec()
+             << " -> " << app->name() << "(" << app->id() << "):" << handler_id;
+  static bool done = false;
+  if (app->from_bookmark() && !done) {
+    AppLaunchParams launch_params(
+        profile, app.get(), extensions::LAUNCH_CONTAINER_WINDOW,
+        WindowOpenDisposition::CURRENT_TAB, extensions::SOURCE_CHROME_INTERNAL);
+    launch_params.override_url = params.url();
+    OpenApplication(std::move(launch_params));
+
+    done = true;
+    return true;
+  } else if (app->from_bookmark() && done) {
+    return false;
+  }
   apps::LaunchPlatformAppWithUrl(
       profile, app.get(), handler_id, params.url(), params.referrer().url);
 
@@ -103,17 +117,22 @@ AppUrlRedirector::MaybeCreateThrottleFor(content::NavigationHandle* handle) {
   for (extensions::ExtensionSet::const_iterator iter =
            enabled_extensions.begin();
        iter != enabled_extensions.end(); ++iter) {
+    LOG(ERROR) << "Looking at: " << (*iter)->name() << "(" << (*iter)->id()
+               << "):";
     const UrlHandlerInfo* handler =
         UrlHandlers::FindMatchingUrlHandler(iter->get(), handle->GetURL());
     if (handler) {
-      DVLOG(1) << "Found matching app handler for redirection: "
-               << (*iter)->name() << "(" << (*iter)->id() << "):"
-               << handler->id;
+      LOG(ERROR) << "Found matching app handler for redirection: "
+                 << (*iter)->name() << "(" << (*iter)->id()
+                 << "):" << handler->id;
       return std::unique_ptr<content::NavigationThrottle>(
           new navigation_interception::InterceptNavigationThrottle(
               handle,
               base::Bind(&LaunchAppWithUrl,
                          scoped_refptr<const Extension>(*iter), handler->id)));
+    } else {
+      LOG(ERROR) << "Didn't Found matching app handler for redirection: "
+                 << (*iter)->name() << "(" << (*iter)->id() << "):";
     }
   }
 

@@ -23,11 +23,23 @@ class NavigationParams {
                    bool is_external_protocol,
                    bool is_main_frame,
                    const GURL& base_url_for_data_url);
+  NavigationParams(const GURL& url,
+                   const GURL& previous_url,
+                   const content::Referrer& referrer,
+                   bool has_user_gesture,
+                   bool is_post,
+                   ui::PageTransition page_transition_type,
+                   bool is_redirect,
+                   bool is_external_protocol,
+                   bool is_main_frame,
+                   const GURL& base_url_for_data_url);
+  ~NavigationParams();
   NavigationParams(const NavigationParams&);
   NavigationParams& operator=(const NavigationParams&) = delete;
 
   const GURL& url() const { return url_; }
   GURL& url() { return url_; }
+  const GURL& previous_url() const { return previous_url_; }
   const content::Referrer& referrer() const { return referrer_; }
   bool has_user_gesture() const { return has_user_gesture_; }
   bool is_post() const { return is_post_; }
@@ -40,6 +52,7 @@ class NavigationParams {
  private:
 
   GURL url_;
+  GURL previous_url_;
   content::Referrer referrer_;
   bool has_user_gesture_;
   bool is_post_;

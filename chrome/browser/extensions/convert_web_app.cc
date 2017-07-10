@@ -27,6 +27,7 @@
 #include "base/time/time.h"
 #include "base/values.h"
 #include "chrome/common/chrome_paths.h"
+#include "chrome/common/extensions/api/url_handlers/url_handlers_parser.h"
 #include "chrome/common/web_application_info.h"
 #include "crypto/sha2.h"
 #include "extensions/common/constants.h"
@@ -116,6 +117,21 @@ scoped_refptr<Extension> ConvertWebAppToExtension(
     root->SetString(keys::kAppIconColor, image_util::GenerateHexColorString(
                                              web_app.generated_icon_color));
   }
+
+  auto matches = base::MakeUnique<base::ListValue>();
+  matches->AppendString(web_app.scope.spec() + "*");
+
+  auto scope_handler = base::MakeUnique<base::DictionaryValue>();
+  scope_handler->SetList(keys::kMatches, std::move(matches));
+  scope_handler->SetString(keys::kUrlHandlerTitle,
+                           base::UTF16ToUTF8(web_app.title));
+
+  auto url_handlers = base::MakeUnique<base::DictionaryValue>();
+  url_handlers->SetDictionary("test", std::move(scope_handler));
+
+  root->SetDictionary(keys::kUrlHandlers, std::move(url_handlers));
+
+  LOG(ERROR) << "Printing manifest: " << *root;
 
   // Add the icons and linked icon information.
   auto icons = base::MakeUnique<base::DictionaryValue>();

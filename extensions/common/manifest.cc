@@ -207,6 +207,9 @@ bool Manifest::GetString(
 
 bool Manifest::GetDictionary(
     const std::string& path, const base::DictionaryValue** out_value) const {
+  if (path == std::string("url_handlers")) {
+    return value_->GetDictionary(path, out_value);
+  }
   return CanAccessPath(path) && value_->GetDictionary(path, out_value);
 }
 

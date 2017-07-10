@@ -368,6 +368,9 @@ void BookmarkAppHelper::UpdateWebAppInfoFromManifest(
       web_app_info->icons.push_back(info);
     }
   }
+
+  if (!manifest.scope.is_empty())
+    web_app_info->scope = manifest.scope;
 }
 
 // static

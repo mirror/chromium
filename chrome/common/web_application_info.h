@@ -45,6 +45,8 @@ struct WebApplicationInfo {
   // The launch URL for the app.
   GURL app_url;
 
+  GURL scope;
+
   // Set of available icons.
   std::vector<IconInfo> icons;
 
