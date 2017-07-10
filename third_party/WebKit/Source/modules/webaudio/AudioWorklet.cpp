@@ -10,6 +10,7 @@
 #include "core/workers/WorkerClients.h"
 #include "modules/webaudio/AudioWorkletMessagingProxy.h"
 #include "modules/webaudio/AudioWorkletThread.h"
+#include "modules/webaudio/BaseAudioContext.h"
 
 namespace blink {
 
@@ -19,26 +20,46 @@ AudioWorklet* AudioWorklet::Create(LocalFrame* frame) {
 
 AudioWorklet::AudioWorklet(LocalFrame* frame) : Worklet(frame) {}
 
-AudioWorklet::~AudioWorklet() {}
+AudioWorklet::~AudioWorklet() {
+  base_audio_contexts_.clear();
+}
+
+void AudioWorklet::RegisterBaseAudioContext(BaseAudioContext* context) {
+  DCHECK(IsMainThread());
+  DCHECK(!base_audio_contexts_.Contains(context));
+  base_audio_contexts_.push_back(context);
+}
+
+void AudioWorklet::UnregisterBaseAudioContext(BaseAudioContext* context) {
+  DCHECK(IsMainThread());
+  size_t index = base_audio_contexts_.Find(context);
+  if (index == kNotFound)
+    return;
+
+  // TODO(hongchan): Rearrange the vector data after the deletion. (shrink/fit)
+  base_audio_contexts_.erase(index);
+}
 
 bool AudioWorklet::NeedsToCreateGlobalScope() {
-  // For now, create only one global scope per document.
-  // TODO(nhiroki): Revisit this later.
-  return GetNumberOfGlobalScopes() == 0;
+  return GetNumberOfGlobalScopes() == 0 ||
+      GetNumberOfGlobalScopes() < base_audio_contexts_.size();
 }
 
 WorkletGlobalScopeProxy* AudioWorklet::CreateGlobalScope() {
   DCHECK(NeedsToCreateGlobalScope());
+
   AudioWorkletThread::EnsureSharedBackingThread();
 
   WorkerClients* worker_clients = WorkerClients::Create();
   AudioWorkletMessagingProxy* proxy =
       new AudioWorkletMessagingProxy(GetExecutionContext(), worker_clients);
   proxy->Initialize();
+
   return proxy;
 }
 
 DEFINE_TRACE(AudioWorklet) {
+  visitor->Trace(base_audio_contexts_);
   Worklet::Trace(visitor);
 }
 

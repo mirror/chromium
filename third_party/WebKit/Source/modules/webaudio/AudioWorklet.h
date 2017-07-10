@@ -12,6 +12,7 @@
 namespace blink {
 
 class LocalFrame;
+class BaseAudioContext;
 
 class MODULES_EXPORT AudioWorklet final : public Worklet {
   WTF_MAKE_NONCOPYABLE(AudioWorklet);
@@ -19,6 +20,13 @@ class MODULES_EXPORT AudioWorklet final : public Worklet {
  public:
   static AudioWorklet* Create(LocalFrame*);
   ~AudioWorklet() override;
+
+  // AudioWorklet needs to know the existence of BaseAudioContext instance.
+  void RegisterBaseAudioContext(BaseAudioContext*);
+
+  // When BaseAudioContext goes away, update the list of instances in
+  // AudioWorklet.
+  void UnregisterBaseAudioContext(BaseAudioContext*);
 
   DECLARE_VIRTUAL_TRACE();
 
@@ -28,6 +36,9 @@ class MODULES_EXPORT AudioWorklet final : public Worklet {
   // Implements Worklet.
   bool NeedsToCreateGlobalScope() final;
   WorkletGlobalScopeProxy* CreateGlobalScope() final;
+
+  // Heap vector for BaseAudioContexts.
+  HeapVector<Member<BaseAudioContext>> base_audio_contexts_;
 };
 
 }  // namespace blink

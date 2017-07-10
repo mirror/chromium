@@ -71,6 +71,7 @@
 #include "modules/webaudio/ScriptProcessorNode.h"
 #include "modules/webaudio/StereoPannerNode.h"
 #include "modules/webaudio/WaveShaperNode.h"
+#include "modules/webaudio/WindowAudioWorklet.h"
 #include "platform/CrossThreadFunctional.h"
 #include "platform/Histogram.h"
 #include "platform/audio/IIRFilter.h"
@@ -168,6 +169,8 @@ void BaseAudioContext::Initialize() {
     // only create the listener if the destination node exists.
     listener_ = AudioListener::Create(*this);
   }
+
+  WindowAudioWorklet::audioWorklet(*this)->RegisterBaseAudioContext(this);
 }
 
 void BaseAudioContext::Clear() {
@@ -180,6 +183,8 @@ void BaseAudioContext::Clear() {
 
 void BaseAudioContext::Uninitialize() {
   DCHECK(IsMainThread());
+
+  WindowAudioWorklet::audioWorklet(*this)->UnregisterBaseAudioContext(this);
 
   if (!IsDestinationInitialized())
     return;
@@ -996,6 +1001,7 @@ DEFINE_TRACE(BaseAudioContext) {
   visitor->Trace(periodic_wave_square_);
   visitor->Trace(periodic_wave_sawtooth_);
   visitor->Trace(periodic_wave_triangle_);
+
   EventTargetWithInlineData::Trace(visitor);
   SuspendableObject::Trace(visitor);
 }

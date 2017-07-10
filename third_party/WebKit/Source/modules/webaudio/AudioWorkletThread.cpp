@@ -65,6 +65,11 @@ void AudioWorkletThread::EnsureSharedBackingThread() {
   WorkletThreadHolder<AudioWorkletThread>::EnsureInstance("AudioWorkletThread");
 }
 
+WorkerBackingThread& AudioWorkletThread::GetSharedBackingThread() {
+  DCHECK(IsMainThread());
+  return *WorkletThreadHolder<AudioWorkletThread>::GetInstance()->GetThread();
+}
+
 void AudioWorkletThread::ClearSharedBackingThread() {
   DCHECK(IsMainThread());
   WorkletThreadHolder<AudioWorkletThread>::ClearInstance();

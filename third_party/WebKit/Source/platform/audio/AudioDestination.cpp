@@ -32,6 +32,7 @@
 #include "platform/CrossThreadFunctional.h"
 #include "platform/Histogram.h"
 #include "platform/WebTaskRunner.h"
+#include "platform/WebThreadSupportingGC.h"
 #include "platform/audio/AudioUtilities.h"
 #include "platform/audio/PushPullFIFO.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
@@ -131,7 +132,7 @@ void AudioDestination::Render(const WebVector<float*>& destination_data,
 
   // TODO(hongchan): this check might be redundant, so consider removing later.
   if (frames_to_render != 0 && rendering_thread_) {
-    rendering_thread_->GetWebTaskRunner()->PostTask(
+    rendering_thread_->PostTask(
         BLINK_FROM_HERE,
         CrossThreadBind(&AudioDestination::RequestRenderOnWebThread,
                         CrossThreadUnretained(this), number_of_frames,
@@ -191,7 +192,7 @@ void AudioDestination::Start() {
   if (web_audio_device_ && !is_playing_) {
     TRACE_EVENT0("webaudio", "AudioDestination::Start");
     rendering_thread_ =
-        Platform::Current()->CreateThread("WebAudio Rendering Thread");
+        WebThreadSupportingGC::Create("WebAudio Rendering Thread");
     web_audio_device_->Start();
     is_playing_ = true;
   }
@@ -205,8 +206,19 @@ void AudioDestination::Stop() {
   if (web_audio_device_ && is_playing_) {
     TRACE_EVENT0("webaudio", "AudioDestination::Stop");
     web_audio_device_->Stop();
-    rendering_thread_.reset();
     is_playing_ = false;
+  }
+}
+
+void AudioDestination::StartWithWorkletThread(WebThreadSupportingGC& thread) {
+  DCHECK(IsMainThread());
+
+  // Start the "audio device" after the rendering thread is ready.
+  if (web_audio_device_ && !is_playing_) {
+    TRACE_EVENT0("webaudio", "AudioDestination::StartWithWorkletThread");
+    rendering_thread_ = WTF::WrapUnique(&thread);
+    web_audio_device_->Start();
+    is_playing_ = true;
   }
 }
 
@@ -261,8 +273,7 @@ bool AudioDestination::CheckBufferSize() {
 }
 
 bool AudioDestination::IsRenderingThread() {
-  return static_cast<ThreadIdentifier>(rendering_thread_->ThreadId()) ==
-         CurrentThread();
+  return rendering_thread_->IsCurrentThread();
 }
 
 }  // namespace blink

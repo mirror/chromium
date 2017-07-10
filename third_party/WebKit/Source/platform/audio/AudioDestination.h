@@ -43,7 +43,7 @@ namespace blink {
 class PushPullFIFO;
 class SecurityOrigin;
 class WebAudioLatencyHint;
-class WebThread;
+class WebThreadSupportingGC;
 
 // The AudioDestination class is an audio sink interface between the media
 // renderer and the Blink's WebAudio module. It has a FIFO to adapt the
@@ -85,6 +85,9 @@ class PLATFORM_EXPORT AudioDestination : public WebAudioDevice::RenderCallback {
   virtual void Start();
   virtual void Stop();
 
+  // For AudioWorklet experimental threading.
+  void StartWithWorkletThread(WebThreadSupportingGC&);
+
   // Getters must be accessed from the main thread.
   size_t CallbackBufferSize() const;
   bool IsPlaying();
@@ -115,7 +118,7 @@ class PLATFORM_EXPORT AudioDestination : public WebAudioDevice::RenderCallback {
   bool is_playing_;
 
   // Accessed by the device thread. Rendering thread for WebAudio graph.
-  std::unique_ptr<WebThread> rendering_thread_;
+  std::unique_ptr<WebThreadSupportingGC> rendering_thread_;
 
   // Accessed by both threads: resolves the buffer size mismatch between the
   // WebAudio engine and the callback function from the actual audio device.
