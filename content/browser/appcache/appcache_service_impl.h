@@ -86,10 +86,8 @@ class CONTENT_EXPORT AppCacheServiceImpl
   explicit AppCacheServiceImpl(storage::QuotaManagerProxy* quota_manager_proxy);
   ~AppCacheServiceImpl() override;
 
-  void Initialize(
-      const base::FilePath& cache_directory,
-      const scoped_refptr<base::SingleThreadTaskRunner>& db_thread,
-      const scoped_refptr<base::SingleThreadTaskRunner>& cache_thread);
+  void Initialize(const base::FilePath& cache_directory,
+                  const scoped_refptr<base::SingleThreadTaskRunner>& db_thread);
 
   void AddObserver(Observer* observer) {
     observers_.AddObserver(observer);
@@ -202,7 +200,6 @@ class CONTENT_EXPORT AppCacheServiceImpl
 
   base::FilePath cache_directory_;
   scoped_refptr<base::SingleThreadTaskRunner> db_thread_;
-  scoped_refptr<base::SingleThreadTaskRunner> cache_thread_;
   AppCachePolicy* appcache_policy_;
   AppCacheQuotaClient* quota_client_;
   AppCacheExecutableHandlerFactory* handler_factory_;

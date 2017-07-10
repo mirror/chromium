@@ -23,14 +23,7 @@ const char kCacheValue[] = "cached value";
 
 class ShaderDiskCacheTest : public testing::Test {
  public:
-  ShaderDiskCacheTest()
-      : cache_thread_("CacheThread") {
-    base::Thread::Options options;
-    options.message_loop_type = base::MessageLoop::TYPE_IO;
-    CHECK(cache_thread_.StartWithOptions(options));
-    factory_ =
-        base::MakeUnique<ShaderCacheFactory>(cache_thread_.task_runner());
-  }
+  ShaderDiskCacheTest() { factory_ = base::MakeUnique<ShaderCacheFactory>(); }
 
   ~ShaderDiskCacheTest() override {}
 
@@ -48,7 +41,6 @@ class ShaderDiskCacheTest : public testing::Test {
 
   std::unique_ptr<ShaderCacheFactory> factory_;
   base::ScopedTempDir temp_dir_;
-  base::Thread cache_thread_;
   base::MessageLoopForIO message_loop_;
 
   DISALLOW_COPY_AND_ASSIGN(ShaderDiskCacheTest);

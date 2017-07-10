@@ -36,10 +36,8 @@ class AppCacheStorageImpl : public AppCacheStorage {
   explicit AppCacheStorageImpl(AppCacheServiceImpl* service);
   ~AppCacheStorageImpl() override;
 
-  void Initialize(
-      const base::FilePath& cache_directory,
-      const scoped_refptr<base::SingleThreadTaskRunner>& db_thread,
-      const scoped_refptr<base::SingleThreadTaskRunner>& cache_thread);
+  void Initialize(const base::FilePath& cache_directory,
+                  const scoped_refptr<base::SingleThreadTaskRunner>& db_thread);
   void Disable();
   bool is_disabled() const { return is_disabled_; }
 

@@ -21,9 +21,7 @@ class AppCacheDiskCacheTest : public testing::Test {
   AppCacheDiskCacheTest() {}
 
   void SetUp() override {
-    // Use the current thread for the DiskCache's cache_thread.
     message_loop_.reset(new base::MessageLoopForIO());
-    cache_thread_ = base::ThreadTaskRunnerHandle::Get();
     ASSERT_TRUE(directory_.CreateUniqueTempDir());
     completion_callback_ = base::Bind(
         &AppCacheDiskCacheTest::OnComplete,
@@ -45,7 +43,6 @@ class AppCacheDiskCacheTest : public testing::Test {
 
   base::ScopedTempDir directory_;
   std::unique_ptr<base::MessageLoop> message_loop_;
-  scoped_refptr<base::SingleThreadTaskRunner> cache_thread_;
   net::CompletionCallback completion_callback_;
   std::vector<int> completion_results_;
 
@@ -60,7 +57,7 @@ TEST_F(AppCacheDiskCacheTest, DisablePriorToInitCompletion) {
   std::unique_ptr<AppCacheDiskCache> disk_cache(new AppCacheDiskCache);
   EXPECT_FALSE(disk_cache->is_disabled());
   disk_cache->InitWithDiskBackend(directory_.GetPath(), k10MBytes, false,
-                                  cache_thread_, completion_callback_);
+                                  completion_callback_);
   disk_cache->CreateEntry(1, &entry, completion_callback_);
   disk_cache->OpenEntry(2, &entry, completion_callback_);
   disk_cache->DoomEntry(3, completion_callback_);
@@ -91,7 +88,7 @@ TEST_F(AppCacheDiskCacheTest, DisableAfterInitted) {
   std::unique_ptr<AppCacheDiskCache> disk_cache(new AppCacheDiskCache);
   EXPECT_FALSE(disk_cache->is_disabled());
   disk_cache->InitWithDiskBackend(directory_.GetPath(), k10MBytes, false,
-                                  cache_thread_, completion_callback_);
+                                  completion_callback_);
   FlushCacheTasks();
   EXPECT_EQ(1u, completion_results_.size());
   EXPECT_EQ(net::OK, completion_results_[0]);
@@ -126,7 +123,7 @@ TEST_F(AppCacheDiskCacheTest, DISABLED_DisableWithEntriesOpen) {
   std::unique_ptr<AppCacheDiskCache> disk_cache(new AppCacheDiskCache);
   EXPECT_FALSE(disk_cache->is_disabled());
   disk_cache->InitWithDiskBackend(directory_.GetPath(), k10MBytes, false,
-                                  cache_thread_, completion_callback_);
+                                  completion_callback_);
   FlushCacheTasks();
   EXPECT_EQ(1u, completion_results_.size());
   EXPECT_EQ(net::OK, completion_results_[0]);

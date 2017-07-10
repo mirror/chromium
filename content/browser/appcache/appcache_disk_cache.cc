@@ -220,19 +220,17 @@ int AppCacheDiskCache::InitWithDiskBackend(
     const base::FilePath& disk_cache_directory,
     int disk_cache_size,
     bool force,
-    const scoped_refptr<base::SingleThreadTaskRunner>& cache_thread,
     const net::CompletionCallback& callback) {
   return Init(net::APP_CACHE,
               disk_cache_directory,
               disk_cache_size,
               force,
-              cache_thread,
               callback);
 }
 
 int AppCacheDiskCache::InitWithMemBackend(
     int mem_cache_size, const net::CompletionCallback& callback) {
-  return Init(net::MEMORY_CACHE, base::FilePath(), mem_cache_size, false, NULL,
+  return Init(net::MEMORY_CACHE, base::FilePath(), mem_cache_size, false,
               callback);
 }
 
@@ -345,7 +343,6 @@ int AppCacheDiskCache::Init(
     const base::FilePath& cache_directory,
     int cache_size,
     bool force,
-    const scoped_refptr<base::SingleThreadTaskRunner>& cache_thread,
     const net::CompletionCallback& callback) {
   DCHECK(!is_initializing_or_waiting_to_initialize() && !disk_cache_.get());
   is_disabled_ = false;
@@ -358,7 +355,6 @@ int AppCacheDiskCache::Init(
       cache_directory,
       cache_size,
       force,
-      cache_thread,
       NULL,
       &(create_backend_callback_->backend_ptr_),
       base::Bind(&CreateBackendCallbackShim::Callback,
