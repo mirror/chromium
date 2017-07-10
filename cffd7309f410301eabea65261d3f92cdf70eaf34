@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "2520bd51_86835fd6",
+        "filename": "components/payments/core/address_normalization_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-07-10T14:39:08Z",
+      "side": 1,
+      "message": "Definitely no harm in making this reusable. I just feel like having a usable object after a call to a method with \"Finalize\" in the name is misleading.\n\nMaybe rename the Finalize... method to something else if you\u0027d rather not add a Reset method?",
+      "parentUuid": "8726a399_f548cd2c",
+      "revId": "cffd7309f410301eabea65261d3f92cdf70eaf34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9ab0e194_2f3b9163",
         "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
         "patchSetId": 2
@@ -175,6 +193,30 @@
       "revId": "cffd7309f410301eabea65261d3f92cdf70eaf34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2808da18_afe6867c",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-07-10T14:39:08Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "de62672d_67a1baf9",
+      "range": {
+        "startLine": 261,
+        "startChar": 1,
+        "endLine": 261,
+        "endChar": 0
+      },
+      "revId": "cffd7309f410301eabea65261d3f92cdf70eaf34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
