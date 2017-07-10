@@ -16,6 +16,24 @@
       "revId": "d142b778c9eb3ad460703e5e723a2b89da6920f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "709b09b5_98d0f595",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3252,
+      "author": {
+        "id": 1130690
+      },
+      "writtenOn": "2017-07-10T17:47:34Z",
+      "side": 1,
+      "message": "Sorry, I didn\u0027t get back sooner. Apparently I didn\u0027t get an email from comments on gerrit. I agree and am not sure the rationale behind it by whoever wrote it. I\u0027m ok with removing the DCHECK if you\u0027d like, but can I do that in another cl? With the branch coming up, I really would like to get this fix in ASAP to verify it works everywhere and then clean up soon.",
+      "parentUuid": "844b4741_a6b1ca54",
+      "revId": "d142b778c9eb3ad460703e5e723a2b89da6920f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
