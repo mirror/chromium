@@ -16,6 +16,24 @@
       "revId": "b33a417d682f0aad3f81597b0d8ee72acc02a668",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "889b2740_69f6a006",
+        "filename": "media/capture/video/android/java/src/org/chromium/media/VideoCapture.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-07-10T23:27:11Z",
+      "side": 1,
+      "message": "It currently runs in the browser process, so we should be fine.",
+      "parentUuid": "b3e2988f_9469bb2a",
+      "revId": "b33a417d682f0aad3f81597b0d8ee72acc02a668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
