@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<script src="../resources/testharness.js"></script>
+<script src="../resources/testharnessreport.js"></script>
+
+<div id="main" role="main">
+
+  <input id="input" type="text" value="Line 1">
+
+  <div id="contenteditable-textbox" role="textbox" contenteditable="true">
+    <div id="contenteditable-line1">Line 1</div>
+    <textarea id="contenteditable-line2" rows="1" cols="40">Line 2</textarea>
+  </div>
+
+  <div id="contenteditable-div" contenteditable>
+    <p id="paragraph1">Line 1<br>
+      Line 2</p>
+    <p id="paragraph2">Line 3</p>
+  </div>
+
+</div>
+
+<script>
+  test(function() {
+    var input = document.getElementById('input');
+    var axInput = accessibilityController.accessibleElementById('input');
+    assert_equals(axInput, input);
+  }, 'The editable root of an input element is the input element itself.');
+
+  test(function() {
+    var contentEditable = document.getElementById('contenteditable-textbox');
+    var axContentEditable = accessibilityController.accessibleElementById('contenteditable-textbox');
+    assert_equals(axContentEditable, contentEditable);
+  }, 'The editable root of a content editable with a role of textbox is the content editable itself.');
+
+  test(function() {
+    var contentEditable = document.getElementById('contenteditable-line1');
+    var axContentEditable = accessibilityController.accessibleElementById('contenteditable-line1');
+    assert_equals(axContentEditable, contentEditable);
+  }, 'The editable root of a content editable inside another content editable is the inner content editable.');
+
+  test(function() {
+    var textarea = document.getElementById('contenteditable-line2');
+    var axTextarea = accessibilityController.accessibleElementById('contenteditable-line2');
+    assert_equals(axTextarea, textarea);
+  }, 'The editable root of a textarea embedded inside a content editable is the textarea itself.');
+
+  test(function() {
+    var contentEditable = document.getElementById('contenteditable');
+    var axParagraph1 = accessibilityController.accessibleElementById('paragraph1');
+    var axParagraph2 = accessibilityController.accessibleElementById('paragraph2');
+    assert_equals(axParagraph1, contentEditable);
+    assert_equals(axParagraph2, contentEditable);
+  }, 'The editable root of a paragraph within a content editable is the content editable.');
+
+  if (window.testRunner)
+    document.getElementById("main").style.display = "none";
+</script>
