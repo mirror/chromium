@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "308d9810_05de0136",
+        "filename": "third_party/WebKit/Source/platform/mojo/Values.typemap",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-10T20:23:21Z",
+      "side": 1,
+      "message": "Is this file exactly the same as //mojo/common/values.typemap?\nIf yes, please consider using that one directly in the blink variant.",
+      "revId": "473d904368a508b4626be1c8ec18d2e47d386fbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
