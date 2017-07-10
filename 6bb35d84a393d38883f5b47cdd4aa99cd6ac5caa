@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83b0a6af_d8db37ce",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/gsa/ContextReporter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-07-10T22:04:34Z",
+      "side": 1,
+      "message": "nit in javaland, acronyms are treated as words with regards to capitalization, so this should be mLastUrl",
+      "revId": "6bb35d84a393d38883f5b47cdd4aa99cd6ac5caa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcd8a119_dc3fae45",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/gsa/ContextReporter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-07-10T22:04:34Z",
+      "side": 1,
+      "message": "I would use TextUtils.equals(currentTab.getUrl(), mLastURL) and for title.  It handles nulls more gracefully.",
+      "range": {
+        "startLine": 197,
+        "startChar": 23,
+        "endLine": 197,
+        "endChar": 29
+      },
+      "revId": "6bb35d84a393d38883f5b47cdd4aa99cd6ac5caa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
