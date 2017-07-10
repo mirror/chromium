@@ -5,6 +5,7 @@
 package org.chromium.content.browser;
 
 import android.content.ComponentName;
+import android.content.Intent;
 import android.os.Bundle;
 
 import org.chromium.base.process_launcher.ChildProcessConnection;
@@ -32,6 +33,15 @@ class TestChildProcessConnection extends ChildProcessConnection {
         }
     }
 
+    private final static ChildServiceConnectionFactory CONNECTION_FACTORY =
+            new ChildServiceConnectionFactory() {
+                @Override
+                public ChildServiceConnection createConnection(
+                        Intent bindIntent, int bindFlags, ChildServiceConnectionDelegate delegate) {
+                    return new MockChildServiceConnection();
+                }
+            };
+
     private int mPid;
     private boolean mConnected;
     private ServiceCallback mServiceCallback;
@@ -42,7 +52,8 @@ class TestChildProcessConnection extends ChildProcessConnection {
      */
     TestChildProcessConnection(ComponentName serviceName, boolean bindToCaller,
             boolean bindAsExternalService, Bundle serviceBundle) {
-        super(null /* context */, serviceName, bindToCaller, bindAsExternalService, serviceBundle);
+        super(null /* context */, serviceName, bindToCaller, bindAsExternalService, serviceBundle,
+                CONNECTION_FACTORY);
     }
 
     public void setPid(int pid) {
@@ -52,11 +63,6 @@ class TestChildProcessConnection extends ChildProcessConnection {
     @Override
     public int getPid() {
         return mPid;
-    }
-
-    @Override
-    protected ChildServiceConnection createServiceConnection(int bindFlags) {
-        return new MockChildServiceConnection();
     }
 
     // We don't have a real service so we have to mock the connection status.
