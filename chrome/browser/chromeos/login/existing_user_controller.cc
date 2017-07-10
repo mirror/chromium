@@ -55,6 +55,7 @@
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/generated_resources.h"
 #include "chromeos/chromeos_switches.h"
+#include "chromeos/cryptohome/async_method_caller.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/power_manager_client.h"
 #include "chromeos/dbus/session_manager_client.h"
@@ -107,6 +108,19 @@ enum LoginPasswordChangeFlow {
   LOGIN_PASSWORD_CHANGE_FLOW_CRYPTOHOME_FAILURE = 1,
 
   LOGIN_PASSWORD_CHANGE_FLOW_COUNT,  // Must be the last entry.
+};
+
+enum EcryptfsMigrationAction {
+  // Don't migrate.
+  DISALLOW_ARC_NO_MIGRATION = 0,
+  // Migrate.
+  MIGRATE = 1,
+  // Wipe the user home and start again.
+  WIPE = 2,
+  // Ask the user if migration should be performed.
+  ASK_USER = 3,
+  // Last value for validity checks.
+  COUNT
 };
 
 // Delay for transferring the auth cache to the system profile.
@@ -926,7 +940,89 @@ void ExistingUserController::OnPasswordChangeDetected() {
 void ExistingUserController::OnOldEncryptionDetected(
     const UserContext& user_context,
     bool has_incomplete_migration) {
-  ShowEncryptionMigrationScreen(user_context, has_incomplete_migration);
+  if (has_incomplete_migration) {
+    // If migration was incomplete, continue migration without checking user
+    // policy.
+    ShowEncryptionMigrationScreen(user_context, has_incomplete_migration);
+  } else {
+    // Fetch user policy.
+    policy::BrowserPolicyConnectorChromeOS* connector =
+        g_browser_process->platform_part()->browser_policy_connector_chromeos();
+    // Use signin profile request context
+    net::URLRequestContextGetter* signin_profile_context_getter =
+        ProfileHelper::GetSigninProfile()->GetRequestContext();
+    pre_signin_policy_fetcher_ =
+        base::MakeUnique<policy::PreSigninPolicyFetcher>(
+            DBusThreadManager::Get()->GetCryptohomeClient(),
+            DBusThreadManager::Get()->GetSessionManagerClient(),
+            connector->device_management_service(),
+            signin_profile_context_getter, user_context.GetAccountId(),
+            cryptohome::KeyDefinition(user_context.GetKey()->GetSecret(),
+                                      std::string(), cryptohome::PRIV_DEFAULT));
+    pre_signin_policy_fetcher_->GetPolicy(
+        base::BindOnce(&ExistingUserController::OnPolicyFetched,
+                       weak_factory_.GetWeakPtr(), user_context));
+  }
+}
+
+void ExistingUserController::OnPolicyFetched(
+    UserContext user_context,
+    policy::PreSigninPolicyFetcher::PolicyFetchResult result,
+    std::unique_ptr<enterprise_management::CloudPolicySettings>
+        policy_payload) {
+  using policy::PreSigninPolicyFetcher;
+
+  EcryptfsMigrationAction action =
+      EcryptfsMigrationAction::DISALLOW_ARC_NO_MIGRATION;
+  if (result == policy::PreSigninPolicyFetcher::PolicyFetchResult::
+                    POLICY_FETCH_NO_POLICY) {
+    // Unmanaged user. Ask user if they want to migrate.
+    action = EcryptfsMigrationAction::ASK_USER;
+  } else if (result == policy::PreSigninPolicyFetcher::PolicyFetchResult::
+                           POLICY_FETCH_SUCCESS &&
+             policy_payload->has_ecryptfsmigrationstrategy()) {
+    const enterprise_management::IntegerPolicyProto& policy_proto =
+        policy_payload->ecryptfsmigrationstrategy();
+    if (policy_proto.has_value()) {
+      if (!policy_proto.has_policy_options() ||
+          policy_proto.policy_options().mode() !=
+              enterprise_management::PolicyOptions::UNSET) {
+        if (policy_proto.value() >= 0 &&
+            policy_proto.value() < EcryptfsMigrationAction::COUNT) {
+          action = static_cast<EcryptfsMigrationAction>(policy_proto.value());
+        }
+      }
+    }
+  }
+
+  switch (action) {
+    case DISALLOW_ARC_NO_MIGRATION:
+    default:
+      user_context.SetIsForcingDircrypto(false);
+      ContinuePerformLogin(login_performer_->auth_mode(), user_context);
+      break;
+    case MIGRATE:
+      // TODO(pmarko): Reusing resume is probably wrong from UI perspective.
+      // Introduce an enum instead of the bool parameter to choose between
+      // ask_user/continue_interrupted_migration/start_migration.
+      ShowEncryptionMigrationScreen(user_context, true);
+      break;
+    case ASK_USER:
+      ShowEncryptionMigrationScreen(user_context, false);
+      break;
+    case WIPE:
+      cryptohome::AsyncMethodCaller::GetInstance()->AsyncRemove(
+          cryptohome::Identification(user_context.GetAccountId()),
+          base::Bind(&ExistingUserController::WipePerformed,
+                     weak_factory_.GetWeakPtr(), user_context));
+      break;
+  }
+}
+
+void ExistingUserController::WipePerformed(const UserContext& user_context,
+                                           bool success,
+                                           cryptohome::MountError return_code) {
+  ContinuePerformLogin(login_performer_->auth_mode(), user_context);
 }
 
 void ExistingUserController::WhiteListCheckFailed(const std::string& email) {
