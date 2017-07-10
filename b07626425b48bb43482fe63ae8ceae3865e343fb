@@ -70,6 +70,30 @@
       "revId": "b07626425b48bb43482fe63ae8ceae3865e343fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36f9e9ec_6554492e",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-07-10T13:07:10Z",
+      "side": 1,
+      "message": "Thanks for the clarification!",
+      "parentUuid": "5256de97_ae3a3555",
+      "range": {
+        "startLine": 422,
+        "startChar": 29,
+        "endLine": 422,
+        "endChar": 76
+      },
+      "revId": "b07626425b48bb43482fe63ae8ceae3865e343fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
