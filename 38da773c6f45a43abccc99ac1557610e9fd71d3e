@@ -16,6 +16,24 @@
       "revId": "38da773c6f45a43abccc99ac1557610e9fd71d3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a8b9e8f_2e2ced12",
+        "filename": "chrome/browser/resources/media_router/elements/media_router_container/media_router_container.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1336,
+      "author": {
+        "id": 1212809
+      },
+      "writtenOn": "2017-07-10T22:42:19Z",
+      "side": 1,
+      "message": "As of this point, the only issues that should appear in the cast mode list are non-blocking bad file issues. If a blocking issue is added that might appear in the cast mode list, I think that the desired behavior will probably need to be determined based on what caused the issue, so kicking back to the SINK LIST for now I think is fine.",
+      "parentUuid": "a819f033_061603b3",
+      "revId": "38da773c6f45a43abccc99ac1557610e9fd71d3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
