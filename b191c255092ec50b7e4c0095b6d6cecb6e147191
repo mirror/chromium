@@ -281,6 +281,30 @@
       "revId": "b191c255092ec50b7e4c0095b6d6cecb6e147191",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "672c7631_a62d47ed",
+        "filename": "components/variations/service/variations_field_trial_creator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-10T18:34:58Z",
+      "side": 1,
+      "message": "Well, per the style guide you would need to provide accessors to them, rather than use them directly.\n\nBut, once you have accessors, at that point it should be pretty straight forward to just switch to using composition instead of inheritance - which is generally preferred. So instead of calling Foo() and set_x()/x() you\u0027d call trial_creator_.Foo() and trail_creator_.x()/.set_x().\n\nSo I suggest trying the above approach.",
+      "parentUuid": "82df51a6_d767e2ba",
+      "range": {
+        "startLine": 104,
+        "startChar": 9,
+        "endLine": 104,
+        "endChar": 0
+      },
+      "revId": "b191c255092ec50b7e4c0095b6d6cecb6e147191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
