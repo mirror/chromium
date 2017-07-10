@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ebac90d7_c65575ee",
+        "filename": "chrome/browser/sessions/session_restore.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-10T16:04:47Z",
+      "side": 1,
+      "message": "Given the comments (regression check) above, is this changing the intended behavior? Is there any delay between setting |select| to false and the browser reloads the focused tab?",
+      "revId": "310c5a9008a95ca837ee70360ad59ab956061d03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
