@@ -14,6 +14,7 @@
 #include "base/metrics/field_trial.h"
 
 namespace base {
+class CommandLine;
 class FieldTrialList;
 
 namespace test {
@@ -69,6 +70,31 @@ class VariationParamsManager {
 
   // Clears all of the associated params.
   void ClearAllVariationParams();
+
+  // Appends command line switches to |command_line| in a way that mimics
+  // SetVariationParams.
+  //
+  // This is useful in situations where using VariationParamsManager directly
+  // would have resulted in initializing FieldTrialList twice (once from
+  // ChromeBrowserMainParts::SetupFieldTrials and once from
+  // VariationParamsManager).
+  static void AppendVariationParams(
+      base::CommandLine* command_line,
+      const std::string& trial_name,
+      const std::map<std::string, std::string>& param_values);
+
+  // Appends command line switches to |command_line| in a way that mimics
+  // SetVariationParamsWithFeatureAssociations.
+  //
+  // This is useful in situations where using VariationParamsManager directly
+  // would have resulted in initializing FieldTrialList twice (once from
+  // ChromeBrowserMainParts::SetupFieldTrials and once from
+  // VariationParamsManager).
+  static void AppendVariationParamsWithFeatureAssociations(
+      base::CommandLine* command_line,
+      const std::string& trial_name,
+      const std::map<std::string, std::string>& param_values,
+      const std::set<std::string>& associated_features);
 
  private:
   std::unique_ptr<base::FieldTrialList> field_trial_list_;
