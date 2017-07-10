@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "957c3c66_83069783",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-10T23:49:25Z",
+      "side": 1,
+      "message": "I don\u0027t think there\u0027s consensus on this topic, but I like to do the following:\n\n1) |variable_name|\n2) ClassName\n3) FunctionName()\n\nWith your current style, there\u0027s no way to differentiate (2) and (3) without context.",
+      "range": {
+        "startLine": 9,
+        "startChar": 13,
+        "endLine": 9,
+        "endChar": 30
+      },
+      "revId": "bae87592118a114d6c4533def43e47dab99fb835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d3907c2_3b2d7cf5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-10T23:49:25Z",
+      "side": 1,
+      "message": "typo?",
+      "range": {
+        "startLine": 20,
+        "startChar": 4,
+        "endLine": 20,
+        "endChar": 24
+      },
+      "revId": "bae87592118a114d6c4533def43e47dab99fb835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45ea4c98_650592af",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-10T23:49:25Z",
+      "side": 1,
+      "message": "Letting PrintingControllerImpl manage the life cycle of ....",
+      "revId": "bae87592118a114d6c4533def43e47dab99fb835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba6ad75e_b8850fec",
+        "filename": "chrome/browser/android/tab_android.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-10T23:49:25Z",
+      "side": 1,
+      "message": "Try to check what thread a function is running on before taking any other action.",
+      "revId": "bae87592118a114d6c4533def43e47dab99fb835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a515e4fe_82524804",
+        "filename": "chrome/browser/android/tab_android.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-10T23:49:25Z",
+      "side": 1,
+      "message": "Can you try printing on an interstitial page, e.g. visit https://expired.badssl.com/, and see if:\n\na) This code is reachable\nb) If yes to (a), then if |contents| is a nullptr or not.\n\nWe wouldn\u0027t want to continue if |contents| is a nullptr. I\u0027m just not 100% sure if it can happen.",
+      "revId": "bae87592118a114d6c4533def43e47dab99fb835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "745d1753_2643e293",
+        "filename": "printing/android/java/src/org/chromium/printing/PrintingControllerImpl.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-10T23:49:25Z",
+      "side": 1,
+      "message": "Are you trying to set the variables to an invalid value here? I\u0027m pretty sure on the native side, the invalid value is -1. I\u0027m not sure if there\u0027s a constant somewhere in Java code to indicate invalid Render {Process,Frame} IDs.",
+      "revId": "bae87592118a114d6c4533def43e47dab99fb835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
