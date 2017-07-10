@@ -16,6 +16,24 @@
       "revId": "00ac729923014b1b17b0e08a52868698a1e62c20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20297811_8104ee24",
+        "filename": "chrome/test/chromedriver/run_buildbot_steps.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1129864
+      },
+      "writtenOn": "2017-07-10T21:50:26Z",
+      "side": 1,
+      "message": "Oops, sorry, that was a copy-paste mistake from the actual URL loaded in the browser address bar. I will make the necessary corrections.\n\nHowever, I noticed that old URL \"https://code.google.com/.. \" gets automatically redirected to the new URL \"https://bugs.chromium.org/..\" . So, fixing the URL does not actually resolve the issue.\nI think there seems to be a known Ubuntu/Python bug https://bugs.launchpad.net/ubuntu/+source/openssl/+bug/965371 which is causing the issue. I am not sure of the workaround though.",
+      "parentUuid": "07fb472c_31f3fb16",
+      "revId": "00ac729923014b1b17b0e08a52868698a1e62c20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
