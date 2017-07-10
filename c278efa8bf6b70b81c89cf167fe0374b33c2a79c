@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e1b7b84_39c936cb",
+        "filename": "third_party/WebKit/Source/core/xml/parser/XMLDocumentParser.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-07-10T09:01:04Z",
+      "side": 1,
+      "message": "nitpick: We already have this value in unused_pending_script. Maybe we could just rename the parameter unused_pending_script to pending_script and drop this line.",
+      "range": {
+        "startLine": 438,
+        "startChar": 2,
+        "endLine": 438,
+        "endChar": 31
+      },
+      "revId": "c278efa8bf6b70b81c89cf167fe0374b33c2a79c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
