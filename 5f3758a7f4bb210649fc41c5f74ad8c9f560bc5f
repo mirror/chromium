@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8684df34_c0ad6f30",
+        "filename": "chrome/installer/zucchini/crc32.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-10T23:25:51Z",
+      "side": 1,
+      "message": "Code search reveals new line is most common.",
+      "parentUuid": "bb20bbea_ef3b197b",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 9
+      },
+      "revId": "5f3758a7f4bb210649fc41c5f74ad8c9f560bc5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ba6884f_341c7719",
         "filename": "chrome/installer/zucchini/crc32.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "5f3758a7f4bb210649fc41c5f74ad8c9f560bc5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9f60c77_92e3ba89",
+        "filename": "chrome/installer/zucchini/crc32.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-10T23:25:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ba6884f_341c7719",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 8
+      },
+      "revId": "5f3758a7f4bb210649fc41c5f74ad8c9f560bc5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,54 @@
     },
     {
       "key": {
+        "uuid": "91300456_d49be4fa",
+        "filename": "chrome/installer/zucchini/crc32.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-10T23:25:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f334126_3177a518",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "5f3758a7f4bb210649fc41c5f74ad8c9f560bc5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e68a099d_d2a45f00",
+        "filename": "chrome/installer/zucchini/crc32.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-10T23:25:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f334126_3177a518",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "5f3758a7f4bb210649fc41c5f74ad8c9f560bc5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58db0da3_c723e33d",
         "filename": "chrome/installer/zucchini/crc32.h",
         "patchSetId": 4
@@ -91,6 +187,54 @@
       "revId": "5f3758a7f4bb210649fc41c5f74ad8c9f560bc5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b289503_e2a2fd70",
+        "filename": "chrome/installer/zucchini/crc32.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-10T23:25:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58db0da3_c723e33d",
+      "range": {
+        "startLine": 8,
+        "startChar": 9,
+        "endLine": 8,
+        "endChar": 18
+      },
+      "revId": "5f3758a7f4bb210649fc41c5f74ad8c9f560bc5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c53ea1d4_8bccc3c6",
+        "filename": "chrome/installer/zucchini/crc32.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-10T23:25:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58db0da3_c723e33d",
+      "range": {
+        "startLine": 8,
+        "startChar": 9,
+        "endLine": 8,
+        "endChar": 18
+      },
+      "revId": "5f3758a7f4bb210649fc41c5f74ad8c9f560bc5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +261,54 @@
     },
     {
       "key": {
+        "uuid": "439f6733_b6455cff",
+        "filename": "chrome/installer/zucchini/crc32.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-10T23:25:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2a778bf_3052f6d9",
+      "range": {
+        "startLine": 12,
+        "startChar": 14,
+        "endLine": 12,
+        "endChar": 17
+      },
+      "revId": "5f3758a7f4bb210649fc41c5f74ad8c9f560bc5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b0b80eb9_34349252",
+        "filename": "chrome/installer/zucchini/crc32.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-10T23:25:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2a778bf_3052f6d9",
+      "range": {
+        "startLine": 12,
+        "startChar": 14,
+        "endLine": 12,
+        "endChar": 17
+      },
+      "revId": "5f3758a7f4bb210649fc41c5f74ad8c9f560bc5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03acb065_66a1d91f",
         "filename": "chrome/installer/zucchini/crc32_unittest.cc",
         "patchSetId": 4
@@ -137,6 +329,30 @@
       "revId": "5f3758a7f4bb210649fc41c5f74ad8c9f560bc5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7a6565c_8bc6cc10",
+        "filename": "chrome/installer/zucchini/crc32_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-10T23:25:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03acb065_66a1d91f",
+      "range": {
+        "startLine": 19,
+        "startChar": 38,
+        "endLine": 19,
+        "endChar": 41
+      },
+      "revId": "5f3758a7f4bb210649fc41c5f74ad8c9f560bc5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
