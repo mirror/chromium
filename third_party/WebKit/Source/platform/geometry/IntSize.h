@@ -112,7 +112,7 @@ class PLATFORM_EXPORT IntSize {
   explicit IntSize(const CGSize&);  // don't do this implicitly since it's lossy
   operator CGSize() const;
 
-#if defined(__OBJC__) && !defined(NSGEOMETRY_TYPES_SAME_AS_CGGEOMETRY_TYPES)
+#if defined(__OBJC__)
   explicit IntSize(const NSSize&);  // don't do this implicitly since it's lossy
   operator NSSize() const;
 #endif

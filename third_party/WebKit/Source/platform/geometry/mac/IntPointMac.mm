@@ -27,8 +27,6 @@
 
 namespace blink {
 
-#ifndef NSGEOMETRY_TYPES_SAME_AS_CGGEOMETRY_TYPES
-
 IntPoint::IntPoint(const NSPoint& p)
     : m_x(static_cast<int>(p.x)), m_y(static_cast<int>(p.y)) {}
 
@@ -36,5 +34,4 @@ IntPoint::operator NSPoint() const {
   return NSMakePoint(m_x, m_y);
 }
 
-#endif
 }

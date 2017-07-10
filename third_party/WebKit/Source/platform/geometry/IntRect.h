@@ -191,7 +191,7 @@ class PLATFORM_EXPORT IntRect {
 
 #if defined(OS_MACOSX)
   operator CGRect() const;
-#if defined(__OBJC__) && !defined(NSGEOMETRY_TYPES_SAME_AS_CGGEOMETRY_TYPES)
+#if defined(__OBJC__)
   operator NSRect() const;
 #endif
 #endif
@@ -240,7 +240,7 @@ inline bool operator!=(const IntRect& a, const IntRect& b) {
 
 #if defined(OS_MACOSX)
 PLATFORM_EXPORT IntRect EnclosingIntRect(const CGRect&);
-#if defined(__OBJC__) && !defined(NSGEOMETRY_TYPES_SAME_AS_CGGEOMETRY_TYPES)
+#if defined(__OBJC__)
 PLATFORM_EXPORT IntRect enclosingIntRect(const NSRect&);
 #endif
 #endif

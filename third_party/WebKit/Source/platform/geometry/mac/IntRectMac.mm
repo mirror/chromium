@@ -27,8 +27,6 @@
 
 namespace blink {
 
-#ifndef NSGEOMETRY_TYPES_SAME_AS_CGGEOMETRY_TYPES
-
 IntRect::operator NSRect() const {
   return NSMakeRect(x(), y(), width(), height());
 }
@@ -41,5 +39,4 @@ IntRect enclosingIntRect(const NSRect& rect) {
   return IntRect(l, t, r - l, b - t);
 }
 
-#endif
 }
