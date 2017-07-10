@@ -154,6 +154,9 @@ class PasswordFormManager : public FormFetcher::Consumer {
   // |pending_credentials_|.
   void Update(const autofill::PasswordForm& credentials_to_update);
 
+  // Updates the username value. Called when user edits the username.
+  void UpdateUsername(const base::string16& new_username);
+
   // Call these if/when we know the form submission worked or failed.
   // These routines are used to update internal statistics ("ActionsTaken").
   void LogSubmitPassed();
