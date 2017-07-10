@@ -22,6 +22,31 @@
       "revId": "4911f076d411f578d9ac9994133d80f7f1f03b69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e067693_4a4af143",
+        "filename": "services/resource_coordinator/public/cpp/resource_coordinator_features.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1223950
+      },
+      "writtenOn": "2017-07-10T22:58:23Z",
+      "side": 1,
+      "message": "Matthew Halpern\n\nIntern,",
+      "parentUuid": "cb17e8f2_3ab18d24",
+      "range": {
+        "startLine": 21,
+        "startChar": 4,
+        "endLine": 21,
+        "endChar": 33
+      },
+      "tag": "mailMessageId\u003d\u003cCAEgPhxF\u003dSBOwygcdSE6i5i2AinKhrZJ2DW-kFoCEJ8yUs+vjMg@mail.gmail.com\u003e",
+      "revId": "4911f076d411f578d9ac9994133d80f7f1f03b69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
