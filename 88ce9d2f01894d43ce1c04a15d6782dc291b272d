@@ -33,6 +33,40 @@
       "revId": "88ce9d2f01894d43ce1c04a15d6782dc291b272d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f0ecf9a_b4e365db",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerGlobalScopeClient.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-10T06:55:16Z",
+      "side": 1,
+      "message": "optional nit: |can_make_payment| would be more descriptive than |response|",
+      "revId": "88ce9d2f01894d43ce1c04a15d6782dc291b272d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75984125_d94f2143",
+        "filename": "third_party/WebKit/public/web/modules/serviceworker/WebServiceWorkerContextClient.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-10T06:55:16Z",
+      "side": 1,
+      "message": "optional nit: |can_make_payment| would be more descriptive than |response|",
+      "revId": "88ce9d2f01894d43ce1c04a15d6782dc291b272d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
