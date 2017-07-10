@@ -61,7 +61,7 @@ void ProfilingGlobals::RunMainMessageLoop() {
 }
 
 void ProfilingGlobals::QuitWhenIdle() {
-  main_message_loop_->QuitWhenIdle();
+  //main_message_loop_->QuitWhenIdle();
 }
 
 }  // namespace profiling
