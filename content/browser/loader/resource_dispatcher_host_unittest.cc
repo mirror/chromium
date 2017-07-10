@@ -1936,7 +1936,7 @@ TEST_F(ResourceDispatcherHostTest, CancelRequestsOnRenderFrameDeleted) {
 
   TestResourceDispatcherHostDelegate delegate;
   host_.SetDelegate(&delegate);
-  host_.OnRenderViewHostCreated(filter_->child_id(), 0);
+  host_.OnRenderViewHostCreated(filter_->child_id(), 0, nullptr);
 
   // One RenderView issues a high priority request and a low priority one. Both
   // should be started.
@@ -3686,7 +3686,8 @@ TEST_F(ResourceDispatcherHostTest, DidChangePriority) {
 
   // Needed to enable scheduling for this child.
   host_.OnRenderViewHostCreated(filter_->child_id(),  // child_id
-                                0);                   // route_id
+                                0,                    // route_id
+                                nullptr);
 
   // Prevent any of these requests from completing.
   job_factory_->SetDelayedCompleteJobGeneration(true);
