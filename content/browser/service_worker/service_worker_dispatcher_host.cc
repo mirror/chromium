@@ -137,6 +137,7 @@ void ServiceWorkerDispatcherHost::OnFilterRemoved() {
     GetContext()->RemoveDispatcherHost(render_process_id_);
   context_wrapper_ = nullptr;
   channel_ready_ = false;
+  BrowserAssociatedInterface::ShutDown();
 }
 
 void ServiceWorkerDispatcherHost::OnDestruct() const {

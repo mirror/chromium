@@ -65,6 +65,10 @@ class BrowserAssociatedInterface {
     internal_state_->ShutDown();
   }
 
+ protected:
+  // Call ShutDown() to reset the bindings earlier than the destructor would.
+  void ShutDown() { internal_state_->ShutDown(); }
+
  private:
   class InternalState : public base::RefCountedThreadSafe<InternalState> {
    public:
