@@ -34,6 +34,23 @@
       "revId": "6bbbc8af11cb6fa10a4d8d6f1be8819631c3c5c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "35ee80e9_04438a84",
+        "filename": "chrome/test/data/webui/settings/site_details_permission_tests.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-10T01:29:20Z",
+      "side": 1,
+      "message": "Did you mean to include removing this code in this CL? Should we just break the cookie stuff out separately if it\u0027s orthogonal?",
+      "revId": "6bbbc8af11cb6fa10a4d8d6f1be8819631c3c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

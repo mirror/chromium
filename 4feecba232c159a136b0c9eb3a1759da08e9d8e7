@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "808b133a_5b737c77",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-10T01:29:20Z",
+      "side": 1,
+      "message": "Could we just make the default value a part of the site exception structure?",
+      "revId": "4feecba232c159a136b0c9eb3a1759da08e9d8e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01f6fa75_507980e9",
+        "filename": "chrome/browser/resources/settings/site_settings/site_settings_behavior.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-10T01:29:20Z",
+      "side": 1,
+      "message": "The enforcement enum is kinda confusing as it doesn\u0027t map fully to the concepts we have in the permissions model. It may be better to just return the source here.",
+      "revId": "4feecba232c159a136b0c9eb3a1759da08e9d8e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
