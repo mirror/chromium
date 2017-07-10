@@ -178,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "3f2cd70c_c374973c",
+        "filename": "ui/accessibility/platform/ax_platform_node_mac.mm",
+        "patchSetId": 28
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-07-10T21:30:15Z",
+      "side": 1,
+      "message": "It turns out that we don\u0027t support changing selection in a readonly field, unlike Cocoa. I found a comment about this in native_widget_mac_accessibility_unittest.mm:606",
+      "parentUuid": "579badc1_8d0d29ef",
+      "revId": "538d157f8f1a61326112f81de797d02c5883befa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7b7b6f3e_0ac5bdc6",
         "filename": "ui/accessibility/platform/ax_platform_node_mac.mm",
         "patchSetId": 28
