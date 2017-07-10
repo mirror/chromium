@@ -8,24 +8,25 @@
 
 namespace blink {
 
+namespace {
+
+// Mapping from WebClientHintsType to WebFeatureMapping. The ordering of
+// WebFeatures should match the ordering of enums in WebClientHintsType.
+constexpr WebFeature WebFeatureMapping[kWebClientHintsTypeLast + 1] = {
+    WebFeature::kClientHintsDeviceRAM, WebFeature::kClientHintsDPR,
+    WebFeature::kClientHintsResourceWidth,
+    WebFeature::kClientHintsViewportWidth,
+};
+
+}  // namespace
+
 FrameClientHintsPreferencesContext::FrameClientHintsPreferencesContext(
     LocalFrame* frame)
     : frame_(frame) {}
 
-void FrameClientHintsPreferencesContext::CountClientHintsDeviceRAM() {
-  UseCounter::Count(frame_, WebFeature::kClientHintsDeviceRAM);
-}
-
-void FrameClientHintsPreferencesContext::CountClientHintsDPR() {
-  UseCounter::Count(frame_, WebFeature::kClientHintsDPR);
-}
-
-void FrameClientHintsPreferencesContext::CountClientHintsResourceWidth() {
-  UseCounter::Count(frame_, WebFeature::kClientHintsResourceWidth);
-}
-
-void FrameClientHintsPreferencesContext::CountClientHintsViewportWidth() {
-  UseCounter::Count(frame_, WebFeature::kClientHintsViewportWidth);
+void FrameClientHintsPreferencesContext::CountClientHints(
+    WebClientHintsType type) {
+  UseCounter::Count(frame_, WebFeatureMapping[static_cast<int32_t>(type)]);
 }
 
 }  // namespace blink
