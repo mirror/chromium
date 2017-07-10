@@ -22,6 +22,30 @@
       "revId": "e83f543ed4954dd909dc88f9fdc5fec5ee92c4a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed78715e_c8064201",
+        "filename": "chrome/browser/win/jumplist.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-07-10T21:46:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ed911f9_55af39a9",
+      "range": {
+        "startLine": 326,
+        "startChar": 32,
+        "endLine": 326,
+        "endChar": 68
+      },
+      "revId": "e83f543ed4954dd909dc88f9fdc5fec5ee92c4a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
