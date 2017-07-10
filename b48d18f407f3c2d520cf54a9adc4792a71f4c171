@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "638defb6_ae14f1c9",
+        "filename": "chrome/browser/password_manager/chrome_password_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-10T12:43:34Z",
+      "side": 1,
+      "message": "This is just a drive-by cleanup that makes the flow easier to understand.",
+      "revId": "b48d18f407f3c2d520cf54a9adc4792a71f4c171",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8444d39e_4637d24f",
+        "filename": "chrome/browser/password_manager/save_password_infobar_delegate_android_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-10T12:43:34Z",
+      "side": 1,
+      "message": "I\u0027ll work on this in parallel and see which CL lands first. I did not want to block this on the refactoring that can happen in parallel.",
+      "revId": "b48d18f407f3c2d520cf54a9adc4792a71f4c171",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cedebd56_7c6fd0bc",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-10T12:43:34Z",
+      "side": 1,
+      "message": "In theory, GetPasswordFormMetricsRecorder() never returns a nullptr. Except that it does if the model delegate is a mocked class. I decided to add this extra check here.",
+      "revId": "b48d18f407f3c2d520cf54a9adc4792a71f4c171",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
