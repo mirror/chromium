@@ -46,6 +46,30 @@
       "revId": "2479052a34c01799dfab3c12cff02cb081f2e7f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "86984f0c_b7a50749",
+        "filename": "ui/views/controls/base_focus_ring.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-10T20:35:11Z",
+      "side": 1,
+      "message": "I think it would make more sense to add a helper instead of a base class:\n\n// Configure |view| for painting focus ring highlights.\nstatic void FocusRing::InitFocusRingView(View* view) {\n  // A layer is necessary to paint beyond the parent\u0027s bounds.\n  view-\u003eSetPaintToLayer();\n  view-\u003elayer()-\u003eSetFillsBoundsOpaquely(false);\n  // Don\u0027t allow the view to process events.\n  view-\u003eset_can_process_events_within_subtree(false);\n}",
+      "parentUuid": "9dfc2f26_a73deb98",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 20
+      },
+      "revId": "2479052a34c01799dfab3c12cff02cb081f2e7f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

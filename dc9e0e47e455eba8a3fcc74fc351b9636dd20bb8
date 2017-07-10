@@ -870,6 +870,30 @@
       "revId": "dc9e0e47e455eba8a3fcc74fc351b9636dd20bb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c1a37c06_93598426",
+        "filename": "ui/views/controls/focus_ring.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-10T20:35:11Z",
+      "side": 1,
+      "message": "Can you explain what you mean about the code lying?\n\nI\u0027d really like to see some simplifications of this CL, and have two proposals:\n\n(1) Use FocusRing subclasses, which would allow use of the static Install/Uninstall/GetFocusRing functions, allow in-lining the BaseFocusRing ctor into FocusRing, and allow declaring the Checkbox and RadioButton subclasses within the respective checkbox.cc and radio_button.cc files\u0027 anon namespaces.\n\n(2) Define views::View* subclasses |CheckboxFocusRing| and |RadioButtonFocusRing| in the respective cc files something like this:\n\n// A focus ring that highlights the checkbox icon when it has focus.\nclass CheckboxFocusRing : public View {\n  CheckboxFocusRing(Checkbox* checkbox) : checkbox_(checkbox) {\n    // call or inline my suggested FocusRing::InitFocusRingView(this);\n  }\n  ~CheckboxFocusRing() \u003d default;\n\n private:\n  // View:\n\n  // Override SetVisible to call Layout and SchedulePaint *only if needed* (probably not needed?).\n\n  void Layout() override {\n    gfx::Rect focus_bounds \u003d checkbox_-\u003eimage()-\u003ebounds();\n    focus_bounds.Inset(gfx::Insets(-2.f));\n    SetBoundsRect(focus_bounds);\n  }\n\n  void OnPaint(gfx::Canvas* canvas) override {\n    cc::PaintFlags focus_flags;\n    focus_flags.setAntiAlias(true);\n    focus_flags.setColor(\n        SkColorSetA(GetNativeTheme()-\u003eGetSystemColor(\n                        ui::NativeTheme::kColorId_FocusedBorderColor),\n                    0x66));\n    focus_flags.setStyle(cc::PaintFlags::kStroke_Style);\n    focus_flags.setStrokeWidth(2);\n\n    canvas-\u003eDrawRoundRect(GetLocalBounds(), 2.f, flags);\n  }\n\n  Checkbox* checkbox_;\n\n  DISALLOW_COPY_AND_ASSIGN(CheckboxFocusRing);\n};\n\nclass Checkbox... { View* focus_ring_ \u003d nullptr; }\n\nCheckbox::Checkbox(...) ...{\n  ...\n  if (UseMd()) {\n    ...\n    focus_ring_ \u003d new CheckboxFocusRing(this);\n    focus_ring_-\u003eSetVisible(false);\n    AddChildView(focus_ring_);\n  }\n}\n\nvoid Checkbox::OnFocus() {\n  LabelButton::OnFocus();\n  if (!UseMd())\n    UpdateImage();\n  else\n    focus_ring_-\u003eSetVisible(true);\n}\n\nvoid Checkbox::OnBlur() {\n  LabelButton::OnBlur();\n  if (!UseMd())\n    UpdateImage();\n  else\n    focus_ring_-\u003eSetVisible(false);\n}",
+      "parentUuid": "d0132f12_eb13f003",
+      "range": {
+        "startLine": 66,
+        "startChar": 16,
+        "endLine": 66,
+        "endChar": 23
+      },
+      "revId": "dc9e0e47e455eba8a3fcc74fc351b9636dd20bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
