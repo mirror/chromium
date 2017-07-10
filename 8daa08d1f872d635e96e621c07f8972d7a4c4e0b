@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "38a0f66f_418e485b",
+        "filename": "content/public/app/mojo/content_browser_manifest.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-10T15:05:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9cab56d_ff66e1b7",
+      "revId": "8daa08d1f872d635e96e621c07f8972d7a4c4e0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fab6d17c_0f43abd4",
         "filename": "content/public/app/mojo/content_browser_manifest.json",
         "patchSetId": 3
@@ -67,6 +85,24 @@
       "revId": "8daa08d1f872d635e96e621c07f8972d7a4c4e0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "013dfc82_5f6107a0",
+        "filename": "content/public/app/mojo/content_browser_manifest.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-10T15:05:55Z",
+      "side": 1,
+      "message": "It only needs to be in navigation.",
+      "parentUuid": "fab6d17c_0f43abd4",
+      "revId": "8daa08d1f872d635e96e621c07f8972d7a4c4e0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
