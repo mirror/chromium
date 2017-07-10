@@ -22,6 +22,76 @@
       "revId": "6c9faec129bd18b585d8ce543e1395d6803c5a0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44b59e1f_fecb2c12",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/os_metrics.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-10T14:09:56Z",
+      "side": 1,
+      "message": "not with this casing, the two alternatives are:\n\nA) namespace os_metrics (lowercase)\nB) create a fully static class, e.g.:\nclass SERVICES_RESOURCE_COORDINATOR_PUBLIC_CPP_EXPORT OSMetrics {\n  static bool GetProcessMemoryMaps(...);\n  static bool GetOSMemoryDump(...)\n}\n\nI slightly prefer B, our c++ style guide prefers (but not mandates) A [1].\nSo at this point is up to you, both of them will work for me.\n\n\n[1] https://google.github.io/styleguide/cppguide.html#Nonmember,_Static_Member,_and_Global_Functions\n(Prefer grouping functions with a namespace instead of using a class as if it were a namespace. Static methods of a class should generally be closely related to instances of the class or the class\u0027s static data.)",
+      "parentUuid": "f4c0083a_98ce45f2",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 21
+      },
+      "revId": "6c9faec129bd18b585d8ce543e1395d6803c5a0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bd82d23_a14559d3",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/os_metrics.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-10T14:09:56Z",
+      "side": 1,
+      "message": "s/Dump/Get/ for consistency with the other method?",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 4
+      },
+      "revId": "6c9faec129bd18b585d8ce543e1395d6803c5a0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7c2eb18_c8697b67",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/os_metrics_linux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-10T14:09:56Z",
+      "side": 1,
+      "message": "nit: add g_ prefix (g_proc_smaps_for_testing) to global variables.",
+      "range": {
+        "startLine": 178,
+        "startChar": 6,
+        "endLine": 178,
+        "endChar": 7
+      },
+      "revId": "6c9faec129bd18b585d8ce543e1395d6803c5a0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
