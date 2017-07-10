@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "023789b7_f0dddba6",
+        "filename": "android_webview/browser/aw_metrics_service_client.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-10T20:24:47Z",
+      "side": 1,
+      "message": "I think you need \"\u003d LAZY_INSTANCE_INITIALIZER;\" here.",
+      "range": {
+        "startLine": 48,
+        "startChar": 56,
+        "endLine": 48,
+        "endChar": 0
+      },
+      "revId": "a4c9c45b10b04b569f90c7a29cf986c3e0b31a69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
