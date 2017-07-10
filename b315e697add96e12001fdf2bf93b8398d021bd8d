@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37d5699a_7a81cb5d",
+        "filename": "components/translate/core/browser/translate_url_fetcher.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-07-10T09:02:07Z",
+      "side": 1,
+      "message": "Can you initialize this in the .cc file, together with |retry_count_|?\nI would prefer that all the initialization is done in the same place.",
+      "range": {
+        "startLine": 82,
+        "startChar": 6,
+        "endLine": 82,
+        "endChar": 23
+      },
+      "revId": "b315e697add96e12001fdf2bf93b8398d021bd8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
