@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "063117a4_a186846f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-10T21:01:41Z",
+      "side": 1,
+      "message": "Good to clarify in first sentence of paragraph (here and in all cls) what the event is supposed to represent.",
+      "revId": "358a88aea28fccccf2c996c2e81bc368d671a639",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "990c693e_e0ff67ea",
+        "filename": "ios/chrome/browser/ui/reading_list/reading_list_coordinator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-10T21:01:41Z",
+      "side": 1,
+      "message": "Typo. s/when/one",
+      "range": {
+        "startLine": 325,
+        "startChar": 67,
+        "endLine": 325,
+        "endChar": 71
+      },
+      "revId": "358a88aea28fccccf2c996c2e81bc368d671a639",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
