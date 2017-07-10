@@ -24,6 +24,7 @@
 
 #if defined(OS_CHROMEOS)
 #include "chrome/browser/chromeos/login/easy_unlock/easy_unlock_types.h"
+#include "chromeos/login/auth/user_context.h"
 #endif
 
 class AccountId;
@@ -218,6 +219,10 @@ class EasyUnlockService : public KeyedService {
   // Records that the user clicked on the lock icon during the trial run
   // initiated by the Easy Unlock app.
   void RecordClickOnLockIcon();
+
+#if defined(OS_CHROMEOS)
+  virtual void OnUserReauth(const chromeos::UserContext& user_context);
+#endif
 
   void AddObserver(EasyUnlockServiceObserver* observer);
   void RemoveObserver(EasyUnlockServiceObserver* observer);

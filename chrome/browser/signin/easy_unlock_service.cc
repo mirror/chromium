@@ -620,6 +620,9 @@ void EasyUnlockService::RecordClickOnLockIcon() {
     screenlock_state_handler_->RecordClickOnLockIcon();
 }
 
+void EasyUnlockService::OnUserReauth(
+    const chromeos::UserContext& user_context) {}
+
 void EasyUnlockService::AddObserver(EasyUnlockServiceObserver* observer) {
   observers_.AddObserver(observer);
 }
