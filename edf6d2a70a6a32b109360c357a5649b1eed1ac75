@@ -70,6 +70,30 @@
       "revId": "edf6d2a70a6a32b109360c357a5649b1eed1ac75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f66b5ddf_fa5b5609",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImplTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-07-10T16:39:47Z",
+      "side": 1,
+      "message": "True. Thanks! \nIt\u0027s in the new patch (12) if you want to have a look.",
+      "parentUuid": "ebc9f26c_b923b591",
+      "range": {
+        "startLine": 185,
+        "startChar": 26,
+        "endLine": 185,
+        "endChar": 91
+      },
+      "revId": "edf6d2a70a6a32b109360c357a5649b1eed1ac75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
