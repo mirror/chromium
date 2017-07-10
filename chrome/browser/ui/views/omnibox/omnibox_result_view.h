@@ -140,6 +140,9 @@ class OmniboxResultView : public views::View,
   // the keyword match will hide even the icon of the regular match.
   bool ShowOnlyKeywordMatch() const;
 
+  static size_t CommonPrefixLength(const base::string16& lhs,
+                                   const base::string16& rhs);
+
   // Initializes |contents_rendertext_| if it is NULL.
   void InitContentsRenderTextIfNecessary() const;
 

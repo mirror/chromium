@@ -214,6 +214,8 @@ void OmniboxPopupContentsView::UpdatePopupAppearance() {
   // we have enough row views.
   const size_t result_size = model_->result().size();
   max_match_contents_width_ = 0;
+  any_tail_suggestions_ = false;
+  common_suggestion_.clear();
   for (size_t i = 0; i < result_size; ++i) {
     OmniboxResultView* view = result_view_at(i);
     const AutocompleteMatch& match = GetMatchAtIndex(i);
@@ -226,6 +228,11 @@ void OmniboxPopupContentsView::UpdatePopupAppearance() {
     if (match.type == AutocompleteMatchType::SEARCH_SUGGEST_TAIL) {
       max_match_contents_width_ = std::max(
           max_match_contents_width_, view->GetMatchContentsWidth());
+      if (!any_tail_suggestions_) {
+        any_tail_suggestions_ = true;
+        common_suggestion_ = base::UTF8ToUTF16(match.GetAdditionalInfo(
+            kACMatchPropertySuggestionText));
+      }
     }
   }
 
