@@ -70,6 +70,30 @@
       "revId": "453a886141c7e593368cca31b27dbeee5c1716d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a138a677_0cd82840",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-07-10T06:47:20Z",
+      "side": 1,
+      "message": "I\u0027m working on it and adding some tests for that case. I apologize for the delay, I will have it ready today.",
+      "parentUuid": "1165d648_aafdf1c3",
+      "range": {
+        "startLine": 132,
+        "startChar": 12,
+        "endLine": 132,
+        "endChar": 18
+      },
+      "revId": "453a886141c7e593368cca31b27dbeee5c1716d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
