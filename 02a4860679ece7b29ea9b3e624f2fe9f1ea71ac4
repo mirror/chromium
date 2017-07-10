@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "efe36285_615b245c",
+        "filename": "net/base/platform_mime_util_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-07-10T21:58:24Z",
+      "side": 1,
+      "message": "Yeah, I\u0027m not sure if we will need anything here. So maybe later we will just remove this NOTIMPLEMENTED and TODO.",
+      "parentUuid": "d142dbd1_86a1734d",
+      "revId": "02a4860679ece7b29ea9b3e624f2fe9f1ea71ac4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8f3fc4a2_40afc9ea",
         "filename": "net/cert/cert_verify_proc.h",
         "patchSetId": 6
@@ -30,6 +48,30 @@
       "writtenOn": "2017-07-10T20:51:40Z",
       "side": 1,
       "message": "Was this refactor necessary, or just an extra?\n(I am fine with it, just want to understand how to review this in case it was addressing any bugs).",
+      "range": {
+        "startLine": 32,
+        "startChar": 9,
+        "endLine": 32,
+        "endChar": 22
+      },
+      "revId": "02a4860679ece7b29ea9b3e624f2fe9f1ea71ac4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbccdd5e_29ce42e5",
+        "filename": "net/cert/cert_verify_proc.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-07-10T21:58:24Z",
+      "side": 1,
+      "message": "It\u0027s necessary because CreateCertVerifyProcBuiltin() returns scoped_refptr\u003c\u003e and CreateDefault() now calls CreateCertVerifyProcBuiltin()",
+      "parentUuid": "8f3fc4a2_40afc9ea",
       "range": {
         "startLine": 32,
         "startChar": 9,
@@ -56,6 +98,24 @@
       "revId": "02a4860679ece7b29ea9b3e624f2fe9f1ea71ac4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4d1022e_97688ac1",
+        "filename": "net/cert/cert_verify_proc_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-07-10T21:58:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cb74cea9_4c14b95c",
+      "revId": "02a4860679ece7b29ea9b3e624f2fe9f1ea71ac4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
