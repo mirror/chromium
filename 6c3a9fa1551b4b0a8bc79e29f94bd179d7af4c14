@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d82507ed_8b4d17dd",
+        "filename": "chrome/browser/metrics/chrome_browser_main_extra_parts_metrics.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-07-10T23:00:26Z",
+      "side": 1,
+      "message": "Hm.. I\u0027m only seeing 14.04 and 16.04 in the metrics.  Maybe the format string was changed?\ngo/m9PvqWIaMMfsIAT7fCbf\n\nI have a 17.04 vm and \u0027lsb_release -d\u0027 gives \u0027Description:    Ubuntu 17.04\u0027",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 36
+      },
+      "revId": "6c3a9fa1551b4b0a8bc79e29f94bd179d7af4c14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e5a514e_83de07fd",
+        "filename": "chrome/browser/metrics/chrome_browser_main_extra_parts_metrics.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-07-10T23:00:26Z",
+      "side": 1,
+      "message": "Ah, probably this needs to be 2",
+      "range": {
+        "startLine": 223,
+        "startChar": 34,
+        "endLine": 223,
+        "endChar": 35
+      },
+      "revId": "6c3a9fa1551b4b0a8bc79e29f94bd179d7af4c14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
