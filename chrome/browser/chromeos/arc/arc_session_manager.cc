@@ -638,6 +638,7 @@ void ArcSessionManager::RequestEnableImpl() {
   }
 
   if (start_arc_directly) {
+    direct_mode_start_ = true;
     StartArc();
     // Check Android management in parallel.
     // Note: StartBackgroundAndroidManagementCheck() may call
@@ -664,7 +665,9 @@ void ArcSessionManager::RequestDisable() {
     arc_session_runner_->RequestStop(true);
     return;
   }
+
   oobe_start_ = false;
+  direct_mode_start_ = false;
   enable_requested_ = false;
   scoped_opt_in_tracker_.reset();
 

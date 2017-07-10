@@ -242,6 +242,8 @@ class ArcSessionManager : public ArcSessionRunner::Observer,
   // available only on initial start.
   ArcPaiStarter* pai_starter() { return pai_starter_.get(); }
 
+  bool direct_mode_start() const { return direct_mode_start_; }
+
   // Injectors for testing.
   void SetArcSessionRunnerForTesting(
       std::unique_ptr<ArcSessionRunner> arc_session_runner);
@@ -357,6 +359,8 @@ class ArcSessionManager : public ArcSessionRunner::Observer,
   // |IsOobeOptInActive| will be changed by the time when |oobe_start_| is
   // checked to prevent the Play Store auto-launch.
   bool oobe_start_ = false;
+  // Indicates that ARC is started in direct mode, without user interaction.
+  bool direct_mode_start_ = false;
   base::OneShotTimer arc_sign_in_timer_;
 
   std::unique_ptr<ArcSupportHost> support_host_;
