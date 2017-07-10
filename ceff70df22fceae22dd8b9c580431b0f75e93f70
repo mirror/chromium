@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16577809_9e5e6095",
+        "filename": "ash/shelf/shelf_widget.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-10T23:00:37Z",
+      "side": 1,
+      "message": "Without line numbers, will this yield anything of value over crashing on the |status_area_widget_| access below? Would |CHECK(status_area_widget_) \u003c\u003c \"Status area widget is null\";| or similar help capture better data in the reports?",
+      "range": {
+        "startLine": 223,
+        "startChar": 8,
+        "endLine": 223,
+        "endChar": 27
+      },
+      "revId": "ceff70df22fceae22dd8b9c580431b0f75e93f70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
