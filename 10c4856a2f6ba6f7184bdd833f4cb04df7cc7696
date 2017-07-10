@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c5889267_07fec6ca",
+        "filename": "chrome/android/java/res/layout/history_header_view.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-07-10T22:45:41Z",
+      "side": 1,
+      "message": "Changed to have the following behavior:\n\n1)\n8dp (from recyclerview in selectable_list_layout)\nPrivacy text\n16dp (privacy text padding)\nCBD\n8dp (CBD bottom padding)\n\n2)\n8dp (from recyclerview in selectable_list_layout)\nprivacy\n24dp (from privacy text)\n\n\n3)\n8dp (from recyclerview in selectable_list_layout)\nCBD\n8dp (CBD bottom padding)\n\n\n4)\n8dp (from recyclerview in selectable_list_layout)\n\n5)\n8dp (from recyclerview in selectable_list_layout)",
+      "parentUuid": "f51a59bf_7c59fcc7",
+      "range": {
+        "startLine": 10,
+        "startChar": 33,
+        "endLine": 10,
+        "endChar": 36
+      },
+      "revId": "10c4856a2f6ba6f7184bdd833f4cb04df7cc7696",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "92aa4ff1_2ee04e78",
         "filename": "chrome/android/java/res/layout/history_privacy_disclaimer_header.xml",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "10c4856a2f6ba6f7184bdd833f4cb04df7cc7696",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f28695e_dfd8eab2",
+        "filename": "chrome/android/java/res/layout/history_privacy_disclaimer_header.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-07-10T22:45:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92aa4ff1_2ee04e78",
+      "range": {
+        "startLine": 2,
+        "startChar": 15,
+        "endLine": 2,
+        "endChar": 19
+      },
+      "revId": "10c4856a2f6ba6f7184bdd833f4cb04df7cc7696",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "566d1993_dd35a345",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-07-10T22:45:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77306441_fa0ad48e",
+      "range": {
+        "startLine": 377,
+        "startChar": 8,
+        "endLine": 377,
+        "endChar": 17
+      },
+      "revId": "10c4856a2f6ba6f7184bdd833f4cb04df7cc7696",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5511950_367c5173",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/history/HistoryActivityTest.java",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2017-07-07T19:57:53Z",
       "side": 1,
       "message": "I thought we had two items in the headerGroup, one for the privacy disclaimers and one for the history items?\n\nAlso, can we loop over the headerGroup and assert the visibility of CBD and privacy disclaimer header items is correct?",
+      "range": {
+        "startLine": 508,
+        "startChar": 24,
+        "endLine": 508,
+        "endChar": 35
+      },
+      "revId": "10c4856a2f6ba6f7184bdd833f4cb04df7cc7696",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0aceab25_44d9cf71",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/history/HistoryActivityTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-07-10T22:45:41Z",
+      "side": 1,
+      "message": "In search mode, the header group will be removed from mGroups (see HistoryManager.onMenuItemClick()), and therefore the headerGroup (first group in mGroups) is actually the first history item group, which contains 1 date view and 2 history item views.",
+      "parentUuid": "d5511950_367c5173",
       "range": {
         "startLine": 508,
         "startChar": 24,

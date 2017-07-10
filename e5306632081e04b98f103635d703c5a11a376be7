@@ -273,6 +273,30 @@
     },
     {
       "key": {
+        "uuid": "ca86665f_8bc2b42d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-07-10T22:45:41Z",
+      "side": 1,
+      "message": "On tablet,\n1) Sign in to chrome and wait until account is synced.\n2) Open history page, enable info button, and make sure \"Your Google Account may have other forms of browsing history...\" shows up.\n3) With the history page opened, go to settings and sign out from chrome. Exit settings and goes back to the history page that\u0027s already opened.\n\nObserved behavior: info button and info header show on history page\nExpected behavior: info button and info header should be hidden",
+      "parentUuid": "8a8f4ec4_dde83e19",
+      "range": {
+        "startLine": 416,
+        "startChar": 48,
+        "endLine": 416,
+        "endChar": 54
+      },
+      "revId": "e5306632081e04b98f103635d703c5a11a376be7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8068c8fc_1755a3d1",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryManagerToolbar.java",
         "patchSetId": 1
@@ -529,6 +553,30 @@
       "revId": "e5306632081e04b98f103635d703c5a11a376be7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "119b5632_8aac79d3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/DateDividedAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-07-10T22:45:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8dba31f2_bdad089a",
+      "range": {
+        "startLine": 274,
+        "startChar": 0,
+        "endLine": 274,
+        "endChar": 73
+      },
+      "revId": "e5306632081e04b98f103635d703c5a11a376be7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
