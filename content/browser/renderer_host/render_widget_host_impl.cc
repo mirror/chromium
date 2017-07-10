@@ -770,14 +770,6 @@ void RenderWidgetHostImpl::WasResized() {
     delegate_->RenderWidgetWasResized(this, width_changed);
 }
 
-void RenderWidgetHostImpl::GotFocus() {
-  Focus();
-  if (owner_delegate_)
-    owner_delegate_->RenderWidgetGotFocus();
-  if (delegate_)
-    delegate_->RenderWidgetGotFocus(this);
-}
-
 void RenderWidgetHostImpl::Focus() {
   RenderWidgetHostImpl* focused_widget =
       delegate_ ? delegate_->GetRenderWidgetHostWithPageFocus() : nullptr;
@@ -785,6 +777,10 @@ void RenderWidgetHostImpl::Focus() {
   if (!focused_widget)
     focused_widget = this;
   focused_widget->SetPageFocus(true);
+  if (owner_delegate_)
+    owner_delegate_->RenderWidgetGotFocus();
+  if (delegate_)
+    delegate_->RenderWidgetGotFocus(this);
 }
 
 void RenderWidgetHostImpl::Blur() {
