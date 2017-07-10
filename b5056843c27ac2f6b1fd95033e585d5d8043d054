@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e9f7e5b_6d8760a7",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AutofillActionModeCallback.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-07-10T16:50:45Z",
+      "side": 1,
+      "message": "I think we need to keep this code always like this otherwise we cannot support \u003d\u003d O",
+      "range": {
+        "startLine": 27,
+        "startChar": 8,
+        "endLine": 27,
+        "endChar": 88
+      },
+      "revId": "b5056843c27ac2f6b1fd95033e585d5d8043d054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2908e4cd_ace7b2e5",
+        "filename": "components/autofill/android/java/src/org/chromium/components/autofill/AutofillProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-07-10T16:50:45Z",
+      "side": 1,
+      "message": "nit: (ok not doing it this time since you will change it right away)  I think the format is TODO(michaelbai)",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 50
+      },
+      "revId": "b5056843c27ac2f6b1fd95033e585d5d8043d054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
