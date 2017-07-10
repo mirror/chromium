@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86331d9d_5a0e1bc7",
+        "filename": "chrome/browser/ssl/cert_report_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-07-10T22:36:52Z",
+      "side": 1,
+      "message": "Mustafa, you mentioned you could check the Windows part of this block on your own Windows machine, but do you have any idea how I could go about testing the ChromeOS element? The IsEnterpriseManaged() function was written in a few different places in the ChromeOS code, so I\u0027m not sure I implemented this correctly.",
+      "revId": "2bf2295a2f4f0ae5b91c836c2ce30996b27d6fee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
