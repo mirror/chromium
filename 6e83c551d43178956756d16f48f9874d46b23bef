@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7234c5e8_1d46548c",
+        "filename": "components/payments/core/address_normalization_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-07-10T18:31:41Z",
+      "side": 1,
+      "message": "nit: please DCHECK(!completion_callback_) here before overwriting",
+      "revId": "6e83c551d43178956756d16f48f9874d46b23bef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
