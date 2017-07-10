@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d7e0994_b3f7abc5",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 817,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-10T23:41:35Z",
+      "side": 1,
+      "message": "Probably don\u0027t need the map.  Just a nit though.",
+      "range": {
+        "startLine": 817,
+        "startChar": 2,
+        "endLine": 817,
+        "endChar": 50
+      },
+      "revId": "0281c229d20ad7b9997890a50c9582821841d40f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
