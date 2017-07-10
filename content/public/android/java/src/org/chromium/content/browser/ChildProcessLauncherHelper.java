@@ -128,7 +128,7 @@ public class ChildProcessLauncherHelper {
     @VisibleForTesting
     @CalledByNative
     public static ChildProcessLauncherHelper createAndStart(long nativePointer, int paramId,
-            String[] commandLine, FileDescriptorInfo[] filesToBeMapped) {
+            String[] commandLine, FileDescriptorInfo[] filesToBeMapped, boolean sandboxed) {
         assert LauncherThread.runningOnLauncherThread();
         ChildProcessCreationParams creationParams = ChildProcessCreationParams.get(paramId);
         if (paramId != ChildProcessCreationParams.DEFAULT_ID && creationParams == null) {
@@ -138,14 +138,9 @@ public class ChildProcessLauncherHelper {
         String processType =
                 ContentSwitches.getSwitchValue(commandLine, ContentSwitches.SWITCH_PROCESS_TYPE);
 
-        boolean sandboxed = true;
         if (!ContentSwitches.SWITCH_RENDERER_PROCESS.equals(processType)) {
-            if (ContentSwitches.SWITCH_GPU_PROCESS.equals(processType)) {
-                sandboxed = false;
-            } else {
-                // We only support sandboxed utility processes now.
-                assert ContentSwitches.SWITCH_UTILITY_PROCESS.equals(processType);
-            }
+            assert (ContentSwitches.SWITCH_GPU_PROCESS.equals(processType))
+                    || (ContentSwitches.SWITCH_UTILITY_PROCESS.equals(processType));
         }
 
         IBinder binderCallback = ContentSwitches.SWITCH_GPU_PROCESS.equals(processType)
