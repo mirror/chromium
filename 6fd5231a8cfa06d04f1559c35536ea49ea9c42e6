@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3cefab5f_154d2ca5",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 5063,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-10T23:33:47Z",
+      "side": 1,
+      "message": "Could you please also file a bug and add TODOs (in a separate CL) to cleanup existing workaround after dropping iOS10.",
+      "range": {
+        "startLine": 5063,
+        "startChar": 20,
+        "endLine": 5063,
+        "endChar": 43
+      },
+      "revId": "6fd5231a8cfa06d04f1559c35536ea49ea9c42e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
