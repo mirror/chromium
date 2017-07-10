@@ -124,11 +124,13 @@ static void ClearBrowsingData(
       env, jignoring_domains.obj(), &ignoring_domains);
   base::android::JavaIntArrayToIntVector(env, jignoring_domain_reasons.obj(),
                                          &ignoring_domain_reasons);
-  std::unique_ptr<content::BrowsingDataFilterBuilder> filter_builder(
-      content::BrowsingDataFilterBuilder::Create(
-          content::BrowsingDataFilterBuilder::BLACKLIST));
-  for (const std::string& domain : excluding_domains) {
-    filter_builder->AddRegisterableDomain(domain);
+  std::unique_ptr<content::BrowsingDataFilterBuilder> filter_builder;
+  if (!excluding_domains.empty()) {
+    filter_builder = content::BrowsingDataFilterBuilder::Create(
+        content::BrowsingDataFilterBuilder::BLACKLIST);
+    for (const std::string& domain : excluding_domains) {
+      filter_builder->AddRegisterableDomain(domain);
+    }
   }
 
   if (!excluding_domains.empty() || !ignoring_domains.empty()) {
