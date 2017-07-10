@@ -62,6 +62,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Manages interactions with the VR Shell.
@@ -92,6 +94,9 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
 
     private static final String DAYDREAM_VR_EXTRA = "android.intent.extra.VR_LAUNCH";
     private static final String DAYDREAM_HOME_PACKAGE = "com.google.android.vr.home";
+
+    private static final ArrayList<String> DAYDREAM_HOME_PACKAGES = new ArrayList<>(
+            Arrays.asList("com.google.android.vr.home", "com.google.android.vr.home.dev"));
 
     // Linter and formatter disagree on how the line below should be formatted.
     /* package */
@@ -727,7 +732,7 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
         if (IntentUtils.safeGetBooleanExtra(intent, DAYDREAM_VR_EXTRA, false)
                 && ChromeFeatureList.isEnabled(ChromeFeatureList.WEBVR_AUTOPRESENT)
                 && activitySupportsAutopresentation(activity)
-                && IntentHandler.isIntentFromTrustedApp(intent, DAYDREAM_HOME_PACKAGE)) {
+                && IntentHandler.isIntentFromTrustedApp(intent, DAYDREAM_HOME_PACKAGES)) {
             VrShellDelegate instance = getInstance(activity);
             if (instance == null) return;
             instance.onAutopresentIntent();

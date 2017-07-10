@@ -805,17 +805,17 @@ public class IntentHandler {
 
     /**
      * @param intent An Intent to be checked.
-     * @param packageName The app where the intent is expected to originate from
+     * @param packageNames The list of apps where the intent may originate from
      * @return Whether the intent originates from the first-party app with the given package name.
      */
-    public static boolean isIntentFromTrustedApp(Intent intent, String packageName) {
-        if (intent == null) return false;
+    public static boolean isIntentFromTrustedApp(Intent intent, ArrayList<String> packageNames) {
+        if (intent == null || packageNames == null) return false;
 
         PendingIntent token = fetchAuthenticationTokenFromIntent(intent);
         if (token == null) return false;
 
         return isIntentChromeOrFirstParty(intent)
-                && ApiCompatibilityUtils.getCreatorPackage(token).equals(packageName);
+                && packageNames.contains(ApiCompatibilityUtils.getCreatorPackage(token));
     }
 
     @VisibleForTesting
