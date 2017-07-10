@@ -4,6 +4,7 @@
 
 #include "platform/loader/fetch/ResourceLoadScheduler.h"
 
+#include "platform/Histogram.h"
 #include "platform/RuntimeEnabledFeatures.h"
 
 namespace blink {
@@ -144,12 +145,27 @@ void ResourceLoadScheduler::MaybeRun() {
 void ResourceLoadScheduler::Run(ResourceLoadScheduler::ClientId id,
                                 ResourceLoadSchedulerClient* client) {
   running_requests_.insert(id);
+  maximum_running_requests_seen_ =
+      std::max(maximum_running_requests_seen_, running_requests_.size());
   client->Run();
 }
 
 void ResourceLoadScheduler::SetOutstandingLimitAndMaybeRun(size_t limit) {
   outstanding_limit_ = limit;
   MaybeRun();
+}
+
+void ResourceLoadScheduler::OnNetworkQuiet() {
+  DEFINE_STATIC_LOCAL(
+      CustomCountHistogram, main_frame_peak,
+      ("Blink.ResourceLoadScheduler.PeakRequests.Mainframe", 0, 10000, 25));
+  DEFINE_STATIC_LOCAL(
+      CustomCountHistogram, sub_frame_peak,
+      ("Blink.ResourceLoadScheduler.PeakRequests.Subframe", 0, 10000, 25));
+  if (context_->IsMainFrame())
+    main_frame_peak.Count(maximum_running_requests_seen_);
+  else
+    sub_frame_peak.Count(maximum_running_requests_seen_);
 }
 
 }  // namespace blink

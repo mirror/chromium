@@ -85,6 +85,8 @@ class PLATFORM_EXPORT ResourceLoadScheduler final
   // WebFrameScheduler::Observer overrides:
   void OnThrottlingStateChanged(WebFrameScheduler::ThrottlingState) override;
 
+  void OnNetworkQuiet();
+
  private:
   ResourceLoadScheduler(FetchContext*);
 
@@ -117,6 +119,8 @@ class PLATFORM_EXPORT ResourceLoadScheduler final
 
   // Holds clients that were granted and are running.
   HashSet<ClientId> running_requests_;
+
+  unsigned maximum_running_requests_seen_ = 0;
 
   // Holds clients that haven't been granted, and are waiting for a grant.
   HeapHashMap<ClientId, Member<ResourceLoadSchedulerClient>>
