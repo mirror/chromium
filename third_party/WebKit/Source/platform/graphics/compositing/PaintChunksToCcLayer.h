@@ -46,7 +46,8 @@ class PLATFORM_EXPORT PaintChunksToCcLayer {
       const PropertyTreeState& layer_state,
       const gfx::Vector2dF& layer_offset,
       const DisplayItemList&,
-      RasterUnderInvalidationCheckingParams* = nullptr);
+      RasterUnderInvalidationCheckingParams* = nullptr,
+      bool to_be_released_as_record = false);
 };
 
 }  // namespace blink
