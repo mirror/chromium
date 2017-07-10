@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01ec62c8_cbbf255a",
+        "filename": "components/ui_devtools/views/ui_devtools_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-10T22:20:38Z",
+      "side": 1,
+      "message": "This should still be |root_window|",
+      "range": {
+        "startLine": 142,
+        "startChar": 46,
+        "endLine": 142,
+        "endChar": 62
+      },
+      "revId": "b40364bd73cde370bf84724a120c8e89c45edd36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d537155_74db387c",
+        "filename": "components/ui_devtools/views/ui_devtools_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-10T22:20:38Z",
+      "side": 1,
+      "message": "This too should still be |root_window|",
+      "range": {
+        "startLine": 170,
+        "startChar": 37,
+        "endLine": 170,
+        "endChar": 53
+      },
+      "revId": "b40364bd73cde370bf84724a120c8e89c45edd36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
