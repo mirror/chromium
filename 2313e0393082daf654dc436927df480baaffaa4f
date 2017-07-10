@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec29c2af_04329d94",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-07-10T17:38:04Z",
+      "side": 1,
+      "message": "We can do that?!",
+      "range": {
+        "startLine": 245,
+        "startChar": 9,
+        "endLine": 245,
+        "endChar": 18
+      },
+      "revId": "2313e0393082daf654dc436927df480baaffaa4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
