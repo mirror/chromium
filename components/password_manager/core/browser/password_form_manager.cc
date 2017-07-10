@@ -457,6 +457,10 @@ void PasswordFormManager::Update(
                       old_primary_key ? &old_primary_key.value() : nullptr);
 }
 
+void PasswordFormManager::UpdateUsername(const base::string16& new_username) {
+  pending_credentials_.username_value = std::move(new_username);
+}
+
 void PasswordFormManager::PresaveGeneratedPassword(
     const autofill::PasswordForm& form) {
   form_saver()->PresaveGeneratedPassword(form);

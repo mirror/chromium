@@ -75,6 +75,9 @@ class PasswordsModelDelegate {
   // Called from the model when the user chooses to update a password.
   virtual void UpdatePassword(const autofill::PasswordForm& password_form) = 0;
 
+  // Called from the model when the user updates the username.
+  virtual void UpdateUsername(const base::string16& new_username) = 0;
+
   // Called from the dialog controller when the user chooses a credential.
   // Controller can be destroyed inside the method.
   virtual void ChooseCredential(

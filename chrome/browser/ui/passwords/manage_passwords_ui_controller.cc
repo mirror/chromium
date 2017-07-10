@@ -308,6 +308,15 @@ void ManagePasswordsUIController::UpdatePassword(
   UpdateBubbleAndIconVisibility();
 }
 
+void ManagePasswordsUIController::UpdateUsername(
+    const base::string16& new_username) {
+  DCHECK_EQ(password_manager::ui::PENDING_PASSWORD_STATE, GetState());
+  password_manager::PasswordFormManager* form_manager =
+      passwords_data_.form_manager();
+  DCHECK(form_manager);
+  form_manager->UpdateUsername(new_username);
+}
+
 void ManagePasswordsUIController::ChooseCredential(
     const autofill::PasswordForm& form,
     password_manager::CredentialType credential_type) {
