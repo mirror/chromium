@@ -104,7 +104,8 @@ class SessionRestoreImpl : public content::NotificationObserver {
                      bool clobber_existing_tab,
                      bool always_create_tabbed_browser,
                      const std::vector<GURL>& urls_to_open,
-                     SessionRestore::CallbackList* callbacks)
+                     SessionRestore::CallbackList* callbacks,
+                     const base::Closure& session_restore_started_callback)
       : profile_(profile),
         browser_(browser),
         synchronous_(synchronous),
@@ -131,6 +132,8 @@ class SessionRestoreImpl : public content::NotificationObserver {
 
     keep_alive_.reset(new ScopedKeepAlive(KeepAliveOrigin::SESSION_RESTORE,
                                           KeepAliveRestartOption::DISABLED));
+
+    session_restore_started_callback.Run();
   }
 
   bool synchronous() const { return synchronous_; }
@@ -771,7 +774,8 @@ Browser* SessionRestore::RestoreSession(
       profile, browser, (behavior & SYNCHRONOUS) != 0,
       (behavior & CLOBBER_CURRENT_TAB) != 0,
       (behavior & ALWAYS_CREATE_TABBED_BROWSER) != 0, urls_to_open,
-      SessionRestore::on_session_restored_callbacks());
+      SessionRestore::on_session_restored_callbacks(),
+      base::Bind(&SessionRestore::NotifySessionRestoreStartedLoadingTabs));
   return restorer->Restore();
 }
 
@@ -800,9 +804,10 @@ std::vector<Browser*> SessionRestore::RestoreForeignSessionWindows(
     std::vector<const sessions::SessionWindow*>::const_iterator begin,
     std::vector<const sessions::SessionWindow*>::const_iterator end) {
   std::vector<GURL> gurls;
-  SessionRestoreImpl restorer(profile, static_cast<Browser*>(nullptr), true,
-                              false, true, gurls,
-                              on_session_restored_callbacks());
+  SessionRestoreImpl restorer(
+      profile, static_cast<Browser*>(nullptr), true, false, true, gurls,
+      on_session_restored_callbacks(),
+      base::Bind(&SessionRestore::NotifySessionRestoreStartedLoadingTabs));
   return restorer.RestoreForeignSession(begin, end);
 }
 
@@ -814,8 +819,10 @@ WebContents* SessionRestore::RestoreForeignSessionTab(
   Browser* browser = chrome::FindBrowserWithWebContents(source_web_contents);
   Profile* profile = browser->profile();
   std::vector<GURL> gurls;
-  SessionRestoreImpl restorer(profile, browser, true, false, false, gurls,
-                              on_session_restored_callbacks());
+  SessionRestoreImpl restorer(
+      profile, browser, true, false, false, gurls,
+      on_session_restored_callbacks(),
+      base::Bind(&SessionRestore::NotifySessionRestoreStartedLoadingTabs));
   return restorer.RestoreForeignTab(tab, disposition);
 }
 
@@ -872,12 +879,31 @@ void SessionRestore::AddURLsToOpen(const Profile* profile,
 
 // static
 void SessionRestore::AddObserver(SessionRestoreObserver* observer) {
-  observers().AddObserver(observer);
+  observers()->AddObserver(observer);
 }
 
 // static
 void SessionRestore::RemoveObserver(SessionRestoreObserver* observer) {
-  observers().RemoveObserver(observer);
+  observers()->RemoveObserver(observer);
+}
+
+// static
+void SessionRestore::OnTabLoaderFinishedLoadingTabs() {
+  if (!session_restore_started_)
+    return;
+
+  for (auto& observer : *SessionRestore::observers())
+    observer.OnSessionRestoreFinishedLoadingTabs();
+
+  session_restore_started_ = false;
+}
+
+void SessionRestore::NotifySessionRestoreStartedLoadingTabs() {
+  if (!session_restore_started_) {
+    for (auto& observer : *observers())
+      observer.OnSessionRestoreStartedLoadingTabs();
+    session_restore_started_ = true;
+  }
 }
 
 // static
@@ -887,3 +913,6 @@ base::CallbackList<void(int)>*
 // static
 base::ObserverList<SessionRestoreObserver>* SessionRestore::observers_ =
     nullptr;
+
+// static
+bool SessionRestore::session_restore_started_ = false;
