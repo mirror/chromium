@@ -22,6 +22,30 @@
       "revId": "2479052a34c01799dfab3c12cff02cb081f2e7f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dfc2f26_a73deb98",
+        "filename": "ui/views/controls/base_focus_ring.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-07-10T19:06:21Z",
+      "side": 1,
+      "message": "It\u0027s a generalization for the notion of painting a focus ring which should be useful in other instances as we roll-out more Material Design work.",
+      "parentUuid": "65142210_e947f336",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 20
+      },
+      "revId": "2479052a34c01799dfab3c12cff02cb081f2e7f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

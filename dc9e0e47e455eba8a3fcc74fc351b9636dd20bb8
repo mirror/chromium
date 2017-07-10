@@ -355,6 +355,30 @@
     },
     {
       "key": {
+        "uuid": "23676313_58090ead",
+        "filename": "ui/views/controls/button/checkbox.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-07-10T19:06:21Z",
+      "side": 1,
+      "message": "An unassailable argument. Done.",
+      "parentUuid": "1b38b933_fc3e22e6",
+      "range": {
+        "startLine": 239,
+        "startChar": 5,
+        "endLine": 239,
+        "endChar": 13
+      },
+      "revId": "dc9e0e47e455eba8a3fcc74fc351b9636dd20bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ccc0152a_5a0bb9bf",
         "filename": "ui/views/controls/button/checkbox.cc",
         "patchSetId": 5
@@ -813,6 +837,30 @@
       "side": 1,
       "message": "I\u0027m a bit confused. Why wouldn\u0027t a subclass return the same value for GetClassName()? Subclasses like CheckboxFocusRing and RadioButtonFocusRing should return the same \"FocusRing\" class name unless you explicitly override that method, right? I would suggest pursuing that approach, or just ignoring the FocusRung class altogether, and making the Checkbox and RadioButton overrides of PaintFocusRing use their own |View* focus_ring_;| members (and View hierarchy children) to paint the custom focus rings as needed.",
       "parentUuid": "591bd70f_799c514d",
+      "range": {
+        "startLine": 66,
+        "startChar": 16,
+        "endLine": 66,
+        "endChar": 23
+      },
+      "revId": "dc9e0e47e455eba8a3fcc74fc351b9636dd20bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d0132f12_eb13f003",
+        "filename": "ui/views/controls/focus_ring.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-07-10T19:06:21Z",
+      "side": 1,
+      "message": "Yes, it would return whatever current FocusRing instance among the child-views. However, if that instance were a decedent, the code is now \"lying\". That\u0027s what I meant by saying it would technically work but would also be a bit more obscure.\n\nThe addition of the BaseFocusRing was there to better generalize focus ring painting.",
+      "parentUuid": "d4be16ca_a9d93caf",
       "range": {
         "startLine": 66,
         "startChar": 16,
