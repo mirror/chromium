@@ -117,6 +117,30 @@
       "revId": "b356df4356092534a75811b9c31fb91f50ef012d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3af69e6b_19ec3aea",
+        "filename": "content/browser/cocoa/system_hotkey_helper_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-07-10T19:18:00Z",
+      "side": 1,
+      "message": "I cannot seem to find where in the code that uses a default behavior of SKIP_ON_SHUTDOWN. Isn\u0027t TaskTrait\u0027s |shutdown_behavior_| field going to default to CONTINUE_ON_SHUTDOWN (the first enum value), even if shutdown_behavior_set_explicitly_ is still false? Can you maybe update the code to make it easier to find where the default gets set? Because I tried before posting my last comment, and apparently failed.\n\nI\u0027m also surprised to hear that the default is SKIP_ON_SHUTDOWN. Why don\u0027t we default to the lighter weight CONTINUE_ON_SHUTDOWN if the caller hasn\u0027t specified / doesn\u0027t care? Why waste resources/block shutdown?",
+      "parentUuid": "ade455e5_c3deea12",
+      "range": {
+        "startLine": 37,
+        "startChar": 24,
+        "endLine": 37,
+        "endChar": 32
+      },
+      "revId": "b356df4356092534a75811b9c31fb91f50ef012d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
