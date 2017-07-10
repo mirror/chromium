@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8de91dd3_8f36fdd0",
+        "filename": "chrome/common/service_process_util_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-10T19:25:41Z",
+      "side": 1,
+      "message": "Can you remind me what the * was for? :-)",
+      "revId": "3b608908aeda4859a23450dcfc908598b9a4a89c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
