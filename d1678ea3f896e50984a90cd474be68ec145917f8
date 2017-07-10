@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fa75e9f4_b6b9470a",
+        "filename": "third_party/WebKit/Source/core/frame/csp/CSPDirectiveList.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1099,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-07-10T11:27:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bca23878_7d611f45",
+      "revId": "d1678ea3f896e50984a90cd474be68ec145917f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7fc090d4_05937195",
         "filename": "third_party/WebKit/Source/core/frame/csp/CSPDirectiveList.cpp",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "d1678ea3f896e50984a90cd474be68ec145917f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa5e49b9_43deff4b",
+        "filename": "third_party/WebKit/Source/core/frame/csp/CSPDirectiveList.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1108,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-07-10T11:27:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fc090d4_05937195",
+      "revId": "d1678ea3f896e50984a90cd474be68ec145917f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a44856f2_59571bb1",
+        "filename": "third_party/WebKit/Source/core/frame/csp/CSPDirectiveList.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1115,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-07-10T11:27:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2e0e781_a754949c",
+      "revId": "d1678ea3f896e50984a90cd474be68ec145917f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f4c6ca7_878b106a",
         "filename": "third_party/WebKit/Source/core/frame/csp/CSPDirectiveList.cpp",
         "patchSetId": 1
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "9ef61758_cc6f8e37",
+        "filename": "third_party/WebKit/Source/core/frame/csp/CSPDirectiveList.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1149,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-07-10T11:27:46Z",
+      "side": 1,
+      "message": "Probably...",
+      "parentUuid": "5f4c6ca7_878b106a",
+      "revId": "d1678ea3f896e50984a90cd474be68ec145917f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2cb23cc_3fef87de",
         "filename": "third_party/WebKit/Source/core/frame/csp/CSPDirectiveList.cpp",
         "patchSetId": 1
@@ -84,6 +156,24 @@
       "revId": "d1678ea3f896e50984a90cd474be68ec145917f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "876e91cb_c7ff5541",
+        "filename": "third_party/WebKit/Source/core/frame/csp/CSPDirectiveList.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1447,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-07-10T11:27:46Z",
+      "side": 1,
+      "message": "Yes, that\u0027s what I was planning to do.",
+      "parentUuid": "a2cb23cc_3fef87de",
+      "revId": "d1678ea3f896e50984a90cd474be68ec145917f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
