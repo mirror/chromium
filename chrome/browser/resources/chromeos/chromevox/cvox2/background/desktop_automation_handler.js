@@ -67,7 +67,8 @@ DesktopAutomationHandler = function(node) {
       EventType.SCROLL_POSITION_CHANGED, this.onScrollPositionChanged);
   this.addListener_(EventType.SELECTION, this.onSelection);
   this.addListener_(EventType.TEXT_CHANGED, this.onEditableChanged_);
-  this.addListener_(EventType.TEXT_SELECTION_CHANGED, this.onEditableChanged_);
+  this.addListener_(
+      EventType.TEXT_SELECTION_CHANGED, this.onTextSelectionChanged);
   this.addListener_(EventType.VALUE_CHANGED, this.onValueChanged);
 
   AutomationObjectConstructorInstaller.init(node, function() {
@@ -385,6 +386,15 @@ DesktopAutomationHandler.prototype = {
            ChromeVoxState.instance.currentRange, null, evt.type)
           .go();
     }.bind(this));
+  },
+
+  /**
+   * Provides all feedback once a text selection changed event fires.
+   * @param {!AutomationEvent} evt
+   */
+  onTextSelectionChanged: function(evt) {
+    if (evt.target.state.editable)
+      this.onEditableChanged_(evt);
   },
 
   /**
