@@ -5,6 +5,7 @@
 #include "components/viz/host/server_gpu_memory_buffer_manager.h"
 
 #include "base/test/scoped_task_environment.h"
+#include "base/threading/thread.h"
 #include "gpu/ipc/host/gpu_memory_buffer_support.h"
 #include "services/ui/gpu/interfaces/gpu_service.mojom.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -253,6 +254,31 @@ TEST_F(ServerGpuMemoryBufferManagerTest,
                 allocated_handle.type);
     }
   }
+}
+
+TEST_F(ServerGpuMemoryBufferManagerTest, GpuMemoryBufferDestroyed) {
+  gfx::ClientNativePixmapFactory::ResetInstance();
+  TestGpuService gpu_service;
+  ServerGpuMemoryBufferManager manager(&gpu_service, 1);
+  base::Thread diff_thread("TestThread");
+  ASSERT_TRUE(diff_thread.Start());
+  std::unique_ptr<gfx::GpuMemoryBuffer> gpu_mem_buffer;
+  base::RunLoop run_loop;
+  ASSERT_TRUE(diff_thread.task_runner()->PostTask(
+      FROM_HERE,
+      base::Bind(
+          [](ServerGpuMemoryBufferManager* manager,
+             std::unique_ptr<gfx::GpuMemoryBuffer>* out_gpu_mem_buffer,
+             const base::Closure& callback) {
+            *out_gpu_mem_buffer = manager->CreateGpuMemoryBuffer(
+                gfx::Size(10, 20), gfx::BufferFormat::YVU_420,
+                gfx::BufferUsage::GPU_READ, gpu::kNullSurfaceHandle);
+            callback.Run();
+          },
+          &manager, &gpu_mem_buffer, run_loop.QuitClosure())));
+  run_loop.Run();
+  EXPECT_TRUE(gpu_mem_buffer);
+  gpu_mem_buffer.reset();
 }
 
 }  // namespace viz
