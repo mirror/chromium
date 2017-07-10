@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05333ce8_93f1da3b",
+        "filename": "base/message_loop/message_pump_libevent.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-10T23:54:36Z",
+      "side": 1,
+      "message": "Is DPLOG appropriate here?  I could not find any indication as to how libevent indicates the reasons for failures.",
+      "revId": "03b8e36fa6cb98501561e98815630b5cf1d7702b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
