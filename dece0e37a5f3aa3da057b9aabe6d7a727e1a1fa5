@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5a216d16_675cca8f",
+        "filename": "ios/chrome/browser/ui/payments/contact_info_selection_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-07-10T20:34:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a603de6f_9ded3a48",
+      "revId": "dece0e37a5f3aa3da057b9aabe6d7a727e1a1fa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8afa5872_9461c57b",
         "filename": "ios/chrome/browser/ui/payments/contact_info_selection_mediator.mm",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "dece0e37a5f3aa3da057b9aabe6d7a727e1a1fa5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c712724a_da10d23b",
+        "filename": "ios/chrome/browser/ui/payments/contact_info_selection_mediator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-07-10T20:34:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8afa5872_9461c57b",
+      "revId": "dece0e37a5f3aa3da057b9aabe6d7a727e1a1fa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -56,6 +92,30 @@
       "revId": "dece0e37a5f3aa3da057b9aabe6d7a727e1a1fa5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e955c43e_98585b69",
+        "filename": "ios/chrome/browser/ui/payments/contact_info_selection_mediator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-07-10T20:34:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58fd534b_70d8216c",
+      "range": {
+        "startLine": 109,
+        "startChar": 0,
+        "endLine": 112,
+        "endChar": 77
+      },
+      "revId": "dece0e37a5f3aa3da057b9aabe6d7a727e1a1fa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
