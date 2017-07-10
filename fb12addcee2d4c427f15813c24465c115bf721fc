@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "63e83bd2_2a71353a",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-07-10T22:50:42Z",
+      "side": 1,
+      "message": "ContentsView is needed to initialize SuggestionsContainerView, so I make this change and update the test that not\njust use a nullptr delegate to create AppsGridView.\n\nI will abandon this CL and move the change to https://chromium-review.googlesource.com/c/564485/.",
+      "parentUuid": "afa2b7e1_7d8da887",
+      "revId": "fb12addcee2d4c427f15813c24465c115bf721fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "69cd75b1_34adda74",
         "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
         "patchSetId": 9
