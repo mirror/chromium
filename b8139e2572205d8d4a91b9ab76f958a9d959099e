@@ -16,6 +16,24 @@
       "revId": "b8139e2572205d8d4a91b9ab76f958a9d959099e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "835e5080_e6ea7a05",
+        "filename": "chrome/browser/resources/settings/people_page/change_picture.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-10T20:30:06Z",
+      "side": 1,
+      "message": "I\u0027m not sure I follow. Having a cr-picture-preview without a camera seems pretty pointless. Why impose that extra requirement on the pages that embed the preview? We would end up with unnecessary copy/paste code in Settings and OOBE.",
+      "parentUuid": "7131c4f5_37cbd03c",
+      "revId": "b8139e2572205d8d4a91b9ab76f958a9d959099e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
