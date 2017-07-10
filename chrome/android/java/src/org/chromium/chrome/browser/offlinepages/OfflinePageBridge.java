@@ -497,6 +497,7 @@ public class OfflinePageBridge {
     /**
      * Schedules to download a page from |url| and categorize under |nameSpace|.
      * The duplicate pages or requests will be checked.
+     * Origin is presumed to be Chrome.
      *
      * @param webContents Web contents upon which the infobar is shown.
      * @param nameSpace Namespace of the page to save.
@@ -505,7 +506,24 @@ public class OfflinePageBridge {
      */
     public void scheduleDownload(
             WebContents webContents, String nameSpace, String url, int uiAction) {
-        nativeScheduleDownload(mNativeOfflinePageBridge, webContents, nameSpace, url, uiAction);
+        scheduleDownload(webContents, nameSpace, url, uiAction, "");
+    }
+
+    /**
+     * Schedules to download a page from |url| and categorize under |namespace| from |origin|.
+     * The duplicate pages or requests will be checked.
+     *
+     * @param webContents Web contents upon which the infobar is shown.
+     * @param nameSpace Namespace of the page to save.
+     * @param url URL of the page to save.
+     * @param uiAction UI action, like showing infobar or toast on certain case.
+     * @param origin Qualified string origin of the page. This will be a JSON-like string with
+     *        package name and signature on Android.
+     */
+    public void scheduleDownload(
+            WebContents webContents, String nameSpace, String url, int uiAction, String origin) {
+        nativeScheduleDownload(
+                mNativeOfflinePageBridge, webContents, nameSpace, url, uiAction, origin);
     }
 
     /**
@@ -644,7 +662,7 @@ public class OfflinePageBridge {
     private native boolean nativeIsShowingDownloadButtonInErrorPage(
             long nativeOfflinePageBridge, WebContents webContents);
     private native void nativeScheduleDownload(long nativeOfflinePageBridge,
-            WebContents webContents, String nameSpace, String url, int uiAction);
+            WebContents webContents, String nameSpace, String url, int uiAction, String origin);
     private native boolean nativeIsOfflinePage(
             long nativeOfflinePageBridge, WebContents webContents);
     private native OfflinePageItem nativeGetOfflinePage(

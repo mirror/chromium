@@ -266,6 +266,9 @@ int64_t RequestCoordinator::SavePageLater(
       id, save_page_later_params.url, save_page_later_params.client_id,
       base::Time::Now(), save_page_later_params.user_requested);
   request.set_original_url(save_page_later_params.original_url);
+  // Record origin only if CCT V2 is enabled.
+  // if (IsOfflinePagesCTV2Enabled())
+  DVLOG(0) << "Request Origin: " << save_page_later_params.request_origin;
   request.set_request_origin(save_page_later_params.request_origin);
 
   // If the download manager is not done with the request, put it on the
