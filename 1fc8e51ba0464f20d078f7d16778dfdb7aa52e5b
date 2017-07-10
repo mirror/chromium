@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63dd11ca_40608495",
+        "filename": "cc/tiles/gpu_image_decode_cache.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1244,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-07-10T20:39:01Z",
+      "side": 1,
+      "message": "Can we add a CHECK(uploaded_image) here and below (in the ::GPU case) to track down which of these is failing?",
+      "range": {
+        "startLine": 1244,
+        "startChar": 21,
+        "endLine": 1244,
+        "endChar": 35
+      },
+      "revId": "1fc8e51ba0464f20d078f7d16778dfdb7aa52e5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96c735c3_b65f1095",
+        "filename": "cc/tiles/gpu_image_decode_cache.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1256,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-07-10T20:39:01Z",
+      "side": 1,
+      "message": "Can we remove this DCHECK since it\u0027s not holding and verify that the rest of the code will handle this case?",
+      "range": {
+        "startLine": 1256,
+        "startChar": 9,
+        "endLine": 1256,
+        "endChar": 23
+      },
+      "revId": "1fc8e51ba0464f20d078f7d16778dfdb7aa52e5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
