@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "194632d0_30bcca5d",
+        "filename": "content/renderer/render_view_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1502,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-07-10T23:51:38Z",
+      "side": 0,
+      "message": "Might be good to close this bug after this lands.",
+      "revId": "e2ae4df240f4949fe9a4e433cb534a8d810efc81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
