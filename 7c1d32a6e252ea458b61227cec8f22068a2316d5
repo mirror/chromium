@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0c14a32_29409304",
+        "filename": "ios/chrome/browser/ui/collection_view/cells/collection_view_text_cell.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-10T15:23:53Z",
+      "side": 1,
+      "message": "I\u0027d rename: cellHeightFor…",
+      "revId": "7c1d32a6e252ea458b61227cec8f22068a2316d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
