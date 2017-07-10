@@ -16,6 +16,24 @@
       "revId": "158e2e56a6a95222cbe2b9e64903bcab927a1a2a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dbab024_03a66a6a",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_github.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-10T23:50:27Z",
+      "side": 1,
+      "message": "I... don\u0027t know. Presumably the behavior would have been equivalent to pr_with_change_id before, and after this change on this line, it now falls back to commit position, which is what I originally intended. Note, there\u0027s no unit test for this now.",
+      "parentUuid": "486a4f11_b835c7bc",
+      "revId": "158e2e56a6a95222cbe2b9e64903bcab927a1a2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
