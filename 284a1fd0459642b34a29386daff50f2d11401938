@@ -70,6 +70,29 @@
     },
     {
       "key": {
+        "uuid": "aed6668f_0b1e351c",
+        "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-10T19:25:11Z",
+      "side": 1,
+      "message": "stevenjb@: Is an a11y label necessary for this?",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 79,
+        "endChar": 71
+      },
+      "revId": "284a1fd0459642b34a29386daff50f2d11401938",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "64f362da_e6fead6a",
         "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.js",
         "patchSetId": 7
