@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0672875_43d343a6",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/security/local-JavaScript-from-remote.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-10T21:03:32Z",
+      "side": 1,
+      "message": "super-nit: other places in this file don\u0027t use braces when the if statement body is one line; could do the same here and below",
+      "revId": "e40020089ff51ad19f45903720d23452e21628ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
