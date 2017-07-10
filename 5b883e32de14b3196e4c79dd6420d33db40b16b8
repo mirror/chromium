@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d765234_f313991f",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-10T23:36:18Z",
+      "side": 1,
+      "message": "BuildWhitelist needs to take \u0026\u0026, and this should be base::Passed(std::move()) as well I think? remember std::move is just a cast. It doesn\u0027t do anything by itself",
+      "revId": "5b883e32de14b3196e4c79dd6420d33db40b16b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ea53f82_7f5b53f6",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-10T23:36:18Z",
+      "side": 1,
+      "message": "generally, each Unretained should have a comment explaining why it\u0027s ok, so I guess in this case, we expect to be a global singleton so it\u0027s never cleaned up on android",
+      "revId": "5b883e32de14b3196e4c79dd6420d33db40b16b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
