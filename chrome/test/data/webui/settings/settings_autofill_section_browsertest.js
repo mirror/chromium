@@ -99,7 +99,6 @@ SettingsAutofillSectionBrowserTest.prototype = {
   extraLibraries: PolymerTest.getLibraries(ROOT_PATH).concat([
     'passwords_and_autofill_fake_data.js',
     'test_util.js',
-    'ensure_lazy_loaded.js',
   ]),
 
   /**
@@ -115,8 +114,6 @@ SettingsAutofillSectionBrowserTest.prototype = {
 
     // Test is run on an individual element that won't have a page language.
     this.accessibilityAuditConfig.auditRulesToIgnore.push('humanLangMissing');
-
-    settings.ensureLazyLoaded();
   },
 
   /**
