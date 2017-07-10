@@ -685,8 +685,8 @@ Status ProcessExtension(const std::string& extension,
   std::string manifest_data;
   if (!base::ReadFileToString(manifest_path, &manifest_data))
     return Status(kUnknownError, "cannot read manifest");
-  std::unique_ptr<base::Value> manifest_value =
-      base::JSONReader::Read(manifest_data);
+  std::unique_ptr<base::Value> manifest_value = base::JSONReader::Read(
+      manifest_data, base::JSON_REPLACE_INVALID_CHARACTERS);
   base::DictionaryValue* manifest;
   if (!manifest_value || !manifest_value->GetAsDictionary(&manifest))
     return Status(kUnknownError, "invalid manifest");

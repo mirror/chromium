@@ -32,7 +32,8 @@ const char kOldInspectorContextError[] =
     "Execution context with given id not found.";
 
 Status ParseInspectorError(const std::string& error_json) {
-  std::unique_ptr<base::Value> error = base::JSONReader::Read(error_json);
+  std::unique_ptr<base::Value> error =
+      base::JSONReader::Read(error_json, base::JSON_REPLACE_INVALID_CHARACTERS);
   base::DictionaryValue* error_dict;
   if (!error || !error->GetAsDictionary(&error_dict))
     return Status(kUnknownError, "inspector error with no error message");
@@ -504,7 +505,8 @@ bool ParseInspectorMessage(
     InspectorMessageType* type,
     InspectorEvent* event,
     InspectorCommandResponse* command_response) {
-  std::unique_ptr<base::Value> message_value = base::JSONReader::Read(message);
+  std::unique_ptr<base::Value> message_value =
+      base::JSONReader::Read(message, base::JSON_REPLACE_INVALID_CHARACTERS);
   base::DictionaryValue* message_dict;
   if (!message_value || !message_value->GetAsDictionary(&message_dict))
     return false;

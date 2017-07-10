@@ -700,8 +700,8 @@ void HttpHandler::HandleCommand(
 
   if (request.data.length()) {
     base::DictionaryValue* body_params;
-    std::unique_ptr<base::Value> parsed_body =
-        base::JSONReader::Read(request.data);
+    std::unique_ptr<base::Value> parsed_body = base::JSONReader::Read(
+        request.data, base::JSON_REPLACE_INVALID_CHARACTERS);
     if (!parsed_body || !parsed_body->GetAsDictionary(&body_params)) {
       std::unique_ptr<net::HttpServerResponseInfo> response(
           new net::HttpServerResponseInfo(net::HTTP_BAD_REQUEST));

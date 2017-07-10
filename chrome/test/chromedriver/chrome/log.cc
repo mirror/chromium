@@ -107,7 +107,8 @@ std::string FormatValueForDisplay(const base::Value& value) {
 }
 
 std::string FormatJsonForDisplay(const std::string& json) {
-  std::unique_ptr<base::Value> value = base::JSONReader::Read(json);
+  std::unique_ptr<base::Value> value =
+      base::JSONReader::Read(json, base::JSON_REPLACE_INVALID_CHARACTERS);
   if (!value)
     value.reset(new base::Value(json));
   return FormatValueForDisplay(*value);

@@ -48,7 +48,8 @@ BrowserInfo::BrowserInfo(std::string android_package,
 }
 
 Status ParseBrowserInfo(const std::string& data, BrowserInfo* browser_info) {
-  std::unique_ptr<base::Value> value = base::JSONReader::Read(data);
+  std::unique_ptr<base::Value> value =
+      base::JSONReader::Read(data, base::JSON_REPLACE_INVALID_CHARACTERS);
   if (!value.get())
     return Status(kUnknownError, "version info not in JSON");
 
