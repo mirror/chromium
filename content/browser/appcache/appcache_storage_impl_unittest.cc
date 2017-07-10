@@ -415,7 +415,7 @@ class AppCacheStorageImplTest : public testing::Test {
   void SetUpTest() {
     DCHECK(io_thread->task_runner()->BelongsToCurrentThread());
     service_.reset(new AppCacheServiceImpl(NULL));
-    service_->Initialize(base::FilePath(), db_thread->task_runner(), NULL);
+    service_->Initialize(base::FilePath(), NULL);
     mock_quota_manager_proxy_ = new MockQuotaManagerProxy();
     service_->quota_manager_proxy_ = mock_quota_manager_proxy_;
     delegate_.reset(new MockStorageDelegate(this));
@@ -469,6 +469,7 @@ class AppCacheStorageImplTest : public testing::Test {
     // scheduled on that thread have been performed prior to return.
     base::WaitableEvent event(base::WaitableEvent::ResetPolicy::AUTOMATIC,
                               base::WaitableEvent::InitialState::NOT_SIGNALED);
+    // ### use the cache backend's runner instead
     db_thread->task_runner()->PostTask(
         FROM_HERE, base::Bind(&AppCacheStorageImplTest::SignalEvent, &event));
     event.Wait();
@@ -1724,8 +1725,7 @@ class AppCacheStorageImplTest : public testing::Test {
     // Recreate the service to point at the db and corruption on disk.
     service_.reset(new AppCacheServiceImpl(NULL));
     service_->set_request_context(io_thread->request_context());
-    service_->Initialize(temp_directory_.GetPath(), db_thread->task_runner(),
-                         db_thread->task_runner());
+    service_->Initialize(temp_directory_.GetPath(), db_thread->task_runner());
     mock_quota_manager_proxy_ = new MockQuotaManagerProxy();
     service_->quota_manager_proxy_ = mock_quota_manager_proxy_;
     delegate_.reset(new MockStorageDelegate(this));

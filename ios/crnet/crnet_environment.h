@@ -141,7 +141,6 @@ class CrNetEnvironment {
 
   static CrNetEnvironment* chrome_net_;
   std::unique_ptr<base::Thread> network_io_thread_;
-  std::unique_ptr<base::Thread> network_cache_thread_;
   std::unique_ptr<base::Thread> file_thread_;
   std::unique_ptr<base::Thread> file_user_blocking_thread_;
   std::unique_ptr<net::SdchManager> sdch_manager_;

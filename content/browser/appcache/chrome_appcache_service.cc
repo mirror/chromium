@@ -46,8 +46,7 @@ void ChromeAppCacheService::InitializeOnIOThread(
   // Init our base class.
   Initialize(cache_path_, BrowserThread::GetTaskRunnerForThread(
                               BrowserThread::FILE_USER_BLOCKING)
-                              .get(),
-             BrowserThread::GetTaskRunnerForThread(BrowserThread::CACHE).get());
+                              .get());
   set_appcache_policy(this);
   set_special_storage_policy(special_storage_policy.get());
 }

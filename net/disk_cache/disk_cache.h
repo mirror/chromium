@@ -24,7 +24,7 @@
 
 namespace base {
 class FilePath;
-class SingleThreadTaskRunner;
+class SequencedTaskRunner;
 
 namespace trace_event {
 class ProcessMemoryDump;
@@ -63,7 +63,6 @@ NET_EXPORT int CreateCacheBackend(
     const base::FilePath& path,
     int max_bytes,
     bool force,
-    const scoped_refptr<base::SingleThreadTaskRunner>& thread,
     net::NetLog* net_log,
     std::unique_ptr<Backend>* backend,
     const net::CompletionCallback& callback);
