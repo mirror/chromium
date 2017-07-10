@@ -22,6 +22,30 @@
       "revId": "d157f01923a50a8e42f0525d48c0ac82d7528862",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4be0986_babce445",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-07-10T19:01:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b798f7ec_3220aaa2",
+      "range": {
+        "startLine": 80,
+        "startChar": 5,
+        "endLine": 80,
+        "endChar": 23
+      },
+      "revId": "d157f01923a50a8e42f0525d48c0ac82d7528862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
