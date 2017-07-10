@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b57170aa_6915b867",
+        "filename": "content/browser/service_worker/service_worker_process_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-10T10:53:02Z",
+      "side": 1,
+      "message": "nit: previous_hosts_count\n\nusing the count of RPHI feels less reliable, wonder if there could be other flags etc for us to know if it\u0027s the one that was just created?",
+      "revId": "5fcd098e97fd02040e0b206fd652e41caafe8108",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
