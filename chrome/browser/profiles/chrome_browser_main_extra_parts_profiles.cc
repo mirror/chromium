@@ -25,6 +25,8 @@
 #include "chrome/browser/engagement/site_engagement_service.h"
 #include "chrome/browser/engagement/site_engagement_service_factory.h"
 #include "chrome/browser/favicon/favicon_service_factory.h"
+#include "chrome/browser/feature_engagement_tracker/feature_engagement_tracker_factory.h"
+#include "chrome/browser/feature_engagement_tracker/features/new_tab_factory.h"
 #include "chrome/browser/google/google_url_tracker_factory.h"
 #include "chrome/browser/history/history_service_factory.h"
 #include "chrome/browser/invalidation/profile_invalidation_provider_factory.h"
@@ -236,6 +238,7 @@ EnsureBrowserContextKeyedServiceFactoriesBuilt() {
   extensions::VerifyTrustAPI::GetFactoryInstance();
 #endif
   FaviconServiceFactory::GetInstance();
+  FeatureEngagementTrackerFactory::GetInstance();
   FindBarStateFactory::GetInstance();
   GAIAInfoUpdateServiceFactory::GetInstance();
 #if !defined(OS_ANDROID)
@@ -282,6 +285,7 @@ EnsureBrowserContextKeyedServiceFactoriesBuilt() {
   MediaGalleriesPreferencesFactory::GetInstance();
   NTPResourceCacheFactory::GetInstance();
 #endif
+  new_tab_help::NewTabFactory::GetInstance();
   ContentSuggestionsServiceFactory::GetInstance();
   PasswordStoreFactory::GetInstance();
 #if !defined(OS_ANDROID)
