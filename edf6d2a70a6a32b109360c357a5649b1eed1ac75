@@ -46,6 +46,30 @@
       "revId": "edf6d2a70a6a32b109360c357a5649b1eed1ac75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebc9f26c_b923b591",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImplTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-10T16:36:10Z",
+      "side": 1,
+      "message": "If it always should be different, then there is no reason for it to ever happen :) Also, even though the test marks CRASHED, you can always pull the logcat, the AssertionError should be visible there.\n\nAnother reason why you might want that is that you have more chances to catch unexpected behaviours that way, by having the check running when the whole app is being used, as opposed to a test\u0027s controlled environment.",
+      "parentUuid": "f7bd2e82_28e692db",
+      "range": {
+        "startLine": 185,
+        "startChar": 26,
+        "endLine": 185,
+        "endChar": 91
+      },
+      "revId": "edf6d2a70a6a32b109360c357a5649b1eed1ac75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
