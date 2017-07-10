@@ -88,6 +88,7 @@ class ClientNativePixmapFactory;
 namespace viz {
 class HostFrameSinkManager;
 class FrameSinkManagerImpl;
+class ServerGpuMemoryBufferManager;
 }
 
 namespace content {
@@ -175,6 +176,7 @@ class CONTENT_EXPORT BrowserMainLoop {
   }
 
   gpu::GpuChannelEstablishFactory* gpu_channel_establish_factory() const;
+  viz::ServerGpuMemoryBufferManager* gpu_memory_buffer_manager() const;
 
 #if defined(OS_ANDROID)
   void SynchronouslyFlushStartupTasks();

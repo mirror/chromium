@@ -50,9 +50,11 @@ DefaultGpuHost::DefaultGpuHost(GpuHostDelegate* delegate)
   gpu_main_->CreateGpuService(MakeRequest(&gpu_service_),
                               std::move(gpu_host_proxy), preferences,
                               mojo::ScopedSharedBufferHandle());
+  auto provider =
+      base::Bind(&DefaultGpuHost::gpu_service, base::Unretained(this));
   gpu_memory_buffer_manager_ =
-      base::MakeUnique<viz::ServerGpuMemoryBufferManager>(gpu_service_.get(),
-                                                          next_client_id_++);
+      base::MakeUnique<viz::ServerGpuMemoryBufferManager>(
+          provider, next_client_id_++, base::ThreadTaskRunnerHandle::Get());
 }
 
 DefaultGpuHost::~DefaultGpuHost() {}

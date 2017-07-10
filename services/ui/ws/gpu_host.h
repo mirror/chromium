@@ -61,6 +61,7 @@ class DefaultGpuHost : public GpuHost, public mojom::GpuHost {
 
   GpuClient* AddInternal(mojom::GpuRequest request);
   void OnBadMessageFromGpu();
+  mojom::GpuService* gpu_service() { return gpu_service_.get(); }
 
   // GpuHost:
   void Add(mojom::GpuRequest request) override;

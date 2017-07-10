@@ -74,10 +74,6 @@ void BrowserProcessSubThread::IOThreadPreCleanUp() {
   // and delete the BrowserChildProcessHost instances to release whatever
   // IO thread only resources they are referencing.
   BrowserChildProcessHostImpl::TerminateAll();
-
-  // Unregister GpuMemoryBuffer dump provider before IO thread is shut down.
-  base::trace_event::MemoryDumpManager::GetInstance()->UnregisterDumpProvider(
-      BrowserGpuMemoryBufferManager::current());
 }
 
 }  // namespace content
