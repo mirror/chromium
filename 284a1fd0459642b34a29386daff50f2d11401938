@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "43b9f1f9_b65fca32",
+        "filename": "chrome/browser/resources/settings/icons.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-10T21:28:13Z",
+      "side": 1,
+      "message": "Did you try:\n\niron-icon {\n       --iron-icon-fill-color: #4285F4;\n     }",
+      "parentUuid": "d97535bf_1674daf0",
+      "revId": "284a1fd0459642b34a29386daff50f2d11401938",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c07cb007_f93632e9",
         "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.html",
         "patchSetId": 7
@@ -107,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "de298dd4_13bb6587",
+        "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-10T21:28:13Z",
+      "side": 1,
+      "message": "We should avoid adding an extra div here.\n\nYou should be able to give this div and id and use that to specify the padding:\n\n#content {\n  padding-left: 5px;\n}\n\n\u003cdiv id\u003d\"content\" class\u003d\"body\"\u003e\n\nAlternately using a second class should also work:\n\n.indented {\n  padding-left: 5px;\n}\n\n\u003cdiv class\u003d\"body indented\"\u003e\n\nAnother option would be:\n\n.body \u003e * {\n  margin-left: 5px;\n}\n\nThat said, it is a little weird that this dialog indents all of its content differently from other dialogs. Might want to double check this with UX.",
+      "parentUuid": "bda8b5e3_6087a309",
+      "revId": "284a1fd0459642b34a29386daff50f2d11401938",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "57578aca_c8f97ee5",
         "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.html",
         "patchSetId": 7
@@ -139,6 +175,24 @@
       "revId": "284a1fd0459642b34a29386daff50f2d11401938",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e87a8faa_2628708f",
+        "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-10T21:28:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0e9f3bdc_2e734c30",
+      "revId": "284a1fd0459642b34a29386daff50f2d11401938",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
