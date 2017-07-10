@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "7886c7a7_d4112394",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-10T05:35:38Z",
+      "side": 1,
+      "message": "Hm, would this still cause copy? I think it\u0027s fine to expose std::vector out of blink or add convenient methods there if the current code\u0027s introducing inefficiency.\n\nAlso should we DCHECK reading out data is done at this point?",
+      "revId": "f3c41d3b0ccb91e387baeda4e73f84b7375e452c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b3734957_5784b727",
         "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
         "patchSetId": 6
@@ -36,6 +53,57 @@
     },
     {
       "key": {
+        "uuid": "70fa5f6c_ab5f1325",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-10T05:35:38Z",
+      "side": 1,
+      "message": "nit: BundledReceivers, maybe, Receivers and Receiver look too alike",
+      "revId": "f3c41d3b0ccb91e387baeda4e73f84b7375e452c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5659eb62_0330dd1d",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-10T05:35:38Z",
+      "side": 1,
+      "message": "nit: do running_receivers_.found() and use the iter here and to erase it?",
+      "revId": "f3c41d3b0ccb91e387baeda4e73f84b7375e452c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02975981_1986f33c",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-10T05:35:38Z",
+      "side": 1,
+      "message": "DCHECK script_data_ doesn\u0027t have url?",
+      "revId": "f3c41d3b0ccb91e387baeda4e73f84b7375e452c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "32402589_8211c60f",
         "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
         "patchSetId": 6
@@ -47,6 +115,23 @@
       "writtenOn": "2017-07-10T04:52:12Z",
       "side": 1,
       "message": "Why do you wait in the while loop? Is this a guard for \"spurious wakeup\"? If so, can you add a comment about it?",
+      "revId": "f3c41d3b0ccb91e387baeda4e73f84b7375e452c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa0d0cde_405302d8",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-10T05:35:38Z",
+      "side": 1,
+      "message": "nit: \u0027is_completed_\u0027 sounds more like \u0027it has completed the work\u0027, while here it seems to mean \u0027there has been something wrong\u0027... should this be rather, say, \u0027connection_closed_\u0027 or something like that?",
       "revId": "f3c41d3b0ccb91e387baeda4e73f84b7375e452c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +172,40 @@
         "endLine": 32,
         "endChar": 30
       },
+      "revId": "f3c41d3b0ccb91e387baeda4e73f84b7375e452c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75b56322_5f79d707",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-10T05:35:38Z",
+      "side": 1,
+      "message": "nit: Please explicitly note that this shouldn\u0027t be called on the main thread. Also \u0027error happens\u0027 is a bit vague, could make it clear what\u0027s expected in the case? (E.g. this returns false if the wait finished with an error, in the case no script data may be available for the URL and the caller should... bula bula)",
+      "revId": "f3c41d3b0ccb91e387baeda4e73f84b7375e452c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54f49313_0af2461c",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-10T05:35:38Z",
+      "side": 1,
+      "message": "and waiting_cv_",
       "revId": "f3c41d3b0ccb91e387baeda4e73f84b7375e452c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
