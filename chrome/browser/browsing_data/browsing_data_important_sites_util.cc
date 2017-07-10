@@ -61,8 +61,21 @@ void Remove(int remove_mask,
             std::unique_ptr<content::BrowsingDataFilterBuilder> filter_builder,
             content::BrowsingDataRemover* remover,
             base::OnceClosure callback) {
+  browsing_data::RecordDeletionForPeriod(time_period);
+
   auto* observer =
       new BrowsingDataTaskObserver(remover, std::move(callback), 2);
+
+  if (filter_builder->IsEmptyBlacklist()) {
+    // If there is no filter, we can do all removals in one call.
+    remover->RemoveAndReply(
+        browsing_data::CalculateBeginDeleteTime(time_period),
+        browsing_data::CalculateEndDeleteTime(time_period), remove_mask,
+        origin_mask, observer);
+    // There won't be a second call.
+    observer->OnBrowsingDataRemoverDone();
+    return;
+  }
 
   int filterable_mask =
       remove_mask &
@@ -70,8 +83,6 @@ void Remove(int remove_mask,
   int nonfilterable_mask =
       remove_mask &
       ~ChromeBrowsingDataRemoverDelegate::IMPORTANT_SITES_DATA_TYPES;
-
-  browsing_data::RecordDeletionForPeriod(time_period);
 
   if (filterable_mask) {
     remover->RemoveWithFilterAndReply(
