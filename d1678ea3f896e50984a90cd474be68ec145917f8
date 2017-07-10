@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bca23878_7d611f45",
+        "filename": "third_party/WebKit/Source/core/frame/csp/CSPDirectiveList.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1099,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-07-10T10:05:19Z",
+      "side": 1,
+      "message": "Can you add tests like `report-to; report-to;`, `report-to;report-uri;report-to`, `report-uri;report-to;report-to`, etc?",
+      "revId": "d1678ea3f896e50984a90cd474be68ec145917f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fc090d4_05937195",
+        "filename": "third_party/WebKit/Source/core/frame/csp/CSPDirectiveList.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1108,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-07-10T10:05:19Z",
+      "side": 1,
+      "message": "1. I think you convinced me that we can drop this in our last chat.\n2. https://html.spec.whatwg.org/#attr-meta-http-equiv-content-security-policy is a better link.",
+      "revId": "d1678ea3f896e50984a90cd474be68ec145917f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2e0e781_a754949c",
+        "filename": "third_party/WebKit/Source/core/frame/csp/CSPDirectiveList.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1115,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-07-10T10:05:19Z",
+      "side": 1,
+      "message": "s/superseed/supersede/",
+      "revId": "d1678ea3f896e50984a90cd474be68ec145917f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f4c6ca7_878b106a",
+        "filename": "third_party/WebKit/Source/core/frame/csp/CSPDirectiveList.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1149,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-07-10T10:05:19Z",
+      "side": 1,
+      "message": "Hrm. I guess we do URL parsing later? We should probably have been canonicalizing these strings into URLs here rather than in the reporting code. Ah well...",
+      "revId": "d1678ea3f896e50984a90cd474be68ec145917f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2cb23cc_3fef87de",
+        "filename": "third_party/WebKit/Source/core/frame/csp/CSPDirectiveList.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1447,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-07-10T10:05:19Z",
+      "side": 1,
+      "message": "How do you plan to address this? Pass the bool up along with the list of endpoints?",
+      "revId": "d1678ea3f896e50984a90cd474be68ec145917f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
