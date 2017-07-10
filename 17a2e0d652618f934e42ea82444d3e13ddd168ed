@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7b1f55e_afbdfbe2",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-07-10T01:32:46Z",
+      "side": 1,
+      "message": "optional: Add TODO(yawano): Handle the case where filter type has changed between OFF/FOCUS and ALL/WHITELISTED_PACKAGE_NAME after this initialization.",
+      "revId": "17a2e0d652618f934e42ea82444d3e13ddd168ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58b7b7ad_36abf685",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-07-10T01:32:46Z",
+      "side": 1,
+      "message": "optional: We need to handle AccessibilityFilterType::OFF case in this function as well. Please add a TODO comment for me not to forget about it. It should be simply returning at the beginning of the function.\n\ni.e. TODO(yawano): Handle AccessibilityFilterType::OFF.",
+      "range": {
+        "startLine": 162,
+        "startChar": 2,
+        "endLine": 162,
+        "endChar": 51
+      },
+      "revId": "17a2e0d652618f934e42ea82444d3e13ddd168ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
