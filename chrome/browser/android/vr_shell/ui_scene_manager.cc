@@ -22,6 +22,7 @@
 #include "chrome/browser/android/vr_shell/ui_elements/ui_element_debug_id.h"
 #include "chrome/browser/android/vr_shell/ui_elements/url_bar.h"
 #include "chrome/browser/android/vr_shell/ui_scene.h"
+#include "chrome/browser/android/vr_shell/vector_icons.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/vector_icons/vector_icons.h"
 #include "ui/vector_icons/vector_icons.h"
@@ -239,7 +240,7 @@ void UiSceneManager::CreateSystemIndicators() {
       {&video_capture_indicator_, kVideoCaptureIndicator, ui::kVideocamIcon,
        IDS_VIDEO_CALL_NOTIFICATION_TEXT_2},
       {&screen_capture_indicator_, kScreenCaptureIndicator,
-       vector_icons::kScreenShareIcon, IDS_SCREEN_CAPTURE_NOTIFICATION_TEXT_2},
+       vr_shell::kScreenShareIcon, IDS_SCREEN_CAPTURE_NOTIFICATION_TEXT_2},
       {&bluetooth_connected_indicator_, kBluetoothConnectedIndicator,
        vector_icons::kBluetoothConnectedIcon, 0},
       {&location_access_indicator_, kLocationAccessIndicator,

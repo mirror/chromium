@@ -5,12 +5,29 @@
 import("//chrome/common/features.gni")
 import("//device/vr/features/features.gni")
 import("//testing/test.gni")
+import("//ui/vector_icons/vector_icons.gni")
 
 if (is_android) {
   import("//build/config/android/rules.gni")
 }
 
 assert(enable_vr)
+
+aggregate_vector_icons("vr_vector_icons") {
+  icon_directory = "vector_icons"
+
+  icons = [ "screen_share.icon" ]
+}
+
+static_library("vector_icons") {
+  sources = get_target_outputs(":vr_vector_icons")
+  deps = [
+    ":vr_vector_icons",
+    "//skia",
+    "//ui/gfx",
+    "//ui/vector_icons",
+  ]
+}
 
 # This library is platform-independent UI and related modules, which should
 # compile on any platform.
@@ -100,6 +117,7 @@ static_library("vr_common") {
   ]
 
   deps = [
+    ":vector_icons",
     "//base",
     "//cc/paint",
     "//chrome/app:generated_resources",
