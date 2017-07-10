@@ -951,6 +951,11 @@ IPC_MESSAGE_ROUTED5(FrameMsg_CommitNavigation,
                     content::RequestNavigationParams /* request_params */)
 
 // PlzNavigate
+// Informs the renderer that the browser stopped processing a renderer-initiated
+// navigation. It does not stop ongoing loads in the current page.
+IPC_MESSAGE_ROUTED0(FrameMsg_DroppedNavigation)
+
+// PlzNavigate
 // Tells the renderer that a navigation failed with the error code |error_code|
 // and that the renderer should display an appropriate error page.
 IPC_MESSAGE_ROUTED4(FrameMsg_FailedNavigation,

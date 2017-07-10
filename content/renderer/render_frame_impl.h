@@ -927,6 +927,7 @@ class CONTENT_EXPORT RenderFrameImpl
                           int error_code);
   void OnReportContentSecurityPolicyViolation(
       const content::CSPViolationParams& violation_params);
+  void OnDroppedNavigation();
   void OnGetSavableResourceLinks();
   void OnGetSerializedHtmlWithLocalLinks(
       const std::map<GURL, base::FilePath>& url_to_local_path,
