@@ -22,6 +22,52 @@
       "revId": "eb553a92fa4e963dca25080fd4ab4f365c78b0bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1af4b5cb_7241c12b",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-10T17:28:11Z",
+      "side": 1,
+      "message": "the screenshot you posted doesn\u0027t seem correct relative to the mock --- the size doesn\u0027t line up. I think you might want the size to be 16 (the mock says 13.3 but doesn\u0027t account for internal padding).\n\nAlso, I wonder why we aren\u0027t using kInfoOutlineIcon which is pretty much the same idea and used elsewhere in the UI. Did designers intentionally diverge from that precedent?",
+      "range": {
+        "startLine": 439,
+        "startChar": 13,
+        "endLine": 439,
+        "endChar": 29
+      },
+      "revId": "eb553a92fa4e963dca25080fd4ab4f365c78b0bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44b0b8c9_468707f7",
+        "filename": "ui/vector_icons/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-10T17:28:11Z",
+      "side": 1,
+      "message": "this icon should go in components/vector_icons (as should all the icons in this file --- could you please add a comment to that effect in this file to prevent people from making this same mistake in the future?)",
+      "range": {
+        "startLine": 22,
+        "startChar": 5,
+        "endLine": 22,
+        "endChar": 17
+      },
+      "revId": "eb553a92fa4e963dca25080fd4ab4f365c78b0bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
