@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f1cb0ec_0758259d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-10T11:51:29Z",
+      "side": 1,
+      "message": "Why is this \"similar\" and not \"the same\"?",
+      "range": {
+        "startLine": 10,
+        "startChar": 14,
+        "endLine": 10,
+        "endChar": 21
+      },
+      "revId": "8cc756e210806d367703508904e016c6ca411835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
