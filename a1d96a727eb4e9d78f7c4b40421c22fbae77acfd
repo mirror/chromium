@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "8f653053_40c06d80",
+        "filename": "components/omnibox/browser/scored_history_match.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-07-10T18:34:02Z",
+      "side": 1,
+      "message": "s/a CGI ?... fragment/the query component/",
+      "revId": "a1d96a727eb4e9d78f7c4b40421c22fbae77acfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fcd39055_05636318",
         "filename": "components/omnibox/browser/scored_history_match.cc",
         "patchSetId": 1
@@ -13,6 +30,41 @@
       "writtenOn": "2017-07-07T23:40:00Z",
       "side": 1,
       "message": "above lines will probably \"accidentally\" fix a bug with IP addresses.",
+      "revId": "a1d96a727eb4e9d78f7c4b40421c22fbae77acfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cded4b47_dcdc72e9",
+        "filename": "components/omnibox/browser/scored_history_match.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-07-10T18:34:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fcd39055_05636318",
+      "revId": "a1d96a727eb4e9d78f7c4b40421c22fbae77acfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f8010a97_fea1bb5b",
+        "filename": "components/omnibox/browser/scored_history_match.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-07-10T18:34:02Z",
+      "side": 1,
+      "message": "Add a brief description of what |cleanup_adjustments| does.",
       "revId": "a1d96a727eb4e9d78f7c4b40421c22fbae77acfd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

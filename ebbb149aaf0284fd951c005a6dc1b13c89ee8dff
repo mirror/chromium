@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3315b19_83cb70e4",
+        "filename": "components/omnibox/browser/scored_history_match.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-07-10T18:34:02Z",
+      "side": 1,
+      "message": "I\u0027m wondering if simply \"adjustments\" might not be a better name here. Does it matter in the context of this method that the caller considered this to be \"cleanup\"? Or is it sufficient to know that |url| has some associated adjustments? Let me know what you think.",
+      "revId": "ebbb149aaf0284fd951c005a6dc1b13c89ee8dff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1740a385_fcd21fbb",
+        "filename": "components/omnibox/browser/scored_history_match.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-07-10T18:34:02Z",
+      "side": 1,
+      "message": "The examples given here might lead one to believe that \"known public registries\" is limited to the traditional set of TLDs (.com, .net, .co.uk, etc.). But if I read EXCLUDE_PRIVATE_REGISTRIES and the Mozilla list correctly, known public registries includes most of the new TLDs such as .restaurant and .google). Can you expand the examples to something like:\n\n(i.e. .com, .net, .co.uk, .restaurant).",
+      "revId": "ebbb149aaf0284fd951c005a6dc1b13c89ee8dff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7284024_c545253e",
+        "filename": "components/omnibox/browser/scored_history_match.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-07-10T18:34:02Z",
+      "side": 1,
+      "message": "This change violates the promise of your CL description (\"This CL [...] is intended to provide identical functionality as before\") a bit.\n\nI think this is a good change but would you mind moving it to a follow-on CL and then include some tests for its effects? There are some interesting public suffixes such as hokkaido.jp and naturalhistorymuseum.museum whose scoring will change.",
+      "revId": "ebbb149aaf0284fd951c005a6dc1b13c89ee8dff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70809d0c_650257cb",
+        "filename": "components/omnibox/browser/scored_history_match.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-07-10T18:34:02Z",
+      "side": 1,
+      "message": "Suggest removing this comment and the next one (\"The match is in the last part of a dotted...\"). They\u0027re a little out of date after the registry length change and I think it\u0027s better to just explain the logic above.",
+      "revId": "ebbb149aaf0284fd951c005a6dc1b13c89ee8dff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47b82c1c_421ec672",
+        "filename": "components/omnibox/browser/scored_history_match_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-07-10T18:34:02Z",
+      "side": 1,
+      "message": "s/ASCIIToUTF16/UTF8ToUTF16/",
+      "revId": "ebbb149aaf0284fd951c005a6dc1b13c89ee8dff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
