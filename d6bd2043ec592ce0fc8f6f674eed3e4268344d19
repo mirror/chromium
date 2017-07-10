@@ -16,6 +16,24 @@
       "revId": "d6bd2043ec592ce0fc8f6f674eed3e4268344d19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cf12765_cac2303b",
+        "filename": "tools/traffic_annotation/auditor/BUILD.gn",
+        "patchSetId": 13
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-07-10T06:53:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27767c0c_69a6890f",
+      "revId": "d6bd2043ec592ce0fc8f6f674eed3e4268344d19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
