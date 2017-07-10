@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4b98324_2ccd2d48",
+        "filename": "services/resource_coordinator/memory_instrumentation/process_map.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-10T13:13:09Z",
+      "side": 1,
+      "message": "I think you actually want to move the code that sets the instances_ here? Or maybe you are doing that in some other CL?",
+      "range": {
+        "startLine": 59,
+        "startChar": 52,
+        "endLine": 59,
+        "endChar": 53
+      },
+      "revId": "a4f2405b55353ba4cb2b0e358b9b96d50c391d68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
