@@ -4,6 +4,7 @@
 
 #include "core/layout/ng/ng_fragment_builder.h"
 
+#include "core/layout/ng/inline/ng_physical_line_box_fragment.h"
 #include "core/layout/ng/inline/ng_physical_text_fragment.h"
 #include "core/layout/ng/ng_block_break_token.h"
 #include "core/layout/ng/ng_block_node.h"
@@ -192,6 +193,98 @@ NGFragmentBuilder& NGFragmentBuilder::AddOutOfFlowDescendant(
   return *this;
 }
 
+NGFragmentBuilder& NGFragmentBuilder::AddBaseline(
+    NGBaselineAlgorithmType algorithm_type,
+    FontBaseline baseline_type,
+    LayoutUnit offset) {
+  baselines_.push_back(NGBaseline{algorithm_type, baseline_type, offset});
+  return *this;
+}
+
+bool NGFragmentBuilder::AddBaselineIfExists(const NGBaselineRequest& request,
+                                            unsigned index) {
+  const NGPhysicalFragment* child = Children()[index].Get();
+  if (child->IsLineBox()) {
+    const NGPhysicalLineBoxFragment* line_box =
+        ToNGPhysicalLineBoxFragment(child);
+    LayoutUnit offset = line_box->BaselinePosition(request.baseline_type);
+    AddBaseline(request.algorithm_type, request.baseline_type,
+                offset + Offsets()[index].block_offset);
+    return true;
+  }
+
+  if (child->IsBox()) {
+    const NGPhysicalBoxFragment* box = ToNGPhysicalBoxFragment(child);
+    for (const auto& baseline : box->Baselines()) {
+      if (baseline.algorithm_type == request.algorithm_type &&
+          baseline.baseline_type == request.baseline_type) {
+        AddBaseline(request.algorithm_type, request.baseline_type,
+                    baseline.offset + Offsets()[index].block_offset);
+        return true;
+      }
+    }
+  }
+
+  return false;
+}
+
+void NGFragmentBuilder::PropagateBaselinesFromChildren(
+    const Vector<NGBaselineRequest>& requests) {
+  if (requests.IsEmpty())
+    return;
+
+  for (const auto& request : requests) {
+    switch (request.algorithm_type) {
+      case NGBaselineAlgorithmType::kAtomicInline:
+      case NGBaselineAlgorithmType::kAtomicInlineForFirstLine:
+        for (unsigned i = Children().size(); i--;) {
+          if (AddBaselineIfExists(request, i))
+            break;
+        }
+        break;
+      case NGBaselineAlgorithmType::kFirstLine:
+        for (unsigned i = 0; i < Children().size(); i++) {
+          if (AddBaselineIfExists(request, i))
+            break;
+        }
+        break;
+    }
+  }
+}
+
+void NGFragmentBuilder::CopyBaselinesFromOldLayout(
+    const Vector<NGBaselineRequest>& requests,
+    const LayoutBox* layout_box) {
+  if (requests.IsEmpty())
+    return;
+
+  DCHECK(NGBaseline::ShouldPropagateBaselines(layout_box));
+
+  LineDirectionMode line_direction = IsHorizontalWritingMode(writing_mode_)
+                                         ? LineDirectionMode::kHorizontalLine
+                                         : LineDirectionMode::kVerticalLine;
+  for (const auto& request : requests) {
+    int position;
+    switch (request.algorithm_type) {
+      case NGBaselineAlgorithmType::kAtomicInline:
+        position = layout_box->BaselinePosition(request.baseline_type, false,
+                                                line_direction);
+        break;
+      case NGBaselineAlgorithmType::kAtomicInlineForFirstLine:
+        position = layout_box->BaselinePosition(request.baseline_type, true,
+                                                line_direction);
+        break;
+      case NGBaselineAlgorithmType::kFirstLine:
+        position = layout_box->FirstLineBoxBaseline();
+        if (position < 0)
+          continue;
+        break;
+    }
+    AddBaseline(request.algorithm_type, request.baseline_type,
+                LayoutUnit(position));
+  }
+}
+
 RefPtr<NGLayoutResult> NGFragmentBuilder::ToBoxFragment() {
   DCHECK_EQ(type_, NGPhysicalFragment::kFragmentBox);
   DCHECK_EQ(offsets_.size(), children_.size());
@@ -229,8 +322,8 @@ RefPtr<NGLayoutResult> NGFragmentBuilder::ToBoxFragment() {
 
   RefPtr<NGPhysicalBoxFragment> fragment = AdoptRef(new NGPhysicalBoxFragment(
       layout_object_, physical_size, overflow_.ConvertToPhysical(writing_mode_),
-      children_, positioned_floats_, border_edges_.ToPhysical(writing_mode_),
-      std::move(break_token)));
+      children_, positioned_floats_, baselines_,
+      border_edges_.ToPhysical(writing_mode_), std::move(break_token)));
 
   return AdoptRef(
       new NGLayoutResult(std::move(fragment), oof_positioned_descendants_,

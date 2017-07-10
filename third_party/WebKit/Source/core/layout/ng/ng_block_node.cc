@@ -10,6 +10,7 @@
 #include "core/layout/LayoutMultiColumnSet.h"
 #include "core/layout/api/LineLayoutAPIShim.h"
 #include "core/layout/line/InlineIterator.h"
+#include "core/layout/ng/inline/ng_baseline.h"
 #include "core/layout/ng/inline/ng_inline_node.h"
 #include "core/layout/ng/layout_ng_block_flow.h"
 #include "core/layout/ng/ng_block_break_token.h"
@@ -360,6 +361,7 @@ RefPtr<NGLayoutResult> NGBlockNode::RunOldLayout(
       .SetDirection(box_->StyleRef().Direction())
       .SetWritingMode(writing_mode)
       .SetOverflowSize(overflow_size);
+  builder.CopyBaselinesFromOldLayout(constraint_space.BaselineRequests(), box_);
   return builder.ToBoxFragment();
 }
 

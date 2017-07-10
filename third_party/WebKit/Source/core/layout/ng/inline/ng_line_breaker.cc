@@ -164,7 +164,7 @@ void NGLineBreaker::BreakLine(NGLineInfo* line_info) {
     if (item.Type() == NGInlineItem::kText) {
       state = HandleText(*item_results, item, item_result);
     } else if (item.Type() == NGInlineItem::kAtomicInline) {
-      state = HandleAtomicInline(item, item_result);
+      state = HandleAtomicInline(item, item_result, *line_info);
     } else if (item.Type() == NGInlineItem::kControl) {
       state = HandleControlItem(item, item_result);
       if (state == LineBreakState::kForcedBreak) {
@@ -352,7 +352,8 @@ NGLineBreaker::LineBreakState NGLineBreaker::HandleControlItem(
 
 NGLineBreaker::LineBreakState NGLineBreaker::HandleAtomicInline(
     const NGInlineItem& item,
-    NGInlineItemResult* item_result) {
+    NGInlineItemResult* item_result,
+    const NGLineInfo& line_info) {
   DCHECK_EQ(item.Type(), NGInlineItem::kAtomicInline);
 
   if (!should_create_line_box_)
@@ -361,6 +362,13 @@ NGLineBreaker::LineBreakState NGLineBreaker::HandleAtomicInline(
   NGBlockNode node = NGBlockNode(ToLayoutBox(item.GetLayoutObject()));
   const ComputedStyle& style = node.Style();
   NGConstraintSpaceBuilder constraint_space_builder(constraint_space_);
+  constraint_space_builder.AddBaselineRequest(
+      line_info.UseFirstLineStyle()
+          ? NGBaselineAlgorithmType::kAtomicInlineForFirstLine
+          : NGBaselineAlgorithmType::kAtomicInline,
+      IsHorizontalWritingMode(constraint_space_->WritingMode())
+          ? FontBaseline::kAlphabeticBaseline
+          : FontBaseline::kIdeographicBaseline);
   RefPtr<NGConstraintSpace> constraint_space =
       constraint_space_builder.SetIsNewFormattingContext(true)
           .SetIsShrinkToFit(true)

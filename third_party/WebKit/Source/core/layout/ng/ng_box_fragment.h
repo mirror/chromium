@@ -12,6 +12,7 @@
 
 namespace blink {
 
+struct NGLineHeightMetrics;
 struct NGLogicalSize;
 
 class CORE_EXPORT NGBoxFragment final : public NGFragment {
@@ -22,6 +23,9 @@ class CORE_EXPORT NGBoxFragment final : public NGFragment {
 
   // Returns the total size, including the contents outside of the border-box.
   NGLogicalSize OverflowSize() const;
+
+  NGLineHeightMetrics BaselineMetrics(NGBaselineAlgorithmType,
+                                      FontBaseline) const;
 };
 
 DEFINE_TYPE_CASTS(NGBoxFragment,

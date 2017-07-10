@@ -4,6 +4,7 @@
 
 #include "core/layout/ng/inline/ng_inline_layout_algorithm.h"
 
+#include "core/layout/ng/inline/ng_baseline.h"
 #include "core/layout/ng/inline/ng_bidi_paragraph.h"
 #include "core/layout/ng/inline/ng_inline_break_token.h"
 #include "core/layout/ng/inline/ng_inline_node.h"
@@ -287,25 +288,14 @@ NGInlineBoxState* NGInlineLayoutAlgorithm::PlaceAtomicInline(
   NGInlineBoxState* box =
       box_states_.OnOpenTag(item, *item_result, line_box, position);
 
-  // For replaced elements, inline-block elements, and inline-table elements,
-  // the height is the height of their margin box.
-  // https://drafts.csswg.org/css2/visudet.html#line-height
-  NGBoxFragment fragment(
-      ConstraintSpace().WritingMode(),
-      ToNGPhysicalBoxFragment(
-          item_result->layout_result->PhysicalFragment().Get()));
-  LayoutUnit block_size =
-      fragment.BlockSize() + item_result->margins.BlockSum();
-
-  // TODO(kojii): Add baseline position to NGPhysicalFragment.
-  LayoutBox* layout_box = ToLayoutBox(item.GetLayoutObject());
-  LineDirectionMode line_direction_mode =
-      IsHorizontalWritingMode() ? LineDirectionMode::kHorizontalLine
-                                : LineDirectionMode::kVerticalLine;
-  LayoutUnit baseline_offset(layout_box->BaselinePosition(
-      baseline_type_, line_info.UseFirstLineStyle(), line_direction_mode));
-
-  NGLineHeightMetrics metrics(baseline_offset, block_size - baseline_offset);
+  const NGPhysicalBoxFragment* physical_fragment = ToNGPhysicalBoxFragment(
+      item_result->layout_result->PhysicalFragment().Get());
+  NGBoxFragment fragment(ConstraintSpace().WritingMode(), physical_fragment);
+  NGLineHeightMetrics metrics = fragment.BaselineMetrics(
+      line_info.UseFirstLineStyle()
+          ? NGBaselineAlgorithmType::kAtomicInlineForFirstLine
+          : NGBaselineAlgorithmType::kAtomicInline,
+      baseline_type_);
   box->metrics.Unite(metrics);
 
   // TODO(kojii): Figure out what to do with OOF in NGLayoutResult.
@@ -315,7 +305,7 @@ NGInlineBoxState* NGInlineLayoutAlgorithm::PlaceAtomicInline(
   // |fragment| directly. Currently |CopyFragmentDataToLayoutBlockFlow|
   // requires a text fragment.
   text_builder->SetDirection(style.Direction());
-  text_builder->SetSize({fragment.InlineSize(), block_size});
+  text_builder->SetSize({fragment.InlineSize(), metrics.LineHeight()});
   LayoutUnit line_top = item_result->margins.block_start - metrics.ascent;
   RefPtr<NGPhysicalTextFragment> text_fragment = text_builder->ToTextFragment(
       item_result->item_index, item_result->start_offset,
@@ -428,6 +418,9 @@ RefPtr<NGLayoutResult> NGInlineLayoutAlgorithm::Layout() {
   if (!container_builder_.BfcOffset()) {
     container_builder_.SetEndMarginStrut(ConstraintSpace().MarginStrut());
   }
+
+  container_builder_.PropagateBaselinesFromChildren(
+      ConstraintSpace().BaselineRequests());
 
   return container_builder_.ToBoxFragment();
 }

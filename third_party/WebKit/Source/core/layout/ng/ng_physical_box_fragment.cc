@@ -14,6 +14,7 @@ NGPhysicalBoxFragment::NGPhysicalBoxFragment(
     NGPhysicalSize overflow,
     Vector<RefPtr<NGPhysicalFragment>>& children,
     Vector<NGPositionedFloat>& positioned_floats,
+    Vector<NGBaseline>& baselines,
     unsigned border_edges,  // NGBorderEdges::Physical
     RefPtr<NGBreakToken> break_token)
     : NGPhysicalFragment(layout_object,
@@ -23,6 +24,7 @@ NGPhysicalBoxFragment::NGPhysicalBoxFragment(
       overflow_(overflow),
       positioned_floats_(positioned_floats) {
   children_.swap(children);
+  baselines_.swap(baselines);
   border_edge_ = border_edges;
 }
 

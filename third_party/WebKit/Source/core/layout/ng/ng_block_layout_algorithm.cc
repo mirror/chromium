@@ -337,6 +337,9 @@ RefPtr<NGLayoutResult> NGBlockLayoutAlgorithm::Layout() {
       ConstraintSpace().HasBlockFragmentation())
     FinalizeForFragmentation();
 
+  container_builder_.PropagateBaselinesFromChildren(
+      ConstraintSpace().BaselineRequests());
+
   return container_builder_.ToBoxFragment();
 }
 
@@ -678,6 +681,9 @@ RefPtr<NGConstraintSpace> NGBlockLayoutAlgorithm::CreateConstraintSpaceForChild(
   NGConstraintSpaceBuilder space_builder(MutableConstraintSpace());
   space_builder.SetAvailableSize(child_available_size_)
       .SetPercentageResolutionSize(child_percentage_size_);
+
+  if (NGBaseline::ShouldPropagateBaselines(child))
+    space_builder.AddBaselineRequests(ConstraintSpace().BaselineRequests());
 
   bool is_new_fc = child.CreatesNewFormattingContext();
   space_builder.SetIsNewFormattingContext(is_new_fc)
