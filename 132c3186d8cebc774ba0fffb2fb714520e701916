@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a7a0261_15b13ed0",
+        "filename": "components/cronet/url_request_context_config.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-07-10T19:00:42Z",
+      "side": 1,
+      "message": "s/transparency/Transparency/\n\nMaybe\n// Certificate Transparency is intentionally ignored in Cronet. See\n// //net/docs/certificate-transparency.md for more details.",
+      "range": {
+        "startLine": 479,
+        "startChar": 17,
+        "endLine": 479,
+        "endChar": 30
+      },
+      "revId": "132c3186d8cebc774ba0fffb2fb714520e701916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
