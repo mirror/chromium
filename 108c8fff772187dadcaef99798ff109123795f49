@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e2da009_7ff5c68e",
+        "filename": "chrome/browser/resources/settings/settings_main/settings_main.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-07-10T17:45:36Z",
+      "side": 0,
+      "message": "What was the original intent of this content block? Do we need to replace its original functionality by pulling in something else?",
+      "revId": "108c8fff772187dadcaef99798ff109123795f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

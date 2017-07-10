@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6195c150_a9c4f8ab",
+        "filename": "chrome/browser/resources/settings/languages_page/languages_page.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-07-10T17:45:36Z",
+      "side": 1,
+      "message": "Is there still a \u0027paper-icon-button\u0027 in the html still? If not, should this if-statement be updated or removed?",
+      "revId": "f56493a23e04619bf309ff6b984817d6632ac344",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
