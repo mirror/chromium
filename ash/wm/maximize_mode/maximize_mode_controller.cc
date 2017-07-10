@@ -122,12 +122,8 @@ CreateScopedDisableInternalMouseAndKeyboard() {
 }  // namespace
 
 MaximizeModeController::MaximizeModeController()
-    : have_seen_accelerometer_data_(false),
-      can_detect_lid_angle_(false),
-      touchview_usage_interval_start_time_(base::Time::Now()),
+    : touchview_usage_interval_start_time_(base::Time::Now()),
       tick_clock_(new base::DefaultTickClock()),
-      tablet_mode_switch_is_on_(false),
-      lid_is_closed_(false),
       scoped_session_observer_(this),
       weak_factory_(this) {
   Shell::Get()->AddShellObserver(this);
@@ -147,6 +143,10 @@ MaximizeModeController::MaximizeModeController()
   power_manager_client->AddObserver(this);
   power_manager_client->GetSwitchStates(base::Bind(
       &MaximizeModeController::OnGetSwitchStates, weak_factory_.GetWeakPtr()));
+
+  hide_title_bars_enabled_ = base::CommandLine::ForCurrentProcess()->HasSwitch(
+      switches::kAshHideTitlebarsInTabletMode);
+  LOG(ERROR) << hide_title_bars_enabled_;
 }
 
 MaximizeModeController::~MaximizeModeController() {
@@ -298,6 +298,10 @@ void MaximizeModeController::SuspendDone(
     const base::TimeDelta& sleep_duration) {
   // We do not want TouchView usage metrics to include time spent in suspend.
   touchview_usage_interval_start_time_ = base::Time::Now();
+}
+
+bool MaximizeModeController::ShouldHideTitlebars() {
+  return IsMaximizeModeWindowManagerEnabled() && hide_title_bars_enabled_;
 }
 
 void MaximizeModeController::HandleHingeRotation(

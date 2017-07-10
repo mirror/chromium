@@ -7,11 +7,13 @@
 #include <memory>
 
 #include "ash/ash_layout_constants.h"
+#include "ash/ash_switches.h"
 #include "ash/frame/caption_buttons/frame_caption_button.h"
 #include "ash/frame/caption_buttons/frame_caption_button_container_view.h"
 #include "ash/shell.h"
 #include "ash/test/ash_test_base.h"
 #include "ash/wm/maximize_mode/maximize_mode_controller.h"
+#include "base/command_line.h"
 #include "ui/aura/client/aura_constants.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/image/image_skia.h"
@@ -95,6 +97,13 @@ class CustomFrameViewAshTest : public test::AshTestBase {
   CustomFrameViewAshTest() {}
   ~CustomFrameViewAshTest() override {}
 
+  void SetUp() override {
+    LOG(ERROR) << "setUp";
+    base::CommandLine::ForCurrentProcess()->AppendSwitch(
+        switches::kAshHideTitlebarsInTabletMode);
+    test::AshTestBase::SetUp();
+  }
+
  protected:
   std::unique_ptr<views::Widget> CreateWidget(TestWidgetDelegate* delegate) {
     std::unique_ptr<views::Widget> widget(new views::Widget);
@@ -131,6 +140,11 @@ TEST_F(CustomFrameViewAshTest, HeaderHeight) {
   EXPECT_EQ(
       GetAshLayoutSize(AshLayoutSize::NON_BROWSER_CAPTION_BUTTON).height(),
       delegate->custom_frame_view()->GetHeaderView()->height());
+
+  Shell::Get()->maximize_mode_controller()->EnableMaximizeModeWindowManager(
+      true);
+  delegate->custom_frame_view()->Layout();
+  EXPECT_EQ(0, delegate->custom_frame_view()->GetHeaderView()->height());
 }
 
 // Verify that CustomFrameViewAsh returns the correct minimum and maximum frame
