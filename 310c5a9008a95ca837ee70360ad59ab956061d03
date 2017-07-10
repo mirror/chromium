@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a3ba2b27_a9c02a15",
+        "filename": "chrome/browser/sessions/session_restore.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-07-10T20:56:24Z",
+      "side": 1,
+      "message": "This check fails on ChromeOS for test SessionRestoreTestChromeOS.RestoreMaximized. Is there any behavior difference specific to ChromeOS?",
+      "parentUuid": "ebac90d7_c65575ee",
+      "revId": "310c5a9008a95ca837ee70360ad59ab956061d03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1c2aeefa_52bff687",
         "filename": "chrome/browser/sessions/session_restore_browsertest.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "310c5a9008a95ca837ee70360ad59ab956061d03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4cf4fd2_beb11fb2",
+        "filename": "chrome/browser/sessions/session_restore_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1674,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-07-10T20:56:24Z",
+      "side": 1,
+      "message": "Done. I moved the test to PageLoadMetrics\u0027 browser tests and tested using a histogram value.",
+      "parentUuid": "1c2aeefa_52bff687",
+      "revId": "310c5a9008a95ca837ee70360ad59ab956061d03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
