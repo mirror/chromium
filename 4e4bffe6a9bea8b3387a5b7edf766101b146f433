@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8126a69c_a4722664",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-10T18:05:12Z",
+      "side": 1,
+      "message": "super-nit: I usually use the prefix \"chromeos:\" in CLs that only affect Chrome OS.",
+      "revId": "4e4bffe6a9bea8b3387a5b7edf766101b146f433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "522d60dc_e7128b81",
+        "filename": "ash/frame/header_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-10T18:05:12Z",
+      "side": 1,
+      "message": "Please add a test for this feature somewhere. CustomFrameViewAshTest might be a good place, or maybe in the maximize controller tests.",
+      "revId": "4e4bffe6a9bea8b3387a5b7edf766101b146f433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79aa8226_10e021da",
+        "filename": "ash/wm/maximize_mode/maximize_mode_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-10T18:05:12Z",
+      "side": 1,
+      "message": "Since this method might be called frequently (like during window layout) I think you should cache the value of the flag in a member variable in MaximizeModeController.",
+      "revId": "4e4bffe6a9bea8b3387a5b7edf766101b146f433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f78fa32_d6fcd27d",
+        "filename": "ash/wm/maximize_mode/maximize_mode_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-10T18:05:12Z",
+      "side": 1,
+      "message": "Please document.\n\nnit: Move above all the overrides.",
+      "revId": "4e4bffe6a9bea8b3387a5b7edf766101b146f433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93dc92c4_bed13f00",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 3135,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-10T18:05:12Z",
+      "side": 1,
+      "message": "nit: If the flag is InTabletMode the name should be in-tablet-mode",
+      "revId": "4e4bffe6a9bea8b3387a5b7edf766101b146f433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
