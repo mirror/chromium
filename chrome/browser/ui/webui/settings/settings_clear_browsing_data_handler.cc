@@ -240,11 +240,13 @@ ClearBrowsingDataHandler::ProcessImportantSites(
         excluding_domain_reasons, ignoring_domains, ignoring_domain_reasons);
   }
 
-  std::unique_ptr<content::BrowsingDataFilterBuilder> filter_builder(
-      content::BrowsingDataFilterBuilder::Create(
-          content::BrowsingDataFilterBuilder::BLACKLIST));
-  for (const std::string& domain : excluding_domains) {
-    filter_builder->AddRegisterableDomain(domain);
+  std::unique_ptr<content::BrowsingDataFilterBuilder> filter_builder;
+  if (!excluding_domains.empty()) {
+    filter_builder = content::BrowsingDataFilterBuilder::Create(
+        content::BrowsingDataFilterBuilder::BLACKLIST);
+    for (const std::string& domain : excluding_domains) {
+      filter_builder->AddRegisterableDomain(domain);
+    }
   }
   return filter_builder;
 }
