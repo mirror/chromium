@@ -1218,7 +1218,7 @@ void GpuProcessHost::LoadedShader(const std::string& key,
   bool prefix_ok = !key.compare(0, prefix.length(), prefix);
   UMA_HISTOGRAM_BOOLEAN("GPU.ShaderLoadPrefixOK", prefix_ok);
   if (prefix_ok)
-    gpu_service_ptr_->LoadedShader(data);
+    gpu_service_ptr_->LoadedShader(key, data);
 }
 
 ui::mojom::GpuService* GpuProcessHost::gpu_service() {
