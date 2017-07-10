@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "836fe49a_ad83614a",
+        "filename": "chrome/installer/zucchini/buffer_sink.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-10T21:12:32Z",
+      "side": 1,
+      "message": "Assign is still around. Is this intentional?",
+      "range": {
+        "startLine": 32,
+        "startChar": 14,
+        "endLine": 32,
+        "endChar": 23
+      },
+      "revId": "691d70e4fb35bca5a0f29dca157e3ab0f3fd3371",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85f18aed_07c7edbe",
+        "filename": "chrome/installer/zucchini/buffer_source.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-10T21:12:32Z",
+      "side": 1,
+      "message": "#include \u003calgorithm\u003e  for std::mismatch().",
+      "revId": "691d70e4fb35bca5a0f29dca157e3ab0f3fd3371",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
