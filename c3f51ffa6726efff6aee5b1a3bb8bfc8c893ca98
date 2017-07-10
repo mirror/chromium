@@ -137,6 +137,29 @@
       "revId": "c3f51ffa6726efff6aee5b1a3bb8bfc8c893ca98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e770e115_e5f5df15",
+        "filename": "chrome/browser/signin/dice_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-10T11:57:38Z",
+      "side": 1,
+      "message": "You could also just check token_service-\u003eRefreshTokenIsAvailable here (but that would not check that OA2TS fires OnRefreshTokenAvailable when the token is available though).",
+      "range": {
+        "startLine": 183,
+        "startChar": 14,
+        "endLine": 183,
+        "endChar": 38
+      },
+      "revId": "c3f51ffa6726efff6aee5b1a3bb8bfc8c893ca98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
