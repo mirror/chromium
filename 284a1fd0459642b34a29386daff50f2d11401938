@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d97535bf_1674daf0",
+        "filename": "chrome/browser/resources/settings/icons.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-10T20:30:31Z",
+      "side": 1,
+      "message": "I am not aware of a way to do that here.  I\u0027ve tried though! Let me know if anything comes to mind.",
+      "parentUuid": "e037e107_9dab750e",
+      "revId": "284a1fd0459642b34a29386daff50f2d11401938",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c07cb007_f93632e9",
         "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.html",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "284a1fd0459642b34a29386daff50f2d11401938",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f57a0571_99d70567",
+        "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-10T20:30:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c07cb007_f93632e9",
+      "revId": "284a1fd0459642b34a29386daff50f2d11401938",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "bda8b5e3_6087a309",
+        "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-10T20:30:31Z",
+      "side": 1,
+      "message": "I noticed that padding modifications to body made in this file are ignored, unless I use !important.  I could either do that or wrap all the divs inside .body with another div .body-contents and add the single margin-left property.  For now I\u0027ll do the latter because I don\u0027t know how people feel about !important here.  Let me know what you think.",
+      "parentUuid": "d2d52aa7_20e663fb",
+      "revId": "284a1fd0459642b34a29386daff50f2d11401938",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "57578aca_c8f97ee5",
         "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.html",
         "patchSetId": 7
@@ -64,6 +118,24 @@
       "writtenOn": "2017-07-10T17:46:22Z",
       "side": 1,
       "message": "Span may be not needed if we fix how we indent these?",
+      "revId": "284a1fd0459642b34a29386daff50f2d11401938",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e9f3bdc_2e734c30",
+        "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-10T20:30:31Z",
+      "side": 1,
+      "message": "It is needed because it has a different color and has additional margin-top.  I could change it to a div instead if that\u0027s preferred.",
+      "parentUuid": "57578aca_c8f97ee5",
       "revId": "284a1fd0459642b34a29386daff50f2d11401938",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -134,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "43fdbf1f_2c769381",
+        "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-10T20:30:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64f362da_e6fead6a",
+      "revId": "284a1fd0459642b34a29386daff50f2d11401938",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51f88364_868d785a",
         "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.js",
         "patchSetId": 7
@@ -148,6 +238,24 @@
       "revId": "284a1fd0459642b34a29386daff50f2d11401938",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6425bca7_0c658e2b",
+        "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-07-10T20:30:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51f88364_868d785a",
+      "revId": "284a1fd0459642b34a29386daff50f2d11401938",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
