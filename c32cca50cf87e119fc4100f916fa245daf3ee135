@@ -70,6 +70,30 @@
       "revId": "c32cca50cf87e119fc4100f916fa245daf3ee135",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ede8231c_f9729d4f",
+        "filename": "ui/events/blink/input_handler_proxy.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1172,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-07-10T13:18:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6c55a81_33018183",
+      "range": {
+        "startLine": 1172,
+        "startChar": 11,
+        "endLine": 1172,
+        "endChar": 36
+      },
+      "revId": "c32cca50cf87e119fc4100f916fa245daf3ee135",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
