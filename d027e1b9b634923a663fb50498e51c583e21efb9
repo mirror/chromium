@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8eaf5a0d_95a3c9b7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-07-10T19:58:39Z",
+      "side": 1,
+      "message": "This is confusing since I don\u0027t see how you get two DownloadServices. In //c/b/d/download_service_factory.h, it looks like the implementation of DSF is doing the normal BrowserContextKeyedServiceFactory code which should ensure a one-to-one relationship between services and profiles.\n\n(It might be correct to always initialize the DownloadService in the list of KSFs where you\u0027re doing so in the current patch set, but I\u0027m unsure if it\u0027s correct for the reasons you state.)",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 63
+      },
+      "revId": "d027e1b9b634923a663fb50498e51c583e21efb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
