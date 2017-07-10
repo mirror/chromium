@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0fd9ceb0_12db77f8",
+        "filename": "content/shell/browser/shell_net_log.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-10T16:11:21Z",
+      "side": 1,
+      "message": "optional:  May want to inline this.",
+      "revId": "602dfb6cd0e5b02200f2852db1cbcb4f8dc7bcc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
