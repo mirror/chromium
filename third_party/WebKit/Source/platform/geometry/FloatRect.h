@@ -190,7 +190,7 @@ class PLATFORM_EXPORT FloatRect {
 #if defined(OS_MACOSX)
   FloatRect(const CGRect&);
   operator CGRect() const;
-#if defined(__OBJC__) && !defined(NSGEOMETRY_TYPES_SAME_AS_CGGEOMETRY_TYPES)
+#if defined(__OBJC__)
   FloatRect(const NSRect&);
   operator NSRect() const;
 #endif

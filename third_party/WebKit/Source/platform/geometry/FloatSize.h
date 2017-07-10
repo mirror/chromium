@@ -116,13 +116,12 @@ class PLATFORM_EXPORT FloatSize {
     return FloatSize(width_ * scale_x, height_ * scale_y);
   }
 
+// Don't convert implicitly since it's lossy.
 #if defined(OS_MACOSX)
-  explicit FloatSize(
-      const CGSize&);  // don't do this implicitly since it's lossy
+  explicit FloatSize(const CGSize&);
   operator CGSize() const;
-#if defined(__OBJC__) && !defined(NSGEOMETRY_TYPES_SAME_AS_CGGEOMETRY_TYPES)
-  explicit FloatSize(
-      const NSSize&);  // don't do this implicitly since it's lossy
+#if defined(__OBJC__)
+  explicit FloatSize(const NSSize&);
   operator NSSize() const;
 #endif
 #endif

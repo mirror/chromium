@@ -28,13 +28,10 @@
 
 namespace blink {
 
-#ifndef NSGEOMETRY_TYPES_SAME_AS_CGGEOMETRY_TYPES
-
 FloatRect::FloatRect(const NSRect& r) : m_location(r.origin), m_size(r.size) {}
 
 FloatRect::operator NSRect() const {
   return NSMakeRect(x(), y(), width(), height());
 }
 
-#endif
 }
