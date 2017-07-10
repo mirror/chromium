@@ -80,6 +80,24 @@
       "revId": "82f66f76e9e0f427e3b12c47df2b134e0c2a0550",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4c53578_ace61e61",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcherTest.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-10T04:04:54Z",
+      "side": 1,
+      "message": "Instead created a CL https://chromium-review.googlesource.com/c/564858/",
+      "parentUuid": "f1a7b61a_719d0a67",
+      "revId": "82f66f76e9e0f427e3b12c47df2b134e0c2a0550",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
