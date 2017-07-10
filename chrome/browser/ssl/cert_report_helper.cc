@@ -125,6 +125,13 @@ void CertReportHelper::FinishCertCollection(
 
   report.AddNetworkTimeInfo(g_browser_process->network_time_tracker());
 
+// Check the IsEnrolledToDomain flag if the user is running a windows machine.
+#if defined(OS_WIN)
+  report.AddWindowsEnterpriseSetting(base::win::IsEnrolledToDomain);
+#else
+  report.AddWindowsEnterpriseSetting(false);
+#endif  // defined(OS_WIN)
+
   report.SetInterstitialInfo(
       interstitial_reason_, user_proceeded,
       overridable_

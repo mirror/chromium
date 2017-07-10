@@ -73,11 +73,16 @@ class ErrorReport {
   void AddNetworkTimeInfo(
       const network_time::NetworkTimeTracker* network_time_tracker);
 
+  void AddWindowsEnterpriseSetting(bool windows_enterprise_setting);
+
   // Sets is_retry_upload field of the protobuf to |is_retry_upload|.
   void SetIsRetryUpload(bool is_retry_upload);
 
   // Gets the hostname to which this report corresponds.
   const std::string& hostname() const;
+
+  // Returns the value of the windows_enterprise_setting flag on the report.
+  bool windows_enterprise_setting() const;
 
   // Returns true if the report has been retried.
   bool is_retry_upload() const;
