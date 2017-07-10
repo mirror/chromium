@@ -255,8 +255,10 @@ class FullCardRequester : public payments::FullCardRequest::ResultDelegate,
   ~FullCardRequester() override {}
 
   // payments::FullCardRequest::ResultDelegate:
-  void OnFullCardRequestSucceeded(const CreditCard& card,
-                                  const base::string16& cvc) override {
+  void OnFullCardRequestSucceeded(
+      const CreditCard& card,
+      const base::string16& cvc,
+      const payments::FullCardRequest* /* full_card_request */) override {
     JNIEnv* env = base::android::AttachCurrentThread();
     Java_FullCardRequestDelegate_onFullCardDetails(
         env, jdelegate_, CreateJavaCreditCardFromNative(env, card),
