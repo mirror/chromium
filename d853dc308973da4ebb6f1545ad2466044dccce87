@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0fc4351f_8a68e7e4",
+        "filename": "components/ukm/test_ukm_recorder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-10T14:09:21Z",
+      "side": 1,
+      "message": "let\u0027s update this method to call GetSourcesForUrl, assert there\u0027s no more than one resulting source, and then return that source.",
+      "revId": "d853dc308973da4ebb6f1545ad2466044dccce87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a769017a_f60fa6b4",
+        "filename": "components/ukm/test_ukm_recorder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-10T14:09:21Z",
+      "side": 1,
+      "message": "similarly, i\u0027m inclined to remove this (and perhaps GetEntry) in favor of the new utility methods if at all possible. When consumers call GetEntry() by index they\u0027re likely making assumptions about entry ordering that can make test code fragile going forward. The utility methods I added were designed to allow testers to assert common things w/o having to depend on ordering / assume that a specific entry or metric would be logged at a specific index.",
+      "revId": "d853dc308973da4ebb6f1545ad2466044dccce87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "574934c0_522aca19",
+        "filename": "components/ukm/test_ukm_recorder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-10T14:09:21Z",
+      "side": 1,
+      "message": "do we continue to need FindMetric as a public function now that we have ExpectMetric? Maybe we can remove this?",
+      "revId": "d853dc308973da4ebb6f1545ad2466044dccce87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
