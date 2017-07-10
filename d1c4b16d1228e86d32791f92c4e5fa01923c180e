@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d661556_1185d6f8",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-07-10T18:55:56Z",
+      "side": 1,
+      "message": "nit: Can this be \u003ccstring\u003e ?",
+      "range": {
+        "startLine": 7,
+        "startChar": 19,
+        "endLine": 7,
+        "endChar": 0
+      },
+      "revId": "d1c4b16d1228e86d32791f92c4e5fa01923c180e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "446fe2b0_fe103ec3",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-07-10T18:55:56Z",
+      "side": 1,
+      "message": "Would it work if we used emplace here? It is a bit shorter and more efficient:\n\nguid_mac_map.emplace(interface_row-\u003eInterfaceGuid, std::string{....});\n\nSimilarly for L156.",
+      "range": {
+        "startLine": 77,
+        "startChar": 17,
+        "endLine": 77,
+        "endChar": 23
+      },
+      "revId": "d1c4b16d1228e86d32791f92c4e5fa01923c180e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2f1e8fa_9b21b9fa",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-07-10T18:55:56Z",
+      "side": 1,
+      "message": "emplace_back(name, ssid_entry-\u003esecond);",
+      "range": {
+        "startLine": 233,
+        "startChar": 20,
+        "endLine": 233,
+        "endChar": 29
+      },
+      "revId": "d1c4b16d1228e86d32791f92c4e5fa01923c180e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afda0c55_4092991c",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-07-10T18:55:56Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 237,
+        "startChar": 26,
+        "endLine": 237,
+        "endChar": 0
+      },
+      "revId": "d1c4b16d1228e86d32791f92c4e5fa01923c180e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
