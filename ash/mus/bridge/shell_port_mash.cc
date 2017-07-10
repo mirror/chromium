@@ -177,9 +177,13 @@ void ShellPortMash::SetGlobalOverrideCursor(
 }
 
 bool ShellPortMash::IsMouseEventsEnabled() {
-  // TODO: http://crbug.com/637853
-  NOTIMPLEMENTED();
-  return true;
+  if (GetAshConfig() == Config::MUS) {
+    return Shell::Get()->cursor_manager()->IsMouseEventsEnabled();
+  } else {
+    // TODO: http://crbug.com/637853
+    NOTIMPLEMENTED();
+    return true;
+  }
 }
 
 std::unique_ptr<WindowResizer> ShellPortMash::CreateDragWindowResizer(
