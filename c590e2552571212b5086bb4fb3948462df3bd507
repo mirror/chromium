@@ -72,6 +72,23 @@
     },
     {
       "key": {
+        "uuid": "2d79b1d4_b7933f03",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_grc_tab_signal_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-10T19:35:47Z",
+      "side": 1,
+      "message": "nit: comments",
+      "revId": "c590e2552571212b5086bb4fb3948462df3bd507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ecab369f_bcae5193",
         "filename": "chrome/browser/resource_coordinator/tab_manager_web_contents_data.h",
         "patchSetId": 3
@@ -171,6 +188,41 @@
       "side": 1,
       "message": "My understanding is these API are from the sender\u0027s perspective, consider that the implementation is a server, then \"Send*\" is reasonable, take a look at some other mojo interface.\n\nhttps://cs.chromium.org/chromium/src/chrome/common/page_load_metrics/page_load_metrics.mojom?l\u003d114\n\nhttps://cs.chromium.org/chromium/src/chrome/common/prerender.mojom?l\u003d11",
       "parentUuid": "883bde9d_9dc342e0",
+      "revId": "c590e2552571212b5086bb4fb3948462df3bd507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1af0bc91_050bb73c",
+        "filename": "services/resource_coordinator/public/interfaces/tab_signal_generator.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-10T19:35:47Z",
+      "side": 1,
+      "message": "Is sender\u0027s perspective a required rule?\n\nThe 2 examples make sense. But for here, the observer is the one initializing the mojo channel and waiting for signals. I think it makes more sense to use receiver\u0027s perspective, which is more consistent with other observer patterns.",
+      "parentUuid": "8f3e5207_516676e9",
+      "revId": "c590e2552571212b5086bb4fb3948462df3bd507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf3336cc_d469d7b3",
+        "filename": "services/resource_coordinator/public/interfaces/tab_signal_generator.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-10T19:35:47Z",
+      "side": 1,
+      "message": "Since there is both observer and generator. Maybe add some comments to distinguish those, e.g., which side they live and who talks to them etc.",
       "revId": "c590e2552571212b5086bb4fb3948462df3bd507",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
