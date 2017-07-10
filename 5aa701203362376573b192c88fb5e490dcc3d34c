@@ -130,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "73405b62_6f180b61",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_printers_browser_proxy.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-10T22:13:29Z",
+      "side": 1,
+      "message": "I believe you\u0027re correct Lei, it should be makeAndModel.\n\nReference: https://google.github.io/styleguide/javascriptguide.xml?showone\u003dNaming#Naming",
+      "parentUuid": "c0f18d47_2ee4dfa7",
+      "range": {
+        "startLine": 57,
+        "startChar": 5,
+        "endLine": 57,
+        "endChar": 19
+      },
+      "revId": "5aa701203362376573b192c88fb5e490dcc3d34c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "27ffc1b3_73125f76",
         "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.h",
         "patchSetId": 1
