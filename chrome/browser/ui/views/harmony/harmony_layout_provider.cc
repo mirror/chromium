@@ -34,6 +34,10 @@ int HarmonyLayoutProvider::GetDistanceMetric(int metric) const {
       return kHarmonyLayoutUnit / 2;
     case views::DISTANCE_RELATED_CONTROL_HORIZONTAL:
       return kHarmonyLayoutUnit;
+    case DISTANCE_DIALOG_INPUT_FIELD_HORIZONTAL_INDENT:
+      return 0;
+    case DISTANCE_INPUT_LABEL_MINIMIUM_WIDTH:
+      return kHarmonyLayoutUnit * 7;
     case DISTANCE_RELATED_CONTROL_HORIZONTAL_SMALL:
       return kHarmonyLayoutUnit;
     case views::DISTANCE_RELATED_CONTROL_VERTICAL:
