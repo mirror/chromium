@@ -120,7 +120,7 @@ GaiaScreenMode GetGaiaScreenMode(const std::string& email, bool use_offline) {
 std::string GetEnterpriseDomain() {
   policy::BrowserPolicyConnectorChromeOS* connector =
       g_browser_process->platform_part()->browser_policy_connector_chromeos();
-  return connector->GetEnterpriseDomain();
+  return connector->GetDisplayDomain();
 }
 
 std::string GetRealm() {

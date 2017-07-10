@@ -273,6 +273,7 @@ class DevicePolicyStatusProvider : public CloudPolicyCoreStatusProvider {
 
  private:
   std::string domain_;
+  std::string display_domain_;
 
   DISALLOW_COPY_AND_ASSIGN(DevicePolicyStatusProvider);
 };
@@ -385,6 +386,7 @@ DevicePolicyStatusProvider::DevicePolicyStatusProvider(
       : CloudPolicyCoreStatusProvider(
             connector->GetDeviceCloudPolicyManager()->core()) {
   domain_ = connector->GetEnterpriseDomain();
+  display_domain_ = connector->GetDisplayDomain();
 }
 
 DevicePolicyStatusProvider::~DevicePolicyStatusProvider() {
@@ -393,6 +395,7 @@ DevicePolicyStatusProvider::~DevicePolicyStatusProvider() {
 void DevicePolicyStatusProvider::GetStatus(base::DictionaryValue* dict) {
   GetStatusFromCore(core_, dict);
   dict->SetString("domain", domain_);
+  dict->SetString("displayDomain", display_domain_);
 }
 
 DeviceLocalAccountPolicyStatusProvider::DeviceLocalAccountPolicyStatusProvider(

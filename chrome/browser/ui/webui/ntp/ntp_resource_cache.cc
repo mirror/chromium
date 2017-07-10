@@ -336,7 +336,7 @@ void NTPResourceCache::CreateNewTabGuestHTML() {
 
   policy::BrowserPolicyConnectorChromeOS* connector =
       g_browser_process->platform_part()->browser_policy_connector_chromeos();
-  std::string enterprise_domain = connector->GetEnterpriseDomain();
+  std::string enterprise_domain = connector->GetDisplayDomain();
 
   // TODO(jamescook): What about Active Directory managed devices?
   if (!enterprise_domain.empty()) {

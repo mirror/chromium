@@ -126,7 +126,7 @@ void VersionInfoUpdater::UpdateVersionLabel() {
 void VersionInfoUpdater::UpdateEnterpriseInfo() {
   policy::BrowserPolicyConnectorChromeOS* connector =
       g_browser_process->platform_part()->browser_policy_connector_chromeos();
-  SetEnterpriseInfo(connector->GetEnterpriseDomain(),
+  SetEnterpriseInfo(connector->GetDisplayDomain(),
                     connector->GetDeviceAssetID());
 }
 
