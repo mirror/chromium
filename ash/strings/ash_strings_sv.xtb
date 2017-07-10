@@ -158,8 +158,10 @@
 <translation id="5744083938413354016">Tryck snabbt två gånger och dra</translation>
 <translation id="5777841717266010279">Vill du avbryta skärmdelningen?</translation>
 <translation id="57838592816432529">Stäng av ljudet</translation>
+<translation id="5860033963881614850">Av</translation>
 <translation id="5895138241574237353">Starta om</translation>
 <translation id="5901316534475909376">Skift+Escape</translation>
+<translation id="5916664084637901428">På</translation>
 <translation id="5927132638760172455">Castar till en okänd mottagare</translation>
 <translation id="5932901536148835538">Chromebit</translation>
 <translation id="5947494881799873997">Återgå</translation>
@@ -169,7 +171,6 @@
 <translation id="5978382165065462689">Dela kontroll över skärmen via Fjärrhjälp.</translation>
 <translation id="5980301590375426705">Avsluta gästsession</translation>
 <translation id="6018164090099858612">Spegelläge avslutas</translation>
-<translation id="6041154455840261787">Högkontrastläget har aktiverats. Tryck på söktangenten + Skift + H igen om du vill inaktivera det.</translation>
 <translation id="6043212731627905357">Skärmen kan inte användas med <ph name="DEVICE_TYPE" /> (det finns inte stöd för skärmen).</translation>
 <translation id="6043994281159824495">Logga ut nu</translation>
 <translation id="6047696787498798094">Skärmdelningen avbryts när du byter till en annan användare. Vill du fortsätta?</translation>
@@ -213,6 +214,7 @@
 <translation id="714034171374937760">Chromebase</translation>
 <translation id="7165278925115064263">Alt + Skift + K</translation>
 <translation id="7168224885072002358">Återgår till den gamla upplösningen om <ph name="TIMEOUT_SECONDS" /></translation>
+<translation id="7199454189089571166">Assistentläge</translation>
 <translation id="7209101170223508707">CAPS LOCK är på. Avbryt genom att trycka på Alt + Sök eller Skift.</translation>
 <translation id="7246339268451149667">Vill du aktivera upplåsning med fingeravtryck?</translation>
 <translation id="7256634071279256947">Mikrofonen på baksidan</translation>
@@ -234,7 +236,6 @@
 <translation id="7814236020522506259"><ph name="HOUR" /> och <ph name="MINUTE" /></translation>
 <translation id="7823564328645135659">Chromes språk har ändrats från <ph name="FROM_LOCALE" /> till <ph name="TO_LOCALE" /> efter synkronisering av dina inställningar.</translation>
 <translation id="7904094684485781019">Administratören för kontot tillåter inte multiinloggning.</translation>
-<translation id="7951523953736115461">Nattljus</translation>
 <translation id="7977927628060636163">Söker efter mobilnätverk …</translation>
 <translation id="7982789257301363584">Nätverk</translation>
 <translation id="8000066093800657092">Inget nätverk</translation>

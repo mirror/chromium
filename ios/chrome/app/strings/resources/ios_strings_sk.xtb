@@ -37,6 +37,7 @@
 <translation id="1540800554400757039">Adresa 1</translation>
 <translation id="1545749641540134597">Naskenovať kód QR</translation>
 <translation id="1580783302095112590">E-mail bol odoslaný.</translation>
+<translation id="1612730193129642006">Zobraziť karty v mriežke</translation>
 <translation id="1646446875146297738">Ak povolíte možnosť Nesledovať, žiadosť sa zahrnie do vašej aktivity prehliadania. Záleží na tom, či webové stránky na túto žiadosť zareagujú a akým spôsobom ju interpretujú.
 
 Niektoré webové stránky môžu napríklad na túto žiadosť odpovedať zobrazením reklám, ktoré nie sú založené na navštívených webových stránkach. Veľa webových stránok bude aj naďalej zhromažďovať a používať vaše údaje prehliadania – napríklad na zlepšenie zabezpečenia, na poskytovanie obsahu, služieb, reklám a odporúčaní na webových stránkach a na generovanie štatistík prehľadov. <ph name="BEGIN_LINK" />Viac informácií<ph name="END_LINK" /></translation>
@@ -388,6 +389,7 @@ Vaše údaje boli <ph name="TIME" /> zašifrované pomocou vlastnej prístupovej
 <translation id="8775144690796719618">Neplatná webová adresa</translation>
 <translation id="8820817407110198400">Záložky</translation>
 <translation id="8840513115188359703">Neodhlásime vás z účtu Google.</translation>
+<translation id="8881801611828450202">Hľadať tento obrázok v službe <ph name="SEARCH_ENGINE" /></translation>
 <translation id="8904976895050290827">Chrome Sync</translation>
 <translation id="895541991026785598">Nahlásiť problém</translation>
 <translation id="8971089644512329999">Ok, rozumiem</translation>
@@ -406,6 +408,7 @@ Vaše údaje boli <ph name="TIME" /> zašifrované pomocou vlastnej prístupovej
 <translation id="9188680907066685419">Odhlásenie zo spravovaného účtu</translation>
 <translation id="9203116392574189331">Handoff</translation>
 <translation id="9223358826628549784">Správa o zlyhaní bola odoslaná.</translation>
+<translation id="932327136139879170">Domov</translation>
 <translation id="935490618240037774">Záložky, história, heslá a ďalšie nastavenia budú synchronizované s vaším účtom Google a budete ich môcť použiť na všetkých zariadeniach.</translation>
 <translation id="939598580284253335">Zadať prístupovú frázu</translation>
 <translation id="976982866697960176">Spravujte synchronizované údaje…</translation>

@@ -37,6 +37,7 @@
 <translation id="1540800554400757039">Adresă 1</translation>
 <translation id="1545749641540134597">Scanează codul QR</translation>
 <translation id="1580783302095112590">E-mail trimis.</translation>
+<translation id="1612730193129642006">Afișează Grila de file</translation>
 <translation id="1646446875146297738">Dacă activezi funcția „Nu urmări” înseamnă că în traficul de navigare va fi inclusă o solicitare. Efectele depind de răspunsul site-ului la solicitare și de modul în care solicitarea este interpretată.
 
 De exemplu, unele site-uri pot răspunde la această solicitare afișând anunțuri care nu sunt bazate pe alte site-uri accesate de tine. Numeroase site-uri vor culege și vor utiliza totuși datele tale de navigare, de exemplu, pentru a îmbunătăți securitatea, pentru a oferi conținut, servicii, anunțuri și recomandări și pentru a genera statistici de raportare. <ph name="BEGIN_LINK" />Află mai multe<ph name="END_LINK" /></translation>
@@ -388,6 +389,7 @@ Datele au fost criptate cu expresia de acces pentru sincronizare la <ph name="TI
 <translation id="8775144690796719618">Adresă URL nevalidă</translation>
 <translation id="8820817407110198400">Marcaje</translation>
 <translation id="8840513115188359703">Nu vei fi deconectat(ă) de la Contul Google.</translation>
+<translation id="8881801611828450202">Caută această imagine cu <ph name="SEARCH_ENGINE" /></translation>
 <translation id="8904976895050290827">Chrome Sync</translation>
 <translation id="895541991026785598">Raportați o problemă</translation>
 <translation id="8971089644512329999">Ok, am înțeles</translation>
@@ -406,6 +408,7 @@ Datele au fost criptate cu expresia de acces pentru sincronizare la <ph name="TI
 <translation id="9188680907066685419">Deconectează-te de la contul gestionat</translation>
 <translation id="9203116392574189331">Handoff</translation>
 <translation id="9223358826628549784">Raportul de blocare a fost trimis.</translation>
+<translation id="932327136139879170">Pagina de pornire</translation>
 <translation id="935490618240037774">Marcajele, istoricul, parolele și alte setări vor fi sincronizate cu Contul Google, pentru a le putea folosi pe toate dispozitivele.</translation>
 <translation id="939598580284253335">Introdu expresia de acces</translation>
 <translation id="976982866697960176">Gestionează datele sincronizate…</translation>

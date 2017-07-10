@@ -176,6 +176,7 @@
 <translation id="2762000892062317888">เมื่อสักครู่</translation>
 <translation id="2777555524387840389">เหลือ <ph name="SECONDS" /> วิ</translation>
 <translation id="2781151931089541271">เหลือ 1 วิ</translation>
+<translation id="2810645512293415242">ลดรายละเอียดหน้าเว็บเพื่อประหยัดเน็ตมือถือและโหลดได้เร็วขึ้น</translation>
 <translation id="2836148919159985482">แตะปุ่มกลับเพื่อออกจากโหมดเต็มหน้าจอ</translation>
 <translation id="2842985007712546952">โฟลเดอร์ระดับบนสุด</translation>
 <translation id="2870560284913253234">เว็บไซต์</translation>
@@ -273,7 +274,6 @@
 <translation id="3744111561329211289">ซิงค์ในแบ็กกราวด์</translation>
 <translation id="3773755127849930740"><ph name="BEGIN_LINK" />เปิดบลูทูธ<ph name="END_LINK" />เพื่อให้จับคู่ได้</translation>
 <translation id="3789841737615482174">ติดตั้ง</translation>
-<translation id="380076759404194828">{NUM_SELECTED,plural, =1{เลือกแล้ว 1 รายการ}other{เลือกแล้ว # รายการ}}</translation>
 <translation id="3810838688059735925">วิดีโอ</translation>
 <translation id="3810973564298564668">จัดการ</translation>
 <translation id="3819178904835489326">ลบการดาวน์โหลด <ph name="NUMBER_OF_DOWNLOADS" /> รายการแล้ว</translation>
@@ -452,6 +452,7 @@
 <translation id="5568069709869097550">ไม่สามารถลงชื่อเข้าใช้</translation>
 <translation id="557283862590186398">Chrome ต้องการสิทธิ์เข้าถึงไมโครโฟนของคุณสำหรับไซต์นี้</translation>
 <translation id="5578795271662203820">ค้นหาภาพนี้ใน <ph name="SEARCH_ENGINE" /></translation>
+<translation id="5585019845078534178">บัตร</translation>
 <translation id="5595485650161345191">แก้ไขที่อยู่</translation>
 <translation id="5596627076506792578">ตัวเลือกเพิ่มเติม</translation>
 <translation id="5620928963363755975">หาไฟล์และหน้าในโฟลเดอร์ดาวน์โหลดจากปุ่มตัวเลือกเพิ่มเติม</translation>
@@ -558,6 +559,7 @@
 <translation id="654446541061731451">เลือกแท็บที่จะบีม</translation>
 <translation id="6545017243486555795">ล้างข้อมูลทั้งหมด</translation>
 <translation id="6550675742724504774">ตัวเลือก</translation>
+<translation id="6556716549745717622">บล็อกหากไซต์มักแสดงโฆษณาที่แทรก (แนะนำ)</translation>
 <translation id="6560414384669816528">ค้นหาด้วย Sogou</translation>
 <translation id="6566259936974865419">Chrome ได้ประหยัดพื้นที่ให้คุณไป <ph name="GIGABYTES" /> GB</translation>
 <translation id="656628257199996201">แปลภาษา<ph name="SOURCE_LANGUAGE" />เสมอ</translation>
@@ -592,6 +594,7 @@
 <translation id="6831043979455480757">แปลภาษา</translation>
 <translation id="6846298663435243399">กำลังโหลด…</translation>
 <translation id="6850830437481525139">ปิดแล้ว <ph name="TAB_COUNT" /> แท็บ</translation>
+<translation id="6856477143496886355">ใช้ข้อมูลบัตรและที่อยู่จาก Google Payments</translation>
 <translation id="6864459304226931083">ดาวน์โหลดรูปภาพ</translation>
 <translation id="6865313869410766144">ข้อมูลฟอร์มที่ป้อนอัตโนมัติ</translation>
 <translation id="6868088497967843822">ลงชื่อเข้าใช้เพื่อรับบุ๊กมาร์ก ประวัติการเข้าชม รหัสผ่าน และการตั้งค่าอื่นๆ บนอุปกรณ์ทั้งหมดของคุณ</translation>

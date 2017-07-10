@@ -3390,7 +3390,6 @@ Tryk på en vilkårlig tast for at fortsætte udforskningen.</translation>
 <translation id="6138680304137685902">X9.62 ECDSA-signatur med SHA-384</translation>
 <translation id="614161640521680948">Sprog:</translation>
 <translation id="6143186082490678276">Få hjælp</translation>
-<translation id="6144697279259829572">{NUM_ITEMS,plural, =1{Denne handling sletter mindst $1 element permanent fra denne enhed.}one{Denne handling sletter mindst $1 element permanent fra denne enhed.}other{Denne handling sletter mindst $1 elementer permanent fra denne enhed.}}</translation>
 <translation id="6144890426075165477"><ph name="PRODUCT_NAME" /> er i øjeblikket ikke din standardbrowser.</translation>
 <translation id="6146563240635539929">Videoer</translation>
 <translation id="6147020289383635445">Visning af udskrift mislykkedes.</translation>
@@ -4207,7 +4206,6 @@ Brug kun denne funktion til konti, du har tillid til.</translation>
 <translation id="7388044238629873883">Du er næsten færdig.</translation>
 <translation id="7392118418926456391">Virusscanningen mislykkedes</translation>
 <translation id="7392915005464253525">G&amp;enåbn lukkede faner</translation>
-<translation id="7393449708074241536">Denne handling sletter <ph name="TOTAL_COUNT" /> elementer permanent fra denne enhed.</translation>
 <translation id="7396845648024431313"><ph name="APP_NAME" /> vil starte ved opstart af systemet og fortsætte med at køre i baggrunden, selv når du har lukket alle andre vinduer i <ph name="PRODUCT_NAME" />.</translation>
 <translation id="7400418766976504921">Webadresse</translation>
 <translation id="740083207982962331">Vent, mens din Chromebox genstarter...</translation>
@@ -5414,7 +5412,6 @@ Efterfølgende underretninger, vinduer og dialogbokse kan blive delt mellem skri
 <translation id="974555521953189084">Indtast din adgangssætning for at starte synkroniseringen</translation>
 <translation id="981121421437150478">Offline</translation>
 <translation id="98515147261107953">Liggende</translation>
-<translation id="987267091708560486">{NUM_ITEMS,plural, =1{Denne handling sletter $1 element permanent fra denne enhed.}one{Denne handling sletter $1 element permanent fra denne enhed.}other{Denne handling sletter $1 elementer permanent fra denne enhed.}}</translation>
 <translation id="988978206646512040">Tomme adgangssætninger er ikke tilladt</translation>
 <translation id="992032470292211616">Udvidelser, apps og temaer kan skade din enhed. Er du sikker på, at du vil fortsætte?</translation>
 <translation id="992592832486024913">Deaktiver ChromeVox (talefeedback)</translation>

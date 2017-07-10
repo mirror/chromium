@@ -37,6 +37,7 @@
 <translation id="1540800554400757039">1 adreso eil.</translation>
 <translation id="1545749641540134597">Nuskaitykite QR kodą</translation>
 <translation id="1580783302095112590">El. laiškas išsiųstas.</translation>
+<translation id="1612730193129642006">Rodyti skirtuko tinklelį</translation>
 <translation id="1646446875146297738">Įgalinus „Nestebėti“, į naršymo srautą bus įtraukta užklausa. Bet koks poveikis priklauso nuo to, ar svetainė atsako į užklausą ir kaip ji interpretuojama.
 
 Pvz., kai kurios svetainės gali atsakyti į šią užklausą parodydamos skelbimus, nepagrįstus kitomis svetainėmis, kuriose lankėtės. Daugybė svetainių vis tiek rinks ir naudos jūsų naršymo duomenis, pvz., siekdamos pagerinti saugumą, teikti svetainėse turinį, paslaugas, skelbimus ir rekomendacijas bei generuoti ataskaitų statistiką. <ph name="BEGIN_LINK" />Sužinokite daugiau<ph name="END_LINK" /></translation>
@@ -388,6 +389,7 @@ Be to, reikia įgalinti „Handoff“ nustatymų skiltyje „Bendrieji“, o įr
 <translation id="8775144690796719618">Netinkamas URL</translation>
 <translation id="8820817407110198400">Žymės</translation>
 <translation id="8840513115188359703">Nebūsite atjungti nuo „Google“ paskyros.</translation>
+<translation id="8881801611828450202">Ieškoti „<ph name="SEARCH_ENGINE" />“ šio vaizdo</translation>
 <translation id="8904976895050290827">Chrome Sync</translation>
 <translation id="895541991026785598">Pranešti apie problemą</translation>
 <translation id="8971089644512329999">Gerai, supratau</translation>
@@ -406,6 +408,7 @@ Be to, reikia įgalinti „Handoff“ nustatymų skiltyje „Bendrieji“, o įr
 <translation id="9188680907066685419">Atsijungimas nuo valdomos paskyros</translation>
 <translation id="9203116392574189331">Handoff</translation>
 <translation id="9223358826628549784">Strigties ataskaita išsiųsta.</translation>
+<translation id="932327136139879170">Kontaktinė namų informacija</translation>
 <translation id="935490618240037774">Žymės, istorija, slaptažodžiai ir kiti nustatymai bus sinchronizuojami su „Google“ paskyra, kad galėtumėte juos naudoti visuose įrenginiuose.</translation>
 <translation id="939598580284253335">Įvesti slaptafrazę</translation>
 <translation id="976982866697960176">Tvarkyti sinchronizuotus duomenis…</translation>

@@ -176,6 +176,7 @@ Dapat na na-on mo ang Bluetooth at Lokasyon upang magamit ang Pisikal na Web.</t
 <translation id="2762000892062317888">ngayon lang</translation>
 <translation id="2777555524387840389"><ph name="SECONDS" /> (na) segundo na lang ang natitira</translation>
 <translation id="2781151931089541271">1 segundo na lang ang natitira</translation>
+<translation id="2810645512293415242">Pinasimple ang page upang ma-save ang data at mag-load nang mas mabilis.</translation>
 <translation id="2836148919159985482">Pindutin ang button na bumalik upang lumabas sa full screen.</translation>
 <translation id="2842985007712546952">Pangunahing folder</translation>
 <translation id="2870560284913253234">Site</translation>
@@ -273,7 +274,6 @@ Upang baguhin ang iyong termino para sa paghahanap, pindutin ito nang matagal up
 <translation id="3744111561329211289">Pag-sync sa background</translation>
 <translation id="3773755127849930740"><ph name="BEGIN_LINK" />I-on ang Bluetooth<ph name="END_LINK" /> upang payagan ang pagpapares</translation>
 <translation id="3789841737615482174">Mag-install</translation>
-<translation id="380076759404194828">{NUM_SELECTED,plural, =1{1 piniling item}one{# piniling item}other{# na piniling item}}</translation>
 <translation id="3810838688059735925">Video</translation>
 <translation id="3810973564298564668">Mamahala</translation>
 <translation id="3819178904835489326">Na-delete ang <ph name="NUMBER_OF_DOWNLOADS" /> (na) pag-download</translation>
@@ -452,6 +452,7 @@ Upang baguhin ang iyong termino para sa paghahanap, pindutin ito nang matagal up
 <translation id="5568069709869097550">Hindi makapag-sign in</translation>
 <translation id="557283862590186398">Kailangan ng Chrome ng pahintulot na i-access ang iyong mikropono para sa site na ito.</translation>
 <translation id="5578795271662203820">Hanapin sa <ph name="SEARCH_ENGINE" /> ang larawan</translation>
+<translation id="5585019845078534178">Mga Card</translation>
 <translation id="5595485650161345191">Mag-edit ng address</translation>
 <translation id="5596627076506792578">Higit pang opsyon</translation>
 <translation id="5620928963363755975">Hanapin ang iyong mga file at page sa Mga Download mula sa button na Higit Pang Opsyon</translation>
@@ -558,6 +559,7 @@ Halimbawa, maaaring tumugon ang ilang website sa kahilingang ito sa pamamagitan 
 <translation id="654446541061731451">Pumili ng tab upang mag-beam</translation>
 <translation id="6545017243486555795">I-clear ang Lahat ng Data</translation>
 <translation id="6550675742724504774">Mga Pagpipilian</translation>
+<translation id="6556716549745717622">I-block kung malamang na magpakita ang site ng mga nakakasagabal na ad (inirerekomenda)</translation>
 <translation id="6560414384669816528">Maghanap gamit ang Sogou</translation>
 <translation id="6566259936974865419">Nag-save ang Chrome ng <ph name="GIGABYTES" /> GB para sa iyo</translation>
 <translation id="656628257199996201">Palaging isalin ang <ph name="SOURCE_LANGUAGE" /></translation>
@@ -592,6 +594,7 @@ Halimbawa, maaaring tumugon ang ilang website sa kahilingang ito sa pamamagitan 
 <translation id="6831043979455480757">Isalin</translation>
 <translation id="6846298663435243399">Naglo-load…</translation>
 <translation id="6850830437481525139"><ph name="TAB_COUNT" /> (na) tab ang isinara</translation>
+<translation id="6856477143496886355">Mga card at address na gumagamit ng Google Payments</translation>
 <translation id="6864459304226931083">I-download ang larawan</translation>
 <translation id="6865313869410766144">Data ng form ng autofill</translation>
 <translation id="6868088497967843822">Mag-sign in upang makuha ang iyong mga bookmark, history, password at ibang mga setting sa lahat ng iyong device</translation>

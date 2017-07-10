@@ -273,7 +273,6 @@ Para ajustar el término de búsqueda, mantén presionado el texto y seleccióna
 <translation id="3744111561329211289">Sincronización en segundo plano</translation>
 <translation id="3773755127849930740"><ph name="BEGIN_LINK" />Activa Bluetooth<ph name="END_LINK" /> para permitir la sincronización</translation>
 <translation id="3789841737615482174">Instalar</translation>
-<translation id="380076759404194828">{NUM_SELECTED,plural, =1{Se seleccionó 1 elemento}other{Se seleccionaron # elementos}}</translation>
 <translation id="3810838688059735925">Video</translation>
 <translation id="3810973564298564668">Administrar</translation>
 <translation id="3819178904835489326"><ph name="NUMBER_OF_DOWNLOADS" /> descargas borradas</translation>

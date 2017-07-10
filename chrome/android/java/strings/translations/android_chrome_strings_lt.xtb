@@ -176,6 +176,7 @@ Kad galėtumėte naudoti Fizinį žiniatinklį, būtina įgalinti „Bluetooth�
 <translation id="2762000892062317888">ką tik</translation>
 <translation id="2777555524387840389">Liko <ph name="SECONDS" /> sek.</translation>
 <translation id="2781151931089541271">Liko 1 sek.</translation>
+<translation id="2810645512293415242">Supaprastintas puslapis, kad būtų galima saugoti duomenis ir greičiau įkelti.</translation>
 <translation id="2836148919159985482">Palieskite mygtuką „Atgal“, kad išeitumėte iš viso ekrano režimo.</translation>
 <translation id="2842985007712546952">Viršaplankis</translation>
 <translation id="2870560284913253234">Svetainė</translation>
@@ -273,7 +274,6 @@ Jei norite koreguoti paieškos terminą, paspauskite ir laikykite, kad jį pasir
 <translation id="3744111561329211289">Fono sinchronizavimas</translation>
 <translation id="3773755127849930740"><ph name="BEGIN_LINK" />Įjunkite „Bluetooth“<ph name="END_LINK" />, kad būtų leidžiama susieti</translation>
 <translation id="3789841737615482174">Įdiegti</translation>
-<translation id="380076759404194828">{NUM_SELECTED,plural, =1{Pasirinktas 1 elementas}one{Pasirinktas # elementas}few{Pasirinkti # elementai}many{Pasirinkta # elemento}other{Pasirinkta # elementų}}</translation>
 <translation id="3810838688059735925">Vaizdo</translation>
 <translation id="3810973564298564668">Valdyti</translation>
 <translation id="3819178904835489326">Ištrinta atsisiuntimų: <ph name="NUMBER_OF_DOWNLOADS" /></translation>
@@ -452,6 +452,7 @@ Jei norite koreguoti paieškos terminą, paspauskite ir laikykite, kad jį pasir
 <translation id="5568069709869097550">Nepavyksta prisijungti</translation>
 <translation id="557283862590186398">„Chrome“ reikia leidimo, kad galėtų naudoti jūsų mikrofoną šioje svetainėje.</translation>
 <translation id="5578795271662203820">Ieškoti „<ph name="SEARCH_ENGINE" />“ šio vaizdo</translation>
+<translation id="5585019845078534178">Kortelės</translation>
 <translation id="5595485650161345191">Adreso redagavimas</translation>
 <translation id="5596627076506792578">Daugiau parinkčių</translation>
 <translation id="5620928963363755975">Suraskite failus ir puslapius „Atsisiuntimų“ skiltyje spustelėję mygtuką „Daugiau parinkčių“</translation>
@@ -558,6 +559,7 @@ Pavyzdžiui, kai kurios svetainės gali atsakyti į šią užklausą rodydamos j
 <translation id="654446541061731451">Kad perduotumėte, pasirinkite skirtuką</translation>
 <translation id="6545017243486555795">Išvalyti visus duomenis</translation>
 <translation id="6550675742724504774">Parinktys</translation>
+<translation id="6556716549745717622">Blokuoti, jei svetainėje bandoma rodyti nepageidaujamus skelbimus (rekomenduojama)</translation>
 <translation id="6560414384669816528">Atlikti paiešką naudojant „Sogou“</translation>
 <translation id="6566259936974865419">„Chrome“ sutaupė jums <ph name="GIGABYTES" /> GB</translation>
 <translation id="656628257199996201">Visada versti iš <ph name="SOURCE_LANGUAGE" /> k.</translation>
@@ -592,6 +594,7 @@ Pavyzdžiui, kai kurios svetainės gali atsakyti į šią užklausą rodydamos j
 <translation id="6831043979455480757">Vertėjas</translation>
 <translation id="6846298663435243399">Įkeliama…</translation>
 <translation id="6850830437481525139">Uždaryta skirtukų lapų: <ph name="TAB_COUNT" /></translation>
+<translation id="6856477143496886355">„Google Payments“ naudojamos kortelės ir adresai</translation>
 <translation id="6864459304226931083">Atsisiųsti vaizdą</translation>
 <translation id="6865313869410766144">Automatinio pildymo formos duomenys</translation>
 <translation id="6868088497967843822">Prisijunkite, kad žymės, istorija, slaptažodžiai ir kiti nustatymai būtų pateikti visuose įrenginiuose</translation>

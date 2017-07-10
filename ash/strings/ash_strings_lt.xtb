@@ -159,8 +159,10 @@ Jei norite atšaukti, paspauskite paieškos arba antrojo lygio klavišą.</trans
 <translation id="5744083938413354016">Vilkimas palietus</translation>
 <translation id="5777841717266010279">Nutraukti ekrano bendrinimą?</translation>
 <translation id="57838592816432529">Nutildyti</translation>
+<translation id="5860033963881614850">Išjungta</translation>
 <translation id="5895138241574237353">Paleisti iš naujo</translation>
 <translation id="5901316534475909376">„Shift“ + „Esc“</translation>
+<translation id="5916664084637901428">Įjungta</translation>
 <translation id="5927132638760172455">Perduodama į nežinomą imtuvą</translation>
 <translation id="5932901536148835538">Chromebit</translation>
 <translation id="5947494881799873997">Grąžinti</translation>
@@ -170,7 +172,6 @@ Jei norite atšaukti, paspauskite paieškos arba antrojo lygio klavišą.</trans
 <translation id="5978382165065462689">Leidžiama valdyti jūsų ekraną naudojant Nuotolinę pagalbą.</translation>
 <translation id="5980301590375426705">Išeiti iš svečio režimo</translation>
 <translation id="6018164090099858612">Išjungiamas atvaizdavimo režimas</translation>
-<translation id="6041154455840261787">Įgalintas didelio kontrasto režimas. Dar kartą paspauskite „Search“ + „Shift“ + H, kad jį išjungtumėte.</translation>
 <translation id="6043212731627905357">Šis monitorius nesuderinamas su jūsų „<ph name="DEVICE_TYPE" />“ (monitorius nepalaikomas).</translation>
 <translation id="6043994281159824495">Atsijungti dabar</translation>
 <translation id="6047696787498798094">Perjungus naudotoją ekrano bendrinimas bus nutrauktas. Ar norite tęsti?</translation>
@@ -214,6 +215,7 @@ Jei norite atšaukti, paspauskite paieškos arba antrojo lygio klavišą.</trans
 <translation id="714034171374937760">Chromebase</translation>
 <translation id="7165278925115064263">„Alt“ + „Shift“ + K</translation>
 <translation id="7168224885072002358">Po <ph name="TIMEOUT_SECONDS" /> bus grąžinta sena skyra</translation>
+<translation id="7199454189089571166">Padėjėjo režimas</translation>
 <translation id="7209101170223508707">DIDŽIŲJŲ RAIDŽIŲ RAŠYMAS įjungtas.
 Jei norite atšaukti, paspauskite „Alt“ + paieškos klavišas arba „Alt“ + antrojo lygio klavišas.</translation>
 <translation id="7246339268451149667">Įgalinti atrakinimą naudojant kontrolinį kodą?</translation>
@@ -236,7 +238,6 @@ Jei norite atšaukti, paspauskite „Alt“ + paieškos klavišas arba „Alt“
 <translation id="7814236020522506259"><ph name="HOUR" />:<ph name="MINUTE" /></translation>
 <translation id="7823564328645135659">Po nustatymų sinchronizavimo kalba pakeista iš <ph name="FROM_LOCALE" /> į <ph name="TO_LOCALE" />.</translation>
 <translation id="7904094684485781019">Šios paskyros administratorius neleidžia naudoti kelių paskyrų.</translation>
-<translation id="7951523953736115461">Nakties šviesa</translation>
 <translation id="7977927628060636163">Ieškoma mobiliojo ryšio tinklų...</translation>
 <translation id="7982789257301363584">Tinklas</translation>
 <translation id="8000066093800657092">Tinklo nėra</translation>

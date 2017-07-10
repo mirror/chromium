@@ -159,8 +159,10 @@ Bonyeza Alt + Utafutaji au Hama ili kughairi.</translation>
 <translation id="5744083938413354016">Uburutaji wa kugonga</translation>
 <translation id="5777841717266010279">Je,ungependa kuacha kushiriki skrini?</translation>
 <translation id="57838592816432529">Zima sauti</translation>
+<translation id="5860033963881614850">Kimezimwa</translation>
 <translation id="5895138241574237353">Zzima na uwashe</translation>
 <translation id="5901316534475909376">Shift+Esc</translation>
+<translation id="5916664084637901428">Imewashwa</translation>
 <translation id="5927132638760172455">Inatuma kwa mpokeaji asiyejulikana</translation>
 <translation id="5932901536148835538">Chromebit</translation>
 <translation id="5947494881799873997">Rejesha</translation>
@@ -170,7 +172,6 @@ Bonyeza Alt + Utafutaji au Hama ili kughairi.</translation>
 <translation id="5978382165065462689">Kushiriki udhibiti wa skrini yako kupitia Usaidizi wa Mbali.</translation>
 <translation id="5980301590375426705">Maliza Ugeni</translation>
 <translation id="6018164090099858612">Inaondoka kwenye hali ya kuakisi</translation>
-<translation id="6041154455840261787">Utofautishaji wa Hali ya Juu umewashwa. Bonyeza Search+Shift+H tena ili ugeuze na kuuzima.</translation>
 <translation id="6043212731627905357">Skrini hii haiingiliani na kifaa chako cha <ph name="DEVICE_TYPE" /> (Skrini haitumiki).</translation>
 <translation id="6043994281159824495">Ondoka kwenye akaunti sasa hivi</translation>
 <translation id="6047696787498798094">Itaacha kushiriki skrini unapobadilisha hadi kwa mtumiaji mwingine. Je, unataka kuendelea?</translation>
@@ -214,6 +215,7 @@ Bonyeza Alt + Utafutaji au Hama ili kughairi.</translation>
 <translation id="714034171374937760">Chromebase</translation>
 <translation id="7165278925115064263">Alt+Shift+K</translation>
 <translation id="7168224885072002358">Inarejesha katika ubora wa zamani baada ya <ph name="TIMEOUT_SECONDS" /></translation>
+<translation id="7199454189089571166">Hali ya Mratibu</translation>
 <translation id="7209101170223508707">CAPS LOCK imeamilishwa. 
 Bonyeza Alt + Utafutaji au Hama ili kughairi.</translation>
 <translation id="7246339268451149667">Je, ungependa kuwasha kipengele cha kufungua kwa kutumia Alama ya Kidole?</translation>
@@ -236,7 +238,6 @@ Bonyeza Alt + Utafutaji au Hama ili kughairi.</translation>
 <translation id="7814236020522506259"><ph name="HOUR" /> na <ph name="MINUTE" /></translation>
 <translation id="7823564328645135659">Lugha imebadilika kutoka "<ph name="FROM_LOCALE" /> "na kuwa" <ph name="TO_LOCALE" />" baada ya kulinganisha mipangilio yako.</translation>
 <translation id="7904094684485781019">Msimamizi wa akaunti hii ameondoa uwezo wa kuingia katika akaunti nyingi kwa wakati mmoja</translation>
-<translation id="7951523953736115461">Mwanga wa usiku</translation>
 <translation id="7977927628060636163">Inatafuta mitandao ya simu...</translation>
 <translation id="7982789257301363584">Mtandao</translation>
 <translation id="8000066093800657092">Hakuna mtandao</translation>

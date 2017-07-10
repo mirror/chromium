@@ -159,8 +159,10 @@ Pritisnite tipko za iskanje ali Shift, da jo prekličete.</translation>
 <translation id="5744083938413354016">Vlečenje z dotikom</translation>
 <translation id="5777841717266010279">Želite ustaviti skupno rabo zaslona?</translation>
 <translation id="57838592816432529">Izklopi zvok</translation>
+<translation id="5860033963881614850">Izklopljeno</translation>
 <translation id="5895138241574237353">Znova zaženi</translation>
 <translation id="5901316534475909376">Shift + Esc</translation>
+<translation id="5916664084637901428">Vklopljeno</translation>
 <translation id="5927132638760172455">Predvajanje na neznanem sprejemniku</translation>
 <translation id="5932901536148835538">Chromebit</translation>
 <translation id="5947494881799873997">Razveljavi</translation>
@@ -170,7 +172,6 @@ Pritisnite tipko za iskanje ali Shift, da jo prekličete.</translation>
 <translation id="5978382165065462689">Deljenje nadzora nad zaslonom prek pomoči na daljavo.</translation>
 <translation id="5980301590375426705">Zapusti sejo gosta</translation>
 <translation id="6018164090099858612">Izhod iz zrcalnega načina</translation>
-<translation id="6041154455840261787">Visokokontrastni način je omogočen. Če ga želite izklopiti, znova pritisnite tipko za iskanje + Shift + H.</translation>
 <translation id="6043212731627905357">Ta monitor se ne ujema z napravo <ph name="DEVICE_TYPE" /> (monitor ni podprt).</translation>
 <translation id="6043994281159824495">Odjava</translation>
 <translation id="6047696787498798094">Ko preklopite na drugega uporabnika, bo skupna raba zaslona ustavljena. Ali želite nadaljevati?</translation>
@@ -214,6 +215,7 @@ Pritisnite tipko za iskanje ali Shift, da jo prekličete.</translation>
 <translation id="714034171374937760">Chromebase</translation>
 <translation id="7165278925115064263">Alt + Shift + K</translation>
 <translation id="7168224885072002358">Ponastavitev na prejšnjo ločljivost čez <ph name="TIMEOUT_SECONDS" /></translation>
+<translation id="7199454189089571166">Način pomočnika</translation>
 <translation id="7209101170223508707">Tipka CAPS LOCK je vklopljena.
 Pritisnite Alt in tipko za iskanje ali Shift, da jo prekličete.</translation>
 <translation id="7246339268451149667">Želite omogočiti odklepanje s prstnim odtisom?</translation>
@@ -236,7 +238,6 @@ Pritisnite Alt in tipko za iskanje ali Shift, da jo prekličete.</translation>
 <translation id="7814236020522506259"><ph name="HOUR" /> in <ph name="MINUTE" /></translation>
 <translation id="7823564328645135659">Po sinhronizaciji nastavitev se je jezik spremenil iz jezika »<ph name="FROM_LOCALE" />« v jezik »<ph name="TO_LOCALE" />«.</translation>
 <translation id="7904094684485781019">Skrbnik tega računa je onemogočil prijavo z več računi.</translation>
-<translation id="7951523953736115461">Nočna svetloba</translation>
 <translation id="7977927628060636163">Iskanje mobilnih omrežij ...</translation>
 <translation id="7982789257301363584">Omrežje</translation>
 <translation id="8000066093800657092">Ni omrežja</translation>
