@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb4af5ce_e9363862",
+        "filename": "tools/win/linker_verbose_tracking.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1117489
+      },
+      "writtenOn": "2017-07-10T22:06:22Z",
+      "side": 1,
+      "message": "Would it be better to use contains or operator in?",
+      "range": {
+        "startLine": 128,
+        "startChar": 24,
+        "endLine": 128,
+        "endChar": 29
+      },
+      "revId": "6d13e6cb537ac1d0e264758df94bbe37c90989d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc569426_28176451",
+        "filename": "tools/win/linker_verbose_tracking.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1117489
+      },
+      "writtenOn": "2017-07-10T22:06:22Z",
+      "side": 1,
+      "message": "The same comment as above.",
+      "range": {
+        "startLine": 141,
+        "startChar": 24,
+        "endLine": 141,
+        "endChar": 29
+      },
+      "revId": "6d13e6cb537ac1d0e264758df94bbe37c90989d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
