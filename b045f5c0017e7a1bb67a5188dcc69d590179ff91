@@ -1,0 +1,233 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "559b39c0_7336dd5d",
+        "filename": "net/http2/PRESUBMIT.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1222405
+      },
+      "writtenOn": "2017-07-10T20:00:58Z",
+      "side": 1,
+      "message": "s/spdy/http2/g and s/Spdy/Http2/g (and s/SPDY/HTTP2/g)? (I wonder if vim has a clean way of handling all cases :P)",
+      "range": {
+        "startLine": 38,
+        "startChar": 14,
+        "endLine": 50,
+        "endChar": 61
+      },
+      "revId": "b045f5c0017e7a1bb67a5188dcc69d590179ff91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffa125e0_671bb1f3",
+        "filename": "net/http2/decoder/http2_frame_decoder_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1222405
+      },
+      "writtenOn": "2017-07-10T20:00:58Z",
+      "side": 1,
+      "message": "optional: Can slay? (Converges with server-side.)",
+      "range": {
+        "startLine": 9,
+        "startChar": 17,
+        "endLine": 9,
+        "endChar": 0
+      },
+      "revId": "b045f5c0017e7a1bb67a5188dcc69d590179ff91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dc85a1dd_553722a2",
+        "filename": "net/http2/hpack/decoder/hpack_decoder_state_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1222405
+      },
+      "writtenOn": "2017-07-10T20:00:58Z",
+      "side": 1,
+      "message": "optional: Can slay (also converges with server-side).",
+      "range": {
+        "startLine": 531,
+        "startChar": 36,
+        "endLine": 531,
+        "endChar": 52
+      },
+      "revId": "b045f5c0017e7a1bb67a5188dcc69d590179ff91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2e78c865_c8ebf99a",
+        "filename": "net/http2/hpack/decoder/hpack_varint_decoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1222405
+      },
+      "writtenOn": "2017-07-10T20:00:58Z",
+      "side": 1,
+      "message": "nit: Can slay?",
+      "range": {
+        "startLine": 7,
+        "startChar": 18,
+        "endLine": 7,
+        "endChar": 0
+      },
+      "revId": "b045f5c0017e7a1bb67a5188dcc69d590179ff91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1b5040fc_2ba82deb",
+        "filename": "net/http2/hpack/decoder/hpack_varint_decoder_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1222405
+      },
+      "writtenOn": "2017-07-10T20:00:58Z",
+      "side": 1,
+      "message": "nit: Can slay :)",
+      "range": {
+        "startLine": 6,
+        "startChar": 54,
+        "endLine": 6,
+        "endChar": 0
+      },
+      "revId": "b045f5c0017e7a1bb67a5188dcc69d590179ff91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec770072_574a4576",
+        "filename": "net/http2/hpack/decoder/hpack_varint_decoder_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1222405
+      },
+      "writtenOn": "2017-07-10T20:00:58Z",
+      "side": 1,
+      "message": "optional: Using Http2StrCat would converge with the server-side.",
+      "range": {
+        "startLine": 153,
+        "startChar": 0,
+        "endLine": 159,
+        "endChar": 32
+      },
+      "revId": "b045f5c0017e7a1bb67a5188dcc69d590179ff91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a95596d1_3c3834ad",
+        "filename": "net/http2/hpack/decoder/hpack_whole_entry_buffer_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1222405
+      },
+      "writtenOn": "2017-07-10T20:00:58Z",
+      "side": 1,
+      "message": "optional/out-of-scope: s/lt/tl/ :)",
+      "range": {
+        "startLine": 31,
+        "startChar": 22,
+        "endLine": 31,
+        "endChar": 24
+      },
+      "revId": "b045f5c0017e7a1bb67a5188dcc69d590179ff91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2f4529f1_4e25ef70",
+        "filename": "net/http2/hpack/decoder/http2_hpack_decoder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1222405
+      },
+      "writtenOn": "2017-07-10T20:00:58Z",
+      "side": 1,
+      "message": "optional: Converge with server-side filenames (without the http2_* prefix), either by changing here or server-side. Okay to address in a later CL.",
+      "revId": "b045f5c0017e7a1bb67a5188dcc69d590179ff91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "77af0ae1_3bac6bad",
+        "filename": "net/http2/hpack/hpack_string.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1222405
+      },
+      "writtenOn": "2017-07-10T20:00:58Z",
+      "side": 1,
+      "message": "optional: Slay blank line.",
+      "revId": "b045f5c0017e7a1bb67a5188dcc69d590179ff91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9585d7b0_f39bf4f0",
+        "filename": "net/http2/hpack/huffman/http2_hpack_huffman_decoder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1222405
+      },
+      "writtenOn": "2017-07-10T20:00:58Z",
+      "side": 1,
+      "message": "optional: Converge with server-side filenames (without the http2_* prefix), either by changing here or server-side. Okay to address in a later CL.",
+      "revId": "b045f5c0017e7a1bb67a5188dcc69d590179ff91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d087a10a_8d90727e",
+        "filename": "net/http2/l",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1222405
+      },
+      "writtenOn": "2017-07-10T20:00:58Z",
+      "side": 1,
+      "message": "This looks like saved output from $ l - can slay? :)",
+      "revId": "b045f5c0017e7a1bb67a5188dcc69d590179ff91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
