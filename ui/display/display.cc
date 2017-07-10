@@ -60,7 +60,7 @@ int64_t internal_display_id_ = -1;
 
 gfx::ColorSpace GetForcedColorSpace() {
   if (gfx::ICCProfile::HasForcedProfile())
-    return gfx::ICCProfile::GetForcedProfile().GetColorSpace();
+    return gfx::ICCProfile::GetForcedColorSpace();
   return gfx::ColorSpace::CreateSRGB();
 }
 

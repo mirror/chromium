@@ -59,8 +59,10 @@ class COLOR_SPACE_EXPORT ICCProfile {
 
   // TODO(ccameron): Move this flag to display::Display, like forcing device
   // scale factor.
+  // https://crbug.com/740663
   static bool HasForcedProfile();
   static ICCProfile GetForcedProfile();
+  static ColorSpace GetForcedColorSpace();
 
   // Return a ColorSpace that references this ICCProfile. ColorTransforms
   // created using this ColorSpace will match this ICCProfile precisely.
