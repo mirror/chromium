@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "c80ebfd6_6d7ba189",
+        "filename": "content/browser/frame_host/interstitial_page_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-10T23:59:27Z",
+      "side": 1,
+      "message": "It makes me sad to expose this, since it\u0027s a complicated internal concept.  If there\u0027s no way to handle this detail within InterstitialPageImpl::Hide itself, then I guess I\u0027m ok with it.  Please do include a comment on this if we make it visible.",
+      "revId": "74b8520cdfbc9ea0550189ba83534944aaee8896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1d137617_a272fcb4",
         "filename": "content/browser/web_contents/web_contents_impl.cc",
         "patchSetId": 2
@@ -48,6 +65,24 @@
       "side": 1,
       "message": "I just tried to change, but if you look at WebContentsImpl::DetachInterstitialPage, it breaks if we change ShowingInterstitialPage().",
       "parentUuid": "969ca084_b79db7d5",
+      "revId": "74b8520cdfbc9ea0550189ba83534944aaee8896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "418c8304_d792b2ed",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3145,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-10T23:59:27Z",
+      "side": 1,
+      "message": "We could special case DetachInterstitialPage if needed, but I\u0027d be worried about other callers of ShowingInterstitialPage doing the wrong thing while the interstitial is visible but going away.\n\nNote that an interstitial can be in a disabled state for a long time (e.g., if a user clicks proceed and there\u0027s some additional delay before the page commits).\n\nThis may be a case where we could spend an arbitrary amount of time trying to find the right fix (or making interstitial deletion synchronous, as I tried in https://codereview.chromium.org/2938043002/).  Perhaps we\u0027re better off fixing this one case and waiting for the interstitial refactor to handle the rest.",
+      "parentUuid": "4f66e711_ae94870f",
       "revId": "74b8520cdfbc9ea0550189ba83534944aaee8896",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
