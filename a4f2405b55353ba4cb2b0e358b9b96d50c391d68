@@ -22,6 +22,23 @@
       "revId": "a4f2405b55353ba4cb2b0e358b9b96d50c391d68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d91c9f4c_dc37ecbb",
+        "filename": "services/service_manager/service_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1045,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-10T16:31:03Z",
+      "side": 1,
+      "message": "nit: \u0026identity to avoid unnecessary string copies",
+      "revId": "a4f2405b55353ba4cb2b0e358b9b96d50c391d68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
