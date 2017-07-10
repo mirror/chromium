@@ -88,6 +88,9 @@ void InstallConditionalFeaturesOnWindow(const ScriptState* script_state) {
          script_state->GetIsolate()->GetCurrentContext());
   DCHECK(script_state->PerContextData());
   DCHECK(script_state->World().IsMainWorld());
+
+  LOG(INFO) << "Called InstallConditionalFeaturesOnWindow";
+
   InstallConditionalFeatures(&V8Window::wrapperTypeInfo, script_state,
                              v8::Local<v8::Object>(),
                              v8::Local<v8::Function>());

@@ -22,6 +22,8 @@ using InstallConditionalFeaturesFunction = void (*)(const WrapperTypeInfo*,
 using InstallPendingConditionalFeatureFunction = void (*)(const String&,
                                                           const ScriptState*);
 
+using InstallConditionalMembersOnWindowFunction = void (*)(const ScriptState*);
+
 // Sets the function to be called by |installConditionalFeatures|. The function
 // is initially set to the private |installConditionalFeaturesDefault| function,
 // but can be overridden by this function. A pointer to the previously set
@@ -36,6 +38,10 @@ PLATFORM_EXPORT InstallConditionalFeaturesFunction
 PLATFORM_EXPORT InstallPendingConditionalFeatureFunction
     SetInstallPendingConditionalFeatureFunction(
         InstallPendingConditionalFeatureFunction);
+
+PLATFORM_EXPORT InstallConditionalMembersOnWindowFunction
+    SetInstallConditionalMembersOnWindowFunction(
+        InstallConditionalMembersOnWindowFunction);
 
 // Installs all of the conditionally enabled V8 bindings for the given type, in
 // a specific context. This is called in V8PerContextData, after the constructor
@@ -53,6 +59,8 @@ PLATFORM_EXPORT void InstallConditionalFeatures(const WrapperTypeInfo*,
 // (avoids forcing the creation of objects prematurely).
 PLATFORM_EXPORT void InstallPendingConditionalFeature(const String&,
                                                       const ScriptState*);
+
+PLATFORM_EXPORT void InstallConditionalMembersOnWindow(const ScriptState*);
 
 }  // namespace blink
 

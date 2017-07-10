@@ -32,6 +32,8 @@ InstallConditionalFeaturesFunction
     g_original_install_conditional_features_function = nullptr;
 InstallPendingConditionalFeatureFunction
     g_original_install_pending_conditional_feature_function = nullptr;
+InstallConditionalMembersOnWindowFunction
+    g_original_install_conditional_members_on_window_function = nullptr;
 }
 
 void InstallConditionalFeaturesForModules(
@@ -226,6 +228,23 @@ void InstallPendingConditionalFeatureForModules(
   }
 }
 
+void SetupConditionalMembersOnWindowForModules(
+    const ScriptState* script_state) {
+  DCHECK(script_state);
+  DCHECK(script_state->GetContext() ==
+         script_state->GetIsolate()->GetCurrentContext());
+  DCHECK(script_state->PerContextData());
+
+  (*g_original_install_conditional_members_on_window_function)(script_state);
+  LOG(INFO) << "Called SetupConditionalMembersOnWindowForModules";
+
+  v8::Local<v8::Object> instance_object = script_state->GetContext()->Global();
+
+  V8WindowPartial::installConditionalFeaturesOnGlobal(
+      script_state->GetContext(), script_state->World(),
+      v8::Local<v8::Object>(), instance_object);
+}
+
 void RegisterInstallConditionalFeaturesForModules() {
   RegisterInstallConditionalFeaturesForCore();
   g_original_install_conditional_features_function =
@@ -234,6 +253,9 @@ void RegisterInstallConditionalFeaturesForModules() {
   g_original_install_pending_conditional_feature_function =
       SetInstallPendingConditionalFeatureFunction(
           &InstallPendingConditionalFeatureForModules);
+  g_original_install_conditional_members_on_window_function =
+      SetInstallConditionalMembersOnWindowFunction(
+          &SetupConditionalMembersOnWindowForModules);
 }
 
 }  // namespace blink

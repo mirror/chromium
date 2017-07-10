@@ -18,6 +18,9 @@ void InstallConditionalFeaturesDefault(
 void InstallPendingConditionalFeatureDefault(const String& feature,
                                              const ScriptState* script_state) {}
 
+void InstallConditionalMembersOnWindowDefault(const ScriptState* script_state) {
+}
+
 namespace {
 InstallConditionalFeaturesFunction g_install_conditional_features_function =
     &InstallConditionalFeaturesDefault;
@@ -25,6 +28,10 @@ InstallConditionalFeaturesFunction g_install_conditional_features_function =
 InstallPendingConditionalFeatureFunction
     g_install_pending_conditional_feature_function =
         &InstallPendingConditionalFeatureDefault;
+
+InstallConditionalMembersOnWindowFunction
+    g_install_conditional_members_on_window_function =
+        &InstallConditionalMembersOnWindowDefault;
 }  // namespace
 
 InstallConditionalFeaturesFunction SetInstallConditionalFeaturesFunction(
@@ -48,6 +55,17 @@ SetInstallPendingConditionalFeatureFunction(
   return original_function;
 }
 
+InstallConditionalMembersOnWindowFunction
+SetInstallConditionalMembersOnWindowFunction(
+    InstallConditionalMembersOnWindowFunction
+        new_install_conditional_members_on_window_function) {
+  InstallConditionalMembersOnWindowFunction original_function =
+      g_install_conditional_members_on_window_function;
+  g_install_conditional_members_on_window_function =
+      new_install_conditional_members_on_window_function;
+  return original_function;
+}
+
 void InstallConditionalFeatures(const WrapperTypeInfo* type,
                                 const ScriptState* script_state,
                                 v8::Local<v8::Object> prototype_object,
@@ -65,6 +83,17 @@ void InstallPendingConditionalFeature(const String& feature,
   DCHECK(script_state->World().IsMainWorld());
 
   (*g_install_pending_conditional_feature_function)(feature, script_state);
+}
+
+void InstallConditionalMembersOnWindow(const ScriptState* script_state) {
+  DCHECK(script_state);
+  DCHECK(script_state->GetContext() ==
+         script_state->GetIsolate()->GetCurrentContext());
+  DCHECK(script_state->PerContextData());
+
+  LOG(INFO) << "Called InstallConditionalMembersOnWindow";
+
+  (*g_install_conditional_members_on_window_function)(script_state);
 }
 
 }  // namespace blink

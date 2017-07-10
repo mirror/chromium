@@ -52,6 +52,7 @@
 #include "platform/Histogram.h"
 #include "platform/RuntimeEnabledFeatures.h"
 #include "platform/ScriptForbiddenScope.h"
+#include "platform/bindings/ConditionalFeatures.h"
 #include "platform/bindings/DOMWrapperWorld.h"
 #include "platform/bindings/V8DOMWrapper.h"
 #include "platform/bindings/V8PrivateProperty.h"
@@ -123,6 +124,8 @@ void LocalWindowProxy::Initialize() {
           ? "Blink.Binding.InitializeMainLocalWindowProxy"
           : "Blink.Binding.InitializeNonMainLocalWindowProxy");
 
+  LOG(INFO) << "Called LocalWindowProxy::Initialize";
+
   ScriptForbiddenScope::AllowUserAgentScript allow_script;
 
   v8::HandleScope handle_scope(GetIsolate());
@@ -139,7 +142,10 @@ void LocalWindowProxy::Initialize() {
   SetupWindowPrototypeChain();
 
   SecurityOrigin* origin = 0;
+  bool isSecureContext;
   if (world_->IsMainWorld()) {
+    LOG(INFO) << "LocalWindowProxy::Initialize - MainWorld";
+
     // ActivityLogger for main world is updated within updateDocumentInternal().
     UpdateDocumentInternal();
     origin = GetFrame()->GetDocument()->GetSecurityOrigin();
@@ -151,7 +157,11 @@ void LocalWindowProxy::Initialize() {
         ContentSecurityPolicy::kWillNotThrowException, g_empty_string));
     context->SetErrorMessageForCodeGenerationFromStrings(
         V8String(GetIsolate(), csp->EvalDisabledErrorMessage()));
+    isSecureContext = GetFrame()->GetDocument()->IsSecureContext();
+    LOG(INFO) << "LocalWindowProxy::Initialize - isSecureContext: "
+              << isSecureContext;
   } else {
+    LOG(INFO) << "LocalWindowProxy::Initialize - some other world";
     UpdateActivityLogger();
     origin = world_->IsolatedWorldSecurityOrigin();
     SetSecurityToken(origin);
@@ -160,9 +170,13 @@ void LocalWindowProxy::Initialize() {
   MainThreadDebugger::Instance()->ContextCreated(script_state_.Get(),
                                                  GetFrame(), origin);
   GetFrame()->Client()->DidCreateScriptContext(context, world_->GetWorldId());
+
+  InstallConditionalMembersOnWindow(script_state_.Get());
   // If conditional features for window have been queued before the V8 context
   // was ready, then inject them into the context now
   if (world_->IsMainWorld()) {
+    LOG(INFO) << "About to call InstallConditionalFeaturesOnWindow";
+
     InstallConditionalFeaturesOnWindow(script_state_.Get());
   }
 
