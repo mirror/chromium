@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "b9f1e832_defedf1d",
+        "filename": "components/payments/core/address_normalization_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-10T18:27:37Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "2520bd51_86835fd6",
+      "revId": "cffd7309f410301eabea65261d3f92cdf70eaf34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9ab0e194_2f3b9163",
         "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
         "patchSetId": 2
