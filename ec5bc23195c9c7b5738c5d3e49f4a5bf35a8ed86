@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b5aaa087_25d147a0",
+        "filename": "third_party/WebKit/Source/platform/RuntimeEnabledFeatures.json5",
+        "patchSetId": 7
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2017-07-10T10:31:25Z",
+      "side": 1,
+      "message": "Also, I don\u0027t think there was an intent to ship for this. If you want to turn it on for stable, you need to send one and get it LGTMed*3",
+      "parentUuid": "7df019f7_245835d0",
+      "revId": "ec5bc23195c9c7b5738c5d3e49f4a5bf35a8ed86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5b870485_282b2e6a",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ClientHintsPreferences.cpp",
         "patchSetId": 7
@@ -155,6 +173,24 @@
       "writtenOn": "2017-07-10T03:34:59Z",
       "side": 1,
       "message": "Have you changed RAM to Ram to follow the style guide at https://google.github.io/styleguide/cppguide.html#Type_Names? Then it\u0027s fine but how about changing also DPR to Dpr for consistency?",
+      "revId": "ec5bc23195c9c7b5738c5d3e49f4a5bf35a8ed86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c770ca7_41a37c9c",
+        "filename": "third_party/WebKit/public/platform/WebClientHintsType.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2017-07-10T10:31:25Z",
+      "side": 1,
+      "message": "The rule in https://google.github.io/styleguide/cppguide.html#Function_Names surprises me, as we have many (many!) places in the code where acronyms are capitalized. (LocalDOMWindow, AcceptCH, DPR, HTTP to name a few)\nShould we reconsider this rule for Blink style? Or should we start converting all of the above examples, and probably many more? (I\u0027d vote for the former personally)",
+      "parentUuid": "6ccd8706_34930da2",
       "revId": "ec5bc23195c9c7b5738c5d3e49f4a5bf35a8ed86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
