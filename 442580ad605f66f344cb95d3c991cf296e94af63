@@ -22,6 +22,30 @@
       "revId": "442580ad605f66f344cb95d3c991cf296e94af63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "017b868c_8e216f16",
+        "filename": "content/common/indexed_db/indexed_db.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-07-10T21:50:55Z",
+      "side": 1,
+      "message": "This sounds fine - let\u0027s duplicate the leveldb::Status enum state. Don\u0027t worry about the message.",
+      "parentUuid": "84be0472_68ce7cb1",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 101,
+        "endChar": 2
+      },
+      "revId": "442580ad605f66f344cb95d3c991cf296e94af63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
