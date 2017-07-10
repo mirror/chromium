@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76d96af7_ac02a0c7",
+        "filename": "ios/chrome/browser/ui/reading_list/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-10T21:03:56Z",
+      "side": 1,
+      "message": "In all of these CLs, there should not be \"/public\" on end. The BUILD.gn file in feature_engagement_tracker should be used.",
+      "range": {
+        "startLine": 27,
+        "startChar": 45,
+        "endLine": 27,
+        "endChar": 51
+      },
+      "revId": "74dcdc033b26c6e8a5adb040057c21a339bb07d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
