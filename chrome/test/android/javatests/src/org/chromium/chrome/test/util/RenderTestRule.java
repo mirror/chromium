@@ -73,13 +73,6 @@ public class RenderTestRule extends TestWatcher {
      */
     private static final String[] RENDER_TEST_DEVICES = {"Nexus 5X", "Nexus 5"};
 
-    /**
-     * Before we know how flaky screenshot tests are going to be we don't want them to cause a
-     * full test failure every time they fail. If the tests prove their worth, this will be set to
-     * false/removed.
-     */
-    private static final boolean REPORT_ONLY_DO_NOT_FAIL = true;
-
     /** How many pixels can be different in an image before counting the images as different. */
     private static final int PIXEL_DIFF_THRESHOLD = 0;
 
@@ -198,11 +191,7 @@ public class RenderTestRule extends TestWatcher {
             sb.append(TextUtils.join(", ", mMismatchIds));
         }
 
-        if (REPORT_ONLY_DO_NOT_FAIL) {
-            Log.w(TAG, sb.toString());
-        } else {
-            throw new RenderTestException(sb.toString());
-        }
+        throw new RenderTestException(sb.toString());
     }
 
     /**
