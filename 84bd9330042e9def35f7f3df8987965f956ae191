@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "12503a33_78b76966",
+        "filename": "third_party/WebKit/Source/core/frame/RootFrameViewportTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-07-10T18:08:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43f6f096_2b0a9bc1",
+      "range": {
+        "startLine": 71,
+        "startChar": 19,
+        "endLine": 71,
+        "endChar": 27
+      },
+      "revId": "84bd9330042e9def35f7f3df8987965f956ae191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7968441c_c0c3ddf6",
         "filename": "third_party/WebKit/Source/platform/graphics/GraphicsLayerTest.cpp",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-10T17:27:49Z",
       "side": 1,
       "message": "Should this be IntRect(ScrollOffsetInt().Width(), ScrollOffsetInt().Height(), 10, 10) ?",
+      "range": {
+        "startLine": 179,
+        "startChar": 19,
+        "endLine": 179,
+        "endChar": 24
+      },
+      "revId": "84bd9330042e9def35f7f3df8987965f956ae191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29a77c0a_cbb55de9",
+        "filename": "third_party/WebKit/Source/platform/graphics/GraphicsLayerTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-07-10T18:08:15Z",
+      "side": 1,
+      "message": "Done, and I removed the VisibleWidth and VisibleHeight overrides too",
+      "parentUuid": "7968441c_c0c3ddf6",
       "range": {
         "startLine": 179,
         "startChar": 19,
