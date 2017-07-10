@@ -520,7 +520,9 @@ process_version("version_header") {
   output = "$target_gen_dir/chrome_version.h"
 }
 
-static_library("constants") {
+# Separate out the various string constants so that they can be used without
+# pulling in all of the code associated with the "constants" target.
+static_library("constants_only") {
   sources = [
     "chrome_constants.cc",
     "chrome_constants.h",
@@ -544,8 +546,34 @@ static_library("constants") {
     "pref_names.cc",
     "pref_names.h",
   ]
+}
+
+# Separate out the logging code so that it can be pulled in to, for instance,
+# chrome_watcher, without pulling in all of :common. This avoids binary size
+# regressions and long link times. This target cannot be used in conjunction
+# with :common because of its use of static_switches which is incompatible with
+# content.
+static_library("logging") {
+  sources = [
+    "logging_chrome.cc",
+    "logging_chrome.h",
+  ]
+  defines = []
+
+  configs += [
+    "//build/config:precompiled_headers",
+    "//build/config/compiler:wexit_time_destructors",
+  ]
 
   public_deps = [
+    "//chrome/common:constants_only",
+    "//content/public/common:static_switches",
+  ]
+}
+
+static_library("constants") {
+  public_deps = [
+    ":constants_only",
     ":features",
     "//content/public/common:result_codes",
     "//extensions/features",
