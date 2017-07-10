@@ -48,6 +48,53 @@
     },
     {
       "key": {
+        "uuid": "ec01a8d4_2d3e4f7a",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-10T22:19:50Z",
+      "side": 1,
+      "message": "And for tests, what I\u0027m thinking of is just expose this as a static method in the header (Maybe making it private/protected and friending a test fixture), and setting 0/1/2 field trials, and making sure you get out what is expected (Not so concerned about the error case, but may want one of those as well)",
+      "parentUuid": "ee835250_47de8f5e",
+      "range": {
+        "startLine": 125,
+        "startChar": 24,
+        "endLine": 125,
+        "endChar": 63
+      },
+      "revId": "ed6a1668c0348ae02a84db16428dfbdc2649eeec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af9fac25_5aafb975",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-10T22:19:50Z",
+      "side": 1,
+      "message": "nit:  Per google style, should declare values before first use, so config_param_index should probably be just above the while(true).  result is fine, though.",
+      "range": {
+        "startLine": 130,
+        "startChar": 6,
+        "endLine": 130,
+        "endChar": 25
+      },
+      "revId": "ed6a1668c0348ae02a84db16428dfbdc2649eeec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a0aeb81e_c6a809b4",
         "filename": "content/browser/loader/resource_scheduler.cc",
         "patchSetId": 40
