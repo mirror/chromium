@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d1e0428_095b92dc",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-10T11:51:51Z",
+      "side": 1,
+      "message": "optional nit: You could store this in a bool as you use it twice and get some free readability.\n(e.g. hostsAreEqual)",
+      "range": {
+        "startLine": 422,
+        "startChar": 29,
+        "endLine": 422,
+        "endChar": 76
+      },
+      "revId": "b07626425b48bb43482fe63ae8ceae3865e343fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
