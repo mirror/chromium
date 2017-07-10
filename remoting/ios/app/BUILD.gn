@@ -48,6 +48,8 @@ source_set("common_source_set") {
     "remoting_view_controller.mm",
     "session_reconnect_view.h",
     "session_reconnect_view.mm",
+    "user_status_presenter.h",
+    "user_status_presenter.mm",
   ]
 
   deps = [
