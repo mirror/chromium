@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0f3f2f0e_8ac6bf18",
+        "filename": "ios/chrome/browser/ui/settings/password_details_collection_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-10T13:02:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54c4b27f_f137ea1f",
+      "range": {
+        "startLine": 497,
+        "startChar": 42,
+        "endLine": 497,
+        "endChar": 48
+      },
+      "revId": "00ecf0942c5111106a56920a73ffa21b1482cbbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58e681ba_e02250c1",
         "filename": "ios/chrome/browser/ui/settings/password_details_collection_view_controller.mm",
         "patchSetId": 5
@@ -39,6 +63,24 @@
       "revId": "00ecf0942c5111106a56920a73ffa21b1482cbbd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ecceaa6_53cf32a8",
+        "filename": "ios/chrome/browser/ui/settings/password_details_collection_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-10T13:02:31Z",
+      "side": 1,
+      "message": "Right, I think I\u0027m still a bit struggling with Objective C. Thanks for catching and fixing this for me!",
+      "parentUuid": "58e681ba_e02250c1",
+      "revId": "00ecf0942c5111106a56920a73ffa21b1482cbbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
