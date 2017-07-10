@@ -74,7 +74,7 @@ int ExtractProcessFromExtensionId(Profile* profile,
       manager->GetSiteInstanceForURL(extension_url);
   if (!site_instance || !site_instance->HasProcess())
     return -1;
-  content::RenderProcessHost* process = site_instance->GetProcess();
+  content::RenderProcessHost* process = site_instance->GetProcess(nullptr);
 
   return process->GetID();
 }

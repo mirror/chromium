@@ -20,7 +20,7 @@ RendererPrelauncher::RendererPrelauncher(
 RendererPrelauncher::~RendererPrelauncher() {
   if (rph_routing_id_ != MSG_ROUTING_NONE) {
     DCHECK(site_instance_);
-    site_instance_->GetProcess()->RemoveRoute(rph_routing_id_);
+    site_instance_->GetProcess(nullptr)->RemoveRoute(rph_routing_id_);
   }
 }
 

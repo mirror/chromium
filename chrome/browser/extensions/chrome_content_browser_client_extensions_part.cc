@@ -498,7 +498,7 @@ bool ChromeContentBrowserClientExtensionsPart::
   ProcessMap* process_map = ProcessMap::Get(site_instance->GetBrowserContext());
   if (is_new_url_for_web_store && site_instance->HasProcess() &&
       !process_map->Contains(new_extension->id(),
-                             site_instance->GetProcess()->GetID()))
+                             site_instance->GetProcess(nullptr)->GetID()))
     return true;
 
   // Otherwise, swap BrowsingInstances when transitioning to/from Chrome Web
@@ -760,7 +760,8 @@ void ChromeContentBrowserClientExtensionsPart::RenderProcessWillLaunch(
 
 void ChromeContentBrowserClientExtensionsPart::SiteInstanceGotProcess(
     SiteInstance* site_instance) {
-  BrowserContext* context = site_instance->GetProcess()->GetBrowserContext();
+  BrowserContext* context =
+      site_instance->GetProcess(nullptr)->GetBrowserContext();
   ExtensionRegistry* registry = ExtensionRegistry::Get(context);
   if (!registry)
     return;
@@ -772,14 +773,14 @@ void ChromeContentBrowserClientExtensionsPart::SiteInstanceGotProcess(
     return;
 
   ProcessMap::Get(context)->Insert(extension->id(),
-                                   site_instance->GetProcess()->GetID(),
+                                   site_instance->GetProcess(nullptr)->GetID(),
                                    site_instance->GetId());
 
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,
       base::BindOnce(&InfoMap::RegisterExtensionProcess,
                      ExtensionSystem::Get(context)->info_map(), extension->id(),
-                     site_instance->GetProcess()->GetID(),
+                     site_instance->GetProcess(nullptr)->GetID(),
                      site_instance->GetId()));
 }
 
@@ -797,14 +798,14 @@ void ChromeContentBrowserClientExtensionsPart::SiteInstanceDeleting(
     return;
 
   ProcessMap::Get(context)->Remove(extension->id(),
-                                   site_instance->GetProcess()->GetID(),
+                                   site_instance->GetProcess(nullptr)->GetID(),
                                    site_instance->GetId());
 
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,
       base::BindOnce(&InfoMap::UnregisterExtensionProcess,
                      ExtensionSystem::Get(context)->info_map(), extension->id(),
-                     site_instance->GetProcess()->GetID(),
+                     site_instance->GetProcess(nullptr)->GetID(),
                      site_instance->GetId()));
 }
 

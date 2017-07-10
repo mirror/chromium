@@ -1915,7 +1915,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, CleanupCrossSiteIframe) {
   int subframe_process_id = root->child_at(0)
                                 ->current_frame_host()
                                 ->GetSiteInstance()
-                                ->GetProcess()
+                                ->GetProcess(nullptr)
                                 ->GetID();
   int subframe_rvh_id = root->child_at(0)
                             ->current_frame_host()

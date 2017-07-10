@@ -820,7 +820,7 @@ bool ChildProcessSecurityPolicyImpl::CanReadRequestBody(
   DCHECK(site_instance);
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
-  int child_id = site_instance->GetProcess()->GetID();
+  int child_id = site_instance->GetProcess(nullptr)->GetID();
 
   StoragePartition* storage_partition = BrowserContext::GetStoragePartition(
       site_instance->GetBrowserContext(), site_instance);

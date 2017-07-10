@@ -475,7 +475,7 @@ bool GuestViewManager::CanEmbedderAccessInstanceID(
   if (guest_view->CanBeEmbeddedInsideCrossProcessFrames()) {
     // MimeHandlerViewGuests (PDF) may be embedded in a cross-process frame.
     return embedder_render_process_id ==
-           guest_view->GetOwnerSiteInstance()->GetProcess()->GetID();
+           guest_view->GetOwnerSiteInstance()->GetProcess(nullptr)->GetID();
   }
 
   // Other than MimeHandlerViewGuest, all other guest types are only permitted

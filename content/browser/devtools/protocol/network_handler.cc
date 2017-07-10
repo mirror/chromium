@@ -517,7 +517,7 @@ Response NetworkHandler::ClearBrowserCache() {
   if (host_) {
     content::BrowsingDataRemover* remover =
         content::BrowserContext::GetBrowsingDataRemover(
-            host_->GetSiteInstance()->GetProcess()->GetBrowserContext());
+            host_->GetSiteInstance()->GetProcess(nullptr)->GetBrowserContext());
     remover->Remove(base::Time(), base::Time::Max(),
                     content::BrowsingDataRemover::DATA_TYPE_CACHE,
                     content::BrowsingDataRemover::ORIGIN_TYPE_UNPROTECTED_WEB);

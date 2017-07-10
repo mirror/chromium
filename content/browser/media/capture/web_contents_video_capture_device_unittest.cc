@@ -189,7 +189,7 @@ class CaptureTestRenderViewHost : public TestRenderViewHost {
       : TestRenderViewHost(instance,
                            base::MakeUnique<RenderWidgetHostImpl>(
                                widget_delegate,
-                               instance->GetProcess(),
+                               instance->GetProcess(nullptr),
                                routing_id,
                                false /* This means: "Is not hidden." */),
                            delegate,

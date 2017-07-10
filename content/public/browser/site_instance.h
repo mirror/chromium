@@ -94,7 +94,10 @@ class CONTENT_EXPORT SiteInstance : public base::RefCounted<SiteInstance> {
   // For sites that require process-per-site mode (e.g., WebUI), this will
   // ensure only one RenderProcessHost for the site exists within the
   // BrowserContext.
-  virtual content::RenderProcessHost* GetProcess() = 0;
+  //
+  // When |new_host_created| is not null, if a new RenderProcessHost is created
+  // *|new_host_created| is set to true, otherwise set to false.
+  virtual content::RenderProcessHost* GetProcess(bool* new_host_created) = 0;
 
   // Browser context to which this SiteInstance (and all related
   // SiteInstances) belongs.

@@ -41,7 +41,7 @@ class CONTENT_EXPORT SiteInstanceImpl final : public SiteInstance,
   // SiteInstance interface overrides.
   int32_t GetId() override;
   bool HasProcess() const override;
-  RenderProcessHost* GetProcess() override;
+  RenderProcessHost* GetProcess(bool* new_host_created) override;
   BrowserContext* GetBrowserContext() const override;
   const GURL& GetSiteURL() const override;
   scoped_refptr<SiteInstance> GetRelatedSiteInstance(const GURL& url) override;
