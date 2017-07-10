@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "3de4e4f7_00ea7631",
+        "filename": "ios/chrome/browser/ui/payments/js_payment_request_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-10T18:51:26Z",
+      "side": 1,
+      "message": "Do you need to give an example of unsuccessful outcome?",
+      "range": {
+        "startLine": 33,
+        "startChar": 51,
+        "endLine": 33,
+        "endChar": 60
+      },
+      "revId": "ac3b93554dee043fa1d66161e65f63ff3068ce1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f31feeaa_ccebb1c3",
+        "filename": "ios/chrome/browser/ui/payments/js_payment_request_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-10T18:51:26Z",
+      "side": 1,
+      "message": "nit: s/setPaymentRequestIDToValue/setPaymentRequestID\n\nFrom Coding Guidelines for Cocoa: \"Make the word before the argument describe the argument.\"\n\nhttps://developer.apple.com/library/content/documentation/Cocoa/Conceptual/CodingGuidelines/Articles/NamingMethods.html#//apple_ref/doc/uid/20001282-1001751-BCIJHEDH",
+      "range": {
+        "startLine": 34,
+        "startChar": 8,
+        "endLine": 34,
+        "endChar": 34
+      },
+      "revId": "ac3b93554dee043fa1d66161e65f63ff3068ce1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc8eb502_c774ddd1",
+        "filename": "ios/chrome/browser/ui/payments/js_payment_request_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-10T18:51:26Z",
+      "side": 1,
+      "message": "Could you please add a test for this new method.",
+      "range": {
+        "startLine": 35,
+        "startChar": 17,
+        "endLine": 35,
+        "endChar": 34
+      },
+      "revId": "ac3b93554dee043fa1d66161e65f63ff3068ce1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "df299cdc_5986ad86",
         "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
         "patchSetId": 2
@@ -35,6 +104,29 @@
         "startChar": 51,
         "endLine": 585,
         "endChar": 65
+      },
+      "revId": "ac3b93554dee043fa1d66161e65f63ff3068ce1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31ad3a75_165942df",
+        "filename": "ios/web/payments/payment_request.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-10T18:51:26Z",
+      "side": 1,
+      "message": "s/kPaymentDetailsID/kPaymentDetailsId per C++ Style Guide (also see kPaymentRequestId)",
+      "range": {
+        "startLine": 21,
+        "startChar": 18,
+        "endLine": 21,
+        "endChar": 35
       },
       "revId": "ac3b93554dee043fa1d66161e65f63ff3068ce1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
