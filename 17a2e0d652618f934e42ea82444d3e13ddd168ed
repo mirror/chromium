@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "89e2c28e_d82589f5",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-10T08:21:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7b1f55e_afbdfbe2",
+      "revId": "17a2e0d652618f934e42ea82444d3e13ddd168ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58b7b7ad_36abf685",
         "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
         "patchSetId": 1
@@ -39,6 +57,30 @@
       "revId": "17a2e0d652618f934e42ea82444d3e13ddd168ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0032a2a5_7bbdfc83",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-10T08:21:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58b7b7ad_36abf685",
+      "range": {
+        "startLine": 162,
+        "startChar": 2,
+        "endLine": 162,
+        "endChar": 51
+      },
+      "revId": "17a2e0d652618f934e42ea82444d3e13ddd168ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "fa94e7f8_7d313b22",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-10T08:21:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "676b943b_e19fe019",
+      "range": {
+        "startLine": 41,
+        "startChar": 60,
+        "endLine": 41,
+        "endChar": 67
+      },
+      "revId": "17a2e0d652618f934e42ea82444d3e13ddd168ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3eaa3b96_a1688a49",
         "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge_factory.cc",
         "patchSetId": 1
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "cdd6d43e_e488728b",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-10T08:21:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3eaa3b96_a1688a49",
+      "range": {
+        "startLine": 21,
+        "startChar": 58,
+        "endLine": 21,
+        "endChar": 62
+      },
+      "revId": "17a2e0d652618f934e42ea82444d3e13ddd168ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eeea2bb9_da12a3b9",
         "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge_factory.cc",
         "patchSetId": 1
@@ -105,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "dfbcf438_c4da405c",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-10T08:21:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eeea2bb9_da12a3b9",
+      "revId": "17a2e0d652618f934e42ea82444d3e13ddd168ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b28d90db_e5ccea8e",
         "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge_factory.cc",
         "patchSetId": 1
@@ -119,6 +227,24 @@
       "revId": "17a2e0d652618f934e42ea82444d3e13ddd168ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faea6415_7f645cfb",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-10T08:21:06Z",
+      "side": 1,
+      "message": "Done. Also, reduced the VLOG level to avoid verbose logging.",
+      "parentUuid": "b28d90db_e5ccea8e",
+      "revId": "17a2e0d652618f934e42ea82444d3e13ddd168ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -145,6 +271,30 @@
     },
     {
       "key": {
+        "uuid": "ee413fa8_200581b8",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge_factory.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-10T08:21:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0f3063f_2c490fb7",
+      "range": {
+        "startLine": 24,
+        "startChar": 5,
+        "endLine": 24,
+        "endChar": 12
+      },
+      "revId": "17a2e0d652618f934e42ea82444d3e13ddd168ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96380d35_824485a2",
         "filename": "chrome/browser/chromeos/arc/arc_service_launcher.cc",
         "patchSetId": 1
@@ -162,6 +312,24 @@
     },
     {
       "key": {
+        "uuid": "c32169fa_f97a13e2",
+        "filename": "chrome/browser/chromeos/arc/arc_service_launcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-10T08:21:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96380d35_824485a2",
+      "revId": "17a2e0d652618f934e42ea82444d3e13ddd168ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "753b90f8_2df86515",
         "filename": "components/arc/arc_service_manager.h",
         "patchSetId": 1
@@ -176,6 +344,24 @@
       "revId": "17a2e0d652618f934e42ea82444d3e13ddd168ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b675ba53_ee88875a",
+        "filename": "components/arc/arc_service_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-10T08:21:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "753b90f8_2df86515",
+      "revId": "17a2e0d652618f934e42ea82444d3e13ddd168ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -202,6 +388,30 @@
     },
     {
       "key": {
+        "uuid": "86f5519b_97523540",
+        "filename": "components/arc/arc_service_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-10T08:21:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18c98367_6a52008a",
+      "range": {
+        "startLine": 72,
+        "startChar": 12,
+        "endLine": 72,
+        "endChar": 16
+      },
+      "revId": "17a2e0d652618f934e42ea82444d3e13ddd168ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "806e745e_0ef6b1bc",
         "filename": "components/arc/arc_service_manager.h",
         "patchSetId": 1
@@ -213,6 +423,24 @@
       "writtenOn": "2017-07-10T02:53:02Z",
       "side": 1,
       "message": "The usage of the pointer is a bit tricky. Can you add a comment unless you\u0027re very sure you\u0027ll remove this in a week or two?",
+      "revId": "17a2e0d652618f934e42ea82444d3e13ddd168ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "421d79df_32534116",
+        "filename": "components/arc/arc_service_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-10T08:21:06Z",
+      "side": 1,
+      "message": "I don\u0027t think I\u0027m fully understanding your point.\nCould you elaborate what is expected in a bit more details?\nI just added TODO referring to browser_context(), but I\u0027m happy to add more.",
+      "parentUuid": "806e745e_0ef6b1bc",
       "revId": "17a2e0d652618f934e42ea82444d3e13ddd168ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
