@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf795aa0_4b2112ac",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 835,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-07-10T21:19:20Z",
+      "side": 1,
+      "message": "FYI: gcc is choking on this line, it needs parenthesis to clarify the order. Windows compiler is apparently fine with it. See the try bot results.",
+      "revId": "967fb328bd8119dd1b1286c53b4efdb6bf39b2fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
