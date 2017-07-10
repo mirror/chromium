@@ -22,6 +22,30 @@
       "revId": "edf6d2a70a6a32b109360c357a5649b1eed1ac75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7bd2e82_28e692db",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImplTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-07-10T16:29:59Z",
+      "side": 1,
+      "message": "Sure. Although, then if the filepath is not the same for some reason, the test will fail with CRASHED adn no other explanation, which can be very annoying if you are investigating. Why would we want that?",
+      "parentUuid": "bfa3d07e_23c38327",
+      "range": {
+        "startLine": 185,
+        "startChar": 26,
+        "endLine": 185,
+        "endChar": 91
+      },
+      "revId": "edf6d2a70a6a32b109360c357a5649b1eed1ac75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
