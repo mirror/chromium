@@ -51,8 +51,9 @@ DefaultGpuHost::DefaultGpuHost(GpuHostDelegate* delegate)
                               std::move(gpu_host_proxy), preferences,
                               mojo::ScopedSharedBufferHandle());
   gpu_memory_buffer_manager_ =
-      base::MakeUnique<viz::ServerGpuMemoryBufferManager>(gpu_service_.get(),
-                                                          next_client_id_++);
+      base::MakeUnique<viz::ServerGpuMemoryBufferManager>(
+          gpu_service_.get(), next_client_id_++,
+          base::ThreadTaskRunnerHandle::Get());
 }
 
 DefaultGpuHost::~DefaultGpuHost() {}
