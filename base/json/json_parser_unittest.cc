@@ -335,6 +335,11 @@ TEST_F(JSONParserTest, DecodeUnicodeNonCharacter) {
   EXPECT_FALSE(JSONReader::Read("[\"\\ufdd0\"]"));
   EXPECT_FALSE(JSONReader::Read("[\"\\ufffe\"]"));
   EXPECT_FALSE(JSONReader::Read("[\"\\ud83f\\udffe\"]"));
+
+  EXPECT_TRUE(
+      JSONReader::Read("[\"\\ufdd0\"]", JSON_REPLACE_INVALID_CHARACTERS));
+  EXPECT_TRUE(
+      JSONReader::Read("[\"\\ufffe\"]", JSON_REPLACE_INVALID_CHARACTERS));
 }
 
 TEST_F(JSONParserTest, DecodeNegativeEscapeSequence) {
