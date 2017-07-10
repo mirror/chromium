@@ -386,9 +386,11 @@ TEST_F(ServiceManagerTest, CreatePackagedSingletonInstance) {
   }
 }
 
-TEST_F(ServiceManagerTest, PIDReceivedCallback) {
+// Tests that creating connecting to a singleton packaged service work.
+TEST_F(ServiceManagerTest, CreatePackagedSingletonInstance2) {
   AddListenerAndWaitForApplications();
 
+  // Connect to the embedder service first.
   {
     base::RunLoop loop;
     std::string service_name;
