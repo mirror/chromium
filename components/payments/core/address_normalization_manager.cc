@@ -61,6 +61,10 @@ void AddressNormalizationManager::MaybeRunCompletionCallback() {
   // We're no longer accepting requests, and all the delegates have completed.
   // Now's the time to run the completion callback.
   std::move(completion_callback_).Run();
+
+  // Start accepting requests after the completion callback has run.
+  accepting_requests_ = true;
+  delegates_.clear();
 }
 
 AddressNormalizationManager::NormalizerDelegate::NormalizerDelegate(
