@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d78be498_c37f325d",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-10T04:52:12Z",
+      "side": 1,
+      "message": "blink::WebVector\u003cBytesChunk\u003e",
+      "revId": "f3c41d3b0ccb91e387baeda4e73f84b7375e452c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3734957_5784b727",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-10T04:52:12Z",
+      "side": 1,
+      "message": "I feel \"blink::WebVector doesn\u0027t have push_back\" doesn\u0027t clearly explain your intention. How about \"... because blink::WebVector is immutable and cannot append data\"?",
+      "revId": "f3c41d3b0ccb91e387baeda4e73f84b7375e452c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32402589_8211c60f",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-10T04:52:12Z",
+      "side": 1,
+      "message": "Why do you wait in the while loop? Is this a guard for \"spurious wakeup\"? If so, can you add a comment about it?",
+      "revId": "f3c41d3b0ccb91e387baeda4e73f84b7375e452c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62317646_c58f070a",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-10T04:52:12Z",
+      "side": 1,
+      "message": "This class would be slightly too big/complicated to keep it as a nested class, so how about moving this into its own file? It\u0027d be helps for writing unit tests and avoiding the number of key types (\"WebServiceWorkerInstalledScriptsManagerImpl::\" is not necessary :)",
+      "revId": "f3c41d3b0ccb91e387baeda4e73f84b7375e452c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3108503f_abe4d0db",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-10T04:52:12Z",
+      "side": 1,
+      "message": "s/error/an error/",
+      "range": {
+        "startLine": 32,
+        "startChar": 29,
+        "endLine": 32,
+        "endChar": 30
+      },
+      "revId": "f3c41d3b0ccb91e387baeda4e73f84b7375e452c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
