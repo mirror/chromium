@@ -33,6 +33,7 @@
 #include <memory>
 
 #include "build/build_config.h"
+#include "controller/WebDevToolsAgentImpl.h"
 #include "core/animation/CompositorMutatorImpl.h"
 #include "core/dom/UserGestureIndicator.h"
 #include "core/editing/CompositionUnderlineVectorBuilder.h"
@@ -74,7 +75,6 @@
 #include "public/web/WebPlugin.h"
 #include "public/web/WebRange.h"
 #include "public/web/WebWidgetClient.h"
-#include "web/WebDevToolsAgentImpl.h"
 
 namespace blink {
 
