@@ -713,8 +713,8 @@ void GlobalMenuBarX11::OnAvatarMenuChanged(AvatarMenu* avatar_menu) {
 
 void GlobalMenuBarX11::OnBrowserSetLastActive(Browser* browser) {
   // Rebuild the avatar menu so that the items have the correct active state.
-  avatar_menu_->RebuildMenu();
   avatar_menu_->ActiveBrowserChanged(browser);
+  avatar_menu_->RebuildMenu();
   RebuildProfilesMenu();
 }
 
