@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7a39b39_0bf19ff7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-10T18:01:28Z",
+      "side": 1,
+      "message": "Fix capitalization",
+      "range": {
+        "startLine": 11,
+        "startChar": 14,
+        "endLine": 11,
+        "endChar": 34
+      },
+      "revId": "2c1467e44a19dd860f890803b767ca1848452621",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02ce5dcd_a6f06dc5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-10T18:01:28Z",
+      "side": 1,
+      "message": "Nit: Cleaned",
+      "range": {
+        "startLine": 13,
+        "startChar": 2,
+        "endLine": 13,
+        "endChar": 10
+      },
+      "revId": "2c1467e44a19dd860f890803b767ca1848452621",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50c6c73e_b6907a77",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-10T18:01:28Z",
+      "side": 1,
+      "message": "Remove this line. The default constructor will take care of this.",
+      "range": {
+        "startLine": 47,
+        "startChar": 6,
+        "endLine": 47,
+        "endChar": 20
+      },
+      "revId": "2c1467e44a19dd860f890803b767ca1848452621",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ae064f8_03285781",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-10T18:01:28Z",
+      "side": 1,
+      "message": "Reflow this comment.",
+      "range": {
+        "startLine": 39,
+        "startChar": 5,
+        "endLine": 39,
+        "endChar": 35
+      },
+      "revId": "2c1467e44a19dd860f890803b767ca1848452621",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a8daa7e_67d85c41",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-10T18:01:28Z",
+      "side": 1,
+      "message": "The correct way to do this is\n\nnamespace gfx {\nclass Rect;\n}\n\nYou won\u0027t get compile errors because some of these types are brought it by the other includes.\n\nApply to the rest of the forward declared types as well.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 17
+      },
+      "revId": "2c1467e44a19dd860f890803b767ca1848452621",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10189db4_09ac1e04",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo_dialog_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-10T18:01:28Z",
+      "side": 1,
+      "message": "Should this be commented? This is a no-op.",
+      "range": {
+        "startLine": 18,
+        "startChar": 4,
+        "endLine": 18,
+        "endChar": 64
+      },
+      "revId": "2c1467e44a19dd860f890803b767ca1848452621",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "367f5e4f_b869e251",
+        "filename": "chrome/browser/ui/views/tabs/tab_strip.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2358,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-10T18:01:28Z",
+      "side": 1,
+      "message": "Commented code?",
+      "range": {
+        "startLine": 2358,
+        "startChar": 4,
+        "endLine": 2358,
+        "endChar": 35
+      },
+      "revId": "2c1467e44a19dd860f890803b767ca1848452621",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

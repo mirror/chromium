@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "71f160e9_ab9f4c9e",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-10T18:01:28Z",
+      "side": 1,
+      "message": "A nullptr std::unique_ptr will be false.\n\nAlso, go ahead and use base::MakeUnique here as well.",
+      "parentUuid": "c73e2570_331d337c",
+      "range": {
+        "startLine": 72,
+        "startChar": 2,
+        "endLine": 73,
+        "endChar": 69
+      },
+      "revId": "f6909e70dd51ad1548f277617cd07f2b093c4a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4e6815af_81b5449a",
         "filename": "chrome/browser/ui/views/tabs/new_tab_button.h",
         "patchSetId": 8
@@ -400,6 +424,30 @@
       "revId": "f6909e70dd51ad1548f277617cd07f2b093c4a06",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "374679ce_bf746910",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-10T18:01:28Z",
+      "side": 1,
+      "message": "I mean how did we arrive at these numbers? Were these arbitrary?\n\nRemove the comment about the constants subject to change. That is implied.",
+      "parentUuid": "ebe5eb0d_15a22985",
+      "range": {
+        "startLine": 24,
+        "startChar": 4,
+        "endLine": 24,
+        "endChar": 36
+      },
+      "revId": "f6909e70dd51ad1548f277617cd07f2b093c4a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
