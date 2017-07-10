@@ -124,8 +124,8 @@ PassRefPtr<SimpleFontData> FontCache::FallbackOnStandardFontStyle(
     const FontDescription& font_description,
     UChar32 character) {
   FontDescription substitute_description(font_description);
-  substitute_description.SetStyle(kFontStyleNormal);
-  substitute_description.SetWeight(kFontWeightNormal);
+  substitute_description.SetStyle(NormalSlopeValue());
+  substitute_description.SetWeight(NormalWeightValue());
 
   FontFaceCreationParams creation_params(
       substitute_description.Family().Family());
@@ -135,10 +135,12 @@ PassRefPtr<SimpleFontData> FontCache::FallbackOnStandardFontStyle(
       substitute_platform_data->FontContainsCharacter(character)) {
     FontPlatformData platform_data =
         FontPlatformData(*substitute_platform_data);
-    platform_data.SetSyntheticBold(font_description.Weight() >= kFontWeight600);
-    platform_data.SetSyntheticItalic(
-        font_description.Style() == kFontStyleItalic ||
-        font_description.Style() == kFontStyleOblique);
+    platform_data.SetSyntheticBold(font_description.Weight() >=
+                                   BoldThreshold());
+    // TODO: What to do about oblique?
+    platform_data.SetSyntheticItalic(font_description.Style() ==
+                                     ItalicSlopeValue());
+    // ||        font_description.Style() == kFontStyleOblique);
     return FontDataFromFontPlatformData(&platform_data, kDoNotRetain);
   }
 
@@ -282,16 +284,15 @@ std::unique_ptr<FontPlatformData> FontCache::CreateFontPlatformData(
   if (!tf)
     return nullptr;
 
-  return WTF::WrapUnique(
-      new FontPlatformData(tf, name.data(), font_size,
-                           (NumericFontWeight(font_description.Weight()) >
-                            200 + tf->fontStyle().weight()) ||
-                               font_description.IsSyntheticBold(),
-                           ((font_description.Style() == kFontStyleItalic ||
-                             font_description.Style() == kFontStyleOblique) &&
-                            !tf->isItalic()) ||
-                               font_description.IsSyntheticItalic(),
-                           font_description.Orientation()));
+  return WTF::WrapUnique(new FontPlatformData(
+      tf, name.data(), font_size,
+      (font_description.Weight() >
+           FontSelectionValue(200) +
+               FontSelectionValue(tf->fontStyle().weight()) ||
+       font_description.IsSyntheticBold()),
+      ((font_description.Style() == ItalicSlopeValue()) && !tf->isItalic()) ||
+          font_description.IsSyntheticItalic(),
+      font_description.Orientation()));
 }
 #endif  // !defined(OS_WIN)
 

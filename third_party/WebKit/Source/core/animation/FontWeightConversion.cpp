@@ -9,43 +9,21 @@
 
 namespace blink {
 
-double FontWeightToDouble(FontWeight font_weight) {
-  switch (font_weight) {
-    case kFontWeight100:
-      return 100;
-    case kFontWeight200:
-      return 200;
-    case kFontWeight300:
-      return 300;
-    case kFontWeight400:
-      return 400;
-    case kFontWeight500:
-      return 500;
-    case kFontWeight600:
-      return 600;
-    case kFontWeight700:
-      return 700;
-    case kFontWeight800:
-      return 800;
-    case kFontWeight900:
-      return 900;
-    default:
-      NOTREACHED();
-      return 400;
-  }
+double constexpr kMaxDiscreteWeight = 900.0f;
+double constexpr kMinDiscreteWeight = 100.0f;
+
+double FontWeightToDouble(FontSelectionValue font_weight) {
+  return static_cast<float>(font_weight);
 }
 
-FontWeight DoubleToFontWeight(double value) {
-  static const FontWeight kFontWeights[] = {
-      kFontWeight100, kFontWeight200, kFontWeight300,
-      kFontWeight400, kFontWeight500, kFontWeight600,
-      kFontWeight700, kFontWeight800, kFontWeight900,
-  };
+// https://drafts.csswg.org/css-fonts-4/#font-weight-prop still describes
+// font-weight as animatable in discrete steps, compare crbug.com/739334
+FontSelectionValue DoubleToFontWeight(double value) {
+  value = std::min(value, kMaxDiscreteWeight);
+  value = std::max(value, kMinDiscreteWeight);
+  double rounded_to_hundreds = roundf(value / 100) * 100.0;
 
-  int index = round(value / 100 - 1);
-  int clamped_index =
-      clampTo<int>(index, 0, WTF_ARRAY_LENGTH(kFontWeights) - 1);
-  return kFontWeights[clamped_index];
+  return FontSelectionValue(rounded_to_hundreds);
 }
 
 }  // namespace blink
