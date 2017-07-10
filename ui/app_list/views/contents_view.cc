@@ -269,10 +269,14 @@ void ContentsView::UpdatePageBounds() {
     }
   }
 
-  NotifyCustomLauncherPageAnimationChanged(progress, current_page, target_page);
-
   AppListModel::State current_state = GetStateForPageIndex(current_page);
   AppListModel::State target_state = GetStateForPageIndex(target_page);
+
+  if (current_state == AppListModel::STATE_SEARCH_RESULTS ||
+      target_state == AppListModel::STATE_SEARCH_RESULTS)
+    progress = 1;
+
+  NotifyCustomLauncherPageAnimationChanged(progress, current_page, target_page);
 
   // Update app list pages.
   for (AppListPage* page : app_list_pages_) {

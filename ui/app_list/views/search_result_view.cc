@@ -26,7 +26,7 @@ namespace app_list {
 namespace {
 
 const int kPreferredWidth = 300;
-const int kPreferredHeight = 56;
+const int kPreferredHeight = 48;
 const int kIconLeftPadding = 16;
 const int kIconRightPadding = 24;
 const int kTextTrailPadding = 16;
@@ -258,14 +258,15 @@ void SearchResultView::PaintButtonContents(gfx::Canvas* canvas) {
   else if (hover)
     canvas->FillRect(content_rect, kHighlightedColor);
 
-  if (!is_last_result_) {
-    gfx::Rect line_rect = content_rect;
-    line_rect.set_height(kBorderSize);
-    line_rect.set_y(content_rect.bottom() - kBorderSize);
-    line_rect.set_x(kSeparatorPadding);
-    canvas->FillRect(line_rect, kSeparatorColor);
+  if (false) {
+    if (!is_last_result_) {
+      gfx::Rect line_rect = content_rect;
+      line_rect.set_height(kBorderSize);
+      line_rect.set_y(content_rect.bottom() - kBorderSize);
+      line_rect.set_x(kSeparatorPadding);
+      canvas->FillRect(line_rect, kSeparatorColor);
+    }
   }
-
   gfx::Rect border_bottom = gfx::SubtractRects(rect, content_rect);
   canvas->FillRect(border_bottom, kResultBorderColor);
 
