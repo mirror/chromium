@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "74bbcf49_4bcf8cdd",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-10T05:50:37Z",
+      "side": 1,
+      "message": "Should this be called bytes_read?",
+      "revId": "f3c41d3b0ccb91e387baeda4e73f84b7375e452c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57dfbdf0_9dd7e40b",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-10T05:50:37Z",
+      "side": 1,
+      "message": "Don\u0027t use default: label, so the compiler can warn if something wasn\u0027t handled.",
+      "revId": "f3c41d3b0ccb91e387baeda4e73f84b7375e452c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72137fc5_9f662aa2",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-10T05:50:37Z",
+      "side": 1,
+      "message": "This comment doesn\u0027t seem useful.",
+      "revId": "f3c41d3b0ccb91e387baeda4e73f84b7375e452c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d78be498_c37f325d",
         "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
         "patchSetId": 6
@@ -64,6 +115,23 @@
       "writtenOn": "2017-07-10T05:35:38Z",
       "side": 1,
       "message": "nit: BundledReceivers, maybe, Receivers and Receiver look too alike",
+      "revId": "f3c41d3b0ccb91e387baeda4e73f84b7375e452c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "793c8141_f1eff5d8",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-10T05:50:37Z",
+      "side": 1,
+      "message": "Does this mean we should try to signal an error?",
       "revId": "f3c41d3b0ccb91e387baeda4e73f84b7375e452c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +223,58 @@
     },
     {
       "key": {
+        "uuid": "13de5de6_1c5244e6",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-10T05:50:37Z",
+      "side": 1,
+      "message": "Can you describe the flow in more detail. Something like: \"The IO thread adds scripts to the container, and the worker thread takes the scripts.\"\n\nCan there be multiple worker threads? Or each worker thread has one InstalledScriptsManager, and one ScriptContainer?",
+      "parentUuid": "62317646_c58f070a",
+      "revId": "f3c41d3b0ccb91e387baeda4e73f84b7375e452c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e155b5a4_eab65735",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-10T05:50:37Z",
+      "side": 1,
+      "message": "If only the IO thread will call this, can we say that  and DCHECK it to give more constraints to the control flow?",
+      "revId": "f3c41d3b0ccb91e387baeda4e73f84b7375e452c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "562b01bb_c8c32203",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-10T05:50:37Z",
+      "side": 1,
+      "message": "Is Exists only called by the worker thread?",
+      "revId": "f3c41d3b0ccb91e387baeda4e73f84b7375e452c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3108503f_abe4d0db",
         "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.h",
         "patchSetId": 6
@@ -189,6 +309,46 @@
       "writtenOn": "2017-07-10T05:35:38Z",
       "side": 1,
       "message": "nit: Please explicitly note that this shouldn\u0027t be called on the main thread. Also \u0027error happens\u0027 is a bit vague, could make it clear what\u0027s expected in the case? (E.g. this returns false if the wait finished with an error, in the case no script data may be available for the URL and the caller should... bula bula)",
+      "revId": "f3c41d3b0ccb91e387baeda4e73f84b7375e452c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab49af94_55cb500c",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-10T05:50:37Z",
+      "side": 1,
+      "message": "It\u0027s probably clear, but I\u0027d like to say this is a blocking wait.",
+      "range": {
+        "startLine": 32,
+        "startChar": 4,
+        "endLine": 32,
+        "endChar": 5
+      },
+      "revId": "f3c41d3b0ccb91e387baeda4e73f84b7375e452c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e760588_fd542f5e",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-10T05:50:37Z",
+      "side": 1,
+      "message": "Is Take only called by the worker thread?",
       "revId": "f3c41d3b0ccb91e387baeda4e73f84b7375e452c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
