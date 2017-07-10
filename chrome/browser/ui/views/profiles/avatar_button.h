@@ -94,6 +94,8 @@ class AvatarButton : public views::LabelButton,
 
   AvatarButtonStyle button_style_;
 
+  ScopedObserver<views::Widget, AvatarButton> widget_observer_;
+
   DISALLOW_COPY_AND_ASSIGN(AvatarButton);
 };
 
