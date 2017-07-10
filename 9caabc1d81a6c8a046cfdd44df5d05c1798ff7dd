@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "59ddd223_1b32c295",
+        "filename": "chrome/browser/ui/views/harmony/chrome_layout_provider.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-10T07:02:35Z",
+      "side": 1,
+      "message": "Done. We could also possibly just drop this indent from the older dialogs..",
+      "parentUuid": "bb1e2455_7c3bea00",
+      "range": {
+        "startLine": 42,
+        "startChar": 11,
+        "endLine": 42,
+        "endChar": 20
+      },
+      "revId": "9caabc1d81a6c8a046cfdd44df5d05c1798ff7dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f74e2931_a37cbee7",
         "filename": "chrome/browser/ui/views/harmony/chrome_layout_provider.h",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "9caabc1d81a6c8a046cfdd44df5d05c1798ff7dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c71b3617_ef73134c",
+        "filename": "chrome/browser/ui/views/harmony/chrome_layout_provider.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-10T07:02:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f74e2931_a37cbee7",
+      "range": {
+        "startLine": 43,
+        "startChar": 30,
+        "endLine": 43,
+        "endChar": 68
+      },
+      "revId": "9caabc1d81a6c8a046cfdd44df5d05c1798ff7dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,47 @@
     },
     {
       "key": {
+        "uuid": "8e04dedb_20ad6904",
+        "filename": "chrome/browser/ui/views/harmony/chrome_layout_provider.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-10T07:02:35Z",
+      "side": 1,
+      "message": "Good point - Done",
+      "parentUuid": "8d13ae20_9940b6b5",
+      "range": {
+        "startLine": 44,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 47
+      },
+      "revId": "9caabc1d81a6c8a046cfdd44df5d05c1798ff7dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc287d64_c3c8b779",
+        "filename": "chrome/browser/ui/views/harmony/harmony_layout_provider.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-10T07:02:35Z",
+      "side": 1,
+      "message": "Based on Peter\u0027s comments at https://bugs.chromium.org/p/chromium/issues/detail?id\u003d652017#c6 I\u0027ve rolled this part back to just adding a separate override for the http dialog, and also removing the close-[x] from pre-harmony http auth dialogs.",
+      "revId": "9caabc1d81a6c8a046cfdd44df5d05c1798ff7dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ba62aa8_1877135a",
         "filename": "chrome/browser/ui/views/harmony/textfield_layout.h",
         "patchSetId": 8
@@ -94,6 +183,30 @@
     },
     {
       "key": {
+        "uuid": "ec0a927e_1801fdf4",
+        "filename": "chrome/browser/ui/views/harmony/textfield_layout.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-10T07:02:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ba62aa8_1877135a",
+      "range": {
+        "startLine": 17,
+        "startChar": 45,
+        "endLine": 17,
+        "endChar": 52
+      },
+      "revId": "9caabc1d81a6c8a046cfdd44df5d05c1798ff7dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed0fdda6_bbef6383",
         "filename": "chrome/browser/ui/views/login_view.cc",
         "patchSetId": 8
@@ -114,6 +227,30 @@
       "revId": "9caabc1d81a6c8a046cfdd44df5d05c1798ff7dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae78034a_dc74a19a",
+        "filename": "chrome/browser/ui/views/login_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-10T07:02:35Z",
+      "side": 1,
+      "message": "Part of me wonders whether the old code was just written that way to get around the weirdness around spanning columns ;). IMO, multiple columns sets are a weirder concept than just merging cells in a row. And I had trouble in DialogClientView ensuring preferred sizes were properly propagated through the grid when I tried to use multiple column sets. Seems to work fine here though. Done.",
+      "parentUuid": "ed0fdda6_bbef6383",
+      "range": {
+        "startLine": 23,
+        "startChar": 5,
+        "endLine": 23,
+        "endChar": 19
+      },
+      "revId": "9caabc1d81a6c8a046cfdd44df5d05c1798ff7dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
