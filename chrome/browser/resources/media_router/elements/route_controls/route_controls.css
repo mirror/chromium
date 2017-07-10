@@ -23,6 +23,11 @@
   width: 90%;
 }
 
+:host-context([dir='rtl']) paper-slider[dir='ltr'] {
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
+
 #media-controls {
   font-size: 1.25em;
   margin: 0 8px;
