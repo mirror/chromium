@@ -69,6 +69,24 @@
       "revId": "7b1ba73eed2ccd5dbd1a9e2691d738db7b071cb2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "922167fa_b12bc556",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-10T09:03:13Z",
+      "side": 1,
+      "message": "Talked offline.\n\nThis patch two return statements/builders",
+      "parentUuid": "e6eef9a7_ab9525a0",
+      "revId": "7b1ba73eed2ccd5dbd1a9e2691d738db7b071cb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
