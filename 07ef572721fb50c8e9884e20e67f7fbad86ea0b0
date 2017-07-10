@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "d1cedb97_ec03ad21",
+        "filename": "third_party/WebKit/public/platform/modules/credentialmanager/OWNERS",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-10T12:03:48Z",
+      "side": 1,
+      "message": "Created identity-dev@ and add mention of it here.",
+      "parentUuid": "0dab7272_adcb506a",
+      "revId": "07ef572721fb50c8e9884e20e67f7fbad86ea0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "da70f858_c226c32d",
         "filename": "third_party/WebKit/public/platform/modules/credentialmanager/credential_manager.mojom",
         "patchSetId": 3
@@ -83,6 +101,24 @@
       "writtenOn": "2017-07-10T10:08:46Z",
       "side": 1,
       "message": "Do we update copyright for moves? I guess we don\u0027t.",
+      "revId": "07ef572721fb50c8e9884e20e67f7fbad86ea0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be5e60d4_beca93e3",
+        "filename": "third_party/WebKit/public/platform/modules/credentialmanager/credential_manager.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-10T12:03:48Z",
+      "side": 1,
+      "message": "The style guide is quite unclear on that. Given that I did not otherwise change a single character in this file, I opted for keeping similarity at 100%.",
+      "parentUuid": "da70f858_c226c32d",
       "revId": "07ef572721fb50c8e9884e20e67f7fbad86ea0b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
