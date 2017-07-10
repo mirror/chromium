@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "fb25c83f_a4cdaf26",
+        "filename": "ios/chrome/browser/ui/collection_view/cells/collection_view_text_cell.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-10T11:45:10Z",
+      "side": 1,
+      "message": "Comment.",
+      "revId": "62d8176d02b9a86f97edc723941ba7f133228fa2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a1e6ff5_bda370da",
+        "filename": "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_text_item.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-10T11:45:10Z",
+      "side": 1,
+      "message": "[self.cellClass margin]?",
+      "range": {
+        "startLine": 52,
+        "startChar": 20,
+        "endLine": 52,
+        "endChar": 42
+      },
+      "revId": "62d8176d02b9a86f97edc723941ba7f133228fa2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4df557dc_5fe820be",
         "filename": "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_text_item.mm",
         "patchSetId": 1
@@ -18,6 +58,70 @@
         "startChar": 23,
         "endLine": 55,
         "endChar": 45
+      },
+      "revId": "62d8176d02b9a86f97edc723941ba7f133228fa2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4e1fec0_534ef61f",
+        "filename": "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_text_item.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-10T11:45:10Z",
+      "side": 1,
+      "message": "I\u0027d say optimize iff this is still a performance issue.",
+      "parentUuid": "4df557dc_5fe820be",
+      "range": {
+        "startLine": 55,
+        "startChar": 23,
+        "endLine": 55,
+        "endChar": 45
+      },
+      "revId": "62d8176d02b9a86f97edc723941ba7f133228fa2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcaa66b1_8c33fee7",
+        "filename": "ios/chrome/browser/ui/content_suggestions/cells/suggested_content.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-10T11:45:10Z",
+      "side": 1,
+      "message": "Comment.",
+      "revId": "62d8176d02b9a86f97edc723941ba7f133228fa2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbd9e70f_8e5831c4",
+        "filename": "ios/chrome/browser/ui/content_suggestions/cells/suggested_content.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-10T11:45:10Z",
+      "side": 1,
+      "message": "It\u0027s weird to me that this is a method on the items, not the cell class.",
+      "range": {
+        "startLine": 32,
+        "startChar": 11,
+        "endLine": 32,
+        "endChar": 29
       },
       "revId": "62d8176d02b9a86f97edc723941ba7f133228fa2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
