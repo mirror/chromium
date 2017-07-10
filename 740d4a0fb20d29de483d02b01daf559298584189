@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d7ef787b_23c0fee0",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ApplicationPanelSidebar.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 743,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-07-10T18:05:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2cf91db0_cc389b2d",
+      "revId": "740d4a0fb20d29de483d02b01daf559298584189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77d26b76_f7e92092",
         "filename": "third_party/WebKit/Source/devtools/front_end/resources/DatabaseModel.js",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "2d7be8f1_e7f204bd",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/DatabaseModel.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-07-10T18:05:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77d26b76_f7e92092",
+      "revId": "740d4a0fb20d29de483d02b01daf559298584189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b3e2686_bdc8690a",
         "filename": "third_party/WebKit/Source/devtools/front_end/resources/DatabaseQueryView.js",
         "patchSetId": 4
@@ -50,6 +86,24 @@
       "revId": "740d4a0fb20d29de483d02b01daf559298584189",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11368b3e_1c8ca4c3",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/DatabaseQueryView.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-07-10T18:05:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b3e2686_bdc8690a",
+      "revId": "740d4a0fb20d29de483d02b01daf559298584189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
