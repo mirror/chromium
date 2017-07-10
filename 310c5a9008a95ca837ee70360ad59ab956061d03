@@ -16,6 +16,23 @@
       "revId": "310c5a9008a95ca837ee70360ad59ab956061d03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c2aeefa_52bff687",
+        "filename": "chrome/browser/sessions/session_restore_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1674,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-10T16:58:12Z",
+      "side": 1,
+      "message": "the TestingObserver is intended to be private to page_load_metrics tests. I don\u0027t want to leak it to non page load metrics code. Can we instead write this test in the page load metrics codebase, since we are really asserting a certain property of page load metrics code (that a given tab is treated as having started in the foreground)?\n\nBTW we tend to assert things in page_load_metrics_browsertest.cc by histogram. So rather than adding this boolean param you could assert that a histogram that is only expected to be logged in the foreground is actually logged.",
+      "revId": "310c5a9008a95ca837ee70360ad59ab956061d03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
