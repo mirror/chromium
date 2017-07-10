@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad3b50dc_dba29f8b",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 71285,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-10T10:58:55Z",
+      "side": 1,
+      "message": "Nit: I think I would write \"The time for which the [...] dialog is shown\" if you want to stay consistent with the \"The time...\" phrasing, otherwise \"How long the [...] dialog is shown\".",
+      "range": {
+        "startLine": 71285,
+        "startChar": 4,
+        "endLine": 71285,
+        "endChar": 13
+      },
+      "revId": "cb35484f2f4ceb66e55b03f231aaf4bf7d28f47f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
