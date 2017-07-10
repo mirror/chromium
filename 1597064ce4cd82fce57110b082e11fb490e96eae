@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b2aa2258_28134921",
+        "filename": "ui/gfx/platform_font.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2017-07-10T22:20:20Z",
+      "side": 1,
+      "message": "This could be moved explicitly to the linux version.\n\nAuraInit already is doing some linux explicit work. And just relying on the fact that the impl sets up this static state.\n\nThoughts?",
+      "parentUuid": "2b53dbae_70e7523c",
+      "revId": "1597064ce4cd82fce57110b082e11fb490e96eae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "30216e5a_eb224d0d",
         "filename": "ui/gfx/platform_font_linux.cc",
         "patchSetId": 1
@@ -87,6 +105,24 @@
       "writtenOn": "2017-07-10T21:30:31Z",
       "side": 1,
       "message": "Should this just call PlatformLinux directly, above in the OS_LINUX block? (and continue to use gfx::Font() here)",
+      "revId": "1597064ce4cd82fce57110b082e11fb490e96eae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e762071a_e20e36a3",
+        "filename": "ui/views/mus/aura_init.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2017-07-10T22:20:20Z",
+      "side": 1,
+      "message": "If we never expect to have to use this on other platforms, then yes",
+      "parentUuid": "ac75477d_efe3cb90",
       "revId": "1597064ce4cd82fce57110b082e11fb490e96eae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
