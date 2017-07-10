@@ -1976,14 +1976,18 @@ void BrowserView::ViewHierarchyChanged(
   if (!initialized_ && details.is_add) {
     InitViews();
     initialized_ = true;
+#if defined(USE_AURA)
     if (base::CommandLine::ForCurrentProcess()->HasSwitch(
             switches::kEnableExperimentalFullscreenExitUI)) {
       widget->GetNativeView()->AddPreTargetHandler(GetFullscreenControlHost());
     }
+#endif
   } else if (fullscreen_control_host_) {
+#if defined(USE_AURA)
     auto* native_view = widget->GetNativeView();
     if (native_view)
       native_view->RemovePreTargetHandler(fullscreen_control_host_.get());
+#endif
   }
 }
 
