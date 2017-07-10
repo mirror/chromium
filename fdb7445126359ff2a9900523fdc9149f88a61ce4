@@ -22,6 +22,30 @@
       "revId": "fdb7445126359ff2a9900523fdc9149f88a61ce4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c97a000e_63a03ff7",
+        "filename": "ios/chrome/test/earl_grey/chrome_matchers.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-07-10T16:03:28Z",
+      "side": 1,
+      "message": "Done. Good catch!",
+      "parentUuid": "09183ce5_25ce05d7",
+      "range": {
+        "startLine": 126,
+        "startChar": 11,
+        "endLine": 126,
+        "endChar": 14
+      },
+      "revId": "fdb7445126359ff2a9900523fdc9149f88a61ce4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
