@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "882b5cbc_f4f6f16d",
+        "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_headers.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2017-07-10T23:12:35Z",
+      "side": 1,
+      "message": "nit: the other constants have accessor methods. Why not this one?",
+      "range": {
+        "startLine": 217,
+        "startChar": 40,
+        "endLine": 217,
+        "endChar": 58
+      },
+      "revId": "c8f4553b99b257796034b7e319661037717aeb21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f77fa13_65567aea",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 7234,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2017-07-10T23:12:35Z",
+      "side": 1,
+      "message": "In the histogram description, I would make it clear that these buckets are collected into one histogram for convenience, that these aren\u0027t orthogonal cases, and that in general request and receive couples can be compared.",
+      "range": {
+        "startLine": 7234,
+        "startChar": 12,
+        "endLine": 7234,
+        "endChar": 58
+      },
+      "revId": "c8f4553b99b257796034b7e319661037717aeb21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
