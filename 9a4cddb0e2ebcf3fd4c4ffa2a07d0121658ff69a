@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db9cd2f2_a14f7da8",
+        "filename": "chrome/browser/ui/views/frame/global_menu_bar_x11.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-10T17:49:18Z",
+      "side": 1,
+      "message": "Note that the comments on ActiveBrowserChanged() only seem to imply that it matters on Mac, and the one here doesn\u0027t note that the order is important either (or why).\n\nIt would be good to fix at least one of those things.  It would be even better to add some kind of unittest that verifies that changing the active browser has the right effect on the menu items.",
+      "revId": "9a4cddb0e2ebcf3fd4c4ffa2a07d0121658ff69a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
