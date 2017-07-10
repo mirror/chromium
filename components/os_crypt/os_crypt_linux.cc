@@ -225,44 +225,13 @@ bool OSCrypt::DecryptString(const std::string& ciphertext,
 }
 
 // static
-void OSCrypt::SetStore(const std::string& store_type) {
-  // Changing the targeted password store makes no sense after initializing.
-  DCHECK(!g_cache.Get().is_key_storage_cached);
-
-  KeyStorageLinux::SetStore(store_type);
-}
-
-// static
-void OSCrypt::SetProductName(const std::string& product_name) {
-  // Setting the product name makes no sense after initializing.
-  DCHECK(!g_cache.Get().is_key_storage_cached);
-
-  KeyStorageLinux::SetProductName(product_name);
-}
-
-// static
-void OSCrypt::SetMainThreadRunner(
-    scoped_refptr<base::SingleThreadTaskRunner> main_thread_runner) {
-  // Setting the task runner makes no sense after initializing.
-  DCHECK(!g_cache.Get().is_key_storage_cached);
-
-  KeyStorageLinux::SetMainThreadRunner(main_thread_runner);
-}
-
-// static
-void OSCrypt::ShouldUsePreference(bool should_use_preference) {
+os_crypt::Config* OSCrypt::GetConfigPtr() {
   // Setting initialisation parameters makes no sense after initializing.
+  // We get the config via OSCrypt so that we can perform this check, because
+  // OSCrypt's lazy initialisation shouldn't happen before we set its
+  // parameters.
   DCHECK(!g_cache.Get().is_key_storage_cached);
-
-  KeyStorageLinux::ShouldUsePreference(should_use_preference);
-}
-
-// static
-void OSCrypt::SetUserDataPath(const base::FilePath& path) {
-  // Setting initialisation parameters makes no sense after initializing.
-  DCHECK(!g_cache.Get().is_key_storage_cached);
-
-  KeyStorageLinux::SetUserDataPath(path);
+  return os_crypt::Config::GetInstance();
 }
 
 // static

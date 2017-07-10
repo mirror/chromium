@@ -14,12 +14,9 @@
 #include "build/build_config.h"
 
 #if defined(OS_LINUX) && !defined(OS_CHROMEOS)
+#include "components/os_crypt/key_storage_config_linux.h"
 #include "components/os_crypt/key_storage_linux.h"
 #endif  // defined(OS_LINUX) && !defined(OS_CHROMEOS)
-
-namespace base {
-class FilePath;
-}
 
 // The OSCrypt class gives access to simple encryption and decryption of
 // strings. Note that on Mac, access to the system Keychain is required and
@@ -28,27 +25,8 @@ class FilePath;
 class OSCrypt {
  public:
 #if defined(OS_LINUX) && !defined(OS_CHROMEOS)
-  // If |store_type| is a known password store, we will attempt to use it.
-  // In any other case, we default to auto-detecting the store.
-  // This should not be changed after OSCrypt has been used.
-  static void SetStore(const std::string& store_type);
-
-  // Some password stores may prompt the user for permission and show the
-  // application name.
-  static void SetProductName(const std::string& product_name);
-
-  // The gnome-keyring implementation requires calls from the main thread.
-  // TODO(crbug/466975): Libsecret and KWallet don't need this. We can remove
-  // this when we stop supporting keyring.
-  static void SetMainThreadRunner(
-      scoped_refptr<base::SingleThreadTaskRunner> main_thread_runner);
-
-  // Enable the feature where we determine if we should try a backend via a
-  // preference file.
-  static void ShouldUsePreference(bool should_use_preference);
-
-  // Set the folder, where OSCrypt will check for its preference file.
-  static void SetUserDataPath(const base::FilePath& path);
+  // TODO(cfroussios) why not SetConfig()?
+  static os_crypt::Config* GetConfigPtr();
 
   // Returns true iff the real secret key (not hardcoded one) is available.
   static bool IsEncryptionAvailable();
