@@ -24,24 +24,27 @@ namespace {
 class ClientSharedBitmap : public cc::SharedBitmap {
  public:
   ClientSharedBitmap(
-      scoped_refptr<
-          cc::mojom::ThreadSafeSharedBitmapAllocationNotifierAssociatedPtr>
+      scoped_refptr<cc::mojom::ThreadSafeSharedBitmapAllocationNotifierPtr>
           shared_bitmap_allocation_notifier,
       base::SharedMemory* shared_memory,
-      const cc::SharedBitmapId& id)
-      : cc::SharedBitmap(static_cast<uint8_t*>(shared_memory->memory()), id),
+      const cc::SharedBitmapId& id,
+      uint32_t sequence_number)
+      : cc::SharedBitmap(static_cast<uint8_t*>(shared_memory->memory()),
+                         id,
+                         sequence_number),
         shared_bitmap_allocation_notifier_(
             std::move(shared_bitmap_allocation_notifier)) {}
 
   ClientSharedBitmap(
-      scoped_refptr<
-          cc::mojom::ThreadSafeSharedBitmapAllocationNotifierAssociatedPtr>
+      scoped_refptr<cc::mojom::ThreadSafeSharedBitmapAllocationNotifierPtr>
           shared_bitmap_allocation_notifier,
       std::unique_ptr<base::SharedMemory> shared_memory_holder,
-      const cc::SharedBitmapId& id)
+      const cc::SharedBitmapId& id,
+      uint32_t sequence_number)
       : ClientSharedBitmap(std::move(shared_bitmap_allocation_notifier),
                            shared_memory_holder.get(),
-                           id) {
+                           id,
+                           sequence_number) {
     shared_memory_holder_ = std::move(shared_memory_holder);
   }
 
@@ -57,8 +60,7 @@ class ClientSharedBitmap : public cc::SharedBitmap {
   }
 
  private:
-  scoped_refptr<
-      cc::mojom::ThreadSafeSharedBitmapAllocationNotifierAssociatedPtr>
+  scoped_refptr<cc::mojom::ThreadSafeSharedBitmapAllocationNotifierPtr>
       shared_bitmap_allocation_notifier_;
   std::unique_ptr<base::SharedMemory> shared_memory_holder_;
 };
@@ -110,8 +112,7 @@ std::unique_ptr<base::SharedMemory> AllocateSharedMemory(size_t buf_size) {
 }  // namespace
 
 ClientSharedBitmapManager::ClientSharedBitmapManager(
-    scoped_refptr<
-        cc::mojom::ThreadSafeSharedBitmapAllocationNotifierAssociatedPtr>
+    scoped_refptr<cc::mojom::ThreadSafeSharedBitmapAllocationNotifierPtr>
         shared_bitmap_allocation_notifier)
     : shared_bitmap_allocation_notifier_(
           std::move(shared_bitmap_allocation_notifier)) {}
@@ -131,6 +132,8 @@ ClientSharedBitmapManager::AllocateSharedBitmap(const gfx::Size& size) {
   if (!memory || !memory->Map(memory_size))
     CollectMemoryUsageAndDie(size, memory_size);
 
+  base::AutoLock lock(lock_);
+
   NotifyAllocatedSharedBitmap(memory.get(), id);
 
   // Close the associated FD to save resources, the previously mapped memory
@@ -138,7 +141,8 @@ ClientSharedBitmapManager::AllocateSharedBitmap(const gfx::Size& size) {
   memory->Close();
 
   return base::MakeUnique<ClientSharedBitmap>(
-      shared_bitmap_allocation_notifier_, std::move(memory), id);
+      shared_bitmap_allocation_notifier_, std::move(memory), id,
+      ++last_sequence_number_);
 }
 
 std::unique_ptr<cc::SharedBitmap>
@@ -151,9 +155,10 @@ ClientSharedBitmapManager::GetSharedBitmapFromId(const gfx::Size&,
 std::unique_ptr<cc::SharedBitmap>
 ClientSharedBitmapManager::GetBitmapForSharedMemory(base::SharedMemory* mem) {
   cc::SharedBitmapId id = cc::SharedBitmap::GenerateId();
-  NotifyAllocatedSharedBitmap(mem, cc::SharedBitmap::GenerateId());
+  base::AutoLock lock(lock_);
+  NotifyAllocatedSharedBitmap(mem, id);
   return base::MakeUnique<ClientSharedBitmap>(
-      shared_bitmap_allocation_notifier_, mem, id);
+      shared_bitmap_allocation_notifier_, mem, id, ++last_sequence_number_);
 }
 
 // Notifies the browser process that a shared bitmap with the given ID was

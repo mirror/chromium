@@ -28,6 +28,7 @@
 #include "cc/ipc/compositor_frame_sink.mojom.h"
 #include "cc/resources/shared_bitmap.h"
 #include "cc/surfaces/frame_sink_id.h"
+#include "components/viz/service/display_embedder/shared_bitmap_allocation_notifier_impl.h"
 #include "content/browser/renderer_host/event_with_latency_info.h"
 #include "content/browser/renderer_host/input/input_ack_handler.h"
 #include "content/browser/renderer_host/input/input_router_client.h"
@@ -105,6 +106,7 @@ class CONTENT_EXPORT RenderWidgetHostImpl
       public TouchEmulatorClient,
       public NON_EXPORTED_BASE(SyntheticGestureController::Delegate),
       public NON_EXPORTED_BASE(cc::mojom::CompositorFrameSink),
+      public NON_EXPORTED_BASE(viz::SharedBitmapAllocationObserver),
       public IPC::Listener {
  public:
   // |routing_id| must not be MSG_ROUTING_NONE.
@@ -752,6 +754,9 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   // Once both the frame and its swap messages arrive, we call this method to
   // process the messages. Virtual for tests.
   virtual void ProcessSwapMessages(std::vector<IPC::Message> messages);
+
+  // viz::SharedBitmapAllocationObserver implementation.
+  void DidAllocateSharedBitmap() override;
 
 #if defined(OS_MACOSX)
   device::mojom::WakeLock* GetWakeLock();

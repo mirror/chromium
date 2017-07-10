@@ -40,7 +40,7 @@ class ServerSharedBitmap : public cc::SharedBitmap {
                      scoped_refptr<BitmapData> bitmap_data,
                      const cc::SharedBitmapId& id,
                      ServerSharedBitmapManager* manager)
-      : SharedBitmap(pixels, id),
+      : SharedBitmap(pixels, id, 0),
         bitmap_data_(bitmap_data),
         manager_(manager) {}
 
@@ -78,7 +78,7 @@ ServerSharedBitmapManager* ServerSharedBitmapManager::current() {
 
 std::unique_ptr<cc::SharedBitmap>
 ServerSharedBitmapManager::AllocateSharedBitmap(const gfx::Size& size) {
-  base::AutoLock lock(lock_);
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   size_t bitmap_size;
   if (!cc::SharedBitmap::SizeInBytes(size, &bitmap_size))
     return nullptr;
@@ -97,7 +97,7 @@ ServerSharedBitmapManager::AllocateSharedBitmap(const gfx::Size& size) {
 std::unique_ptr<cc::SharedBitmap>
 ServerSharedBitmapManager::GetSharedBitmapFromId(const gfx::Size& size,
                                                  const cc::SharedBitmapId& id) {
-  base::AutoLock lock(lock_);
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   auto it = handle_map_.find(id);
   if (it == handle_map_.end())
     return nullptr;
@@ -124,7 +124,7 @@ ServerSharedBitmapManager::GetSharedBitmapFromId(const gfx::Size& size,
 bool ServerSharedBitmapManager::OnMemoryDump(
     const base::trace_event::MemoryDumpArgs& args,
     base::trace_event::ProcessMemoryDump* pmd) {
-  base::AutoLock lock(lock_);
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
 
   for (const auto& bitmap : handle_map_) {
     base::trace_event::MemoryAllocatorDump* dump =
@@ -160,7 +160,7 @@ bool ServerSharedBitmapManager::ChildAllocatedSharedBitmap(
     size_t buffer_size,
     const base::SharedMemoryHandle& handle,
     const cc::SharedBitmapId& id) {
-  base::AutoLock lock(lock_);
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   if (handle_map_.find(id) != handle_map_.end())
     return false;
   auto data = base::MakeRefCounted<BitmapData>(buffer_size);
@@ -173,18 +173,18 @@ bool ServerSharedBitmapManager::ChildAllocatedSharedBitmap(
 
 void ServerSharedBitmapManager::ChildDeletedSharedBitmap(
     const cc::SharedBitmapId& id) {
-  base::AutoLock lock(lock_);
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   handle_map_.erase(id);
 }
 
 size_t ServerSharedBitmapManager::AllocatedBitmapCount() const {
-  base::AutoLock lock(lock_);
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   return handle_map_.size();
 }
 
 void ServerSharedBitmapManager::FreeSharedMemoryFromMap(
     const cc::SharedBitmapId& id) {
-  base::AutoLock lock(lock_);
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   handle_map_.erase(id);
 }
 
