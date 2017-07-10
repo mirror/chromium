@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "abe0c4d1_76604862",
+        "filename": "media/filters/vp9_parser_fuzzertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-07-10T14:30:11Z",
+      "side": 1,
+      "message": "This would make existing corpus kind of useless... I highly recommend to use std::hash based on data (e.g. https://cs.chromium.org/search/?q\u003d%22std::hash%22+file:fuzz\u0026sq\u003dpackage:chromium\u0026type\u003dcs) for \"randomization\" of flags.",
+      "range": {
+        "startLine": 28,
+        "startChar": 2,
+        "endLine": 28,
+        "endChar": 27
+      },
+      "revId": "06d6fe043911686bcdcf984e19fad94ddf14b51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
