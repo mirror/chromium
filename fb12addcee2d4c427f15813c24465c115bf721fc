@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "afa2b7e1_7d8da887",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-10T22:39:28Z",
+      "side": 1,
+      "message": "Why add this ContentsView dependency instead of just passing a delegate as before? If we need a ContentsView* in a followup CL, move this change to that CL.",
+      "revId": "fb12addcee2d4c427f15813c24465c115bf721fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "69cd75b1_34adda74",
         "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
         "patchSetId": 9
