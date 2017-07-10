@@ -31,7 +31,7 @@ AddressNormalizationManager::AddressNormalizationManager(
 
 AddressNormalizationManager::~AddressNormalizationManager() {}
 
-void AddressNormalizationManager::FinalizeWithCompletionCallback(
+void AddressNormalizationManager::FinalizePendingRequestsWithCompletionCallback(
     base::OnceClosure completion_callback) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   completion_callback_ = std::move(completion_callback);
@@ -61,6 +61,10 @@ void AddressNormalizationManager::MaybeRunCompletionCallback() {
   // We're no longer accepting requests, and all the delegates have completed.
   // Now's the time to run the completion callback.
   std::move(completion_callback_).Run();
+
+  // Start accepting requests after the completion callback has run.
+  delegates_.clear();
+  accepting_requests_ = true;
 }
 
 AddressNormalizationManager::NormalizerDelegate::NormalizerDelegate(
