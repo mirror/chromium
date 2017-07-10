@@ -16,6 +16,24 @@
       "revId": "9da5a148b8e93adeb4c79bf1a2d82f28104a9f18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0d9d396_08fb6811",
+        "filename": "ui/views/controls/textfield/textfield.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 974,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-07-10T22:08:42Z",
+      "side": 1,
+      "message": "You are right, the real bug is that the cursor_view is initialized as visible. Updating its position makes it appears in the text field. Could you please review the new approach? Thank you.",
+      "parentUuid": "e960162b_47f5340b",
+      "revId": "9da5a148b8e93adeb4c79bf1a2d82f28104a9f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
