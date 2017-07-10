@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65796130_e96c14dd",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-10T17:12:15Z",
+      "side": 1,
+      "message": "nit: const base::Value\u0026 property",
+      "revId": "6763eb6b64aa665847633dcc021567fc7d56cdc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
