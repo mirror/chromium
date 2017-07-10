@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a5bf4bf_bd4b285a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-10T20:58:24Z",
+      "side": 1,
+      "message": "Would be good to make first sentence of description paragraph describe what the event is. ie:\nThis CL adds a notification to the FeatureEngagementTracker when the user clears browsing history.",
+      "revId": "371a7a1ba7b946fc4a618894e9d7e9651adb8624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fe0cd69_2956b364",
+        "filename": "ios/chrome/browser/ui/settings/clear_browsing_data_collection_view_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-10T20:58:24Z",
+      "side": 1,
+      "message": "Comment would be clearer if parentheses were in separate, complete sentence.",
+      "range": {
+        "startLine": 644,
+        "startChar": 4,
+        "endLine": 644,
+        "endChar": 5
+      },
+      "revId": "371a7a1ba7b946fc4a618894e9d7e9651adb8624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
