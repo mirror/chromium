@@ -46,6 +46,30 @@
       "revId": "b07626425b48bb43482fe63ae8ceae3865e343fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5256de97_ae3a3555",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-10T13:02:39Z",
+      "side": 1,
+      "message": "The variable you used previously was a reference (\"auto\u0026 t \u003d tiles[i]\" or something). \n\n-----\n\nIf you have a bool \"x \u003da || b;\" here, it\u0027s a (super cheap) copy of that value.\n\nIf you change the value of the variable, you change what it references. This can easily slip your attention and generally, pointers or iterators are better to make sure the reader knows when you change the references object.\n\nIf you just need read access, using \"const Tile\u0026 tile \u003d new_tiles[position]\" is a nice and harmless abbreviation.\n\nIf you would want to keep the variable and invalidate the object in the array immediately, I think I would have tried \"Tile tile \u003d std::move(new_tiles[position]);\". Not sure if others would agree here.\n\n\nBtw: I know that you just moved the variable from the for (auto\u0026 tile : tiles) into the loop. But even the for(auto\u0026) was debatable (and I think debated).",
+      "parentUuid": "ca72247d_e963496b",
+      "range": {
+        "startLine": 422,
+        "startChar": 29,
+        "endLine": 422,
+        "endChar": 76
+      },
+      "revId": "b07626425b48bb43482fe63ae8ceae3865e343fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
