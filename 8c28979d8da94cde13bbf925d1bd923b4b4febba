@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5089f198_904e6b71",
+        "filename": "docs/clang_static_analyzer.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-07-10T18:48:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3a77b38_1491632b",
+      "revId": "8c28979d8da94cde13bbf925d1bd923b4b4febba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be47d837_354cc78a",
         "filename": "docs/clang_static_analyzer.md",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "8c28979d8da94cde13bbf925d1bd923b4b4febba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02e7f57f_626cf5de",
+        "filename": "docs/clang_static_analyzer.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-07-10T18:48:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be47d837_354cc78a",
+      "revId": "8c28979d8da94cde13bbf925d1bd923b4b4febba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a2eac750_bf5d2f1d",
+        "filename": "docs/clang_static_analyzer.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-07-10T18:48:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "318fef36_2d073551",
+      "revId": "8c28979d8da94cde13bbf925d1bd923b4b4febba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "402636f6_b6896143",
         "filename": "docs/clang_static_analyzer.md",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-07-10T04:15:08Z",
       "side": 1,
       "message": "What is the flag syntax? Should it be -analyzer or --analyzer?",
+      "revId": "8c28979d8da94cde13bbf925d1bd923b4b4febba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7612d6c_0a4d7238",
+        "filename": "docs/clang_static_analyzer.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-07-10T18:48:07Z",
+      "side": 1,
+      "message": "One hyphen. It\u0027s correct as written.",
+      "parentUuid": "402636f6_b6896143",
       "revId": "8c28979d8da94cde13bbf925d1bd923b4b4febba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "d9315b12_b2807371",
+        "filename": "docs/clang_static_analyzer.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-07-10T18:48:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b639ae05_36b3a563",
+      "revId": "8c28979d8da94cde13bbf925d1bd923b4b4febba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63b9c40f_1cc1685d",
         "filename": "docs/clang_static_analyzer.md",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "8c28979d8da94cde13bbf925d1bd923b4b4febba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6efff41d_4e1d1428",
+        "filename": "docs/clang_static_analyzer.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-07-10T18:48:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63b9c40f_1cc1685d",
+      "revId": "8c28979d8da94cde13bbf925d1bd923b4b4febba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "edb2d83d_d59c5008",
+        "filename": "docs/clang_static_analyzer.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-07-10T18:48:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49fd7ec8_9b598356",
+      "revId": "8c28979d8da94cde13bbf925d1bd923b4b4febba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bac90f0d_afb25627",
         "filename": "docs/clang_static_analyzer.md",
         "patchSetId": 3
@@ -132,6 +258,24 @@
       "writtenOn": "2017-07-10T04:15:08Z",
       "side": 1,
       "message": "nit: This may go against one of the rules-of-thumb for DCHECKs, which is that it is practically  pointless to DCHECK(ptr) if you are going to de-reference |ptr| immediately afterward (commonly the case if |ptr| is a raw pointer parameter to a function. It sounds like we\u0027re now saying that DCHECKs are legitimate in these cases, and it sounds like we\u0027ll have a lot of DCHECKs to add?",
+      "revId": "8c28979d8da94cde13bbf925d1bd923b4b4febba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f284ac4_4786a158",
+        "filename": "docs/clang_static_analyzer.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-07-10T18:48:07Z",
+      "side": 1,
+      "message": "That\u0027s true, though the codebase is already linting pretty cleanly in that regard.",
+      "parentUuid": "bac90f0d_afb25627",
       "revId": "8c28979d8da94cde13bbf925d1bd923b4b4febba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "9cdf9a30_a29efec2",
+        "filename": "docs/clang_static_analyzer.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-07-10T18:48:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2998f5e_a243a488",
+      "revId": "8c28979d8da94cde13bbf925d1bd923b4b4febba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b321834_3956b348",
         "filename": "docs/clang_static_analyzer.md",
         "patchSetId": 3
@@ -169,6 +331,24 @@
       "revId": "8c28979d8da94cde13bbf925d1bd923b4b4febba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c493236_1487b091",
+        "filename": "docs/clang_static_analyzer.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-07-10T18:48:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b321834_3956b348",
+      "revId": "8c28979d8da94cde13bbf925d1bd923b4b4febba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "6ee33c1b_09f3e8c9",
+        "filename": "docs/clang_static_analyzer.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-07-10T18:48:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41f381a0_863f1a55",
+      "revId": "8c28979d8da94cde13bbf925d1bd923b4b4febba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb41a4ef_1ccdf640",
         "filename": "docs/clang_static_analyzer.md",
         "patchSetId": 3
@@ -200,6 +398,24 @@
       "writtenOn": "2017-07-10T04:15:08Z",
       "side": 1,
       "message": "nit: You have mentioned this already, above - IIUC what you want to say here is that the Chromium assertion macros use an analyzer annotation internally, and that this can be applied elsewhere, if need be, e.g. to component-specific assertion macros?",
+      "revId": "8c28979d8da94cde13bbf925d1bd923b4b4febba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff82db7f_ca40daec",
+        "filename": "docs/clang_static_analyzer.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-07-10T18:48:07Z",
+      "side": 1,
+      "message": "I think this section is probably too detailed for the average developer. I added some text to the \"addressing false positives\" section suggesting that the reader look at base/logging.h for more information.",
+      "parentUuid": "fb41a4ef_1ccdf640",
       "revId": "8c28979d8da94cde13bbf925d1bd923b4b4febba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
