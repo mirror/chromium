@@ -945,7 +945,7 @@ InspectorTest.TempFileMock.create = function(dirPath, name)
     return Promise.resolve(tempFile);
 }
 
-InspectorTest.dumpLoadedModules = function(next)
+InspectorTest.dumpLoadedModules = function()
 {
     function moduleSorter(left, right)
     {
@@ -959,8 +959,6 @@ InspectorTest.dumpLoadedModules = function(next)
         if (modules[i]._loadedForTest)
             InspectorTest.addResult("    " + modules[i]._descriptor.name);
     }
-    if (next)
-        next();
 }
 
 InspectorTest.TimeoutMock = function()

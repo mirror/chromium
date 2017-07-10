@@ -1,0 +1,37 @@
+This test validates set of loaded modules for Network panel.
+
+Loaded modules:
+    bindings
+    cm
+    common
+    components
+    console_model
+    cookie_table
+    data_grid
+    diff
+    dom_extension
+    emulation
+    extensions
+    formatter
+    help
+    host
+    main
+    mobile_throttling
+    network
+    network_log
+    network_priorities
+    object_ui
+    perf_ui
+    persistence
+    platform
+    product_registry
+    protocol
+    sdk
+    services
+    source_frame
+    text_editor
+    text_utils
+    ui
+    workspace
+    workspace_diff
+
