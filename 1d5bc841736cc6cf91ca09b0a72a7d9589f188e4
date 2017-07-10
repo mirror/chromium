@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "39bc9c72_a2a14368",
+        "filename": "chrome/browser/vr/OWNERS",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-10T15:12:17Z",
+      "side": 1,
+      "message": "So to confirm, I just drop this noparent line, correct?",
+      "parentUuid": "096fbc09_a34ac6ca",
+      "revId": "1d5bc841736cc6cf91ca09b0a72a7d9589f188e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea47507d_d062a8b3",
         "filename": "chrome/browser/vr/color_scheme.h",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-10T07:31:26Z",
       "side": 1,
       "message": "should this be namespace vr or similar (here and everywhere)?",
+      "revId": "1d5bc841736cc6cf91ca09b0a72a7d9589f188e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93303b2d_8e6e8bc6",
+        "filename": "chrome/browser/vr/color_scheme.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-10T15:12:17Z",
+      "side": 1,
+      "message": "That\u0027s a good point.",
+      "parentUuid": "ea47507d_d062a8b3",
       "revId": "1d5bc841736cc6cf91ca09b0a72a7d9589f188e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
