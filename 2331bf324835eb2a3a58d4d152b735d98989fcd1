@@ -67,6 +67,63 @@
       "revId": "2331bf324835eb2a3a58d4d152b735d98989fcd1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "815fbcd1_ee5038f7",
+        "filename": "chrome/browser/chromeos/policy/user_cloud_policy_store_chromeos_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-10T04:01:47Z",
+      "side": 1,
+      "message": "Just directly call FakeCryptohomeClient::GetStubSystemSalt().\n\nPlease don\u0027t add any new code which uses the deprecated blocking version method.",
+      "revId": "2331bf324835eb2a3a58d4d152b735d98989fcd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e144d14a_54dd0e02",
+        "filename": "chromeos/dbus/fake_cryptohome_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-10T04:01:47Z",
+      "side": 1,
+      "message": "std::string()",
+      "range": {
+        "startLine": 153,
+        "startChar": 71,
+        "endLine": 153,
+        "endChar": 73
+      },
+      "revId": "2331bf324835eb2a3a58d4d152b735d98989fcd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ebad1fe_13aa7f8b",
+        "filename": "chromeos/dbus/fake_cryptohome_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-10T04:01:47Z",
+      "side": 1,
+      "message": "I find this behavior difficult to understand as the salt\u0027s emptiness is cryptohomed\u0027s implementation detail which has almost nothing to do with chrome.\n\nHow about using an existing flag (e.g. service_is_available_) or adding a new one to explicitly control the fake\u0027s behavior?",
+      "revId": "2331bf324835eb2a3a58d4d152b735d98989fcd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
