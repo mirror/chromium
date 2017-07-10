@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4fb117b_7fa3d850",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-10T18:34:41Z",
+      "side": 1,
+      "message": "Make sure the layer as at the top, i.e. something like:\n  if (root-\u003elayer() !\u003d ...)\n    root-\u003elayer()-\u003eAdd(...);\n  else\n    root-\u003elayer()-\u003eStackAtTop(...);",
+      "revId": "a199654e0f3482660daac924eebdec74eebf7554",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf476801_8dbcbb70",
+        "filename": "components/ui_devtools/views/ui_devtools_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-10T18:34:41Z",
+      "side": 1,
+      "message": "Keep the input-param as an aura::Window*.",
+      "revId": "a199654e0f3482660daac924eebdec74eebf7554",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e66e1796_a2328a11",
+        "filename": "components/ui_devtools/views/ui_devtools_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-10T18:34:41Z",
+      "side": 1,
+      "message": "Keep the inputparam as an aura::Window*",
+      "revId": "a199654e0f3482660daac924eebdec74eebf7554",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
