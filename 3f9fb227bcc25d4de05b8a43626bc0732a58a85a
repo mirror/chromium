@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c0e9c49_7afca66a",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-10T23:56:12Z",
+      "side": 1,
+      "message": "Since we only use delegate_ in two places I would remove the member.",
+      "revId": "3f9fb227bcc25d4de05b8a43626bc0732a58a85a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68ad2804_edfff8ce",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-10T23:56:12Z",
+      "side": 1,
+      "message": "Can we move this to a helper, e.g.:\nif (is_fullscreen_app_list_enabled_)\n  suggested_apps_indicator_ \u003d CreateIndicator();",
+      "revId": "3f9fb227bcc25d4de05b8a43626bc0732a58a85a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96c78c51_06c02ffc",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-10T23:56:12Z",
+      "side": 1,
+      "message": "Same here, and test on suggested_apps_indicator_ instead:\n\nif (suggested_apps_indicator_)\n  LayoutIndicator();",
+      "revId": "3f9fb227bcc25d4de05b8a43626bc0732a58a85a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc7a185a_43121623",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 893,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-10T23:56:12Z",
+      "side": 1,
+      "message": "Just integrate the logic from the bool version here.",
+      "revId": "3f9fb227bcc25d4de05b8a43626bc0732a58a85a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "175dc044_a311cca8",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 901,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-10T23:56:12Z",
+      "side": 1,
+      "message": "This will still be clear if you pass (0), more clear imho.",
+      "revId": "3f9fb227bcc25d4de05b8a43626bc0732a58a85a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eff5c7de_225ddfd3",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 906,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-10T23:56:12Z",
+      "side": 1,
+      "message": "total_pages",
+      "revId": "3f9fb227bcc25d4de05b8a43626bc0732a58a85a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a8decd9_dc944e64",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 958,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-10T23:56:12Z",
+      "side": 1,
+      "message": "Passing TilesPerPage(1) instead of (false) is OK, if not ideal.\n\nAlternatively, use TilesPerFirstPage() and TilesPerNthPage() instead of passing a bool. Otherwise each call should really document the arg according to the style guide, e.g. TilesPerPage(true /* page_zero */);",
+      "revId": "3f9fb227bcc25d4de05b8a43626bc0732a58a85a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c96553cb_cbfbf38e",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1071,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-10T23:56:12Z",
+      "side": 1,
+      "message": "This would be more clear if lines 1034-1071 were moved to a helper method, e.g.:\n\nif (HandleSuggestionsMove(...))\n  return;",
+      "revId": "3f9fb227bcc25d4de05b8a43626bc0732a58a85a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6428854_fa1aefb4",
+        "filename": "ui/app_list/views/apps_grid_view.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-10T23:56:12Z",
+      "side": 1,
+      "message": "Avoid methods with the same name with different args.",
+      "revId": "3f9fb227bcc25d4de05b8a43626bc0732a58a85a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
