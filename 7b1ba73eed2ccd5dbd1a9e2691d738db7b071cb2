@@ -16,6 +16,24 @@
       "revId": "7b1ba73eed2ccd5dbd1a9e2691d738db7b071cb2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67394dee_15a98fac",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-10T08:04:10Z",
+      "side": 1,
+      "message": "When hit \u003c extend \u003c base case, base is already adjusted for granularity by\nlast selection change, thus we don\u0027t need to expand it again.\n\nThis is same as start for forward case.",
+      "parentUuid": "7d014902_6b708eb6",
+      "revId": "7b1ba73eed2ccd5dbd1a9e2691d738db7b071cb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
