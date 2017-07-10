@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "4749c09a_7e30af69",
+        "filename": "ios/chrome/browser/ntp_tiles/ntp_tiles_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-10T13:39:26Z",
+      "side": 1,
+      "message": "No, it doesn\u0027t look to do it. It passes 100% the first time I run the test (out of 20+ runs). But it fails on the 3rd attempt (surprisingly it seems to fail on exactly the 3rd attempt each time, out of 5+ runs so not statistically significant).\n\nI also tried a different method that opens the tab via the UI (and does more synchronization and is more of a user action), and that seemed to succeed more times in a row (out of the 10 times I tested it, it always failed on the 6th or 7th attempt).\n\nI didn\u0027t run it enough to conclusively say it fails on exactly the nth run, but it does seem weird that it has never failed on the first run or made it beyond the 6th run (I\u0027m trying to run it 10 times, which never happened).\n\nI\u0027m going to debug a little and see if I can figure out what\u0027s happening.",
+      "parentUuid": "76a9bc0b_145c11f4",
+      "revId": "fb377bd316b52447992f98ed23d2da910b8d99e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "52853f97_5f4ad07b",
         "filename": "ios/chrome/browser/ntp_tiles/ntp_tiles_egtest.mm",
         "patchSetId": 1
@@ -48,6 +66,30 @@
       "writtenOn": "2017-07-10T13:18:10Z",
       "side": 1,
       "message": "Optional: I think the test would be more readable with s/simple/title1/. WDYT?",
+      "range": {
+        "startLine": 51,
+        "startChar": 79,
+        "endLine": 51,
+        "endChar": 0
+      },
+      "revId": "fb377bd316b52447992f98ed23d2da910b8d99e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6a4a940_be82d2e3",
+        "filename": "ios/chrome/browser/ntp_tiles/ntp_tiles_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-10T13:39:26Z",
+      "side": 1,
+      "message": "good idea. Done.",
+      "parentUuid": "52853f97_5f4ad07b",
       "range": {
         "startLine": 51,
         "startChar": 79,
