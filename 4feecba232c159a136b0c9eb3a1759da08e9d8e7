@@ -36,6 +36,29 @@
     },
     {
       "key": {
+        "uuid": "4a5f4091_9748fea9",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-07-10T05:11:17Z",
+      "side": 1,
+      "message": "nit: parens around single argument arrow functions\n\nhttps://google.github.io/styleguide/jsguide.html#features-functions-arrow-functions\n\n(I am taking the tip as gospel)",
+      "range": {
+        "startLine": 118,
+        "startChar": 34,
+        "endLine": 118,
+        "endChar": 41
+      },
+      "revId": "4feecba232c159a136b0c9eb3a1759da08e9d8e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7396ca13_a39e809d",
         "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.js",
         "patchSetId": 7
@@ -47,6 +70,63 @@
       "writtenOn": "2017-07-10T03:12:38Z",
       "side": 1,
       "message": "nit: add {} around these",
+      "revId": "4feecba232c159a136b0c9eb3a1759da08e9d8e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d00149b_d0962f56",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-07-10T05:11:17Z",
+      "side": 1,
+      "message": "nit: Braces for all of these.",
+      "revId": "4feecba232c159a136b0c9eb3a1759da08e9d8e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47c9bf79_747b90d8",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-07-10T05:11:17Z",
+      "side": 1,
+      "message": "Cool kids use `No string for ${this.category}\u0027s default setting of ${setting}`.",
+      "range": {
+        "startLine": 129,
+        "startChar": 0,
+        "endLine": 130,
+        "endChar": 23
+      },
+      "revId": "4feecba232c159a136b0c9eb3a1759da08e9d8e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "041cf748_5075d011",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-07-10T05:11:17Z",
+      "side": 1,
+      "message": "nit: parens for arrow fn.",
       "revId": "4feecba232c159a136b0c9eb3a1759da08e9d8e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -150,6 +230,188 @@
       "writtenOn": "2017-07-10T03:12:38Z",
       "side": 1,
       "message": "You could also test that setting a user-specified value doesn\u0027t show up as default?",
+      "revId": "4feecba232c159a136b0c9eb3a1759da08e9d8e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "556be194_3e9229fa",
+        "filename": "chrome/test/data/webui/settings/site_details_permission_tests.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-07-10T05:11:17Z",
+      "side": 1,
+      "message": "Comma at the end here will make clang format do reasonable things. Also, it\u0027s really weird to explicitly set a value as undefined. Why is this necessary?",
+      "range": {
+        "startLine": 18,
+        "startChar": 50,
+        "endLine": 18,
+        "endChar": 59
+      },
+      "revId": "4feecba232c159a136b0c9eb3a1759da08e9d8e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3efb5104_b6569e76",
+        "filename": "chrome/test/data/webui/settings/site_details_tests.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-07-10T05:11:17Z",
+      "side": 1,
+      "message": "Remove undefineds?\n\nAlso, change all these strings to the constants.js version.",
+      "revId": "4feecba232c159a136b0c9eb3a1759da08e9d8e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68186917_ef7ff745",
+        "filename": "chrome/test/data/webui/settings/site_details_tests.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-07-10T05:11:17Z",
+      "side": 1,
+      "message": "Constants here.",
+      "revId": "4feecba232c159a136b0c9eb3a1759da08e9d8e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6873708_dabca7f1",
+        "filename": "chrome/test/data/webui/settings/site_details_tests.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-07-10T05:11:17Z",
+      "side": 1,
+      "message": "Constants there.",
+      "revId": "4feecba232c159a136b0c9eb3a1759da08e9d8e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5b1c5fe_0ddfbb39",
+        "filename": "chrome/test/data/webui/settings/site_details_tests.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-07-10T05:11:17Z",
+      "side": 1,
+      "message": "I like constants everywhere!",
+      "revId": "4feecba232c159a136b0c9eb3a1759da08e9d8e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0deb45d6_297f8ae6",
+        "filename": "chrome/test/data/webui/settings/test_site_settings_prefs_browser_proxy.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-07-10T05:11:17Z",
+      "side": 1,
+      "message": "This is another example of a type that won\u0027t get updated because it won\u0027t error when a thing is added or removed. Maybe it\u0027s better to just treat this as a {Map\u003cstring, !DefaultContentSetting\u003e}. WDYT?",
+      "revId": "4feecba232c159a136b0c9eb3a1759da08e9d8e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ef5c85c_080ba58f",
+        "filename": "chrome/test/data/webui/settings/test_site_settings_prefs_browser_proxy.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-07-10T05:11:17Z",
+      "side": 1,
+      "message": "So this type never existed until you added it just then?",
+      "range": {
+        "startLine": 49,
+        "startChar": 24,
+        "endLine": 49,
+        "endChar": 44
+      },
+      "revId": "4feecba232c159a136b0c9eb3a1759da08e9d8e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53e366a2_c66dff77",
+        "filename": "chrome/test/data/webui/settings/test_site_settings_prefs_browser_proxy.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-07-10T05:11:17Z",
+      "side": 1,
+      "message": "I\u0027m not a fan of this conversion. Can you add a TODO to the test prefs to use the values from constants.js as the keys?",
+      "revId": "4feecba232c159a136b0c9eb3a1759da08e9d8e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1634c632_a3c599cb",
+        "filename": "chrome/test/data/webui/settings/test_site_settings_prefs_browser_proxy.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-07-10T05:11:17Z",
+      "side": 1,
+      "message": "Does this fail catastrophically if I forget to add/remove something here?",
+      "revId": "4feecba232c159a136b0c9eb3a1759da08e9d8e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb86a697_22bf8583",
+        "filename": "chrome/test/data/webui/settings/test_site_settings_prefs_browser_proxy.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-07-10T05:11:17Z",
+      "side": 1,
+      "message": "fmt",
       "revId": "4feecba232c159a136b0c9eb3a1759da08e9d8e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
