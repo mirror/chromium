@@ -1813,7 +1813,7 @@ inline CSSIdentifierValue::CSSIdentifierValue(ItemPosition item_position)
 template <>
 inline ItemPosition CSSIdentifierValue::ConvertTo() const {
   switch (value_id_) {
-    case CSSValueAuto:
+    case CSSValueLegacy:
       return kItemPositionAuto;
     case CSSValueNormal:
       return kItemPositionNormal;
