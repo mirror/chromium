@@ -22,6 +22,30 @@
       "revId": "d027e1b9b634923a663fb50498e51c583e21efb9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bea77702_45d73630",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-07-10T20:39:15Z",
+      "side": 1,
+      "message": "In previous patches I also initialized download service in ChromeDownloadManagerDelegate, which \nhit a DCHECK in https://cs.chromium.org/chromium/src/components/keyed_service/core/keyed_service_factory.cc?dr\u003dC\u0026l\u003d92 where Associate function checks for duplicate creation.\n\nThe code path causing the problem is PrefetchServiceFactory \u003d\u003d\u003e DownloadServiceFactory \u003d\u003d\u003e content::DownloadManager \u003d\u003d\u003e ChromeDownloadManagerDelegate \u003d\u003d\u003e DownloadServiceFactory, where DownloadServiceFactory is created twice in the same call stack.\n\nThe comment is to document this problem. The comment is removed since now the CL only builds the instance in the list of KSFs.",
+      "parentUuid": "8eaf5a0d_95a3c9b7",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 63
+      },
+      "revId": "d027e1b9b634923a663fb50498e51c583e21efb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
