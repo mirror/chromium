@@ -2070,9 +2070,11 @@ void ChromeContentBrowserClient::GuestPermissionRequestHelper(
       base::BindOnce(
           &ChromeContentBrowserClient::RequestFileSystemPermissionOnUIThread,
           it->first, it->second, url, allow,
-          base::Bind(&ChromeContentBrowserClient::FileSystemAccessed,
-                     weak_factory_.GetWeakPtr(), url, render_frames,
-                     callback)));
+          base::Bind(
+              &ChromeContentBrowserClient::FileSystemAccessed,
+              weak_factory_.GetWeakPtr(), url, render_frames,
+              base::Bind(&TaskRunner::PostTask,
+                         base::SequencedTaskRunnerHandle::Get(), callback))));
 }
 
 void ChromeContentBrowserClient::RequestFileSystemPermissionOnUIThread(
