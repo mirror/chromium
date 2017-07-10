@@ -1,0 +1,244 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a08c170e_1eeae9fc",
+        "filename": "ui/accessibility/ax_enums.idl",
+        "patchSetId": 28
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-10T04:34:46Z",
+      "side": 1,
+      "message": "nit: remove trailing whitespace",
+      "range": {
+        "startLine": 417,
+        "startChar": 64,
+        "endLine": 417,
+        "endChar": 65
+      },
+      "revId": "538d157f8f1a61326112f81de797d02c5883befa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77522b2c_e5c4a8fd",
+        "filename": "ui/accessibility/ax_enums.idl",
+        "patchSetId": 28
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-10T04:34:46Z",
+      "side": 1,
+      "message": "nit: also here (at least.. I think that\u0027s what gerrit is telling me it is is with that red box)",
+      "range": {
+        "startLine": 419,
+        "startChar": 72,
+        "endLine": 419,
+        "endChar": 73
+      },
+      "revId": "538d157f8f1a61326112f81de797d02c5883befa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "892e5b61_86d39a11",
+        "filename": "ui/accessibility/ax_enums.idl",
+        "patchSetId": 28
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-10T04:34:46Z",
+      "side": 1,
+      "message": "nit: Convention in this file seems to match the regular C style guide for comments, which asks for \"  // Sentence case with a full stop at the end.\"",
+      "range": {
+        "startLine": 621,
+        "startChar": 19,
+        "endLine": 621,
+        "endChar": 26
+      },
+      "revId": "538d157f8f1a61326112f81de797d02c5883befa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8013994e_9dd2a351",
+        "filename": "ui/accessibility/platform/ax_platform_node_mac.mm",
+        "patchSetId": 28
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-10T04:34:46Z",
+      "side": 1,
+      "message": "true -\u003e YES. But also I think you have NSAccessibilitySelectedTextAttribute and NSAccessibilitySelectedTextRangeAttribute swapped around.\n\n\"setting\" NSAccessibilitySelectedTextAttribute replaces the selected text with a new string. setting NSAccessibilitySelectedTextRangeAttribute just changes what text is highlighted.",
+      "revId": "538d157f8f1a61326112f81de797d02c5883befa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b7b6f3e_0ac5bdc6",
+        "filename": "ui/accessibility/platform/ax_platform_node_mac.mm",
+        "patchSetId": 28
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-10T04:34:46Z",
+      "side": 1,
+      "message": "This doesn\u0027t look right. AXEnum values start from zero so GetIntAttribute returns 0 both when AX_ATTR_RESTRICTIONS hasn\u0027t been set and when it\u0027s been set to AX_RESTRICTIONS_READONLY. I think here you also want to check data.HasIntAttribute(). and return @(NO) when there is no restriction set at all.\n\n(I didn\u0027t look at the non-Mac files -- maybe similar treatment is needed there.)",
+      "revId": "538d157f8f1a61326112f81de797d02c5883befa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64107914_1314f340",
+        "filename": "ui/views/accessibility/native_view_accessibility_base.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-10T04:34:46Z",
+      "side": 1,
+      "message": "nit: needs curlies",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 24
+      },
+      "revId": "538d157f8f1a61326112f81de797d02c5883befa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "704185cf_c62829db",
+        "filename": "ui/views/controls/button/button.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-10T04:34:46Z",
+      "side": 1,
+      "message": "nit: needs curlies",
+      "revId": "538d157f8f1a61326112f81de797d02c5883befa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f886ba1b_b30b7ebf",
+        "filename": "ui/views/controls/label_unittest.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-10T04:34:46Z",
+      "side": 1,
+      "message": "Can this now GetIntAttribute() and check that?",
+      "revId": "538d157f8f1a61326112f81de797d02c5883befa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b4eb760_302ee0fc",
+        "filename": "ui/views/controls/progress_bar_unittest.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-10T04:34:46Z",
+      "side": 1,
+      "message": "Same here- GetIntAttribute to check the new result",
+      "revId": "538d157f8f1a61326112f81de797d02c5883befa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fbc0b8d_3c9dee83",
+        "filename": "ui/views/controls/textfield/textfield.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 917,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-10T04:34:46Z",
+      "side": 1,
+      "message": "nit: needs curlies (also the else branch)",
+      "revId": "538d157f8f1a61326112f81de797d02c5883befa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "836f6250_259b029f",
+        "filename": "ui/views/controls/textfield/textfield.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 918,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-10T04:34:46Z",
+      "side": 1,
+      "message": "If it\u0027s intentional, perhaps comment that this overwrites the value set in NativeViewAccessibilityBase?\n\nThat\u0027s *if* it\u0027s intentional. I think the old code would still show it as disabled. I\u0027d expect a disabled AND read only textfield to behave more like a disabled textfield than a read only textfield.",
+      "range": {
+        "startLine": 918,
+        "startChar": 35,
+        "endLine": 918,
+        "endChar": 55
+      },
+      "revId": "538d157f8f1a61326112f81de797d02c5883befa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c78e8894_b6471176",
+        "filename": "ui/views/controls/textfield/textfield.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 921,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-10T04:34:46Z",
+      "side": 1,
+      "message": "Does the logic here match your expectations?\n\nE.g. Current (and old) behaviour: Textfield can be disabled but still have AX_STATE_EDITABLE. (But not read only and editable.) Does AX_STATE_EDITABLE still have a role? - perhaps comment here why it\u0027s needed separately for textfields and not just a third enum value for AX_ATTR_RESTRICTIONS.\n\n(Note I don\u0027t know the right answer here - I\u0027ll defer to a11y folks)",
+      "range": {
+        "startLine": 921,
+        "startChar": 28,
+        "endLine": 921,
+        "endChar": 45
+      },
+      "revId": "538d157f8f1a61326112f81de797d02c5883befa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
