@@ -787,6 +787,9 @@ void OmniboxViewViews::OnBlur() {
   render_text->SetElideBehavior(gfx::ELIDE_TAIL);
   render_text->SetDisplayOffset(0);
 
+  // Deselect the text. Ensures the cursor is an I-beam.
+  SelectRange(gfx::Range(0));
+
   // Focus changes can affect the visibility of any keyword hint.
   // |location_bar_view_| can be null in tests.
   if (location_bar_view_) {
