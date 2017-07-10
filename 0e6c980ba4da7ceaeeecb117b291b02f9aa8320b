@@ -16,6 +16,24 @@
       "revId": "0e6c980ba4da7ceaeeecb117b291b02f9aa8320b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b0d90f2_b2c27989",
+        "filename": "mojo/common/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-10T20:54:15Z",
+      "side": 1,
+      "message": "It didn\u0027t compile, with error saying:\n../../mojo/common/values_struct_traits.h:143:10: error: no type named \u0027NullValuePtr\u0027 in namespace \u0027mojo::common::mojom\u0027; did you mean \u0027common::mojom::blink::NullValuePtr\u0027?\n  static common::mojom::NullValuePtr null_value(const base::Value\u0026 value) {\n\nWhen I opened gen/mojo/common/values.mojom-shared.h, I didn\u0027t see NullValuePtr.",
+      "parentUuid": "26396121_b1738af0",
+      "revId": "0e6c980ba4da7ceaeeecb117b291b02f9aa8320b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
