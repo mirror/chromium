@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54c4b27f_f137ea1f",
+        "filename": "ios/chrome/browser/ui/settings/password_details_collection_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-10T08:28:05Z",
+      "side": 1,
+      "message": "*given",
+      "range": {
+        "startLine": 497,
+        "startChar": 42,
+        "endLine": 497,
+        "endChar": 48
+      },
+      "revId": "00ecf0942c5111106a56920a73ffa21b1482cbbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58e681ba_e02250c1",
+        "filename": "ios/chrome/browser/ui/settings/password_details_collection_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-10T08:28:05Z",
+      "side": 1,
+      "message": "While correct, this is weird and should probably be avoided for readability reasons.\n\nPrefer:\n- (void)ensureContextMenuShownForItemType:(NSInteger)itemType\n                           collectionView:(UICollectionView*)collectionView\n                              atIndexPath:(NSIndexPath)indexPath {",
+      "revId": "00ecf0942c5111106a56920a73ffa21b1482cbbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
