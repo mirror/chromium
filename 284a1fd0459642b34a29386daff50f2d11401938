@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e037e107_9dab750e",
+        "filename": "chrome/browser/resources/settings/icons.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-10T17:46:22Z",
+      "side": 1,
+      "message": "Typically we would leave the image gray and color the icon itself, can we do that here?",
+      "revId": "284a1fd0459642b34a29386daff50f2d11401938",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c07cb007_f93632e9",
+        "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-10T17:46:22Z",
+      "side": 1,
+      "message": "This is a long list, can we wrap these in a div? Otherwise use a class.",
+      "revId": "284a1fd0459642b34a29386daff50f2d11401938",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2d52aa7_20e663fb",
+        "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-10T17:46:22Z",
+      "side": 1,
+      "message": "It looks like we could just use margin-left here, or maybe use padding?",
+      "revId": "284a1fd0459642b34a29386daff50f2d11401938",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57578aca_c8f97ee5",
+        "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-10T17:46:22Z",
+      "side": 1,
+      "message": "Span may be not needed if we fix how we indent these?",
+      "revId": "284a1fd0459642b34a29386daff50f2d11401938",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64f362da_e6fead6a",
+        "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-10T17:46:22Z",
+      "side": 1,
+      "message": "Not sure what \u0027confirmation\u0027 refers to in this context, maybe just \u0027image\u0027?",
+      "revId": "284a1fd0459642b34a29386daff50f2d11401938",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51f88364_868d785a",
+        "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-10T17:46:22Z",
+      "side": 1,
+      "message": "This method name is super confusing, \u0027signal strength\u0027 is an integer not a string.",
+      "revId": "284a1fd0459642b34a29386daff50f2d11401938",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
