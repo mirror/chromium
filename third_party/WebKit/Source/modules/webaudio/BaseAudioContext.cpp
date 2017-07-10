@@ -71,6 +71,7 @@
 #include "modules/webaudio/ScriptProcessorNode.h"
 #include "modules/webaudio/StereoPannerNode.h"
 #include "modules/webaudio/WaveShaperNode.h"
+#include "modules/webaudio/WindowAudioWorklet.h"
 #include "platform/CrossThreadFunctional.h"
 #include "platform/Histogram.h"
 #include "platform/audio/IIRFilter.h"
