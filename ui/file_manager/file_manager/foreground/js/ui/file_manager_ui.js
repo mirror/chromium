@@ -281,6 +281,13 @@ function FileManagerUI(providersModel, element, launchParam) {
   };
 
   /**
+   * @type {!cr.ui.MenuButton}
+   * @const
+   */
+  this.shareMenuButton =
+      util.queryDecoratedElement('#share-menu-button', cr.ui.MenuButton);
+
+  /**
    * Banners in the file list.
    * @type {Banners}
    */
