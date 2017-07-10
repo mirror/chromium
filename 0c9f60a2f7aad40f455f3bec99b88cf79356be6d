@@ -34,6 +34,24 @@
       "revId": "0c9f60a2f7aad40f455f3bec99b88cf79356be6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ef7477c_a30d8500",
+        "filename": "cc/layers/render_surface_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-07-10T21:16:57Z",
+      "side": 1,
+      "message": "Yes I think that\u0027d be a better approach. IMO solid color mask should be handled explicitly.",
+      "parentUuid": "c50143cd_dd0615a2",
+      "revId": "0c9f60a2f7aad40f455f3bec99b88cf79356be6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
