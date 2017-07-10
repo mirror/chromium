@@ -559,8 +559,8 @@ TEST_F(RenderFrameHostManagerTest, NewTabPageProcesses) {
 
   EXPECT_NE(contents()->GetMainFrame()->GetSiteInstance(),
             contents2->GetMainFrame()->GetSiteInstance());
-  EXPECT_EQ(contents()->GetMainFrame()->GetSiteInstance()->GetProcess(),
-            contents2->GetMainFrame()->GetSiteInstance()->GetProcess());
+  EXPECT_EQ(contents()->GetMainFrame()->GetSiteInstance()->GetProcess(nullptr),
+            contents2->GetMainFrame()->GetSiteInstance()->GetProcess(nullptr));
 }
 
 // Ensure that the browser ignores most IPC messages that arrive from a
@@ -1046,7 +1046,7 @@ TEST_F(RenderFrameHostManagerTest, WebUIInNewTab) {
   set_should_create_webui(true);
   scoped_refptr<SiteInstance> blank_instance =
       SiteInstance::Create(browser_context());
-  blank_instance->GetProcess()->Init();
+  blank_instance->GetProcess(nullptr)->Init();
 
   // Create a blank tab.
   std::unique_ptr<TestWebContents> web_contents1(

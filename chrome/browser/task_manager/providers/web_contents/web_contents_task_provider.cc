@@ -246,7 +246,7 @@ void WebContentsEntry::CreateTaskForFrame(RenderFrameHost* render_frame_host) {
   DCHECK(!tasks_by_frames_.count(render_frame_host));
 
   content::SiteInstance* site_instance = render_frame_host->GetSiteInstance();
-  if (!site_instance->GetProcess()->HasConnection())
+  if (!site_instance->GetProcess(nullptr)->HasConnection())
     return;
   if (!render_frame_host->IsRenderFrameLive())
     return;

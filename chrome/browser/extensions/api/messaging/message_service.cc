@@ -173,7 +173,8 @@ static content::RenderProcessHost* GetExtensionProcess(
   scoped_refptr<SiteInstance> site_instance =
       ProcessManager::Get(context)->GetSiteInstanceForURL(
           Extension::GetBaseURLFromExtensionId(extension_id));
-  return site_instance->HasProcess() ? site_instance->GetProcess() : NULL;
+  return site_instance->HasProcess() ? site_instance->GetProcess(nullptr)
+                                     : nullptr;
 }
 
 }  // namespace

@@ -543,7 +543,7 @@ void NavigationRequest::OnRequestRedirected(
   // TODO(clamy): Kill the renderer if FilterURL fails?
   GURL url = common_params_.url;
   if (!browser_initiated_ && source_site_instance()) {
-    source_site_instance()->GetProcess()->FilterURL(false, &url);
+    source_site_instance()->GetProcess(nullptr)->FilterURL(false, &url);
     // FilterURL sets the URL to about:blank if the CSP checks prevent the
     // renderer from accessing it.
     if ((url == url::kAboutBlankURL) && (url != common_params_.url)) {
@@ -569,8 +569,9 @@ void NavigationRequest::OnRequestRedirected(
   // Note: calling GetProcess on the SiteInstance can lead to the creation of a
   // new process if it doesn't have one. In this case, it should only be called
   // on a SiteInstance that already has a process.
-  RenderProcessHost* expected_process =
-      site_instance->HasProcess() ? site_instance->GetProcess() : nullptr;
+  RenderProcessHost* expected_process = site_instance->HasProcess()
+                                            ? site_instance->GetProcess(nullptr)
+                                            : nullptr;
 
   // It's safe to use base::Unretained because this NavigationRequest owns the
   // NavigationHandle where the callback will be stored.

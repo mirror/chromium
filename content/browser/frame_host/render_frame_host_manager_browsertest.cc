@@ -1237,7 +1237,7 @@ IN_PROC_BROWSER_TEST_F(RenderFrameHostManagerTest,
 
   // The original process should still be alive, since it is still used in the
   // first window.
-  RenderProcessHost* orig_process = orig_site_instance->GetProcess();
+  RenderProcessHost* orig_process = orig_site_instance->GetProcess(nullptr);
   EXPECT_TRUE(orig_process->HasConnection());
 
   // Navigate the first window to a different site as well.  The original
@@ -2370,8 +2370,10 @@ IN_PROC_BROWSER_TEST_F(RenderFrameHostManagerTest,
                             ->root();
   int32_t orig_site_instance_id =
       root->current_frame_host()->GetSiteInstance()->GetId();
-  int initial_process_id =
-      root->current_frame_host()->GetSiteInstance()->GetProcess()->GetID();
+  int initial_process_id = root->current_frame_host()
+                               ->GetSiteInstance()
+                               ->GetProcess(nullptr)
+                               ->GetID();
   int initial_rfh_id = root->current_frame_host()->GetRoutingID();
   int initial_rvh_id =
       root->current_frame_host()->render_view_host()->GetRoutingID();
