@@ -4,7 +4,7 @@
 
 #include "content/browser/gpu/gpu_client.h"
 
-#include "content/browser/gpu/browser_gpu_memory_buffer_manager.h"
+#include "components/viz/host/server_gpu_memory_buffer_manager.h"
 #include "content/browser/gpu/gpu_process_host.h"
 #include "content/common/child_process_host_impl.h"
 #include "content/public/browser/browser_thread.h"
@@ -14,8 +14,12 @@
 
 namespace content {
 
-GpuClient::GpuClient(int render_process_id)
-    : render_process_id_(render_process_id), weak_factory_(this) {
+GpuClient::GpuClient(int render_process_id,
+                     viz::ServerGpuMemoryBufferManager* gmb_manager)
+    : render_process_id_(render_process_id),
+      gmb_manager_(gmb_manager),
+      weak_factory_(this) {
+  DCHECK(gmb_manager_);
   bindings_.set_connection_error_handler(
       base::Bind(&GpuClient::OnError, base::Unretained(this)));
 }
@@ -32,10 +36,7 @@ void GpuClient::Add(ui::mojom::GpuRequest request) {
 void GpuClient::OnError() {
   if (!bindings_.empty())
     return;
-  BrowserGpuMemoryBufferManager* gpu_memory_buffer_manager =
-      BrowserGpuMemoryBufferManager::current();
-  if (gpu_memory_buffer_manager)
-    gpu_memory_buffer_manager->ProcessRemoved(render_process_id_);
+  gmb_manager_->DestroyAllGpuMemoryBufferForClient(render_process_id_);
 }
 
 void GpuClient::OnEstablishGpuChannel(
@@ -82,8 +83,6 @@ void GpuClient::CreateGpuMemoryBuffer(
     gfx::BufferFormat format,
     gfx::BufferUsage usage,
     const ui::mojom::Gpu::CreateGpuMemoryBufferCallback& callback) {
-  DCHECK(BrowserGpuMemoryBufferManager::current());
-
   base::CheckedNumeric<int> bytes = size.width();
   bytes *= size.height();
   if (!bytes.IsValid()) {
@@ -91,19 +90,15 @@ void GpuClient::CreateGpuMemoryBuffer(
     return;
   }
 
-  BrowserGpuMemoryBufferManager::current()
-      ->AllocateGpuMemoryBufferForChildProcess(
-          id, size, format, usage, render_process_id_,
-          base::Bind(&GpuClient::OnCreateGpuMemoryBuffer,
-                     weak_factory_.GetWeakPtr(), callback));
+  gmb_manager_->AllocateGpuMemoryBuffer(
+      id, render_process_id_, size, format, usage, gpu::kNullSurfaceHandle,
+      base::Bind(&GpuClient::OnCreateGpuMemoryBuffer,
+                 weak_factory_.GetWeakPtr(), callback));
 }
 
 void GpuClient::DestroyGpuMemoryBuffer(gfx::GpuMemoryBufferId id,
                                        const gpu::SyncToken& sync_token) {
-  DCHECK(BrowserGpuMemoryBufferManager::current());
-
-  BrowserGpuMemoryBufferManager::current()->ChildProcessDeletedGpuMemoryBuffer(
-      id, render_process_id_, sync_token);
+  gmb_manager_->DestroyGpuMemoryBuffer(id, render_process_id_, sync_token);
 }
 
 }  // namespace content

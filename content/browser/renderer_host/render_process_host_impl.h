@@ -392,8 +392,9 @@ class CONTENT_EXPORT RenderProcessHostImpl
 
   void BindRouteProvider(mojom::RouteProviderAssociatedRequest request);
 
-  void CreateMusGpuRequest(const service_manager::BindSourceInfo& source_info,
-                           ui::mojom::GpuRequest request);
+  void CreateGpuRequest(viz::ServerGpuMemoryBufferManager* gmb_manager,
+                        const service_manager::BindSourceInfo& source_info,
+                        ui::mojom::GpuRequest request);
   void CreateOffscreenCanvasProvider(
       const service_manager::BindSourceInfo& source_info,
       blink::mojom::OffscreenCanvasProviderRequest request);
