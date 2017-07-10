@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "868a822f_b616400d",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-07-10T09:19:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a6505a5_881f33d1",
+      "range": {
+        "startLine": 416,
+        "startChar": 4,
+        "endLine": 416,
+        "endChar": 9
+      },
+      "revId": "456c75735547729305b375d7106943fde44be24c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61eea7a5_fa3f17eb",
         "filename": "components/ntp_tiles/most_visited_sites.cc",
         "patchSetId": 1
@@ -96,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "48d723ed_0822cba0",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-07-10T09:19:43Z",
+      "side": 1,
+      "message": "Replaced the magic number with a constant. Which value should we use for now?\n\n@Chris: Somehow, I was unable to find \"Display Size\" in the Settings of the 6P.",
+      "parentUuid": "5c15879c_7ac96bd9",
+      "range": {
+        "startLine": 423,
+        "startChar": 14,
+        "endLine": 423,
+        "endChar": 15
+      },
+      "revId": "456c75735547729305b375d7106943fde44be24c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "485152ed_8fbbadd3",
         "filename": "components/ntp_tiles/most_visited_sites.cc",
         "patchSetId": 1
@@ -116,6 +164,30 @@
       "revId": "456c75735547729305b375d7106943fde44be24c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b839c39_f7551df1",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-07-10T09:19:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "485152ed_8fbbadd3",
+      "range": {
+        "startLine": 426,
+        "startChar": 6,
+        "endLine": 426,
+        "endChar": 9
+      },
+      "revId": "456c75735547729305b375d7106943fde44be24c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -142,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "dd26215e_feb61df8",
+        "filename": "components/ntp_tiles/most_visited_sites_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-07-10T09:19:43Z",
+      "side": 1,
+      "message": "Eliminated this Matcher completely as you suggested and added one for fourth place.",
+      "parentUuid": "381d16c1_c8ba632d",
+      "range": {
+        "startLine": 98,
+        "startChar": 11,
+        "endLine": 98,
+        "endChar": 32
+      },
+      "revId": "456c75735547729305b375d7106943fde44be24c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42b52433_f5bf4e51",
         "filename": "components/ntp_tiles/most_visited_sites_unittest.cc",
         "patchSetId": 1
@@ -162,6 +258,30 @@
       "revId": "456c75735547729305b375d7106943fde44be24c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50a461e7_4e3e3e7b",
+        "filename": "components/ntp_tiles/most_visited_sites_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-07-10T09:19:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42b52433_f5bf4e51",
+      "range": {
+        "startLine": 108,
+        "startChar": 7,
+        "endLine": 108,
+        "endChar": 11
+      },
+      "revId": "456c75735547729305b375d7106943fde44be24c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -188,6 +308,30 @@
     },
     {
       "key": {
+        "uuid": "4c74494c_e583a60f",
+        "filename": "components/ntp_tiles/most_visited_sites_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-07-10T09:19:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a807aea4_3d6e4245",
+      "range": {
+        "startLine": 111,
+        "startChar": 6,
+        "endLine": 111,
+        "endChar": 10
+      },
+      "revId": "456c75735547729305b375d7106943fde44be24c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "819a27a7_d8bb08a5",
         "filename": "components/ntp_tiles/most_visited_sites_unittest.cc",
         "patchSetId": 1
@@ -208,6 +352,30 @@
       "revId": "456c75735547729305b375d7106943fde44be24c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0759cb9e_c9668817",
+        "filename": "components/ntp_tiles/most_visited_sites_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-07-10T09:19:43Z",
+      "side": 1,
+      "message": "Good point. Fixed and verified.",
+      "parentUuid": "819a27a7_d8bb08a5",
+      "range": {
+        "startLine": 599,
+        "startChar": 30,
+        "endLine": 599,
+        "endChar": 75
+      },
+      "revId": "456c75735547729305b375d7106943fde44be24c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -258,6 +426,30 @@
     },
     {
       "key": {
+        "uuid": "9316c2d7_35a00193",
+        "filename": "components/ntp_tiles/most_visited_sites_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-07-10T09:19:43Z",
+      "side": 1,
+      "message": "Done, thanks for the suggestions!",
+      "parentUuid": "9e528478_6a2a1556",
+      "range": {
+        "startLine": 604,
+        "startChar": 30,
+        "endLine": 604,
+        "endChar": 56
+      },
+      "revId": "456c75735547729305b375d7106943fde44be24c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d19b5d5_17f1c73e",
         "filename": "components/ntp_tiles/most_visited_sites_unittest.cc",
         "patchSetId": 1
@@ -278,6 +470,30 @@
       "revId": "456c75735547729305b375d7106943fde44be24c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "040317fb_f8b37d40",
+        "filename": "components/ntp_tiles/most_visited_sites_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-07-10T09:19:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d19b5d5_17f1c73e",
+      "range": {
+        "startLine": 623,
+        "startChar": 2,
+        "endLine": 623,
+        "endChar": 13
+      },
+      "revId": "456c75735547729305b375d7106943fde44be24c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
