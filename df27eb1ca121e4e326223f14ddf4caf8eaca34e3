@@ -22,6 +22,30 @@
       "revId": "df27eb1ca121e4e326223f14ddf4caf8eaca34e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66882b1c_71ac6a61",
+        "filename": "content/browser/renderer_host/input/gesture_event_queue.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1178142
+      },
+      "writtenOn": "2017-07-10T19:36:54Z",
+      "side": 1,
+      "message": "The events are being produced by chromeOS correctly.  I\u0027m not very familiar with the event handling in chrome, but sahel describes a race condition in bug 717205 comment #21, where GSU events and GFS events follow a different path and sometimes arrive out of order.",
+      "parentUuid": "840a175e_f8c00be0",
+      "range": {
+        "startLine": 90,
+        "startChar": 14,
+        "endLine": 90,
+        "endChar": 32
+      },
+      "revId": "df27eb1ca121e4e326223f14ddf4caf8eaca34e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
