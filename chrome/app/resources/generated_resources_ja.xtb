@@ -3393,7 +3393,6 @@
 <translation id="6138680304137685902">X9.62 ECDSA 署名（SHA-384）</translation>
 <translation id="614161640521680948">言語:</translation>
 <translation id="6143186082490678276">ヘルプ</translation>
-<translation id="6144697279259829572">{NUM_ITEMS,plural, =1{このデバイスから少なくとも $1 件の項目が完全に削除されます。}other{このデバイスから少なくとも $1 件の項目が完全に削除されます。}}</translation>
 <translation id="6144890426075165477">現在、<ph name="PRODUCT_NAME" /> は既定のブラウザに設定されていません。</translation>
 <translation id="6146563240635539929">動画</translation>
 <translation id="6147020289383635445">印刷プレビューの表示に失敗しました。</translation>
@@ -4212,7 +4211,6 @@
 <translation id="7388044238629873883">もうすぐ終わりです。</translation>
 <translation id="7392118418926456391">ウイルス スキャンに失敗しました</translation>
 <translation id="7392915005464253525">閉じたウィンドウを開く（&amp;E）</translation>
-<translation id="7393449708074241536">このデバイスから <ph name="TOTAL_COUNT" /> 件の項目が完全に削除されます。</translation>
 <translation id="7396845648024431313"><ph name="APP_NAME" /> はシステム起動時に開始され、他の <ph name="PRODUCT_NAME" /> ウィンドウをすべて閉じてもバックグラウンドで動作し続けます。</translation>
 <translation id="7400418766976504921">URL</translation>
 <translation id="740083207982962331">Chromebox を再起動しています。しばらくお待ちください...</translation>
@@ -5417,7 +5415,6 @@
 <translation id="974555521953189084">同期を開始するにはパスワードを入力します</translation>
 <translation id="981121421437150478">オフライン</translation>
 <translation id="98515147261107953">横</translation>
-<translation id="987267091708560486">{NUM_ITEMS,plural, =1{このデバイスから $1 件の項目が完全に削除されます。}other{このデバイスから $1 件の項目が完全に削除されます。}}</translation>
 <translation id="988978206646512040">パスフレーズは必ず指定してください</translation>
 <translation id="992032470292211616">拡張機能、アプリ、テーマはお使いの端末に悪影響を与える可能性があります。続行してもよろしいですか？</translation>
 <translation id="992592832486024913">ChromeVox（音声フィードバック）を無効にする</translation>

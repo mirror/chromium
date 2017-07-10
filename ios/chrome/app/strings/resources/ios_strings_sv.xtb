@@ -37,6 +37,7 @@
 <translation id="1540800554400757039">Adressrad 1</translation>
 <translation id="1545749641540134597">Skanna QR-kod</translation>
 <translation id="1580783302095112590">E-post skickades.</translation>
+<translation id="1612730193129642006">Visa flikar i rutnät</translation>
 <translation id="1646446875146297738">Om du aktiverar Do Not Track innebär det att en begäran skickas med webbtrafiken. Vad som händer sedan beror på om webbplatserna svarar på din begäran och hur begäran tolkas.
 
 En del webbplatser kan till exempel svara genom att visa annonser som inte baseras på webbplatser du har besökt tidigare. Många webbplatser fortsätter att samla in och använda din webbinformation, till exempel för att förbättra säkerheten, för att erbjuda innehåll, tjänster, annonser och rekommendationer på sina webbplatser och för att generera statistik för rapporteringsändamål. <ph name="BEGIN_LINK" />Läs mer<ph name="END_LINK" /></translation>
@@ -388,6 +389,7 @@ Din data krypterades med lösenfrasen den <ph name="TIME" />. Ange den om du vil
 <translation id="8775144690796719618">Ogiltig webbadress</translation>
 <translation id="8820817407110198400">Bokmärken</translation>
 <translation id="8840513115188359703">Du loggas inte ut från Google-kontot.</translation>
+<translation id="8881801611828450202">Sök på <ph name="SEARCH_ENGINE" /> efter denna bild</translation>
 <translation id="8904976895050290827">Synkronisera med Chrome</translation>
 <translation id="895541991026785598">Rapportera ett problem</translation>
 <translation id="8971089644512329999">Ok, jag förstår</translation>
@@ -406,6 +408,7 @@ Din data krypterades med lösenfrasen den <ph name="TIME" />. Ange den om du vil
 <translation id="9188680907066685419">Logga ut från hanterat konto</translation>
 <translation id="9203116392574189331">Handoff</translation>
 <translation id="9223358826628549784">Felrapporten har skickats.</translation>
+<translation id="932327136139879170">Startsida</translation>
 <translation id="935490618240037774">Bokmärken, historik, lösenord och andra inställningar synkroniseras med ditt Google-konto så att du kan använda dem på alla enheter.</translation>
 <translation id="939598580284253335">Ange lösenfras</translation>
 <translation id="976982866697960176">Hantera synkroniserad data …</translation>

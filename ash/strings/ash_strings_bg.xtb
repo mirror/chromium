@@ -159,8 +159,10 @@
 <translation id="5744083938413354016">Преместване чрез докосване</translation>
 <translation id="5777841717266010279">Да се спре ли споделянето на екрана?</translation>
 <translation id="57838592816432529">Заглушаване</translation>
+<translation id="5860033963881614850">Изключено</translation>
 <translation id="5895138241574237353">Рестартиране</translation>
 <translation id="5901316534475909376">Shift + Esc</translation>
+<translation id="5916664084637901428">Включено</translation>
 <translation id="5927132638760172455">Предава се към неизвестен приемник</translation>
 <translation id="5932901536148835538">Chromebit</translation>
 <translation id="5947494881799873997">Възстановяване</translation>
@@ -170,7 +172,6 @@
 <translation id="5978382165065462689">Споделяте контрола върху екрана си чрез отдалечено съдействие.</translation>
 <translation id="5980301590375426705">Изход от сесията като гост</translation>
 <translation id="6018164090099858612">Излиза се от огледалния режим</translation>
-<translation id="6041154455840261787">Режимът на висок контраст е активиран. Натиснете отново Search + Shift + H, за да го изключите.</translation>
 <translation id="6043212731627905357">Този монитор не се поддържа от вашия <ph name="DEVICE_TYPE" />.</translation>
 <translation id="6043994281159824495">Изход сега</translation>
 <translation id="6047696787498798094">Споделянето на екрана ще спре, когато превключите към друг потребител. Искате ли да продължите?</translation>
@@ -214,6 +215,7 @@
 <translation id="714034171374937760">Chromebase</translation>
 <translation id="7165278925115064263">Alt + Shift + K</translation>
 <translation id="7168224885072002358">Старата разделителна способност ще се възстанови след <ph name="TIMEOUT_SECONDS" /></translation>
+<translation id="7199454189089571166">Режим с асистент</translation>
 <translation id="7209101170223508707">„CAPS LOCK“ е включен.
 Натиснете „Alt + търсене“ или „Shift“, за да анулирате.</translation>
 <translation id="7246339268451149667">Да се активира ли отключването с отпечатък?</translation>
@@ -236,7 +238,6 @@
 <translation id="7814236020522506259"><ph name="HOUR" /> и <ph name="MINUTE" /></translation>
 <translation id="7823564328645135659">Езикът се промени от „<ph name="FROM_LOCALE" />“ на „<ph name="TO_LOCALE" />“ след синхронизирането на настройките ви.</translation>
 <translation id="7904094684485781019">Администраторът на този профил е забранил централизирания вход.</translation>
-<translation id="7951523953736115461">Нощно осветление</translation>
 <translation id="7977927628060636163">Търсят се мобилни мрежи...</translation>
 <translation id="7982789257301363584">Мрежа</translation>
 <translation id="8000066093800657092">Няма мрежа</translation>

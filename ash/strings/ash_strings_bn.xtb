@@ -159,8 +159,10 @@ Search অথবা বাতিল করতে Shift টিপুন৷</trans
 <translation id="5744083938413354016">ট্যাপ করে টেনে আনা</translation>
 <translation id="5777841717266010279">স্ক্রীন শেয়ার করা থামাবেন?</translation>
 <translation id="57838592816432529">নিঃশব্দ করুন</translation>
+<translation id="5860033963881614850">বন্ধ করুন</translation>
 <translation id="5895138241574237353">পুনর্সূচনা</translation>
 <translation id="5901316534475909376">Shift+Esc</translation>
+<translation id="5916664084637901428">চালু</translation>
 <translation id="5927132638760172455">একটি অজানা রিসিভারে কাস্টিং করা হচ্ছে</translation>
 <translation id="5932901536148835538">Chromebit</translation>
 <translation id="5947494881799873997">ফেরান</translation>
@@ -170,7 +172,6 @@ Search অথবা বাতিল করতে Shift টিপুন৷</trans
 <translation id="5978382165065462689">রিমোট সহায়কের মাধ্যমে আপনার স্ক্রীন নিয়ন্ত্রণ ভাগ করুন৷</translation>
 <translation id="5980301590375426705">অতিথি থেকে প্রস্থান</translation>
 <translation id="6018164090099858612">মিরর মোড থেকে প্রস্থান করছে</translation>
-<translation id="6041154455840261787">উচ্চ কনট্রাস্ট মোড সক্ষম করা হয়েছে। এটি টগল করে বন্ধ করতে চাইলে আবার Search+Shift+H টিপু্ন।</translation>
 <translation id="6043212731627905357">এই মনিটরটি আপনার <ph name="DEVICE_TYPE" /> এর সাথে তাল মেলাতে পারছে না (মনিটরটি সমর্থিত নয়)।</translation>
 <translation id="6043994281159824495">এখনই প্রস্থান করুন</translation>
 <translation id="6047696787498798094">যখন আপনি অন্য ব্যবহারকারীতে পাল্টাবেন তখন স্ক্রীন শেয়ার করা বন্ধ হবে৷ আপনি কি চালিয়ে যেতে চান?</translation>
@@ -214,6 +215,7 @@ Search অথবা বাতিল করতে Shift টিপুন৷</trans
 <translation id="714034171374937760">Chromebase</translation>
 <translation id="7165278925115064263">Alt+Shift+K</translation>
 <translation id="7168224885072002358"><ph name="TIMEOUT_SECONDS" /> এ পুরানো রেসুলিউশানে ফেরানো হচ্ছে</translation>
+<translation id="7199454189089571166">সহায়ক মোড</translation>
 <translation id="7209101170223508707">CAPS LOCK চালু আছে৷
 Alt+Search অথবা বাতিল করতে Shift টিপুন৷</translation>
 <translation id="7246339268451149667">আঙ্গুলের ছাপ দিয়ে আনলক সক্ষম করবেন?</translation>
@@ -236,7 +238,6 @@ Alt+Search অথবা বাতিল করতে Shift টিপুন৷</t
 <translation id="7814236020522506259"><ph name="HOUR" /> এবং <ph name="MINUTE" /></translation>
 <translation id="7823564328645135659">আপনার সেটিংস সিঙ্ক করার পরে ভাষা "<ph name="FROM_LOCALE" />" থেকে "<ph name="TO_LOCALE" />" এ পরিবর্তন করা হয়েছে৷</translation>
 <translation id="7904094684485781019">এই অ্যাকাউন্টের প্রশাসক একাধিক প্রবেশ করুন অননুমোদিত করেছেন৷</translation>
-<translation id="7951523953736115461">নাইট লাইট</translation>
 <translation id="7977927628060636163">মোবাইল নেটওয়ার্কগুলির জন্য অনুসন্ধান করছে...</translation>
 <translation id="7982789257301363584">নেটওয়ার্ক</translation>
 <translation id="8000066093800657092">কোনও নেটওয়ার্ক নেই</translation>
