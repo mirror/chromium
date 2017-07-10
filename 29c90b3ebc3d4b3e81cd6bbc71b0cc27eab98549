@@ -178,6 +178,24 @@
       "revId": "29c90b3ebc3d4b3e81cd6bbc71b0cc27eab98549",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5af93f48_166a239f",
+        "filename": "content/public/browser/android/motion_event_synthesizer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-10T17:45:27Z",
+      "side": 1,
+      "message": "\u003e Please mind your tone Bo, nobody here has bad intent. If there\u0027s an issue with our implementation please file a bug with some suggestions, or otherwise reach out to the team.\n\nThe jni targets are meant to be private, and the generated jni headers are only meant to be included once. You lucked out this time because there are no java-\u003enative calls in that file; only one native function can be registered as the implementation of a native method, so something would have been broken.\n\nThere\u0027s also less bad importing things from content but outside of content_public. But that was a mistake made a long time ago by content code and loads of other code does it :/\n\n\u003e Not only did we have no idea this was a \u0027shortcut\u0027, or \u0027bad code\u0027, but our non-\u0027VR people\u0027 reviewers also apparently didn\u0027t realize that was the case. We did what we thought was the correct way to do it.\n\nLooked over the review. I think the issue was aelias was only asked to review the content change, not VR code.\n\n\u003e \n\u003e I\u0027m not sure why MES is in the content layer to begin with, that sounds like an issue in itself.\n\nIt was only used by content before VR.",
+      "parentUuid": "4ee54be7_f681a866",
+      "revId": "29c90b3ebc3d4b3e81cd6bbc71b0cc27eab98549",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
