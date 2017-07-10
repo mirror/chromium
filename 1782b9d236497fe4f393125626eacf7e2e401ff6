@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c488d7cf_de81cbd8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-07-10T22:49:28Z",
+      "side": 1,
+      "message": "I don\u0027t think we should be doing it - this is all code churn and indirections. Why not rename web/ to controller/?",
+      "revId": "1782b9d236497fe4f393125626eacf7e2e401ff6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e46e332e_a2dd7489",
+        "filename": "third_party/WebKit/Source/core/exported/WebDevToolsAgentCore.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-07-10T22:49:28Z",
+      "side": 1,
+      "message": "What is this class about?",
+      "revId": "1782b9d236497fe4f393125626eacf7e2e401ff6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
