@@ -462,6 +462,24 @@
       "revId": "17a2e0d652618f934e42ea82444d3e13ddd168ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce844f98_a986db0e",
+        "filename": "components/arc/arc_service_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-10T11:45:36Z",
+      "side": 1,
+      "message": "Thanks. Done.",
+      "parentUuid": "9389eb84_31f3576b",
+      "revId": "17a2e0d652618f934e42ea82444d3e13ddd168ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
