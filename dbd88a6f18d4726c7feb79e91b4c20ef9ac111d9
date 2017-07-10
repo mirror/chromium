@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a2f9d574_3b2833d2",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/client_process_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-07-10T20:40:37Z",
+      "side": 1,
+      "message": "it was just hard to parse the error message when callback is null. Moved it to the request function.",
+      "parentUuid": "f1dfbd0a_d04d2a49",
+      "range": {
+        "startLine": 188,
+        "startChar": 0,
+        "endLine": 188,
+        "endChar": 30
+      },
+      "revId": "dbd88a6f18d4726c7feb79e91b4c20ef9ac111d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3070ae99_aa99a7d5",
         "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/client_process_impl.h",
         "patchSetId": 6
