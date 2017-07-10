@@ -16,6 +16,24 @@
       "revId": "473aa85857e217410159005f20cb5308e994b4d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d628dfe_bed36f67",
+        "filename": "ios/showcase/core/app_delegate.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-07-10T22:19:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e570aecc_b036f39f",
+      "revId": "473aa85857e217410159005f20cb5308e994b4d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
