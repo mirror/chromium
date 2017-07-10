@@ -162,6 +162,16 @@ FakeSessionManagerClient::BlockingRetrievePolicyForUser(
   return RetrievePolicyResponseType::SUCCESS;
 }
 
+void FakeSessionManagerClient::RetrievePolicyForUserWithoutSession(
+    const cryptohome::Identification& cryptohome_id,
+    const std::string& temporary_mount_path,
+    const RetrievePolicyCallback& callback) {
+  // This is currently not supported in FakeSessionManagerClient.
+  base::ThreadTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE,
+      base::Bind(callback, nullptr, RetrievePolicyResponseType::OTHER_ERROR));
+}
+
 void FakeSessionManagerClient::RetrieveDeviceLocalAccountPolicy(
     const std::string& account_id,
     const RetrievePolicyCallback& callback) {
