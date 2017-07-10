@@ -247,6 +247,21 @@ TEST(ErrorReportTest, NetworkTimeQueryingFeatureInfo) {
                 .network_time_query_behavior());
 }
 
+TEST(ErrorReportTest, TestWindowsEnterpriseSettingPopulated) {
+  SSLInfo ssl_info;
+  ASSERT_NO_FATAL_FAILURE(
+      GetTestSSLInfo(INCLUDE_UNVERIFIED_CERT_CHAIN, &ssl_info, kCertStatus));
+  ErrorReport report(kDummyHostname, ssl_info);
+
+  report.AddWindowsEnterpriseSetting(false);
+  std::string serialized_report;
+  ASSERT_TRUE(report.Serialize(&serialized_report));
+
+  CertLoggerRequest parsed;
+  ASSERT_TRUE(parsed.ParseFromString(serialized_report));
+  EXPECT_EQ(false, parsed.windows_enterprise_setting());
+}
+
 #if defined(OS_ANDROID)
 // Tests that information about the Android AIA fetching feature is included in
 // the report.
