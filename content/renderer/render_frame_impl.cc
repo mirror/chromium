@@ -1657,6 +1657,7 @@ bool RenderFrameImpl::OnMessageReceived(const IPC::Message& msg) {
     IPC_MESSAGE_HANDLER(FrameMsg_FailedNavigation, OnFailedNavigation)
     IPC_MESSAGE_HANDLER(FrameMsg_ReportContentSecurityPolicyViolation,
                         OnReportContentSecurityPolicyViolation)
+    IPC_MESSAGE_HANDLER(FrameMsg_DroppedNavigation, OnDroppedNavigation)
     IPC_MESSAGE_HANDLER(FrameMsg_GetSavableResourceLinks,
                         OnGetSavableResourceLinks)
     IPC_MESSAGE_HANDLER(FrameMsg_GetSerializedHtmlWithLocalLinks,
@@ -5283,6 +5284,11 @@ void RenderFrameImpl::OnReportContentSecurityPolicyViolation(
     const content::CSPViolationParams& violation_params) {
   frame_->ReportContentSecurityPolicyViolation(
       BuildWebContentSecurityPolicyViolation(violation_params));
+}
+
+void RenderFrameImpl::OnDroppedNavigation() {
+  browser_side_navigation_pending_ = false;
+  frame_->clientDroppedNavigation();
 }
 
 WebNavigationPolicy RenderFrameImpl::DecidePolicyForNavigation(
