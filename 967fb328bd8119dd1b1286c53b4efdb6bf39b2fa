@@ -2,6 +2,97 @@
   "comments": [
     {
       "key": {
+        "uuid": "4b51cfe1_885c574c",
+        "filename": "AUTHORS",
+        "patchSetId": 6
+      },
+      "lineNbr": 863,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-10T21:48:38Z",
+      "side": 1,
+      "message": "You only need one line or the other-- if there\u0027s a corporate entry, I don\u0027t think you need the individual contributor entry, and vice versa.\n\nI don\u0027t see either you or Nike on the list of signers, so we can\u0027t accept the CL just yet.  The checklist is here:\nhttps://www.chromium.org/developers/contributing-code/external-contributor-checklist\n\nSounds like you would need to sign the CLA:\nhttps://cla.developers.google.com/\n\n(I don\u0027t know what\u0027s involved with getting a full corporation added to the list.)",
+      "revId": "967fb328bd8119dd1b1286c53b4efdb6bf39b2fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ef55a47_009c6c9f",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 822,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-10T21:48:38Z",
+      "side": 1,
+      "message": "nit: always have",
+      "range": {
+        "startLine": 822,
+        "startChar": 33,
+        "endLine": 822,
+        "endChar": 40
+      },
+      "revId": "967fb328bd8119dd1b1286c53b4efdb6bf39b2fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c9b873a_e4413813",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 824,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-10T21:48:38Z",
+      "side": 1,
+      "message": "Which lines does this comment refer to?  I don\u0027t see a recalculation in the 825-833 block.  Should the comment move down above line 835?",
+      "revId": "967fb328bd8119dd1b1286c53b4efdb6bf39b2fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2baabe58_17737a4a",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 827,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-10T21:48:38Z",
+      "side": 1,
+      "message": "nit: It\u0027s a bit unusual to have a DCHECK(!foo) followed by an if (foo).  I think it might make more sense to write the DCHECK as a NOTREACHED() inside the no_gesture_target block, after or instead of LOG(ERROR) statement.  (You can do a NOTREACHED() \u003c\u003c \"...\" to include an error message.)\n\nRelated question: Is it safe to proceed with the rest of this function if we hit this in a release build, or should we return early?  DCHECKs and NOTREACHEDs are compiled out there.  (It looks like this might be in response to something from the renderer process, in which case the values wouldn\u0027t be trusted and could intentionally try to avoid a match.)",
+      "revId": "967fb328bd8119dd1b1286c53b4efdb6bf39b2fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08a93f7f_5b5f3d92",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-10T21:48:38Z",
+      "side": 1,
+      "message": "Huh, was this around from a previous CL?  Normally we need to add new histograms to histograms.xml, but it looks like there\u0027s already an occurrence in there (with no current uses).",
+      "revId": "967fb328bd8119dd1b1286c53b4efdb6bf39b2fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bf795aa0_4b2112ac",
         "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
         "patchSetId": 6
@@ -13,6 +104,23 @@
       "writtenOn": "2017-07-10T21:19:20Z",
       "side": 1,
       "message": "FYI: gcc is choking on this line, it needs parenthesis to clarify the order. Windows compiler is apparently fine with it. See the try bot results.",
+      "revId": "967fb328bd8119dd1b1286c53b4efdb6bf39b2fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74df4a20_63ba9b48",
+        "filename": "content/test/data/page_with_touch_start_default_prevented.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-10T21:48:38Z",
+      "side": 1,
+      "message": "Hmm, is there something unusual about this file?  I\u0027m wondering why most of the lines (apart from 7-10) appear double-spaced here in the review tool.  Maybe that\u0027s indicating some kind of line ending problem?",
       "revId": "967fb328bd8119dd1b1286c53b4efdb6bf39b2fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
