@@ -1593,8 +1593,8 @@ PassRefPtr<BlobDataHandle> XMLHttpRequest::CreateBlobDataHandleFromResponse() {
     // FIXME: finalResponseMIMETypeWithFallback() defaults to
     // text/xml which may be incorrect. Replace it with
     // finalResponseMIMEType() after compatibility investigation.
-    blob_data->SetContentType(FinalResponseMIMETypeWithFallback().LowerASCII());
   }
+  blob_data->SetContentType(FinalResponseMIMETypeWithFallback().LowerASCII());
   return BlobDataHandle::Create(std::move(blob_data),
                                 length_downloaded_to_file_);
 }
