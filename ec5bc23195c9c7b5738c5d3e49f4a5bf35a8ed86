@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b870485_282b2e6a",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ClientHintsPreferences.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-10T02:30:29Z",
+      "side": 1,
+      "message": "enabled_types_{}\n\n(And I prefer having this initialization in the header, like\n\n  bool enabled_types_[kWebClientHintsTypeNumValues] \u003d {};\n\n).",
+      "revId": "ec5bc23195c9c7b5738c5d3e49f4a5bf35a8ed86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1262396_8bb65b48",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ClientHintsPreferencesTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-10T02:30:29Z",
+      "side": 1,
+      "message": "\u003d {};",
+      "range": {
+        "startLine": 56,
+        "startChar": 56,
+        "endLine": 56,
+        "endChar": 61
+      },
+      "revId": "ec5bc23195c9c7b5738c5d3e49f4a5bf35a8ed86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce0238a5_ec46f5b8",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-10T02:30:29Z",
+      "side": 1,
+      "message": "\u003d {};",
+      "revId": "ec5bc23195c9c7b5738c5d3e49f4a5bf35a8ed86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58034574_e4817c76",
+        "filename": "third_party/WebKit/public/platform/WebClientHintsType.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-10T02:30:29Z",
+      "side": 1,
+      "message": "Please use the correct license.",
+      "revId": "ec5bc23195c9c7b5738c5d3e49f4a5bf35a8ed86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
