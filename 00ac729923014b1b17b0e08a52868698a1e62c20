@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07fb472c_31f3fb16",
+        "filename": "chrome/test/chromedriver/run_buildbot_steps.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-07-10T21:12:06Z",
+      "side": 1,
+      "message": "The double % sign for %%3A and %%20 in previous version are needed. The % operator after the string will replace  double %% with single %.",
+      "revId": "00ac729923014b1b17b0e08a52868698a1e62c20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
