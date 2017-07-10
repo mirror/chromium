@@ -146,33 +146,40 @@ class ServiceWorkerMetrics {
   enum class StartSituation {
     UNKNOWN,
     DURING_STARTUP,
-    EXISTING_PROCESS,
-    NEW_PROCESS
+    NEW_PROCESS,
+    EXISTING_UNREADY_PROCESS,
+    EXISTING_READY_PROCESS
   };
 
   // Used for UMA. Append only.
   // This enum describes how an activated worker was found and prepared (i.e.,
   // reached the RUNNING status) in order to dispatch a fetch event to.
   enum class WorkerPreparationType {
-    UNKNOWN,
+    UNKNOWN = 0,
     // The worker was already starting up. We waited for it to finish.
-    STARTING,
+    STARTING = 1,
     // The worker was already running.
-    RUNNING,
+    RUNNING = 2,
     // The worker was stopping. We waited for it to stop, and then started it
     // up.
-    STOPPING,
+    STOPPING = 3,
     // The worker was in the stopped state. We started it up, and startup
     // required a new process to be created.
-    START_IN_NEW_PROCESS,
-    // The worker was in the stopped state. We started it up, and it used an
-    // existing process.
-    START_IN_EXISTING_PROCESS,
+    START_IN_NEW_PROCESS = 4,
+    // Deprecated 07/2017; replaced by START_IN_EXISTING_UNREADY_PROCESS and
+    // START_IN_EXISTING_READY_PROCESS.
+    //   START_IN_EXISTING_PROCESS = 5,
     // The worker was in the stopped state. We started it up, and this occurred
     // during browser startup.
-    START_DURING_STARTUP,
+    START_DURING_STARTUP = 6,
+    // The worker was in the stopped state. We started it up, and it used an
+    // existing unready process.
+    START_IN_EXISTING_UNREADY_PROCESS = 7,
+    // The worker was in the stopped state. We started it up, and it used an
+    // existing ready process.
+    START_IN_EXISTING_READY_PROCESS = 8,
     // Add new types here.
-    NUM_TYPES
+    NUM_TYPES = 9
   };
 
   // Used for UMA. Append only.
@@ -337,8 +344,6 @@ class ServiceWorkerMetrics {
       StartSituation start_situation);
 
   static const char* LoadSourceToString(LoadSource source);
-  static StartSituation GetStartSituation(bool is_browser_startup_complete,
-                                          bool is_new_process);
 
   // Records the result of a start attempt that occurred after the worker had
   // failed |failure_count| consecutive times.

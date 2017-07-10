@@ -29,8 +29,10 @@ std::string StartSituationToSuffix(
       return "_DuringStartup";
     case ServiceWorkerMetrics::StartSituation::NEW_PROCESS:
       return "_NewProcess";
-    case ServiceWorkerMetrics::StartSituation::EXISTING_PROCESS:
-      return "_ExistingProcess";
+    case ServiceWorkerMetrics::StartSituation::EXISTING_UNREADY_PROCESS:
+      return "_ExistingUnreadyProcess";
+    case ServiceWorkerMetrics::StartSituation::EXISTING_READY_PROCESS:
+      return "_ExistingReadyProcess";
     default:
       NOTREACHED() << static_cast<int>(situation);
   }
@@ -103,8 +105,10 @@ ServiceWorkerMetrics::WorkerPreparationType GetWorkerPreparationType(
           return Preparation::START_DURING_STARTUP;
         case Situation::NEW_PROCESS:
           return Preparation::START_IN_NEW_PROCESS;
-        case Situation::EXISTING_PROCESS:
-          return Preparation::START_IN_EXISTING_PROCESS;
+        case Situation::EXISTING_UNREADY_PROCESS:
+          return Preparation::START_IN_EXISTING_UNREADY_PROCESS;
+        case Situation::EXISTING_READY_PROCESS:
+          return Preparation::START_IN_EXISTING_READY_PROCESS;
         case Situation::UNKNOWN:
           break;
       }
@@ -132,8 +136,10 @@ std::string GetWorkerPreparationSuffix(
       return "_StartWorkerDuringStartup";
     case Preparation::START_IN_NEW_PROCESS:
       return "_StartWorkerNewProcess";
-    case Preparation::START_IN_EXISTING_PROCESS:
-      return "_StartWorkerExistingProcess";
+    case Preparation::START_IN_EXISTING_UNREADY_PROCESS:
+      return "_StartWorkerExistingUnreadyProcess";
+    case Preparation::START_IN_EXISTING_READY_PROCESS:
+      return "_StartWorkerExistingReadyProcess";
     case Preparation::STARTING:
       return "_StartingWorker";
     case Preparation::RUNNING:
@@ -846,16 +852,6 @@ const char* ServiceWorkerMetrics::LoadSourceToString(LoadSource source) {
   }
   NOTREACHED() << static_cast<int>(source);
   return nullptr;
-}
-
-ServiceWorkerMetrics::StartSituation ServiceWorkerMetrics::GetStartSituation(
-    bool is_browser_startup_complete,
-    bool is_new_process) {
-  if (!is_browser_startup_complete)
-    return StartSituation::DURING_STARTUP;
-  if (is_new_process)
-    return StartSituation::NEW_PROCESS;
-  return StartSituation::EXISTING_PROCESS;
 }
 
 void ServiceWorkerMetrics::RecordStartStatusAfterFailure(

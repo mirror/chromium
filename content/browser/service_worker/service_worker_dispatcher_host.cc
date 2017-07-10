@@ -1023,22 +1023,6 @@ void ServiceWorkerDispatcherHost::OnSetHostedVersionId(
 
   // A process for the worker must be equal to a process for the provider host.
   if (version->embedded_worker()->process_id() != provider_host->process_id()) {
-    // Temporary debugging for https://crbug.com/668633
-    base::debug::ScopedCrashKey scope_worker_pid(
-        "swdh_set_hosted_version_worker_pid",
-        base::IntToString(version->embedded_worker()->process_id()));
-    base::debug::ScopedCrashKey scope_provider_host_pid(
-        "swdh_set_hosted_version_host_pid",
-        base::IntToString(provider_host->process_id()));
-    if (version->embedded_worker()->process_id() !=
-        ChildProcessHost::kInvalidUniqueID) {
-      base::debug::ScopedCrashKey scope_is_new_process(
-          "swdh_set_hosted_version_is_new_process",
-          version->embedded_worker()->is_new_process() ? "true" : "false");
-    }
-    base::debug::ScopedCrashKey scope_worker_restart_count(
-        "swdh_set_hosted_version_restart_count",
-        base::IntToString(version->embedded_worker()->restart_count()));
     bad_message::ReceivedBadMessage(
         this, bad_message::SWDH_SET_HOSTED_VERSION_PROCESS_MISMATCH);
     return;
