@@ -45,6 +45,10 @@ class MockSessionManagerClient : public SessionManagerClient {
   MOCK_METHOD2(RetrievePolicyForUser,
                void(const cryptohome::Identification&,
                     const RetrievePolicyCallback&));
+  MOCK_METHOD3(RetrievePolicyForUserWithoutSession,
+               void(const cryptohome::Identification&,
+                    const std::string&,
+                    const RetrievePolicyCallback&));
   MOCK_METHOD2(BlockingRetrievePolicyForUser,
                RetrievePolicyResponseType(const cryptohome::Identification&,
                                           std::string*));

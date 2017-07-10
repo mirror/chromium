@@ -52,6 +52,10 @@ class FakeSessionManagerClient : public SessionManagerClient {
   RetrievePolicyResponseType BlockingRetrievePolicyForUser(
       const cryptohome::Identification& cryptohome_id,
       std::string* policy_out) override;
+  void RetrievePolicyForUserWithoutSession(
+      const cryptohome::Identification& cryptohome_id,
+      const std::string& temporary_mount_path,
+      const RetrievePolicyCallback& callback) override;
   void RetrieveDeviceLocalAccountPolicy(
       const std::string& account_id,
       const RetrievePolicyCallback& callback) override;
