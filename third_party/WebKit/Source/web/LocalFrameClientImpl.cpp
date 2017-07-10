@@ -34,6 +34,7 @@
 #include <memory>
 
 #include "bindings/core/v8/ScriptController.h"
+#include "controller/WebDevToolsAgentImpl.h"
 #include "core/HTMLNames.h"
 #include "core/dom/Document.h"
 #include "core/dom/Fullscreen.h"
@@ -107,7 +108,6 @@
 #include "public/web/WebPluginParams.h"
 #include "public/web/WebViewClient.h"
 #include "v8/include/v8.h"
-#include "web/WebDevToolsAgentImpl.h"
 
 namespace blink {
 
