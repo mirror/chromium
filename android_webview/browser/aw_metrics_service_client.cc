@@ -14,7 +14,6 @@
 #include "base/files/file_util.h"
 #include "base/guid.h"
 #include "base/i18n/rtl.h"
-#include "base/lazy_instance.h"
 #include "base/path_service.h"
 #include "base/threading/sequenced_worker_pool.h"
 #include "components/metrics/call_stack_profile_metrics_provider.h"
@@ -45,8 +44,7 @@ const int kUploadIntervalMinutes = 30;
 const size_t GUID_SIZE = 32 + 4;
 
 // Client ID of the app, read and cached synchronously at startup
-base::LazyInstance<std::string>::Leaky g_client_id_guid =
-    LAZY_INSTANCE_INITIALIZER;
+std::string g_client_id_guid;
 
 // Callbacks for metrics::MetricsStateManager::Create. Store/LoadClientInfo
 // allow Windows Chrome to back up ClientInfo. They're no-ops for WebView.
@@ -77,7 +75,7 @@ AwMetricsServiceClient* AwMetricsServiceClient::GetInstance() {
 
 void AwMetricsServiceClient::GetOrCreateGUID() {
   // Check for cached GUID
-  if (g_client_id_guid.Get().length() == GUID_SIZE)
+  if (g_client_id_guid.length() == GUID_SIZE)
     return;
 
   // UMA uses randomly-generated GUIDs (globally unique identifiers) to
@@ -88,7 +86,7 @@ void AwMetricsServiceClient::GetOrCreateGUID() {
     LOG(ERROR) << "Failed to get app data directory for Android WebView";
 
     // Generate a 1-time GUID so metrics can still be collected
-    g_client_id_guid.Get() = base::GenerateGUID();
+    g_client_id_guid = base::GenerateGUID();
     return;
   }
 
@@ -96,17 +94,17 @@ void AwMetricsServiceClient::GetOrCreateGUID() {
       user_data_dir.Append(FILE_PATH_LITERAL("metrics_guid"));
 
   // Try to read an existing GUID.
-  if (base::ReadFileToStringWithMaxSize(guid_file_path, &g_client_id_guid.Get(),
+  if (base::ReadFileToStringWithMaxSize(guid_file_path, &g_client_id_guid,
                                         GUID_SIZE)) {
-    if (base::IsValidGUID(g_client_id_guid.Get()))
+    if (base::IsValidGUID(g_client_id_guid))
       return;
     LOG(ERROR) << "Overwriting invalid GUID";
   }
 
   // We must write a new GUID.
-  g_client_id_guid.Get() = base::GenerateGUID();
-  if (!base::WriteFile(guid_file_path, g_client_id_guid.Get().c_str(),
-                       g_client_id_guid.Get().size())) {
+  g_client_id_guid = base::GenerateGUID();
+  if (!base::WriteFile(guid_file_path, g_client_id_guid.c_str(),
+                       g_client_id_guid.size())) {
     // If writing fails, proceed anyway with the new GUID. It won't be persisted
     // to the next run, but we can still collect metrics with this 1-time GUID.
     LOG(ERROR) << "Failed to write new GUID";
@@ -141,9 +139,8 @@ void AwMetricsServiceClient::Initialize(
 void AwMetricsServiceClient::InitializeWithGUID() {
   // The guid must have already been initialized at this point, either
   // synchronously or asynchronously depending on the kEnableWebViewFinch flag
-  DCHECK_EQ(g_client_id_guid.Get().length(), GUID_SIZE);
-  pref_service_->SetString(metrics::prefs::kMetricsClientID,
-                           g_client_id_guid.Get());
+  DCHECK_EQ(g_client_id_guid.length(), GUID_SIZE);
+  pref_service_->SetString(metrics::prefs::kMetricsClientID, g_client_id_guid);
 
   metrics_state_manager_ = metrics::MetricsStateManager::Create(
       pref_service_, this, base::Bind(&StoreClientInfo),
