@@ -16,11 +16,10 @@ MockBrowsingDataDatabaseHelper::MockBrowsingDataDatabaseHelper(
 MockBrowsingDataDatabaseHelper::~MockBrowsingDataDatabaseHelper() {
 }
 
-void MockBrowsingDataDatabaseHelper::StartFetching(
-    const FetchCallback& callback) {
+void MockBrowsingDataDatabaseHelper::StartFetching(FetchCallback callback) {
   ASSERT_FALSE(callback.is_null());
   ASSERT_TRUE(callback_.is_null());
-  callback_ = callback;
+  callback_ = std::move(callback);
 }
 
 void MockBrowsingDataDatabaseHelper::DeleteDatabase(
@@ -48,7 +47,7 @@ void MockBrowsingDataDatabaseHelper::AddDatabaseSamples() {
 }
 
 void MockBrowsingDataDatabaseHelper::Notify() {
-  callback_.Run(response_);
+  std::move(callback_).Run(response_);
 }
 
 void MockBrowsingDataDatabaseHelper::Reset() {
