@@ -21,6 +21,7 @@
 #include "base/single_thread_task_runner.h"
 #include "base/synchronization/waitable_event.h"
 #include "build/build_config.h"
+#include "components/viz/service/display_embedder/shared_bitmap_allocation_notifier_impl.h"
 #include "content/browser/child_process_launcher.h"
 #include "content/browser/dom_storage/session_storage_namespace_impl.h"
 #include "content/browser/renderer_host/frame_sink_provider_impl.h"
@@ -399,6 +400,9 @@ class CONTENT_EXPORT RenderProcessHostImpl
       blink::mojom::OffscreenCanvasProviderRequest request);
   void BindFrameSinkProvider(const service_manager::BindSourceInfo& source_info,
                              mojom::FrameSinkProviderRequest request);
+  void BindSharedBitmapAllocationNotifier(
+      const service_manager::BindSourceInfo& source_info,
+      cc::mojom::SharedBitmapAllocationNotifierRequest request);
   void CreateStoragePartitionService(
       const service_manager::BindSourceInfo& source_info,
       mojom::StoragePartitionServiceRequest request);
@@ -712,6 +716,9 @@ class CONTENT_EXPORT RenderProcessHostImpl
       instance_weak_factory_;
 
   FrameSinkProviderImpl frame_sink_provider_;
+
+  viz::SharedBitmapAllocationNotifierImpl
+      shared_bitmap_allocation_notifier_impl_;
 
   base::WeakPtrFactory<RenderProcessHostImpl> weak_factory_;
 

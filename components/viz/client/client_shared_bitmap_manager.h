@@ -24,8 +24,7 @@ namespace viz {
 class ClientSharedBitmapManager : public cc::SharedBitmapManager {
  public:
   explicit ClientSharedBitmapManager(
-      scoped_refptr<
-          cc::mojom::ThreadSafeSharedBitmapAllocationNotifierAssociatedPtr>
+      scoped_refptr<cc::mojom::ThreadSafeSharedBitmapAllocationNotifierPtr>
           shared_bitmap_allocation_notifier);
   ~ClientSharedBitmapManager() override;
 
@@ -43,8 +42,7 @@ class ClientSharedBitmapManager : public cc::SharedBitmapManager {
   void NotifyAllocatedSharedBitmap(base::SharedMemory* memory,
                                    const cc::SharedBitmapId& id);
 
-  scoped_refptr<
-      cc::mojom::ThreadSafeSharedBitmapAllocationNotifierAssociatedPtr>
+  scoped_refptr<cc::mojom::ThreadSafeSharedBitmapAllocationNotifierPtr>
       shared_bitmap_allocation_notifier_;
 
   DISALLOW_COPY_AND_ASSIGN(ClientSharedBitmapManager);
