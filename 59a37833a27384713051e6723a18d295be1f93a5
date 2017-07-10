@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50b4d1ff_1087af21",
+        "filename": "chrome/test/chromedriver/chrome_launcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1000112
+      },
+      "writtenOn": "2017-07-10T16:49:06Z",
+      "side": 1,
+      "message": "Nit: add a comment explaining why we want to support \"invalid\" characters (eg. that these might come from valid EcmaScript strings which, for example, web-platform-tests might be using explicitly to test string handling behavior).",
+      "revId": "59a37833a27384713051e6723a18d295be1f93a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
