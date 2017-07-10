@@ -8,7 +8,6 @@ import android.content.ComponentName;
 import android.os.Bundle;
 
 import org.chromium.base.process_launcher.ChildProcessConnection;
-import org.chromium.base.process_launcher.ChildProcessCreationParams;
 
 /** An implementation of ChildProcessConnection that does not connect to a real service. */
 class TestChildProcessConnection extends ChildProcessConnection {
@@ -41,10 +40,9 @@ class TestChildProcessConnection extends ChildProcessConnection {
      * Creates a mock binding corresponding to real ManagedChildProcessConnection after the
      * connection is established: with initial binding bound and no strong binding.
      */
-    TestChildProcessConnection(ComponentName serviceName, boolean bindAsExternalService,
-            Bundle serviceBundle, ChildProcessCreationParams creationParams) {
-        super(null /* context */, serviceName, bindAsExternalService, serviceBundle,
-                creationParams);
+    TestChildProcessConnection(ComponentName serviceName, boolean bindToCaller,
+            boolean bindAsExternalService, Bundle serviceBundle) {
+        super(null /* context */, serviceName, bindToCaller, bindAsExternalService, serviceBundle);
     }
 
     public void setPid(int pid) {
