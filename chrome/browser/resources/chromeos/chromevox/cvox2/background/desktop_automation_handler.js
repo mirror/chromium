@@ -393,6 +393,11 @@ DesktopAutomationHandler.prototype = {
    * @private
    */
   onEditableChanged_: function(evt) {
+    var topRoot = AutomationUtil.getTopLevelRoot(evt.target);
+    if (!evt.target.state.focused ||
+        (topRoot && topRoot.parent && !topRoot.parent.state.focused))
+      return;
+
     if (!ChromeVoxState.instance.currentRange) {
       this.onEventDefault(evt);
       ChromeVoxState.instance.setCurrentRange(
