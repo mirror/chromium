@@ -8,7 +8,9 @@ test(function () {
   if (!window.internals)
     assert_unreached('This test requires window.internals.');
 
-  assert_greater_than(internals.updateStyleAndReturnAffectedElementCount(), 1);
+  // We cannot assert whether any elements were affected, because a style
+  // recalc may or may not have occurred before test execution.
+  internals.updateStyleAndReturnAffectedElementCount();
 
   element.style.top = "0px";
   assert_equals(internals.updateStyleAndReturnAffectedElementCount(), 1);
