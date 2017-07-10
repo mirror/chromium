@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d80f21f0_b6fd2a86",
+        "filename": "chrome/browser/ui/views/harmony/textfield_layout.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-07-10T23:01:08Z",
+      "side": 1,
+      "message": "You may have missed my earlier comment: this should be de-duplicated with kBaseHeight in MdTextButton.",
+      "range": {
+        "startLine": 24,
+        "startChar": 16,
+        "endLine": 24,
+        "endChar": 39
+      },
+      "revId": "557ad6067844b37345d812a20144222c328b2e9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -251,6 +251,30 @@
       "revId": "9caabc1d81a6c8a046cfdd44df5d05c1798ff7dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "20b7a72f_f7b1916c",
+        "filename": "chrome/browser/ui/views/login_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-07-10T23:01:08Z",
+      "side": 1,
+      "message": "I would agree with you if the column set management wasn\u0027t split between the two files (here and textfield_layout). In this case I think it\u0027s clearer to just have \"this file\u0027s column set\" and \"the other file\u0027s column set.\"",
+      "parentUuid": "ae78034a_dc74a19a",
+      "range": {
+        "startLine": 23,
+        "startChar": 5,
+        "endLine": 23,
+        "endChar": 19
+      },
+      "revId": "9caabc1d81a6c8a046cfdd44df5d05c1798ff7dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
