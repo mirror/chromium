@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17bb02a0_0166be77",
+        "filename": "chrome/browser/browsing_data/browsing_data_important_sites_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-10T12:11:46Z",
+      "side": 1,
+      "message": "This could be written in a more elegant way by setting\n\nfilterable_mask \u003d 0;\nunfilterable_mask \u003d remove_mask;\n\nBut the current code is possibly less error-prone. Just wanted to point out :)",
+      "range": {
+        "startLine": 69,
+        "startChar": 5,
+        "endLine": 69,
+        "endChar": 41
+      },
+      "revId": "ad33a6903d087b2197e129daf4ef1c3a7ee68467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
