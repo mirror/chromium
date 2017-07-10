@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5682dae2_186d714e",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptPromiseResolverTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-10T14:14:54Z",
+      "side": 1,
+      "message": "You don\u0027t need to add this comment.",
+      "revId": "cc1e1851a9019518fd63ebdcb5da628273780bfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
