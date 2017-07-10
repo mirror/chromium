@@ -337,6 +337,9 @@ class CONTENT_EXPORT RenderProcessHostImpl
       RenderProcessHost* render_process_host,
       const GURL& site_url);
 
+  // Returns the total count of RenderProcessHostImpl.
+  static size_t GetAllHostsCount();
+
  protected:
   // A proxy for our IPC::Channel that lives on the IO thread.
   std::unique_ptr<IPC::ChannelProxy> channel_;

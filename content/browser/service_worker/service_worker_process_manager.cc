@@ -167,7 +167,7 @@ ServiceWorkerStatusCode ServiceWorkerProcessManager::AllocateWorkerProcess(
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   out_info->process_id = ChildProcessHost::kInvalidUniqueID;
-  out_info->is_new_process = false;
+  out_info->start_situation = ServiceWorkerMetrics::StartSituation::UNKNOWN;
 
   if (process_id_for_test_ != ChildProcessHost::kInvalidUniqueID) {
     // Let tests specify the returned process ID. Note: We may need to be able
@@ -175,7 +175,8 @@ ServiceWorkerStatusCode ServiceWorkerProcessManager::AllocateWorkerProcess(
     int result = can_use_existing_process ? process_id_for_test_
                                           : new_process_id_for_test_;
     out_info->process_id = result;
-    out_info->is_new_process = false;
+    out_info->start_situation =
+        ServiceWorkerMetrics::StartSituation::EXISTING_READY_PROCESS;
     return SERVICE_WORKER_OK;
   }
 
@@ -193,7 +194,8 @@ ServiceWorkerStatusCode ServiceWorkerProcessManager::AllocateWorkerProcess(
       instance_info_.insert(
           std::make_pair(embedded_worker_id, ProcessInfo(process_id)));
       out_info->process_id = process_id;
-      out_info->is_new_process = false;
+      out_info->start_situation =
+          ServiceWorkerMetrics::StartSituation::EXISTING_READY_PROCESS;
       return SERVICE_WORKER_OK;
     }
   }
@@ -215,6 +217,7 @@ ServiceWorkerStatusCode ServiceWorkerProcessManager::AllocateWorkerProcess(
     site_instance->set_process_reuse_policy(
         SiteInstanceImpl::ProcessReusePolicy::REUSE_PENDING_OR_COMMITTED_SITE);
   }
+  size_t hosts_count = RenderProcessHostImpl::GetAllHostsCount();
   RenderProcessHost* rph = site_instance->GetProcess();
 
   // This Init() call posts a task to the IO thread that adds the RPH's
@@ -230,9 +233,16 @@ ServiceWorkerStatusCode ServiceWorkerProcessManager::AllocateWorkerProcess(
 
   rph->IncrementServiceWorkerRefCount();
   out_info->process_id = rph->GetID();
-  // TODO(falken): This is not accurate. SiteInstance could have returned an
-  // existing process.
-  out_info->is_new_process = true;
+  if (rph->IsReady()) {
+    out_info->start_situation =
+        ServiceWorkerMetrics::StartSituation::EXISTING_READY_PROCESS;
+  } else if (hosts_count == RenderProcessHostImpl::GetAllHostsCount()) {
+    out_info->start_situation =
+        ServiceWorkerMetrics::StartSituation::EXISTING_UNREADY_PROCESS;
+  } else {
+    out_info->start_situation =
+        ServiceWorkerMetrics::StartSituation::NEW_PROCESS;
+  }
   return SERVICE_WORKER_OK;
 }
 

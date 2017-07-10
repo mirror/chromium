@@ -2128,6 +2128,11 @@ void RenderProcessHostImpl::RemoveExpectedNavigationToSite(
   tracker->DecrementSiteProcessCount(site_url, render_process_host->GetID());
 }
 
+// static
+size_t RenderProcessHostImpl::GetAllHostsCount() {
+  return g_all_hosts.Get().size();
+}
+
 bool RenderProcessHostImpl::IsForGuestsOnly() const {
   return is_for_guests_only_;
 }
