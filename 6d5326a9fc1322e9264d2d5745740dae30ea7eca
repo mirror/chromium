@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "84bd6533_cd074ceb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabsConnectionService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-07-10T15:59:51Z",
+      "side": 1,
+      "message": "I don\u0027t think you want to remove the previous logic for |showLightWeightFre|. It seems |true| be most likely here.",
+      "range": {
+        "startLine": 100,
+        "startChar": 82,
+        "endLine": 100,
+        "endChar": 87
+      },
+      "revId": "6d5326a9fc1322e9264d2d5745740dae30ea7eca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bf45a2df_e32ee4f8",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/document/ChromeLauncherActivity.java",
         "patchSetId": 3
@@ -64,6 +87,29 @@
         "startChar": 46,
         "endLine": 292,
         "endChar": 85
+      },
+      "revId": "6d5326a9fc1322e9264d2d5745740dae30ea7eca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "999a7941_1cf8a999",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/FirstRunSignInProcessor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-07-10T15:59:51Z",
+      "side": 1,
+      "message": "A dumb question: are these checks not necessary?",
+      "range": {
+        "startLine": 70,
+        "startChar": 33,
+        "endLine": 70,
+        "endChar": 36
       },
       "revId": "6d5326a9fc1322e9264d2d5745740dae30ea7eca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
