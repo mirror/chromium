@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "45fefd0a_1556c800",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-10T20:28:49Z",
+      "side": 1,
+      "message": "I don\u0027t have much context for how the new icon in the mock was chosen, but for consistency in this patch I\u0027ve changed it to use the kInfoOutlineIcon which you mentioned (and gave it a size of 16).\n\nPeter/Bret, are you okay with this? If this decision needs to go through anyone else (UI) for approval please let me know.",
+      "parentUuid": "1af4b5cb_7241c12b",
+      "range": {
+        "startLine": 439,
+        "startChar": 13,
+        "endLine": 439,
+        "endChar": 29
+      },
+      "revId": "eb553a92fa4e963dca25080fd4ab4f365c78b0bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "44b0b8c9_468707f7",
         "filename": "ui/vector_icons/BUILD.gn",
         "patchSetId": 4
@@ -68,6 +92,30 @@
       "revId": "eb553a92fa4e963dca25080fd4ab4f365c78b0bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edc3ea1e_06896267",
+        "filename": "ui/vector_icons/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-10T20:28:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44b0b8c9_468707f7",
+      "range": {
+        "startLine": 22,
+        "startChar": 5,
+        "endLine": 22,
+        "endChar": 17
+      },
+      "revId": "eb553a92fa4e963dca25080fd4ab4f365c78b0bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
