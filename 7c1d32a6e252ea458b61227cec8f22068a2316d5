@@ -16,6 +16,24 @@
       "revId": "7c1d32a6e252ea458b61227cec8f22068a2316d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2f04bad_9f1d4e8e",
+        "filename": "ios/chrome/browser/ui/collection_view/cells/collection_view_text_cell.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-10T15:25:13Z",
+      "side": 1,
+      "message": "The class is already called \"Cell...\", so it is its height (the cell height).\nBut if you think it is clearer I will change it.",
+      "parentUuid": "c0c14a32_29409304",
+      "revId": "7c1d32a6e252ea458b61227cec8f22068a2316d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
