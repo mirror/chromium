@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "572ebe36_bd62cf34",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-07-10T10:35:31Z",
+      "side": 1,
+      "message": "the CL description doesn\u0027t match the contents of the CL",
+      "revId": "b18a12197b8732849c19086f61a601816494b1d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "330719cc_77b4d4c0",
+        "filename": "content/browser/indexed_db/indexed_db_internals_ui.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-07-10T10:35:31Z",
+      "side": 1,
+      "message": "I wonder, in general we avoid referring to a product name, especially in content/ which is also used by none-Chrome products. Does that matter here?",
+      "revId": "b18a12197b8732849c19086f61a601816494b1d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
