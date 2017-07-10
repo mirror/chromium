@@ -79,7 +79,6 @@ TEST_F(IOSChromeStabilityMetricsProviderTest, LogRendererCrash) {
   system_profile.Clear();
   provider.ProvideStabilityMetrics(&system_profile);
 
-  EXPECT_EQ(1, system_profile.stability().renderer_crash_count());
   EXPECT_EQ(0, system_profile.stability().renderer_failed_launch_count());
   EXPECT_EQ(0, system_profile.stability().extension_renderer_crash_count());
 }

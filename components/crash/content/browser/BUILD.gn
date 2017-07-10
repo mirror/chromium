@@ -18,6 +18,8 @@ source_set("browser") {
     "//base",
     "//breakpad:client",
     "//components/crash/content/app",
+    "//components/metrics",
+    "//components/prefs",
     "//content/public/browser",
     "//content/public/common",
   ]
