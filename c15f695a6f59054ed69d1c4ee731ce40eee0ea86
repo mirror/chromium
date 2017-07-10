@@ -70,6 +70,30 @@
       "revId": "c15f695a6f59054ed69d1c4ee731ce40eee0ea86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14ee54ef_fa5c4dd1",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1223950
+      },
+      "writtenOn": "2017-07-10T20:17:52Z",
+      "side": 1,
+      "message": "I see what you\u0027re saying. I have to use the reference twice. Otherwise I would pass in directly to PropagatePropery as you suggested in your code snippet.\n\nAre you okay with the snippet above? If so I will integrate, push, and commit.",
+      "parentUuid": "53652610_f79092a2",
+      "range": {
+        "startLine": 316,
+        "startChar": 2,
+        "endLine": 316,
+        "endChar": 28
+      },
+      "revId": "c15f695a6f59054ed69d1c4ee731ce40eee0ea86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
