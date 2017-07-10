@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9454c7f5_0c5f9c65",
+        "filename": "AUTHORS",
+        "patchSetId": 6
+      },
+      "lineNbr": 863,
+      "author": {
+        "id": 1224778
+      },
+      "writtenOn": "2017-07-10T22:03:45Z",
+      "side": 1,
+      "message": "Ah, strange.  Took awhile to get approval for submission, which was based around the CLA, so I would have expected that it be there given approval.  I\u0027ll follow up on my side and make sure this gets done.  I\u0027ll just add the Org as well--just trying to be thorough :).",
+      "parentUuid": "4b51cfe1_885c574c",
+      "revId": "967fb328bd8119dd1b1286c53b4efdb6bf39b2fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9ef55a47_009c6c9f",
         "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
         "patchSetId": 6
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "76683839_c9f4876e",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 822,
+      "author": {
+        "id": 1224778
+      },
+      "writtenOn": "2017-07-10T22:03:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9ef55a47_009c6c9f",
+      "range": {
+        "startLine": 822,
+        "startChar": 33,
+        "endLine": 822,
+        "endChar": 40
+      },
+      "revId": "967fb328bd8119dd1b1286c53b4efdb6bf39b2fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c9b873a_e4413813",
         "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
         "patchSetId": 6
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "3018f09a_d8854588",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 824,
+      "author": {
+        "id": 1224778
+      },
+      "writtenOn": "2017-07-10T22:03:45Z",
+      "side": 1,
+      "message": "Oh, good catch.  Moved the whole block, but these last lines should go above 829.",
+      "parentUuid": "8c9b873a_e4413813",
+      "revId": "967fb328bd8119dd1b1286c53b4efdb6bf39b2fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2baabe58_17737a4a",
         "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
         "patchSetId": 6
@@ -70,6 +130,24 @@
       "writtenOn": "2017-07-10T21:48:38Z",
       "side": 1,
       "message": "nit: It\u0027s a bit unusual to have a DCHECK(!foo) followed by an if (foo).  I think it might make more sense to write the DCHECK as a NOTREACHED() inside the no_gesture_target block, after or instead of LOG(ERROR) statement.  (You can do a NOTREACHED() \u003c\u003c \"...\" to include an error message.)\n\nRelated question: Is it safe to proceed with the rest of this function if we hit this in a release build, or should we return early?  DCHECKs and NOTREACHEDs are compiled out there.  (It looks like this might be in response to something from the renderer process, in which case the values wouldn\u0027t be trusted and could intentionally try to avoid a match.)",
+      "revId": "967fb328bd8119dd1b1286c53b4efdb6bf39b2fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89fad1c7_82f76dc1",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 827,
+      "author": {
+        "id": 1224778
+      },
+      "writtenOn": "2017-07-10T22:03:45Z",
+      "side": 1,
+      "message": "Will convert to NOTREACHED.\n\nGiven that surface recalculation is needed in some cases; I\u0027ve no_gesture_target as a possible condition for recalculation which allows safe continued execution.",
+      "parentUuid": "2baabe58_17737a4a",
       "revId": "967fb328bd8119dd1b1286c53b4efdb6bf39b2fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -110,6 +188,24 @@
     },
     {
       "key": {
+        "uuid": "145441d3_b87518e2",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 835,
+      "author": {
+        "id": 1224778
+      },
+      "writtenOn": "2017-07-10T22:03:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bf795aa0_4b2112ac",
+      "revId": "967fb328bd8119dd1b1286c53b4efdb6bf39b2fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74df4a20_63ba9b48",
         "filename": "content/test/data/page_with_touch_start_default_prevented.html",
         "patchSetId": 6
@@ -121,6 +217,24 @@
       "writtenOn": "2017-07-10T21:48:38Z",
       "side": 1,
       "message": "Hmm, is there something unusual about this file?  I\u0027m wondering why most of the lines (apart from 7-10) appear double-spaced here in the review tool.  Maybe that\u0027s indicating some kind of line ending problem?",
+      "revId": "967fb328bd8119dd1b1286c53b4efdb6bf39b2fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c2b1baf_adad9346",
+        "filename": "content/test/data/page_with_touch_start_default_prevented.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1224778
+      },
+      "writtenOn": "2017-07-10T22:03:45Z",
+      "side": 1,
+      "message": "Will investigate, contents were mostly copied from a sibling file.",
+      "parentUuid": "74df4a20_63ba9b48",
       "revId": "967fb328bd8119dd1b1286c53b4efdb6bf39b2fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
