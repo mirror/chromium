@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55515e75_2090ff4d",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 3618,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-10T20:57:49Z",
+      "side": 1,
+      "message": "Might be good to capitalize and put in quotes the event, such as \"Added to Reading List\" event so that it is clear that it is an event. Do this for all comments across CLs.\nSorry did not catch before.",
+      "revId": "330c243f4b1d5268c39c9b6b59e4cfd9539a543a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
