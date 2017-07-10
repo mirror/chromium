@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c346fdf_8a69e6ab",
+        "filename": "remoting/ios/app/client_connection_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-07-10T23:33:48Z",
+      "side": 1,
+      "message": "Could you just do the literal conversion, i.e. \"@createPairing\"?",
+      "range": {
+        "startLine": 543,
+        "startChar": 34,
+        "endLine": 543,
+        "endChar": 62
+      },
+      "revId": "3adc2dc189dc40be4c53dfadded752fb95450847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc49c47a_a642f7c7",
+        "filename": "remoting/ios/keychain_wrapper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-07-10T23:33:48Z",
+      "side": 1,
+      "message": "Maybe `@property(nonatomic, readonly, class) KeychainWrapper* instance`?",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 29
+      },
+      "revId": "3adc2dc189dc40be4c53dfadded752fb95450847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1890ccd5_77d61725",
+        "filename": "remoting/ios/keychain_wrapper.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-07-10T23:33:48Z",
+      "side": 1,
+      "message": "Just a sanity check. Could pairingId or secret ever have a \"|\"?",
+      "range": {
+        "startLine": 97,
+        "startChar": 28,
+        "endLine": 97,
+        "endChar": 29
+      },
+      "revId": "3adc2dc189dc40be4c53dfadded752fb95450847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38030d33_146b26e9",
+        "filename": "remoting/ios/keychain_wrapper.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-07-10T23:33:48Z",
+      "side": 1,
+      "message": "Why do we need to check this? Looks like dataUsingEncoding is supported since iOS 2.0..?",
+      "range": {
+        "startLine": 126,
+        "startChar": 17,
+        "endLine": 126,
+        "endChar": 35
+      },
+      "revId": "3adc2dc189dc40be4c53dfadded752fb95450847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a18695a_49ef7b0b",
+        "filename": "remoting/ios/session/remoting_client.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-07-10T23:33:48Z",
+      "side": 1,
+      "message": "\"@pairing_supported\"?",
+      "range": {
+        "startLine": 139,
+        "startChar": 40,
+        "endLine": 139,
+        "endChar": 72
+      },
+      "revId": "3adc2dc189dc40be4c53dfadded752fb95450847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c6f8455_cc98911c",
+        "filename": "remoting/ios/session/remoting_client.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-07-10T23:33:48Z",
+      "side": 1,
+      "message": "*refactoring :P",
+      "range": {
+        "startLine": 186,
+        "startChar": 31,
+        "endLine": 186,
+        "endChar": 40
+      },
+      "revId": "3adc2dc189dc40be4c53dfadded752fb95450847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbbd476d_b3866052",
+        "filename": "remoting/ios/session/remoting_client.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-07-10T23:33:48Z",
+      "side": 1,
+      "message": "No, the device name here is not the hostName X_X It is supposed to be the name of the client, i.e. your iDevice...",
+      "range": {
+        "startLine": 191,
+        "startChar": 28,
+        "endLine": 191,
+        "endChar": 61
+      },
+      "revId": "3adc2dc189dc40be4c53dfadded752fb95450847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
