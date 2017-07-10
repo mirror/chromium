@@ -89,6 +89,30 @@
     },
     {
       "key": {
+        "uuid": "f4b14d5f_e302eac6",
+        "filename": "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_text_item.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-10T12:07:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b4e1fec0_534ef61f",
+      "range": {
+        "startLine": 55,
+        "startChar": 23,
+        "endLine": 55,
+        "endChar": 45
+      },
+      "revId": "62d8176d02b9a86f97edc723941ba7f133228fa2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fcaa66b1_8c33fee7",
         "filename": "ios/chrome/browser/ui/content_suggestions/cells/suggested_content.h",
         "patchSetId": 1
@@ -117,6 +141,30 @@
       "writtenOn": "2017-07-10T11:45:10Z",
       "side": 1,
       "message": "It\u0027s weird to me that this is a method on the items, not the cell class.",
+      "range": {
+        "startLine": 32,
+        "startChar": 11,
+        "endLine": 32,
+        "endChar": 29
+      },
+      "revId": "62d8176d02b9a86f97edc723941ba7f133228fa2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8087164_d91572df",
+        "filename": "ios/chrome/browser/ui/content_suggestions/cells/suggested_content.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-10T12:07:18Z",
+      "side": 1,
+      "message": "I agree but it depends of the content of the items (text on one line, on two lines...).\nI did not want to create a class method with 10 arguments on the cell.",
+      "parentUuid": "cbd9e70f_8e5831c4",
       "range": {
         "startLine": 32,
         "startChar": 11,
