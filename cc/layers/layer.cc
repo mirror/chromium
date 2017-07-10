@@ -142,6 +142,8 @@ void Layer::SetLayerTreeHost(LayerTreeHost* host) {
 
   // When changing hosts, the layer needs to commit its properties to the impl
   // side for the new host.
+  if (layer_tree_host_)
+    layer_tree_host_->SetNeedsCommit();
   SetNeedsPushProperties();
 
   for (size_t i = 0; i < inputs_.children.size(); ++i)
@@ -149,11 +151,6 @@ void Layer::SetLayerTreeHost(LayerTreeHost* host) {
 
   if (inputs_.mask_layer.get())
     inputs_.mask_layer->SetLayerTreeHost(host);
-
-  if (host && !host->GetSettings().use_layer_lists &&
-      GetMutatorHost()->HasAnyAnimation(element_id())) {
-    host->SetNeedsCommit();
-  }
 }
 
 void Layer::SetNeedsCommit() {
