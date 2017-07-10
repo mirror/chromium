@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89845db6_77ba8d02",
+        "filename": "cc/layers/render_surface_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-07-10T20:14:27Z",
+      "side": 1,
+      "message": "I don\u0027t think you can move the multi-texture check after this line. PictureLayerImpl::GetContentsResourceId() assumes single tile:\n\nhttps://cs.chromium.org/chromium/src/cc/layers/picture_layer_impl.cc?rcl\u003de027b261dc44c339f395f2dba24c36923c405018\u0026l\u003d880\n\nEven if we removed that DCHECK, it is still incorrect because we would only look at the top-left tile.",
+      "revId": "0c9f60a2f7aad40f455f3bec99b88cf79356be6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
