@@ -188,8 +188,24 @@ void MseTrackBuffer::EnqueueProcessedFrame(
     DCHECK(last_keyframe_presentation_timestamp_ != kNoTimestamp);
     // This is just one case of potentially problematic GOP structures, though
     // others are more clearly disallowed in at least some of the MSE bytestream
-    // specs, especially ISOBMFF.
+    // specs, especially ISOBMFF. See https://crbug.com/739931 for more
+    // information.
     if (frame->timestamp() < last_keyframe_presentation_timestamp_) {
+      if (!num_nonkeyframe_precedes_gop_start_warnings_) {
+        // At most once per each track, set this boolean property on the
+        // player's log and report a RAPPOR URL instance. Upon player teardown
+        // or process termination, this will be used to report telemetry to
+        // gauge the frequency of these types of streams. Note this allows for
+        // multiple tracks containing this type of sequence, but within the
+        // same playback, to result in multiple RAPPOR reports.
+        media_log_->SetBooleanProperty(
+            "mse_found_nonkeyframe_preceding_gop_start", true);
+        // TODO(wolenetz): Consider including codec or container type in the
+        // RAPPOR metric, or switching to UKM, if this is determined
+        // insufficient.
+        media_log_->RecordRapporWithSecurityOrigin(
+            "Media.OriginUrl.MSE.NonSAPType1");
+      }
       LIMITED_MEDIA_LOG(DEBUG, media_log_,
                         num_nonkeyframe_precedes_gop_start_warnings_,
                         kMaxNumNonkeyframePrecedesGopStartWarnings)

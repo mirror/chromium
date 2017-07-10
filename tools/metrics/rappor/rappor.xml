@@ -1269,6 +1269,19 @@ components/rappor/rappor_parameters.h.
   </summary>
 </rappor-metric>
 
+<rappor-metric name="Media.OriginUrl.MSE.NonSAPType1" type="ETLD_PLUS_ONE">
+  <owner>wolenetz@chromium.org</owner>
+  <summary>
+    The domain and registry of the URL that loads an HTML5 media player using
+    Media Source Extensions (MSE) and supplies media containing a track
+    resulting in a sequence emitted from the coded frame processing algorithm
+    where a nonkeyframe's PTS precedes the PTS of the keyframe needed to decode
+    it. There could be other non-SAP-Type-1 sequences which are not yet detected
+    or reported (like interleaved GOPs). See https://crbug.com/739931 for more
+    context on why such sequences may be problematic.
+  </summary>
+</rappor-metric>
+
 <rappor-metric name="Media.OriginUrl.MSE.PipelineError" type="ETLD_PLUS_ONE">
   <owner>xhwang@chromium.org</owner>
   <summary>

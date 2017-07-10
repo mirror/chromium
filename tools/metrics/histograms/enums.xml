@@ -3338,6 +3338,11 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="1" label="Missing data in disk cache"/>
 </enum>
 
+<enum name="BooleanMSEDetectedNonSAPType1">
+  <int value="0" label="Not detected"/>
+  <int value="1" label="Detected"/>
+</enum>
+
 <enum name="BooleanNativeNotifications">
   <int value="0" label="Using Chrome notifications"/>
   <int value="1" label="Using native notifications"/>

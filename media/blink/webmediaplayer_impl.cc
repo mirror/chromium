@@ -1944,6 +1944,14 @@ void WebMediaPlayerImpl::StartPipeline() {
     // TODO(tguilbert/avayvod): Update this flag when removing |cast_impl_|.
     using_media_player_renderer_ = true;
 
+    // TODO(sandersd/wolenetz): Have MediaUrlDemuxer perform this logging itself
+    // once all constructions of it have a "live" MediaLog* to use. Currently,
+    // the exception is MojoMediaService's construction of MediaUrlDemuxer
+    // (which happens for playbacks for which we first construct a
+    // MediaUrlDemuxer here, so logging demuxer type here is functionally
+    // correct but a bit ugly.)
+    media_log_->SetStringProperty("demuxer", "MediaUrlDemuxer");
+
     demuxer_.reset(
         new MediaUrlDemuxer(media_task_runner_, loaded_url_,
                             frame_->GetDocument().FirstPartyForCookies()));
