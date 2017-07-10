@@ -30,6 +30,11 @@ bool IsAutoOrNormalOrStretch(CSSValueID id) {
                                                 CSSValueStretch>(id);
 }
 
+bool IsNormalOrStretch(CSSValueID id) {
+  return CSSPropertyParserHelpers::IdentMatches<CSSValueNormal,
+                                                CSSValueStretch>(id);
+}
+
 bool IsContentDistributionKeyword(CSSValueID id) {
   return CSSPropertyParserHelpers::IdentMatches<
       CSSValueSpaceBetween, CSSValueSpaceAround, CSSValueSpaceEvenly,
@@ -116,9 +121,12 @@ CSSValue* CSSPropertyAlignmentUtils::ConsumeSelfPositionOverflowPosition(
 }
 
 CSSValue* CSSPropertyAlignmentUtils::ConsumeSimplifiedItemPosition(
-    CSSParserTokenRange& range) {
+    CSSParserTokenRange& range,
+    AutoKeyword autoKeyword) {
   CSSValueID id = range.Peek().Id();
-  if (IsAutoOrNormalOrStretch(id))
+  if (IsNormalOrStretch(id) ||
+      (autoKeyword == AutoKeyword::kAllow &&
+       CSSPropertyParserHelpers::IdentMatches<CSSValueAuto>(id)))
     return CSSPropertyParserHelpers::ConsumeIdent(range);
 
   if (IsBaselineKeyword(id))
