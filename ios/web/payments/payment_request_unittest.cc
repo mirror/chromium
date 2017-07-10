@@ -96,6 +96,59 @@ TEST(PaymentRequestTest, PaymentItemFromDictionaryValueFailure) {
   EXPECT_FALSE(actual.FromDictionaryValue(item_dict));
 }
 
+// Tests the success case when populating a PaymentDetails from a dictionary.
+TEST(PaymentRequestTest, PaymentDetailsFromDictionaryValueSuccess) {
+  PaymentDetails expected;
+  expected.id = "12345";
+  expected.error = base::ASCIIToUTF16("Error in details");
+
+  base::DictionaryValue details_dict;
+  details_dict.SetString("error", "Error in details");
+  details_dict.SetString("id", "12345");
+  PaymentDetails actual;
+  EXPECT_TRUE(
+      actual.FromDictionaryValue(details_dict, false /* requires_total */));
+  EXPECT_EQ(expected, actual);
+
+  expected.total.label = base::ASCIIToUTF16("TOTAL");
+  expected.total.amount.currency = base::ASCIIToUTF16("GBP");
+  expected.total.amount.value = base::ASCIIToUTF16("6.66");
+
+  std::unique_ptr<base::DictionaryValue> total_dict(new base::DictionaryValue);
+  total_dict->SetString("label", "TOTAL");
+  std::unique_ptr<base::DictionaryValue> amount_dict(new base::DictionaryValue);
+  amount_dict->SetString("currency", "GBP");
+  amount_dict->SetString("value", "6.66");
+  total_dict->Set("amount", std::move(amount_dict));
+  details_dict.Set("total", std::move(total_dict));
+
+  EXPECT_TRUE(
+      actual.FromDictionaryValue(details_dict, false /* requires_total */));
+  EXPECT_EQ(expected, actual);
+
+  EXPECT_TRUE(
+      actual.FromDictionaryValue(details_dict, true /* requires_total */));
+  EXPECT_EQ(expected, actual);
+}
+
+// Tests the failure case when populating a PaymentDetails from a dictionary.
+TEST(PaymentRequestTest, PaymentDetailsFromDictionaryValueFailure) {
+  PaymentDetails expected;
+  expected.id = "12345";
+  expected.total.label = base::ASCIIToUTF16("TOTAL");
+  expected.total.amount.currency = base::ASCIIToUTF16("GBP");
+  expected.total.amount.value = base::ASCIIToUTF16("6.66");
+  expected.error = base::ASCIIToUTF16("Error in details");
+
+  base::DictionaryValue details_dict;
+  details_dict.SetString("id", "12345");
+  details_dict.SetString("error", "Error in details");
+
+  PaymentDetails actual;
+  EXPECT_FALSE(
+      actual.FromDictionaryValue(details_dict, true /* requires_total */));
+}
+
 // Tests the success case when populating a PaymentShippingOption from a
 // dictionary.
 TEST(PaymentRequestTest, PaymentShippingOptionFromDictionaryValueSuccess) {
@@ -238,6 +291,26 @@ TEST(PaymentRequestTest, ParsingFullyPopulatedRequestDictionarySucceeds) {
 
   // With the required values present, parsing should succeed.
   EXPECT_TRUE(output_request.FromDictionaryValue(request_dict));
+  EXPECT_FALSE(output_request.payment_request_id.empty());
+  EXPECT_EQ(expected_request.details, output_request.details);
+
+  // If details.id is present, set the payment_request_id to that value.
+  details_dict.reset(new base::DictionaryValue);
+  total_dict.reset(new base::DictionaryValue);
+  total_dict->SetString("label", "TOTAL");
+  amount_dict.reset(new base::DictionaryValue);
+  amount_dict->SetString("currency", "GBP");
+  amount_dict->SetString("value", "6.66");
+  total_dict->Set("amount", std::move(amount_dict));
+  details_dict->Set("total", std::move(total_dict));
+  details_dict->SetString("id", "12345");
+  details_dict->SetString("error", "Error in details");
+  request_dict.Set("details", std::move(details_dict));
+
+  expected_request.payment_request_id = "12345";
+  expected_request.details.id = "12345";
+
+  EXPECT_TRUE(output_request.FromDictionaryValue(request_dict));
   EXPECT_EQ(expected_request, output_request);
 
   // If payment options are present, parse those as well.
@@ -303,7 +376,7 @@ TEST(PaymentRequestTest, PopulatedResponseDictionary) {
   expected_value.SetString("payerPhone", "1234-567-890");
 
   PaymentResponse payment_response;
-  payment_response.payment_request_id = base::ASCIIToUTF16("12345");
+  payment_response.payment_request_id = "12345";
   payment_response.method_name = base::ASCIIToUTF16("American Express");
 
   payments::BasicCardResponse payment_response_details;
@@ -472,6 +545,13 @@ TEST(PaymentRequestTest, PaymentDetailsEquality) {
   PaymentDetails details2;
   EXPECT_EQ(details1, details2);
 
+  details1.id = "12345";
+  EXPECT_NE(details1, details2);
+  details2.id = "54321";
+  EXPECT_NE(details1, details2);
+  details2.id = details1.id;
+  EXPECT_EQ(details1, details2);
+
   details1.total.label = base::ASCIIToUTF16("Total");
   EXPECT_NE(details1, details2);
   details2.total.label = base::ASCIIToUTF16("Shipping");
@@ -571,6 +651,13 @@ TEST(PaymentRequestTest, PaymentOptionsEquality) {
 TEST(PaymentRequestTest, PaymentRequestEquality) {
   PaymentRequest request1;
   PaymentRequest request2;
+  EXPECT_EQ(request1, request2);
+
+  request1.payment_request_id = "12345";
+  EXPECT_NE(request1, request2);
+  request2.payment_request_id = "54321";
+  EXPECT_NE(request1, request2);
+  request2.payment_request_id = request1.payment_request_id;
   EXPECT_EQ(request1, request2);
 
   payments::PaymentAddress address1;

@@ -43,6 +43,15 @@ NSString* JSONEscape(NSString* JSON) {
   [self executeScript:@"Function.prototype()" completionHandler:nil];
 }
 
+- (void)setPaymentRequestIDToValue:(std::string)value
+                 completionHandler:(ProceduralBlockWithBool)completionHandler {
+  NSString* script = [NSString
+      stringWithFormat:
+          @"__gCrWeb['paymentRequestManager'].setPaymentRequestID('%@')",
+          base::SysUTF8ToNSString(value)];
+  [self executeScript:script completionHandler:completionHandler];
+}
+
 - (void)resolveRequestPromiseWithPaymentResponse:
             (const web::PaymentResponse&)paymentResponse
                                completionHandler:

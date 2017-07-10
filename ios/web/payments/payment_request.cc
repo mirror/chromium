@@ -4,6 +4,7 @@
 
 #include "ios/web/public/payments/payment_request.h"
 
+#include "base/ios/device_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/values.h"
 
@@ -17,6 +18,7 @@ static const char kPaymentCurrencyAmountCurrencySystemISO4217[] =
 static const char kPaymentCurrencyAmountCurrencySystem[] = "currencySystem";
 static const char kPaymentCurrencyAmountCurrency[] = "currency";
 static const char kPaymentCurrencyAmountValue[] = "value";
+static const char kPaymentDetailsID[] = "id";
 static const char kPaymentDetailsDisplayItems[] = "displayItems";
 static const char kPaymentDetailsError[] = "error";
 static const char kPaymentDetailsShippingOptions[] = "shippingOptions";
@@ -178,7 +180,7 @@ PaymentDetails::PaymentDetails(const PaymentDetails& other) = default;
 PaymentDetails::~PaymentDetails() = default;
 
 bool PaymentDetails::operator==(const PaymentDetails& other) const {
-  return this->total == other.total &&
+  return this->id == other.id && this->total == other.total &&
          this->display_items == other.display_items &&
          this->shipping_options == other.shipping_options &&
          this->modifiers == other.modifiers && this->error == other.error;
@@ -188,16 +190,21 @@ bool PaymentDetails::operator!=(const PaymentDetails& other) const {
   return !(*this == other);
 }
 
-bool PaymentDetails::FromDictionaryValue(const base::DictionaryValue& value) {
+bool PaymentDetails::FromDictionaryValue(const base::DictionaryValue& value,
+                                         bool requires_total) {
   this->display_items.clear();
   this->shipping_options.clear();
   this->modifiers.clear();
 
+  // ID is optional.
+  value.GetString(kPaymentDetailsID, &this->id);
+
   const base::DictionaryValue* total_dict = nullptr;
-  if (!value.GetDictionary(kPaymentDetailsTotal, &total_dict)) {
+  if (!value.GetDictionary(kPaymentDetailsTotal, &total_dict) &&
+      requires_total) {
     return false;
   }
-  if (!this->total.FromDictionaryValue(*total_dict)) {
+  if (total_dict && !this->total.FromDictionaryValue(*total_dict)) {
     return false;
   }
 
@@ -323,9 +330,16 @@ bool PaymentRequest::FromDictionaryValue(const base::DictionaryValue& value) {
   // Parse the payment details.
   const base::DictionaryValue* payment_details_dict = nullptr;
   if (!value.GetDictionary(kPaymentRequestDetails, &payment_details_dict) ||
-      !this->details.FromDictionaryValue(*payment_details_dict)) {
+      !this->details.FromDictionaryValue(*payment_details_dict,
+                                         true /* requires_total */)) {
     return false;
   }
+
+  // If details.id is missing, set payment_request_id to a value that uniquely
+  //       identifies the payment request. Otherwise copy over the details.id.
+  this->payment_request_id = this->details.id.empty()
+                                 ? ios::device_util::GetRandomId()
+                                 : this->details.id;
 
   // Parse the payment options.
   const base::DictionaryValue* payment_options = nullptr;

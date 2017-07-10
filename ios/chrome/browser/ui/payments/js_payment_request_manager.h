@@ -5,6 +5,8 @@
 #ifndef IOS_CHROME_BROWSER_UI_PAYMENTS_JS_PAYMENT_REQUEST_MANAGER_H_
 #define IOS_CHROME_BROWSER_UI_PAYMENTS_JS_PAYMENT_REQUEST_MANAGER_H_
 
+#include <string>
+
 #include "base/strings/string16.h"
 #include "ios/chrome/browser/procedural_block_types.h"
 #import "ios/web/public/web_state/js/crw_js_injection_manager.h"
@@ -25,6 +27,12 @@ class PaymentShippingOption;
 // Executes a JS noop function. This is used to work around an issue where the
 // JS event queue is blocked while presenting the Payment Request UI.
 - (void)executeNoop;
+
+// Sets the id property on the current PaymentRequest to |value|. If
+// |completionHandler| is not nil, it will be invoked with YES after the
+// operation has completed successfully or with NO otherwise.
+- (void)setPaymentRequestIDToValue:(std::string)value
+                 completionHandler:(ProceduralBlockWithBool)completionHandler;
 
 // Resolves the JavaScript promise associated with the current PaymentRequest
 // with the a JSON serialization of |paymentResponse|. If |completionHandler| is
