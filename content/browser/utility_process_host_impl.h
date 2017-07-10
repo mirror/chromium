@@ -48,7 +48,7 @@ class CONTENT_EXPORT UtilityProcessHostImpl
   bool StartBatchMode() override;
   void EndBatchMode() override;
   void SetExposedDir(const base::FilePath& dir) override;
-  void DisableSandbox() override;
+  void SetSandboxType(SandboxType sandbox_type) override;
 #if defined(OS_WIN)
   void ElevatePrivileges() override;
 #endif
