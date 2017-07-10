@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "351b21ad_bae39dd5",
+        "filename": "chrome/browser/ui/cocoa/bookmarks/bookmark_bar_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-10T17:30:00Z",
+      "side": 1,
+      "message": "Maybe add a comment above this line about the reason the Impl version exists.",
+      "range": {
+        "startLine": 462,
+        "startChar": 25,
+        "endLine": 462,
+        "endChar": 0
+      },
+      "revId": "5a1cc6f48953368a9d3668535ae6bc5b4757bc3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
