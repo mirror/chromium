@@ -46,6 +46,30 @@
       "revId": "b040ffbbdf06588a82e77702ba782a927601445b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b08e0371_93ce58f9",
+        "filename": "net/http/http_server_properties_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 935,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-07-10T13:52:05Z",
+      "side": 0,
+      "message": "The reason we did\u0027t save broken services in the past is that we didn\u0027t store the broken-state/backoff, so when we restarted, we\u0027d try to use them again even though we should have known they were broken. Now that we\u0027re saving the brokenness/backoff I don\u0027t think we\u0027ll have this problem.\n\nSo I think your code now has the correct behavior.",
+      "parentUuid": "27d6f391_40eb6634",
+      "range": {
+        "startLine": 935,
+        "startChar": 60,
+        "endLine": 935,
+        "endChar": 0
+      },
+      "revId": "b040ffbbdf06588a82e77702ba782a927601445b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
