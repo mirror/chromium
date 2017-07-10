@@ -93,7 +93,7 @@ interface Element : Node {
     // FIXME: getClientRect() and getBoundingClientRect() should
     // return DOMRectList and DOMRect respectively.
     ClientRectList getClientRects();
-    ClientRect getBoundingClientRect();
+    [RuntimeCallStatsCounter=ElementGetBoundingClientRect] ClientRect getBoundingClientRect();
 
     // TODO(sunyunjia): Add default value for scrollIntoView() once
     // crbug.com/734599 is fixed.
