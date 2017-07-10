@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c62c58ab_3c76ea47",
+        "filename": "build/android/test_runner.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 969,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-07-10T22:55:42Z",
+      "side": 1,
+      "message": "If you have args._trace_output and args.trace_all. Then this if statement AND the one above are both entered.\n\nI think I was hitting an exception when start_instrumenting was getting called twice.",
+      "revId": "4ce61843477edd87cb9921d0eb75fe41559c813b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
