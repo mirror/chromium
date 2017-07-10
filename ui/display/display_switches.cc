@@ -50,3 +50,11 @@ const char kEnableUnifiedDesktop[] = "ash-enable-unified-desktop";
 #endif
 
 }  // namespace switches
+
+namespace features {
+
+// Automatically enable HDR when possible.
+const base::Feature kAutoEnableHDR{"AutoEnableHDR",
+                                   base::FEATURE_DISABLED_BY_DEFAULT};
+
+}  // namespace features

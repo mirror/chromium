@@ -29,6 +29,8 @@ class DISPLAY_EXPORT DisplayInfo final {
   const gfx::Rect& screen_rect() const { return screen_rect_; }
   const gfx::Rect& screen_work_rect() const { return screen_work_rect_; }
   float device_scale_factor() const { return device_scale_factor_; }
+  void set_hdr(bool hdr) { hdr_ = hdr; }
+  bool hdr() const { return hdr_; }
 
  private:
   int64_t id_;
@@ -36,6 +38,7 @@ class DISPLAY_EXPORT DisplayInfo final {
   gfx::Rect screen_rect_;
   gfx::Rect screen_work_rect_;
   float device_scale_factor_;
+  bool hdr_ = false;
 };
 
 }  // namespace win
