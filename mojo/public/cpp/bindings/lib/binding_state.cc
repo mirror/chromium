@@ -82,6 +82,8 @@ void BindingStateBase::BindInternal(
     MessageReceiverWithResponderStatus* stub,
     uint32_t interface_version) {
   DCHECK(!router_);
+  if (!handle.is_valid())
+    return;
 
   MultiplexRouter::Config config =
       passes_associated_kinds
