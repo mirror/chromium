@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92a8d774_94b5b09e",
+        "filename": "chrome/browser/chromeos/printing/usb_printer_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-10T21:56:37Z",
+      "side": 1,
+      "message": "I\u0027m concerned for i18n. Is this the order expected in all languages?",
+      "revId": "5aa701203362376573b192c88fb5e490dcc3d34c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
