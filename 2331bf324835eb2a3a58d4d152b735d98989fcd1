@@ -231,6 +231,24 @@
     },
     {
       "key": {
+        "uuid": "30b57500_b6bed715",
+        "filename": "chrome/browser/chromeos/policy/user_cloud_policy_store_chromeos_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-10T11:35:57Z",
+      "side": 1,
+      "message": "\u003e Returning GetStubSanitizedUsername()\u0027s result is part of FakeCryptohomeClient\u0027s interface contract (for some mysterious reason, this funcdtion is in CryptohomeClient and its function comment is in cryptohome_client.h, though).\n\nWhether it is a part of interface or just implementation details is unclear to me.\nI just believe as you said so.\n\n\u003e You are making the test code unnecessarily complicated.\n\nI had disagreed, unless GetStubSanitizedUsername()\u0027s result is a part of fake interface.\n\n\u003e I thought if there are two functions with the same functionality, it should be immediately clear for everyone that the synchronous version is being deprecated, but maybe I\u0027m relying too much on people.\n\nI see. For coming review, specifically ones for dbus newbees like me :-), I\u0027d appreciate if you remove such assumptions based on dbus/ directory specific knowledge. I\u0027m happy to follow your guidance, but initially not know the history.",
+      "parentUuid": "48bcd10f_a9dee91c",
+      "revId": "2331bf324835eb2a3a58d4d152b735d98989fcd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e144d14a_54dd0e02",
         "filename": "chromeos/dbus/fake_cryptohome_client.cc",
         "patchSetId": 1
@@ -364,6 +382,24 @@
       "revId": "2331bf324835eb2a3a58d4d152b735d98989fcd1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2b7f7a3_394bc43b",
+        "filename": "chromeos/dbus/fake_cryptohome_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-10T11:35:57Z",
+      "side": 1,
+      "message": "Done.\n\nThank you for pointers and offline discussion.\nNow I believe I understood your design decisions.\nIt\u0027s nice if there\u0027s some documentation about it as the interface is well encapsulated.\n\nAlso,\n\n\u003e adding a new one to explicitly control the fake\u0027s behavior?\n\nplease do not suggest an option which you will disagree.",
+      "parentUuid": "5908c426_59093eb7",
+      "revId": "2331bf324835eb2a3a58d4d152b735d98989fcd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
