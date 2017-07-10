@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92f71dbe_b5cfa75f",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 854,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-07-10T12:17:45Z",
+      "side": 1,
+      "message": "Remove this comment: the call to OnRequestFailed in AbortOnError is done through a PostTask, so the NavigationRequest should still be alive.",
+      "revId": "53a9abd3c393e5b807bde3ea55697adea57f60c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c4148f5_8fcdbfdd",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 885,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-07-10T12:17:45Z",
+      "side": 1,
+      "message": "Remove this comment: the call to OnRequestFailed is done through a PostTask, so the NavigationRequest should still be alive.",
+      "revId": "53a9abd3c393e5b807bde3ea55697adea57f60c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c88b9bc2_07aa2f84",
+        "filename": "content/browser/frame_host/navigation_request.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-07-10T12:17:45Z",
+      "side": 1,
+      "message": "Skip a line above and add a comment describing the function.",
+      "revId": "53a9abd3c393e5b807bde3ea55697adea57f60c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
