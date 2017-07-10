@@ -1,0 +1,19 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module chrome.mojom;
+
+interface ServiceProcess {
+  // A message for ensuring the connection is established.
+  Hello() => ();
+
+  // Gets serialized UMA histograms.
+  GetHistograms() => (array<string> histograms);
+
+  // Tell the service process that an update is available.
+  UpdateAvailable();
+
+  // Tell the service process to shutdown.
+  ShutDown();
+};
