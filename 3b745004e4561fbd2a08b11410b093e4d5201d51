@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d062e11c_7f364448",
+        "filename": "ash/aura/pointer_watcher_adapter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-10T22:33:45Z",
+      "side": 1,
+      "message": "Is this used elsewhere? If not, just remove the function?",
+      "revId": "3b745004e4561fbd2a08b11410b093e4d5201d51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b0571f5_89108bcf",
+        "filename": "ash/system/tray/tray_event_filter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-10T22:33:45Z",
+      "side": 1,
+      "message": "Do you mean (!target_widget || target_widget-\u003eIsAlwaysOnTop())? If not, you don\u0027t need the extra parens.",
+      "revId": "3b745004e4561fbd2a08b11410b093e4d5201d51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1454f614_9d3f6a76",
+        "filename": "ui/views/mus/pointer_watcher_event_router.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-10T22:33:45Z",
+      "side": 1,
+      "message": "Using |target| here is likely wrong (see comment below).",
+      "revId": "3b745004e4561fbd2a08b11410b093e4d5201d51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc736841_9476c382",
+        "filename": "ui/views/mus/pointer_watcher_event_router.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-10T22:33:45Z",
+      "side": 1,
+      "message": "I think if |target_widget| is not null, then you need to send |target_widget-\u003eGetNativeWindow()| here (because |updated_location| may no longer be in |target|\u0027s coordinate space).",
+      "revId": "3b745004e4561fbd2a08b11410b093e4d5201d51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a3774ac_c1e8ab53",
+        "filename": "ui/views/pointer_watcher.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-10T22:33:45Z",
+      "side": 1,
+      "message": "Can you add a comment here mentioning that |target| may or may not have an associated views::Widget?",
+      "revId": "3b745004e4561fbd2a08b11410b093e4d5201d51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
