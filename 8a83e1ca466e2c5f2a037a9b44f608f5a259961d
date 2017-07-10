@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2047210d_2e51b1bc",
+        "filename": "components/url_log/url_log.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-10T17:05:29Z",
+      "side": 1,
+      "message": "Should this just be leaky?",
+      "revId": "8a83e1ca466e2c5f2a037a9b44f608f5a259961d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dc40858_7aeff044",
+        "filename": "components/url_log/url_log.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-10T17:05:29Z",
+      "side": 1,
+      "message": "Since this is a Singleton...I don\u0027t think we have any guarantee it will be destroyed on the thread it\u0027s created on?\n\nHrm...Do we run multiple tests in the same process on any platform?  If we do, this class potentially breaks that, particularly for any tests that actually test this class.",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 33
+      },
+      "revId": "8a83e1ca466e2c5f2a037a9b44f608f5a259961d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad90f21c_2bf19bfc",
+        "filename": "components/url_log/url_log.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-10T17:05:29Z",
+      "side": 1,
+      "message": "on creation -\u003e via a command line switch.\nhappens immediately -\u003e happens on the current thread and is immediately flushed to disk",
+      "revId": "8a83e1ca466e2c5f2a037a9b44f608f5a259961d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e62b303_bb570641",
+        "filename": "components/url_log/url_log.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-10T17:05:29Z",
+      "side": 1,
+      "message": "This is crash-resistant and critical -\u003e This means that even if the browser subsequently crashes, the output file will contain all fetched URLs, and is critical\n\n(\"Crash-resistant\" is confusing - \"crash resistant\" to me implies to code resists crashes, which it doesn\u0027t.  It\u0027s the log that resists them.",
+      "range": {
+        "startLine": 20,
+        "startChar": 9,
+        "endLine": 20,
+        "endChar": 19
+      },
+      "revId": "8a83e1ca466e2c5f2a037a9b44f608f5a259961d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d548062_5fbc547f",
+        "filename": "components/url_log/url_log.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-10T17:05:29Z",
+      "side": 1,
+      "message": "These should be documented, and have blank lines between methods, unless they\u0027re very closely related (like set_foo() and foo() related, or a constructor and destructor that both don\u0027t need documentation)",
+      "revId": "8a83e1ca466e2c5f2a037a9b44f608f5a259961d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00723945_40754b9a",
+        "filename": "components/url_log/url_log.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-10T17:05:29Z",
+      "side": 1,
+      "message": "I\u0027d suggest just inlining this, though if you prefer to keep it, it should be base::FilePath\u0026 path",
+      "range": {
+        "startLine": 38,
+        "startChar": 27,
+        "endLine": 38,
+        "endChar": 36
+      },
+      "revId": "8a83e1ca466e2c5f2a037a9b44f608f5a259961d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
