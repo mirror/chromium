@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "6823d0b0_95be9081",
+        "filename": "components/url_log/url_log.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-10T20:14:25Z",
+      "side": 1,
+      "message": "Suppose we have two tests that use this run in the same process (Maybe they\u0027re testing this, maybe they use it incidentally):  If one test uses it on the main thread, and another uses it on another thread, we\u0027re in trouble.\n\nMoreover, since this is a singleton, if one test doesn\u0027t set the command line flag to enable it, but uses a class that calls into it on another thread, and another test sets the command line flag to enable it, and uses it on the main thread, the first test passes as long as it\u0027s either run in another process, or run before the second test.  Otherwise, it fails.",
+      "parentUuid": "d7728b2a_12b078a8",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 33
+      },
+      "revId": "8a83e1ca466e2c5f2a037a9b44f608f5a259961d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ad90f21c_2bf19bfc",
         "filename": "components/url_log/url_log.h",
         "patchSetId": 12
