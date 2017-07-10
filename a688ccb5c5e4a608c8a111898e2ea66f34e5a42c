@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14cc3405_a25c1da2",
+        "filename": "components/sync/driver/sync_service_crypto.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002186
+      },
+      "writtenOn": "2017-07-10T17:30:16Z",
+      "side": 1,
+      "message": "This can be removed too I think (and other references to the cached passphrase)?",
+      "range": {
+        "startLine": 86,
+        "startChar": 7,
+        "endLine": 86,
+        "endChar": 40
+      },
+      "revId": "a688ccb5c5e4a608c8a111898e2ea66f34e5a42c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
