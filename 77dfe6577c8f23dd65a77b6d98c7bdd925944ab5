@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ec6bf96_84473983",
+        "filename": "ui/app_list/test/run_all_unittests.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-10T18:09:38Z",
+      "side": 1,
+      "message": "Can this use ViewsTestSuite instead, or maybe move AuraTestSuite into a separate file? This doesn\u0027t seem like a setup step that an AppList developer should need to be aware of (beyond knowing that there is a Views/Aura dependency).",
+      "revId": "77dfe6577c8f23dd65a77b6d98c7bdd925944ab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
