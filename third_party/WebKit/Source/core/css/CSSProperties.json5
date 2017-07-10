@@ -3041,6 +3041,13 @@
       default_value: "auto",
       field_group: "rare-inherited",
     },
+    {
+      name: "line-break",
+      inherited: true,
+      type_name: "LineBreak",
+      default_value: "auto",
+      field_group: "rare-inherited",
+    },
     // An Apple extension.
     {
       name: "-webkit-line-clamp",
@@ -4129,10 +4136,6 @@
     {
       name: "-webkit-justify-content",
       alias_for: "justify-content",
-    },
-    {
-      name: "line-break",
-      alias_for: "-webkit-line-break",
     },
     {
       name: "-webkit-opacity",
