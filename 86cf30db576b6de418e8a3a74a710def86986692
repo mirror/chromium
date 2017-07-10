@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6618f06_b204a03b",
+        "filename": "chrome/browser/chromeos/login/session/user_session_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 968,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-10T01:54:41Z",
+      "side": 1,
+      "message": "Is it possible to initialize |ui_shown_time_| only when the user signing in has already opted in to ARC?\n\nI don\u0027t think we want to record an UMA metric for e.g. the following case:\n\n1. An opt-out user signs in to Chrome OS (and with the current CL, |ui_shown_time_| is initialized.)\n2. The user uses Chrome OS for hours.\n3. The user opts in to Chrome OS.\n4. The user starts an ARC app. UMA is recorded (with \u0027hours\u0027) because |ui_shown_time_| is not null.\n\nThis is why I mentioned |start_arc_directly| in b/63276467#comment2. WDYT?",
+      "revId": "86cf30db576b6de418e8a3a74a710def86986692",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c421f517_848ca1d9",
+        "filename": "chrome/browser/chromeos/login/session/user_session_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-10T01:54:41Z",
+      "side": 1,
+      "message": "nit: s/:/ overrides:/ for consistency.",
+      "revId": "86cf30db576b6de418e8a3a74a710def86986692",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fa8519e_70a2391b",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-10T01:54:41Z",
+      "side": 1,
+      "message": "Is there any reason to avoid calling NotifyClosed() here and making the function private? That seems less error-prone (I was concerned that the sub class might forget calling NotifyClosed().)",
+      "revId": "86cf30db576b6de418e8a3a74a710def86986692",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1e46cfc_18909bbe",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-10T01:54:41Z",
+      "side": 1,
+      "message": "Since this is visible to the sub classes, can you add a function comment?",
+      "revId": "86cf30db576b6de418e8a3a74a710def86986692",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74a2104f_c7ea01ef",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-10T01:54:41Z",
+      "side": 1,
+      "message": "unused #include",
+      "revId": "86cf30db576b6de418e8a3a74a710def86986692",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abc09152_fb170646",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-10T01:54:41Z",
+      "side": 1,
+      "message": "\u003d default;",
+      "revId": "86cf30db576b6de418e8a3a74a710def86986692",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fffb369_e2c42c58",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_list_prefs.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-10T01:54:41Z",
+      "side": 1,
+      "message": "qq: when is this path taken?",
+      "revId": "86cf30db576b6de418e8a3a74a710def86986692",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c856cbe_2332fc67",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_list_prefs.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 651,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-10T01:54:41Z",
+      "side": 1,
+      "message": "Can we use a smaller max value like 2 or 3? This UMA is primarily for detecting ARC app launches during Chrome session restoration, and I think the Chrome work almost always finishes within a minute after sign-in.",
+      "range": {
+        "startLine": 651,
+        "startChar": 43,
+        "endLine": 651,
+        "endChar": 74
+      },
+      "revId": "86cf30db576b6de418e8a3a74a710def86986692",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
