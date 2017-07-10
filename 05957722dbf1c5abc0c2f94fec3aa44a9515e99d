@@ -22,6 +22,30 @@
       "revId": "05957722dbf1c5abc0c2f94fec3aa44a9515e99d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd0e021c_f2a0bf0e",
+        "filename": "services/ui/gpu/interfaces/gpu_service.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1105324
+      },
+      "writtenOn": "2017-07-10T21:31:51Z",
+      "side": 1,
+      "message": "The key is used to store the shader into a map in memory. Sorry, I\u0027m actually kind of confused by your question. The new APIs I\u0027m designing for ANGLE aren\u0027t quite the same as Chromium - I can\u0027t re-create the key from just the data like the command buffer does with it\u0027s current implementation without significantly redesigning a few systems in ANGLE.\n\nI\u0027m not actually sure what a child process is and how that\u0027s different from a host. I have no plans whatsoever to redesign any of those models though, I just need access to the key so I can use that to insert the shader into a map in ANGLE. Sorry if that\u0027s not clear, I can add more detail to the comment.",
+      "parentUuid": "802cbb8a_a5466ffe",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 69
+      },
+      "revId": "05957722dbf1c5abc0c2f94fec3aa44a9515e99d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
