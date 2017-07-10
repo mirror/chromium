@@ -970,7 +970,8 @@ void Textfield::OnBoundsChanged(const gfx::Rect& previous_bounds) {
   bounds.Inset(gfx::Insets(0, kTextPadding, 0, kTextPadding));
   GetRenderText()->SetDisplayRect(bounds);
   OnCaretBoundsChanged();
-  UpdateCursorViewPosition();
+  if (ShouldShowCursor())
+    UpdateCursorViewPosition();
 }
 
 bool Textfield::GetNeedsNotificationWhenVisibleBoundsChange() const {
