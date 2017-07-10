@@ -46,6 +46,53 @@
       "revId": "df27eb1ca121e4e326223f14ddf4caf8eaca34e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "949046a3_ce2b8a3d",
+        "filename": "content/browser/renderer_host/input/gesture_event_queue.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-07-10T20:00:08Z",
+      "side": 1,
+      "message": "Right I recall discussing this. It occurs if a mouse wheel event is ack\u0027d after the fling start begins. So the situation is\n\n-\u003e MouseWheel\n\u003c- MouseWheelAck\n-\u003e GestureScrollBegin\n-\u003e GestureScrollUpdate\n-\u003e MouseWheel\n-\u003e GestureFlingStart\n\u003c- MouseWheelAck\n-\u003e GestureScrollUpdate\n\nPerhaps we should write a test case around this?",
+      "parentUuid": "66882b1c_71ac6a61",
+      "range": {
+        "startLine": 90,
+        "startChar": 14,
+        "endLine": 90,
+        "endChar": 32
+      },
+      "revId": "df27eb1ca121e4e326223f14ddf4caf8eaca34e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c60433d8_cdb1b490",
+        "filename": "content/browser/renderer_host/input/gesture_event_queue.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-07-10T20:00:08Z",
+      "side": 1,
+      "message": "Can this no be in the debounce pinch block. But add a comment that GestureFlingStart doesn\u0027t need to be debounced because it is a single/discrete event?",
+      "range": {
+        "startLine": 92,
+        "startChar": 23,
+        "endLine": 92,
+        "endChar": 24
+      },
+      "revId": "df27eb1ca121e4e326223f14ddf4caf8eaca34e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
