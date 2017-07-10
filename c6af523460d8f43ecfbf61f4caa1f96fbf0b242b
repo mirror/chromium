@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48589c88_481e9e8f",
+        "filename": "content/browser/media/media_internals.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-07-10T20:29:58Z",
+      "side": 1,
+      "message": "Can this be a shared constant value? (Or perhaps a contains check for \"ChunkDemuxer\" or \"MSE\", or an explicit bool property sent separately?)",
+      "range": {
+        "startLine": 596,
+        "startChar": 23,
+        "endLine": 596,
+        "endChar": 43
+      },
+      "revId": "c6af523460d8f43ecfbf61f4caa1f96fbf0b242b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20bae516_ea470403",
+        "filename": "content/browser/media/media_internals.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-07-10T20:29:58Z",
+      "side": 1,
+      "message": "Does this show up in the media internals log with this key name? If so, it\u0027s rather long.",
+      "range": {
+        "startLine": 601,
+        "startChar": 31,
+        "endLine": 601,
+        "endChar": 72
+      },
+      "revId": "c6af523460d8f43ecfbf61f4caa1f96fbf0b242b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d7c36b4_78ef018a",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1947,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-07-10T20:29:58Z",
+      "side": 1,
+      "message": "This is chromium bug 512916",
+      "range": {
+        "startLine": 1947,
+        "startChar": 7,
+        "endLine": 1947,
+        "endChar": 30
+      },
+      "revId": "c6af523460d8f43ecfbf61f4caa1f96fbf0b242b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ee3ddb5_293ac80a",
+        "filename": "media/filters/chunk_demuxer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-07-10T20:29:58Z",
+      "side": 1,
+      "message": "I\u0027m separately trying to remove all MediaLog calls from constructors. Can this be moved to Initialize() without affecting functionality?",
+      "range": {
+        "startLine": 437,
+        "startChar": 14,
+        "endLine": 437,
+        "endChar": 31
+      },
+      "revId": "c6af523460d8f43ecfbf61f4caa1f96fbf0b242b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51a20d0c_d26bab48",
+        "filename": "media/filters/ffmpeg_demuxer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 887,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-07-10T20:29:58Z",
+      "side": 1,
+      "message": "(Same comment about media log usage in constructors.)",
+      "range": {
+        "startLine": 887,
+        "startChar": 14,
+        "endLine": 887,
+        "endChar": 31
+      },
+      "revId": "c6af523460d8f43ecfbf61f4caa1f96fbf0b242b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fecc33e_5c850274",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 3343,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-07-10T20:29:58Z",
+      "side": 1,
+      "message": "Since enum names don\u0027t show up in the UI, it\u0027s better for these to be more descriptive.\n\nThere seems to be a general problem of double-negatives here, but I don\u0027t have a good solution.",
+      "range": {
+        "startLine": 3343,
+        "startChar": 24,
+        "endLine": 3343,
+        "endChar": 32
+      },
+      "revId": "c6af523460d8f43ecfbf61f4caa1f96fbf0b242b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
