@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c735b26_b086b203",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-07-10T00:23:19Z",
+      "side": 1,
+      "message": "Typo: sinlge -\u003e single",
+      "revId": "0f062f4c0a67e80dfa018e116d1bb4ab16de401c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
