@@ -84,6 +84,10 @@ class PasswordStoreX : public password_manager::PasswordStoreDefault {
     virtual bool GetAllLogins(
         std::vector<std::unique_ptr<autofill::PasswordForm>>* forms)
         WARN_UNUSED_RESULT = 0;
+
+    // Returns the background thread in case the backend uses one, or null.
+    virtual scoped_refptr<base::SequencedTaskRunner>
+    GetBackgroundTaskRunner() = 0;
   };
 
   // Takes ownership of |login_db| and |backend|. |backend| may be NULL in which
@@ -105,6 +109,7 @@ class PasswordStoreX : public password_manager::PasswordStoreDefault {
       const autofill::PasswordForm& form) override;
   password_manager::PasswordStoreChangeList RemoveLoginImpl(
       const autofill::PasswordForm& form) override;
+  scoped_refptr<base::SequencedTaskRunner> GetBackgroundTaskRunner() override;
   password_manager::PasswordStoreChangeList RemoveLoginsByURLAndTimeImpl(
       const base::Callback<bool(const GURL&)>& url_filter,
       base::Time delete_begin,
@@ -141,6 +146,8 @@ class PasswordStoreX : public password_manager::PasswordStoreDefault {
   // stored passwords, and the number of passwords migrated will be returned.
   // (This might be 0 if migration was not necessary.) Returns < 0 on failure.
   ssize_t MigrateLogins();
+
+  scoped_refptr<base::SequencedTaskRunner> background_task_runner_;
 
   // The native backend in use, or NULL if none.
   std::unique_ptr<NativeBackend> backend_;
