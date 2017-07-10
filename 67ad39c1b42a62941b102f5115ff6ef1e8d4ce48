@@ -22,6 +22,30 @@
       "revId": "67ad39c1b42a62941b102f5115ff6ef1e8d4ce48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac48702b_ffca5af3",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 898,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-10T19:47:50Z",
+      "side": 1,
+      "message": "Yeah, this was an incorrect copy/paste leftover. Didn\u0027t know about @dict, nice. Done.",
+      "parentUuid": "2e37e8b9_53751e1c",
+      "range": {
+        "startLine": 898,
+        "startChar": 4,
+        "endLine": 898,
+        "endChar": 33
+      },
+      "revId": "67ad39c1b42a62941b102f5115ff6ef1e8d4ce48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
