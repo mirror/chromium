@@ -22,6 +22,8 @@
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/profiles/profile_metrics.h"
 #include "chrome/browser/profiles/profiles_state.h"
+#include "chrome/browser/themes/theme_service.h"
+#include "chrome/browser/themes/theme_service_factory.h"
 #include "chrome/browser/ui/browser_list.h"
 #include "chrome/browser/ui/user_manager.h"
 #include "chrome/browser/ui/views/frame/browser_view.h"
@@ -198,6 +200,18 @@ IN_PROC_BROWSER_TEST_F(ProfileChooserViewExtensionsTest, SigninButtonHasFocus) {
   ASSERT_NO_FATAL_FAILURE(OpenProfileChooserView(browser()));
 
   EXPECT_TRUE(signin_current_profile_button()->HasFocus());
+}
+
+IN_PROC_BROWSER_TEST_F(ProfileChooserViewExtensionsTest, ThemeChanged) {
+  ASSERT_TRUE(profiles::IsMultipleProfilesEnabled());
+  ASSERT_NO_FATAL_FAILURE(OpenProfileChooserView(browser()));
+
+  InstallExtension(test_data_dir_.AppendASCII("theme"), 1);
+  content::WindowedNotificationObserver theme_change_observer(
+      chrome::NOTIFICATION_BROWSER_THEME_CHANGED,
+      content::Source<ThemeService>(
+          ThemeServiceFactory::GetForProfile(profile())));
+  theme_change_observer.Wait();
 }
 
 IN_PROC_BROWSER_TEST_F(ProfileChooserViewExtensionsTest, ViewProfileUMA) {
