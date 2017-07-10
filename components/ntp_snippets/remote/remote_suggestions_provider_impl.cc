@@ -60,12 +60,20 @@ const char kCategoryContentAllowFetchingMore[] = "allow_fetching_more";
 const char kOrderNewRemoteCategoriesBasedOnArticlesCategory[] =
     "order_new_remote_categories_based_on_articles_category";
 
-// Not more than this number of prefetched suggestions will be kept longer.
-const int kMaxAdditionalPrefetchedSuggestions = 5;
+// Variation parameter for additional prefetched suggestions quantity. Not more
+// than this number of prefetched suggestions will be kept longer.
+const char kMaxAdditionalPrefetchedSuggestionsParamName[] =
+    "max_additional_prefetched_suggestions";
 
-// Only prefetched suggestions published not later than this are considered to
-// be kept longer.
-const base::TimeDelta kMaxAgeForAdditionalPrefetchedSuggestion =
+const int kDefaultMaxAdditionalPrefetchedSuggestions = 5;
+
+// Variation parameter for additional prefetched suggestions age. Only
+// prefetched suggestions fetched not later than this are considered to be kept
+// longer.
+const char kMaxAgeForAdditionalPrefetchedSuggestionParamName[] =
+    "max_age_for_additional_prefetched_suggestion_minutes";
+
+const base::TimeDelta kDefaultMaxAgeForAdditionalPrefetchedSuggestion =
     base::TimeDelta::FromHours(36);
 
 bool IsOrderingNewRemoteCategoriesBasedOnArticlesCategoryEnabled() {
@@ -105,6 +113,21 @@ void AddFetchedCategoriesToRankerBasedOnArticlesCategory(
 
 bool IsKeepingPrefetchedSuggestionsEnabled() {
   return base::FeatureList::IsEnabled(kKeepPrefetchedContentSuggestions);
+}
+
+int GetMaxAdditionalPrefetchedSuggestions() {
+  return variations::GetVariationParamByFeatureAsInt(
+      kKeepPrefetchedContentSuggestions,
+      kMaxAdditionalPrefetchedSuggestionsParamName,
+      kDefaultMaxAdditionalPrefetchedSuggestions);
+}
+
+base::TimeDelta GetMaxAgeForAdditionalPrefetchedSuggestion() {
+  return base::TimeDelta::FromMinutes(
+      variations::GetVariationParamByFeatureAsInt(
+          kKeepPrefetchedContentSuggestions,
+          kMaxAgeForAdditionalPrefetchedSuggestionParamName,
+          kDefaultMaxAgeForAdditionalPrefetchedSuggestion.InMinutes()));
 }
 
 template <typename SuggestionPtrContainer>
@@ -808,9 +831,9 @@ void RemoteSuggestionsProviderImpl::IntegrateSuggestions(
                             : remote_suggestion->amp_url();
       if (prefetched_pages_tracker_->PrefetchedOfflinePageExists(url) &&
           clock_->Now() - remote_suggestion->fetch_date() <
-              kMaxAgeForAdditionalPrefetchedSuggestion &&
-          additional_prefetched_suggestions.size() <
-              kMaxAdditionalPrefetchedSuggestions) {
+              GetMaxAgeForAdditionalPrefetchedSuggestion() &&
+          static_cast<int>(additional_prefetched_suggestions.size()) <
+              GetMaxAdditionalPrefetchedSuggestions()) {
         additional_prefetched_suggestions.push_back(
             std::move(remote_suggestion));
       } else {
