@@ -21,6 +21,8 @@
 #include "chrome/browser/bookmarks/bookmark_stats.h"
 #include "chrome/browser/command_updater.h"
 #include "chrome/browser/extensions/api/omnibox/omnibox_api.h"
+#include "chrome/browser/feature_engagement_tracker/features/new_tab_factory.h"
+#include "chrome/browser/feature_engagement_tracker/features/new_tab_tracker.h"
 #include "chrome/browser/net/predictor.h"
 #include "chrome/browser/predictors/autocomplete_action_predictor.h"
 #include "chrome/browser/predictors/autocomplete_action_predictor_factory.h"
@@ -181,12 +183,12 @@ bool ChromeOmniboxClient::IsPasteAndGoEnabled() const {
   return controller_->command_updater()->IsCommandEnabled(IDC_OPEN_CURRENT_URL);
 }
 
-bool ChromeOmniboxClient::IsNewTabPage(const std::string& url) const {
-  return url == chrome::kChromeUINewTabURL;
+bool ChromeOmniboxClient::IsNewTabPage(const GURL& url) const {
+  return url.spec() == chrome::kChromeUINewTabURL;
 }
 
-bool ChromeOmniboxClient::IsHomePage(const std::string& url) const {
-  return url == profile_->GetPrefs()->GetString(prefs::kHomePage);
+bool ChromeOmniboxClient::IsHomePage(const GURL& url) const {
+  return url.spec() == profile_->GetPrefs()->GetString(prefs::kHomePage);
 }
 
 const SessionID& ChromeOmniboxClient::GetSessionID() const {
@@ -441,6 +443,16 @@ void ChromeOmniboxClient::OnRevert() {
 }
 
 void ChromeOmniboxClient::OnURLOpenedFromOmnibox(OmniboxLog* log) {
+  // Checking that the old URL is not the NTP.
+  // The NTP is expected to be "clobbered" since the user should automatically
+  // navigate away from it. Thus, the feature tracker should
+  // not be notified in this case to avoid inaccurate measurements.
+  if (!IsNewTabPage(GetURL())) {
+    new_tab_help::NewTabFactory::GetInstance()
+        ->GetForProfile(profile_)
+        ->NotifyOmniboxNavigation();
+  }
+
   predictors::AutocompleteActionPredictorFactory::GetForProfile(profile_)
       ->OnOmniboxOpenedUrl(*log);
 }
