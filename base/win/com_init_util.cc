@@ -68,7 +68,7 @@ void AssertComInitialized(const char* message) {
     return;
   }
 
-  NOTREACHED() << (message ? message : kComNotInitialized);
+  // NOTREACHED() << (message ? message : kComNotInitialized);
 }
 
 void AssertComApartmentType(ComApartmentType apartment_type) {
