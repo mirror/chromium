@@ -108,6 +108,10 @@ class OfflineAudioDestinationHandler final : public AudioDestinationHandler {
                             AudioBus* destination_bus,
                             size_t number_of_frames);
 
+  // Because the alternative thread can exist, this method returns what is
+  // currently valid/available.
+  WebThread* GetRenderingThread();
+
   // This AudioHandler renders into this AudioBuffer.
   // This Persistent doesn't make a reference cycle including the owner
   // OfflineAudioDestinationNode. It is accessed by both audio and main thread.
@@ -117,6 +121,9 @@ class OfflineAudioDestinationHandler final : public AudioDestinationHandler {
 
   // Rendering thread.
   std::unique_ptr<WebThread> render_thread_;
+
+  // The experimental worklet rendering thread.
+  WebThread* worklet_backing_thread_ = nullptr;
 
   // These variables are for counting the number of frames for the current
   // progress and the remaining frames to be processed.
