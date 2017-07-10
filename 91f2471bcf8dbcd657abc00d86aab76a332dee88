@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a2a8b16_3c0b28dd",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/Panner/panner-equalpower.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-07-10T16:54:49Z",
+      "side": 1,
+      "message": "nit: a missing period.",
+      "range": {
+        "startLine": 94,
+        "startChar": 69,
+        "endLine": 94,
+        "endChar": 77
+      },
+      "revId": "91f2471bcf8dbcd657abc00d86aab76a332dee88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a562c1a_be8147b3",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/Panner/panner-equalpower.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-07-10T16:54:49Z",
+      "side": 1,
+      "message": "nit: a missing period.",
+      "range": {
+        "startLine": 128,
+        "startChar": 21,
+        "endLine": 128,
+        "endChar": 29
+      },
+      "revId": "91f2471bcf8dbcd657abc00d86aab76a332dee88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
