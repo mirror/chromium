@@ -444,6 +444,24 @@
       "revId": "17a2e0d652618f934e42ea82444d3e13ddd168ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9389eb84_31f3576b",
+        "filename": "components/arc/arc_service_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-10T09:43:07Z",
+      "side": 1,
+      "message": "Please just add a regular function comment so that ARC devs can understand what the member variable is for.",
+      "parentUuid": "421d79df_32534116",
+      "revId": "17a2e0d652618f934e42ea82444d3e13ddd168ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
