@@ -45,6 +45,52 @@
       "revId": "7bf2c25d1b412380565e510159dd1d901b1d5717",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ffc8632_2b3221ba",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImplTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-10T12:14:21Z",
+      "side": 1,
+      "message": "Doesn\u0027t this throw an exception before we have a thumbnail?\n\nAlso, instead of polling, could you notify from inside onThumbnailRetrieved()?",
+      "range": {
+        "startLine": 161,
+        "startChar": 31,
+        "endLine": 161,
+        "endChar": 54
+      },
+      "revId": "7bf2c25d1b412380565e510159dd1d901b1d5717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "693c6b45_d31df6dd",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImplTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-10T12:14:21Z",
+      "side": 1,
+      "message": "Make this class static?",
+      "range": {
+        "startLine": 189,
+        "startChar": 12,
+        "endLine": 189,
+        "endChar": 17
+      },
+      "revId": "7bf2c25d1b412380565e510159dd1d901b1d5717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
