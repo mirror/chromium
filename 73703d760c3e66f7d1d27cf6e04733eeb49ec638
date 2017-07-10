@@ -22,6 +22,30 @@
       "revId": "73703d760c3e66f7d1d27cf6e04733eeb49ec638",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32df3553_7f6f0a78",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/Panner/panner-equalpower.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-10T15:32:01Z",
+      "side": 1,
+      "message": "They\u0027re a bunch of spaces.  Should be removed anyway.",
+      "parentUuid": "efd05619_b9ecd41e",
+      "range": {
+        "startLine": 135,
+        "startChar": 0,
+        "endLine": 135,
+        "endChar": 7
+      },
+      "revId": "73703d760c3e66f7d1d27cf6e04733eeb49ec638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
