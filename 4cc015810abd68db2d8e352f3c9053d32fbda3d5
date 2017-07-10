@@ -34,6 +34,24 @@
       "revId": "4cc015810abd68db2d8e352f3c9053d32fbda3d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12d17cab_21f5ba98",
+        "filename": "base/sys_info_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-07-10T21:57:24Z",
+      "side": 1,
+      "message": "\u003e 1. We could do that (with a pragma), but does it really matter in this case? If Gestalt returns the correct result on 10.9.2 we can just use it. Presumably when we drop support for 10.9 we would be dropping support for all patch versions at the same time, so that wouldn\u0027t affect when we can remove the deprecated code.\n\u003e 2. The function [1] returns whether the version is at least what you ask for, not what the version actually is, so I don\u0027t think that would help.\n\u003e \n\u003e [1] http://llvm-cs.pcc.me.uk/projects/compiler-rt/lib/builtins/os_version_check.c#163\n\nIt was important to avoid Gestalt() when possible because it was observed to spin up threads and do other things we would prefer to avoid during performance-sensitive early startup. Elsewhere, we avoid it entirely (https://chromium.googlesource.com/chromium/src/+/98b75a2586d9ad1b051708df2572fcdbc0dcd7da/base/mac/mac_util.mm#366)",
+      "parentUuid": "2282e8bd_9b1ff850",
+      "revId": "4cc015810abd68db2d8e352f3c9053d32fbda3d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
