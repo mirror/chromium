@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "dece4729_517e611c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroup.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-10T16:41:50Z",
+      "side": 1,
+      "message": "To me it\u0027s less about the performance and more about expressing the invariants of the data structure. In this case, we don\u0027t care about the order of elements, only the count of individual items, and List doesn\u0027t express that very well. We could use a Map\u003cInteger, Integer\u003e or EnumMap? Alternatively, we could go *up* the hierarchy and make this a plain Collection\u003c\u003e, because that has all the methods we need.",
+      "parentUuid": "9b9ccf75_1dc2678e",
+      "range": {
+        "startLine": 152,
+        "startChar": 18,
+        "endLine": 152,
+        "endChar": 31
+      },
+      "revId": "04280ff345396c5f57d164572315715408628404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e356c601_9a94739a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroup.java",
         "patchSetId": 7
