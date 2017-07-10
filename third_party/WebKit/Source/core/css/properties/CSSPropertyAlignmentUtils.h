@@ -12,12 +12,16 @@ namespace blink {
 class CSSParserTokenRange;
 class CSSValue;
 
+enum class AutoKeyword { kAllow, kForbid };
+
 class CSSPropertyAlignmentUtils {
   STATIC_ONLY(CSSPropertyAlignmentUtils);
 
  public:
   static CSSValue* ConsumeSelfPositionOverflowPosition(CSSParserTokenRange&);
-  static CSSValue* ConsumeSimplifiedItemPosition(CSSParserTokenRange&);
+  static CSSValue* ConsumeSimplifiedItemPosition(
+      CSSParserTokenRange&,
+      AutoKeyword = AutoKeyword::kAllow);
   static CSSValue* ConsumeContentDistributionOverflowPosition(
       CSSParserTokenRange&);
   static CSSValue* ConsumeSimplifiedContentPosition(CSSParserTokenRange&);
