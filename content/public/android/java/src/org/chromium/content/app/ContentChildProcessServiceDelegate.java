@@ -64,8 +64,7 @@ public class ContentChildProcessServiceDelegate implements ChildProcessServiceDe
 
     @Override
     public void onServiceBound(Intent intent) {
-        mLinkerParams = (ChromiumLinkerParams) intent.getParcelableExtra(
-                ContentChildProcessConstants.EXTRA_LINKER_PARAMS);
+        mLinkerParams = new ChromiumLinkerParams(intent.getExtras());
         mLibraryProcessType = ChildProcessCreationParams.getLibraryProcessType(intent);
     }
 
