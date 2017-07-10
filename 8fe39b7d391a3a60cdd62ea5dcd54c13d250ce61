@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c91e52b8_9063a16e",
+        "filename": "tools/gn/xcode_writer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-10T07:44:32Z",
+      "side": 1,
+      "message": "I don\u0027t think we should hard-code one application name here. If we need to have a relationship between those two targets, then I think we need to add some property to the create_bundle targets so that we can find them.\n\nI started playing with the idea of adding a extra_attributes property to create_bundle that will be converted to a dictionary mapping strings to strings and then the value will just be added as extra_attributes to the generated target.",
+      "revId": "8fe39b7d391a3a60cdd62ea5dcd54c13d250ce61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f46441d6_ea43fbe3",
+        "filename": "tools/gn/xcode_writer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-10T07:44:32Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "8fe39b7d391a3a60cdd62ea5dcd54c13d250ce61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
