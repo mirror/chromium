@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ea6da6c_33a51714",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPageView.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-10T15:12:05Z",
+      "side": 1,
+      "message": "Nit: \"every time any of the flags [...]\"? Also, I would use the same spelling for \"initialization\" as in the method name (either way around).",
+      "range": {
+        "startLine": 552,
+        "startChar": 24,
+        "endLine": 552,
+        "endChar": 45
+      },
+      "revId": "04280ff345396c5f57d164572315715408628404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb689759_d8698d01",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroup.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-10T15:12:05Z",
+      "side": 1,
+      "message": "I still think a MultiSet would work a bit better here.",
+      "range": {
+        "startLine": 152,
+        "startChar": 18,
+        "endLine": 152,
+        "endChar": 31
+      },
+      "revId": "04280ff345396c5f57d164572315715408628404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e356c601_9a94739a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroup.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-10T15:12:05Z",
+      "side": 1,
+      "message": "\"we\" is the delegate?",
+      "range": {
+        "startLine": 331,
+        "startChar": 36,
+        "endLine": 331,
+        "endChar": 38
+      },
+      "revId": "04280ff345396c5f57d164572315715408628404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
