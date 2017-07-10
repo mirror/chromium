@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d6c55d2b_68efd0c1",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-07-10T11:44:45Z",
+      "side": 1,
+      "message": "I didn\u0027t change the order, because in that case the checks had to be distributed. How does it look now?",
+      "parentUuid": "87e80ce0_b908d64d",
+      "range": {
+        "startLine": 107,
+        "startChar": 30,
+        "endLine": 107,
+        "endChar": 56
+      },
+      "revId": "ea9f21f727ef995ffdfeb13e8608c9d9c9388354",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd44a3ee_6e74df77",
         "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "ea9f21f727ef995ffdfeb13e8608c9d9c9388354",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c68c732_9fe0d4a0",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-07-10T11:44:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd44a3ee_6e74df77",
+      "range": {
+        "startLine": 366,
+        "startChar": 4,
+        "endLine": 366,
+        "endChar": 9
+      },
+      "revId": "ea9f21f727ef995ffdfeb13e8608c9d9c9388354",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d23cb3cd_8c77d00e",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-07-10T11:44:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b66eb32a_ba6368b2",
+      "range": {
+        "startLine": 491,
+        "startChar": 2,
+        "endLine": 491,
+        "endChar": 22
+      },
+      "revId": "ea9f21f727ef995ffdfeb13e8608c9d9c9388354",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd9b4b88_26816766",
         "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "a471d22f_1b9b6b67",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-07-10T11:44:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fd9b4b88_26816766",
+      "range": {
+        "startLine": 538,
+        "startChar": 19,
+        "endLine": 538,
+        "endChar": 20
+      },
+      "revId": "ea9f21f727ef995ffdfeb13e8608c9d9c9388354",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d7ed5ee_f0827289",
         "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.h",
         "patchSetId": 2
@@ -114,6 +210,30 @@
       "revId": "ea9f21f727ef995ffdfeb13e8608c9d9c9388354",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d9bbd3d_f0ed3272",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-07-10T11:44:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d7ed5ee_f0827289",
+      "range": {
+        "startLine": 198,
+        "startChar": 7,
+        "endLine": 198,
+        "endChar": 13
+      },
+      "revId": "ea9f21f727ef995ffdfeb13e8608c9d9c9388354",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
