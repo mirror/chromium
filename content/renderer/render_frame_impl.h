@@ -424,8 +424,10 @@ class CONTENT_EXPORT RenderFrameImpl
       const WebPluginInfo& info,
       const blink::WebPluginParams& params,
       std::unique_ptr<PluginInstanceThrottler> throttler) override;
-  void LoadURLExternally(const blink::WebURLRequest& request,
-                         blink::WebNavigationPolicy policy) override;
+  void LoadURLExternally(
+      const blink::WebURLRequest& request,
+      blink::WebNavigationPolicy policy,
+      blink::WebTriggeringEventInfo triggering_event_info) override;
   void ExecuteJavaScript(const base::string16& javascript) override;
   bool IsMainFrame() override;
   bool IsHidden() override;
@@ -546,6 +548,7 @@ class CONTENT_EXPORT RenderFrameImpl
   void LoadURLExternally(const blink::WebURLRequest& request,
                          blink::WebNavigationPolicy policy,
                          const blink::WebString& suggested_name,
+                         blink::WebTriggeringEventInfo triggering_event_info,
                          bool should_replace_current_entry) override;
   void LoadErrorPage(int reason) override;
   blink::WebNavigationPolicy DecidePolicyForNavigation(
