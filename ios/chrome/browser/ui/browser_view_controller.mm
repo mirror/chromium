@@ -4117,11 +4117,6 @@ class BrowserBookmarkModelBridge : public bookmarks::BookmarkModelObserver {
         [super chromeExecuteCommand:sender];
       }
       break;
-    case IDC_RELOAD: {
-      // Route to dispatcher until downstream code is migrated.
-      [self.dispatcher reload];
-      break;
-    }
     case IDC_SHARE_PAGE:
       [self sharePage];
       break;
