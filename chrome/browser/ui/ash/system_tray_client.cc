@@ -501,7 +501,7 @@ void SystemTrayClient::OnStoreError(policy::CloudPolicyStore* store) {
 void SystemTrayClient::UpdateEnterpriseDomain() {
   policy::BrowserPolicyConnectorChromeOS* connector =
       g_browser_process->platform_part()->browser_policy_connector_chromeos();
-  const std::string enterprise_domain = connector->GetEnterpriseDomain();
+  const std::string enterprise_domain = connector->GetDisplayDomain();
   const bool active_directory_managed = connector->IsActiveDirectoryManaged();
   if (enterprise_domain == last_enterprise_domain_ &&
       active_directory_managed == last_active_directory_managed_) {

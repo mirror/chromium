@@ -80,6 +80,10 @@ class BrowserPolicyConnectorChromeOS
   // Returns the enterprise domain if device is managed.
   std::string GetEnterpriseDomain() const;
 
+  // Custom display domain used in UI instead of enterprise domain (if
+  // specified).
+  std::string GetDisplayDomain() const;
+
   // Returns the Kerberos realm (aka Windows Domain) if the device is managed by
   // Active Directory.
   std::string GetRealm() const;
