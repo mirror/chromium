@@ -36,9 +36,6 @@ class StartupInformationTest : public base::MultiProcessTest {};
 
 // Verify that only the explicitly specified event is inherited.
 TEST_F(StartupInformationTest, InheritStdOut) {
-  if (base::win::GetVersion() < base::win::VERSION_VISTA)
-    return;
-
   base::win::StartupInformation startup_info;
 
   HANDLE section = ::CreateFileMappingW(INVALID_HANDLE_VALUE, NULL,
