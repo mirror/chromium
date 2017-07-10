@@ -22,6 +22,30 @@
       "revId": "8ab692c8ea1921097ab771e27c22d830c1f647ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94252ff8_73662bb3",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 1600,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-10T08:07:58Z",
+      "side": 1,
+      "message": "It does match the M61 (Dev/Canary) server-side config, in particular the group I\u0027m hoping to launch. The M60 Beta config is different, but that isn\u0027t going to launch due to the perf regressions mentioned in the CL description.",
+      "parentUuid": "75785d56_d76d10ae",
+      "range": {
+        "startLine": 1600,
+        "startChar": 68,
+        "endLine": 1600,
+        "endChar": 0
+      },
+      "revId": "8ab692c8ea1921097ab771e27c22d830c1f647ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
