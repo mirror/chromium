@@ -16,6 +16,8 @@
 #include "extensions/browser/extension_registry_observer.h"
 #include "extensions/browser/value_store/value_store_frontend.h"
 
+class ValueStore;
+
 namespace content {
 class BrowserContext;
 }

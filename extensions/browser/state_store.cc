@@ -6,7 +6,9 @@
 
 #include <stddef.h>
 
+#include <memory>
 #include <utility>
+#include <vector>
 
 #include "base/bind.h"
 #include "base/location.h"
@@ -42,7 +44,7 @@ class StateStore::DelayedTaskQueue {
 
   // Queues up a task for invoking once we're ready. Invokes immediately if
   // we're already ready.
-  void InvokeWhenReady(const base::Closure& task);
+  void InvokeWhenReady(base::OnceClosure task);
 
   // Marks us ready, and invokes all pending tasks.
   void SetReady();
@@ -52,14 +54,14 @@ class StateStore::DelayedTaskQueue {
 
  private:
   bool ready_;
-  std::vector<base::Closure> pending_tasks_;
+  std::vector<base::OnceClosure> pending_tasks_;
 };
 
-void StateStore::DelayedTaskQueue::InvokeWhenReady(const base::Closure& task) {
+void StateStore::DelayedTaskQueue::InvokeWhenReady(base::OnceClosure task) {
   if (ready_) {
-    task.Run();
+    std::move(task).Run();
   } else {
-    pending_tasks_.push_back(task);
+    pending_tasks_.push_back(std::move(task));
   }
 }
 
@@ -67,7 +69,7 @@ void StateStore::DelayedTaskQueue::SetReady() {
   ready_ = true;
 
   for (size_t i = 0; i < pending_tasks_.size(); ++i)
-    pending_tasks_[i].Run();
+    std::move(pending_tasks_[i]).Run();
   pending_tasks_.clear();
 }
 
@@ -107,23 +109,23 @@ void StateStore::GetExtensionValue(const std::string& extension_id,
                                    const std::string& key,
                                    ReadCallback callback) {
   task_queue_->InvokeWhenReady(
-      base::Bind(&ValueStoreFrontend::Get, base::Unretained(store_.get()),
-                 GetFullKey(extension_id, key), callback));
+      base::BindOnce(&ValueStoreFrontend::Get, base::Unretained(store_.get()),
+                     GetFullKey(extension_id, key), std::move(callback)));
 }
 
 void StateStore::SetExtensionValue(const std::string& extension_id,
                                    const std::string& key,
                                    std::unique_ptr<base::Value> value) {
   task_queue_->InvokeWhenReady(
-      base::Bind(&ValueStoreFrontend::Set, base::Unretained(store_.get()),
-                 GetFullKey(extension_id, key), base::Passed(&value)));
+      base::BindOnce(&ValueStoreFrontend::Set, base::Unretained(store_.get()),
+                     GetFullKey(extension_id, key), base::Passed(&value)));
 }
 
 void StateStore::RemoveExtensionValue(const std::string& extension_id,
                                       const std::string& key) {
-  task_queue_->InvokeWhenReady(base::Bind(&ValueStoreFrontend::Remove,
-                                          base::Unretained(store_.get()),
-                                          GetFullKey(extension_id, key)));
+  task_queue_->InvokeWhenReady(base::BindOnce(&ValueStoreFrontend::Remove,
+                                              base::Unretained(store_.get()),
+                                              GetFullKey(extension_id, key)));
 }
 
 bool StateStore::IsInitialized() const {
@@ -178,9 +180,9 @@ void StateStore::RemoveKeysForExtension(const std::string& extension_id) {
   for (std::set<std::string>::iterator key = registered_keys_.begin();
        key != registered_keys_.end();
        ++key) {
-    task_queue_->InvokeWhenReady(base::Bind(&ValueStoreFrontend::Remove,
-                                            base::Unretained(store_.get()),
-                                            GetFullKey(extension_id, *key)));
+    task_queue_->InvokeWhenReady(base::BindOnce(
+        &ValueStoreFrontend::Remove, base::Unretained(store_.get()),
+        GetFullKey(extension_id, *key)));
   }
 }
 
