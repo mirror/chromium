@@ -15,7 +15,7 @@
 #include "base/trace_event/memory_dump_manager.h"
 #include "base/trace_event/trace_event.h"
 #include "build/build_config.h"
-#include "content/browser/gpu/browser_gpu_memory_buffer_manager.h"
+#include "components/viz/host/server_gpu_memory_buffer_manager.h"
 #include "content/browser/gpu/gpu_data_manager_impl.h"
 #include "content/browser/gpu/gpu_process_host.h"
 #include "content/browser/gpu/shader_cache_factory.h"
@@ -32,6 +32,16 @@
 #include "services/service_manager/runner/common/client_util.h"
 
 namespace content {
+
+namespace {
+
+ui::mojom::GpuService* GetGpuService() {
+  DCHECK(BrowserThread::CurrentlyOn(BrowserThread::IO));
+  auto* host = GpuProcessHost::Get();
+  return host ? host->gpu_service() : nullptr;
+}
+
+}  // namespace
 
 BrowserGpuChannelHostFactory* BrowserGpuChannelHostFactory::instance_ = NULL;
 
@@ -174,14 +184,6 @@ void BrowserGpuChannelHostFactory::EstablishRequest::Cancel() {
   finished_ = true;
 }
 
-void BrowserGpuChannelHostFactory::CloseChannel() {
-  DCHECK(instance_);
-  if (instance_->gpu_channel_) {
-    instance_->gpu_channel_->DestroyChannel();
-    instance_->gpu_channel_ = nullptr;
-  }
-}
-
 void BrowserGpuChannelHostFactory::Initialize(bool establish_gpu_channel) {
   DCHECK(!instance_);
   instance_ = new BrowserGpuChannelHostFactory();
@@ -203,9 +205,10 @@ BrowserGpuChannelHostFactory::BrowserGpuChannelHostFactory()
       shutdown_event_(new base::WaitableEvent(
           base::WaitableEvent::ResetPolicy::MANUAL,
           base::WaitableEvent::InitialState::NOT_SIGNALED)),
-      gpu_memory_buffer_manager_(
-          new BrowserGpuMemoryBufferManager(gpu_client_id_,
-                                            gpu_client_tracing_id_)) {
+      gpu_memory_buffer_manager_(new viz::ServerGpuMemoryBufferManager(
+          base::Bind(&GetGpuService),
+          gpu_client_id_,
+          BrowserThread::GetTaskRunnerForThread(BrowserThread::IO))) {
   if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kDisableGpuShaderDiskCache)) {
     DCHECK(GetContentClient());

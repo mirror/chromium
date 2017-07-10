@@ -19,6 +19,14 @@ class TestGpuService : public ui::mojom::GpuService {
   TestGpuService() {}
   ~TestGpuService() override {}
 
+  ServerGpuMemoryBufferManager::GpuServiceProvider CreateProvider() {
+    return base::Bind(
+        [](TestGpuService* service) -> ui::mojom::GpuService* {
+          return service;
+        },
+        base::Unretained(this));
+  }
+
   bool HasAllocationRequest(gfx::GpuMemoryBufferId id, int client_id) const {
     for (const auto& req : allocation_requests_) {
       if (req.id == id && req.client_id == client_id)
@@ -182,7 +190,8 @@ TEST_F(ServerGpuMemoryBufferManagerTest, AllocationRequestsForDestroyedClient) {
   // GpuService is asynchronous. In this test, the mojom::GpuService is not
   // bound to a mojo pipe, which means those calls are all synchronous.
   TestGpuService gpu_service;
-  ServerGpuMemoryBufferManager manager(&gpu_service, 1);
+  ServerGpuMemoryBufferManager manager(gpu_service.CreateProvider(), 1,
+                                       base::ThreadTaskRunnerHandle::Get());
 
   const auto buffer_id = static_cast<gfx::GpuMemoryBufferId>(1);
   const int client_id = 2;
@@ -212,7 +221,8 @@ TEST_F(ServerGpuMemoryBufferManagerTest,
        RequestsFromUntrustedClientsValidated) {
   gfx::ClientNativePixmapFactory::ResetInstance();
   TestGpuService gpu_service;
-  ServerGpuMemoryBufferManager manager(&gpu_service, 1);
+  ServerGpuMemoryBufferManager manager(gpu_service.CreateProvider(), 1,
+                                       base::ThreadTaskRunnerHandle::Get());
   const auto buffer_id = static_cast<gfx::GpuMemoryBufferId>(1);
   const int client_id = 2;
   // SCANOUT cannot be used if native gpu memory buffer is not supported.

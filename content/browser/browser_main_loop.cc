@@ -54,6 +54,7 @@
 #include "components/tracing/common/trace_to_console.h"
 #include "components/tracing/common/tracing_switches.h"
 #include "components/viz/host/host_frame_sink_manager.h"
+#include "components/viz/host/server_gpu_memory_buffer_manager.h"
 #include "components/viz/service/display_embedder/server_shared_bitmap_manager.h"
 #include "components/viz/service/frame_sinks/frame_sink_manager_impl.h"
 #include "content/browser/browser_thread_impl.h"
@@ -63,7 +64,6 @@
 #include "content/browser/download/download_resource_handler.h"
 #include "content/browser/download/save_file_manager.h"
 #include "content/browser/gpu/browser_gpu_channel_host_factory.h"
-#include "content/browser/gpu/browser_gpu_memory_buffer_manager.h"
 #include "content/browser/gpu/compositor_util.h"
 #include "content/browser/gpu/gpu_data_manager_impl.h"
 #include "content/browser/gpu/gpu_process_host.h"
@@ -931,6 +931,13 @@ BrowserMainLoop::gpu_channel_establish_factory() const {
   return BrowserGpuChannelHostFactory::instance();
 }
 
+viz::ServerGpuMemoryBufferManager* BrowserMainLoop::gpu_memory_buffer_manager()
+    const {
+  if (auto* factory = BrowserGpuChannelHostFactory::instance())
+    return factory->gpu_memory_buffer_manager();
+  return nullptr;
+}
+
 #if defined(OS_ANDROID)
 void BrowserMainLoop::SynchronouslyFlushStartupTasks() {
   startup_task_runner_->RunAllTasksNow();
@@ -1229,9 +1236,8 @@ void BrowserMainLoop::ShutdownThreadsAndCleanUp() {
   device_monitor_mac_.reset();
 #endif
 
-  if (BrowserGpuChannelHostFactory::instance()) {
-    BrowserGpuChannelHostFactory::instance()->CloseChannel();
-  }
+  if (auto* factory = BrowserGpuChannelHostFactory::instance())
+    factory->gpu_memory_buffer_manager()->ScheduleTerminate();
 
   // Shutdown the Service Manager and IPC.
   service_manager_context_.reset();
@@ -1475,12 +1481,6 @@ int BrowserMainLoop::BrowserThreadsStarted() {
 #endif  // defined(USE_AURA)
 #endif  // defined(OS_ANDROID)
 
-  // Enable the GpuMemoryBuffer dump provider with IO thread affinity. Note that
-  // unregistration happens on the IO thread (See
-  // BrowserProcessSubThread::IOThreadPreCleanUp).
-  base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
-      BrowserGpuMemoryBufferManager::current(), "BrowserGpuMemoryBufferManager",
-      io_thread_->task_runner());
 #if defined(OS_ANDROID)
   base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
       tracing::GraphicsMemoryDumpProvider::GetInstance(), "AndroidGraphics",
