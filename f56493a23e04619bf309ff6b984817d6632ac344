@@ -16,6 +16,24 @@
       "revId": "f56493a23e04619bf309ff6b984817d6632ac344",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5775ab01_6a79476d",
+        "filename": "chrome/browser/resources/settings/languages_page/languages_page.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-10T21:51:26Z",
+      "side": 1,
+      "message": "It looks like it\u0027s still used so I changed it to BUTTON.\nBut it also looks strange in the UI so I filed a bug and put in a TODO about that.",
+      "parentUuid": "6195c150_a9c4f8ab",
+      "revId": "f56493a23e04619bf309ff6b984817d6632ac344",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -16,6 +16,24 @@
       "revId": "108c8fff772187dadcaef99798ff109123795f49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68f9d081_b2c8f4a4",
+        "filename": "chrome/browser/resources/settings/settings_main/settings_main.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-10T21:51:26Z",
+      "side": 0,
+      "message": "I believe this is currently unused. I was looking into how to replace the functionality and wanted to test it as it\u0027s currently used and just didn\u0027t find any current users.",
+      "parentUuid": "5e2da009_7ff5c68e",
+      "revId": "108c8fff772187dadcaef99798ff109123795f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
