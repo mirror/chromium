@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<title>Clipboard: expected data types for image</title>
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+<style>
+  .hidden { display: none; }
+</style>
+<div id=instructions class=hidden>
+  This file tests the image pasting functionality of
+  DataTransferItems. To try the test manually, right-click on the
+  image &gt; Copy Image, click anywhere in the background of the main
+  page and paste.
+</div>
+<iframe id="src" src="resources/mozilla.gif"></iframe><br>
+<script>
+async_test(t => {
+  window.addEventListener('load', t.step_func(() => {
+    document.body.addEventListener('paste', t.step_func(e => {
+      const types = new Set([...e.clipboardData.items]
+        .map(item => `${item.kind};${item.type}`));
+
+      assert_true(types.has('file;image/png'),
+                  'Clipboard should have image/png');
+
+      // Depending on the platform, may have string;text/html or not,
+      // but should not have string;text/plain after copying an image
+      // or web apps get confused. https://crbug.com/736439
+
+      assert_false(types.has('string;text/plain'),
+                   'Clipboard should not have text/plain');
+
+      t.done();
+    }));
+
+    try {
+      const srcElement = document.getElementById('src');
+      srcElement.contentWindow.document.execCommand('copy');
+      document.execCommand('paste');
+    } catch (ex) {
+      // Fails in browser due to cross-origin restriction when run
+      // locally via file: so show manual instructions.
+      document.body.querySelector('#instructions').classList.remove('hidden');
+    }
+  }));
+}, 'Image copy/paste has image/png and not text/plain');
+</script>
