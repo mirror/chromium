@@ -147,6 +147,7 @@ class CORE_EXPORT LocalFrameClient : public FrameClient {
   virtual void LoadURLExternally(const ResourceRequest&,
                                  NavigationPolicy,
                                  const String& suggested_name,
+                                 WebTriggeringEventInfo,
                                  bool replaces_current_history_item) = 0;
   virtual void LoadErrorPage(int reason) = 0;
 

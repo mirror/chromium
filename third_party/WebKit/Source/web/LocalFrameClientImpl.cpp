@@ -647,6 +647,7 @@ void LocalFrameClientImpl::LoadURLExternally(
     const ResourceRequest& request,
     NavigationPolicy policy,
     const String& suggested_name,
+    WebTriggeringEventInfo triggering_event_info,
     bool should_replace_current_entry) {
   if (!web_frame_->Client())
     return;
@@ -654,7 +655,7 @@ void LocalFrameClientImpl::LoadURLExternally(
   Fullscreen::FullyExitFullscreen(*web_frame_->GetFrame()->GetDocument());
   web_frame_->Client()->LoadURLExternally(
       WrappedResourceRequest(request), static_cast<WebNavigationPolicy>(policy),
-      suggested_name, should_replace_current_entry);
+      suggested_name, triggering_event_info, should_replace_current_entry);
 }
 
 void LocalFrameClientImpl::LoadErrorPage(int reason) {

@@ -292,6 +292,7 @@ class CORE_EXPORT EmptyLocalFrameClient : public LocalFrameClient {
   void LoadURLExternally(const ResourceRequest&,
                          NavigationPolicy,
                          const String&,
+                         WebTriggeringEventInfo,
                          bool) override {}
   void LoadErrorPage(int reason) override {}
 
