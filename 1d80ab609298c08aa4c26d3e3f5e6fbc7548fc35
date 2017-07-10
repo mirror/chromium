@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80d9b724_fefbd096",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkerCacheViews.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-10T21:26:32Z",
+      "side": 1,
+      "message": "this would overwrite the cached response. should this be an else branch?",
+      "revId": "1d80ab609298c08aa4c26d3e3f5e6fbc7548fc35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "983db339_3cab2cb4",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkerCacheViews.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-10T21:26:32Z",
+      "side": 1,
+      "message": "Please avoid accessing fields like this. Let\u0027s type cast selectedNode instead.",
+      "revId": "1d80ab609298c08aa4c26d3e3f5e6fbc7548fc35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "918e5dfc_4a864e87",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkerCacheViews.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-10T21:26:32Z",
+      "side": 1,
+      "message": "this._previewPromise?",
+      "revId": "1d80ab609298c08aa4c26d3e3f5e6fbc7548fc35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
