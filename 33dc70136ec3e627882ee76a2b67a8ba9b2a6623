@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dea2790c_e59fbde2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-10T16:45:09Z",
+      "side": 1,
+      "message": "nit: this variable is unused besides the assert. Just inline it with below so that Math.min is not called when assert is skipped?",
+      "range": {
+        "startLine": 142,
+        "startChar": 16,
+        "endLine": 142,
+        "endChar": 28
+      },
+      "revId": "33dc70136ec3e627882ee76a2b67a8ba9b2a6623",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c20da0b7_1ff96a53",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-10T16:45:09Z",
+      "side": 1,
+      "message": "I think Bernhard meant call assert here.",
+      "revId": "33dc70136ec3e627882ee76a2b67a8ba9b2a6623",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
