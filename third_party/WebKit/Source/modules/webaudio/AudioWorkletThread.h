@@ -37,6 +37,9 @@ class MODULES_EXPORT AudioWorkletThread final : public WorkerThread {
 
   static void CreateSharedBackingThreadForTest();
 
+  // This only can be called after the instance is ensured.
+  static WebThread* GetSharedBackingThread();
+
  protected:
   WorkerOrWorkletGlobalScope* CreateWorkerGlobalScope(
       std::unique_ptr<WorkerThreadStartupData>) final;
