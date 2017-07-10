@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e538df27_a5e43662",
+        "filename": "chrome/browser/ntp_tiles/ntp_tiles_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-07-10T16:39:44Z",
+      "side": 1,
+      "message": "Contains() might be appropriate for the previous test, but here I think ElementsAre() is better because it also verifies that a single tile is produced (vs both URLs being listed).",
+      "range": {
+        "startLine": 120,
+        "startChar": 20,
+        "endLine": 120,
+        "endChar": 21
+      },
+      "revId": "09ab5c86c895c0c40f72ef4c195efe03a9bbd25a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd7e49b4_67e44dd3",
+        "filename": "chrome/browser/ntp_tiles/ntp_tiles_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-07-10T16:39:44Z",
+      "side": 1,
+      "message": "I recommend adding a comment that TopSites, in the current implementation, uses the start of the redirect chain. I.e. emphasize that we verify this here for documentation purposes.",
+      "revId": "09ab5c86c895c0c40f72ef4c195efe03a9bbd25a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
