@@ -4,6 +4,7 @@
 
 #include "chrome/browser/devtools/global_confirm_info_bar.h"
 
+#include <memory>
 #include <utility>
 
 #include "base/macros.h"
@@ -217,8 +218,10 @@ void GlobalConfirmInfoBar::MaybeAddInfoBar(content::WebContents* web_contents) {
   infobars::InfoBar* added_bar = infobar_service->AddInfoBar(
       infobar_service->CreateConfirmInfoBar(std::move(proxy)));
 
-  proxy_ptr->info_bar_ = added_bar;
-  DCHECK(added_bar);
-  proxies_[infobar_service] = proxy_ptr;
-  infobar_service->AddObserver(this);
+  // It's possible for AddInfoBar() to return nullptr.
+  if (added_bar) {
+    proxy_ptr->info_bar_ = added_bar;
+    proxies_[infobar_service] = proxy_ptr;
+    infobar_service->AddObserver(this);
+  }
 }
