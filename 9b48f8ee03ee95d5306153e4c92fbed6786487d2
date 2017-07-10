@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4aec949d_8727f8ec",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-10T15:06:52Z",
+      "side": 1,
+      "message": "Oh hey, could you do this now that you\u0027re here? :)",
+      "range": {
+        "startLine": 107,
+        "startChar": 35,
+        "endLine": 107,
+        "endChar": 90
+      },
+      "revId": "9b48f8ee03ee95d5306153e4c92fbed6786487d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08441189_051cdfef",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-10T15:06:52Z",
+      "side": 1,
+      "message": "We could just get the suggestions source from the UI delegate in the constructor and hold on to it.",
+      "range": {
+        "startLine": 459,
+        "startChar": 33,
+        "endLine": 459,
+        "endChar": 68
+      },
+      "revId": "9b48f8ee03ee95d5306153e4c92fbed6786487d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3db7ee12_21e07846",
+        "filename": "chrome/browser/android/ntp/ntp_snippets_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-10T15:06:52Z",
+      "side": 1,
+      "message": "Nit: Pass by const ref.",
+      "range": {
+        "startLine": 461,
+        "startChar": 4,
+        "endLine": 461,
+        "endChar": 32
+      },
+      "revId": "9b48f8ee03ee95d5306153e4c92fbed6786487d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
