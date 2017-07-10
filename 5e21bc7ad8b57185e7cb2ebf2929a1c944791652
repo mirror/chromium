@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afbc2f7f_15a4a015",
+        "filename": "components/network_session_configurator/browser/network_session_configurator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-07-10T22:13:01Z",
+      "side": 1,
+      "message": "Up to you, but I\u0027d probably just do:\n\nfor (QuicVersion supported_version : all_supported_versions) {\n  if (version \u003d\u003d net::QuicVersionToString(supported_version))\n    supported_versions.push_back(*it);\n}\n\nSince this method is only called at startup, and all_supported_versions is small, I\u0027m not sure it\u0027s worth potentially optimizing. (Also, removing entries from a vector is O(n) so I\u0027m not sure it ends up more efficient.",
+      "range": {
+        "startLine": 340,
+        "startChar": 5,
+        "endLine": 340,
+        "endChar": 0
+      },
+      "revId": "5e21bc7ad8b57185e7cb2ebf2929a1c944791652",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fafd653_7c681270",
+        "filename": "components/network_session_configurator/browser/network_session_configurator_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-07-10T22:13:01Z",
+      "side": 1,
+      "message": "Oh, I see. That code is there to de-dup the list? If so, please comment.",
+      "range": {
+        "startLine": 339,
+        "startChar": 39,
+        "endLine": 339,
+        "endChar": 75
+      },
+      "revId": "5e21bc7ad8b57185e7cb2ebf2929a1c944791652",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
