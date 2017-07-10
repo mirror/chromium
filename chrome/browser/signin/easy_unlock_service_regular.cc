@@ -198,7 +198,7 @@ void EasyUnlockServiceRegular::LaunchSetup() {
     OpenSetupApp();
   } else {
     bool reauth_success = chromeos::EasyUnlockReauth::ReauthForUserContext(
-        base::Bind(&EasyUnlockServiceRegular::OnUserContextFromReauth,
+        base::Bind(&EasyUnlockServiceRegular::OnUserReauth,
                    weak_ptr_factory_.GetWeakPtr()));
     if (!reauth_success)
       OpenSetupApp();
@@ -209,7 +209,7 @@ void EasyUnlockServiceRegular::LaunchSetup() {
 }
 
 #if defined(OS_CHROMEOS)
-void EasyUnlockServiceRegular::OnUserContextFromReauth(
+void EasyUnlockServiceRegular::OnUserReauth(
     const chromeos::UserContext& user_context) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   short_lived_user_context_.reset(new chromeos::ShortLivedUserContext(
