@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "670103ac_10aee0b2",
+        "filename": "net/cert/cert_verify_proc.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-10T20:51:40Z",
+      "side": 1,
+      "message": "Correct, the plan is to migrate (some/all) platforms to CertVerifyProcBuiltin.\n\nSo using it for Fuschia is fine, just with the understanding that within the next month or two it may not be as capable (but I expect that timeline won\u0027t be a blocker for you guys).",
+      "parentUuid": "4263f360_2c0c802b",
+      "range": {
+        "startLine": 517,
+        "startChar": 9,
+        "endLine": 517,
+        "endChar": 36
+      },
+      "revId": "e539e115ca5a5889879dfc4c3b5bf75703533111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b1915f8f_4b3d3b31",
         "filename": "net/features.gni",
         "patchSetId": 3

@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d142dbd1_86a1734d",
+        "filename": "net/base/platform_mime_util_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-10T20:51:40Z",
+      "side": 1,
+      "message": "If there isn\u0027t OS level configurability, relying on a static list in Chrome should be fine.\n(There are already a number of baked in static ones for images and such, so this probably works fine just returning false).",
+      "revId": "02a4860679ece7b29ea9b3e624f2fe9f1ea71ac4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f3fc4a2_40afc9ea",
+        "filename": "net/cert/cert_verify_proc.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-10T20:51:40Z",
+      "side": 1,
+      "message": "Was this refactor necessary, or just an extra?\n(I am fine with it, just want to understand how to review this in case it was addressing any bugs).",
+      "range": {
+        "startLine": 32,
+        "startChar": 9,
+        "endLine": 32,
+        "endChar": 22
+      },
+      "revId": "02a4860679ece7b29ea9b3e624f2fe9f1ea71ac4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb74cea9_4c14b95c",
+        "filename": "net/cert/cert_verify_proc_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-10T20:51:40Z",
+      "side": 1,
+      "message": "FYI, as this comment explains a bit of the problem with TestRootCerts.\n\nRight now there is a bit of a coupling problem between the cert store and the cert verifier implementation (assumed both were system based).\n\nWe can chat more about this off thread. The challenge is that the cert store is tightly coupled to the cert verifier right now (and the test cert store is tied tot he system trust store on most platforms).",
+      "revId": "02a4860679ece7b29ea9b3e624f2fe9f1ea71ac4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
