@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e960162b_47f5340b",
+        "filename": "ui/views/controls/textfield/textfield.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 974,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-10T18:41:59Z",
+      "side": 1,
+      "message": "Updating the cursor position should not affect the cursor visibility. So if you call it, even when the cursor should remain hidden, this should cause the bug, right? How does this change fix the problem?",
+      "revId": "9da5a148b8e93adeb4c79bf1a2d82f28104a9f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
