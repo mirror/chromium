@@ -231,6 +231,8 @@ void CustomFrameViewAsh::OverlayView::Layout() {
     header_view_->SetBounds(0, onscreen_height - height, width(), height);
     header_view_->SetVisible(true);
   }
+
+  GetWidget()->non_client_view()->Layout();
 }
 
 ///////////////////////////////////////////////////////////////////////////////

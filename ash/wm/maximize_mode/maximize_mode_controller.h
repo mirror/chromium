@@ -93,6 +93,10 @@ class ASH_EXPORT MaximizeModeController
   // Binds the mojom::TouchViewManager interface request to this object.
   void BindRequest(mojom::TouchViewManagerRequest request);
 
+  // Checks if we should hide title bars in tablet mode. Returns true if the
+  // flag is enabled and we are in maximize mode.
+  bool ShouldHideTitlebars();
+
   // ShellObserver:
   void OnMaximizeModeStarted() override;
   void OnMaximizeModeEnded() override;
@@ -179,10 +183,10 @@ class ASH_EXPORT MaximizeModeController
   std::unique_ptr<ScopedDisableInternalMouseAndKeyboard> event_blocker_;
 
   // Whether we have ever seen accelerometer data.
-  bool have_seen_accelerometer_data_;
+  bool have_seen_accelerometer_data_ = false;
 
   // Whether both accelerometers are available.
-  bool can_detect_lid_angle_;
+  bool can_detect_lid_angle_ = false;
 
   // Tracks time spent in (and out of) touchview mode.
   base::Time touchview_usage_interval_start_time_;
@@ -198,10 +202,10 @@ class ASH_EXPORT MaximizeModeController
   std::unique_ptr<base::TickClock> tick_clock_;
 
   // Set when tablet mode switch is on. This is used to force maximize mode.
-  bool tablet_mode_switch_is_on_;
+  bool tablet_mode_switch_is_on_ = false;
 
   // Tracks when the lid is closed. Used to prevent entering maximize mode.
-  bool lid_is_closed_;
+  bool lid_is_closed_ = false;
 
   // Tracks smoothed accelerometer data over time. This is done when the hinge
   // is approaching vertical to remove abrupt acceleration that can lead to
@@ -217,6 +221,8 @@ class ASH_EXPORT MaximizeModeController
 
   // Tracks whether a flag is used to force maximize mode.
   ForceTabletMode force_tablet_mode_ = ForceTabletMode::NONE;
+
+  bool hide_title_bars_enabled_ = false;
 
   ScopedSessionObserver scoped_session_observer_;
 
