@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8a3b115e_b67e3ba3",
+        "filename": "build/config/ios/imageset.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-10T14:00:07Z",
+      "side": 1,
+      "message": "This is safe if images in the .imageset directory have the same name as the directory (foo.imageset -\u003e foo.png or foo.jpg) and follow the old convention for naming the resources (@2x, @3x, ~ipad, ~iphone suffixes).\n\nI just wrote a small script to check this and all .imageset used by the application follow the correct naming convention, so it is currently safe for all images (and if people develop with this variable set to false, then it will stay safe).",
+      "parentUuid": "d07874f2_47c57b59",
+      "revId": "dad0d3064874b139ea7145156442234184e7217d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da438c26_c3d37299",
         "filename": "build/config/ios/imageset.gni",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "f339fefb_5ef15a9d",
+        "filename": "build/config/ios/imageset.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-10T14:00:07Z",
+      "side": 1,
+      "message": "Maybe.\n\nOr I could use another \"$target_gen_dir/${target_name}_xcassets\" for _xcassets_dir and leave the value unchanged for _imageset_dir when compilation of asset catalogs is enabled to make this work and keep the current name (actool compilation is enabled if the \"create_bundle\" detect path matching *.xcassets/{Content.json,*.imageset/{Contents.json,*.{png,jpg}}} so it will still disable the compilation).",
+      "parentUuid": "da438c26_c3d37299",
+      "revId": "dad0d3064874b139ea7145156442234184e7217d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf062e7d_6dbfc3da",
         "filename": "build/config/ios/imageset.gni",
         "patchSetId": 1
@@ -50,6 +86,24 @@
       "revId": "dad0d3064874b139ea7145156442234184e7217d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c90e57b8_f653b939",
+        "filename": "build/config/ios/imageset.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-10T14:00:07Z",
+      "side": 1,
+      "message": "The compilation of asset catalogs requires the path to all asset catalogs to build, so the invocation of \"actool\" is done when generating the ninja rules for the \"create_bundle\" that depends on the \"bundle_data\" target below.",
+      "parentUuid": "bf062e7d_6dbfc3da",
+      "revId": "dad0d3064874b139ea7145156442234184e7217d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
