@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "28ad0932_e2837726",
+        "filename": "third_party/WebKit/Source/platform/wtf/HashMap.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1103784
+      },
+      "writtenOn": "2017-07-10T03:51:25Z",
+      "side": 1,
+      "message": "Yes.",
+      "parentUuid": "80691ad7_cebd3218",
+      "revId": "c071b57ca2b3f3c53656eea65c6d9fcc0660ba47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ebed21a9_5f002208",
         "filename": "third_party/WebKit/Source/platform/wtf/HashTable.h",
         "patchSetId": 1
@@ -112,6 +130,24 @@
       "writtenOn": "2017-07-07T19:03:01Z",
       "side": 1,
       "message": "I guess the method name should also be DumpStats().",
+      "revId": "c071b57ca2b3f3c53656eea65c6d9fcc0660ba47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfa58dee_5e443a3a",
+        "filename": "third_party/WebKit/Source/platform/wtf/HashTable.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 913,
+      "author": {
+        "id": 1103784
+      },
+      "writtenOn": "2017-07-10T03:51:25Z",
+      "side": 1,
+      "message": "Right.",
+      "parentUuid": "12da81fb_24434bd6",
       "revId": "c071b57ca2b3f3c53656eea65c6d9fcc0660ba47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
