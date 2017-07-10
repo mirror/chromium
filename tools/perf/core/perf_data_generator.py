@@ -556,26 +556,27 @@ def get_waterfall_config():
       }
     ])
 
-  waterfall = add_tester(
-    waterfall, 'Linux Perf', 'linux-release', 'linux',
-    swarming=[
-      {
-       'gpu': '102b:0534',
-       'os': 'Ubuntu-14.04',
-       'pool': 'Chrome-perf',
-       'device_ids': [
-           'build148-m1', 'build149-m1',
-           'build150-m1', 'build151-m1', 'build152-m1'
-          ],
-       'perf_tests': [
-         # crbug.com/698831
-         # ('cc_perftests', 'build150-m1'),
-         ('load_library_perf_tests', 'build150-m1'),
-         ('net_perftests', 'build150-m1'),
-         ('tracing_perftests', 'build150-m1'),
-         ('media_perftests', 'build151-m1')]
-      }
-    ])
+  # TODO(martiniss): Comment back in once crbug.com/732463 is resolved
+  # waterfall = add_tester(
+  #   waterfall, 'Linux Perf', 'linux-release', 'linux',
+  #   swarming=[
+  #     {
+  #      'gpu': '102b:0534',
+  #      'os': 'Ubuntu-14.04',
+  #      'pool': 'Chrome-perf',
+  #      'device_ids': [
+  #          'build148-m1', 'build149-m1',
+  #          'build150-m1', 'build151-m1', 'build152-m1'
+  #         ],
+  #      'perf_tests': [
+  #        # crbug.com/698831
+  #        # ('cc_perftests', 'build150-m1'),
+  #        ('load_library_perf_tests', 'build150-m1'),
+  #        ('net_perftests', 'build150-m1'),
+  #        ('tracing_perftests', 'build150-m1'),
+  #        ('media_perftests', 'build151-m1')]
+  #     }
+  #   ])
 
   return waterfall
 
