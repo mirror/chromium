@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4302f267_a94557cc",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-07-10T12:25:28Z",
+      "side": 1,
+      "message": "I believe we should be able to test this behavior. Similarly to how ManagePasswordsBubbleModel::OnSaveClicked is tested.",
+      "range": {
+        "startLine": 343,
+        "startChar": 5,
+        "endLine": 343,
+        "endChar": 31
+      },
+      "revId": "b6ce5e40906a5ac78a59834afaaa5d852b5ff6ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
