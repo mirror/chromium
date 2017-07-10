@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4ec4a3a_38a70486",
+        "filename": "third_party/WebKit/Source/core/css/CSSComputedStyleDeclaration.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-10T18:44:08Z",
+      "side": 1,
+      "message": "Not sure if it matters wear this is put inside this array.",
+      "revId": "af11911b88866a12362057c9b2f108c8d10c79ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4c28a94_2d5e9300",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
+        "patchSetId": 2
+      },
+      "lineNbr": 3048,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-10T18:44:08Z",
+      "side": 1,
+      "message": "Not sure whether \"default_value\" is still required here.",
+      "revId": "af11911b88866a12362057c9b2f108c8d10c79ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c33c0641_5c21e70e",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserFastPaths.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 811,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-10T18:44:08Z",
+      "side": 1,
+      "message": "This function (IsValidKeywordPropertyAndValue) is the only logic changed in this CL to make it so that after-line-break is not allowed.",
+      "revId": "af11911b88866a12362057c9b2f108c8d10c79ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

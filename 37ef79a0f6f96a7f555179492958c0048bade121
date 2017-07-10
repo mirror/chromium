@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7adfc2a2_e0887972",
+        "filename": "third_party/WebKit/Source/core/frame/UseCounter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1074,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-10T18:44:08Z",
+      "side": 0,
+      "message": "I\u0027m assuming here that it\u0027s correct and desirable to use the same UseCounter sample ID for \"line-break\" now that it\u0027s not an alias.",
+      "revId": "37ef79a0f6f96a7f555179492958c0048bade121",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
