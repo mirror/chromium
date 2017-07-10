@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c60d40dc_f1b57f08",
+        "filename": "components/offline_pages/core/offline_page_model_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-10T23:39:30Z",
+      "side": 1,
+      "message": "this looks very similar SavePageParams... \n\nI would structure it a bit different. I\u0027d expose AddOfflinePageItem(OfflinePageItem) which would add a record to DB but wouldn\u0027t do anything with file. This can be used in this class for SavePage as well, as you currently use AddOfflinePage.\n\nThe functionality that moves the file I\u0027d leave on PrefetchImporter. PrefetchImporter will need to get an archive_dir on creation, you don\u0027t need to attach it to ArchiveManager for that, it\u0027s easy to grab like this:\n      profile-\u003eGetPath().Append(chrome::kOfflinePageArchivesDirname);\n\nThen, you don\u0027t need any changes to ArchiveManager.\n\nI think it\u0027ll be clearer and avoid unneeded bundling of concerns into more classes.",
+      "range": {
+        "startLine": 91,
+        "startChar": 9,
+        "endLine": 91,
+        "endChar": 25
+      },
+      "revId": "f6f5ccf37a4f6c2abffe8f98d547b4816378bac1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b2e04b9_5be11bf7",
+        "filename": "components/offline_pages/core/prefetch/prefetch_service_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-10T23:39:30Z",
+      "side": 1,
+      "message": "This method should just take OfflinePageItem as a param.",
+      "range": {
+        "startLine": 772,
+        "startChar": 27,
+        "endLine": 772,
+        "endChar": 41
+      },
+      "revId": "f6f5ccf37a4f6c2abffe8f98d547b4816378bac1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
