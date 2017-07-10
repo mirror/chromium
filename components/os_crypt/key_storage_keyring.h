@@ -8,6 +8,8 @@
 #include <string>
 
 #include "base/macros.h"
+#include "base/memory/ref_counted.h"
+#include "base/single_thread_task_runner.h"
 #include "components/os_crypt/key_storage_linux.h"
 
 namespace base {
