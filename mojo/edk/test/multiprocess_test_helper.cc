@@ -33,9 +33,7 @@
 #include "mojo/edk/embedder/platform_channel_pair.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
-#if defined(OS_WIN)
-#include "base/win/windows_version.h"
-#elif defined(OS_MACOSX) && !defined(OS_IOS)
+#if defined(OS_MACOSX) && !defined(OS_IOS)
 #include "base/mac/mach_port_broker.h"
 #endif
 
@@ -138,10 +136,7 @@ ScopedMessagePipeHandle MultiprocessTestHelper::StartChildWithExtraSwitch(
   options.fds_to_remap = &handle_passing_info;
 #elif defined(OS_WIN)
   options.start_hidden = true;
-  if (base::win::GetVersion() >= base::win::VERSION_VISTA)
-    options.handles_to_inherit = &handle_passing_info;
-  else
-    options.inherit_handles = true;
+  options.handles_to_inherit = &handle_passing_info;
 #else
 #error "Not supported yet."
 #endif
