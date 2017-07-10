@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6c811d0_9bde8ce7",
+        "filename": "components/ukm/test_ukm_recorder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-10T16:34:07Z",
+      "side": 1,
+      "message": "nit: can we also move these to the bottom of the public section of the class, so readers don\u0027t encounter them first?",
+      "revId": "4825399319323ca1b2e76255d77f6d6a492844fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
