@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d17d550e_5187b4da",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParserHelpers.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1637,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-07-10T23:53:34Z",
+      "side": 1,
+      "message": "I don\u0027t like that this is almost an exact duplicate of ConsumeShorthandGreedily. I understand that when this project is finished ConsumeShorthandGreedily will be deleted, but having this much duplicated code in the interim is not good. I think the interim design needs a rethink here. Perhaps a temporary callback?",
+      "revId": "aa92db80d56c5bb196b0572ce99c0ef2436c5362",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46af0971_40eb4018",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParserHelpers.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-07-10T23:53:34Z",
+      "side": 1,
+      "message": "nit: the pluralisation here should be ConsumeShorthandGreedilyViaLonghandAPIs (this also applies to the other methods similarly named that have already been implemented).",
+      "revId": "aa92db80d56c5bb196b0572ce99c0ef2436c5362",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
