@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e407486_f537aeb8",
+        "filename": "components/favicon/core/large_icon_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-07-10T15:03:47Z",
+      "side": 1,
+      "message": "How about: \"Update the time that the icon at |icon_url| was requested.\"",
+      "revId": "303d58fdbda3d3e8f64ff253640bc5a5ba28551d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bf04f05_b387e444",
+        "filename": "components/favicon/core/large_icon_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-07-10T15:03:47Z",
+      "side": 1,
+      "message": "In my opinion, this is not a useful test",
+      "revId": "303d58fdbda3d3e8f64ff253640bc5a5ba28551d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8ee7e73_eacbaf4f",
+        "filename": "components/ntp_snippets/content_suggestions_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-07-10T15:03:47Z",
+      "side": 1,
+      "message": "Please add a comment for the LargeIconService::TouchIconFromGoogleServer() call",
+      "revId": "303d58fdbda3d3e8f64ff253640bc5a5ba28551d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01f22860_fbd5f1df",
+        "filename": "components/ntp_tiles/icon_cacher_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-07-10T15:03:47Z",
+      "side": 1,
+      "message": "Please add a comment for the TouchIconFromGoogleServer() call",
+      "revId": "303d58fdbda3d3e8f64ff253640bc5a5ba28551d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
