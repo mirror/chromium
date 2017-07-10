@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82eec82d_1cd303ee",
+        "filename": "chrome/browser/policy/cloud/user_policy_signin_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-07-10T08:39:43Z",
+      "side": 1,
+      "message": "nit: Is this expected to happen? Should this be a DCHECK?",
+      "range": {
+        "startLine": 143,
+        "startChar": 1,
+        "endLine": 143,
+        "endChar": 2
+      },
+      "revId": "be8af217bbc2afb288c9296d9f000d9f34e6c30c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
