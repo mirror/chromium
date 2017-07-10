@@ -34,6 +34,24 @@
       "revId": "d142b778c9eb3ad460703e5e723a2b89da6920f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99c39898_0449ecd3",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3252,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-10T18:29:54Z",
+      "side": 1,
+      "message": "Removing the DCHECK isn\u0027t much better.  It should be a condition before doing the add_request_header call.  That should be safe to change now, but if really you want to do it in a separate CL I\u0027m ok with that.\n\nI understand the desire to get this in before branch.  Can you get the unit tests added that I mentioned in the other comment?  Right now there\u0027s no verification that this CL is correct, and the tests are important before branch as well.  (Shouldn\u0027t be hard-- we can just factor this parsing out into a helper method and write a few test cases for it in web_contents_impl_unittest.cc.)",
+      "parentUuid": "709b09b5_98d0f595",
+      "revId": "d142b778c9eb3ad460703e5e723a2b89da6920f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
