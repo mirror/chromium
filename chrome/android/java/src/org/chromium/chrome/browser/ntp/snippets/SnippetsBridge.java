@@ -80,7 +80,8 @@ public class SnippetsBridge implements SuggestionsSource {
     }
 
     public static void setRemoteSuggestionsEnabled(boolean enabled) {
-        nativeSetRemoteSuggestionsEnabled(enabled);
+        // TODO(dgn): Rewire if we decide to implement a dedicated prefs page. If not remove by M62.
+        throw new UnsupportedOperationException();
     }
 
     public static boolean areRemoteSuggestionsEnabled() {
@@ -88,11 +89,13 @@ public class SnippetsBridge implements SuggestionsSource {
     }
 
     public static boolean areRemoteSuggestionsManaged() {
-        return nativeAreRemoteSuggestionsManaged();
+        // TODO(dgn): Rewire if we decide to implement a dedicated prefs page. If not remove by M62.
+        throw new UnsupportedOperationException();
     }
 
     public static boolean areRemoteSuggestionsManagedByCustodian() {
-        return nativeAreRemoteSuggestionsManagedByCustodian();
+        // TODO(dgn): Rewire if we decide to implement a dedicated prefs page. If not remove by M62.
+        throw new UnsupportedOperationException();
     }
 
     public static void setContentSuggestionsNotificationsEnabled(boolean enabled) {
@@ -256,10 +259,7 @@ public class SnippetsBridge implements SuggestionsSource {
     private native void nativeReloadSuggestions(long nativeNTPSnippetsBridge);
     private static native void nativeRemoteSuggestionsSchedulerOnFetchDue();
     private static native void nativeRemoteSuggestionsSchedulerRescheduleFetching();
-    private static native void nativeSetRemoteSuggestionsEnabled(boolean enabled);
     private static native boolean nativeAreRemoteSuggestionsEnabled();
-    private static native boolean nativeAreRemoteSuggestionsManaged();
-    private static native boolean nativeAreRemoteSuggestionsManagedByCustodian();
     private static native void nativeSetContentSuggestionsNotificationsEnabled(boolean enabled);
     private static native boolean nativeAreContentSuggestionsNotificationsEnabled();
     private native int[] nativeGetCategories(long nativeNTPSnippetsBridge);
