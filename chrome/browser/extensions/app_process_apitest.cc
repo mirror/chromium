@@ -808,7 +808,8 @@ IN_PROC_BROWSER_TEST_F(AppApiTest, SameBrowsingInstanceAfterSwap) {
                                base_url.Resolve("path1/iframe.html"));
   content::SiteInstance* app_instance =
       browser()->tab_strip_model()->GetWebContentsAt(0)->GetSiteInstance();
-  EXPECT_TRUE(process_map->Contains(app_instance->GetProcess()->GetID()));
+  EXPECT_TRUE(
+      process_map->Contains(app_instance->GetProcess(nullptr)->GetID()));
 
   // Popup window should be in the app's process.
   const BrowserList* active_browser_list = BrowserList::GetInstance();

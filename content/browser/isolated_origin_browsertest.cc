@@ -278,7 +278,8 @@ IN_PROC_BROWSER_TEST_F(IsolatedOriginTest, SubframeReusesExistingProcess) {
           second_shell->web_contents()->GetMainFrame()->GetSiteInstance());
   EXPECT_FALSE(second_shell_instance->IsRelatedSiteInstance(
       root->current_frame_host()->GetSiteInstance()));
-  RenderProcessHost* isolated_process = second_shell_instance->GetProcess();
+  RenderProcessHost* isolated_process =
+      second_shell_instance->GetProcess(nullptr);
   EXPECT_EQ(SiteInstanceImpl::ProcessReusePolicy::DEFAULT,
             second_shell_instance->process_reuse_policy());
 
@@ -334,7 +335,7 @@ IN_PROC_BROWSER_TEST_F(IsolatedOriginTest, SubframeReusesExistingProcess) {
             second_subframe->current_frame_host()->GetSiteInstance());
   EXPECT_NE(third_shell_instance,
             child->current_frame_host()->GetSiteInstance());
-  EXPECT_NE(third_shell_instance->GetProcess(), isolated_process);
+  EXPECT_NE(third_shell_instance->GetProcess(nullptr), isolated_process);
 }
 
 // Check that isolated origins can access cookies.  This requires cookie checks
@@ -397,7 +398,8 @@ IN_PROC_BROWSER_TEST_F(IsolatedOriginTest, ProcessLimit) {
   EXPECT_TRUE(NavigateToURL(new_shell, isolated_foo_url));
   scoped_refptr<SiteInstance> isolated_foo_instance(
       new_shell->web_contents()->GetMainFrame()->GetSiteInstance());
-  RenderProcessHost* isolated_foo_process = isolated_foo_instance->GetProcess();
+  RenderProcessHost* isolated_foo_process =
+      isolated_foo_instance->GetProcess(nullptr);
   EXPECT_NE(child->current_frame_host()->GetSiteInstance(),
             isolated_foo_instance);
   EXPECT_FALSE(isolated_foo_instance->IsRelatedSiteInstance(

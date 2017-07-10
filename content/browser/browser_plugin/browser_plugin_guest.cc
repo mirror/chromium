@@ -168,9 +168,11 @@ int BrowserPluginGuest::GetGuestProxyRoutingID() {
                              ->root()
                              ->render_manager()
                              ->CreateRenderFrameProxy(owner_site_instance);
-  guest_proxy_routing_id_ = RenderFrameProxyHost::FromID(
-      owner_site_instance->GetProcess()->GetID(), proxy_routing_id)
-          ->GetRenderViewHost()->GetRoutingID();
+  guest_proxy_routing_id_ =
+      RenderFrameProxyHost::FromID(
+          owner_site_instance->GetProcess(nullptr)->GetID(), proxy_routing_id)
+          ->GetRenderViewHost()
+          ->GetRoutingID();
 
   return guest_proxy_routing_id_;
 }

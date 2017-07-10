@@ -398,8 +398,9 @@ void NavigationControllerImpl::Reload(ReloadType reload_type,
     // should not be treated as a cross-site reload.
     SiteInstanceImpl* site_instance = entry->site_instance();
     // Permit reloading guests without further checks.
-    bool is_for_guests_only = site_instance && site_instance->HasProcess() &&
-        site_instance->GetProcess()->IsForGuestsOnly();
+    bool is_for_guests_only =
+        site_instance && site_instance->HasProcess() &&
+        site_instance->GetProcess(nullptr)->IsForGuestsOnly();
     if (!is_for_guests_only && site_instance &&
         site_instance->HasWrongProcessForURL(entry->GetURL())) {
       // Create a navigation entry that resembles the current one, but do not

@@ -34,8 +34,7 @@ struct SecondGreater {
 ServiceWorkerProcessManager::ProcessInfo::ProcessInfo(
     const scoped_refptr<SiteInstance>& site_instance)
     : site_instance(site_instance),
-      process_id(site_instance->GetProcess()->GetID()) {
-}
+      process_id(site_instance->GetProcess(nullptr)->GetID()) {}
 
 ServiceWorkerProcessManager::ProcessInfo::ProcessInfo(int process_id)
     : process_id(process_id) {
@@ -167,7 +166,7 @@ ServiceWorkerStatusCode ServiceWorkerProcessManager::AllocateWorkerProcess(
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   out_info->process_id = ChildProcessHost::kInvalidUniqueID;
-  out_info->is_new_process = false;
+  out_info->start_situation = ServiceWorkerMetrics::StartSituation::UNKNOWN;
 
   if (process_id_for_test_ != ChildProcessHost::kInvalidUniqueID) {
     // Let tests specify the returned process ID. Note: We may need to be able
@@ -175,7 +174,8 @@ ServiceWorkerStatusCode ServiceWorkerProcessManager::AllocateWorkerProcess(
     int result = can_use_existing_process ? process_id_for_test_
                                           : new_process_id_for_test_;
     out_info->process_id = result;
-    out_info->is_new_process = false;
+    out_info->start_situation =
+        ServiceWorkerMetrics::StartSituation::EXISTING_READY_PROCESS;
     return SERVICE_WORKER_OK;
   }
 
@@ -193,7 +193,8 @@ ServiceWorkerStatusCode ServiceWorkerProcessManager::AllocateWorkerProcess(
       instance_info_.insert(
           std::make_pair(embedded_worker_id, ProcessInfo(process_id)));
       out_info->process_id = process_id;
-      out_info->is_new_process = false;
+      out_info->start_situation =
+          ServiceWorkerMetrics::StartSituation::EXISTING_READY_PROCESS;
       return SERVICE_WORKER_OK;
     }
   }
@@ -215,7 +216,8 @@ ServiceWorkerStatusCode ServiceWorkerProcessManager::AllocateWorkerProcess(
     site_instance->set_process_reuse_policy(
         SiteInstanceImpl::ProcessReusePolicy::REUSE_PENDING_OR_COMMITTED_SITE);
   }
-  RenderProcessHost* rph = site_instance->GetProcess();
+  bool new_host_created = false;
+  RenderProcessHost* rph = site_instance->GetProcess(&new_host_created);
 
   // This Init() call posts a task to the IO thread that adds the RPH's
   // ServiceWorkerDispatcherHost to the
@@ -230,9 +232,16 @@ ServiceWorkerStatusCode ServiceWorkerProcessManager::AllocateWorkerProcess(
 
   rph->IncrementServiceWorkerRefCount();
   out_info->process_id = rph->GetID();
-  // TODO(falken): This is not accurate. SiteInstance could have returned an
-  // existing process.
-  out_info->is_new_process = true;
+  if (rph->IsReady()) {
+    out_info->start_situation =
+        ServiceWorkerMetrics::StartSituation::EXISTING_READY_PROCESS;
+  } else if (!new_host_created) {
+    out_info->start_situation =
+        ServiceWorkerMetrics::StartSituation::EXISTING_UNREADY_PROCESS;
+  } else {
+    out_info->start_situation =
+        ServiceWorkerMetrics::StartSituation::NEW_PROCESS;
+  }
   return SERVICE_WORKER_OK;
 }
 
@@ -260,7 +269,7 @@ void ServiceWorkerProcessManager::ReleaseWorkerProcess(int embedded_worker_id) {
 
   RenderProcessHost* rph = nullptr;
   if (info->second.site_instance.get()) {
-    rph = info->second.site_instance->GetProcess();
+    rph = info->second.site_instance->GetProcess(nullptr);
     DCHECK_EQ(info->second.process_id, rph->GetID())
         << "A SiteInstance's process shouldn't get destroyed while we're "
            "holding a reference to it. Was the reference actually held?";

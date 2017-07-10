@@ -187,9 +187,11 @@ IN_PROC_BROWSER_TEST_F(ProcessManagementTest, MAYBE_ProcessOverflow) {
   extensions::ProcessManager* process_manager =
       extensions::ProcessManager::Get(browser()->profile());
   content::RenderProcessHost* extension1_host =
-      process_manager->GetSiteInstanceForURL(extension1_url)->GetProcess();
+      process_manager->GetSiteInstanceForURL(extension1_url)
+          ->GetProcess(nullptr);
   content::RenderProcessHost* extension2_host =
-      process_manager->GetSiteInstanceForURL(extension2_url)->GetProcess();
+      process_manager->GetSiteInstanceForURL(extension2_url)
+          ->GetProcess(nullptr);
 
   // An isolated app only shares with other instances of itself, not other
   // isolated apps or anything else.
@@ -445,6 +447,6 @@ IN_PROC_BROWSER_TEST_F(ProcessManagementTest,
       content::SiteInstance::CreateForURL(web_contents->GetBrowserContext(),
                                           extension->GetResourceURL(""));
   EXPECT_TRUE(new_site_instance->HasProcess());
-  EXPECT_EQ(new_site_instance->GetProcess(),
-            web_contents->GetSiteInstance()->GetProcess());
+  EXPECT_EQ(new_site_instance->GetProcess(nullptr),
+            web_contents->GetSiteInstance()->GetProcess(nullptr));
 }
