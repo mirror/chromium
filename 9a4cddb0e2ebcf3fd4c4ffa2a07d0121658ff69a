@@ -34,6 +34,24 @@
       "revId": "9a4cddb0e2ebcf3fd4c4ffa2a07d0121658ff69a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5de00ec_fbb0ae3c",
+        "filename": "chrome/browser/ui/views/frame/global_menu_bar_x11.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-10T19:33:47Z",
+      "side": 1,
+      "message": "It definitely doesn\u0027t seem fair to force you to add tests for everyone else\u0027s code.\n\nLooks like chrome/browser/profiles/ is the place where AvatarMenu lives.  Can you file a bug against the OWNERS in that directory to add some testing, and reference this bug as one of the things it\u0027d be nice to ultimately be able to regression test?",
+      "parentUuid": "b31ab365_71565fd8",
+      "revId": "9a4cddb0e2ebcf3fd4c4ffa2a07d0121658ff69a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
