@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4061be4_a04fc473",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-10T18:49:36Z",
+      "side": 1,
+      "message": "Nit: I\u0027m not 100% sure if the compiler is smart enough to optimize out two calls to operator[].\n\nIt would probably be slightly more efficient to capture it into a local mutable reference, and assign and pass it.\n\nOr if you\u0027re a horrible person like me, you could write:\n\nPropagateProperty(property_type, *(properties_[property_type] \u003d std::move(value)));",
+      "range": {
+        "startLine": 316,
+        "startChar": 2,
+        "endLine": 316,
+        "endChar": 28
+      },
+      "revId": "c15f695a6f59054ed69d1c4ee731ce40eee0ea86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
