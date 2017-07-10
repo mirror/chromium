@@ -456,10 +456,7 @@ std::unique_ptr<URLRequestContext> URLRequestContextBuilder::Build() {
               : CACHE_BACKEND_SIMPLE;
       http_cache_backend.reset(new HttpCache::DefaultBackend(
           DISK_CACHE, backend_type, http_cache_params_.path,
-          http_cache_params_.max_size,
-          GetFileSingleThreadTaskRunner(
-              {base::MayBlock(), base::TaskPriority::USER_BLOCKING,
-               base::TaskShutdownBehavior::BLOCK_SHUTDOWN})));
+          http_cache_params_.max_size));
     } else {
       http_cache_backend =
           HttpCache::DefaultBackend::InMemory(http_cache_params_.max_size);

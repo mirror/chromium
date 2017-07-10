@@ -22,6 +22,7 @@
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/sys_info.h"
+#include "base/threading/thread.h"
 #include "base/threading/thread_restrictions.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
@@ -80,6 +81,17 @@ size_t GetIndexSize(int table_len) {
   return sizeof(disk_cache::IndexHeader) + table_size;
 }
 
+scoped_refptr<base::SingleThreadTaskRunner> CacheThread() {
+  static base::Thread* cache_thread = nullptr;
+  if (!cache_thread) {
+    cache_thread = new base::Thread("CacheThread_Internal");
+    // ### return value?
+    cache_thread->StartWithOptions(
+        base::Thread::Options(base::MessageLoop::TYPE_IO, 0));
+  }
+  return cache_thread->task_runner();
+}
+
 // ------------------------------------------------------------------------
 
 // Sets group for the current experiment. Returns false if the files should be
@@ -115,11 +127,8 @@ void FinalCleanupCallback(disk_cache::BackendImpl* backend) {
 
 namespace disk_cache {
 
-BackendImpl::BackendImpl(
-    const base::FilePath& path,
-    const scoped_refptr<base::SingleThreadTaskRunner>& cache_thread,
-    net::NetLog* net_log)
-    : background_queue_(this, cache_thread),
+BackendImpl::BackendImpl(const base::FilePath& path, net::NetLog* net_log)
+    : background_queue_(this, CacheThread()),
       path_(path),
       block_files_(path),
       mask_(0),
@@ -141,12 +150,10 @@ BackendImpl::BackendImpl(
             base::WaitableEvent::InitialState::NOT_SIGNALED),
       ptr_factory_(this) {}
 
-BackendImpl::BackendImpl(
-    const base::FilePath& path,
-    uint32_t mask,
-    const scoped_refptr<base::SingleThreadTaskRunner>& cache_thread,
-    net::NetLog* net_log)
-    : background_queue_(this, cache_thread),
+BackendImpl::BackendImpl(const base::FilePath& path,
+                         uint32_t mask,
+                         net::NetLog* net_log)
+    : background_queue_(this, CacheThread()),
       path_(path),
       block_files_(path),
       mask_(mask),
