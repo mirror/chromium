@@ -406,13 +406,14 @@ void RenderSurfaceImpl::AppendQuads(DrawMode draw_mode,
     TRACE_EVENT1("cc", "RenderSurfaceImpl::AppendQuads",
                  "mask_layer_gpu_memory_usage",
                  mask_layer->GPUMemoryUsageInBytes());
-    if (mask_layer->mask_type() == Layer::LayerMaskType::MULTI_TEXTURE_MASK) {
-      TileMaskLayer(render_pass, shared_quad_state, visible_layer_rect);
-      return;
-    }
     gfx::SizeF mask_uv_size;
     mask_layer->GetContentsResourceId(&mask_resource_id, &mask_texture_size,
                                       &mask_uv_size);
+    if (mask_resource_id &&
+        mask_layer->mask_type() == Layer::LayerMaskType::MULTI_TEXTURE_MASK) {
+      TileMaskLayer(render_pass, shared_quad_state, visible_layer_rect);
+      return;
+    }
     gfx::SizeF unclipped_mask_target_size = gfx::ScaleSize(
         gfx::SizeF(OwningEffectNode()->unscaled_mask_target_size),
         surface_contents_scale.x(), surface_contents_scale.y());
