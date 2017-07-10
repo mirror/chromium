@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2060653e_2ddeb566",
+        "filename": "base/sys_info_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-10T19:54:09Z",
+      "side": 1,
+      "message": "2 things:\n1. Like in the other file, it\u0027d be nice to call the new way when it\u0027s actually available (10.9.2+), not when the documentation claims\n2. libBuiltin now contains a built-in to get the OS version, could we call that and then return it\u0027s result from this function?",
+      "revId": "4cc015810abd68db2d8e352f3c9053d32fbda3d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
