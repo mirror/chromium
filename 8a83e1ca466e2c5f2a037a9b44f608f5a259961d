@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5b45ee24_e5cbb01d",
+        "filename": "components/url_log/url_log.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-10T20:10:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2047210d_2e51b1bc",
+      "revId": "8a83e1ca466e2c5f2a037a9b44f608f5a259961d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2dc40858_7aeff044",
         "filename": "components/url_log/url_log.cc",
         "patchSetId": 12
@@ -30,6 +48,30 @@
       "writtenOn": "2017-07-10T17:05:29Z",
       "side": 1,
       "message": "Since this is a Singleton...I don\u0027t think we have any guarantee it will be destroyed on the thread it\u0027s created on?\n\nHrm...Do we run multiple tests in the same process on any platform?  If we do, this class potentially breaks that, particularly for any tests that actually test this class.",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 33
+      },
+      "revId": "8a83e1ca466e2c5f2a037a9b44f608f5a259961d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7728b2a_12b078a8",
+        "filename": "components/url_log/url_log.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-10T20:10:47Z",
+      "side": 1,
+      "message": "\u003e Hrm...Do we run multiple tests in the same process on any platform?\n\nI don\u0027t quite understand it. Could you elaborate more? (In any case, I\u0027ve added the unit tests for this class.)\n\nI guess all tests on this file should be run on the same process.",
+      "parentUuid": "2dc40858_7aeff044",
       "range": {
         "startLine": 49,
         "startChar": 2,
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "bdc82690_a9d07010",
+        "filename": "components/url_log/url_log.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-10T20:10:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad90f21c_2bf19bfc",
+      "revId": "8a83e1ca466e2c5f2a037a9b44f608f5a259961d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e62b303_bb570641",
         "filename": "components/url_log/url_log.h",
         "patchSetId": 12
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "5618a307_4fe2df8c",
+        "filename": "components/url_log/url_log.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-10T20:10:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e62b303_bb570641",
+      "range": {
+        "startLine": 20,
+        "startChar": 9,
+        "endLine": 20,
+        "endChar": 19
+      },
+      "revId": "8a83e1ca466e2c5f2a037a9b44f608f5a259961d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d548062_5fbc547f",
         "filename": "components/url_log/url_log.h",
         "patchSetId": 12
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "b83e111d_dd5e2de2",
+        "filename": "components/url_log/url_log.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-10T20:10:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d548062_5fbc547f",
+      "revId": "8a83e1ca466e2c5f2a037a9b44f608f5a259961d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "00723945_40754b9a",
         "filename": "components/url_log/url_log.h",
         "patchSetId": 12
@@ -110,6 +212,30 @@
       "writtenOn": "2017-07-10T17:05:29Z",
       "side": 1,
       "message": "I\u0027d suggest just inlining this, though if you prefer to keep it, it should be base::FilePath\u0026 path",
+      "range": {
+        "startLine": 38,
+        "startChar": 27,
+        "endLine": 38,
+        "endChar": 36
+      },
+      "revId": "8a83e1ca466e2c5f2a037a9b44f608f5a259961d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5377b4e_6b797a8b",
+        "filename": "components/url_log/url_log.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1160021
+      },
+      "writtenOn": "2017-07-10T20:10:47Z",
+      "side": 1,
+      "message": "Actually, there\u0027s no reason for this class to exist. I\u0027ll just merge it with the constructor.",
+      "parentUuid": "00723945_40754b9a",
       "range": {
         "startLine": 38,
         "startChar": 27,
