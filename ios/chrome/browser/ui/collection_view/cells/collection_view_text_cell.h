@@ -18,6 +18,8 @@
 // The second line of detail text to display.
 @property(nonatomic, readonly, strong, nullable) UILabel* detailTextLabel;
 
++ (CGFloat)margin;
+
 @end
 
 #endif  // IOS_CHROME_BROWSER_UI_COLLECTION_VIEW_CELLS_COLLECTION_VIEW_TEXT_CELL_H_

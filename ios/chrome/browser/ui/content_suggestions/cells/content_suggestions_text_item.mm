@@ -13,6 +13,10 @@
 #error "This file requires ARC support."
 #endif
 
+namespace {
+CGFloat kMinimalHeight = 48;
+}
+
 @implementation ContentSuggestionsTextItem
 
 @synthesize text = _text;
@@ -32,14 +36,8 @@
 - (void)configureCell:(CollectionViewTextCell*)cell {
   [super configureCell:cell];
 
-  cell.textLabel.text = self.text;
-  cell.textLabel.textColor = [[MDCPalette greyPalette] tint900];
-  cell.textLabel.font = [MDCTypography body2Font];
-  cell.textLabel.numberOfLines = 0;
-  cell.detailTextLabel.text = self.detailText;
-  cell.detailTextLabel.textColor = [[MDCPalette greyPalette] tint500];
-  cell.detailTextLabel.font = [MDCTypography body1Font];
-  cell.detailTextLabel.numberOfLines = 0;
+  [self configureTextLabel:cell.textLabel];
+  [self configureDetailTextLabel:cell.detailTextLabel];
 
   cell.isAccessibilityElement = YES;
   if (self.detailText.length == 0) {
@@ -48,6 +46,38 @@
     cell.accessibilityLabel =
         [NSString stringWithFormat:@"%@, %@", self.text, self.detailText];
   }
+}
+
+- (CGFloat)cellHeightForWidth:(CGFloat)width {
+  CGFloat margin = [CollectionViewTextCell margin];
+  CGSize sizeForLabel = CGSizeMake(width - 2 * margin, 500);
+
+  UILabel* textLabel = [[UILabel alloc] init];
+  UILabel* detailTextLabel = [[UILabel alloc] init];
+  [self configureTextLabel:textLabel];
+  [self configureDetailTextLabel:detailTextLabel];
+
+  CGFloat cellHeight = 2 * margin;
+  cellHeight += [textLabel sizeThatFits:sizeForLabel].height;
+  cellHeight += [detailTextLabel sizeThatFits:sizeForLabel].height;
+
+  return MAX(cellHeight, kMinimalHeight);
+}
+
+#pragma mark - Private
+
+- (void)configureTextLabel:(UILabel*)textLabel {
+  textLabel.text = self.text;
+  textLabel.textColor = [[MDCPalette greyPalette] tint900];
+  textLabel.font = [MDCTypography body2Font];
+  textLabel.numberOfLines = 0;
+}
+
+- (void)configureDetailTextLabel:(UILabel*)detailTextLabel {
+  detailTextLabel.text = self.detailText;
+  detailTextLabel.textColor = [[MDCPalette greyPalette] tint500];
+  detailTextLabel.font = [MDCTypography body1Font];
+  detailTextLabel.numberOfLines = 0;
 }
 
 @end

@@ -357,18 +357,16 @@ BOOL ShouldCellsBeFullWidth(UITraitCollection* collection) {
 
 - (CGFloat)collectionView:(UICollectionView*)collectionView
     cellHeightAtIndexPath:(NSIndexPath*)indexPath {
-  CollectionViewItem* item =
+  CSCollectionViewItem* item =
       [self.collectionViewModel itemAtIndexPath:indexPath];
   UIEdgeInsets inset = [self collectionView:collectionView
                                      layout:collectionView.collectionViewLayout
                      insetForSectionAtIndex:indexPath.section];
   UIEdgeInsets contentInset = self.collectionView.contentInset;
+  CGFloat width = CGRectGetWidth(collectionView.bounds) - inset.left -
+                  inset.right - contentInset.left - contentInset.right;
 
-  return [MDCCollectionViewCell
-      cr_preferredHeightForWidth:CGRectGetWidth(collectionView.bounds) -
-                                 inset.left - inset.right - contentInset.left -
-                                 contentInset.right
-                         forItem:item];
+  return [item cellHeightForWidth:width];
 }
 
 #pragma mark - MDCCollectionViewEditingDelegate
