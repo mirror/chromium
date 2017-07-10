@@ -16,6 +16,24 @@
       "revId": "3b608908aeda4859a23450dcfc908598b9a4a89c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02b070be_c6612e77",
+        "filename": "chrome/common/service_process_util_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-07-10T20:54:44Z",
+      "side": 1,
+      "message": "It doesn\u0027t seem to be documented anywhere in clang, but I believe that it means the same thing as in Swift, where it is documented [1] as:\n\n\"The last argument, *, is required and specifies that on any other platform, the body of the if executes on the minimum deployment target specified by your target.\"\n\n[1] https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/ControlFlow.html",
+      "parentUuid": "8de91dd3_8f36fdd0",
+      "revId": "3b608908aeda4859a23450dcfc908598b9a4a89c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
