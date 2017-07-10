@@ -400,6 +400,7 @@ void WebFrameTestClient::LoadURLExternally(
     const blink::WebURLRequest& request,
     blink::WebNavigationPolicy policy,
     const blink::WebString& suggested_name,
+    blink::WebTriggeringEventInfo triggering_event_info,
     bool replaces_current_history_item) {
   if (test_runner()->shouldWaitUntilExternalURLLoad()) {
     if (policy == blink::kWebNavigationPolicyDownload) {

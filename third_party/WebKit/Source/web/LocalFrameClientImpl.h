@@ -125,6 +125,7 @@ class LocalFrameClientImpl final : public LocalFrameClient {
   void LoadURLExternally(const ResourceRequest&,
                          NavigationPolicy,
                          const String& suggested_name,
+                         WebTriggeringEventInfo,
                          bool should_replace_current_entry) override;
   void LoadErrorPage(int reason) override;
   bool NavigateBackForward(int offset) const override;
