@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f3a42ce4_1b20b366",
+        "filename": "chrome/browser/app_controller_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1607,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-07-10T20:33:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3357e416_b062ec1c",
+      "revId": "8fa4ca0e3c7edab6b3e1238a74d9ed4dc9da145a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d2628dc_6e18babb",
         "filename": "components/handoff/handoff_manager.h",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-10T19:15:36Z",
       "side": 1,
       "message": "I think the SDK has some spiffy macro for this that we could maybe use?",
+      "revId": "8fa4ca0e3c7edab6b3e1238a74d9ed4dc9da145a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba82df64_df367915",
+        "filename": "components/handoff/handoff_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-07-10T20:33:14Z",
+      "side": 1,
+      "message": "There\u0027s an NS_AVAILABLE_MAC macro that could work, but it wasn\u0027t clear to me whether that was public interface or just an implementation detail of the SDK.",
+      "parentUuid": "1d2628dc_6e18babb",
       "revId": "8fa4ca0e3c7edab6b3e1238a74d9ed4dc9da145a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
