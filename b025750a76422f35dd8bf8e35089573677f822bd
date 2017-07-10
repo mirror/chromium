@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4cdd09b8_c8ac5f7a",
+        "filename": "ios/chrome/app/application_delegate/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-10T21:10:39Z",
+      "side": 1,
+      "message": "Needs to be removed.",
+      "range": {
+        "startLine": 99,
+        "startChar": 45,
+        "endLine": 99,
+        "endChar": 51
+      },
+      "revId": "b025750a76422f35dd8bf8e35089573677f822bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
