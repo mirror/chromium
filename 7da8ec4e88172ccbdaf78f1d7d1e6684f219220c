@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b029703e_5ea65d42",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/desktop_automation_handler.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-07-10T06:09:12Z",
+      "side": 1,
+      "message": "I moved this up above the currentRange block. Is it important that it go after?\n\nNote that pre-r483795 there was some logic up here to check if the target was focused. It looks like that logic moved into createTextEditHandlerIfNeeded_ but a) it only checks the parent focus, not the node itself, and b) it\u0027s too late.\n\nI found that my code is still broken if I call this after the currentRange block, but moving it ahead fixes the issue.",
+      "range": {
+        "startLine": 396,
+        "startChar": 14,
+        "endLine": 396,
+        "endChar": 44
+      },
+      "revId": "7da8ec4e88172ccbdaf78f1d7d1e6684f219220c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
