@@ -158,8 +158,10 @@
 <translation id="5744083938413354016">Napauttamalla vetäminen</translation>
 <translation id="5777841717266010279">Lopetetaanko näytön jakaminen?</translation>
 <translation id="57838592816432529">Mykistä</translation>
+<translation id="5860033963881614850">Pois käytöstä</translation>
 <translation id="5895138241574237353">Käynnistä uudelleen</translation>
 <translation id="5901316534475909376">Shift+Esc</translation>
+<translation id="5916664084637901428">Käytössä</translation>
 <translation id="5927132638760172455">Suoratoistetaan tuntemattomaan vastaanottimeen</translation>
 <translation id="5932901536148835538">Chromebit</translation>
 <translation id="5947494881799873997">Palauta</translation>
@@ -169,7 +171,6 @@
 <translation id="5978382165065462689">Näyttösi hallinta jaetaan Etätuen kautta.</translation>
 <translation id="5980301590375426705">Sulje vierastila</translation>
 <translation id="6018164090099858612">Poistutaan peilitilasta</translation>
-<translation id="6041154455840261787">Suuri kontrasti ‑tila on käytössä. Poista se käytöstä painamalla uudelleen Haku + Vaihto + H.</translation>
 <translation id="6043212731627905357">Näyttö ja <ph name="DEVICE_TYPE" /> eivät sovi yhteen (näyttöä ei tueta).</translation>
 <translation id="6043994281159824495">Kirjaudu ulos nyt</translation>
 <translation id="6047696787498798094">Näytön jakaminen loppuu, kun vaihdat toiseen käyttäjään. Haluatko jatkaa?</translation>
@@ -213,6 +214,7 @@
 <translation id="714034171374937760">Chromebase</translation>
 <translation id="7165278925115064263">Alt+Vaihto+K</translation>
 <translation id="7168224885072002358">Palautetaan vanha tarkkuus, aikaa palautukseen <ph name="TIMEOUT_SECONDS" /></translation>
+<translation id="7199454189089571166">Assistant-tila</translation>
 <translation id="7209101170223508707">CAPS LOCK on päällä. Peruuta painamalla Alt + hakupainike tai Shift.</translation>
 <translation id="7246339268451149667">Sallitaanko lukituksen avaaminen sormenjäljellä?</translation>
 <translation id="7256634071279256947">Takamikrofoni</translation>
@@ -234,7 +236,6 @@
 <translation id="7814236020522506259"><ph name="HOUR" /> <ph name="MINUTE" /></translation>
 <translation id="7823564328645135659">Käyttökieli on muutettu kielestä <ph name="FROM_LOCALE" /> kieleksi <ph name="TO_LOCALE" /> asetustesi synkronoinnin yhteydessä.</translation>
 <translation id="7904094684485781019">Tämän tilin järjestelmänvalvoja on estänyt useisiin tileihin kirjautumisen.</translation>
-<translation id="7951523953736115461">Yövalo</translation>
 <translation id="7977927628060636163">Haetaan mobiiliverkkoja…</translation>
 <translation id="7982789257301363584">Verkko</translation>
 <translation id="8000066093800657092">Ei verkkoa</translation>

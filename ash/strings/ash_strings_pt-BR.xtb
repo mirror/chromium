@@ -158,8 +158,10 @@
 <translation id="5744083938413354016">Arrastar com toque</translation>
 <translation id="5777841717266010279">Interromper compartilhamento de tela?</translation>
 <translation id="57838592816432529">Desativar som</translation>
+<translation id="5860033963881614850">Desativado</translation>
 <translation id="5895138241574237353">Reiniciar</translation>
 <translation id="5901316534475909376">Shift+Esc</translation>
+<translation id="5916664084637901428">Ativado</translation>
 <translation id="5927132638760172455">Transmitindo para um destinatário desconhecido</translation>
 <translation id="5932901536148835538">Chromebit</translation>
 <translation id="5947494881799873997">Reverter</translation>
@@ -169,7 +171,6 @@
 <translation id="5978382165065462689">Compartilhando o controle de sua tela por meio da Assistência remota.</translation>
 <translation id="5980301590375426705">Sair da sessão de visitante</translation>
 <translation id="6018164090099858612">Saindo do modo espelhado</translation>
-<translation id="6041154455840261787">Modo de alto contraste ativado. Pressione a tecla de pesquisa+Shift+H novamente para desativá-lo.</translation>
 <translation id="6043212731627905357">Este monitor não está funcionando bem com seu <ph name="DEVICE_TYPE" /> (o monitor não é compatível).</translation>
 <translation id="6043994281159824495">Sair agora</translation>
 <translation id="6047696787498798094">O compartilhamento de tela será interrompido quando você alternar para outro usuário. Deseja continuar?</translation>
@@ -213,6 +214,7 @@
 <translation id="714034171374937760">Chromebase</translation>
 <translation id="7165278925115064263">Alt+Shift+K</translation>
 <translation id="7168224885072002358">Revertendo para resolução anterior em <ph name="TIMEOUT_SECONDS" /></translation>
+<translation id="7199454189089571166">Modo Assistente</translation>
 <translation id="7209101170223508707">A tecla CAPS LOCK está ativada. Pressione Alt + Pesquisar ou Shift para cancelar.</translation>
 <translation id="7246339268451149667">Ativar desbloqueio com impressão digital?</translation>
 <translation id="7256634071279256947">Microfone traseiro</translation>
@@ -234,7 +236,6 @@
 <translation id="7814236020522506259"><ph name="HOUR" /> e <ph name="MINUTE" /></translation>
 <translation id="7823564328645135659">O idioma foi alterado de "<ph name="FROM_LOCALE" />" para "<ph name="TO_LOCALE" />" após a sincronização de suas configurações.</translation>
 <translation id="7904094684485781019">O administrador desta conta bloqueou o login múltiplo.</translation>
-<translation id="7951523953736115461">Modo noturno</translation>
 <translation id="7977927628060636163">Pesquisando redes móveis…</translation>
 <translation id="7982789257301363584">Rede</translation>
 <translation id="8000066093800657092">Sem rede</translation>

@@ -44,7 +44,7 @@
 <translation id="2127372758936585790">Chargeur de faible puissance</translation>
 <translation id="2144487987174258011">Redémarrez pour mettre Adobe Flash Player à jour</translation>
 <translation id="2208323208084708176">Mode bureau unifié</translation>
-<translation id="225680501294068881">Recherche d'appareils en cours…</translation>
+<translation id="225680501294068881">Recherche d'appareils…</translation>
 <translation id="2268130516524549846">Bluetooth désactivé</translation>
 <translation id="2268813581635650749">Déconnecter tous les utilisateurs</translation>
 <translation id="2292698582925480719">Échelle d'affichage</translation>
@@ -159,8 +159,10 @@ Appuyez sur Search ou Maj pour le désactiver.</translation>
 <translation id="5744083938413354016">Déplacement tactile</translation>
 <translation id="5777841717266010279">Arrêter le partage d'écran ?</translation>
 <translation id="57838592816432529">Couper le son</translation>
+<translation id="5860033963881614850">Désactivé</translation>
 <translation id="5895138241574237353">Redémarrer</translation>
 <translation id="5901316534475909376">Maj+Échap</translation>
+<translation id="5916664084637901428">Activé</translation>
 <translation id="5927132638760172455">Destinataire de la diffusion inconnu</translation>
 <translation id="5932901536148835538">Chromebit</translation>
 <translation id="5947494881799873997">Rétablir</translation>
@@ -170,7 +172,6 @@ Appuyez sur Search ou Maj pour le désactiver.</translation>
 <translation id="5978382165065462689">Partager le contrôle de votre écran via l'assistance à distance</translation>
 <translation id="5980301590375426705">Fermer la session Invité</translation>
 <translation id="6018164090099858612">Sortie du mode Miroir…</translation>
-<translation id="6041154455840261787">Le mode Contraste élevé est activé. Appuyez de nouveau sur la touche de recherche+Maj+H pour le désactiver.</translation>
 <translation id="6043212731627905357">Ce moniteur ne fonctionne pas avec votre <ph name="DEVICE_TYPE" /> (il n'est pas compatible).</translation>
 <translation id="6043994281159824495">Se déconnecter maintenant</translation>
 <translation id="6047696787498798094">Le partage d'écran s'arrête lorsque vous passez à un autre utilisateur. Voulez-vous continuer ?</translation>
@@ -214,6 +215,7 @@ Appuyez sur Search ou Maj pour le désactiver.</translation>
 <translation id="714034171374937760">Chromebase</translation>
 <translation id="7165278925115064263">Alt+Maj+K</translation>
 <translation id="7168224885072002358">Rétablissement de la résolution précédente dans <ph name="TIMEOUT_SECONDS" /></translation>
+<translation id="7199454189089571166">Mode assistant</translation>
 <translation id="7209101170223508707">Le VERROUILLAGE DES MAJUSCULES est activé.
 Appuyez sur Alt + Recherche ou Maj pour le désactiver.</translation>
 <translation id="7246339268451149667">Activer le déverrouillage par empreinte digitale ?</translation>
@@ -236,7 +238,6 @@ Appuyez sur Alt + Recherche ou Maj pour le désactiver.</translation>
 <translation id="7814236020522506259"><ph name="HOUR" /> et <ph name="MINUTE" /></translation>
 <translation id="7823564328645135659">La langue utilisée est passée de "<ph name="FROM_LOCALE" />" à "<ph name="TO_LOCALE" />" après la synchronisation de vos paramètres.</translation>
 <translation id="7904094684485781019">L'administrateur de ce compte a désactivé la connexion multicompte.</translation>
-<translation id="7951523953736115461">Éclairage nocturne</translation>
 <translation id="7977927628060636163">Recherche de réseaux mobiles…</translation>
 <translation id="7982789257301363584">Réseau</translation>
 <translation id="8000066093800657092">Aucun réseau détecté</translation>

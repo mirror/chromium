@@ -159,8 +159,10 @@ Press Search or Shift to cancel.</translation>
 <translation id="5744083938413354016">Tap dragging</translation>
 <translation id="5777841717266010279">Stop screen sharing?</translation>
 <translation id="57838592816432529">Mute</translation>
+<translation id="5860033963881614850">Off</translation>
 <translation id="5895138241574237353">Restart</translation>
 <translation id="5901316534475909376">Shift+Esc</translation>
+<translation id="5916664084637901428">On</translation>
 <translation id="5927132638760172455">Casting to an unknown receiver</translation>
 <translation id="5932901536148835538">Chromebit</translation>
 <translation id="5947494881799873997">Revert</translation>
@@ -170,7 +172,6 @@ Press Search or Shift to cancel.</translation>
 <translation id="5978382165065462689">Sharing control of your screen via Remote Assistance.</translation>
 <translation id="5980301590375426705">Exit guest</translation>
 <translation id="6018164090099858612">Exiting mirror mode</translation>
-<translation id="6041154455840261787">High Contrast Mode enabled. Press Search+Shift+H again to toggle it off.</translation>
 <translation id="6043212731627905357">This monitor isn't getting along with your <ph name="DEVICE_TYPE" /> (the monitor is not supported).</translation>
 <translation id="6043994281159824495">Sign out now</translation>
 <translation id="6047696787498798094">Screen sharing will stop when you switch to another user. Do you want to continue?</translation>
@@ -214,6 +215,7 @@ Press Search or Shift to cancel.</translation>
 <translation id="714034171374937760">Chromebase</translation>
 <translation id="7165278925115064263">Alt+Shift+K</translation>
 <translation id="7168224885072002358">Reverting to old resolution in <ph name="TIMEOUT_SECONDS" /></translation>
+<translation id="7199454189089571166">Assistant mode</translation>
 <translation id="7209101170223508707">CAPS LOCK is on.
 Press Alt+Search or Shift to cancel.</translation>
 <translation id="7246339268451149667">Enable Fingerprint unlock?</translation>
@@ -236,7 +238,6 @@ Press Alt+Search or Shift to cancel.</translation>
 <translation id="7814236020522506259"><ph name="HOUR" /> and <ph name="MINUTE" /></translation>
 <translation id="7823564328645135659">The language has changed from "<ph name="FROM_LOCALE" />" to "<ph name="TO_LOCALE" />" after syncing your settings.</translation>
 <translation id="7904094684485781019">The administrator for this account has disallowed multiple sign-in.</translation>
-<translation id="7951523953736115461">Night light</translation>
 <translation id="7977927628060636163">Searching for mobile networks...</translation>
 <translation id="7982789257301363584">Network</translation>
 <translation id="8000066093800657092">No network</translation>

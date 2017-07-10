@@ -37,6 +37,7 @@
 <translation id="1540800554400757039">Cím 1. sora</translation>
 <translation id="1545749641540134597">QR-kód beolvasása</translation>
 <translation id="1580783302095112590">Levél elküldve.</translation>
+<translation id="1612730193129642006">Laprács megjelenítése</translation>
 <translation id="1646446875146297738">A „Nincs nyomon követés” funkció engedélyezése azzal jár, hogy egy adott kérés beleszámít majd a böngészési forgalomba. A hatása attól is függ, hogy az adott webhely válaszol-e a kérésre, és hogyan értelmezi azt.
 
 Bizonyos webhelyek például úgy válaszolhatnak a kérésre, hogy olyan hirdetéseket jelenítenek meg Önnek, amelyek nem az Ön által felkeresett más webhelyek alapján lettek kiválasztva. Sok webhelyszolgáltató így is összegyűjti és használja majd az Önnel kapcsolatos böngészési információkat – például a webhelyükön a biztonság javításához, valamint tartalmak, szolgáltatások, hirdetések és javaslatok biztosításához és jelentésstatisztikák gyűjtéséhez. <ph name="BEGIN_LINK" />További információ<ph name="END_LINK" /></translation>
@@ -389,6 +390,7 @@ Adatainak titkosítása megtörtént összetett szinkronizálási jelszavával a
 <translation id="8775144690796719618">Érvénytelen URL</translation>
 <translation id="8820817407110198400">Könyvjelzők</translation>
 <translation id="8840513115188359703">A rendszer nem jelentkezteti ki Google-fiókjából.</translation>
+<translation id="8881801611828450202">Kép keresése a(z) <ph name="SEARCH_ENGINE" /> segítségével</translation>
 <translation id="8904976895050290827">Chrome - szinkronizálás</translation>
 <translation id="895541991026785598">Hibabejelentés</translation>
 <translation id="8971089644512329999">Rendben, értem</translation>
@@ -407,6 +409,7 @@ Adatainak titkosítása megtörtént összetett szinkronizálási jelszavával a
 <translation id="9188680907066685419">Kijelentkezés felügyelt fiókból</translation>
 <translation id="9203116392574189331">Átadás</translation>
 <translation id="9223358826628549784">Hibajelentés elküldve.</translation>
+<translation id="932327136139879170">Főoldal</translation>
 <translation id="935490618240037774">A böngésző szinkronizálni fogja a könyvjelzőket, az előzményeket, a jelszavakat és az egyéb beállításokat Google-fiókjával, hogy bármelyik eszközén hozzájuk férjen.</translation>
 <translation id="939598580284253335">Összetett jelszó megadása</translation>
 <translation id="976982866697960176">Szinkronizált adatok kezelése...</translation>

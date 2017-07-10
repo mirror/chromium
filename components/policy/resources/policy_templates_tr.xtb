@@ -1777,7 +1777,6 @@ Bu politika yanlış (false) değerine ayarlanırsa Yeni Sekme sayfasında, otom
 <translation id="7713608076604149344">İndirme kısıtlamaları</translation>
 <translation id="7715711044277116530">Sunum modunda ekranın kararma gecikmesinin ölçekleneceği yüzde</translation>
 <translation id="7717938661004793600"><ph name="PRODUCT_OS_NAME" /> erişilebilirlik özelliklerini yapılandır.</translation>
-<translation id="7719251660743813569">Kullanım ölçümlerinin Google'a bildirilip bildirilmeyeceğini denetler. True olarak ayarlanırsa, <ph name="PRODUCT_OS_NAME" /> kullanım ölçümlerini rapor eder. Hiç ayarlanmazsa veya false değerine ayarlanırsa, ölçüm raporlama devre dışı olur.</translation>
 <translation id="7724994675283793633">Bu politika, HTTP için 80 dışındaki bağlantı noktalarında ve HTTPS için 443 dışındaki bağlantı noktalarında HTTP/0.9 desteğini etkinleştirir.
 
       Bu politika varsayılan olarak devre dışıdır ve etkinleştirilirse kullanıcıları https://crbug.com/600352 adresinde belirtilen güvenlik sorununa karşı açık durumda bırakır.
