@@ -79,11 +79,6 @@ class SyncServiceCrypto : public SyncEncryptionHandler::Observer {
   // Takes the previously saved nigori state; null if there isn't any.
   std::unique_ptr<SyncEncryptionHandler::NigoriState> TakeSavedNigoriState();
 
-  // Sets the cached passphrase.
-  void CachePassphrase(const std::string& passphrase) {
-    cached_passphrase_ = passphrase;
-  }
-
   // During initial signin, ProfileSyncService caches the user's signin
   // passphrase so it can be used to encrypt/decrypt data after sync starts up.
   // This routine is invoked once the engine has started up to use the
