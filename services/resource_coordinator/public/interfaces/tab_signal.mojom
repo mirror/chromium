@@ -1,0 +1,21 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module resource_coordinator.mojom;
+
+import "coordination_unit.mojom";
+import "mojo/common/values.mojom";
+
+enum TabEvent {
+  kDoneLoading,
+};
+
+interface TabSignalObserver {
+  SendProperty(CoordinationUnitID cu_id, PropertyType type, mojo.common.mojom.Value value);
+  SendEvent(CoordinationUnitID cu_id, TabEvent event);
+};
+
+interface TabSignalGenerator {
+  AddObserver(TabSignalObserver observer);
+};

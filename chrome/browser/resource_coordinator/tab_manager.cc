@@ -31,6 +31,8 @@
 #include "chrome/browser/media/webrtc/media_stream_capture_indicator.h"
 #include "chrome/browser/memory/oom_memory_details.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.h"
+#include "chrome/browser/resource_coordinator/tab_manager_grc_tab_signal_observer.h"
 #include "chrome/browser/resource_coordinator/tab_manager_observer.h"
 #include "chrome/browser/resource_coordinator/tab_manager_web_contents_data.h"
 #include "chrome/browser/sessions/session_restore.h"
@@ -52,6 +54,7 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/page_importance_signals.h"
+#include "services/resource_coordinator/public/interfaces/coordination_unit.mojom.h"
 
 #if defined(OS_CHROMEOS)
 #include "ash/multi_profile_uma.h"
@@ -144,6 +147,7 @@ TabManager::TabManager()
       browser_tab_strip_tracker_(this, nullptr, this),
       test_tick_clock_(nullptr),
       is_session_restore_loading_tabs_(false),
+      grc_tab_signal_observer_(new GRCTabSignalObserver()),
       weak_ptr_factory_(this) {
 #if defined(OS_CHROMEOS)
   delegate_.reset(new TabManagerDelegate(weak_ptr_factory_.GetWeakPtr()));
@@ -847,6 +851,17 @@ void TabManager::TabInsertedAt(TabStripModel* tab_strip_model,
                                content::WebContents* contents,
                                int index,
                                bool foreground) {
+  // Gets CoordinationUnitID for this WebContents and adds it to
+  // GRCTabSignalObserver.
+  auto* tab_resource_coordinator =
+      ResourceCoordinatorWebContentsObserver::FromWebContents(contents)
+          ->tab_resource_coordinator();
+  tab_resource_coordinator->service()->GetID(
+      base::Bind(&TabManager::GRCTabSignalObserver::
+                     AssociateCoordinationUnitIDWithWebContents,
+                 base::Unretained(grc_tab_signal_observer_.get()),
+                 base::Unretained(contents)));
+
   // Only interested in background tabs, as foreground tabs get taken care of by
   // ActiveTabChanged.
   if (foreground)
