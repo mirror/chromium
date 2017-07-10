@@ -49,6 +49,9 @@ class CONTENT_EXPORT RenderFrameObserver : public IPC::Listener,
   // Called when a load is explicitly stopped by the user or browser.
   virtual void OnStop() {}
 
+  // Called when the browser stopped processing a renderer-initiated navigation.
+  virtual void OnDroppedNavigation() {}
+
   // Called when the RenderFrame visiblity is changed.
   virtual void WasHidden() {}
   virtual void WasShown() {}
