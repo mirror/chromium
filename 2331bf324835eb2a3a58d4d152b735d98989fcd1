@@ -195,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "5e097620_39843fed",
+        "filename": "chrome/browser/chromeos/policy/user_cloud_policy_store_chromeos_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-10T09:08:31Z",
+      "side": 1,
+      "message": "As for GetStubSanitizedUsername(), because it is the implementation details of the fake, if we can avoid it easily, it\u0027s better not to depend on it.\nI believe, this RunLoop approach is common in chrome, and encapsulated enough so it should be better.\n\n\u003e BlockingMethodCaller.\n\n(off topic) Wow, 5 years old bug! Actually I didn\u0027t depend on it, because it is fake :-P.\nAnyway, if these blocking methods are deprecated, it\u0027s better to note so to public interface/methods, IMHO. Whether we use the BlockingMethodCaller or not, and deprecating the public method are independent, in precise?",
+      "parentUuid": "83d66fee_ef6cf8e1",
+      "revId": "2331bf324835eb2a3a58d4d152b735d98989fcd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e144d14a_54dd0e02",
         "filename": "chromeos/dbus/fake_cryptohome_client.cc",
         "patchSetId": 1
@@ -289,6 +307,24 @@
       "side": 1,
       "message": "I don\u0027t think it\u0027s a good idea to have an is_ready boolean for each method.\nI introduced service_is_available_ in https://codereview.chromium.org/34303002 and I don\u0027t see any harm in using it also for controlling the behavior of GetSanitizedUsername().",
       "parentUuid": "e6ef605f_bc04fe79",
+      "revId": "2331bf324835eb2a3a58d4d152b735d98989fcd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f5bc752_24c31793",
+        "filename": "chromeos/dbus/fake_cryptohome_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-10T09:08:31Z",
+      "side": 1,
+      "message": "\u003e I don\u0027t think it\u0027s a good idea to have an is_ready boolean for each method.\n\nThat\u0027s why I tried to follow the real implementation details ;-).\n\nSo..., I\u0027m confused.\nIs it a flag to control whether the service itself is ready or not, isn\u0027t it?\nLooks like the situation we need here is, the service is ready, but sanitization is somehow failing...???\n\nBTW, I couldn\u0027t find document what happens/should happen when calling async CryptohomeClient methods while initialization is not yet completed. Immediate fail? Or pending until the initialization is done?\nIs it by design? Or current implementation details?",
+      "parentUuid": "cf0eac8c_fea97cf7",
       "revId": "2331bf324835eb2a3a58d4d152b735d98989fcd1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
