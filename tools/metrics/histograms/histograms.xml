@@ -87992,6 +87992,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="WinJumplist.NotificationTimeInterval" units="ms">
+  <obsolete>
+    Obsolete 07/10/2017 as it's no longer needed.
+  </obsolete>
   <owner>chengx@chromium.org</owner>
   <summary>
     The time interval between two adjacent update notifications if it's less
@@ -88040,6 +88043,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="WinJumplistUpdater.AddTasksDuration" units="ms">
+  <obsolete>
+    Obsolete 07/10/2017 as it's no longer needed.
+  </obsolete>
   <owner>chengx@chromium.org</owner>
   <summary>Time spent in JumpListUpdater::AddTasks.</summary>
 </histogram>
