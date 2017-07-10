@@ -5140,7 +5140,7 @@ bool LayoutBox::HasLeftOverflow() const {
 
 DISABLE_CFI_PERF
 void LayoutBox::AddLayoutOverflow(const LayoutRect& rect) {
-  if (rect.IsEmpty())
+  if (!rect.Height())
     return;
 
   LayoutRect client_box = NoOverflowRect();
