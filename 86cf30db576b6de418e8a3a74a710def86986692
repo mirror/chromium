@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "39b6ef59_ad612561",
+        "filename": "chrome/browser/chromeos/login/session/user_session_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 968,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-07-10T16:50:38Z",
+      "side": 1,
+      "message": "The scenario above should not happen once first_launch_app_request_ is used only once.\nFrom document I got that we interesting the time when user takes an action since he is able to do so. ARC may be started very differently and this may lead to cases when this metric can be interpreted wrongly. This is why I rely on the actual time when Chrome UI is available for user.\n\nTo address |start_arc_directly| concern I added extra flag.",
+      "parentUuid": "11945149_3da54d0a",
+      "revId": "86cf30db576b6de418e8a3a74a710def86986692",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c421f517_848ca1d9",
         "filename": "chrome/browser/chromeos/login/session/user_session_manager.h",
         "patchSetId": 3
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "ba77ecce_f7a79a42",
+        "filename": "chrome/browser/chromeos/login/session/user_session_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-07-10T16:50:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c421f517_848ca1d9",
+      "revId": "86cf30db576b6de418e8a3a74a710def86986692",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7fa8519e_70a2391b",
         "filename": "chrome/browser/chromeos/login/ui/login_display_host.cc",
         "patchSetId": 3
@@ -65,6 +101,24 @@
       "writtenOn": "2017-07-10T01:54:41Z",
       "side": 1,
       "message": "Is there any reason to avoid calling NotifyClosed() here and making the function private? That seems less error-prone (I was concerned that the sub class might forget calling NotifyClosed().)",
+      "revId": "86cf30db576b6de418e8a3a74a710def86986692",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b8747de_4e26509d",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-07-10T16:50:38Z",
+      "side": 1,
+      "message": "This is good observation. I considered doing this. But Impl class has rich functionality on DTOR. From this point it is possible to keep it there. I don\u0027t have strong preferences here so I am OK to do it as you recommend.",
+      "parentUuid": "7fa8519e_70a2391b",
       "revId": "86cf30db576b6de418e8a3a74a710def86986692",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -88,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "6f00503e_c57e0177",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-07-10T16:50:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1e46cfc_18909bbe",
+      "revId": "86cf30db576b6de418e8a3a74a710def86986692",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74a2104f_c7ea01ef",
         "filename": "chrome/browser/chromeos/login/ui/login_display_host_observer.h",
         "patchSetId": 3
@@ -102,6 +174,24 @@
       "revId": "86cf30db576b6de418e8a3a74a710def86986692",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c32c9638_09a2db8e",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-07-10T16:50:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74a2104f_c7ea01ef",
+      "revId": "86cf30db576b6de418e8a3a74a710def86986692",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "94d259d0_ecd1cc32",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-07-10T16:50:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abc09152_fb170646",
+      "revId": "86cf30db576b6de418e8a3a74a710def86986692",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8fffb369_e2c42c58",
         "filename": "chrome/browser/ui/app_list/arc/arc_app_list_prefs.cc",
         "patchSetId": 3
@@ -139,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "037bd052_7fc84a5a",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_list_prefs.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-07-10T16:50:38Z",
+      "side": 1,
+      "message": "This is for Settings app, which we don\u0027t show in app launcher.",
+      "parentUuid": "8fffb369_e2c42c58",
+      "revId": "86cf30db576b6de418e8a3a74a710def86986692",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9c856cbe_2332fc67",
         "filename": "chrome/browser/ui/app_list/arc/arc_app_list_prefs.cc",
         "patchSetId": 3
@@ -150,6 +276,30 @@
       "writtenOn": "2017-07-10T01:54:41Z",
       "side": 1,
       "message": "Can we use a smaller max value like 2 or 3? This UMA is primarily for detecting ARC app launches during Chrome session restoration, and I think the Chrome work almost always finishes within a minute after sign-in.",
+      "range": {
+        "startLine": 651,
+        "startChar": 43,
+        "endLine": 651,
+        "endChar": 74
+      },
+      "revId": "86cf30db576b6de418e8a3a74a710def86986692",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68d44625_94d599d5",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_list_prefs.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 651,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-07-10T16:50:38Z",
+      "side": 1,
+      "message": "Got it. Done",
+      "parentUuid": "9c856cbe_2332fc67",
       "range": {
         "startLine": 651,
         "startChar": 43,
