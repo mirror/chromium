@@ -174,12 +174,20 @@ void ErrorReport::AddNetworkTimeInfo(
   network_time_info->set_network_time_query_behavior(report_behavior);
 }
 
+void ErrorReport::SetIsLikelyManagedDevice(bool is_likely_managed_device) {
+  cert_report_->set_is_likely_managed_device(is_likely_managed_device);
+}
+
 void ErrorReport::SetIsRetryUpload(bool is_retry_upload) {
   cert_report_->set_is_retry_upload(is_retry_upload);
 }
 
 const std::string& ErrorReport::hostname() const {
   return cert_report_->hostname();
+}
+
+bool ErrorReport::is_likely_managed_device() const {
+  return cert_report_->is_likely_managed_device();
 }
 
 bool ErrorReport::is_retry_upload() const {
