@@ -577,6 +577,7 @@ class IdentityTestWithSignin : public AsyncExtensionBrowserTest {
 #else
     signin_manager_->SignIn(gaia, email, "password");
 #endif
+    token_service_->LoadCredentials(account_id);
     token_service_->UpdateCredentials(account_id, "refresh_token");
   }
 
@@ -661,6 +662,7 @@ class GetAuthTokenFunctionTest
   }
 
   void IssueLoginRefreshTokenForAccount(const std::string& account_key) {
+    token_service_->LoadCredentials(account_key);
     token_service_->UpdateCredentials(account_key, "refresh_token");
   }
 
