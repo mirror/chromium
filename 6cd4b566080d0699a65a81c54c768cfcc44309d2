@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c5fc134_e8a4e8eb",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessConnection.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-07-10T19:58:08Z",
+      "side": 1,
+      "message": "Any reason we call this when retryOnTimeout is false since it seems it won\u0027t do anything in the end?",
+      "range": {
+        "startLine": 311,
+        "startChar": 12,
+        "endLine": 311,
+        "endChar": 25
+      },
+      "revId": "6cd4b566080d0699a65a81c54c768cfcc44309d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b42eb02a_8fab05d6",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessConnection.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-07-10T19:58:08Z",
+      "side": 1,
+      "message": "Should we also assert mService is null and mDidOnServiceConnected is false?",
+      "range": {
+        "startLine": 632,
+        "startChar": 0,
+        "endLine": 632,
+        "endChar": 59
+      },
+      "revId": "6cd4b566080d0699a65a81c54c768cfcc44309d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96883b99_dac700b2",
+        "filename": "content/public/android/junit/src/org/chromium/content/browser/ChildProcessConnectionTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-07-10T19:58:08Z",
+      "side": 1,
+      "message": "Might be good to also test:\n- with retryOnTimeout false (checking we don\u0027t attempt to reconnect)\n- when the service does connect that the watchdog gets cancelled.",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 3
+      },
+      "revId": "6cd4b566080d0699a65a81c54c768cfcc44309d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
