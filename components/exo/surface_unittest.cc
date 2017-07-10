@@ -10,10 +10,12 @@
 #include "cc/test/begin_frame_args_test.h"
 #include "cc/test/fake_external_begin_frame_source.h"
 #include "components/exo/buffer.h"
+#include "components/exo/shell_surface.h"
 #include "components/exo/surface.h"
 #include "components/exo/test/exo_test_base.h"
 #include "components/exo/test/exo_test_helper.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/khronos/GLES2/gl2.h"
 #include "ui/aura/env.h"
 #include "ui/compositor/layer_tree_owner.h"
 #include "ui/gfx/gpu_memory_buffer.h"
@@ -99,8 +101,8 @@ TEST_F(SurfaceTest, RequestFrameCallback) {
   EXPECT_TRUE(frame_time.is_null());
 }
 
-const cc::CompositorFrame& GetFrameFromSurface(Surface* surface) {
-  cc::SurfaceId surface_id = surface->GetSurfaceId();
+const cc::CompositorFrame& GetFrameFromSurface(ShellSurface* shell_surface) {
+  cc::SurfaceId surface_id = shell_surface->host_window()->GetSurfaceId();
   cc::SurfaceManager* surface_manager =
       aura::Env::GetInstance()->context_factory_private()->GetSurfaceManager();
   const cc::CompositorFrame& frame =
@@ -110,9 +112,10 @@ const cc::CompositorFrame& GetFrameFromSurface(Surface* surface) {
 
 TEST_F(SurfaceTest, SetOpaqueRegion) {
   gfx::Size buffer_size(1, 1);
-  std::unique_ptr<Buffer> buffer(
-      new Buffer(exo_test_helper()->CreateGpuMemoryBuffer(buffer_size)));
-  std::unique_ptr<Surface> surface(new Surface);
+  auto buffer = base::MakeUnique<Buffer>(
+      exo_test_helper()->CreateGpuMemoryBuffer(buffer_size));
+  auto surface = base::MakeUnique<Surface>();
+  auto shell_surface = base::MakeUnique<ShellSurface>(surface.get());
 
   // Attaching a buffer with alpha channel.
   surface->Attach(buffer.get());
@@ -124,7 +127,7 @@ TEST_F(SurfaceTest, SetOpaqueRegion) {
   RunAllPendingInMessageLoop();
 
   {
-    const cc::CompositorFrame& frame = GetFrameFromSurface(surface.get());
+    const cc::CompositorFrame& frame = GetFrameFromSurface(shell_surface.get());
     ASSERT_EQ(1u, frame.render_pass_list.size());
     ASSERT_EQ(1u, frame.render_pass_list.back()->quad_list.size());
     EXPECT_FALSE(frame.render_pass_list.back()
@@ -138,7 +141,7 @@ TEST_F(SurfaceTest, SetOpaqueRegion) {
   RunAllPendingInMessageLoop();
 
   {
-    const cc::CompositorFrame& frame = GetFrameFromSurface(surface.get());
+    const cc::CompositorFrame& frame = GetFrameFromSurface(shell_surface.get());
     ASSERT_EQ(1u, frame.render_pass_list.size());
     ASSERT_EQ(1u, frame.render_pass_list.back()->quad_list.size());
     EXPECT_TRUE(frame.render_pass_list.back()
@@ -157,7 +160,7 @@ TEST_F(SurfaceTest, SetOpaqueRegion) {
   RunAllPendingInMessageLoop();
 
   {
-    const cc::CompositorFrame& frame = GetFrameFromSurface(surface.get());
+    const cc::CompositorFrame& frame = GetFrameFromSurface(shell_surface.get());
     ASSERT_EQ(1u, frame.render_pass_list.size());
     ASSERT_EQ(1u, frame.render_pass_list.back()->quad_list.size());
     EXPECT_FALSE(frame.render_pass_list.back()
@@ -178,9 +181,10 @@ TEST_F(SurfaceTest, SetInputRegion) {
 
 TEST_F(SurfaceTest, SetBufferScale) {
   gfx::Size buffer_size(512, 512);
-  std::unique_ptr<Buffer> buffer(
-      new Buffer(exo_test_helper()->CreateGpuMemoryBuffer(buffer_size)));
-  std::unique_ptr<Surface> surface(new Surface);
+  auto buffer = base::MakeUnique<Buffer>(
+      exo_test_helper()->CreateGpuMemoryBuffer(buffer_size));
+  auto surface = base::MakeUnique<Surface>();
+  auto shell_surface = base::MakeUnique<ShellSurface>(surface.get());
 
   // This will update the bounds of the surface and take the buffer scale into
   // account.
@@ -198,9 +202,10 @@ TEST_F(SurfaceTest, SetBufferScale) {
 
 TEST_F(SurfaceTest, MirrorLayers) {
   gfx::Size buffer_size(512, 512);
-  std::unique_ptr<Buffer> buffer(
-      new Buffer(exo_test_helper()->CreateGpuMemoryBuffer(buffer_size)));
-  std::unique_ptr<Surface> surface(new Surface);
+  auto buffer = base::MakeUnique<Buffer>(
+      exo_test_helper()->CreateGpuMemoryBuffer(buffer_size));
+  auto surface = base::MakeUnique<Surface>();
+  auto shell_surface = base::MakeUnique<ShellSurface>(surface.get());
 
   surface->Attach(buffer.get());
   surface->Commit();
@@ -208,19 +213,20 @@ TEST_F(SurfaceTest, MirrorLayers) {
   EXPECT_EQ(buffer_size, surface->window()->bounds().size());
   EXPECT_EQ(buffer_size, surface->window()->layer()->bounds().size());
   std::unique_ptr<ui::LayerTreeOwner> old_layer_owner =
-      ::wm::MirrorLayers(surface->window(), false /* sync_bounds */);
+      ::wm::MirrorLayers(shell_surface->host_window(), false /* sync_bounds */);
   EXPECT_EQ(buffer_size, surface->window()->bounds().size());
   EXPECT_EQ(buffer_size, surface->window()->layer()->bounds().size());
   EXPECT_EQ(buffer_size, old_layer_owner->root()->bounds().size());
-  EXPECT_TRUE(surface->window()->layer()->has_external_content());
+  EXPECT_TRUE(shell_surface->host_window()->layer()->has_external_content());
   EXPECT_TRUE(old_layer_owner->root()->has_external_content());
 }
 
 TEST_F(SurfaceTest, SetViewport) {
   gfx::Size buffer_size(1, 1);
-  std::unique_ptr<Buffer> buffer(
-      new Buffer(exo_test_helper()->CreateGpuMemoryBuffer(buffer_size)));
-  std::unique_ptr<Surface> surface(new Surface);
+  auto buffer = base::MakeUnique<Buffer>(
+      exo_test_helper()->CreateGpuMemoryBuffer(buffer_size));
+  auto surface = base::MakeUnique<Surface>();
+  auto shell_surface = base::MakeUnique<ShellSurface>(surface.get());
 
   // This will update the bounds of the surface and take the viewport into
   // account.
@@ -242,9 +248,10 @@ TEST_F(SurfaceTest, SetViewport) {
 
 TEST_F(SurfaceTest, SetCrop) {
   gfx::Size buffer_size(16, 16);
-  std::unique_ptr<Buffer> buffer(
-      new Buffer(exo_test_helper()->CreateGpuMemoryBuffer(buffer_size)));
-  std::unique_ptr<Surface> surface(new Surface);
+  auto buffer = base::MakeUnique<Buffer>(
+      exo_test_helper()->CreateGpuMemoryBuffer(buffer_size));
+  auto surface = base::MakeUnique<Surface>();
+  auto shell_surface = base::MakeUnique<ShellSurface>(surface.get());
 
   surface->Attach(buffer.get());
   gfx::Size crop_size(12, 12);
@@ -257,16 +264,17 @@ TEST_F(SurfaceTest, SetCrop) {
 
 TEST_F(SurfaceTest, SetBlendMode) {
   gfx::Size buffer_size(1, 1);
-  std::unique_ptr<Buffer> buffer(
-      new Buffer(exo_test_helper()->CreateGpuMemoryBuffer(buffer_size)));
-  std::unique_ptr<Surface> surface(new Surface);
+  auto buffer = base::MakeUnique<Buffer>(
+      exo_test_helper()->CreateGpuMemoryBuffer(buffer_size));
+  auto surface = base::MakeUnique<Surface>();
+  auto shell_surface = base::MakeUnique<ShellSurface>(surface.get());
 
   surface->Attach(buffer.get());
   surface->SetBlendMode(SkBlendMode::kSrc);
   surface->Commit();
   RunAllPendingInMessageLoop();
 
-  const cc::CompositorFrame& frame = GetFrameFromSurface(surface.get());
+  const cc::CompositorFrame& frame = GetFrameFromSurface(shell_surface.get());
   ASSERT_EQ(1u, frame.render_pass_list.size());
   ASSERT_EQ(1u, frame.render_pass_list.back()->quad_list.size());
   EXPECT_FALSE(frame.render_pass_list.back()
@@ -276,15 +284,17 @@ TEST_F(SurfaceTest, SetBlendMode) {
 
 TEST_F(SurfaceTest, OverlayCandidate) {
   gfx::Size buffer_size(1, 1);
-  std::unique_ptr<Buffer> buffer(new Buffer(
-      exo_test_helper()->CreateGpuMemoryBuffer(buffer_size), 0, 0, true, true));
-  std::unique_ptr<Surface> surface(new Surface);
+  auto buffer = base::MakeUnique<Buffer>(
+      exo_test_helper()->CreateGpuMemoryBuffer(buffer_size), GL_TEXTURE_2D, 0,
+      true, true);
+  auto surface = base::MakeUnique<Surface>();
+  auto shell_surface = base::MakeUnique<ShellSurface>(surface.get());
 
   surface->Attach(buffer.get());
   surface->Commit();
   RunAllPendingInMessageLoop();
 
-  const cc::CompositorFrame& frame = GetFrameFromSurface(surface.get());
+  const cc::CompositorFrame& frame = GetFrameFromSurface(shell_surface.get());
   ASSERT_EQ(1u, frame.render_pass_list.size());
   ASSERT_EQ(1u, frame.render_pass_list.back()->quad_list.size());
   cc::DrawQuad* draw_quad = frame.render_pass_list.back()->quad_list.back();
@@ -297,9 +307,11 @@ TEST_F(SurfaceTest, OverlayCandidate) {
 
 TEST_F(SurfaceTest, SetAlpha) {
   gfx::Size buffer_size(1, 1);
-  std::unique_ptr<Buffer> buffer(
-      new Buffer(exo_test_helper()->CreateGpuMemoryBuffer(buffer_size)));
-  std::unique_ptr<Surface> surface(new Surface);
+  auto buffer = base::MakeUnique<Buffer>(
+      exo_test_helper()->CreateGpuMemoryBuffer(buffer_size), GL_TEXTURE_2D, 0,
+      true, true);
+  auto surface = base::MakeUnique<Surface>();
+  auto shell_surface = base::MakeUnique<ShellSurface>(surface.get());
 
   surface->Attach(buffer.get());
   surface->SetAlpha(0.5f);
@@ -316,10 +328,12 @@ TEST_F(SurfaceTest, Commit) {
 TEST_F(SurfaceTest, SendsBeginFrameAcks) {
   cc::FakeExternalBeginFrameSource source(0.f, false);
   gfx::Size buffer_size(1, 1);
-  std::unique_ptr<Buffer> buffer(
-      new Buffer(exo_test_helper()->CreateGpuMemoryBuffer(buffer_size)));
-  std::unique_ptr<Surface> surface(new Surface);
-  surface->SetBeginFrameSource(&source);
+  auto buffer = base::MakeUnique<Buffer>(
+      exo_test_helper()->CreateGpuMemoryBuffer(buffer_size), GL_TEXTURE_2D, 0,
+      true, true);
+  auto surface = base::MakeUnique<Surface>();
+  auto shell_surface = base::MakeUnique<ShellSurface>(surface.get());
+  shell_surface->SetBeginFrameSource(&source);
   surface->Attach(buffer.get());
 
   // Request a frame callback so that Surface now needs BeginFrames.
@@ -331,7 +345,7 @@ TEST_F(SurfaceTest, SendsBeginFrameAcks) {
 
   // Surface should add itself as observer during
   // DidReceiveCompositorFrameAck().
-  surface->DidReceiveCompositorFrameAck();
+  shell_surface->DidReceiveCompositorFrameAck();
   EXPECT_EQ(1u, source.num_observers());
 
   cc::BeginFrameArgs args(source.CreateBeginFrameArgs(BEGINFRAME_FROM_HERE));
@@ -342,7 +356,7 @@ TEST_F(SurfaceTest, SendsBeginFrameAcks) {
   surface->Commit();  // Acknowledges the BeginFrame via CompositorFrame.
   RunAllPendingInMessageLoop();
 
-  const cc::CompositorFrame& frame = GetFrameFromSurface(surface.get());
+  const cc::CompositorFrame& frame = GetFrameFromSurface(shell_surface.get());
   cc::BeginFrameAck expected_ack(args.source_id, args.sequence_number,
                                  args.sequence_number, true);
   EXPECT_EQ(expected_ack, frame.metadata.begin_frame_ack);
