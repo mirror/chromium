@@ -34,6 +34,24 @@
       "revId": "9d757ce805de78a7f4efb75ad7bb04a187e49a29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "709248b9_a639e958",
+        "filename": "chrome/browser/page_load_metrics/observers/subresource_filter_metrics_observer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-10T19:56:10Z",
+      "side": 1,
+      "message": "As discussed offline, let\u0027s keep as-is since this is backed by an optional proto, so we don\u0027t lose information (and additionally, we don\u0027t send redundant data over the wire).",
+      "parentUuid": "5a7246da_735e6c56",
+      "revId": "9d757ce805de78a7f4efb75ad7bb04a187e49a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
