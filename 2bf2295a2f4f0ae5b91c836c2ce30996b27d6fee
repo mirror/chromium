@@ -16,6 +16,70 @@
       "revId": "2bf2295a2f4f0ae5b91c836c2ce30996b27d6fee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba3b89d7_2f0b561e",
+        "filename": "chrome/browser/ssl/cert_report_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-07-10T22:50:31Z",
+      "side": 1,
+      "message": "Actually I\u0027m not sure if I can test the Windows part either. My plan was to patch this CL and build Chrome, but I don\u0027t think local builds are subject to enterprise policies so it\u0027ll always get false.\n\nInstallAttributes seems to be related to Chrome installation. You\u0027ll probably want to use this instead:\n\ng_browser_process-\u003eplatform_part()\n      -\u003ebrowser_policy_connector_chromeos()\n      -\u003eIsEnterpriseManaged();",
+      "parentUuid": "86331d9d_5a0e1bc7",
+      "revId": "2bf2295a2f4f0ae5b91c836c2ce30996b27d6fee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cfd443b_04dc9ad4",
+        "filename": "chrome/browser/ssl/cert_report_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-07-10T22:50:31Z",
+      "side": 1,
+      "message": "Let\u0027s leave it unset for other OS.",
+      "range": {
+        "startLine": 135,
+        "startChar": 41,
+        "endLine": 135,
+        "endChar": 0
+      },
+      "revId": "2bf2295a2f4f0ae5b91c836c2ce30996b27d6fee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6601720_954ee2b4",
+        "filename": "components/certificate_reporting/cert_logger.proto",
+        "patchSetId": 5
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-07-10T22:50:31Z",
+      "side": 1,
+      "message": "Now that we are using \"IsEnterpriseManaged()\" on ChromeOS and Windows, we should probably name this is_enterprise_managed as well.",
+      "range": {
+        "startLine": 155,
+        "startChar": 16,
+        "endLine": 155,
+        "endChar": 40
+      },
+      "revId": "2bf2295a2f4f0ae5b91c836c2ce30996b27d6fee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
