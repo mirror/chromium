@@ -598,7 +598,7 @@ public class DownloadHistoryAdapter extends DateDividedAdapter
 
         clear(false);
         if (!filteredTimedItems.isEmpty() && !mIsSearching && mShouldShowStorageInfoHeader) {
-            addHeader();
+            addHeaders(null);
         }
 
         loadItems(filteredTimedItems);
