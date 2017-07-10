@@ -401,24 +401,38 @@ NTPTilesVector MostVisitedSites::InsertHomeTile(
 
   const GURL& home_page_url = home_page_client_->GetHomePageUrl();
   NTPTilesVector new_tiles;
-  // Add the home tile as first tile.
+  // Add the home tile to the first four tiles.
   NTPTile home_tile;
   home_tile.url = home_page_url;
   home_tile.title = title;
   home_tile.source = TileSource::HOMEPAGE;
-  new_tiles.push_back(std::move(home_tile));
 
-  for (auto& tile : tiles) {
-    if (new_tiles.size() >= num_sites_) {
-      break;
-    }
+  bool home_tile_added = false;
+  size_t index = 0;
 
+  while (index < tiles.size() && new_tiles.size() < num_sites_) {
+    // Add the home tile to the first four tiles
+    // or at the position of a tile that has the same host
+    // and is ranked higher.
     // TODO(fhorschig): Introduce a more sophisticated deduplication.
-    if (tile.url.host() == home_page_url.host()) {
-      continue;
+    if (!home_tile_added && (index >= max_home_tile_index_ ||
+                             tiles[index].url.host() == home_page_url.host())) {
+      new_tiles.push_back(std::move(home_tile));
+      home_tile_added = true;
+      continue;  // Do not advance the current tile index.
     }
 
-    new_tiles.push_back(std::move(tile));
+    // Add non-home page tiles.
+    if (tiles[index].url.host() != home_page_url.host()) {
+      new_tiles.push_back(std::move(tiles[index]));
+    }
+    ++index;
+  }
+
+  // Add the home page tile if there are less than 4 tiles
+  // and none of them is the home page (and there is space left).
+  if (!home_tile_added && new_tiles.size() < num_sites_) {
+    new_tiles.push_back(std::move(home_tile));
   }
   return new_tiles;
 }

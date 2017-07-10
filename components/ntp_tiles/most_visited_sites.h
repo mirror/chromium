@@ -247,6 +247,9 @@ class MostVisitedSites : public history::TopSitesObserver,
   // The maximum number of most visited sites to return.
   size_t num_sites_;
 
+  // The maximum index of the home page tile.
+  const size_t max_home_tile_index_ = 3;
+
   std::unique_ptr<
       suggestions::SuggestionsService::ResponseCallbackList::Subscription>
       suggestions_subscription_;
