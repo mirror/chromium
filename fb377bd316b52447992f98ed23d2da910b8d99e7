@@ -16,6 +16,47 @@
       "revId": "fb377bd316b52447992f98ed23d2da910b8d99e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76a9bc0b_145c11f4",
+        "filename": "ios/chrome/browser/ntp_tiles/ntp_tiles_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-07-10T13:18:10Z",
+      "side": 1,
+      "message": "Does chrome_test_util::OpenNewTab() below do the job?",
+      "parentUuid": "2a3c90bd_5f41f7a8",
+      "revId": "fb377bd316b52447992f98ed23d2da910b8d99e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52853f97_5f4ad07b",
+        "filename": "ios/chrome/browser/ntp_tiles/ntp_tiles_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-07-10T13:18:10Z",
+      "side": 1,
+      "message": "Optional: I think the test would be more readable with s/simple/title1/. WDYT?",
+      "range": {
+        "startLine": 51,
+        "startChar": 79,
+        "endLine": 51,
+        "endChar": 0
+      },
+      "revId": "fb377bd316b52447992f98ed23d2da910b8d99e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
