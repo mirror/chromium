@@ -1,0 +1,326 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0bef7cf4_1d8b48e8",
+        "filename": "ash/system/network/network_icon.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-10T17:55:13Z",
+      "side": 1,
+      "message": "This should be an int. We don\u0027t have any non-integral signal strength values, and we don\u0027t need to do any rounding here.",
+      "range": {
+        "startLine": 203,
+        "startChar": 0,
+        "endLine": 203,
+        "endChar": 52
+      },
+      "revId": "89c2b16f1603efd17489e00ac2200c1dba31c396",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bfc3c5c_c13b6ba5",
+        "filename": "ash/system/network/network_icon.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 822,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-10T17:55:13Z",
+      "side": 1,
+      "message": "You\u0027ll have to share some code between this function and the medium-strength one.\n\nYou should also share some code with the functions related to kNumNetworkImages, since the signal-strength-to-num-bars computation is already done throughout this file for other network types. The only difference is that the underlying images you are returning should be blue instead of black-and-white.",
+      "range": {
+        "startLine": 821,
+        "startChar": 0,
+        "endLine": 822,
+        "endChar": 42
+      },
+      "revId": "89c2b16f1603efd17489e00ac2200c1dba31c396",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b8db308_dd257b1d",
+        "filename": "ash/system/network/network_icon.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 823,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-10T17:55:13Z",
+      "side": 1,
+      "message": "nit: At the start of the function, DCHECK(NetworkTypePattern::Mobile().MatchesType(network-\u003etype())).",
+      "range": {
+        "startLine": 823,
+        "startChar": 0,
+        "endLine": 823,
+        "endChar": 44
+      },
+      "revId": "89c2b16f1603efd17489e00ac2200c1dba31c396",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a95f9112_bd10750e",
+        "filename": "ash/system/network/network_icon.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-10T17:55:13Z",
+      "side": 1,
+      "message": "You can just use integer division - you don\u0027t need a math function (but you should really just share code for other images).",
+      "range": {
+        "startLine": 826,
+        "startChar": 0,
+        "endLine": 826,
+        "endChar": 74
+      },
+      "revId": "89c2b16f1603efd17489e00ac2200c1dba31c396",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2308e3d_bab091ab",
+        "filename": "ash/system/network/network_icon.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-10T17:55:13Z",
+      "side": 1,
+      "message": "A few comments:\n\n(1) You specifically need to mention that this is the blue network icon in the function name. We already have a function for getting a (black-and-white) tether network icon (GetImageForNetwork()), so this function name needs to mention specifically that this is a special blue icon. Likewise, please remove \"new\" from the name of this function. Naming suggestion: GetImageForBlueMobileBars(const chromeos::NetworkState* mobile_network).\n(2) Please add a comment which explicitly explains what this function does - you can follow the conventions for other functions in this file.\n(3) Please add another function here which returns the \"medium signal\" blue tether icon, as that will be used as the default icon for notifications which do not correspond to a specific network (e.g., the \"multiple hotspots available\" icon). Naming suggestion: GetImageForMediumStrengthBlueMobileBars().",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 54
+      },
+      "revId": "89c2b16f1603efd17489e00ac2200c1dba31c396",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f0e5600_5a288117",
+        "filename": "ash/system/tray/tray_constants.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-10T17:55:13Z",
+      "side": 1,
+      "message": "Same thing - kBlueIconColor.",
+      "range": {
+        "startLine": 82,
+        "startChar": 14,
+        "endLine": 82,
+        "endChar": 27
+      },
+      "revId": "89c2b16f1603efd17489e00ac2200c1dba31c396",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0677aa99_18bf2b5e",
+        "filename": "ash/system/tray/tray_constants.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-10T17:55:13Z",
+      "side": 1,
+      "message": "nit: We\u0027ve been capitalizing Tether to keep the convention of capitalizing other network types (e.g., Wi-Fi, Ethernet).",
+      "range": {
+        "startLine": 144,
+        "startChar": 17,
+        "endLine": 144,
+        "endChar": 23
+      },
+      "revId": "89c2b16f1603efd17489e00ac2200c1dba31c396",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f421ecf_cd8c1497",
+        "filename": "ash/system/tray/tray_constants.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-10T17:55:13Z",
+      "side": 1,
+      "message": "nit: Period at end of sentence (yes, even for short phrases which are not grammatically full sentences).",
+      "range": {
+        "startLine": 144,
+        "startChar": 24,
+        "endLine": 144,
+        "endChar": 36
+      },
+      "revId": "89c2b16f1603efd17489e00ac2200c1dba31c396",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b00d2d0_6b238b1c",
+        "filename": "ash/system/tray/tray_constants.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-10T17:55:13Z",
+      "side": 1,
+      "message": "Constants are prefixed with a \"k\": kBlueIconColor.",
+      "range": {
+        "startLine": 145,
+        "startChar": 21,
+        "endLine": 145,
+        "endChar": 34
+      },
+      "revId": "89c2b16f1603efd17489e00ac2200c1dba31c396",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ac066b2_76751b94",
+        "filename": "chrome/browser/chromeos/net/DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-10T17:55:13Z",
+      "side": 1,
+      "message": "Add the entire directory (instead of a specific file):\n\n\"+ash/system/network\",",
+      "range": {
+        "startLine": 5,
+        "startChar": 22,
+        "endLine": 5,
+        "endChar": 37
+      },
+      "revId": "89c2b16f1603efd17489e00ac2200c1dba31c396",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4dcecc9_b154919e",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-10T17:55:13Z",
+      "side": 1,
+      "message": "You can remove this TODO now.",
+      "range": {
+        "startLine": 89,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 42
+      },
+      "revId": "89c2b16f1603efd17489e00ac2200c1dba31c396",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4b8f3ba_f0fd129b",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-10T17:55:13Z",
+      "side": 1,
+      "message": "After the refactor, you will always have an image type, so this should be gone.",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 92,
+        "endChar": 80
+      },
+      "revId": "89c2b16f1603efd17489e00ac2200c1dba31c396",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25ea8e6a_44eac363",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-10T17:55:13Z",
+      "side": 1,
+      "message": "Please remove this version of the function.\n\nYou\u0027ll need to:\n(1) Make a change to the NotificationPresenter interface (in //chromeos/components/tether) to remove this old version and add your new one.\n(2) Change the function prototype below to add \"override\".\n(3) Update FakeNotificationPresenter to support this new function.\n(4) Update the HostScanner class to use this version of the function, and update its test to use the new FakeNotificationPresenter function.",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 61
+      },
+      "revId": "89c2b16f1603efd17489e00ac2200c1dba31c396",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "496470a1_1271e5e3",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-10T17:55:13Z",
+      "side": 1,
+      "message": "Since we are using this function for cases where a NetworkState is not supplied, let\u0027s change this function prototype a bit.\n\nPlease add a private enum of the icon type:\n\nenum class TetherIconType {\n  ICON_TYPE_0_BARS,\n  ICON_TYPE_1_BAR,\n  ...,\n  ICON_TYPE_4_BARS\n};\n\nThen, take a TetherIconType as the parameter here instead of the NetworkState*.\n\nIn your .cc file, add a function in the anonymous namespace which translates a NetworkState* to one of the enum values. Then, in the NotifyPotentialHotspotsNearby() function, translate the provided NetworkState* into an enum value befor calling CreateNotification().",
+      "range": {
+        "startLine": 95,
+        "startChar": 6,
+        "endLine": 95,
+        "endChar": 53
+      },
+      "revId": "89c2b16f1603efd17489e00ac2200c1dba31c396",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
