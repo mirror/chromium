@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4df557dc_5fe820be",
+        "filename": "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_text_item.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-10T09:14:03Z",
+      "side": 1,
+      "message": "I don\u0027t know if it is better to have a property lazily instantiated or one created every time. No sure it changes much.",
+      "range": {
+        "startLine": 55,
+        "startChar": 23,
+        "endLine": 55,
+        "endChar": 45
+      },
+      "revId": "62d8176d02b9a86f97edc723941ba7f133228fa2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
