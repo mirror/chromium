@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26396121_b1738af0",
+        "filename": "mojo/common/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-10T20:46:20Z",
+      "side": 1,
+      "message": "This file couldn\u0027t be used now that we want to use it in both chromium/blink variant.\n\nI think you should do:\n- remove this file from the sources list;\n- add to public_deps: \":common_custom_types_shared_cpp_sources\";\n- in values_struct_traits.h, include \"values.mojom-shared.h\" instead of \"values.mojom.h\".",
+      "revId": "0e6c980ba4da7ceaeeecb117b291b02f9aa8320b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
