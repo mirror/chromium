@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f936d78_27d92af7",
+        "filename": "storage/browser/blob/blob_registry_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-10T21:12:12Z",
+      "side": 1,
+      "message": "Nit: std::move() since we\u0027re passing by value already",
+      "range": {
+        "startLine": 267,
+        "startChar": 27,
+        "endLine": 267,
+        "endChar": 46
+      },
+      "revId": "b0253ec267c9e70408bbe29a5909201f8569fb57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2f4f463_c5669c88",
+        "filename": "storage/browser/blob/blob_registry_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-10T21:12:12Z",
+      "side": 1,
+      "message": "Nit: IWYU for \u003cmemory\u003e",
+      "range": {
+        "startLine": 51,
+        "startChar": 40,
+        "endLine": 51,
+        "endChar": 55
+      },
+      "revId": "b0253ec267c9e70408bbe29a5909201f8569fb57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

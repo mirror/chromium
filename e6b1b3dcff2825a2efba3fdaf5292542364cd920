@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3479b027_7c9d9791",
+        "filename": "storage/browser/blob/blob_registry_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-10T21:12:12Z",
+      "side": 1,
+      "message": "I can\u0027t help but notice the delegate method is called CanReadFile but this error is WRITE_FAILED... maybe a comment to note this fact would be useful, so future readers don\u0027t believe this is a copy paste error?",
+      "range": {
+        "startLine": 297,
+        "startChar": 48,
+        "endLine": 297,
+        "endChar": 69
+      },
+      "revId": "e6b1b3dcff2825a2efba3fdaf5292542364cd920",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
