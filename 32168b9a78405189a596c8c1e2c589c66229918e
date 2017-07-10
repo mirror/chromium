@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "582f1aaf_71fced22",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-07-10T17:05:49Z",
+      "side": 1,
+      "message": "I\u0027ve been stuck on this for the past 15 minutes trying to understand it.\n\nAs long as you\u0027re working with this code, and the test cases and expected behaviors are fresh in your mind, can you make another CL at some point and try eliminating the trim_http parameter to this method?\n\nI\u0027m guessing it made more sense at some point in the past, but AFAICT, this method currently sets a funny trap for its callers. It knows exactly what it wants to do (trim http only if the user input didn\u0027t include it). But instead, it has the 2 callers determine that and then DCHECKs if they do it wrong. It would be simpler and more readable if this method just did what it knows it wants to do.",
+      "revId": "32168b9a78405189a596c8c1e2c589c66229918e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a741797f_a3232c63",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1148,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-07-10T17:05:49Z",
+      "side": 1,
+      "message": "I\u0027m a big fan of the ternary operator in the right cases and I know we do something similar in related code. But the addition of a logical expression for the test on top of the bitwise negation, bitwise AND, and ternary expression moves this, for me, from \"elegantly succinct\" to \"a puzzle I have to solve to know what this code is doing\".\n\nHow about the following instead?\n\nconst auto fill_into_edit_format_types \u003d url_formatter::kFormatUrlOmitAll;\nif (!params.trim_http || history_match.match_in_scheme)\n  fill_into_edit_format_types \u0026\u003d ~url_formatter::kFormatUrlOmitHTTP;",
+      "revId": "32168b9a78405189a596c8c1e2c589c66229918e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0feef454_6fdfa91f",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1178,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-07-10T17:05:49Z",
+      "side": 1,
+      "message": "const",
+      "revId": "32168b9a78405189a596c8c1e2c589c66229918e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
