@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa7742f5_822ca4b9",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeCache.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-07-10T16:20:02Z",
+      "side": 1,
+      "message": "// Up-convert from LChar to UChar.",
+      "range": {
+        "startLine": 41,
+        "startChar": 12,
+        "endLine": 41,
+        "endChar": 19
+      },
+      "revId": "04843a5f05678ae07e5a47ee5e78bfb8589d8638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad4b0cb5_35742923",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeCache.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-07-10T16:20:02Z",
+      "side": 1,
+      "message": "Why did you move the definition out of the ShapeCache class? It\u0027s only used by the ShapeCache and I\u0027d prefer not to expose it outside of the class unless we have a good reason to do so.",
+      "range": {
+        "startLine": 48,
+        "startChar": 6,
+        "endLine": 48,
+        "endChar": 20
+      },
+      "revId": "04843a5f05678ae07e5a47ee5e78bfb8589d8638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
