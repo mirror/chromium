@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e628f6e_ffde64e3",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 1796,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-10T22:15:46Z",
+      "side": 1,
+      "message": "URLRequestContextGetter is always non-null.  The NQE, however, may be nullptr (In fact, it always is in incognito mode).\n\nCould you add an integration test or two that enables the new feature, and loads a page with a bunch of non-blocking resources, and make sure it works, for incognito and non-incognito?  Sorry for all the test requests, the scheduler code is just complicated, and it\u0027s very easy to break something.",
+      "range": {
+        "startLine": 1796,
+        "startChar": 0,
+        "endLine": 1796,
+        "endChar": 32
+      },
+      "revId": "ed6a1668c0348ae02a84db16428dfbdc2649eeec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee835250_47de8f5e",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-10T22:15:46Z",
+      "side": 1,
+      "message": "This is sufficiently complicated that I suggest a couple tests for it.",
+      "range": {
+        "startLine": 125,
+        "startChar": 24,
+        "endLine": 125,
+        "endChar": 63
+      },
+      "revId": "ed6a1668c0348ae02a84db16428dfbdc2649eeec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0aeb81e_c6a809b4",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-10T22:15:46Z",
+      "side": 1,
+      "message": "Rather than making this a pointer to a field owned by the ResourceScheduler, I\u0027d suggest taking in a pointer to the ResourceScheduler, and giving it accessors for max_requests_for_bdp_ranges and max_delayable_requests_threshold.  (Note that inner classes have private access to outer classes, so the methods could be private, or we could even access the parent fields directly, but the methods make it a little clearer that we\u0027re digging into its guts, and what we\u0027re pulling out).\n\nA couple reasons - the lifetime of the ResourceScheduler is much clearer, and I\u0027m paranoid about the ResourceScheduler\u0027s max_requests_for_bdp_ranges_ becoming mutable in the future.  Also slightly reduces redundant data.  Not suggesting it for this CL, but could imagine getting rid of most other constructor arguments, and just pulling them from the ResourceScheduler as needed.",
+      "range": {
+        "startLine": 483,
+        "startChar": 64,
+        "endLine": 483,
+        "endChar": 65
+      },
+      "revId": "ed6a1668c0348ae02a84db16428dfbdc2649eeec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f09adb50_e39a505c",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 799,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-10T22:15:46Z",
+      "side": 1,
+      "message": "const auto\u0026",
+      "range": {
+        "startLine": 799,
+        "startChar": 24,
+        "endLine": 799,
+        "endChar": 52
+      },
+      "revId": "ed6a1668c0348ae02a84db16428dfbdc2649eeec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e61be0a_1b1b7c54",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 910,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-10T22:15:46Z",
+      "side": 1,
+      "message": "kMaxNumDelayableRequestsPerClient -\u003e kDefaultMaxNumDelayableRequestsPerClient?",
+      "range": {
+        "startLine": 910,
+        "startChar": 36,
+        "endLine": 910,
+        "endChar": 37
+      },
+      "revId": "ed6a1668c0348ae02a84db16428dfbdc2649eeec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4534c4f3_212caa22",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 912,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-10T22:15:46Z",
+      "side": 1,
+      "message": "I don\u0027t think we need these nested ifs.\n\nmax_delayable_requests_overridden_count_ is set even when max_requests_for_bdp_ranges_ is empty, so we can just unconditionally use it.  This does suggest a rename, though:\n\nmax_delayable_requests_overridden_count_ -\u003e max_delayable_requests_",
+      "range": {
+        "startLine": 912,
+        "startChar": 5,
+        "endLine": 912,
+        "endChar": 0
+      },
+      "revId": "ed6a1668c0348ae02a84db16428dfbdc2649eeec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
