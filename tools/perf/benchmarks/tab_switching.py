@@ -50,5 +50,6 @@ class TabSwitchingTypical25(perf_benchmark.PerfBenchmark):
   def GetExpectations(self):
     class StoryExpectations(story.expectations.StoryExpectations):
       def SetExpectations(self):
-        pass # No tests disabled.
+        self.DisableStory('multitab:misc:typical24',
+                          [story.expectations.ALL_ANDROID], 'crbug.com/740581')
     return StoryExpectations()
