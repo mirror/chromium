@@ -53,6 +53,7 @@
 #include "services/device/public/interfaces/wake_lock_context.mojom.h"
 #include "third_party/WebKit/public/platform/WebFocusType.h"
 #include "third_party/WebKit/public/platform/WebInsecureRequestPolicy.h"
+#include "third_party/WebKit/public/platform/frame_broker.mojom.h"
 #include "third_party/WebKit/public/platform/modules/bluetooth/web_bluetooth.mojom.h"
 #include "third_party/WebKit/public/web/WebTextDirection.h"
 #include "third_party/WebKit/public/web/WebTreeScopeType.h"
@@ -117,6 +118,7 @@ class CONTENT_EXPORT RenderFrameHostImpl
       public base::SupportsUserData,
       NON_EXPORTED_BASE(public mojom::FrameHost),
       NON_EXPORTED_BASE(public mojom::FrameHostInterfaceBroker),
+      NON_EXPORTED_BASE(public blink::mojom::FrameBroker),
       public BrowserAccessibilityDelegate,
       public SiteInstanceImpl::Observer,
       public NON_EXPORTED_BASE(service_manager::mojom::InterfaceProvider),
@@ -198,6 +200,9 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // mojom::FrameHostInterfaceBroker
   void GetInterfaceProvider(
       service_manager::mojom::InterfaceProviderRequest interfaces) override;
+
+  // blink::mojom::FrameBroker
+  void OnFirstPaint(base::TimeDelta time_to_first_paint) override;
 
   // IPC::Sender
   bool Send(IPC::Message* msg) override;
@@ -957,6 +962,10 @@ class CONTENT_EXPORT RenderFrameHostImpl
                                  bool success,
                                  const base::string16& user_input);
 
+  void CreateFrameBrokerService(
+      const service_manager::BindSourceInfo& source_info,
+      blink::mojom::FrameBrokerRequest request);
+
   // Returns ownership of the NavigationHandle associated with a navigation that
   // just committed.
   std::unique_ptr<NavigationHandleImpl> TakeNavigationHandleForCommit(
@@ -1207,6 +1216,8 @@ class CONTENT_EXPORT RenderFrameHostImpl
   mojo::AssociatedBinding<mojom::FrameHost> frame_host_associated_binding_;
   mojom::FramePtr frame_;
   mojom::FrameBindingsControlAssociatedPtr frame_bindings_control_;
+
+  mojo::Binding<blink::mojom::FrameBroker> frame_broker_binding_;
 
   // If this is true then this object was created in response to a renderer
   // initiated request. Init() will be called, and until then navigation
