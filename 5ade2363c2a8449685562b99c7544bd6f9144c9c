@@ -1,0 +1,170 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6af55db2_4ed843fa",
+        "filename": "sandbox/mac/v2-sandbox.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-07-10T21:48:08Z",
+      "side": 1,
+      "message": "Perhaps \"seatbelt_sandbox_design.md\" ? At some point, it won\u0027t be V2 and it will just be the only.",
+      "revId": "5ade2363c2a8449685562b99c7544bd6f9144c9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "034c1c0f_43295f0c",
+        "filename": "sandbox/mac/v2-sandbox.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-07-10T21:48:08Z",
+      "side": 1,
+      "message": "Maybe make this a list along with the other two pieces of metadata below?",
+      "revId": "5ade2363c2a8449685562b99c7544bd6f9144c9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92b54672_a3b5425d",
+        "filename": "sandbox/mac/v2-sandbox.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-07-10T21:48:08Z",
+      "side": 1,
+      "message": "Just use the URL directly rather than the redirector.",
+      "range": {
+        "startLine": 27,
+        "startChar": 35,
+        "endLine": 27,
+        "endChar": 111
+      },
+      "revId": "5ade2363c2a8449685562b99c7544bd6f9144c9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baa2d01b_ebcee2b7",
+        "filename": "sandbox/mac/v2-sandbox.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-07-10T21:48:08Z",
+      "side": 1,
+      "message": "Capitalize",
+      "range": {
+        "startLine": 67,
+        "startChar": 12,
+        "endLine": 67,
+        "endChar": 13
+      },
+      "revId": "5ade2363c2a8449685562b99c7544bd6f9144c9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1c2cac0_572c5e27",
+        "filename": "sandbox/mac/v2-sandbox.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-07-10T21:48:08Z",
+      "side": 1,
+      "message": "A",
+      "range": {
+        "startLine": 126,
+        "startChar": 11,
+        "endLine": 126,
+        "endChar": 12
+      },
+      "revId": "5ade2363c2a8449685562b99c7544bd6f9144c9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc2197ca_ee8f75db",
+        "filename": "sandbox/mac/v2-sandbox.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-07-10T21:48:08Z",
+      "side": 1,
+      "message": "Should be a heading.",
+      "revId": "5ade2363c2a8449685562b99c7544bd6f9144c9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25a8cf07_d903752d",
+        "filename": "sandbox/mac/v2-sandbox.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-07-10T21:48:08Z",
+      "side": 1,
+      "message": "This didn\u0027t translate well. You can check the Gerrit formatting by clicking on the \"gitiles\" link when viewing the file in diff mode.",
+      "range": {
+        "startLine": 221,
+        "startChar": 0,
+        "endLine": 221,
+        "endChar": 2
+      },
+      "revId": "5ade2363c2a8449685562b99c7544bd6f9144c9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcf8db2e_242ae410",
+        "filename": "sandbox/mac/v2-sandbox.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-07-10T21:48:08Z",
+      "side": 1,
+      "message": "Mark these as inline code?",
+      "range": {
+        "startLine": 221,
+        "startChar": 2,
+        "endLine": 221,
+        "endChar": 16
+      },
+      "revId": "5ade2363c2a8449685562b99c7544bd6f9144c9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
