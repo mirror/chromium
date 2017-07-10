@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "e943b147_66a93eb5",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-10T23:58:51Z",
+      "side": 1,
+      "message": "Okay, we can\u0027t do this refactor.\n\nOmniboxEditModel calls this method with a fixed false \u0027trim_http\u0027 parameter. It doesn\u0027t show up on codesearch for some reason.\n\nThe DCHECK is also not exactly the equivalent meaning, as for HTTP URLs, trim_http can either be true or false, and we can still pass the DCHECK.",
+      "parentUuid": "60239039_6e4a0748",
+      "revId": "32168b9a78405189a596c8c1e2c589c66229918e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a741797f_a3232c63",
         "filename": "components/omnibox/browser/history_url_provider.cc",
         "patchSetId": 2
