@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce0e03f7_11214fd7",
+        "filename": "chrome/browser/page_load_metrics/observers/subresource_filter_metrics_observer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-10T19:45:33Z",
+      "side": 1,
+      "message": "Hm I thought we were going to do something like:\nif (activation_decision_ \u003d\u003d ACTIVATED) {\n  builder-\u003eAddMetric(DryRun, activation_level_ \u003d\u003d DRYRUN);\n}",
+      "revId": "9d757ce805de78a7f4efb75ad7bb04a187e49a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
