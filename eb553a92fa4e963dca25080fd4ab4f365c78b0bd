@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "ad82f88e_cfbe4bb2",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-10T20:42:23Z",
+      "side": 1,
+      "message": "Thanks, I\u0027ve posted on the associated bug asking for clarification, will amend this patch when we\u0027ve reached consensus.",
+      "parentUuid": "b478ebcf_72dfa102",
+      "range": {
+        "startLine": 439,
+        "startChar": 13,
+        "endLine": 439,
+        "endChar": 29
+      },
+      "revId": "eb553a92fa4e963dca25080fd4ab4f365c78b0bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "44b0b8c9_468707f7",
         "filename": "ui/vector_icons/BUILD.gn",
         "patchSetId": 4
