@@ -168,7 +168,7 @@ SDK.ServiceWorkerCacheModel = class extends SDK.SDKModel {
 
     for (var cacheJson of cachesJson) {
       var cache =
-          new SDK.ServiceWorkerCacheModel.Cache(cacheJson.securityOrigin, cacheJson.cacheName, cacheJson.cacheId);
+          new SDK.ServiceWorkerCacheModel.Cache(this, cacheJson.securityOrigin, cacheJson.cacheName, cacheJson.cacheId);
       updatingCachesIds.add(cache.cacheId);
       if (this._caches.has(cache.cacheId))
         continue;
@@ -227,6 +227,15 @@ SDK.ServiceWorkerCacheModel = class extends SDK.SDKModel {
             dataEntry.request, dataEntry.response, new Date(dataEntry.responseTime * 1000).toLocaleString()));
     callback(entries, response.hasMore);
   }
+
+  /**
+   * @param {string} cacheId
+   * @param {string} request
+   * @return {!Promise<?Protocol.CacheStorage.CachedResponse>}
+   */
+  _requestCachedResponse(cacheId, request) {
+    return this._agent.requestCachedResponse(cacheId, request);
+  }
 };
 
 SDK.SDKModel.register(SDK.ServiceWorkerCacheModel, SDK.Target.Capability.Browser, false);
@@ -258,11 +267,13 @@ SDK.ServiceWorkerCacheModel.Entry = class {
  */
 SDK.ServiceWorkerCacheModel.Cache = class {
   /**
+   * @param {!SDK.ServiceWorkerCacheModel} model
    * @param {string} securityOrigin
    * @param {string} cacheName
    * @param {string} cacheId
    */
-  constructor(securityOrigin, cacheName, cacheId) {
+  constructor(model, securityOrigin, cacheName, cacheId) {
+    this._model = model;
     this.securityOrigin = securityOrigin;
     this.cacheName = cacheName;
     this.cacheId = cacheId;
@@ -282,5 +293,13 @@ SDK.ServiceWorkerCacheModel.Cache = class {
    */
   toString() {
     return this.securityOrigin + this.cacheName;
+  }
+
+  /**
+   * @param {string} url
+   * @return {!Promise<?Protocol.CacheStorage.CachedResponse>}
+   */
+  requestCachedResponse(url) {
+    return this._model._requestCachedResponse(this.cacheId, url);
   }
 };
