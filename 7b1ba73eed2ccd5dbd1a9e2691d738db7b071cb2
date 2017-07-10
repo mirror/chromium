@@ -34,6 +34,24 @@
       "revId": "7b1ba73eed2ccd5dbd1a9e2691d738db7b071cb2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6eef9a7_ab9525a0",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-07-10T08:36:26Z",
+      "side": 1,
+      "message": "It seems that we only have 2 results.\n1. Suppose we have:\nfoo ^bar| baz\n1-a: if user s-click on baz, we get\nfoo ^bar baz|\n1-b: if use s-click on foo, we get\n|foo bar^ baz\n\n2. Suppose we have:\nfoo |bar^ baz\n2-a: if user s-click on baz, we get\nfoo ^bar baz|\n2-b: if use s-click on foo, we get\n|foo bar^ baz\n\nCould you change to flow where we have only 2 returns or 2 builders?",
+      "parentUuid": "67394dee_15a98fac",
+      "revId": "7b1ba73eed2ccd5dbd1a9e2691d738db7b071cb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
