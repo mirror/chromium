@@ -164,6 +164,15 @@
     "extension_types": ["platform_app"],
     "platforms": ["chromeos"]
   },
+  // COMMENT: This doesn't make much sense currently since its implicitly
+  // added when the declarative_net_request_rules manifest key is present. But
+  // this would when dynamic rules support is added.
+  "declarativeNetRequest" : {
+    "channel" : "trunk",
+    // COMMENT: legacy packaged app vs platform app vs hosted_app.
+    "extension_types": ["extension", "legacy_packaged_app"],
+    "min_manifest_version" : 2
+  },
   "declarativeWebRequest": {
       "channel": "beta",
       "extension_types": ["extension", "legacy_packaged_app"]
