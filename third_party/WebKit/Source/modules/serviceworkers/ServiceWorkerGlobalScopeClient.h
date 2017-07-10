@@ -46,7 +46,7 @@
 
 namespace blink {
 
-struct WebPaymentAppResponse;
+struct WebPaymentHandlerResponse;
 struct WebServiceWorkerClientQueryOptions;
 class ExecutionContext;
 class WebServiceWorkerContextClient;
@@ -108,7 +108,7 @@ class MODULES_EXPORT ServiceWorkerGlobalScopeClient
                                              WebServiceWorkerStreamHandle*,
                                              double event_dispatch_time);
   void RespondToPaymentRequestEvent(int event_id,
-                                    const WebPaymentAppResponse&,
+                                    const WebPaymentHandlerResponse&,
                                     double event_dispatch_time);
   void DidHandleFetchEvent(int fetch_event_id,
                            WebServiceWorkerEventResult,

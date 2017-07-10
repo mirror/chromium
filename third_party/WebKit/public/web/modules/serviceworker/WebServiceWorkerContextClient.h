@@ -46,7 +46,7 @@
 
 namespace blink {
 
-struct WebPaymentAppResponse;
+struct WebPaymentHandlerResponse;
 struct WebServiceWorkerClientQueryOptions;
 class WebServiceWorkerContextProxy;
 class WebServiceWorkerNetworkProvider;
@@ -190,7 +190,7 @@ class WebServiceWorkerContextClient {
       double event_dispatch_time) {}
   virtual void RespondToPaymentRequestEvent(
       int event_id,
-      const WebPaymentAppResponse& response,
+      const WebPaymentHandlerResponse& response,
       double event_dispatch_time) {}
   virtual void DidHandleFetchEvent(int fetch_event_id,
                                    WebServiceWorkerEventResult result,
