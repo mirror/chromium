@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e4384b2_3fb6e0d5",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_tile.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-07-10T15:20:10Z",
+      "side": 1,
+      "message": "Comment missing.",
+      "revId": "2837851de51c5739d0af7e4d68b183168fa626a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf1738d8_48c45cb3",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_tile_saver.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-07-10T15:20:10Z",
+      "side": 1,
+      "message": "Does this mean we are going to fetch every favicon twice?  One for the actual NTP, and once for this?  If I understand this correctly, any chance we can just do this once instead?",
+      "revId": "2837851de51c5739d0af7e4d68b183168fa626a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "247ed3d6_45ecbdbb",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_tile_saver.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-07-10T15:20:10Z",
+      "side": 1,
+      "message": "Shouldn\u0027t all these be upper case?",
+      "revId": "2837851de51c5739d0af7e4d68b183168fa626a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
