@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "245ecff9_d588c384",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-07-10T15:41:17Z",
+      "side": 1,
+      "message": "+ 1 for passing a context or form, if possible.",
+      "parentUuid": "1956ab7c_fa432e4f",
+      "range": {
+        "startLine": 753,
+        "startChar": 25,
+        "endLine": 753,
+        "endChar": 47
+      },
+      "revId": "2dd2d4b0d6f45d4d25bdf9b4e39b796914b43843",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "966d8f8b_28efac54",
         "filename": "components/autofill/core/browser/autofill_metrics.h",
         "patchSetId": 22
@@ -59,6 +83,30 @@
       "writtenOn": "2017-07-07T22:20:27Z",
       "side": 1,
       "message": "I\u0027m really not a fan of passing the timestamp in every method, and in fullcardrequestsuccess too. We should be able to find another way. I\u0027ll try to think of something after the week end.\n\nI know this is not an easy task :)",
+      "range": {
+        "startLine": 731,
+        "startChar": 52,
+        "endLine": 731,
+        "endChar": 73
+      },
+      "revId": "2dd2d4b0d6f45d4d25bdf9b4e39b796914b43843",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d99db69c_223f35ae",
+        "filename": "components/autofill/core/browser/autofill_metrics.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 731,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-07-10T15:41:17Z",
+      "side": 1,
+      "message": "I don\u0027t want to block you on this CL but we should find a better way to get these values in a next CL. Otherwise this code will be harder to maintain.",
+      "parentUuid": "966d8f8b_28efac54",
       "range": {
         "startLine": 731,
         "startChar": 52,
