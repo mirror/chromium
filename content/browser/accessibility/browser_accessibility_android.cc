@@ -202,7 +202,8 @@ bool BrowserAccessibilityAndroid::IsEditableText() const {
 }
 
 bool BrowserAccessibilityAndroid::IsEnabled() const {
-  return !HasState(ui::AX_STATE_DISABLED);
+  return GetIntAttribute(ui::AX_ATTR_RESTRICTIONS) !=
+         ui::AX_RESTRICTIONS_DISABLED;
 }
 
 bool BrowserAccessibilityAndroid::IsExpanded() const {
