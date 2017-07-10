@@ -10,13 +10,13 @@ namespace gl {
 GLSurfaceFormat::GLSurfaceFormat() {
 }
 
-GLSurfaceFormat::GLSurfaceFormat(SurfacePixelLayout layout) {
-  pixel_layout_ = layout;
-}
-
 GLSurfaceFormat::GLSurfaceFormat(const GLSurfaceFormat& other) = default;
 
 GLSurfaceFormat::~GLSurfaceFormat() {
+}
+
+GLSurfaceFormat::GLSurfaceFormat(SurfacePixelLayout layout) {
+  pixel_layout_ = layout;
 }
 
 GLSurfaceFormat::SurfacePixelLayout GLSurfaceFormat::GetPixelLayout() {
@@ -28,6 +28,14 @@ void GLSurfaceFormat::SetDefaultPixelLayout(SurfacePixelLayout layout) {
       layout != PIXEL_LAYOUT_DONT_CARE) {
     pixel_layout_ = layout;
   }
+}
+
+void GLSurfaceFormat::SetColorSpace(SurfaceColorSpace color_space) {
+  color_space_ = color_space;
+}
+
+GLSurfaceFormat::SurfaceColorSpace GLSurfaceFormat::GetColorSpace() {
+  return color_space_;
 }
 
 void GLSurfaceFormat::SetRGB565() {
@@ -52,7 +60,8 @@ bool GLSurfaceFormat::IsCompatible(GLSurfaceFormat other) {
       GetValue(stencil_bits_, 8) == GetValue(other.stencil_bits_, 8) &&
       GetValue(depth_bits_, 24) == GetValue(other.depth_bits_, 24) &&
       GetValue(samples_, 0) == GetValue(other.samples_, 0) &&
-      pixel_layout_ == other.pixel_layout_) {
+      pixel_layout_ == other.pixel_layout_ &&
+      color_space_ == other.color_space_) {
     return true;
   }
   return false;
