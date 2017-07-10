@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "762746ef_7487713f",
+        "filename": "components/omnibox/browser/scored_history_match.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-10T22:08:14Z",
+      "side": 1,
+      "message": "Done. I was on the fence and now I\u0027m convinced. I also moved the arg to be right next to url.",
+      "parentUuid": "b3315b19_83cb70e4",
+      "revId": "ebbb149aaf0284fd951c005a6dc1b13c89ee8dff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1740a385_fcd21fbb",
         "filename": "components/omnibox/browser/scored_history_match.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "ebbb149aaf0284fd951c005a6dc1b13c89ee8dff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed98f497_a8855fcf",
+        "filename": "components/omnibox/browser/scored_history_match.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-10T22:08:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1740a385_fcd21fbb",
+      "revId": "ebbb149aaf0284fd951c005a6dc1b13c89ee8dff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a711fcd7_34c26077",
+        "filename": "components/omnibox/browser/scored_history_match.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-10T22:08:14Z",
+      "side": 1,
+      "message": "I reversed the change to put in a followup... but to verify...\n\nYou mean that the scoring for domains for TLDs with multiple periods are going to change right?\n\nI imagine .jp and .museum will remain the same since the old code searched backwards for the first period right?",
+      "parentUuid": "a7284024_c545253e",
+      "revId": "ebbb149aaf0284fd951c005a6dc1b13c89ee8dff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70809d0c_650257cb",
         "filename": "components/omnibox/browser/scored_history_match.cc",
         "patchSetId": 2
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "8f2b2097_f64f222d",
+        "filename": "components/omnibox/browser/scored_history_match.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-10T22:08:14Z",
+      "side": 1,
+      "message": "Will do in the followup CL.",
+      "parentUuid": "70809d0c_650257cb",
+      "revId": "ebbb149aaf0284fd951c005a6dc1b13c89ee8dff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47b82c1c_421ec672",
         "filename": "components/omnibox/browser/scored_history_match_unittest.cc",
         "patchSetId": 2
@@ -84,6 +156,24 @@
       "revId": "ebbb149aaf0284fd951c005a6dc1b13c89ee8dff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9f5c4f6_7eb56e50",
+        "filename": "components/omnibox/browser/scored_history_match_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-10T22:08:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47b82c1c_421ec672",
+      "revId": "ebbb149aaf0284fd951c005a6dc1b13c89ee8dff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
