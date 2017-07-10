@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "802cbb8a_a5466ffe",
+        "filename": "services/ui/gpu/interfaces/gpu_service.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-10T21:15:58Z",
+      "side": 1,
+      "message": "1) What\u0027s the purpose of key here? Why is it useful/needed? Presumably |data| is the shader that was loaded, and we need to pass it to the GPU service so it can use that--but it\u0027s not clear what the purpose of key is.\n\n2) What things can talk to the GpuService? Is it just the host that can talk to the GPU service, or will child processes eventually be able to talk to it?",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 69
+      },
+      "revId": "05957722dbf1c5abc0c2f94fec3aa44a9515e99d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
