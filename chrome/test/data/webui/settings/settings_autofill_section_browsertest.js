@@ -173,6 +173,7 @@ SettingsAutofillSectionBrowserTest.prototype = {
 TEST_F('SettingsAutofillSectionBrowserTest', 'uiTest', function() {
   suite('AutofillSection', function() {
     test('testAutofillExtensionIndicator', function() {
+      assertTrue(false);  // Fail test on purpose.
       // Initializing with fake prefs
       var section = document.createElement('settings-autofill-section');
       section.prefs = {autofill: {enabled: {}}};

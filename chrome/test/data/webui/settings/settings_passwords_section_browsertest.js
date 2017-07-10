@@ -186,6 +186,7 @@ TEST_F('SettingsPasswordSectionBrowserTest', 'uiTests', function() {
     });
 
     test('testPasswordsExtensionIndicator', function() {
+      assertTrue(false);  // Fail test on purpose.
       // Initialize with dummy prefs.
       var element = document.createElement('passwords-section');
       element.prefs = {credentials_enable_service: {}};

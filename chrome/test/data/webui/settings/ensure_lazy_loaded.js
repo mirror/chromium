@@ -8,11 +8,14 @@ cr.define('settings', function() {
     if (location.href == location.origin + '/') {
       suiteSetup(function() {
         return new Promise(function(resolve, reject) {
+          console.log('ensureLazyLoaded did a thing');
           // This URL needs to match the URL passed to <settings-idle-load> from
           // <settings-basic-page>.
           Polymer.Base.importHref('/lazy_load.html', resolve, reject, true);
         });
       });
+    } else {
+      console.log('ensureLazyLoaded called, but doing nothing');
     }
   }
 

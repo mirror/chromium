@@ -150,6 +150,7 @@ TEST_F('PasswordsAndFormsBrowserTest', 'uiTests', function() {
 
   suite('PasswordsAndForms', function() {
     test('baseLoadAndRemove', function() {
+      assertTrue(false);  // Fail test on purpose.
       return createPrefs(true, true).then(function(prefs) {
         var element = createPasswordsAndFormsElement(prefs);
 
