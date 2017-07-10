@@ -16,6 +16,24 @@
       "revId": "602dfb6cd0e5b02200f2852db1cbcb4f8dc7bcc7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4b89011_6acf8966",
+        "filename": "content/shell/browser/shell_net_log.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-10T18:09:15Z",
+      "side": 1,
+      "message": "I tend to like it as a separate variable so will keep :)",
+      "parentUuid": "0fd9ceb0_12db77f8",
+      "revId": "602dfb6cd0e5b02200f2852db1cbcb4f8dc7bcc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
