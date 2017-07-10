@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d014902_6b708eb6",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-07-10T04:42:46Z",
+      "side": 1,
+      "message": "Why do you compute end only if base is first?",
+      "revId": "7b1ba73eed2ccd5dbd1a9e2691d738db7b071cb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
