@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "83d66fee_ef6cf8e1",
+        "filename": "chrome/browser/chromeos/policy/user_cloud_policy_store_chromeos_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-10T07:52:26Z",
+      "side": 1,
+      "message": "Sorry, wrong function name.\nWhat I tried to say was CryptohomeClient::GetStubSanitizedUsername().\n\ncrbug.com/126674 has been there for long to remove all blocking version methods, but unfortunately we haven\u0027t seen much progress.\nAlso, blocking version methods of crypthome client are impelemnted with BlockingMethodCaller whose class comment says you should avoid using it.",
+      "parentUuid": "9696a4c2_74d4587a",
+      "revId": "2331bf324835eb2a3a58d4d152b735d98989fcd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e144d14a_54dd0e02",
         "filename": "chromeos/dbus/fake_cryptohome_client.cc",
         "patchSetId": 1
@@ -253,6 +271,24 @@
       "side": 1,
       "message": "Ok, let\u0027s introduce another bool, then.\nNote: ServiceIsAvailable is for controlling the dbus connection emulation, so it looks not for this case.",
       "parentUuid": "6ebad1fe_13aa7f8b",
+      "revId": "2331bf324835eb2a3a58d4d152b735d98989fcd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf0eac8c_fea97cf7",
+        "filename": "chromeos/dbus/fake_cryptohome_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-10T07:52:26Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s a good idea to have an is_ready boolean for each method.\nI introduced service_is_available_ in https://codereview.chromium.org/34303002 and I don\u0027t see any harm in using it also for controlling the behavior of GetSanitizedUsername().",
+      "parentUuid": "e6ef605f_bc04fe79",
       "revId": "2331bf324835eb2a3a58d4d152b735d98989fcd1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
