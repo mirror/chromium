@@ -141,6 +141,30 @@
       "revId": "b356df4356092534a75811b9c31fb91f50ef012d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da6e3414_481e4b2e",
+        "filename": "content/browser/cocoa/system_hotkey_helper_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-10T19:39:54Z",
+      "side": 1,
+      "message": "The first enum value in any enum is not guaranteed to be the default. In this case, this line selects SKIP_ON_SHUTDOWN as the default.\nhttps://cs.chromium.org/chromium/src/base/task_scheduler/task_traits.h?rcl\u003d8b4f1223115aa934a660b2df2776bbb7124ce6bd\u0026l\u003d157\n\nIt is not the intent of this API to let developers omit traits that just happen to match the default. Instead, the intent is to let developers omit traits when they want to use the scheduler\u0027s opinion on how to dispatch tasks.\n\nIn this case, we should have an opinion. Adding a CONTINUE_ON_SHUTDOWN documents that the task can be terminated in the middle of execution and no bad result will occur. A priority will also document the importance of this task to the user.\n\nAs for SKIP_ON_SHUTDOWN vs. CONTINUE_ON_SHUTDOWN, SKIP_ON_SHUTDOWN is the safer default because it provides atomic execution of the task under shutdown situations.",
+      "parentUuid": "3af69e6b_19ec3aea",
+      "range": {
+        "startLine": 37,
+        "startChar": 24,
+        "endLine": 37,
+        "endChar": 32
+      },
+      "revId": "b356df4356092534a75811b9c31fb91f50ef012d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
