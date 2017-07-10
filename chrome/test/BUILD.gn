@@ -3204,6 +3204,7 @@ test("unit_tests") {
     "../browser/page_load_metrics/observers/subresource_filter_metrics_observer_unittest.cc",
     "../browser/page_load_metrics/observers/tab_restore_page_load_metrics_observer_unittest.cc",
     "../browser/page_load_metrics/observers/ukm_page_load_metrics_observer_unittest.cc",
+    "../browser/page_load_metrics/observers/use_counter_page_load_metrics_observer_unittest.cc",
     "../browser/page_load_metrics/page_load_metrics_util_unittest.cc",
     "../browser/page_load_metrics/test/ukm_tester.cc",
     "../browser/page_load_metrics/test/ukm_tester.h",
