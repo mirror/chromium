@@ -257,6 +257,24 @@
       "revId": "89e090349b524a34ecfd5a9ff153d14febb79ddb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26c10a2e_9b849bec",
+        "filename": "media/remoting/rpc.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1138617
+      },
+      "writtenOn": "2017-07-10T23:52:07Z",
+      "side": 1,
+      "message": "Yuri: No, media::remoting::Receiver was created by xjz@ for the integration test(https://codereview.chromium.org/2808583002)\n\nWe have our own receiver implementation. and that\u0027s the reason Chris added me to CC to make sure cast implements this RPC properly.\n\nI found out the answer for my question. config change observer callback is issued from DemuxerStream. If we need to implement the RPC, we should issue the message right after receiving the RPC_DS_READUNTIL_CALLBACK",
+      "parentUuid": "3b8afd89_61b7c784",
+      "revId": "89e090349b524a34ecfd5a9ff153d14febb79ddb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
