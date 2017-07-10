@@ -364,16 +364,16 @@ AtomicString ExtractMIMETypeFromMediaType(const AtomicString& media_type) {
       media_type.GetString().Substring(type_start, type_end - type_start));
 }
 
-String ExtractCharsetFromMediaType(const String& media_type) {
+String DeprecatedExtractCharsetFromMediaType(const String& media_type) {
   unsigned pos, len;
-  FindCharsetInMediaType(media_type, pos, len);
+  DeprecatedFindCharsetInMediaType(media_type, pos, len);
   return media_type.Substring(pos, len);
 }
 
-void FindCharsetInMediaType(const String& media_type,
-                            unsigned& charset_pos,
-                            unsigned& charset_len,
-                            unsigned start) {
+void DeprecatedFindCharsetInMediaType(const String& media_type,
+                                      unsigned& charset_pos,
+                                      unsigned& charset_len,
+                                      unsigned start) {
   charset_pos = start;
   charset_len = 0;
 
