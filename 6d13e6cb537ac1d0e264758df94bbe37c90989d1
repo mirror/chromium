@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e75d37c2_481ef6da",
+        "filename": "tools/win/linker_verbose_tracking.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-07-10T22:18:17Z",
+      "side": 1,
+      "message": "operator in works very well - good idea. That makes it much clearer. I applied that to four places. Done.",
+      "parentUuid": "cb4af5ce_e9363862",
+      "range": {
+        "startLine": 128,
+        "startChar": 24,
+        "endLine": 128,
+        "endChar": 29
+      },
+      "revId": "6d13e6cb537ac1d0e264758df94bbe37c90989d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc569426_28176451",
         "filename": "tools/win/linker_verbose_tracking.py",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "6d13e6cb537ac1d0e264758df94bbe37c90989d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e5c8237_e29a4e4f",
+        "filename": "tools/win/linker_verbose_tracking.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-07-10T22:18:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc569426_28176451",
+      "range": {
+        "startLine": 141,
+        "startChar": 24,
+        "endLine": 141,
+        "endChar": 29
+      },
+      "revId": "6d13e6cb537ac1d0e264758df94bbe37c90989d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
