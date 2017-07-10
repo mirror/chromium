@@ -87,6 +87,7 @@ class CONTENT_EXPORT InterstitialPageImpl
 
   RenderWidgetHostView* GetView();
 
+  bool enabled() const { return enabled_; }
   bool pause_throbber() const { return pause_throbber_; }
 
   // TODO(nasko): This should move to InterstitialPageNavigatorImpl, but in
@@ -170,7 +171,6 @@ class CONTENT_EXPORT InterstitialPageImpl
   void UpdateDeviceScaleFactor(double device_scale_factor) override;
   RenderWidgetHostInputEventRouter* GetInputEventRouter() override;
 
-  bool enabled() const { return enabled_; }
   WebContents* web_contents() const;
   const GURL& url() const { return url_; }
 

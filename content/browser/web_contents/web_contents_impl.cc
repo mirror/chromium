@@ -2015,7 +2015,8 @@ RenderWidgetHostImpl* WebContentsImpl::GetFocusedRenderWidgetHost(
 RenderWidgetHostImpl* WebContentsImpl::GetRenderWidgetHostWithPageFocus() {
   WebContentsImpl* focused_web_contents = GetFocusedWebContents();
 
-  if (focused_web_contents->ShowingInterstitialPage()) {
+  if (focused_web_contents->interstitial_page_ &&
+      focused_web_contents->interstitial_page_->enabled()) {
     return static_cast<RenderFrameHostImpl*>(
                focused_web_contents->interstitial_page_->GetMainFrame())
         ->GetRenderWidgetHost();
