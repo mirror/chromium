@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "aab583a9_b58bfba8",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-07-10T14:07:12Z",
+      "side": 1,
+      "message": "Oops! forgot removing it.\n\nDone",
+      "parentUuid": "7270602c_ac2119bb",
+      "revId": "eb454afb111fc06162748a6f1cd88a61bd8ec775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "835be11d_703b3396",
         "filename": "components/exo/surface.cc",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-08T10:43:18Z",
       "side": 1,
       "message": "nit: exo code typically don\u0027t use \u0027const\u0027 for local variables unless they are static constants that deserve a kConstantName name. how about just doing \"needs_commit \u0026\u003d needs_commit_surface_hierarchy_;\" here?",
+      "revId": "eb454afb111fc06162748a6f1cd88a61bd8ec775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57da2fcf_608dfa34",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-07-10T14:07:12Z",
+      "side": 1,
+      "message": "Remove the const.\n\nWe cannot modify needs_commit. Because it will be passed to children surfaces, it should be modified.",
+      "parentUuid": "835be11d_703b3396",
       "revId": "eb454afb111fc06162748a6f1cd88a61bd8ec775",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ed9f7f5b_3b89c8d5",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-07-10T14:07:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b5f1e6b_d7895512",
+      "revId": "eb454afb111fc06162748a6f1cd88a61bd8ec775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "594cbd60_272819b4",
         "filename": "components/exo/surface.cc",
         "patchSetId": 7
@@ -64,6 +118,24 @@
       "writtenOn": "2017-07-08T10:43:18Z",
       "side": 1,
       "message": "nit: s/sub_surface_and_position/sub_surface/ and just surface below is preferred if possible",
+      "revId": "eb454afb111fc06162748a6f1cd88a61bd8ec775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec0f8414_dc0c1bf1",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-07-10T14:07:12Z",
+      "side": 1,
+      "message": "Done. Changed it to sub_surface_entry",
+      "parentUuid": "594cbd60_272819b4",
       "revId": "eb454afb111fc06162748a6f1cd88a61bd8ec775",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "b8039db3_f7f2896b",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-07-10T14:07:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27095766_fba3a7d6",
+      "revId": "eb454afb111fc06162748a6f1cd88a61bd8ec775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "732787ff_8c5c51aa",
         "filename": "components/exo/surface_tree_host.h",
         "patchSetId": 7
@@ -101,6 +191,24 @@
       "revId": "eb454afb111fc06162748a6f1cd88a61bd8ec775",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3404dd8b_ece74412",
+        "filename": "components/exo/surface_tree_host.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-07-10T14:07:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "732787ff_8c5c51aa",
+      "revId": "eb454afb111fc06162748a6f1cd88a61bd8ec775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
