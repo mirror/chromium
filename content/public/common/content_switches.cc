@@ -497,6 +497,10 @@ const char kEnableVtune[]                   = "enable-vtune-support";
 // Enable Vulkan support, must also have ENABLE_VULKAN defined.
 const char kEnableVulkan[] = "enable-vulkan";
 
+// Enable the compositor's wait_for_all_pipeline_stages_before_draw mode.
+const char kEnableWaitForAllPipelineStagesBeforeDraw[] =
+    "enable-wait-for-all-pipeline-stages-before-draw";
+
 // Enable WebFonts intervention and trigger the signal always.
 const char kEnableWebFontsInterventionTrigger[] =
     "enable-webfonts-intervention-trigger";
