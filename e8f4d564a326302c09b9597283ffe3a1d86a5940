@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e456a1f_80f0abe6",
+        "filename": "chrome/browser/devtools/global_confirm_info_bar.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-07-10T21:38:28Z",
+      "side": 1,
+      "message": "Fixing lint warning while I\u0027m here.",
+      "range": {
+        "startLine": 7,
+        "startChar": 17,
+        "endLine": 7,
+        "endChar": 0
+      },
+      "revId": "e8f4d564a326302c09b9597283ffe3a1d86a5940",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
