@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ccc5c7e8_650ac0f3",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 34604,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-10T19:53:51Z",
+      "side": 1,
+      "message": "I think BooleanPresent is better than BooleanSuccess here.",
+      "range": {
+        "startLine": 34604,
+        "startChar": 60,
+        "endLine": 34604,
+        "endChar": 74
+      },
+      "revId": "5bd7bca03418d1051dba701937bd13d20cf4dcbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
