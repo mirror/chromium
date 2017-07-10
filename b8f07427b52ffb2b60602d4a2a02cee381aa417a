@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "511b8ff9_e54663cb",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 964,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-10T20:59:30Z",
+      "side": 1,
+      "message": "Kill empty line?",
+      "revId": "b8f07427b52ffb2b60602d4a2a02cee381aa417a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7096ef4_21aecd4c",
+        "filename": "ios/chrome/browser/ui/commands/application_commands.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-10T20:59:30Z",
+      "side": 1,
+      "message": "*practice\n\n(Ironically, I wrote \"practive\" on my first attempt at this comment!)",
+      "range": {
+        "startLine": 11,
+        "startChar": 34,
+        "endLine": 11,
+        "endChar": 42
+      },
+      "revId": "b8f07427b52ffb2b60602d4a2a02cee381aa417a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b34b416_bf9ff9c1",
+        "filename": "ios/chrome/browser/ui/commands/application_commands.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-10T20:59:30Z",
+      "side": 1,
+      "message": "Nit: *Shows",
+      "range": {
+        "startLine": 16,
+        "startChar": 3,
+        "endLine": 16,
+        "endChar": 7
+      },
+      "revId": "b8f07427b52ffb2b60602d4a2a02cee381aa417a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "278b2de9_8040bac4",
+        "filename": "ios/chrome/browser/ui/ntp/new_tab_page_toolbar_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-10T20:59:30Z",
+      "side": 1,
+      "message": "Why is the dispatcher made readwrite?",
+      "revId": "b8f07427b52ffb2b60602d4a2a02cee381aa417a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71adcc3b_f3fd2182",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_model.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-10T20:59:30Z",
+      "side": 1,
+      "message": "Is this needed?",
+      "revId": "b8f07427b52ffb2b60602d4a2a02cee381aa417a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
