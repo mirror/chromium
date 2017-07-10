@@ -16,6 +16,24 @@
       "revId": "0c9f60a2f7aad40f455f3bec99b88cf79356be6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c50143cd_dd0615a2",
+        "filename": "cc/layers/render_surface_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1157921
+      },
+      "writtenOn": "2017-07-10T20:52:43Z",
+      "side": 1,
+      "message": "Can we check if the mask layer\u0027s raster source to determine whether we want to skip them?",
+      "parentUuid": "89845db6_77ba8d02",
+      "revId": "0c9f60a2f7aad40f455f3bec99b88cf79356be6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
