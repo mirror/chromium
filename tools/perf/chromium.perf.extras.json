@@ -1,0 +1,28 @@
+{
+  "comment": [
+    "This file contains manually-specified tests that should be merged into",
+    "testing/buildbot/chromium.perf.json.",
+    "This is not recommended; this file is mostly a hack for now"
+  ],
+  "Linux Perf": {
+    "isolated_scripts": [
+      {
+        "args": [
+          "-l"
+        ],
+        "isolate_name": "telemetry_perf_tests",
+        "name": "Dummy job",
+        "override_compile_targets": [
+          "telemetry_perf_tests"
+        ],
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "expiration": 36000,
+          "hard_timeout": 10800,
+          "ignore_task_failure": true,
+          "io_timeout": 3600
+        }
+      }
+    ]
+  }
+}
