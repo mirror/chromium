@@ -11,7 +11,7 @@ LoopbackConnectionManager::LoopbackConnectionManager(
     : ServerConnectionManager("localhost", 0, false, signal),
       loopback_server_(persistent_file) {}
 
-LoopbackConnectionManager::~LoopbackConnectionManager() {}
+LoopbackConnectionManager::~LoopbackConnectionManager() = default;
 
 bool LoopbackConnectionManager::PostBufferToPath(
     PostBufferParams* params,

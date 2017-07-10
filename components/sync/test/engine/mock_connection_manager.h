@@ -40,7 +40,7 @@ class MockConnectionManager : public ServerConnectionManager {
   };
 
   MockConnectionManager(syncable::Directory*, CancelationSignal* signal);
-  ~MockConnectionManager() override;
+  ~MockConnectionManager();
 
   // Overridden ServerConnectionManager functions.
   bool PostBufferToPath(PostBufferParams*,

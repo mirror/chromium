@@ -20,7 +20,7 @@ class LoopbackConnectionManager : public ServerConnectionManager {
  public:
   LoopbackConnectionManager(CancelationSignal* signal,
                             const base::FilePath& persistent_file);
-  ~LoopbackConnectionManager() override;
+  ~LoopbackConnectionManager();
 
  private:
   // Overridden ServerConnectionManager functions.
