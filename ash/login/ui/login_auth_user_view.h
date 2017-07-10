@@ -5,6 +5,8 @@
 #ifndef ASH_LOGIN_UI_LOGIN_AUTH_USER_VIEW_H_
 #define ASH_LOGIN_UI_LOGIN_AUTH_USER_VIEW_H_
 
+#include <stdint.h>
+
 #include "ash/ash_export.h"
 #include "ash/login/ui/login_password_view.h"
 #include "ash/public/interfaces/user_info.mojom.h"
@@ -55,10 +57,15 @@ class ASH_EXPORT LoginAuthUserView : public views::View {
   void SetAuthMethods(uint32_t auth_methods);
   AuthMethods auth_methods() const { return auth_methods_; }
 
+  // Parent view for all content above the PIN keyboard.
+  views::View* non_pin_root() const { return non_pin_root_; }
+  // The PIN view.
+  LoginPinView* pin_view() const { return pin_view_; }
+
   // Update the displayed name, icon, etc to that of |user|.
   void UpdateForUser(const mojom::UserInfoPtr& user);
 
-  const AccountId& current_user() const { return current_user_; }
+  const mojom::UserInfoPtr& current_user() const;
 
   // views::View:
   const char* GetClassName() const override;
@@ -68,8 +75,8 @@ class ASH_EXPORT LoginAuthUserView : public views::View {
   // Called when the user submits an auth method. Runs mojo call.
   void OnAuthSubmit(bool is_pin, const base::string16& password);
 
-  AccountId current_user_;
   AuthMethods auth_methods_ = AUTH_NONE;
+  views::View* non_pin_root_ = nullptr;
   LoginUserView* user_view_ = nullptr;
   LoginPasswordView* password_view_ = nullptr;
   LoginPinView* pin_view_ = nullptr;

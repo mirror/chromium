@@ -39,7 +39,8 @@ LoginAuthUserView::LoginAuthUserView(const mojom::UserInfoPtr& user,
     : on_auth_(on_auth) {
   // Build child views.
   user_view_ =
-      new LoginUserView(LoginDisplayStyle::kLarge, true /*show_dropdown*/);
+      new LoginUserView(LoginDisplayStyle::kLarge, true /*show_dropdown*/,
+                        base::Bind(&base::DoNothing) /*on_tap*/);
   password_view_ = new LoginPasswordView(
       base::Bind(&LoginAuthUserView::OnAuthSubmit, base::Unretained(this),
                  false /*is_pin*/));
@@ -54,11 +55,18 @@ LoginAuthUserView::LoginAuthUserView(const mojom::UserInfoPtr& user,
                                         gfx::Insets(),
                                         kDistanceBetweenUsernameAndPasswordDp));
 
+  non_pin_root_ = new views::View();
+  non_pin_root_->SetLayoutManager(
+      new views::BoxLayout(views::BoxLayout::kVertical, gfx::Insets(),
+                           kDistanceBetweenUsernameAndPasswordDp));
+
+  AddChildView(non_pin_root_);
+
   // Note: |user_view_| will be sized to it's minimum size (not its preferred
   // size) because of the vertical box layout manager. This class expresses the
   // minimum preferred size again so everything works out as desired (ie, we can
   // control how far away the password auth is from the user label).
-  AddChildView(user_view_);
+  non_pin_root_->AddChildView(user_view_);
 
   {
     // We need to center LoginPasswordAuth.
@@ -66,7 +74,7 @@ LoginAuthUserView::LoginAuthUserView(const mojom::UserInfoPtr& user,
     // Also, BoxLayout::kVertical will ignore preferred width, which messes up
     // separator rendering.
     auto* row = new views::View();
-    AddChildView(row);
+    non_pin_root_->AddChildView(row);
 
     auto* layout = new views::BoxLayout(views::BoxLayout::kHorizontal);
     layout->set_main_axis_alignment(
@@ -90,20 +98,26 @@ LoginAuthUserView::LoginAuthUserView(const mojom::UserInfoPtr& user,
   }
 
   SetAuthMethods(auth_methods_);
-  UpdateForUser(user);
+
+  user_view_->UpdateForUser(user, false /*animate*/);
 }
 
 LoginAuthUserView::~LoginAuthUserView() = default;
 
 void LoginAuthUserView::SetAuthMethods(uint32_t auth_methods) {
+  auth_methods_ = static_cast<AuthMethods>(auth_methods);
+
   // TODO(jdufault): Implement additional auth methods.
-  pin_view_->SetVisible((auth_methods & AUTH_PIN) != 0);
+  pin_view_->SetVisible((auth_methods_ & AUTH_PIN) != 0);
   PreferredSizeChanged();
 }
 
 void LoginAuthUserView::UpdateForUser(const mojom::UserInfoPtr& user) {
-  current_user_ = user->account_id;
-  user_view_->UpdateForUser(user);
+  user_view_->UpdateForUser(user, true /*animate*/);
+}
+
+const mojom::UserInfoPtr& LoginAuthUserView::current_user() const {
+  return user_view_->current_user();
 }
 
 const char* LoginAuthUserView::GetClassName() const {
@@ -121,7 +135,7 @@ gfx::Size LoginAuthUserView::CalculatePreferredSize() const {
 void LoginAuthUserView::OnAuthSubmit(bool is_pin,
                                      const base::string16& password) {
   Shell::Get()->lock_screen_controller()->AuthenticateUser(
-      current_user_, UTF16ToUTF8(password), is_pin,
+      current_user()->account_id, UTF16ToUTF8(password), is_pin,
       base::BindOnce([](OnAuthCallback on_auth,
                         bool auth_success) { on_auth.Run(auth_success); },
                      on_auth_));
