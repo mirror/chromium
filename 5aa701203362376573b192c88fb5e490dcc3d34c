@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "bc14f0fe_081c52fd",
+        "filename": "chrome/browser/chromeos/printing/usb_printer_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-07-10T22:12:52Z",
+      "side": 1,
+      "message": "Thanks for bringing this up, I\u0027d not thought about it at all.\n\nAs this is orthogonal to the bug being fixed here, filed crbug/740727 to figure out the right way to internationalize these names. \n\nGiven that we\u0027re moving metadata around (from USB device firmware to Printer structures) it\u0027s not entirely clear to me how this fits in the i10n frameworks.  The USB string will almost certainly be a classic translation string (and I\u0027d be surprised if it doesn\u0027t already exist somewhere), but the other strings will not.  And I don\u0027t know how to generalize the \"which should come first, manufacturer or model\" question across locales.",
+      "parentUuid": "7b238a46_0861e379",
+      "revId": "5aa701203362376573b192c88fb5e490dcc3d34c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1094f398_76e54e78",
         "filename": "chrome/browser/chromeos/printing/usb_printer_util.cc",
         "patchSetId": 1
@@ -68,6 +86,24 @@
       "revId": "5aa701203362376573b192c88fb5e490dcc3d34c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccf921b2_44db214b",
+        "filename": "chrome/browser/chromeos/printing/usb_printer_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-07-10T22:12:52Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1094f398_76e54e78",
+      "revId": "5aa701203362376573b192c88fb5e490dcc3d34c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
