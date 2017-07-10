@@ -34,6 +34,24 @@
       "revId": "0e6c980ba4da7ceaeeecb117b291b02f9aa8320b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44ca72d5_4f3a2414",
+        "filename": "mojo/common/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-10T21:35:44Z",
+      "side": 1,
+      "message": "That is because NullValuePtr is different type in chromium and blink variant, i.e., it is not shared. So you cannot use it here if you want to share this struct traits in both variants.\n\nI have sent you a CL showing how to fix this:\nhttps://chromium-review.googlesource.com/565889\n\nBasically, you need to pick another type and define the conversion between that type and common::mojom::NullValueDataView. I chose void* in the fix above.",
+      "parentUuid": "0b0d90f2_b2c27989",
+      "revId": "0e6c980ba4da7ceaeeecb117b291b02f9aa8320b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
