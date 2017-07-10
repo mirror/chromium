@@ -22,6 +22,30 @@
       "revId": "ca98682a5e2fcea39dd2fbffed9541e927fd5a40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2695bbcd_3468b2be",
+        "filename": "chrome/browser/chromeos/arc/arc_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1182849
+      },
+      "writtenOn": "2017-07-10T17:08:44Z",
+      "side": 0,
+      "message": "Definitely, that was my mistake.\nFixed in patch set 2",
+      "parentUuid": "1e9bef87_1fd3b038",
+      "range": {
+        "startLine": 107,
+        "startChar": 16,
+        "endLine": 107,
+        "endChar": 19
+      },
+      "revId": "ca98682a5e2fcea39dd2fbffed9541e927fd5a40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
