@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d137617_a272fcb4",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1985,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-07-10T21:48:42Z",
+      "side": 1,
+      "message": "Is there a similar bug here?",
+      "revId": "74b8520cdfbc9ea0550189ba83534944aaee8896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "969ca084_b79db7d5",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3145,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-07-10T21:48:42Z",
+      "side": 1,
+      "message": "This one is probably fine, since it checks enabled() internally in InterstitialPageImpl.  I\u0027m not an expert on interstitials, but I wonder if many things would break if we just checked enabled() in ShowingInterstitialPage() instead?",
+      "revId": "74b8520cdfbc9ea0550189ba83534944aaee8896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41d2f9b1_5dcaca2b",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 5055,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-07-10T21:48:42Z",
+      "side": 1,
+      "message": "Also here?  (Basically, I was looking for other focus-related places that rely on ShowingInterstitialPage, maybe there are others I missed.)",
+      "revId": "74b8520cdfbc9ea0550189ba83534944aaee8896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
