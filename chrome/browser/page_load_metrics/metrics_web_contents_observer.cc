@@ -574,7 +574,8 @@ MetricsWebContentsObserver::NotifyAbortedProvisionalLoadsNewNavigation(
 void MetricsWebContentsObserver::OnTimingUpdated(
     content::RenderFrameHost* render_frame_host,
     const mojom::PageLoadTiming& timing,
-    const mojom::PageLoadMetadata& metadata) {
+    const mojom::PageLoadMetadata& metadata,
+    const mojom::PageLoadFeatures& new_features) {
   // We may receive notifications from frames that have been navigated away
   // from. We simply ignore them.
   if (GetMainFrame(render_frame_host) != web_contents()->GetMainFrame()) {
@@ -605,7 +606,7 @@ void MetricsWebContentsObserver::OnTimingUpdated(
 
   if (committed_load_) {
     committed_load_->metrics_update_dispatcher()->UpdateMetrics(
-        render_frame_host, timing, metadata);
+        render_frame_host, timing, metadata, new_features);
   }
 }
 
@@ -614,7 +615,8 @@ void MetricsWebContentsObserver::UpdateTiming(
     const mojom::PageLoadMetadataPtr metadata) {
   content::RenderFrameHost* render_frame_host =
       page_load_metrics_binding_.GetCurrentTargetFrame();
-  OnTimingUpdated(render_frame_host, *timing, *metadata);
+  OnTimingUpdated(render_frame_host, *timing, *metadata,
+                  mojom::PageLoadFeatures());
 }
 
 bool MetricsWebContentsObserver::ShouldTrackNavigation(
