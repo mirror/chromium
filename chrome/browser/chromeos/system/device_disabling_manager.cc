@@ -217,7 +217,7 @@ void DeviceDisablingManager::UpdateFromCrosSettings() {
   }
 
   // Cache the enrollment domain.
-  enrollment_domain_ = browser_policy_connector_->GetEnterpriseDomain();
+  enrollment_domain_ = browser_policy_connector_->GetDisplayDomain();
 
   // If no session or login is in progress, show the device disabled screen.
   delegate_->ShowDeviceDisabledScreen();

@@ -92,7 +92,7 @@ void AddPublicSessionDetailsToUserDictionaryEntry(
 
   if (policy_connector->IsCloudManaged()) {
     user_dict->SetString(kKeyEnterpriseDomain,
-                         policy_connector->GetEnterpriseDomain());
+                         policy_connector->GetDisplayDomain());
   }
 
   std::vector<std::string> kEmptyRecommendedLocales;

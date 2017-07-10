@@ -48,6 +48,9 @@ cr.define('policy', function() {
         var domain = this.querySelector('.domain');
         domain.textContent = status.domain;
         domain.parentElement.hidden = false;
+        var displayDomain = this.querySelector('.display-domain');
+        displayDomain.textContent = status.displayDomain;
+        displayDomain.parentElement.hidden = false;
 
         // Populate the device naming information.
         // Populate the asset identifier.
