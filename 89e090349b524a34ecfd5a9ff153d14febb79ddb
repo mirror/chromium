@@ -239,6 +239,24 @@
       "revId": "89e090349b524a34ecfd5a9ff153d14febb79ddb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b8afd89_61b7c784",
+        "filename": "media/remoting/rpc.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-10T20:43:43Z",
+      "side": 1,
+      "message": "Agree w/ Chris here. We don\u0027t want to special-case anything for remoting, if it can be helped; especially if that would introduce consistency issues.\n\nOne thing I\u0027m wondering about is versioning-related: What happens if the Chromecast is an older version that doesn\u0027t know about these new RPCs? Meaning, it is not yet updated to a version built against a recent-enough Chromium commit. Will anything break if these new RenderClient methods are never called?\n\nEric: Chromecast uses media::remoting::Receiver as its RendererClient, right? Otherwise, how will Chromecast know to call these new RPCs?",
+      "parentUuid": "ada6823e_16d5bd2c",
+      "revId": "89e090349b524a34ecfd5a9ff153d14febb79ddb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

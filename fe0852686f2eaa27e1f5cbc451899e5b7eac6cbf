@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9a828e1_3eed8dcb",
+        "filename": "media/remoting/courier_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-10T20:43:43Z",
+      "side": 1,
+      "message": "Instead of DCHECK(), this should be:\n\n  if (!out_audio_config.IsValidConfig()) {\n    VLOG(1) \u003c\u003c __func__ \u003c\u003c \" invalid AudioDecodecConfig in RPC message: \"\n            \u003c\u003c out_audio_config.AsHumanReadableString();\n    OnFatalError(RPC_INVALID);\n    return; \n  }\n\nThe reason is that the RPC message is coming from a remote device running a different software implementation, and/or it\u0027s possible the RPC message could have been corrupted in-transit. So, it\u0027s not an assumption-breaker or internal logic flaw (which is what DCHECK is meant for). Thus, rather than crash the browser on that, we should explicitly check it at runtime and just immediately end the session.",
+      "range": {
+        "startLine": 610,
+        "startChar": 2,
+        "endLine": 610,
+        "endChar": 43
+      },
+      "revId": "fe0852686f2eaa27e1f5cbc451899e5b7eac6cbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c2f0116_a5fa45b7",
+        "filename": "media/remoting/courier_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-10T20:43:43Z",
+      "side": 1,
+      "message": "ditto: Need runtime \"if-guard handling,\" like audio.",
+      "range": {
+        "startLine": 634,
+        "startChar": 2,
+        "endLine": 634,
+        "endChar": 43
+      },
+      "revId": "fe0852686f2eaa27e1f5cbc451899e5b7eac6cbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
