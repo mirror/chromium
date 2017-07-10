@@ -3196,6 +3196,7 @@ TEST_F(TextfieldTest, CursorVisibility) {
 // the text cursor's location is updated accordingly.
 TEST_F(TextfieldTest, TextfieldBoundsChangeTest) {
   InitTextfield();
+  ;
   gfx::Size new_size = gfx::Size(30, 100);
   textfield_->SetSize(new_size);
 
@@ -3212,6 +3213,7 @@ TEST_F(TextfieldTest, TextfieldBoundsChangeTest) {
   int prev_x = GetCursorBounds().x();
   SendKeyEvent('a');
   EXPECT_EQ(prev_x, GetCursorBounds().x());
+  EXPECT_TRUE(test_api_->IsCursorVisible());
 
   // Increase the textfield size and check if the cursor moves to the new end.
   textfield_->SetSize(gfx::Size(40, 100));
@@ -3220,7 +3222,9 @@ TEST_F(TextfieldTest, TextfieldBoundsChangeTest) {
   prev_x = GetCursorBounds().x();
   // Decrease the textfield size and check if the cursor moves to the new end.
   textfield_->SetSize(gfx::Size(30, 100));
+  textfield_->SetCursorEnabled(false);
   EXPECT_GT(prev_x, GetCursorBounds().x());
+  EXPECT_FALSE(test_api_->IsCursorVisible());
 }
 
 // Verify that if a textfield gains focus during key dispatch that an edit
