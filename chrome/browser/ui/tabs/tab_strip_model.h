@@ -13,17 +13,15 @@
 
 #include "base/macros.h"
 #include "base/observer_list.h"
+#include "base/optional.h"
 #include "chrome/browser/ui/tabs/tab_strip_model_observer.h"
+#include "content/public/browser/web_contents.h"
 #include "ui/base/models/list_selection_model.h"
 #include "ui/base/page_transition_types.h"
 
 class Profile;
 class TabStripModelDelegate;
 class TabStripModelOrderController;
-
-namespace content {
-class WebContents;
-}
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -170,7 +168,9 @@ class TabStripModel {
   // See also AddWebContents.
   void InsertWebContentsAt(int index,
                            content::WebContents* contents,
-                           int add_types);
+                           int add_types,
+                           base::Optional<content::WebContents::CreateParams>
+                               create_params = base::nullopt);
 
   // Closes the WebContents at the specified index. This causes the
   // WebContents to be destroyed, but it may not happen immediately.

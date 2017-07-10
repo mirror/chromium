@@ -654,6 +654,7 @@ MetricsWebContentsObserver::TestingObserver::TestingObserver(
     : observer_(page_load_metrics::MetricsWebContentsObserver::FromWebContents(
           web_contents)) {
   observer_->AddTestingObserver(this);
+  started_in_foreground_ = observer_->in_foreground_;
 }
 
 MetricsWebContentsObserver::TestingObserver::~TestingObserver() {

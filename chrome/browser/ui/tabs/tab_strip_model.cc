@@ -268,10 +268,12 @@ void TabStripModel::AppendWebContents(WebContents* contents,
                                    ADD_NONE);
 }
 
-void TabStripModel::InsertWebContentsAt(int index,
-                                        WebContents* contents,
-                                        int add_types) {
-  delegate_->WillAddWebContents(contents);
+void TabStripModel::InsertWebContentsAt(
+    int index,
+    WebContents* contents,
+    int add_types,
+    base::Optional<content::WebContents::CreateParams> create_params) {
+  delegate_->WillAddWebContents(contents, create_params);
 
   bool active = (add_types & ADD_ACTIVE) != 0;
   bool pin = (add_types & ADD_PINNED) != 0;

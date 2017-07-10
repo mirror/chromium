@@ -4,6 +4,8 @@
 
 #include "chrome/browser/ui/browser_tabrestore.h"
 
+#include <utility>
+
 #include "chrome/browser/extensions/tab_helper.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/sessions/session_service.h"
@@ -25,6 +27,9 @@ using content::NavigationEntry;
 using sessions::ContentSerializedNavigationBuilder;
 using sessions::SerializedNavigationEntry;
 
+using WebContentsAndCreateParams =
+    std::pair<WebContents*, WebContents::CreateParams>;
+
 namespace chrome {
 
 namespace {
@@ -37,7 +42,7 @@ RestoreType GetRestoreType(Browser* browser, bool from_last_session) {
              : RestoreType::LAST_SESSION_EXITED_CLEANLY;
 }
 
-WebContents* CreateRestoredTab(
+WebContentsAndCreateParams CreateRestoredTab(
     Browser* browser,
     const std::vector<SerializedNavigationEntry>& navigations,
     int selected_navigation,
@@ -79,7 +84,7 @@ WebContents* CreateRestoredTab(
       &entries);
   DCHECK_EQ(0u, entries.size());
 
-  return web_contents;
+  return {web_contents, create_params};
 }
 
 }  // namespace
@@ -95,14 +100,10 @@ content::WebContents* AddRestoredTab(
     bool from_last_session,
     content::SessionStorageNamespace* session_storage_namespace,
     const std::string& user_agent_override) {
-  WebContents* web_contents = CreateRestoredTab(browser,
-                                                navigations,
-                                                selected_navigation,
-                                                extension_app_id,
-                                                from_last_session,
-                                                session_storage_namespace,
-                                                user_agent_override,
-                                                !select);
+  WebContentsAndCreateParams web_contents_and_create_params = CreateRestoredTab(
+      browser, navigations, selected_navigation, extension_app_id,
+      from_last_session, session_storage_namespace, user_agent_override,
+      !select);
 
   int add_types = select ? TabStripModel::ADD_ACTIVE
                          : TabStripModel::ADD_NONE;
@@ -111,8 +112,10 @@ content::WebContents* AddRestoredTab(
         tab_index, browser->tab_strip_model()->IndexOfFirstNonPinnedTab());
     add_types |= TabStripModel::ADD_PINNED;
   }
-  browser->tab_strip_model()->InsertWebContentsAt(tab_index, web_contents,
-                                                  add_types);
+  WebContents* web_contents = web_contents_and_create_params.first;
+  browser->tab_strip_model()->InsertWebContentsAt(
+      tab_index, web_contents, add_types,
+      web_contents_and_create_params.second);
   if (select) {
     browser->window()->Activate();
   } else {
@@ -145,23 +148,19 @@ content::WebContents* ReplaceRestoredTab(
     const std::string& extension_app_id,
     content::SessionStorageNamespace* session_storage_namespace,
     const std::string& user_agent_override) {
-  WebContents* web_contents = CreateRestoredTab(browser,
-                                                navigations,
-                                                selected_navigation,
-                                                extension_app_id,
-                                                from_last_session,
-                                                session_storage_namespace,
-                                                user_agent_override,
-                                                false);
+  WebContentsAndCreateParams web_contents_and_create_params = CreateRestoredTab(
+      browser, navigations, selected_navigation, extension_app_id,
+      from_last_session, session_storage_namespace, user_agent_override, false);
 
   // ReplaceWebContentsAt won't animate in the restoration, so manually do the
   // equivalent of ReplaceWebContentsAt.
   TabStripModel* tab_strip = browser->tab_strip_model();
   int insertion_index = tab_strip->active_index();
-  tab_strip->InsertWebContentsAt(insertion_index + 1,
-                                 web_contents,
-                                 TabStripModel::ADD_ACTIVE |
-                                 TabStripModel::ADD_INHERIT_GROUP);
+  WebContents* web_contents = web_contents_and_create_params.first;
+  tab_strip->InsertWebContentsAt(
+      insertion_index + 1, web_contents,
+      TabStripModel::ADD_ACTIVE | TabStripModel::ADD_INHERIT_GROUP,
+      web_contents_and_create_params.second);
   tab_strip->CloseWebContentsAt(insertion_index, TabStripModel::CLOSE_NONE);
   return web_contents;
 }

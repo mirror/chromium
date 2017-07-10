@@ -56,8 +56,11 @@ class MetricsWebContentsObserver
 
     virtual void OnCommit(PageLoadTracker* tracker) {}
 
+    bool started_in_foreground() const { return started_in_foreground_; }
+
    private:
     page_load_metrics::MetricsWebContentsObserver* observer_;
+    bool started_in_foreground_;
 
     DISALLOW_COPY_AND_ASSIGN(TestingObserver);
   };

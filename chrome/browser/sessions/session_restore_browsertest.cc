@@ -25,6 +25,7 @@
 #include "chrome/browser/first_run/first_run.h"
 #include "chrome/browser/lifetime/keep_alive_types.h"
 #include "chrome/browser/lifetime/scoped_keep_alive.h"
+#include "chrome/browser/page_load_metrics/metrics_web_contents_observer.h"
 #include "chrome/browser/prefs/session_startup_pref.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_manager.h"
@@ -1667,4 +1668,32 @@ IN_PROC_BROWSER_TEST_F(SessionRestoreWithStartupURLTest,
             tab_strip->GetWebContentsAt(0)->GetURL().possibly_invalid_spec());
   EXPECT_EQ(kStartupURL,
             tab_strip->GetWebContentsAt(1)->GetURL().possibly_invalid_spec());
+}
+
+class SessionRestoreTestingObserver
+    : public page_load_metrics::MetricsWebContentsObserver::TestingObserver {
+ public:
+  static std::unique_ptr<SessionRestoreTestingObserver>
+  CreateSessionRestoreTestingObserver(content::WebContents* web_contents) {
+    return base::MakeUnique<SessionRestoreTestingObserver>(web_contents);
+  }
+
+  explicit SessionRestoreTestingObserver(content::WebContents* web_contents)
+      : TestingObserver(web_contents) {}
+};
+
+IN_PROC_BROWSER_TEST_F(SessionRestoreTest,
+                       SingleRestoredTabShouldStartedInForeground) {
+  ui_test_utils::NavigateToURL(
+      browser(), ui_test_utils::GetTestUrl(
+                     base::FilePath(base::FilePath::kCurrentDirectory),
+                     base::FilePath(FILE_PATH_LITERAL("title1.html"))));
+
+  Browser* new_browser = QuitBrowserAndRestore(browser(), 1);
+
+  std::unique_ptr<SessionRestoreTestingObserver> page_load_metrics_tester =
+      SessionRestoreTestingObserver::CreateSessionRestoreTestingObserver(
+          new_browser->tab_strip_model()->GetActiveWebContents());
+
+  EXPECT_TRUE(page_load_metrics_tester->started_in_foreground());
 }
