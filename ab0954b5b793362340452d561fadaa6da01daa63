@@ -22,6 +22,30 @@
       "revId": "ab0954b5b793362340452d561fadaa6da01daa63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "065bfe90_679231c3",
+        "filename": "chrome/browser/ntp_tiles/ntp_tiles_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-07-10T08:53:49Z",
+      "side": 1,
+      "message": "Let\u0027s chat later in person but I\u0027ll add one point now.\n\nWrt to (2) above, I think it\u0027s a non-issue, except the fact that the test relies on the implementation calling SyncWithHistory(). If this changed, the test would need to be updated as per your previous proposal. You might want to add a comment about that.",
+      "parentUuid": "8dd1ce25_bf67b9ac",
+      "range": {
+        "startLine": 51,
+        "startChar": 19,
+        "endLine": 51,
+        "endChar": 0
+      },
+      "revId": "ab0954b5b793362340452d561fadaa6da01daa63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
