@@ -213,7 +213,6 @@ Output.STATE_INFO_ = {
   busy: {on: {msgId: 'busy_state'}},
   collapsed: {on: {msgId: 'aria_expanded_false'}},
   default: {on: {msgId: 'default_state'}},
-  disabled: {on: {msgId: 'aria_disabled_true'}},
   expanded: {on: {msgId: 'aria_expanded_true'}},
   multiselectable: {on: {msgId: 'aria_multiselectable_true'}},
   required: {on: {msgId: 'aria_required_true'}},
@@ -234,6 +233,15 @@ Output.INPUT_TYPE_MESSAGE_IDS_ = {
   'tel': 'input_type_number',
   'text': 'input_type_text',
   'url': 'input_type_url',
+};
+
+/**
+ * Rules for mapping the restrictions property to a msg id
+ * @const {Object<string>}
+ * @private
+ */
+Output.RESTRICTIONS_STATE_MAP = {
+  'disabled': 'aria_disabled_true'
 };
 
 /**
@@ -264,7 +272,10 @@ Output.PRESSED_STATE_MAP = {
  */
 Output.RULES = {
   navigate: {
-    'default': {speak: '$name $value $state $role $description', braille: ''},
+    'default': {
+      speak: '$name $value $state $restrictions $role $description',
+      braille: ''
+    },
     abstractContainer: {
       enter: '$nameFromNode $role $state $description',
       leave: '@exited_container($role)'
@@ -273,7 +284,7 @@ Output.RULES = {
       speak: '$if($valueForRange, $valueForRange, $value) ' +
           '$if($minValueForRange, @aria_value_min($minValueForRange)) ' +
           '$if($maxValueForRange, @aria_value_max($maxValueForRange)) ' +
-          '$name $role $description $state'
+          '$name $role $description $state $restrictions'
     },
     alert: {
       enter: '$name $role $state',
@@ -298,10 +309,10 @@ Output.RULES = {
     },
     checkBox: {
       speak: '$if($checked, $earcon(CHECK_ON), $earcon(CHECK_OFF)) ' +
-          '$name $role $checked $description $state'
+          '$name $role $checked $description $state $restrictions'
     },
     client: {speak: '$name'},
-    date: {enter: '$nameFromNode $role $description'},
+    date: {enter: '$nameFromNode $role $state $restrictions $description'},
     dialog: {enter: '$nameFromNode $role $description'},
     genericContainer: {
       enter: '$nameFromNode $description $state',
@@ -322,17 +333,17 @@ Output.RULES = {
       speak: '!relativePitch(hierarchicalLevel) ' +
           '$nameOrDescendants= ' +
           '$if($hierarchicalLevel, @tag_h+$hierarchicalLevel, $role) $state ' +
-          '$description'
+          '$restrictions $description'
     },
     image: {
       speak: '$if($name, $name, $urlFilename) ' +
           '$value $state $role $description',
     },
     inlineTextBox: {speak: '$name='},
-    inputTime: {enter: '$nameFromNode $role $description'},
+    inputTime: {enter: '$nameFromNode $role $state $restrictions $description'},
     link: {
-      enter: '$nameFromNode= $role $state',
-      speak: '$name $value $state ' +
+      enter: '$nameFromNode= $role $state $restrictions',
+      speak: '$name $value $state $restrictions ' +
           '$if($inPageLinkTarget, @internal_link, $role) $description',
     },
     list: {
@@ -343,37 +354,38 @@ Output.RULES = {
     listBox: {
       enter: '$nameFromNode ' +
           '$role @@list_with_items($countChildren(listBoxOption)) ' +
-          '$description'
+          '$restrictions $description'
     },
     listBoxOption: {
       speak: '$name $role @describe_index($indexInParent, $parentChildCount) ' +
-          '$description $state'
+          '$description $state $restrictions'
     },
     listItem: {
       enter: '$name= $role $state $description',
-      speak: '$nameOrDescendants $earcon(LIST_ITEM) $role $state $description'
+      speak: '$nameOrDescendants $earcon(LIST_ITEM) $role $state ' +
+          '$restrictions $description'
     },
     listMarker: {speak: '$name'},
     menu: {
       enter: '$name $role',
       speak: '$name $role @@list_with_items($countChildren(menuItem)) ' +
-          '$description $state'
+          '$description $state $restrictions'
     },
     menuItem: {
       speak: '$name $role $if($haspopup, @has_submenu) ' +
           '@describe_index($indexInParent, $parentChildCount) ' +
-          '$description $state'
+          '$description $state $restrictions'
     },
     menuItemCheckBox: {
       speak: '$if($checked, $earcon(CHECK_ON), $earcon(CHECK_OFF)) ' +
-          '$name $role $checked $state $description ' +
+          '$name $role $checked $state $restrictions $description ' +
           '@describe_index($indexInParent, $parentChildCount) '
     },
     menuItemRadio: {
       speak: '$if($checked, $earcon(CHECK_ON), $earcon(CHECK_OFF)) ' +
           '$if($checked, @describe_radio_selected($name), ' +
-          '@describe_radio_unselected($name)) $state $description ' +
-          '@describe_index($indexInParent, $parentChildCount) '
+          '@describe_radio_unselected($name)) $state $restrictions ' +
+          '$description @describe_index($indexInParent, $parentChildCount) '
     },
     menuListOption: {
       speak: '$name @role_menuitem ' +
@@ -383,14 +395,15 @@ Output.RULES = {
     paragraph: {speak: '$descendants'},
     popUpButton: {
       speak: '$value $name $role @aria_has_popup ' +
-          '$state $description'
+          '$state $restrictions $description'
     },
     radioButton: {
       speak: '$if($checked, $earcon(CHECK_ON), $earcon(CHECK_OFF)) ' +
           '$if($checked, @describe_radio_selected($name), ' +
-          '@describe_radio_unselected($name)) $description $state'
+          '@describe_radio_unselected($name)) $description $state ' +
+          '$restrictions'
     },
-    radioGroup: {enter: '$name $role $description'},
+    radioGroup: {enter: '$name $role $restrictions $description'},
     rootWebArea: {enter: '$name', speak: '$if($name, $name, $docUrl)'},
     region: {speak: '$state $nameOrTextContent $description'},
     row: {enter: '$node(tableRowHeader)'},
@@ -399,10 +412,10 @@ Output.RULES = {
     switch: {
       speak: '$if($checked, $earcon(CHECK_ON), $earcon(CHECK_OFF)) ' +
           '$if($checked, @describe_switch_on($name), ' +
-          '@describe_switch_off($name)) $description $state'
+          '@describe_switch_off($name)) $description $state $restrictions'
     },
     tab: {
-      speak: '@describe_tab($name) $state $description ' +
+      speak: '@describe_tab($name) $state $restrictions $description ' +
           '$if($setSize, @describe_index($posInSet, $setSize))',
     },
     table: {
@@ -414,7 +427,7 @@ Output.RULES = {
     tableHeaderContainer: {speak: '$nameOrTextContent $state $description'},
     textField: {
       speak: '$name $value $if($multiline, @tag_textarea, $if(' +
-          '$inputType, $inputType, $role)) $description $state',
+          '$inputType, $inputType, $role)) $description $state $restrictions',
       braille: ''
     },
     timer: {speak: '$nameFromNode $descendants $value $state $description'},
@@ -422,14 +435,17 @@ Output.RULES = {
       speak: '$if($checked, $earcon(CHECK_ON), $earcon(CHECK_OFF)) ' +
           '$name $role $pressed $description $state'
     },
-    toolbar: {enter: '$name $role $description'},
-    tree: {enter: '$name $role @@list_with_items($countChildren(treeItem))'},
+    toolbar: {enter: '$name $role $description $restrictions'},
+    tree: {
+      enter: '$name $role @@list_with_items($countChildren(treeItem)) ' +
+          '$restrictions'
+    },
     treeItem: {
-      enter: '$role $expanded $collapsed ' +
+      enter: '$role $expanded $collapsed $restrictions ' +
           '@describe_index($indexInParent, $parentChildCount) ' +
           '@describe_depth($hierarchicalLevel)',
       speak: '$name ' +
-          '$role $description $state ' +
+          '$role $description $state $restrictions ' +
           '@describe_index($indexInParent, $parentChildCount) ' +
           '@describe_depth($hierarchicalLevel)'
     },
@@ -992,6 +1008,11 @@ Output.prototype = {
                             })
                             .length;
             this.append_(buff, String(count));
+          }
+        } else if (token == 'restrictions') {
+          var msg = Output.RESTRICTIONS_STATE_MAP[node.restrictions];
+          if (msg) {
+            this.format_(node, '@' + msg, buff);
           }
         } else if (token == 'checked') {
           var msg = Output.CHECKED_STATE_MAP[node.checked];
