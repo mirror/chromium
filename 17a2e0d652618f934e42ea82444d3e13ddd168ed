@@ -39,6 +39,183 @@
       "revId": "17a2e0d652618f934e42ea82444d3e13ddd168ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "676b943b_e19fe019",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-10T02:53:02Z",
+      "side": 1,
+      "message": "service",
+      "range": {
+        "startLine": 41,
+        "startChar": 60,
+        "endLine": 41,
+        "endChar": 67
+      },
+      "revId": "17a2e0d652618f934e42ea82444d3e13ddd168ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3eaa3b96_a1688a49",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-10T02:53:02Z",
+      "side": 1,
+      "message": "/* create */",
+      "range": {
+        "startLine": 21,
+        "startChar": 58,
+        "endLine": 21,
+        "endChar": 62
+      },
+      "revId": "17a2e0d652618f934e42ea82444d3e13ddd168ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eeea2bb9_da12a3b9",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-10T02:53:02Z",
+      "side": 1,
+      "message": "Can you add a comment on why this dependency is needed?",
+      "revId": "17a2e0d652618f934e42ea82444d3e13ddd168ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b28d90db_e5ccea8e",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-10T02:53:02Z",
+      "side": 1,
+      "message": "nit: Is this message relevant for the \u0027!arc_service_manager\u0027 case? When a_s_m can be nullptr here?\n\nMaybe split the IF into two?",
+      "revId": "17a2e0d652618f934e42ea82444d3e13ddd168ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0f3063f_2c490fb7",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge_factory.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-10T02:53:02Z",
+      "side": 1,
+      "message": "You should probably mention that the getter may create a new service instance when needed.",
+      "range": {
+        "startLine": 24,
+        "startChar": 5,
+        "endLine": 24,
+        "endChar": 12
+      },
+      "revId": "17a2e0d652618f934e42ea82444d3e13ddd168ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96380d35_824485a2",
+        "filename": "chrome/browser/chromeos/arc/arc_service_launcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-10T02:53:02Z",
+      "side": 1,
+      "message": "Please mention that the getter instantiates the service. That\u0027s probably not obvious for most of ARC devs.",
+      "revId": "17a2e0d652618f934e42ea82444d3e13ddd168ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "753b90f8_2df86515",
+        "filename": "components/arc/arc_service_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-10T02:53:02Z",
+      "side": 1,
+      "message": "What\u0027s the actual plan? It was unclear to me how to fix the TODO. Can you elaborate?",
+      "revId": "17a2e0d652618f934e42ea82444d3e13ddd168ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18c98367_6a52008a",
+        "filename": "components/arc/arc_service_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-10T02:53:02Z",
+      "side": 1,
+      "message": "Did you mean \u0027these\u0027? If so, can you add a TODO to each? (getter, setter and the variable.)",
+      "range": {
+        "startLine": 72,
+        "startChar": 12,
+        "endLine": 72,
+        "endChar": 16
+      },
+      "revId": "17a2e0d652618f934e42ea82444d3e13ddd168ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "806e745e_0ef6b1bc",
+        "filename": "components/arc/arc_service_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-10T02:53:02Z",
+      "side": 1,
+      "message": "The usage of the pointer is a bit tricky. Can you add a comment unless you\u0027re very sure you\u0027ll remove this in a week or two?",
+      "revId": "17a2e0d652618f934e42ea82444d3e13ddd168ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
