@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "c3dd8a3a_def8881c",
+        "filename": "chrome/browser/chromeos/printing/usb_printer_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-07-10T22:14:42Z",
+      "side": 1,
+      "message": "...and I just realized I replied to the wrong patch.  (I have another patch which touches this code and thought these were drive-by comments there  :))\n\nSorry about that.",
+      "parentUuid": "bc14f0fe_081c52fd",
+      "revId": "5aa701203362376573b192c88fb5e490dcc3d34c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1094f398_76e54e78",
         "filename": "chrome/browser/chromeos/printing/usb_printer_util.cc",
         "patchSetId": 1
