@@ -125,8 +125,7 @@ class ProfileSyncServiceStartupTest : public testing::Test {
     profile_sync_service_bundle_.signin_manager()->SetAuthenticatedAccountInfo(
         kGaiaId, kEmail);
     if (sync_service)
-      sync_service->GoogleSigninSucceededWithPassword(account_id, kEmail,
-                                                      kDummyPassword);
+      sync_service->GoogleSigninSucceeded(account_id, kEmail);
 #endif
     return account_id;
   }
