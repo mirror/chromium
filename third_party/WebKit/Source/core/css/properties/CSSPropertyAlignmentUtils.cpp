@@ -116,9 +116,17 @@ CSSValue* CSSPropertyAlignmentUtils::ConsumeSelfPositionOverflowPosition(
 }
 
 CSSValue* CSSPropertyAlignmentUtils::ConsumeSimplifiedItemPosition(
-    CSSParserTokenRange& range) {
+    CSSParserTokenRange& range,
+    AutoKeyword autoKeyword,
+    LegacyKeyword legacyKeyword) {
   CSSValueID id = range.Peek().Id();
-  if (IsAutoOrNormalOrStretch(id))
+  if (autoKeyword == AutoKeyword::kForbid &&
+      CSSPropertyParserHelpers::IdentMatches<CSSValueAuto>(id))
+    return nullptr;
+
+  if ((legacyKeyword == LegacyKeyword::kAllow &&
+       CSSPropertyParserHelpers::IdentMatches<CSSValueLegacy>(id)) ||
+      IsAutoOrNormalOrStretch(id))
     return CSSPropertyParserHelpers::ConsumeIdent(range);
 
   if (IsBaselineKeyword(id))
