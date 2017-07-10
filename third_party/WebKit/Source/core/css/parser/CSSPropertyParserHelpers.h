@@ -131,6 +131,12 @@ const CSSValue* ParseLonghandViaAPI(CSSPropertyID unresolved_property,
                                     CSSParserTokenRange&,
                                     bool& needs_legacy_parsing);
 
+bool ConsumeShorthandVia2LonghandsAPI(const StylePropertyShorthand&,
+                                      bool important,
+                                      const CSSParserContext&,
+                                      CSSParserTokenRange&,
+                                      HeapVector<CSSProperty, 256>& properties);
+
 bool ConsumeShorthandVia4LonghandsAPI(const StylePropertyShorthand&,
                                       bool important,
                                       const CSSParserContext&,
