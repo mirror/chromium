@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e570aecc_b036f39f",
+        "filename": "ios/showcase/core/app_delegate.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-07-10T21:56:47Z",
+      "side": 1,
+      "message": "Remove?",
+      "revId": "473aa85857e217410159005f20cb5308e994b4d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
