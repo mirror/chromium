@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84f3a544_c19d8f5e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/ui/MediaButtonReceiver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-07-10T15:31:04Z",
+      "side": 1,
+      "message": "Are we 100% sure we will always call startForeground on the service as soon as it\u0027s created? If not, we would get another crash with a slightly different error.",
+      "revId": "6a0030a183d710105eb5910f6d046d9838551cfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
