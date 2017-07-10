@@ -16,6 +16,24 @@
       "revId": "47aafa36e9463dfe9354c651c4c2bb7e048481ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06311c0f_5aa498f7",
+        "filename": "base/android/java/src/org/chromium/base/process_launcher/ChildConnectionAllocator.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-07-10T21:23:24Z",
+      "side": 1,
+      "message": "OK. In that case do we want to enforce that this constructor is called on that specific passed-in handler?",
+      "parentUuid": "48c30dc9_a913235f",
+      "revId": "47aafa36e9463dfe9354c651c4c2bb7e048481ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
