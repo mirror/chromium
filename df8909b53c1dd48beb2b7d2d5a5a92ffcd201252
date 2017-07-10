@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "813a6c0f_48afee57",
+        "filename": "chrome/browser/ui/cocoa/bookmarks/bookmark_bar_folder_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-07-10T20:37:20Z",
+      "side": 1,
+      "message": "I think we can use NSRectFill() here and avoid making an NSBezierPath",
+      "range": {
+        "startLine": 222,
+        "startChar": 3,
+        "endLine": 222,
+        "endChar": 9
+      },
+      "revId": "df8909b53c1dd48beb2b7d2d5a5a92ffcd201252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
