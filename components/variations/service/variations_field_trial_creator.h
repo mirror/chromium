@@ -13,6 +13,7 @@
 #include "base/metrics/field_trial.h"
 #include "base/threading/thread_checker.h"
 #include "components/variations/client_filterable_state.h"
+#include "components/variations/platform_field_trials.h"
 #include "components/variations/service/ui_string_overrider.h"
 #include "components/variations/service/variations_service_client.h"
 #include "components/variations/variations_seed_store.h"
@@ -44,6 +45,11 @@ class VariationsFieldTrialCreator {
   // Chrome and WebView must provide their own implementations.
   virtual std::unique_ptr<const base::FieldTrial::EntropyProvider>
   CreateLowEntropyProvider() = 0;
+
+  bool SetupFieldTrials(std::unique_ptr<base::FieldTrialList>& field_trial_list,
+                        std::unique_ptr<base::FeatureList>& feature_list,
+                        std::vector<std::string>& variation_ids,
+                        variations::PlatformFieldTrials* platform_field_trials);
 
  protected:
   // Returns all of the client state used for filtering studies.
