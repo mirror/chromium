@@ -126,6 +126,13 @@
     "dependencies": ["permission:declarativeWebRequest"],
     "contexts": ["blessed_extension"]
   },
+  "declarativeNetRequest" : {
+    // COMMENT: Api features depending on permission features seems a bit
+    // backwards to me. I would have thought permission and manifest features
+    // should depend on api features.
+    "dependencies" : ["permission:declarativeNetRequest"],
+    "contexts" : ["blessed_extension"]
+  },
   "diagnostics": {
     "dependencies": ["permission:diagnostics"],
     "extension_types": ["platform_app"],
