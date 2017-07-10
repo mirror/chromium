@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8726a399_f548cd2c",
+        "filename": "components/payments/core/address_normalization_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-10T13:43:55Z",
+      "side": 1,
+      "message": "When I tested calling show() on the PaymentRequest object again after the first transaction had completed, I ran into the issue where this object needed to be reusable. I think there\u0027s no harm in making it so. Whether we should be allowed to call show() again on PaymentRequest is another question which I don\u0027t know the answer to at the moment. If that happens not to be the case, I think it should be prevented in a different way.\nI hesitate to introduce a public Reset() method to this class as it could possibly be called while the normalization is in progress. The delegates should get deleted only when they have completed. WDYT?",
+      "parentUuid": "78be4b3e_979eac3a",
+      "revId": "cffd7309f410301eabea65261d3f92cdf70eaf34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9ab0e194_2f3b9163",
         "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
         "patchSetId": 2
@@ -30,6 +48,30 @@
       "writtenOn": "2017-07-07T20:05:50Z",
       "side": 1,
       "message": "nit: unordered_map ?",
+      "range": {
+        "startLine": 100,
+        "startChar": 7,
+        "endLine": 100,
+        "endChar": 10
+      },
+      "revId": "cffd7309f410301eabea65261d3f92cdf70eaf34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aceb885f_5aeb2323",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-10T13:43:55Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "9ab0e194_2f3b9163",
       "range": {
         "startLine": 100,
         "startChar": 7,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "f61886d0_ec5b2005",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-10T13:43:55Z",
+      "side": 1,
+      "message": "of course! :facepalm",
+      "parentUuid": "28ed1611_c57f4c79",
+      "range": {
+        "startLine": 260,
+        "startChar": 2,
+        "endLine": 260,
+        "endChar": 8
+      },
+      "revId": "cffd7309f410301eabea65261d3f92cdf70eaf34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea0b7f5b_bf0017ac",
         "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
         "patchSetId": 2
@@ -76,6 +142,30 @@
       "writtenOn": "2017-07-07T20:05:50Z",
       "side": 1,
       "message": "Is it worth checking if _activeWebState is equal to webState, and if so, call [self setActiveWebState:nil] or some other method?",
+      "range": {
+        "startLine": 261,
+        "startChar": 1,
+        "endLine": 261,
+        "endChar": 0
+      },
+      "revId": "cffd7309f410301eabea65261d3f92cdf70eaf34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de62672d_67a1baf9",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-10T13:43:55Z",
+      "side": 1,
+      "message": "That shouldn\u0027t be necessary. The BrowserViewController calls setActiveWebState: with the new active WebState instance or nil if the last WebState gets removed.",
+      "parentUuid": "ea0b7f5b_bf0017ac",
       "range": {
         "startLine": 261,
         "startChar": 1,
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "a8a57617_d61e356e",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-10T13:43:55Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "569e61e1_00bf49df",
+      "range": {
+        "startLine": 390,
+        "startChar": 2,
+        "endLine": 390,
+        "endChar": 6
+      },
+      "revId": "cffd7309f410301eabea65261d3f92cdf70eaf34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d58dcfb8_69a02c0b",
         "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
         "patchSetId": 2
@@ -122,6 +236,30 @@
       "writtenOn": "2017-07-07T20:05:50Z",
       "side": 1,
       "message": "nit: const auto",
+      "range": {
+        "startLine": 392,
+        "startChar": 2,
+        "endLine": 392,
+        "endChar": 6
+      },
+      "revId": "cffd7309f410301eabea65261d3f92cdf70eaf34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f22fa5f4_4db40293",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-10T13:43:55Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "d58dcfb8_69a02c0b",
       "range": {
         "startLine": 392,
         "startChar": 2,
