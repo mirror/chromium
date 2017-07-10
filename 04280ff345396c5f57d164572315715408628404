@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "f036b29c_8bbc4d82",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroup.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-10T17:08:11Z",
+      "side": 1,
+      "message": "Understood. Used Collection and added a comment to clarify this.",
+      "parentUuid": "dece4729_517e611c",
+      "range": {
+        "startLine": 152,
+        "startChar": 18,
+        "endLine": 152,
+        "endChar": 31
+      },
+      "revId": "04280ff345396c5f57d164572315715408628404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e356c601_9a94739a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroup.java",
         "patchSetId": 7
