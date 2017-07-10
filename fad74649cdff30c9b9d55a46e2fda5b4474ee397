@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53f93a83_584941bb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-07-10T21:01:08Z",
+      "side": 1,
+      "message": "The first line of the message should be a clear and concise description of the purpose of the change. \"build on yash\u0027s work and added test\" should be moved to later part of the message. There should be an empty line between the first line and the rest of the message. For ChromeDriver changes, by convention the first line should start with [Chromedriver] (including the square brackets).",
+      "revId": "fad74649cdff30c9b9d55a46e2fda5b4474ee397",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
