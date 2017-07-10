@@ -22,6 +22,30 @@
       "revId": "c7e193b38a216fc908f8ea3716bdf35cd9a30b06",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e06411e_52750cbc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/BottomToolbarPhone.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 735,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-10T17:26:04Z",
+      "side": 1,
+      "message": "You\u0027re correct, mUnfocusedLocationBarlayoutWidth \u003d mUnfocusedLocationBarLayoutRight - mUnfocusedLocationBarLayoutLeft and the expression is always 0. I fixed this per your suggestion.\n\nThere are videos in the bug of the various combinations of LTR/RTL text in LTR/RTL toolbar layouts.",
+      "parentUuid": "cc08f8c0_938f94c7",
+      "range": {
+        "startLine": 735,
+        "startChar": 38,
+        "endLine": 735,
+        "endChar": 69
+      },
+      "revId": "c7e193b38a216fc908f8ea3716bdf35cd9a30b06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
