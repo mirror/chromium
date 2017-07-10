@@ -434,6 +434,7 @@ ChunkDemuxer::ChunkDemuxer(
       detected_text_track_count_(0) {
   DCHECK(!open_cb_.is_null());
   DCHECK(!encrypted_media_init_data_cb_.is_null());
+  media_log_->SetStringProperty("demuxer", "ChunkDemuxer (MSE)");
 }
 
 std::string ChunkDemuxer::GetDisplayName() const {

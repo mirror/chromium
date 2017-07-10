@@ -208,6 +208,10 @@ MATCHER(ParsedDTSGreaterThanPTS, "") {
          CONTAINS_STRING(arg, ", which is after the frame's PTS");
 }
 
+MATCHER_P(DemuxerName, name_string, "") {
+  return CONTAINS_STRING(arg, "demuxer") && CONTAINS_STRING(arg, name_string);
+}
+
 MATCHER_P(FoundStream, stream_type_string, "") {
   return CONTAINS_STRING(
              arg, "found_" + std::string(stream_type_string) + "_stream") &&

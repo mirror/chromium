@@ -884,6 +884,7 @@ FFmpegDemuxer::FFmpegDemuxer(
   DCHECK(task_runner_.get());
   DCHECK(data_source_);
   DCHECK(!media_tracks_updated_cb_.is_null());
+  media_log_->SetStringProperty("demuxer", "FFmpegDemuxer");
 }
 
 FFmpegDemuxer::~FFmpegDemuxer() {

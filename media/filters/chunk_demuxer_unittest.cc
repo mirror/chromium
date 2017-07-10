@@ -189,6 +189,7 @@ class ChunkDemuxerTest : public ::testing::Test {
         base::Bind(&ChunkDemuxerTest::DemuxerOpened, base::Unretained(this));
     Demuxer::EncryptedMediaInitDataCB encrypted_media_init_data_cb = base::Bind(
         &ChunkDemuxerTest::OnEncryptedMediaInitData, base::Unretained(this));
+    EXPECT_MEDIA_LOG(DemuxerName("ChunkDemuxer (MSE)"));
     demuxer_.reset(
         new ChunkDemuxer(open_cb, encrypted_media_init_data_cb, &media_log_));
   }

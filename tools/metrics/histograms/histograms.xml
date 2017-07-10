@@ -30020,6 +30020,19 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Media.MSE.DetectedNonSAPType1"
+    enum="BooleanMSEDetectedNonSAPType1">
+  <owner>wolenetz@chromium.org</owner>
+  <summary>
+    Whether an MSE playback included any track containing a sequence emitted
+    from the coded frame processing algorithm where a non-keyframe's PTS
+    precedes the PTS of the keyframe needed to decode it. There could be other
+    non-SAP-Type-1 sequences which are not yet detected or reported (like
+    interleaved GOPs). See https://crbug.com/739931 for more context on why such
+    sequences may be problematic.
+  </summary>
+</histogram>
+
 <histogram name="Media.MSE.DetectedTrackCount.Audio">
   <owner>wolenetz@chromium.org</owner>
   <summary>

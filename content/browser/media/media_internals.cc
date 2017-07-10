@@ -330,6 +330,8 @@ class MediaInternals::MediaInternalsUMAHandler {
     bool video_decoder_changed = false;
     bool has_cdm = false;
     bool is_incognito = false;
+    bool is_mse = false;
+    bool mse_found_nonkeyframe_preceding_gop_start = false;
     std::string audio_codec_name;
     std::string video_codec_name;
     std::string video_decoder;
@@ -588,6 +590,21 @@ void MediaInternals::MediaInternalsUMAHandler::SavePlayerState(
         if (buffering_state == "BUFFERING_HAVE_ENOUGH")
           player_info.has_reached_have_enough = true;
       }
+      if (event.params.HasKey("demuxer")) {
+        std::string demuxer;
+        event.params.GetString("demuxer", &demuxer);
+        if (demuxer == "ChunkDemuxer (MSE)")
+          player_info.is_mse = true;
+        else
+          player_info.is_mse = false;
+      }
+      if (event.params.HasKey("mse_found_nonkeyframe_preceding_gop_start")) {
+        DCHECK(player_info.is_mse);
+        event.params.GetBoolean(
+            "mse_found_nonkeyframe_preceding_gop_start",
+            &player_info.mse_found_nonkeyframe_preceding_gop_start);
+        DCHECK(player_info.mse_found_nonkeyframe_preceding_gop_start);
+      }
       break;
     case media::MediaLogEvent::Type::WATCH_TIME_UPDATE: {
       DVLOG(2) << "Processing watch time update.";
@@ -756,6 +773,15 @@ void MediaInternals::MediaInternalsUMAHandler::ReportUMAForPipelineStatus(
   // never-used players.
   if (player_info.has_cdm && player_info.has_ever_played)
     UMA_HISTOGRAM_BOOLEAN("Media.EME.IsIncognito", player_info.is_incognito);
+
+  // If the playback used MSE, report whether or not it encountered a
+  // potentially problematic Non-SAP-Type-1 sequence. See also
+  // https://crbug.com/739931 for more information.
+  if (player_info.is_mse) {
+    UMA_HISTOGRAM_BOOLEAN(
+        "Media.MSE.DetectedNonSAPType1",
+        player_info.mse_found_nonkeyframe_preceding_gop_start);
+  }
 }
 
 void MediaInternals::MediaInternalsUMAHandler::OnProcessTerminated(
