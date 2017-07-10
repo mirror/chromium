@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87e80ce0_b908d64d",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-10T09:15:22Z",
+      "side": 1,
+      "message": "Does this compile?\n\nIf your intention was to test vs an empty string (std::string()), why not details_[0].empty() ?\n\nMore importantly, why this weird logic? If we don\u0027t care about overwriting empty strings, let\u0027s not add them in the first place.\n\nIf the idea is that ToText() always requires something to be at the position [0], then that is ToText()\u0027s problem and that should handle it:\n\ndetails_.empty() ? std::string() : details_[0];\n\nIf the problem is that the derivative constructors pass std::string() which is then inserted at line 77, it means that you have the constructor chain the other way around. You should have:\n\nAuditorResult(ResultType type) : type_(type) {}\nAuditorResult(ResultType type, std::string message) : AuditorResult(type) {\n  details_.push_back(message);\n}",
+      "range": {
+        "startLine": 107,
+        "startChar": 30,
+        "endLine": 107,
+        "endChar": 56
+      },
+      "revId": "ea9f21f727ef995ffdfeb13e8608c9d9c9388354",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd44a3ee_6e74df77",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-10T09:15:22Z",
+      "side": 1,
+      "message": "nit: Not a bug, but this is passed by copy, so the const specifier doesn\u0027t achieve much.",
+      "range": {
+        "startLine": 366,
+        "startChar": 4,
+        "endLine": 366,
+        "endChar": 9
+      },
+      "revId": "ea9f21f727ef995ffdfeb13e8608c9d9c9388354",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b66eb32a_ba6368b2",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-10T09:15:22Z",
+      "side": 1,
+      "message": "reserved_ids.clear() before inserting.\n\nAlso, this would be much better readable if it was an array in an unnamed namespace.\n\n{\n  { TRAFFIC_ANNOTATION_FOR_TESTS, \"test\"},\n  { ..., ...},\n}\n\nand then this method can return a const ref to it.",
+      "range": {
+        "startLine": 491,
+        "startChar": 2,
+        "endLine": 491,
+        "endChar": 22
+      },
+      "revId": "ea9f21f727ef995ffdfeb13e8608c9d9c9388354",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd9b4b88_26816766",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-10T09:15:22Z",
+      "side": 1,
+      "message": "nit: unsigned int",
+      "range": {
+        "startLine": 538,
+        "startChar": 19,
+        "endLine": 538,
+        "endChar": 20
+      },
+      "revId": "ea9f21f727ef995ffdfeb13e8608c9d9c9388354",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d7ed5ee_f0827289",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-10T09:15:22Z",
+      "side": 1,
+      "message": "style:\n\n// Does something.\nDoSomething();",
+      "range": {
+        "startLine": 198,
+        "startChar": 7,
+        "endLine": 198,
+        "endChar": 13
+      },
+      "revId": "ea9f21f727ef995ffdfeb13e8608c9d9c9388354",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
