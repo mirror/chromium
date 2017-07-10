@@ -20,6 +20,14 @@ class TestGpuService : public ui::mojom::GpuService {
   TestGpuService() {}
   ~TestGpuService() override {}
 
+  ServerGpuMemoryBufferManager::GpuServiceProvider CreateProvider() {
+    return base::Bind(
+        [](TestGpuService* service) -> ui::mojom::GpuService* {
+          return service;
+        },
+        base::Unretained(this));
+  }
+
   bool HasAllocationRequest(gfx::GpuMemoryBufferId id, int client_id) const {
     for (const auto& req : allocation_requests_) {
       if (req.id == id && req.client_id == client_id)
@@ -154,6 +162,28 @@ class ServerGpuMemoryBufferManagerTest : public ::testing::Test {
   ServerGpuMemoryBufferManagerTest() = default;
   ~ServerGpuMemoryBufferManagerTest() override = default;
 
+  std::unique_ptr<gfx::GpuMemoryBuffer> AllocateGpuMemoryBufferSync(
+      ServerGpuMemoryBufferManager* manager) {
+    base::Thread diff_thread("TestThread");
+    diff_thread.Start();
+    std::unique_ptr<gfx::GpuMemoryBuffer> buffer;
+    base::RunLoop run_loop;
+    diff_thread.task_runner()->PostTask(
+        FROM_HERE, base::Bind(
+                       [](ServerGpuMemoryBufferManager* manager,
+                          std::unique_ptr<gfx::GpuMemoryBuffer>* out_buffer,
+                          const base::Closure& callback) {
+                         *out_buffer = manager->CreateGpuMemoryBuffer(
+                             gfx::Size(64, 64), gfx::BufferFormat::YVU_420,
+                             gfx::BufferUsage::GPU_READ,
+                             gpu::kNullSurfaceHandle);
+                         callback.Run();
+                       },
+                       manager, &buffer, run_loop.QuitClosure()));
+    run_loop.Run();
+    return buffer;
+  }
+
   // ::testing::Test:
   void SetUp() override {
     gfx::ClientNativePixmapFactory::ResetInstance();
@@ -183,7 +213,8 @@ TEST_F(ServerGpuMemoryBufferManagerTest, AllocationRequestsForDestroyedClient) {
   // GpuService is asynchronous. In this test, the mojom::GpuService is not
   // bound to a mojo pipe, which means those calls are all synchronous.
   TestGpuService gpu_service;
-  ServerGpuMemoryBufferManager manager(&gpu_service, 1);
+  ServerGpuMemoryBufferManager manager(gpu_service.CreateProvider(), 1,
+                                       base::ThreadTaskRunnerHandle::Get());
 
   const auto buffer_id = static_cast<gfx::GpuMemoryBufferId>(1);
   const int client_id = 2;
@@ -213,7 +244,8 @@ TEST_F(ServerGpuMemoryBufferManagerTest,
        RequestsFromUntrustedClientsValidated) {
   gfx::ClientNativePixmapFactory::ResetInstance();
   TestGpuService gpu_service;
-  ServerGpuMemoryBufferManager manager(&gpu_service, 1);
+  ServerGpuMemoryBufferManager manager(gpu_service.CreateProvider(), 1,
+                                       base::ThreadTaskRunnerHandle::Get());
   const auto buffer_id = static_cast<gfx::GpuMemoryBufferId>(1);
   const int client_id = 2;
   // SCANOUT cannot be used if native gpu memory buffer is not supported.
@@ -259,25 +291,28 @@ TEST_F(ServerGpuMemoryBufferManagerTest,
 TEST_F(ServerGpuMemoryBufferManagerTest, GpuMemoryBufferDestroyed) {
   gfx::ClientNativePixmapFactory::ResetInstance();
   TestGpuService gpu_service;
-  ServerGpuMemoryBufferManager manager(&gpu_service, 1);
-  base::Thread diff_thread("TestThread");
-  ASSERT_TRUE(diff_thread.Start());
-  std::unique_ptr<gfx::GpuMemoryBuffer> buffer;
-  base::RunLoop run_loop;
-  ASSERT_TRUE(diff_thread.task_runner()->PostTask(
-      FROM_HERE, base::Bind(
-                     [](ServerGpuMemoryBufferManager* manager,
-                        std::unique_ptr<gfx::GpuMemoryBuffer>* out_buffer,
-                        const base::Closure& callback) {
-                       *out_buffer = manager->CreateGpuMemoryBuffer(
-                           gfx::Size(64, 64), gfx::BufferFormat::YVU_420,
-                           gfx::BufferUsage::GPU_READ, gpu::kNullSurfaceHandle);
-                       callback.Run();
-                     },
-                     &manager, &buffer, run_loop.QuitClosure())));
-  run_loop.Run();
+  ServerGpuMemoryBufferManager manager(gpu_service.CreateProvider(), 1,
+                                       base::ThreadTaskRunnerHandle::Get());
+  auto buffer = AllocateGpuMemoryBufferSync(&manager);
   EXPECT_TRUE(buffer);
   buffer.reset();
+}
+
+TEST_F(ServerGpuMemoryBufferManagerTest,
+       GpuMemoryBufferDestroyedOnDifferentThread) {
+  gfx::ClientNativePixmapFactory::ResetInstance();
+  TestGpuService gpu_service;
+  ServerGpuMemoryBufferManager manager(gpu_service.CreateProvider(), 1,
+                                       base::ThreadTaskRunnerHandle::Get());
+  auto buffer = AllocateGpuMemoryBufferSync(&manager);
+  EXPECT_TRUE(buffer);
+  // Destroy the buffer in a different thread.
+  base::Thread diff_thread("DestroyThread");
+  ASSERT_TRUE(diff_thread.Start());
+  diff_thread.task_runner()->PostTask(
+      FROM_HERE, base::Bind([](std::unique_ptr<gfx::GpuMemoryBuffer> buffer) {},
+                            base::Passed(&buffer)));
+  diff_thread.Stop();
 }
 
 }  // namespace viz
