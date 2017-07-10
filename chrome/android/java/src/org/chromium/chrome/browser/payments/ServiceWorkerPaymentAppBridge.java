@@ -12,6 +12,7 @@ import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.SuppressFBWarnings;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.content_public.browser.WebContents;
+import org.chromium.payments.mojom.PaymentCurrencyAmount;
 import org.chromium.payments.mojom.PaymentDetailsModifier;
 import org.chromium.payments.mojom.PaymentItem;
 import org.chromium.payments.mojom.PaymentMethodData;
@@ -84,13 +85,18 @@ public class ServiceWorkerPaymentAppBridge implements PaymentAppFactory.PaymentA
     }
 
     @CalledByNative
-    private static String getCurrencyFromPaymentItem(PaymentItem item) {
-        return item.amount.currency;
+    private static PaymentCurrencyAmount getCurrencyAmountFromPaymentItem(PaymentItem item) {
+        return item.amount;
     }
 
     @CalledByNative
-    private static String getValueFromPaymentItem(PaymentItem item) {
-        return item.amount.value;
+    private static String getCurrencyFromCurrencyAmount(PaymentCurrencyAmount amount) {
+        return amount.currency;
+    }
+
+    @CalledByNative
+    private static String getValueFromCurrencyAmount(PaymentCurrencyAmount amount) {
+        return amount.value;
     }
 
     @CalledByNative

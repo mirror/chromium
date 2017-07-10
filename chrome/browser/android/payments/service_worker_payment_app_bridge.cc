@@ -127,17 +127,13 @@ static void InvokePaymentApp(
     event_data->method_data.push_back(std::move(methodData));
   }
 
-  event_data->total = PaymentItem::New();
-  event_data->total->label = ConvertJavaStringToUTF8(
-      env,
-      Java_ServiceWorkerPaymentAppBridge_getLabelFromPaymentItem(env, jtotal));
-  event_data->total->amount = PaymentCurrencyAmount::New();
-  event_data->total->amount->currency = ConvertJavaStringToUTF8(
-      env, Java_ServiceWorkerPaymentAppBridge_getCurrencyFromPaymentItem(
+  event_data->total = PaymentCurrencyAmount::New();
+  event_data->total->currency = ConvertJavaStringToUTF8(
+      env, Java_ServiceWorkerPaymentAppBridge_getCurrencyFromCurrencyAmount(
                env, jtotal));
-  event_data->total->amount->value = ConvertJavaStringToUTF8(
-      env,
-      Java_ServiceWorkerPaymentAppBridge_getValueFromPaymentItem(env, jtotal));
+  event_data->total->value = ConvertJavaStringToUTF8(
+      env, Java_ServiceWorkerPaymentAppBridge_getValueFromCurrencyAmount(
+               env, jtotal));
 
   for (jsize i = 0; i < env->GetArrayLength(jmodifiers); i++) {
     ScopedJavaLocalRef<jobject> jmodifier(
@@ -146,17 +142,20 @@ static void InvokePaymentApp(
 
     ScopedJavaLocalRef<jobject> jtotal =
         Java_ServiceWorkerPaymentAppBridge_getTotalFromModifier(env, jmodifier);
+    ScopedJavaLocalRef<jobject> jamount =
+        Java_ServiceWorkerPaymentAppBridge_getCurrencyAmountFromPaymentItem(
+            env, jtotal);
     modifier->total = PaymentItem::New();
     modifier->total->label = ConvertJavaStringToUTF8(
         env, Java_ServiceWorkerPaymentAppBridge_getLabelFromPaymentItem(
                  env, jtotal));
     modifier->total->amount = PaymentCurrencyAmount::New();
     modifier->total->amount->currency = ConvertJavaStringToUTF8(
-        env, Java_ServiceWorkerPaymentAppBridge_getCurrencyFromPaymentItem(
-                 env, jtotal));
+        env, Java_ServiceWorkerPaymentAppBridge_getCurrencyFromCurrencyAmount(
+                 env, jamount));
     modifier->total->amount->value = ConvertJavaStringToUTF8(
-        env, Java_ServiceWorkerPaymentAppBridge_getValueFromPaymentItem(
-                 env, jtotal));
+        env, Java_ServiceWorkerPaymentAppBridge_getValueFromCurrencyAmount(
+                 env, jamount));
 
     ScopedJavaLocalRef<jobject> jmodifier_method_data =
         Java_ServiceWorkerPaymentAppBridge_getMethodDataFromModifier(env,
