@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "877f34ba_f1e9d2bc",
+        "filename": "third_party/WebKit/Source/core/loader/LinkLoader.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2017-07-10T06:35:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96baaecc_69006ff7",
+      "range": {
+        "startLine": 484,
+        "startChar": 10,
+        "endLine": 484,
+        "endChar": 28
+      },
+      "revId": "b2ea9b091f547142a679c8e48c5bc9a69ac950bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f543cf74_7250751e",
         "filename": "third_party/WebKit/Source/core/loader/resource/ImageResource.cpp",
         "patchSetId": 18
@@ -218,6 +242,87 @@
         "endLine": 236,
         "endChar": 19
       },
+      "revId": "b2ea9b091f547142a679c8e48c5bc9a69ac950bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65a09c69_f98e3b34",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2017-07-10T06:35:08Z",
+      "side": 1,
+      "message": "See https://codereview.chromium.org/2319483002/#msg17 (Where I tried to do something similar).\n\nI believe we support multiple ResourceFetchers getting the same preloaded resource from the memory cache. Removing the counter in favor of a boolean may mean we can no longer reliably know when a resource is a pending preload.",
+      "parentUuid": "59da8289_ce5a3284",
+      "range": {
+        "startLine": 236,
+        "startChar": 7,
+        "endLine": 236,
+        "endChar": 19
+      },
+      "revId": "b2ea9b091f547142a679c8e48c5bc9a69ac950bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86b1bfba_9ead22e6",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 1019,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2017-07-10T06:35:08Z",
+      "side": 1,
+      "message": "Wouldn\u0027t that result in double downloads in e.g. `\u003cscript src\u003dblocking.js\u003e\u003clink rel\u003dpreload href\u003dfoo as\u003dimage\u003e\u003cimg src\u003dfoo\u003e`?",
+      "range": {
+        "startLine": 1019,
+        "startChar": 3,
+        "endLine": 1019,
+        "endChar": 0
+      },
+      "revId": "b2ea9b091f547142a679c8e48c5bc9a69ac950bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b5ca874_a01134fc",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 1147,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2017-07-10T06:35:08Z",
+      "side": 1,
+      "message": "Can you elaborate?",
+      "revId": "b2ea9b091f547142a679c8e48c5bc9a69ac950bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aae3f4e_5ddbf92b",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 1246,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2017-07-10T06:35:08Z",
+      "side": 1,
+      "message": "So here we\u0027re now removing the resource from MemoryCache even if it is a used preload? Can you explain why?",
       "revId": "b2ea9b091f547142a679c8e48c5bc9a69ac950bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
