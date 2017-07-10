@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2836a7a_c3c67563",
+        "filename": "chrome/browser/password_manager/password_store_x.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-10T16:26:58Z",
+      "side": 1,
+      "message": "I just realised this is too complicated. Instead I can pass the task runner through to PasswordStore, which returns it via the base implementation of this method.",
+      "range": {
+        "startLine": 128,
+        "startChar": 16,
+        "endLine": 128,
+        "endChar": 39
+      },
+      "revId": "6c3a5fedd1689426df0541c19aed4c344180aab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
