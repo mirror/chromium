@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6a5cc08_8107a0eb",
+        "filename": "components/viz/host/server_gpu_memory_buffer_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-10T16:52:09Z",
+      "side": 1,
+      "message": "nit: gpu_memory_buffer or just buffer",
+      "revId": "006eb684978d7b902f6ef73f9533af6607fad569",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a99fe32_3d57c9e8",
+        "filename": "components/viz/host/server_gpu_memory_buffer_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-10T16:52:09Z",
+      "side": 1,
+      "message": "Ditto",
+      "revId": "006eb684978d7b902f6ef73f9533af6607fad569",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c1319cc_0e66e716",
+        "filename": "components/viz/host/server_gpu_memory_buffer_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-10T16:52:09Z",
+      "side": 1,
+      "message": "Odd size for a yuv buffer. Maybe 64x64 to avoid device specific issues",
+      "revId": "006eb684978d7b902f6ef73f9533af6607fad569",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
