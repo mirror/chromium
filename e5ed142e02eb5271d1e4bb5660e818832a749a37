@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e5c7b246_e52f26f7",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-07-10T21:04:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd936274_b05f9e64",
+      "revId": "e5ed142e02eb5271d1e4bb5660e818832a749a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba562170_59412092",
         "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "e5ed142e02eb5271d1e4bb5660e818832a749a37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "484353e7_62ffc5f2",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-07-10T21:04:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba562170_59412092",
+      "revId": "e5ed142e02eb5271d1e4bb5660e818832a749a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

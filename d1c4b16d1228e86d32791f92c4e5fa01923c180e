@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "230db870_d4329fb2",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-07-10T21:04:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d661556_1185d6f8",
+      "range": {
+        "startLine": 7,
+        "startChar": 19,
+        "endLine": 7,
+        "endChar": 0
+      },
+      "revId": "d1c4b16d1228e86d32791f92c4e5fa01923c180e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "446fe2b0_fe103ec3",
         "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "d1c4b16d1228e86d32791f92c4e5fa01923c180e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c6d9cd0_d8c6ba1b",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-07-10T21:04:07Z",
+      "side": 1,
+      "message": "base::small_map doesn\u0027t have an emplace method unfortunately.  I could look into adding that and changing this in the future though.",
+      "parentUuid": "446fe2b0_fe103ec3",
+      "range": {
+        "startLine": 77,
+        "startChar": 17,
+        "endLine": 77,
+        "endChar": 23
+      },
+      "revId": "d1c4b16d1228e86d32791f92c4e5fa01923c180e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "2f809639_33399ac5",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-07-10T21:04:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2f1e8fa_9b21b9fa",
+      "range": {
+        "startLine": 233,
+        "startChar": 20,
+        "endLine": 233,
+        "endChar": 29
+      },
+      "revId": "d1c4b16d1228e86d32791f92c4e5fa01923c180e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "afda0c55_4092991c",
         "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "d1c4b16d1228e86d32791f92c4e5fa01923c180e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3c8c2b5_04c577d7",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-07-10T21:04:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "afda0c55_4092991c",
+      "range": {
+        "startLine": 237,
+        "startChar": 26,
+        "endLine": 237,
+        "endChar": 0
+      },
+      "revId": "d1c4b16d1228e86d32791f92c4e5fa01923c180e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
