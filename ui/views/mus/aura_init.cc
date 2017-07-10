@@ -19,6 +19,7 @@
 #include "ui/base/material_design/material_design_controller.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/base/ui_base_paths.h"
+#include "ui/gfx/platform_font.h"
 #include "ui/views/layout/layout_provider.h"
 #include "ui/views/mus/mus_client.h"
 #include "ui/views/style/typography_provider.h"
@@ -109,9 +110,13 @@ bool AuraInit::Init(service_manager::Connector* connector,
   SkFontConfigInterface::SetGlobal(font_loader_.get());
 #endif
 
-  // There is a bunch of static state in gfx::Font, by running this now,
-  // before any other apps load, we ensure all the state is set up.
-  gfx::Font();
+  // Initialize static default font, by running this now, before any other apps
+  // load, we ensure all the state is set up.
+  bool success = gfx::PlatformFont::InitDefault();
+
+  // If a remote service manager has shut down, initializing the font will fail.
+  if (!success)
+    return false;
 
   ui::InitializeInputMethodForTesting();
   return true;

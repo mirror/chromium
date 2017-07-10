@@ -31,6 +31,11 @@ class GFX_EXPORT PlatformFont : public base::RefCounted<PlatformFont> {
   static constexpr int kDefaultBaseFontSize = 12;
 #endif
 
+  // Initials the default PlatformFont. Returns true if this is successful, or
+  // false if fonts resources are not available. If this returns false, the
+  // calling service should shut down.
+  static bool InitDefault();
+
   // Creates an appropriate PlatformFont implementation.
   static PlatformFont* CreateDefault();
 #if defined(OS_WIN) || defined(OS_MACOSX) || defined(OS_IOS)

@@ -43,7 +43,8 @@ base::LazyInstance<scoped_refptr<PlatformFontLinux>>::Leaky g_default_font =
 // updated to contain the fallback's family name.
 sk_sp<SkTypeface> CreateSkTypeface(bool italic,
                                    gfx::Font::Weight weight,
-                                   std::string* family) {
+                                   std::string* family,
+                                   bool* out_success) {
   DCHECK(family);
 
   const int font_weight = (weight == Font::Weight::INVALID)
@@ -59,10 +60,13 @@ sk_sp<SkTypeface> CreateSkTypeface(bool italic,
     // scalable font.
     typeface = sk_sp<SkTypeface>(SkTypeface::MakeFromName(
         kFallbackFontFamilyName, sk_style));
-    CHECK(typeface) << "Could not find any font: " << *family << ", "
-                    << kFallbackFontFamilyName;
+    if (!typeface) {
+      *out_success = false;
+      return nullptr;
+    }
     *family = kFallbackFontFamilyName;
   }
+  *out_success = true;
   return typeface;
 }
 
@@ -76,12 +80,34 @@ std::string* PlatformFontLinux::default_font_description_ = NULL;
 // PlatformFontLinux, public:
 
 PlatformFontLinux::PlatformFontLinux() {
-  if (!g_default_font.Get()) {
-    std::string family = kFallbackFontFamilyName;
-    int size_pixels = 12;
-    int style = Font::NORMAL;
-    Font::Weight weight = Font::Weight::NORMAL;
-    FontRenderParams params;
+  InitDefaultFont();
+  InitFromPlatformFont(g_default_font.Get().get());
+}
+
+PlatformFontLinux::PlatformFontLinux(const std::string& font_name,
+                                     int font_size_pixels) {
+  FontRenderParamsQuery query;
+  query.families.push_back(font_name);
+  query.pixel_size = font_size_pixels;
+  query.weight = Font::Weight::NORMAL;
+  InitFromDetails(nullptr, font_name, font_size_pixels, Font::NORMAL,
+                  query.weight, gfx::GetFontRenderParams(query, NULL));
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// PlatformFontLinux, PlatformFont implementation:
+
+// static
+bool PlatformFontLinux::InitDefaultFont() {
+  if (g_default_font.Get())
+    return true;
+
+  bool success = false;
+  std::string family = kFallbackFontFamilyName;
+  int size_pixels = 12;
+  int style = Font::NORMAL;
+  Font::Weight weight = Font::Weight::NORMAL;
+  FontRenderParams params;
 
 #if defined(OS_CHROMEOS)
     // On Chrome OS, a FontList font description string is stored as a
@@ -107,27 +133,14 @@ PlatformFontLinux::PlatformFontLinux() {
     }
 #endif
 
+    sk_sp<SkTypeface> typeface =
+        CreateSkTypeface(style & Font::ITALIC, weight, &family, &success);
+    if (!success)
+      return false;
     g_default_font.Get() = new PlatformFontLinux(
-        CreateSkTypeface(style & Font::ITALIC, weight, &family), family,
-        size_pixels, style, weight, params);
-  }
-
-  InitFromPlatformFont(g_default_font.Get().get());
+        std::move(typeface), family, size_pixels, style, weight, params);
+    return success;
 }
-
-PlatformFontLinux::PlatformFontLinux(const std::string& font_name,
-                                     int font_size_pixels) {
-  FontRenderParamsQuery query;
-  query.families.push_back(font_name);
-  query.pixel_size = font_size_pixels;
-  query.weight = Font::Weight::NORMAL;
-  InitFromDetails(nullptr, font_name, font_size_pixels,
-                  Font::NORMAL, query.weight,
-                  gfx::GetFontRenderParams(query, NULL));
-}
-
-////////////////////////////////////////////////////////////////////////////////
-// PlatformFontLinux, PlatformFont implementation:
 
 // static
 void PlatformFontLinux::ReloadDefaultFont() {
@@ -153,10 +166,13 @@ Font PlatformFontLinux::DeriveFont(int size_delta,
 
   // If the style changed, we may need to load a new face.
   std::string new_family = font_family_;
+  bool success = true;
   sk_sp<SkTypeface> typeface =
       (weight == weight_ && style == style_)
           ? typeface_
-          : CreateSkTypeface(style, weight, &new_family);
+          : CreateSkTypeface(style, weight, &new_family, &success);
+  CHECK(success) << "Could not find any font: " << new_family << ", "
+                 << kFallbackFontFamilyName;
 
   FontRenderParamsQuery query;
   query.families.push_back(new_family);
@@ -249,8 +265,12 @@ void PlatformFontLinux::InitFromDetails(
   DCHECK_GT(font_size_pixels, 0);
 
   font_family_ = font_family;
-  typeface_ = typeface ? std::move(typeface) :
-      CreateSkTypeface(style & Font::ITALIC, weight, &font_family_);
+  bool success = true;
+  typeface_ = typeface ? std::move(typeface)
+                       : CreateSkTypeface(style & Font::ITALIC, weight,
+                                          &font_family_, &success);
+  CHECK(success) << "Could not find any font: " << font_family_ << ", "
+                 << kFallbackFontFamilyName;
 
   font_size_pixels_ = font_size_pixels;
   style_ = style;
@@ -301,6 +321,11 @@ void PlatformFontLinux::ComputeMetricsIfNecessary() {
 
 ////////////////////////////////////////////////////////////////////////////////
 // PlatformFont, public:
+
+// static
+bool PlatformFont::InitDefault() {
+  return PlatformFontLinux::InitDefaultFont();
+}
 
 // static
 PlatformFont* PlatformFont::CreateDefault() {
