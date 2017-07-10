@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b53dbae_70e7523c",
+        "filename": "ui/gfx/platform_font.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-10T21:30:31Z",
+      "side": 1,
+      "message": "Do we need this here?",
+      "revId": "1597064ce4cd82fce57110b082e11fb490e96eae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30216e5a_eb224d0d",
+        "filename": "ui/gfx/platform_font_linux.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-10T21:30:31Z",
+      "side": 1,
+      "message": "CHECK()?",
+      "revId": "1597064ce4cd82fce57110b082e11fb490e96eae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f07710d2_687fe19f",
+        "filename": "ui/gfx/platform_font_linux.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-10T21:30:31Z",
+      "side": 1,
+      "message": "nullptr",
+      "range": {
+        "startLine": 94,
+        "startChar": 64,
+        "endLine": 94,
+        "endChar": 68
+      },
+      "revId": "1597064ce4cd82fce57110b082e11fb490e96eae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5264ab6_57212949",
+        "filename": "ui/gfx/platform_font_linux.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-10T21:30:31Z",
+      "side": 1,
+      "message": "return true",
+      "revId": "1597064ce4cd82fce57110b082e11fb490e96eae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac75477d_efe3cb90",
+        "filename": "ui/views/mus/aura_init.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-10T21:30:31Z",
+      "side": 1,
+      "message": "Should this just call PlatformLinux directly, above in the OS_LINUX block? (and continue to use gfx::Font() here)",
+      "revId": "1597064ce4cd82fce57110b082e11fb490e96eae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
