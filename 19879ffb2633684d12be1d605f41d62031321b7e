@@ -141,6 +141,30 @@
       "revId": "19879ffb2633684d12be1d605f41d62031321b7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "24d9797d_7f7c2471",
+        "filename": "components/password_manager/core/browser/password_store.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 603,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-10T14:29:23Z",
+      "side": 1,
+      "message": "You can create a simple header in this folder with this condition that would define a flag GAIA_PASSWORD_REUSE_DETECTION. Then you can simplify all the existing places using only that flag.",
+      "parentUuid": "3e2b763e_543dcd12",
+      "range": {
+        "startLine": 603,
+        "startChar": 4,
+        "endLine": 603,
+        "endChar": 11
+      },
+      "revId": "19879ffb2633684d12be1d605f41d62031321b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
