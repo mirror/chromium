@@ -93,7 +93,8 @@ Display CreateDisplayFromDisplayInfo(const DisplayInfo& display_info) {
 
   // TODO(ccameron): Populate this based on this specific display.
   // http://crbug.com/735613
-  display.set_color_space(gfx::ICCProfile::FromBestMonitor().GetColorSpace());
+  if (!Display::HasForceColorProfile())
+    display.set_color_space(gfx::ICCProfile::FromBestMonitor().GetColorSpace());
 
   return display;
 }
