@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df299cdc_5986ad86",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-07-10T18:50:39Z",
+      "side": 1,
+      "message": "This feels like a hack: the ID will be generated when the PaymentRequest is parsed, and this bit of code here, out of nowhere, sets the ID on the javascript object.\n\nI think it would be a lot clearer to generate the ID right here (instead of in PaymentRequest::FromDictionaryValue), and then write it back to the JavaScript object (or do it all from PaymentRequest::FromDictionaryValue, but AFAICT, we don\u0027t have access to the JS Manager in there).\n\nWe should also DCHECK here that the request has no ID before setting one: if it has an ID, then why didn\u0027t we find it with std::find_if?",
+      "revId": "ac3b93554dee043fa1d66161e65f63ff3068ce1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "739a6702_174acefb",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-07-10T18:50:39Z",
+      "side": 1,
+      "message": "typo: requires_total",
+      "range": {
+        "startLine": 585,
+        "startChar": 51,
+        "endLine": 585,
+        "endChar": 65
+      },
+      "revId": "ac3b93554dee043fa1d66161e65f63ff3068ce1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6822b755_19355424",
+        "filename": "ios/web/payments/payment_request.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-07-10T18:50:39Z",
+      "side": 1,
+      "message": "Is this requires_total stuff related to the ID generation? Doesn\u0027t seem to be, unless I\u0027m missing something. If that\u0027s the case, please extract into a separate CL.",
+      "range": {
+        "startLine": 204,
+        "startChar": 6,
+        "endLine": 204,
+        "endChar": 20
+      },
+      "revId": "ac3b93554dee043fa1d66161e65f63ff3068ce1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1517e061_4c658755",
+        "filename": "ios/web/payments/payment_request.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-07-10T18:50:39Z",
+      "side": 1,
+      "message": "As mentioned in payment_request_manager.mm, this bit of code should be kept with the bit of code that sync\u0027s this ID back to the JavaScript object.",
+      "revId": "ac3b93554dee043fa1d66161e65f63ff3068ce1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
