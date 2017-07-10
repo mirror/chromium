@@ -34,6 +34,24 @@
       "revId": "b8139e2572205d8d4a91b9ab76f958a9d959099e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce8577f9_52a19994",
+        "filename": "chrome/browser/resources/settings/people_page/change_picture.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-10T20:57:22Z",
+      "side": 1,
+      "message": "I see what you are saying... and I don\u0027t want any duplicate code...\n\nBut it does seem odd to call picturePreview.takePhoto(). Semantically, I would just expect something called picturePreview to be purely a preview without camera functionality.",
+      "parentUuid": "835e5080_e6ea7a05",
+      "revId": "b8139e2572205d8d4a91b9ab76f958a9d959099e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
