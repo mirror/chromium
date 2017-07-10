@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "92e4c230_dca6929e",
+        "filename": "cc/tiles/gpu_image_decode_cache.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1244,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-07-10T20:46:10Z",
+      "side": 1,
+      "message": "We did a similar investigation at:\nhttps://bugs.chromium.org/p/chromium/issues/detail?id\u003d721744#c12\n\nThe theory there was perhaps a bad image size.",
+      "parentUuid": "63dd11ca_40608495",
+      "range": {
+        "startLine": 1244,
+        "startChar": 21,
+        "endLine": 1244,
+        "endChar": 35
+      },
+      "revId": "1fc8e51ba0464f20d078f7d16778dfdb7aa52e5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "96c735c3_b65f1095",
         "filename": "cc/tiles/gpu_image_decode_cache.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "1fc8e51ba0464f20d078f7d16778dfdb7aa52e5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cde445e1_af566c9e",
+        "filename": "cc/tiles/gpu_image_decode_cache.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1256,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-07-10T20:46:10Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "96c735c3_b65f1095",
+      "range": {
+        "startLine": 1256,
+        "startChar": 9,
+        "endLine": 1256,
+        "endChar": 23
+      },
+      "revId": "1fc8e51ba0464f20d078f7d16778dfdb7aa52e5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
