@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9078c067_c558d6e1",
+        "filename": "chrome/browser/ui/cocoa/custom_frame_view.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-10T08:07:39Z",
+      "side": 0,
+      "message": "Here\u0027s an example of what scares me.. This suggests Apple switched from NSGrayFrame to NSThemeFrame in 10.8. Seems they could easily switch to a different name in a future release. But I guess _not_ relying on NSThemeFrame to exist didn\u0027t give us any advantage going in to 10.13",
+      "revId": "a28aeb7be0f77767683a8157ab9277a3dd110154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

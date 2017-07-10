@@ -1,0 +1,380 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05a4c338_e1003d56",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller_private.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-10T08:07:39Z",
+      "side": 1,
+      "message": "I would say more about where this comes from, and where it\u0027s likely to exist. E.g. I think we can only rely on this existing on NSThemeFrame in 10.9.  (I wouldn\u0027t use \"root view\" since it\u0027s getting really confusing what that is ;)",
+      "revId": "715a316202c720dafbd32b46010b86c4b29f91da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "680df9c7_22530146",
+        "filename": "chrome/browser/ui/cocoa/tabbed_browser_window.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-10T08:07:39Z",
+      "side": 1,
+      "message": "nit: import",
+      "range": {
+        "startLine": 5,
+        "startChar": 1,
+        "endLine": 5,
+        "endChar": 8
+      },
+      "revId": "715a316202c720dafbd32b46010b86c4b29f91da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e29fdf2_c7f63894",
+        "filename": "chrome/browser/ui/cocoa/tabbed_browser_window.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-10T08:07:39Z",
+      "side": 1,
+      "message": "nit: constexpr for these",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 5
+      },
+      "revId": "715a316202c720dafbd32b46010b86c4b29f91da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5abcb33_10a12317",
+        "filename": "chrome/browser/ui/cocoa/tabbed_browser_window.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-10T08:07:39Z",
+      "side": 1,
+      "message": "nit:  // namespace",
+      "revId": "715a316202c720dafbd32b46010b86c4b29f91da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f055899_6656cb10",
+        "filename": "chrome/browser/ui/cocoa/tabbed_browser_window.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-10T08:07:39Z",
+      "side": 1,
+      "message": "Can we add tests that ensure NSThemeFrame still @respondsToSelector for all of these. That might help us pick up library changes or possible dead code.",
+      "range": {
+        "startLine": 41,
+        "startChar": 11,
+        "endLine": 41,
+        "endChar": 35
+      },
+      "revId": "715a316202c720dafbd32b46010b86c4b29f91da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3711790_b6e7ac05",
+        "filename": "chrome/browser/ui/cocoa/tabbed_browser_window.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-10T08:07:39Z",
+      "side": 1,
+      "message": "I guess we should have a @respondsToSelector test for this too..",
+      "revId": "715a316202c720dafbd32b46010b86c4b29f91da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "529017a9_00e99c4b",
+        "filename": "chrome/browser/ui/cocoa/tabbed_browser_window.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-10T08:07:39Z",
+      "side": 1,
+      "message": "Does this only exist in 10.12+?  (Does relying on it break RTL for \u003c10.11? .. assuming that\u0027s a thing we do. I\u0027m not sure it is).",
+      "revId": "715a316202c720dafbd32b46010b86c4b29f91da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05275adc_661c117a",
+        "filename": "chrome/browser/ui/cocoa/tabbed_browser_window.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-10T08:07:39Z",
+      "side": 1,
+      "message": "no dot notation",
+      "range": {
+        "startLine": 87,
+        "startChar": 9,
+        "endLine": 87,
+        "endChar": 20
+      },
+      "revId": "715a316202c720dafbd32b46010b86c4b29f91da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8901a067_f19ef24a",
+        "filename": "chrome/browser/ui/cocoa/tabbed_browser_window.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-10T08:07:39Z",
+      "side": 1,
+      "message": "// FramedBrowserWindow overrides.",
+      "revId": "715a316202c720dafbd32b46010b86c4b29f91da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7668446e_c52404bf",
+        "filename": "chrome/browser/ui/cocoa/tabbed_browser_window.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-10T08:07:39Z",
+      "side": 1,
+      "message": "// NSWindow (Private) overrides.",
+      "revId": "715a316202c720dafbd32b46010b86c4b29f91da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b2b0455_762fba83",
+        "filename": "chrome/browser/ui/cocoa/tabbed_browser_window.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-10T08:07:39Z",
+      "side": 1,
+      "message": "Comment about this. E.g. (assuming you\u0027ve tested this and it works and the words are correct) \"If NSThemeFrame isn\u0027t present at runtime, TabbedBrowserWindowFrame will fail to load and its class will be nil.\"",
+      "revId": "715a316202c720dafbd32b46010b86c4b29f91da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de8d0b68_9df908b8",
+        "filename": "chrome/browser/ui/cocoa/tabbed_browser_window.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-10T08:07:39Z",
+      "side": 1,
+      "message": "does this work? Every time I\u0027ve tried to use it I get a link error. Maybe we just want to check explicitly for 10.9 and use MavericksTabbedBrowserWindowFrame",
+      "revId": "715a316202c720dafbd32b46010b86c4b29f91da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9aa1d88_a181d180",
+        "filename": "chrome/browser/ui/cocoa/tabbed_browser_window.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-10T08:07:39Z",
+      "side": 1,
+      "message": "I think we order initializers first? The C++ style guide certainly isn\u0027t fussed about mixing static/non-static methods last I checked",
+      "revId": "715a316202c720dafbd32b46010b86c4b29f91da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55bdef9f_dbad59c8",
+        "filename": "chrome/browser/ui/cocoa/tabbed_browser_window.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-10T08:07:39Z",
+      "side": 1,
+      "message": "// TabbedBrowserWindow () private implementation.",
+      "revId": "715a316202c720dafbd32b46010b86c4b29f91da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b73d070_ac5bea6d",
+        "filename": "chrome/browser/ui/cocoa/tabbed_browser_window.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-10T08:07:39Z",
+      "side": 1,
+      "message": "ObjCCastStrict?",
+      "range": {
+        "startLine": 181,
+        "startChar": 14,
+        "endLine": 181,
+        "endChar": 25
+      },
+      "revId": "715a316202c720dafbd32b46010b86c4b29f91da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08f6196d_6f107b8a",
+        "filename": "chrome/browser/ui/cocoa/tabbed_browser_window_unittest.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-10T08:07:39Z",
+      "side": 1,
+      "message": "nit: constexpr",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 5
+      },
+      "revId": "715a316202c720dafbd32b46010b86c4b29f91da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1dc2cb0_1c3bc6e8",
+        "filename": "chrome/browser/ui/cocoa/tabbed_browser_window_unittest.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-10T08:07:39Z",
+      "side": 1,
+      "message": "private/protected",
+      "revId": "715a316202c720dafbd32b46010b86c4b29f91da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6d79313_9dae8f13",
+        "filename": "chrome/browser/ui/cocoa/tabbed_browser_window_unittest.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-10T08:07:39Z",
+      "side": 1,
+      "message": "nit: private:\\n DISALLOW_COPY_..",
+      "revId": "715a316202c720dafbd32b46010b86c4b29f91da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd40633a_2c64c63b",
+        "filename": "chrome/browser/ui/cocoa/tabbed_browser_window_unittest.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-10T08:07:39Z",
+      "side": 1,
+      "message": "public:",
+      "revId": "715a316202c720dafbd32b46010b86c4b29f91da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08f8c257_0c40458c",
+        "filename": "chrome/browser/ui/cocoa/tabbed_browser_window_unittest.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-10T08:07:39Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN(..). You\u0027ll need a default constructor.",
+      "revId": "715a316202c720dafbd32b46010b86c4b29f91da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
