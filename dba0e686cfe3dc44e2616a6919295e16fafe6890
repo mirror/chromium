@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed8cbc53_cf456044",
+        "filename": "third_party/WebKit/Source/platform/fonts/AlternateFontFamily.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-10T21:34:57Z",
+      "side": 1,
+      "message": "nit: I suspect EqualIgnoringASCIICase suffices here and elsewhere, since none of our static font family names have non-ASCII in them. Not super important, but crbug.com/627682 seeks to replace most uses of the full-Unicode version with *IgnoringASCIICase.",
+      "revId": "dba0e686cfe3dc44e2616a6919295e16fafe6890",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9590d6ed_0f32ea0e",
+        "filename": "third_party/WebKit/Source/platform/fonts/AlternateFontFamily.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-10T21:34:57Z",
+      "side": 1,
+      "message": "This was probably intended to be \"const AtomicString\u0026\", like the previous. Also not introduced by this change, though.",
+      "revId": "dba0e686cfe3dc44e2616a6919295e16fafe6890",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
