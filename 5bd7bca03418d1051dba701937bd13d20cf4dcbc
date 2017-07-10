@@ -22,6 +22,30 @@
       "revId": "5bd7bca03418d1051dba701937bd13d20cf4dcbc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d7113fd_63d9bcc4",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 34604,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-07-10T20:29:09Z",
+      "side": 1,
+      "message": "Done. I couldn\u0027t find an explanation of the different types in cs or google, am I just missing something obvious or are these not documented?",
+      "parentUuid": "ccc5c7e8_650ac0f3",
+      "range": {
+        "startLine": 34604,
+        "startChar": 60,
+        "endLine": 34604,
+        "endChar": 74
+      },
+      "revId": "5bd7bca03418d1051dba701937bd13d20cf4dcbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
