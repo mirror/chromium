@@ -195,7 +195,8 @@ void GLSurface::WaitForSnapshotRendering() {
 }
 
 void GLSurface::SetRelyOnImplicitSync(bool rely_on_implicit_sync) {
-  NOTIMPLEMENTED();
+  // "rely_on_implicit_sync" workaround is not supported at this level.
+  DCHECK(!rely_on_implicit_sync);
 }
 
 GLSurface* GLSurface::GetCurrent() {
