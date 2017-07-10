@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a2396f7e_9a379f57",
+        "filename": "ui/accessibility/ax_enums.idl",
+        "patchSetId": 28
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-07-10T14:21:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a08c170e_1eeae9fc",
+      "range": {
+        "startLine": 417,
+        "startChar": 64,
+        "endLine": 417,
+        "endChar": 65
+      },
+      "revId": "538d157f8f1a61326112f81de797d02c5883befa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77522b2c_e5c4a8fd",
         "filename": "ui/accessibility/ax_enums.idl",
         "patchSetId": 28
@@ -45,6 +69,30 @@
       "revId": "538d157f8f1a61326112f81de797d02c5883befa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd914a43_f92cb940",
+        "filename": "ui/accessibility/ax_enums.idl",
+        "patchSetId": 28
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-07-10T14:21:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77522b2c_e5c4a8fd",
+      "range": {
+        "startLine": 419,
+        "startChar": 72,
+        "endLine": 419,
+        "endChar": 73
+      },
+      "revId": "538d157f8f1a61326112f81de797d02c5883befa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7aa920f8_8b11eead",
+        "filename": "ui/accessibility/ax_enums.idl",
+        "patchSetId": 28
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-07-10T14:21:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "892e5b61_86d39a11",
+      "range": {
+        "startLine": 621,
+        "startChar": 19,
+        "endLine": 621,
+        "endChar": 26
+      },
+      "revId": "538d157f8f1a61326112f81de797d02c5883befa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8013994e_9dd2a351",
         "filename": "ui/accessibility/platform/ax_platform_node_mac.mm",
         "patchSetId": 28
@@ -88,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "579badc1_8d0d29ef",
+        "filename": "ui/accessibility/platform/ax_platform_node_mac.mm",
+        "patchSetId": 28
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-07-10T14:21:01Z",
+      "side": 1,
+      "message": "Ok, good catch and thank you for the explanation Trent. You are correct.",
+      "parentUuid": "8013994e_9dd2a351",
+      "revId": "538d157f8f1a61326112f81de797d02c5883befa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7b7b6f3e_0ac5bdc6",
         "filename": "ui/accessibility/platform/ax_platform_node_mac.mm",
         "patchSetId": 28
@@ -99,6 +189,24 @@
       "writtenOn": "2017-07-10T04:34:46Z",
       "side": 1,
       "message": "This doesn\u0027t look right. AXEnum values start from zero so GetIntAttribute returns 0 both when AX_ATTR_RESTRICTIONS hasn\u0027t been set and when it\u0027s been set to AX_RESTRICTIONS_READONLY. I think here you also want to check data.HasIntAttribute(). and return @(NO) when there is no restriction set at all.\n\n(I didn\u0027t look at the non-Mac files -- maybe similar treatment is needed there.)",
+      "revId": "538d157f8f1a61326112f81de797d02c5883befa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30b9c899_4d365aef",
+        "filename": "ui/accessibility/platform/ax_platform_node_mac.mm",
+        "patchSetId": 28
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-07-10T14:21:01Z",
+      "side": 1,
+      "message": "I think this is correct. Anything that is not disabled is considered enabled, and this passed tests which do test for this. Readonly has a value of 1 in the generated file:\n\nenum AXRestrictions {\n  AX_RESTRICTIONS_NONE,\n  AX_RESTRICTIONS_READ_ONLY,\n  AX_RESTRICTIONS_DISABLED,\n  AX_RESTRICTIONS_LAST \u003d AX_RESTRICTIONS_DISABLED,\n};",
+      "parentUuid": "7b7b6f3e_0ac5bdc6",
       "revId": "538d157f8f1a61326112f81de797d02c5883befa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "f4023acc_1a71a007",
+        "filename": "ui/views/accessibility/native_view_accessibility_base.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-07-10T14:21:01Z",
+      "side": 1,
+      "message": "Ok. I thought git cl format corrected all these cases. Thanks.",
+      "parentUuid": "64107914_1314f340",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 24
+      },
+      "revId": "538d157f8f1a61326112f81de797d02c5883befa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "704185cf_c62829db",
         "filename": "ui/views/controls/button/button.cc",
         "patchSetId": 28
@@ -145,6 +277,24 @@
     },
     {
       "key": {
+        "uuid": "8b21b28d_d35a0254",
+        "filename": "ui/views/controls/button/button.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-07-10T14:21:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "704185cf_c62829db",
+      "revId": "538d157f8f1a61326112f81de797d02c5883befa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f886ba1b_b30b7ebf",
         "filename": "ui/views/controls/label_unittest.cc",
         "patchSetId": 28
@@ -156,6 +306,24 @@
       "writtenOn": "2017-07-10T04:34:46Z",
       "side": 1,
       "message": "Can this now GetIntAttribute() and check that?",
+      "revId": "538d157f8f1a61326112f81de797d02c5883befa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f4b4b08_b8052ed3",
+        "filename": "ui/views/controls/label_unittest.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-07-10T14:21:01Z",
+      "side": 1,
+      "message": "Yes, although a label is no longer readonly is cross-platform code. I\u0027ll add a HasIntState false check.",
+      "parentUuid": "f886ba1b_b30b7ebf",
       "revId": "538d157f8f1a61326112f81de797d02c5883befa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -179,6 +347,24 @@
     },
     {
       "key": {
+        "uuid": "f2b8ad08_f0f1c547",
+        "filename": "ui/views/controls/progress_bar_unittest.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-07-10T14:21:01Z",
+      "side": 1,
+      "message": "Added a HasIntState check, since it has no restrictions anymore.",
+      "parentUuid": "9b4eb760_302ee0fc",
+      "revId": "538d157f8f1a61326112f81de797d02c5883befa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2fbc0b8d_3c9dee83",
         "filename": "ui/views/controls/textfield/textfield.cc",
         "patchSetId": 28
@@ -193,6 +379,24 @@
       "revId": "538d157f8f1a61326112f81de797d02c5883befa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f69e76b_8eaefbd0",
+        "filename": "ui/views/controls/textfield/textfield.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 917,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-07-10T14:21:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2fbc0b8d_3c9dee83",
+      "revId": "538d157f8f1a61326112f81de797d02c5883befa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -219,6 +423,30 @@
     },
     {
       "key": {
+        "uuid": "b633e127_53fee96c",
+        "filename": "ui/views/controls/textfield/textfield.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 918,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-07-10T14:21:01Z",
+      "side": 1,
+      "message": "Thanks for making me look at this more closely. I think the old logic is incorrect as well. The editable state should be added no matter what, as the AX editable state means that the object supported editable interfaces, which is true even when the object is currently readonly or disabled.\n\nYou can see this in the blink code for IsEditable() here: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/modules/accessibility/AXLayoutObject.cpp?type\u003dcs\u0026q\u003dfile:accessi+%5C:%5C:IsEditable\u0026sq\u003dpackage:chromium\u0026l\u003d334",
+      "parentUuid": "836f6250_259b029f",
+      "range": {
+        "startLine": 918,
+        "startChar": 35,
+        "endLine": 918,
+        "endChar": 55
+      },
+      "revId": "538d157f8f1a61326112f81de797d02c5883befa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c78e8894_b6471176",
         "filename": "ui/views/controls/textfield/textfield.cc",
         "patchSetId": 28
@@ -230,6 +458,30 @@
       "writtenOn": "2017-07-10T04:34:46Z",
       "side": 1,
       "message": "Does the logic here match your expectations?\n\nE.g. Current (and old) behaviour: Textfield can be disabled but still have AX_STATE_EDITABLE. (But not read only and editable.) Does AX_STATE_EDITABLE still have a role? - perhaps comment here why it\u0027s needed separately for textfields and not just a third enum value for AX_ATTR_RESTRICTIONS.\n\n(Note I don\u0027t know the right answer here - I\u0027ll defer to a11y folks)",
+      "range": {
+        "startLine": 921,
+        "startChar": 28,
+        "endLine": 921,
+        "endChar": 45
+      },
+      "revId": "538d157f8f1a61326112f81de797d02c5883befa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcce1bdd_192ce2c2",
+        "filename": "ui/views/controls/textfield/textfield.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 921,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-07-10T14:21:01Z",
+      "side": 1,
+      "message": "Comment added.",
+      "parentUuid": "c78e8894_b6471176",
       "range": {
         "startLine": 921,
         "startChar": 28,
