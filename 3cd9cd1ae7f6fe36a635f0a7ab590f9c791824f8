@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d04a4b45_07f9c832",
+        "filename": "ios/clean/chrome/browser/ui/tab_collection/tab_collection_mediator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-10T15:18:24Z",
+      "side": 1,
+      "message": "Super nit: If the title is empty, we convert IDS_DEFAULT_TAB_TITLE from UTF16 to an NSString. But if the operations are ordered a bit differently, this doesn\u0027t need to happen; |item| can be constructed first, and then the initialization of |title| can either be the NSString-fetched IDS_DEFAULT_TAB_TITLE, or the UTF16-to-NSString of |title|.\n\nOr, you can bake defaulting to IDS_DEFAULT_TAB_TITLE into TabCollectionItem, pushing the logic into the model object.\n\n(Or you can leave this as-is).",
+      "range": {
+        "startLine": 153,
+        "startChar": 21,
+        "endLine": 153,
+        "endChar": 39
+      },
+      "revId": "3cd9cd1ae7f6fe36a635f0a7ab590f9c791824f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "884ac6e6_81ba4b6e",
+        "filename": "ios/clean/chrome/browser/ui/tab_collection/tab_collection_tab_cell.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-10T15:18:24Z",
+      "side": 1,
+      "message": "weakSelf.snapshot \u003d snapshot?",
+      "range": {
+        "startLine": 67,
+        "startChar": 37,
+        "endLine": 67,
+        "endChar": 57
+      },
+      "revId": "3cd9cd1ae7f6fe36a635f0a7ab590f9c791824f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
