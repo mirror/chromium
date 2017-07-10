@@ -49,9 +49,9 @@ RenderFrameProxyHost* RenderFrameProxyHost::FromID(int process_id,
 RenderFrameProxyHost::RenderFrameProxyHost(SiteInstance* site_instance,
                                            RenderViewHostImpl* render_view_host,
                                            FrameTreeNode* frame_tree_node)
-    : routing_id_(site_instance->GetProcess()->GetNextRoutingID()),
+    : routing_id_(site_instance->GetProcess(nullptr)->GetNextRoutingID()),
       site_instance_(site_instance),
-      process_(site_instance->GetProcess()),
+      process_(site_instance->GetProcess(nullptr)),
       frame_tree_node_(frame_tree_node),
       render_frame_proxy_created_(false),
       render_view_host_(render_view_host) {

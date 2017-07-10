@@ -1485,7 +1485,8 @@ TEST_F(NavigationControllerTest, ReloadWithGuest) {
   // Make the entry believe its RenderProcessHost is a guest.
   NavigationEntryImpl* entry1 = controller.GetVisibleEntry();
   reinterpret_cast<MockRenderProcessHost*>(
-      entry1->site_instance()->GetProcess())->set_is_for_guests_only(true);
+      entry1->site_instance()->GetProcess(nullptr))
+      ->set_is_for_guests_only(true);
 
   // And reload.
   controller.Reload(ReloadType::NORMAL, true);

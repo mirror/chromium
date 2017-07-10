@@ -1437,8 +1437,10 @@ void ChromeContentBrowserClient::SiteInstanceGotProcess(
                                                profile)) {
     InstantService* instant_service =
         InstantServiceFactory::GetForProfile(profile);
-    if (instant_service)
-      instant_service->AddInstantProcess(site_instance->GetProcess()->GetID());
+    if (instant_service) {
+      instant_service->AddInstantProcess(
+          site_instance->GetProcess(nullptr)->GetID());
+    }
   }
 
   for (size_t i = 0; i < extra_parts_.size(); ++i)
