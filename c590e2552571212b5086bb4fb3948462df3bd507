@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e48cd76_2851e5ba",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-10T17:03:51Z",
+      "side": 1,
+      "message": "Comments needed.",
+      "revId": "c590e2552571212b5086bb4fb3948462df3bd507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f6c5f7f_d806c61b",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-10T17:03:51Z",
+      "side": 1,
+      "message": "nit: comment?",
+      "revId": "c590e2552571212b5086bb4fb3948462df3bd507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecab369f_bcae5193",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_web_contents_data.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-10T17:03:51Z",
+      "side": 1,
+      "message": "This is similar to WebContentsObserver::DidStopLoading(). Some comments can help people to not get confused.\n\nAlso, I expect there will be a bunch of other signals coming from GRC. Maybe add a comment to group them. Something like \"Signals coming from GRC\".",
+      "revId": "c590e2552571212b5086bb4fb3948462df3bd507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d78f9af6_29976247",
+        "filename": "services/resource_coordinator/public/interfaces/tab_signal_generator.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-10T17:03:51Z",
+      "side": 1,
+      "message": "This includes both observer and generator. Should this file be just tab_signal.mojom?",
+      "revId": "c590e2552571212b5086bb4fb3948462df3bd507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "883bde9d_9dc342e0",
+        "filename": "services/resource_coordinator/public/interfaces/tab_signal_generator.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-10T17:03:51Z",
+      "side": 1,
+      "message": "I think the interface names should be OnPropertyReceived and OnEventReceived or something similar.",
+      "revId": "c590e2552571212b5086bb4fb3948462df3bd507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c70518d_932648ab",
+        "filename": "services/resource_coordinator/resource_coordinator_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-10T17:03:51Z",
+      "side": 1,
+      "message": "nit: remove empty line.",
+      "revId": "c590e2552571212b5086bb4fb3948462df3bd507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
