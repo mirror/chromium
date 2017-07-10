@@ -106,7 +106,7 @@ void ReplaceCharsetInMediaType(String& media_type,
                                const String& charset_value) {
   unsigned pos = 0, len = 0;
 
-  FindCharsetInMediaType(media_type, pos, len);
+  DeprecatedFindCharsetInMediaType(media_type, pos, len);
 
   if (!len) {
     // When no charset found, do nothing.
@@ -118,7 +118,7 @@ void ReplaceCharsetInMediaType(String& media_type,
   while (len) {
     media_type.replace(pos, len, charset_value);
     unsigned start = pos + charset_value.length();
-    FindCharsetInMediaType(media_type, pos, len, start);
+    DeprecatedFindCharsetInMediaType(media_type, pos, len, start);
   }
 }
 
@@ -1434,7 +1434,7 @@ AtomicString XMLHttpRequest::FinalResponseMIMETypeWithFallback() const {
 
 String XMLHttpRequest::FinalResponseCharset() const {
   String override_response_charset =
-      ExtractCharsetFromMediaType(mime_type_override_);
+      DeprecatedExtractCharsetFromMediaType(mime_type_override_);
   if (!override_response_charset.IsEmpty())
     return override_response_charset;
   return response_.TextEncodingName();
