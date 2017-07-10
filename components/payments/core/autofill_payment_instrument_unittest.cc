@@ -120,7 +120,7 @@ class FakePaymentRequestDelegate : public PaymentRequestDelegate {
 
   void CompleteFullCardRequest() {
     full_card_result_delegate_->OnFullCardRequestSucceeded(
-        full_card_request_card_, base::ASCIIToUTF16("123"));
+        full_card_request_card_, base::ASCIIToUTF16("123"), nullptr);
   }
 
   autofill::RegionDataLoader* GetRegionDataLoader() override { return nullptr; }
