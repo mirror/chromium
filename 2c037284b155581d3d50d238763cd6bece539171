@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "52837773_d2e88453",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 925,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-07-10T20:48:28Z",
+      "side": 1,
+      "message": "We can\u0027t. This isn\u0027t just a Closure; we need to pass the function arguments too.",
+      "parentUuid": "90fd6db2_646475de",
+      "revId": "2c037284b155581d3d50d238763cd6bece539171",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a99a340a_875e3670",
         "filename": "chrome/browser/chrome_content_browser_client.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "2c037284b155581d3d50d238763cd6bece539171",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32387f3b_fed51f68",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2116,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-07-10T20:48:28Z",
+      "side": 1,
+      "message": "Oh yeah, done.",
+      "parentUuid": "a99a340a_875e3670",
+      "revId": "2c037284b155581d3d50d238763cd6bece539171",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
