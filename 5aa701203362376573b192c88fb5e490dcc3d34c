@@ -16,6 +16,41 @@
       "revId": "5aa701203362376573b192c88fb5e490dcc3d34c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b238a46_0861e379",
+        "filename": "chrome/browser/chromeos/printing/usb_printer_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-10T22:04:35Z",
+      "side": 1,
+      "message": "Yes, please always use l10n_util::GetStringFUTF16.",
+      "parentUuid": "92a8d774_94b5b09e",
+      "revId": "5aa701203362376573b192c88fb5e490dcc3d34c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1094f398_76e54e78",
+        "filename": "chrome/browser/chromeos/printing/usb_printer_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-10T22:04:35Z",
+      "side": 1,
+      "message": "Here too. USB may need to be translated and the order may change.",
+      "revId": "5aa701203362376573b192c88fb5e490dcc3d34c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
