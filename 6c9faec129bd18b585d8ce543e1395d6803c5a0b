@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4c0083a_98ce45f2",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/os_metrics.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-07-10T08:30:04Z",
+      "side": 1,
+      "message": "Is this allowed?",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 21
+      },
+      "revId": "6c9faec129bd18b585d8ce543e1395d6803c5a0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
