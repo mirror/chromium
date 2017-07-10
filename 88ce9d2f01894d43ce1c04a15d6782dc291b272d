@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "401cc8a1_77911a60",
+        "filename": "third_party/WebKit/Source/modules/payments/PaymentHandlerUtils.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-10T06:45:10Z",
+      "side": 1,
+      "message": "#include \"platform/wtf/Allocator.h\" for STATIC_ONLY.",
+      "revId": "88ce9d2f01894d43ce1c04a15d6782dc291b272d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc0e0ee8_3b6cc534",
+        "filename": "third_party/WebKit/Source/modules/payments/PaymentHandlerUtils.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-10T06:45:10Z",
+      "side": 1,
+      "message": "#endif  // PaymentHandlerUtils_h",
+      "revId": "88ce9d2f01894d43ce1c04a15d6782dc291b272d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
