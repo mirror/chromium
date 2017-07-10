@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc08f8c0_938f94c7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/BottomToolbarPhone.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 735,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-07-10T17:14:46Z",
+      "side": 1,
+      "message": "isn\u0027t mUnfocusedLocationBarLayoutWidth equal to mUnfocusedLocationBarLayoutRight -  mUnfocusedLocationBarLayoutLeft?\n\nIf we substitute and abbrev the below, isn\u0027t it like this:\n\nmUnfocusedLocationBarLayoutLeft + (mUnfocusedLocationBarLayoutRight -  mUnfocusedLocationBarLayoutLeft) - mUnfocusedLocationBarLayoutRight.  Isn\u0027t that 0?\n\n...\n\nJust wondering if this should/could be\n-currentWidth + getRightPositionOfLocationBarBackground(mVisualState)\n\nBut I\u0027m a bit slow this morning so I wouldn\u0027t be surprised how much I\u0027m overlooking this morning.",
+      "range": {
+        "startLine": 735,
+        "startChar": 38,
+        "endLine": 735,
+        "endChar": 69
+      },
+      "revId": "c7e193b38a216fc908f8ea3716bdf35cd9a30b06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
