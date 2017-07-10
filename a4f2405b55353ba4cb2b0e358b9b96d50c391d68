@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8708acf4_1131c556",
+        "filename": "services/resource_coordinator/memory_instrumentation/process_map.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-07-10T16:48:36Z",
+      "side": 1,
+      "message": "I split it out into https://chromium-review.googlesource.com/c/565510/ even though it is tiny because I\u0027m worried we might have to revert it if we observe missing data in UMA.",
+      "parentUuid": "a4b98324_2ccd2d48",
+      "range": {
+        "startLine": 59,
+        "startChar": 52,
+        "endLine": 59,
+        "endChar": 53
+      },
+      "revId": "a4f2405b55353ba4cb2b0e358b9b96d50c391d68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d91c9f4c_dc37ecbb",
         "filename": "services/service_manager/service_manager.cc",
         "patchSetId": 4
@@ -39,6 +63,24 @@
       "revId": "a4f2405b55353ba4cb2b0e358b9b96d50c391d68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2deb74bf_7f9a55fd",
+        "filename": "services/service_manager/service_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1045,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-07-10T16:48:36Z",
+      "side": 1,
+      "message": "Done, thanks! Also updated the other uses above while I was here.",
+      "parentUuid": "d91c9f4c_dc37ecbb",
+      "revId": "a4f2405b55353ba4cb2b0e358b9b96d50c391d68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
