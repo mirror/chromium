@@ -85,8 +85,9 @@ Browser* BrowserTabStripModelDelegate::CreateNewStripWithContents(
 }
 
 void BrowserTabStripModelDelegate::WillAddWebContents(
-    content::WebContents* contents) {
-  TabHelpers::AttachTabHelpers(contents, base::nullopt);
+    content::WebContents* contents,
+    base::Optional<content::WebContents::CreateParams> create_params) {
+  TabHelpers::AttachTabHelpers(contents, create_params);
 
   // Make the tab show up in the task manager.
   task_manager::WebContentsTags::CreateForTabContents(contents);
