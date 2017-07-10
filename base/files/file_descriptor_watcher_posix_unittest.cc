@@ -81,6 +81,9 @@ class FileDescriptorWatcherTest
       base::RunLoop().RunUntilIdle();
     }
 
+    // Ensure that OtherThread is done processing before closing fds.
+    other_thread_.Stop();
+
     EXPECT_EQ(0, IGNORE_EINTR(close(pipe_fds_[0])));
     EXPECT_EQ(0, IGNORE_EINTR(close(pipe_fds_[1])));
   }
