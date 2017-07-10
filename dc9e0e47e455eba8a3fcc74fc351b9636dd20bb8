@@ -331,6 +331,30 @@
     },
     {
       "key": {
+        "uuid": "1b38b933_fc3e22e6",
+        "filename": "ui/views/controls/button/checkbox.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-10T18:26:36Z",
+      "side": 1,
+      "message": "It would seem beneficial to optimize this CL toward that better end-state, rather than doing something different in the interim that would need to be modified later.",
+      "parentUuid": "465ff601_83958370",
+      "range": {
+        "startLine": 239,
+        "startChar": 5,
+        "endLine": 239,
+        "endChar": 13
+      },
+      "revId": "dc9e0e47e455eba8a3fcc74fc351b9636dd20bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ccc0152a_5a0bb9bf",
         "filename": "ui/views/controls/button/checkbox.cc",
         "patchSetId": 5
@@ -765,6 +789,30 @@
       "side": 1,
       "message": "A subclass of FocusRing won\u0027t work correctly since the Install/Uninstall mechanism relies on there being a single instance within the child view hierarchy. See GetFocusRing(). It uses GetClassName() to locate the existing specific class instance. A subclass could be a different class type.\n\nTechnically, it could be made to work, but the resulting code would be more obscure/obtuse.",
       "parentUuid": "407b5027_2b76a694",
+      "range": {
+        "startLine": 66,
+        "startChar": 16,
+        "endLine": 66,
+        "endChar": 23
+      },
+      "revId": "dc9e0e47e455eba8a3fcc74fc351b9636dd20bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d4be16ca_a9d93caf",
+        "filename": "ui/views/controls/focus_ring.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-10T18:26:36Z",
+      "side": 1,
+      "message": "I\u0027m a bit confused. Why wouldn\u0027t a subclass return the same value for GetClassName()? Subclasses like CheckboxFocusRing and RadioButtonFocusRing should return the same \"FocusRing\" class name unless you explicitly override that method, right? I would suggest pursuing that approach, or just ignoring the FocusRung class altogether, and making the Checkbox and RadioButton overrides of PaintFocusRing use their own |View* focus_ring_;| members (and View hierarchy children) to paint the custom focus rings as needed.",
+      "parentUuid": "591bd70f_799c514d",
       "range": {
         "startLine": 66,
         "startChar": 16,
