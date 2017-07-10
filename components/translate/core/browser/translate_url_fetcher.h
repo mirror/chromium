@@ -79,7 +79,7 @@ class TranslateURLFetcher : public net::URLFetcherDelegate {
   int retry_count_;
 
   // Max number how many times to retry on the server error
-  int max_retry_on_5xx_;
+  int max_retry_on_5xx_ = 0;
 
   // An extra HTTP request header
   std::string extra_request_header_;
