@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a679ec1_30c38ebb",
+        "filename": "content/browser/android/dialog_overlay_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-07-10T21:33:45Z",
+      "side": 1,
+      "message": "you can do this in two ways.\n\none option is to return null as you\u0027re doing, and make the java side call mClient.onDestroyed() then cleanup(), when it gets a null back.  if you do that, then you should also make the current call to onDismissed in the ctor follow that pattern as well.  might want to pass in |web_contents_impl| to the ctor too, rather than make it look it up again.  could probably inline the remaining bits of GetContentViewCore() into Init and the ctor, respectively.\n\nthe other option is to move all of these checks into the ctor, and have it call onDismissed for them as it does if |!cvc_|.\n\ni think that both ways will work fine even after my pixel test cl splits the ctor in half.\n\nthe first one is probably less jumping through hoops and is closer to the code as you have it now.",
+      "range": {
+        "startLine": 41,
+        "startChar": 28,
+        "endLine": 41,
+        "endChar": 45
+      },
+      "revId": "9fba898dc6411894bc6b1ee015c1378beb79cd94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30f4a081_3fe7158e",
+        "filename": "content/browser/android/dialog_overlay_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-07-10T21:33:45Z",
+      "side": 1,
+      "message": "before, this didn\u0027t unregister for tokens, since the cvc is going away.  this is fine, as long as cvc is okay with us doing that.  i have no idea.",
+      "revId": "9fba898dc6411894bc6b1ee015c1378beb79cd94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
