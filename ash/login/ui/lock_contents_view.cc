@@ -29,32 +29,33 @@ namespace ash {
 
 namespace {
 
-// Any non-zero value used for separator height. Makes debugging easier.
+// Any non-zero value used for separator height. Makes debugging easier. Should
+// not affect visual appearance.
 constexpr int kNonEmptyHeightDp = 30;
 
-// Horizontal distance between the two users in the two-user layout.
-constexpr int kDistanceBetweenUsersInTwoUserModeLandscapeDp = 118;
-constexpr int kDistanceBetweenUsersInTwoUserModePortraitDp = 32;
+// Horizontal distance between two users in the low density layout.
+constexpr int kLowDensityDistanceBetweenUsersInLandscapeDp = 118;
+constexpr int kLowDensityDistanceBetweenUsersInPortraitDp = 32;
 
-// Margin left of the auth user in the small layout.
-constexpr int kSmallMarginLeftOfAuthUserLandscapeDp = 98;
-constexpr int kSmallMarginLeftOfAuthUserPortraitDp = 0;
+// Margin left of the auth user in the medium density layout.
+constexpr int kMediumDensityMarginLeftOfAuthUserLandscapeDp = 98;
+constexpr int kMediumDensityMarginLeftOfAuthUserPortraitDp = 0;
 
-// The horizontal distance between the auth user and the small user row.
-constexpr int kSmallDistanceBetweenAuthUserAndUsersLandscapeDp = 220;
-constexpr int kSmallDistanceBetweenAuthUserAndUsersPortraitDp = 84;
+// Horizontal distance between the auth user and the medium density user row.
+constexpr int kMediumDensityDistanceBetweenAuthUserAndUsersLandscapeDp = 220;
+constexpr int kMediumDensityDistanceBetweenAuthUserAndUsersPortraitDp = 84;
 
-// The vertical padding between each entry in the small user row
-constexpr int kSmallVerticalDistanceBetweenUsersDp = 53;
+// Vertical padding between each entry in the medium density user row
+constexpr int kMediumDensityVerticalDistanceBetweenUsersDp = 53;
 
-// The horizontal padding left and right of the extra-small user list.
-constexpr int kExtraSmallHorizontalPaddingLeftOfUserListLandscapeDp = 72;
-constexpr int kExtraSmallHorizontalPaddingRightOfUserListLandscapeDp = 72;
-constexpr int kExtraSmallHorizontalPaddingLeftOfUserListPortraitDp = 46;
-constexpr int kExtraSmallHorizontalPaddingRightOfUserListPortraitDp = 12;
+// Horizontal padding left and right of the high density user list.
+constexpr int kHighDensityHorizontalPaddingLeftOfUserListLandscapeDp = 72;
+constexpr int kHighDensityHorizontalPaddingRightOfUserListLandscapeDp = 72;
+constexpr int kHighDensityHorizontalPaddingLeftOfUserListPortraitDp = 46;
+constexpr int kHighDensityHorizontalPaddingRightOfUserListPortraitDp = 12;
 
 // The vertical padding between each entry in the extra-small user row
-constexpr int kExtraSmallVerticalDistanceBetweenUsersDp = 32;
+constexpr int kHighDensityVerticalDistanceBetweenUsersDp = 32;
 
 // Returns true if landscape constants should be used for UI shown in |widget|.
 bool ShowLandscape(views::Widget* widget) {
@@ -232,8 +233,8 @@ void LockContentsView::CreateLowDensityLayout(
     const std::vector<ash::mojom::UserInfoPtr>& users) {
   // Space between auth user and alternative user.
   AddChildView(MakeOrientationViewWithWidths(
-      kDistanceBetweenUsersInTwoUserModeLandscapeDp,
-      kDistanceBetweenUsersInTwoUserModePortraitDp));
+      kLowDensityDistanceBetweenUsersInLandscapeDp,
+      kLowDensityDistanceBetweenUsersInPortraitDp));
   // TODO(jdufault): When alt_user_view is clicked we should show auth methods.
   auto* alt_user_view =
       new LoginUserView(LoginDisplayStyle::kLarge, false /*show_dropdown*/,
@@ -246,21 +247,21 @@ void LockContentsView::CreateLowDensityLayout(
 void LockContentsView::CreateMediumDensityLayout(
     const std::vector<ash::mojom::UserInfoPtr>& users) {
   // Insert spacing before (left of) auth.
-  AddChildViewAt(
-      MakeOrientationViewWithWidths(kSmallMarginLeftOfAuthUserLandscapeDp,
-                                    kSmallMarginLeftOfAuthUserPortraitDp),
-      0);
+  AddChildViewAt(MakeOrientationViewWithWidths(
+                     kMediumDensityMarginLeftOfAuthUserLandscapeDp,
+                     kMediumDensityMarginLeftOfAuthUserPortraitDp),
+                 0);
   // Insert spacing between auth and user list.
   AddChildView(MakeOrientationViewWithWidths(
-      kSmallDistanceBetweenAuthUserAndUsersLandscapeDp,
-      kSmallDistanceBetweenAuthUserAndUsersPortraitDp));
+      kMediumDensityDistanceBetweenAuthUserAndUsersLandscapeDp,
+      kMediumDensityDistanceBetweenAuthUserAndUsersPortraitDp));
 
   // Add additional users.
   auto* row = new views::View();
   AddChildView(row);
   auto* layout =
       new views::BoxLayout(views::BoxLayout::kVertical, gfx::Insets(),
-                           kSmallVerticalDistanceBetweenUsersDp);
+                           kMediumDensityVerticalDistanceBetweenUsersDp);
   row->SetLayoutManager(layout);
   for (std::size_t i = 1u; i < users.size(); ++i) {
     auto* view =
@@ -307,14 +308,14 @@ void LockContentsView::CreateHighDensityLayout(
 
   // Padding left of user list.
   AddChildView(MakeOrientationViewWithWidths(
-      kExtraSmallHorizontalPaddingLeftOfUserListLandscapeDp,
-      kExtraSmallHorizontalPaddingLeftOfUserListPortraitDp));
+      kHighDensityHorizontalPaddingLeftOfUserListLandscapeDp,
+      kHighDensityHorizontalPaddingLeftOfUserListPortraitDp));
 
   // Add user list.
   auto* row = new views::View();
   auto* row_layout =
       new views::BoxLayout(views::BoxLayout::kVertical, gfx::Insets(),
-                           kExtraSmallVerticalDistanceBetweenUsersDp);
+                           kHighDensityVerticalDistanceBetweenUsersDp);
   row_layout->set_minimum_cross_axis_size(
       LoginUserView::WidthForLayoutStyle(LoginDisplayStyle::kExtraSmall));
   row->SetLayoutManager(row_layout);
@@ -334,8 +335,8 @@ void LockContentsView::CreateHighDensityLayout(
 
   // Padding right of user list.
   AddChildView(MakeOrientationViewWithWidths(
-      kExtraSmallHorizontalPaddingRightOfUserListLandscapeDp,
-      kExtraSmallHorizontalPaddingRightOfUserListPortraitDp));
+      kHighDensityHorizontalPaddingRightOfUserListLandscapeDp,
+      kHighDensityHorizontalPaddingRightOfUserListPortraitDp));
 }
 
 views::View* LockContentsView::MakeOrientationViewWithWidths(int landscape,
