@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e66d3207_baf62290",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPageView.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-10T16:19:06Z",
+      "side": 1,
+      "message": "Done 🇬🇧",
+      "parentUuid": "1ea6da6c_33a51714",
+      "range": {
+        "startLine": 552,
+        "startChar": 24,
+        "endLine": 552,
+        "endChar": 45
+      },
+      "revId": "04280ff345396c5f57d164572315715408628404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fb689759_d8698d01",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroup.java",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-10T15:12:05Z",
       "side": 1,
       "message": "I still think a MultiSet would work a bit better here.",
+      "range": {
+        "startLine": 152,
+        "startChar": 18,
+        "endLine": 152,
+        "endChar": 31
+      },
+      "revId": "04280ff345396c5f57d164572315715408628404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b9ccf75_1dc2678e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroup.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-10T16:19:06Z",
+      "side": 1,
+      "message": "AFAIK there is no multiset in the standard java or android libraries :/ I could have a set of  custom objects that maintains a count if you want, but that seems more complicated than necessary, no? The number of tasks is sufficiently small that O(n) or O(logn) on remove doesn\u0027t matter here I\u0027d say.",
+      "parentUuid": "fb689759_d8698d01",
       "range": {
         "startLine": 152,
         "startChar": 18,
@@ -68,6 +116,30 @@
       "revId": "04280ff345396c5f57d164572315715408628404",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c0cc8ad_054bc6a9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroup.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-10T16:19:06Z",
+      "side": 1,
+      "message": "reformulated. We is whatever calls onSwitchToForeground, here the adapter or the newtabpage, but that\u0027s depending on what the delegate should do, yes.",
+      "parentUuid": "e356c601_9a94739a",
+      "range": {
+        "startLine": 331,
+        "startChar": 36,
+        "endLine": 331,
+        "endChar": 38
+      },
+      "revId": "04280ff345396c5f57d164572315715408628404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
