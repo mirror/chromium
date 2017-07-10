@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "152fbe17_f902f073",
+        "filename": "base/value_iterators.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-10T17:18:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3039c92_43c9d855",
+      "revId": "b0aa9191377ac771ba3ac07d4491003516331e11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "445d515a_b12bac82",
         "filename": "base/values.h",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "c7ca2599_0e9a515b",
+        "filename": "base/values.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-10T17:18:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "445d515a_b12bac82",
+      "revId": "b0aa9191377ac771ba3ac07d4491003516331e11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6c43e7d_56b8d2af",
         "filename": "base/values_unittest.cc",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-07T16:55:56Z",
       "side": 1,
       "message": "It\u0027s not very intuitive that the return type of dict.FindKey would need to be compared against something nested (dict.DictItems().end()). Should Value provide an \"end\" top level function so that you could check whether dict.FindKey(\"foo\") \u003d\u003d dict.end() or something similar?\n\nOr alternatively, dict.DictItems() should have FindKey, not the top level dict?\n\n(sorry if I\u0027m missing something, it just seems to be a mispatch between what object returns the found iterator and what object returns the end iterator)",
+      "revId": "b0aa9191377ac771ba3ac07d4491003516331e11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "275dcdf9_a7b87e68",
+        "filename": "base/values_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-10T17:18:45Z",
+      "side": 1,
+      "message": "The idea of having a dedicated |Value::DictEnd| was mentioned in the proposal doc (http://docs/document/d/1uDLu5uTRlCWePxQUEHc8yNQdEoE1BDISYdpggWEABnw/edit#heading\u003dh.icznl3bfmf6v). I initially thought this wouldn\u0027t be necessary due to |Value::DictItems::end| providing the same functionality. But you do raise a good point that it is probably confusing that the check needs to be done on DictItems instead of on Value directly.\n\nI wouldn\u0027t want to expose FindKey on DictItems, as the whole custom iterator concept is of temporary nature. We simply want to make callers life easier while migrating everything to value semantics, at which point we remove the underlying unique_ptrs from DictStorage. At that point there is no need to have base::detail::dict_iterator around anymore, as it will provide the exact same functionality as DictStorage::iterator. Ideally we then would expose |Value::DictStorage Value::GetDict()| and replace all calls to Value::DictItems with Value::GetDict without needing to change any other client code.\n\nTo repeat: I do agree that additionally exposing Value::DictEnd is a good idea, but I would also like to hear what brettw@ has to say about this.",
+      "parentUuid": "f6c43e7d_56b8d2af",
       "revId": "b0aa9191377ac771ba3ac07d4491003516331e11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
