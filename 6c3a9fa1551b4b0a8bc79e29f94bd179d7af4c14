@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dce63d33_99017dc7",
+        "filename": "chrome/browser/metrics/chrome_browser_main_extra_parts_metrics.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1208920
+      },
+      "writtenOn": "2017-07-10T23:18:08Z",
+      "side": 1,
+      "message": "I wondered about that too, but assumed no one was using 16.10 (I missed that 17.04 had no usage either).",
+      "parentUuid": "d82507ed_8b4d17dd",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 36
+      },
+      "revId": "6c3a9fa1551b4b0a8bc79e29f94bd179d7af4c14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e5a514e_83de07fd",
         "filename": "chrome/browser/metrics/chrome_browser_main_extra_parts_metrics.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "6c3a9fa1551b4b0a8bc79e29f94bd179d7af4c14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ebb566b_c570a8a8",
+        "filename": "chrome/browser/metrics/chrome_browser_main_extra_parts_metrics.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1208920
+      },
+      "writtenOn": "2017-07-10T23:18:08Z",
+      "side": 1,
+      "message": "Good catch, that would be it.",
+      "parentUuid": "0e5a514e_83de07fd",
+      "range": {
+        "startLine": 223,
+        "startChar": 34,
+        "endLine": 223,
+        "endChar": 35
+      },
+      "revId": "6c3a9fa1551b4b0a8bc79e29f94bd179d7af4c14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
