@@ -8,6 +8,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include <cassert>
 #include <climits>
 #include <cmath>
 #include <cstdlib>
@@ -15,6 +16,70 @@
 #include <type_traits>
 
 #include "base/numerics/safe_conversions.h"
+
+// Probe for builtin math overflow support on Clang and version check on GCC.
+#if defined(__clang__) || defined(__GNUC__)
+#include "base/numerics/safe_math_clang_gcc_impl.h"
+
+#else
+// These are the placeholder implementations for platforms that don't provide
+// optimized builtin/intrinsic operations.
+namespace base {
+namespace internal {
+
+template <typename T, typename U>
+struct CheckedAddFastOp {
+  static const bool is_supported = false;
+  template <typename V>
+  static bool Do(T, U, V*) {
+    assert(false);  // Should not be reached.
+    return false;
+  }
+};
+
+template <typename T, typename U>
+struct CheckedSubFastOp {
+  static const bool is_supported = false;
+  template <typename V>
+  static bool Do(T, U, V*) {
+    assert(false);  // Should not be reached.
+    return false;
+  }
+};
+
+template <typename T, typename U>
+struct CheckedMulFastOp {
+  static const bool is_supported = false;
+  template <typename V>
+  static bool Do(T, U, V*) {
+    assert(false);  // Should not be reached.
+    return false;
+  }
+};
+
+template <typename T, typename U>
+struct ClampedAddFastOp {
+  static const bool is_supported = false;
+  template <typename V>
+  static V Do(T, U) {
+    assert(false);  // Should not be reached.
+    return false;
+  }
+};
+
+template <typename T, typename U>
+struct ClampedSubFastOp {
+  static const bool is_supported = false;
+  template <typename V>
+  static V Do(T, U) {
+    assert(false);  // Should not be reached.
+    return false;
+  }
+};
+
+}  // namespace internal
+}  // namespace base
+#endif
 
 namespace base {
 namespace internal {
