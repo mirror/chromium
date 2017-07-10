@@ -12,6 +12,7 @@ import android.view.WindowManager;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
+import org.chromium.base.annotations.MainDex;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ import java.util.List;
  * provides some necessary data type(s) with accessors.
  **/
 @JNINamespace("media")
+@MainDex
 public abstract class VideoCapture {
     /**
      * Common class for storing a framerate range. Values should be multiplied by 1000.
