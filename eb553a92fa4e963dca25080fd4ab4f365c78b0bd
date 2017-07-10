@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "b478ebcf_72dfa102",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-10T20:32:23Z",
+      "side": 1,
+      "message": "You should talk to bettes@/hwi@ about this -- make sure they\u0027re aware of the old icon and see whether we want to match it or add a different one.  I don\u0027t have much of an opinion myself.",
+      "parentUuid": "45fefd0a_1556c800",
+      "range": {
+        "startLine": 439,
+        "startChar": 13,
+        "endLine": 439,
+        "endChar": 29
+      },
+      "revId": "eb553a92fa4e963dca25080fd4ab4f365c78b0bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "44b0b8c9_468707f7",
         "filename": "ui/vector_icons/BUILD.gn",
         "patchSetId": 4
