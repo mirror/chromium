@@ -22,6 +22,30 @@
       "revId": "2d944a84033d67935bee67f936e341107d493efb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0a40e6f_66d65bfc",
+        "filename": "third_party/WebKit/Source/platform/audio/ReverbInputBuffer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-10T17:06:56Z",
+      "side": 1,
+      "message": "Hmm.  Original had write_index + number_of_frames \u003c\u003d buffer_length.\n\nAnd I think if we do CHECK_LT, then line 45 (new) can never be true. I think this is ok. If buffer_length \u003d 1, and write_index \u003d 0, and number_of_frames \u003d 1, we do want to allow writing the one sample because the buffer is long enough to hold it.",
+      "parentUuid": "99061a38_d50d7048",
+      "range": {
+        "startLine": 41,
+        "startChar": 2,
+        "endLine": 41,
+        "endChar": 10
+      },
+      "revId": "2d944a84033d67935bee67f936e341107d493efb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
