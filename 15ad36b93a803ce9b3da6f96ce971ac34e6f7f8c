@@ -52,6 +52,24 @@
       "revId": "15ad36b93a803ce9b3da6f96ce971ac34e6f7f8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ebbbc4c_a4ac8240",
+        "filename": "chrome/browser/password_manager/native_backend_gnome_x.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-10T15:54:08Z",
+      "side": 0,
+      "message": "Good point about making it clear that it\u0027s UI thread when it needs to be. As far as I could tell from the existing code, only the Gnome Keyring library really cared about running on the UI thread, though. KDE and Libsecret seem fine with any main thread. So I adjusted just the native_backend_gnome_x.*.",
+      "parentUuid": "38b47e47_688a653e",
+      "revId": "15ad36b93a803ce9b3da6f96ce971ac34e6f7f8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
