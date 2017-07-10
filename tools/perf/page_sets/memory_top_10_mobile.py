@@ -63,7 +63,7 @@ class BackgroundPage(MemoryMeasurementPage):
 
 class MemoryTop10Mobile(story.StorySet):
   """User story to measure foreground/background memory in top 10 mobile."""
-  DETERMINISTIC_MODE = True
+  DETERMINISTIC_MODE = False
 
   def __init__(self):
     super(MemoryTop10Mobile, self).__init__(
