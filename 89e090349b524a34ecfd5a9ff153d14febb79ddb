@@ -221,6 +221,24 @@
       "revId": "89e090349b524a34ecfd5a9ff153d14febb79ddb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ada6823e_16d5bd2c",
+        "filename": "media/remoting/rpc.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1138617
+      },
+      "writtenOn": "2017-07-10T19:51:11Z",
+      "side": 1,
+      "message": "\"the renderer\u0027s observing that config\"... Does it mean it will be signaled when renderer receives the config changg from demuxer, or during the actual rendering??",
+      "parentUuid": "15fbf28b_72e986ac",
+      "revId": "89e090349b524a34ecfd5a9ff153d14febb79ddb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
