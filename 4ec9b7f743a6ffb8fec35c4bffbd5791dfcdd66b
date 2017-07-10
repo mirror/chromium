@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9feb37fc_c09e4773",
+        "filename": "chrome/browser/chromeos/lock_screen_apps/state_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-10T17:49:03Z",
+      "side": 1,
+      "message": "nit: The style guide uses /*close_window*/ format (ie, no spaces)",
+      "revId": "4ec9b7f743a6ffb8fec35c4bffbd5791dfcdd66b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4abbb632_25f219af",
+        "filename": "chrome/browser/chromeos/lock_screen_apps/state_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-10T17:49:03Z",
+      "side": 1,
+      "message": "Ditto",
+      "revId": "4ec9b7f743a6ffb8fec35c4bffbd5791dfcdd66b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
