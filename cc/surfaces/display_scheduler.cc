@@ -37,6 +37,9 @@ DisplayScheduler::DisplayScheduler(BeginFrameSource* begin_frame_source,
       weak_ptr_factory_(this) {
   begin_frame_deadline_closure_ = base::Bind(
       &DisplayScheduler::OnBeginFrameDeadline, weak_ptr_factory_.GetWeakPtr());
+  delayed_begin_frame_deadline_closure_ =
+      base::Bind(&DisplayScheduler::OnDelayedBeginFrameDeadline,
+                 weak_ptr_factory_.GetWeakPtr());
 }
 
 DisplayScheduler::~DisplayScheduler() {
@@ -235,6 +238,7 @@ bool DisplayScheduler::OnBeginFrameDerivedImpl(const BeginFrameArgs& args) {
   if (inside_begin_frame_deadline_interval_)
     OnBeginFrameDeadline();
 
+  // if (observing_begin_frame_source_) {
   // Schedule the deadline.
   current_begin_frame_args_ = save_args;
   current_begin_frame_args_.deadline -=
@@ -242,6 +246,7 @@ bool DisplayScheduler::OnBeginFrameDerivedImpl(const BeginFrameArgs& args) {
   inside_begin_frame_deadline_interval_ = true;
   UpdateHasPendingSurfaces();
   ScheduleBeginFrameDeadline();
+  //}
 
   return true;
 }
@@ -432,13 +437,34 @@ void DisplayScheduler::ScheduleBeginFrameDeadline() {
     return;
   }
 
-  begin_frame_deadline_task_.Reset(begin_frame_deadline_closure_);
+  // begin_frame_deadline_task_.Reset(begin_frame_deadline_closure_);
   base::TimeDelta delta =
       std::max(base::TimeDelta(), desired_deadline - base::TimeTicks::Now());
-  task_runner_->PostDelayedTask(FROM_HERE,
-                                begin_frame_deadline_task_.callback(), delta);
-  TRACE_EVENT2("cc", "Using new deadline", "delta", delta.ToInternalValue(),
-               "desired_deadline", desired_deadline);
+
+  // EXPERIMENT - only post the task if delta is zero
+  // task_runner_->PostDelayedTask(FROM_HERE,
+  //                              begin_frame_deadline_task_.callback(), delta);
+  if (delta.is_zero()) {
+    TRACE_EVENT0("cc", "Using zero deadline");
+    begin_frame_deadline_task_.Reset(begin_frame_deadline_closure_);
+    task_runner_->PostTask(FROM_HERE, begin_frame_deadline_task_.callback());
+
+  } else if (desired_deadline - current_begin_frame_args_.frame_time !=
+             current_begin_frame_args_.interval) {
+    TRACE_EVENT2("cc", "Using new deadline", "delta", delta.ToInternalValue(),
+                 "desired_deadline", desired_deadline);
+    begin_frame_deadline_task_.Reset(delayed_begin_frame_deadline_closure_);
+    task_runner_->PostDelayedTask(FROM_HERE,
+                                  begin_frame_deadline_task_.callback(), delta);
+  } else {
+    TRACE_EVENT1("cc", "Using v-sync deadline", "desired_deadline",
+                 desired_deadline);
+    // TODO: get rid of this - used as flag for now.
+    begin_frame_deadline_task_.Reset(begin_frame_deadline_closure_);
+  }
+  // END: experiment
+  // TRACE_EVENT2("cc", "Using new deadline", "delta", delta.ToInternalValue(),
+  //             "desired_deadline", desired_deadline);
 }
 
 bool DisplayScheduler::AttemptDrawAndSwap() {
@@ -466,6 +492,11 @@ void DisplayScheduler::OnBeginFrameDeadline() {
 
   bool did_draw = AttemptDrawAndSwap();
   DidFinishFrame(did_draw);
+}
+
+void DisplayScheduler::OnDelayedBeginFrameDeadline() {
+  TRACE_EVENT0("cc", "DisplayScheduler::OnDelayedBeginFrameDeadline");
+  OnBeginFrameDeadline();
 }
 
 void DisplayScheduler::DidFinishFrame(bool did_draw) {

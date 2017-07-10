@@ -81,6 +81,7 @@ class CC_SURFACES_EXPORT DisplayScheduler : public BeginFrameObserverBase,
   virtual void ScheduleBeginFrameDeadline();
   bool AttemptDrawAndSwap();
   void OnBeginFrameDeadline();
+  void OnDelayedBeginFrameDeadline();  // EXPERIMENT
   bool DrawAndSwap();
   void StartObservingBeginFrames();
   void StopObservingBeginFrames();
@@ -95,6 +96,7 @@ class CC_SURFACES_EXPORT DisplayScheduler : public BeginFrameObserverBase,
 
   BeginFrameArgs current_begin_frame_args_;
   base::Closure begin_frame_deadline_closure_;
+  base::Closure delayed_begin_frame_deadline_closure_;  // EXPERIMENT
   base::CancelableClosure begin_frame_deadline_task_;
   base::TimeTicks begin_frame_deadline_task_time_;
 
