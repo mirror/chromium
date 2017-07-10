@@ -801,8 +801,10 @@ public class SuggestionsSectionTest {
         verify(section.getCategoryInfo(),
                 (action == ContentSuggestionsAdditionalAction.VIEW_ALL ? times(1) : never()))
                 .performViewAllAction(navDelegate);
+
+        // noinspection unchecked -- See https://crbug.com/740162 for rationale.
         verify(suggestionsSource,
                 (action == ContentSuggestionsAdditionalAction.FETCH ? times(1) : never()))
-                .fetchSuggestions(anyInt(), any(String[].class));
+                .fetchSuggestions(anyInt(), any(String[].class), any(Callback.class));
     }
 }

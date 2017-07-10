@@ -132,17 +132,6 @@ public class SectionList
     }
 
     @Override
-    public void onMoreSuggestions(@CategoryInt int category, List<SnippetArticle> suggestions) {
-        @CategoryStatus
-        int status = mUiDelegate.getSuggestionsSource().getCategoryStatus(category);
-        if (!canProcessSuggestions(category, status)) return;
-
-        SuggestionsSection section = mSections.get(category);
-        section.setStatus(status);
-        section.appendSuggestions(suggestions, /* userRequested = */ true);
-    }
-
-    @Override
     public void onCategoryStatusChanged(@CategoryInt int category, @CategoryStatus int status) {
         // Observers should not be registered for this state.
         assert status != CategoryStatus.ALL_SUGGESTIONS_EXPLICITLY_DISABLED;

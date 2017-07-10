@@ -193,7 +193,8 @@ public class FakeSuggestionsSource implements SuggestionsSource {
     }
 
     @Override
-    public void fetchSuggestions(@CategoryInt int category, String[] displayedSuggestionIds) {
+    public void fetchSuggestions(@CategoryInt int category, String[] displayedSuggestionIds,
+            Callback<List<SnippetArticle>> callback) {
         throw new UnsupportedOperationException();
     }
 
