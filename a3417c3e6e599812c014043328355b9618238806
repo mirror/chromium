@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50c1fe1f_2e555f48",
+        "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-10T18:28:53Z",
+      "side": 1,
+      "message": "If you just need an InterfacePtrInfo, You could instead use the mojo::MakeRequest() overload that takes an InterfacePtrInfo*.",
+      "revId": "a3417c3e6e599812c014043328355b9618238806",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbf98d3d_66b1d778",
+        "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-10T18:28:53Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "a3417c3e6e599812c014043328355b9618238806",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b32cda2_01dcb843",
+        "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-10T18:28:53Z",
+      "side": 1,
+      "message": "It would be more clear to name it GetInterfacePtrInfo.",
+      "revId": "a3417c3e6e599812c014043328355b9618238806",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
