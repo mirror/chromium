@@ -40,7 +40,7 @@ interface GpuService {
   RequestCompleteGpuInfo() => (gpu.mojom.GpuInfo gpu_info);
 
   // Notify GPU that a shader was loaded from disk.
-  LoadedShader(string data);
+  LoadedShader(string key, string data);
 
   // Tells GPU to release the surface because it's being destroyed.
   DestroyingVideoSurface(int32 surface_id) => ();
