@@ -21,6 +21,7 @@
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/resource_coordinator/tab_manager_stats_collector.h"
 #include "chrome/browser/resource_coordinator/tab_manager_web_contents_data.h"
 #include "chrome/browser/resource_coordinator/tab_stats.h"
 #include "chrome/browser/sessions/tab_loader.h"
@@ -637,59 +638,6 @@ TEST_F(TabManagerTest, OnSessionRestoreStartedAndFinishedLoadingTabs) {
       ->NavigateAndCommit(GURL("about:blank"));
   WebContentsTester::For(test_contents.get())->TestSetIsLoading(false);
   EXPECT_FALSE(tab_manager->IsSessionRestoreLoadingTabs());
-}
-
-TEST_F(TabManagerTest, HistogramsSessionRestoreSwitchToTab) {
-  const char kHistogramName[] = "TabManager.SessionRestore.SwitchToTab";
-
-  TabManager tab_manager;
-  TabStripDummyDelegate delegate;
-  TabStripModel tab_strip(&delegate, profile());
-  WebContents* tab = CreateWebContents();
-  tab_strip.AppendWebContents(tab, true);
-
-  auto* data = tab_manager.GetWebContentsData(tab);
-
-  base::HistogramTester histograms;
-  histograms.ExpectTotalCount(kHistogramName, 0);
-
-  data->SetTabLoadingState(TAB_IS_LOADING);
-  tab_manager.RecordSwitchToTab(tab);
-  tab_manager.RecordSwitchToTab(tab);
-
-  // Nothing should happen until we're in a session restore
-  histograms.ExpectTotalCount(kHistogramName, 0);
-
-  tab_manager.OnSessionRestoreStartedLoadingTabs();
-
-  data->SetTabLoadingState(TAB_IS_NOT_LOADING);
-  tab_manager.RecordSwitchToTab(tab);
-  tab_manager.RecordSwitchToTab(tab);
-  histograms.ExpectTotalCount(kHistogramName, 2);
-  histograms.ExpectBucketCount(kHistogramName, TAB_IS_NOT_LOADING, 2);
-
-  data->SetTabLoadingState(TAB_IS_LOADING);
-  tab_manager.RecordSwitchToTab(tab);
-  tab_manager.RecordSwitchToTab(tab);
-  tab_manager.RecordSwitchToTab(tab);
-
-  histograms.ExpectTotalCount(kHistogramName, 5);
-  histograms.ExpectBucketCount(kHistogramName, TAB_IS_NOT_LOADING, 2);
-  histograms.ExpectBucketCount(kHistogramName, TAB_IS_LOADING, 3);
-
-  data->SetTabLoadingState(TAB_IS_LOADED);
-  tab_manager.RecordSwitchToTab(tab);
-  tab_manager.RecordSwitchToTab(tab);
-  tab_manager.RecordSwitchToTab(tab);
-  tab_manager.RecordSwitchToTab(tab);
-
-  histograms.ExpectTotalCount(kHistogramName, 9);
-  histograms.ExpectBucketCount(kHistogramName, TAB_IS_NOT_LOADING, 2);
-  histograms.ExpectBucketCount(kHistogramName, TAB_IS_LOADING, 3);
-  histograms.ExpectBucketCount(kHistogramName, TAB_IS_LOADED, 4);
-
-  // Tabs with a committed URL must be closed explicitly to avoid DCHECK errors.
-  tab_strip.CloseAllTabs();
 }
 
 }  // namespace resource_coordinator
