@@ -70,6 +70,30 @@
       "revId": "d027e1b9b634923a663fb50498e51c583e21efb9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a4ebbbf_a32bc494",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-07-10T20:56:14Z",
+      "side": 1,
+      "message": "I think it\u0027s a cycle in DSF\u003d\u003d\u003econtent/download\u003d\u003d\u003eDSF. Not cycle between keyed services.",
+      "parentUuid": "7b5a81fc_2c47f485",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 63
+      },
+      "revId": "d027e1b9b634923a663fb50498e51c583e21efb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
