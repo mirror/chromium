@@ -8,6 +8,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include <deque>
 #include <list>
 #include <map>
 #include <set>
@@ -116,7 +117,7 @@ class MEDIA_EXPORT GpuVideoDecoder
   void DestroyVDA();
 
   // Request a shared-memory segment of at least |min_size| bytes.  Will
-  // allocate as necessary.
+  // allocate as necessary. May return nullptr during Shutdown.
   std::unique_ptr<base::SharedMemory> GetSharedMemory(size_t min_size);
 
   // Return a shared-memory segment to the available pool.
@@ -178,8 +179,9 @@ class MEDIA_EXPORT GpuVideoDecoder
 
   // Shared-memory buffer pool.  Since allocating SHM segments requires a
   // round-trip to the browser process, we keep allocation out of the
-  // steady-state of the decoder.
-  std::vector<std::unique_ptr<base::SharedMemory>> available_shm_segments_;
+  // steady-state of the decoder.  Kept in FIFO order to ensure we expire
+  // segments which become useless due to size.
+  std::deque<std::unique_ptr<base::SharedMemory>> available_shm_segments_;
 
   // Placeholder sync token that was created and validated after the most
   // recent picture buffers were created.

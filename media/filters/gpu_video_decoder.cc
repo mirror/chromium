@@ -745,15 +745,18 @@ void GpuVideoDecoder::ReusePictureBuffer(int64_t picture_buffer_id) {
 std::unique_ptr<base::SharedMemory> GpuVideoDecoder::GetSharedMemory(
     size_t min_size) {
   DCheckGpuVideoAcceleratorFactoriesTaskRunnerIsCurrent();
-  if (available_shm_segments_.empty() ||
-      available_shm_segments_.back()->mapped_size() < min_size) {
-    size_t size_to_allocate = std::max(min_size, kSharedMemorySegmentBytes);
-    // CreateSharedMemory() can return NULL during Shutdown.
-    return factories_->CreateSharedMemory(size_to_allocate);
+
+  // Drain available segments until one of sufficient size is found.
+  std::unique_ptr<base::SharedMemory> result;
+  while (!result && !available_shm_segments_.empty()) {
+    result = std::move(available_shm_segments_.front());
+    available_shm_segments_.pop_front();
+    if (min_size < result->mapped_size())
+      return result;
   }
-  auto ret = std::move(available_shm_segments_.back());
-  available_shm_segments_.pop_back();
-  return ret;
+
+  return factories_->CreateSharedMemory(
+      std::max(min_size, kSharedMemorySegmentBytes));
 }
 
 void GpuVideoDecoder::PutSharedMemory(
