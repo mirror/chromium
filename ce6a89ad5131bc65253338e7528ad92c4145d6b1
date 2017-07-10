@@ -87,6 +87,24 @@
       "revId": "ce6a89ad5131bc65253338e7528ad92c4145d6b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a339891_fdf76228",
+        "filename": "media/remoting/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-07-10T16:23:55Z",
+      "side": 1,
+      "message": "A callback doesn\u0027t work due to conversion from GURL to WebURL. Seems like a proxy is needed under media/blink/ then.",
+      "parentUuid": "cd8480a8_75ec54ba",
+      "revId": "ce6a89ad5131bc65253338e7528ad92c4145d6b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
