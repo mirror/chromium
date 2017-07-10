@@ -10,7 +10,8 @@
 #import "ios/clean/chrome/browser/ui/commands/find_in_page_visibility_commands.h"
 #import "ios/clean/chrome/browser/ui/commands/settings_commands.h"
 
-// Declare all the possible items.
+// Declare all the possible items. If adding or removing items update
+// kToolsMenuNumberOfItems with the new total count.
 const MenuModelItem itemsModelList[] = {
     // clang-format off
   { IDS_IOS_TOOLS_MENU_NEW_TAB,               kToolsMenuNewTabId,
