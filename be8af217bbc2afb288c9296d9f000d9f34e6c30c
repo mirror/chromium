@@ -22,6 +22,30 @@
       "revId": "be8af217bbc2afb288c9296d9f000d9f34e6c30c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a1c2cde_0b02af6f",
+        "filename": "chrome/browser/policy/cloud/user_policy_signin_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-10T11:28:49Z",
+      "side": 1,
+      "message": "Yes, with DICE, there is no gurateed order between GoogleSigninSucceeded and OnRefreshTokenAvailable. In DICE, the order will be (RefreshTokenIsAvailable, GoogleSigninSucceeded). In the current world, the order is (GoogleSigninSucceeded, RefreshTokenIsAvailable)\n\nI agree that in the initial design of the SigninManager, we should have not sent GoogleSigninSucceeded before adding the account to the TokenService. Unfortunately, this was not the case.\n\nNote that blundell@ is actively working on the IdentityService and I hope these details will be hidden once we convert the clients to use the IdentityService instead of the SigninManager + TokenService.",
+      "parentUuid": "82eec82d_1cd303ee",
+      "range": {
+        "startLine": 143,
+        "startChar": 1,
+        "endLine": 143,
+        "endChar": 2
+      },
+      "revId": "be8af217bbc2afb288c9296d9f000d9f34e6c30c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
