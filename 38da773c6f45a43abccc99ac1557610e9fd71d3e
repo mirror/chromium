@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a819f033_061603b3",
+        "filename": "chrome/browser/resources/media_router/elements/media_router_container/media_router_container.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1336,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-07-10T22:31:36Z",
+      "side": 1,
+      "message": "Is the assumption that the CAST_MODE_LIST view will not create a blocking issue? (A blocking issue takes up the entire dialog, whereas a non-blocking one just creates a black banner at the bottom.) Otherwise, if you go into the ISSUE view from CAST_MODE_LIST, I think dismissing the issue will take you to the SINK_LIST view instead of back to the CAST_MODE_LIST view. That might be okay though.",
+      "revId": "38da773c6f45a43abccc99ac1557610e9fd71d3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
