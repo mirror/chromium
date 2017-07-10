@@ -195,6 +195,8 @@ source_set("ntp_internal") {
     "new_tab_page_view.mm",
     "notification_promo_whats_new.h",
     "notification_promo_whats_new.mm",
+    "ntp_tile_saver.h",
+    "ntp_tile_saver.mm",
     "whats_new_header_view.h",
     "whats_new_header_view.mm",
   ]
@@ -203,6 +205,7 @@ source_set("ntp_internal") {
   ]
   deps = [
     ":ntp",
+    ":ntp_tile",
     ":resources",
     "//base",
     "//base:i18n",
@@ -239,6 +242,7 @@ source_set("ntp_internal") {
     "//ios/chrome/browser/ui/toolbar",
     "//ios/chrome/browser/web_state_list",
     "//ios/chrome/common",
+    "//ios/chrome/common/app_group",
     "//ios/public/provider/chrome/browser",
     "//ios/public/provider/chrome/browser/images",
     "//ios/public/provider/chrome/browser/ui",
@@ -257,6 +261,14 @@ source_set("ntp_internal") {
     "CoreGraphics.framework",
     "QuartzCore.framework",
     "UIKit.framework",
+  ]
+}
+
+source_set("ntp_tile") {
+  configs += [ "//build/config/compiler:enable_arc" ]
+  sources = [
+    "ntp_tile.h",
+    "ntp_tile.mm",
   ]
 }
 

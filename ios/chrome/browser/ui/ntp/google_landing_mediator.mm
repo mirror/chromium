@@ -32,6 +32,7 @@
 #import "ios/chrome/browser/ui/commands/generic_chrome_command.h"
 #import "ios/chrome/browser/ui/ntp/google_landing_consumer.h"
 #import "ios/chrome/browser/ui/ntp/notification_promo_whats_new.h"
+#include "ios/chrome/browser/ui/ntp/ntp_tile_saver.h"
 #import "ios/chrome/browser/ui/toolbar/web_toolbar_controller.h"
 #import "ios/chrome/browser/ui/url_loader.h"
 #import "ios/chrome/browser/web_state_list/web_state_list.h"
@@ -270,6 +271,8 @@ void SearchEngineObserver::OnTemplateURLServiceChanged() {
 
   _mostVisitedData = data;
   [self.consumer mostVisitedDataUpdated];
+  // This is used by the content widget.
+  ntp_tile_saver::saveMostVisitedToDisk(data, self);
 
   if (data.size() && !_recordedPageImpression) {
     _recordedPageImpression = YES;
