@@ -70,6 +70,30 @@
       "revId": "5dfca923a6135d4d464d8aa2b9078151954fead1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a77fff49_8f0e8d0b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/emulation/DeviceModeModel.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-07-10T21:36:30Z",
+      "side": 0,
+      "message": "Restoring...",
+      "parentUuid": "f896dc6c_71faf1ae",
+      "range": {
+        "startLine": 676,
+        "startChar": 25,
+        "endLine": 676,
+        "endChar": 39
+      },
+      "revId": "5dfca923a6135d4d464d8aa2b9078151954fead1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

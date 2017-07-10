@@ -92,6 +92,24 @@
       "revId": "1d41f90e3ad5606b75f6dde90bfd72b87bdb4d1b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c43b1c6_e647c3c6",
+        "filename": "third_party/WebKit/Source/devtools/front_end/emulation/DeviceModeModel.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-07-10T21:36:30Z",
+      "side": 1,
+      "message": "Ok, doing it!",
+      "parentUuid": "59ee3b04_c2eb04a5",
+      "revId": "1d41f90e3ad5606b75f6dde90bfd72b87bdb4d1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
