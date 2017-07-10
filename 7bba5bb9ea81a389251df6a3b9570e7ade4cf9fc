@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4e3d54cd_c25f7a2d",
+        "filename": "content/browser/android/dialog_overlay_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-07-10T16:28:45Z",
+      "side": 1,
+      "message": "Done.  it turns out that it\u0027s easy to avoid posting callbacks entirely.  one just needs the java side to call into native a second time, when it\u0027s ready for the tokens.",
+      "parentUuid": "daf940cc_4fa21c7e",
+      "revId": "7bba5bb9ea81a389251df6a3b9570e7ade4cf9fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ebbccd86_d06f7a9e",
         "filename": "content/public/android/java/src/org/chromium/content/browser/androidoverlay/AndroidOverlayProviderImpl.java",
         "patchSetId": 4
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "a83ac5f9_b6b4775b",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/androidoverlay/AndroidOverlayProviderImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-07-10T16:28:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebbccd86_d06f7a9e",
+      "range": {
+        "startLine": 70,
+        "startChar": 89,
+        "endLine": 70,
+        "endChar": 94
+      },
+      "revId": "7bba5bb9ea81a389251df6a3b9570e7ade4cf9fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "107d5183_9dd19de0",
         "filename": "content/public/android/java/src/org/chromium/content/browser/androidoverlay/DialogOverlayImpl.java",
         "patchSetId": 4
@@ -56,6 +98,24 @@
       "revId": "7bba5bb9ea81a389251df6a3b9570e7ade4cf9fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c77383eb_d9142960",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/androidoverlay/DialogOverlayImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-07-10T16:28:45Z",
+      "side": 1,
+      "message": "native can\u0027t call back before we post |initialize|, so that |initialize| is the first message that it receives.\n\nhowever, adding a nativeCompleteInit() fn after we post that does the trick nicely.",
+      "parentUuid": "107d5183_9dd19de0",
+      "revId": "7bba5bb9ea81a389251df6a3b9570e7ade4cf9fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "08397a81_4a58f9f0",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/androidoverlay/DialogOverlayImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-07-10T16:28:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a130a63f_5d48e67e",
+      "revId": "7bba5bb9ea81a389251df6a3b9570e7ade4cf9fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b298876_072f3948",
         "filename": "content/public/android/javatests/src/org/chromium/content/browser/androidoverlay/DialogOverlayImplPixelTest.java",
         "patchSetId": 4
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "871b0feb_821bd79f",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/androidoverlay/DialogOverlayImplPixelTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-07-10T16:28:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b298876_072f3948",
+      "revId": "7bba5bb9ea81a389251df6a3b9570e7ade4cf9fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "146e7634_44afd171",
         "filename": "content/public/android/javatests/src/org/chromium/content/browser/androidoverlay/DialogOverlayImplPixelTest.java",
         "patchSetId": 4
@@ -104,6 +200,24 @@
       "writtenOn": "2017-07-07T23:58:02Z",
       "side": 1,
       "message": "what textured background..? seems a bit too lenient",
+      "revId": "7bba5bb9ea81a389251df6a3b9570e7ade4cf9fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11fae91c_5da633ca",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/androidoverlay/DialogOverlayImplPixelTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-07-10T16:28:45Z",
+      "side": 1,
+      "message": "i see a light blue background when running tests.  it\u0027s not so much textured, as constructed of overlapping, partially transparent rectangles.  they seem to come from something called a  ContentViewApi23 ( https://cs.chromium.org/chromium/src/content/public/android/java/src/org/chromium/content/browser/ContentView.java?rcl\u003dd2c93b0144c96f0ec5b267bafb440540662e680b\u0026l\u003d344 ), which is positioned over the compositorview.\n\nat least, i think that\u0027s what hierarchyviewer is telling me.  it wasn\u0027t clear to me why it does this, but it\u0027s done it for as long as i can remember.  not specific to this test.\n\nif there\u0027s a way to turn it off, then that would be awesome.",
+      "parentUuid": "146e7634_44afd171",
       "revId": "7bba5bb9ea81a389251df6a3b9570e7ade4cf9fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "30de2736_204d694f",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/androidoverlay/DialogOverlayImplPixelTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-07-10T16:28:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e395fb3_16fdd8a0",
+      "revId": "7bba5bb9ea81a389251df6a3b9570e7ade4cf9fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6c81510_55887e56",
         "filename": "content/public/android/javatests/src/org/chromium/content/browser/androidoverlay/DialogOverlayImplPixelTest.java",
         "patchSetId": 4
@@ -141,6 +273,24 @@
       "revId": "7bba5bb9ea81a389251df6a3b9570e7ade4cf9fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ac18c7b_3a9a072c",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/androidoverlay/DialogOverlayImplPixelTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-07-10T16:28:45Z",
+      "side": 1,
+      "message": "Done.  also merged them into the same constants, since they were pretty much arbitrary anyway.",
+      "parentUuid": "f6c81510_55887e56",
+      "revId": "7bba5bb9ea81a389251df6a3b9570e7ade4cf9fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -167,6 +317,30 @@
     },
     {
       "key": {
+        "uuid": "34cb2ea1_48fbd0c5",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/androidoverlay/DialogOverlayImplTestBase.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-07-10T16:28:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f79b82b5_7fa6e302",
+      "range": {
+        "startLine": 35,
+        "startChar": 95,
+        "endLine": 35,
+        "endChar": 100
+      },
+      "revId": "7bba5bb9ea81a389251df6a3b9570e7ade4cf9fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f265eec_9d183b41",
         "filename": "content/public/android/javatests/src/org/chromium/content/browser/androidoverlay/DialogOverlayImplTestBase.java",
         "patchSetId": 4
@@ -184,6 +358,24 @@
     },
     {
       "key": {
+        "uuid": "c35788bf_45f2cacd",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/androidoverlay/DialogOverlayImplTestBase.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-07-10T16:28:45Z",
+      "side": 1,
+      "message": "good catch.  this is present @ToT too, and i didn\u0027t notice then or now.",
+      "parentUuid": "7f265eec_9d183b41",
+      "revId": "7bba5bb9ea81a389251df6a3b9570e7ade4cf9fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1beedb4b_0139a0c1",
         "filename": "content/public/android/junit/src/org/chromium/content/browser/androidoverlay/DialogOverlayCoreTest.java",
         "patchSetId": 4
@@ -198,6 +390,24 @@
       "revId": "7bba5bb9ea81a389251df6a3b9570e7ade4cf9fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6f2b6e6_c1369438",
+        "filename": "content/public/android/junit/src/org/chromium/content/browser/androidoverlay/DialogOverlayCoreTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-07-10T16:28:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1beedb4b_0139a0c1",
+      "revId": "7bba5bb9ea81a389251df6a3b9570e7ade4cf9fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -221,6 +431,30 @@
       "revId": "7bba5bb9ea81a389251df6a3b9570e7ade4cf9fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "635f27ba_6c0df0fa",
+        "filename": "content/public/android/junit/src/org/chromium/content/browser/androidoverlay/DialogOverlayCoreTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-07-10T16:28:45Z",
+      "side": 1,
+      "message": "sorry, done.  copied it directly from android.",
+      "parentUuid": "e2abf0e6_9047d696",
+      "range": {
+        "startLine": 83,
+        "startChar": 61,
+        "endLine": 83,
+        "endChar": 62
+      },
+      "revId": "7bba5bb9ea81a389251df6a3b9570e7ade4cf9fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
