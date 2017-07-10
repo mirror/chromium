@@ -215,6 +215,9 @@ enum ReauthToAccessPasswordInSettingsEvent {
   REAUTH_COUNT
 };
 
+// Who created this PasswordFormManager?
+enum class CredentialSourceType { kPasswordManager, kCredentialManagementAPI };
+
 // A version of the UMA_HISTOGRAM_BOOLEAN macro that allows the |name|
 // to vary over the program's runtime.
 void LogUMAHistogramBoolean(const std::string& name, bool sample);

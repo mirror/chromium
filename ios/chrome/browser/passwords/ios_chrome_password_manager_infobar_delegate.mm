@@ -8,6 +8,7 @@
 
 #include "base/strings/string16.h"
 #include "components/password_manager/core/browser/password_form_manager.h"
+#include "components/password_manager/core/browser/password_form_metrics_recorder.h"
 #include "components/password_manager/core/browser/password_manager_constants.h"
 #include "components/strings/grit/components_strings.h"
 #import "ios/chrome/browser/ui/commands/UIKit+ChromeExecuteCommand.h"
