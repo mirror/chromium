@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89f55b4c_eb6f1957",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeBackgroundService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-07-10T14:52:17Z",
+      "side": 0,
+      "message": "are you planning to deprecate the histograms in the change 3/3? Usually we try to deprecate as soon as removing the recording code. Both would work for me, let\u0027s just not forget about those.",
+      "range": {
+        "startLine": 140,
+        "startChar": 20,
+        "endLine": 140,
+        "endChar": 90
+      },
+      "revId": "c9db6fd4934f31be754e207f47a25b15bb4faba6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dde6219f_b6405ce3",
+        "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-07-10T14:52:17Z",
+      "side": 0,
+      "message": "naive question: should we keep the clearers at least for some time or is it done somewhere in a different place?",
+      "range": {
+        "startLine": 338,
+        "startChar": 6,
+        "endLine": 338,
+        "endChar": 29
+      },
+      "revId": "c9db6fd4934f31be754e207f47a25b15bb4faba6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
