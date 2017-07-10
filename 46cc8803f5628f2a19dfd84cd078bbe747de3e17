@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "5220e0b3_d97e7844",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-07-10T18:38:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fdeda031_171d2274",
+      "range": {
+        "startLine": 229,
+        "startChar": 20,
+        "endLine": 229,
+        "endChar": 37
+      },
+      "revId": "46cc8803f5628f2a19dfd84cd078bbe747de3e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a92bab9_2d0913a0",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
         "patchSetId": 8
@@ -91,6 +115,30 @@
       "revId": "46cc8803f5628f2a19dfd84cd078bbe747de3e17",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33c575a6_d05fcbe1",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-07-10T18:38:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a92bab9_2d0913a0",
+      "range": {
+        "startLine": 241,
+        "startChar": 0,
+        "endLine": 245,
+        "endChar": 39
+      },
+      "revId": "46cc8803f5628f2a19dfd84cd078bbe747de3e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "076fa60d_1797a64e",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-07-10T18:38:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de08f654_2a7ab5de",
+      "range": {
+        "startLine": 263,
+        "startChar": 6,
+        "endLine": 263,
+        "endChar": 32
+      },
+      "revId": "46cc8803f5628f2a19dfd84cd078bbe747de3e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4efea13_fd9ab48f",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
         "patchSetId": 8
@@ -128,6 +200,30 @@
       "writtenOn": "2017-07-07T21:11:47Z",
       "side": 1,
       "message": "We don\u0027t need to CHECK on every creation. We only CHECK when we weren\u0027t able to create any workers.\n\nThis may be better broken up\n\nCreateAndRegisterSchedulerWorker() only does creation and is used by Start() so we can do the two phase startup when we create all necessary and then start.\n\nCreateRegisterAndStartSchedulerWorker() is used by WakeUpOneWorker() which calls CreateSchedulerWorker() and starts it.\n\nThis would also allow you to keep the workers created DCHECK in OnMainEntry.",
+      "range": {
+        "startLine": 626,
+        "startChar": 2,
+        "endLine": 626,
+        "endChar": 34
+      },
+      "revId": "46cc8803f5628f2a19dfd84cd078bbe747de3e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f32672d_57809176",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-07-10T18:38:02Z",
+      "side": 1,
+      "message": "Done. (kind of).\n\nI\u0027ve changed it so that AddNewWorker() doesn\u0027t call Start() rather than creating two functions for creating workers. (I just didn\u0027t like how long function names would\u0027ve needed to be!)\n\nIs that fine with you?",
+      "parentUuid": "e4efea13_fd9ab48f",
       "range": {
         "startLine": 626,
         "startChar": 2,
@@ -160,6 +256,30 @@
       "revId": "46cc8803f5628f2a19dfd84cd078bbe747de3e17",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f305d4f_d4ee87fb",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-07-10T18:38:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8336c07a_c25b77fa",
+      "range": {
+        "startLine": 783,
+        "startChar": 5,
+        "endLine": 783,
+        "endChar": 19
+      },
+      "revId": "46cc8803f5628f2a19dfd84cd078bbe747de3e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
