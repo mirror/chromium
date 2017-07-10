@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3a77b38_1491632b",
+        "filename": "docs/clang_static_analyzer.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-10T04:15:08Z",
+      "side": 1,
+      "message": "s/recording/records",
+      "revId": "8c28979d8da94cde13bbf925d1bd923b4b4febba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be47d837_354cc78a",
+        "filename": "docs/clang_static_analyzer.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-10T04:15:08Z",
+      "side": 1,
+      "message": "s/is/are",
+      "revId": "8c28979d8da94cde13bbf925d1bd923b4b4febba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "318fef36_2d073551",
+        "filename": "docs/clang_static_analyzer.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-10T04:15:08Z",
+      "side": 1,
+      "message": "s/is/are",
+      "revId": "8c28979d8da94cde13bbf925d1bd923b4b4febba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "402636f6_b6896143",
+        "filename": "docs/clang_static_analyzer.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-10T04:15:08Z",
+      "side": 1,
+      "message": "What is the flag syntax? Should it be -analyzer or --analyzer?",
+      "revId": "8c28979d8da94cde13bbf925d1bd923b4b4febba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b639ae05_36b3a563",
+        "filename": "docs/clang_static_analyzer.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-10T04:15:08Z",
+      "side": 1,
+      "message": "s/in/at",
+      "revId": "8c28979d8da94cde13bbf925d1bd923b4b4febba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63b9c40f_1cc1685d",
+        "filename": "docs/clang_static_analyzer.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-10T04:15:08Z",
+      "side": 1,
+      "message": "nit: Spurious extra ).",
+      "revId": "8c28979d8da94cde13bbf925d1bd923b4b4febba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49fd7ec8_9b598356",
+        "filename": "docs/clang_static_analyzer.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-10T04:15:08Z",
+      "side": 1,
+      "message": "nit: which violate asserts -\u003e which we assert are unreachable.",
+      "revId": "8c28979d8da94cde13bbf925d1bd923b4b4febba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bac90f0d_afb25627",
+        "filename": "docs/clang_static_analyzer.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-10T04:15:08Z",
+      "side": 1,
+      "message": "nit: This may go against one of the rules-of-thumb for DCHECKs, which is that it is practically  pointless to DCHECK(ptr) if you are going to de-reference |ptr| immediately afterward (commonly the case if |ptr| is a raw pointer parameter to a function. It sounds like we\u0027re now saying that DCHECKs are legitimate in these cases, and it sounds like we\u0027ll have a lot of DCHECKs to add?",
+      "revId": "8c28979d8da94cde13bbf925d1bd923b4b4febba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2998f5e_a243a488",
+        "filename": "docs/clang_static_analyzer.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-10T04:15:08Z",
+      "side": 1,
+      "message": "nit: It would be helpful to expand this example a little, and either to make clear why the cast hints that it\u0027s OK that the variable not be used, or to wrap it up in an ANALYZER_ALLOW_UNUSED macro for better readability, for example.",
+      "revId": "8c28979d8da94cde13bbf925d1bd923b4b4febba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b321834_3956b348",
+        "filename": "docs/clang_static_analyzer.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-10T04:15:08Z",
+      "side": 1,
+      "message": "s/bugs/a bug",
+      "revId": "8c28979d8da94cde13bbf925d1bd923b4b4febba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41f381a0_863f1a55",
+        "filename": "docs/clang_static_analyzer.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-10T04:15:08Z",
+      "side": 1,
+      "message": "nit: The reader might reasonably question why for loops are relevant to the analyzer wrapper script.",
+      "revId": "8c28979d8da94cde13bbf925d1bd923b4b4febba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb41a4ef_1ccdf640",
+        "filename": "docs/clang_static_analyzer.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-10T04:15:08Z",
+      "side": 1,
+      "message": "nit: You have mentioned this already, above - IIUC what you want to say here is that the Chromium assertion macros use an analyzer annotation internally, and that this can be applied elsewhere, if need be, e.g. to component-specific assertion macros?",
+      "revId": "8c28979d8da94cde13bbf925d1bd923b4b4febba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
