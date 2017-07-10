@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "7df019f7_245835d0",
+        "filename": "third_party/WebKit/Source/platform/RuntimeEnabledFeatures.json5",
+        "patchSetId": 7
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-10T02:43:13Z",
+      "side": 1,
+      "message": "Are we starting with stable but needs this runtime flag?",
+      "revId": "ec5bc23195c9c7b5738c5d3e49f4a5bf35a8ed86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5b870485_282b2e6a",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ClientHintsPreferences.cpp",
         "patchSetId": 7
@@ -13,6 +30,23 @@
       "writtenOn": "2017-07-10T02:30:29Z",
       "side": 1,
       "message": "enabled_types_{}\n\n(And I prefer having this initialization in the header, like\n\n  bool enabled_types_[kWebClientHintsTypeNumValues] \u003d {};\n\n).",
+      "revId": "ec5bc23195c9c7b5738c5d3e49f4a5bf35a8ed86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a391896a_b2f7eb45",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ClientHintsPreferences.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-10T02:43:13Z",
+      "side": 1,
+      "message": "Is this a test-only method? Could this be SetShouldSentForTesting() ?\n\nAlso if it always takes true we can omit the parameter",
       "revId": "ec5bc23195c9c7b5738c5d3e49f4a5bf35a8ed86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +104,40 @@
       "writtenOn": "2017-07-10T02:30:29Z",
       "side": 1,
       "message": "Please use the correct license.",
+      "revId": "ec5bc23195c9c7b5738c5d3e49f4a5bf35a8ed86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72169394_0fbf3708",
+        "filename": "third_party/WebKit/public/platform/WebClientHintsType.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-10T02:43:13Z",
+      "side": 1,
+      "message": "Please use the new, shorter copyright format.",
+      "revId": "ec5bc23195c9c7b5738c5d3e49f4a5bf35a8ed86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d1a7d03_1a49b46c",
+        "filename": "third_party/WebKit/public/platform/WebClientHintsType.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-10T02:43:13Z",
+      "side": 1,
+      "message": "nit: optional, but I prefer not having num-of- type constant a part of the enum itself, as having unused value confuses switch/case warnings etc. (Some code instead have kLast \u003d ... type of enum value and uses static_cast\u003cint\u003e(kLast + 1) constant for enum size)",
       "revId": "ec5bc23195c9c7b5738c5d3e49f4a5bf35a8ed86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
