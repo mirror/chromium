@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d43f08dd_3acedf54",
+        "filename": "components/upload_list/upload_list.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-07-10T17:51:18Z",
+      "side": 1,
+      "message": "We named this “request” and not “perform” to convey at use sites that it may not have an immediate effect (and in fact the upload may not even happen in-process).",
+      "revId": "5277759e0a41b83a02a6d3e83a5aa6cf8d079e3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
