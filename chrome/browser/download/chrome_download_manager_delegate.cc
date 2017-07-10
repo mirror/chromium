@@ -30,6 +30,7 @@
 #include "chrome/browser/download/download_item_model.h"
 #include "chrome/browser/download/download_path_reservation_tracker.h"
 #include "chrome/browser/download/download_prefs.h"
+#include "chrome/browser/download/download_service_factory.h"
 #include "chrome/browser/download/download_stats.h"
 #include "chrome/browser/download/download_target_determiner.h"
 #include "chrome/browser/download/save_package_file_picker.h"
@@ -234,6 +235,10 @@ void ChromeDownloadManagerDelegate::SetDownloadManager(DownloadManager* dm) {
     // Include this download manager in the set monitored by safe browsing.
     sb_service->AddDownloadManager(dm);
   }
+
+  // TODO(xingliu): See if we can initialize in browser_process_impl.cc.
+  // Currently it seems most of download related systems are initialized here.
+  DownloadServiceFactory::GetInstance()->GetForBrowserContext(profile_);
 }
 
 void ChromeDownloadManagerDelegate::Shutdown() {
