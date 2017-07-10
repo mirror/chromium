@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59a57445_92e9aca2",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-07-10T17:57:49Z",
+      "side": 1,
+      "message": "Please make sure to resolve this before you commit.",
+      "range": {
+        "startLine": 623,
+        "startChar": 17,
+        "endLine": 623,
+        "endChar": 27
+      },
+      "revId": "7a9ac46fbf44814b869e142fa4cf2e1d947ef6ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
