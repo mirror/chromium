@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "4f31fd18_65b80084",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-10T10:01:51Z",
+      "side": 1,
+      "message": "Calling member functions doesn\u0027t work before the object is created: https://chromium-review.googlesource.com/c/541323/3/chrome%252Fandroid%252Fjava%252Fsrc%252Forg%252Fchromium%252Fchrome%252Fbrowser%252Fdownload%252Fui%252FThumbnailProviderImpl.java#b14",
+      "parentUuid": "e79b94fb_8da3c3e8",
+      "range": {
+        "startLine": 60,
+        "startChar": 35,
+        "endLine": 60,
+        "endChar": 47
+      },
+      "revId": "284ed08d06ad33e6dd13c9c060776002ccaa621e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "96e7ff9c_0659855e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
         "patchSetId": 7
