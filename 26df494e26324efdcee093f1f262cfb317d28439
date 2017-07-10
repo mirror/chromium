@@ -22,6 +22,30 @@
       "revId": "26df494e26324efdcee093f1f262cfb317d28439",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a21e58c_52f2e61b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenu.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-10T17:44:18Z",
+      "side": 1,
+      "message": "I was looking at AppMenu.java for another bug and noticed a comment that says \"Some OEMs don\u0027t actually let us change the background...\" that\u0027s used if the app menu is shown by a permanent hardware button. We should grab a Samsung phone with a hardware menu button from the test team and make sure the positioning looks correct on there.",
+      "parentUuid": "c75cf0e6_678a78e1",
+      "range": {
+        "startLine": 101,
+        "startChar": 50,
+        "endLine": 101,
+        "endChar": 87
+      },
+      "revId": "26df494e26324efdcee093f1f262cfb317d28439",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
