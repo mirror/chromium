@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f625f58b_8854274a",
+        "filename": "third_party/WebKit/Source/core/frame/BrowserControls.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-10T22:13:15Z",
+      "side": 1,
+      "message": "This doesn\u0027t look right to me, we shouldn\u0027t lie if we\u0027re using bottom controls and say we didn\u0027t consume any delta. This will break overscroll glow for example since the controls will pass along delta to the overscroll glow. That said, I don\u0027t know why doing this would fix the issue - could you investigate this? I suspect this might just be masking it...",
+      "range": {
+        "startLine": 73,
+        "startChar": 9,
+        "endLine": 73,
+        "endChar": 73
+      },
+      "revId": "8f7b71b0afea1aee76adac53055365b2bf421352",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2de392e6_079de397",
+        "filename": "third_party/WebKit/Source/core/frame/BrowserControlsTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-10T22:13:15Z",
+      "side": 1,
+      "message": "Was the bug (the unexpected scroll jump) occurring during the GestureScrollUpdate or when the finger was lifted? I\u0027ve seen plenty of these browser-control related jump bugs but they\u0027re always caused by clamping/anchoring which happens after the scroll ends and during the WebViewImpl::ResizeWithBrowserControls. i.e. Are you sure this test would have caught the bug?",
+      "range": {
+        "startLine": 215,
+        "startChar": 2,
+        "endLine": 215,
+        "endChar": 54
+      },
+      "revId": "8f7b71b0afea1aee76adac53055365b2bf421352",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
