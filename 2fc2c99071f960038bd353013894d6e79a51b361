@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a676e0e5_1cd46320",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-10T23:34:33Z",
+      "side": 1,
+      "message": "To document the types, you can use Google docstring format: http://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html",
+      "revId": "2fc2c99071f960038bd353013894d6e79a51b361",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a98a5007_47af5c35",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-10T23:34:33Z",
+      "side": 1,
+      "message": "Hmm, does this actually sort? According to https://docs.python.org/2/library/functions.html#sorted, sorted returns a new iterable and does not modify its argument.",
+      "revId": "2fc2c99071f960038bd353013894d6e79a51b361",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "738fdfe0_93d32317",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-10T23:34:33Z",
+      "side": 1,
+      "message": "Can you do just \".... !\u003d 1\" instead of \"not ... \u003d\u003d 1\"?",
+      "revId": "2fc2c99071f960038bd353013894d6e79a51b361",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "817d5e0e_4813f656",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-10T23:34:33Z",
+      "side": 1,
+      "message": "nit: maybe a blank line before this?",
+      "revId": "2fc2c99071f960038bd353013894d6e79a51b361",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd00aa9d_5f44a7e4",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-10T23:34:33Z",
+      "side": 1,
+      "message": "This can just be \"if property_[...] \u003d\u003d \u0027multi_keyword\u0027\"",
+      "revId": "2fc2c99071f960038bd353013894d6e79a51b361",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "926920de_61967cb5",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-10T23:34:33Z",
+      "side": 1,
+      "message": "Same here.",
+      "revId": "2fc2c99071f960038bd353013894d6e79a51b361",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e488e9b1_d09fa469",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-10T23:34:33Z",
+      "side": 1,
+      "message": "We can move this out of the if statement. Both keywords and multi_keywords use include_paths",
+      "revId": "2fc2c99071f960038bd353013894d6e79a51b361",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34d74757_f43e4c6b",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-10T23:34:33Z",
+      "side": 1,
+      "message": "Perhaps give a more detailed explanation of what\u0027s happening here. A small example showing the algorithm working would help too.",
+      "revId": "2fc2c99071f960038bd353013894d6e79a51b361",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b964caf_88219438",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-10T23:34:33Z",
+      "side": 1,
+      "message": "Remove unused code.",
+      "revId": "2fc2c99071f960038bd353013894d6e79a51b361",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "475c5428_8c55a53c",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-10T23:34:33Z",
+      "side": 1,
+      "message": "nit: maybe use start_segment and end_segment?",
+      "revId": "2fc2c99071f960038bd353013894d6e79a51b361",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39a06f04_9907775c",
+        "filename": "third_party/WebKit/Source/build/scripts/templates/CSSValueIDMappingsGenerated.h.tmpl",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-07-10T23:34:33Z",
+      "side": 1,
+      "message": "Remove unused comment",
+      "revId": "2fc2c99071f960038bd353013894d6e79a51b361",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
