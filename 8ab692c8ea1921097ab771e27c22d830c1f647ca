@@ -46,6 +46,30 @@
       "revId": "8ab692c8ea1921097ab771e27c22d830c1f647ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "72720b9b_6c31a83d",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 1600,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-10T21:53:32Z",
+      "side": 1,
+      "message": "I see, thanks for clarifying.  If the M60 Beta config is not going to launch, I\u0027d recommend ending that branch of the trial, especially if there\u0027s a known performance issue with the code.",
+      "parentUuid": "94252ff8_73662bb3",
+      "range": {
+        "startLine": 1600,
+        "startChar": 68,
+        "endLine": 1600,
+        "endChar": 0
+      },
+      "revId": "8ab692c8ea1921097ab771e27c22d830c1f647ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
