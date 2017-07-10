@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8dd1ce25_bf67b9ac",
+        "filename": "chrome/browser/ntp_tiles/ntp_tiles_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-10T08:34:21Z",
+      "side": 1,
+      "message": "I think we should chat in person when you get a chance, rather than discuss this in the review (but should put outcome in the review).\n\nI\u0027m concerned with the assignment, that this could introduce flake. Let me know if I\u0027m over-engineering this, or if it is a reasonable case.\n\nHere are the test code steps I\u0027m concerned about:\n1. Navigates to the new URL\n2. Creates this waiter object.\n3. Sets most visited URL observer.\n4. Calls WaitForTiles().\n\nHere are a few edge cases that have me concerned for flake...\n1. Can OnMostVisitedURLsAvailable be called before #4? From previous discussion in this code review it sounded like it isn\u0027t explicitly guaranteed not to happen, so assume it could happen.\n2. What if OnMostVisitedURLsAvailable gets called after WaitForTiles(), but OnMostVisitedURLsAvailable doesn\u0027t include the new URL, but is then called a second time? WaitForTiles() would return without the new URL and the test would fail.\n\nIf both of these cases are true, would we need something more like the implementation in a separate patch where it.\n- Tracks all URLs since the object was created.\n- Waits for a specific condition (i.e. URL), rather than just OnMostVisitedURLsAvailable?",
+      "range": {
+        "startLine": 51,
+        "startChar": 19,
+        "endLine": 51,
+        "endChar": 0
+      },
+      "revId": "ab0954b5b793362340452d561fadaa6da01daa63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
