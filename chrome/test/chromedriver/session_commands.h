@@ -40,6 +40,12 @@ struct InitSessionParams {
   PortManager* port_manager;
 };
 
+bool MergeCapabilities(const base::DictionaryValue* always_match,
+                       const base::DictionaryValue* first_match,
+                       base::DictionaryValue* merged);
+
+bool MatchCapabilities(const base::DictionaryValue* capabilities);
+
 // Initializes a session.
 Status ExecuteInitSession(const InitSessionParams& bound_params,
                           Session* session,
