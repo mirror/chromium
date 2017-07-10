@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0d3e4927_e24531e5",
+        "filename": "chrome/browser/chromeos/policy/user_cloud_policy_store_chromeos_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-10T07:33:16Z",
+      "side": 1,
+      "message": "Ack. Again Bind() is needed to address another comment.",
+      "parentUuid": "45b1591a_bd703f1d",
+      "revId": "2331bf324835eb2a3a58d4d152b735d98989fcd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5bc01209_7801f7ab",
         "filename": "chrome/browser/chromeos/policy/user_cloud_policy_store_chromeos_unittest.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "2331bf324835eb2a3a58d4d152b735d98989fcd1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05942374_77f42cec",
+        "filename": "chrome/browser/chromeos/policy/user_cloud_policy_store_chromeos_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-10T07:33:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5bc01209_7801f7ab",
+      "revId": "2331bf324835eb2a3a58d4d152b735d98989fcd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "59038906_c7d10a6b",
+        "filename": "chrome/browser/chromeos/policy/user_cloud_policy_store_chromeos_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-10T07:33:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90bd2ade_44d41b13",
+      "revId": "2331bf324835eb2a3a58d4d152b735d98989fcd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc5eb302_db0031cf",
         "filename": "chrome/browser/chromeos/policy/user_cloud_policy_store_chromeos_unittest.cc",
         "patchSetId": 1
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "295568d1_bf16d4e2",
+        "filename": "chrome/browser/chromeos/policy/user_cloud_policy_store_chromeos_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-10T07:33:16Z",
+      "side": 1,
+      "message": "Ack. Now, it needs to be mutable.",
+      "parentUuid": "dc5eb302_db0031cf",
+      "revId": "2331bf324835eb2a3a58d4d152b735d98989fcd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "815fbcd1_ee5038f7",
         "filename": "chrome/browser/chromeos/policy/user_cloud_policy_store_chromeos_unittest.cc",
         "patchSetId": 1
@@ -84,6 +156,24 @@
       "revId": "2331bf324835eb2a3a58d4d152b735d98989fcd1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9696a4c2_74d4587a",
+        "filename": "chrome/browser/chromeos/policy/user_cloud_policy_store_chromeos_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-10T07:33:16Z",
+      "side": 1,
+      "message": "Hmm, I couldn\u0027t find comment that it is deprecated. Could you point it me?\n\nGetStubSystemSalt won\u0027t work for the case. Instead, replaced by async call + RunLoop.",
+      "parentUuid": "815fbcd1_ee5038f7",
+      "revId": "2331bf324835eb2a3a58d4d152b735d98989fcd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +200,30 @@
     },
     {
       "key": {
+        "uuid": "d705ccef_2d6e92b5",
+        "filename": "chromeos/dbus/fake_cryptohome_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-10T07:33:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e144d14a_54dd0e02",
+      "range": {
+        "startLine": 153,
+        "startChar": 71,
+        "endLine": 153,
+        "endChar": 73
+      },
+      "revId": "2331bf324835eb2a3a58d4d152b735d98989fcd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ebad1fe_13aa7f8b",
         "filename": "chromeos/dbus/fake_cryptohome_client.h",
         "patchSetId": 1
@@ -121,6 +235,24 @@
       "writtenOn": "2017-07-10T04:01:47Z",
       "side": 1,
       "message": "I find this behavior difficult to understand as the salt\u0027s emptiness is cryptohomed\u0027s implementation detail which has almost nothing to do with chrome.\n\nHow about using an existing flag (e.g. service_is_available_) or adding a new one to explicitly control the fake\u0027s behavior?",
+      "revId": "2331bf324835eb2a3a58d4d152b735d98989fcd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6ef605f_bc04fe79",
+        "filename": "chromeos/dbus/fake_cryptohome_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-10T07:33:16Z",
+      "side": 1,
+      "message": "Ok, let\u0027s introduce another bool, then.\nNote: ServiceIsAvailable is for controlling the dbus connection emulation, so it looks not for this case.",
+      "parentUuid": "6ebad1fe_13aa7f8b",
       "revId": "2331bf324835eb2a3a58d4d152b735d98989fcd1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
