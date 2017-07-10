@@ -131,4 +131,13 @@ NSString* GetShippingOptionSelectorErrorMessage(
   }
 }
 
+NSString* GetContactNotificationLabelFromAutofillProfile(
+    const payments::PaymentRequest& payment_request,
+    const autofill::AutofillProfile& profile) {
+  const base::string16 notification =
+      payment_request.profile_comparator()->GetStringForMissingContactFields(
+          profile);
+  return !notification.empty() ? base::SysUTF16ToNSString(notification) : nil;
+}
+
 }  // namespace payment_request_util
