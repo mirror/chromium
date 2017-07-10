@@ -88,10 +88,13 @@ class WebFrameTestProxy : public Base, public WebFrameTestProxyBase {
   void LoadURLExternally(const blink::WebURLRequest& request,
                          blink::WebNavigationPolicy policy,
                          const blink::WebString& suggested_name,
+                         blink::WebTriggeringEventInfo triggering_event_info,
                          bool replaces_current_history_item) override {
     test_client()->LoadURLExternally(request, policy, suggested_name,
+                                     triggering_event_info,
                                      replaces_current_history_item);
     Base::LoadURLExternally(request, policy, suggested_name,
+                            triggering_event_info,
                             replaces_current_history_item);
   }
 

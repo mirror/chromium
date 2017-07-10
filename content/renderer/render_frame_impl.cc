@@ -2616,9 +2616,11 @@ blink::WebPlugin* RenderFrameImpl::CreatePlugin(
   return nullptr;
 }
 
-void RenderFrameImpl::LoadURLExternally(const blink::WebURLRequest& request,
-                                        blink::WebNavigationPolicy policy) {
-  LoadURLExternally(request, policy, WebString(), false);
+void RenderFrameImpl::LoadURLExternally(
+    const blink::WebURLRequest& request,
+    blink::WebNavigationPolicy policy,
+    blink::WebTriggeringEventInfo triggering_event_info) {
+  LoadURLExternally(request, policy, WebString(), triggering_event_info, false);
 }
 
 void RenderFrameImpl::LoadErrorPage(int reason) {
@@ -3314,10 +3316,12 @@ void RenderFrameImpl::DidAddMessageToConsole(
       static_cast<int32_t>(source_line), source_name.Utf16()));
 }
 
-void RenderFrameImpl::LoadURLExternally(const blink::WebURLRequest& request,
-                                        blink::WebNavigationPolicy policy,
-                                        const blink::WebString& suggested_name,
-                                        bool should_replace_current_entry) {
+void RenderFrameImpl::LoadURLExternally(
+    const blink::WebURLRequest& request,
+    blink::WebNavigationPolicy policy,
+    const blink::WebString& suggested_name,
+    blink::WebTriggeringEventInfo triggering_event_info,
+    bool should_replace_current_entry) {
   Referrer referrer(RenderViewImpl::GetReferrerFromRequest(frame_, request));
   if (policy == blink::kWebNavigationPolicyDownload) {
     FrameHostMsg_DownloadUrl_Params params;
@@ -3330,12 +3334,10 @@ void RenderFrameImpl::LoadURLExternally(const blink::WebURLRequest& request,
 
     Send(new FrameHostMsg_DownloadUrl(params));
   } else {
-    // TODO(csharrison): Plumb triggering_event_info through Blink.
     OpenURL(request.Url(), IsHttpPost(request),
             GetRequestBodyForWebURLRequest(request),
             GetWebURLRequestHeaders(request), referrer, policy,
-            should_replace_current_entry, false,
-            blink::WebTriggeringEventInfo::kUnknown);
+            should_replace_current_entry, false, triggering_event_info);
   }
 }
 
@@ -5538,7 +5540,8 @@ WebNavigationPolicy RenderFrameImpl::DecidePolicyForNavigation(
       pending_navigation_info_.reset(new PendingNavigationInfo(info));
       return blink::kWebNavigationPolicyHandledByClient;
     } else {
-      LoadURLExternally(info.url_request, info.default_policy);
+      LoadURLExternally(info.url_request, info.default_policy,
+                        info.triggering_event_info);
       return blink::kWebNavigationPolicyIgnore;
     }
   }

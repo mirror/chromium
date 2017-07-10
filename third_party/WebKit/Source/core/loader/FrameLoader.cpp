@@ -871,7 +871,8 @@ void FrameLoader::Load(const FrameLoadRequest& passed_request,
   if (!target_frame && !request.FrameName().IsEmpty()) {
     if (policy == kNavigationPolicyDownload) {
       Client()->LoadURLExternally(request.GetResourceRequest(),
-                                  kNavigationPolicyDownload, String(), false);
+                                  kNavigationPolicyDownload, String(),
+                                  request.TriggeringEventInfo(), false);
       return;  // Navigation/download will be handled by the client.
     } else if (ShouldNavigateTargetFrame(policy)) {
       request.GetResourceRequest().SetFrameType(
@@ -1354,7 +1355,7 @@ NavigationPolicy FrameLoader::ShouldContinueForNavigationPolicy(
     return policy;
   }
 
-  Client()->LoadURLExternally(request, policy, String(),
+  Client()->LoadURLExternally(request, policy, String(), triggering_event_info,
                               replaces_current_history_item);
   return kNavigationPolicyIgnore;
 }
@@ -1415,13 +1416,6 @@ NavigationPolicy FrameLoader::CheckLoadCanStart(
       ContentSecurityPolicy::CheckHeaderType::kCheckReportOnly);
   ModifyRequestForCSP(resource_request, nullptr);
 
-  WebTriggeringEventInfo triggering_event_info =
-      WebTriggeringEventInfo::kNotFromEvent;
-  if (frame_load_request.TriggeringEvent()) {
-    triggering_event_info = frame_load_request.TriggeringEvent()->isTrusted()
-                                ? WebTriggeringEventInfo::kFromTrustedEvent
-                                : WebTriggeringEventInfo::kFromUntrustedEvent;
-  }
   return ShouldContinueForNavigationPolicy(
       resource_request, frame_load_request.OriginDocument(),
       frame_load_request.GetSubstituteData(), nullptr,
@@ -1429,7 +1423,7 @@ NavigationPolicy FrameLoader::CheckLoadCanStart(
       navigation_type, navigation_policy, type,
       frame_load_request.ClientRedirect() ==
           ClientRedirectPolicy::kClientRedirect,
-      triggering_event_info, frame_load_request.Form());
+      frame_load_request.TriggeringEventInfo(), frame_load_request.Form());
 }
 
 void FrameLoader::StartLoad(FrameLoadRequest& frame_load_request,

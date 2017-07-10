@@ -31,6 +31,7 @@
 #include "core/loader/FrameLoaderTypes.h"
 #include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "platform/loader/fetch/SubstituteData.h"
+#include "public/web/WebTriggeringEventInfo.h"
 
 namespace blink {
 
@@ -83,6 +84,7 @@ struct CORE_EXPORT FrameLoadRequest {
   void SetTriggeringEvent(Event* triggering_event) {
     triggering_event_ = triggering_event;
   }
+  WebTriggeringEventInfo TriggeringEventInfo() const;
 
   HTMLFormElement* Form() const { return form_.Get(); }
   void SetForm(HTMLFormElement* form) { form_ = form; }

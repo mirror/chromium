@@ -113,11 +113,12 @@ String LinkSelectionTestBase::GetSelectionText() {
 
 class TestFrameClient : public FrameTestHelpers::TestWebFrameClient {
  public:
-  MOCK_METHOD4(LoadURLExternally,
+  MOCK_METHOD5(LoadURLExternally,
                void(const WebURLRequest&,
                     WebNavigationPolicy,
-                    const WebString& downloadName,
-                    bool shouldReplaceCurrentEntry));
+                    const WebString& download_name,
+                    WebTriggeringEventInfo triggering_event_info,
+                    bool should_replace_current_entry));
 };
 
 class LinkSelectionTest : public LinkSelectionTestBase {
@@ -224,7 +225,7 @@ TEST_F(LinkSelectionTest, SingleClickWithAltStartsDownload) {
   EXPECT_CALL(
       test_frame_client_,
       LoadURLExternally(_, WebNavigationPolicy::kWebNavigationPolicyDownload,
-                        WebString(), _));
+                        WebString(), _, _));
   EmulateMouseClick(left_point_in_link_, WebMouseEvent::Button::kLeft,
                     WebInputEvent::kAltKey);
 }
@@ -245,7 +246,7 @@ TEST_F(LinkSelectionTest, SingleClickWithAltStartsDownloadWhenTextSelected) {
   EXPECT_CALL(
       test_frame_client_,
       LoadURLExternally(_, WebNavigationPolicy::kWebNavigationPolicyDownload,
-                        WebString(), _));
+                        WebString(), _, _));
   EmulateMouseClick(left_point_in_link_, WebMouseEvent::Button::kLeft,
                     WebInputEvent::kAltKey);
 }

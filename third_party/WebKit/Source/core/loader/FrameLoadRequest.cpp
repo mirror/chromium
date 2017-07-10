@@ -94,4 +94,13 @@ FrameLoadRequest::FrameLoadRequest(
   }
 }
 
+WebTriggeringEventInfo FrameLoadRequest::TriggeringEventInfo() const {
+  if (TriggeringEvent()) {
+    return TriggeringEvent()->isTrusted()
+               ? WebTriggeringEventInfo::kFromTrustedEvent
+               : WebTriggeringEventInfo::kFromUntrustedEvent;
+  }
+  return WebTriggeringEventInfo::kNotFromEvent;
+}
+
 }  // namespace blink

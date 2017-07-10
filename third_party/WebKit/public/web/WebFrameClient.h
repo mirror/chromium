@@ -315,6 +315,7 @@ class BLINK_EXPORT WebFrameClient {
   virtual void LoadURLExternally(const WebURLRequest&,
                                  WebNavigationPolicy,
                                  const WebString& download_name,
+                                 WebTriggeringEventInfo triggering_event_info,
                                  bool should_replace_current_entry) {}
 
   // The client should load an error page in the current frame.
