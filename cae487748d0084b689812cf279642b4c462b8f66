@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83cd4a63_23c42102",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-10T23:25:04Z",
+      "side": 1,
+      "message": "Curious, do you know how we get here with kUserScroll?",
+      "range": {
+        "startLine": 654,
+        "startChar": 47,
+        "endLine": 654,
+        "endChar": 73
+      },
+      "revId": "cae487748d0084b689812cf279642b4c462b8f66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "821a146e_4247383d",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-10T23:25:04Z",
+      "side": 1,
+      "message": "Why do we consider a \"smooth scroll due to style\" smooth only if its sequenced?",
+      "range": {
+        "startLine": 676,
+        "startChar": 7,
+        "endLine": 676,
+        "endChar": 29
+      },
+      "revId": "cae487748d0084b689812cf279642b4c462b8f66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d690dca1_8450a6fa",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObject.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-10T23:25:04Z",
+      "side": 1,
+      "message": "It doesn\u0027t seem right to ignore the scroll_type. If you\u0027re having issues with other values here, perhaps we need to adjust the callers?",
+      "range": {
+        "startLine": 638,
+        "startChar": 30,
+        "endLine": 638,
+        "endChar": 49
+      },
+      "revId": "cae487748d0084b689812cf279642b4c462b8f66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd6d0d69_45699894",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 1799,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-10T23:25:04Z",
+      "side": 1,
+      "message": "Why can\u0027t we DCHECK this now?",
+      "range": {
+        "startLine": 1799,
+        "startChar": 6,
+        "endLine": 1799,
+        "endChar": 40
+      },
+      "revId": "cae487748d0084b689812cf279642b4c462b8f66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "733458fc_6633f9f0",
+        "filename": "third_party/WebKit/Source/platform/scroll/ProgrammaticScrollAnimator.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-10T23:25:04Z",
+      "side": 1,
+      "message": "Please add a comment that this is true for the entire duration of an animated scroll as well as during an instant scroll if that scroll is part of a sequence. It is reset to false at the end of the scroll.",
+      "range": {
+        "startLine": 62,
+        "startChar": 2,
+        "endLine": 62,
+        "endChar": 28
+      },
+      "revId": "cae487748d0084b689812cf279642b4c462b8f66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "855a1176_b991dbc2",
+        "filename": "third_party/WebKit/Source/platform/scroll/SmoothScrollSequencer.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-10T23:25:04Z",
+      "side": 1,
+      "message": "You should do this from ProgrammaticScrollAnimator::ScrollToOffsetWithoutAnimation for symmetry with the smooth behavior case.",
+      "range": {
+        "startLine": 33,
+        "startChar": 2,
+        "endLine": 34,
+        "endChar": 26
+      },
+      "revId": "cae487748d0084b689812cf279642b4c462b8f66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

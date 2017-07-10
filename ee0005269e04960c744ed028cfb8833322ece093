@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "269a7dfa_7d588514",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 4718,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-10T23:25:04Z",
+      "side": 1,
+      "message": "The implementation is correct (behaviorally), but I mean you shouldn\u0027t move the rect in this method since now the coordinate space and interpretation of the rect we return will differ based on how the method was called which is confusing (and PLSA doesn\u0027t have the same behavior). You should do this adjustment in LayoutBox::ScrollRectToVisible when you get back the rect from a FrameView.",
+      "parentUuid": "e966f507_e5b750aa",
+      "range": {
+        "startLine": 4718,
+        "startChar": 17,
+        "endLine": 4718,
+        "endChar": 21
+      },
+      "revId": "ee0005269e04960c744ed028cfb8833322ece093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "21b07f9c_56f47f04",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
         "patchSetId": 16
