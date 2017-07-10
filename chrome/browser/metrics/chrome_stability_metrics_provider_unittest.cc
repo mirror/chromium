@@ -128,7 +128,6 @@ TEST_F(ChromeStabilityMetricsProviderTest, NotificationObserver) {
   // be executed immediately.
   provider.ProvideStabilityMetrics(&system_profile);
 
-  EXPECT_EQ(2, system_profile.stability().renderer_crash_count());
   EXPECT_EQ(1, system_profile.stability().renderer_failed_launch_count());
   EXPECT_EQ(0, system_profile.stability().extension_renderer_crash_count());
 
