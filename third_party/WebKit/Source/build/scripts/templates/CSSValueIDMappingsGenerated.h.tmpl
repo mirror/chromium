@@ -22,6 +22,7 @@ template <class T>
 T cssValueIDToPlatformEnumGenerated(CSSValueID);
 
 {% for enum_name, mapping in mappings.items() %}
+{% if 'segment' not in mapping %}
 template <>
 inline {{enum_name}} cssValueIDToPlatformEnumGenerated(CSSValueID v) {
   switch (v) {
@@ -46,7 +47,39 @@ inline CSSValueID platformEnumToCSSValueIDGenerated({{enum_name}} v) {
       return CSSValueNone;
   }
 }
+{% else %}
 
+template <>
+inline {{enum_name}} cssValueIDToPlatformEnumGenerated(CSSValueID v) {
+  switch (v) {
+  {% for cs_value, cs_num, css_value, css_num in mapping['mapping']: %}
+  {% if css_num|int() < mapping.s_segment[3]|int() or css_num|int() > mapping.e_segment[3]|int() %}
+    case {{css_value}}:
+      return {{enum_name}}::{{cs_value}};
+  {% endif %}
+  {% endfor %}
+    default:
+      //NOTREACHED();
+      if (v >= {{mapping.s_segment[2]}} && v <= {{mapping.e_segment[2]}}) {
+        return static_cast<{{enum_name}}>(v - {{mapping.s_segment[2]}} + static_cast<int>({{enum_name}}::{{mapping.s_segment[0]}}));
+      } else
+        return {{enum_name}}::{{mapping['default_value']}};
+  }
+}
+
+inline CSSValueID platformEnumToCSSValueIDGenerated({{enum_name}} v) {
+  switch (v) {
+  {% for cs_value, cs_num, css_value, css_num in mapping['mapping']: %}
+    case {{enum_name}}::{{cs_value}}:
+      return {{css_value}};
+  {% endfor %}
+    default:
+      NOTREACHED();
+      return CSSValueNone;
+  }
+}
+
+{% endif %}
 {% endfor %}
 } // namespace detail
 
