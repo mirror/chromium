@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b8b5e97_a7fd423c",
+        "filename": "components/password_manager/core/browser/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-10T11:13:57Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this whole section be excluded on CrOS if it\u0027s not used. Otherwise, what\u0027s the purpose of password_reuse_detection_support?",
+      "range": {
+        "startLine": 142,
+        "startChar": 6,
+        "endLine": 142,
+        "endChar": 38
+      },
+      "revId": "19879ffb2633684d12be1d605f41d62031321b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "492a9464_b3724485",
+        "filename": "components/password_manager/core/browser/password_store.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 603,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-10T11:13:57Z",
+      "side": 1,
+      "message": "Can we have a readable define somewhere for this feature? I\u0027m concerned that this complex condition is repeated many times while it\u0027s not very clear what it\u0027s guarding.",
+      "range": {
+        "startLine": 603,
+        "startChar": 4,
+        "endLine": 603,
+        "endChar": 11
+      },
+      "revId": "19879ffb2633684d12be1d605f41d62031321b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
