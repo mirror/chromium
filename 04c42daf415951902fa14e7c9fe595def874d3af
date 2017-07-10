@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1f9ae12c_e6baa251",
+        "filename": "headless/lib/browser/headless_browser_main_parts.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-07-10T11:27:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7d707bb_1baa51a8",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 20
+      },
+      "revId": "04c42daf415951902fa14e7c9fe595def874d3af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e9148cc_7d1fd97a",
         "filename": "headless/lib/headless_devtools_client_browsertest.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-10T11:19:53Z",
       "side": 1,
       "message": "does this need an extra file or does it exist already?",
+      "range": {
+        "startLine": 1456,
+        "startChar": 41,
+        "endLine": 1456,
+        "endChar": 51
+      },
+      "revId": "04c42daf415951902fa14e7c9fe595def874d3af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6deddc11_12721a76",
+        "filename": "headless/lib/headless_devtools_client_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1456,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-07-10T11:27:59Z",
+      "side": 1,
+      "message": "It\u0027s built into the python server.",
+      "parentUuid": "0e9148cc_7d1fd97a",
       "range": {
         "startLine": 1456,
         "startChar": 41,
