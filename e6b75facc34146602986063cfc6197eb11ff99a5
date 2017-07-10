@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8d3e8985_74b2f45e",
+        "filename": "ipc/ipc_mojo_perftest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-10T23:23:58Z",
+      "side": 1,
+      "message": "Yes, just leftover from when I was experimenting with making strings pass-by-value. Fixed. :)",
+      "parentUuid": "32bd6297_a10125e0",
+      "revId": "e6b75facc34146602986063cfc6197eb11ff99a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2336ebe5_8ba7accf",
         "filename": "mojo/public/cpp/bindings/connector.h",
         "patchSetId": 2
@@ -39,6 +57,30 @@
       "revId": "e6b75facc34146602986063cfc6197eb11ff99a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad151689_2f8ba11a",
+        "filename": "mojo/public/cpp/bindings/connector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-10T23:23:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2336ebe5_8ba7accf",
+      "range": {
+        "startLine": 77,
+        "startChar": 4,
+        "endLine": 77,
+        "endChar": 28
+      },
+      "revId": "e6b75facc34146602986063cfc6197eb11ff99a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "ca37290e_01b48e0c",
+        "filename": "mojo/public/cpp/bindings/connector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-10T23:23:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ddfb273_5edde85b",
+      "range": {
+        "startLine": 195,
+        "startChar": 14,
+        "endLine": 195,
+        "endChar": 50
+      },
+      "revId": "e6b75facc34146602986063cfc6197eb11ff99a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9876697_7151768c",
         "filename": "mojo/public/cpp/bindings/lib/interface_endpoint_client.cc",
         "patchSetId": 2
@@ -79,6 +145,24 @@
       "revId": "e6b75facc34146602986063cfc6197eb11ff99a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f8a8bea_b77b91c0",
+        "filename": "mojo/public/cpp/bindings/lib/interface_endpoint_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-10T23:23:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9876697_7151768c",
+      "revId": "e6b75facc34146602986063cfc6197eb11ff99a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "f0aa516a_35c29326",
+        "filename": "mojo/public/cpp/bindings/lib/message.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-10T23:23:58Z",
+      "side": 1,
+      "message": "Sure, I did this to avoid code duplication between this file and UnserializedMessageContext, but I\u0027ve instead moved the common code to message_internal.h",
+      "parentUuid": "4e746a19_6c18550f",
+      "range": {
+        "startLine": 182,
+        "startChar": 11,
+        "endLine": 182,
+        "endChar": 28
+      },
+      "revId": "e6b75facc34146602986063cfc6197eb11ff99a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "779dde34_d6ef48db",
         "filename": "mojo/public/cpp/bindings/lib/message.cc",
         "patchSetId": 2
@@ -119,6 +227,24 @@
       "revId": "e6b75facc34146602986063cfc6197eb11ff99a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4fecb9c_1a8d3972",
+        "filename": "mojo/public/cpp/bindings/lib/message.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-10T23:23:58Z",
+      "side": 1,
+      "message": "Done. Added a comment.",
+      "parentUuid": "779dde34_d6ef48db",
+      "revId": "e6b75facc34146602986063cfc6197eb11ff99a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -139,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "f28fa144_ee1a3e9b",
+        "filename": "mojo/public/cpp/bindings/lib/message.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-10T23:23:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c190b02_723a949d",
+      "revId": "e6b75facc34146602986063cfc6197eb11ff99a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "872871a8_edc51d62",
         "filename": "mojo/public/cpp/bindings/lib/message_internal.cc",
         "patchSetId": 2
@@ -153,6 +297,24 @@
       "revId": "e6b75facc34146602986063cfc6197eb11ff99a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d53bb7f8_23e04e66",
+        "filename": "mojo/public/cpp/bindings/lib/message_internal.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-10T23:23:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "872871a8_edc51d62",
+      "revId": "e6b75facc34146602986063cfc6197eb11ff99a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -173,6 +335,24 @@
     },
     {
       "key": {
+        "uuid": "28c2c4fb_d212464c",
+        "filename": "mojo/public/cpp/bindings/lib/unserialized_message_context.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-10T23:23:58Z",
+      "side": 1,
+      "message": "Done :)",
+      "parentUuid": "a4b5913d_46eb39db",
+      "revId": "e6b75facc34146602986063cfc6197eb11ff99a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3828bda6_aedca5d2",
         "filename": "mojo/public/cpp/bindings/lib/unserialized_message_context.h",
         "patchSetId": 2
@@ -190,6 +370,24 @@
     },
     {
       "key": {
+        "uuid": "f72c080f_ec6d68cf",
+        "filename": "mojo/public/cpp/bindings/lib/unserialized_message_context.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-10T23:23:58Z",
+      "side": 1,
+      "message": "I\u0027ve made it return null instead, which is fine since the only usage of it is in a place which gracefully allows the result to be null.",
+      "parentUuid": "3828bda6_aedca5d2",
+      "revId": "e6b75facc34146602986063cfc6197eb11ff99a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "982dffb0_a33bf3eb",
         "filename": "mojo/public/cpp/bindings/lib/unserialized_message_context.h",
         "patchSetId": 2
@@ -204,6 +402,24 @@
       "revId": "e6b75facc34146602986063cfc6197eb11ff99a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb4a06a7_f5c3b409",
+        "filename": "mojo/public/cpp/bindings/lib/unserialized_message_context.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-10T23:23:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "982dffb0_a33bf3eb",
+      "revId": "e6b75facc34146602986063cfc6197eb11ff99a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -230,6 +446,30 @@
     },
     {
       "key": {
+        "uuid": "f0079984_3e022d11",
+        "filename": "mojo/public/cpp/system/handle_signal_tracker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-10T23:23:58Z",
+      "side": 1,
+      "message": "This is embarrassing, but I never actually finished the implementation of this class, which means it didn\u0027t do anything at all :/  Fixed.",
+      "parentUuid": "4aaeefd6_0e3683ff",
+      "range": {
+        "startLine": 14,
+        "startChar": 58,
+        "endLine": 14,
+        "endChar": 59
+      },
+      "revId": "e6b75facc34146602986063cfc6197eb11ff99a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93f5ec7b_0b2358b0",
         "filename": "mojo/public/cpp/system/handle_signal_tracker.h",
         "patchSetId": 2
@@ -244,6 +484,24 @@
       "revId": "e6b75facc34146602986063cfc6197eb11ff99a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a61a5bc_1bee2ef3",
+        "filename": "mojo/public/cpp/system/handle_signal_tracker.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-10T23:23:58Z",
+      "side": 1,
+      "message": "The idea is that we only ever arm one or the other (one arm operation must eventually succeed since the condition is either satisfied or not satisfied), and we only do so at initialization, and after the last-armed one triggers (once it is no longer armed).",
+      "parentUuid": "93f5ec7b_0b2358b0",
+      "revId": "e6b75facc34146602986063cfc6197eb11ff99a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -270,6 +528,30 @@
     },
     {
       "key": {
+        "uuid": "102e2423_74c72cbd",
+        "filename": "mojo/public/tools/bindings/generators/cpp_templates/interface_definition.tmpl",
+        "patchSetId": 2
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-10T23:23:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ed8fe0d_a8b82061",
+      "range": {
+        "startLine": 262,
+        "startChar": 8,
+        "endLine": 262,
+        "endChar": 59
+      },
+      "revId": "e6b75facc34146602986063cfc6197eb11ff99a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75c3294c_2fa8ab35",
         "filename": "mojo/public/tools/bindings/pylib/mojom/generate/module.py",
         "patchSetId": 2
@@ -284,6 +566,24 @@
       "revId": "e6b75facc34146602986063cfc6197eb11ff99a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c94e7811_2787cd95",
+        "filename": "mojo/public/tools/bindings/pylib/mojom/generate/module.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 916,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-10T23:23:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75c3294c_2fa8ab35",
+      "revId": "e6b75facc34146602986063cfc6197eb11ff99a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
