@@ -163,10 +163,10 @@ NS_INLINE UIEdgeInsets TabHistoryPopupMenuInsets() {
 - (void)commandWasSelected:(int)commandID {
   // Record the corresponding metric.
   switch (commandID) {
-    case TOOLS_BOOKMARK_EDIT:
+    case IDC_TEMP_EDIT_BOOKMARK:
       base::RecordAction(UserMetricsAction("MobileMenuEditBookmark"));
       break;
-    case TOOLS_BOOKMARK_ITEM:
+    case IDC_BOOKMARK_PAGE:
       base::RecordAction(UserMetricsAction("MobileMenuAddToBookmarks"));
       break;
     case IDC_CLOSE_ALL_TABS:
@@ -193,7 +193,7 @@ NS_INLINE UIEdgeInsets TabHistoryPopupMenuInsets() {
     case TOOLS_RELOAD_ITEM:
       base::RecordAction(UserMetricsAction("MobileMenuReload"));
       break;
-    case TOOLS_SHARE_ITEM:
+    case IDC_SHARE_PAGE:
       base::RecordAction(UserMetricsAction("MobileMenuShare"));
       break;
     case IDC_REQUEST_DESKTOP_SITE:
