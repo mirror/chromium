@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "42c6e5c5_6f785c9a",
+        "filename": "components/variations/variations_params_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-07-11T16:53:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92768faa_ead8eec3",
+      "range": {
+        "startLine": 113,
+        "startChar": 15,
+        "endLine": 113,
+        "endChar": 16
+      },
+      "revId": "f9940df80808d309bce31a033f59ca5fb8931171",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d1cc00e_475a2d98",
         "filename": "components/variations/variations_params_manager.h",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "ea6d9966_6d131ede",
+        "filename": "components/variations/variations_params_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-07-11T16:53:26Z",
+      "side": 1,
+      "message": "Hmmm... okay.  |command_line| acts like |self| or |this| - this is why I put it first.  I thought that I saw a thread on chromium-dev that said that both orders are okay, but I can\u0027t find it now.  Aaaand I see that Google C++ Style Guide pushes toward putting output parameters last (https://google.github.io/styleguide/cppguide.html#Function_Parameter_Ordering).\n\nDone.",
+      "parentUuid": "1d1cc00e_475a2d98",
+      "range": {
+        "startLine": 94,
+        "startChar": 37,
+        "endLine": 94,
+        "endChar": 38
+      },
+      "revId": "f9940df80808d309bce31a033f59ca5fb8931171",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f3922cc4_23678a7c",
         "filename": "components/variations/variations_params_manager.h",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-07-11T16:28:18Z",
       "side": 1,
       "message": "Can this be a std::set\u003cbase::Feature\u003e?",
+      "range": {
+        "startLine": 97,
+        "startChar": 35,
+        "endLine": 97,
+        "endChar": 54
+      },
+      "revId": "f9940df80808d309bce31a033f59ca5fb8931171",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2199548b_2b6edba2",
+        "filename": "components/variations/variations_params_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-07-11T16:53:26Z",
+      "side": 1,
+      "message": "FWIW, I was aiming for consistency with SetVariationParamsWithFeatureAssociations.\n\nMaybe there should be another overload:\n\n  static void AppendVariationParamsWithFeatureAssociations(\n      const base::Feature\u0026 associated_feature,\n      const std::string\u0026 param_name,\n      const std::string\u0026 param_value,\n      base::CommandLine* command_line);\n\n- Is |trial_name| really needed?  Can\u0027t I hardcode something like \"TestTrialName\"?\n- |const std::string\u0026 param_name|, and |const std::string\u0026 param_value| instead of const |std::map\u003cstd::string, std::string\u003e\u0026 param_values|\n- |const base::Feature\u0026 associated_feature| instead of |const std::set\u003cstd::string\u003e\u0026 associated_features|\n\nWDYT?\n\n\nPS. Please note kSpeculativeResourcePrefetchingFeatureName and how it is in calls to VariationParamsManager from chrome/browser/predictors/resource_prefetch_common_unittest.cc and from chrome/browser/predictors/resource_prefetch_predictor_browsertest.cc.  Do you think SetVariationParamsWithFeatureAssociations (and the constructor of VariationParamsManager) should also take |base::Feature| instead of |std::string|?",
+      "parentUuid": "f3922cc4_23678a7c",
       "range": {
         "startLine": 97,
         "startChar": 35,
