@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f745001_25de1ba7",
+        "filename": "content/browser/renderer_host/input/mock_input_router_client.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-07-11T21:04:20Z",
+      "side": 1,
+      "message": "Should this be initialized in the ctor?",
+      "revId": "3bdfae4b1183f1130bd714255a98dd7a32d92f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
