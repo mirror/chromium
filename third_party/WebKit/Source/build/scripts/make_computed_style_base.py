@@ -514,6 +514,7 @@ class ComputedStyleBaseWriter(make_style_builder.StyleBuilderWriter):
                     "Shorthand '{}' cannot have a field_template.".format(property_['name'])
 
         css_properties = [value for value in self._properties.values() if not value['longhands']]
+        self.css_properties = dict([(x["type_name"], x) for x in css_properties])
 
         for property_ in css_properties:
             # Set default values for extra parameters in ComputedStyleExtraFields.json5.
@@ -550,6 +551,7 @@ class ComputedStyleBaseWriter(make_style_builder.StyleBuilderWriter):
             'ComputedStyleBase.cpp': self.generate_base_computed_style_cpp,
             'ComputedStyleBaseConstants.h': self.generate_base_computed_style_constants,
         }
+        self._css_values_dictionary_file = json5_file_paths[3]
 
     @template_expander.use_jinja('ComputedStyleBase.h.tmpl', tests={'in': lambda a, b: a in b})
     def generate_base_computed_style_h(self):
@@ -573,6 +575,23 @@ class ComputedStyleBaseWriter(make_style_builder.StyleBuilderWriter):
 
     @template_expander.use_jinja('ComputedStyleBaseConstants.h.tmpl')
     def generate_base_computed_style_constants(self):
+        """We sort the enum values based on each value's position on
+        CSSProperties.json5 enum. This will ensure that if there is a continuous
+        segment on CSSProperties.json5 matching the segment in this enum then
+        the generated enum will have the same order and continuity as
+        CSSProperties.json5
+        """
+        css_values_dictionary = json5_generator.Json5File.load_from_files(
+            [self._css_values_dictionary_file],
+            default_parameters=self.json5_file.parameters
+        ).name_dictionaries
+        css_values_dictionary = [enum_value_name(x['name']) for x in css_values_dictionary]
+        name_to_position_dictionary = dict(zip(css_values_dictionary, range(len(css_values_dictionary))))
+        for enum in self._generated_enums:
+            if enum.type_name in self.css_properties:
+                val_enum_pair = [(name_to_position_dictionary[val], val) for val in enum.values]
+                val_enum_pair = sorted(val_enum_pair, key=lambda x: x[0])
+                enum.values = [x[1] for x in val_enum_pair]
         return {
             'properties': self._properties,
             'enums': self._generated_enums,
