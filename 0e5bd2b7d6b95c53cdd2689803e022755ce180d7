@@ -93,6 +93,30 @@
       "revId": "0e5bd2b7d6b95c53cdd2689803e022755ce180d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1c351c12_6a75ca0e",
+        "filename": "components/supervised_user_error_page/resources/supervised_user_block_interstitial.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-11T16:04:24Z",
+      "side": 1,
+      "message": "So tl;dr: Unrelated cleanup - got it :)",
+      "parentUuid": "e7bb02e5_1fe956b0",
+      "range": {
+        "startLine": 53,
+        "startChar": 29,
+        "endLine": 53,
+        "endChar": 0
+      },
+      "revId": "0e5bd2b7d6b95c53cdd2689803e022755ce180d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
