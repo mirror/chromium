@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "900725ee_6b55701b",
+        "filename": "ios/chrome/browser/ui/reading_list/reading_list_coordinator.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-07-11T21:02:40Z",
+      "side": 1,
+      "message": "How does this behave in tests? It is worth adding an eg test to make sure this is incremented?",
+      "range": {
+        "startLine": 121,
+        "startChar": 0,
+        "endLine": 121,
+        "endChar": 76
+      },
+      "revId": "a6ef1c3ad3040c606293111fddfedc0cf1bf0ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
