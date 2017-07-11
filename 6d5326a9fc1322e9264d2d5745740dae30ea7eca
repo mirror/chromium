@@ -210,6 +210,29 @@
       "revId": "6d5326a9fc1322e9264d2d5745740dae30ea7eca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a246e7f0_6da2be72",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/AsyncInitializationActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-07-11T13:25:17Z",
+      "side": 1,
+      "message": "nit: comment on parameter and return value.",
+      "range": {
+        "startLine": 331,
+        "startChar": 22,
+        "endLine": 331,
+        "endChar": 48
+      },
+      "revId": "6d5326a9fc1322e9264d2d5745740dae30ea7eca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
