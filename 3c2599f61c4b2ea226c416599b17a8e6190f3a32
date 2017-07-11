@@ -22,6 +22,30 @@
       "revId": "3c2599f61c4b2ea226c416599b17a8e6190f3a32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d41c1b57_7de4b36b",
+        "filename": "chromecast/chromecast.gni",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1226549
+      },
+      "writtenOn": "2017-07-11T16:51:17Z",
+      "side": 1,
+      "message": "Would we want this to use it\u0027s own product name (like android things), or just use CAST_PRODUCT_TYPE_ANDROID_TV?",
+      "parentUuid": "2e3fbafd_a9aa6384",
+      "range": {
+        "startLine": 54,
+        "startChar": 60,
+        "endLine": 54,
+        "endChar": 0
+      },
+      "revId": "3c2599f61c4b2ea226c416599b17a8e6190f3a32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
