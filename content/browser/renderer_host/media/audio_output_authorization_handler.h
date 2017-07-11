@@ -38,9 +38,9 @@ class CONTENT_EXPORT AudioOutputAuthorizationHandler {
   // hashed, so it must be hashed before sending it to the renderer.
   using AuthorizationCompletedCallback =
       base::OnceCallback<void(media::OutputDeviceStatus status,
-                              bool should_send_id,
                               const media::AudioParameters& params,
-                              const std::string& raw_device_id)>;
+                              const std::string& raw_device_id,
+                              const std::string& device_id_for_renderer)>;
 
   AudioOutputAuthorizationHandler(media::AudioSystem* audio_system,
                                   MediaStreamManager* media_stream_manager,
@@ -57,7 +57,6 @@ class CONTENT_EXPORT AudioOutputAuthorizationHandler {
   void RequestDeviceAuthorization(int render_frame_id,
                                   int session_id,
                                   const std::string& device_id,
-                                  const url::Origin& security_origin,
                                   AuthorizationCompletedCallback cb) const;
 
   // Calling this method will make the checks for permission from the user
@@ -67,6 +66,11 @@ class CONTENT_EXPORT AudioOutputAuthorizationHandler {
  private:
   // Convention: Something named |device_id| is hashed and something named
   // |raw_device_id| is not hashed.
+
+  void HashDeviceId(AuthorizationCompletedCallback cb,
+                    const std::string& raw_device_id,
+                    media::AudioParameters params,
+                    const url::Origin& origin) const;
 
   void AccessChecked(AuthorizationCompletedCallback cb,
                      const std::string& device_id,
@@ -81,17 +85,18 @@ class CONTENT_EXPORT AudioOutputAuthorizationHandler {
   void GetDeviceParameters(AuthorizationCompletedCallback cb,
                            const std::string& raw_device_id) const;
 
-  void DeviceParametersReceived(
-      AuthorizationCompletedCallback cb,
-      bool should_send_id,
-      const std::string& raw_device_id,
-      const media::AudioParameters& output_params) const;
+  void DeviceParametersReceived(AuthorizationCompletedCallback cb,
+                                const std::string& id_for_renderer,
+                                const std::string& raw_device_id,
+                                const media::AudioParameters& params) const;
 
-  media::AudioSystem* audio_system_;
+  media::AudioSystem* const audio_system_;
   MediaStreamManager* const media_stream_manager_;
-  std::unique_ptr<MediaDevicesPermissionChecker> permission_checker_;
   const int render_process_id_;
   const std::string salt_;
+  bool override_permissions_ = false;
+  bool permissions_override_value_ = false;
+
   // All access is on the IO thread, and taking a weak pointer to const looks
   // const, so this can be mutable.
   mutable base::WeakPtrFactory<const AudioOutputAuthorizationHandler>
