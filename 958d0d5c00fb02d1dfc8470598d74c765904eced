@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c62944b7_a707e6be",
+        "filename": "ui/views/controls/textfield/textfield_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 3198,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-07-11T20:16:10Z",
+      "side": 1,
+      "message": "Yes, you are right! My test does not cover the initialization! I like this proposition! This is  a good simulation of the bug!",
+      "parentUuid": "ad597b0e_67b853a4",
+      "revId": "958d0d5c00fb02d1dfc8470598d74c765904eced",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f05456a8_09ea1014",
         "filename": "ui/views/controls/textfield/textfield_unittest.cc",
         "patchSetId": 4
@@ -39,6 +57,30 @@
       "revId": "958d0d5c00fb02d1dfc8470598d74c765904eced",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0e1f8c9_2dbb69d4",
+        "filename": "ui/views/controls/textfield/textfield_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 3199,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-07-11T20:16:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f05456a8_09ea1014",
+      "range": {
+        "startLine": 3199,
+        "startChar": 3,
+        "endLine": 3199,
+        "endChar": 0
+      },
+      "revId": "958d0d5c00fb02d1dfc8470598d74c765904eced",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
