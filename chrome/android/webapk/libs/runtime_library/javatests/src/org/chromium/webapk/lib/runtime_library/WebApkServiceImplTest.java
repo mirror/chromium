@@ -12,14 +12,20 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.IBinder;
 import android.support.test.filters.SmallTest;
-import android.test.InstrumentationTestCase;
 
 import org.chromium.base.test.util.CallbackHelper;
+import org.junit.Test;
+import org.chromium.base.test.BaseJUnit4ClassRunner;
+import org.junit.runner.RunWith;
+import android.support.test.InstrumentationRegistry;
+import org.junit.Assert;
+import org.junit.Before;
 
 /**
  * Instrumentation tests for {@link org.chromium.webapk.WebApkServiceImpl}.
  */
-public class WebApkServiceImplTest extends InstrumentationTestCase {
+@RunWith(BaseJUnit4ClassRunner.class)
+public class WebApkServiceImplTest {
     private static final String APK_WITH_WEBAPK_SERVICE_PACKAGE =
             "org.chromium.webapk.lib.runtime_library.test.apk_with_webapk_service";
     private static final String WEBAPK_SERVICE_IMPL_WRAPPER_CLASS_NAME =
@@ -56,23 +62,24 @@ public class WebApkServiceImplTest extends InstrumentationTestCase {
         public void onServiceDisconnected(ComponentName name) {}
     }
 
-    @Override
+    @Before
     public void setUp() {
-        mContext = getInstrumentation().getContext();
-        mTargetContext = getInstrumentation().getTargetContext();
+        mContext = InstrumentationRegistry.getInstrumentation().getContext();
+        mTargetContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         mTargetUid = getUid(mTargetContext);
     }
 
     /**
      * Test that an application which is not allowed to use the WebAPK service actually cannot.
      */
+    @Test
     @SmallTest
     public void testApiFailsIfNoPermission() throws Exception {
         IWebApkApi api = bindService(mContext, mTargetUid + 1, SMALL_ICON_ID);
         try {
             // Check that the api either throws an exception or returns a default small icon id.
             int actualSmallIconId = api.getSmallIconId();
-            assertTrue(actualSmallIconId != SMALL_ICON_ID);
+            Assert.assertTrue(actualSmallIconId != SMALL_ICON_ID);
         } catch (Exception e) {
         }
     }
@@ -80,16 +87,17 @@ public class WebApkServiceImplTest extends InstrumentationTestCase {
     /**
      * Test that an application which is allowed to use the WebAPK service actually can.
      */
+    @Test
     @SmallTest
     public void testApiWorksIfHasPermission() throws Exception {
         IWebApkApi api = bindService(mContext, mTargetUid, SMALL_ICON_ID);
         try {
             // Check that the api returns the real small icon id.
             int actualSmallIconId = api.getSmallIconId();
-            assertEquals(SMALL_ICON_ID, actualSmallIconId);
+            Assert.assertEquals(SMALL_ICON_ID, actualSmallIconId);
         } catch (Exception e) {
             e.printStackTrace();
-            fail("Should not have thrown an exception when permission is granted.");
+            Assert.fail("Should not have thrown an exception when permission is granted.");
         }
     }
 
@@ -104,7 +112,7 @@ public class WebApkServiceImplTest extends InstrumentationTestCase {
                     context.getPackageName(), PackageManager.GET_META_DATA);
             return appInfo.uid;
         } catch (Exception e) {
-            fail();
+            Assert.fail();
         }
         return -1;
     }
@@ -130,7 +138,7 @@ public class WebApkServiceImplTest extends InstrumentationTestCase {
         waiter.waitForCallback(0);
 
         IWebApkApi api = waiter.api();
-        assertNotNull(api);
+        Assert.assertNotNull(api);
         return api;
     }
 }
