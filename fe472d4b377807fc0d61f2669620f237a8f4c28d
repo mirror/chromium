@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cbd3ed27_6035cd3f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-11T18:22:56Z",
+      "side": 1,
+      "message": "Convention is to title CL something like Reland of (original CL)\n\nThen add in description what additional change you did.",
+      "revId": "fe472d4b377807fc0d61f2669620f237a8f4c28d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "723d3e54_a4ec931a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-11T18:22:56Z",
+      "side": 1,
+      "message": "Would be good to say that this CL is a reland of the first, and it fixes the egtest issue.",
+      "range": {
+        "startLine": 14,
+        "startChar": 8,
+        "endLine": 14,
+        "endChar": 13
+      },
+      "revId": "fe472d4b377807fc0d61f2669620f237a8f4c28d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
