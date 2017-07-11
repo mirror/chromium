@@ -87,6 +87,24 @@
       "revId": "2fa0ce459a612affeac206750b3e7a96c552c0a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "69bd17a2_19856bef",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-07-11T23:55:49Z",
+      "side": 1,
+      "message": "Oh, I thought everything will be done through mojo at some point. I must have misunderstood, pardon my ignorance regarding long-term plans.",
+      "parentUuid": "97112ee3_9c2f9d61",
+      "revId": "2fa0ce459a612affeac206750b3e7a96c552c0a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
