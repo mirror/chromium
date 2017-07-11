@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6cf655b_dc278138",
+        "filename": "content/browser/renderer_host/compositor_impl_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1000608
+      },
+      "writtenOn": "2017-07-11T01:59:00Z",
+      "side": 1,
+      "message": "Will the color space ever need to change while the context exists?",
+      "revId": "e1eea453edfa333c751706a456d81b08704ca7d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dd1f9c2_7d37eb57",
+        "filename": "ui/gl/gl_surface_format.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000608
+      },
+      "writtenOn": "2017-07-11T01:59:00Z",
+      "side": 1,
+      "message": "I think color space shouldn\u0027t affect compatibility of surface formats. This is passed in to egl as an attrib, not as part of the EGLConfig, so the context shouldn\u0027t know anything about it.",
+      "revId": "e1eea453edfa333c751706a456d81b08704ca7d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
