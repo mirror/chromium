@@ -60,9 +60,9 @@ class MODULES_EXPORT NotificationResourcesLoader final
                  const KURL&,
                  std::unique_ptr<NotificationImageLoader::ImageCallback>);
   void DidLoadImage(const SkBitmap& image);
-  void DidLoadIcon(const SkBitmap& image);
-  void DidLoadBadge(const SkBitmap& image);
-  void DidLoadActionIcon(size_t action_index, const SkBitmap& image);
+  void DidLoadIcon(const SkBitmap& icon);
+  void DidLoadBadge(const SkBitmap& badge);
+  void DidLoadActionIcon(size_t action_index, const SkBitmap& action_icon);
 
   // Decrements |m_pendingRequestCount| and runs |m_completionCallback| if
   // there are no more pending requests.
