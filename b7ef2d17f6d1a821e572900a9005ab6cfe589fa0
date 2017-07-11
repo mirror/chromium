@@ -34,6 +34,24 @@
       "revId": "b7ef2d17f6d1a821e572900a9005ab6cfe589fa0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2c7a447_09bbb9e6",
+        "filename": "components/infobars/core/infobar_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-07-11T05:56:24Z",
+      "side": 1,
+      "message": "Just exercising some caution after flipping the flag to the new code-path so if we find anything particularly broken that would take a while to fix we can revert to the old path.",
+      "parentUuid": "2ae61ef3_d22dbd57",
+      "revId": "b7ef2d17f6d1a821e572900a9005ab6cfe589fa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
