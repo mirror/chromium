@@ -426,6 +426,24 @@
     },
     {
       "key": {
+        "uuid": "5152f12c_76b9e478",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-11T16:55:59Z",
+      "side": 1,
+      "message": "I agree, I think that unittests should use these constants. I have updated this CL to use the constants instead of the literals.\n\nI am happy to either leave it as this or to drop the \"internal\" in a separate CL. Which one do you prefer?",
+      "parentUuid": "4b07603d_0dfe0a5c",
+      "revId": "4a6a49a4a819a317387ec2ce6563db05ab1924e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6ab063d_5c6b1619",
         "filename": "components/password_manager/core/browser/password_form_metrics_recorder_unittest.cc",
         "patchSetId": 3
