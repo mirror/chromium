@@ -28,6 +28,7 @@ repack("packed_resources") {
 
 grit("resources") {
   source = "test_resources.grd"
+  source_is_generated = true
   inputs = [
     "${root_gen_dir}/ios/web/test/mojo_test.mojom.js",
   ]
