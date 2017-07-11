@@ -27,6 +27,8 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/threading/thread_restrictions.h"
 #include "base/time/time.h"
+#include "extensions/common/api/declarative_net_request/rules_manifest_info.h"
+#include "extensions/common/api/declarative_net_request/utils.h"
 #include "extensions/common/constants.h"
 #include "extensions/common/extension.h"
 #include "extensions/common/extension_icon_set.h"
@@ -38,6 +40,8 @@
 #include "extensions/common/manifest_handler.h"
 #include "extensions/common/manifest_handlers/default_locale_handler.h"
 #include "extensions/common/manifest_handlers/icons_handler.h"
+#include "extensions/common/permissions/api_permission.h"
+#include "extensions/common/permissions/permissions_data.h"
 #include "extensions/strings/grit/extensions_strings.h"
 #include "net/base/escape.h"
 #include "net/base/filename_util.h"
@@ -209,20 +213,30 @@ scoped_refptr<Extension> LoadExtension(const base::FilePath& extension_path,
   std::unique_ptr<base::DictionaryValue> manifest =
       LoadManifest(extension_path, error);
   if (!manifest.get())
-    return NULL;
+    return nullptr;
   if (!extension_l10n_util::LocalizeExtension(
           extension_path, manifest.get(), error)) {
-    return NULL;
+    return nullptr;
   }
 
   scoped_refptr<Extension> extension(Extension::Create(
       extension_path, location, *manifest, flags, extension_id, error));
   if (!extension.get())
-    return NULL;
+    return nullptr;
 
   std::vector<InstallWarning> warnings;
   if (!ValidateExtension(extension.get(), error, &warnings))
-    return NULL;
+    return nullptr;
+
+  // Declarative Net Request API rulesets for unpacked extensions need to be
+  // indexed and persisted, since they don't go through the CrxInstaller.
+  // COMMENT: Ideally we should not be loading unstrusted json in the browser
+  // process but we do the same for manifests for unpacked extensions.
+  if (Manifest::IsUnpackedLocation(extension->location()) &&
+      !IndexAndPersistRulesetIfNeeded(extension.get(), error)) {
+    return nullptr;
+  }
+
   extension->AddInstallWarnings(warnings);
 
   return extension;
@@ -241,11 +255,11 @@ std::unique_ptr<base::DictionaryValue> LoadManifest(
   base::FilePath manifest_path = extension_path.Append(manifest_filename);
   if (!base::PathExists(manifest_path)) {
     *error = l10n_util::GetStringUTF8(IDS_EXTENSION_MANIFEST_UNREADABLE);
-    return NULL;
+    return nullptr;
   }
 
   JSONFileValueDeserializer deserializer(manifest_path);
-  std::unique_ptr<base::Value> root(deserializer.Deserialize(NULL, error));
+  std::unique_ptr<base::Value> root(deserializer.Deserialize(nullptr, error));
   if (!root.get()) {
     if (error->empty()) {
       // If |error| is empty, than the file could not be read.
@@ -257,15 +271,30 @@ std::unique_ptr<base::DictionaryValue> LoadManifest(
       *error = base::StringPrintf(
           "%s  %s", manifest_errors::kManifestParseError, error->c_str());
     }
-    return NULL;
+    return nullptr;
   }
 
   if (!root->IsType(base::Value::Type::DICTIONARY)) {
     *error = l10n_util::GetStringUTF8(IDS_EXTENSION_MANIFEST_INVALID);
-    return NULL;
+    return nullptr;
   }
 
   return base::DictionaryValue::From(std::move(root));
+}
+
+bool IndexAndPersistRulesetIfNeeded(const Extension* extension,
+                                    std::string* error) {
+  const base::FilePath* json_ruleset_path =
+      declarative_net_request::RulesManifestData::GetJSONRulesetPath(extension);
+  if (!json_ruleset_path)
+    return true;
+
+  // The kDeclarativeNetRequest API permission should have been added by the
+  // presence of the kDeclarativeNetRequestRulesetLocation manifest key.
+  DCHECK(extension->permissions_data()->HasAPIPermission(
+      APIPermission::kDeclarativeNetRequest));
+  return declarative_net_request::IndexAndPersistRuleset(
+      *json_ruleset_path, GetIndexedRulesetPath(extension->path()), error);
 }
 
 bool ValidateExtension(const Extension* extension,
@@ -342,8 +371,11 @@ std::vector<base::FilePath> FindPrivateKeyFiles(
 bool CheckForIllegalFilenames(const base::FilePath& extension_path,
                               std::string* error) {
   // Reserved underscore names.
+  // COMMENT: Is this ok for computed hashes etc.?
   static const base::FilePath::CharType* reserved_names[] = {
-      kLocaleFolder, kPlatformSpecificFolder, FILE_PATH_LITERAL("__MACOSX"), };
+      kLocaleFolder, kPlatformSpecificFolder, kMetadataFolder,
+      FILE_PATH_LITERAL("__MACOSX"),
+  };
   CR_DEFINE_STATIC_LOCAL(
       std::set<base::FilePath::StringType>,
       reserved_underscore_names,
@@ -485,7 +517,7 @@ MessageBundle* LoadMessageBundle(
   // Load locale information if available.
   base::FilePath locale_path = extension_path.Append(kLocaleFolder);
   if (!base::PathExists(locale_path))
-    return NULL;
+    return nullptr;
 
   std::set<std::string> chrome_locales;
   extension_l10n_util::GetAllLocales(&chrome_locales);
@@ -496,7 +528,7 @@ MessageBundle* LoadMessageBundle(
       !base::PathExists(default_locale_path)) {
     *error = l10n_util::GetStringUTF8(
         IDS_EXTENSION_LOCALES_NO_DEFAULT_LOCALE_SPECIFIED);
-    return NULL;
+    return nullptr;
   }
 
   MessageBundle* message_bundle =
@@ -563,6 +595,10 @@ base::FilePath GetVerifiedContentsPath(const base::FilePath& extension_path) {
 }
 base::FilePath GetComputedHashesPath(const base::FilePath& extension_path) {
   return extension_path.Append(kMetadataFolder).Append(kComputedHashesFilename);
+}
+
+base::FilePath GetIndexedRulesetPath(const base::FilePath& extension_path) {
+  return extension_path.Append(kMetadataFolder).Append(kIndexedRulesetFilename);
 }
 
 }  // namespace file_util

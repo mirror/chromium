@@ -127,6 +127,12 @@
     "channel": "stable",
     "extension_types": "all"
   },
+  "declarative_net_request_rules" : {
+    // COMMENT: Don't see other manifest features having dependencies.
+    "dependencies": ["permission:declarativeNetRequest"],
+    // COMMENT: Legacy packaged apps?
+    "extension_types": ["extension", "legacy_packaged_app"]
+  },
   "default_locale": {
     "channel": "stable",
     "extension_types": "all"
