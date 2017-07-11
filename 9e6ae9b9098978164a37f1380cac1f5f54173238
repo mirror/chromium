@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2267db0c_515a8b49",
+        "filename": "components/viz/common/quads/shared_bitmap.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-11T21:59:23Z",
+      "side": 1,
+      "message": "uint32_t sequence_number() const?",
+      "range": {
+        "startLine": 45,
+        "startChar": 11,
+        "endLine": 45,
+        "endChar": 26
+      },
+      "revId": "9e6ae9b9098978164a37f1380cac1f5f54173238",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "989ccbba_ee32b8d6",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2592,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-11T21:59:23Z",
+      "side": 1,
+      "message": "nit: braces.",
+      "revId": "9e6ae9b9098978164a37f1380cac1f5f54173238",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
