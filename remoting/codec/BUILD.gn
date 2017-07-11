@@ -104,6 +104,7 @@ source_set("unit_tests") {
     "audio_encoder_opus_unittest.cc",
     "codec_test.cc",
     "codec_test.h",
+    "libyuv_bug_unittest.cc",
     "video_decoder_vpx_unittest.cc",
     "video_encoder_helper_unittest.cc",
     "video_encoder_verbatim_unittest.cc",
@@ -118,6 +119,7 @@ source_set("unit_tests") {
     "//testing/gtest",
     "//third_party/webrtc/modules/desktop_capture",
     "//ui/gfx:color_space",
+    "//third_party/libyuv",
   ]
 
   if (is_ios || is_android) {
