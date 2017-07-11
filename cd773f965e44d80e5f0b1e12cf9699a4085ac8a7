@@ -1,0 +1,153 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f9d60d0_f5fe7bed",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextmenu/ContextMenuHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-07-11T23:22:01Z",
+      "side": 1,
+      "message": "why not the same logic as in TabularContextMenuViewPager?\n\n        int deviceWidthPx \u003d getResources().getDisplayMetrics().widthPixels;\n        int contextMenuWidth \u003d Math.min(deviceWidthPx - 2 * mContextMenuMinimumPaddingPx,\n                getResources().getDimensionPixelSize(R.dimen.context_menu_max_width));",
+      "range": {
+        "startLine": 230,
+        "startChar": 60,
+        "endLine": 230,
+        "endChar": 61
+      },
+      "revId": "cd773f965e44d80e5f0b1e12cf9699a4085ac8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f1aba17_395390d4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextmenu/ContextMenuHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-07-11T23:22:01Z",
+      "side": 1,
+      "message": "I would do x2 the padding.  padding to me implies on side at a time, so I would divide your dimen by 2 for consistency.",
+      "range": {
+        "startLine": 235,
+        "startChar": 34,
+        "endLine": 235,
+        "endChar": 73
+      },
+      "revId": "cd773f965e44d80e5f0b1e12cf9699a4085ac8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "079b1ea3_10800f54",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 1737,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-07-11T23:22:01Z",
+      "side": 1,
+      "message": "is this now specific to images or would we use this for other things?  I\u0027m wondering if we should update the name.",
+      "range": {
+        "startLine": 1737,
+        "startChar": 56,
+        "endLine": 1737,
+        "endChar": 63
+      },
+      "revId": "cd773f965e44d80e5f0b1e12cf9699a4085ac8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07870a1b_13a30885",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 1738,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-07-11T23:22:01Z",
+      "side": 1,
+      "message": "instead of the ..., we should use the unicode ellipsis …",
+      "revId": "cd773f965e44d80e5f0b1e12cf9699a4085ac8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "168f1376_32723ba8",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 1741,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-07-11T23:22:01Z",
+      "side": 1,
+      "message": "With these string changes potentially affecting the old context menu, I think we should pull these changes out separately.  The strings aren\u0027t called out in the UX bug, so I think we should run them by srahim@chromium.org.  Leaving off Google in the search for this image isn\u0027t consistent with desktop in particular, so I think we should figure out what we want as the wider chrome product than just changing them here.\n\nSo yeah, let\u0027s fork this off to a separate CL and file a new bug to get clarification on it (or at least get the UX to comment on the strings in the existing bug).",
+      "range": {
+        "startLine": 1741,
+        "startChar": 18,
+        "endLine": 1741,
+        "endChar": 19
+      },
+      "revId": "cd773f965e44d80e5f0b1e12cf9699a4085ac8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fdc5b04_ebd5f7ad",
+        "filename": "chrome/browser/ui/android/context_menu_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-07-11T23:22:01Z",
+      "side": 1,
+      "message": "remove",
+      "revId": "cd773f965e44d80e5f0b1e12cf9699a4085ac8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "427a197a_61f492aa",
+        "filename": "chrome/browser/ui/android/context_menu_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-07-11T23:22:01Z",
+      "side": 1,
+      "message": "this should all be removed as well.",
+      "range": {
+        "startLine": 110,
+        "startChar": 11,
+        "endLine": 110,
+        "endChar": 26
+      },
+      "revId": "cd773f965e44d80e5f0b1e12cf9699a4085ac8a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
