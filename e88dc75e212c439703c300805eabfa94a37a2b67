@@ -33,6 +33,24 @@
       "revId": "e88dc75e212c439703c300805eabfa94a37a2b67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fa4db9c_55aade87",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-11T05:51:52Z",
+      "side": 1,
+      "message": "Or, I\u0027d not make as mode. Instead, just saying;\n\n// Returns true if the current ARC run has started with skipping user ToS negotiation,\n// because the user had accepted already (practically, in a previous session or via enterprise\n// policy in most cases). Returns false if ARC is not currently running.\nbool is_directly_started() const { return directly_started_; }\n\nor something?",
+      "parentUuid": "116cb2b1_42878e8b",
+      "revId": "e88dc75e212c439703c300805eabfa94a37a2b67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
