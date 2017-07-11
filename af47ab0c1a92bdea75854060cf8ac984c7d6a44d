@@ -22,6 +22,47 @@
       "revId": "af47ab0c1a92bdea75854060cf8ac984c7d6a44d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ff42049_4b9dee0c",
+        "filename": "content/browser/renderer_host/media/audio_output_authorization_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-07-11T17:14:33Z",
+      "side": 1,
+      "message": "I think just replacing all |device_id| instances with qualified ones is sufficient. Use the same names throughout and maybe document them in the class level comment.",
+      "parentUuid": "0d983fcd_9ea91eb5",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 74
+      },
+      "revId": "af47ab0c1a92bdea75854060cf8ac984c7d6a44d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ebc81f1_04cd7d80",
+        "filename": "content/browser/renderer_host/media/audio_output_authorization_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-07-11T17:14:33Z",
+      "side": 1,
+      "message": "const \u0026?",
+      "revId": "af47ab0c1a92bdea75854060cf8ac984c7d6a44d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
