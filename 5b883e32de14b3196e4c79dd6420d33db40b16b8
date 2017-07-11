@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5ddc2f77_1eea5dff",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-07-11T00:29:33Z",
+      "side": 1,
+      "message": "just for future reader. Turned out this base::Passed is not really necessary, as bind in this case does a move as param is an r-value.",
+      "parentUuid": "2d765234_f313991f",
+      "revId": "5b883e32de14b3196e4c79dd6420d33db40b16b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ea53f82_7f5b53f6",
         "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "5b883e32de14b3196e4c79dd6420d33db40b16b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c02d5f66_1376db4c",
+        "filename": "android_webview/browser/aw_safe_browsing_whitelist_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-07-11T00:29:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ea53f82_7f5b53f6",
+      "revId": "5b883e32de14b3196e4c79dd6420d33db40b16b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
