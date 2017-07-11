@@ -470,6 +470,30 @@
     },
     {
       "key": {
+        "uuid": "fe5d1679_6ca9dd54",
+        "filename": "mojo/public/cpp/system/handle_signal_tracker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-11T17:44:31Z",
+      "side": 1,
+      "message": "That sounds we probably need some test coverage for this class. :)",
+      "parentUuid": "f0079984_3e022d11",
+      "range": {
+        "startLine": 14,
+        "startChar": 58,
+        "endLine": 14,
+        "endChar": 59
+      },
+      "revId": "e6b75facc34146602986063cfc6197eb11ff99a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93f5ec7b_0b2358b0",
         "filename": "mojo/public/cpp/system/handle_signal_tracker.h",
         "patchSetId": 2
@@ -581,6 +605,24 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "75c3294c_2fa8ab35",
+      "revId": "e6b75facc34146602986063cfc6197eb11ff99a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "00aae8aa_affcaffc",
+        "filename": "mojo/public/tools/bindings/pylib/mojom/generate/module.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 916,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-11T17:44:31Z",
+      "side": 1,
+      "message": "Sorry I probably wasn\u0027t clear. :)\nWhat I was thinking was:\n- check both _HasPropery(kind.key_kind) and _HasPropery(kind.value_kind) here; and\n- remove the comment.\n\nWe don\u0027t really need to special case map keys.",
+      "parentUuid": "c94e7811_2787cd95",
       "revId": "e6b75facc34146602986063cfc6197eb11ff99a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
