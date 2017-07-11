@@ -1,0 +1,222 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "660f71c0_cad34a56",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-11T20:26:32Z",
+      "side": 1,
+      "message": "Not used.",
+      "revId": "d458710df59490f9d8772ad587aacc981c5a21be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50b7148d_d30a0b7c",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 1030,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-11T20:26:32Z",
+      "side": 1,
+      "message": "\"Tests to see\" / \"Test to check that\" is a little awkward - generally the entire TEST_F block is considered a test (As opposed to referring to individual EXPECTS/ASSERTS as a test).  Maybe use \"Test that\" instead, for all these test comments?",
+      "revId": "d458710df59490f9d8772ad587aacc981c5a21be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4263cc46_f5cfc6b1",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 1035,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-11T20:26:32Z",
+      "side": 1,
+      "message": "Google style guide discourages uncommon abbreviations.  Suggest just writing out experiment_status.",
+      "range": {
+        "startLine": 1035,
+        "startChar": 6,
+        "endLine": 1035,
+        "endChar": 7
+      },
+      "revId": "d458710df59490f9d8772ad587aacc981c5a21be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78d8c867_4beb0c10",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 1039,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-11T20:26:32Z",
+      "side": 1,
+      "message": "which lies in the configuration bucket -\u003e which lies in the first configuration bucket?",
+      "range": {
+        "startLine": 1039,
+        "startChar": 29,
+        "endLine": 1039,
+        "endChar": 35
+      },
+      "revId": "d458710df59490f9d8772ad587aacc981c5a21be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94630cf0_a31e6260",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 1040,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-11T20:26:32Z",
+      "side": 1,
+      "message": "ECT -\u003e effective connection type",
+      "range": {
+        "startLine": 1040,
+        "startChar": 19,
+        "endLine": 1040,
+        "endChar": 21
+      },
+      "revId": "d458710df59490f9d8772ad587aacc981c5a21be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d619faf_63eff6b7",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 1051,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-11T20:26:32Z",
+      "side": 1,
+      "message": "BW -\u003e bandwidth (RTT is fine)",
+      "range": {
+        "startLine": 1051,
+        "startChar": 55,
+        "endLine": 1051,
+        "endChar": 62
+      },
+      "revId": "d458710df59490f9d8772ad587aacc981c5a21be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c131be5_92965fcd",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 1068,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-11T20:26:32Z",
+      "side": 1,
+      "message": "high-pri -\u003e high priority\n\nAlso, I\u0027m not following this comment.  We make two requests here, which is what the limit is.  I\u0027m not seeing where we subtract the current high priority request?",
+      "range": {
+        "startLine": 1068,
+        "startChar": 63,
+        "endLine": 1068,
+        "endChar": 67
+      },
+      "revId": "d458710df59490f9d8772ad587aacc981c5a21be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1fb9577_95886743",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 1107,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-11T20:26:32Z",
+      "side": 1,
+      "message": "ECT -\u003e effective connection type",
+      "range": {
+        "startLine": 1107,
+        "startChar": 67,
+        "endLine": 1107,
+        "endChar": 71
+      },
+      "revId": "d458710df59490f9d8772ad587aacc981c5a21be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39eb1a51_f991084c",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 1155,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-11T20:26:32Z",
+      "side": 1,
+      "message": "write out ECT and BDP (Find to abbreviate it below, since it\u0027s referenced repeatedly in one line, right above where it\u0027s spelled out)",
+      "range": {
+        "startLine": 1155,
+        "startChar": 24,
+        "endLine": 1155,
+        "endChar": 27
+      },
+      "revId": "d458710df59490f9d8772ad587aacc981c5a21be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c5252c1_79b97ec1",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 1295,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-11T20:26:32Z",
+      "side": 1,
+      "message": "Is this comment right?  It makes it so that it\u0027s overridden to 2, not 4, right?",
+      "range": {
+        "startLine": 1295,
+        "startChar": 13,
+        "endLine": 1295,
+        "endChar": 0
+      },
+      "revId": "d458710df59490f9d8772ad587aacc981c5a21be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
