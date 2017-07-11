@@ -33,6 +33,23 @@
       "revId": "6f2e336cc4303e05097f772e394eb0d6598baace",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdd6a2b5_21b46402",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ClientHintsPreferences.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-11T12:02:27Z",
+      "side": 1,
+      "message": "For this one for + switch/case feels wasteful, it\u0027d have been better to just write them down plainly, or if we really want to be exhaustive maybe:\n\nconst struct { WebClientHintsType type; const char* header; } hints[] \u003d {\n  { kDeviceRam, \"device-ram\" }, ...};\n\nfor (...) {\n  DCHECK_EQ(hints[i].type, i);\n  enabled_types[hints[i].type] \u003d accept_client_hints_header.Contain(hints[i].header);\n}\n\nenabled_types[kDeviceRam] \u0026\u003d RuntimeEnabledFeatures::DeviceRamEnabled();\n\n(But just write them down flat feels also ok)",
+      "revId": "6f2e336cc4303e05097f772e394eb0d6598baace",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
