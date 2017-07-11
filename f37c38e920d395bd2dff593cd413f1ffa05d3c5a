@@ -93,6 +93,30 @@
       "revId": "f37c38e920d395bd2dff593cd413f1ffa05d3c5a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "72c00ea4_6d000ff9",
+        "filename": "media/base/scoped_callback_runner.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-11T15:11:55Z",
+      "side": 1,
+      "message": "Actually I can\u0027t use WARN_UNUSED_RESULT for inline functions:\n\n../../media/base/scoped_callback_runner.h:77:5: error: GCC does not allow \u0027warn_unused_result\u0027 attribute in this position on a function definition [-Werror,-Wgcc-compat]\n    WARN_UNUSED_RESULT {\n    ^\n../../base/compiler_specific.h:143:43: note: expanded from macro \u0027WARN_UNUSED_RESULT\u0027\n#define WARN_UNUSED_RESULT __attribute__((warn_unused_result))",
+      "parentUuid": "9a760019_20146d03",
+      "range": {
+        "startLine": 75,
+        "startChar": 65,
+        "endLine": 75,
+        "endChar": 66
+      },
+      "revId": "f37c38e920d395bd2dff593cd413f1ffa05d3c5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
