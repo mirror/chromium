@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "608369b3_d199fe6a",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/main_thread_task_queue.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-07-11T10:39:36Z",
+      "side": 1,
+      "message": "nit: blank line above to be consistent.",
+      "range": {
+        "startLine": 107,
+        "startChar": 42,
+        "endLine": 107,
+        "endChar": 54
+      },
+      "revId": "fe5fcce04ec3ec289d5252aa2689a9c0025675b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34266d02_373690f7",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-07-11T10:39:36Z",
+      "side": 1,
+      "message": "This is fine, but optionally you could do the following which is slightly shorter.\n\nif (task_runners_.erase(find_it)) {\n  ...\n}",
+      "range": {
+        "startLine": 436,
+        "startChar": 7,
+        "endLine": 436,
+        "endChar": 14
+      },
+      "revId": "fe5fcce04ec3ec289d5252aa2689a9c0025675b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91d1741d_896b7a71",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1297,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-07-11T10:39:36Z",
+      "side": 1,
+      "message": "I wonder if the if really helps us here since SetQueueEnabled bails out if nothing changed.",
+      "revId": "fe5fcce04ec3ec289d5252aa2689a9c0025675b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0bd1172_8dc7694d",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1310,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-07-11T10:39:36Z",
+      "side": 1,
+      "message": "Likewise I wonder if the if really helps us here since task_queue-\u003eSetQueuePriority bails out if nothing changes.",
+      "range": {
+        "startLine": 1310,
+        "startChar": 6,
+        "endLine": 1310,
+        "endChar": 18
+      },
+      "revId": "fe5fcce04ec3ec289d5252aa2689a9c0025675b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d27247e_9eb72c5a",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1656,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-07-11T10:39:36Z",
+      "side": 1,
+      "message": "I think we need another name for this since this isn\u0027t a simple getter for is_enabled.  Maybe CanRun or CanExecute?",
+      "range": {
+        "startLine": 1656,
+        "startChar": 45,
+        "endLine": 1656,
+        "endChar": 54
+      },
+      "revId": "fe5fcce04ec3ec289d5252aa2689a9c0025675b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dcbeddf_a166a6fe",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1694,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-07-11T10:39:36Z",
+      "side": 1,
+      "message": "I\u0027d be tempted to move these to the header unless something prevent that.",
+      "range": {
+        "startLine": 1694,
+        "startChar": 9,
+        "endLine": 1694,
+        "endChar": 17
+      },
+      "revId": "fe5fcce04ec3ec289d5252aa2689a9c0025675b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "981fe98d_f9cafc27",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-07-11T10:39:36Z",
+      "side": 1,
+      "message": "Should this become a class now?",
+      "range": {
+        "startLine": 306,
+        "startChar": 2,
+        "endLine": 306,
+        "endChar": 8
+      },
+      "revId": "fe5fcce04ec3ec289d5252aa2689a9c0025675b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
