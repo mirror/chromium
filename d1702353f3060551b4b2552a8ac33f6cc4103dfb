@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0175f572_65890081",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 15
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-11T01:18:24Z",
+      "side": 1,
+      "message": "further to Robert\u0027s comment.. the CL summary still really confuses me... there\u0027s no context about what\u0027s changing.\n\nTo put it in perspective, consider that QA often skim the summary of changes in a bisect using the first line of the commit message (example: https://chromium.googlesource.com/chromium/src/+log/598a769a9e1dc76058c61ccd0c9e2eb60ca776e5..95458fa6c6f719ddf09de4947afdd03069990f16 )\n\nYou\u0027d want something that indicates what part of Chrome is changing (and if there\u0027s room, how it\u0027s changing).\n\nE.g. \n\nInitial prototype of NewTabPromo: a bubble anchored near the new tab button.",
+      "revId": "d1702353f3060551b4b2552a8ac33f6cc4103dfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

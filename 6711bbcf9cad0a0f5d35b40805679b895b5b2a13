@@ -135,6 +135,200 @@
       "revId": "6711bbcf9cad0a0f5d35b40805679b895b5b2a13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ca4ee66_466152d4",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-11T01:18:24Z",
+      "side": 1,
+      "message": "nit: a \"toast\" is usually unanchored UI that pops up in a stack in the corner of the screen or window. (and I don\u0027t think a dialog can be both \"floating\" and \"anchored\"). I think you can just say \"The NewTabPromo is a bubble anchored..\"",
+      "range": {
+        "startLine": 26,
+        "startChar": 33,
+        "endLine": 26,
+        "endChar": 38
+      },
+      "revId": "6711bbcf9cad0a0f5d35b40805679b895b5b2a13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34aab2c4_a1c20da0",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-11T01:18:24Z",
+      "side": 1,
+      "message": "nit: const gfx::Rect\u0026 anchor_rect",
+      "range": {
+        "startLine": 33,
+        "startChar": 63,
+        "endLine": 33,
+        "endChar": 74
+      },
+      "revId": "6711bbcf9cad0a0f5d35b40805679b895b5b2a13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "024f4b6d_60a9811e",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-11T01:18:24Z",
+      "side": 1,
+      "message": "nit: explicit not needed",
+      "range": {
+        "startLine": 33,
+        "startChar": 2,
+        "endLine": 33,
+        "endChar": 10
+      },
+      "revId": "6711bbcf9cad0a0f5d35b40805679b895b5b2a13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "594b8110_eb70c8e7",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-11T01:18:24Z",
+      "side": 1,
+      "message": "nit: order last in this list  (BubbleDialogDelegateView introduces Init(), but the other methods all come from ancestors)",
+      "revId": "6711bbcf9cad0a0f5d35b40805679b895b5b2a13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0677536c_ab32dedc",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-11T01:18:24Z",
+      "side": 1,
+      "message": "nit: order according to View (OnMousePressed, OnMouseEntered, OnMouseExited)",
+      "revId": "6711bbcf9cad0a0f5d35b40805679b895b5b2a13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff58e156_276b9439",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-11T01:18:24Z",
+      "side": 1,
+      "message": "and.. I guess this should be next to GetDialogButtons since they both come via DialogDelegate (the order of these two is less prescriptive. Probably GetDialogButtons first since DialogModel is first in the inheritance list)\n\n\nMake sure to move the definitions in the .cc to match",
+      "revId": "6711bbcf9cad0a0f5d35b40805679b895b5b2a13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d16fbc20_75df83d0",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-11T01:18:24Z",
+      "side": 1,
+      "message": "NewTabButton -\u003e NewTabPromo. But, I don\u0027t think you want this data member - further to Peter\u0027s comments about ownership, a View* typically can\u0027t \"own\" a Widget*: Instead, a Widget* normally owns \"itself\" (or, more specifically, NATIVE_WIDGET_OWNS_WIDGET per the comment in ui/views/widget/widget.h - i.e. the true owner is the NativeWidget, which is owned by the operating system / window manager).\n\nThe typical pattern that emerges instead would be for NewTabButton to be a WidgetObserver, which observes NewTabPromo to watch when it is closed or destroyed. NewTabPromo doesn\u0027t then need to invoke methods on NewTabButton, so this member shouldn\u0027t be needed.",
+      "revId": "6711bbcf9cad0a0f5d35b40805679b895b5b2a13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fc99360_1b0ecd1a",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo_dialog_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-11T01:18:24Z",
+      "side": 1,
+      "message": "this and ui_base_switches.h don\u0027t seem to be used",
+      "range": {
+        "startLine": 5,
+        "startChar": 14,
+        "endLine": 5,
+        "endChar": 29
+      },
+      "revId": "6711bbcf9cad0a0f5d35b40805679b895b5b2a13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0369aaae_9c617cd6",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo_dialog_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-11T01:18:24Z",
+      "side": 1,
+      "message": "BrowserView* browser_view \u003d BrowserView::GetBrowserViewForBrowser(browser());",
+      "revId": "6711bbcf9cad0a0f5d35b40805679b895b5b2a13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4618e477_659426cf",
+        "filename": "chrome/browser/ui/views/tabs/tab_strip.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-11T01:18:24Z",
+      "side": 1,
+      "message": "the underscores should match the CamelCase. E.g. new_tab_button or NewtabButton (probably the former). Needs fixing in a few places in this CL.",
+      "revId": "6711bbcf9cad0a0f5d35b40805679b895b5b2a13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
