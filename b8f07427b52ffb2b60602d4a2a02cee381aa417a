@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0d37481b_b70fbbc1",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 964,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-11T12:22:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "511b8ff9_e54663cb",
+      "revId": "b8f07427b52ffb2b60602d4a2a02cee381aa417a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7096ef4_21aecd4c",
         "filename": "ios/chrome/browser/ui/commands/application_commands.h",
         "patchSetId": 3
@@ -39,6 +57,30 @@
       "revId": "b8f07427b52ffb2b60602d4a2a02cee381aa417a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "593c653f_465bb7cf",
+        "filename": "ios/chrome/browser/ui/commands/application_commands.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-11T12:22:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7096ef4_21aecd4c",
+      "range": {
+        "startLine": 11,
+        "startChar": 34,
+        "endLine": 11,
+        "endChar": 42
+      },
+      "revId": "b8f07427b52ffb2b60602d4a2a02cee381aa417a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "eac66d63_649d7283",
+        "filename": "ios/chrome/browser/ui/commands/application_commands.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-11T12:22:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b34b416_bf9ff9c1",
+      "range": {
+        "startLine": 16,
+        "startChar": 3,
+        "endLine": 16,
+        "endChar": 7
+      },
+      "revId": "b8f07427b52ffb2b60602d4a2a02cee381aa417a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "278b2de9_8040bac4",
         "filename": "ios/chrome/browser/ui/ntp/new_tab_page_toolbar_controller.h",
         "patchSetId": 3
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "282b43a0_884c37aa",
+        "filename": "ios/chrome/browser/ui/ntp/new_tab_page_toolbar_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-11T12:22:59Z",
+      "side": 1,
+      "message": "Leftover from an earlier change, I think.",
+      "parentUuid": "278b2de9_8040bac4",
+      "revId": "b8f07427b52ffb2b60602d4a2a02cee381aa417a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71adcc3b_f3fd2182",
         "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_model.mm",
         "patchSetId": 3
@@ -93,6 +177,24 @@
       "writtenOn": "2017-07-10T20:59:30Z",
       "side": 1,
       "message": "Is this needed?",
+      "revId": "b8f07427b52ffb2b60602d4a2a02cee381aa417a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88a6b34e_6346b046",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_model.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-11T12:22:59Z",
+      "side": 1,
+      "message": "Nope, once upon a time the TOOLS_*_ITEM constants were in that header.",
+      "parentUuid": "71adcc3b_f3fd2182",
       "revId": "b8f07427b52ffb2b60602d4a2a02cee381aa417a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
