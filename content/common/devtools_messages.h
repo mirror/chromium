@@ -128,7 +128,6 @@ IPC_MESSAGE_ROUTED1(DevToolsAgentHostMsg_RequestNewWindow,
 IPC_MESSAGE_ROUTED1(DevToolsMsg_SetupDevToolsClient,
                     std::string /* compatibility script */)
 
-
 //-----------------------------------------------------------------------------
 // These are messages sent from the renderer to the browser.
 
