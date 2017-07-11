@@ -22,6 +22,9 @@ class Browser;
 // True if the current page is starred. Used by star touch bar button.
 @property(nonatomic, assign) BOOL isStarred;
 
+// Provides the view to display when tin the error page.
+@property(nonatomic, retain) NSView* webContentsView;
+
 // Designated initializer.
 - (instancetype)initWithBrowser:(Browser*)browser
         browserWindowController:(BrowserWindowController*)bwc;
