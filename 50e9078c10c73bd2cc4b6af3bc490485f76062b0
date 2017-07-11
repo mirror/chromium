@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "16e3d8a7_e0c8d108",
+        "filename": "chrome/browser/ui/views/profiles/avatar_button.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-11T01:00:26Z",
+      "side": 1,
+      "message": "nit: ScopedObserver\u003cviews::Widget, views::WidgetObserver\u003e widget_observer_;",
+      "revId": "50e9078c10c73bd2cc4b6af3bc490485f76062b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bb310599_8b43c6d7",
         "filename": "chrome/browser/ui/views/profiles/profile_chooser_view_browsertest.cc",
         "patchSetId": 3
