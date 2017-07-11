@@ -102,6 +102,8 @@ class BookmarkAppHelper : public content::NotificationObserver {
       std::map<int, BookmarkAppHelper::BitmapAndSource> bitmap_map,
       WebApplicationInfo* web_app_info);
 
+  static GURL GetScopeFromExtension(const Extension* extension);
+
   // Begins the asynchronous bookmark app creation.
   void Create(const CreateBookmarkAppCallback& callback);
 

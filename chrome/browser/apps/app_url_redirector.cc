@@ -9,6 +9,10 @@
 #include "base/logging.h"
 #include "chrome/browser/prerender/prerender_contents.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/ui/browser_finder.h"
+#include "chrome/browser/ui/extensions/app_launch_params.h"
+#include "chrome/browser/ui/extensions/application_launch.h"
+#include "chrome/browser/web_applications/web_app.h"
 #include "chrome/common/extensions/api/url_handlers/url_handlers_parser.h"
 #include "components/navigation_interception/intercept_navigation_throttle.h"
 #include "components/navigation_interception/navigation_params.h"
@@ -56,6 +60,24 @@ bool LaunchAppWithUrl(
 
   Profile* profile =
       Profile::FromBrowserContext(source->GetBrowserContext());
+
+  if (app->from_bookmark()) {
+    // If we are in the same app that is navigating no need to open a new
+    // app window.
+    Browser* browser = chrome::FindBrowserWithWebContents(source);
+    if (browser->app_name() ==
+        web_app::GenerateApplicationNameFromExtensionId(app->id())) {
+      return false;
+    } else {
+      AppLaunchParams launch_params(profile, app.get(),
+                                    extensions::LAUNCH_CONTAINER_WINDOW,
+                                    WindowOpenDisposition::CURRENT_TAB,
+                                    extensions::SOURCE_CHROME_INTERNAL);
+      launch_params.override_url = params.url();
+      OpenApplication(std::move(launch_params));
+      return true;
+    }
+  }
 
   DVLOG(1) << "Launching app handler with URL: "
            << params.url().spec() << " -> "
