@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a72a9f12_6a3aa8bd",
+        "filename": "extensions/common/api/_api_features.json",
+        "patchSetId": 10
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-11T22:58:18Z",
+      "side": 1,
+      "message": "Api features depending on permission features seems a bit backwards to me. I would have thought permission and manifest features should depend on api features.",
+      "range": {
+        "startLine": 130,
+        "startChar": 7,
+        "endLine": 130,
+        "endChar": 13
+      },
+      "revId": "c1f4581537278187d62df05b99d5f83d58b1aca9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1acd214_df6cb764",
+        "filename": "extensions/common/api/_manifest_features.json",
+        "patchSetId": 10
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-11T22:58:18Z",
+      "side": 1,
+      "message": "Should we have legacy_packaged_app here?",
+      "range": {
+        "startLine": 133,
+        "startChar": 7,
+        "endLine": 133,
+        "endChar": 14
+      },
+      "revId": "c1f4581537278187d62df05b99d5f83d58b1aca9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b26c6be0_64518567",
+        "filename": "extensions/common/api/_permission_features.json",
+        "patchSetId": 10
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-11T22:58:18Z",
+      "side": 1,
+      "message": "This doesn\u0027t make much sense currently since its implicitly added when the declarative_net_request_rules manifest key is present. But this would when dynamic rules support is added.",
+      "range": {
+        "startLine": 167,
+        "startChar": 5,
+        "endLine": 167,
+        "endChar": 12
+      },
+      "revId": "c1f4581537278187d62df05b99d5f83d58b1aca9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96817f39_19b788a5",
+        "filename": "extensions/common/api/declarative_net_request.idl",
+        "patchSetId": 10
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-11T22:58:18Z",
+      "side": 1,
+      "message": "We don\u0027t support default values for fields in schemas right?",
+      "range": {
+        "startLine": 48,
+        "startChar": 7,
+        "endLine": 48,
+        "endChar": 14
+      },
+      "revId": "c1f4581537278187d62df05b99d5f83d58b1aca9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa8b2aab_16b8cfca",
+        "filename": "extensions/common/api/declarative_net_request/rules_manifest_info.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-11T22:58:18Z",
+      "side": 1,
+      "message": "I think the code above should ensure that the provided path is within the extension directory. Is there an easy way to explicitly check this? (I imagine we do the same for background pages etc.)",
+      "range": {
+        "startLine": 83,
+        "startChar": 5,
+        "endLine": 83,
+        "endChar": 12
+      },
+      "revId": "c1f4581537278187d62df05b99d5f83d58b1aca9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8610f90d_6859b182",
+        "filename": "extensions/common/api/declarative_net_request/rules_manifest_info.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-11T22:58:18Z",
+      "side": 1,
+      "message": "It seems that it\u0027s not a convention to have a separate namespace for apis, other than for generated code which would live in extensions::api::declarative_net_request. However, I think it\u0027s useful to have a separate namespace here especially to avoid confusion with DWR.",
+      "range": {
+        "startLine": 14,
+        "startChar": 3,
+        "endLine": 14,
+        "endChar": 10
+      },
+      "revId": "c1f4581537278187d62df05b99d5f83d58b1aca9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dea8af45_1e81aa98",
+        "filename": "extensions/common/file_util.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-11T22:58:18Z",
+      "side": 1,
+      "message": "Ideally we should not be loading unstrusted json in the browser process. But I am assuming its ok since we do the same for manifests for unpacked extensions.",
+      "range": {
+        "startLine": 233,
+        "startChar": 5,
+        "endLine": 233,
+        "endChar": 12
+      },
+      "revId": "c1f4581537278187d62df05b99d5f83d58b1aca9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a14e8209_dc976920",
+        "filename": "extensions/common/file_util.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-11T22:58:18Z",
+      "side": 1,
+      "message": "I added kMetadata folder here. Hence the extension would still load successfully is it has a _metadata folder already. Is this ok considering how _metadata folder is currently used?",
+      "range": {
+        "startLine": 378,
+        "startChar": 5,
+        "endLine": 378,
+        "endChar": 12
+      },
+      "revId": "c1f4581537278187d62df05b99d5f83d58b1aca9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "153825ed_e84a3cf4",
+        "filename": "extensions/utility/unpacker.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-11T22:58:18Z",
+      "side": 1,
+      "message": "So this reads and persists the JSON ruleset in the utility process. The flatbuffer file is then read in the browser process. My understanding is that this is safe from a security standpoint considering we trust our flatbuffer code. Can somebody confirm?",
+      "range": {
+        "startLine": 238,
+        "startChar": 5,
+        "endLine": 238,
+        "endChar": 12
+      },
+      "revId": "c1f4581537278187d62df05b99d5f83d58b1aca9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
