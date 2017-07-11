@@ -21,17 +21,6 @@
 namespace base {
 namespace internal {
 
-// This provides a small optimization that generates more compact code when one
-// of the components in an operation is a compile-time constant.
-template <typename T>
-constexpr bool IsCompileTimeConstant(const T v) {
-#if defined(__clang__) || defined(__GNUC__)
-  return __builtin_constant_p(v);
-#else
-  return false;
-#endif
-}
-
 // This is a wrapper to generate return the max or min for a supplied type.
 // If the argument is false, the returned value is the maximum. If true the
 // returned value is the minimum.

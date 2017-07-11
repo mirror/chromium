@@ -76,6 +76,17 @@ constexpr typename std::make_unsigned<T>::type SafeUnsignedAbs(T value) {
                                 : static_cast<UnsignedT>(value);
 }
 
+// This provides a small optimization that generates more compact code when one
+// of the components in an operation is a compile-time constant.
+template <typename T>
+constexpr bool IsCompileTimeConstant(const T v) {
+#if defined(__clang__) || defined(__GNUC__)
+  return __builtin_constant_p(v);
+#else
+  return false;
+#endif
+}
+
 enum IntegerRepresentation {
   INTEGER_REPRESENTATION_UNSIGNED,
   INTEGER_REPRESENTATION_SIGNED
@@ -335,6 +346,13 @@ struct DstRangeRelationToSrcRangeImpl<Dst,
             static_cast<Promotion>(value) <=
                 static_cast<Promotion>(DstLimits::max()));
   }
+};
+
+// Simple wrapper for statically checking if a type's range is contained.
+template <typename Dst, typename Src>
+struct IsTypeInRangeForNumericType {
+  static const bool value = StaticDstRangeRelationToSrcRange<Dst, Src>::value ==
+                            NUMERIC_RANGE_CONTAINED;
 };
 
 template <typename Dst,

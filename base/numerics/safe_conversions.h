@@ -13,13 +13,44 @@
 
 #include "base/numerics/safe_conversions_impl.h"
 
+#if !defined(__native_client__) && (defined(__ARMEL__) || defined(__arch64__))
+#include "base/numerics/safe_conversions_arm_impl.h"
+#else
+namespace base {
+namespace internal {
+
+template <typename Dst, typename Src>
+struct SaturateFastAsmOp {
+  static const bool is_supported = false;
+  static Dst Do(Src) {
+    assert(false);  // Should not be reached.
+    return Dst();
+  }
+};
+
+template <typename Dst, typename Src>
+struct IsValueInRangeFastOp {
+  static const bool is_supported = false;
+  static bool Do(Src) {
+    assert(false);  // Should not be reached.
+    return false;
+  }
+};
+
+}  // namespace internal
+}  // namespace base
+
+#endif
+
 namespace base {
 
 // Convenience function that returns true if the supplied value is in range
 // for the destination type.
 template <typename Dst, typename Src>
 constexpr bool IsValueInRangeForNumericType(Src value) {
-  return internal::DstRangeRelationToSrcRange<Dst>(value).IsValid();
+  return internal::IsValueInRangeFastOp<Dst, Src>::is_supported
+             ? internal::IsValueInRangeFastOp<Dst, Src>::Do(value)
+             : internal::DstRangeRelationToSrcRange<Dst>(value).IsValid();
 }
 
 // Forces a crash, like a CHECK(false). Used for numeric boundary errors.
@@ -33,14 +64,6 @@ struct CheckOnFailure {
 #endif
     return T();
   }
-};
-
-// Simple wrapper for statically checking if a type's range is contained.
-template <typename Dst, typename Src>
-struct IsTypeInRangeForNumericType {
-  static const bool value =
-      internal::StaticDstRangeRelationToSrcRange<Dst, Src>::value ==
-      internal::NUMERIC_RANGE_CONTAINED;
 };
 
 // checked_cast<> is analogous to static_cast<> for numeric types,
@@ -130,9 +153,15 @@ template <typename Dst,
           typename Src>
 constexpr Dst saturated_cast(Src value) {
   using SrcType = typename UnderlyingType<Src>::type;
-  return saturated_cast_impl<Dst, SaturationHandler, SrcType>(
-      value,
-      DstRangeRelationToSrcRange<Dst, SaturationHandler, SrcType>(value));
+  return !IsCompileTimeConstant(value) &&
+                 SaturateFastAsmOp<Dst, Src>::is_supported &&
+                 std::is_same<SaturationHandler<Dst>,
+                              SaturationDefaultLimits<Dst>>::value
+             ? SaturateFastAsmOp<Dst, SrcType>::Do(value)
+             : saturated_cast_impl<Dst, SaturationHandler, SrcType>(
+                   value,
+                   DstRangeRelationToSrcRange<Dst, SaturationHandler, SrcType>(
+                       value));
 }
 
 // strict_cast<> is analogous to static_cast<> for numeric types, except that
