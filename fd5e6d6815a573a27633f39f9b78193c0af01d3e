@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c86eb39f_59f8c977",
+        "filename": "components/cronet/url_request_context_config.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-07-11T17:02:33Z",
+      "side": 1,
+      "message": "Is there a reason this isn\u0027t in a shared header file?  Seems a little brittle to have to have it declared again in url_request_context_builder.h?",
+      "revId": "fd5e6d6815a573a27633f39f9b78193c0af01d3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
