@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5248a8c_18d8e346",
+        "filename": "ui/gl/gl_surface_format.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-11T05:14:10Z",
+      "side": 1,
+      "message": "FWIW, I\u0027m a bit surprised to see that simple getters/setters like this aren\u0027t inlined. *shrug*",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 36
+      },
+      "revId": "4bacd234ec7a631b3124c4042b83d8b6611cbf83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
