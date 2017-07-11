@@ -89,6 +89,9 @@ class APP_LIST_EXPORT SearchBoxView : public views::View,
   void OnEnabledChanged() override;
   const char* GetClassName() const override;
 
+  // Updates the |content_container_|'s background corner radius.
+  void UpdateBackground(bool search_results_state);
+
  private:
   // Updates model text and selection model with current Textfield info.
   void UpdateModel();
