@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "d3e8b568_82670dc3",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-11T17:38:28Z",
+      "side": 1,
+      "message": "Yes, it looks like we can. The app list code and the delegate implementation used to be in different modules, but it looks like that is no longer the case. I would do that in a separate CL though.",
+      "parentUuid": "a153f9c4_b0434efb",
+      "revId": "3f9fb227bcc25d4de05b8a43626bc0732a58a85a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68ad2804_edfff8ce",
         "filename": "ui/app_list/views/apps_grid_view.cc",
         "patchSetId": 5

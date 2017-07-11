@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "551a8214_9c544183",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-11T17:38:28Z",
+      "side": 1,
+      "message": "nit: We can DCHECK(contents_view_) in the constructor then (since there is no setter and we never change it) just have:\n  contents_view_-\u003eapp_list_main_view()-\u003eCancelDragInActiveFolder();",
+      "revId": "c57512367bc19a729fde648614f4ae7ed09b3825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e374607c_19ef9047",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 870,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-11T17:38:28Z",
+      "side": 1,
+      "message": "No need for local |delegate| here, let clang do the formatting :)",
+      "revId": "c57512367bc19a729fde648614f4ae7ed09b3825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c405a1bc_c7679893",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 895,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-11T17:38:28Z",
+      "side": 1,
+      "message": "nit: There isn\u0027t really any common code in this function, I would make this two separate functions, e.g. LayoutSuggestedAppsIndicator() and LayoutAllAppsIndicator()",
+      "revId": "c57512367bc19a729fde648614f4ae7ed09b3825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "601d76f8_0f63d9a7",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1150,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-11T17:38:28Z",
+      "side": 1,
+      "message": "nit: remove this and make the next if an \u0027else if\u0027.",
+      "revId": "c57512367bc19a729fde648614f4ae7ed09b3825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98bd8d14_4972fa7a",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1982,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-11T17:38:28Z",
+      "side": 1,
+      "message": "Move this to where it is used.",
+      "revId": "c57512367bc19a729fde648614f4ae7ed09b3825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cbd7ab4_93e076bf",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1984,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-11T17:38:28Z",
+      "side": 1,
+      "message": "I realize this was already like this, but invert and early exit here.",
+      "revId": "c57512367bc19a729fde648614f4ae7ed09b3825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3c4ccdb_32c9dabd",
+        "filename": "ui/app_list/views/apps_grid_view.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-11T17:38:28Z",
+      "side": 1,
+      "message": "This should be suggestions_container() to match the member name, and if we\u0027re only using for tests it should be suggestions_container_for_test()",
+      "revId": "c57512367bc19a729fde648614f4ae7ed09b3825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71f0d357_bdcad705",
+        "filename": "ui/app_list/views/apps_grid_view.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-11T17:38:28Z",
+      "side": 1,
+      "message": "I missed this before: You should be able to forward declare this in the header with just:\n\nstruct Index;\n\nthen in the .cc file:\n\nstruct AppsGridView::Index {\n...\n};",
+      "revId": "c57512367bc19a729fde648614f4ae7ed09b3825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
