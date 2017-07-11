@@ -234,7 +234,6 @@ public class ExternalNavigationHandler {
         boolean incomingIntentRedirect = (isLink && isFromIntent && params.isRedirect())
                 || isOnEffectiveIntentRedirect;
 
-
         // http://crbug/331571 : Do not override a navigation started from user typing.
         // http://crbug/424029 : Need to stay in Chrome for an intent heading explicitly to Chrome.
         if (params.getRedirectHandler() != null) {
@@ -268,17 +267,16 @@ public class ExternalNavigationHandler {
         // http://crbug.com/181186: We need to show the intent picker when we receive a redirect
         // following a form submit.
         boolean isRedirectFromFormSubmit = isFormSubmit && params.isRedirect();
+        if (!(typedRedirectToExternalProtocol || linkNotFromIntent || incomingIntentRedirect
+                    || isRedirectFromFormSubmit)) {
+            if (DEBUG) Log.i(TAG, "NO_OVERRIDE: Incoming intent (not a redirect)");
+            return OverrideUrlLoadingResult.NO_OVERRIDE;
+        }
 
-        if (!typedRedirectToExternalProtocol) {
-            if (!linkNotFromIntent && !incomingIntentRedirect && !isRedirectFromFormSubmit) {
-                if (DEBUG) Log.i(TAG, "NO_OVERRIDE: Incoming intent (not a redirect)");
-                return OverrideUrlLoadingResult.NO_OVERRIDE;
-            }
-            if (params.getRedirectHandler() != null
-                    && params.getRedirectHandler().isNavigationFromUserTyping()) {
-                if (DEBUG) Log.i(TAG, "NO_OVERRIDE: Navigation from user typing");
-                return OverrideUrlLoadingResult.NO_OVERRIDE;
-            }
+        if (params.getRedirectHandler() != null
+                && params.getRedirectHandler().isNavigationFromUserTyping()) {
+            if (DEBUG) Log.i(TAG, "NO_OVERRIDE: Navigation from user typing");
+            return OverrideUrlLoadingResult.NO_OVERRIDE;
         }
 
         // Don't override navigation from a chrome:* url to http or https. For example,
