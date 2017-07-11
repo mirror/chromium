@@ -144,9 +144,6 @@ QUIC_FLAG(bool,
 // If enabled, use refactored stream creation methods.
 QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_refactor_stream_creation, false)
 
-// A second take on fixing QUIC BBR packet conservation.
-QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_bbr_fix_conservation2, true)
-
 // If true, GFEs generate and validate source address token using the actual
 // client IP for proxied session.
 QUIC_FLAG(bool,
