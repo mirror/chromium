@@ -211,6 +211,30 @@
       "revId": "e8bbe698c2a00ed19b495cc3dd1a17225a6e3254",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aea48eba_373a9139",
+        "filename": "components/variations/variations_params_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-07-11T20:57:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40396db1_d91e6644",
+      "range": {
+        "startLine": 80,
+        "startChar": 29,
+        "endLine": 80,
+        "endChar": 0
+      },
+      "revId": "e8bbe698c2a00ed19b495cc3dd1a17225a6e3254",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
