@@ -129,15 +129,6 @@ LayoutUnit RootInlineBox::PlaceEllipsis(const AtomicString& ellipsis_str,
     SetHasEllipsisBox(true);
   }
 
-  // FIXME: Do we need an RTL version of this?
-  LayoutUnit adjusted_logical_left = logical_left_offset + LogicalLeft();
-  if (ltr && (adjusted_logical_left + LogicalWidth() + ellipsis_width) <=
-                 block_right_edge) {
-    if (HasEllipsisBox())
-      GetEllipsisBox()->SetLogicalLeft(LogicalLeft() + LogicalWidth());
-    return LogicalWidth() + ellipsis_width;
-  }
-
   // Now attempt to find the nearest glyph horizontally and place just to the
   // right (or left in RTL) of that glyph.  Mark all of the objects that
   // intersect the ellipsis box as not painting (as being truncated).
