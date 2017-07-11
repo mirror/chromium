@@ -34,6 +34,24 @@
       "revId": "b9500440cefcc2339a0340edd58cb9e13d61b9b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e3175df4_e066e321",
+        "filename": "base/mac/sdk_forward_declarations.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-07-11T21:06:41Z",
+      "side": 1,
+      "message": "(filed https://bugs.chromium.org/p/chromium/issues/detail?id\u003d741084 for the clang-format bug)",
+      "parentUuid": "89da4f3d_d2fc09d3",
+      "revId": "b9500440cefcc2339a0340edd58cb9e13d61b9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
