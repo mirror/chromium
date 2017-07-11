@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05c1d552_fc0d4147",
+        "filename": "cc/output/overlay_processor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-07-11T21:55:05Z",
+      "side": 1,
+      "message": "I thought use_output_surface_for_resource set to true meant plane_z_order is 0. Do we ever hit this line?",
+      "revId": "b57c9e1cecf2cc90f500ece5b0b18f9b5d30035e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67b38611_36414ae5",
+        "filename": "cc/output/overlay_processor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-07-11T21:55:05Z",
+      "side": 1,
+      "message": "overlay.plane_z_order \u003c 0 is redundant now.",
+      "revId": "b57c9e1cecf2cc90f500ece5b0b18f9b5d30035e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b296db6_7c4ef2be",
+        "filename": "cc/output/overlay_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-07-11T21:55:05Z",
+      "side": 1,
+      "message": "Can we check here that GetAndResetOverlayDamage returns the full rect?",
+      "revId": "b57c9e1cecf2cc90f500ece5b0b18f9b5d30035e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
