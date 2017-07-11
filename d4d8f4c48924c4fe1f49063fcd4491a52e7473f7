@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3e4d25d_f226c4e2",
+        "filename": "AUTHORS",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002088
+      },
+      "writtenOn": "2017-07-11T22:30:52Z",
+      "side": 1,
+      "message": "look, I\u0027m contributing!",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 14
+      },
+      "revId": "d4d8f4c48924c4fe1f49063fcd4491a52e7473f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bf1e22b_6a9bf847",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1002088
+      },
+      "writtenOn": "2017-07-11T22:30:52Z",
+      "side": 1,
+      "message": "feeling important is good. Good for you, Peter.",
+      "range": {
+        "startLine": 574,
+        "startChar": 4,
+        "endLine": 574,
+        "endChar": 8
+      },
+      "revId": "d4d8f4c48924c4fe1f49063fcd4491a52e7473f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
