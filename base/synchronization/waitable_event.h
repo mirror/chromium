@@ -22,6 +22,12 @@
 #include "base/synchronization/lock.h"
 #endif
 
+#if defined(OS_LINUX) || defined(OS_ANDROID)
+#include <sys/eventfd.h>
+
+#include "base/files/scoped_file.h"
+#endif
+
 namespace base {
 
 class TimeDelta;
@@ -154,6 +160,15 @@ class BASE_EXPORT WaitableEvent {
 
 #if defined(OS_WIN)
   win::ScopedHandle handle_;
+#elif defined(OS_LINUX) || defined(OS_ANDROID)
+  // Reads the current value of the event_fd_ to clear the event object.
+  void ClearEvent();
+
+  // The eventfd object.
+  ScopedFD event_fd_;
+
+  // Whether ResetPolicy::AUTOMATIC was specified.
+  const bool auto_reset_;
 #else
   // On Windows, you must not close a HANDLE which is currently being waited on.
   // The MSDN documentation says that the resulting behaviour is 'undefined'.

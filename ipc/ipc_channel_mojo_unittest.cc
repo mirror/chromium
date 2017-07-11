@@ -799,7 +799,7 @@ class ChannelProxyClient {
   IPC::ChannelProxy* proxy() { return runner_->proxy(); }
 
  private:
-  base::MessageLoop message_loop_;
+  base::test::ScopedTaskEnvironment scoped_task_environment_;
   std::unique_ptr<ChannelProxyRunner> runner_;
 };
 

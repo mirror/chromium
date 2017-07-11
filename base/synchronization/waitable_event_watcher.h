@@ -18,11 +18,20 @@
 #include "base/synchronization/waitable_event.h"
 #endif
 
+#if defined(OS_LINUX) || defined(OS_ANDROID)
+#include <memory>
+
+#include "base/files/file_descriptor_watcher_posix.h"
+#include "base/files/scoped_file.h"
+#include "base/memory/ref_counted.h"
+#endif
+
 namespace base {
 
 class Flag;
 class AsyncWaiter;
 class WaitableEvent;
+class WaitableEventWatcherImpl;
 
 // This class provides a way to wait on a WaitableEvent asynchronously.
 //
@@ -101,6 +110,8 @@ class BASE_EXPORT WaitableEventWatcher
 
   EventCallback callback_;
   WaitableEvent* event_ = nullptr;
+#elif defined(OS_LINUX)
+  scoped_refptr<WaitableEventWatcherImpl> impl_;
 #else
   // Instantiated in StartWatching(). Set before the callback runs. Reset in
   // StopWatching() or StartWatching().

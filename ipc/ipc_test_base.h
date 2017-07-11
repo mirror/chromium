@@ -12,6 +12,7 @@
 #include "base/message_loop/message_loop.h"
 #include "base/process/process.h"
 #include "base/test/multiprocess_test.h"
+#include "base/test/scoped_task_environment.h"
 #include "build/build_config.h"
 #include "ipc/ipc_channel.h"
 #include "ipc/ipc_channel_factory.h"
@@ -19,19 +20,12 @@
 #include "mojo/edk/test/mojo_test_base.h"
 #include "mojo/edk/test/multiprocess_test_helper.h"
 
-namespace base {
-class MessageLoop;
-}
-
 class IPCChannelMojoTestBase : public testing::Test {
  public:
   IPCChannelMojoTestBase();
   ~IPCChannelMojoTestBase() override;
 
   void Init(const std::string& test_client_name);
-  void InitWithCustomMessageLoop(
-      const std::string& test_client_name,
-      std::unique_ptr<base::MessageLoop> message_loop);
 
   bool WaitForClientShutdown();
 
@@ -51,7 +45,7 @@ class IPCChannelMojoTestBase : public testing::Test {
   mojo::ScopedMessagePipeHandle TakeHandle();
 
  private:
-  std::unique_ptr<base::MessageLoop> message_loop_;
+  base::test::ScopedTaskEnvironment scoped_task_environment_;
 
   mojo::ScopedMessagePipeHandle handle_;
   mojo::edk::test::MultiprocessTestHelper helper_;

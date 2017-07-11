@@ -49,6 +49,7 @@ bool IsBaselinePolicyAllowed(int sysno) {
          SyscallSets::IsAllowedGettime(sysno) ||
          SyscallSets::IsAllowedProcessStartOrDeath(sysno) ||
          SyscallSets::IsAllowedSignalHandling(sysno) ||
+         SyscallSets::IsEventFd(sysno) ||
          SyscallSets::IsGetSimpleId(sysno) ||
          SyscallSets::IsKernelInternalApi(sysno) ||
 #if defined(__arm__)
@@ -67,7 +68,6 @@ bool IsBaselinePolicyWatched(int sysno) {
          SyscallSets::IsAdvancedTimer(sysno) ||
          SyscallSets::IsAsyncIo(sysno) ||
          SyscallSets::IsDebug(sysno) ||
-         SyscallSets::IsEventFd(sysno) ||
          SyscallSets::IsExtendedAttributes(sysno) ||
          SyscallSets::IsFaNotify(sysno) ||
          SyscallSets::IsFsControl(sysno) ||

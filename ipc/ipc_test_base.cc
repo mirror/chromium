@@ -17,15 +17,7 @@ IPCChannelMojoTestBase::IPCChannelMojoTestBase() = default;
 IPCChannelMojoTestBase::~IPCChannelMojoTestBase() = default;
 
 void IPCChannelMojoTestBase::Init(const std::string& test_client_name) {
-  InitWithCustomMessageLoop(test_client_name,
-                            base::MakeUnique<base::MessageLoop>());
-}
-
-void IPCChannelMojoTestBase::InitWithCustomMessageLoop(
-    const std::string& test_client_name,
-    std::unique_ptr<base::MessageLoop> message_loop) {
   handle_ = helper_.StartChild(test_client_name);
-  message_loop_ = std::move(message_loop);
 }
 
 bool IPCChannelMojoTestBase::WaitForClientShutdown() {
@@ -33,8 +25,7 @@ bool IPCChannelMojoTestBase::WaitForClientShutdown() {
 }
 
 void IPCChannelMojoTestBase::TearDown() {
-  if (message_loop_)
-    base::RunLoop().RunUntilIdle();
+  scoped_task_environment_.RunUntilIdle();
 }
 
 void IPCChannelMojoTestBase::CreateChannel(IPC::Listener* listener) {

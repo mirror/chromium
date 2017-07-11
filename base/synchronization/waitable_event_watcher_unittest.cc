@@ -11,8 +11,10 @@
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/synchronization/waitable_event.h"
+#include "base/test/scoped_task_environment.h"
 #include "base/threading/platform_thread.h"
 #include "base/threading/sequenced_task_runner_handle.h"
+#include "base/threading/simple_thread.h"
 #include "build/build_config.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -48,11 +50,30 @@ class DecrementCountContainer {
 }  // namespace
 
 class WaitableEventWatcherTest
-    : public testing::TestWithParam<MessageLoop::Type> {};
+    : public testing::TestWithParam<MessageLoop::Type> {
+ public:
+  static test::ScopedTaskEnvironment::MainThreadType
+  MainThreadTypeForMessageLoopType(MessageLoop::Type type) {
+    switch (type) {
+      case MessageLoop::Type::TYPE_UI:
+        return test::ScopedTaskEnvironment::MainThreadType::UI;
+      case MessageLoop::Type::TYPE_IO:
+        return test::ScopedTaskEnvironment::MainThreadType::IO;
+      default:
+        return test::ScopedTaskEnvironment::MainThreadType::DEFAULT;
+    }
+  }
+
+ protected:
+  test::ScopedTaskEnvironment::MainThreadType MainThreadType() {
+    return MainThreadTypeForMessageLoopType(GetParam());
+  }
+
+ private:
+  test::ScopedTaskEnvironment scoped_task_environment_{MainThreadType()};
+};
 
 TEST_P(WaitableEventWatcherTest, BasicSignal) {
-  MessageLoop message_loop(GetParam());
-
   // A manual-reset event that is not yet signaled.
   WaitableEvent event(WaitableEvent::ResetPolicy::MANUAL,
                       WaitableEvent::InitialState::NOT_SIGNALED);
@@ -66,8 +87,6 @@ TEST_P(WaitableEventWatcherTest, BasicSignal) {
 }
 
 TEST_P(WaitableEventWatcherTest, BasicCancel) {
-  MessageLoop message_loop(GetParam());
-
   // A manual-reset event that is not yet signaled.
   WaitableEvent event(WaitableEvent::ResetPolicy::MANUAL,
                       WaitableEvent::InitialState::NOT_SIGNALED);
@@ -80,8 +99,6 @@ TEST_P(WaitableEventWatcherTest, BasicCancel) {
 }
 
 TEST_P(WaitableEventWatcherTest, CancelAfterSet) {
-  MessageLoop message_loop(GetParam());
-
   // A manual-reset event that is not yet signaled.
   WaitableEvent event(WaitableEvent::ResetPolicy::MANUAL,
                       WaitableEvent::InitialState::NOT_SIGNALED);
@@ -107,25 +124,52 @@ TEST_P(WaitableEventWatcherTest, CancelAfterSet) {
   EXPECT_EQ(1, counter);
 }
 
-TEST_P(WaitableEventWatcherTest, OutlivesMessageLoop) {
-  // Simulate a MessageLoop that dies before an WaitableEventWatcher.  This
-  // ordinarily doesn't happen when people use the Thread class, but it can
-  // happen when people use the Singleton pattern or atexit.
-  WaitableEvent event(WaitableEvent::ResetPolicy::MANUAL,
-                      WaitableEvent::InitialState::NOT_SIGNALED);
-  {
-    WaitableEventWatcher watcher;
-    {
-      MessageLoop message_loop(GetParam());
+// Simulate a MessageLoop that dies before an WaitableEventWatcher.  This
+// ordinarily doesn't happen when people use the Thread class, but it can
+// happen when people use the Singleton pattern or atexit.
+//
+// This test runs on a dedicated SipmleThread, so that it can control the
+// precise destruction order of the MessageLoop. This isn't possible on the
+// test main thread, since the ScopedTaskEnvironment owns it.
+class OutlivesMessageLoopThread : public SimpleThread {
+ public:
+  explicit OutlivesMessageLoopThread(MessageLoop::Type message_loop_type)
+      : SimpleThread("WaitableEvent.OutlivesMessageLoopThread"),
+        message_loop_type_(message_loop_type) {}
 
-      watcher.StartWatching(&event, BindOnce(&QuitWhenSignaled));
+  void Run() override {
+    WaitableEvent event(WaitableEvent::ResetPolicy::MANUAL,
+                        WaitableEvent::InitialState::NOT_SIGNALED);
+    {
+      WaitableEventWatcher watcher;
+      {
+        MessageLoop message_loop(message_loop_type_);
+
+        watcher.StartWatching(&event, BindOnce(&QuitWhenSignaled));
+      }
     }
+
+    did_run_ = true;
   }
+
+  bool did_run() const { return did_run_; }
+
+ private:
+  const MessageLoop::Type message_loop_type_;
+  bool did_run_ = false;
+
+  DISALLOW_COPY_AND_ASSIGN(OutlivesMessageLoopThread);
+};
+
+TEST_P(WaitableEventWatcherTest, OutlivesMessageLoop) {
+  OutlivesMessageLoopThread test_thread(GetParam());
+  test_thread.Start();
+  EXPECT_TRUE(test_thread.HasBeenStarted());
+  test_thread.Join();
+  EXPECT_TRUE(test_thread.did_run());
 }
 
 TEST_P(WaitableEventWatcherTest, SignaledAtStart) {
-  MessageLoop message_loop(GetParam());
-
   WaitableEvent event(WaitableEvent::ResetPolicy::MANUAL,
                       WaitableEvent::InitialState::SIGNALED);
 
@@ -136,8 +180,6 @@ TEST_P(WaitableEventWatcherTest, SignaledAtStart) {
 }
 
 TEST_P(WaitableEventWatcherTest, StartWatchingInCallback) {
-  MessageLoop message_loop(GetParam());
-
   WaitableEvent event(WaitableEvent::ResetPolicy::MANUAL,
                       WaitableEvent::InitialState::NOT_SIGNALED);
 
@@ -159,17 +201,18 @@ TEST_P(WaitableEventWatcherTest, StartWatchingInCallback) {
 // To help detect errors around deleting WaitableEventWatcher, an additional
 // bool parameter is used to test sleeping between watching and deletion.
 class WaitableEventWatcherDeletionTest
-    : public testing::TestWithParam<std::tuple<MessageLoop::Type, bool>> {};
+    : public testing::TestWithParam<std::tuple<MessageLoop::Type, bool>> {
+ private:
+  test::ScopedTaskEnvironment scoped_task_environment_{
+      WaitableEventWatcherTest::MainThreadTypeForMessageLoopType(
+          std::get<0>(GetParam()))};
+};
 
 TEST_P(WaitableEventWatcherDeletionTest, DeleteUnder) {
-  MessageLoop::Type message_loop_type;
-  bool delay_after_delete;
-  std::tie(message_loop_type, delay_after_delete) = GetParam();
+  bool delay_after_delete = std::get<1>(GetParam());
 
   // Delete the WaitableEvent out from under the Watcher. This is explictly
   // allowed by the interface.
-
-  MessageLoop message_loop(message_loop_type);
 
   {
     WaitableEventWatcher watcher;
@@ -193,13 +236,9 @@ TEST_P(WaitableEventWatcherDeletionTest, DeleteUnder) {
 }
 
 TEST_P(WaitableEventWatcherDeletionTest, SignalAndDelete) {
-  MessageLoop::Type message_loop_type;
-  bool delay_after_delete;
-  std::tie(message_loop_type, delay_after_delete) = GetParam();
+  bool delay_after_delete = std::get<1>(GetParam());
 
   // Signal and immediately delete the WaitableEvent out from under the Watcher.
-
-  MessageLoop message_loop(message_loop_type);
 
   {
     WaitableEventWatcher watcher;

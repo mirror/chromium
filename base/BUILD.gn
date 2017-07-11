@@ -788,8 +788,10 @@ component("base") {
     "synchronization/read_write_lock_win.cc",
     "synchronization/spin_wait.h",
     "synchronization/waitable_event.h",
+    "synchronization/waitable_event_linux.cc",
     "synchronization/waitable_event_posix.cc",
     "synchronization/waitable_event_watcher.h",
+    "synchronization/waitable_event_watcher_linux.cc",
     "synchronization/waitable_event_watcher_posix.cc",
     "synchronization/waitable_event_watcher_win.cc",
     "synchronization/waitable_event_win.cc",
@@ -1203,7 +1205,11 @@ component("base") {
 
   # Android.
   if (is_android) {
-    sources -= [ "debug/stack_trace_posix.cc" ]
+    sources -= [
+      "debug/stack_trace_posix.cc",
+      "synchronization/waitable_event_posix.cc",
+      "synchronization/waitable_event_watcher_posix.cc",
+    ]
 
     # Android uses some Linux sources, put those back.
     set_sources_assignment_filter([])
@@ -1219,6 +1225,8 @@ component("base") {
       "process/process_info_linux.cc",
       "process/process_iterator_linux.cc",
       "process/process_metrics_linux.cc",
+      "synchronization/waitable_event_linux.cc",
+      "synchronization/waitable_event_watcher_linux.cc",
       "sys_info_linux.cc",
     ]
     set_sources_assignment_filter(sources_assignment_filter)
@@ -1563,6 +1571,11 @@ component("base") {
 
     configs += linux_configs
     all_dependent_configs += linux_configs
+
+    sources -= [
+      "synchronization/waitable_event_posix.cc",
+      "synchronization/waitable_event_watcher_posix.cc",
+    ]
 
     # These dependencies are not required on Android, and in the case
     # of xdg_mime must be excluded due to licensing restrictions.
