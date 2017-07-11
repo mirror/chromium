@@ -20,8 +20,11 @@
 #include "gpu/ipc/client/gpu_channel_host.h"
 #include "ipc/message_filter.h"
 
+namespace viz {
+class ServerGpuMemoryBufferManager;
+}
+
 namespace content {
-class BrowserGpuMemoryBufferManager;
 
 class CONTENT_EXPORT BrowserGpuChannelHostFactory
     : public gpu::GpuChannelHostFactory,
@@ -39,6 +42,9 @@ class CONTENT_EXPORT BrowserGpuChannelHostFactory
 
   gpu::GpuChannelHost* GetGpuChannel();
   int GetGpuChannelId() { return gpu_client_id_; }
+  viz::ServerGpuMemoryBufferManager* gpu_memory_buffer_manager() const {
+    return gpu_memory_buffer_manager_.get();
+  }
 
   // Closes the channel to the GPU process. This should be called before the IO
   // thread stops.
@@ -68,7 +74,7 @@ class CONTENT_EXPORT BrowserGpuChannelHostFactory
   const uint64_t gpu_client_tracing_id_;
   std::unique_ptr<base::WaitableEvent> shutdown_event_;
   scoped_refptr<gpu::GpuChannelHost> gpu_channel_;
-  std::unique_ptr<BrowserGpuMemoryBufferManager> gpu_memory_buffer_manager_;
+  std::unique_ptr<viz::ServerGpuMemoryBufferManager> gpu_memory_buffer_manager_;
   scoped_refptr<EstablishRequest> pending_request_;
   std::vector<gpu::GpuChannelEstablishedCallback> established_callbacks_;
 

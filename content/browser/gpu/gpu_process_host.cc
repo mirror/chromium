@@ -513,6 +513,8 @@ GpuProcessHost::GpuProcessHost(int host_id, GpuProcessKind kind)
 
 GpuProcessHost::~GpuProcessHost() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  // XXX(sad): Notify ServerGpuMemoryBufferManager that |gpu_service_| is no
+  // longer valid.
 
   SendOutstandingReplies();
 

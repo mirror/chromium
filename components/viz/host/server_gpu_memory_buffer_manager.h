@@ -9,7 +9,7 @@
 
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
-#include "base/sequenced_task_runner.h"
+#include "base/single_thread_task_runner.h"
 #include "base/synchronization/waitable_event.h"
 #include "base/trace_event/memory_dump_provider.h"
 #include "components/viz/host/viz_host_export.h"
@@ -32,9 +32,14 @@ class VIZ_HOST_EXPORT ServerGpuMemoryBufferManager
     : public gpu::GpuMemoryBufferManager,
       public base::trace_event::MemoryDumpProvider {
  public:
-  ServerGpuMemoryBufferManager(ui::mojom::GpuService* gpu_service,
-                               int client_id);
+  using GpuServiceProvider = base::Callback<ui::mojom::GpuService*(void)>;
+  ServerGpuMemoryBufferManager(
+      const GpuServiceProvider provider,
+      int client_id,
+      scoped_refptr<base::SingleThreadTaskRunner> task_runner);
   ~ServerGpuMemoryBufferManager() override;
+
+  void ScheduleTerminate();
 
   void DestroyGpuMemoryBuffer(gfx::GpuMemoryBufferId id,
                               int client_id,
@@ -71,8 +76,9 @@ class VIZ_HOST_EXPORT ServerGpuMemoryBufferManager
       size_t buffer_size_in_bytes,
       base::OnceCallback<void(const gfx::GpuMemoryBufferHandle&)> callback,
       const gfx::GpuMemoryBufferHandle& handle);
+  void TerminateOnThread();
 
-  ui::mojom::GpuService* gpu_service_;
+  GpuServiceProvider provider_;
   const int client_id_;
   int next_gpu_memory_id_ = 1;
 
@@ -92,7 +98,8 @@ class VIZ_HOST_EXPORT ServerGpuMemoryBufferManager
   std::unordered_set<int> pending_buffers_;
 
   const gpu::GpuMemoryBufferConfigurationSet native_configurations_;
-  scoped_refptr<base::SequencedTaskRunner> task_runner_;
+  scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
+  base::WeakPtr<ServerGpuMemoryBufferManager> weak_ptr_;
   base::WeakPtrFactory<ServerGpuMemoryBufferManager> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(ServerGpuMemoryBufferManager);

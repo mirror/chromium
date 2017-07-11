@@ -6,7 +6,7 @@
 
 #include "base/logging.h"
 #include "base/strings/stringprintf.h"
-#include "base/threading/sequenced_task_runner_handle.h"
+#include "base/threading/thread_task_runner_handle.h"
 #include "base/trace_event/memory_dump_manager.h"
 #include "base/trace_event/process_memory_dump.h"
 #include "gpu/ipc/client/gpu_memory_buffer_impl.h"
@@ -16,21 +16,33 @@
 #include "ui/gfx/buffer_format_util.h"
 #include "ui/gfx/gpu_memory_buffer_tracing.h"
 
+using base::trace_event::MemoryDumpManager;
+
 namespace viz {
 
 ServerGpuMemoryBufferManager::BufferInfo::BufferInfo() = default;
 ServerGpuMemoryBufferManager::BufferInfo::~BufferInfo() = default;
 
 ServerGpuMemoryBufferManager::ServerGpuMemoryBufferManager(
-    ui::mojom::GpuService* gpu_service,
-    int client_id)
-    : gpu_service_(gpu_service),
+    const GpuServiceProvider provider,
+    int client_id,
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner)
+    : provider_(provider),
       client_id_(client_id),
       native_configurations_(gpu::GetNativeGpuMemoryBufferConfigurations()),
-      task_runner_(base::SequencedTaskRunnerHandle::Get()),
-      weak_factory_(this) {}
+      task_runner_(std::move(task_runner)),
+      weak_factory_(this) {
+  MemoryDumpManager::GetInstance()->RegisterDumpProvider(
+      this, "ServerGpuMemoryBufferManager", task_runner_);
+}
 
 ServerGpuMemoryBufferManager::~ServerGpuMemoryBufferManager() {}
+
+void ServerGpuMemoryBufferManager::ScheduleTerminate() {
+  task_runner_->PostTask(
+      FROM_HERE,
+      base::Bind(&ServerGpuMemoryBufferManager::TerminateOnThread, weak_ptr_));
+}
 
 void ServerGpuMemoryBufferManager::AllocateGpuMemoryBuffer(
     gfx::GpuMemoryBufferId id,
@@ -41,12 +53,15 @@ void ServerGpuMemoryBufferManager::AllocateGpuMemoryBuffer(
     gpu::SurfaceHandle surface_handle,
     base::OnceCallback<void(const gfx::GpuMemoryBufferHandle&)> callback) {
   DCHECK(task_runner_->RunsTasksInCurrentSequence());
+  if (!weak_ptr_)
+    weak_ptr_ = weak_factory_.GetWeakPtr();
   if (gpu::GetNativeGpuMemoryBufferType() != gfx::EMPTY_BUFFER) {
     const bool is_native = native_configurations_.find(std::make_pair(
                                format, usage)) != native_configurations_.end();
-    if (is_native) {
+    auto* gpu_service = provider_.Run();
+    if (is_native && gpu_service) {
       pending_buffers_.insert(client_id);
-      gpu_service_->CreateGpuMemoryBuffer(
+      gpu_service->CreateGpuMemoryBuffer(
           id, size, format, usage, client_id, surface_handle,
           base::Bind(&ServerGpuMemoryBufferManager::OnGpuMemoryBufferAllocated,
                      weak_factory_.GetWeakPtr(), client_id,
@@ -108,10 +123,21 @@ ServerGpuMemoryBufferManager::CreateGpuMemoryBuffer(
   wait_event.Wait();
   if (handle.is_null())
     return nullptr;
+  // The destruction callback can be called on any thread. So use an
+  // intermediate callback here as the destruction callback, which bounces off
+  // onto the |task_runner_| thread to do the real work.
+  auto real_destroy_callback =
+      base::Bind(&ServerGpuMemoryBufferManager::DestroyGpuMemoryBuffer,
+                 weak_ptr_, id, client_id_);
   return gpu::GpuMemoryBufferImpl::CreateFromHandle(
       handle, size, format, usage,
-      base::Bind(&ServerGpuMemoryBufferManager::DestroyGpuMemoryBuffer,
-                 weak_factory_.GetWeakPtr(), id, client_id_));
+      base::Bind(
+          [](scoped_refptr<base::SingleThreadTaskRunner> task_runner,
+             const gpu::GpuMemoryBufferImpl::DestructionCallback callback,
+             const gpu::SyncToken& sync_token) {
+            task_runner->PostTask(FROM_HERE, base::Bind(callback, sync_token));
+          },
+          task_runner_, real_destroy_callback));
 }
 
 void ServerGpuMemoryBufferManager::SetDestructionSyncToken(
@@ -171,19 +197,23 @@ void ServerGpuMemoryBufferManager::DestroyGpuMemoryBuffer(
   if (iter == allocated_buffers_[client_id].end())
     return;
   DCHECK_NE(gfx::EMPTY_BUFFER, iter->second.type);
-  if (iter->second.type != gfx::SHARED_MEMORY_BUFFER)
-    gpu_service_->DestroyGpuMemoryBuffer(id, client_id, sync_token);
+  auto* gpu_service = provider_.Run();
+  if (iter->second.type != gfx::SHARED_MEMORY_BUFFER && gpu_service)
+    gpu_service->DestroyGpuMemoryBuffer(id, client_id, sync_token);
   allocated_buffers_[client_id].erase(id);
 }
 
 void ServerGpuMemoryBufferManager::DestroyAllGpuMemoryBufferForClient(
     int client_id) {
   DCHECK(task_runner_->RunsTasksInCurrentSequence());
-  for (auto pair : allocated_buffers_[client_id]) {
-    DCHECK_NE(gfx::EMPTY_BUFFER, pair.second.type);
-    if (pair.second.type != gfx::SHARED_MEMORY_BUFFER) {
-      gpu_service_->DestroyGpuMemoryBuffer(pair.first, client_id,
-                                           gpu::SyncToken());
+  auto* gpu_service = provider_.Run();
+  if (gpu_service) {
+    for (auto pair : allocated_buffers_[client_id]) {
+      DCHECK_NE(gfx::EMPTY_BUFFER, pair.second.type);
+      if (pair.second.type != gfx::SHARED_MEMORY_BUFFER) {
+        gpu_service->DestroyGpuMemoryBuffer(pair.first, client_id,
+                                            gpu::SyncToken());
+      }
     }
   }
   allocated_buffers_.erase(client_id);
@@ -212,9 +242,10 @@ void ServerGpuMemoryBufferManager::OnGpuMemoryBufferAllocated(
   DCHECK(task_runner_->RunsTasksInCurrentSequence());
   if (pending_buffers_.find(client_id) == pending_buffers_.end()) {
     // The client has been destroyed since the allocation request was made.
-    if (!handle.is_null()) {
-      gpu_service_->DestroyGpuMemoryBuffer(handle.id, client_id,
-                                           gpu::SyncToken());
+    auto* gpu_service = provider_.Run();
+    if (!handle.is_null() && gpu_service) {
+      gpu_service->DestroyGpuMemoryBuffer(handle.id, client_id,
+                                          gpu::SyncToken());
     }
     std::move(callback).Run(gfx::GpuMemoryBufferHandle());
     return;
@@ -227,6 +258,12 @@ void ServerGpuMemoryBufferManager::OnGpuMemoryBufferAllocated(
         std::make_pair(handle.id, buffer_info));
   }
   std::move(callback).Run(handle);
+}
+
+void ServerGpuMemoryBufferManager::TerminateOnThread() {
+  MemoryDumpManager::GetInstance()->UnregisterDumpProvider(this);
+  weak_ptr_.reset();
+  weak_factory_.InvalidateWeakPtrs();
 }
 
 }  // namespace viz
