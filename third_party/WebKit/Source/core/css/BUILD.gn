@@ -545,6 +545,7 @@ blink_core_sources("css") {
     "properties/CSSShorthandPropertyAPIMargin.cpp",
     "properties/CSSShorthandPropertyAPIOffset.cpp",
     "properties/CSSShorthandPropertyAPIOverflow.cpp",
+    "properties/CSSShorthandPropertyAPIScrollPaddingBlock.cpp",
     "properties/CSSShorthandPropertyAPITextDecoration.cpp",
     "properties/CSSShorthandPropertyAPIWebkitMarginCollapse.cpp",
     "properties/CSSShorthandPropertyAPIWebkitMaskBoxImage.cpp",
