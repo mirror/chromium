@@ -8,12 +8,14 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include <deque>
 #include <list>
 #include <map>
 #include <set>
 #include <utility>
 #include <vector>
 
+#include "base/containers/flat_set.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "gpu/command_buffer/common/sync_token.h"
@@ -116,7 +118,7 @@ class MEDIA_EXPORT GpuVideoDecoder
   void DestroyVDA();
 
   // Request a shared-memory segment of at least |min_size| bytes.  Will
-  // allocate as necessary.
+  // allocate as necessary. May return nullptr during Shutdown.
   std::unique_ptr<base::SharedMemory> GetSharedMemory(size_t min_size);
 
   // Return a shared-memory segment to the available pool.
@@ -177,9 +179,17 @@ class MEDIA_EXPORT GpuVideoDecoder
   VideoDecoderConfig config_;
 
   // Shared-memory buffer pool.  Since allocating SHM segments requires a
-  // round-trip to the browser process, we keep allocation out of the
+  // round-trip to the browser process, we try to keep allocation out of the
   // steady-state of the decoder.
-  std::vector<std::unique_ptr<base::SharedMemory>> available_shm_segments_;
+  class SharedMemorySortedBySize {
+   public:
+    bool operator()(const std::unique_ptr<base::SharedMemory>& lhs,
+                    const std::unique_ptr<base::SharedMemory>& rhs) const {
+      return lhs->mapped_size() < rhs->mapped_size();
+    }
+  };
+  base::flat_set<std::unique_ptr<base::SharedMemory>, SharedMemorySortedBySize>
+      available_shm_segments_;
 
   // Placeholder sync token that was created and validated after the most
   // recent picture buffers were created.
@@ -234,6 +244,13 @@ class MEDIA_EXPORT GpuVideoDecoder
   // Set during Initialize(); given to the VDA for purposes for handling
   // encrypted content.
   int cdm_id_;
+
+  size_t decoded_bytes_ = 0u;
+  size_t decoded_count_ = 0u;
+  size_t allocated_bytes_ = 0u;
+  size_t allocation_count_ = 0u;
+
+  size_t min_shared_memory_segment_size_ = 0u;
 
   // Bound to factories_->GetMessageLoop().
   // NOTE: Weak pointers must be invalidated before all other member variables.
