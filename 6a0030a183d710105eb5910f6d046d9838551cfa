@@ -16,6 +16,24 @@
       "revId": "6a0030a183d710105eb5910f6d046d9838551cfa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "476edfc5_d71c9ecd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/ui/MediaButtonReceiver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-11T16:05:30Z",
+      "side": 1,
+      "message": "Correct. Though, I spent an hour trying to reproduce the issue but wasn\u0027t able to. Will land this and follow-up if there are still crashes but at a different place. For sure, it should at least reduce the crashes as a call to this that ends up starting playback will no longer crash.",
+      "parentUuid": "84f3a544_c19d8f5e",
+      "revId": "6a0030a183d710105eb5910f6d046d9838551cfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
