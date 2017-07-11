@@ -108,6 +108,8 @@ blink_core_sources("dom") {
     "DocumentLifecycle.cpp",
     "DocumentLifecycle.h",
     "DocumentOrShadowRoot.h",
+    "DocumentPaintDefinition.cpp",
+    "DocumentPaintDefinition.h",
     "DocumentParser.cpp",
     "DocumentParser.h",
     "DocumentParserClient.h",

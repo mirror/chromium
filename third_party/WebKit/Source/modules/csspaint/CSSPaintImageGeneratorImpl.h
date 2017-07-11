@@ -26,7 +26,8 @@ class CSSPaintImageGeneratorImpl final : public CSSPaintImageGenerator {
                                         Observer*);
   ~CSSPaintImageGeneratorImpl() override;
 
-  PassRefPtr<Image> Paint(const ImageResourceObserver&,
+  PassRefPtr<Image> Paint(const Document&,
+                          const ImageResourceObserver&,
                           const IntSize&,
                           const CSSStyleValueVector*) final;
   const Vector<CSSPropertyID>& NativeInvalidationProperties() const final;
@@ -42,11 +43,12 @@ class CSSPaintImageGeneratorImpl final : public CSSPaintImageGenerator {
   DECLARE_VIRTUAL_TRACE();
 
  private:
-  CSSPaintImageGeneratorImpl(Observer*);
+  CSSPaintImageGeneratorImpl(Observer*, const String&);
   CSSPaintImageGeneratorImpl(CSSPaintDefinition*);
 
   Member<CSSPaintDefinition> definition_;
   Member<Observer> observer_;
+  String name_;
 };
 
 }  // namespace blink

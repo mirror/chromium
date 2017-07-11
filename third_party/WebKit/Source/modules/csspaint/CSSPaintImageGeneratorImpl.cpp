@@ -24,7 +24,7 @@ CSSPaintImageGenerator* CSSPaintImageGeneratorImpl::Create(
   CSSPaintDefinition* paint_definition = paint_worklet->FindDefinition(name);
   CSSPaintImageGeneratorImpl* generator;
   if (!paint_definition) {
-    generator = new CSSPaintImageGeneratorImpl(observer);
+    generator = new CSSPaintImageGeneratorImpl(observer, name);
     paint_worklet->AddPendingGenerator(name, generator);
   } else {
     generator = new CSSPaintImageGeneratorImpl(paint_definition);
@@ -37,8 +37,9 @@ CSSPaintImageGeneratorImpl::CSSPaintImageGeneratorImpl(
     CSSPaintDefinition* definition)
     : definition_(definition) {}
 
-CSSPaintImageGeneratorImpl::CSSPaintImageGeneratorImpl(Observer* observer)
-    : observer_(observer) {}
+CSSPaintImageGeneratorImpl::CSSPaintImageGeneratorImpl(Observer* observer,
+                                                       const String& name)
+    : observer_(observer), name_(name) {}
 
 CSSPaintImageGeneratorImpl::~CSSPaintImageGeneratorImpl() {}
 
@@ -51,10 +52,14 @@ void CSSPaintImageGeneratorImpl::SetDefinition(CSSPaintDefinition* definition) {
 }
 
 PassRefPtr<Image> CSSPaintImageGeneratorImpl::Paint(
+    const Document& document,
     const ImageResourceObserver& observer,
     const IntSize& size,
     const CSSStyleValueVector* data) {
-  return definition_ ? definition_->Paint(observer, size, data) : nullptr;
+  LocalDOMWindow* dom_window = document.domWindow();
+  PaintWorklet* paint_worklet =
+      WindowPaintWorklet::From(*dom_window).paintWorklet();
+  return paint_worklet->Paint(name_, observer, size, data);
 }
 
 const Vector<CSSPropertyID>&
