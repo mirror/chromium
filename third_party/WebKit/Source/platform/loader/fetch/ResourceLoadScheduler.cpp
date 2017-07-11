@@ -130,7 +130,7 @@ bool ResourceLoadScheduler::Release(
 
 void ResourceLoadScheduler::SetOutstandingLimitForTesting(size_t limit) {
   SetOutstandingLimitAndMaybeRun(limit);
-  is_enabled_ = limit != 0u;
+  is_enabled_ = true;
 }
 
 void ResourceLoadScheduler::OnThrottlingStateChanged(
