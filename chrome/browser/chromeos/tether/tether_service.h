@@ -12,6 +12,7 @@
 #include "base/memory/weak_ptr.h"
 #include "chromeos/dbus/power_manager_client.h"
 #include "chromeos/dbus/session_manager_client.h"
+#include "chromeos/network/network_state.h"
 #include "chromeos/network/network_state_handler.h"
 #include "chromeos/network/network_state_handler_observer.h"
 #include "components/cryptauth/cryptauth_device_manager.h"
@@ -87,6 +88,8 @@ class TetherService : public KeyedService,
   };
 
  protected:
+  Profile* profile_;
+
   // KeyedService:
   void Shutdown() override;
 
@@ -152,7 +155,6 @@ class TetherService : public KeyedService,
   // was closed).
   bool suspended_ = false;
 
-  Profile* profile_;
   chromeos::PowerManagerClient* power_manager_client_;
   chromeos::SessionManagerClient* session_manager_client_;
   cryptauth::CryptAuthService* cryptauth_service_;

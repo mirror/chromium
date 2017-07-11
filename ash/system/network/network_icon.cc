@@ -195,6 +195,9 @@ const double kConnectingImageAlpha = 0.5;
 // networks.
 const int kNumNetworkImages = 5;
 
+// Displays 2 out of 4 fars for medium signal strength.
+const int kMediumSignalStrength = kNumNetworkImages / 2;
+
 // Number of discrete images to use for alpha fade animation
 const int kNumFadeImages = 10;
 
@@ -289,10 +292,12 @@ class NetworkIconImageSource : public gfx::CanvasImageSource {
 // bars (e.g. for cell connections).
 class SignalStrengthImageSource : public gfx::CanvasImageSource {
  public:
+  // To construct an image with a specific size.
   SignalStrengthImageSource(ImageType image_type,
                             IconType icon_type,
-                            int signal_strength)
-      : CanvasImageSource(GetSizeForIconType(icon_type), false),
+                            int signal_strength,
+                            gfx::Size size)
+      : CanvasImageSource(size, false),
         image_type_(image_type),
         icon_type_(icon_type),
         color_(GetDefaultColorForIconType(icon_type_)),
@@ -303,6 +308,15 @@ class SignalStrengthImageSource : public gfx::CanvasImageSource {
     DCHECK_GE(signal_strength, 0);
     DCHECK_LT(signal_strength, kNumNetworkImages);
   }
+
+  SignalStrengthImageSource(ImageType image_type,
+                            IconType icon_type,
+                            int signal_strength)
+      : SignalStrengthImageSource(image_type,
+                                  icon_type,
+                                  signal_strength,
+                                  GetSizeForIconType(icon_type)) {}
+
   ~SignalStrengthImageSource() override {}
 
   void set_color(SkColor color) { color_ = color; }
@@ -813,6 +827,20 @@ gfx::ImageSkia GetImageForNewWifiNetwork(SkColor icon_color,
   Badges badges;
   badges.bottom_right = {&kNetworkBadgeAddOtherIcon, badge_color};
   return NetworkIconImageSource::CreateImage(icon, badges);
+}
+
+gfx::ImageSkia GetImageForBlueMobileBars(const int& number_of_bars) {
+  SignalStrengthImageSource* source = new SignalStrengthImageSource(
+      ImageTypeForNetworkType(chromeos::kTypeTether), ICON_TYPE_DEFAULT_VIEW,
+      number_of_bars, gfx::Size(40, 40));
+  source->set_color(kBlueIconColor);
+  gfx::ImageSkia icon =
+      gfx::ImageSkia(source, gfx::Size(40, 40));  // source->size());
+  return icon;
+}
+
+gfx::ImageSkia GetImageForMediumStrengthBlueMobileBars() {
+  return GetImageForBlueMobileBars(kMediumSignalStrength);
 }
 
 base::string16 GetLabelForNetwork(const chromeos::NetworkState* network,

@@ -12,6 +12,7 @@
 #include "chromeos/components/tether/host_scan_cache.h"
 #include "chromeos/components/tether/tether_host_fetcher.h"
 #include "chromeos/network/network_state.h"
+#include "chromeos/network/network_state_handler.h"
 #include "components/cryptauth/remote_device_loader.h"
 
 namespace chromeos {
@@ -90,8 +91,13 @@ void HostScanner::OnTetherAvailabilityResponse(
     }
 
     if (scanned_device_list_so_far.size() == 1) {
-      notification_presenter_->NotifyPotentialHotspotNearby(
-          scanned_device_list_so_far.at(0).remote_device);
+      const cryptauth::RemoteDevice& remote_device =
+          scanned_device_list_so_far.at(0).remote_device;
+      const chromeos::NetworkState* network_state = GetCachedNetworkState(
+          device_id_tether_network_guid_map_->GetTetherNetworkGuidForDeviceId(
+              remote_device.GetDeviceId()));
+      notification_presenter_->NotifyPotentialHotspotNearby(remote_device,
+                                                            network_state);
     } else {
       notification_presenter_->NotifyMultiplePotentialHotspotsNearby();
     }
@@ -105,6 +111,11 @@ void HostScanner::OnTetherAvailabilityResponse(
     NotifyScanFinished();
     previous_scan_time_ = clock_->Now();
   }
+}
+
+const NetworkState* HostScanner::GetCachedNetworkState(std::string guid) {
+  return host_scan_cache_->GetNetworkStateHandler()->GetNetworkStateFromGuid(
+      guid);
 }
 
 void HostScanner::AddObserver(Observer* observer) {

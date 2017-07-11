@@ -103,7 +103,6 @@ extern const SkColor kMenuSeparatorColor;
 // system tray.
 extern const int kTrayIconSize;
 extern const SkColor kTrayIconColor;
-
 // The total visual padding at the start and end of the icon/label section
 // of the tray.
 constexpr int kTrayEdgePadding = 6;
@@ -141,6 +140,9 @@ extern const int kTrayPopupInkDropCornerRadius;
 
 // The height of the system info row.
 extern const int kTrayPopupSystemInfoRowHeight;
+
+// Icon color of tether notifications.
+extern const SkColor kBlueIconColor;
 
 namespace test {
 const int kSettingsTrayItemViewId = 10000;

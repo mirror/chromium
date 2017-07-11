@@ -85,6 +85,9 @@ class HostScanCache : public TetherHostResponseRecorder::Observer {
   // TetherHostResponseRecorder::Observer:
   void OnPreviouslyConnectedHostIdsChanged() override;
 
+  // Retrieve the network state handler.
+  NetworkStateHandler* GetNetworkStateHandler();
+
  private:
   friend class HostScanCacheTest;
 

@@ -3,7 +3,12 @@
 // found in the LICENSE file.
 
 #include "chrome/browser/chromeos/tether/fake_tether_service.h"
-
+#include "base/memory/ptr_util.h"
+#include "chrome/browser/chromeos/net/tether_notification_presenter.h"
+#include "chromeos/network/network_connect.h"
+#include "components/cryptauth/remote_device.h"
+#include "components/proximity_auth/logging/logging.h"
+#include "ui/message_center/message_center.h"
 constexpr char kTetherGuidPrefix[] = "tether-guid-";
 constexpr char kTetherNamePrefix[] = "tether";
 constexpr char kCarrier[] = "FakeCarrier";
@@ -30,9 +35,25 @@ void FakeTetherService::StartTetherIfEnabled() {
     network_state_handler()->AddTetherNetworkState(
         kTetherGuidPrefix + std::to_string(i),
         kTetherNamePrefix + std::to_string(i), kCarrier,
-        100 /* battery_percentage */, 100 /* signal_strength */,
+        100 /* battery_percentage */, 75 /* signal_strength */,
         false /* has_connected_to_host */);
   }
+  auto notification_presenter =
+      base::MakeUnique<chromeos::tether::TetherNotificationPresenter>(
+          profile_, message_center::MessageCenter::Get(),
+          chromeos::NetworkConnect::Get());
+  PA_LOG(INFO) << "FOR REGAN: FORCE OPEN WIFI VIEW!";
+  cryptauth::RemoteDevice device;
+  device.public_key = "publicKey0";  //+ std::to_string(i);
+  device.name = "ReganPixel";
+
+  // Get Network state associated with the device (i.e ReganPixel)
+  const chromeos::NetworkState* lol =
+      network_state_handler()->GetNetworkStateFromGuid(kTetherGuidPrefix +
+                                                       std::to_string(0));
+
+  // pass device and corresponding network state to the function
+  notification_presenter->NotifyPotentialHotspotNearby(device, lol);
 }
 
 void FakeTetherService::StopTether() {
