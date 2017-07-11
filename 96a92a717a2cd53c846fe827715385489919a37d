@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a2cc5b0_d5fb6210",
+        "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-07-11T07:46:58Z",
+      "side": 1,
+      "message": "Could you s/camera_hal_server_ptr/camera_hal_server_ptr_info/ ?",
+      "revId": "96a92a717a2cd53c846fe827715385489919a37d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b60ea52_6e1a4b53",
+        "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-07-11T07:46:58Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "96a92a717a2cd53c846fe827715385489919a37d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
