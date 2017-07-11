@@ -396,11 +396,8 @@ StoragePartitionImpl::StoragePartitionImpl(
 StoragePartitionImpl::~StoragePartitionImpl() {
   browser_context_ = nullptr;
 
-  // These message loop checks are just to avoid leaks in unittests.
-  if (GetDatabaseTracker() &&
-      BrowserThread::IsMessageLoopValid(BrowserThread::FILE)) {
-    BrowserThread::PostTask(
-        BrowserThread::FILE,
+  if (GetDatabaseTracker()) {
+    GetDatabaseTracker()->task_runner()->PostTask(
         FROM_HERE,
         base::Bind(&storage::DatabaseTracker::Shutdown, GetDatabaseTracker()));
   }
@@ -463,10 +460,12 @@ std::unique_ptr<StoragePartitionImpl> StoragePartitionImpl::Create(
   partition->filesystem_context_ = CreateFileSystemContext(
       context, partition_path, in_memory, quota_manager_proxy.get());
 
+  // HACK FOR TESTING - DO NOT LAND
+  // BrowsingDataRemoverImplTest.MultipleTasks is failing on Android. Why?
   partition->database_tracker_ = new storage::DatabaseTracker(
       partition_path, in_memory, context->GetSpecialStoragePolicy(),
       quota_manager_proxy.get(),
-      BrowserThread::GetTaskRunnerForThread(BrowserThread::FILE).get());
+      BrowserThread::GetTaskRunnerForThread(BrowserThread::FILE));
 
   partition->dom_storage_context_ = new DOMStorageContextWrapper(
       BrowserContext::GetConnectorFor(context),
