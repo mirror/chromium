@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c81987a6_94767b80",
+        "filename": "cc/output/overlay_processor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-11T22:39:30Z",
+      "side": 1,
+      "message": "Not sure for real use cases but it\u0027s needed for existing unit tests to pass and I\u0027m assuming the tests are valid.",
+      "parentUuid": "05c1d552_fc0d4147",
+      "revId": "b57c9e1cecf2cc90f500ece5b0b18f9b5d30035e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "67b38611_36414ae5",
         "filename": "cc/output/overlay_processor.cc",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "46642061_93bfa7c9",
+        "filename": "cc/output/overlay_processor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-11T22:39:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67b38611_36414ae5",
+      "revId": "b57c9e1cecf2cc90f500ece5b0b18f9b5d30035e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b296db6_7c4ef2be",
         "filename": "cc/output/overlay_unittest.cc",
         "patchSetId": 5
@@ -50,6 +86,24 @@
       "revId": "b57c9e1cecf2cc90f500ece5b0b18f9b5d30035e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cd73e79_89d3c86b",
+        "filename": "cc/output/overlay_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-11T22:39:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b296db6_7c4ef2be",
+      "revId": "b57c9e1cecf2cc90f500ece5b0b18f9b5d30035e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
