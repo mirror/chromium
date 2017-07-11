@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4be7244f_1d47994c",
+        "filename": "tools/gn/xcode_writer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-07-11T05:19:34Z",
+      "side": 1,
+      "message": "Thank you for the guidance, I\u0027v uploaded a CL https://chromium-review.googlesource.com/c/566390/ to add the extra_attributes property, and will work on removing the hard coded application name tomorrow.",
+      "parentUuid": "c91e52b8_9063a16e",
+      "revId": "8fe39b7d391a3a60cdd62ea5dcd54c13d250ce61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f46441d6_ea43fbe3",
         "filename": "tools/gn/xcode_writer.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "8fe39b7d391a3a60cdd62ea5dcd54c13d250ce61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21831130_54cc3314",
+        "filename": "tools/gn/xcode_writer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-07-11T05:19:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f46441d6_ea43fbe3",
+      "revId": "8fe39b7d391a3a60cdd62ea5dcd54c13d250ce61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
