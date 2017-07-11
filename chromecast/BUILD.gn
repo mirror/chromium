@@ -477,6 +477,7 @@ buildflag_header("chromecast_features") {
     "IS_CAST_AUDIO_ONLY=$is_cast_audio_only",
     "IS_CAST_USING_CMA_BACKEND=$is_cast_using_cma_backend",
     "SUPPORTS_MULTIZONE=$supports_multizone",
+    "ENABLE_ATHINGS_LOOPBACK=$enable_athings_loopback",
   ]
 }
 
