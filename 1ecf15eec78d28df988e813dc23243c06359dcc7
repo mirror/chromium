@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "71ff84ac_b8f2e1f5",
+        "filename": "components/cronet/ios/cronet_environment.mm",
+        "patchSetId": 18
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-07-11T16:00:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9377c22a_74b3cbcb",
+      "range": {
+        "startLine": 122,
+        "startChar": 20,
+        "endLine": 122,
+        "endChar": 38
+      },
+      "revId": "1ecf15eec78d28df988e813dc23243c06359dcc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "166aa124_06d7e5ca",
         "filename": "ios/chrome/app/startup/ios_chrome_main.mm",
         "patchSetId": 18
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "1378a374_a05b972c",
+        "filename": "ios/chrome/app/startup/ios_chrome_main.mm",
+        "patchSetId": 18
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-07-11T16:00:35Z",
+      "side": 1,
+      "message": "you\u0027re right, the function can bind directly. no need for the block!",
+      "parentUuid": "166aa124_06d7e5ca",
+      "range": {
+        "startLine": 52,
+        "startChar": 62,
+        "endLine": 52,
+        "endChar": 74
+      },
+      "revId": "1ecf15eec78d28df988e813dc23243c06359dcc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9946775b_1c39425d",
         "filename": "ios/web/public/global_state/DEPS",
         "patchSetId": 18
@@ -59,6 +107,30 @@
       "writtenOn": "2017-07-10T16:05:16Z",
       "side": 1,
       "message": "ios/web should not depend on components and all existing dependencies are bugs.",
+      "range": {
+        "startLine": 2,
+        "startChar": 15,
+        "endLine": 2,
+        "endChar": 34
+      },
+      "revId": "1ecf15eec78d28df988e813dc23243c06359dcc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04127e5d_ba8925a4",
+        "filename": "ios/web/public/global_state/DEPS",
+        "patchSetId": 18
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-07-11T16:00:35Z",
+      "side": 1,
+      "message": "That\u0027s true, but it brings up the past question of where is the best place for the global_state code.\n\nLooking around for a new location, I feel like this belongs in ios/components, but I thought I remember discussing that and for some reason it was the wrong place? Do you remember why?\n\nI was looking at the full DEPS we\u0027ll need in this CL: https://chromium-review.googlesource.com/c/558268",
+      "parentUuid": "9946775b_1c39425d",
       "range": {
         "startLine": 2,
         "startChar": 15,
@@ -91,6 +163,30 @@
       "revId": "1ecf15eec78d28df988e813dc23243c06359dcc7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "857ccfa7_ea0968d8",
+        "filename": "ios/web/public/global_state/ios_global_state.mm",
+        "patchSetId": 18
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-07-11T16:00:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a023e445_c8b8375f",
+      "range": {
+        "startLine": 57,
+        "startChar": 27,
+        "endLine": 57,
+        "endChar": 38
+      },
+      "revId": "1ecf15eec78d28df988e813dc23243c06359dcc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
