@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f68ce7c1_8c89f7d3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/DateDividedAdapter.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-07-11T19:04:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51fde23b_8376cea2",
+      "range": {
+        "startLine": 361,
+        "startChar": 5,
+        "endLine": 361,
+        "endChar": 13
+      },
+      "revId": "e0b0dea3d6c2b1e8e42265ac40f10a14ddc03fe6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b76a5026_d24ad1ea",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/DateDividedAdapter.java",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "b890a747_4eac6372",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/DateDividedAdapter.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-07-11T19:04:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b76a5026_d24ad1ea",
+      "range": {
+        "startLine": 365,
+        "startChar": 43,
+        "endLine": 365,
+        "endChar": 62
+      },
+      "revId": "e0b0dea3d6c2b1e8e42265ac40f10a14ddc03fe6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82781e1b_259d9712",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/DateDividedAdapter.java",
         "patchSetId": 6
@@ -68,6 +116,30 @@
       "revId": "e0b0dea3d6c2b1e8e42265ac40f10a14ddc03fe6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84516193_b83c64aa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/DateDividedAdapter.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-07-11T19:04:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82781e1b_259d9712",
+      "range": {
+        "startLine": 489,
+        "startChar": 36,
+        "endLine": 489,
+        "endChar": 42
+      },
+      "revId": "e0b0dea3d6c2b1e8e42265ac40f10a14ddc03fe6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
