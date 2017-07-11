@@ -250,7 +250,7 @@ void SSLManager::DidRunMixedContent(const GURL& security_origin) {
 
   if (ssl_host_state_delegate_) {
     ssl_host_state_delegate_->HostRanInsecureContent(
-        security_origin.host(), site_instance->GetProcess()->GetID(),
+        security_origin.host(), site_instance->GetProcess(nullptr)->GetID(),
         SSLHostStateDelegate::MIXED_CONTENT);
   }
   UpdateEntry(entry, 0, 0);
@@ -268,7 +268,7 @@ void SSLManager::DidRunContentWithCertErrors(const GURL& security_origin) {
 
   if (ssl_host_state_delegate_) {
     ssl_host_state_delegate_->HostRanInsecureContent(
-        security_origin.host(), site_instance->GetProcess()->GetID(),
+        security_origin.host(), site_instance->GetProcess(nullptr)->GetID(),
         SSLHostStateDelegate::CERT_ERRORS_CONTENT);
   }
   UpdateEntry(entry, 0, 0);
@@ -420,7 +420,7 @@ void SSLManager::UpdateEntry(NavigationEntryImpl* entry,
   // possibly have insecure content.  See bug https://crbug.com/12423.
   if (site_instance && ssl_host_state_delegate_) {
     std::string host = entry->GetURL().host();
-    int process_id = site_instance->GetProcess()->GetID();
+    int process_id = site_instance->GetProcess(nullptr)->GetID();
     if (ssl_host_state_delegate_->DidHostRunInsecureContent(
             host, process_id, SSLHostStateDelegate::MIXED_CONTENT)) {
       entry->GetSSL().content_status |= SSLStatus::RAN_INSECURE_CONTENT;

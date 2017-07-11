@@ -1237,7 +1237,7 @@ void NavigatorImpl::RecordNavigationMetrics(
     return;
   }
   bool navigation_created_new_renderer_process =
-      site_instance->GetProcess()->GetInitTimeForNavigationMetrics() >
+      site_instance->GetProcess(nullptr)->GetInitTimeForNavigationMetrics() >
       navigation_data_->start_time_;
   if (navigation_created_new_renderer_process) {
     UMA_HISTOGRAM_TIMES(

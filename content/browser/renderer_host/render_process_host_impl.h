@@ -264,10 +264,13 @@ class CONTENT_EXPORT RenderProcessHostImpl
 
   // Returns a suitable RenderProcessHost to use for |site_instance|. Depending
   // on the SiteInstance's ProcessReusePolicy and its url, this may be an
-  // existing RenderProcessHost or a new one.
+  // existing RenderProcessHost or a new one. When |new_host_created| is not
+  // null, if a new RenderProcessHost is created *|new_host_created| is set to
+  // true, otherwise set to false.
   static RenderProcessHost* GetProcessHostForSiteInstance(
       BrowserContext* browser_context,
-      SiteInstanceImpl* site_instance);
+      SiteInstanceImpl* site_instance,
+      bool* new_host_created);
 
   static base::MessageLoop* GetInProcessRendererThreadForTesting();
 

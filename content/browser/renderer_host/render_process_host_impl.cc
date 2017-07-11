@@ -3226,7 +3226,8 @@ void RenderProcessHostImpl::RegisterProcessHostForSite(
 // static
 RenderProcessHost* RenderProcessHostImpl::GetProcessHostForSiteInstance(
     BrowserContext* browser_context,
-    SiteInstanceImpl* site_instance) {
+    SiteInstanceImpl* site_instance,
+    bool* new_host_created) {
   const GURL site_url = site_instance->GetSiteURL();
   SiteInstanceImpl::ProcessReusePolicy process_reuse_policy =
       site_instance->process_reuse_policy();
@@ -3278,6 +3279,8 @@ RenderProcessHost* RenderProcessHostImpl::GetProcessHostForSiteInstance(
 
   // Otherwise (or if that fails), create a new one.
   if (!render_process_host) {
+    if (new_host_created)
+      *new_host_created = true;
     if (g_render_process_host_factory_) {
       render_process_host =
           g_render_process_host_factory_->CreateRenderProcessHost(
@@ -3288,6 +3291,8 @@ RenderProcessHost* RenderProcessHostImpl::GetProcessHostForSiteInstance(
       render_process_host = new RenderProcessHostImpl(
           browser_context, partition, is_for_guests_only);
     }
+  } else if (new_host_created) {
+    *new_host_created = false;
   }
 
   if (is_unmatched_service_worker) {

@@ -90,8 +90,8 @@ IN_PROC_BROWSER_TEST_F(RenderFrameMessageFilterBrowserTest, Cookies) {
   EXPECT_EQ("https://127.0.0.1/",
             web_contents_https->GetSiteInstance()->GetSiteURL().spec());
 
-  EXPECT_NE(web_contents_http->GetSiteInstance()->GetProcess(),
-            web_contents_https->GetSiteInstance()->GetProcess());
+  EXPECT_NE(web_contents_http->GetSiteInstance()->GetProcess(nullptr),
+            web_contents_https->GetSiteInstance()->GetProcess(nullptr));
 
   EXPECT_EQ("", GetCookieFromJS(web_contents_https->GetMainFrame()));
   EXPECT_EQ("", GetCookieFromJS(web_contents_http->GetMainFrame()));

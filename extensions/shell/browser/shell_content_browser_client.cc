@@ -161,17 +161,14 @@ void ShellContentBrowserClient::SiteInstanceGotProcess(
     return;
 
   ProcessMap::Get(browser_main_parts_->browser_context())
-      ->Insert(extension->id(),
-               site_instance->GetProcess()->GetID(),
+      ->Insert(extension->id(), site_instance->GetProcess(nullptr)->GetID(),
                site_instance->GetId());
 
   BrowserThread::PostTask(
-      BrowserThread::IO,
-      FROM_HERE,
+      BrowserThread::IO, FROM_HERE,
       base::Bind(&InfoMap::RegisterExtensionProcess,
                  browser_main_parts_->extension_system()->info_map(),
-                 extension->id(),
-                 site_instance->GetProcess()->GetID(),
+                 extension->id(), site_instance->GetProcess(nullptr)->GetID(),
                  site_instance->GetId()));
 }
 
@@ -187,17 +184,14 @@ void ShellContentBrowserClient::SiteInstanceDeleting(
     return;
 
   ProcessMap::Get(browser_main_parts_->browser_context())
-      ->Remove(extension->id(),
-               site_instance->GetProcess()->GetID(),
+      ->Remove(extension->id(), site_instance->GetProcess(nullptr)->GetID(),
                site_instance->GetId());
 
   BrowserThread::PostTask(
-      BrowserThread::IO,
-      FROM_HERE,
+      BrowserThread::IO, FROM_HERE,
       base::Bind(&InfoMap::UnregisterExtensionProcess,
                  browser_main_parts_->extension_system()->info_map(),
-                 extension->id(),
-                 site_instance->GetProcess()->GetID(),
+                 extension->id(), site_instance->GetProcess(nullptr)->GetID(),
                  site_instance->GetId()));
 }
 

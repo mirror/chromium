@@ -501,7 +501,7 @@ void RenderFrameHostManager::DidChangeOpener(
   FrameTreeNode* opener = nullptr;
   if (opener_routing_id != MSG_ROUTING_NONE) {
     RenderFrameHostImpl* opener_rfhi = RenderFrameHostImpl::FromID(
-        source_site_instance->GetProcess()->GetID(), opener_routing_id);
+        source_site_instance->GetProcess(nullptr)->GetID(), opener_routing_id);
     // If |opener_rfhi| is null, the opener RFH has already disappeared.  In
     // this case, clear the opener rather than keeping the old opener around.
     if (opener_rfhi)
@@ -1592,7 +1592,7 @@ void RenderFrameHostManager::CreatePendingRenderFrameHost(
   // another host that already initialized it) or may not (we have our own
   // process or the existing process crashed) have been initialized. Calling
   // Init multiple times will be ignored, so this is safe.
-  if (!new_instance->GetProcess()->Init())
+  if (!new_instance->GetProcess(nullptr)->Init())
     return;
 
   CreateProxiesForNewRenderFrameHost(old_instance, new_instance);
@@ -1659,7 +1659,7 @@ RenderFrameHostManager::CreateRenderFrameHost(
     bool hidden,
     bool renderer_initiated_creation) {
   if (frame_routing_id == MSG_ROUTING_NONE)
-    frame_routing_id = site_instance->GetProcess()->GetNextRoutingID();
+    frame_routing_id = site_instance->GetProcess(nullptr)->GetNextRoutingID();
 
   // Create a RVH for main frames, or find the existing one for subframes.
   FrameTree* frame_tree = frame_tree_node_->frame_tree();
@@ -1703,7 +1703,7 @@ bool RenderFrameHostManager::CreateSpeculativeRenderFrameHost(
   // another host that already initialized it) or may not (we have our own
   // process or the existing process crashed) have been initialized. Calling
   // Init multiple times will be ignored, so this is safe.
-  if (!new_instance->GetProcess()->Init())
+  if (!new_instance->GetProcess(nullptr)->Init())
     return false;
 
   CreateProxiesForNewRenderFrameHost(old_instance, new_instance);
@@ -1740,7 +1740,7 @@ std::unique_ptr<RenderFrameHostImpl> RenderFrameHostManager::CreateRenderFrame(
       frame_tree_node_->parent()->current_frame_host()->GetSiteInstance() !=
           instance) {
     CHECK(SiteIsolationPolicy::AreCrossProcessFramesPossible());
-    widget_routing_id = instance->GetProcess()->GetNextRoutingID();
+    widget_routing_id = instance->GetProcess(nullptr)->GetNextRoutingID();
   }
 
   new_render_frame_host = CreateRenderFrameHost(

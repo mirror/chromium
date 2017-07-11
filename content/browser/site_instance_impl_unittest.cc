@@ -250,13 +250,13 @@ TEST_F(SiteInstanceTest, GetProcess) {
   std::unique_ptr<RenderProcessHost> host1;
   scoped_refptr<SiteInstanceImpl> instance(
       SiteInstanceImpl::Create(browser_context.get()));
-  host1.reset(instance->GetProcess());
+  host1.reset(instance->GetProcess(nullptr));
   EXPECT_TRUE(host1.get() != nullptr);
 
   // Ensure that GetProcess creates a new process.
   scoped_refptr<SiteInstanceImpl> instance2(
       SiteInstanceImpl::Create(browser_context.get()));
-  std::unique_ptr<RenderProcessHost> host2(instance2->GetProcess());
+  std::unique_ptr<RenderProcessHost> host2(instance2->GetProcess(nullptr));
   EXPECT_TRUE(host2.get() != nullptr);
   EXPECT_NE(host1.get(), host2.get());
 
@@ -468,9 +468,10 @@ TEST_F(SiteInstanceTest, OneSiteInstancePerSite) {
 
   // The two SiteInstances for http://google.com should not use the same process
   // if process-per-site is not enabled.
-  std::unique_ptr<RenderProcessHost> process_a1(site_instance_a1->GetProcess());
+  std::unique_ptr<RenderProcessHost> process_a1(
+      site_instance_a1->GetProcess(nullptr));
   std::unique_ptr<RenderProcessHost> process_a2_2(
-      site_instance_a2_2->GetProcess());
+      site_instance_a2_2->GetProcess(nullptr));
   EXPECT_NE(process_a1.get(), process_a2_2.get());
 
   // Should be able to see that we do have SiteInstances.
@@ -506,7 +507,8 @@ TEST_F(SiteInstanceTest, OneSiteInstancePerSiteInBrowserContext) {
   scoped_refptr<SiteInstanceImpl> site_instance_a1(
       browsing_instance->GetSiteInstanceForURL(url_a1));
   EXPECT_TRUE(site_instance_a1.get() != nullptr);
-  std::unique_ptr<RenderProcessHost> process_a1(site_instance_a1->GetProcess());
+  std::unique_ptr<RenderProcessHost> process_a1(
+      site_instance_a1->GetProcess(nullptr));
 
   // A separate site should create a separate SiteInstance.
   const GURL url_b1("http://www.yahoo.com/");
@@ -535,7 +537,7 @@ TEST_F(SiteInstanceTest, OneSiteInstancePerSiteInBrowserContext) {
       browsing_instance2->GetSiteInstanceForURL(url_a1));
   EXPECT_TRUE(site_instance_a1.get() != nullptr);
   EXPECT_NE(site_instance_a1.get(), site_instance_a1_2.get());
-  EXPECT_EQ(process_a1.get(), site_instance_a1_2->GetProcess());
+  EXPECT_EQ(process_a1.get(), site_instance_a1_2->GetProcess(nullptr));
 
   // A visit to the original site in a new BrowsingInstance (different browser
   // context) should return a different SiteInstance with a different process.
@@ -547,7 +549,7 @@ TEST_F(SiteInstanceTest, OneSiteInstancePerSiteInBrowserContext) {
       browsing_instance3->GetSiteInstanceForURL(url_a2));
   EXPECT_TRUE(site_instance_a2_3.get() != nullptr);
   std::unique_ptr<RenderProcessHost> process_a2_3(
-      site_instance_a2_3->GetProcess());
+      site_instance_a2_3->GetProcess(nullptr));
   EXPECT_NE(site_instance_a1.get(), site_instance_a2_3.get());
   EXPECT_NE(process_a1.get(), process_a2_3.get());
 
@@ -606,35 +608,38 @@ TEST_F(SiteInstanceTest, ProcessSharingByType) {
   scoped_refptr<SiteInstanceImpl> extension1_instance(
       CreateSiteInstance(browser_context.get(),
           GURL(kPrivilegedScheme + std::string("://foo/bar"))));
-  set_privileged_process_id(extension1_instance->GetProcess()->GetID());
+  set_privileged_process_id(extension1_instance->GetProcess(nullptr)->GetID());
 
   scoped_refptr<SiteInstanceImpl> extension2_instance(
       CreateSiteInstance(browser_context.get(),
           GURL(kPrivilegedScheme + std::string("://baz/bar"))));
 
   std::unique_ptr<RenderProcessHost> extension_host(
-      extension1_instance->GetProcess());
-  EXPECT_EQ(extension1_instance->GetProcess(),
-            extension2_instance->GetProcess());
+      extension1_instance->GetProcess(nullptr));
+  EXPECT_EQ(extension1_instance->GetProcess(nullptr),
+            extension2_instance->GetProcess(nullptr));
 
   // Create some WebUI instances and make sure they share a process.
   scoped_refptr<SiteInstanceImpl> webui1_instance(CreateSiteInstance(
       browser_context.get(), GURL(kChromeUIScheme + std::string("://gpu"))));
-  policy->GrantWebUIBindings(webui1_instance->GetProcess()->GetID());
+  policy->GrantWebUIBindings(webui1_instance->GetProcess(nullptr)->GetID());
 
   scoped_refptr<SiteInstanceImpl> webui2_instance(CreateSiteInstance(
       browser_context.get(),
       GURL(kChromeUIScheme + std::string("://media-internals"))));
 
-  std::unique_ptr<RenderProcessHost> dom_host(webui1_instance->GetProcess());
-  EXPECT_EQ(webui1_instance->GetProcess(), webui2_instance->GetProcess());
+  std::unique_ptr<RenderProcessHost> dom_host(
+      webui1_instance->GetProcess(nullptr));
+  EXPECT_EQ(webui1_instance->GetProcess(nullptr),
+            webui2_instance->GetProcess(nullptr));
 
   // Make sure none of differing privilege processes are mixed.
-  EXPECT_NE(extension1_instance->GetProcess(), webui1_instance->GetProcess());
+  EXPECT_NE(extension1_instance->GetProcess(nullptr),
+            webui1_instance->GetProcess(nullptr));
 
   for (size_t i = 0; i < kMaxRendererProcessCount; ++i) {
-    EXPECT_NE(extension1_instance->GetProcess(), hosts[i].get());
-    EXPECT_NE(webui1_instance->GetProcess(), hosts[i].get());
+    EXPECT_NE(extension1_instance->GetProcess(nullptr), hosts[i].get());
+    EXPECT_NE(webui1_instance->GetProcess(nullptr), hosts[i].get());
   }
 
   DrainMessageLoop();
@@ -663,7 +668,7 @@ TEST_F(SiteInstanceTest, HasWrongProcessForURL) {
 
   // The call to GetProcess actually creates a new real process, which works
   // fine, but might be a cause for problems in different contexts.
-  host.reset(instance->GetProcess());
+  host.reset(instance->GetProcess(nullptr));
   EXPECT_TRUE(host.get() != nullptr);
   EXPECT_TRUE(instance->HasProcess());
 
@@ -678,7 +683,8 @@ TEST_F(SiteInstanceTest, HasWrongProcessForURL) {
   scoped_refptr<SiteInstanceImpl> webui_instance(
       SiteInstanceImpl::Create(browser_context.get()));
   webui_instance->SetSite(webui_url);
-  std::unique_ptr<RenderProcessHost> webui_host(webui_instance->GetProcess());
+  std::unique_ptr<RenderProcessHost> webui_host(
+      webui_instance->GetProcess(nullptr));
 
   // Simulate granting WebUI bindings for the process.
   ChildProcessSecurityPolicyImpl::GetInstance()->GrantWebUIBindings(
@@ -721,7 +727,7 @@ TEST_F(SiteInstanceTest, HasWrongProcessForURLInSitePerProcess) {
 
   // The call to GetProcess actually creates a new real process, which works
   // fine, but might be a cause for problems in different contexts.
-  host.reset(instance->GetProcess());
+  host.reset(instance->GetProcess(nullptr));
   EXPECT_TRUE(host.get() != nullptr);
   EXPECT_TRUE(instance->HasProcess());
 
@@ -753,7 +759,7 @@ TEST_F(SiteInstanceTest, ProcessPerSiteWithWrongBindings) {
   EXPECT_TRUE(instance->HasSite());
 
   // The call to GetProcess actually creates a new real process.
-  host.reset(instance->GetProcess());
+  host.reset(instance->GetProcess(nullptr));
   EXPECT_TRUE(host.get() != nullptr);
   EXPECT_TRUE(instance->HasProcess());
 
@@ -766,7 +772,7 @@ TEST_F(SiteInstanceTest, ProcessPerSiteWithWrongBindings) {
   scoped_refptr<SiteInstanceImpl> instance2(
       SiteInstanceImpl::Create(browser_context.get()));
   instance2->SetSite(webui_url);
-  host2.reset(instance2->GetProcess());
+  host2.reset(instance2->GetProcess(nullptr));
   EXPECT_TRUE(host2.get() != nullptr);
   EXPECT_TRUE(instance2->HasProcess());
   EXPECT_NE(host.get(), host2.get());
@@ -787,7 +793,7 @@ TEST_F(SiteInstanceTest, NoProcessPerSiteForEmptySite) {
   instance->SetSite(GURL());
   EXPECT_TRUE(instance->HasSite());
   EXPECT_TRUE(instance->GetSiteURL().is_empty());
-  host.reset(instance->GetProcess());
+  host.reset(instance->GetProcess(nullptr));
 
   EXPECT_FALSE(RenderProcessHostImpl::GetProcessHostForSite(
       browser_context.get(), GURL()));

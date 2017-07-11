@@ -150,8 +150,9 @@ void SafeBrowsingNavigationObserver::DidStartNavigation(
   // incorrect when another frame is targeting this frame. Need to refine this
   // logic after the true initiator details are added to NavigationHandle
   // (https://crbug.com/651895).
-  int current_process_id =
-      navigation_handle->GetStartingSiteInstance()->GetProcess()->GetID();
+  int current_process_id = navigation_handle->GetStartingSiteInstance()
+                               ->GetProcess(nullptr)
+                               ->GetID();
   content::RenderFrameHost* current_frame_host =
       navigation_handle->GetWebContents()->FindFrameByFrameTreeNodeId(
           nav_event->frame_id, current_process_id);

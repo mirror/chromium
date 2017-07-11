@@ -35,11 +35,12 @@ RenderViewHost* TestRenderViewHostFactory::CreateRenderViewHost(
     int32_t routing_id,
     int32_t main_frame_routing_id,
     bool swapped_out) {
-  return new TestRenderViewHost(instance,
-                                base::MakeUnique<RenderWidgetHostImpl>(
-                                    widget_delegate, instance->GetProcess(),
-                                    routing_id, false /* hidden */),
-                                delegate, main_frame_routing_id, swapped_out);
+  return new TestRenderViewHost(
+      instance,
+      base::MakeUnique<RenderWidgetHostImpl>(widget_delegate,
+                                             instance->GetProcess(nullptr),
+                                             routing_id, false /* hidden */),
+      delegate, main_frame_routing_id, swapped_out);
 }
 
 }  // namespace content

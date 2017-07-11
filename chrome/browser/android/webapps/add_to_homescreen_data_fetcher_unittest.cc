@@ -211,7 +211,7 @@ class AddToHomescreenDataFetcherTest : public ChromeRenderViewHostTestHarness {
 
     scoped_refptr<content::SiteInstance> site_instance =
         content::SiteInstance::Create(browser_context());
-    site_instance->GetProcess()->Init();
+    site_instance->GetProcess(nullptr)->Init();
     MockWebContents* mock_web_contents = new MockWebContents(browser_context());
     mock_web_contents->Init(content::WebContents::CreateParams(
         browser_context(), std::move(site_instance)));

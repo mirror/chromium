@@ -34,7 +34,7 @@ RenderViewHost* RenderViewHostFactory::Create(
   // In the browser-driven case, the routing ID of the view is lazily assigned:
   // this is signified by passing MSG_ROUTING_NONE for |routing_id|.
   if (routing_id == MSG_ROUTING_NONE) {
-    routing_id = instance->GetProcess()->GetNextRoutingID();
+    routing_id = instance->GetProcess(nullptr)->GetNextRoutingID();
   } else {
     // Otherwise, in the renderer-driven case, the routing ID of the view is
     // already set. This is due to the fact that a sync render->browser IPC is
@@ -51,7 +51,7 @@ RenderViewHost* RenderViewHostFactory::Create(
   return new RenderViewHostImpl(
       instance,
       base::MakeUnique<RenderWidgetHostImpl>(
-          widget_delegate, instance->GetProcess(), routing_id, hidden),
+          widget_delegate, instance->GetProcess(nullptr), routing_id, hidden),
       delegate, main_frame_routing_id, swapped_out,
       true /* has_initialized_audio_host */);
 }

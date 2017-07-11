@@ -1681,7 +1681,7 @@ void WebContentsImpl::Init(const WebContents::CreateParams& params) {
   int32_t main_frame_widget_routing_id = params.main_frame_widget_routing_id;
   if (main_frame_widget_routing_id == MSG_ROUTING_NONE) {
     view_routing_id = main_frame_widget_routing_id =
-        site_instance->GetProcess()->GetNextRoutingID();
+        site_instance->GetProcess(nullptr)->GetNextRoutingID();
   }
 
   GetRenderManager()->Init(site_instance.get(), view_routing_id,

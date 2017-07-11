@@ -85,7 +85,7 @@ bool SiteInstanceImpl::HasProcess() const {
   return false;
 }
 
-RenderProcessHost* SiteInstanceImpl::GetProcess() {
+RenderProcessHost* SiteInstanceImpl::GetProcess(bool* new_host_created) {
   // TODO(erikkay) It would be nice to ensure that the renderer type had been
   // properly set before we get here.  The default tab creation case winds up
   // with no site set at this point, so it will default to TYPE_NORMAL.  This
@@ -108,7 +108,7 @@ RenderProcessHost* SiteInstanceImpl::GetProcess() {
     }
 
     process_ = RenderProcessHostImpl::GetProcessHostForSiteInstance(
-        browser_context, this);
+        browser_context, this, new_host_created);
 
     CHECK(process_);
     process_->AddObserver(this);
@@ -128,6 +128,8 @@ RenderProcessHost* SiteInstanceImpl::GetProcess() {
 
     if (has_site_)
       LockToOriginIfNeeded();
+  } else if (new_host_created) {
+    *new_host_created = false;
   }
   DCHECK(process_);
 
@@ -227,7 +229,7 @@ bool SiteInstanceImpl::HasWrongProcessForURL(const GURL& url) {
   // process is not (or vice versa), make sure we notice and fix it.
   GURL site_url = GetSiteForURL(browsing_instance_->browser_context(), url);
   return !RenderProcessHostImpl::IsSuitableHost(
-      GetProcess(), browsing_instance_->browser_context(), site_url);
+      GetProcess(nullptr), browsing_instance_->browser_context(), site_url);
 }
 
 scoped_refptr<SiteInstanceImpl>

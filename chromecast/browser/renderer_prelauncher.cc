@@ -20,14 +20,14 @@ RendererPrelauncher::RendererPrelauncher(
 RendererPrelauncher::~RendererPrelauncher() {
   if (rph_routing_id_ != MSG_ROUTING_NONE) {
     DCHECK(site_instance_);
-    site_instance_->GetProcess()->RemoveRoute(rph_routing_id_);
+    site_instance_->GetProcess(nullptr)->RemoveRoute(rph_routing_id_);
   }
 }
 
 void RendererPrelauncher::Prelaunch() {
   DLOG(INFO) << "Prelaunching for: " << gurl_;
   site_instance_ = content::SiteInstance::CreateForURL(browser_context_, gurl_);
-  content::RenderProcessHost* rph = site_instance_->GetProcess();
+  content::RenderProcessHost* rph = site_instance_->GetProcess(nullptr);
   rph_routing_id_ = rph->GetNextRoutingID();
   rph->AddRoute(rph_routing_id_, this);
   rph->Init();
