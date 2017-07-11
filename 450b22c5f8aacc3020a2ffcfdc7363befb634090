@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2de4fa1_d83b89fc",
+        "filename": "chromeos/components/tether/ble_advertiser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-11T21:51:08Z",
+      "side": 1,
+      "message": "nit: Please add explanations here so that readers of this class know what\u0027s going on. It\u0027s hard to understand otherwise. Also, \"no caller exists to hold it\" is vague - please clarify.",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 10
+      },
+      "revId": "450b22c5f8aacc3020a2ffcfdc7363befb634090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "807270c3_28ef8641",
+        "filename": "chromeos/components/tether/ble_advertiser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-11T21:51:08Z",
+      "side": 1,
+      "message": "Add a test where this occurs and ensure that the advertisement is unregistered successfully.",
+      "range": {
+        "startLine": 49,
+        "startChar": 4,
+        "endLine": 49,
+        "endChar": 29
+      },
+      "revId": "450b22c5f8aacc3020a2ffcfdc7363befb634090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fa92707_f6f63eb7",
+        "filename": "chromeos/components/tether/ble_advertiser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-11T21:51:08Z",
+      "side": 1,
+      "message": "Instead, take a device ID as a parameter to this function and use it here.",
+      "range": {
+        "startLine": 50,
+        "startChar": 49,
+        "endLine": 50,
+        "endChar": 68
+      },
+      "revId": "450b22c5f8aacc3020a2ffcfdc7363befb634090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
