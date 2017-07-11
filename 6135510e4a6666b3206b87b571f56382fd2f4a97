@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f51e05fb_210d1b62",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001815
+      },
+      "writtenOn": "2017-07-11T22:03:23Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "43493ba6_d240a449",
+      "range": {
+        "startLine": 14,
+        "startChar": 21,
+        "endLine": 14,
+        "endChar": 26
+      },
+      "revId": "6135510e4a6666b3206b87b571f56382fd2f4a97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2af31a6f_b301f90c",
         "filename": "/COMMIT_MSG",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-11T03:51:31Z",
       "side": 1,
       "message": "Can\u0027t Intel easily fix this by adding a license header to this file upstream?",
+      "range": {
+        "startLine": 20,
+        "startChar": 16,
+        "endLine": 20,
+        "endChar": 22
+      },
+      "revId": "6135510e4a6666b3206b87b571f56382fd2f4a97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebcb60f2_bd696ab9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001815
+      },
+      "writtenOn": "2017-07-11T22:03:23Z",
+      "side": 1,
+      "message": "Yes, it was fixed and to be available on next release.",
+      "parentUuid": "2af31a6f_b301f90c",
       "range": {
         "startLine": 20,
         "startChar": 16,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d7821c44_c65a300d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001815
+      },
+      "writtenOn": "2017-07-11T22:03:23Z",
+      "side": 1,
+      "message": "This is also going to be fixed on next release.",
+      "parentUuid": "3362bb2f_7c9a5a11",
+      "range": {
+        "startLine": 21,
+        "startChar": 60,
+        "endLine": 21,
+        "endChar": 71
+      },
+      "revId": "6135510e4a6666b3206b87b571f56382fd2f4a97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7a091124_dc0b7e43",
         "filename": "media/gpu/vaapi_wrapper.cc",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2017-07-11T03:51:31Z",
       "side": 1,
       "message": "This change should not be required anymore as per https://chromium-review.googlesource.com/c/566204/",
+      "range": {
+        "startLine": 1229,
+        "startChar": 35,
+        "endLine": 1229,
+        "endChar": 36
+      },
+      "revId": "6135510e4a6666b3206b87b571f56382fd2f4a97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "035ba3c3_2557e808",
+        "filename": "media/gpu/vaapi_wrapper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1229,
+      "author": {
+        "id": 1001815
+      },
+      "writtenOn": "2017-07-11T22:03:23Z",
+      "side": 1,
+      "message": "Yes, if that patch gets merged first.",
+      "parentUuid": "7a091124_dc0b7e43",
       "range": {
         "startLine": 1229,
         "startChar": 35,
