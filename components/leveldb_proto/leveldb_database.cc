@@ -91,6 +91,12 @@ bool LevelDB::Init(const leveldb_proto::Options& options) {
   leveldb_options.create_if_missing = true;
   leveldb_options.max_open_files = 0;  // Use minimum.
   leveldb_options.reuse_logs = leveldb_env::kDefaultLogReuseOptionValue;
+
+  static leveldb::Cache* g_block_cache = nullptr;
+  if (!g_block_cache)
+    g_block_cache = leveldb::NewLRUCache(0);
+
+  leveldb_options.block_cache = g_block_cache;
   if (options.write_buffer_size != 0)
     leveldb_options.write_buffer_size = options.write_buffer_size;
   if (options.read_cache_size != 0) {
