@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c46aca9f_361e54ea",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-11T15:55:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f381709_45c42ec1",
+      "range": {
+        "startLine": 667,
+        "startChar": 72,
+        "endLine": 667,
+        "endChar": 74
+      },
+      "revId": "73b838554576d9c947b6082bf9352d5d30131ba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd9f64dd_834b4cda",
         "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
         "patchSetId": 2
@@ -95,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "25ed3484_6745be1c",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-11T15:55:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd9f64dd_834b4cda",
+      "range": {
+        "startLine": 684,
+        "startChar": 51,
+        "endLine": 684,
+        "endChar": 52
+      },
+      "revId": "73b838554576d9c947b6082bf9352d5d30131ba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b7b3006_1348b460",
         "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
         "patchSetId": 2
@@ -115,6 +163,30 @@
       "revId": "73b838554576d9c947b6082bf9352d5d30131ba2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e86d7b2c_f432cb52",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-11T15:55:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b7b3006_1348b460",
+      "range": {
+        "startLine": 688,
+        "startChar": 51,
+        "endLine": 688,
+        "endChar": 52
+      },
+      "revId": "73b838554576d9c947b6082bf9352d5d30131ba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
