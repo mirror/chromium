@@ -11,8 +11,6 @@
 
 #include "base/logging.h"
 #include "base/macros.h"
-// TODO(xhwang): Remove this include after http://crbug.com/656706 is fixed.
-#include "media/base/content_decryption_module.h"
 #include "media/base/media_export.h"
 
 namespace media {
@@ -53,8 +51,8 @@ class MEDIA_EXPORT CdmPromise {
     KEY_IDS_VECTOR_TYPE
   };
 
-  CdmPromise();
-  virtual ~CdmPromise();
+  CdmPromise() = default;
+  virtual ~CdmPromise() = default;
 
   // Used to indicate that the operation failed. |exception_code| must be
   // specified. |system_code| is a Key System-specific value for the error
@@ -95,7 +93,7 @@ struct CdmPromiseTraits<std::string> {
 // This class adds the resolve(T) method. This class is still an interface, and
 // is used as the type of promise that gets passed around.
 template <typename... T>
-class MEDIA_EXPORT CdmPromiseTemplate : public CdmPromise {
+class CdmPromiseTemplate : public CdmPromise {
  public:
   CdmPromiseTemplate() : is_settled_(false) {}
 
@@ -108,9 +106,7 @@ class MEDIA_EXPORT CdmPromiseTemplate : public CdmPromise {
                       uint32_t system_code,
                       const std::string& error_message) = 0;
 
-  ResolveParameterType GetResolveParameterType() const override {
-    return CdmPromiseTraits<T...>::kType;
-  }
+  virtual ResolveParameterType GetResolveParameterType() const = 0;
 
  protected:
   bool IsPromiseSettled() const { return is_settled_; }

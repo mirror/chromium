@@ -245,6 +245,9 @@ class IgnoreResponsePromise : public SimpleCdmPromise {
               const std::string& error_message) final {
     MarkPromiseSettled();
   }
+  CdmPromise::ResolveParameterType GetResolveParameterType() const final {
+    return CdmPromise::VOID_TYPE;
+  }
 };
 
 }  // namespace
