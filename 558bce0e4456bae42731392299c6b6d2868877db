@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "92d76f36_5c2654aa",
+        "filename": "chrome/common/BUILD.gn",
+        "patchSetId": 16
+      },
+      "lineNbr": 718,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-07-11T23:31:53Z",
+      "side": 1,
+      "message": "I see.\n\nThanks!",
+      "parentUuid": "c4fac1de_73a9a469",
+      "revId": "558bce0e4456bae42731392299c6b6d2868877db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "97f53425_05b01d85",
         "filename": "third_party/WebKit/public/BUILD.gn",
         "patchSetId": 16
@@ -33,6 +51,24 @@
       "revId": "558bce0e4456bae42731392299c6b6d2868877db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe74c7d9_6cc3dc80",
+        "filename": "third_party/WebKit/public/BUILD.gn",
+        "patchSetId": 16
+      },
+      "lineNbr": 714,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-07-11T23:31:53Z",
+      "side": 1,
+      "message": "I see. Removed.",
+      "parentUuid": "97f53425_05b01d85",
+      "revId": "558bce0e4456bae42731392299c6b6d2868877db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
