@@ -85,31 +85,29 @@ function initialize() {
           'secondCustodianEmail');
     }
   }
-  var showDetailsLink = loadTimeData.getString('showDetailsLink');
-  $('show-details-link').hidden = !showDetailsLink;
-  $('back-button').hidden = showDetailsLink || !window.domAutomationController;
   $('back-button').onclick = function(event) {
     sendCommand('back');
   };
-  $('show-details-link').onclick = function(event) {
-    showDetails = true;
-    $('show-details-link').hidden = true;
-    $('hide-details-link').hidden = false;
-    updateDetails();
-  };
-  $('hide-details-link').onclick = function(event) {
-    showDetails = false;
-    $('show-details-link').hidden = false;
-    $('hide-details-link').hidden = true;
-    updateDetails();
-  };
   if (window.domAutomationController &&
         loadTimeData.getBoolean('showFeedbackLink')) {
+    $('show-details-link').onclick = function(event) {
+      showDetails = true;
+      $('show-details-link').hidden = true;
+      $('hide-details-link').hidden = false;
+      updateDetails();
+    };
+    $('hide-details-link').onclick = function(event) {
+      showDetails = false;
+      $('show-details-link').hidden = false;
+      $('hide-details-link').hidden = true;
+      updateDetails();
+    };
     $('feedback-link').onclick = function(event) {
       sendCommand('feedback');
     };
   } else {
     $('feedback').hidden = true;
+    $('details-button-container').hidden = true;
   }
 }
 
