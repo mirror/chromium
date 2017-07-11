@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce153f13_37c31f3a",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position-3/position-sticky-nested-left.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2017-07-11T19:39:50Z",
+      "side": 1,
+      "message": "An alternative is to add \"font-size: 0;\" in \".contents\". That way you can still format the divs as usual without unexpected offset and guarantee the readability. Just mention the reason of using font-size in the class. Same for the test with right constraint.",
+      "range": {
+        "startLine": 95,
+        "startChar": 50,
+        "endLine": 95,
+        "endChar": 71
+      },
+      "revId": "457b6a8d3d977ac5e1dc126400b2064ad73f80ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
