@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "804bd36f_e1daadf1",
+        "filename": "components/cronet/ios/cronet_environment.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-07-11T21:54:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "482f9fe5_331d5aae",
+      "revId": "5252ac4ac619ca3a6a7a1ec8319ffd23645d25f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52b10466_c5817292",
         "filename": "components/cronet/ios/test/cronet_netlog_test.mm",
         "patchSetId": 1
