@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "23c44789_d4791a31",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/ImageSerializationTag.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-07-11T15:16:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9db5e648_ccb0c6c4",
+      "revId": "17853883f739cde217f3652d043a60b205c960a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a1b2b1e_8852644c",
         "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/ImageSerializationTag.h",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "17853883f739cde217f3652d043a60b205c960a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bae9457b_e6542b87",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/ImageSerializationTag.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-07-11T15:16:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a1b2b1e_8852644c",
+      "revId": "17853883f739cde217f3652d043a60b205c960a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "0bd206ad_4a12687c",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/ImageSerializationTag.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-07-11T15:16:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df94cf0f_4e86ee1c",
+      "revId": "17853883f739cde217f3652d043a60b205c960a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09ff0c99_851b16ed",
         "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueDeserializer.cpp",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "17853883f739cde217f3652d043a60b205c960a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf8d62a6_316302e3",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueDeserializer.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-07-11T15:16:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09ff0c99_851b16ed",
+      "revId": "17853883f739cde217f3652d043a60b205c960a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "9aea8250_8b6705fd",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueDeserializer.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-07-11T15:16:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9717c24_155e2fbf",
+      "revId": "17853883f739cde217f3652d043a60b205c960a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3655aefb_8efedc73",
         "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueDeserializer.cpp",
         "patchSetId": 6
@@ -101,6 +191,24 @@
       "revId": "17853883f739cde217f3652d043a60b205c960a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c29240a7_f80406e2",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueDeserializer.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-07-11T15:16:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3655aefb_8efedc73",
+      "revId": "17853883f739cde217f3652d043a60b205c960a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "32bc6b9c_1afb9e73",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueDeserializer.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-07-11T15:16:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d85c9c3_8522e55c",
+      "revId": "17853883f739cde217f3652d043a60b205c960a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6bb18047_213db9ec",
         "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueDeserializer.cpp",
         "patchSetId": 6
@@ -135,6 +261,24 @@
       "revId": "17853883f739cde217f3652d043a60b205c960a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "614a0191_f6af1138",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueDeserializer.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-07-11T15:16:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6bb18047_213db9ec",
+      "revId": "17853883f739cde217f3652d043a60b205c960a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "503fa2f2_125668a6",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueDeserializer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-07-11T15:16:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52afff46_4a2207f8",
+      "revId": "17853883f739cde217f3652d043a60b205c960a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a71f787_15ef58eb",
         "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueSerializer.cpp",
         "patchSetId": 6
@@ -169,6 +331,24 @@
       "revId": "17853883f739cde217f3652d043a60b205c960a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8a8f151_5552fcea",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueSerializer.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-07-11T15:16:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a71f787_15ef58eb",
+      "revId": "17853883f739cde217f3652d043a60b205c960a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "66951ca4_f3de535a",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueSerializer.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-07-11T15:16:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4701ac2e_cbf51642",
+      "revId": "17853883f739cde217f3652d043a60b205c960a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b743d8c_510ef115",
         "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueSerializer.cpp",
         "patchSetId": 6
@@ -203,6 +401,24 @@
       "revId": "17853883f739cde217f3652d043a60b205c960a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f37a299_8ed4e7de",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueSerializer.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-07-11T15:16:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b743d8c_510ef115",
+      "revId": "17853883f739cde217f3652d043a60b205c960a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "6336c172_63ad4a26",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueSerializer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-07-11T15:16:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01280abd_dcee594b",
+      "revId": "17853883f739cde217f3652d043a60b205c960a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "352bdb29_3e8e023c",
         "filename": "third_party/WebKit/Source/core/html/ImageData.h",
         "patchSetId": 6
@@ -237,6 +471,24 @@
       "revId": "17853883f739cde217f3652d043a60b205c960a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5744ea1d_6399a6a2",
+        "filename": "third_party/WebKit/Source/core/html/ImageData.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-07-11T15:16:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "352bdb29_3e8e023c",
+      "revId": "17853883f739cde217f3652d043a60b205c960a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -257,6 +509,24 @@
     },
     {
       "key": {
+        "uuid": "3a213915_73f6a860",
+        "filename": "third_party/WebKit/Source/core/html/ImageData.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-07-11T15:16:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53d768a9_d702e3a0",
+      "revId": "17853883f739cde217f3652d043a60b205c960a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9587fbf_4f391ee4",
         "filename": "third_party/WebKit/Source/platform/graphics/CanvasColorParams.cpp",
         "patchSetId": 6
@@ -268,6 +538,24 @@
       "writtenOn": "2017-07-07T20:00:50Z",
       "side": 1,
       "message": "Defer to junov@, but building these (though we will thankfully hit a Skia-side cache) just to do the comparison looks kinda expensive. Is this the idiomatic way to tell?",
+      "revId": "17853883f739cde217f3652d043a60b205c960a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8535f124_a65074be",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasColorParams.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-07-11T15:16:58Z",
+      "side": 1,
+      "message": "As far as I know this is the only way we can make sure the color spaces match (I will check again with Brian though, as we are using this check repeatedly in color management code). I\u0027m not sure how expensive is to engage Skia, but I expect the comparison to end up in a memcmp call over small SkColorSpace objects (since Skia does not use color look-up tables for standard color spaces).\n(https://cs.chromium.org/chromium/src/third_party/skia/src/core/SkColorSpace.cpp?q\u003dSkColorSpace::Equals\u0026sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d526).",
+      "parentUuid": "d9587fbf_4f391ee4",
       "revId": "17853883f739cde217f3652d043a60b205c960a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -291,6 +579,24 @@
     },
     {
       "key": {
+        "uuid": "203810fc_6830646f",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasColorParams.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-07-11T15:16:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f52952c_61b4b2eb",
+      "revId": "17853883f739cde217f3652d043a60b205c960a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0a65fdb_ce853435",
         "filename": "third_party/WebKit/Source/platform/graphics/CanvasColorParams.h",
         "patchSetId": 6
@@ -302,6 +608,24 @@
       "writtenOn": "2017-07-07T20:00:50Z",
       "side": 1,
       "message": "These seem like they could be smaller helper functions living somewhere that convert between the for-serialization and internal-use enums (assuming we\u0027re not willing to lock in values of the current enums forever), to avoid making this class more complicated.",
+      "revId": "17853883f739cde217f3652d043a60b205c960a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a2471d0_30515ccf",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasColorParams.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-07-11T15:16:58Z",
+      "side": 1,
+      "message": "Moved to a new class in serialization code.",
+      "parentUuid": "d0a65fdb_ce853435",
       "revId": "17853883f739cde217f3652d043a60b205c960a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
