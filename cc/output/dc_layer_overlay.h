@@ -60,6 +60,8 @@ class CC_EXPORT DCLayerOverlay {
   // If |rpdq| is present, then the renderer must draw the filter effects and
   // copy the result into an IOSurface.
   const RenderPassDrawQuad* rpdq = nullptr;
+
+  gfx::ColorSpace color_space;
 };
 
 typedef std::vector<DCLayerOverlay> DCLayerOverlayList;

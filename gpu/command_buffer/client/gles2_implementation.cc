@@ -40,6 +40,7 @@
 #include "gpu/command_buffer/common/gles2_cmd_utils.h"
 #include "gpu/command_buffer/common/id_allocator.h"
 #include "gpu/command_buffer/common/sync_token.h"
+#include "ui/gfx/color_space.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/rect_f.h"
 
@@ -4993,6 +4994,26 @@ void GLES2Implementation::ScheduleDCLayerSharedStateCHROMIUM(
   memcpy(mem + 4, transform, 16 * sizeof(GLfloat));
   helper_->ScheduleDCLayerSharedStateCHROMIUM(opacity, is_clipped, z_order,
                                               buffer.shm_id(), buffer.offset());
+}
+
+void GLES2Implementation::SetColorSpaceForScanoutCHROMIUM(
+    GLuint texture_id,
+    ColorSpace color_space) {
+  gfx::ColorSpace* gfx_color_space =
+      reinterpret_cast<gfx::ColorSpace*>(color_space);
+  base::Pickle color_space_data;
+  gfx_color_space->Serialize(&color_space_data);
+
+  ScopedTransferBufferPtr buffer(color_space_data.size(), helper_,
+                                 transfer_buffer_);
+  if (!buffer.valid() || buffer.size() < color_space_data.size()) {
+    SetGLError(GL_OUT_OF_MEMORY, "GLES2::SetColorSpaceForScanoutCHROMIUM",
+               "out of memory");
+    return;
+  }
+  memcpy(buffer.address(), color_space_data.data(), color_space_data.size());
+  helper_->SetColorSpaceForScanoutCHROMIUM(
+      texture_id, buffer.shm_id(), buffer.offset(), color_space_data.size());
 }
 
 void GLES2Implementation::ScheduleDCLayerCHROMIUM(

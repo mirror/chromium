@@ -159,6 +159,7 @@ component("gles2_implementation") {
     "//gpu/command_buffer/client",
     "//gpu/command_buffer/common",
     "//gpu/command_buffer/common:gles2_utils",
+    "//ui/gfx:color_space",
     "//ui/gfx/geometry",
   ]
 }
@@ -183,6 +184,7 @@ component("gles2_implementation_no_check") {
     "//gpu/command_buffer/common",
     "//gpu/command_buffer/common:gles2_utils",
     "//ui/gfx",
+    "//ui/gfx:color_space",
     "//ui/gfx/geometry",
   ]
 }
