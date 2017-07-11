@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c954df57_97935c92",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/FirstRunFlowSequencer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-07-11T13:42:31Z",
+      "side": 0,
+      "message": "IIRC, finish previous LightweightFirstRunActivity is for startActivityForResult, but now LightweightFirstRunActivity is launched with pendingIntent only, might be OK here.\n\nbut not sure I understand the root cause in the description since we add \u0027FLAG_ACTIVITY_NEW_TASK\u0027 flag for intent and caller in this function.",
+      "range": {
+        "startLine": 392,
+        "startChar": 33,
+        "endLine": 392,
+        "endChar": 42
+      },
+      "revId": "cc73643302ad7ea271c063fb21fbb8c047cf837e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
