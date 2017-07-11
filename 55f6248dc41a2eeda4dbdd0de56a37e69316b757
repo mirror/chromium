@@ -282,6 +282,24 @@
       "revId": "55f6248dc41a2eeda4dbdd0de56a37e69316b757",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4396dd9_5f87b48a",
+        "filename": "ui/compositor/external_begin_frame_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-07-11T09:11:05Z",
+      "side": 1,
+      "message": "Moved observer to Display.\n\nI could integrate the functionality implemented in ExternalBFController into ui::Compositor or GpuPTF, too. Just figured it would make sense not to bloat either of them further. I\u0027d like to avoid exposing BeginFrameSources (ExternalBFS/Client) to clients, so that we can later move relatively easily to IPC for ExternalBeginFrameController/Client interaction once the DisplayCopmositor lives in a different process. Does that make sense? :) \n\n+fsamuel@ since he might have comments about how to best do this, too.",
+      "parentUuid": "d677ce02_da7d80af",
+      "revId": "55f6248dc41a2eeda4dbdd0de56a37e69316b757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
