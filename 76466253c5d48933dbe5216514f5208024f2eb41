@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6bbba141_79dc84fb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-07-11T21:40:14Z",
+      "side": 1,
+      "message": "Currently there is not a good way to test the whole piece.",
+      "parentUuid": "263c4b6d_a6dc7a4c",
+      "revId": "76466253c5d48933dbe5216514f5208024f2eb41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7e61c2cd_b3be082e",
         "filename": "chrome/browser/android/offline_pages/downloads/offline_page_download_bridge.cc",
         "patchSetId": 1
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "3a9b7dcd_97591f8b",
+        "filename": "chrome/browser/android/offline_pages/downloads/offline_page_download_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-07-11T21:40:14Z",
+      "side": 1,
+      "message": "Added comment for this.",
+      "parentUuid": "9a4a4e2a_f912e6d2",
+      "revId": "76466253c5d48933dbe5216514f5208024f2eb41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3c176363_5dec4380",
         "filename": "chrome/browser/android/offline_pages/downloads/offline_page_download_bridge.cc",
         "patchSetId": 1
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "9a496f53_98e55c9c",
+        "filename": "chrome/browser/android/offline_pages/downloads/offline_page_download_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-07-11T21:40:14Z",
+      "side": 1,
+      "message": "No. It should be handled by AcquireFileAccessPermission.",
+      "parentUuid": "3c176363_5dec4380",
+      "revId": "76466253c5d48933dbe5216514f5208024f2eb41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d428e327_ccfd8dd3",
         "filename": "chrome/browser/android/offline_pages/downloads/offline_page_download_bridge.cc",
         "patchSetId": 1
@@ -81,6 +135,24 @@
       "writtenOn": "2017-07-10T22:55:40Z",
       "side": 1,
       "message": "Is there any chance that |url| will be different by this time?  Is that important?",
+      "revId": "76466253c5d48933dbe5216514f5208024f2eb41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f438af28_b871cccf",
+        "filename": "chrome/browser/android/offline_pages/downloads/offline_page_download_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-07-11T21:40:14Z",
+      "side": 1,
+      "message": "It is not likely because:\n1) The permission dialog is model\n2) We\u0027re already in a non-html page so the redirection is not possible.",
+      "parentUuid": "d428e327_ccfd8dd3",
       "revId": "76466253c5d48933dbe5216514f5208024f2eb41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
