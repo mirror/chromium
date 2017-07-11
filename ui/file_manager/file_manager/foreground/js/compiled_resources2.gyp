@@ -143,6 +143,17 @@
       'includes': ['../../../compile_js2.gypi'],
     },
     {
+      'target_name': 'file_action_menu_controller',
+      'dependencies': [
+        '../../../externs/compiled_resources2.gyp:directory_change_event',
+        '../elements/compiled_resources2.gyp:files_toggle_ripple',
+        '<(DEPTH)/ui/webui/resources/js/cr/ui/compiled_resources2.gyp:context_menu_button',
+        'directory_model',
+        'file_manager_commands',
+      ],
+      'includes': ['../../../compile_js2.gypi'],
+    },
+    {
       'target_name': 'file_list_model',
       'dependencies': [
         '../../common/js/compiled_resources2.gyp:file_type',
@@ -173,6 +184,7 @@
         'directory_model',
         'elements_importer',
         'empty_folder_controller',
+        'file_action_menu_controller',
         'file_selection',
         'file_transfer_controller',
         'folder_shortcuts_data_model',
