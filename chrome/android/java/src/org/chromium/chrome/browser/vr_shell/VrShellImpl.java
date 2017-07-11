@@ -354,7 +354,7 @@ public class VrShellImpl
         setSplashScreenIcon();
 
         // Set the UI and content sizes before we load the UI.
-        updateWebVrDisplaySize(forWebVr);
+        setContentCssSize(DEFAULT_CONTENT_WIDTH, DEFAULT_CONTENT_HEIGHT, DEFAULT_DPR);
 
         reparentAllTabs(mContentVrWindowAndroid);
         swapToForegroundTab();
@@ -576,17 +576,6 @@ public class VrShellImpl
     public void setWebVrModeEnabled(boolean enabled, boolean showToast) {
         mContentVrWindowAndroid.setVSyncPaused(enabled);
         nativeSetWebVrMode(mNativeVrShell, enabled, showToast);
-        updateWebVrDisplaySize(enabled);
-    }
-
-    private void updateWebVrDisplaySize(boolean inWebVr) {
-        if (inWebVr) {
-            DisplayAndroid primaryDisplay = DisplayAndroid.getNonMultiDisplay(mActivity);
-            setContentCssSize(
-                    primaryDisplay.getDisplayWidth(), primaryDisplay.getDisplayHeight(), WEBVR_DPR);
-        } else {
-            setContentCssSize(DEFAULT_CONTENT_WIDTH, DEFAULT_CONTENT_HEIGHT, DEFAULT_DPR);
-        }
     }
 
     @Override
