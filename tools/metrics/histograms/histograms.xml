@@ -621,6 +621,27 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Android.ChildProcessLauncher.OnServiceConnectedTime"
+    units="ms">
+  <owner>boliu@chromium.org</owner>
+  <summary>
+    Measure time from bindService call to onServiceConnected. This is part of
+    launching child services on Android that's under Android's control. Recorded
+    in the first onServiceConnected of a connection.
+  </summary>
+</histogram>
+
+<histogram name="Android.ChildProcessLauncher.OnServiceConnectedTimedOut"
+    enum="BooleanTimedOut">
+  <owner>boliu@chromium.org</owner>
+  <summary>
+    Boolean histogram that's recorded timed out waiting for OnServiceConnected.
+    The false case is equivalent to when
+    Android.ChildProcessLauncher.OnServiceConnectedTime is recorded, so is not
+    recorded again.
+  </summary>
+</histogram>
+
 <histogram name="Android.ChromeHome.DurationOpen" units="ms">
   <owner>mdjones@chromium.org</owner>
   <owner>twellington@chromium.org</owner>
