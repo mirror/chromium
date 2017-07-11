@@ -85,6 +85,9 @@ class HostScanCache : public TetherHostResponseRecorder::Observer {
   // TetherHostResponseRecorder::Observer:
   void OnPreviouslyConnectedHostIdsChanged() override;
 
+  // Retrieve the network state handler.
+  NetworkStateHandler* GetNetworkStateHandler();
+
  private:
   friend class HostScanCacheTest;
 
@@ -106,8 +109,8 @@ class HostScanCache : public TetherHostResponseRecorder::Observer {
   // timer fires, the result is removed (unless it corresponds to the active
   // host).
   std::unordered_map<std::string, std::unique_ptr<base::Timer>>
-      tether_guid_to_timer_map_;
-  std::unordered_set<std::string> setup_required_tether_guids_;
+      tether_guid_to_timer_map_ std::unordered_set<std::string>
+          setup_required_tether_guids_;
   base::WeakPtrFactory<HostScanCache> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(HostScanCache);
