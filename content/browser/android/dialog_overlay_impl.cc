@@ -25,24 +25,44 @@ static jlong Init(JNIEnv* env,
                   jlong high,
                   jlong low) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  return reinterpret_cast<jlong>(new DialogOverlayImpl(
-      obj, base::UnguessableToken::Deserialize(high, low)));
+
+  RenderFrameHostImpl* rfhi =
+      content::RenderFrameHostImpl::FromOverlayRoutingToken(
+          base::UnguessableToken::Deserialize(high, low));
+
+  // The routing token may have been invalid.
+  if (!rfhi)
+    return 0;
+
+  WebContentsImpl* web_contents_impl = static_cast<WebContentsImpl*>(
+      content::WebContents::FromRenderFrameHost(rfhi));
+
+  // If the overlay would not be immediately used, fail the request.
+  if (!rfhi->IsCurrent() || web_contents_impl->IsHidden())
+    return 0;
+
+  ContentViewCoreImpl* cvc =
+      content::ContentViewCoreImpl::FromWebContents(web_contents_impl);
+
+  if (!cvc)
+    return 0;
+
+  return reinterpret_cast<jlong>(
+      new DialogOverlayImpl(obj, rfhi, web_contents_impl, cvc));
 }
 
 DialogOverlayImpl::DialogOverlayImpl(const JavaParamRef<jobject>& obj,
-                                     const base::UnguessableToken& token)
-    : token_(token), cvc_(nullptr) {
+                                     RenderFrameHostImpl* rfhi,
+                                     WebContents* web_contents,
+                                     ContentViewCoreImpl* cvc)
+    : WebContentsObserver(web_contents), rfhi_(rfhi), cvc_(cvc) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  cvc_ = GetContentViewCore();
+
+  DCHECK(rfhi_);
+  DCHECK(cvc_);
 
   JNIEnv* env = AttachCurrentThread();
   obj_ = JavaObjectWeakGlobalRef(env, obj);
-
-  // If there's no CVC, then just post a null token immediately.
-  if (!cvc_) {
-    Java_DialogOverlayImpl_onDismissed(env, obj.obj());
-    return;
-  }
 
   cvc_->AddObserver(this);
 
@@ -58,6 +78,16 @@ DialogOverlayImpl::~DialogOverlayImpl() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   // We should only be deleted after one unregisters for token callbacks.
   DCHECK(!cvc_);
+}
+
+void DialogOverlayImpl::Stop() {
+  rfhi_ = nullptr;
+  UnregisterForTokensIfNeeded();
+
+  JNIEnv* env = AttachCurrentThread();
+  ScopedJavaLocalRef<jobject> obj = obj_.get(env);
+  if (!obj.is_null())
+    Java_DialogOverlayImpl_onDismissed(env, obj.obj());
 }
 
 void DialogOverlayImpl::Destroy(JNIEnv* env, const JavaParamRef<jobject>& obj) {
@@ -92,12 +122,36 @@ void DialogOverlayImpl::UnregisterForTokensIfNeeded() {
 
 void DialogOverlayImpl::OnContentViewCoreDestroyed() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  cvc_ = nullptr;
+  Stop();
+}
 
-  JNIEnv* env = AttachCurrentThread();
-  ScopedJavaLocalRef<jobject> obj = obj_.get(env);
-  if (!obj.is_null())
-    Java_DialogOverlayImpl_onDismissed(env, obj.obj());
+void DialogOverlayImpl::RenderFrameDeleted(RenderFrameHost* render_frame_host) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  if (render_frame_host == rfhi_)
+    Stop();
+}
+
+void DialogOverlayImpl::RenderFrameHostChanged(RenderFrameHost* old_host,
+                                               RenderFrameHost* new_host) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  if (old_host == rfhi_)
+    Stop();
+}
+
+void DialogOverlayImpl::FrameDeleted(RenderFrameHost* render_frame_host) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  if (render_frame_host == rfhi_)
+    Stop();
+}
+
+void DialogOverlayImpl::WasHidden() {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  Stop();
+}
+
+void DialogOverlayImpl::WebContentsDestroyed() {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  Stop();
 }
 
 void DialogOverlayImpl::OnAttachedToWindow() {
@@ -119,30 +173,6 @@ void DialogOverlayImpl::OnDetachedFromWindow() {
   ScopedJavaLocalRef<jobject> obj = obj_.get(env);
   if (!obj.is_null())
     Java_DialogOverlayImpl_onWindowToken(env, obj.obj(), nullptr);
-}
-
-ContentViewCoreImpl* DialogOverlayImpl::GetContentViewCore() {
-  // Get the frame from the token.
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  content::RenderFrameHost* frame =
-      content::RenderFrameHostImpl::FromOverlayRoutingToken(token_);
-  if (!frame) {
-    DVLOG(1) << "Cannot find frame host for token " << token_;
-    return nullptr;
-  }
-
-  content::WebContents* web_contents =
-      content::WebContents::FromRenderFrameHost(frame);
-  DCHECK(web_contents);
-
-  content::ContentViewCoreImpl* cvc =
-      content::ContentViewCoreImpl::FromWebContents(web_contents);
-  if (!cvc) {
-    DVLOG(1) << "Cannot find cvc for token " << token_;
-    return nullptr;
-  }
-
-  return cvc;
 }
 
 static jint RegisterSurface(JNIEnv* env,
