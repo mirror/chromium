@@ -213,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "38e5374f_f4a53acf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/FirstRunSignInProcessor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-07-11T13:59:49Z",
+      "side": 1,
+      "message": "As discussed offline, I am ok to remove these checks since this is expected for ChromeTabbedActivity and CustomTabActivity.",
+      "parentUuid": "a4c3ce8a_b3709c87",
+      "range": {
+        "startLine": 70,
+        "startChar": 33,
+        "endLine": 70,
+        "endChar": 36
+      },
+      "revId": "6d5326a9fc1322e9264d2d5745740dae30ea7eca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a246e7f0_6da2be72",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/AsyncInitializationActivity.java",
         "patchSetId": 3
