@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bafe88aa_554dc1c7",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 1326,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-07-11T17:12:13Z",
+      "side": 1,
+      "message": "good catch, I mixed these two up.",
+      "parentUuid": "b6bbea84_c05f1f2d",
+      "revId": "e46aef28b8e89197c3b85c509b94905a24dd2bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1e1f0a9_07f9be98",
         "filename": "testing/variations/fieldtrial_testing_config.json",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "e46aef28b8e89197c3b85c509b94905a24dd2bc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfabd641_3426fc7c",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 1327,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-07-11T17:12:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1e1f0a9_07f9be98",
+      "revId": "e46aef28b8e89197c3b85c509b94905a24dd2bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
