@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "138e670a_e21d0d5d",
+        "filename": "cloud_print/virtual_driver/win/port_monitor/port_monitor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-07-11T09:24:59Z",
+      "side": 1,
+      "message": "nit: I\u0027d suggest you change this to:\n\nif (!GetTokenInfo...) return false;\nreturn session_id !\u003d 0;",
+      "range": {
+        "startLine": 308,
+        "startChar": 11,
+        "endLine": 308,
+        "endChar": 16
+      },
+      "revId": "963708cd3c54633adbb93a98886077dee6922e11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
