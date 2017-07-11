@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c7381b4_9c810e46",
+        "filename": "base/atomic_sequence_num.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-11T18:54:32Z",
+      "side": 1,
+      "message": "Any significance to using this over \u003d 0;?\n\nI think \u003d 0 is usually preferred in Chrome.",
+      "range": {
+        "startLine": 26,
+        "startChar": 22,
+        "endLine": 26,
+        "endChar": 25
+      },
+      "revId": "a2fec929c2b19bf8cdfbed7dc674001e72ff4b7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
