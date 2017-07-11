@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9f12521c_8695da45",
+        "filename": "chrome/browser/ui/views/payments/payment_request_item_list.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2017-07-11T21:37:53Z",
+      "side": 1,
+      "message": "~~ Be the change you wish to see in the world ~~\n\n(done tho)",
+      "parentUuid": "cde1be41_8986b691",
+      "revId": "2a77459f1f20350ab70754f60fbcfe0ec5bdc761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "97c2fa4b_6b3851be",
         "filename": "chrome/browser/ui/views/payments/payment_request_item_list.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-11T18:29:52Z",
       "side": 1,
       "message": "I think it makes sense for the list itself to also be a view, and we can then do away with CreateListView entirely. WDYT?",
+      "revId": "2a77459f1f20350ab70754f60fbcfe0ec5bdc761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdcfe658_cd457b4e",
+        "filename": "chrome/browser/ui/views/payments/payment_request_item_list.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2017-07-11T21:37:53Z",
+      "side": 1,
+      "message": "Agreed but since it doesn\u0027t directly affect a11y in the same way, I\u0027d like to wait till 62.",
+      "parentUuid": "97c2fa4b_6b3851be",
       "revId": "2a77459f1f20350ab70754f60fbcfe0ec5bdc761",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d02058f3_2c1c1ec4",
+        "filename": "chrome/browser/ui/views/payments/payment_request_item_list.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2017-07-11T21:37:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d100fe1_4dae5a0c",
+      "revId": "2a77459f1f20350ab70754f60fbcfe0ec5bdc761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c735ff2f_b770cf44",
         "filename": "chrome/browser/ui/views/payments/payment_request_item_list.h",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "2a77459f1f20350ab70754f60fbcfe0ec5bdc761",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "905dc45a_161ecaa0",
+        "filename": "chrome/browser/ui/views/payments/payment_request_item_list.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2017-07-11T21:37:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c735ff2f_b770cf44",
+      "revId": "2a77459f1f20350ab70754f60fbcfe0ec5bdc761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
