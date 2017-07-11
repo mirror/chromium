@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "871af399_6f79e8ff",
+        "filename": "ios/chrome/browser/ntp_tiles/ntp_tiles_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-11T13:30:42Z",
+      "side": 1,
+      "message": "From offline conversation, I\u0027ll leave it as is. Then will do a follow up test or two handling a Refresh(), where the observer is set only once, before the navigation.",
+      "parentUuid": "4dbb7bb6_d7c73fc9",
+      "revId": "fb377bd316b52447992f98ed23d2da910b8d99e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "52853f97_5f4ad07b",
         "filename": "ios/chrome/browser/ntp_tiles/ntp_tiles_egtest.mm",
         "patchSetId": 1
