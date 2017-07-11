@@ -255,7 +255,7 @@ Format:
   "session_rate": "{Comparator}",
   "event_used": "{EventConfig}",
   "event_trigger": "{EventConfig}",
-  "event_???": "{EventConfig}",
+  "event_???": "{EventConfig}"
  }
 ```
 
@@ -286,6 +286,10 @@ The `FeatureConfig` fields `availability`, `session_rate`, `event_used` and
         that must have been met.
     *   Name must match `/^event_[a-zA-Z0-9-_]+$/` and not be `event_used` or
         `event_trigger`.
+
+*** note
+Any parameter starting with `x_` is ignored by the feature engagement tracker.
+***
 
 **Examples**
 
