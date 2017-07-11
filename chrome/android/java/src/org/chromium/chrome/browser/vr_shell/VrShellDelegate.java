@@ -360,6 +360,11 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
         }
     }
 
+    public static void showDoffAndExitVr(boolean optional) {
+        assert sInstance != null;
+        sInstance.showDoffAndExitVrInternal(optional);
+    }
+
     @CalledByNative
     private static VrShellDelegate getInstance() {
         Activity activity = ApplicationStatus.getLastTrackedFocusedActivity();
@@ -1066,7 +1071,7 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
         mShouldShowPageInfo = false;
     }
 
-    /* package */ void showDoffAndExitVr(boolean optional) {
+    private void showDoffAndExitVrInternal(boolean optional) {
         if (mShowingDaydreamDoff) return;
         if (showDoff(optional)) return;
         shutdownVr(true /* disableVrMode */, false /* canReenter */, true /* stayingInChrome */);
@@ -1074,7 +1079,7 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
 
     /* package */ void onUnhandledPageInfo() {
         mShouldShowPageInfo = true;
-        showDoffAndExitVr(true);
+        showDoffAndExitVrInternal(true);
     }
 
     /* package */ void exitCct() {
