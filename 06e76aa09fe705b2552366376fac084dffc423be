@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1541919d_ac66aa15",
+        "filename": "docs/fuchsia_build_instructions.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-11T23:35:20Z",
+      "side": 1,
+      "message": "Oh yes, we have a bug filed to fix that... *sigh*",
+      "parentUuid": "2bebab58_2cb165e0",
+      "range": {
+        "startLine": 96,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 63
+      },
+      "revId": "06e76aa09fe705b2552366376fac084dffc423be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce05d469_3b4083ff",
         "filename": "docs/fuchsia_build_instructions.md",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "06e76aa09fe705b2552366376fac084dffc423be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24757991_3389d5fa",
+        "filename": "docs/fuchsia_build_instructions.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-11T23:35:20Z",
+      "side": 1,
+      "message": "Ah, different kinds of brokenness; Debug builds actually provoke various bits of Debug book-keeping which dcheck_always_on may not - basically when I tried it it broke on ipc_tests, where Release build succeeded.",
+      "parentUuid": "ce05d469_3b4083ff",
+      "range": {
+        "startLine": 97,
+        "startChar": 39,
+        "endLine": 97,
+        "endChar": 72
+      },
+      "revId": "06e76aa09fe705b2552366376fac084dffc423be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
