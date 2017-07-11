@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4d28b8a_284314a9",
+        "filename": "third_party/WebKit/Source/core/inspector/DevToolsEmulator.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-11T00:25:44Z",
+      "side": 1,
+      "message": "Better ask web_view_ rather than store it yourself, since page scale may have been set not only through protocol, and could also be clamped and not being exactly equal to passed value.",
+      "range": {
+        "startLine": 244,
+        "startChar": 42,
+        "endLine": 244,
+        "endChar": 60
+      },
+      "revId": "2c89a3c1dab263a84bb6b6a6b2e0d836786cd059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
