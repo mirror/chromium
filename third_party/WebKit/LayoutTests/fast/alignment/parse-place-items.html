@@ -8,6 +8,9 @@
 #placeItemsCenterAuto {
   place-items: center auto;
 }
+#placeItemsCenterLegacy {
+  place-items: center legacy;
+}
 #placeItemsBaseline {
   place-items: baseline;
 }
@@ -74,6 +77,7 @@
   <div id="log"></div>
 
   <div id="placeItemsNormal"></div>
+  <div id="placeItemsCenterLegacy"></div>
   <div id="placeItemsCenterAuto"></div>
   <div id="placeItemsBaseline"></div>
   <div id="placeItemsFirstBaseline"></div>
@@ -125,8 +129,13 @@ test(function() {
 }, "Test getting the Computed Value of place-items's longhand properties when setting 'normal' value through CSS.");
 
 test(function() {
-  checkValues(placeItemsCenterAuto, "placeItems", "place-items", "", "center normal");
-  checkPlaceItemsValues(placeItemsCenterAuto, "", "center", "normal");
+  checkValues(placeItemsCenterLegacy, "placeItems", "place-items", "", "center normal");
+  checkPlaceItemsValues(placeItemsCenterLegacy, "", "center", "normal");
+}, "Test getting the Computed Value of place-items's longhand properties when setting 'center legacy' value through CSS.");
+
+test(function() {
+  checkValues(placeItemsCenterAuto, "placeItems", "place-items", "", "normal normal");
+  checkPlaceItemsValues(placeItemsCenterAuto, "", "normal", "normal");
 }, "Test getting the Computed Value of place-items's longhand properties when setting 'center auto' value through CSS.");
 
 test(function() {
