@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9450b565_80ce72d6",
+        "filename": "ios/web/app/web_main_loop.mm",
+        "patchSetId": 19
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-11T16:26:11Z",
+      "side": 1,
+      "message": "The callback returns a std::unique_ptr\u003c\u003e. Since it is a local variable, it will be destroyed at the end of the current statement, thus init_params will point to a deleted object. Instead this code should be changed to the following:\n\n  std::unique_ptr\u003cbase::TaskScheduler::InitParams\u003e init_params;\n  if (!init_params_callback.is_null()) {\n    init_params \u003d init_params_callback.Run();\n  }\n  ios_global_state::StartTaskScheduler(init_params.get());\n\nBTW, is there a point to passing a non-null callback that is allowed to return null? If not, maybe put a DCHECK(init_params) after calling the callback.\n\nIf as recommended you change TaskSchedulerInitParamsCallback to be a base::OnceCallback, then \"init_params_callback.Run()\" need to be replaced by \"std::move(init_params_callback).Run()\".",
+      "range": {
+        "startLine": 129,
+        "startChar": 18,
+        "endLine": 129,
+        "endChar": 50
+      },
+      "revId": "3c3b0f59854b1394ece6f6d4ffc27e2b396d743c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d95633bc_b897758c",
+        "filename": "ios/web/public/app/task_scheduler_init_params_callback.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-11T16:26:11Z",
+      "side": 1,
+      "message": "This callback is only invoked once, so maybe change this to base::OnceCallback (this is better as it ensure that the bound data is deallocated earlier). Caveat: base::OnceCallback is not copiable but is moveable, so you\u0027ll have to change the code to pass the callback by value and use std::move().",
+      "revId": "3c3b0f59854b1394ece6f6d4ffc27e2b396d743c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
