@@ -235,7 +235,8 @@ unsigned SQLTableBuilder::SealVersion() {
   return ++sealed_version_;
 }
 
-bool SQLTableBuilder::MigrateFrom(unsigned old_version, sql::Connection* db) {
+bool SQLTableBuilder::MigrateFrom(unsigned old_version,
+                                  sql::Connection* db) const {
   for (; old_version < sealed_version_; ++old_version) {
     if (!MigrateToNextFrom(old_version, db))
       return false;
@@ -244,7 +245,7 @@ bool SQLTableBuilder::MigrateFrom(unsigned old_version, sql::Connection* db) {
   return true;
 }
 
-bool SQLTableBuilder::CreateTable(sql::Connection* db) {
+bool SQLTableBuilder::CreateTable(sql::Connection* db) const {
   DCHECK(IsVersionLastAndSealed(sealed_version_));
   DCHECK(!constraints_.empty());
 
@@ -354,7 +355,7 @@ size_t SQLTableBuilder::NumberOfIndices() const {
 }
 
 bool SQLTableBuilder::MigrateToNextFrom(unsigned old_version,
-                                        sql::Connection* db) {
+                                        sql::Connection* db) const {
   DCHECK_LT(old_version, sealed_version_);
   DCHECK_GE(old_version, 0u);
   DCHECK(IsVersionLastAndSealed(sealed_version_));
@@ -456,7 +457,7 @@ bool SQLTableBuilder::MigrateToNextFrom(unsigned old_version,
 }
 
 bool SQLTableBuilder::MigrateIndicesToNextFrom(unsigned old_version,
-                                               sql::Connection* db) {
+                                               sql::Connection* db) const {
   DCHECK_LT(old_version, sealed_version_);
   DCHECK(IsVersionLastAndSealed(sealed_version_));
   sql::Transaction transaction(db);
@@ -486,6 +487,16 @@ bool SQLTableBuilder::MigrateIndicesToNextFrom(unsigned old_version,
 
 std::vector<SQLTableBuilder::Column>::reverse_iterator
 SQLTableBuilder::FindLastColumnByName(const std::string& name) {
+  // std::next(begin(), std::distance(cbegin(), c_it)) is currently the easiest
+  // way to obtain an iterator from a const_iterator.
+  return std::next(columns_.rbegin(),
+                   std::distance(columns_.crbegin(),
+                                 static_cast<const SQLTableBuilder&>(*this)
+                                     .FindLastColumnByName(name)));
+}
+
+std::vector<SQLTableBuilder::Column>::const_reverse_iterator
+SQLTableBuilder::FindLastColumnByName(const std::string& name) const {
   return std::find_if(
       columns_.rbegin(), columns_.rend(),
       [&name](const Column& column) { return name == column.name; });
@@ -493,6 +504,16 @@ SQLTableBuilder::FindLastColumnByName(const std::string& name) {
 
 std::vector<SQLTableBuilder::Index>::reverse_iterator
 SQLTableBuilder::FindLastIndexByName(const std::string& name) {
+  // std::next(begin(), std::distance(cbegin(), c_it)) is currently the easiest
+  // way to obtain an iterator from a const_iterator.
+  return std::next(indices_.rbegin(),
+                   std::distance(indices_.crbegin(),
+                                 static_cast<const SQLTableBuilder&>(*this)
+                                     .FindLastIndexByName(name)));
+}
+
+std::vector<SQLTableBuilder::Index>::const_reverse_iterator
+SQLTableBuilder::FindLastIndexByName(const std::string& name) const {
   return std::find_if(
       indices_.rbegin(), indices_.rend(),
       [&name](const Index& index) { return name == index.name; });
