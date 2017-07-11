@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "86d485af_8bc39b19",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-11T17:13:54Z",
+      "side": 1,
+      "message": "SGTM I will send you the CL.",
+      "parentUuid": "8efa41c8_59b80c04",
+      "revId": "32168b9a78405189a596c8c1e2c589c66229918e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a741797f_a3232c63",
         "filename": "components/omnibox/browser/history_url_provider.cc",
         "patchSetId": 2
