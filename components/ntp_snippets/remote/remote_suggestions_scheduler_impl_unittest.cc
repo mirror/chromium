@@ -29,14 +29,15 @@
 #include "components/ntp_snippets/remote/test_utils.h"
 #include "components/ntp_snippets/status.h"
 #include "components/ntp_snippets/user_classifier.h"
-#include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/testing_pref_service.h"
+#include "components/sync_preferences/testing_pref_service_syncable.h"
 #include "components/variations/variations_params_manager.h"
 #include "components/web_resource/web_resource_pref_names.h"
 #include "net/base/network_change_notifier.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
+using sync_preferences::TestingPrefServiceSyncable;
 using testing::ElementsAre;
 using testing::Eq;
 using testing::Field;
