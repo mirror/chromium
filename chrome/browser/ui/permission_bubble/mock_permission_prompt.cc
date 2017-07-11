@@ -52,6 +52,10 @@ void MockPermissionPrompt::Hide() {
   is_visible_ = false;
 }
 
+void MockPermissionPrompt::CheckNoActivePrompt() {
+  CHECK(!is_visible_);
+}
+
 void MockPermissionPrompt::UpdateAnchorPosition() {}
 
 gfx::NativeWindow MockPermissionPrompt::GetNativeWindow() {

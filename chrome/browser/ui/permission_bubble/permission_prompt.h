@@ -73,6 +73,10 @@ class PermissionPrompt {
   // Returns a reference to this prompt's native window.
   // TODO(hcarmona): Remove this as part of the bubble API work.
   virtual gfx::NativeWindow GetNativeWindow() = 0;
+
+  // CHECK() that there is no active prompt, to ensure the UI is still in sync
+  // with the PermissionRequestManager.
+  virtual void CheckNoActivePrompt() = 0;
 };
 
 #endif  // CHROME_BROWSER_UI_PERMISSION_BUBBLE_PERMISSION_PROMPT_H_

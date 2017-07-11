@@ -26,6 +26,7 @@ class MockPermissionPrompt : public PermissionPrompt {
   void Hide() override;
   void UpdateAnchorPosition() override;
   gfx::NativeWindow GetNativeWindow() override;
+  void CheckNoActivePrompt() override;
 
   bool IsVisible();
 

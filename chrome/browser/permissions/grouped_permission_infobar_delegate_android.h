@@ -64,6 +64,8 @@ class GroupedPermissionInfoBarDelegate : public ConfirmInfoBarDelegate {
 
   // InfoBarDelegate:
   bool EqualsDelegate(infobars::InfoBarDelegate* delegate) const override;
+  GroupedPermissionInfoBarDelegate* AsGroupedPermissionInfoBarDelegate()
+      override;
 
   const GURL requesting_origin_;
   // Whether the accept/deny decision is persisted.
