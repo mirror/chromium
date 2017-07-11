@@ -568,9 +568,9 @@ AutocompleteMatch HistoryURLProvider::SuggestExactInput(
   if (destination_url.is_valid()) {
     match.destination_url = destination_url;
 
-    // Trim off "http://" if the user didn't type it.
-    DCHECK(!trim_http ||
-           !AutocompleteInput::HasHTTPScheme(input.text()));
+    // Callers should only set |trim_http| to true if the input does not
+    // explicitly contain "http://".
+    DCHECK(!(trim_http && AutocompleteInput::HasHTTPScheme(input.text())));
     base::string16 display_string(url_formatter::FormatUrl(
         destination_url,
         url_formatter::kFormatUrlOmitAll & ~url_formatter::kFormatUrlOmitHTTP,
