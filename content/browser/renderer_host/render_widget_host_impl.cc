@@ -41,6 +41,7 @@
 #include "content/browser/renderer_host/dip_util.h"
 #include "content/browser/renderer_host/frame_metadata_util.h"
 #include "content/browser/renderer_host/input/input_router_config_helper.h"
+#include "content/browser/renderer_host/input/input_router_impl.h"
 #include "content/browser/renderer_host/input/legacy_input_router_impl.h"
 #include "content/browser/renderer_host/input/synthetic_gesture.h"
 #include "content/browser/renderer_host/input/synthetic_gesture_controller.h"
@@ -72,6 +73,7 @@
 #include "content/public/browser/render_widget_host_iterator.h"
 #include "content/public/browser/storage_partition.h"
 #include "content/public/common/content_constants.h"
+#include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/result_codes.h"
 #include "content/public/common/web_preferences.h"
@@ -264,6 +266,14 @@ RenderWidgetHostImpl::RenderWidgetHostImpl(RenderWidgetHostDelegate* delegate,
                                            RenderProcessHost* process,
                                            int32_t routing_id,
                                            bool hidden)
+    : RenderWidgetHostImpl(delegate, process, routing_id, nullptr, hidden) {}
+
+RenderWidgetHostImpl::RenderWidgetHostImpl(
+    RenderWidgetHostDelegate* delegate,
+    RenderProcessHost* process,
+    int32_t routing_id,
+    mojom::WidgetInputHandlerAssociatedPtr widget_input_handler,
+    bool hidden)
     : renderer_initialized_(false),
       destroyed_(false),
       delegate_(delegate),
@@ -303,6 +313,7 @@ RenderWidgetHostImpl::RenderWidgetHostImpl(RenderWidgetHostDelegate* delegate,
       current_content_source_id_(0),
       monitoring_composition_info_(false),
       compositor_frame_sink_binding_(this),
+      associated_widget_input_handler_(std::move(widget_input_handler)),
       weak_factory_(this) {
   CHECK(delegate_);
   CHECK_NE(MSG_ROUTING_NONE, routing_id_);
@@ -334,11 +345,7 @@ RenderWidgetHostImpl::RenderWidgetHostImpl(RenderWidgetHostDelegate* delegate,
 
   latency_tracker_.Initialize(routing_id_, GetProcess()->GetID());
 
-  input_router_.reset(new LegacyInputRouterImpl(
-      process_, this, this, routing_id_, GetInputRouterConfigForPlatform()));
-  legacy_widget_input_handler_ = base::MakeUnique<LegacyIPCWidgetInputHandler>(
-      static_cast<LegacyInputRouterImpl*>(input_router_.get()));
-
+  SetupInputRouter();
   touch_emulator_.reset();
 
   if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
@@ -1480,6 +1487,13 @@ void RenderWidgetHostImpl::SetCursor(const CursorInfo& cursor_info) {
 }
 
 mojom::WidgetInputHandler* RenderWidgetHostImpl::GetWidgetInputHandler() {
+  if (associated_widget_input_handler_) {
+    return associated_widget_input_handler_.get();
+  }
+  if (base::FeatureList::IsEnabled(features::kMojoInputMessages)) {
+    return widget_input_handler_.get();
+  }
+
   return legacy_widget_input_handler_.get();
 }
 
@@ -1691,11 +1705,9 @@ void RenderWidgetHostImpl::RendererExited(base::TerminationStatus status,
   // renderer. Otherwise it may be stuck waiting for the old renderer to ack an
   // event. (In particular, the above call to view_->RenderProcessGone will
   // destroy the aura window, which may dispatch a synthetic mouse move.)
-  input_router_.reset(new LegacyInputRouterImpl(
-      process_, this, this, routing_id_, GetInputRouterConfigForPlatform()));
-  legacy_widget_input_handler_ = base::MakeUnique<LegacyIPCWidgetInputHandler>(
-      static_cast<LegacyInputRouterImpl*>(input_router_.get()));
-
+  SetupInputRouter();
+  associated_widget_input_handler_ = nullptr;
+  widget_input_handler_ = nullptr;
   synthetic_gesture_controller_.reset();
 
   last_received_frame_token_ = 0;
@@ -2693,5 +2705,28 @@ device::mojom::WakeLock* RenderWidgetHostImpl::GetWakeLock() {
   return wake_lock_.get();
 }
 #endif
+
+void RenderWidgetHostImpl::SetupInputRouter() {
+  if (base::FeatureList::IsEnabled(features::kMojoInputMessages)) {
+    input_router_.reset(
+        new InputRouterImpl(this, this, GetInputRouterConfigForPlatform()));
+  } else {
+    input_router_.reset(new LegacyInputRouterImpl(
+        process_, this, this, routing_id_, GetInputRouterConfigForPlatform()));
+    legacy_widget_input_handler_ =
+        base::MakeUnique<LegacyIPCWidgetInputHandler>(
+            static_cast<LegacyInputRouterImpl*>(input_router_.get()));
+  }
+}
+
+void RenderWidgetHostImpl::SetWidgetInputHandler(
+    mojom::WidgetInputHandlerAssociatedPtr widget_input_handler) {
+  associated_widget_input_handler_ = std::move(widget_input_handler);
+}
+
+void RenderWidgetHostImpl::SetWidgetInputHandler(
+    mojom::WidgetInputHandlerPtr widget_input_handler) {
+  widget_input_handler_ = std::move(widget_input_handler);
+}
 
 }  // namespace content
