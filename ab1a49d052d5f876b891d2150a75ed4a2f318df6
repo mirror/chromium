@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0cb53fb4_683c5aa4",
+        "filename": "chrome/common/extensions/api/automation.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-07-11T13:01:59Z",
+      "side": 1,
+      "message": "nit: I think these are attributes, not methods, so they do not return things, they store or reference things",
+      "range": {
+        "startLine": 457,
+        "startChar": 66,
+        "endLine": 457,
+        "endChar": 73
+      },
+      "revId": "ab1a49d052d5f876b891d2150a75ed4a2f318df6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad4fd2f0_f22a563f",
+        "filename": "content/browser/accessibility/browser_accessibility_manager_mac.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-07-11T13:01:59Z",
+      "side": 1,
+      "message": "this should be a struct with descriptive member names instead of an std::pair and then we can get rid of the comment text describing it above",
+      "range": {
+        "startLine": 97,
+        "startChar": 20,
+        "endLine": 97,
+        "endChar": 51
+      },
+      "revId": "ab1a49d052d5f876b891d2150a75ed4a2f318df6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51e50994_75bb1e8a",
+        "filename": "content/renderer/accessibility/blink_ax_tree_source.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-07-11T13:01:59Z",
+      "side": 1,
+      "message": "why IsDetached()?",
+      "range": {
+        "startLine": 798,
+        "startChar": 24,
+        "endLine": 798,
+        "endChar": 34
+      },
+      "revId": "ab1a49d052d5f876b891d2150a75ed4a2f318df6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5733bbed_b0b5bb83",
+        "filename": "content/shell/test_runner/web_ax_object_proxy.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-07-11T13:01:59Z",
+      "side": 1,
+      "message": "this seems stylistically wrong - it should probably be down with the other methods that return a v8::Local\u003cv8::Object\u003e and it does not need to be qualified with the name of the class it\u0027s inside",
+      "range": {
+        "startLine": 99,
+        "startChar": 24,
+        "endLine": 99,
+        "endChar": 40
+      },
+      "revId": "ab1a49d052d5f876b891d2150a75ed4a2f318df6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "041c850c_1ff066f0",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1874,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-07-11T13:01:59Z",
+      "side": 1,
+      "message": "why did this change?",
+      "range": {
+        "startLine": 1874,
+        "startChar": 6,
+        "endLine": 1874,
+        "endChar": 19
+      },
+      "revId": "ab1a49d052d5f876b891d2150a75ed4a2f318df6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
