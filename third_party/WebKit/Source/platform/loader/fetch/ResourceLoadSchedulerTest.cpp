@@ -4,6 +4,8 @@
 
 #include "platform/loader/fetch/ResourceLoadScheduler.h"
 
+#include "platform/RuntimeEnabledFeatures.h"
+#include "platform/loader/testing/MockFetchContext.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace blink {
@@ -31,13 +33,14 @@ class MockClient final : public GarbageCollectedFinalized<MockClient>,
 class ResourceLoadSchedulerTest : public ::testing::Test {
  public:
   void SetUp() override {
-    scheduler_ = ResourceLoadScheduler::Create();
+    RuntimeEnabledFeatures::SetResourceLoadSchedulerEnabled(true);
+    scheduler_ = ResourceLoadScheduler::Create(
+        MockFetchContext::Create(MockFetchContext::kShouldNotLoadNewResource));
     scheduler()->SetOutstandingLimitForTesting(1);
   }
   void TearDown() override {
-    scheduler()->SetOutstandingLimitForTesting(
-        ResourceLoadScheduler::kOutstandingUnlimited);
     scheduler()->Shutdown();
+    RuntimeEnabledFeatures::SetResourceLoadSchedulerEnabled(false);
   }
 
   ResourceLoadScheduler* scheduler() { return scheduler_; }
