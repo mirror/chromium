@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd0fbfc5_bb88e9ab",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 771,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-07-11T02:51:58Z",
+      "side": 1,
+      "message": "This DCHECK means you can pass a const reference to TickAnimation.",
+      "revId": "2fdd79f198ac3b9e553ca0889c9e499e5d57d56f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
