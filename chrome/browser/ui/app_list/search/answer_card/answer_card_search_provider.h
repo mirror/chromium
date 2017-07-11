@@ -8,6 +8,7 @@
 #include <memory>
 #include <string>
 
+#include "base/strings/string16.h"
 #include "base/time/time.h"
 #include "chrome/browser/ui/app_list/search/answer_card/answer_card_contents.h"
 #include "ui/app_list/search_provider.h"
@@ -96,6 +97,10 @@ class AnswerCardSearchProvider : public SearchProvider,
 
   // Current preferred size of the contents.
   gfx::Size preferred_size_;
+
+  // Suffix for the request URL that includes additional parameters besides the
+  // query string.
+  const base::string16 query_suffix_;
 
   DISALLOW_COPY_AND_ASSIGN(AnswerCardSearchProvider);
 };

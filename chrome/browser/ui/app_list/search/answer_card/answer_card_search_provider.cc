@@ -50,7 +50,8 @@ AnswerCardSearchProvider::AnswerCardSearchProvider(
       model_(model),
       list_controller_(list_controller),
       contents_(std::move(contents)),
-      answer_server_url_(features::AnswerServerUrl()) {
+      answer_server_url_(features::AnswerServerUrl()),
+      query_suffix_(base::UTF8ToUTF16(features::AnswerServerQuerySuffix())) {
   contents_->SetDelegate(this);
 }
 
@@ -85,7 +86,8 @@ void AnswerCardSearchProvider::Start(bool is_voice_query,
 
   // Lifetime of |prefixed_query| should be longer than the one of
   // |replacements|.
-  base::string16 prefixed_query(base::UTF8ToUTF16("q=") + query);
+  base::string16 prefixed_query(base::UTF8ToUTF16("q=") + query +
+                                query_suffix_);
   GURL::ReplacementsW replacements;
   replacements.SetQueryStr(prefixed_query);
   current_request_url_ = answer_server_url_.ReplaceComponents(replacements);
