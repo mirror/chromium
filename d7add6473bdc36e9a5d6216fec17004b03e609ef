@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "489cabfc_970ef085",
+        "filename": "content/browser/frame_host/frame_tree_node.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-07-11T12:02:13Z",
+      "side": 1,
+      "message": "As explained in NavigationRequest, from_begin_navigation is defined in the inverse way of what it should be. When fixed, this line should read:\ninform_renderer \u0026\u0026 navigation_request_-\u003efrom_begin_navigation();",
+      "revId": "d7add6473bdc36e9a5d6216fec17004b03e609ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91576fc7_a8650a3f",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-07-11T12:02:13Z",
+      "side": 1,
+      "message": "This should be the reverse. It\u0027s NavigationRequest::CreateRendererInitiated that is used when we receive a BeginNavigation IPC.",
+      "revId": "d7add6473bdc36e9a5d6216fec17004b03e609ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cad2182f_f19408f7",
+        "filename": "content/browser/frame_host/navigation_request.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-07-11T12:02:13Z",
+      "side": 1,
+      "message": "I would rephrase this as:\nWhether the NavigationRequest was created after receiving a BeginNavigation IPC. When true, main frame navigations should not commit in a different process (unless asked by the content/ embedder). When true, the renderer process expects to be notified if the navigation is aborted.",
+      "revId": "d7add6473bdc36e9a5d6216fec17004b03e609ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2e79897_b9bda44b",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1964,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-07-11T12:02:13Z",
+      "side": 1,
+      "message": "With the good definition of from_begin_navigation this should be:\nrequest.from_begin_navigation() \u0026\u0026 !can_renderer_initiate_transfer;",
+      "revId": "d7add6473bdc36e9a5d6216fec17004b03e609ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "400bec59_02592c08",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-07-11T12:02:13Z",
+      "side": 1,
+      "message": "s/clientDroppedNavigation/ClientDroppedNavigation",
+      "revId": "d7add6473bdc36e9a5d6216fec17004b03e609ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d46aea93_4221ebeb",
+        "filename": "third_party/WebKit/public/web/WebLocalFrame.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-07-11T12:02:13Z",
+      "side": 1,
+      "message": "Now that Blink uses the same styleguide as the rest of Chrome, this should be ClientDroppedNavigation.",
+      "revId": "d7add6473bdc36e9a5d6216fec17004b03e609ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
