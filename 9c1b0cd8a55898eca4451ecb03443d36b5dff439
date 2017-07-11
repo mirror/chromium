@@ -205,6 +205,24 @@
       "revId": "9c1b0cd8a55898eca4451ecb03443d36b5dff439",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3abf0d3a_b586a627",
+        "filename": "ui/ozone/platform/drm/gpu/drm_thread.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1112153
+      },
+      "writtenOn": "2017-07-11T17:12:28Z",
+      "side": 1,
+      "message": "Good to know. Done.",
+      "parentUuid": "05a1993a_67681c0e",
+      "revId": "9c1b0cd8a55898eca4451ecb03443d36b5dff439",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
