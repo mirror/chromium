@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87b28d0f_6d974cc5",
+        "filename": "chrome/browser/chrome_service_worker_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-11T01:23:56Z",
+      "side": 1,
+      "message": "typo: |expected_request|... but seems like |expected_result| is better or just |expected|?\n\nAlso can you put a 1 /* EXPLAnATION */ comment?",
+      "revId": "6e5dbf672f4994f7628b233f069a7afab09ac42c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "520fcae6_9da61725",
+        "filename": "content/browser/service_worker/service_worker_context_wrapper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1026,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-11T01:23:56Z",
+      "side": 1,
+      "message": "I prefer we just DCHECK(UI) and force the caller to PostTask to UI. That pattern tends to lead to cleaner code IMO.",
+      "revId": "6e5dbf672f4994f7628b233f069a7afab09ac42c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
