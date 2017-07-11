@@ -34,6 +34,24 @@
       "revId": "4aed01f206b9acc54a8fdf59f7be280b1b51ea66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c2bfdba_fabf108a",
+        "filename": "build/config/jumbo.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-07-11T15:40:07Z",
+      "side": 1,
+      "message": "Yup.",
+      "parentUuid": "49a5bb27_08819d25",
+      "revId": "4aed01f206b9acc54a8fdf59f7be280b1b51ea66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
