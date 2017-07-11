@@ -57,6 +57,30 @@
       "revId": "1ad674faadb900339b57902c51dcde73951916b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a2a9a98_88bb41ab",
+        "filename": "chrome/browser/metrics/chrome_metrics_services_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-11T22:54:41Z",
+      "side": 1,
+      "message": "Yeah I agree we should probably make the APIs work similarly.  I don\u0027t have a strong opinion on that though.  I think the current call to chrome::IsIncognitoSessionActive() works in general, but if we check too close to profile creation we miss it because it\u0027s relying on when a TabModel is added which may happen after.  That\u0027s why we need something a bit different here.\n\nI\u0027m surprised there\u0027s no general way to listen to profile creation/destruction without relying on BrowserList or TabModelList in general though.",
+      "parentUuid": "d8a8714f_b974492a",
+      "range": {
+        "startLine": 305,
+        "startChar": 0,
+        "endLine": 305,
+        "endChar": 62
+      },
+      "revId": "1ad674faadb900339b57902c51dcde73951916b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
