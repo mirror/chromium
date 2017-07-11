@@ -108,6 +108,30 @@
     },
     {
       "key": {
+        "uuid": "2758aa96_f5f8ddfc",
+        "filename": "ui/ozone/platform/drm/gpu/drm_thread.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1112153
+      },
+      "writtenOn": "2017-07-11T00:38:09Z",
+      "side": 1,
+      "message": "I think GBM_BO_USE_RENDERING is subset of GBM_BO_USE_TEXTURING.\nso GBM_BO_USE_RENDERING is GBM_BO_USE_TEXTURING, but GBM_BO_USE_TEXTURING isn\u0027t GBM_BO_USE_RENDERING.\n\nGBM_BO_USE_TEXTURING is all readable texture.\nGBM_BO_USE_RENDERING is only writable texture among all readable texture.\n\nGralloc enum has similar semantics.\nhttps://github.com/android/platform_hardware_libhardware/blob/master/include/hardware/gralloc.h#L88\n    /* buffer will be used as an OpenGL ES texture */\n    GRALLOC_USAGE_HW_TEXTURE            \u003d 0x00000100U,\n    /* buffer will be used as an OpenGL ES render target */\n    GRALLOC_USAGE_HW_RENDER             \u003d 0x00000200U,\n\nGurchetan, Daniele, what do you think?",
+      "parentUuid": "3a76aae1_e6dd7b58",
+      "range": {
+        "startLine": 123,
+        "startChar": 14,
+        "endLine": 123,
+        "endChar": 55
+      },
+      "revId": "9c1b0cd8a55898eca4451ecb03443d36b5dff439",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1c875ef6_ee12f8a6",
         "filename": "ui/ozone/platform/drm/gpu/drm_thread.cc",
         "patchSetId": 5
