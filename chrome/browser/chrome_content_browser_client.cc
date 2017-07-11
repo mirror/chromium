@@ -73,11 +73,10 @@
 #include "chrome/browser/renderer_host/chrome_navigation_ui_data.h"
 #include "chrome/browser/renderer_host/chrome_render_message_filter.h"
 #include "chrome/browser/renderer_host/pepper/chrome_browser_pepper_host_factory.h"
-#include "chrome/browser/safe_browsing/browser_url_loader_throttle.h"
 #include "chrome/browser/safe_browsing/certificate_reporting_service.h"
 #include "chrome/browser/safe_browsing/certificate_reporting_service_factory.h"
-#include "chrome/browser/safe_browsing/mojo_safe_browsing_impl.h"
 #include "chrome/browser/safe_browsing/safe_browsing_service.h"
+#include "chrome/browser/safe_browsing/url_checker_delegate_impl.h"
 #include "chrome/browser/search/instant_service.h"
 #include "chrome/browser/search/instant_service_factory.h"
 #include "chrome/browser/search/search.h"
@@ -149,6 +148,9 @@
 #include "components/rappor/public/rappor_utils.h"
 #include "components/rappor/rappor_recorder_impl.h"
 #include "components/rappor/rappor_service_impl.h"
+#include "components/safe_browsing/browser/browser_url_loader_throttle.h"
+#include "components/safe_browsing/browser/mojo_safe_browsing_impl.h"
+#include "components/safe_browsing/browser/url_checker_delegate.h"
 #include "components/safe_browsing/common/safe_browsing_prefs.h"
 #include "components/security_interstitials/core/ssl_error_ui.h"
 #include "components/signin/core/common/profile_management_switches.h"
@@ -2926,11 +2928,14 @@ void ChromeContentBrowserClient::ExposeInterfacesToRenderer(
   }
 
   if (base::FeatureList::IsEnabled(features::kNetworkService)) {
+    scoped_refptr<safe_browsing::UrlCheckerDelegate> checker_delegate(
+        new safe_browsing::UrlCheckerDelegateImpl(
+            safe_browsing_service_->database_manager(),
+            safe_browsing_service_->ui_manager()));
+
     registry->AddInterface(
         base::Bind(&safe_browsing::MojoSafeBrowsingImpl::Create,
-                   safe_browsing_service_->database_manager(),
-                   safe_browsing_service_->ui_manager(),
-                   render_process_host->GetID()),
+                   std::move(checker_delegate), render_process_host->GetID()),
         BrowserThread::GetTaskRunnerForThread(BrowserThread::IO));
   }
 
@@ -3438,10 +3443,14 @@ ChromeContentBrowserClient::CreateURLLoaderThrottles(
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK(base::FeatureList::IsEnabled(features::kNetworkService));
 
+  scoped_refptr<safe_browsing::UrlCheckerDelegate> checker_delegate(
+      new safe_browsing::UrlCheckerDelegateImpl(
+          safe_browsing_service_->database_manager(),
+          safe_browsing_service_->ui_manager()));
+
   std::vector<std::unique_ptr<content::URLLoaderThrottle>> result;
   result.push_back(base::MakeUnique<safe_browsing::BrowserURLLoaderThrottle>(
-      safe_browsing_service_->database_manager(),
-      safe_browsing_service_->ui_manager(), wc_getter));
+      std::move(checker_delegate), wc_getter));
   return result;
 }
 

@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_BROWSER_SAFE_BROWSING_BROWSER_URL_LOADER_THROTTLE_H_
-#define CHROME_BROWSER_SAFE_BROWSING_BROWSER_URL_LOADER_THROTTLE_H_
+#ifndef COMPONENTS_SAFE_BROWSING_BROWSER_BROWSER_URL_LOADER_THROTTLE_H_
+#define COMPONENTS_SAFE_BROWSING_BROWSER_BROWSER_URL_LOADER_THROTTLE_H_
 
 #include <memory>
 
@@ -18,8 +18,7 @@ class WebContents;
 
 namespace safe_browsing {
 
-class SafeBrowsingDatabaseManager;
-class SafeBrowsingUIManager;
+class UrlCheckerDelegate;
 class SafeBrowsingUrlCheckerImpl;
 
 // BrowserURLLoaderThrottle is used in the browser process to query
@@ -32,8 +31,7 @@ class BrowserURLLoaderThrottle : public content::URLLoaderThrottle {
   // |web_contents_getter| is used for displaying SafeBrowsing UI when
   // necessary.
   BrowserURLLoaderThrottle(
-      scoped_refptr<SafeBrowsingDatabaseManager> database_manager,
-      scoped_refptr<SafeBrowsingUIManager> ui_manager,
+      scoped_refptr<UrlCheckerDelegate> checker_delegate,
       const base::Callback<content::WebContents*()>& web_contents_getter);
   ~BrowserURLLoaderThrottle() override;
 
@@ -49,9 +47,8 @@ class BrowserURLLoaderThrottle : public content::URLLoaderThrottle {
  private:
   void OnCheckUrlResult(bool safe);
 
-  // The following two members stay valid until |url_checker_| is created.
-  scoped_refptr<SafeBrowsingDatabaseManager> database_manager_;
-  scoped_refptr<SafeBrowsingUIManager> ui_manager_;
+  // The following member stays valid until |url_checker_| is created.
+  scoped_refptr<UrlCheckerDelegate> checker_delegate_;
 
   base::Callback<content::WebContents*()> web_contents_getter_;
 
@@ -65,4 +62,4 @@ class BrowserURLLoaderThrottle : public content::URLLoaderThrottle {
 
 }  // namespace safe_browsing
 
-#endif  // CHROME_BROWSER_SAFE_BROWSING_BROWSER_URL_LOADER_THROTTLE_H_
+#endif  // COMPONENTS_SAFE_BROWSING_BROWSER_BROWSER_URL_LOADER_THROTTLE_H_
