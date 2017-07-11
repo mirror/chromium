@@ -14,6 +14,7 @@
 #include "base/task_scheduler/post_task.h"
 #include "base/version.h"
 #include "chrome/browser/platform_util_internal.h"
+#include "chrome/browser/profiles/profile.h"
 #include "content/public/browser/browser_thread.h"
 #include "url/gurl.h"
 

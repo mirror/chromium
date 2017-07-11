@@ -16,6 +16,7 @@
 #include "jni/MediaDrmCredentialManager_jni.h"
 #include "media/base/android/media_drm_bridge.h"
 #include "media/base/provision_fetcher.h"
+#include "net/url_request/url_request_context_getter.h"
 #include "url/gurl.h"
 
 #include "widevine_cdm_version.h"  // In SHARED_INTERMEDIATE_DIR.
@@ -90,9 +91,9 @@ void MediaDrmCredentialManager::OnResetCredentialsCompleted(
 void MediaDrmCredentialManager::ResetCredentialsInternal(
     SecurityLevel security_level) {
   // Create provision fetcher for the default browser http request context.
-  media::CreateFetcherCB create_fetcher_cb =
-      base::Bind(&content::CreateProvisionFetcher,
-                 g_browser_process->system_request_context());
+  media::CreateFetcherCB create_fetcher_cb = base::Bind(
+      &content::CreateProvisionFetcher,
+      base::RetainedRef(g_browser_process->system_request_context()));
 
   ResetCredentialsCB reset_credentials_cb =
       base::Bind(&MediaDrmCredentialManager::OnResetCredentialsCompleted,
