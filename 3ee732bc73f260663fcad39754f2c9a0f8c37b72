@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "93d95f45_b4ce8471",
+        "filename": "base/synchronization/waitable_event.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-07-11T16:40:31Z",
+      "side": 1,
+      "message": "Either make this static or take it out of the class entirely and make it local to waitable_event_mac.cc.",
+      "revId": "3ee732bc73f260663fcad39754f2c9a0f8c37b72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dacbd46d_28b129a0",
+        "filename": "base/synchronization/waitable_event_mac.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-07-11T16:40:31Z",
+      "side": 1,
+      "message": "But you only ever MakeEvent() with a kevent64() following it, so maybe leave it as a member function but make it responsible for creating the kevent64_s and then calling kevent64().",
+      "revId": "3ee732bc73f260663fcad39754f2c9a0f8c37b72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "34d00a6d_8bf05b00",
         "filename": "base/task_scheduler/task_tracker_unittest.cc",
         "patchSetId": 6
