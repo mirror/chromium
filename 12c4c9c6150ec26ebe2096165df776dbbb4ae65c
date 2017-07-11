@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "e9fda5ab_4616c7e1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-07-11T21:03:33Z",
+      "side": 1,
+      "message": "Looks like you used dp and not pixels, so this is out of date.\n\nGeneral style nit, but try to wrap your commit messages to make it easier to read.  Here\u0027s a link off of the chromium dev site:\nhttps://chris.beams.io/posts/git-commit/#seven-rules\n\nI think this could be:\n\n\"\"\"\n[Android] Tweak spacing and sizing of revamped context menu UI.\n\n* Add spacing above and below the image view.\n* Add spacing above and below the text for links\n* Added a max width and max height for images in the context menu.\n\"\"\"",
+      "range": {
+        "startLine": 7,
+        "startChar": 47,
+        "endLine": 7,
+        "endChar": 50
+      },
+      "revId": "12c4c9c6150ec26ebe2096165df776dbbb4ae65c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1685c472_2c724db5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-07-11T21:03:33Z",
+      "side": 1,
+      "message": "is this section valid?",
+      "range": {
+        "startLine": 10,
+        "startChar": 54,
+        "endLine": 10,
+        "endChar": 55
+      },
+      "revId": "12c4c9c6150ec26ebe2096165df776dbbb4ae65c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1fe386ba_4f2109de",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextmenu/ContextMenuHelper.java",
         "patchSetId": 2
