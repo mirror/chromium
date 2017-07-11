@@ -17,6 +17,7 @@
 #include "chrome/browser/ui/tab_contents/core_tab_helper.h"
 #include "chrome/common/thumbnail_capturer.mojom.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_headers.h"
+#include "content/public/browser/android/content_view_core.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/common/context_menu_params.h"
@@ -106,6 +107,18 @@ ContextMenuHelper::~ContextMenuHelper() {
 void ContextMenuHelper::ShowContextMenu(
     content::RenderFrameHost* render_frame_host,
     const content::ContextMenuParams& params) {
+  content::ContentViewCore* content_view_core =
+      content::ContentViewCore::FromWebContents(web_contents_);
+
+  if (!content_view_core)
+    return;
+
+  base::android::ScopedJavaLocalRef<jobject> jcontent_view_core(
+      content_view_core->GetJavaObject());
+
+  if (jcontent_view_core.is_null())
+    return;
+
   JNIEnv* env = base::android::AttachCurrentThread();
   context_menu_params_ = params;
   render_frame_id_ = render_frame_host->GetRoutingID();
@@ -194,25 +207,28 @@ void ContextMenuHelper::RetrieveImageForShare(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj,
     const JavaParamRef<jobject>& jcallback,
-    jint max_dimen_px) {
+    jint max_width_px,
+    jint max_height_px) {
   RetrieveImageInternal(env, base::Bind(&OnRetrieveImageForShare), jcallback,
-                        max_dimen_px);
+                        max_width_px, max_height_px);
 }
 
 void ContextMenuHelper::RetrieveImageForContextMenu(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj,
     const JavaParamRef<jobject>& jcallback,
-    jint max_dimen_px) {
+    jint max_width_px,
+    jint max_height_px) {
   RetrieveImageInternal(env, base::Bind(&OnRetrieveImageForContextMenu),
-                        jcallback, max_dimen_px);
+                        jcallback, max_width_px, max_height_px);
 }
 
 void ContextMenuHelper::RetrieveImageInternal(
     JNIEnv* env,
     const ImageRetrieveCallback& retrieve_callback,
     const JavaParamRef<jobject>& jcallback,
-    jint max_dimen_px) {
+    jint max_width_px,
+    jint max_height_px) {
   content::RenderFrameHost* render_frame_host =
       content::RenderFrameHost::FromID(render_process_id_, render_frame_id_);
   if (!render_frame_host)
@@ -224,7 +240,8 @@ void ContextMenuHelper::RetrieveImageInternal(
   // until there's either a connection error or a response.
   auto* thumbnail_capturer_proxy = thumbnail_capturer.get();
   thumbnail_capturer_proxy->RequestThumbnailForContextNode(
-      0, gfx::Size(max_dimen_px, max_dimen_px), chrome::mojom::ImageFormat::PNG,
+      0, gfx::Size(max_width_px, max_height_px),
+      chrome::mojom::ImageFormat::PNG,
       base::Bind(retrieve_callback, base::Passed(&thumbnail_capturer),
                  base::android::ScopedJavaGlobalRef<jobject>(env, jcallback)));
 }

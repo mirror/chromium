@@ -13,7 +13,6 @@ import android.support.annotation.StringRes;
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.DefaultBrowserInfo;
-import org.chromium.chrome.browser.search_engines.TemplateUrlService;
 import org.chromium.chrome.browser.widget.TintedDrawable;
 
 /**
@@ -107,12 +106,7 @@ public enum ChromeContextMenuItem implements ContextMenuItem {
      */
     @Override
     public String getTitle(Context context) {
-        if (this == ChromeContextMenuItem.SEARCH_BY_IMAGE) {
-            return context.getString(R.string.contextmenu_search_web_for_image,
-                    TemplateUrlService.getInstance()
-                            .getDefaultSearchEngineTemplateUrl()
-                            .getShortName());
-        } else if (this == OPEN_IN_BROWSER_ID) {
+        if (this == OPEN_IN_BROWSER_ID) {
             return DefaultBrowserInfo.getTitleOpenInDefaultBrowser(false);
         } else if (mStringId == 0) {
             return "";
