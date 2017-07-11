@@ -12,6 +12,8 @@
 #include "components/safe_browsing/base_ui_manager.h"
 #include "content/public/browser/web_contents.h"
 
+class PrefService;
+
 namespace safe_browsing {
 class BasePingManager;
 class SafeBrowsingURLRequestContextGetter;
@@ -35,7 +37,8 @@ class AwSafeBrowsingUIManager : public safe_browsing::BaseUIManager {
 
   // Construction needs to happen on the UI thread.
   explicit AwSafeBrowsingUIManager(
-      AwURLRequestContextGetter* browser_url_request_context_getter);
+      AwURLRequestContextGetter* browser_url_request_context_getter,
+      PrefService* pref_service);
 
   // Gets the correct ErrorUiType for the web contents
   int GetErrorUiType(const UnsafeResource& resource) const;
@@ -66,6 +69,9 @@ class AwSafeBrowsingUIManager : public safe_browsing::BaseUIManager {
       url_request_context_getter_;
 
   bool extended_reporting_allowed_ = false;
+
+  // non-owning
+  PrefService* pref_service_;
 
   DISALLOW_COPY_AND_ASSIGN(AwSafeBrowsingUIManager);
 };
