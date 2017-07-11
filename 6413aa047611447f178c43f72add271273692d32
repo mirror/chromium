@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fa746975_50f68a41",
+        "filename": "media/filters/gpu_video_decoder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-07-11T18:55:33Z",
+      "side": 1,
+      "message": "This is a good thought and something I considered but discounted since typically first frames aren\u0027t very complex and thus we may be undersizing. That said, I didn\u0027t test this, so I\u0027ll do that report back.",
+      "parentUuid": "9f0ad0a7_21ab1a8f",
+      "range": {
+        "startLine": 245,
+        "startChar": 4,
+        "endLine": 245,
+        "endChar": 35
+      },
+      "revId": "6413aa047611447f178c43f72add271273692d32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc4660ed_ac8b34ba",
         "filename": "media/filters/gpu_video_decoder.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-11T17:59:36Z",
       "side": 1,
       "message": "It seems we should be tracking |max_allocated_bytes_| and setting |allocated_bytes_| \u003d 0 here? (Under the assumption that the performance penalty is proportional to |allocation_count_|.)",
+      "range": {
+        "startLine": 845,
+        "startChar": 2,
+        "endLine": 845,
+        "endChar": 25
+      },
+      "revId": "6413aa047611447f178c43f72add271273692d32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "870ce200_a4daab6e",
+        "filename": "media/filters/gpu_video_decoder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 845,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-07-11T18:55:33Z",
+      "side": 1,
+      "message": "I\u0027ll delete those prior to submission, they\u0027re just there for my local testing.",
+      "parentUuid": "fc4660ed_ac8b34ba",
       "range": {
         "startLine": 845,
         "startChar": 2,
