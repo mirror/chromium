@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee6376eb_79fb3ca0",
+        "filename": "chrome/browser/ui/cocoa/autofill/autofill_popup_base_view_cocoa.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-07-11T15:03:50Z",
+      "side": 1,
+      "message": "I think this function can be:\n\nreturn gfx::ScreenRectToNSRect(popup_delegate_-\u003epopup_bounds());",
+      "revId": "138129f1edd7ebb28794b978f81d15e662d23528",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "095e47c4_0e4d2c26",
+        "filename": "chrome/browser/ui/cocoa/autofill/autofill_popup_base_view_cocoa.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-07-11T15:03:50Z",
+      "side": 1,
+      "message": "conventionally, \"bounds\" in Cocoa are in a View/Window\u0027s own coordinate system (ie: the bounds rect\u0027s origin is always at (0,0)) and \"frames\" are in a View/Window\u0027s parent\u0027s coordinate system (which is the screen\u0027s coordinate system for a Window), so this should be called \"getClippedPopupFrame\", and the above should be \"getFullPopupFrame\".",
+      "range": {
+        "startLine": 160,
+        "startChar": 10,
+        "endLine": 160,
+        "endChar": 31
+      },
+      "revId": "138129f1edd7ebb28794b978f81d15e662d23528",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4556a24f_abf3d31e",
+        "filename": "chrome/browser/ui/cocoa/autofill/autofill_popup_base_view_cocoa.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-07-11T15:03:50Z",
+      "side": 1,
+      "message": "this says \"off-screen\" but it only tests against the window\u0027s frame - is that deliberate?",
+      "range": {
+        "startLine": 163,
+        "startChar": 38,
+        "endLine": 163,
+        "endChar": 48
+      },
+      "revId": "138129f1edd7ebb28794b978f81d15e662d23528",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d3a861d_56756897",
+        "filename": "chrome/browser/ui/cocoa/autofill/autofill_popup_base_view_cocoa.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-07-11T15:03:50Z",
+      "side": 1,
+      "message": "This is alarming: popup_bounds() is in origin-at-top-left screen coordinates I think, but clippedPopupBounds is in origin-at-bottom-left coordinates. The logic looks like it\u0027s right, but it\u0027s still a bit tricky to reason about. I would probably write this like:\n\n  // popupFrame and [appWindow frame] are both in screen coordinates\n  CGFloat dY \u003d NSMaxY([appWindow frame]) - NSMaxY(popupFrame);\n  popupFrame.origin.y \u003d [appWindow frame].origin.y;\n  popupFrame.size.height \u003d NSMaxY([appWindow frame]) - dY;\n\nthis is equivalent to the current logic (I think) but without needing to use the delta between the window and screen frames.",
+      "range": {
+        "startLine": 183,
+        "startChar": 8,
+        "endLine": 183,
+        "endChar": 23
+      },
+      "revId": "138129f1edd7ebb28794b978f81d15e662d23528",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
