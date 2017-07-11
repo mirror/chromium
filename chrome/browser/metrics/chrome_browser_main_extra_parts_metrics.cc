@@ -13,6 +13,8 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/sparse_histogram.h"
 #include "base/sys_info.h"
+#include "base/task_scheduler/post_task.h"
+#include "base/task_scheduler/task_traits.h"
 #include "base/threading/sequenced_worker_pool.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
@@ -495,12 +497,22 @@ void ChromeBrowserMainExtraPartsMetrics::PostBrowserStart() {
   RecordMacMetrics();
 #endif  // defined(OS_MACOSX)
 
+  base::TaskTraits task_traits = {base::MayBlock(),
+                                  base::TaskPriority::BACKGROUND,
+                                  base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN};
+#if defined(OS_WIN)
+  // RecordStartupMetrics calls into shell_integration::GetDefaultBrowser(),
+  // which requires a COM thread on Windows.
+  base::CreateCOMSTATaskRunnerWithTraits(task_traits)
+      ->PostTask(FROM_HERE, base::BindOnce(&RecordStartupMetricsOnBlockingPool));
+#else
+  base::PostTaskWithTraits(FROM_HERE, task_traits,
+                           base::BindOnce(&RecordStartupMetricsOnBlockingPool));
+#endif  // defined(OS_WIN)
+
+#if defined(OS_WIN)
   constexpr base::TimeDelta kStartupMetricsGatheringDelay =
       base::TimeDelta::FromSeconds(45);
-  content::BrowserThread::GetBlockingPool()->PostDelayedTask(
-      FROM_HERE, base::BindOnce(&RecordStartupMetricsOnBlockingPool),
-      kStartupMetricsGatheringDelay);
-#if defined(OS_WIN)
   content::BrowserThread::PostDelayedTask(
       content::BrowserThread::IO, FROM_HERE,
       base::Bind(&RecordIsPinnedToTaskbarHistogram),
