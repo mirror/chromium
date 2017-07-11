@@ -275,7 +275,7 @@ static void UpdateLayoutObjectState(const SelectionPaintRange& new_range,
 }
 
 std::pair<int, int> LayoutSelection::SelectionStartEnd() {
-  Commit();
+  DCHECK(!HasPendingSelection());
   if (paint_range_.IsNull())
     return std::make_pair(-1, -1);
   return std::make_pair(paint_range_.StartOffset(), paint_range_.EndOffset());
