@@ -381,9 +381,8 @@ class ProfileSyncService : public syncer::SyncServiceBase,
   syncer::ModelTypeSet GetEncryptedDataTypes() const override;
 
   // SigninManagerBase::Observer implementation.
-  void GoogleSigninSucceededWithPassword(const std::string& account_id,
-                                         const std::string& username,
-                                         const std::string& password) override;
+  void GoogleSigninSucceeded(const std::string& account_id,
+                             const std::string& username) override;
   void GoogleSignedOut(const std::string& account_id,
                        const std::string& username) override;
 
