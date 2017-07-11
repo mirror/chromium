@@ -103,7 +103,8 @@ std::unique_ptr<Buffer> Display::CreateLinuxDMABufBuffer(
   gfx::GpuMemoryBufferHandle handle;
   handle.type = gfx::NATIVE_PIXMAP;
   for (auto& fd : fds)
-    handle.native_pixmap_handle.fds.emplace_back(std::move(fd));
+    handle.native_pixmap_handle.fds.push_back(
+        base::FileDescriptor(fd.get(), true));
 
   for (auto& plane : planes)
     handle.native_pixmap_handle.planes.push_back(plane);

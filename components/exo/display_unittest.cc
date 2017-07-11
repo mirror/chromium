@@ -67,15 +67,34 @@ TEST_F(DisplayTest, DISABLED_CreateLinuxDMABufBuffer) {
           ->CreateNativePixmap(gfx::kNullAcceleratedWidget, buffer_size,
                                gfx::BufferFormat::RGBA_8888,
                                gfx::BufferUsage::GPU_READ);
+  ASSERT_TRUE(pixmap);
   gfx::NativePixmapHandle native_pixmap_handle = pixmap->ExportHandle();
-  std::vector<gfx::NativePixmapPlane> planes;
-  std::vector<base::ScopedFD> fds;
-  planes.push_back(native_pixmap_handle.planes[0]);
-  fds.push_back(base::ScopedFD(native_pixmap_handle.fds[0].fd));
+  base::ScopedFD scoped_fd(native_pixmap_handle.fds[0].fd);
 
-  std::unique_ptr<Buffer> buffer1 = display->CreateLinuxDMABufBuffer(
-      buffer_size, gfx::BufferFormat::RGBA_8888, planes, std::move(fds));
-  EXPECT_TRUE(buffer1);
+  std::vector<gfx::NativePixmapPlane> planes;
+  planes.push_back(native_pixmap_handle.planes[0]);
+
+  {
+    std::vector<base::ScopedFD> fds;
+    fds.push_back(base::ScopedFD(HANDLE_EINTR(dup(scoped_fd.get()))));
+    std::unique_ptr<Buffer> buffer1 = display->CreateLinuxDMABufBuffer(
+        buffer_size, gfx::BufferFormat::RGBA_8888, planes, std::move(fds));
+    EXPECT_TRUE(buffer1);
+  }
+
+  // Creating and destroying multiple buffers should not leak FDs.
+  std::unique_ptr<base::ProcessMetrics> process_metrics(
+      base::ProcessMetrics::CreateCurrentProcessMetrics());
+  int open_fd_count = process_metrics->GetOpenFdCount();
+  const int kBufferCount = 64;
+  for (int i = 0; i < kBufferCount; ++i) {
+    std::vector<base::ScopedFD> fds;
+    fds.push_back(base::ScopedFD(HANDLE_EINTR(dup(scoped_fd.get()))));
+    std::unique_ptr<Buffer> buffer = display->CreateLinuxDMABufBuffer(
+        buffer_size, gfx::BufferFormat::RGBA_8888, planes, std::move(fds));
+    EXPECT_TRUE(buffer);
+  }
+  EXPECT_LT(process_metrics->GetOpenFdCount(), open_fd_count + kBufferCount);
 
   std::vector<base::ScopedFD> invalid_fds;
   invalid_fds.push_back(base::ScopedFD());
