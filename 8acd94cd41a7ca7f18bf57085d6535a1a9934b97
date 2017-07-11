@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d66455fe_78ce8849",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8PerContextData.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-07-11T06:37:47Z",
+      "side": 0,
+      "message": "Huge congratulations!!!  You now remove the only one use case of WrapperTypeInfo::kWrapperTypeExceptionPrototype.  In a follow-up CL, you can remove all kWrapperTypeExceptionPrototype-related code.  :)",
+      "range": {
+        "startLine": 151,
+        "startChar": 25,
+        "endLine": 151,
+        "endChar": 55
+      },
+      "revId": "8acd94cd41a7ca7f18bf57085d6535a1a9934b97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
