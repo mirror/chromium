@@ -208,6 +208,8 @@
 #include "extensions/common/manifest.h"
 #endif
 
+#include "chrome/browser/ui/webui/hello_world_ui.h"
+
 using content::WebUI;
 using content::WebUIController;
 using ui::WebDialogUI;
@@ -625,6 +627,9 @@ WebUIFactoryFunction GetWebUIFactoryFunction(WebUI* web_ui,
       url.host_piece() == chrome::kChromeUISiteEngagementHost) {
     return &NewWebUI<SiteEngagementUI>;
   }
+
+  if (url.host() == chrome::kChromeUIHelloWorldHost)
+    return &NewWebUI<HelloWorldUI>;
 
   return NULL;
 }

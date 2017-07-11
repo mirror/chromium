@@ -846,4 +846,7 @@ const char kChooserUsbOverviewURL[] =
 const char kEolNotificationURL[] = "https://www.google.com/chromebook/older/";
 #endif
 
+const char kChromeUIHelloWorldURL[] = "chrome://hello-world/";
+const char kChromeUIHelloWorldHost[] = "hello-world";
+
 }  // namespace chrome

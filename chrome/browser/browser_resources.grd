@@ -674,6 +674,9 @@
         <include name="IDR_SANDBOX_INTERNALS_HTML" file="resources\sandbox_internals\sandbox_internals.html" flattenhtml="true" allowexternalscript="true" type="BINDATA" compress="gzip" />
         <include name="IDR_SANDBOX_INTERNALS_JS" file="resources\sandbox_internals\sandbox_internals.js" type="BINDATA" compress="gzip" />
       </if>
+      <include name="IDR_HELLO_WORLD_HTML" file="resources\hello_world.html" type="BINDATA" />
+      <include name="IDR_HELLO_WORLD_CSS" file="resources\hello_world.css" type="BINDATA" />
+      <include name="IDR_HELLO_WORLD_JS" file="resources\hello_world.js" type="BINDATA" />
     </includes>
   </release>
 </grit>

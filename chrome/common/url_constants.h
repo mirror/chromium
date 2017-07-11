@@ -639,6 +639,9 @@ extern const char kChooserUsbOverviewURL[];
 extern const char kEolNotificationURL[];
 #endif
 
+extern const char kChromeUIHelloWorldURL[];
+extern const char kChromeUIHelloWorldHost[];
+
 }  // namespace chrome
 
 #endif  // CHROME_COMMON_URL_CONSTANTS_H_

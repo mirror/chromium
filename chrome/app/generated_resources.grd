@@ -12219,6 +12219,12 @@ read aloud to screenreader users to announce that a completion is available.">
         Exit Fullscreen
       </message>
     </if>
+    <message name="IDS_HELLO_WORLD_TITLE" desc="A happy message saying hello to the world">
+      Hello World!
+    </message>
+    <message name="IDS_HELLO_WORLD_WELCOME_TEXT" desc="Message welcoming the user to the hello world page">
+      Welcome to this fancy Hello World page <ph name="WELCOME_NAME">$1<ex>Chromium User</ex></ph>!
+    </message>
   </messages>
  </release>
 </grit>
