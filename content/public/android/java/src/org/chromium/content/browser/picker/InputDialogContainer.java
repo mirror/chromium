@@ -34,9 +34,8 @@ import java.util.concurrent.TimeUnit;
  * Opens the appropriate date/time picker dialog for the given dialog type.
  */
 public class InputDialogContainer {
-
     /**
-     * Delegate that implements the picker's actions.
+     * OnDismissListener that implements the picker's actions.
      */
     public interface InputActionDelegate {
         void cancelDateTimeDialog();
