@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "7360def5_9b5092de",
+        "filename": "content/browser/frame_host/interstitial_page_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-07-11T19:49:49Z",
+      "side": 1,
+      "message": "I\u0027ve refactored the fix so we don\u0027t expose this.",
+      "revId": "74b8520cdfbc9ea0550189ba83534944aaee8896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1d137617_a272fcb4",
         "filename": "content/browser/web_contents/web_contents_impl.cc",
         "patchSetId": 2
