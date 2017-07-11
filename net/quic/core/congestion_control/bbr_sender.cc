@@ -290,9 +290,16 @@ void BbrSender::OnCongestionEvent(bool /*rtt_updated*/,
                         2);
       UpdateAckAggregationBytes(event_time, bytes_acked);
     }
-    if (FLAGS_quic_reloadable_flag_quic_bbr_ack_aggregation_bytes2) {
-      QUIC_FLAG_COUNT_N(quic_reloadable_flag_quic_bbr_ack_aggregation_bytes2, 1,
-                        2);
+    if (FLAGS_quic_reloadable_flag_quic_bbr_ack_aggregation_bytes2 ||
+        FLAGS_quic_reloadable_flag_quic_bbr_ack_aggregation_bytes3) {
+      if (FLAGS_quic_reloadable_flag_quic_bbr_ack_aggregation_bytes2) {
+        QUIC_FLAG_COUNT_N(quic_reloadable_flag_quic_bbr_ack_aggregation_bytes2,
+                          1, 2);
+      }
+      if (FLAGS_quic_reloadable_flag_quic_bbr_ack_aggregation_bytes3) {
+        QUIC_FLAG_COUNT_N(quic_reloadable_flag_quic_bbr_ack_aggregation_bytes3,
+                          1, 2);
+      }
       UpdateAckAggregationBytes(event_time, bytes_acked);
       if (unacked_packets_->bytes_in_flight() <=
           1.25 * GetTargetCongestionWindow(pacing_gain_)) {
@@ -667,6 +674,18 @@ void BbrSender::CalculateCongestionWindow(QuicByteCount bytes_acked) {
     if (2 * max_ack_height_.GetBest() > bytes_acked_since_queue_drained_) {
       target_window +=
           2 * max_ack_height_.GetBest() - bytes_acked_since_queue_drained_;
+    }
+  } else if (FLAGS_quic_reloadable_flag_quic_bbr_ack_aggregation_bytes3 &&
+             is_at_full_bandwidth_) {
+    QUIC_FLAG_COUNT_N(quic_reloadable_flag_quic_bbr_ack_aggregation_bytes3, 2,
+                      2);
+    // Subtracting only half the bytes_acked_since_queue_drained ensures sending
+    // doesn't completely stop for a long period of time if the queue hasn't
+    // been drained recently.
+    if (1.5 * max_ack_height_.GetBest() >
+        bytes_acked_since_queue_drained_ / 2) {
+      target_window += 1.5 * max_ack_height_.GetBest() -
+                       bytes_acked_since_queue_drained_ / 2;
     }
   }
   if (FLAGS_quic_reloadable_flag_quic_bbr_add_tso_cwnd) {

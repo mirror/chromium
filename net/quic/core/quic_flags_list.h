@@ -201,3 +201,10 @@ QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_disable_version_36, false)
 QUIC_FLAG(bool,
           FLAGS_quic_reloadable_flag_quic_disable_packets_based_cc,
           false);
+
+// When enabled, adds up to 1.5x the previously measured ack aggregation in
+// bytes to the CWND, but reduces that amount by 1/2 the bytes acked since the
+// queue was drained.
+QUIC_FLAG(bool,
+          FLAGS_quic_reloadable_flag_quic_bbr_ack_aggregation_bytes3,
+          false);
