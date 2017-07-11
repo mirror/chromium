@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "5c51a549_3de37f2e",
+        "filename": "content/browser/android/dialog_overlay_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-11T23:39:17Z",
+      "side": 1,
+      "message": "\u003e Can a ContentViewCore ever be destroyed/replaced whilst the WebContent lives on?\n\nNo. WebContentsImpl owns ContentViewCoreImpl, implicitly through UserData. And you can double check it never changes: https://cs.chromium.org/chromium/src/content/browser/android/content_view_core_impl.cc?rcl\u003d32f99d7e474d48ae4b80918e453e80991388a450\u0026l\u003d174\n\n\u003e I am not that familiar with CVC. If this is impossible, I will remove this method.",
+      "parentUuid": "056c99a9_4fba8bd3",
+      "revId": "2fa841fe9a402427e680459a5ebae961ddb1bc8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d8b8b844_220527ba",
         "filename": "content/public/android/java/src/org/chromium/content/browser/androidoverlay/DialogOverlayImpl.java",
         "patchSetId": 6
