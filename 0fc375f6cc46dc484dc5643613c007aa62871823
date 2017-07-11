@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32dce861_7711b95b",
+        "filename": "chromeos/components/tether/fake_host_scan_cache.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-11T22:55:35Z",
+      "side": 1,
+      "message": "Can you replace all of this with an erase() call?",
+      "range": {
+        "startLine": 27,
+        "startChar": 32,
+        "endLine": 27,
+        "endChar": 38
+      },
+      "revId": "0fc375f6cc46dc484dc5643613c007aa62871823",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c1ea312_f575661b",
+        "filename": "chromeos/components/tether/host_scanner.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-11T22:55:35Z",
+      "side": 1,
+      "message": "It feels weird for this class to agnostic of why concrete type its host_scan_cache_ is, but know to use a MasterHostScanCache constant. Do you think this constant should be in HostScanCache instead?",
+      "range": {
+        "startLine": 55,
+        "startChar": 9,
+        "endLine": 55,
+        "endChar": 28
+      },
+      "revId": "0fc375f6cc46dc484dc5643613c007aa62871823",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2b2066b_8e408d3f",
+        "filename": "chromeos/components/tether/master_host_scan_cache.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-11T22:55:35Z",
+      "side": 1,
+      "message": "Safe to remove this TODO?",
+      "range": {
+        "startLine": 29,
+        "startChar": 3,
+        "endLine": 29,
+        "endChar": 7
+      },
+      "revId": "0fc375f6cc46dc484dc5643613c007aa62871823",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
