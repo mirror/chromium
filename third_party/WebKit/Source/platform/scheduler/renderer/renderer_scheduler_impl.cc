@@ -382,6 +382,15 @@ scoped_refptr<MainThreadTaskQueue> RendererSchedulerImpl::NewLoadingTaskQueue(
   return loading_task_queue;
 }
 
+scoped_refptr<MainThreadTaskQueue>
+RendererSchedulerImpl::NewLoadingControlTaskQueue(
+    MainThreadTaskQueue::QueueType queue_type) {
+  scoped_refptr<MainThreadTaskQueue> loading_control_task_queue(
+      NewLoadingTaskQueue(queue_type));
+  loading_control_task_queue->SetQueuePriority(TaskQueue::HIGH_PRIORITY);
+  return loading_control_task_queue;
+}
+
 scoped_refptr<MainThreadTaskQueue> RendererSchedulerImpl::NewTimerTaskQueue(
     MainThreadTaskQueue::QueueType queue_type) {
   helper_.CheckOnValidThread();
