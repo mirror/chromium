@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabb8ae7_742085e1",
+        "filename": "content/renderer/media_recorder/audio_track_recorder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-11T23:04:13Z",
+      "side": 1,
+      "message": "Taking a fresh look at this code change, I noticed something I missed last time: It seems that this |frames_queued_| member is *always* equal to |audio_bus_queue_.size() * input_params_.frames_per_buffer()|. So, let\u0027s remove this extra data member.",
+      "range": {
+        "startLine": 137,
+        "startChar": 6,
+        "endLine": 137,
+        "endChar": 20
+      },
+      "revId": "58d4cc63b984b0304da21934ae16543a7c123bf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ad7a96d_32c2e1b2",
+        "filename": "content/renderer/media_recorder/audio_track_recorder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-11T23:04:13Z",
+      "side": 1,
+      "message": "Without |frames_queued_|, this loop simplifies a lot to:\n\n  while (audio_bus_queue_.size() \u003e kMaxNumberOfFifoBuffers)\n    audio_bus_queue_.pop_front();\n\nActually, it\u0027d be much more efficient to call deque::erase() in this case:\n\n  if (audio_bus_queue_.size() \u003e kMaxNumberOfFifoBuffers) {\n    const int drop_count \u003d audio_bus_queue_.size() - kMaxNumberOfFifoBuffers;\n    audio_bus_queue_.erase(audio_bus_queue_.begin(), audio_bus_queue_.begin() + drop_count);\n  }",
+      "range": {
+        "startLine": 246,
+        "startChar": 0,
+        "endLine": 251,
+        "endChar": 3
+      },
+      "revId": "58d4cc63b984b0304da21934ae16543a7c123bf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34cee486_00880d28",
+        "filename": "content/renderer/media_recorder/audio_track_recorder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-11T23:04:13Z",
+      "side": 1,
+      "message": "...and this to:\n\n  while (!audio_bus_queue_.empty()) {\n    ...",
+      "range": {
+        "startLine": 254,
+        "startChar": 0,
+        "endLine": 254,
+        "endChar": 63
+      },
+      "revId": "58d4cc63b984b0304da21934ae16543a7c123bf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ee5dd82_4552ef4a",
+        "filename": "content/renderer/media_recorder/audio_track_recorder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-11T23:04:13Z",
+      "side": 1,
+      "message": "There\u0027s no reason to call Zero() if the queue is non-empty, so this should be:\n\n  if (audio_bus_queue_.empty()) {\n    audio_bus-\u003eZero();\n    return 0.0;\n  }",
+      "range": {
+        "startLine": 278,
+        "startChar": 2,
+        "endLine": 280,
+        "endChar": 15
+      },
+      "revId": "58d4cc63b984b0304da21934ae16543a7c123bf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
