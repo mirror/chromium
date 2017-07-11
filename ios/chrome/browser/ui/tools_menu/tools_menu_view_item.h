@@ -22,6 +22,11 @@
 + (instancetype)menuItemWithTitle:(NSString*)title
           accessibilityIdentifier:(NSString*)accessibilityIdentifier
                           command:(int)commandID;
+
+// The object that should be sent via ChromeExecuteCcommand when this item is
+// tapped.
+- (id)command;
+
 @end
 
 @interface ToolsMenuViewCell : UICollectionViewCell
