@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "32e070ba_33338820",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-07-11T06:58:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "087c2986_4d76c839",
+      "revId": "12e09d30a49b93a028c7974c3a1ecf00813fbf68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01a0d7b0_6e436a30",
         "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "12e09d30a49b93a028c7974c3a1ecf00813fbf68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f1e1f10_7b7bb3de",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-07-11T06:58:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "01a0d7b0_6e436a30",
+      "revId": "12e09d30a49b93a028c7974c3a1ecf00813fbf68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "62bda0db_5d2ea405",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-07-11T06:58:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "13665a35_f4ac2aad",
+      "revId": "12e09d30a49b93a028c7974c3a1ecf00813fbf68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1fb94b4_af5580a1",
         "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "12e09d30a49b93a028c7974c3a1ecf00813fbf68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "561ae1f6_9e36a99b",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-07-11T06:58:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c1fb94b4_af5580a1",
+      "revId": "12e09d30a49b93a028c7974c3a1ecf00813fbf68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "87489dd5_8b509517",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-07-11T06:58:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "469f1eaf_165e77cf",
+      "revId": "12e09d30a49b93a028c7974c3a1ecf00813fbf68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca3a310c_a3d04c67",
         "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
         "patchSetId": 6
@@ -98,6 +188,24 @@
       "writtenOn": "2017-07-11T06:23:39Z",
       "side": 1,
       "message": "I think you may omit the inner set of brackets. i.e. if (... !\u003d 1 or ... !\u003d 1).\n\nAlso, maybe a comment saying what\u0027s happening here? I\u0027m guessing you\u0027re ignoring segments of length 1 because they might as well be a case?",
+      "revId": "12e09d30a49b93a028c7974c3a1ecf00813fbf68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1006e072_986555f0",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-07-11T06:58:18Z",
+      "side": 1,
+      "message": "cant, omit brace and it will error, because I have a newline.\nThis one is the definition of a continuous segment.",
+      "parentUuid": "ca3a310c_a3d04c67",
       "revId": "12e09d30a49b93a028c7974c3a1ecf00813fbf68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "983b61c2_7a66350d",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-07-11T06:58:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "03ea52e1_d95dff9a",
+      "revId": "12e09d30a49b93a028c7974c3a1ecf00813fbf68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4ec886b_c84a9533",
         "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
         "patchSetId": 6
@@ -132,6 +258,24 @@
       "writtenOn": "2017-07-11T06:23:39Z",
       "side": 1,
       "message": "I think you might be able to condense this function a bit? e.g.\n\n    longest_segment \u003d max(segments, key\u003dlambda: (start, end): end - start)\n\nSomething like that?",
+      "revId": "12e09d30a49b93a028c7974c3a1ecf00813fbf68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94eb17a8_51fe44bf",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-07-11T06:58:18Z",
+      "side": 1,
+      "message": "I have to know the position and the length as well not just the number so I prefer to write it separately.",
+      "parentUuid": "d4ec886b_c84a9533",
       "revId": "12e09d30a49b93a028c7974c3a1ecf00813fbf68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "60a14965_068fcb87",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-07-11T06:58:18Z",
+      "side": 1,
+      "message": "Sure",
+      "parentUuid": "12f1a206_dd2098d5",
+      "revId": "12e09d30a49b93a028c7974c3a1ecf00813fbf68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "848260db_694b0aaf",
         "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
         "patchSetId": 6
@@ -166,6 +328,24 @@
       "writtenOn": "2017-07-11T06:23:39Z",
       "side": 1,
       "message": "I guess if you\u0027re not using the second return value, you can just make find_largest_segment return the largest segment. If you need the length you can always calculate it from the segment.",
+      "revId": "12e09d30a49b93a028c7974c3a1ecf00813fbf68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "807f2ec9_dbf0f24e",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-07-11T06:58:18Z",
+      "side": 1,
+      "message": "yeah, I just put it there in case I want it later. Will remove.",
+      "parentUuid": "848260db_694b0aaf",
       "revId": "12e09d30a49b93a028c7974c3a1ecf00813fbf68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "a0966f29_04ee2964",
+        "filename": "third_party/WebKit/Source/build/scripts/make_css_value_id_mappings.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-07-11T06:58:18Z",
+      "side": 1,
+      "message": "This one is just augmenting the keyword (enum) with its respective value. I need them to calculate in the tmpl file. Not significant enough for a class.",
+      "parentUuid": "f4bbeb27_058fa229",
+      "revId": "12e09d30a49b93a028c7974c3a1ecf00813fbf68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5c3e7a36_a9ee0cb9",
         "filename": "third_party/WebKit/Source/build/scripts/templates/CSSValueIDMappingsGenerated.h.tmpl",
         "patchSetId": 6
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "8b861b70_0c589144",
+        "filename": "third_party/WebKit/Source/build/scripts/templates/CSSValueIDMappingsGenerated.h.tmpl",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-07-11T06:58:18Z",
+      "side": 1,
+      "message": "in jinja there is no int here everything is string to you have to use a filter. Originally, I though that number will be number here too but nothing is generated so I read and use int filter to make sure they are int when we do comparison.",
+      "parentUuid": "5c3e7a36_a9ee0cb9",
+      "revId": "12e09d30a49b93a028c7974c3a1ecf00813fbf68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "28c9e9c9_a44842cd",
         "filename": "third_party/WebKit/Source/build/scripts/templates/CSSValueIDMappingsGenerated.h.tmpl",
         "patchSetId": 6
@@ -217,6 +433,24 @@
       "writtenOn": "2017-07-11T06:23:39Z",
       "side": 1,
       "message": "Hmm these indicies [2] [3] etc. are getting a bit confusing. What\u0027s start_segment[2] vs start_segment[3]?",
+      "revId": "12e09d30a49b93a028c7974c3a1ecf00813fbf68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3122f223_b5d0966f",
+        "filename": "third_party/WebKit/Source/build/scripts/templates/CSSValueIDMappingsGenerated.h.tmpl",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-07-11T06:58:18Z",
+      "side": 1,
+      "message": "it is the enum keyword and there true int value, 2 enum keyword for each conversion so 4 values in the format (cs_value, cs_num, css_value, css_num).",
+      "parentUuid": "28c9e9c9_a44842cd",
       "revId": "12e09d30a49b93a028c7974c3a1ecf00813fbf68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
