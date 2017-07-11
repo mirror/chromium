@@ -2795,7 +2795,7 @@ public class Tab
      * See {@link #mInterceptNavigationDelegate}.
      */
     @VisibleForTesting
-    protected void setInterceptNavigationDelegate(InterceptNavigationDelegateImpl delegate) {
+    public void setInterceptNavigationDelegate(InterceptNavigationDelegateImpl delegate) {
         mInterceptNavigationDelegate = delegate;
         nativeSetInterceptNavigationDelegate(mNativeTabAndroid, delegate);
     }
