@@ -6,11 +6,15 @@
 
 #include <utility>
 
+#include "base/base_switches.h"
 #include "base/feature_list.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/field_trial.h"
 #include "base/test/scoped_feature_list.h"
+#include "components/variations/field_trial_config/field_trial_util.h"
 #include "components/variations/variations_associated_data.h"
+#include "components/variations/variations_switches.h"
+#include "content/public/common/content_switches.h"
 
 namespace variations {
 namespace testing {
@@ -89,6 +93,49 @@ void VariationParamsManager::ClearAllVariationParams() {
   // Ensure the destructor is called properly, so it can be freshly recreated.
   field_trial_list_.reset();
   field_trial_list_ = base::MakeUnique<base::FieldTrialList>(nullptr);
+}
+
+// static
+void VariationParamsManager::AppendVariationParams(
+    const std::string& trial_name,
+    const std::map<std::string, std::string>& param_values,
+    base::CommandLine* command_line) {
+  // Register a fake study group.
+  const char kFakeStudyGroup[] = "StudyGroupForTesting";
+  command_line->AppendSwitchASCII(::switches::kForceFieldTrials,
+                                  trial_name + "/" + kFakeStudyGroup);
+
+  // Associate |param_values| with the |trial_name| and kFakeStudyGroup.
+  std::string params_arg = trial_name + "." + kFakeStudyGroup + ":";
+  bool first = true;
+  for (const auto& param : param_values) {
+    // Separate each |param|.
+    if (!first)
+      params_arg += "/";
+    first = false;
+
+    // Append each |param|.
+    const std::string& name = param.first;
+    const std::string& value = param.second;
+    params_arg += EscapeValue(name) + "/" + EscapeValue(value);
+  }
+  command_line->AppendSwitchASCII(variations::switches::kForceFieldTrialParams,
+                                  params_arg);
+}
+
+// static
+void VariationParamsManager::AppendVariationParamsWithFeatureAssociations(
+    const std::string& trial_name,
+    const std::map<std::string, std::string>& param_values,
+    const std::set<std::string>& associated_features,
+    base::CommandLine* command_line) {
+  // Enable all the |associated_features|, associating them with |trial_name|.
+  for (const std::string& feature_name : associated_features) {
+    command_line->AppendSwitchASCII(::switches::kEnableFeatures,
+                                    feature_name + "<" + trial_name);
+  }
+
+  AppendVariationParams(trial_name, param_values, command_line);
 }
 
 }  // namespace testing
