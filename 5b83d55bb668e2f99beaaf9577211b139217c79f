@@ -114,6 +114,30 @@
       "revId": "5b83d55bb668e2f99beaaf9577211b139217c79f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f8a2bd9_ba7f127f",
+        "filename": "services/device/wake_lock/power_save_blocker/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-07-11T12:15:05Z",
+      "side": 1,
+      "message": "I think I should change the //services:* into //services:service_junit_test.\nI should also add comments here:\n# Conceptually, this should be visible only to //services/device:java.\n# However, various generated targets also need to see this target as a\n# result of //services/device:java depending on it.",
+      "parentUuid": "17ae3ccb_837e1d29",
+      "range": {
+        "startLine": 95,
+        "startChar": 6,
+        "endLine": 96,
+        "endChar": 28
+      },
+      "revId": "5b83d55bb668e2f99beaaf9577211b139217c79f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
