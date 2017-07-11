@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79a09fa3_b3a1f4b5",
+        "filename": "ui/display/win/screen_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-11T17:00:35Z",
+      "side": 1,
+      "message": "Nit: Capitalize Windows here and on the next line.",
+      "range": {
+        "startLine": 381,
+        "startChar": 46,
+        "endLine": 381,
+        "endChar": 53
+      },
+      "revId": "84c015abffa595fe5e0709e2bb8c83ebc090e728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45ca9468_25903fc3",
+        "filename": "ui/display/win/screen_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-11T17:00:35Z",
+      "side": 1,
+      "message": "Should we have a unit test for this?",
+      "range": {
+        "startLine": 391,
+        "startChar": 0,
+        "endLine": 391,
+        "endChar": 34
+      },
+      "revId": "84c015abffa595fe5e0709e2bb8c83ebc090e728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee94de3b_34a19481",
+        "filename": "ui/display/win/screen_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-11T17:00:35Z",
+      "side": 1,
+      "message": "Document this static method.",
+      "range": {
+        "startLine": 114,
+        "startChar": 2,
+        "endLine": 114,
+        "endChar": 41
+      },
+      "revId": "84c015abffa595fe5e0709e2bb8c83ebc090e728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
