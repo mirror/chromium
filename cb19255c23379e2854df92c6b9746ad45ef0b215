@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c59a480a_51cf4084",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-07-11T06:24:30Z",
+      "side": 1,
+      "message": "nit: This CL description reads more like a message to the reviewers. I would write something like:\n\nShowcase is intended to be a standalone UI app and as such should not reference //ios/web or //ios/chrome. This CL eliminates the Showcase app creating an IOSChromeMain instance and thus\nimplicitly being an //ios/web embedder, instead directly inlining the minimal parts of that startup that are needed (initializing base::CommandLine and loading resources). As part of that change, this CL eliminates Showcase bundling //ios/web resources.",
+      "range": {
+        "startLine": 9,
+        "startChar": 17,
+        "endLine": 9,
+        "endChar": 30
+      },
+      "revId": "cb19255c23379e2854df92c6b9746ad45ef0b215",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9711a151_76ce4e2c",
+        "filename": "ios/showcase/DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-07-11T06:24:30Z",
+      "side": 0,
+      "message": "Thought for a potential followup investigation: This seems suspicious as well. As //ios/chrome freely assumes the presence of //ios/web, any //ios/chrome dependence is dangerous here.",
+      "revId": "dea6441d2d8033ee73d5f746c34be09c03ed4758",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
