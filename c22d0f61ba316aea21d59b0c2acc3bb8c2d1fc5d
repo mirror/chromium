@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "37e69c87_e2c03d16",
+        "filename": "components/password_manager/core/browser/password_reuse_defines.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-07-11T12:12:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1f03b4e_ae6d9386",
+      "range": {
+        "startLine": 8,
+        "startChar": 4,
+        "endLine": 8,
+        "endChar": 11
+      },
+      "revId": "c22d0f61ba316aea21d59b0c2acc3bb8c2d1fc5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a22bee12_0aa5332a",
         "filename": "components/password_manager/core/browser/password_reuse_defines.h",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "c22d0f61ba316aea21d59b0c2acc3bb8c2d1fc5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df040919_a02e86cb",
+        "filename": "components/password_manager/core/browser/password_reuse_defines.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-07-11T12:12:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a22bee12_0aa5332a",
+      "range": {
+        "startLine": 10,
+        "startChar": 8,
+        "endLine": 10,
+        "endChar": 35
+      },
+      "revId": "c22d0f61ba316aea21d59b0c2acc3bb8c2d1fc5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
