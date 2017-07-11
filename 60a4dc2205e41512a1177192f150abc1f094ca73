@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "805b466b_75ebf9dd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-11T21:15:21Z",
+      "side": 1,
+      "message": "Can you update the CL description?\n\nPerhaps:\n\nUse FileNetLogObserver in cronet (iOS).\n\nThis replaces use of the deprecated WriteToFileNetLogObserver.\nIt has the advantage of moving file I/O off the calling thread.\n\nThis is a re-land of https://chromium-review.googlesource.com/c/564341/, with fixes.\n\nBug: 716570",
+      "revId": "60a4dc2205e41512a1177192f150abc1f094ca73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1eeb10e1_bebdc602",
+        "filename": "components/cronet/ios/cronet_environment.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-11T21:15:21Z",
+      "side": 1,
+      "message": "My previous question on whether this can be extracted to a function and documented still stands.",
+      "revId": "60a4dc2205e41512a1177192f150abc1f094ca73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
