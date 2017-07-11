@@ -22,6 +22,30 @@
       "revId": "d55dac02c650876abe0acb783bd1de1dc7bd5dcd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f2ea260_ca47cbe3",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2020,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-07-11T23:15:50Z",
+      "side": 1,
+      "message": "Done. I\u0027m curious as to why you prefer flags to be present on all platforms. Wouldn\u0027t including these flags on platforms where they\u0027ll never be used unnecessarily increase binary size for that platform?",
+      "parentUuid": "e759f1d3_521a8bfc",
+      "range": {
+        "startLine": 2020,
+        "startChar": 6,
+        "endLine": 2020,
+        "endChar": 34
+      },
+      "revId": "d55dac02c650876abe0acb783bd1de1dc7bd5dcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
