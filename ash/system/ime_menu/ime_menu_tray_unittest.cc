@@ -30,6 +30,8 @@ using chromeos::input_method::MockInputMethodManager;
 namespace ash {
 namespace {
 
+const int kEmojiButtonId = 1;
+
 ImeMenuTray* GetTray() {
   return StatusAreaWidgetTestHelper::GetStatusAreaWidget()->ime_menu_tray();
 }
@@ -50,6 +52,18 @@ class ImeMenuTrayTest : public test::AshTestBase {
  public:
   ImeMenuTrayTest() {}
   ~ImeMenuTrayTest() override {}
+
+  void SetUp() override {
+    test::AshTestBase::SetUp();
+    // MockInputMethodManager enables emoji, handwriting and voice input by
+    // default.
+    InputMethodManager::Initialize(new MockInputMethodManager);
+  }
+
+  void TearDown() override {
+    InputMethodManager::Shutdown();
+    test::AshTestBase::TearDown();
+  }
 
  protected:
   // Returns true if the IME menu tray is visible.
@@ -72,6 +86,11 @@ class ImeMenuTrayTest : public test::AshTestBase {
 
   // Returns true if voice input is enabled for the current keyboard.
   bool IsVoiceEnabled() { return GetTray()->voice_enabled_; }
+
+  views::Button* GetEmojiButton() const {
+    return static_cast<views::Button*>(
+        GetTray()->bubble_->bubble_view()->GetViewByID(kEmojiButtonId));
+  }
 
   // Verifies the IME menu list has been updated with the right IME list.
   void ExpectValidImeList(const std::vector<mojom::ImeInfo>& expected_imes,
@@ -264,11 +283,14 @@ TEST_F(ImeMenuTrayTest, TestAccelerator) {
   EXPECT_FALSE(IsBubbleShown());
 }
 
+// Tests that tapping the emoji button shows the virtual keyboard and does not
+// crash. http://crbug.com/739630
 TEST_F(ImeMenuTrayTest, ShowEmojiKeyset) {
   Shell::Get()->ime_controller()->ShowImeMenuOnShelf(true);
   ASSERT_TRUE(IsVisible());
   ASSERT_FALSE(IsTrayBackgroundActive());
 
+  // Open the menu.
   ui::GestureEvent tap(0, 0, 0, base::TimeTicks(),
                        ui::GestureEventDetails(ui::ET_GESTURE_TAP));
   GetTray()->PerformAction(tap);
@@ -277,11 +299,14 @@ TEST_F(ImeMenuTrayTest, ShowEmojiKeyset) {
 
   AccessibilityDelegate* accessibility_delegate =
       Shell::Get()->accessibility_delegate();
-
   accessibility_delegate->SetVirtualKeyboardEnabled(true);
   EXPECT_TRUE(accessibility_delegate->IsVirtualKeyboardEnabled());
 
-  GetTray()->ShowKeyboardWithKeyset("emoji");
+  // Tap the emoji button.
+  views::Button* emoji_button = GetEmojiButton();
+  ASSERT_TRUE(emoji_button);
+  emoji_button->OnGestureEvent(&tap);
+
   // The menu should be hidden.
   EXPECT_FALSE(IsBubbleShown());
   // The virtual keyboard should be enabled.
@@ -294,12 +319,23 @@ TEST_F(ImeMenuTrayTest, ShowEmojiKeyset) {
 }
 
 TEST_F(ImeMenuTrayTest, ForceToShowEmojiKeyset) {
+  Shell::Get()->ime_controller()->ShowImeMenuOnShelf(true);
+
+  // Open the menu.
+  ui::GestureEvent tap(0, 0, 0, base::TimeTicks(),
+                       ui::GestureEventDetails(ui::ET_GESTURE_TAP));
+  GetTray()->PerformAction(tap);
+
   AccessibilityDelegate* accessibility_delegate =
       Shell::Get()->accessibility_delegate();
   accessibility_delegate->SetVirtualKeyboardEnabled(false);
   ASSERT_FALSE(accessibility_delegate->IsVirtualKeyboardEnabled());
 
-  GetTray()->ShowKeyboardWithKeyset("emoji");
+  // Tap the emoji button.
+  views::Button* emoji_button = GetEmojiButton();
+  ASSERT_TRUE(emoji_button);
+  emoji_button->OnGestureEvent(&tap);
+
   // The virtual keyboard should be enabled.
   EXPECT_TRUE(accessibility_delegate->IsVirtualKeyboardEnabled());
 
@@ -311,16 +347,7 @@ TEST_F(ImeMenuTrayTest, ForceToShowEmojiKeyset) {
 }
 
 TEST_F(ImeMenuTrayTest, ShouldShowBottomButtons) {
-  FocusInInputContext(ui::TEXT_INPUT_TYPE_TEXT);
-  EXPECT_FALSE(GetTray()->ShouldShowBottomButtons());
-  EXPECT_FALSE(IsEmojiEnabled());
-  EXPECT_FALSE(IsHandwritingEnabled());
-  EXPECT_FALSE(IsVoiceEnabled());
-
   InputMethodManager* input_method_manager = InputMethodManager::Get();
-  EXPECT_FALSE(input_method_manager);
-  InputMethodManager::Initialize(new MockInputMethodManager);
-  input_method_manager = InputMethodManager::Get();
   EXPECT_TRUE(input_method_manager &&
               input_method_manager->IsEmojiHandwritingVoiceOnImeMenuEnabled());
   EXPECT_TRUE(input_method_manager->GetImeMenuFeatureEnabled(
@@ -329,6 +356,8 @@ TEST_F(ImeMenuTrayTest, ShouldShowBottomButtons) {
       InputMethodManager::FEATURE_HANDWRITING));
   EXPECT_TRUE(input_method_manager->GetImeMenuFeatureEnabled(
       InputMethodManager::FEATURE_VOICE));
+
+  FocusInInputContext(ui::TEXT_INPUT_TYPE_TEXT);
   EXPECT_TRUE(GetTray()->ShouldShowBottomButtons());
   EXPECT_TRUE(IsEmojiEnabled());
   EXPECT_TRUE(IsHandwritingEnabled());
@@ -344,8 +373,6 @@ TEST_F(ImeMenuTrayTest, ShouldShowBottomButtons) {
 TEST_F(ImeMenuTrayTest, ShouldShowBottomButtonsSeperate) {
   FocusInInputContext(ui::TEXT_INPUT_TYPE_TEXT);
   InputMethodManager* input_method_manager = InputMethodManager::Get();
-  InputMethodManager::Initialize(new MockInputMethodManager);
-  input_method_manager = InputMethodManager::Get();
   EXPECT_TRUE(input_method_manager &&
               input_method_manager->IsEmojiHandwritingVoiceOnImeMenuEnabled());
 
