@@ -46,9 +46,8 @@ bool FakeVideoEncodeAccelerator::Initialize(VideoPixelFormat input_format,
                                             VideoCodecProfile output_profile,
                                             uint32_t initial_bitrate,
                                             Client* client) {
-  if (!will_initialization_succeed_) {
+  if (!will_initialization_succeed_)
     return false;
-  }
   if (output_profile == VIDEO_CODEC_PROFILE_UNKNOWN ||
       output_profile > VIDEO_CODEC_PROFILE_MAX) {
     return false;
