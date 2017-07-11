@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c2bad55_f6b8fb58",
+        "filename": "chrome/android/java/res/values/dimens.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-11T17:21:13Z",
+      "side": 0,
+      "message": "Please leave these in here. We are changing them soon and I\u0027d like for the new hires on our team to have an easy time finding and replacing the dimens.",
+      "range": {
+        "startLine": 452,
+        "startChar": 17,
+        "endLine": 452,
+        "endChar": 58
+      },
+      "revId": "094472afa242fa5ec156b2b744b774e1dfd0a046",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
